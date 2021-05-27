@@ -2,7 +2,7 @@ import React, {FC, ReactElement} from 'react';
 import {Route, Switch} from 'react-router-dom';
 
 import SignIn from './pages/SignIn';
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 
 
 const App: FC = (): ReactElement => {
