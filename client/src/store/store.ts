@@ -1,12 +1,20 @@
-import {compose, createStore} from 'redux';
-import {rootReducer} from "./rootReducer";
+import {applyMiddleware, compose, createStore} from 'redux';
+import createSagaMiddleware from "redux-saga";
+import {TagsState} from './ducks/tags/contracts/state';
+import {TweetsState} from './ducks/tweets/contracts/state';
 
-declare global {
-    interface Window {
-        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-    }
+import {rootReducer} from "./rootReducer";
+import rootSaga from "./saga";
+
+export interface RootState {
+    tweets: TweetsState;
+    tags: TagsState;
 }
 
 const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
-export const store = createStore(rootReducer, composeEnhancers());
+const sagaMiddleware = createSagaMiddleware();
+
+export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(sagaMiddleware)));
+
+sagaMiddleware.run(rootSaga);

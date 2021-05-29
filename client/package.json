@@ -18,6 +18,7 @@
     "axios": "^0.21.1",
     "classnames": "^2.3.1",
     "immer": "^9.0.2",
+    "json-server": "^0.16.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.4",
@@ -29,11 +30,13 @@
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1"
   },
+  "proxy": "http://localhost:3001",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "json-server": "json-server --watch public/db.json --port 3001"
   },
   "eslintConfig": {
     "extends": [

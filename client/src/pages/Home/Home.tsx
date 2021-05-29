@@ -1,33 +1,45 @@
-import React, {FC, ReactElement} from 'react';
+import React, {FC, ReactElement, useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import Grid from '@material-ui/core/Grid';
 import {
     Avatar,
     Button,
+    CircularProgress,
     Container,
-    createStyles,
     Divider,
     InputAdornment,
-    InputBase,
     List,
     ListItem,
-    ListItemAvatar, ListItemText,
-    makeStyles,
+    ListItemAvatar,
+    ListItemText,
     Paper,
-    Typography,
-    withStyles
+    Typography
 } from "@material-ui/core";
-import grey from "@material-ui/core/colors/grey";
 import PersonAddIcon from '@material-ui/icons/PersonAddOutlined';
+import SearchIcon from "@material-ui/icons/Search";
+
 import Tweet from "../../components/Tweet/Tweet";
 import SideMenu from "../../components/SideMenu/SideMenu";
-import SearchIcon from "@material-ui/icons/Search";
 import {SearchTextField} from '../../components/SearchTextField';
-import { useHomeStyles } from './HomeStyles';
-import { AddTweetForm } from '../../components/AddTweetForm/AddTweetForm';
-
+import {useHomeStyles} from './HomeStyles';
+import {AddTweetForm} from '../../components/AddTweetForm/AddTweetForm';
+import {fetchTweets} from "../../store/ducks/tweets/actionCreators";
+import {selectIsTweetsLoading, selectTweetsItems} from "../../store/ducks/tweets/selectors";
+import {fetchTags} from "../../store/ducks/tags/actionCreators";
+import Tags from "../../components/Tags/Tags";
+import {selectTagsItems} from "../../store/ducks/tags/selectors";
+import {Route} from "react-router-dom";
 
 const Home: FC = (): ReactElement => {
+    const dispatch = useDispatch();
     const classes = useHomeStyles();
+    const tweets = useSelector(selectTweetsItems);
+    const isLoading = useSelector(selectIsTweetsLoading);
+
+    useEffect(() => {
+        dispatch(fetchTweets());
+        dispatch(fetchTags());
+    }, [dispatch]);
 
     return (
         <Container className={classes.wrapper} maxWidth="lg">
@@ -42,27 +54,17 @@ const Home: FC = (): ReactElement => {
                         </Paper>
                         <Paper>
                             <div className={classes.addForm}>
-                                <AddTweetForm classes={classes} />
+                                <AddTweetForm classes={classes}/>
                             </div>
                             <div className={classes.addFormBottomLine}/>
                         </Paper>
-                        {/*{isLoading ? (*/}
-                        {/*    <div className={classes.tweetsCentred}>*/}
-                        {/*        <CircularProgress />*/}
-                        {/*    </div>*/}
-                        {/*) : (*/}
-                        {/*    tweets.map((tweet) => (*/}
-                        {/*        <Tweet key={tweet._id} text={tweet.text} user={tweet.user} classes={classes} />*/}
-                        {/*    ))*/}
-                        {/*)}*/}
-                        <Tweet
-                            classes={classes}
-                            text={"Hello. How Low?"}
-                            user={{
-                                fullname: "Kurt Cobain",
-                                username: "kurtcobain",
-                                avatarUrl: "https://i0.wp.com/liveforlivemusic.com/wp-content/uploads/2017/04/Screen-Shot-2018-04-04-at-5.39.27-PM.png?resize=740%2C390&ssl=1"
-                            }}/>
+                        <Route exact path={"/home"}>
+                            {isLoading ? (
+                                <div className={classes.tweetsCentred}><CircularProgress /></div>
+                            ) : tweets.map(tweet => (
+                                <Tweet key={tweet._id} classes={classes} text={tweet.text} user={tweet.user}/>
+                            ))}
+                        </Route>
                     </Paper>
                 </Grid>
                 <Grid sm={3} md={3} item>
@@ -79,46 +81,7 @@ const Home: FC = (): ReactElement => {
                             }}
                             fullWidth
                         />
-                        <Paper className={classes.rightSideBlock}>
-                            <Paper className={classes.rightSideBlockHeader} variant="outlined">
-                                <b>Актуальные темы</b>
-                            </Paper>
-                            <List>
-                                <ListItem className={classes.rightSideBlockItem}>
-                                    <ListItemText
-                                        primary="Санкт-Петербург"
-                                        secondary={
-                                            <Typography component="span" variant="body2" color="textSecondary">
-                                                Твитов: 3 331
-                                            </Typography>
-                                        }
-                                    />
-                                </ListItem>
-                                <Divider component="li"/>
-                                <ListItem className={classes.rightSideBlockItem}>
-                                    <ListItemText
-                                        primary="#коронавирус"
-                                        secondary={
-                                            <Typography component="span" variant="body2" color="textSecondary">
-                                                Твитов: 163 122
-                                            </Typography>
-                                        }
-                                    />
-                                </ListItem>
-                                <Divider component="li"/>
-                                <ListItem className={classes.rightSideBlockItem}>
-                                    <ListItemText
-                                        primary="Беларусь"
-                                        secondary={
-                                            <Typography component="span" variant="body2" color="textSecondary">
-                                                Твитов: 13 554
-                                            </Typography>
-                                        }
-                                    />
-                                </ListItem>
-                                <Divider component="li"/>
-                            </List>
-                        </Paper>
+                        <Tags classes={classes} />
                         <Paper className={classes.rightSideBlock}>
                             <Paper className={classes.rightSideBlockHeader} variant="outlined">
                                 <b>Кого читать</b>
