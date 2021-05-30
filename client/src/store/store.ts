@@ -5,9 +5,11 @@ import {TweetsState} from './ducks/tweets/contracts/state';
 
 import {rootReducer} from "./rootReducer";
 import rootSaga from "./saga";
+import {TweetState} from "./ducks/tweet/contracts/state";
 
 export interface RootState {
     tweets: TweetsState;
+    tweet: TweetState;
     tags: TagsState;
 }
 

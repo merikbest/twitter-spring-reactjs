@@ -1,10 +1,13 @@
 import axios from "axios";
 
-import {TweetsState} from "../../store/ducks/tweets/contracts/state";
+import {TweetsState, Tweet} from "../../store/ducks/tweets/contracts/state";
 
 export const TweetsApi = {
     fetchTweets(): Promise<TweetsState['items']> {
         return axios.get('/tweets').then(({ data }) => data);
+    },
+    fetchTweetData(id: string): Promise<Tweet[]> {
+        return axios.get('/tweets?_id=' + id).then(({ data }) => data);
     },
 };
 
