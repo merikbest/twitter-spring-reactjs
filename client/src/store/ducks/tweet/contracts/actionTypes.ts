@@ -8,16 +8,21 @@ export enum TweetActionType {
 }
 
 export interface SetTweetDataActionInterface extends Action<TweetActionType> {
-    type: TweetActionType.SET_TWEET_DATA
-    payload: TweetState["data"]
+    type: TweetActionType.SET_TWEET_DATA;
+    payload: TweetState["data"];
 }
 
 export interface SetTweetDataLoadingStateInterface extends Action<TweetActionType> {
-    type: TweetActionType.SET_LOADING_STATE
-    payload: LoadingState
+    type: TweetActionType.SET_LOADING_STATE;
+    payload: LoadingState;
 }
 
 export interface FetchTweetDataActionInterface extends Action<TweetActionType> {
-    type: TweetActionType.FETCH_TWEET_DATA
-    payload: string
+    type: TweetActionType.FETCH_TWEET_DATA;
+    payload: string;
 }
+
+export type TweetActions =
+    | SetTweetDataActionInterface
+    | SetTweetDataLoadingStateInterface
+    | FetchTweetDataActionInterface;

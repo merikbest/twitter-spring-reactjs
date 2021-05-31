@@ -20,8 +20,3 @@ export const fetchTweetData = (payload: string): FetchTweetDataActionInterface =
     type: TweetActionType.FETCH_TWEET_DATA,
     payload
 });
-
-export type TweetActions =
-    | SetTweetDataActionInterface
-    | SetTweetDataLoadingStateInterface
-    | FetchTweetDataActionInterface;
