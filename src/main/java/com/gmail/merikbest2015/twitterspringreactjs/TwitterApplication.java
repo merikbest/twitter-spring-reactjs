@@ -4,10 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TwitterSpringReactjsApplication {
+public class TwitterApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TwitterSpringReactjsApplication.class, args);
+        SpringApplication.run(TwitterApplication.class, args);
     }
-
 }

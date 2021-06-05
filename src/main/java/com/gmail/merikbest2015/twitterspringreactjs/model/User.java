@@ -19,5 +19,8 @@ public class User {
     private String location;
     private String about;
     private String website;
-    private boolean confirmed;
+    private String activationCode;
+    private String passwordResetCode;
+    private String role;
+    private boolean active;
 }
