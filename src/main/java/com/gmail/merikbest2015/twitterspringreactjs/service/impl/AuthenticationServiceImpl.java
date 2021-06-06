@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.AuthenticationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.security.JwtProvider;
@@ -27,11 +28,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private String hostname;
 
     @Override
-    public Map<String, Object> login(String email) {
+    public AuthenticationResponse login(String email) {
         String token = jwtProvider.createToken(email, "USER");
-        Map<String, Object> response = new HashMap<>();
-        response.put("email", email);
-        response.put("token", token);
+        AuthenticationResponse response = new AuthenticationResponse();
+        response.setEmail(email);
+        response.setToken(token);
         return response;
     }
 

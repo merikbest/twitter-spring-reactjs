@@ -1,12 +1,13 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service;
 
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.AuthenticationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 
 import java.util.Map;
 
 public interface AuthenticationService {
 
-    Map<String, Object> login(String email);
+    AuthenticationResponse login(String email);
 
     boolean registration(User user);
 

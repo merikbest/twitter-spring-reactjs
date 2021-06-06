@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -23,4 +24,7 @@ public class User {
     private String passwordResetCode;
     private String role;
     private boolean active;
+
+    @OneToMany
+    private List<Tweet> tweets;
 }
