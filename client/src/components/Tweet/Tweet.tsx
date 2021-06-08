@@ -1,41 +1,88 @@
 import React, {FC, ReactElement} from 'react';
-import {Link} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import classNames from "classnames";
-import {Avatar, IconButton, Paper, Typography} from "@material-ui/core";
+import {Avatar, IconButton, Menu, MenuItem, Paper, Typography} from '@material-ui/core';
 import CommentIcon from "@material-ui/icons/ModeCommentOutlined";
 import RepostIcon from "@material-ui/icons/RepeatOutlined";
 import LikeIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import ShareIcon from '@material-ui/icons/ReplyOutlined';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import {useHomeStyles} from "../../pages/Home/HomeStyles";
+import {formatDate} from '../../util/formatDate';
 
 interface TweetProps {
-    _id: string
+    id: string
     classes: ReturnType<typeof useHomeStyles>
     text: string
+    dateTime: string
     user: {
-        fullname: string
+        fullName: string
         username: string
         avatarUrl: string
     }
 }
 
-const Tweet: FC<TweetProps> = ({_id, classes, text, user}: TweetProps): ReactElement => {
+const Tweet: FC<TweetProps> = ({id, classes, text, user, dateTime}: TweetProps): ReactElement => {
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const history = useHistory();
+
+    const handleClickTweet = (event: React.MouseEvent<HTMLAnchorElement>): void => {
+        event.preventDefault();
+        history.push(`/home/tweet/${id}`);
+    }
+
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        event.stopPropagation();
+        event.preventDefault();
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     return (
-        <Link className={classes.tweetWrapper} to={`/home/tweet/${_id}`}>
+        <a onClick={handleClickTweet} className={classes.tweetWrapper} href={`/home/tweet/${id}`}>
             <Paper className={classNames(classes.tweet, classes.tweetsHeader)} variant="outlined">
                 <Avatar
                     className={classes.tweetAvatar}
-                    alt={`Аватарка пользователя ${user.fullname}`}
-                    src={user.avatarUrl}
+                    // alt={`Аватарка пользователя ${user.fullName}`}
+                    // src={user.avatarUrl}
+                    alt={`Аватарка пользователя`}
+                    src={"https://avatars.githubusercontent.com/u/56604599?v=4"}
                 />
-                <div>
-                    <Typography>
-                        <b>{user.fullname}</b>&nbsp;
-                        <span className={classes.tweetUserName}>@{user.username}</span>&nbsp;
-                        <span className={classes.tweetUserName}>·</span>&nbsp;
-                        <span className={classes.tweetUserName}>1 ч</span>
+                <div className={classes.tweetContent}>
+                    <Typography className={classes.tweetHeader}>
+                        <div>
+                            <b>{user.fullName}</b>&nbsp;
+                            <span className={classes.tweetUserName}>@{user.username}</span>&nbsp;
+                            <span className={classes.tweetUserName}>·</span>&nbsp;
+                            <span className={classes.tweetUserName}>{formatDate(new Date(dateTime))}</span>
+                        </div>
+                        <div>
+                            <IconButton
+                                aria-label="more"
+                                aria-controls="long-menu"
+                                aria-haspopup="true"
+                                onClick={handleClick}>
+                                <MoreVertIcon/>
+                            </IconButton>
+                            <Menu
+                                id="long-menu"
+                                anchorEl={anchorEl}
+                                keepMounted
+                                open={open}
+                                onClose={handleClose}>
+                                <MenuItem onClick={handleClose}>
+                                    Редактировать
+                                </MenuItem>
+                                <MenuItem onClick={handleClose}>
+                                    Удалить твит
+                                </MenuItem>
+                            </Menu>
+                        </div>
                     </Typography>
                     <Typography variant="body1" gutterBottom>
                         {text}
@@ -65,7 +112,7 @@ const Tweet: FC<TweetProps> = ({_id, classes, text, user}: TweetProps): ReactEle
                     </div>
                 </div>
             </Paper>
-        </Link>
+        </a>
     );
 };
 

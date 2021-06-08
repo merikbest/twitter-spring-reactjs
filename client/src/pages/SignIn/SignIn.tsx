@@ -8,7 +8,7 @@ import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import ChatIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import {Button, makeStyles, Typography} from '@material-ui/core';
 
-import ModalBlock from '../components/ModalBlock/ModalBlock';
+import ModalBlock from '../../components/ModalBlock/ModalBlock';
 
 export const useStylesSignIn = makeStyles((theme) => ({
     wrapper: {

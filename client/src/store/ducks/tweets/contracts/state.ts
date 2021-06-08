@@ -12,10 +12,11 @@ export enum AddFormState {
 }
 
 export interface Tweet {
-    _id: string;
+    id: string;
     text: string;
+    dateTime: string;
     user: {
-        fullname: string;
+        fullName: string;
         username: string;
         avatarUrl: string;
     };

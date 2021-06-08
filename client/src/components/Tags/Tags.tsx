@@ -27,7 +27,7 @@ const Tags: FC<TagsProps> = ({classes}: TagsProps): ReactElement | null => {
             </Paper>
             <List>
                 {tags.map((tag: Tag) => (
-                    <React.Fragment key={tag._id}>
+                    <React.Fragment key={tag.id}>
                         <ListItem className={classes.rightSideBlockItem}>
                             <Link to={`/home/search?1=${tag.name}`}>
                                 <ListItemText

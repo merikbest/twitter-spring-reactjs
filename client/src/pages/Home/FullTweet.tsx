@@ -3,13 +3,20 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useParams} from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import classNames from 'classnames';
+import Paper from '@material-ui/core/Paper';
+import {Avatar, Divider, IconButton} from "@material-ui/core";
+import Typography from '@material-ui/core/Typography';
+import ShareIcon from "@material-ui/icons/ReplyOutlined";
+import RepostIcon from "@material-ui/icons/RepeatOutlined";
+import CommentIcon from "@material-ui/icons/ModeCommentOutlined";
+import LikeIcon from "@material-ui/icons/FavoriteBorderOutlined";
+import format from 'date-fns/format';
+import ruLang from 'date-fns/locale/ru';
 
 import {useHomeStyles} from './HomeStyles';
 import {selectIsTweetLoading, selectTweetData} from '../../store/ducks/tweet/selectors';
 import {fetchTweetData, setTweetData} from '../../store/ducks/tweet/actionCreators';
-import Paper from '@material-ui/core/Paper';
-import {Avatar} from "@material-ui/core";
-import Typography from '@material-ui/core/Typography';
+import Tweet from "../../components/Tweet/Tweet";
 
 export const FullTweet: FC = (): ReactElement | null => {
     const classes = useHomeStyles();
@@ -23,7 +30,6 @@ export const FullTweet: FC = (): ReactElement | null => {
         if (id) {
             dispatch(fetchTweetData(id));
         }
-
         return () => {
             dispatch(setTweetData(undefined));
         };
@@ -39,28 +45,83 @@ export const FullTweet: FC = (): ReactElement | null => {
 
     if (tweetData) {
         return (
-            <Paper className={classes.fullTweet}>
-                <div className={classNames(classes.tweetsHeaderUser)}>
-                    <Avatar
-                        className={classes.tweetAvatar}
-                        alt={`Аватарка пользователя ${tweetData.user.fullname}`}
-                        src={tweetData.user.avatarUrl}
-                    />
-                    <Typography>
-                        <b>{tweetData.user.fullname}</b>&nbsp;
-                        <div>
-                            <span className={classes.tweetUserName}>@{tweetData.user.username}</span>&nbsp;
-                            <span className={classes.tweetUserName}>·</span>&nbsp;
-                            <span className={classes.tweetUserName}>1 ч</span>
-                        </div>
+            <>
+                <Paper className={classes.fullTweet}>
+                    <div className={classNames(classes.tweetsHeaderUser)}>
+                        <Avatar
+                            className={classes.tweetAvatar}
+                            // alt={`Аватарка пользователя ${tweetData.user.fullName}`}
+                            // src={tweetData.user.avatarUrl}
+                            alt={`Аватарка пользователя`}
+                            src={"https://avatars.githubusercontent.com/u/56604599?v=4"}
+                        />
+                        <Typography>
+                            <b>{tweetData.user.fullName}</b>&nbsp;
+                            <div>
+                                <span className={classes.tweetUserName}>@{tweetData.user.username}</span>&nbsp;
+                            </div>
+                        </Typography>
+                    </div>
+                    <Typography className={classes.fullTweetText} gutterBottom>
+                        {tweetData.text}
                     </Typography>
-                </div>
-                <Typography className={classes.fullTweetText} gutterBottom>
-                    {tweetData.text}
-                </Typography>
-            </Paper>
+                    <Typography>
+                        <span
+                            className={classes.tweetUserName}>{format(new Date(tweetData.dateTime), 'H:mm', {locale: ruLang})} · </span>
+                        <span
+                            className={classes.tweetUserName}>{format(new Date(tweetData.dateTime), 'dd MMM. yyyy г.')}</span>
+                    </Typography>
+                    <div className={classNames(classes.tweetFooter, classes.fullTweetFooter)}>
+                        <IconButton>
+                            <CommentIcon style={{fontSize: 25}}/>
+                        </IconButton>
+                        <IconButton>
+                            <RepostIcon style={{fontSize: 25}}/>
+                        </IconButton>
+                        <IconButton>
+                            <LikeIcon style={{fontSize: 25}}/>
+                        </IconButton>
+                        <IconButton>
+                            <ShareIcon style={{fontSize: 25}}/>
+                        </IconButton>
+                    </div>
+                </Paper>
+                <Divider/>
+                <Tweet
+                    id="1"
+                    text="Any more to move? You might need to adjust your stretching routines!"
+                    dateTime={new Date().toString()}
+                    user={{
+                        fullName: 'Arlene Andrews',
+                        username: 'ArleneAndrews_1',
+                        avatarUrl:
+                            'https://avatars.githubusercontent.com/u/56604599?v=4',
+                    }}
+                    classes={classes}/>
+                <Tweet
+                    id="1"
+                    text="Any more to move? You might need to adjust your stretching routines!"
+                    dateTime={new Date().toString()}
+                    user={{
+                        fullName: 'Arlene Andrews',
+                        username: 'ArleneAndrews_1',
+                        avatarUrl:
+                            'https://avatars.githubusercontent.com/u/56604599?v=4',
+                    }}
+                    classes={classes}/>
+                <Tweet
+                    id="1"
+                    text="Any more to move? You might need to adjust your stretching routines!"
+                    dateTime={new Date().toString()}
+                    user={{
+                        fullName: 'Arlene Andrews',
+                        username: 'ArleneAndrews_1',
+                        avatarUrl:
+                            'https://avatars.githubusercontent.com/u/56604599?v=4',
+                    }}
+                    classes={classes}/>
+            </>
         );
     }
-
     return null;
 };
