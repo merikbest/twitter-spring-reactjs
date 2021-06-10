@@ -125,6 +125,9 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         justifyContent: 'space-between',
         maxWidth: 450,
     },
+    tweetPopupMenu: {
+
+    },
     tweetUserName: {
         color: grey[500],
     },

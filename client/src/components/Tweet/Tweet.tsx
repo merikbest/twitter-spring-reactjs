@@ -1,4 +1,4 @@
-import React, {FC, ReactElement} from 'react';
+import React, {FC, ReactElement, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import classNames from "classnames";
 import {Avatar, IconButton, Menu, MenuItem, Paper, Typography} from '@material-ui/core';
@@ -24,7 +24,7 @@ interface TweetProps {
 }
 
 const Tweet: FC<TweetProps> = ({id, classes, text, user, dateTime}: TweetProps): ReactElement => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const history = useHistory();
 
@@ -61,7 +61,7 @@ const Tweet: FC<TweetProps> = ({id, classes, text, user, dateTime}: TweetProps):
                             <span className={classes.tweetUserName}>·</span>&nbsp;
                             <span className={classes.tweetUserName}>{formatDate(new Date(dateTime))}</span>
                         </div>
-                        <div>
+                        <div className={classes.tweetPopupMenu}>
                             <IconButton
                                 aria-label="more"
                                 aria-controls="long-menu"
