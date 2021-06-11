@@ -21,7 +21,7 @@ public class UserMapper {
     private final ModelMapper modelMapper;
     private final UserService userService;
 
-    UserResponse convertToUserResponse(User user) {
+    public UserResponse convertToUserResponse(User user) {
         return modelMapper.map(user, UserResponse.class);
     }
 

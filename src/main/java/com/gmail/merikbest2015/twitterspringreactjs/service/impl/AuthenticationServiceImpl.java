@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.AuthenticationResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.mapper.UserMapper;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.security.JwtProvider;
@@ -20,6 +21,7 @@ import java.util.UUID;
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
     private final MailSender mailSender;
@@ -29,9 +31,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationResponse login(String email) {
+        User user = userRepository.findByEmail(email);
         String token = jwtProvider.createToken(email, "USER");
         AuthenticationResponse response = new AuthenticationResponse();
-        response.setEmail(email);
+        response.setUser(userMapper.convertToUserResponse(user));
         response.setToken(token);
         return response;
     }
