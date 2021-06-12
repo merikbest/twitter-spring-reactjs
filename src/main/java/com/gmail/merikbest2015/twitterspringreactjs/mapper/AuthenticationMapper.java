@@ -22,6 +22,10 @@ public class AuthenticationMapper {
         return authenticationService.registration(userMapper.convertToEntity(registrationRequest));
     }
 
+    public AuthenticationResponse getUserByToken() {
+        return authenticationService.getUserByToken();
+    }
+
     public boolean activateUser(String code) {
         return authenticationService.activateUser(code);
     }
