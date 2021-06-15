@@ -1,8 +1,12 @@
 import axios from 'axios';
 
 axios.interceptors.request.use((config) => {
-    config.headers['Authorization'] = localStorage.getItem('token');
-    return config;
+    if (localStorage.getItem('token')) {
+        config.headers['Authorization'] = localStorage.getItem('token');
+        return config;
+    } else {
+        return config;
+    }
 });
 
 export { axios };

@@ -39,7 +39,9 @@ const Tweet: FC<TweetProps> = ({id, classes, text, user, dateTime}: TweetProps):
         setAnchorEl(event.currentTarget);
     };
 
-    const handleClose = () => {
+    const handleClose = (event: React.MouseEvent<HTMLElement>) => {
+        event.stopPropagation();
+        event.preventDefault();
         setAnchorEl(null);
     };
 
@@ -54,7 +56,7 @@ const Tweet: FC<TweetProps> = ({id, classes, text, user, dateTime}: TweetProps):
                     src={"https://avatars.githubusercontent.com/u/56604599?v=4"}
                 />
                 <div className={classes.tweetContent}>
-                    <Typography className={classes.tweetHeader}>
+                    <div className={classes.tweetHeader}>
                         <div>
                             <b>{user.fullName}</b>&nbsp;
                             <span className={classes.tweetUserName}>@{user.username}</span>&nbsp;
@@ -69,21 +71,12 @@ const Tweet: FC<TweetProps> = ({id, classes, text, user, dateTime}: TweetProps):
                                 onClick={handleClick}>
                                 <MoreVertIcon/>
                             </IconButton>
-                            <Menu
-                                id="long-menu"
-                                anchorEl={anchorEl}
-                                keepMounted
-                                open={open}
-                                onClose={handleClose}>
-                                <MenuItem onClick={handleClose}>
-                                    Редактировать
-                                </MenuItem>
-                                <MenuItem onClick={handleClose}>
-                                    Удалить твит
-                                </MenuItem>
+                            <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+                                <MenuItem onClick={handleClose}>Редактировать</MenuItem>
+                                <MenuItem onClick={handleClose}>Удалить твит</MenuItem>
                             </Menu>
                         </div>
-                    </Typography>
+                    </div>
                     <Typography variant="body1" gutterBottom>
                         {text}
                     </Typography>
