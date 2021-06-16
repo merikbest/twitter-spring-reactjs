@@ -2,14 +2,13 @@ package com.gmail.merikbest2015.twitterspringreactjs.conroller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.Views;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,5 +21,10 @@ public class UserController {
     @JsonView(Views.User.class)
     public ResponseEntity<UserResponse> getUserById(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.getUserById(userId));
+    }
+
+    @PostMapping("/upload")
+    public ResponseEntity<ImageResponse> uploadImage(@RequestPart("file") MultipartFile file) {
+        return ResponseEntity.ok(userMapper.uploadImage(file));
     }
 }

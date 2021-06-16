@@ -8,11 +8,11 @@ import java.util.Map;
 
 public interface AuthenticationService {
 
-    AuthenticationResponse login(String email);
+    Map<String, Object> login(String email);
 
     boolean registration(User user);
 
-    AuthenticationResponse getUserByToken();
+    Map<String, Object> getUserByToken();
 
     boolean activateUser(String code);
 

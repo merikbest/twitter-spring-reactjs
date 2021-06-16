@@ -8,6 +8,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.mapper.TweetMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -32,8 +33,9 @@ public class TweetController {
 
     @PostMapping
     @JsonView(Views.Tweet.class)
-    public ResponseEntity<List<TweetResponse>> createTweet(@RequestBody TweetRequest tweetRequest) {
-        return ResponseEntity.ok(tweetMapper.createTweet(tweetRequest));
+    public ResponseEntity<List<TweetResponse>> createTweet(@RequestPart(name = "file", required = false) MultipartFile file,
+                                                           @RequestPart TweetRequest tweetRequest) {
+        return ResponseEntity.ok(tweetMapper.createTweet(tweetRequest, file));
     }
 
     @DeleteMapping("/{tweetId}")

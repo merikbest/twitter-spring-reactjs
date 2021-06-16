@@ -1,7 +1,5 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.AuthenticationResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.mapper.UserMapper;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.security.JwtProvider;
@@ -23,7 +21,6 @@ import java.util.UUID;
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final UserRepository userRepository;
-    private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
     private final MailSender mailSender;
@@ -32,12 +29,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private String hostname;
 
     @Override
-    public AuthenticationResponse login(String email) {
+    public Map<String, Object> login(String email) {
         User user = userRepository.findByEmail(email);
         String token = jwtProvider.createToken(email, "USER");
-        AuthenticationResponse response = new AuthenticationResponse();
-        response.setUser(userMapper.convertToUserResponse(user));
-        response.setToken(token);
+        Map<String, Object> response = new HashMap<>();
+        response.put("user", user);
+        response.put("token", token);
         return response;
     }
 
@@ -61,12 +58,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public AuthenticationResponse getUserByToken() {
+    public Map<String, Object> getUserByToken() {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());
-        AuthenticationResponse authenticationResponse = new AuthenticationResponse();
-        authenticationResponse.setUser(userMapper.convertToUserResponse(user));
-        return authenticationResponse;
+        String token = jwtProvider.createToken(principal.getName(), "USER");
+        Map<String, Object> response = new HashMap<>();
+        response.put("user", user);
+        response.put("token", token);
+        return response;
     }
 
     @Override

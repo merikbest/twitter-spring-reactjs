@@ -27,4 +27,8 @@ public class User {
 
     @OneToMany
     private List<Tweet> tweets;
+
+    @OneToOne
+    @JoinColumn(name = "image_id")
+    private Image avatar;
 }

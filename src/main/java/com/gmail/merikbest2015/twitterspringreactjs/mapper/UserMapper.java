@@ -1,18 +1,15 @@
 package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
-import com.gmail.merikbest2015.twitterspringreactjs.dto.request.RegistrationRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
+import com.gmail.merikbest2015.twitterspringreactjs.model.Image;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component
 @RequiredArgsConstructor
@@ -21,15 +18,23 @@ public class UserMapper {
     private final ModelMapper modelMapper;
     private final UserService userService;
 
-    public UserResponse convertToUserResponse(User user) {
+    UserResponse convertToUserResponse(User user) {
         return modelMapper.map(user, UserResponse.class);
     }
 
-    User convertToEntity(RegistrationRequest registrationRequest) {
-        return modelMapper.map(registrationRequest, User.class);
+    ImageResponse convertToImageResponse(Image image) {
+        return modelMapper.map(image, ImageResponse.class);
+    }
+
+    private User convertToEntity(UserRequest userRequest) {
+        return modelMapper.map(userRequest, User.class);
     }
 
     public UserResponse getUserById(Long userId) {
         return convertToUserResponse(userService.getUserById(userId));
+    }
+
+    public ImageResponse uploadImage(MultipartFile multipartFile) {
+        return convertToImageResponse(userService.uploadImage(multipartFile));
     }
 }
