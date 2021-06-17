@@ -11,13 +11,20 @@ import {Alert} from "@material-ui/lab";
 
 import {useHomeStyles} from '../../pages/Home/HomeStyles';
 import {useDispatch, useSelector} from "react-redux";
-import {fetchAddTweet} from "../../store/ducks/tweets/actionCreators";
+import {fetchAddTweet, setAddFormState} from "../../store/ducks/tweets/actionCreators";
 import {selectAddFormState} from "../../store/ducks/tweets/selectors";
 import {AddFormState} from '../../store/ducks/tweets/contracts/state';
+import UploadImages from '../UploadImages/UploadImages';
+import {uploadImage} from "../../util/uploadImage";
 
 interface AddTweetFormProps {
     classes: ReturnType<typeof useHomeStyles>;
     maxRows?: number;
+}
+
+export interface ImageObj {
+    blobUrl: string;
+    file: File;
 }
 
 const MAX_LENGTH = 280;
@@ -26,6 +33,10 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({classes, maxRows}: Ad
     const dispatch = useDispatch();
     const addFormState = useSelector(selectAddFormState);
     const [text, setText] = React.useState<string>('');
+    const [images, setImages] = React.useState<ImageObj[]>([]);
+
+    console.log(images)
+
     const textLimitPercent = Math.round((text.length / 280) * 100);
     const textCount = MAX_LENGTH - text.length;
 
@@ -35,9 +46,17 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({classes, maxRows}: Ad
         }
     };
 
-    const handleClickAddTweet = (): void => {
-        dispatch(fetchAddTweet(text));
+    const handleClickAddTweet = async (): Promise<void> => {
+        let result = [];
+        dispatch(setAddFormState(AddFormState.LOADING));
+        for (let i = 0; i < images.length; i++) {
+            const file = images[i].file;
+            const { url } = await uploadImage(file);
+            result.push(url);
+        }
+        dispatch(fetchAddTweet({ text, images: result }));
         setText('');
+        setImages([]);
     };
 
     return (
@@ -58,12 +77,10 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({classes, maxRows}: Ad
             </div>
             <div className={classes.addFormBottom}>
                 <div className={classNames(classes.tweetFooter, classes.addFormBottomActions)}>
-                    <IconButton color="primary">
-                        <ImageOutlinedIcon style={{fontSize: 26}}/>
-                    </IconButton>
-                    <IconButton color="primary">
-                        <EmojiIcon style={{fontSize: 26}}/>
-                    </IconButton>
+                    <UploadImages images={images} onChangeImages={setImages} />
+                    {/*<IconButton color="primary">*/}
+                    {/*    <EmojiIcon style={{fontSize: 26}}/>*/}
+                    {/*</IconButton>*/}
                 </div>
                 <div className={classes.addFormBottomRight}>
                     {text && (

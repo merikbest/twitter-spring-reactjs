@@ -17,6 +17,8 @@ import {useHomeStyles} from './HomeStyles';
 import {selectIsTweetLoading, selectTweetData} from '../../store/ducks/tweet/selectors';
 import {fetchTweetData, setTweetData} from '../../store/ducks/tweet/actionCreators';
 import Tweet from "../../components/Tweet/Tweet";
+import ImageList from "../../components/ImageList/ImageList";
+import mediumZoom from "medium-zoom";
 
 export const FullTweet: FC = (): ReactElement | null => {
     const classes = useHomeStyles();
@@ -34,6 +36,12 @@ export const FullTweet: FC = (): ReactElement | null => {
             dispatch(setTweetData(undefined));
         };
     }, [dispatch, id]);
+
+    useEffect(() => {
+        if (!isLoading) {
+            mediumZoom('.tweet-images img');
+        }
+    }, [isLoading]);
 
     if (isLoading) {
         return (
@@ -64,6 +72,9 @@ export const FullTweet: FC = (): ReactElement | null => {
                     </div>
                     <Typography className={classes.fullTweetText} gutterBottom>
                         {tweetData.text}
+                        <div className="tweet-images">
+                            {tweetData.images && <ImageList classes={classes} images={tweetData.images} />}
+                        </div>
                     </Typography>
                     <Typography>
                         <span

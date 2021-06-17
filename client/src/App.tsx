@@ -25,7 +25,7 @@ const App: FC = (): ReactElement => {
     }, [dispatch]);
 
     useEffect(() => {
-        if (!isAuth && isReady) {
+        if (!localStorage.getItem('token')) {
             history.push('/signin');
         } else {
             history.push('/home');

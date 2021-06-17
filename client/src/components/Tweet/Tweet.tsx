@@ -10,12 +10,16 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import {useHomeStyles} from "../../pages/Home/HomeStyles";
 import {formatDate} from '../../util/formatDate';
+import ImageList from "../ImageList/ImageList";
+import {useDispatch} from "react-redux";
+import {removeTweet} from "../../store/ducks/tweets/actionCreators";
 
 interface TweetProps {
     id: string
     classes: ReturnType<typeof useHomeStyles>
     text: string
     dateTime: string
+    images?: string[]
     user: {
         fullName: string
         username: string
@@ -23,7 +27,8 @@ interface TweetProps {
     }
 }
 
-const Tweet: FC<TweetProps> = ({id, classes, text, user, dateTime}: TweetProps): ReactElement => {
+const Tweet: FC<TweetProps> = ({id, classes, text, images, user, dateTime}: TweetProps): ReactElement => {
+    const dispatch = useDispatch();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const history = useHistory();
@@ -39,10 +44,17 @@ const Tweet: FC<TweetProps> = ({id, classes, text, user, dateTime}: TweetProps):
         setAnchorEl(event.currentTarget);
     };
 
-    const handleClose = (event: React.MouseEvent<HTMLElement>) => {
+    const handleClose = (event: React.MouseEvent<HTMLElement>): void => {
         event.stopPropagation();
         event.preventDefault();
         setAnchorEl(null);
+    };
+
+    const handleRemove = (event: React.MouseEvent<HTMLElement>): void => {
+        handleClose(event);
+        if (window.confirm('Вы действительно хотите удалить твит?')) {
+            dispatch(removeTweet(id));
+        }
     };
 
     return (
@@ -73,12 +85,13 @@ const Tweet: FC<TweetProps> = ({id, classes, text, user, dateTime}: TweetProps):
                             </IconButton>
                             <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
                                 <MenuItem onClick={handleClose}>Редактировать</MenuItem>
-                                <MenuItem onClick={handleClose}>Удалить твит</MenuItem>
+                                <MenuItem onClick={handleRemove}>Удалить твит</MenuItem>
                             </Menu>
                         </div>
                     </div>
                     <Typography variant="body1" gutterBottom>
                         {text}
+                        {images && <ImageList classes={classes} images={images} />}
                     </Typography>
                     <div className={classes.tweetFooter}>
                         <div>

@@ -261,4 +261,46 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
             fontSize: 16,
         },
     },
+    imagesList: {
+        display: 'flex',
+        alignItems: 'center',
+        marginTop: 20,
+        flexWrap: 'wrap',
+    },
+    imagesListItem: {
+        width: 50,
+        height: 50,
+        marginRight: 10,
+        marginBottom: 10,
+        position: 'relative',
+        '& img': {
+            width: '100%',
+            height: '100%',
+            'object-fit': 'cover',
+            borderRadius: 6,
+        },
+        '& svg path': {
+            fill: 'white',
+        },
+    },
+    profileMenu: {
+        top: 'auto !important',
+        left: '17.5% !important',
+        width: '250px !important',
+        bottom: '110px !important',
+        'box-shadow': '1px 1px 10px rgba(0, 0, 0, 0.08)',
+        'border-radius': '20px',
+        border: '1px solid rgba(0, 0, 0, 0.1)',
+        '& a': {
+            color: 'black',
+            textDecoration: 'none',
+        },
+    },
+    imagesListItemRemove: {
+        position: 'absolute',
+        top: -8,
+        right: -6,
+        padding: '0 !important',
+        backgroundColor: '#ff4d4d !important',
+    },
 }));

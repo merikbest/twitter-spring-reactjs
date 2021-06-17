@@ -10,6 +10,7 @@ export interface Tweet {
     id: string;
     text: string;
     dateTime: string;
+    images?: [];
     user: {
         fullName: string;
         username: string;

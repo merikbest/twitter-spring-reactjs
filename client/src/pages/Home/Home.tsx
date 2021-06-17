@@ -27,7 +27,7 @@ const Home: FC = (): ReactElement => {
         <Paper className={classes.tweetsWrapper} variant="outlined">
             <Paper className={classes.tweetsHeader} variant="outlined">
                 <Route path="/home/:any">
-                    <BackButton />
+                    <BackButton/>
                 </Route>
 
                 <Route path={['/home', '/home/search']} exact>
@@ -42,23 +42,26 @@ const Home: FC = (): ReactElement => {
             <Route path={['/home', '/home/search']} exact>
                 <Paper>
                     <div className={classes.addForm}>
-                        <AddTweetForm classes={classes} />
+                        <AddTweetForm classes={classes}/>
                     </div>
-                    <div className={classes.addFormBottomLine} />
+                    <div className={classes.addFormBottomLine}/>
                 </Paper>
             </Route>
 
             <Route path="/home" exact>
                 {isLoading ? (
                     <div className={classes.tweetsCentred}>
-                        <CircularProgress />
+                        <CircularProgress/>
                     </div>
                 ) : (
-                    tweets.map((tweet) => <Tweet key={tweet.id} classes={classes} {...tweet} />)
+                    tweets.map((tweet) => (
+                            <Tweet key={tweet.id} classes={classes} images={tweet.images} {...tweet} />
+                        )
+                    )
                 )}
             </Route>
 
-            <Route path="/home/tweet/:id" component={FullTweet} exact />
+            <Route path="/home/tweet/:id" component={FullTweet} exact/>
         </Paper>
     );
 };

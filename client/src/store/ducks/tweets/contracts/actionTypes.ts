@@ -6,6 +6,7 @@ import {AddFormState, Tweet, TweetsState} from "./state";
 export enum TweetsActionType {
     SET_TWEETS = "tweets/SET_TWEETS",
     ADD_TWEET = "tweets/ADD_TWEET",
+    REMOVE_TWEET = 'tweets/REMOVE_TWEET',
     FETCH_ADD_TWEET = "tweets/FETCH_ADD_TWEET",
     FETCH_TWEETS = "tweets/FETCH_TWEETS",
     SET_LOADING_STATE = "tweets/SET_LOADING_STATE",
@@ -24,6 +25,14 @@ export interface AddTweetActionInterface extends Action<TweetsActionType> {
 
 export interface FetchAddTweetActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_ADD_TWEET;
+    payload: {
+        text: string;
+        images: string[];
+    };
+}
+
+export interface RemoveTweetActionInterface extends Action<TweetsActionType> {
+    type: TweetsActionType.REMOVE_TWEET;
     payload: string;
 }
 
@@ -47,4 +56,5 @@ export type TweetsActions =
     | SetTweetsLoadingStateInterface
     | AddTweetActionInterface
     | FetchAddTweetActionInterface
-    | SetAddFormStateInterface;
+    | SetAddFormStateInterface
+    | RemoveTweetActionInterface;
