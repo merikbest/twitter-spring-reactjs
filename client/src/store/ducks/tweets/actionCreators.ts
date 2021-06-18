@@ -1,4 +1,4 @@
-import {AddFormState, Tweet, TweetsState} from "./contracts/state";
+import {AddFormState, Image, Tweet, TweetsState} from "./contracts/state";
 import {RemoveTweetActionInterface, SetAddFormStateInterface} from "./contracts/actionTypes";
 import {
     AddTweetActionInterface,
@@ -20,7 +20,7 @@ export const addTweet = (payload: Tweet[]): AddTweetActionInterface => ({
     payload
 });
 
-export const fetchAddTweet = (payload: { text: string; images: string[]; }): FetchAddTweetActionInterface => ({
+export const fetchAddTweet = (payload: { text: string; images: Image[]; }): FetchAddTweetActionInterface => ({
     type: TweetsActionType.FETCH_ADD_TWEET,
     payload
 });

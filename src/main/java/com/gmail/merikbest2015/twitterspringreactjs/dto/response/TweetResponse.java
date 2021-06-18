@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.Views;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class TweetResponse {
@@ -17,6 +18,9 @@ public class TweetResponse {
 
     @JsonView({Views.User.class, Views.Tweet.class})
     private LocalDateTime dateTime;
+
+    @JsonView({Views.User.class, Views.Tweet.class})
+    private List<ImageResponse> images;
 
     @JsonView(Views.Tweet.class)
     private UserResponse user;

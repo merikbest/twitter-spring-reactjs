@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {FC, ReactElement} from 'react';
 import classNames from 'classnames';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -13,7 +13,7 @@ import {useHomeStyles} from '../../pages/Home/HomeStyles';
 import {useDispatch, useSelector} from "react-redux";
 import {fetchAddTweet, setAddFormState} from "../../store/ducks/tweets/actionCreators";
 import {selectAddFormState} from "../../store/ducks/tweets/selectors";
-import {AddFormState} from '../../store/ducks/tweets/contracts/state';
+import {AddFormState, Image} from '../../store/ducks/tweets/contracts/state';
 import UploadImages from '../UploadImages/UploadImages';
 import {uploadImage} from "../../util/uploadImage";
 
@@ -23,36 +23,34 @@ interface AddTweetFormProps {
 }
 
 export interface ImageObj {
-    blobUrl: string;
+    src: string;
     file: File;
 }
 
 const MAX_LENGTH = 280;
 
-export const AddTweetForm: React.FC<AddTweetFormProps> = ({classes, maxRows}: AddTweetFormProps): React.ReactElement => {
+export const AddTweetForm: FC<AddTweetFormProps> = ({classes, maxRows}: AddTweetFormProps): ReactElement => {
     const dispatch = useDispatch();
     const addFormState = useSelector(selectAddFormState);
     const [text, setText] = React.useState<string>('');
     const [images, setImages] = React.useState<ImageObj[]>([]);
 
-    console.log(images)
-
     const textLimitPercent = Math.round((text.length / 280) * 100);
     const textCount = MAX_LENGTH - text.length;
 
-    const handleChangeTextare = (e: React.FormEvent<HTMLTextAreaElement>): void => {
+    const handleChangeTextarea = (e: React.FormEvent<HTMLTextAreaElement>): void => {
         if (e.currentTarget) {
             setText(e.currentTarget.value);
         }
     };
 
     const handleClickAddTweet = async (): Promise<void> => {
-        let result = [];
+        let result: Array<Image> = [];
         dispatch(setAddFormState(AddFormState.LOADING));
         for (let i = 0; i < images.length; i++) {
-            const file = images[i].file;
-            const { url } = await uploadImage(file);
-            result.push(url);
+            const file: File = images[i].file;
+            const image: Image = await uploadImage(file);
+            result.push(image);
         }
         dispatch(fetchAddTweet({ text, images: result }));
         setText('');
@@ -68,7 +66,7 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({classes, maxRows}: Ad
                     src="https://i0.wp.com/liveforlivemusic.com/wp-content/uploads/2017/04/Screen-Shot-2018-04-04-at-5.39.27-PM.png?resize=740%2C390&ssl=1"
                 />
                 <TextareaAutosize
-                    onChange={handleChangeTextare}
+                    onChange={handleChangeTextarea}
                     className={classes.addFormTextarea}
                     placeholder="Что происходит?"
                     value={text}

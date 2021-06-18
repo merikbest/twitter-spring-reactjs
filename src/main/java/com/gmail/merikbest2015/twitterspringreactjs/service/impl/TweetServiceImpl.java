@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.List;
@@ -33,7 +32,7 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     @Transactional
-    public List<Tweet> createTweet(Tweet tweet, MultipartFile multipartFile) {
+    public List<Tweet> createTweet(Tweet tweet) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());
         tweet.setUser(user);

@@ -1,5 +1,5 @@
 import {axios} from "../../core/axios";
-import {Tweet} from "../../store/ducks/tweets/contracts/state";
+import {Image, Tweet} from "../../store/ducks/tweets/contracts/state";
 
 interface Response<T> {
     status: string;
@@ -15,7 +15,7 @@ export const TweetsApi = {
         const data = await axios.get<Response<Tweet>>('http://localhost:8080/api/v1/tweets/' + id);
         return data.data;
     },
-    async addTweet(payload: { text: string; images: string[] }): Promise<Response<Tweet[]>> {
+    async addTweet(payload: { text: string; images: Image[] }): Promise<Response<Tweet[]>> {
         const data = await axios.post<Response<Tweet[]>>('http://localhost:8080/api/v1/tweets', payload);
         return data.data;
     },

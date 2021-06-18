@@ -1,11 +1,7 @@
 import axios from 'axios';
+import {Image} from "../store/ducks/tweets/contracts/state";
 
-interface UploadImageReturnProps {
-  id: number;
-  url: string;
-}
-
-export const uploadImage = async (image: File): Promise<UploadImageReturnProps> => {
+export const uploadImage = async (image: File): Promise<Image> => {
   const formData = new FormData();
   formData.append('file', image);
 

@@ -13,13 +13,14 @@ import {formatDate} from '../../util/formatDate';
 import ImageList from "../ImageList/ImageList";
 import {useDispatch} from "react-redux";
 import {removeTweet} from "../../store/ducks/tweets/actionCreators";
+import {Image} from "../../store/ducks/tweets/contracts/state";
 
 interface TweetProps {
     id: string
     classes: ReturnType<typeof useHomeStyles>
     text: string
     dateTime: string
-    images?: string[]
+    images?: Image[]
     user: {
         fullName: string
         username: string

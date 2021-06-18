@@ -7,7 +7,6 @@ import com.gmail.merikbest2015.twitterspringreactjs.service.TweetService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,8 +40,8 @@ public class TweetMapper {
         return convertToTweetResponse(tweetService.getTweetById(tweetId));
     }
 
-    public List<TweetResponse> createTweet(TweetRequest tweetRequest, MultipartFile multipartFile) {
-        return convertListToResponseDto(tweetService.createTweet(convertToTweetEntity(tweetRequest), multipartFile));
+    public List<TweetResponse> createTweet(TweetRequest tweetRequest) {
+        return convertListToResponseDto(tweetService.createTweet(convertToTweetEntity(tweetRequest)));
     }
 
     public List<TweetResponse> deleteTweet(Long tweetId) {

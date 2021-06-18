@@ -6,11 +6,16 @@ export enum AddFormState {
     NEVER = "NEVER"
 }
 
+export interface Image {
+    id: number;
+    src: string;
+}
+
 export interface Tweet {
     id: string;
     text: string;
     dateTime: string;
-    images?: [];
+    images?: Image[];
     user: {
         fullName: string;
         username: string;

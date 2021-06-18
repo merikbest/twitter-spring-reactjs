@@ -22,7 +22,7 @@ const UploadImages: FC<UploadImageProps> = ({images, onChangeImages}) => {
     };
 
     const removeImage = (url: string) => {
-        onChangeImages((prev) => prev.filter((obj) => obj.blobUrl !== url));
+        onChangeImages((prev) => prev.filter((obj) => obj.src !== url));
     };
 
     const handleChangeFileInput = useCallback((event: Event) => {
@@ -34,7 +34,7 @@ const UploadImages: FC<UploadImageProps> = ({images, onChangeImages}) => {
                 onChangeImages((prev) => [
                     ...prev,
                     {
-                        blobUrl: URL.createObjectURL(fileObj),
+                        src: URL.createObjectURL(fileObj),
                         file,
                     },
                 ]);
@@ -56,7 +56,7 @@ const UploadImages: FC<UploadImageProps> = ({images, onChangeImages}) => {
     return (
         <div>
             <ImageList
-                images={images.map((obj) => obj.blobUrl)}
+                images={images}
                 classes={classes}
                 removeImage={removeImage}
             />
