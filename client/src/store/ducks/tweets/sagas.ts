@@ -8,6 +8,7 @@ import {LoadingStatus} from '../../types';
 
 export function* fetchTweetsRequest() {
     try {
+        // ?????????????????
         const items: Tweet[] = yield call(TweetsApi.fetchTweets);
         yield put(setTweets(items));
     } catch (e) {

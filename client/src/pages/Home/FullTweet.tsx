@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useEffect} from 'react';
+import {Link, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {useParams} from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import classNames from 'classnames';
 import Paper from '@material-ui/core/Paper';
@@ -12,13 +12,13 @@ import CommentIcon from "@material-ui/icons/ModeCommentOutlined";
 import LikeIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import format from 'date-fns/format';
 import ruLang from 'date-fns/locale/ru';
+import mediumZoom from "medium-zoom";
 
 import {useHomeStyles} from './HomeStyles';
 import {selectIsTweetLoading, selectTweetData} from '../../store/ducks/tweet/selectors';
 import {fetchTweetData, setTweetData} from '../../store/ducks/tweet/actionCreators';
 import Tweet from "../../components/Tweet/Tweet";
 import ImageList from "../../components/ImageList/ImageList";
-import mediumZoom from "medium-zoom";
 
 export const FullTweet: FC = (): ReactElement | null => {
     const classes = useHomeStyles();
@@ -64,7 +64,9 @@ export const FullTweet: FC = (): ReactElement | null => {
                             src={"https://avatars.githubusercontent.com/u/56604599?v=4"}
                         />
                         <Typography>
-                            <b>{tweetData.user.fullName}</b>&nbsp;
+                            <Link to={`/user/${tweetData.user.id}`}>
+                                <b>{tweetData.user.fullName}</b>&nbsp;
+                            </Link>
                             <div>
                                 <span className={classes.tweetUserName}>@{tweetData.user.username}</span>&nbsp;
                             </div>
@@ -98,39 +100,36 @@ export const FullTweet: FC = (): ReactElement | null => {
                     </div>
                 </Paper>
                 <Divider/>
-                <Tweet
-                    id="1"
-                    text="Any more to move? You might need to adjust your stretching routines!"
-                    dateTime={new Date().toString()}
-                    user={{
-                        fullName: 'Arlene Andrews',
-                        username: 'ArleneAndrews_1',
-                        avatarUrl:
-                            'https://avatars.githubusercontent.com/u/56604599?v=4',
-                    }}
-                    classes={classes}/>
-                <Tweet
-                    id="1"
-                    text="Any more to move? You might need to adjust your stretching routines!"
-                    dateTime={new Date().toString()}
-                    user={{
-                        fullName: 'Arlene Andrews',
-                        username: 'ArleneAndrews_1',
-                        avatarUrl:
-                            'https://avatars.githubusercontent.com/u/56604599?v=4',
-                    }}
-                    classes={classes}/>
-                <Tweet
-                    id="1"
-                    text="Any more to move? You might need to adjust your stretching routines!"
-                    dateTime={new Date().toString()}
-                    user={{
-                        fullName: 'Arlene Andrews',
-                        username: 'ArleneAndrews_1',
-                        avatarUrl:
-                            'https://avatars.githubusercontent.com/u/56604599?v=4',
-                    }}
-                    classes={classes}/>
+                {/*<Tweet*/}
+                {/*    id="1"*/}
+                {/*    text="Any more to move? You might need to adjust your stretching routines!"*/}
+                {/*    dateTime={new Date().toString()}*/}
+                {/*    user={{*/}
+                {/*        fullName: 'Arlene Andrews',*/}
+                {/*        username: 'ArleneAndrews_1',*/}
+                {/*        avatar: 'https://avatars.githubusercontent.com/u/56604599?v=4',*/}
+                {/*    }}*/}
+                {/*    classes={classes}/>*/}
+                {/*<Tweet*/}
+                {/*    id="1"*/}
+                {/*    text="Any more to move? You might need to adjust your stretching routines!"*/}
+                {/*    dateTime={new Date().toString()}*/}
+                {/*    user={{*/}
+                {/*        fullName: 'Arlene Andrews',*/}
+                {/*        username: 'ArleneAndrews_1',*/}
+                {/*        avatar: 'https://avatars.githubusercontent.com/u/56604599?v=4',*/}
+                {/*    }}*/}
+                {/*    classes={classes}/>*/}
+                {/*<Tweet*/}
+                {/*    id="1"*/}
+                {/*    text="Any more to move? You might need to adjust your stretching routines!"*/}
+                {/*    dateTime={new Date().toString()}*/}
+                {/*    user={{*/}
+                {/*        fullName: 'Arlene Andrews',*/}
+                {/*        username: 'ArleneAndrews_1',*/}
+                {/*        avatar: 'https://avatars.githubusercontent.com/u/56604599?v=4',*/}
+                {/*    }}*/}
+                {/*    classes={classes}/>*/}
             </>
         );
     }

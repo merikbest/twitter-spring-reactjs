@@ -11,6 +11,8 @@ import {selectIsTweetsLoading, selectTweetsItems} from "../../store/ducks/tweets
 import {fetchTags} from "../../store/ducks/tags/actionCreators";
 import {BackButton} from "../../components/BackButton/BackButton";
 import {FullTweet} from "./FullTweet";
+import {fetchUserData} from "../../store/ducks/user/actionCreators";
+import {selectUserData} from "../../store/ducks/user/selectors";
 
 const Home: FC = (): ReactElement => {
     const dispatch = useDispatch();
@@ -18,10 +20,11 @@ const Home: FC = (): ReactElement => {
     const tweets = useSelector(selectTweetsItems);
     const isLoading = useSelector(selectIsTweetsLoading);
 
-    // useEffect(() => {
-    //     dispatch(fetchTweets());
-    //     dispatch(fetchTags());
-    // }, [dispatch]);
+    useEffect(() => {
+        dispatch(fetchTweets());
+        dispatch(fetchUserData());
+        // dispatch(fetchTags());
+    }, []);
 
     return (
         <Paper className={classes.tweetsWrapper} variant="outlined">

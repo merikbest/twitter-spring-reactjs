@@ -6,10 +6,13 @@ export interface User {
     email: string;
     fullName: string;
     username: string;
+    avatar: string;
     location: string;
     about: string;
     website: string;
     confirmed: boolean;
+    registration: string;
+    dateOfBirth: string;
     tweets: Tweet[];
 }
 

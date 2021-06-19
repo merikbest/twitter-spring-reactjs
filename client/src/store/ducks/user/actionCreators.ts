@@ -5,6 +5,7 @@ import {
     FetchUserDataActionInterface,
     SetUserDataActionInterface,
     SetUserLoadingStateActionInterface,
+    SignOutActionInterface,
     UserActionsType
 } from "./contracts/actionTypes";
 import {LoginFormProps} from "../../../pages/SignIn/LoginModal";
@@ -13,6 +14,10 @@ import {RegisterFormProps} from "../../../pages/SignIn/RegisterModal";
 export const setUserData = (payload: UserState["data"]): SetUserDataActionInterface => ({
     type: UserActionsType.SET_USER_DATA,
     payload
+});
+
+export const signOut = (): SignOutActionInterface => ({
+    type: UserActionsType.SIGN_OUT,
 });
 
 export const fetchSignIn = (payload: LoginFormProps): FetchSignInActionInterface => ({

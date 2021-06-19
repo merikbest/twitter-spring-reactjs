@@ -14,6 +14,7 @@ import ImageList from "../ImageList/ImageList";
 import {useDispatch} from "react-redux";
 import {removeTweet} from "../../store/ducks/tweets/actionCreators";
 import {Image} from "../../store/ducks/tweets/contracts/state";
+import {User} from "../../store/ducks/user/contracts/state";
 
 interface TweetProps {
     id: string
@@ -21,11 +22,7 @@ interface TweetProps {
     text: string
     dateTime: string
     images?: Image[]
-    user: {
-        fullName: string
-        username: string
-        avatarUrl: string
-    }
+    user: User
 }
 
 const Tweet: FC<TweetProps> = ({id, classes, text, images, user, dateTime}: TweetProps): ReactElement => {

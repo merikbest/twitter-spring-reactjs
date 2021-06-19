@@ -296,6 +296,14 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
             textDecoration: 'none',
         },
     },
+    profileMenuEditButton: {
+        float: 'right',
+        marginTop: '90px',
+        border: '1px solid',
+        borderRadius: '25px',
+        padding: '0 15px',
+        color: theme.palette.primary.main,
+    },
     imagesListItemRemove: {
         position: 'absolute',
         top: -8,

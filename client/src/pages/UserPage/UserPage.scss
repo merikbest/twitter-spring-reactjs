@@ -1,0 +1,63 @@
+.user {
+  &__header {
+    height: 200px;
+    background-color: #c4cfd6;
+  }
+  &__info {
+    margin-top: -70px;
+    padding: 20px;
+    padding-top: 0;
+    font-size: 16px;
+
+    .MuiAvatar-root {
+      width: 140px !important;
+      height: 140px !important;
+      border: 4px solid white;
+    }
+
+    ul {
+      display: flex;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      flex-wrap: wrap;
+
+      li {
+        margin-right: 30px;
+      }
+    }
+
+    &-fullname {
+      margin: 0 !important;
+      font-weight: 900;
+      font-size: 20px;
+    }
+
+    &-details {
+      color: #5b7083;
+    }
+
+    &-username {
+      color: #5b7083;
+    }
+
+    &-description {
+      font-size: 16px;
+    }
+  }
+
+  &__tweets {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .MuiTab-root {
+    text-transform: none !important;
+    min-width: 150px !important;
+    padding: 14px 12px !important;
+  }
+
+  .MuiTab-wrapper {
+    font-weight: 700 !important;
+    font-size: 16px;
+  }
+}

@@ -1,12 +1,9 @@
 import React, {FC, ReactElement} from 'react';
-import {useDispatch} from 'react-redux';
 import {Container, Grid, InputAdornment} from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/SearchOutlined';
 
 import {useHomeStyles} from './Home/HomeStyles';
 import {SearchTextField} from '../components/SearchTextField';
-import {fetchTweets} from '../store/ducks/tweets/actionCreators';
-import {fetchTags} from '../store/ducks/tags/actionCreators';
 import SideMenu from "../components/SideMenu/SideMenu";
 import Tags from "../components/Tags/Tags";
 import Users from '../components/Users/Users';
@@ -17,12 +14,6 @@ interface Layout {
 
 export const Layout: FC<Layout> = ({children}): ReactElement => {
     const classes = useHomeStyles();
-    const dispatch = useDispatch();
-
-    React.useEffect(() => {
-        dispatch(fetchTweets());
-        dispatch(fetchTags());
-    }, [dispatch]);
 
     return (
         <Container className={classes.wrapper} maxWidth="lg">
