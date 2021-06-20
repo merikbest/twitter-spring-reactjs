@@ -18,7 +18,6 @@ import Tweet from "../../components/Tweet/Tweet";
 import {User} from "../../store/ducks/user/contracts/state";
 import "./UserPage.scss";
 import EditProfileModal from "../../components/EditProfileModal/EditProfileModal";
-import ModalBlock from "../../components/ModalBlock/ModalBlock";
 
 const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
     const classes = useHomeStyles();
@@ -109,12 +108,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
                     ))
                 )}
             </div>
-            <ModalBlock
-                visible={visibleEditProfile}
-                title={"Edit"}
-                onClose={onCloseEditProfile}>
-                <p>Hello world</p>
-            </ModalBlock>
+            {visibleEditProfile ? <EditProfileModal visible={visibleEditProfile} onClose={onCloseEditProfile} /> : null}
         </Paper>
     );
 };

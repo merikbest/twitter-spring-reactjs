@@ -33,7 +33,7 @@ const ModalBlock: FC<ModalBlockProps> = ({
                 </IconButton>
                 {title}
             </DialogTitle>
-            <DialogContent>{children}</DialogContent>
+            <DialogContent style={{padding: "0px 0px"}}>{children}</DialogContent>
         </Dialog>
     );
 };
