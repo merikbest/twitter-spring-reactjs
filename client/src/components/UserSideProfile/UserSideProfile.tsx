@@ -39,7 +39,11 @@ const UserSideProfile: FC<UserSideProfileProps> = ({classes}: UserSideProfilePro
     return (
         <>
             <div onClick={handleOpenPopup} className={classes.sideProfile}>
-                <Avatar src="https://avatars.githubusercontent.com/u/56604599?v=4" />
+                <Avatar
+                    alt={`avatar ${userData?.user.id}`}
+                    src={userData?.user.avatar?.src ? userData?.user.avatar?.src :
+                        "https://abs.twimg.com/sticky/default_profile_images/default_profile_reasonably_small.png"}
+                />
                 <div className={classes.sideProfileInfo}>
                     <b>{userData.user.fullName}</b>
                     <Typography style={{color: colors.grey[500]}}>@{userData.user.username}</Typography>
@@ -55,9 +59,9 @@ const UserSideProfile: FC<UserSideProfileProps> = ({classes}: UserSideProfilePro
                 onClose={handleClosePopup}
                 keepMounted>
                 <Link to={`/user/${userData.user.id}`}>
-                    <MenuItem onClick={handleClosePopup}>Мой профиль</MenuItem>
+                    <MenuItem onClick={handleClosePopup}>My profile</MenuItem>
                 </Link>
-                <MenuItem onClick={handleSignOut}>Выйти</MenuItem>
+                <MenuItem onClick={handleSignOut}>Log out @{userData.user.fullName}</MenuItem>
             </Menu>
         </>
     );

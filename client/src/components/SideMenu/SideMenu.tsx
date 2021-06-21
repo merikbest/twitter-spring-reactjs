@@ -50,7 +50,7 @@ const SideMenu: FC<SideMenuProps> = ({classes}: SideMenuProps): ReactElement => 
                             <HomeIcon className={classes.sideMenuListItemIcon}/>
                             <Hidden smDown>
                                 <Typography className={classes.sideMenuListItemLabel} variant="h6">
-                                    Главная
+                                    Home
                                 </Typography>
                             </Hidden>
                         </div>
@@ -61,7 +61,7 @@ const SideMenu: FC<SideMenuProps> = ({classes}: SideMenuProps): ReactElement => 
                         <SearchIcon className={classes.sideMenuListItemIcon}/>
                         <Hidden smDown>
                             <Typography className={classes.sideMenuListItemLabel} variant="h6">
-                                Поиск
+                                Explore
                             </Typography>
                         </Hidden>
                     </div>
@@ -71,7 +71,7 @@ const SideMenu: FC<SideMenuProps> = ({classes}: SideMenuProps): ReactElement => 
                         <NotificationIcon className={classes.sideMenuListItemIcon}/>
                         <Hidden smDown>
                             <Typography className={classes.sideMenuListItemLabel} variant="h6">
-                                Уведомления
+                                Notifications
                             </Typography>
                         </Hidden>
                     </div>
@@ -81,7 +81,7 @@ const SideMenu: FC<SideMenuProps> = ({classes}: SideMenuProps): ReactElement => 
                         <MessageIcon className={classes.sideMenuListItemIcon}/>
                         <Hidden smDown>
                             <Typography className={classes.sideMenuListItemLabel} variant="h6">
-                                Сообщения
+                                Messages
                             </Typography>
                         </Hidden>
                     </div>
@@ -91,7 +91,7 @@ const SideMenu: FC<SideMenuProps> = ({classes}: SideMenuProps): ReactElement => 
                         <BookmarkIcon className={classes.sideMenuListItemIcon}/>
                         <Hidden smDown>
                             <Typography className={classes.sideMenuListItemLabel} variant="h6">
-                                Закладки
+                                Bookmarks
                             </Typography>
                         </Hidden>
                     </div>
@@ -101,7 +101,7 @@ const SideMenu: FC<SideMenuProps> = ({classes}: SideMenuProps): ReactElement => 
                         <ListIcon className={classes.sideMenuListItemIcon}/>
                         <Hidden smDown>
                             <Typography className={classes.sideMenuListItemLabel} variant="h6">
-                                Список
+                                Lists
                             </Typography>
                         </Hidden>
                     </div>
@@ -112,7 +112,7 @@ const SideMenu: FC<SideMenuProps> = ({classes}: SideMenuProps): ReactElement => 
                             <PersonIcon className={classes.sideMenuListItemIcon}/>
                             <Hidden smDown>
                                 <Typography className={classes.sideMenuListItemLabel} variant="h6">
-                                    Профиль
+                                    Profile
                                 </Typography>
                             </Hidden>
                         </div>
@@ -126,7 +126,7 @@ const SideMenu: FC<SideMenuProps> = ({classes}: SideMenuProps): ReactElement => 
                         color="primary"
                         fullWidth>
                         <Hidden smDown>
-                            Твитнуть
+                            Tweet
                         </Hidden>
                         <Hidden mdUp>
                             <CreateIcon/>

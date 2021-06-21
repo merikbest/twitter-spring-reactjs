@@ -1,62 +1,57 @@
 import React, {FC, useState} from 'react';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
 
 import {TweetInputField} from "./TweetInputField";
 import "./TweeterInputStyles.scss";
 
 interface TweeterInputProps {
+    onChange: (...event: any[]) => void;
+    value: string
+    helperText?: string;
+    error?: boolean;
+    name: string;
     label: string;
     maxTextLength: number
 }
 
-const TweeterInput: FC<TweeterInputProps> = ({label, maxTextLength}) => {
-    const [text, setText] = useState<string>("");
+const TweeterInput: FC<TweeterInputProps> = ({onChange, value, helperText, error, name, label, maxTextLength}) => {
     const [focused, setFocused] = useState<boolean>(false);
 
     const onFocus = () => setFocused(true);
     const onBlur = () => setFocused(false);
 
-    const handleChangeTextarea = (event: any): void => {
-        if (event.currentTarget) {
-            setText(event.currentTarget.value);
-        }
-    };
-
     return (
-        <div className={label === "Bio" ? "input_form_wrapper_bio" : "input_form_wrapper"}>
-            <FormControl className={"input_form"} variant="outlined">
-                <div className={"input_form_content"}>
-                    <div className={"input_label"}>
-                        <InputLabel>{label}</InputLabel>
-                    </div>
-                    {text && focused ?
-                        <div className={"input_label count"}>
-                            <InputLabel>{text.length} / {maxTextLength}</InputLabel>
-                        </div> : null}
+        <div className="input_form_wrapper">
+            <div className="input_form_content">
+                <div className="input_label">
+                    <InputLabel style={{fontSize: "13px"}}>{label}</InputLabel>
                 </div>
-                {label === "Bio" ?
-                    <TweetInputField
-                        onFocus={onFocus}
-                        onBlur={onBlur}
-                        multiline
-                        rows={3}
-                        onChange={handleChangeTextarea}
-                        value={text}
-                        startAdornment={<InputAdornment position="start"></InputAdornment>}
-                    /> :
-                    <TweetInputField
-                        onFocus={onFocus}
-                        onBlur={onBlur}
-                        onChange={handleChangeTextarea}
-                        value={text}
-                        startAdornment={<InputAdornment position="start"></InputAdornment>}
-                    />
+                {focused ?
+                    <div className="input_label count">
+                        <InputLabel style={{fontSize: "13px"}}>
+                            {value?.length === undefined ? 0 : value.length} / {maxTextLength}
+                        </InputLabel>
+                    </div> : null
                 }
-            </FormControl>
+            </div>
+            <TweetInputField
+                id={name}
+                name={name}
+                onChange={onChange}
+                value={value}
+                helperText={helperText}
+                error={error}
+                variant="outlined"
+                inputProps={{
+                    maxLength: maxTextLength,
+                }}
+                onFocus={onFocus}
+                onBlur={onBlur}
+                fullWidth
+                multiline={label === "Bio"}
+                rows={label === "Bio" ? 3 : 1}
+            />
         </div>
-
     );
 };
 

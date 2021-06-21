@@ -31,6 +31,12 @@ public class UserResponse {
     private String website;
 
     @JsonView({Views.User.class, Views.Tweet.class})
+    private ImageResponse avatar;
+
+    @JsonView({Views.User.class, Views.Tweet.class})
+    private ImageResponse wallpaper;
+
+    @JsonView({Views.User.class, Views.Tweet.class})
     private boolean confirmed;
 
     @JsonView(Views.User.class)

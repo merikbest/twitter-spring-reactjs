@@ -28,7 +28,7 @@ export const Layout: FC<Layout> = ({children}): ReactElement => {
                     <div className={classes.rightSide}>
                         <SearchTextField
                             variant="outlined"
-                            placeholder="Поиск по Твиттеру"
+                            placeholder="Search Twitter"
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">

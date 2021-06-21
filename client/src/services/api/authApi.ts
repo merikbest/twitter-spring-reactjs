@@ -29,4 +29,9 @@ export const AuthApi = {
         const {data} = await axios.get<User | undefined>('http://localhost:8080/api/v1/user/' + userId);
         return data;
     },
+    async updateUserProfile(userData: User): Promise<User> {
+        const {data} = await axios.put<User>('http://localhost:8080/api/v1/user/', userData);
+        console.log(data)
+        return data;
+    },
 };

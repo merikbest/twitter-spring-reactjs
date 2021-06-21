@@ -17,6 +17,11 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
             draft.status = LoadingStatus.SUCCESS;
             break;
 
+        case UserActionsType.UPDATE_USER_DATA:
+            draft.data = {user: action.payload, token: ""};
+            draft.status = LoadingStatus.SUCCESS;
+            break;
+
         case UserActionsType.SIGN_OUT:
             draft.status = LoadingStatus.LOADED;
             draft.data = undefined;

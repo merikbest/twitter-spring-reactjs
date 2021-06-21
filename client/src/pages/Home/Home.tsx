@@ -34,11 +34,11 @@ const Home: FC = (): ReactElement => {
                 </Route>
 
                 <Route path={['/home', '/home/search']} exact>
-                    <Typography variant="h6">Твиты</Typography>
+                    <Typography variant="h6">Home</Typography>
                 </Route>
 
                 <Route path="/home/tweet">
-                    <Typography variant="h6">Твитнуть</Typography>
+                    <Typography variant="h6">Tweet</Typography>
                 </Route>
             </Paper>
 

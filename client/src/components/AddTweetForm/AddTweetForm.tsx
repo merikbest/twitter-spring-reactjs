@@ -16,6 +16,7 @@ import {selectAddFormState} from "../../store/ducks/tweets/selectors";
 import {AddFormState, Image} from '../../store/ducks/tweets/contracts/state';
 import UploadImages from '../UploadImages/UploadImages';
 import {uploadImage} from "../../util/uploadImage";
+import {selectUserData} from "../../store/ducks/user/selectors";
 
 interface AddTweetFormProps {
     classes: ReturnType<typeof useHomeStyles>;
@@ -32,6 +33,7 @@ const MAX_LENGTH = 280;
 export const AddTweetForm: FC<AddTweetFormProps> = ({classes, maxRows}: AddTweetFormProps): ReactElement => {
     const dispatch = useDispatch();
     const addFormState = useSelector(selectAddFormState);
+    const userData = useSelector(selectUserData);
     const [text, setText] = React.useState<string>('');
     const [images, setImages] = React.useState<ImageObj[]>([]);
 
@@ -62,13 +64,14 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({classes, maxRows}: AddTweet
             <div className={classes.addFormBody}>
                 <Avatar
                     className={classes.tweetAvatar}
-                    alt={`Аватарка пользователя UserAvatar`}
-                    src="https://i0.wp.com/liveforlivemusic.com/wp-content/uploads/2017/04/Screen-Shot-2018-04-04-at-5.39.27-PM.png?resize=740%2C390&ssl=1"
+                    alt={`avatar ${userData?.user.id}`}
+                    src={userData?.user.avatar?.src ? userData?.user.avatar?.src :
+                        "https://abs.twimg.com/sticky/default_profile_images/default_profile_reasonably_small.png"}
                 />
                 <TextareaAutosize
                     onChange={handleChangeTextarea}
                     className={classes.addFormTextarea}
-                    placeholder="Что происходит?"
+                    placeholder="What's happening?"
                     value={text}
                     rowsMax={maxRows}
                 />
@@ -110,14 +113,14 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({classes, maxRows}: AddTweet
                         {addFormState === AddFormState.LOADING ? (
                             <CircularProgress color="inherit" size={16} />
                         ) : (
-                            'Твитнуть'
+                            'Tweet'
                         )}
                     </Button>
                 </div>
             </div>
             {addFormState === AddFormState.ERROR && (
                 <Alert severity="error">
-                    Ошибка при добавлении твита{' '}
+                    Error{' '}
                     <span aria-label="emoji-plak" role="img">😞</span>
                 </Alert>
             )}

@@ -60,10 +60,9 @@ const Tweet: FC<TweetProps> = ({id, classes, text, images, user, dateTime}: Twee
             <Paper className={classNames(classes.tweet, classes.tweetsHeader)} variant="outlined">
                 <Avatar
                     className={classes.tweetAvatar}
-                    // alt={`Аватарка пользователя ${user.fullName}`}
-                    // src={user.avatarUrl}
-                    alt={`Аватарка пользователя`}
-                    src={"https://avatars.githubusercontent.com/u/56604599?v=4"}
+                    alt={`avatar ${user.id}`}
+                    src={user.avatar?.src ? user.avatar?.src :
+                        "https://abs.twimg.com/sticky/default_profile_images/default_profile_reasonably_small.png"}
                 />
                 <div className={classes.tweetContent}>
                     <div className={classes.tweetHeader}>
@@ -82,8 +81,8 @@ const Tweet: FC<TweetProps> = ({id, classes, text, images, user, dateTime}: Twee
                                 <MoreVertIcon/>
                             </IconButton>
                             <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-                                <MenuItem onClick={handleClose}>Редактировать</MenuItem>
-                                <MenuItem onClick={handleRemove}>Удалить твит</MenuItem>
+                                <MenuItem onClick={handleClose}>Edit tweet</MenuItem>
+                                <MenuItem onClick={handleRemove}>Delete tweet</MenuItem>
                             </Menu>
                         </div>
                     </div>
@@ -96,7 +95,7 @@ const Tweet: FC<TweetProps> = ({id, classes, text, images, user, dateTime}: Twee
                             <IconButton>
                                 <CommentIcon style={{fontSize: 20}}/>
                             </IconButton>
-                            <span>1</span>
+                            <span></span>
                         </div>
                         <div>
                             <IconButton>

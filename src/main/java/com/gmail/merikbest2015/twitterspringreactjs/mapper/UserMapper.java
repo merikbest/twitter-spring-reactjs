@@ -37,4 +37,8 @@ public class UserMapper {
     public ImageResponse uploadImage(MultipartFile multipartFile) {
         return convertToImageResponse(userService.uploadImage(multipartFile));
     }
+
+    public UserResponse updateUserProfile(UserRequest userRequest) {
+        return convertToUserResponse(userService.updateUserProfile(convertToEntity(userRequest)));
+    }
 }

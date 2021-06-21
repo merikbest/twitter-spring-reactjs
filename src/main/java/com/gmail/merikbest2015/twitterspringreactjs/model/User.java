@@ -29,6 +29,10 @@ public class User {
     private List<Tweet> tweets;
 
     @OneToOne
-    @JoinColumn(name = "image_id")
+    @JoinColumn(name = "avatar_id")
     private Image avatar;
+
+    @OneToOne
+    @JoinColumn(name = "wallpaper_id")
+    private Image wallpaper;
 }

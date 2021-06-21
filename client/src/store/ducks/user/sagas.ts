@@ -1,8 +1,13 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 
-import {setUserData, setUserLoadingStatus} from "./actionCreators";
-import {AuthUser} from "./contracts/state";
-import {FetchSignInActionInterface, FetchSignUpActionInterface, UserActionsType} from "./contracts/actionTypes";
+import {setUpdatedUserData, setUserData, setUserLoadingStatus} from "./actionCreators";
+import {AuthUser, User} from "./contracts/state";
+import {
+    FetchSignInActionInterface,
+    FetchSignUpActionInterface,
+    UpdateUserDataActionInterface,
+    UserActionsType
+} from "./contracts/actionTypes";
 import {AuthApi} from "../../../services/api/authApi";
 import {LoadingStatus} from "../../types";
 
@@ -37,8 +42,19 @@ export function* fetchUserDataRequest() {
     }
 }
 
+export function* fetchUpdateUserDataRequest({payload}: UpdateUserDataActionInterface) {
+    try {
+        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+        const data: User = yield call(AuthApi.updateUserProfile, payload);
+        yield put(setUpdatedUserData(data));
+    } catch (error) {
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
 export function* userSaga() {
     yield takeLatest(UserActionsType.FETCH_SIGN_IN, fetchSignInRequest);
     yield takeLatest(UserActionsType.FETCH_SIGN_UP, fetchSignUpRequest);
     yield takeLatest(UserActionsType.FETCH_USER_DATA, fetchUserDataRequest);
+    yield takeLatest(UserActionsType.UPDATE_USER_DATA, fetchUpdateUserDataRequest);
 }

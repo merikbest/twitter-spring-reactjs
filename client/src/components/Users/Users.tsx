@@ -19,7 +19,7 @@ const Users: FC = (): ReactElement => {
     return (
         <Paper className={classes.rightSideBlock}>
             <Paper className={classes.rightSideBlockHeader} variant="outlined">
-                <b>Кого читать</b>
+                <b>Relevant people</b>
             </Paper>
             <List>
                 {items.map(() => {

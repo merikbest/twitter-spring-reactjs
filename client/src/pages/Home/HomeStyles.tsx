@@ -311,4 +311,9 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         padding: '0 !important',
         backgroundColor: '#ff4d4d !important',
     },
+    saveEditedProfileBtn: {
+        marginLeft: "auto",
+        marginRight: "-20px",
+        height: "30px",
+    }
 }));

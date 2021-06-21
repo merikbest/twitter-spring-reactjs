@@ -1,22 +1,16 @@
 import {Theme, withStyles} from "@material-ui/core";
-import OutlinedInput from '@material-ui/core/OutlinedInput';
+import TextField from "@material-ui/core/TextField";
 
 export const TweetInputField = withStyles((theme: Theme) => ({
     root: {
-        padding: 0,
-        '& .MuiOutlinedInput-root': {
-            padding: 0,
-        },
-        '&:hover': {
-            borderColor: "#fff",
-            '& .MuiOutlinedInput-notchedOutline': {
-
-            },
-        },
         '& .MuiOutlinedInput-input': {
-            paddingTop: "25px",
-            paddingBottom: "13px",
-            paddingLeft: "4px"
+            paddingTop: 26,
+            paddingBottom: 10,
+        },
+        '& .MuiOutlinedInput-inputMultiline': {
+            overflow: 'hidden',
+            paddingTop: 10,
+            paddingBottom: 10,
         },
     },
-}))(OutlinedInput);
+}))(TextField);

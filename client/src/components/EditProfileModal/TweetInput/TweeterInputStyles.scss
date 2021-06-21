@@ -1,15 +1,10 @@
-.input_form_wrapper_bio {
-  margin-bottom: 100px;
-  padding: 0 20px;
-}
-
 .input_form_wrapper {
-  margin-bottom: 65px;
-  padding: 0 20px;
+  margin-left: 15px;
+  margin-bottom: 25px;
 }
 
 .input_form {
-  width: 540px;
+  width: 560px;
   height: 22px;
 
   &_content {
@@ -20,9 +15,9 @@
 
 .input_label {
   display: inline;
-  top: 15px;
+  bottom: 15px;
   position: relative;
   &.count {
-    padding-right: 60px;
+    padding-right: 70px;
   }
 }

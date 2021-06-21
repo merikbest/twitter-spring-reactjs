@@ -9,12 +9,14 @@ import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.UUID;
 
 @Service
@@ -48,7 +50,24 @@ public class UserServiceImpl implements UserService {
             image.setSrc(amazonS3client.getUrl(bucketName, fileName).toString());
             file.delete();
         }
-        imageRepository.save(image);
-        return image;
+        return imageRepository.save(image);
+    }
+
+    @Override
+    public User updateUserProfile(User userInfo) {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(principal.getName());
+
+        if (userInfo.getAvatar() != null) {
+            user.setAvatar(userInfo.getAvatar());
+        }
+        if (userInfo.getWallpaper() != null) {
+            user.setWallpaper(userInfo.getWallpaper());
+        }
+        user.setUsername(userInfo.getUsername());
+        user.setAbout(userInfo.getAbout());
+        user.setLocation(userInfo.getLocation());
+        user.setWebsite(userInfo.getWebsite());
+        return userRepository.save(user);
     }
 }

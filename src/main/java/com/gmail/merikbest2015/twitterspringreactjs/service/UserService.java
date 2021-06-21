@@ -9,4 +9,6 @@ public interface UserService {
     User getUserById(Long userId);
 
     Image uploadImage(MultipartFile multipartFile);
+
+    User updateUserProfile(User userInfo);
 }
