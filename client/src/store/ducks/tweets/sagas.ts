@@ -1,10 +1,16 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 
-import {addTweet, setAddFormState, setTweets, setTweetsLoadingState} from "./actionCreators";
+import {addTweet, likeTweet, setAddFormState, setTweets, setTweetsLoadingState} from "./actionCreators";
 import {TweetsApi} from "../../../services/api/tweetsApi";
 import {AddFormState, Tweet} from "./contracts/state";
-import {FetchAddTweetActionInterface, RemoveTweetActionInterface, TweetsActionType} from "./contracts/actionTypes";
+import {
+    FetchAddTweetActionInterface,
+    FetchLikeTweetActionInterface,
+    RemoveTweetActionInterface,
+    TweetsActionType
+} from "./contracts/actionTypes";
 import {LoadingStatus} from '../../types';
+import {setTweetData} from "../tweet/actionCreators";
 
 export function* fetchTweetsRequest() {
     try {
@@ -25,7 +31,7 @@ export function* fetchAddTweetRequest({payload}: FetchAddTweetActionInterface) {
     }
 }
 
-export function* fetchRemoveTweetRequest({ payload }: RemoveTweetActionInterface) {
+export function* fetchRemoveTweetRequest({payload}: RemoveTweetActionInterface) {
     try {
         yield call(TweetsApi.removeTweet, payload);
     } catch (error) {
@@ -33,8 +39,15 @@ export function* fetchRemoveTweetRequest({ payload }: RemoveTweetActionInterface
     }
 }
 
+export function* fetchLikeTweetRequest({payload}: FetchLikeTweetActionInterface) {
+    const item: Tweet = yield call(TweetsApi.likeTweet, payload);
+    yield put(likeTweet(item));
+    yield put(setTweetData(item));
+}
+
 export function* tweetsSaga() {
     yield takeLatest(TweetsActionType.FETCH_TWEETS, fetchTweetsRequest);
     yield takeLatest(TweetsActionType.FETCH_ADD_TWEET, fetchAddTweetRequest);
     yield takeLatest(TweetsActionType.REMOVE_TWEET, fetchRemoveTweetRequest);
+    yield takeLatest(TweetsActionType.FETCH_LIKE_TWEET, fetchLikeTweetRequest);
 }

@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -35,4 +36,7 @@ public class User {
     @OneToOne
     @JoinColumn(name = "wallpaper_id")
     private Image wallpaper;
+
+    @ManyToMany(mappedBy = "likes")
+    private List<Tweet> likedTweets;
 }

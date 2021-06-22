@@ -23,7 +23,6 @@ const Home: FC = (): ReactElement => {
     useEffect(() => {
         dispatch(fetchTweets());
         dispatch(fetchUserData());
-        // dispatch(fetchTags());
     }, []);
 
     return (

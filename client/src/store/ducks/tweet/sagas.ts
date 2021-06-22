@@ -5,6 +5,7 @@ import {FetchTweetDataActionInterface, TweetActionType} from "./contracts/action
 import {Tweet} from '../tweets/contracts/state';
 import {setTweetData, setTweetLoadingState} from './actionCreators';
 import {LoadingStatus} from '../../types';
+import {likeTweet} from "../tweets/actionCreators";
 
 export function* fetchTweetDataRequest({payload: tweetId}: FetchTweetDataActionInterface) {
     try {

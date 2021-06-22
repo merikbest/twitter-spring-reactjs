@@ -53,4 +53,19 @@ public class TweetServiceImpl implements TweetService {
         tweets.remove(tweet);
         return tweetRepository.findAllByUserOrderByDateTimeDesc(user);
     }
+
+    @Override
+    public Tweet likeTweet(Long tweetId) {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(principal.getName());
+        Tweet tweet = tweetRepository.getOne(tweetId);
+        List<User> tweetLikes = tweet.getLikes();
+
+        if (tweetLikes.contains(user)) {
+            tweetLikes.remove(user);
+        } else {
+            tweetLikes.add(user);
+        }
+        return tweetRepository.save(tweet);
+    }
 }

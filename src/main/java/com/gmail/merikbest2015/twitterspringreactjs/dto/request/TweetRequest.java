@@ -7,6 +7,7 @@ import java.util.List;
 
 @Data
 public class TweetRequest {
+    private Long id;
     private String text;
     private List<Image> images;
 }

@@ -130,6 +130,10 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
                         <Tweet key={tweet.id} classes={classes} images={tweet.images} {...tweet} />
                     ))
                 )}
+                {/*) : userData?.tweets !== undefined ?*/}
+                {/*userData?.tweets.map(tweet => <Tweet key={tweet.id} classes={classes} images={tweet.images} {...tweet} />)*/}
+                {/*: null*/}
+                {/*}*/}
             </div>
             {visibleEditProfile ? <EditProfileModal visible={visibleEditProfile} onClose={onCloseEditProfile}/> : null}
         </Paper>

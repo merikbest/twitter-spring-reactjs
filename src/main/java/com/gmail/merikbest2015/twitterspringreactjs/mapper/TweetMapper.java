@@ -47,4 +47,11 @@ public class TweetMapper {
     public List<TweetResponse> deleteTweet(Long tweetId) {
         return convertListToResponseDto(tweetService.deleteTweet(tweetId));
     }
+
+    public TweetResponse likeTweet(Long tweetId) {
+//        Tweet tweet = tweetService.likeTweet(tweetId);
+//        TweetResponse tweetResponse = convertToTweetResponse(tweet);
+//        tweetResponse.setTweetLikes((long) tweet.getLikes().size());
+        return convertToTweetResponse(tweetService.likeTweet(tweetId));
+    }
 }

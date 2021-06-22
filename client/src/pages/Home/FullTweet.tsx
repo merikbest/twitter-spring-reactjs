@@ -18,13 +18,14 @@ import {useHomeStyles} from './HomeStyles';
 import {selectIsTweetLoading, selectTweetData} from '../../store/ducks/tweet/selectors';
 import {fetchTweetData, setTweetData} from '../../store/ducks/tweet/actionCreators';
 import ImageList from "../../components/ImageList/ImageList";
+import {fetchLikeTweet} from "../../store/ducks/tweets/actionCreators";
 
 export const FullTweet: FC = (): ReactElement | null => {
     const classes = useHomeStyles();
     const dispatch = useDispatch();
     const tweetData = useSelector(selectTweetData);
     const isLoading = useSelector(selectIsTweetLoading);
-    const params: { id?: string } = useParams();
+    const params: { id: string } = useParams();
     const id = params.id;
 
     useEffect(() => {
@@ -41,6 +42,10 @@ export const FullTweet: FC = (): ReactElement | null => {
             mediumZoom('.tweet-images img');
         }
     }, [isLoading]);
+
+    const handleLike = (): void => {
+        dispatch(fetchLikeTweet(id));
+    };
 
     if (isLoading) {
         return (
@@ -82,6 +87,8 @@ export const FullTweet: FC = (): ReactElement | null => {
                         <span
                             className={classes.tweetUserName}>{format(new Date(tweetData.dateTime), 'dd MMM. yyyy')}</span>
                     </Typography>
+                    <Divider/>
+                    <span>{tweetData.likes.length !== 0 ? tweetData.likes.length : null} Like</span>
                     <div className={classNames(classes.tweetFooter, classes.fullTweetFooter)}>
                         <IconButton>
                             <CommentIcon style={{fontSize: 25}}/>
@@ -89,7 +96,7 @@ export const FullTweet: FC = (): ReactElement | null => {
                         <IconButton>
                             <RepostIcon style={{fontSize: 25}}/>
                         </IconButton>
-                        <IconButton>
+                        <IconButton onClick={handleLike}>
                             <LikeIcon style={{fontSize: 25}}/>
                         </IconButton>
                         <IconButton>

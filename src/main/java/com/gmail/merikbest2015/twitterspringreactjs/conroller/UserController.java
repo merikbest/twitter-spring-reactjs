@@ -19,7 +19,7 @@ public class UserController {
     private final UserMapper userMapper;
 
     @GetMapping("/{userId}")
-    @JsonView(Views.User.class)
+    @JsonView(Views.UserInfo.class)
     public ResponseEntity<UserResponse> getUserById(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.getUserById(userId));
     }

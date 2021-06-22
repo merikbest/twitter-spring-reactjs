@@ -55,6 +55,8 @@ const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}) => {
         resolver: yupResolver(EditProfileFormSchema)
     });
 
+    console.log(avatar)
+
     const onSubmit = async (data: EditProfileFormProps) => {
         console.log(data)
         let avatarResponse: Image | undefined = undefined;
@@ -101,9 +103,12 @@ const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}) => {
                         </div>
                         <div className="edit_avatar">
                             <UploadProfileImage name={"avatar"} image={avatar} onChangeImage={setAvatar}/>
-                            <Avatar
-                                src={userData?.user.avatar?.src && avatar?.src === undefined ? userData?.user.avatar?.src :
-                                    "https://abs.twimg.com/sticky/default_profile_images/default_profile_reasonably_small.png"}/>
+                            <Avatar key={avatar?.src}
+                                    src={userData?.user.avatar?.src && avatar?.src === undefined ?
+                                        userData?.user.avatar?.src : avatar?.src}>
+                                <img alt="default-img"
+                                     src="https://abs.twimg.com/sticky/default_profile_images/default_profile_reasonably_small.png"/>
+                            </Avatar>
                         </div>
                         <FormControl className={"input_form"} variant="outlined">
                             <FormGroup aria-label="position">

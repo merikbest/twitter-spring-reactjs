@@ -12,4 +12,6 @@ public interface TweetService {
     List<Tweet> createTweet(Tweet tweet);
 
     List<Tweet> deleteTweet(Long tweetId);
+
+    Tweet likeTweet(Long tweetId);
 }

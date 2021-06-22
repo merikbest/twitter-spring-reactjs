@@ -7,9 +7,9 @@ import lombok.Data;
 @Data
 public class ImageResponse {
 
-    @JsonView({Views.User.class, Views.Tweet.class})
+    @JsonView({Views.User.class, Views.Tweet.class, Views.UserInfo.class})
     private Long id;
 
-    @JsonView({Views.User.class, Views.Tweet.class})
+    @JsonView({Views.User.class, Views.Tweet.class, Views.UserInfo.class})
     private String src;
 }

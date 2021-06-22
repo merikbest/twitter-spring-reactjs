@@ -19,7 +19,6 @@ const UploadProfileImage: FC<UploadProfileImageProps> = ({name, image, onChangeI
     };
 
     const handleChangeFileInput = useCallback((event: Event) => {
-        console.log(event)
         if (event.target) {
             const target = event.target as HTMLInputElement;
             const file = target.files?.[0];
@@ -48,18 +47,21 @@ const UploadProfileImage: FC<UploadProfileImageProps> = ({name, image, onChangeI
                     <IconButton onClick={handleClickImage} style={{color: "#fff"}}>
                         <PhotoCameraOutlinedIcon />
                     </IconButton>
+                    <input ref={uploadRef} type="file" id="upload-wallpaper-input" hidden />
                 </> :
-                <IconButton onClick={handleClickImage}
-                    style={{
-                        top: "38px",
-                        left: "55px",
-                        position: "absolute",
-                        zIndex: 5,
-                        color: "#fff"}}>
-                    <PhotoCameraOutlinedIcon />
-                </IconButton>
+                <>
+                    <IconButton onClick={handleClickImage}
+                                style={{
+                                    top: "38px",
+                                    left: "55px",
+                                    position: "absolute",
+                                    zIndex: 5,
+                                    color: "#fff"}}>
+                        <PhotoCameraOutlinedIcon />
+                    </IconButton>
+                    <input ref={uploadRef} type="file" id="upload-avatar-input" hidden />
+                </>
             }
-            <input ref={uploadRef} type="file" id="upload-wallpaper-input" hidden />
         </>
     );
 };

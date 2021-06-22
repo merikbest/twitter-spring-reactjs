@@ -41,4 +41,10 @@ public class TweetController {
     public ResponseEntity<List<TweetResponse>> deleteTweet(@PathVariable Long tweetId) {
         return ResponseEntity.ok(tweetMapper.deleteTweet(tweetId));
     }
+
+    @GetMapping("/like/{tweetId}")
+    @JsonView(Views.Tweet.class)
+    public ResponseEntity<TweetResponse> likeTweet(@PathVariable Long tweetId) {
+        return ResponseEntity.ok(tweetMapper.likeTweet(tweetId));
+    }
 }
