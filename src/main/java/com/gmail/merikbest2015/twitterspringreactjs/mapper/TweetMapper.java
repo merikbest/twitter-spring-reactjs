@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.service.TweetService;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 public class TweetMapper {
 
     private final ModelMapper modelMapper;
+    private final UserMapper userMapper;
     private final TweetService tweetService;
 
     private Tweet convertToTweetEntity(TweetRequest tweetRequest) {
@@ -49,9 +51,14 @@ public class TweetMapper {
     }
 
     public TweetResponse likeTweet(Long tweetId) {
-//        Tweet tweet = tweetService.likeTweet(tweetId);
-//        TweetResponse tweetResponse = convertToTweetResponse(tweet);
-//        tweetResponse.setTweetLikes((long) tweet.getLikes().size());
         return convertToTweetResponse(tweetService.likeTweet(tweetId));
+    }
+
+    public List<TweetResponse> getTweetsByUser(UserRequest userRequest) {
+        return convertListToResponseDto(tweetService.getTweetsByUser(userMapper.convertToEntity(userRequest)));
+    }
+
+    public TweetResponse retweet(Long tweetId) {
+        return convertToTweetResponse(tweetService.retweet(tweetId));
     }
 }

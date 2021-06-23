@@ -12,5 +12,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     List<Tweet> findAllByOrderByDateTimeDesc();
 
+    List<Tweet> findAllByUser(User user);
+
     List<Tweet> findAllByUserOrderByDateTimeDesc(User user);
 }

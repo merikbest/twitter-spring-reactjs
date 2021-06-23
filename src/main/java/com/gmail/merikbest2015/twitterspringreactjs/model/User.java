@@ -1,6 +1,5 @@
 package com.gmail.merikbest2015.twitterspringreactjs.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;

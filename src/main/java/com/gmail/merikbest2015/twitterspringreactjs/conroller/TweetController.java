@@ -1,8 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.conroller;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.Views;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.TweetMapper;
 import lombok.RequiredArgsConstructor;
@@ -19,32 +18,37 @@ public class TweetController {
     private final TweetMapper tweetMapper;
 
     @GetMapping
-    @JsonView(Views.Tweet.class)
     public ResponseEntity<List<TweetResponse>> getTweets() {
         return ResponseEntity.ok(tweetMapper.getTweets());
     }
 
     @GetMapping("/{tweetId}")
-    @JsonView(Views.Tweet.class)
     public ResponseEntity<TweetResponse> getTweetById(@PathVariable Long tweetId) {
         return ResponseEntity.ok(tweetMapper.getTweetById(tweetId));
     }
 
+    @PostMapping("/user")
+    public ResponseEntity<List<TweetResponse>> getTweetsByUser(@RequestBody UserRequest userRequest) {
+        return ResponseEntity.ok(tweetMapper.getTweetsByUser(userRequest));
+    }
+
     @PostMapping
-    @JsonView(Views.Tweet.class)
     public ResponseEntity<List<TweetResponse>> createTweet(@RequestBody TweetRequest tweetRequest) {
         return ResponseEntity.ok(tweetMapper.createTweet(tweetRequest));
     }
 
     @DeleteMapping("/{tweetId}")
-    @JsonView(Views.Tweet.class)
     public ResponseEntity<List<TweetResponse>> deleteTweet(@PathVariable Long tweetId) {
         return ResponseEntity.ok(tweetMapper.deleteTweet(tweetId));
     }
 
     @GetMapping("/like/{tweetId}")
-    @JsonView(Views.Tweet.class)
     public ResponseEntity<TweetResponse> likeTweet(@PathVariable Long tweetId) {
         return ResponseEntity.ok(tweetMapper.likeTweet(tweetId));
+    }
+
+    @GetMapping("/retweet/{tweetId}")
+    public ResponseEntity<TweetResponse> retweet(@PathVariable Long tweetId) {
+        return ResponseEntity.ok(tweetMapper.retweet(tweetId));
     }
 }

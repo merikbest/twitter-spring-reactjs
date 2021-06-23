@@ -23,6 +23,11 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
             draft.loadingState = LoadingStatus.LOADING;
             break;
 
+        case TweetsActionType.FETCH_TWEETS_BY_USER:
+            draft.items = [];
+            draft.loadingState = LoadingStatus.LOADING;
+            break;
+
         case TweetsActionType.SET_LOADING_STATE:
             draft.loadingState = action.payload;
             break;
@@ -48,6 +53,11 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
         case TweetsActionType.LIKE_TWEET:
             const tweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.id);
             draft.items[tweetIndex] = action.payload;
+            break;
+
+        case TweetsActionType.RETWEET:
+            const retweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.id);
+            draft.items[retweetIndex] = action.payload;
             break;
 
         default:

@@ -26,7 +26,7 @@ public class UserMapper {
         return modelMapper.map(image, ImageResponse.class);
     }
 
-    private User convertToEntity(UserRequest userRequest) {
+    User convertToEntity(UserRequest userRequest) {
         return modelMapper.map(userRequest, User.class);
     }
 

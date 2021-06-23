@@ -12,7 +12,7 @@ import {useHomeStyles} from "../../pages/Home/HomeStyles";
 import {formatDate} from '../../util/formatDate';
 import ImageList from "../ImageList/ImageList";
 import {useDispatch} from "react-redux";
-import {fetchLikeTweet, likeTweet, removeTweet} from "../../store/ducks/tweets/actionCreators";
+import {fetchLikeTweet, fetchRetweet, likeTweet, removeTweet} from "../../store/ducks/tweets/actionCreators";
 import {Image} from "../../store/ducks/tweets/contracts/state";
 import {User} from "../../store/ducks/user/contracts/state";
 
@@ -21,12 +21,13 @@ interface TweetProps {
     classes: ReturnType<typeof useHomeStyles>;
     text: string;
     likes: User[];
+    retweets: User[];
     dateTime: string;
     images?: Image[];
     user: User;
 }
 
-const Tweet: FC<TweetProps> = ({id, classes, text, images, user, dateTime, likes}: TweetProps): ReactElement => {
+const Tweet: FC<TweetProps> = ({id, classes, text, images, user, dateTime, likes, retweets}: TweetProps): ReactElement => {
     const dispatch = useDispatch();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -58,6 +59,10 @@ const Tweet: FC<TweetProps> = ({id, classes, text, images, user, dateTime, likes
 
     const handleLike = (): void => {
         dispatch(fetchLikeTweet(id));
+    };
+
+    const handleRetweet = (): void => {
+        dispatch(fetchRetweet(id));
     };
 
     return (
@@ -105,15 +110,16 @@ const Tweet: FC<TweetProps> = ({id, classes, text, images, user, dateTime, likes
                         <span></span>
                     </div>
                     <div>
-                        <IconButton>
+                        <IconButton onClick={handleRetweet}>
                             <RepostIcon style={{fontSize: 20}}/>
                         </IconButton>
+                        <span>{retweets.length === 0 || retweets === null ? null : retweets.length}</span>
                     </div>
                     <div>
                         <IconButton onClick={handleLike}>
                             <LikeIcon style={{fontSize: 20}}/>
                         </IconButton>
-                        <span>{likes.length !== 0 ? likes.length : null}</span>
+                        <span>{likes.length === 0 || likes === null ? null : likes.length}</span>
                     </div>
                     <div>
                         <IconButton>

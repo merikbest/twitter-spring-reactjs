@@ -1,7 +1,5 @@
 package com.gmail.merikbest2015.twitterspringreactjs.conroller;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.Views;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.AuthenticationRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.PasswordResetRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.RegistrationRequest;
@@ -30,7 +28,6 @@ public class AuthenticationController {
     private final AuthenticationMapper authenticationMapper;
 
     @PostMapping("/login")
-    @JsonView(Views.User.class)
     public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest request) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
@@ -55,7 +52,6 @@ public class AuthenticationController {
     }
 
     @GetMapping("/user")
-    @JsonView(Views.User.class)
     public ResponseEntity<AuthenticationResponse> getUserByToken() {
         return ResponseEntity.ok(authenticationMapper.getUserByToken());
     }

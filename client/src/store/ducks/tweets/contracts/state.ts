@@ -18,6 +18,7 @@ export interface Tweet {
     dateTime: string;
     images?: Image[];
     likes: User[];
+    retweets: User[];
     user: User;
 }
 

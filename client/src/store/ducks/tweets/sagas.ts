@@ -1,11 +1,12 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 
-import {addTweet, likeTweet, setAddFormState, setTweets, setTweetsLoadingState} from "./actionCreators";
+import {addTweet, likeTweet, setAddFormState, setTweets, setTweetsLoadingStatus} from "./actionCreators";
 import {TweetsApi} from "../../../services/api/tweetsApi";
 import {AddFormState, Tweet} from "./contracts/state";
 import {
     FetchAddTweetActionInterface,
-    FetchLikeTweetActionInterface,
+    FetchLikeTweetActionInterface, FetchRetweetActionInterface,
+    FetchTweetsByUserActionInterface,
     RemoveTweetActionInterface,
     TweetsActionType
 } from "./contracts/actionTypes";
@@ -18,7 +19,16 @@ export function* fetchTweetsRequest() {
         const items: Tweet[] = yield call(TweetsApi.fetchTweets);
         yield put(setTweets(items));
     } catch (e) {
-        yield put(setTweetsLoadingState(LoadingStatus.ERROR));
+        yield put(setTweetsLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
+export function* fetchTweetsByUserRequest({payload}: FetchTweetsByUserActionInterface) {
+    try {
+        const item: Tweet[] = yield call(TweetsApi.fetchTweetsByUser, payload);
+        yield put(setTweets(item));
+    } catch (e) {
+        yield put(setAddFormState(AddFormState.ERROR));
     }
 }
 
@@ -45,9 +55,17 @@ export function* fetchLikeTweetRequest({payload}: FetchLikeTweetActionInterface)
     yield put(setTweetData(item));
 }
 
+export function* fetchRetweetRequest({payload}: FetchRetweetActionInterface) {
+    const item: Tweet = yield call(TweetsApi.retweet, payload);
+    yield put(likeTweet(item));
+    yield put(setTweetData(item));
+}
+
 export function* tweetsSaga() {
     yield takeLatest(TweetsActionType.FETCH_TWEETS, fetchTweetsRequest);
     yield takeLatest(TweetsActionType.FETCH_ADD_TWEET, fetchAddTweetRequest);
     yield takeLatest(TweetsActionType.REMOVE_TWEET, fetchRemoveTweetRequest);
     yield takeLatest(TweetsActionType.FETCH_LIKE_TWEET, fetchLikeTweetRequest);
+    yield takeLatest(TweetsActionType.FETCH_RETWEET, fetchRetweetRequest);
+    yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_USER, fetchTweetsByUserRequest);
 }

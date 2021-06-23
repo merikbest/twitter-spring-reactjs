@@ -1,7 +1,5 @@
 package com.gmail.merikbest2015.twitterspringreactjs.conroller;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.Views;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
@@ -19,13 +17,11 @@ public class UserController {
     private final UserMapper userMapper;
 
     @GetMapping("/{userId}")
-    @JsonView(Views.UserInfo.class)
     public ResponseEntity<UserResponse> getUserById(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.getUserById(userId));
     }
 
     @PutMapping
-    @JsonView(Views.User.class)
     public ResponseEntity<UserResponse> updateUserProfile(@RequestBody UserRequest userRequest) {
         return ResponseEntity.ok(userMapper.updateUserProfile(userRequest));
     }

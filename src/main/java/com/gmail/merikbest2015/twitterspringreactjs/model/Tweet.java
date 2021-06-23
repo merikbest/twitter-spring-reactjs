@@ -15,7 +15,6 @@ public class Tweet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String text;
-    private String imageSrc;
     private LocalDateTime dateTime;
 
     @ManyToOne
@@ -29,6 +28,12 @@ public class Tweet {
             joinColumns = @JoinColumn(name = "tweets_id"),
             inverseJoinColumns = @JoinColumn(name = "users_id"))
     private List<User> likes;
+
+    @ManyToMany
+    @JoinTable(name = "retweets",
+            joinColumns = @JoinColumn(name = "tweets_id"),
+            inverseJoinColumns = @JoinColumn(name = "users_id"))
+    private List<User> retweets;
 
     public Tweet() {
         this.dateTime = LocalDateTime.now().withNano(0);
