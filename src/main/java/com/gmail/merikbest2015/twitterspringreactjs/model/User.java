@@ -11,7 +11,7 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String email;
     private String password;
@@ -25,7 +25,7 @@ public class User {
     private String role;
     private boolean active;
 
-    @OneToMany
+    @ManyToMany
     private List<Tweet> tweets;
 
     @OneToOne
@@ -38,4 +38,16 @@ public class User {
 
     @ManyToMany(mappedBy = "likes")
     private List<Tweet> likedTweets;
+
+    @ManyToMany
+    @JoinTable(name = "user_subscriptions",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "subscriber_id"))
+    private List<User> followers;
+
+    @ManyToMany
+    @JoinTable(name = "user_subscriptions",
+            joinColumns = @JoinColumn(name = "subscriber_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> following;
 }

@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Image;
+import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.ImageRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
@@ -17,6 +18,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -33,6 +35,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Long userId) {
         return userRepository.getOne(userId);
+    }
+
+    @Override
+    public List<Tweet> getUserTweets(Long userId) {
+        User user = userRepository.getOne(userId);
+        return user.getTweets();
     }
 
     @Override
@@ -68,6 +76,24 @@ public class UserServiceImpl implements UserService {
         user.setAbout(userInfo.getAbout());
         user.setLocation(userInfo.getLocation());
         user.setWebsite(userInfo.getWebsite());
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User follow(Long userId) {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(principal.getName());
+        User currentUser = userRepository.getOne(userId);
+        user.getFollowers().add(currentUser);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User unfollow(Long userId) {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(principal.getName());
+        User currentUser = userRepository.getOne(userId);
+        user.getFollowers().remove(currentUser);
         return userRepository.save(user);
     }
 }

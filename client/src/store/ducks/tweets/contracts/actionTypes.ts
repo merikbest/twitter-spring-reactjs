@@ -35,6 +35,7 @@ export interface FetchAddTweetActionInterface extends Action<TweetsActionType> {
         text: string;
         images: Image[];
         likes: [];
+        retweets: [];
     };
 }
 
@@ -82,6 +83,11 @@ export interface FetchTweetsByUserActionInterface extends Action<TweetsActionTyp
     payload: User;
 }
 
+export interface FetchUserTweetsActionInterface extends Action<TweetsActionType> {
+    type: TweetsActionType.FETCH_TWEETS_BY_USER;
+    payload: string
+}
+
 export type TweetsActions =
     | SetTweetsActionInterface
     | FetchTweetsActionInterface
@@ -92,4 +98,5 @@ export type TweetsActions =
     | RemoveTweetActionInterface
     | LikeTweetActionInterface
     | RetweetActionInterface
-    | FetchTweetsByUserActionInterface;
+    | FetchTweetsByUserActionInterface
+    | FetchUserTweetsActionInterface;

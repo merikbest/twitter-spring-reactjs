@@ -14,7 +14,7 @@ import LinkOutlinedIcon from '@material-ui/icons/LinkOutlined';
 import {useHomeStyles} from '../Home/HomeStyles';
 import {BackButton} from "../../components/BackButton/BackButton";
 import {selectIsTweetsLoading, selectTweetsItems} from "../../store/ducks/tweets/selectors";
-import {fetchTweetsByUser, setTweetsLoadingStatus} from "../../store/ducks/tweets/actionCreators";
+import {fetchTweetsByUser, fetchUserTweets, setTweetsLoadingStatus} from "../../store/ducks/tweets/actionCreators";
 import {AuthApi} from "../../services/api/authApi";
 import Tweet from "../../components/Tweet/Tweet";
 import {User} from "../../store/ducks/user/contracts/state";
@@ -50,9 +50,9 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
 
     useEffect(() => {
         if (userData) {
-            dispatch(fetchTweetsByUser(userData));
+            dispatch(fetchUserTweets(match.params.id));
         }
-    },[userData]);
+    }, [userData]);
 
     const handleChange = (event: ChangeEvent<{}>, newValue: number) => {
         setActiveTab(newValue);
@@ -64,6 +64,10 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
 
     const onCloseEditProfile = () => {
         setVisibleEditProfile(false);
+    };
+
+    const handleFollow = () => {
+
     };
 
     return (
@@ -85,8 +89,11 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
                     <Avatar src={userData?.avatar?.src ? userData?.avatar.src :
                         "https://abs.twimg.com/sticky/default_profile_images/default_profile_reasonably_small.png"}/>
                 </div>
-                {userData?.id === user?.user.id ?
-                    <Button onClick={onOpenEditProfile} className={classes.profileMenuEditButton}>Edit profile</Button> : null}
+                {userData?.id === user?.user.id ? (
+                    <Button onClick={onOpenEditProfile} className={classes.profileMenuEditButton}>Edit profile</Button>
+                ) : (
+                    <Button onClick={handleFollow} className={classes.profileMenuEditButton}>Follow</Button>
+                )}
                 {!userData ? (
                     <Skeleton variant="text" width={250} height={30}/>
                 ) : (

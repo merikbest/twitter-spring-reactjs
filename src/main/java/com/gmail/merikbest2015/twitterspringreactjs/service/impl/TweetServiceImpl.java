@@ -85,13 +85,15 @@ public class TweetServiceImpl implements TweetService {
         User user = userRepository.findByEmail(principal.getName());
         Tweet tweet = tweetRepository.getOne(tweetId);
         List<Tweet> tweets = user.getTweets();
+        List<User> retweets = tweet.getRetweets();
 
         if (tweets.contains(tweet)) {
             tweets.remove(tweet);
+            retweets.remove(user);
         } else {
             tweets.add(tweet);
+            retweets.add(user);
         }
         return tweetRepository.save(tweet);
     }
-
 }

@@ -19,4 +19,6 @@ public class UserRequest {
     private ImageResponse wallpaper;
     private boolean confirmed;
     private List<TweetResponse> tweets;
+    private List<UserRequest> followers;
+    private List<UserRequest> following;
 }

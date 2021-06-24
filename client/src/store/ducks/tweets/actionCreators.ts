@@ -2,7 +2,7 @@ import {AddFormState, Image, Tweet, TweetsState} from "./contracts/state";
 import {
     FetchLikeTweetActionInterface,
     FetchRetweetActionInterface,
-    FetchTweetsByUserActionInterface,
+    FetchTweetsByUserActionInterface, FetchUserTweetsActionInterface,
     LikeTweetActionInterface,
     RemoveTweetActionInterface,
     RetweetActionInterface,
@@ -29,7 +29,7 @@ export const addTweet = (payload: Tweet[]): AddTweetActionInterface => ({
     payload
 });
 
-export const fetchAddTweet = (payload: { text: string; images: Image[]; likes: []; }): FetchAddTweetActionInterface => ({
+export const fetchAddTweet = (payload: { text: string; images: Image[]; likes: []; retweets: [] }): FetchAddTweetActionInterface => ({
     type: TweetsActionType.FETCH_ADD_TWEET,
     payload
 });
@@ -38,6 +38,12 @@ export const fetchTweetsByUser = (payload: User): FetchTweetsByUserActionInterfa
     type: TweetsActionType.FETCH_TWEETS_BY_USER,
     payload
 });
+
+export const fetchUserTweets = (payload: string): FetchUserTweetsActionInterface => ({
+    type: TweetsActionType.FETCH_TWEETS_BY_USER,
+    payload
+});
+
 
 export const setTweetsLoadingStatus = (payload: LoadingStatus): SetTweetsLoadingStateInterface => ({
     type: TweetsActionType.SET_LOADING_STATE,

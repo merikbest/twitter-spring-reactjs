@@ -2,6 +2,8 @@ package com.gmail.merikbest2015.twitterspringreactjs.dto.response;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class UserResponse {
     private Long id;
@@ -14,4 +16,6 @@ public class UserResponse {
     private ImageResponse avatar;
     private ImageResponse wallpaper;
     private boolean confirmed;
+    private List<UserResponse> followers;
+    private List<UserResponse> following;
 }

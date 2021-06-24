@@ -54,7 +54,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({classes, maxRows}: AddTweet
             const image: Image = await uploadImage(file);
             result.push(image);
         }
-        dispatch(fetchAddTweet({ text, images: result, likes: [] }));
+        dispatch(fetchAddTweet({ text, images: result, likes: [], retweets: [] }));
         setText('');
         setImages([]);
     };
