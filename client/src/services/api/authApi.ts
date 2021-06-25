@@ -30,8 +30,15 @@ export const AuthApi = {
         return data;
     },
     async updateUserProfile(userData: User): Promise<User> {
-        const {data} = await axios.put<User>('http://localhost:8080/api/v1/user/', userData);
-        console.log(data)
+        const {data} = await axios.put<User>('http://localhost:8080/api/v1/user', userData);
+        return data;
+    },
+    async follow(userId: string): Promise<User | undefined> {
+        const {data} = await axios.get<User | undefined>('http://localhost:8080/api/v1/user/follow/' + userId);
+        return data;
+    },
+    async unfollow(userId: string): Promise<User | undefined> {
+        const {data} = await axios.get<User | undefined>('http://localhost:8080/api/v1/user/unfollow/' + userId);
         return data;
     },
 };

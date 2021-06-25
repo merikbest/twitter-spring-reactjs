@@ -1,18 +1,49 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 
-import {TagsApi} from '../../../services/api/tagsApi'
 import {LoadingStatus} from '../../types';
-import {UsersActionsType} from "./contracts/actionTypes";
+import {
+    FetchUserActionInterface,
+    FollowUserActionInterface,
+    UnfollowUserActionInterface,
+    UsersActionsType
+} from "./contracts/actionTypes";
+import {AuthApi} from "../../../services/api/authApi";
+import {setUser, setUsersLoadingState} from "./actionCreators";
+import {User} from "../user/contracts/state";
+import {setUserLoadingStatus} from "../user/actionCreators";
 
-export function* fetchUsersRequest() {
-    // try {
-    //     const items: TagsState['items'] = yield call(TagsApi.fetchTags);
-    //     yield put(setTags(items));
-    // } catch (error) {
-    //     yield put(setTagsLoadingState(LoadingStatus.ERROR));
-    // }
+export function* fetchUserRequest({payload}: FetchUserActionInterface) {
+    try {
+        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+        const item: User = yield call(AuthApi.getUserInfo, payload);
+        yield put(setUser(item));
+    } catch (error) {
+        yield put(setUsersLoadingState(LoadingStatus.ERROR));
+    }
+}
+
+export function* fetchFollowUser({payload}: FollowUserActionInterface) {
+    try {
+        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+        const item: User = yield call(AuthApi.follow, payload);
+        yield put(setUser(item));
+    } catch (error) {
+        yield put(setUsersLoadingState(LoadingStatus.ERROR));
+    }
+}
+
+export function* fetchUnfollowUser({payload}: UnfollowUserActionInterface) {
+    try {
+        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+        const item: User = yield call(AuthApi.unfollow, payload);
+        yield put(setUser(item));
+    } catch (error) {
+        yield put(setUsersLoadingState(LoadingStatus.ERROR));
+    }
 }
 
 export function* usersSaga() {
-    yield takeLatest(UsersActionsType.FETCH_ITEMS, fetchUsersRequest);
+    yield takeLatest(UsersActionsType.FETCH_USER, fetchUserRequest);
+    yield takeLatest(UsersActionsType.FOLLOW_USER, fetchFollowUser);
+    yield takeLatest(UsersActionsType.UNFOLLOW_USER, fetchUnfollowUser);
 }

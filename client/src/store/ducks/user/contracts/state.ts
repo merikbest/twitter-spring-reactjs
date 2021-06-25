@@ -15,6 +15,8 @@ export interface User {
     registration?: string;
     dateOfBirth?: string;
     tweets?: Tweet[];
+    followers?: User[];
+    following?: User[];
 }
 
 export interface AuthUser {

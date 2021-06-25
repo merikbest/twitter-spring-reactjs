@@ -5,19 +5,29 @@ import {UsersState} from "./contracts/state";
 import {UsersActions, UsersActionsType} from "./contracts/actionTypes";
 
 const initialUsersState: UsersState = {
-    items: [],
+    user: undefined,
+    users: [],
     loadingState: LoadingStatus.NEVER,
 };
 
 export const usersReducer = produce((draft: Draft<UsersState>, action: UsersActions) => {
     switch (action.type) {
+        case UsersActionsType.SET_USER:
+            draft.user = action.payload;
+            draft.loadingState = LoadingStatus.SUCCESS;
+            break;
+
         case UsersActionsType.SET_ITEMS:
-            draft.items = action.payload;
+            draft.users = action.payload;
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
         case UsersActionsType.FETCH_ITEMS:
             draft.loadingState = LoadingStatus.LOADING;
+            break;
+
+        case UsersActionsType.SET_USER_LOADING_STATE:
+            draft.loadingState = action.payload;
             break;
 
         default:
