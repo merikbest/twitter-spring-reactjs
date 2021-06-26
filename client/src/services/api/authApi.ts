@@ -25,6 +25,10 @@ export const AuthApi = {
         const {data} = await axios.get<AuthUser>('http://localhost:8080/api/v1/auth/user');
         return data;
     },
+    async getRelevantUsers(): Promise<User[]> {
+        const {data} = await axios.get<User[]>('http://localhost:8080/api/v1/user/relevant');
+        return data;
+    },
     async getUserInfo(userId: string): Promise<User | undefined> {
         const {data} = await axios.get<User | undefined>('http://localhost:8080/api/v1/user/' + userId);
         return data;

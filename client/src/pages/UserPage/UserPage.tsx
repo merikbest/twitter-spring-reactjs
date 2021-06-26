@@ -22,9 +22,9 @@ import "./UserPage.scss";
 import EditProfileModal from "../../components/EditProfileModal/EditProfileModal";
 import {fetchUserData} from "../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../store/types";
-import {selectUserData} from "../../store/ducks/user/selectors";
-import {selectUser} from "../../store/ducks/users/selectors";
-import {fetchUser, followUser, unfollowUser} from "../../store/ducks/users/actionCreators";
+import {selectUserData, selectUserIsLoading} from "../../store/ducks/user/selectors";
+import {selectUser, selectUsersIsLoading} from "../../store/ducks/users/selectors";
+import {fetchUser, fetchUsers, followUser, unfollowUser} from "../../store/ducks/users/actionCreators";
 
 const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
     const classes = useHomeStyles();
@@ -32,22 +32,20 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
     const tweets = useSelector(selectTweetsItems);
     const myProfile = useSelector(selectUserData);
     const userProfile = useSelector(selectUser);
-    const isLoading = useSelector(selectIsTweetsLoading);
+    const isTweetsLoading = useSelector(selectIsTweetsLoading);
 
     const [activeTab, setActiveTab] = useState<number>(0);
     const [visibleEditProfile, setVisibleEditProfile] = useState<boolean>(false);
-    const followIndex = userProfile?.following?.findIndex((user) => user.id === myProfile?.user.id);
+    const follower = userProfile?.following?.find((user) => user.id === myProfile?.user.id);
 
     useEffect(() => {
         dispatch(setTweetsLoadingStatus(LoadingStatus.LOADING));
-        dispatch(fetchUserData());
-    }, []);
-
-    useEffect(() => {
         if (match.params.id) {
             dispatch(fetchUser(match.params.id));
         }
-    }, [dispatch]);
+        dispatch(fetchUserData());
+        dispatch(fetchUsers());
+    }, [match.params.id]);
 
     useEffect(() => {
         if (userProfile) {
@@ -68,7 +66,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
     };
 
     const handleFollow = () => {
-        if (followIndex === myProfile?.user.id) {
+        if (follower) {
             dispatch(unfollowUser(match.params.id));
         } else {
             dispatch(followUser(match.params.id));
@@ -95,12 +93,12 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
                         "https://abs.twimg.com/sticky/default_profile_images/default_profile_reasonably_small.png"}/>
                 </div>
                 {userProfile?.id === myProfile?.user.id ? (
-                    <Button onClick={onOpenEditProfile} className={classes.profileMenuEditButton}>Edit profile</Button>
+                    <Button onClick={onOpenEditProfile} color="primary" className={classes.profileMenuEditButton}>Edit profile</Button>
                 ) : (
-                    followIndex === myProfile?.user.id ? (
-                        <Button onClick={handleFollow} className={classes.profileMenuEditButton}>Follow</Button>
+                    follower ? (
+                        <Button onClick={handleFollow} color="primary" className={classes.profileMenuEditButton}>Unfollow</Button>
                     ) : (
-                        <Button onClick={handleFollow} className={classes.profileMenuEditButton}>Unfollow</Button>
+                        <Button onClick={handleFollow} color="primary" className={classes.profileMenuEditButton}>Follow</Button>
                     )
                 )}
                 {!userProfile ? (
@@ -147,7 +145,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
                 <Tab label="Likes"/>
             </Tabs>
             <div className="user__tweets">
-                {isLoading ? (
+                {isTweetsLoading ? (
                     <div className={classes.tweetsCentred}>
                         <CircularProgress/>
                     </div>

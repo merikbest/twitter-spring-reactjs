@@ -48,7 +48,7 @@ const App: FC = (): ReactElement => {
                 <Route path="/signin" component={SignIn} exact/>
                 <Layout>
                     <Route path="/home" component={Home}/>
-                    <Route path="/user/:id" component={UserPage}/>
+                    <Route path="/user/:id" component={UserPage} exact />
                     <Route path="/user/activate/:hash" component={ActivatePage} exact />
 
                 </Layout>

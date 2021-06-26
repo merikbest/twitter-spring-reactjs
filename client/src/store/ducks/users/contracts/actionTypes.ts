@@ -7,8 +7,8 @@ export enum UsersActionsType {
     FETCH_USER  = 'users/FETCH_USER',
     FOLLOW_USER  = 'users/FOLLOW_USER',
     UNFOLLOW_USER  = 'users/UNFOLLOW_USER',
-    SET_ITEMS = 'users/SET_ITEMS',
-    FETCH_ITEMS  = 'users/FETCH_TAGS',
+    SET_USERS = 'users/SET_USERS',
+    FETCH_USERS  = 'users/FETCH_USERS',
     SET_USER_LOADING_STATE = 'users/SET_USER_LOADING_STATE',
 }
 
@@ -37,20 +37,16 @@ export interface SetUsersLoadingStatusActionInterface extends Action<UsersAction
     payload: LoadingStatus;
 }
 
-export interface SetUsersItemsActionInterface extends Action<UsersActionsType> {
-    type: UsersActionsType.SET_ITEMS;
+export interface SetUsersActionInterface extends Action<UsersActionsType> {
+    type: UsersActionsType.SET_USERS;
     payload: User[];
 }
 
-export interface FetchUsersItemsActionInterface extends Action<UsersActionsType> {
-    type: UsersActionsType.FETCH_ITEMS;
+export interface FetchUsersActionInterface extends Action<UsersActionsType> {
+    type: UsersActionsType.FETCH_USERS;
 }
 
 export type UsersActions =
     | SetUserActionInterface
-    | FetchUserActionInterface
-    | FollowUserActionInterface
-    | UnfollowUserActionInterface
-    | SetUsersItemsActionInterface
-    | FetchUsersItemsActionInterface
+    | SetUsersActionInterface
     | SetUsersLoadingStatusActionInterface;

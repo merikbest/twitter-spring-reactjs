@@ -38,6 +38,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getRelevantUsers() {
+        return userRepository.findTop5By();
+    }
+
+    @Override
     public List<Tweet> getUserTweets(Long userId) {
         User user = userRepository.getOne(userId);
         return user.getTweets();
@@ -85,7 +90,8 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(principal.getName());
         User currentUser = userRepository.getOne(userId);
         user.getFollowers().add(currentUser);
-        return userRepository.save(user);
+        userRepository.save(user);
+        return currentUser;
     }
 
     @Override
@@ -94,6 +100,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(principal.getName());
         User currentUser = userRepository.getOne(userId);
         user.getFollowers().remove(currentUser);
-        return userRepository.save(user);
+        userRepository.save(user);
+        return currentUser;
     }
 }

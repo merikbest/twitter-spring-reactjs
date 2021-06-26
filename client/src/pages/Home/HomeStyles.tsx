@@ -302,7 +302,6 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         border: '1px solid',
         borderRadius: '25px',
         padding: '0 15px',
-        color: theme.palette.primary.main,
     },
     imagesListItemRemove: {
         position: 'absolute',

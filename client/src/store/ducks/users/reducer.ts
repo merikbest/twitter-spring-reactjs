@@ -17,13 +17,9 @@ export const usersReducer = produce((draft: Draft<UsersState>, action: UsersActi
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
-        case UsersActionsType.SET_ITEMS:
+        case UsersActionsType.SET_USERS:
             draft.users = action.payload;
             draft.loadingState = LoadingStatus.LOADED;
-            break;
-
-        case UsersActionsType.FETCH_ITEMS:
-            draft.loadingState = LoadingStatus.LOADING;
             break;
 
         case UsersActionsType.SET_USER_LOADING_STATE:

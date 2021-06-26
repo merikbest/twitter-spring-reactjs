@@ -8,11 +8,10 @@ import {useHomeStyles} from './HomeStyles';
 import {AddTweetForm} from '../../components/AddTweetForm/AddTweetForm';
 import {fetchTweets} from "../../store/ducks/tweets/actionCreators";
 import {selectIsTweetsLoading, selectTweetsItems} from "../../store/ducks/tweets/selectors";
-import {fetchTags} from "../../store/ducks/tags/actionCreators";
 import {BackButton} from "../../components/BackButton/BackButton";
 import {FullTweet} from "./FullTweet";
 import {fetchUserData} from "../../store/ducks/user/actionCreators";
-import {selectUserData} from "../../store/ducks/user/selectors";
+import {fetchUsers} from "../../store/ducks/users/actionCreators";
 
 const Home: FC = (): ReactElement => {
     const dispatch = useDispatch();
@@ -23,6 +22,7 @@ const Home: FC = (): ReactElement => {
     useEffect(() => {
         dispatch(fetchTweets());
         dispatch(fetchUserData());
+        dispatch(fetchUsers());
     }, []);
 
     return (

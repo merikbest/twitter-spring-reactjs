@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Image;
+import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -27,8 +29,14 @@ public class UserMapper {
         return modelMapper.map(user, UserResponse.class);
     }
 
-    ImageResponse convertToImageResponse(Image image) {
+    private ImageResponse convertToImageResponse(Image image) {
         return modelMapper.map(image, ImageResponse.class);
+    }
+
+    private List<UserResponse> convertListToResponseDto(List<User> users) {
+        return users.stream()
+                .map(this::convertToUserResponse)
+                .collect(Collectors.toList());
     }
 
     User convertToEntity(UserRequest userRequest) {
@@ -57,5 +65,9 @@ public class UserMapper {
 
     public UserResponse unfollow(Long userId) {
         return convertToUserResponse(userService.unfollow(userId));
+    }
+
+    public List<UserResponse> getRelevantUsers() {
+        return convertListToResponseDto(userService.getRelevantUsers());
     }
 }

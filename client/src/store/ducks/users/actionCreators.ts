@@ -1,8 +1,8 @@
 import {User} from "../user/contracts/state";
 import {
-    FetchUserActionInterface,
+    FetchUserActionInterface, FetchUsersActionInterface,
     FollowUserActionInterface,
-    SetUserActionInterface,
+    SetUserActionInterface, SetUsersActionInterface,
     SetUsersLoadingStatusActionInterface,
     UnfollowUserActionInterface,
     UsersActionsType
@@ -17,6 +17,15 @@ export const setUser = (payload: User): SetUserActionInterface => ({
 export const fetchUser = (payload: string): FetchUserActionInterface => ({
     type: UsersActionsType.FETCH_USER,
     payload
+});
+
+export const setUsers = (payload: User[]): SetUsersActionInterface => ({
+    type: UsersActionsType.SET_USERS,
+    payload
+});
+
+export const fetchUsers = (): FetchUsersActionInterface => ({
+    type: UsersActionsType.FETCH_USERS
 });
 
 export const followUser = (payload: string): FollowUserActionInterface => ({
