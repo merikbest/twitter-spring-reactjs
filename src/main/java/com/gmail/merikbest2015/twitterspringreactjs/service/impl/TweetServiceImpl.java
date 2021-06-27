@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -97,6 +95,15 @@ public class TweetServiceImpl implements TweetService {
 //        }
 
         return tweetRepository.findAllByOrderByDateTimeDesc();
+    }
+
+    @Override
+    public List<Tweet> searchTweets(String text) {
+        Set<Tweet> tweets = new HashSet<>();
+        tweets.addAll(tweetRepository.finByTextContaining(text));
+        tweets.addAll(tagRepository.findByTagName(text).getTweets());
+        tweets.addAll(userRepository.findByFullNameContaining(text).getTweets());
+        return List.copyOf(tweets);
     }
 
     @Override

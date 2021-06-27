@@ -42,6 +42,11 @@ public class TweetController {
         return ResponseEntity.ok(tweetMapper.deleteTweet(tweetId));
     }
 
+    @GetMapping("/search/{text}")
+    public ResponseEntity<List<TweetResponse>> searchTweets(@PathVariable String text) {
+        return ResponseEntity.ok(tweetMapper.searchTweets(text));
+    }
+
     @GetMapping("/like/{tweetId}")
     public ResponseEntity<TweetResponse> likeTweet(@PathVariable Long tweetId) {
         return ResponseEntity.ok(tweetMapper.likeTweet(tweetId));

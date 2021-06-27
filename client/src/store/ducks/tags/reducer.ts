@@ -1,7 +1,7 @@
 import produce, {Draft} from 'immer';
 
 import {LoadingStatus} from '../../types';
-import {TagsActions, TagsActionsType} from './actionCreators';
+import { TagsActions, TagsActionsType } from './contracts/actionTypes';
 import {TagsState} from './contracts/state';
 
 const initialTagsState: TagsState = {
@@ -14,11 +14,6 @@ export const tagsReducer = produce((draft: Draft<TagsState>, action: TagsActions
         case TagsActionsType.SET_TAGS:
             draft.items = action.payload;
             draft.loadingState = LoadingStatus.LOADED;
-            break;
-
-        case TagsActionsType.FETCH_TAGS:
-            draft.items = [];
-            draft.loadingState = LoadingStatus.LOADING;
             break;
 
         case TagsActionsType.SET_LOADING_STATE:

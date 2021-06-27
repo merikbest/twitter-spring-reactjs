@@ -3,7 +3,7 @@ import {Container, Grid, InputAdornment} from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/SearchOutlined';
 
 import {useHomeStyles} from './Home/HomeStyles';
-import {SearchTextField} from '../components/SearchTextField';
+import {SideSearchTextField} from '../components/SearchTextField/SideSearchTextField';
 import SideMenu from "../components/SideMenu/SideMenu";
 import Tags from "../components/Tags/Tags";
 import Users from '../components/Users/Users';
@@ -26,7 +26,7 @@ export const Layout: FC<Layout> = ({children}): ReactElement => {
                 </Grid>
                 <Grid sm={3} md={3} item>
                     <div className={classes.rightSide}>
-                        <SearchTextField
+                        <SideSearchTextField
                             variant="outlined"
                             placeholder="Search Twitter"
                             InputProps={{

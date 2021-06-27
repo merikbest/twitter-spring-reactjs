@@ -12,6 +12,7 @@ import {LoadingStatus} from './store/types';
 import TwitterIcon from "@material-ui/icons/Twitter";
 import {fetchUserData} from './store/ducks/user/actionCreators';
 import ActivatePage from "./pages/ActivatePage/ActivatePage";
+import Search from './components/Search/Search';
 
 const App: FC = (): ReactElement => {
     const classes = useHomeStyles();
@@ -50,7 +51,6 @@ const App: FC = (): ReactElement => {
                     <Route path="/home" component={Home}/>
                     <Route path="/user/:id" component={UserPage} exact />
                     <Route path="/user/activate/:hash" component={ActivatePage} exact />
-
                 </Layout>
             </Switch>
         </div>

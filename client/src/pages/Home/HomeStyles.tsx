@@ -85,7 +85,7 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         borderLeft: '0',
         borderRight: '0',
         borderRadius: 0,
-        padding: '10px 15px',
+        // padding: '10px 15px',
         '& h6': {
             fontWeight: 800,
         },

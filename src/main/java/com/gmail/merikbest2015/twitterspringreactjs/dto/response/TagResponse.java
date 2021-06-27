@@ -8,6 +8,6 @@ import java.util.List;
 public class TagResponse {
     private Long id;
     private String tagName;
-    private Long tweetsCount;
+    private Long tweetsQuantity;
     private List<TweetResponse> tweets;
 }

@@ -1,6 +1,5 @@
 package com.gmail.merikbest2015.twitterspringreactjs.conroller;
 
-import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TagRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TagResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.TagMapper;
@@ -22,8 +21,8 @@ public class TagController {
         return ResponseEntity.ok(tagMapper.getTags());
     }
 
-    @PostMapping
-    public ResponseEntity<List<TweetResponse>> getTweetsByTag(@RequestBody TagRequest tagRequest) {
-        return ResponseEntity.ok(tagMapper.getTweetsByTag(tagRequest));
+    @GetMapping("/{tagName}")
+    public ResponseEntity<List<TweetResponse>> getTweetsByTag(@PathVariable String tagName) {
+        return ResponseEntity.ok(tagMapper.getTweetsByTag(tagName));
     }
 }

@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -60,5 +61,9 @@ public class TweetMapper {
 
     public TweetResponse retweet(Long tweetId) {
         return convertToTweetResponse(tweetService.retweet(tweetId));
+    }
+
+    public List<TweetResponse> searchTweets(String text) {
+        return convertListToResponseDto(tweetService.searchTweets(text));
     }
 }

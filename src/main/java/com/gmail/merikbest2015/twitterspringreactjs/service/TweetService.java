@@ -16,6 +16,8 @@ public interface TweetService {
 
     List<Tweet> deleteTweet(Long tweetId);
 
+    List<Tweet> searchTweets(String text);
+
     Tweet likeTweet(Long tweetId);
 
     Tweet retweet(Long tweetId);

@@ -25,6 +25,7 @@ import {LoadingStatus} from "../../store/types";
 import {selectUserData, selectUserIsLoading} from "../../store/ducks/user/selectors";
 import {selectUser, selectUsersIsLoading} from "../../store/ducks/users/selectors";
 import {fetchUser, fetchUsers, followUser, unfollowUser} from "../../store/ducks/users/actionCreators";
+import {fetchTags} from "../../store/ducks/tags/actionCreators";
 
 const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
     const classes = useHomeStyles();
@@ -45,6 +46,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
         }
         dispatch(fetchUserData());
         dispatch(fetchUsers());
+        dispatch(fetchTags());
     }, [match.params.id]);
 
     useEffect(() => {

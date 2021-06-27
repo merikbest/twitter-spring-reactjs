@@ -1,7 +1,7 @@
 import { Theme, withStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField/TextField';
 
-export const SearchTextField = withStyles((theme: Theme) => ({
+export const SideSearchTextField = withStyles((theme: Theme) => ({
     root: {
         '& .MuiOutlinedInput-root': {
             borderRadius: 30,

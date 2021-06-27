@@ -1,9 +1,11 @@
 import {LoadingStatus} from "../../../types";
+import {Tweet} from "../../tweets/contracts/state";
 
 export interface Tag {
     id: string;
-    name: string;
-    count: number;
+    tagName: string;
+    tweetsQuantity: number;
+    tweets: Tweet[];
 }
 
 export interface TagsState {

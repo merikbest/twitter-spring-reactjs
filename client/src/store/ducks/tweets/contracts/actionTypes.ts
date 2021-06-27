@@ -15,6 +15,7 @@ export enum TweetsActionType {
     FETCH_ADD_TWEET = "tweets/FETCH_ADD_TWEET",
     FETCH_TWEETS = "tweets/FETCH_TWEETS",
     FETCH_TWEETS_BY_USER = "tweets/FETCH_TWEETS_BY_USER",
+    FETCH_TWEETS_BY_TAG = "tweets/FETCH_TWEETS_BY_TAG",
     SET_LOADING_STATE = "tweets/SET_LOADING_STATE",
     SET_ADD_FORM_STATE = "tweets/SET_ADD_FORM_STATE"
 }
@@ -83,6 +84,11 @@ export interface FetchTweetsByUserActionInterface extends Action<TweetsActionTyp
     payload: User;
 }
 
+export interface FetchTweetsByTagActionInterface extends Action<TweetsActionType> {
+    type: TweetsActionType.FETCH_TWEETS_BY_TAG;
+    payload: string;
+}
+
 export interface FetchUserTweetsActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_TWEETS_BY_USER;
     payload: string
@@ -99,4 +105,5 @@ export type TweetsActions =
     | LikeTweetActionInterface
     | RetweetActionInterface
     | FetchTweetsByUserActionInterface
+    | FetchTweetsByTagActionInterface
     | FetchUserTweetsActionInterface;
