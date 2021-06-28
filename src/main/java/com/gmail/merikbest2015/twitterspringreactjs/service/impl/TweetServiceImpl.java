@@ -48,6 +48,7 @@ public class TweetServiceImpl implements TweetService {
         tweetRepository.save(tweet);
         List<Tweet> tweets = user.getTweets();
         tweets.add(tweet);
+        userRepository.save(user);
 
         Pattern pattern = Pattern.compile("(#\\w+)\\b");
         Matcher match = pattern.matcher(tweet.getText());
@@ -89,20 +90,25 @@ public class TweetServiceImpl implements TweetService {
         User user = userRepository.findByEmail(principal.getName());
         List<Tweet> tweets = user.getTweets();
         tweets.remove(tweet);
-
-//        if (tweetAuthor.getId().equals(user.getId())) {
-//            tweets.remove(tweet)
-//        }
-
         return tweetRepository.findAllByOrderByDateTimeDesc();
     }
 
     @Override
     public List<Tweet> searchTweets(String text) {
         Set<Tweet> tweets = new HashSet<>();
-        tweets.addAll(tweetRepository.finByTextContaining(text));
-        tweets.addAll(tagRepository.findByTagName(text).getTweets());
-        tweets.addAll(userRepository.findByFullNameContaining(text).getTweets());
+        List<Tweet> tweetsByText = tweetRepository.findAllByTextContaining(text);
+        List<Tag> tagsByText = tagRepository.findByTagNameContaining(text);
+        List<User> usersByText = userRepository.findByFullNameContaining(text);
+
+        if (tweetsByText != null) {
+            tweets.addAll(tweetsByText);
+        }
+        if (tagsByText != null) {
+            tagsByText.forEach(tag -> tweets.addAll(tag.getTweets()));
+        }
+        if (usersByText != null) {
+            usersByText.forEach(user -> tweets.addAll(tweetRepository.findAllByUser(user)));
+        }
         return List.copyOf(tweets);
     }
 

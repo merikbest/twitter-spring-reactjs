@@ -20,12 +20,20 @@ export const TweetsApi = {
         const data = await axios.get<Response<Tweet[]>>(`http://localhost:8080/api/v1/user/${id}/tweets`);
         return data.data;
     },
+    async getUserLikedTweets(id: string): Promise<Response<Tweet[]>> {
+        const data = await axios.get<Response<Tweet[]>>(`http://localhost:8080/api/v1/user/${id}/liked`);
+        return data.data;
+    },
     async fetchTweetData(id: string): Promise<Response<Tweet>> {
         const data = await axios.get<Response<Tweet>>('http://localhost:8080/api/v1/tweets/' + id);
         return data.data;
     },
     async addTweet(payload: { text: string; images: Image[]; likes: []; retweets: []; }): Promise<Response<Tweet[]>> {
         const data = await axios.post<Response<Tweet[]>>('http://localhost:8080/api/v1/tweets', payload);
+        return data.data;
+    },
+    async searchTweets(text: string): Promise<Response<Tweet[]>> {
+        const data = await axios.get<Response<Tweet[]>>('http://localhost:8080/api/v1/tweets/search/' + text);
         return data.data;
     },
     async likeTweet(id: string): Promise<Response<Tweet>> {

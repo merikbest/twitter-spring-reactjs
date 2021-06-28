@@ -49,6 +49,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<Tweet> getUserLikedTweets(Long userId) {
+        User user = userRepository.getOne(userId);
+        return user.getLikedTweets();
+    }
+
+    @Override
     public Image uploadImage(MultipartFile multipartFile) {
         Image image = new Image();
         if (multipartFile != null) {

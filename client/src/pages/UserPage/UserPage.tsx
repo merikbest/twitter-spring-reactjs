@@ -14,18 +14,16 @@ import LinkOutlinedIcon from '@material-ui/icons/LinkOutlined';
 import {useHomeStyles} from '../Home/HomeStyles';
 import {BackButton} from "../../components/BackButton/BackButton";
 import {selectIsTweetsLoading, selectTweetsItems} from "../../store/ducks/tweets/selectors";
-import {fetchTweetsByUser, fetchUserTweets, setTweetsLoadingStatus} from "../../store/ducks/tweets/actionCreators";
-import {AuthApi} from "../../services/api/authApi";
+import {fetchLikedTweets, fetchUserTweets, setTweetsLoadingStatus} from "../../store/ducks/tweets/actionCreators";
 import Tweet from "../../components/Tweet/Tweet";
-import {User} from "../../store/ducks/user/contracts/state";
-import "./UserPage.scss";
 import EditProfileModal from "../../components/EditProfileModal/EditProfileModal";
 import {fetchUserData} from "../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../store/types";
-import {selectUserData, selectUserIsLoading} from "../../store/ducks/user/selectors";
-import {selectUser, selectUsersIsLoading} from "../../store/ducks/users/selectors";
+import {selectUserData} from "../../store/ducks/user/selectors";
+import {selectUser} from "../../store/ducks/users/selectors";
 import {fetchUser, fetchUsers, followUser, unfollowUser} from "../../store/ducks/users/actionCreators";
 import {fetchTags} from "../../store/ducks/tags/actionCreators";
+import "./UserPage.scss";
 
 const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
     const classes = useHomeStyles();
@@ -75,6 +73,14 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
         }
     };
 
+    const handleShowUserTweets = () => {
+        dispatch(fetchUserTweets(match.params.id));
+    };
+
+    const handleShowLikedTweets = () => {
+        dispatch(fetchLikedTweets(match.params.id));
+    };
+
     return (
         <Paper className={classNames(classes.tweetsWrapper, 'user')} variant="outlined">
             <Paper className={classes.tweetsHeader} variant="outlined">
@@ -95,12 +101,15 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
                         "https://abs.twimg.com/sticky/default_profile_images/default_profile_reasonably_small.png"}/>
                 </div>
                 {userProfile?.id === myProfile?.user.id ? (
-                    <Button onClick={onOpenEditProfile} color="primary" className={classes.profileMenuEditButton}>Edit profile</Button>
+                    <Button onClick={onOpenEditProfile} color="primary" className={classes.profileMenuEditButton}>Edit
+                        profile</Button>
                 ) : (
                     follower ? (
-                        <Button onClick={handleFollow} color="primary" className={classes.profileMenuEditButton}>Unfollow</Button>
+                        <Button onClick={handleFollow} color="primary"
+                                className={classes.profileMenuEditButton}>Unfollow</Button>
                     ) : (
-                        <Button onClick={handleFollow} color="primary" className={classes.profileMenuEditButton}>Follow</Button>
+                        <Button onClick={handleFollow} color="primary"
+                                className={classes.profileMenuEditButton}>Follow</Button>
                     )
                 )}
                 {!userProfile ? (
@@ -141,10 +150,10 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
                 </ul>
             </div>
             <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChange}>
-                <Tab label="Tweets"/>
-                <Tab label="Tweets & replies"/>
+                <Tab onClick={handleShowUserTweets} label="Tweets"/>
+                <Tab onClick={handleShowUserTweets} label="Tweets & replies"/>
                 <Tab label="Media"/>
-                <Tab label="Likes"/>
+                <Tab onClick={handleShowLikedTweets} label="Likes"/>
             </Tabs>
             <div className="user__tweets">
                 {isTweetsLoading ? (

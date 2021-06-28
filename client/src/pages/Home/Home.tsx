@@ -39,7 +39,8 @@ const Home: FC = (): ReactElement => {
                     <BackButton/>
                     <Typography variant="h6">Tweet</Typography>
                 </Route>
-                <Route path='/home/search/:tag' component={Search} />
+                {/*<Route path={['/home/search', '/home/search/:tag']} component={Search} />*/}
+                <Route path={'/home/search'} component={Search} />
             </Paper>
 
             <Route path='/home' exact>
@@ -51,7 +52,7 @@ const Home: FC = (): ReactElement => {
                 </Paper>
             </Route>
 
-            <Route path={['/home', '/home/search/:tag']} exact>
+            <Route path={['/home', '/home/search']} exact>
                 {isLoading ? (
                     <div className={classes.tweetsCentred}>
                         <CircularProgress/>

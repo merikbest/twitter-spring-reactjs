@@ -33,6 +33,16 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
             draft.loadingState = LoadingStatus.LOADING;
             break;
 
+        case TweetsActionType.FETCH_TWEETS_BY_TEXT:
+            draft.items = [];
+            draft.loadingState = LoadingStatus.LOADING;
+            break;
+
+        case TweetsActionType.FETCH_LIKED_TWEETS:
+            draft.items = [];
+            draft.loadingState = LoadingStatus.LOADING;
+            break;
+
         case TweetsActionType.SET_LOADING_STATE:
             draft.loadingState = action.payload;
             break;

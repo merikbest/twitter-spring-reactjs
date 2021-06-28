@@ -1,41 +1,56 @@
-import React, {ChangeEvent, FC, useEffect, useState} from 'react';
+import React, {ChangeEvent, FC, FormEvent, useEffect, useState} from 'react';
+import {useLocation} from "react-router-dom";
+import {useDispatch} from "react-redux";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import {MainSearchTextField} from "../SearchTextField/MainSearchTextField";
 import {InputAdornment} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
-import {useDispatch} from "react-redux";
-import {fetchTweetsByTag} from "../../store/ducks/tweets/actionCreators";
-import {RouteComponentProps} from "react-router-dom";
+
+import {MainSearchTextField} from "../SearchTextField/MainSearchTextField";
+import {fetchTweetsByTag, fetchTweetsByText} from "../../store/ducks/tweets/actionCreators";
 import {BackButton} from "../BackButton/BackButton";
 
-const Search: FC<RouteComponentProps<{ tag: string }>> = ({match}) => {
+const Search: FC = () => {
     const dispatch = useDispatch();
+    const location = useLocation<{tag: string | undefined}>();
+    const [text, setText] = React.useState<string>("");
     const [activeTab, setActiveTab] = useState<number>(0);
 
-    const handleChange = (event: ChangeEvent<{}>, newValue: number) => {
+    useEffect(() => {
+        if (location.state?.tag !== undefined) {
+            dispatch(fetchTweetsByTag(location.state?.tag));
+            setText(decodeURIComponent(location.state?.tag));
+        }
+    }, [location]);
+
+    const handleChangeTab = (event: ChangeEvent<{}>, newValue: number): void => {
         setActiveTab(newValue);
     };
 
-    useEffect(() => {
-        dispatch(fetchTweetsByTag(match.params.tag))
-    }, [match.params.tag]);
+    const handleClickSearch = (event: FormEvent<HTMLFormElement>): void => {
+        event.preventDefault();
+        dispatch(fetchTweetsByText(encodeURIComponent(text)));
+    };
 
     return (
         <div>
+            <form onSubmit={handleClickSearch}>
             <BackButton/>
-            <MainSearchTextField
-                variant="outlined"
-                placeholder="Search Twitter"
-                InputProps={{
-                    startAdornment: (
-                        <InputAdornment position="start">
-                            <SearchIcon/>
-                        </InputAdornment>
-                    ),
-                }}
-            />
-            <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChange}>
+                <MainSearchTextField
+                    variant="outlined"
+                    placeholder="Search Twitter"
+                    onChange={(event) => setText(event.target.value)}
+                    value={text}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <SearchIcon/>
+                            </InputAdornment>
+                        ),
+                    }}
+                />
+            </form>
+            <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
                 <Tab style={{minWidth: "120px"}} label="Top"/>
                 <Tab style={{minWidth: "120px"}} label="Latest"/>
                 <Tab style={{minWidth: "120px"}} label="People"/>

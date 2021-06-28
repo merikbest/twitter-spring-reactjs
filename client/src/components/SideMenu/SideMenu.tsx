@@ -57,14 +57,16 @@ const SideMenu: FC<SideMenuProps> = ({classes}: SideMenuProps): ReactElement => 
                     </Link>
                 </li>
                 <li className={classes.sideMenuListItem}>
-                    <div>
-                        <SearchIcon className={classes.sideMenuListItemIcon}/>
-                        <Hidden smDown>
-                            <Typography className={classes.sideMenuListItemLabel} variant="h6">
-                                Explore
-                            </Typography>
-                        </Hidden>
-                    </div>
+                    <Link to="/home/search">
+                        <div>
+                            <SearchIcon className={classes.sideMenuListItemIcon}/>
+                            <Hidden smDown>
+                                <Typography className={classes.sideMenuListItemLabel} variant="h6">
+                                    Explore
+                                </Typography>
+                            </Hidden>
+                        </div>
+                    </Link>
                 </li>
                 <li className={classes.sideMenuListItem}>
                     <div>

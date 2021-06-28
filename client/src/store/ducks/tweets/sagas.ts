@@ -4,9 +4,13 @@ import {addTweet, likeTweet, setAddFormState, setTweets, setTweetsLoadingStatus}
 import {TweetsApi} from "../../../services/api/tweetsApi";
 import {AddFormState, Tweet} from "./contracts/state";
 import {
-    FetchAddTweetActionInterface,
-    FetchLikeTweetActionInterface, FetchRetweetActionInterface, FetchTweetsByTagActionInterface,
-    FetchTweetsByUserActionInterface, FetchUserTweetsActionInterface,
+    FetchAddTweetActionInterface, FetchLikedTweetsActionInterface,
+    FetchLikeTweetActionInterface,
+    FetchRetweetActionInterface,
+    FetchTweetsByTagActionInterface,
+    FetchTweetsByTextActionInterface,
+    FetchTweetsByUserActionInterface,
+    FetchUserTweetsActionInterface,
     RemoveTweetActionInterface,
     TweetsActionType
 } from "./contracts/actionTypes";
@@ -36,6 +40,24 @@ export function* fetchTweetsByUserRequest({payload}: FetchTweetsByUserActionInte
 export function* fetchTweetsByTagRequest({payload}: FetchTweetsByTagActionInterface) {
     try {
         const item: Tweet[] = yield call(TagsApi.fetchTweetsByTag, payload);
+        yield put(setTweets(item));
+    } catch (e) {
+        yield put(setAddFormState(AddFormState.ERROR));
+    }
+}
+
+export function* fetchTweetsByTextRequest({payload}: FetchTweetsByTextActionInterface) {
+    try {
+        const item: Tweet[] = yield call(TweetsApi.searchTweets, payload);
+        yield put(setTweets(item));
+    } catch (e) {
+        yield put(setAddFormState(AddFormState.ERROR));
+    }
+}
+
+export function* fetchLikedTweetsRequest({payload}: FetchLikedTweetsActionInterface) {
+    try {
+        const item: Tweet[] = yield call(TweetsApi.getUserLikedTweets, payload);
         yield put(setTweets(item));
     } catch (e) {
         yield put(setAddFormState(AddFormState.ERROR));
@@ -88,4 +110,6 @@ export function* tweetsSaga() {
     yield takeLatest(TweetsActionType.FETCH_RETWEET, fetchRetweetRequest);
     yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_USER, fetchUserTweetsRequest);
     yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_TAG, fetchTweetsByTagRequest);
+    yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_TEXT, fetchTweetsByTextRequest);
+    yield takeLatest(TweetsActionType.FETCH_LIKED_TWEETS, fetchLikedTweetsRequest);
 }

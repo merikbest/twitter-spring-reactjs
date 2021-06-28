@@ -34,6 +34,11 @@ public class UserController {
         return ResponseEntity.ok(userMapper.getUserTweets(userId));
     }
 
+    @GetMapping("/{userId}/liked")
+    public ResponseEntity<List<TweetResponse>> getUserLikedTweets(@PathVariable Long userId) {
+        return ResponseEntity.ok(userMapper.getUserLikedTweets(userId));
+    }
+
     @PutMapping
     public ResponseEntity<UserResponse> updateUserProfile(@RequestBody UserRequest userRequest) {
         return ResponseEntity.ok(userMapper.updateUserProfile(userRequest));
