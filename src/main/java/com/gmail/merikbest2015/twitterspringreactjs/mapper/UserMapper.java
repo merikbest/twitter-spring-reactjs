@@ -75,4 +75,11 @@ public class UserMapper {
         return convertListToResponseDto(userService.getRelevantUsers());
     }
 
+    public List<UserResponse> getUserFollowers(Long userId) {
+        return convertListToResponseDto(userService.getUserFollowers(userId));
+    }
+
+    public List<UserResponse> getUserFollowing(Long userId) {
+        return convertListToResponseDto(userService.getUserFollowing(userId));
+    }
 }

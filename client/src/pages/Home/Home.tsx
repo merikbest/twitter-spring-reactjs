@@ -14,6 +14,7 @@ import {fetchUserData} from "../../store/ducks/user/actionCreators";
 import {fetchUsers} from "../../store/ducks/users/actionCreators";
 import {fetchTags} from "../../store/ducks/tags/actionCreators";
 import Search from "../../components/Search/Search";
+import FollowingFollowers from "../../components/FollowingFollowers/FollowingFollowers";
 
 const Home: FC = (): ReactElement => {
     const dispatch = useDispatch();
@@ -39,8 +40,8 @@ const Home: FC = (): ReactElement => {
                     <BackButton/>
                     <Typography variant="h6">Tweet</Typography>
                 </Route>
-                {/*<Route path={['/home/search', '/home/search/:tag']} component={Search} />*/}
-                <Route path={'/home/search'} component={Search} />
+                <Route path="/home/search" component={Search}/>
+
             </Paper>
 
             <Route path='/home' exact>

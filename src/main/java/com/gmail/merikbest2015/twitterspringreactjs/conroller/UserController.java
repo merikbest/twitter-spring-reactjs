@@ -58,4 +58,14 @@ public class UserController {
     public ResponseEntity<UserResponse> unfollow(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.unfollow(userId));
     }
+
+    @GetMapping("/{userId}/followers")
+    public ResponseEntity<List<UserResponse>> getUserFollowers(@PathVariable Long userId) {
+        return ResponseEntity.ok(userMapper.getUserFollowers(userId));
+    }
+
+    @GetMapping("/{userId}/following")
+    public ResponseEntity<List<UserResponse>> getUserFollowing(@PathVariable Long userId) {
+        return ResponseEntity.ok(userMapper.getUserFollowing(userId));
+    }
 }

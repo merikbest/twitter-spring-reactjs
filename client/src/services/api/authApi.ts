@@ -29,6 +29,14 @@ export const AuthApi = {
         const {data} = await axios.get<User[]>('http://localhost:8080/api/v1/user/relevant');
         return data;
     },
+    async getUserFollowers(userId: string): Promise<User[] | undefined> {
+        const {data} = await axios.get<User[] | undefined>(`http://localhost:8080/api/v1/user/${userId}/followers`);
+        return data;
+    },
+    async getUserFollowing(userId: string): Promise<User[] | undefined> {
+        const {data} = await axios.get<User[] | undefined>(`http://localhost:8080/api/v1/user/${userId}/following`);
+        return data;
+    },
     async getUserInfo(userId: string): Promise<User | undefined> {
         const {data} = await axios.get<User | undefined>('http://localhost:8080/api/v1/user/' + userId);
         return data;

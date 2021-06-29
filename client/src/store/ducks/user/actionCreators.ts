@@ -2,8 +2,8 @@ import {User, UserState} from "./contracts/state";
 import {
     FetchSignInActionInterface,
     FetchSignUpActionInterface,
-    FetchUserDataActionInterface,
-    SetUserDataActionInterface,
+    FetchUserDataActionInterface, FetchUserFollowersActionInterface, FetchUserFollowingActionInterface,
+    SetUserDataActionInterface, SetUserFollowersActionInterface, SetUserFollowingActionInterface,
     SetUserLoadingStateActionInterface,
     SignOutActionInterface, UpdateUserDataActionInterface,
     UserActionsType
@@ -37,6 +37,26 @@ export const fetchSignUp = (payload: RegisterFormProps): FetchSignUpActionInterf
 
 export const fetchUserData = (): FetchUserDataActionInterface => ({
     type: UserActionsType.FETCH_USER_DATA,
+});
+
+export const fetchUserFollowers = (payload: string): FetchUserFollowersActionInterface => ({
+    type: UserActionsType.FETCH_USER_FOLLOWERS,
+    payload
+});
+
+export const fetchUserFollowing = (payload: string): FetchUserFollowingActionInterface => ({
+    type: UserActionsType.FETCH_USER_FOLLOWING,
+    payload
+});
+
+export const setUserFollowers = (payload: UserState["followers"]): SetUserFollowersActionInterface => ({
+    type: UserActionsType.SET_USER_FOLLOWERS,
+    payload
+});
+
+export const setUserFollowing = (payload: UserState["followers"]): SetUserFollowingActionInterface => ({
+    type: UserActionsType.SET_USER_FOLLOWING,
+    payload
 });
 
 export const setUserLoadingStatus = (payload: UserState["status"]): SetUserLoadingStateActionInterface => ({

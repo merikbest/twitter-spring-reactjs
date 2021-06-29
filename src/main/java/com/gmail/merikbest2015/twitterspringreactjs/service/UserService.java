@@ -13,6 +13,10 @@ public interface UserService {
 
     List<User> getRelevantUsers();
 
+    List<User> getUserFollowers(Long userId);
+
+    List<User> getUserFollowing(Long userId);
+
     List<Tweet> getUserTweets(Long userId);
 
     List<Tweet> getUserLikedTweets(Long userId);

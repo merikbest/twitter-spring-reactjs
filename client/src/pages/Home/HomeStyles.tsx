@@ -1,5 +1,6 @@
 import {colors, makeStyles, Theme} from '@material-ui/core';
 import grey from '@material-ui/core/colors/grey';
+import Follower from "../../components/FollowingFollowers/Follower";
 
 export const useHomeStyles = makeStyles((theme: Theme) => ({
     centered: {

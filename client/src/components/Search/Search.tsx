@@ -12,7 +12,7 @@ import {BackButton} from "../BackButton/BackButton";
 
 const Search: FC = () => {
     const dispatch = useDispatch();
-    const location = useLocation<{tag: string | undefined}>();
+    const location = useLocation<{ tag: string | undefined }>();
     const [text, setText] = React.useState<string>("");
     const [activeTab, setActiveTab] = useState<number>(0);
 
@@ -35,7 +35,7 @@ const Search: FC = () => {
     return (
         <div>
             <form onSubmit={handleClickSearch}>
-            <BackButton/>
+                <BackButton/>
                 <MainSearchTextField
                     variant="outlined"
                     placeholder="Search Twitter"

@@ -26,6 +26,7 @@ export interface AuthUser {
 
 export interface UserState {
     data: AuthUser | undefined;
+    followers: User[] | undefined;
     status: LoadingStatus;
 }
 
