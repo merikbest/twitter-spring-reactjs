@@ -21,7 +21,7 @@ import {fetchUserData} from "../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../store/types";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {selectUser} from "../../store/ducks/users/selectors";
-import {fetchUser, fetchUsers, followUser, unfollowUser} from "../../store/ducks/users/actionCreators";
+import {fetchUser, fetchRelevantUsers, followUser, unfollowUser} from "../../store/ducks/users/actionCreators";
 import {fetchTags} from "../../store/ducks/tags/actionCreators";
 import "./UserPage.scss";
 
@@ -43,7 +43,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
             dispatch(fetchUser(match.params.id));
         }
         dispatch(fetchUserData());
-        dispatch(fetchUsers());
+        dispatch(fetchRelevantUsers());
         dispatch(fetchTags());
     }, [match.params.id]);
 
@@ -66,10 +66,12 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
     };
 
     const handleFollow = () => {
-        if (follower) {
-            dispatch(unfollowUser(match.params.id));
-        } else {
-            dispatch(followUser(match.params.id));
+        if (userProfile?.id) {
+            if (follower) {
+                dispatch(unfollowUser(userProfile?.id));
+            } else {
+                dispatch(followUser(userProfile?.id));
+            }
         }
     };
 
@@ -145,10 +147,10 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
                 </ul>
                 <br/>
                 <ul className="user__info-details">
-                    <Link to={{pathname: `/user/${userProfile?.id}/following`, state: {follow: 0}}}>
+                    <Link to={`/user/${userProfile?.id}/following`}>
                         <li><b>{userProfile?.followers?.length ? userProfile?.followers?.length : 0}</b> Following</li>
                     </Link>
-                    <Link to={{pathname: `/user/${userProfile?.id}/followers`, state: {follow: 1}}}>
+                    <Link to={`/user/${userProfile?.id}/followers`}>
                         <li><b>{userProfile?.following?.length ? userProfile?.following?.length : 0}</b> Followers</li>
                     </Link>
                 </ul>

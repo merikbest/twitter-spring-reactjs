@@ -11,10 +11,6 @@ export enum UserActionsType {
     SET_USER_DATA = "user/SET_USER_DATA",
     UPDATE_USER_DATA = "user/UPDATE_USER_DATA",
     FETCH_USER_DATA = 'user/FETCH_USER_DATA',
-    FETCH_USER_FOLLOWERS = 'user/FETCH_USER_FOLLOWERS',
-    FETCH_USER_FOLLOWING = 'user/FETCH_USER_FOLLOWING',
-    SET_USER_FOLLOWERS = 'user/SET_USER_FOLLOWERS',
-    SET_USER_FOLLOWING = 'user/SET_USER_FOLLOWING',
     SET_USER_LOADING_STATE = "user/SET_USER_LOADING_STATE",
     SIGN_OUT = 'user/SIGN_OUT',
 }
@@ -37,29 +33,9 @@ export interface FetchUserDataActionInterface extends Action<UserActionsType> {
     type: UserActionsType.FETCH_USER_DATA;
 }
 
-export interface FetchUserFollowersActionInterface extends Action<UserActionsType> {
-    type: UserActionsType.FETCH_USER_FOLLOWERS;
-    payload: string;
-}
-
-export interface FetchUserFollowingActionInterface extends Action<UserActionsType> {
-    type: UserActionsType.FETCH_USER_FOLLOWING;
-    payload: string;
-}
-
 export interface SetUserDataActionInterface extends Action<UserActionsType> {
     type: UserActionsType.SET_USER_DATA;
     payload: UserState["data"] | undefined;
-}
-
-export interface SetUserFollowersActionInterface extends Action<UserActionsType> {
-    type: UserActionsType.SET_USER_FOLLOWERS;
-    payload: UserState["followers"] | undefined;
-}
-
-export interface SetUserFollowingActionInterface extends Action<UserActionsType> {
-    type: UserActionsType.SET_USER_FOLLOWING;
-    payload: UserState["followers"] | undefined;
 }
 
 export interface UpdateUserDataActionInterface extends Action<UserActionsType> {
@@ -77,6 +53,4 @@ export type UserActions =
     | SetUserLoadingStateActionInterface
     | FetchUserDataActionInterface
     | SignOutActionInterface
-    | UpdateUserDataActionInterface
-    | SetUserFollowersActionInterface
-    | SetUserFollowingActionInterface;
+    | UpdateUserDataActionInterface;

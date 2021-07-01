@@ -1,53 +1,60 @@
-import React, {ChangeEvent, FC, useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import Paper from '@material-ui/core/Paper';
-import {Button, CircularProgress, Menu, MenuItem, Typography} from "@material-ui/core";
+import {Button, CircularProgress, Typography} from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import IconButton from "@material-ui/core/IconButton";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
-import {BackButton} from "../BackButton/BackButton";
 import {selectUser} from "../../store/ducks/users/selectors";
-import {selectUserFollowers, selectUserIsLoading} from "../../store/ducks/user/selectors";
-import Follower from "./Follower";
-import {Link, useLocation, useParams} from "react-router-dom";
-import {fetchUserFollowers, fetchUserFollowing} from "../../store/ducks/user/actionCreators";
+import {selectUserIsLoading} from "../../store/ducks/user/selectors";
+import {useHistory, useParams} from "react-router-dom";
 import {useStylesFollower} from "./FollowerStyles";
+import {fetchUser} from "../../store/ducks/users/actionCreators";
+import Follower from "./Follower";
 
 const FollowingFollowers = () => {
     const classes = useStylesFollower();
     const dispatch = useDispatch();
-    const location = useLocation<{ follow: number }>();
-    const params = useParams<{ id: string }>();
+    const history = useHistory();
+    const params = useParams<{ id: string, follow: string }>();
     const userProfile = useSelector(selectUser);
-    const followers = useSelector(selectUserFollowers);
     const isFollowersLoading = useSelector(selectUserIsLoading);
     const [activeTab, setActiveTab] = useState<number>(0);
 
     useEffect(() => {
-        if (location.state.follow === 0) {
-            dispatch(fetchUserFollowing(params.id));
+        if (params.follow === "following") {
+            setActiveTab(0);
         } else {
-            dispatch(fetchUserFollowers(params.id));
+            setActiveTab(1);
         }
-        setActiveTab(location.state.follow);
-    }, [location]);
+        dispatch(fetchUser(params.id));
+    }, []);
 
     const handleChangeTab = (event: ChangeEvent<{}>, newValue: number): void => {
         setActiveTab(newValue);
     };
 
     const handleShowFollowing = (): void => {
-        dispatch(fetchUserFollowing(params.id));
+        history.push(`/user/${userProfile?.id}/following`)
     };
 
     const handleShowFollowers = (): void => {
-        dispatch(fetchUserFollowers(params.id));
+        history.push(`/user/${userProfile?.id}/followers`)
+    };
+
+    const handleClickBack = (): void => {
+        history.push(`/user/${userProfile?.id}`);
     };
 
     return (
         <Paper className={classes.followersWrapper} variant="outlined">
             <Paper className={classes.followersHeader}>
-                <BackButton/>
+                <IconButton onClick={handleClickBack} style={{marginRight: 20}} color="primary">
+                    <ArrowBackIcon/>
+                </IconButton>
                 <div>
                     <Typography variant="h6">{userProfile?.fullName}</Typography>
                     <Typography variant="caption" display="block" gutterBottom>@{userProfile?.username}</Typography>
@@ -61,9 +68,9 @@ const FollowingFollowers = () => {
                 <div className={classes.followersCentred}>
                     <CircularProgress/>
                 </div>
-            ) : (followers?.length !== 0 ? (
-                    followers?.map((user) => <Follower user={user}/>)
-                ) : (activeTab === 0 ? (
+            ) : (activeTab === 0 ? (userProfile?.followers?.length !== 0 ? (
+                        userProfile?.followers?.map((user) => <Follower user={user}/>)
+                    ) : (
                         <div className={classes.followersTopicWrapper}>
                             <Typography className={classes.followersTopic}>
                                 You aren’t following anyone yet
@@ -71,10 +78,15 @@ const FollowingFollowers = () => {
                             <Typography className={classes.followersText}>
                                 When you do, they’ll be listed here and you’ll see their Tweets in your timeline.
                             </Typography>
-                            <Button variant="contained" color="primary">
-                                Find people to follow
-                            </Button>
+                            <Link to={"/home/connect"} className={classes.followerLink}>
+                                <Button variant="contained" color="primary">
+                                    Find people to follow
+                                </Button>
+                            </Link>
                         </div>
+                    )
+                ) : (userProfile?.following?.length !== 0 ? (
+                        userProfile?.following?.map((user) => <Follower user={user}/>)
                     ) : (
                         <div className={classes.followersTopicWrapper}>
                             <Typography className={classes.followersTopic}>

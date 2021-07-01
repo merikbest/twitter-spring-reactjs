@@ -5,10 +5,11 @@ import {LoadingStatus} from "../../../types";
 export enum UsersActionsType {
     SET_USER = 'users/SET_USER',
     FETCH_USER  = 'users/FETCH_USER',
+    FETCH_USERS  = 'users/FETCH_USERS',
     FOLLOW_USER  = 'users/FOLLOW_USER',
     UNFOLLOW_USER  = 'users/UNFOLLOW_USER',
     SET_USERS = 'users/SET_USERS',
-    FETCH_USERS  = 'users/FETCH_USERS',
+    FETCH_RELEVANT_USERS  = 'users/FETCH_RELEVANT_USERS',
     SET_USER_LOADING_STATE = 'users/SET_USER_LOADING_STATE',
 }
 
@@ -22,14 +23,18 @@ export interface FetchUserActionInterface extends Action<UsersActionsType> {
     payload: string;
 }
 
+export interface FetchUsersActionInterface extends Action<UsersActionsType> {
+    type: UsersActionsType.FETCH_USERS;
+}
+
 export interface FollowUserActionInterface extends Action<UsersActionsType> {
     type: UsersActionsType.FOLLOW_USER;
-    payload: string;
+    payload: number;
 }
 
 export interface UnfollowUserActionInterface extends Action<UsersActionsType> {
     type: UsersActionsType.UNFOLLOW_USER;
-    payload: string;
+    payload: number;
 }
 
 export interface SetUsersLoadingStatusActionInterface extends Action<UsersActionsType> {
@@ -42,11 +47,12 @@ export interface SetUsersActionInterface extends Action<UsersActionsType> {
     payload: User[];
 }
 
-export interface FetchUsersActionInterface extends Action<UsersActionsType> {
-    type: UsersActionsType.FETCH_USERS;
+export interface FetchRelevantUsersActionInterface extends Action<UsersActionsType> {
+    type: UsersActionsType.FETCH_RELEVANT_USERS;
 }
 
 export type UsersActions =
     | SetUserActionInterface
     | SetUsersActionInterface
-    | SetUsersLoadingStatusActionInterface;
+    | SetUsersLoadingStatusActionInterface
+    | UnfollowUserActionInterface;

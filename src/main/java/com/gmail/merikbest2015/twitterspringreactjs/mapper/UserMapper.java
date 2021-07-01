@@ -5,7 +5,6 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Image;
-import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +46,10 @@ public class UserMapper {
         return convertToUserResponse(userService.getUserById(userId));
     }
 
+    public List<UserResponse> getUsers() {
+        return convertListToResponseDto(userService.getUsers());
+    }
+
     public ImageResponse uploadImage(MultipartFile multipartFile) {
         return convertToImageResponse(userService.uploadImage(multipartFile));
     }
@@ -73,13 +76,5 @@ public class UserMapper {
 
     public List<UserResponse> getRelevantUsers() {
         return convertListToResponseDto(userService.getRelevantUsers());
-    }
-
-    public List<UserResponse> getUserFollowers(Long userId) {
-        return convertListToResponseDto(userService.getUserFollowers(userId));
-    }
-
-    public List<UserResponse> getUserFollowing(Long userId) {
-        return convertListToResponseDto(userService.getUserFollowing(userId));
     }
 }

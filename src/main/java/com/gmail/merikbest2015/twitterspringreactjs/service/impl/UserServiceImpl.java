@@ -38,20 +38,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getUsers() {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(principal.getName());
+        List<User> users = userRepository.findAll();
+        users.remove(user);
+        return users;
+//        return users.stream()
+//                .filter(user -> !user.getId().equals(userPrincipal.getId()))
+//                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<User> getRelevantUsers() {
         return userRepository.findTop5By();
-    }
-
-    @Override
-    public List<User> getUserFollowers(Long userId) {
-        User user = userRepository.getOne(userId);
-        return user.getFollowing();
-    }
-
-    @Override
-    public List<User> getUserFollowing(Long userId) {
-        User user = userRepository.getOne(userId);
-        return user.getFollowers();
     }
 
     @Override

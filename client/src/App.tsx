@@ -51,7 +51,7 @@ const App: FC = (): ReactElement => {
                 <Layout>
                     <Route path="/home" component={Home}/>
                     <Route path="/user/:id" component={UserPage} exact />
-                    <Route path={["/user/:id/following", "/user/:id/followers"]} component={FollowingFollowers}/>
+                    <Route path={"/user/:id/:follow"} component={FollowingFollowers}/>
                     <Route path="/user/activate/:hash" component={ActivatePage} exact />
                 </Layout>
             </Switch>

@@ -24,6 +24,11 @@ public class UserController {
         return ResponseEntity.ok(userMapper.getUserById(userId));
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<UserResponse>> getUsers() {
+        return ResponseEntity.ok(userMapper.getUsers());
+    }
+
     @GetMapping("/relevant")
     public ResponseEntity<List<UserResponse>> getRelevantUsers() {
         return ResponseEntity.ok(userMapper.getRelevantUsers());
@@ -57,15 +62,5 @@ public class UserController {
     @GetMapping("/unfollow/{userId}")
     public ResponseEntity<UserResponse> unfollow(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.unfollow(userId));
-    }
-
-    @GetMapping("/{userId}/followers")
-    public ResponseEntity<List<UserResponse>> getUserFollowers(@PathVariable Long userId) {
-        return ResponseEntity.ok(userMapper.getUserFollowers(userId));
-    }
-
-    @GetMapping("/{userId}/following")
-    public ResponseEntity<List<UserResponse>> getUserFollowing(@PathVariable Long userId) {
-        return ResponseEntity.ok(userMapper.getUserFollowing(userId));
     }
 }

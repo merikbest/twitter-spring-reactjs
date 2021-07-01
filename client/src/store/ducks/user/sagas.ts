@@ -3,16 +3,12 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 import {
     setUpdatedUserData,
     setUserData,
-    setUserFollowers,
-    setUserFollowing,
     setUserLoadingStatus
 } from "./actionCreators";
 import {AuthUser, User} from "./contracts/state";
 import {
     FetchSignInActionInterface,
     FetchSignUpActionInterface,
-    FetchUserFollowersActionInterface,
-    FetchUserFollowingActionInterface,
     UpdateUserDataActionInterface,
     UserActionsType
 } from "./contracts/actionTypes";
@@ -60,31 +56,9 @@ export function* fetchUpdateUserDataRequest({payload}: UpdateUserDataActionInter
     }
 }
 
-export function* fetchUserFollowersRequest({payload}: FetchUserFollowersActionInterface) {
-    try {
-        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const data: User[] | undefined = yield call(AuthApi.getUserFollowers, payload);
-        yield put(setUserFollowers(data));
-    } catch (error) {
-        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
-    }
-}
-
-export function* fetchUserFollowingRequest({payload}: FetchUserFollowingActionInterface) {
-    try {
-        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const data: User[] | undefined = yield call(AuthApi.getUserFollowing, payload);
-        yield put(setUserFollowing(data));
-    } catch (error) {
-        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
-    }
-}
-
 export function* userSaga() {
     yield takeLatest(UserActionsType.FETCH_SIGN_IN, fetchSignInRequest);
     yield takeLatest(UserActionsType.FETCH_SIGN_UP, fetchSignUpRequest);
     yield takeLatest(UserActionsType.FETCH_USER_DATA, fetchUserDataRequest);
     yield takeLatest(UserActionsType.UPDATE_USER_DATA, fetchUpdateUserDataRequest);
-    yield takeLatest(UserActionsType.FETCH_USER_FOLLOWERS, fetchUserFollowersRequest);
-    yield takeLatest(UserActionsType.FETCH_USER_FOLLOWING, fetchUserFollowingRequest);
 }

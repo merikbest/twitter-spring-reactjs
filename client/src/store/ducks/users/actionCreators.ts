@@ -1,11 +1,14 @@
 import {User} from "../user/contracts/state";
 import {
-    FetchUserActionInterface, FetchUsersActionInterface,
+    FetchUserActionInterface,
+    FetchRelevantUsersActionInterface,
     FollowUserActionInterface,
-    SetUserActionInterface, SetUsersActionInterface,
+    SetUserActionInterface,
+    SetUsersActionInterface,
     SetUsersLoadingStatusActionInterface,
     UnfollowUserActionInterface,
-    UsersActionsType
+    UsersActionsType,
+    FetchUsersActionInterface
 } from './contracts/actionTypes';
 import {UsersState} from "./contracts/state";
 
@@ -19,21 +22,25 @@ export const fetchUser = (payload: string): FetchUserActionInterface => ({
     payload
 });
 
+export const fetchUsers = (): FetchUsersActionInterface => ({
+    type: UsersActionsType.FETCH_USERS
+});
+
 export const setUsers = (payload: User[]): SetUsersActionInterface => ({
     type: UsersActionsType.SET_USERS,
     payload
 });
 
-export const fetchUsers = (): FetchUsersActionInterface => ({
-    type: UsersActionsType.FETCH_USERS
+export const fetchRelevantUsers = (): FetchRelevantUsersActionInterface => ({
+    type: UsersActionsType.FETCH_RELEVANT_USERS
 });
 
-export const followUser = (payload: string): FollowUserActionInterface => ({
+export const followUser = (payload: number): FollowUserActionInterface => ({
     type: UsersActionsType.FOLLOW_USER,
     payload
 });
 
-export const unfollowUser = (payload: string): UnfollowUserActionInterface => ({
+export const unfollowUser = (payload: number): UnfollowUserActionInterface => ({
     type: UsersActionsType.UNFOLLOW_USER,
     payload
 });
