@@ -13,7 +13,7 @@ import {FullTweet} from "./FullTweet";
 import {fetchUserData} from "../../store/ducks/user/actionCreators";
 import {fetchRelevantUsers} from "../../store/ducks/users/actionCreators";
 import {fetchTags} from "../../store/ducks/tags/actionCreators";
-import Search from "../../components/Search/Search";
+// import Search from "../../components/Search/Search";
 import Connect from "../../components/Connect/Connect";
 
 const Home: FC = (): ReactElement => {
@@ -24,14 +24,16 @@ const Home: FC = (): ReactElement => {
     const isLoading = useSelector(selectIsTweetsLoading);
 
     useEffect(() => {
-        dispatch(fetchTweets());
         dispatch(fetchUserData());
         dispatch(fetchTags());
 
+        if (location.pathname !== "/search") {
+            dispatch(fetchTweets());
+        }
         if (location.pathname !== "/home/connect") {
             dispatch(fetchRelevantUsers());
         }
-    }, []);
+    }, [location]);
 
     return (
         <Paper className={classes.tweetsWrapper} variant="outlined">
@@ -44,7 +46,7 @@ const Home: FC = (): ReactElement => {
                     <BackButton/>
                     <Typography variant="h6">Tweet</Typography>
                 </Route>
-                <Route path="/home/search" component={Search}/>
+                {/*<Route path="/home/search" component={Search}/>*/}
                 <Route path="/home/connect">
                     <BackButton/>
                     <Typography variant="h6">Connect</Typography>
@@ -60,11 +62,11 @@ const Home: FC = (): ReactElement => {
                 </Paper>
             </Route>
 
-            <Route path="/home/connect">
-                <Connect/>
-            </Route>
+            <Route path="/home/connect" component={Connect} exact/>
+            {/*    <Connect/>*/}
+            {/*</Route>*/}
 
-            <Route path={['/home', '/home/search']} exact>
+            <Route path='/home' exact>
                 {isLoading ? (
                     <div className={classes.tweetsCentred}>
                         <CircularProgress/>

@@ -43,9 +43,7 @@ export function* fetchRelevantUsersRequest() {
 
 export function* fetchFollowUser({payload}: FollowUserActionInterface) {
     try {
-        yield put(setUsersLoadingState(LoadingStatus.LOADING));
-        const item: User = yield call(AuthApi.follow, payload);
-        yield put(setUser(item));
+        yield call(AuthApi.follow, payload);
     } catch (error) {
         yield put(setUsersLoadingState(LoadingStatus.ERROR));
     }

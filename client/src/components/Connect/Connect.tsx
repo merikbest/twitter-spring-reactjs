@@ -5,9 +5,10 @@ import {CircularProgress, Typography} from "@material-ui/core";
 
 import {useStylesFollower} from "../FollowingFollowers/FollowerStyles";
 import {fetchUsers} from "../../store/ducks/users/actionCreators";
+import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 import {selectUsersIsLoading, selectUsersItems} from "../../store/ducks/users/selectors";
 import Follower from "../FollowingFollowers/Follower";
-import {selectUserData} from "../../store/ducks/user/selectors";
+import {User} from "../../store/ducks/user/contracts/state";
 
 const Connect = () => {
     const dispatch = useDispatch();
@@ -18,6 +19,14 @@ const Connect = () => {
     useEffect(() => {
         dispatch(fetchUsers());
     }, []);
+
+    const handleFollow = (user: User): void => {
+        dispatch(followUser(user));
+    };
+
+    const handleUnfollow = (user: User): void => {
+        dispatch(unfollowUser(user));
+    };
 
     return (
         <>
@@ -31,7 +40,8 @@ const Connect = () => {
                         <Typography variant="h6">Suggested for you</Typography>
                     </Paper>
                     <Paper className={classes.followersWrapper} variant="outlined">
-                        {users ? users.map(user => <Follower user={user}/>) : null}
+                        {users ? users.map(user =>
+                            <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>) : null}
                     </Paper>
                 </div>
             )}

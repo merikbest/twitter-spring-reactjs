@@ -9,6 +9,8 @@ import {AuthUser, User} from "./contracts/state";
 import {
     FetchSignInActionInterface,
     FetchSignUpActionInterface,
+    FollowUserActionInterface,
+    UnfollowUserActionInterface,
     UpdateUserDataActionInterface,
     UserActionsType
 } from "./contracts/actionTypes";
@@ -56,9 +58,27 @@ export function* fetchUpdateUserDataRequest({payload}: UpdateUserDataActionInter
     }
 }
 
+export function* fetchFollowUserRequest({payload}: FollowUserActionInterface) {
+    try {
+        yield call(AuthApi.follow, payload);
+    } catch (error) {
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
+export function* fetchUnfollowUserRequest({payload}: UnfollowUserActionInterface) {
+    try {
+        yield call(AuthApi.unfollow, payload);
+    } catch (error) {
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
 export function* userSaga() {
     yield takeLatest(UserActionsType.FETCH_SIGN_IN, fetchSignInRequest);
     yield takeLatest(UserActionsType.FETCH_SIGN_UP, fetchSignUpRequest);
     yield takeLatest(UserActionsType.FETCH_USER_DATA, fetchUserDataRequest);
     yield takeLatest(UserActionsType.UPDATE_USER_DATA, fetchUpdateUserDataRequest);
+    yield takeLatest(UserActionsType.FOLLOW_USER, fetchFollowUserRequest);
+    yield takeLatest(UserActionsType.UNFOLLOW_USER, fetchUnfollowUserRequest);
 }

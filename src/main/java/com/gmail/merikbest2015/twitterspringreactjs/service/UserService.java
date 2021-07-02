@@ -15,6 +15,8 @@ public interface UserService {
 
     List<User> getRelevantUsers();
 
+    List<User> searchUsersByUsername(String username);
+
     List<Tweet> getUserTweets(Long userId);
 
     List<Tweet> getUserLikedTweets(Long userId);

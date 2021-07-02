@@ -13,6 +13,8 @@ export enum UserActionsType {
     FETCH_USER_DATA = 'user/FETCH_USER_DATA',
     SET_USER_LOADING_STATE = "user/SET_USER_LOADING_STATE",
     SIGN_OUT = 'user/SIGN_OUT',
+    FOLLOW_USER = 'user/FOLLOW_USER',
+    UNFOLLOW_USER = 'user/UNFOLLOW_USER',
 }
 
 export interface SignOutActionInterface extends Action<UserActionsType> {
@@ -48,9 +50,21 @@ export interface SetUserLoadingStateActionInterface extends Action<UserActionsTy
     payload: LoadingStatus;
 }
 
+export interface FollowUserActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.FOLLOW_USER;
+    payload: User;
+}
+
+export interface UnfollowUserActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.UNFOLLOW_USER;
+    payload: User;
+}
+
 export type UserActions =
     | SetUserDataActionInterface
     | SetUserLoadingStateActionInterface
     | FetchUserDataActionInterface
     | SignOutActionInterface
-    | UpdateUserDataActionInterface;
+    | UpdateUserDataActionInterface
+    | FollowUserActionInterface
+    | UnfollowUserActionInterface;

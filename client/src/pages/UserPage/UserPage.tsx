@@ -66,11 +66,11 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
     };
 
     const handleFollow = () => {
-        if (userProfile?.id) {
+        if (userProfile) {
             if (follower) {
-                dispatch(unfollowUser(userProfile?.id));
+                dispatch(unfollowUser(userProfile));
             } else {
-                dispatch(followUser(userProfile?.id));
+                dispatch(followUser(userProfile));
             }
         }
     };
@@ -103,16 +103,13 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
                         "https://abs.twimg.com/sticky/default_profile_images/default_profile_reasonably_small.png"}/>
                 </div>
                 {userProfile?.id === myProfile?.user.id ? (
-                    <Button onClick={onOpenEditProfile}
-                            color="primary" className={classes.profileMenuEditButton}>Edit profile</Button>
+                    <Button onClick={onOpenEditProfile} color="primary" className={classes.profileMenuEditButton}>
+                        Edit profile
+                    </Button>
                 ) : (
-                    follower ? (
-                        <Button onClick={handleFollow} color="primary"
-                                className={classes.profileMenuEditButton}>Unfollow</Button>
-                    ) : (
-                        <Button onClick={handleFollow} color="primary"
-                                className={classes.profileMenuEditButton}>Follow</Button>
-                    )
+                    <Button onClick={handleFollow} color="primary" className={classes.profileMenuEditButton}>
+                        {follower ? "Unfollow" : "Follow"}
+                    </Button>
                 )}
                 {!userProfile ? (
                     <Skeleton variant="text" width={250} height={30}/>

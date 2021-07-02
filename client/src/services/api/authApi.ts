@@ -41,6 +41,10 @@ export const AuthApi = {
         const {data} = await axios.get<User[] | undefined>(`http://localhost:8080/api/v1/user/${userId}/following`);
         return data;
     },
+    async searchUsersByUsername(name: string): Promise<User[] | undefined> {
+        const {data} = await axios.get<User[] | undefined>(`http://localhost:8080/api/v1/user/search/${name}`);
+        return data;
+    },
     async getUserInfo(userId: string): Promise<User | undefined> {
         const {data} = await axios.get<User | undefined>('http://localhost:8080/api/v1/user/' + userId);
         return data;
@@ -49,12 +53,12 @@ export const AuthApi = {
         const {data} = await axios.put<User>('http://localhost:8080/api/v1/user', userData);
         return data;
     },
-    async follow(userId: number): Promise<User | undefined> {
-        const {data} = await axios.get<User | undefined>('http://localhost:8080/api/v1/user/follow/' + userId);
+    async follow(user: User): Promise<User | undefined> {
+        const {data} = await axios.get<User | undefined>('http://localhost:8080/api/v1/user/follow/' + user.id);
         return data;
     },
-    async unfollow(userId: number): Promise<User | undefined> {
-        const {data} = await axios.get<User | undefined>('http://localhost:8080/api/v1/user/unfollow/' + userId);
+    async unfollow(user: User): Promise<User | undefined> {
+        const {data} = await axios.get<User | undefined>('http://localhost:8080/api/v1/user/unfollow/' + user.id);
         return data;
     },
 };

@@ -57,7 +57,7 @@ const SideMenu: FC<SideMenuProps> = ({classes}: SideMenuProps): ReactElement => 
                     </Link>
                 </li>
                 <li className={classes.sideMenuListItem}>
-                    <Link to="/home/search">
+                    <Link to="/search">
                         <div>
                             <SearchIcon className={classes.sideMenuListItemIcon}/>
                             <Hidden smDown>

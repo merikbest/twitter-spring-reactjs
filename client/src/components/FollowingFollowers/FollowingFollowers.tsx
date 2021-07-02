@@ -9,17 +9,21 @@ import IconButton from "@material-ui/core/IconButton";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 import {selectUser} from "../../store/ducks/users/selectors";
-import {selectUserIsLoading} from "../../store/ducks/user/selectors";
+import {selectUserData, selectUserIsLoading} from "../../store/ducks/user/selectors";
+import {followUser, unfollowUser} from "../../store/ducks/users/actionCreators";
 import {useHistory, useParams} from "react-router-dom";
 import {useStylesFollower} from "./FollowerStyles";
 import {fetchUser} from "../../store/ducks/users/actionCreators";
 import Follower from "./Follower";
+import {User} from "../../store/ducks/user/contracts/state";
+import {fetchUserData} from "../../store/ducks/user/actionCreators";
 
 const FollowingFollowers = () => {
     const classes = useStylesFollower();
     const dispatch = useDispatch();
     const history = useHistory();
     const params = useParams<{ id: string, follow: string }>();
+    const myProfile = useSelector(selectUserData);
     const userProfile = useSelector(selectUser);
     const isFollowersLoading = useSelector(selectUserIsLoading);
     const [activeTab, setActiveTab] = useState<number>(0);
@@ -31,6 +35,7 @@ const FollowingFollowers = () => {
             setActiveTab(1);
         }
         dispatch(fetchUser(params.id));
+        dispatch(fetchUserData());
     }, []);
 
     const handleChangeTab = (event: ChangeEvent<{}>, newValue: number): void => {
@@ -47,6 +52,14 @@ const FollowingFollowers = () => {
 
     const handleClickBack = (): void => {
         history.push(`/user/${userProfile?.id}`);
+    };
+
+    const handleFollow = (user: User): void => {
+        dispatch(followUser(user));
+    };
+
+    const handleUnfollow = (user: User): void => {
+        dispatch(unfollowUser(user));
     };
 
     return (
@@ -69,31 +82,50 @@ const FollowingFollowers = () => {
                     <CircularProgress/>
                 </div>
             ) : (activeTab === 0 ? (userProfile?.followers?.length !== 0 ? (
-                        userProfile?.followers?.map((user) => <Follower user={user}/>)
+                        userProfile?.followers?.map((user) =>
+                            <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>)
                     ) : (
                         <div className={classes.followersTopicWrapper}>
                             <Typography className={classes.followersTopic}>
-                                You aren’t following anyone yet
+                                {userProfile?.id === myProfile?.user.id ? (
+                                    "You aren’t following anyone yet"
+                                ) : (
+                                    `@${userProfile.username} isn’t following anyone`
+                                )}
                             </Typography>
                             <Typography className={classes.followersText}>
-                                When you do, they’ll be listed here and you’ll see their Tweets in your timeline.
+                                {userProfile?.id === myProfile?.user.id ? (
+                                    "When you do, they’ll be listed here and you’ll see their Tweets in your timeline."
+                                ) : (
+                                    "When they do, they’ll be listed here."
+                                )}
                             </Typography>
                             <Link to={"/home/connect"} className={classes.followerLink}>
-                                <Button variant="contained" color="primary">
-                                    Find people to follow
-                                </Button>
+                                {userProfile?.id === myProfile?.user.id ? (
+                                    <Button variant="contained" color="primary">
+                                        Find people to follow
+                                    </Button>) : null}
                             </Link>
                         </div>
                     )
                 ) : (userProfile?.following?.length !== 0 ? (
-                        userProfile?.following?.map((user) => <Follower user={user}/>)
+                        userProfile?.following?.map((user) =>
+                            <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>)
                     ) : (
                         <div className={classes.followersTopicWrapper}>
                             <Typography className={classes.followersTopic}>
-                                You don’t have any followers yet
+                                {userProfile?.id === myProfile?.user.id ? (
+                                    "You don’t have any followers yet"
+                                ) : (
+                                    `@${userProfile.username} doesn’t have any followers`
+                                )}
                             </Typography>
                             <Typography className={classes.followersText}>
-                                When someone follows you, you’ll see them here.
+                                {userProfile?.id === myProfile?.user.id ? (
+                                    "When someone follows you, you’ll see them here."
+                                ) : (
+                                    "When someone follows them, they’ll be listed here."
+                                )}
                             </Typography>
                         </div>
                     )

@@ -29,12 +29,12 @@ export interface FetchUsersActionInterface extends Action<UsersActionsType> {
 
 export interface FollowUserActionInterface extends Action<UsersActionsType> {
     type: UsersActionsType.FOLLOW_USER;
-    payload: number;
+    payload: User;
 }
 
 export interface UnfollowUserActionInterface extends Action<UsersActionsType> {
     type: UsersActionsType.UNFOLLOW_USER;
-    payload: number;
+    payload: User;
 }
 
 export interface SetUsersLoadingStatusActionInterface extends Action<UsersActionsType> {
@@ -55,4 +55,5 @@ export type UsersActions =
     | SetUserActionInterface
     | SetUsersActionInterface
     | SetUsersLoadingStatusActionInterface
+    | FollowUserActionInterface
     | UnfollowUserActionInterface;

@@ -50,8 +50,9 @@ const App: FC = (): ReactElement => {
                 <Route path="/signin" component={SignIn} exact/>
                 <Layout>
                     <Route path="/home" component={Home}/>
+                    <Route path="/search" component={Search} />
                     <Route path="/user/:id" component={UserPage} exact />
-                    <Route path={"/user/:id/:follow"} component={FollowingFollowers}/>
+                    <Route path="/user/:id/:follow" component={FollowingFollowers}/>
                     <Route path="/user/activate/:hash" component={ActivatePage} exact />
                 </Layout>
             </Switch>

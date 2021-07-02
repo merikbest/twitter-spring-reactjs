@@ -34,6 +34,11 @@ public class UserController {
         return ResponseEntity.ok(userMapper.getRelevantUsers());
     }
 
+    @GetMapping("/search/{username}")
+    public ResponseEntity<List<UserResponse>> searchUsersByUsername(@PathVariable String username) {
+        return ResponseEntity.ok(userMapper.searchUsersByUsername(username));
+    }
+
     @GetMapping("/{userId}/tweets")
     public ResponseEntity<List<TweetResponse>> getUserTweets(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.getUserTweets(userId));

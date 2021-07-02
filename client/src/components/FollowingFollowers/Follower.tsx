@@ -1,4 +1,5 @@
 import React, {FC, useState} from 'react';
+import {useSelector} from "react-redux";
 import {Link} from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import {Avatar, Button, Typography} from "@material-ui/core";
@@ -7,16 +8,15 @@ import DialogContent from "@material-ui/core/DialogContent";
 
 import {User} from "../../store/ducks/user/contracts/state";
 import {useStylesFollower} from "./FollowerStyles";
-import {unfollowUser} from "../../store/ducks/users/actionCreators";
-import {useDispatch, useSelector} from "react-redux";
 import {selectUserData} from "../../store/ducks/user/selectors";
 
 interface FollowerProps {
-    user: User
+    user: User,
+    follow: (user: User) => void,
+    unfollow: (user: User) => void,
 }
 
-const Follower: FC<FollowerProps> = ({user}) => {
-    const dispatch = useDispatch();
+const Follower: FC<FollowerProps> = ({user, follow, unfollow}) => {
     const classes = useStylesFollower();
     const myProfile = useSelector(selectUserData);
     const [btnText, setBtnText] = useState<string>("Following");
@@ -31,11 +31,13 @@ const Follower: FC<FollowerProps> = ({user}) => {
         setVisibleUnfollowModal(false);
     };
 
-    const handleUnfollow = () => {
-        if (user.id) {
-            dispatch(unfollowUser(user.id));
-            setVisibleUnfollowModal(false);
-        }
+    const handleFollow = (user: User): void => {
+        follow(user);
+    };
+
+    const handleUnfollow = (user: User): void => {
+        unfollow(user);
+        setVisibleUnfollowModal(false);
     };
 
     return (
@@ -59,7 +61,11 @@ const Follower: FC<FollowerProps> = ({user}) => {
                     </Link>
                     <div>
                         {follower === -1 ? (
-                            <Button color="primary" variant="outlined" className={classes.followerOutlinedBtn}>
+                            <Button
+                                className={classes.followerOutlinedBtn}
+                                onClick={() => handleFollow(user)}
+                                color="primary"
+                                variant="outlined">
                                 Follow
                             </Button>
                         ) : (
@@ -95,7 +101,7 @@ const Follower: FC<FollowerProps> = ({user}) => {
                                 </Button>
                                 <Button
                                     className={classes.followerModalUnfollowBtn}
-                                    onClick={handleUnfollow}
+                                    onClick={() => handleUnfollow(user)}
                                     variant="contained"
                                     color="primary">
                                     Unfollow

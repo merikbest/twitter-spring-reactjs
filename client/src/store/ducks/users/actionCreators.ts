@@ -35,12 +35,12 @@ export const fetchRelevantUsers = (): FetchRelevantUsersActionInterface => ({
     type: UsersActionsType.FETCH_RELEVANT_USERS
 });
 
-export const followUser = (payload: number): FollowUserActionInterface => ({
+export const followUser = (payload: User): FollowUserActionInterface => ({
     type: UsersActionsType.FOLLOW_USER,
     payload
 });
 
-export const unfollowUser = (payload: number): UnfollowUserActionInterface => ({
+export const unfollowUser = (payload: User): UnfollowUserActionInterface => ({
     type: UsersActionsType.UNFOLLOW_USER,
     payload
 });

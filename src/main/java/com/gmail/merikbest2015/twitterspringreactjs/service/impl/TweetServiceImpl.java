@@ -98,7 +98,7 @@ public class TweetServiceImpl implements TweetService {
         Set<Tweet> tweets = new HashSet<>();
         List<Tweet> tweetsByText = tweetRepository.findAllByTextContaining(text);
         List<Tag> tagsByText = tagRepository.findByTagNameContaining(text);
-        List<User> usersByText = userRepository.findByFullNameContaining(text);
+        List<User> usersByText = userRepository.findByFullNameOrUsernameContaining(text, text);
 
         if (tweetsByText != null) {
             tweets.addAll(tweetsByText);

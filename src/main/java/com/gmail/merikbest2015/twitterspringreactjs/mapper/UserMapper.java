@@ -77,4 +77,8 @@ public class UserMapper {
     public List<UserResponse> getRelevantUsers() {
         return convertListToResponseDto(userService.getRelevantUsers());
     }
+
+    public List<UserResponse> searchUsersByUsername(String username) {
+        return convertListToResponseDto(userService.searchUsersByUsername(username));
+    }
 }

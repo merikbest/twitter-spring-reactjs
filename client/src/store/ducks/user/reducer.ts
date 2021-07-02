@@ -27,6 +27,23 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
             draft.data = undefined;
             break;
 
+        case UserActionsType.FOLLOW_USER:
+            if (draft.data?.user?.followers) {
+                draft.data.user.followers = [...draft.data?.user.followers, action.payload];
+            }
+            draft.status = LoadingStatus.SUCCESS;
+            break;
+
+        case UserActionsType.UNFOLLOW_USER:
+            if (draft.data?.user?.followers) {
+                const unfollowUserIndex = draft.data?.user?.followers?.findIndex(follower => follower.id === action.payload.id);
+                draft.data.user.followers = [
+                    ...draft.data?.user?.followers?.slice(0, unfollowUserIndex),
+                    ...draft.data?.user?.followers?.slice(unfollowUserIndex + 1)];
+            }
+            draft.status = LoadingStatus.SUCCESS;
+            break;
+
         case UserActionsType.SET_USER_LOADING_STATE:
             draft.status = action.payload;
             break;

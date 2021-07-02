@@ -28,7 +28,7 @@ const Tags: FC<TagsProps> = ({classes}: TagsProps): ReactElement => {
             ) : (
                 <List>
                     {tags.map((tag: Tag) => (
-                        <Link to={{pathname: "/home/search", state: {tag: encodeURIComponent(tag.tagName)}}}>
+                        <Link to={{pathname: "/search", state: {tag: encodeURIComponent(tag.tagName)}}}>
                             <React.Fragment key={tag.id}>
                                 <ListItem className={classes.rightSideBlockItem}>
                                     <ListItemText
