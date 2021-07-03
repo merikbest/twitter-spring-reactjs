@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import Paper from '@material-ui/core/Paper';
 import {Button, CircularProgress, Typography} from "@material-ui/core";
@@ -8,15 +8,13 @@ import Tab from "@material-ui/core/Tab";
 import IconButton from "@material-ui/core/IconButton";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
-import {selectUser} from "../../store/ducks/users/selectors";
 import {selectUserData, selectUserIsLoading} from "../../store/ducks/user/selectors";
-import {followUser, unfollowUser} from "../../store/ducks/users/actionCreators";
-import {useHistory, useParams} from "react-router-dom";
 import {useStylesFollower} from "./FollowerStyles";
-import {fetchUser} from "../../store/ducks/users/actionCreators";
 import Follower from "./Follower";
 import {User} from "../../store/ducks/user/contracts/state";
-import {fetchUserData} from "../../store/ducks/user/actionCreators";
+import {fetchUserData, followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
+import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
+import {fetchUserProfile} from "../../store/ducks/userProfile/actionCreators";
 
 const FollowingFollowers = () => {
     const classes = useStylesFollower();
@@ -24,7 +22,7 @@ const FollowingFollowers = () => {
     const history = useHistory();
     const params = useParams<{ id: string, follow: string }>();
     const myProfile = useSelector(selectUserData);
-    const userProfile = useSelector(selectUser);
+    const userProfile = useSelector(selectUserProfile);
     const isFollowersLoading = useSelector(selectUserIsLoading);
     const [activeTab, setActiveTab] = useState<number>(0);
 
@@ -34,7 +32,7 @@ const FollowingFollowers = () => {
         } else {
             setActiveTab(1);
         }
-        dispatch(fetchUser(params.id));
+        dispatch(fetchUserProfile(params.id));
         dispatch(fetchUserData());
     }, []);
 

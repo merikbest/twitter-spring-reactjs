@@ -12,12 +12,12 @@ import PersonAddIcon from "@material-ui/icons/PersonAddOutlined";
 import Divider from "@material-ui/core/Divider/Divider";
 
 import {useHomeStyles} from "../../pages/Home/HomeStyles";
-import {selectUsersIsLoading, selectUsersItems} from "../../store/ducks/users/selectors";
+import {selectUsersIsLoading, selectUsers} from "../../store/ducks/users/selectors";
 
 const Users: FC = (): ReactElement => {
     const classes = useHomeStyles();
     const location = useLocation();
-    const users = useSelector(selectUsersItems);
+    const users = useSelector(selectUsers);
     const isUsersLoading = useSelector(selectUsersIsLoading);
 
     return (

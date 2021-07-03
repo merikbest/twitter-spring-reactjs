@@ -8,7 +8,7 @@ interface Response<T> {
     data: T;
 }
 
-export const TagsApi = {
+export const TagApi = {
     async fetchTags(): Promise<Response<Tag[]>> {
         const data = await axios.get<Response<Tag[]>>('http://localhost:8080/api/v1/tags');
         return data.data;

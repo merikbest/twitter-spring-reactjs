@@ -13,23 +13,21 @@ import {BackButton} from "../BackButton/BackButton";
 import {useHomeStyles} from "../../pages/Home/HomeStyles";
 import Tweet from "../Tweet/Tweet";
 import {selectIsTweetsLoading, selectTweetsItems} from "../../store/ducks/tweets/selectors";
-import {AuthApi} from "../../services/api/authApi";
 import {User} from "../../store/ducks/user/contracts/state";
 import Follower from "../FollowingFollowers/Follower";
 import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
+import {UserApi} from "../../services/api/userApi";
 
 const Search: FC = () => {
     const classes = useHomeStyles();
     const dispatch = useDispatch();
     const isLoading = useSelector(selectIsTweetsLoading);
     const tweets = useSelector(selectTweetsItems);
-
     const location = useLocation<{ tag: string | undefined }>();
+
     const [text, setText] = React.useState<string>("");
     const [activeTab, setActiveTab] = useState<number>(0);
     const [users, setUsers] = useState<User[]>();
-
-    console.log(activeTab)
 
     useEffect(() => {
         if (location.state?.tag !== undefined) {
@@ -49,7 +47,7 @@ const Search: FC = () => {
             if (activeTab !== 2) {
                 dispatch(fetchTweetsByText(encodeURIComponent(text)));
             } else {
-                AuthApi.searchUsersByUsername(encodeURIComponent(text)).then((data) => {
+                UserApi.searchUsersByUsername(encodeURIComponent(text)).then((data) => {
                     setUsers(data);
                 });
             }
@@ -61,7 +59,7 @@ const Search: FC = () => {
     };
 
     const showUsers = (): void => {
-        AuthApi.getUsers().then((data) => {
+        UserApi.getUsers().then((data) => {
             setUsers(data);
         });
     };
@@ -110,7 +108,7 @@ const Search: FC = () => {
             ) : (activeTab !== 2 ? (
                     tweets.map((tweet) => <Tweet key={tweet.id} classes={classes} images={tweet.images} {...tweet}/>)
                 ) : (
-                    users?.map(user => <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>))
+                    users?.map((user) => <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>))
             )}
         </Paper>
     );

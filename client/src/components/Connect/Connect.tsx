@@ -6,14 +6,14 @@ import {CircularProgress, Typography} from "@material-ui/core";
 import {useStylesFollower} from "../FollowingFollowers/FollowerStyles";
 import {fetchUsers} from "../../store/ducks/users/actionCreators";
 import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
-import {selectUsersIsLoading, selectUsersItems} from "../../store/ducks/users/selectors";
+import {selectUsersIsLoading, selectUsers} from "../../store/ducks/users/selectors";
 import Follower from "../FollowingFollowers/Follower";
 import {User} from "../../store/ducks/user/contracts/state";
 
 const Connect = () => {
     const dispatch = useDispatch();
     const classes = useStylesFollower();
-    const users = useSelector(selectUsersItems);
+    const users = useSelector(selectUsers);
     const isUsersLoading = useSelector(selectUsersIsLoading);
 
     useEffect(() => {

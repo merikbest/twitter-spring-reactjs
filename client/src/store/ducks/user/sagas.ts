@@ -1,5 +1,4 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
-
 import {
     setUpdatedUserData,
     setUserData,
@@ -16,6 +15,7 @@ import {
 } from "./contracts/actionTypes";
 import {AuthApi} from "../../../services/api/authApi";
 import {LoadingStatus} from "../../types";
+import {UserApi} from "../../../services/api/userApi";
 
 export function* fetchSignInRequest({payload}: FetchSignInActionInterface) {
     try {
@@ -51,7 +51,7 @@ export function* fetchUserDataRequest() {
 export function* fetchUpdateUserDataRequest({payload}: UpdateUserDataActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const data: User = yield call(AuthApi.updateUserProfile, payload);
+        const data: User = yield call(UserApi.updateUserProfile, payload);
         yield put(setUpdatedUserData(data));
     } catch (error) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
@@ -60,7 +60,7 @@ export function* fetchUpdateUserDataRequest({payload}: UpdateUserDataActionInter
 
 export function* fetchFollowUserRequest({payload}: FollowUserActionInterface) {
     try {
-        yield call(AuthApi.follow, payload);
+        yield call(UserApi.follow, payload);
     } catch (error) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -68,7 +68,7 @@ export function* fetchFollowUserRequest({payload}: FollowUserActionInterface) {
 
 export function* fetchUnfollowUserRequest({payload}: UnfollowUserActionInterface) {
     try {
-        yield call(AuthApi.unfollow, payload);
+        yield call(UserApi.unfollow, payload);
     } catch (error) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }

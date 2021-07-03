@@ -1,22 +1,22 @@
 import produce, {Draft} from 'immer';
 
 import {LoadingStatus} from '../../types';
-import {UsersState} from "./contracts/state";
-import {UsersActions, UsersActionsType} from "./contracts/actionTypes";
+import {UsersSearchState} from "./contracts/state";
+import {UsersSearchActions, UsersSearchActionsType} from "./contracts/actionTypes";
 
-const initialUsersState: UsersState = {
+const initialUsersState: UsersSearchState = {
     users: [],
     loadingState: LoadingStatus.NEVER,
 };
 
-export const usersReducer = produce((draft: Draft<UsersState>, action: UsersActions) => {
+export const usersSearchReducer = produce((draft: Draft<UsersSearchState>, action: UsersSearchActions) => {
     switch (action.type) {
-        case UsersActionsType.SET_USERS:
+        case UsersSearchActionsType.SET_USERS:
             draft.users = action.payload;
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
-        case UsersActionsType.SET_USER_LOADING_STATE:
+        case UsersSearchActionsType.SET_USER_LOADING_STATE:
             draft.loadingState = action.payload;
             break;
 

@@ -1,7 +1,7 @@
 import {LoadingStatus} from "../../../types";
 import {User} from "../../user/contracts/state";
 
-export interface UsersState {
-    users: User[];
+export interface UserProfileState {
+    user: User | undefined;
     loadingState: LoadingStatus;
 }

@@ -7,7 +7,7 @@ interface Response<T> {
     data: T;
 }
 
-export const TweetsApi = {
+export const TweetApi = {
     async fetchTweets(): Promise<Response<Tweet[]>> {
         const data = await axios.get<Response<Tweet[]>>('http://localhost:8080/api/v1/tweets');
         return data.data;
@@ -16,14 +16,7 @@ export const TweetsApi = {
         const data = await axios.post<Response<Tweet[]>>('http://localhost:8080/api/v1/tweets/user', payload);
         return data.data;
     },
-    async getUserTweets(id: string): Promise<Response<Tweet[]>> {
-        const data = await axios.get<Response<Tweet[]>>(`http://localhost:8080/api/v1/user/${id}/tweets`);
-        return data.data;
-    },
-    async getUserLikedTweets(id: string): Promise<Response<Tweet[]>> {
-        const data = await axios.get<Response<Tweet[]>>(`http://localhost:8080/api/v1/user/${id}/liked`);
-        return data.data;
-    },
+
     async fetchTweetData(id: string): Promise<Response<Tweet>> {
         const data = await axios.get<Response<Tweet>>('http://localhost:8080/api/v1/tweets/' + id);
         return data.data;
@@ -46,5 +39,3 @@ export const TweetsApi = {
     },
     removeTweet: (id: string): Promise<void> => axios.delete('/tweets/' + id),
 };
-
-

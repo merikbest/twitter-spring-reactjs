@@ -119,7 +119,6 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
     },
     tweetHeader: {
         display: 'flex',
-        alignItems: 'center',
         justifyContent: 'space-between'
     },
     tweetContent: {
@@ -132,8 +131,9 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         justifyContent: 'space-between',
         maxWidth: 450,
     },
-    tweetPopupMenu: {
-
+    tweetIconButton: {
+        padding: 0,
+        marginRight: 12
     },
     tweetUserName: {
         color: grey[500],

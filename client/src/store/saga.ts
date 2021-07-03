@@ -5,7 +5,10 @@ import {tagsSaga} from "./ducks/tags/sagas";
 import {tweetSaga} from "./ducks/tweet/sagas";
 import {usersSaga} from "./ducks/users/sagas";
 import {userSaga} from "./ducks/user/sagas";
+import {userTweetsSaga} from "./ducks/userTweets/sagas";
+import {userProfileSaga} from "./ducks/userProfile/sagas";
+import {usersSearchSaga} from "./ducks/usersSearch/sagas";
 
 export default function* rootSaga() {
-    yield all([tweetsSaga(), tweetSaga(), tagsSaga(), usersSaga(), userSaga()])
+    yield all([tweetsSaga(), tweetSaga(), tagsSaga(), usersSaga(), userSaga(), userTweetsSaga(), userProfileSaga(), usersSearchSaga()])
 }

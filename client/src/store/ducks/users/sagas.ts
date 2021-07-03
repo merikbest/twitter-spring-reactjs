@@ -1,30 +1,15 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 
 import {LoadingStatus} from '../../types';
-import {
-    FetchUserActionInterface,
-    FollowUserActionInterface,
-    UnfollowUserActionInterface,
-    UsersActionsType
-} from "./contracts/actionTypes";
-import {AuthApi} from "../../../services/api/authApi";
-import {setUser, setUsers, setUsersLoadingState} from "./actionCreators";
+import {UsersActionsType} from "./contracts/actionTypes";
+import {setUsers, setUsersLoadingState} from "./actionCreators";
 import {User} from "../user/contracts/state";
-
-export function* fetchUserRequest({payload}: FetchUserActionInterface) {
-    try {
-        yield put(setUsersLoadingState(LoadingStatus.LOADING));
-        const item: User = yield call(AuthApi.getUserInfo, payload);
-        yield put(setUser(item));
-    } catch (error) {
-        yield put(setUsersLoadingState(LoadingStatus.ERROR));
-    }
-}
+import {UserApi} from "../../../services/api/userApi";
 
 export function* fetchUsersRequest() {
     try {
         yield put(setUsersLoadingState(LoadingStatus.LOADING));
-        const item: User[] = yield call(AuthApi.getUsers);
+        const item: User[] = yield call(UserApi.getUsers);
         yield put(setUsers(item));
     } catch (error) {
         yield put(setUsersLoadingState(LoadingStatus.ERROR));
@@ -34,33 +19,14 @@ export function* fetchUsersRequest() {
 export function* fetchRelevantUsersRequest() {
     try {
         yield put(setUsersLoadingState(LoadingStatus.LOADING));
-        const item: User[] = yield call(AuthApi.getRelevantUsers);
+        const item: User[] = yield call(UserApi.getRelevantUsers);
         yield put(setUsers(item));
     } catch (error) {
         yield put(setUsersLoadingState(LoadingStatus.ERROR));
     }
 }
 
-export function* fetchFollowUser({payload}: FollowUserActionInterface) {
-    try {
-        yield call(AuthApi.follow, payload);
-    } catch (error) {
-        yield put(setUsersLoadingState(LoadingStatus.ERROR));
-    }
-}
-
-export function* fetchUnfollowUser({payload}: UnfollowUserActionInterface) {
-    try {
-        yield call(AuthApi.unfollow, payload);
-    } catch (error) {
-        yield put(setUsersLoadingState(LoadingStatus.ERROR));
-    }
-}
-
 export function* usersSaga() {
-    yield takeLatest(UsersActionsType.FETCH_USER, fetchUserRequest);
     yield takeLatest(UsersActionsType.FETCH_USERS, fetchUsersRequest);
     yield takeLatest(UsersActionsType.FETCH_RELEVANT_USERS, fetchRelevantUsersRequest);
-    yield takeLatest(UsersActionsType.FOLLOW_USER, fetchFollowUser);
-    yield takeLatest(UsersActionsType.UNFOLLOW_USER, fetchUnfollowUser);
 }
