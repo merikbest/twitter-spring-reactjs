@@ -136,7 +136,11 @@ const SideMenu: FC<SideMenuProps> = ({classes}: SideMenuProps): ReactElement => 
                     </Button>
                     <ModalBlock onClose={onCloseAddTweet} visible={visibleAddTweet}>
                         <div style={{width: 550}}>
-                            <AddTweetForm maxRows={15} classes={classes}/>
+                            <AddTweetForm
+                                maxRows={15}
+                                classes={classes}
+                                title={"What's happening?"}
+                                buttonName={"Tweet"}/>
                         </div>
                     </ModalBlock>
                 </li>

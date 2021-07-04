@@ -1,6 +1,5 @@
 package com.gmail.merikbest2015.twitterspringreactjs.model;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

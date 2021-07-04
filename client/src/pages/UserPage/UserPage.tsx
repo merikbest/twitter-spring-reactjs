@@ -13,7 +13,6 @@ import LinkOutlinedIcon from '@material-ui/icons/LinkOutlined';
 
 import {useHomeStyles} from '../Home/HomeStyles';
 import {BackButton} from "../../components/BackButton/BackButton";
-import Tweet from "../../components/Tweet/Tweet";
 import EditProfileModal from "../../components/EditProfileModal/EditProfileModal";
 import {fetchUserData, followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 import {selectUserData} from "../../store/ducks/user/selectors";
@@ -23,6 +22,7 @@ import {selectIsUserTweetsLoading, selectUserTweetsItems} from "../../store/duck
 import {fetchUserTweets, fetchUserLikedTweets} from "../../store/ducks/userTweets/actionCreators";
 import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
 import {fetchUserProfile} from "../../store/ducks/userProfile/actionCreators";
+import UserPageTweets from "./UserPageTweets";
 import "./UserPage.scss";
 
 const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
@@ -162,9 +162,14 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
                         <CircularProgress/>
                     </div>
                 ) : (
-                    tweets.map((tweet) => (
-                        <Tweet key={tweet.id} classes={classes} images={tweet.images} {...tweet} activeTab={activeTab} />
-                    ))
+                    <UserPageTweets
+                        tweets={tweets}
+                        classes={classes}
+                        activeTab={activeTab}
+                        userProfileId={userProfile?.id}
+                        myProfileId={myProfile?.user.id}
+                        username={userProfile?.username}
+                    />
                 )}
             </div>
             {visibleEditProfile ? <EditProfileModal visible={visibleEditProfile} onClose={onCloseEditProfile}/> : null}

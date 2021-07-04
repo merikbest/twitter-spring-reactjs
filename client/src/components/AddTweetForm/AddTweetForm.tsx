@@ -21,6 +21,8 @@ import {selectUserData} from "../../store/ducks/user/selectors";
 interface AddTweetFormProps {
     classes: ReturnType<typeof useHomeStyles>;
     maxRows?: number;
+    title: string;
+    buttonName: string;
 }
 
 export interface ImageObj {
@@ -30,7 +32,7 @@ export interface ImageObj {
 
 const MAX_LENGTH = 280;
 
-export const AddTweetForm: FC<AddTweetFormProps> = ({classes, maxRows}: AddTweetFormProps): ReactElement => {
+export const AddTweetForm: FC<AddTweetFormProps> = ({classes, maxRows, title, buttonName}: AddTweetFormProps): ReactElement => {
     const dispatch = useDispatch();
     const addFormState = useSelector(selectAddFormState);
     const userData = useSelector(selectUserData);
@@ -71,7 +73,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({classes, maxRows}: AddTweet
                 <TextareaAutosize
                     onChange={handleChangeTextarea}
                     className={classes.addFormTextarea}
-                    placeholder="What's happening?"
+                    placeholder={title}
                     value={text}
                     rowsMax={maxRows}
                 />
@@ -113,7 +115,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({classes, maxRows}: AddTweet
                         {addFormState === AddFormState.LOADING ? (
                             <CircularProgress color="inherit" size={16} />
                         ) : (
-                            'Tweet'
+                            buttonName
                         )}
                     </Button>
                 </div>

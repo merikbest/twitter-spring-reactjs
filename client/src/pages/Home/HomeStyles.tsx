@@ -1,6 +1,5 @@
 import {colors, makeStyles, Theme} from '@material-ui/core';
 import grey from '@material-ui/core/colors/grey';
-import Follower from "../../components/FollowingFollowers/Follower";
 
 export const useHomeStyles = makeStyles((theme: Theme) => ({
     centered: {
@@ -94,6 +93,10 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
     tweetsHeaderUser: {
         display: 'flex',
         alignItems: 'center',
+        '& a': {
+            color: "#000",
+            textDecoration: 'none',
+        },
     },
     tweetsHeaderBackButton: {
         marginRight: 20,
@@ -156,7 +159,28 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         maxWidth: '100%',
         justifyContent: 'space-around',
         padding: '2px 0',
-        marginTop: 20,
+    },
+    fullTweetInfo: {
+        display: 'flex',
+        alignItems: 'center',
+        margin: "16px 0",
+        fontSize: 15,
+        '& a': {
+            color: "#000",
+            textDecoration: 'none'
+        },
+    },
+    fullTweetRetweetWrapper: {
+        display: "flex",
+        alignItems: "center",
+        marginLeft: 20,
+        marginTop: 5,
+        color: "rgb(83, 100, 113)",
+        '& p': {
+            marginLeft: 15,
+            fontSize: 14,
+            fontWeight: 700
+        },
     },
     rightSide: {
         paddingTop: 20,
@@ -315,5 +339,20 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         marginLeft: "auto",
         marginRight: "-20px",
         height: "30px",
-    }
+    },
+    userPageTextWrapper: {
+        margin: "40px 20px",
+        textAlign: "center"
+    },
+    userPageTopic: {
+        fontSize: 20,
+        fontWeight: 700,
+        marginBottom: 12
+    },
+    userPageText: {
+        fontSize: 15,
+        fontWeight: 400,
+        marginBottom: 16,
+        color: "rgb(83, 100, 113)"
+    },
 }));

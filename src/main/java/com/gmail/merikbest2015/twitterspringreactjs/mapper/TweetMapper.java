@@ -43,8 +43,8 @@ public class TweetMapper {
         return convertToTweetResponse(tweetService.getTweetById(tweetId));
     }
 
-    public List<TweetResponse> createTweet(TweetRequest tweetRequest) {
-        return convertListToResponseDto(tweetService.createTweet(convertToTweetEntity(tweetRequest)));
+    public TweetResponse createTweet(TweetRequest tweetRequest) {
+        return convertToTweetResponse(tweetService.createTweet(convertToTweetEntity(tweetRequest)));
     }
 
     public List<TweetResponse> deleteTweet(Long tweetId) {
@@ -65,5 +65,9 @@ public class TweetMapper {
 
     public List<TweetResponse> searchTweets(String text) {
         return convertListToResponseDto(tweetService.searchTweets(text));
+    }
+
+    public TweetResponse replyTweet(Long tweetId, TweetRequest tweetRequest) {
+        return convertToTweetResponse(tweetService.replyTweet(tweetId, convertToTweetEntity(tweetRequest)));
     }
 }

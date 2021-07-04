@@ -6,13 +6,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class TweetResponse {
+public class TweetReplyResponse {
     private Long id;
     private String text;
     private LocalDateTime dateTime;
     private List<ImageResponse> images;
     private List<UserResponse> retweets;
     private List<UserResponse> likes;
-    private List<TweetReplyResponse> replies;
     private UserResponse user;
 }

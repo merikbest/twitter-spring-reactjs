@@ -1,6 +1,5 @@
 package com.gmail.merikbest2015.twitterspringreactjs.model;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,6 +36,12 @@ public class Tweet {
             joinColumns = @JoinColumn(name = "tweets_id"),
             inverseJoinColumns = @JoinColumn(name = "users_id"))
     private List<User> retweets;
+
+    @ManyToMany
+    @JoinTable(name = "replies",
+            joinColumns = @JoinColumn(name = "tweets_id"),
+            inverseJoinColumns = @JoinColumn(name = "reply_id"))
+    private List<Tweet> replies;
 
     public Tweet() {
         this.dateTime = LocalDateTime.now().withNano(0);

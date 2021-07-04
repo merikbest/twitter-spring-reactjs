@@ -1,9 +1,5 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
-import {
-    setUpdatedUserData,
-    setUserData,
-    setUserLoadingStatus
-} from "./actionCreators";
+import {setUpdatedUserData, setUserData, setUserLoadingStatus} from "./actionCreators";
 import {AuthUser, User} from "./contracts/state";
 import {
     FetchSignInActionInterface,

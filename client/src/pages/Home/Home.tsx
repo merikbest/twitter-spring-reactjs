@@ -56,7 +56,7 @@ const Home: FC = (): ReactElement => {
             <Route path='/home' exact>
                 <Paper>
                     <div className={classes.addForm}>
-                        <AddTweetForm classes={classes}/>
+                        <AddTweetForm classes={classes} title={"What's happening?"} buttonName={"Tweet"}/>
                     </div>
                     <div className={classes.addFormBottomLine}/>
                 </Paper>

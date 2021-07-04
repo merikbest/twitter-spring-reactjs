@@ -33,7 +33,7 @@ public class TweetController {
     }
 
     @PostMapping
-    public ResponseEntity<List<TweetResponse>> createTweet(@RequestBody TweetRequest tweetRequest) {
+    public ResponseEntity<TweetResponse> createTweet(@RequestBody TweetRequest tweetRequest) {
         return ResponseEntity.ok(tweetMapper.createTweet(tweetRequest));
     }
 
@@ -55,5 +55,10 @@ public class TweetController {
     @GetMapping("/retweet/{tweetId}")
     public ResponseEntity<TweetResponse> retweet(@PathVariable Long tweetId) {
         return ResponseEntity.ok(tweetMapper.retweet(tweetId));
+    }
+
+    @PostMapping("/reply/{tweetId}")
+    public ResponseEntity<TweetResponse> replyTweet(@PathVariable Long tweetId, @RequestBody TweetRequest tweetRequest) {
+        return ResponseEntity.ok(tweetMapper.replyTweet(tweetId, tweetRequest));
     }
 }

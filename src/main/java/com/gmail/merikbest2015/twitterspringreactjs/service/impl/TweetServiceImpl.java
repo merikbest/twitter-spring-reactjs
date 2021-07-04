@@ -41,15 +41,15 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
-    public List<Tweet> createTweet(Tweet tweet) {
+    public Tweet createTweet(Tweet tweet) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());
         tweet.setUser(user);
-        tweetRepository.save(tweet);
-        List<Tweet> tweets = user.getTweets();
-        tweets.add(tweet);
+        Tweet createdTweet = tweetRepository.save(tweet);
+        user.getTweets().add(createdTweet);
         userRepository.save(user);
 
+        // find hashtag in text
         Pattern pattern = Pattern.compile("(#\\w+)\\b");
         Matcher match = pattern.matcher(tweet.getText());
         List<String> hashtags = new ArrayList<>();
@@ -78,7 +78,7 @@ public class TweetServiceImpl implements TweetService {
                 }
             }
         }
-        return tweetRepository.findAllByOrderByDateTimeDesc();
+        return createdTweet;
     }
 
     @Override
@@ -88,8 +88,7 @@ public class TweetServiceImpl implements TweetService {
         tweetRepository.delete(tweet);
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());
-        List<Tweet> tweets = user.getTweets();
-        tweets.remove(tweet);
+        user.getTweets().remove(tweet);
         return tweetRepository.findAllByOrderByDateTimeDesc();
     }
 
@@ -142,6 +141,14 @@ public class TweetServiceImpl implements TweetService {
             tweets.add(tweet);
             retweets.add(user);
         }
+        return tweetRepository.save(tweet);
+    }
+
+    @Override
+    public Tweet replyTweet(Long tweetId, Tweet reply) {
+        Tweet replyTweet = createTweet(reply);
+        Tweet tweet = tweetRepository.getOne(tweetId);
+        tweet.getReplies().add(replyTweet);
         return tweetRepository.save(tweet);
     }
 }

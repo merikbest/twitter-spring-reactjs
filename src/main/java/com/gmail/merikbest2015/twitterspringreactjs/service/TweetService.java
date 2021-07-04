@@ -12,7 +12,7 @@ public interface TweetService {
 
     List<Tweet> getTweetsByUser(User user);
 
-    List<Tweet> createTweet(Tweet tweet);
+    Tweet createTweet(Tweet tweet);
 
     List<Tweet> deleteTweet(Long tweetId);
 
@@ -21,4 +21,6 @@ public interface TweetService {
     Tweet likeTweet(Long tweetId);
 
     Tweet retweet(Long tweetId);
+
+    Tweet replyTweet(Long tweetId, Tweet reply);
 }

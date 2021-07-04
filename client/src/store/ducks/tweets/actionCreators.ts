@@ -25,7 +25,7 @@ export const setTweets = (payload: TweetsState["items"]): SetTweetsActionInterfa
     payload
 });
 
-export const addTweet = (payload: Tweet[]): AddTweetActionInterface => ({
+export const addTweet = (payload: Tweet): AddTweetActionInterface => ({
     type: TweetsActionType.ADD_TWEET,
     payload
 });

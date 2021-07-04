@@ -21,8 +21,8 @@ export const TweetApi = {
         const data = await axios.get<Response<Tweet>>('http://localhost:8080/api/v1/tweets/' + id);
         return data.data;
     },
-    async addTweet(payload: { text: string; images: Image[]; likes: []; retweets: []; }): Promise<Response<Tweet[]>> {
-        const data = await axios.post<Response<Tweet[]>>('http://localhost:8080/api/v1/tweets', payload);
+    async addTweet(payload: { text: string; images: Image[]; likes: []; retweets: []; }): Promise<Response<Tweet>> {
+        const data = await axios.post<Response<Tweet>>('http://localhost:8080/api/v1/tweets', payload);
         return data.data;
     },
     async searchTweets(text: string): Promise<Response<Tweet[]>> {

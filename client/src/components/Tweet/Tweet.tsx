@@ -4,15 +4,18 @@ import classNames from "classnames";
 import {Avatar, IconButton, Menu, MenuItem, Paper, Typography} from '@material-ui/core';
 import CommentIcon from "@material-ui/icons/ModeCommentOutlined";
 import RepostIcon from "@material-ui/icons/RepeatOutlined";
-import LikeIcon from "@material-ui/icons/FavoriteBorderOutlined";
+import LikeIcon from '@material-ui/icons/Favorite';
+import LikeIconOutlined from "@material-ui/icons/FavoriteBorderOutlined";
 import ShareIcon from '@material-ui/icons/ReplyOutlined';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import pink from '@material-ui/core/colors/pink';
+import green from '@material-ui/core/colors/green';
 
 import {useHomeStyles} from "../../pages/Home/HomeStyles";
 import {formatDate} from '../../util/formatDate';
 import ImageList from "../ImageList/ImageList";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchLikeTweet, fetchRetweet, likeTweet, removeTweet} from "../../store/ducks/tweets/actionCreators";
+import {fetchLikeTweet, fetchRetweet, removeTweet} from "../../store/ducks/tweets/actionCreators";
 import {Image} from "../../store/ducks/tweets/contracts/state";
 import {User} from "../../store/ducks/user/contracts/state";
 import {selectUserData} from "../../store/ducks/user/selectors";
@@ -35,7 +38,8 @@ const Tweet: FC<TweetProps> = ({id, classes, text, images, user, dateTime, likes
     const history = useHistory();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    let userRetweetId = retweets.find((user) => user.id === myProfile?.user?.id);
+    const isTweetLiked = likes.find((user) => user.id === myProfile?.user?.id);
+    const isTweetRetweeted = retweets.find((user) => user.id === myProfile?.user?.id);
 
     const handleClickTweet = (event: React.MouseEvent<HTMLAnchorElement>): void => {
         event.preventDefault();
@@ -71,7 +75,7 @@ const Tweet: FC<TweetProps> = ({id, classes, text, images, user, dateTime, likes
 
     return (
         <>
-            {userRetweetId?.id === myProfile?.user?.id ?
+            {isTweetRetweeted ?
                 <div style={{display: "flex", alignItems: "center", marginLeft: 45, marginTop: 5, color: "rgb(83, 100, 113)"}}>
                     <RepostIcon style={{fontSize: 16}}/>
                     <Typography style={{marginLeft: 15, fontSize: 14, fontWeight: 700}}>
@@ -123,15 +127,33 @@ const Tweet: FC<TweetProps> = ({id, classes, text, images, user, dateTime, likes
                         </div>
                         <div>
                             <IconButton onClick={handleRetweet}>
-                                <RepostIcon style={{fontSize: 20}}/>
+                                {isTweetRetweeted ? (
+                                    <RepostIcon style={{fontSize: 20, color: green[500]}}/>
+                                ) : (
+                                    <RepostIcon style={{fontSize: 20}}/>)
+                                }
                             </IconButton>
-                            <span>{retweets.length === 0 || retweets === null ? null : retweets.length}</span>
+                            {retweets.length === 0 || retweets === null ? null : (
+                                isTweetRetweeted ? (
+                                    <span style={{color: green[500]}}>{retweets.length}</span>
+                                ) : (
+                                    <span>{retweets.length}</span>)
+                            )}
                         </div>
                         <div>
                             <IconButton onClick={handleLike}>
-                                <LikeIcon style={{fontSize: 20}}/>
+                                {isTweetLiked ? (
+                                    <LikeIcon style={{fontSize: 20, color: pink[500]}}/>
+                                ) : (
+                                    <LikeIconOutlined style={{fontSize: 20}}/>
+                                )}
                             </IconButton>
-                            <span>{likes.length === 0 || likes === null ? null : likes.length}</span>
+                            {likes.length === 0 || likes === null ? null : (
+                                isTweetLiked ? (
+                                    <span style={{color: pink[500]}}>{likes.length}</span>
+                                ) : (
+                                    <span>{likes.length}</span>)
+                            )}
                         </div>
                         <div>
                             <IconButton>
@@ -142,8 +164,6 @@ const Tweet: FC<TweetProps> = ({id, classes, text, images, user, dateTime, likes
                 </div>
             </Paper>
         </>
-
-
     );
 };
 

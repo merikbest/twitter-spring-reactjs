@@ -46,7 +46,6 @@ export const UserApi = {
     },
     async getUserTweets(id: string): Promise<Response<Tweet[]>> {
         const data = await axios.get<Response<Tweet[]>>(`http://localhost:8080/api/v1/user/${id}/tweets`);
-        console.log(data)
         return data.data;
     },
     async getUserLikedTweets(id: string): Promise<Response<Tweet[]>> {
