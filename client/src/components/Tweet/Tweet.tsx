@@ -1,5 +1,5 @@
 import React, {FC, ReactElement, useState} from 'react';
-import {useHistory} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import classNames from "classnames";
 import {Avatar, IconButton, Menu, MenuItem, Paper, Typography} from '@material-ui/core';
 import CommentIcon from "@material-ui/icons/ModeCommentOutlined";
@@ -30,9 +30,23 @@ interface TweetProps {
     images?: Image[];
     user: User;
     activeTab?: number;
+    addressedUser?: string;
+    addressedId?: number;
 }
 
-const Tweet: FC<TweetProps> = ({id, classes, text, images, user, dateTime, likes, retweets, activeTab}: TweetProps): ReactElement => {
+const Tweet: FC<TweetProps> = ({
+                                   id,
+                                   classes,
+                                   text,
+                                   images,
+                                   user,
+                                   dateTime,
+                                   likes,
+                                   retweets,
+                                   activeTab,
+                                   addressedUser,
+                                   addressedId
+                               }: TweetProps): ReactElement => {
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
     const history = useHistory();
@@ -76,7 +90,13 @@ const Tweet: FC<TweetProps> = ({id, classes, text, images, user, dateTime, likes
     return (
         <>
             {isTweetRetweeted ?
-                <div style={{display: "flex", alignItems: "center", marginLeft: 45, marginTop: 5, color: "rgb(83, 100, 113)"}}>
+                <div style={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginLeft: 45,
+                    marginTop: 5,
+                    color: "rgb(83, 100, 113)"
+                }}>
                     <RepostIcon style={{fontSize: 16}}/>
                     <Typography style={{marginLeft: 15, fontSize: 14, fontWeight: 700}}>
                         You Retweeted
@@ -114,6 +134,16 @@ const Tweet: FC<TweetProps> = ({id, classes, text, images, user, dateTime, likes
                             </div>
                         </div>
                         <Typography variant="body1" gutterBottom>
+                            {addressedUser ? (
+                                <object>
+                                    <Typography style={{zIndex: 2, color: "rgb(83, 100, 113)", fontSize: 15}}>
+                                        Replying to <Link to={`/user/${addressedId}`}
+                                                          style={{textDecoration: "none", color: "rgb(27, 149, 224)"}}>
+                                        @{addressedUser}
+                                    </Link>
+                                    </Typography>
+                                </object>
+                            ) : null}
                             {text}
                             {images && <ImageList classes={classes} images={images}/>}
                         </Typography>

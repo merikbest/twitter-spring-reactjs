@@ -17,12 +17,15 @@ import {AddFormState, Image} from '../../store/ducks/tweets/contracts/state';
 import UploadImages from '../UploadImages/UploadImages';
 import {uploadImage} from "../../util/uploadImage";
 import {selectUserData} from "../../store/ducks/user/selectors";
+import {fetchReplyTweet} from "../../store/ducks/tweet/actionCreators";
 
 interface AddTweetFormProps {
     classes: ReturnType<typeof useHomeStyles>;
     maxRows?: number;
+    tweetId?: string;
     title: string;
     buttonName: string;
+    addressedUsername?: string;
 }
 
 export interface ImageObj {
@@ -32,7 +35,14 @@ export interface ImageObj {
 
 const MAX_LENGTH = 280;
 
-export const AddTweetForm: FC<AddTweetFormProps> = ({classes, maxRows, title, buttonName}: AddTweetFormProps): ReactElement => {
+export const AddTweetForm: FC<AddTweetFormProps> = ({
+                                                        classes,
+                                                        maxRows,
+                                                        tweetId,
+                                                        title,
+                                                        buttonName,
+                                                        addressedUsername
+                                                    }: AddTweetFormProps): ReactElement => {
     const dispatch = useDispatch();
     const addFormState = useSelector(selectAddFormState);
     const userData = useSelector(selectUserData);
@@ -61,6 +71,13 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({classes, maxRows, title, bu
         setImages([]);
     };
 
+    const handleClickReplyTweet = (): void => {
+        if (addressedUsername) {
+            dispatch(fetchReplyTweet({id: tweetId!, text, addressedUsername}));
+            setText("");
+        }
+    };
+
     return (
         <div>
             <div className={classes.addFormBody}>
@@ -80,7 +97,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({classes, maxRows, title, bu
             </div>
             <div className={classes.addFormBottom}>
                 <div className={classNames(classes.tweetFooter, classes.addFormBottomActions)}>
-                    <UploadImages images={images} onChangeImages={setImages} />
+                    <UploadImages images={images} onChangeImages={setImages}/>
                     {/*<IconButton color="primary">*/}
                     {/*    <EmojiIcon style={{fontSize: 26}}/>*/}
                     {/*</IconButton>*/}
@@ -108,12 +125,12 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({classes, maxRows, title, bu
                         </>
                     )}
                     <Button
-                        onClick={handleClickAddTweet}
+                        onClick={buttonName === "Tweet" ? handleClickAddTweet : handleClickReplyTweet}
                         disabled={addFormState === AddFormState.LOADING || !text || text.length >= MAX_LENGTH}
                         color="primary"
                         variant="contained">
                         {addFormState === AddFormState.LOADING ? (
-                            <CircularProgress color="inherit" size={16} />
+                            <CircularProgress color="inherit" size={16}/>
                         ) : (
                             buttonName
                         )}

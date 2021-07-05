@@ -17,7 +17,6 @@ import mediumZoom from "medium-zoom";
 import pink from '@material-ui/core/colors/pink';
 import green from '@material-ui/core/colors/green';
 
-import {useHomeStyles} from './HomeStyles';
 import {selectIsTweetLoading, selectTweetData} from '../../store/ducks/tweet/selectors';
 import {fetchTweetData, setTweetData} from '../../store/ducks/tweet/actionCreators';
 import ImageList from "../../components/ImageList/ImageList";
@@ -25,6 +24,8 @@ import {fetchLikeTweet} from "../../store/ducks/tweets/actionCreators";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import UsersListModal from "../../components/UsersListModal/UsersListModal";
 import {AddTweetForm} from "../../components/AddTweetForm/AddTweetForm";
+import {useHomeStyles} from './HomeStyles';
+import Tweet from "../../components/Tweet/Tweet";
 
 export const FullTweet: FC = (): ReactElement | null => {
     const classes = useHomeStyles();
@@ -168,8 +169,16 @@ export const FullTweet: FC = (): ReactElement | null => {
                             <ShareIcon style={{fontSize: 25}}/>
                         </IconButton>
                     </div>
-                    <Divider style={{marginBottom: 16}}/>
+                    <Divider/>
+                    <Typography style={{margin: "16px 60px", color: "rgb(83, 100, 113)", fontSize: 15}}>
+                        Replying to <Link to={`/user/${tweetData.user.id}`}
+                                          style={{textDecoration: "none", color: "rgb(27, 149, 224)"}}>
+                        @{tweetData.user.username}
+                    </Link>
+                    </Typography>
                     <AddTweetForm
+                        tweetId={tweetData?.id}
+                        addressedUsername={tweetData.user.username}
                         maxRows={15}
                         classes={classes}
                         title={"Tweet your reply"}
@@ -187,9 +196,16 @@ export const FullTweet: FC = (): ReactElement | null => {
                             visible={visibleModalWindow}
                             onClose={onCloseModalWindow}/>
                     )}
-
                 </Paper>
                 <div className={classes.addFormBottomLine}/>
+                {tweetData.replies.map((tweet) =>
+                    <Tweet
+                        key={tweet.id}
+                        classes={classes}
+                        images={tweet.images}
+                        addressedUser={tweetData.user.username}
+                        addressedId={tweetData.user.id}
+                        {...tweet} />)}
             </>
         );
     }

@@ -10,6 +10,7 @@ import java.util.List;
 public class TweetRequest {
     private Long id;
     private String text;
+    private String addressedUsername;
     private List<Image> images;
     private List<UserRequest> likes;
     private List<UserResponse> retweets;

@@ -15,10 +15,12 @@ export interface Image {
 export interface Tweet {
     id: string;
     text: string;
+    addressedUsername: string;
     dateTime: string;
     images?: Image[];
     likes: User[];
     retweets: User[];
+    replies: Tweet[];
     user: User;
 }
 

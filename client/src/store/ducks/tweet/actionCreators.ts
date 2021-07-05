@@ -3,6 +3,7 @@ import {
     FetchTweetDataActionInterface,
     SetTweetDataActionInterface,
     SetTweetDataLoadingStateInterface,
+    FetchReplyTweetActionInterface,
     TweetActionType
 } from "./contracts/actionTypes";
 import {TweetState} from "./contracts/state";
@@ -21,4 +22,10 @@ export const fetchTweetData = (payload: string): FetchTweetDataActionInterface =
     type: TweetActionType.FETCH_TWEET_DATA,
     payload
 });
+
+export const fetchReplyTweet = (payload: { id: string; text: string; addressedUsername: string; }): FetchReplyTweetActionInterface => ({
+    type: TweetActionType.FETCH_REPLY_TWEET,
+    payload
+});
+
 

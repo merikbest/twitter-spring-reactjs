@@ -9,6 +9,7 @@ import java.util.List;
 public class TweetReplyResponse {
     private Long id;
     private String text;
+    private String addressedUsername;
     private LocalDateTime dateTime;
     private List<ImageResponse> images;
     private List<UserResponse> retweets;

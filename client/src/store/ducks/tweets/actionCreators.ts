@@ -2,8 +2,11 @@ import {AddFormState, Image, Tweet, TweetsState} from "./contracts/state";
 import {
     FetchLikedTweetsActionInterface,
     FetchLikeTweetActionInterface,
-    FetchRetweetActionInterface, FetchTweetsByTagActionInterface, FetchTweetsByTextActionInterface,
-    FetchTweetsByUserActionInterface, FetchUserTweetsActionInterface,
+    FetchRetweetActionInterface,
+    FetchTweetsByTagActionInterface,
+    FetchTweetsByTextActionInterface,
+    FetchTweetsByUserActionInterface,
+    FetchUserTweetsActionInterface,
     LikeTweetActionInterface,
     RemoveTweetActionInterface,
     RetweetActionInterface,

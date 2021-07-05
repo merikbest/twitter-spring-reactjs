@@ -18,6 +18,7 @@ public class Tweet {
     private Long id;
     private String text;
     private LocalDateTime dateTime;
+    private String addressedUsername;
 
     @ManyToOne
     private User user;

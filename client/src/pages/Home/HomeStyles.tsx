@@ -142,13 +142,13 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         color: grey[500],
     },
     fullTweet: {
-        padding: 22,
+        padding: "10px 22px 0px 22px",
         paddingBottom: 0,
     },
     fullTweetText: {
         fontSize: 24,
-        marginTop: 20,
-        marginBottom: 20,
+        marginTop: 16,
+        marginBottom: 16,
         lineHeight: 1.3125,
         wordBreak: 'break-word',
     },
