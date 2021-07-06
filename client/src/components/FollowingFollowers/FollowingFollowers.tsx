@@ -12,9 +12,9 @@ import {selectUserData, selectUserIsLoading} from "../../store/ducks/user/select
 import {useStylesFollower} from "./FollowerStyles";
 import Follower from "./Follower";
 import {User} from "../../store/ducks/user/contracts/state";
-import {fetchUserData, followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
+import {fetchUserData, followUser} from "../../store/ducks/user/actionCreators";
 import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
-import {fetchUserProfile} from "../../store/ducks/userProfile/actionCreators";
+import {fetchUserProfile, unfollowUserProfile} from "../../store/ducks/userProfile/actionCreators";
 
 const FollowingFollowers = () => {
     const classes = useStylesFollower();
@@ -57,7 +57,7 @@ const FollowingFollowers = () => {
     };
 
     const handleUnfollow = (user: User): void => {
-        dispatch(unfollowUser(user));
+        dispatch(unfollowUserProfile(user));
     };
 
     return (

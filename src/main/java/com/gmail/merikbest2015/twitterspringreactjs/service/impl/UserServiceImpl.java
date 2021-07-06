@@ -6,6 +6,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.model.Image;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.ImageRepository;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.TweetRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +21,14 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final TweetRepository tweetRepository;
     private final ImageRepository imageRepository;
     private final AmazonS3 amazonS3client;
 
@@ -59,7 +62,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Tweet> getUserTweets(Long userId) {
         User user = userRepository.getOne(userId);
-        return user.getTweets();
+        return user.getTweets().stream()
+                .filter(tweet -> tweet.getAddressedUsername() == null)
+                .collect(Collectors.toList());
     }
 
     @Override

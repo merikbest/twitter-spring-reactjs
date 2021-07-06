@@ -26,6 +26,7 @@ interface TweetProps {
     text: string;
     likes: User[];
     retweets: User[];
+    replies: any;
     dateTime: string;
     images?: Image[];
     user: User;
@@ -43,6 +44,7 @@ const Tweet: FC<TweetProps> = ({
                                    dateTime,
                                    likes,
                                    retweets,
+                                   replies,
                                    activeTab,
                                    addressedUser,
                                    addressedId
@@ -153,7 +155,9 @@ const Tweet: FC<TweetProps> = ({
                             <IconButton>
                                 <CommentIcon style={{fontSize: 20}}/>
                             </IconButton>
-                            <span></span>
+                            {replies?.length === 0 || replies === null ? null : (
+                                <span>{replies?.length}</span>
+                            )}
                         </div>
                         <div>
                             <IconButton onClick={handleRetweet}>
