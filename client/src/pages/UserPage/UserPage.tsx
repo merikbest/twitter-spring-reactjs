@@ -21,7 +21,7 @@ import {fetchTags} from "../../store/ducks/tags/actionCreators";
 import {selectIsUserTweetsLoading, selectUserTweetsItems} from "../../store/ducks/userTweets/selectors";
 import {fetchUserTweets, fetchUserLikedTweets} from "../../store/ducks/userTweets/actionCreators";
 import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
-import {fetchUserProfile} from "../../store/ducks/userProfile/actionCreators";
+import {fetchUserProfile, followUserProfile, unfollowUserProfile} from "../../store/ducks/userProfile/actionCreators";
 import UserPageTweets from "./UserPageTweets";
 import "./UserPage.scss";
 
@@ -64,12 +64,10 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
     };
 
     const handleFollow = () => {
-        if (userProfile) {
-            if (follower) {
-                dispatch(unfollowUser(userProfile));
-            } else {
-                dispatch(followUser(userProfile));
-            }
+        if (follower) {
+            dispatch(unfollowUserProfile(userProfile!));
+        } else {
+            dispatch(followUserProfile(userProfile!));
         }
     };
 

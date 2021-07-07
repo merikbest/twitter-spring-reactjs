@@ -1,9 +1,11 @@
 import {User} from "../user/contracts/state";
 import {
     FetchUserProfileActionInterface,
+    FollowProfileActionInterface,
     FollowUserProfileActionInterface,
     SetUserProfileActionInterface,
     SetUserProfileLoadingStatusActionInterface,
+    UnfollowProfileActionInterface,
     UnfollowUserProfileActionInterface,
     UserProfileActionsType,
 } from './contracts/actionTypes';
@@ -16,6 +18,16 @@ export const setUserProfile = (payload: User): SetUserProfileActionInterface => 
 
 export const fetchUserProfile = (payload: string): FetchUserProfileActionInterface => ({
     type: UserProfileActionsType.FETCH_USER,
+    payload
+});
+
+export const followProfile = (payload: User): FollowProfileActionInterface => ({
+    type: UserProfileActionsType.FOLLOW,
+    payload
+});
+
+export const unfollowProfile = (payload: User): UnfollowProfileActionInterface => ({
+    type: UserProfileActionsType.UNFOLLOW,
     payload
 });
 

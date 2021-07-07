@@ -15,14 +15,14 @@ export const userProfileReducer = produce((draft: Draft<UserProfileState>, actio
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
-        case UserProfileActionsType.FOLLOW_USER:
+        case UserProfileActionsType.FOLLOW:
             if (draft.user?.followers) {
                 draft.user.followers = [...draft.user.followers, action.payload];
             }
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
-        case UserProfileActionsType.UNFOLLOW_USER:
+        case UserProfileActionsType.UNFOLLOW:
             if (draft.user?.followers) {
                 const unfollowUserIndex = draft.user?.followers?.findIndex(follower => follower.id === action.payload.id);
                 draft.user.followers = [

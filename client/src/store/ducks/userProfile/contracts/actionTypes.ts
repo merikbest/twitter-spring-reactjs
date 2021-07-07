@@ -5,6 +5,8 @@ import {LoadingStatus} from "../../../types";
 export enum UserProfileActionsType {
     SET_USER = 'userProfile/SET_USER',
     FETCH_USER  = 'userProfile/FETCH_USER',
+    FOLLOW  = 'userProfile/FOLLOW',
+    UNFOLLOW  = 'userProfile/UNFOLLOW',
     FOLLOW_USER  = 'userProfile/FOLLOW_USER',
     UNFOLLOW_USER  = 'userProfile/UNFOLLOW_USER',
     SET_USER_LOADING_STATE = 'userProfile/SET_USER_LOADING_STATE',
@@ -18,6 +20,16 @@ export interface SetUserProfileActionInterface extends Action<UserProfileActions
 export interface FetchUserProfileActionInterface extends Action<UserProfileActionsType> {
     type: UserProfileActionsType.FETCH_USER;
     payload: string;
+}
+
+export interface FollowProfileActionInterface extends Action<UserProfileActionsType> {
+    type: UserProfileActionsType.FOLLOW;
+    payload: User;
+}
+
+export interface UnfollowProfileActionInterface extends Action<UserProfileActionsType> {
+    type: UserProfileActionsType.UNFOLLOW;
+    payload: User;
 }
 
 export interface FollowUserProfileActionInterface extends Action<UserProfileActionsType> {
@@ -37,6 +49,6 @@ export interface SetUserProfileLoadingStatusActionInterface extends Action<UserP
 
 export type UserProfileActions =
     | SetUserProfileActionInterface
-    | FollowUserProfileActionInterface
-    | UnfollowUserProfileActionInterface
+    | FollowProfileActionInterface
+    | UnfollowProfileActionInterface
     | SetUserProfileLoadingStatusActionInterface;

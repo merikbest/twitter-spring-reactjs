@@ -60,7 +60,7 @@ const Follower: FC<FollowerProps> = ({user, follow, unfollow}) => {
                         </div>
                     </Link>
                     <div>
-                        {follower === -1 ? (
+                        {follower ? (
                             <Button
                                 className={classes.followerOutlinedBtn}
                                 onClick={() => handleFollow(user)}
