@@ -23,6 +23,7 @@ import UploadProfileImage from "./UploadProfileImage";
 import "./EditProfileModalStyles.scss";
 
 interface EditProfileModalProps {
+    classes: ReturnType<typeof useHomeStyles>;
     visible?: boolean;
     onClose: () => void;
 }
@@ -38,10 +39,9 @@ export const EditProfileFormSchema = yup.object().shape({
     username: yup.string().min(1, "Name can’t be blank").required(),
 });
 
-const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}) => {
+const EditProfileModal: FC<EditProfileModalProps> = ({classes, visible, onClose}) => {
     const dispatch = useDispatch();
     const userData = useSelector(selectUserData);
-    const classes = useHomeStyles();
     const [avatar, setAvatar] = useState<ImageObj>();
     const [wallpaper, setWallpaper] = useState<ImageObj>();
 

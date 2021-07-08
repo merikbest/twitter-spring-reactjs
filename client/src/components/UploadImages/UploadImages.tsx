@@ -7,12 +7,12 @@ import {ImageObj} from "../AddTweetForm/AddTweetForm";
 import ImageList from "../ImageList/ImageList";
 
 interface UploadImageProps {
+    classes: ReturnType<typeof useHomeStyles>;
     images: ImageObj[];
     onChangeImages: (callback: (prev: ImageObj[]) => ImageObj[]) => void;
 }
 
-const UploadImages: FC<UploadImageProps> = ({images, onChangeImages}) => {
-    const classes = useHomeStyles();
+const UploadImages: FC<UploadImageProps> = ({classes, images, onChangeImages}) => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleClickImage = () => {

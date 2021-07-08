@@ -14,7 +14,7 @@ import LinkOutlinedIcon from '@material-ui/icons/LinkOutlined';
 import {useHomeStyles} from '../Home/HomeStyles';
 import {BackButton} from "../../components/BackButton/BackButton";
 import EditProfileModal from "../../components/EditProfileModal/EditProfileModal";
-import {fetchUserData, followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
+import {fetchUserData} from "../../store/ducks/user/actionCreators";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {fetchRelevantUsers} from "../../store/ducks/users/actionCreators";
 import {fetchTags} from "../../store/ducks/tags/actionCreators";
@@ -130,7 +130,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
                         </li> : null}
                     {userProfile?.dateOfBirth ?
                         <li>
-                            Дата рождения: {userProfile?.dateOfBirth}
+                            Date of Birth: {userProfile?.dateOfBirth}
                         </li> : null}
                     {userProfile?.registration ?
                         <li>
@@ -170,7 +170,10 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
                     />
                 )}
             </div>
-            {visibleEditProfile ? <EditProfileModal visible={visibleEditProfile} onClose={onCloseEditProfile}/> : null}
+            {visibleEditProfile ?
+                <EditProfileModal classes={classes} visible={visibleEditProfile} onClose={onCloseEditProfile}/>
+                : null
+            }
         </Paper>
     );
 };

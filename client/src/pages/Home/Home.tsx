@@ -13,7 +13,6 @@ import {FullTweet} from "./FullTweet";
 import {fetchUserData} from "../../store/ducks/user/actionCreators";
 import {fetchRelevantUsers} from "../../store/ducks/users/actionCreators";
 import {fetchTags} from "../../store/ducks/tags/actionCreators";
-// import Search from "../../components/Search/Search";
 import Connect from "../../components/Connect/Connect";
 
 const Home: FC = (): ReactElement => {
@@ -46,7 +45,6 @@ const Home: FC = (): ReactElement => {
                     <BackButton/>
                     <Typography variant="h6">Tweet</Typography>
                 </Route>
-                {/*<Route path="/home/search" component={Search}/>*/}
                 <Route path="/home/connect">
                     <BackButton/>
                     <Typography variant="h6">Connect</Typography>
@@ -62,9 +60,9 @@ const Home: FC = (): ReactElement => {
                 </Paper>
             </Route>
 
-            <Route path="/home/connect" component={Connect} exact/>
-            {/*    <Connect/>*/}
-            {/*</Route>*/}
+            <Route path="/home/connect" exact>
+                <Connect classes={classes}/>
+            </Route>
 
             <Route path='/home' exact>
                 {isLoading ? (
@@ -79,7 +77,9 @@ const Home: FC = (): ReactElement => {
                 )}
             </Route>
 
-            <Route path="/home/tweet/:id" component={FullTweet} exact/>
+            <Route path="/home/tweet/:id" exact>
+                <FullTweet classes={classes}/>
+            </Route>
         </Paper>
     );
 };

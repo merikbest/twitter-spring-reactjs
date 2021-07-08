@@ -39,7 +39,7 @@ export const Layout: FC<Layout> = ({children}): ReactElement => {
                             fullWidth
                         />
                         <Tags classes={classes}/>
-                        <Users />
+                        <Users classes={classes}/>
                     </div>
                 </Grid>
             </Grid>

@@ -97,7 +97,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
             </div>
             <div className={classes.addFormBottom}>
                 <div className={classNames(classes.tweetFooter, classes.addFormBottomActions)}>
-                    <UploadImages images={images} onChangeImages={setImages}/>
+                    <UploadImages classes={classes} images={images} onChangeImages={setImages}/>
                     {/*<IconButton color="primary">*/}
                     {/*    <EmojiIcon style={{fontSize: 26}}/>*/}
                     {/*</IconButton>*/}

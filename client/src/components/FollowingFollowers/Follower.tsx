@@ -7,17 +7,17 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 
 import {User} from "../../store/ducks/user/contracts/state";
-import {useStylesFollower} from "./FollowerStyles";
 import {selectUserData} from "../../store/ducks/user/selectors";
+import {useHomeStyles} from "../../pages/Home/HomeStyles";
 
 interface FollowerProps {
-    user: User,
-    follow: (user: User) => void,
-    unfollow: (user: User) => void,
+    classes: ReturnType<typeof useHomeStyles>;
+    user: User;
+    follow: (user: User) => void;
+    unfollow: (user: User) => void;
 }
 
-const Follower: FC<FollowerProps> = ({user, follow, unfollow}) => {
-    const classes = useStylesFollower();
+const Follower: FC<FollowerProps> = ({user, classes, follow, unfollow}) => {
     const myProfile = useSelector(selectUserData);
     const [btnText, setBtnText] = useState<string>("Following");
     const [visibleUnfollowModal, setVisibleUnfollowModal] = useState<boolean>(false);

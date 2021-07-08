@@ -106,9 +106,11 @@ const Search: FC = () => {
                     <CircularProgress/>
                 </div>
             ) : (activeTab !== 2 ? (
-                    tweets.map((tweet) => <Tweet key={tweet.id} classes={classes} images={tweet.images} {...tweet}/>)
+                    tweets.map((tweet) =>
+                        <Tweet key={tweet.id} classes={classes} images={tweet.images} {...tweet}/>)
                 ) : (
-                    users?.map((user) => <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>))
+                    users?.map((user) =>
+                        <Follower classes={classes} user={user} follow={handleFollow} unfollow={handleUnfollow}/>))
             )}
         </Paper>
     );

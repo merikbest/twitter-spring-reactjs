@@ -9,15 +9,17 @@ import IconButton from "@material-ui/core/IconButton";
 import {User} from "../../store/ducks/user/contracts/state";
 import Follower from "../FollowingFollowers/Follower";
 import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
+import {useHomeStyles} from "../../pages/Home/HomeStyles";
 
 interface UsersListModalProps {
+    classes: ReturnType<typeof useHomeStyles>;
     users?: User[];
     visible?: boolean;
     title: string;
     onClose: () => void;
 }
 
-const UsersListModal: FC<UsersListModalProps> = ({users, visible, title, onClose}) => {
+const UsersListModal: FC<UsersListModalProps> = ({users, classes, visible, title, onClose}) => {
     const dispatch = useDispatch();
 
     const handleFollow = (user: User): void => {
@@ -41,7 +43,7 @@ const UsersListModal: FC<UsersListModalProps> = ({users, visible, title, onClose
                 {title}
             </DialogTitle>
             <DialogContent style={{height: "550px", width: "600px", padding: "0px 0px"}}>
-                {users?.map((user) => <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>)}
+                {users?.map((user) => <Follower classes={classes} user={user} follow={handleFollow} unfollow={handleUnfollow}/>)}
             </DialogContent>
         </Dialog>
     );

@@ -27,8 +27,11 @@ import {AddTweetForm} from "../../components/AddTweetForm/AddTweetForm";
 import {useHomeStyles} from './HomeStyles';
 import Tweet from "../../components/Tweet/Tweet";
 
-export const FullTweet: FC = (): ReactElement | null => {
-    const classes = useHomeStyles();
+interface FullTweetProps {
+    classes: ReturnType<typeof useHomeStyles>;
+}
+
+export const FullTweet: FC<FullTweetProps> = ({classes}): ReactElement | null => {
     const dispatch = useDispatch();
     const tweetData = useSelector(selectTweetData);
     const myProfile = useSelector(selectUserData);
@@ -185,12 +188,14 @@ export const FullTweet: FC = (): ReactElement | null => {
                         buttonName={"Reply"}/>
                     {(visibleModalWindow && modalWindowTitle === "Liked by") ? (
                         <UsersListModal
+                            classes={classes}
                             users={tweetData.likes}
                             title={modalWindowTitle}
                             visible={visibleModalWindow}
                             onClose={onCloseModalWindow}/>
                     ) : (
                         <UsersListModal
+                            classes={classes}
                             users={tweetData.retweets}
                             title={modalWindowTitle}
                             visible={visibleModalWindow}
