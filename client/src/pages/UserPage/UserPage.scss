@@ -24,13 +24,18 @@
 
     ul {
       display: flex;
-      margin: 0;
+      margin: 12px 0 0 0;
       padding: 0;
       list-style: none;
       flex-wrap: wrap;
 
       li {
-        margin-right: 30px;
+        color: rgb(83, 100, 113);
+        margin-right: 20px;
+      }
+
+      li:hover {
+        text-decoration: underline;
       }
     }
 
@@ -56,6 +61,7 @@
 
     &-description {
       font-size: 16px;
+      margin-top: 12px;
     }
   }
 

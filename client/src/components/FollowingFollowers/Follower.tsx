@@ -9,6 +9,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import {User} from "../../store/ducks/user/contracts/state";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {useHomeStyles} from "../../pages/Home/HomeStyles";
+import {FollowerButton} from "./FollowerButton";
 
 interface FollowerProps {
     classes: ReturnType<typeof useHomeStyles>;
@@ -21,7 +22,7 @@ const Follower: FC<FollowerProps> = ({user, classes, follow, unfollow}) => {
     const myProfile = useSelector(selectUserData);
     const [btnText, setBtnText] = useState<string>("Following");
     const [visibleUnfollowModal, setVisibleUnfollowModal] = useState<boolean>(false);
-    const follower = myProfile?.user?.followers?.findIndex(follower => follower.id === user.id)
+    const follower = myProfile?.user?.followers?.findIndex(follower => follower.id === user.id);
 
     const handleClickOpenUnfollowModal = (): void => {
         setVisibleUnfollowModal(true);
@@ -60,7 +61,7 @@ const Follower: FC<FollowerProps> = ({user, classes, follow, unfollow}) => {
                         </div>
                     </Link>
                     <div>
-                        {follower ? (
+                        {follower === -1 ? (
                             <Button
                                 className={classes.followerOutlinedBtn}
                                 onClick={() => handleFollow(user)}

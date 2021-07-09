@@ -43,6 +43,8 @@ const UsersItem: FC<UsersItem> = ({user, classes}) => {
         dispatch(unfollowUser(user));
         setVisibleUnfollowModal(false);
     };
+    //class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-rightSideFollowBtn-32 MuiButton-containedPrimary"
+    //class="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-rightSideFollowOutlinedBtn-31 MuiButton-outlinedPrimary"
 
     return (
         <ListItem key={user.id} className={classes.rightSideBlockItem}>
@@ -59,27 +61,29 @@ const UsersItem: FC<UsersItem> = ({user, classes}) => {
                     }
                 />
             </Link>
-            {myProfile?.user.id === user.id ? null : (
-                follower ? (
-                    <Button
-                        className={classes.rightSideFollowOutlinedBtn}
-                        onClick={() => handleFollow(user)}
-                        color="primary"
-                        variant="outlined">
-                        Follow
-                    </Button>
-                ) : (
-                    <Button
-                        className={classes.rightSideFollowOutlinedBtn}
-                        onMouseOver={() => setBtnText("Unfollow")}
-                        onMouseLeave={() => setBtnText("Following")}
-                        onClick={handleClickOpenUnfollowModal}
-                        variant="contained"
-                        color="primary">
-                        {btnText}
-                    </Button>
-                )
-            )}
+            <div style={{flex: 1}}>
+                {myProfile?.user.id === user.id ? null : (
+                    follower === -1 ? (
+                        <Button
+                            className={classes.rightSideFollowOutlinedBtn}
+                            onClick={() => handleFollow(user)}
+                            color="primary"
+                            variant="outlined">
+                            Follow
+                        </Button>
+                    ) : (
+                        <Button
+                            className={classes.rightSideFollowBtn}
+                            onMouseOver={() => setBtnText("Unfollow")}
+                            onMouseLeave={() => setBtnText("Following")}
+                            onClick={handleClickOpenUnfollowModal}
+                            variant="contained"
+                            color="primary">
+                            {btnText}
+                        </Button>
+                    )
+                )}
+            </div>
             <Dialog open={visibleUnfollowModal} onClose={onCloseUnfollowModal} aria-labelledby="form-dialog-title">
                 <DialogContent style={{padding: "0px 0px"}}>
                     <div className={classes.followerModalContentWrapper}>

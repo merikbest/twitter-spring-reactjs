@@ -18,13 +18,13 @@ export const Layout: FC<Layout> = ({children}): ReactElement => {
     return (
         <Container className={classes.wrapper} maxWidth="lg">
             <Grid container spacing={3}>
-                <Grid sm={1} md={3} item>
+                <Grid sm={1} md={2} item style={{minWidth: "256px"}}>
                     <SideMenu classes={classes}/>
                 </Grid>
                 <Grid sm={8} md={6} item>
                     {children}
                 </Grid>
-                <Grid sm={3} md={3} item>
+                <Grid sm={3} md={3} item style={{minWidth: "350px"}}>
                     <div className={classes.rightSide}>
                         <SideSearchTextField
                             variant="outlined"

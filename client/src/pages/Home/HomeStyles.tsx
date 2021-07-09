@@ -50,7 +50,7 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
             padding: '0 25px 0 20px',
             borderRadius: 30,
             height: 50,
-            marginBottom: 15,
+            marginBottom: 3,
             transition: 'background-color 0.1s ease-in-out',
         },
     },
@@ -64,6 +64,7 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         marginLeft: -5,
     },
     sideMenuTweetButton: {
+        height: 40,
         padding: theme.spacing(3.2),
         marginTop: theme.spacing(2),
     },
@@ -216,6 +217,7 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         },
     },
     rightSideFollowOutlinedBtn: {
+        marginLeft: 49,
         float: 'right',
         width: 79,
         height: 32,
@@ -226,8 +228,24 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
             backgroundColor: 'rgb(29, 161, 242, 0.1)',
         },
     },
+    rightSideFollowBtn: {
+        marginLeft: 29,
+        float: 'right',
+        width: 105,
+        height: 32,
+        border: '1px solid',
+        borderRadius: '25px',
+        padding: '0 15px',
+        // TODO '& .MuiButton-containedPrimary':
+        '&:hover': {
+            backgroundColor: 'rgb(202, 32, 85)',
+        },
+    },
     rightSideBlockItem: {
         cursor: 'pointer',
+        '& .MuiListItem-root .MuiListItem-gutters': {
+            padding: "0px 0px 0px 0px",
+        },
         '& .MuiTypography-body1': {
             fontWeight: 700,
         },
@@ -235,7 +253,7 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
             minWidth: 50,
         },
         '& .MuiListItemText-root': {
-            marginRight: 50,
+            // marginRight: 45,
         },
         '&:hover': {
             backgroundColor: '#edf3f6',
@@ -450,7 +468,7 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         float: 'right',
         marginRight: 15,
         width: 105,
-        height: 35,
+        height: 32,
         border: '1px solid',
         borderRadius: '25px',
         padding: '0 15px',

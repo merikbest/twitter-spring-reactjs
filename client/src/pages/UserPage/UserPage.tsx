@@ -138,12 +138,14 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
                         </li> : null}
                     <li><DateRangeIcon className="user__info-icon"/> Joined: June 2021</li>
                 </ul>
-                <br/>
                 <ul className="user__info-details">
-                    <Link to={`/user/${userProfile?.id}/following`}>
+                    <Link to={`/user/${userProfile?.id}/following`}
+                          style={{textDecoration: 'none',
+                              color: "rgb(83, 100, 113)",}}>
                         <li><b>{userProfile?.followers?.length ? userProfile?.followers?.length : 0}</b> Following</li>
                     </Link>
-                    <Link to={`/user/${userProfile?.id}/followers`}>
+                    <Link to={`/user/${userProfile?.id}/followers`}
+                          style={{textDecoration: 'none', color: "rgb(83, 100, 113)",}}>
                         <li><b>{userProfile?.following?.length ? userProfile?.following?.length : 0}</b> Followers</li>
                     </Link>
                 </ul>
