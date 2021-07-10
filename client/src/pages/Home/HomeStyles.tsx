@@ -11,11 +11,8 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
     wrapper: {
         height: '100vh',
     },
-    logo: {
-        margin: '10px 0',
-    },
     logoIcon: {
-        fontSize: 36,
+        fontSize: 32,
     },
     sideMenuList: {
         position: 'sticky',
@@ -26,9 +23,16 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         maxWidth: 230,
     },
     sideMenuListItem: {
+        height: 58,
         '& a': {
             color: 'inherit',
             textDecoration: 'none',
+        },
+        '& svg': {
+            verticalAlign: "bottom",
+            height: "1.3em",
+            marginRight: 15,
+            marginBottom: 3,
         },
         cursor: 'pointer',
         '&:hover': {
@@ -57,7 +61,6 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
     sideMenuListItemLabel: {
         fontWeight: 700,
         fontSize: 20,
-        marginLeft: 15,
     },
     sideMenuListItemIcon: {
         fontSize: 32,

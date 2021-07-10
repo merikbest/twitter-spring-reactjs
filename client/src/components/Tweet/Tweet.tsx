@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useState} from 'react';
+import React, {FC, MouseEventHandler, ReactElement, MouseEvent, useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import classNames from "classnames";
 import {Avatar, IconButton, Menu, MenuItem, Paper, Typography} from '@material-ui/core';
@@ -19,6 +19,7 @@ import {fetchLikeTweet, fetchRetweet, removeTweet} from "../../store/ducks/tweet
 import {Image} from "../../store/ducks/tweets/contracts/state";
 import {User} from "../../store/ducks/user/contracts/state";
 import {selectUserData} from "../../store/ducks/user/selectors";
+import TweetImageModal from "../TweetImageModal/TweetImageModal";
 
 interface TweetProps {
     id: string;
@@ -56,25 +57,26 @@ const Tweet: FC<TweetProps> = ({
     const open = Boolean(anchorEl);
     const isTweetLiked = likes.find((user) => user.id === myProfile?.user?.id);
     const isTweetRetweeted = retweets.find((user) => user.id === myProfile?.user?.id);
+    const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
 
     const handleClickTweet = (event: React.MouseEvent<HTMLAnchorElement>): void => {
         event.preventDefault();
         history.push(`/home/tweet/${id}`);
     }
 
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    const handleClick = (event: MouseEvent<HTMLElement>) => {
         event.stopPropagation();
         event.preventDefault();
         setAnchorEl(event.currentTarget);
     };
 
-    const handleClose = (event: React.MouseEvent<HTMLElement>): void => {
+    const handleClose = (event: MouseEvent<HTMLElement>): void => {
         event.stopPropagation();
         event.preventDefault();
         setAnchorEl(null);
     };
 
-    const handleRemove = (event: React.MouseEvent<HTMLElement>): void => {
+    const handleRemove = (event: MouseEvent<HTMLElement>): void => {
         handleClose(event);
         if (window.confirm('Вы действительно хотите удалить твит?')) {
             dispatch(removeTweet(id));
@@ -87,6 +89,18 @@ const Tweet: FC<TweetProps> = ({
 
     const handleRetweet = (): void => {
         dispatch(fetchRetweet(id));
+    };
+
+    const onOpenImageModalWindow = (): void => {
+        setVisibleModalWindow(true);
+    };
+
+    const onCloseImageModalWindow = (event: any): void => {
+        if (event.target.classList[0]) {
+            if (event.target.classList[0].includes('makeStyles')) {
+                setVisibleModalWindow(false);
+            }
+        }
     };
 
     return (
@@ -135,21 +149,39 @@ const Tweet: FC<TweetProps> = ({
                                 </Menu>
                             </div>
                         </div>
-                        <Typography variant="body1" gutterBottom>
-                            {addressedUser ? (
-                                <object>
-                                    <Typography style={{zIndex: 2, color: "rgb(83, 100, 113)", fontSize: 15}}>
-                                        Replying to <Link to={`/user/${addressedId}`}
-                                                          style={{textDecoration: "none", color: "rgb(27, 149, 224)"}}>
-                                        @{addressedUser}
-                                    </Link>
-                                    </Typography>
-                                </object>
-                            ) : null}
-                            {text}
-                            {images && <ImageList classes={classes} images={images}/>}
-                        </Typography>
                     </a>
+                    <Typography variant="body1" gutterBottom>
+                        {addressedUser ? (
+                            <object>
+                                <Typography style={{zIndex: 2, color: "rgb(83, 100, 113)", fontSize: 15}}>
+                                    Replying to <Link to={`/user/${addressedId}`}
+                                                      style={{textDecoration: "none", color: "rgb(27, 149, 224)"}}>
+                                    @{addressedUser}
+                                </Link>
+                                </Typography>
+                            </object>
+                        ) : null}
+                        <a onClick={handleClickTweet} className={classes.tweetWrapper} href={`/home/tweet/${id}`}>
+                            <div dangerouslySetInnerHTML={{__html: text}}></div>
+                        </a>
+                        <a href={"javascript:void(0);"} onClick={onOpenImageModalWindow}>
+                            <div style={{height: 280, position: "relative"}}>
+                                <img style={{
+                                    objectFit: "cover",
+                                    position: "absolute",
+                                    marginTop: 10,
+                                    width: 504,
+                                    height: 280,
+                                    borderRadius: 20,
+                                    borderColor: "rgb(83, 100, 113)",
+                                }}
+                                     src="https://abs.twimg.com/sticky/default_profile_images/default_profile_reasonably_small.png"
+                                     alt="213"
+                                />
+                            </div>
+                        </a>
+                        {images && <ImageList classes={classes} images={images}/>}
+                    </Typography>
                     <div className={classes.tweetFooter}>
                         <div>
                             <IconButton>
@@ -196,6 +228,17 @@ const Tweet: FC<TweetProps> = ({
                         </div>
                     </div>
                 </div>
+                <TweetImageModal
+                    tweetId={id}
+                    user={user}
+                    dateTime={dateTime}
+                    replies={replies}
+                    likes={likes}
+                    retweets={retweets}
+                    text={text}
+                    visible={visibleModalWindow}
+                    onClose={onCloseImageModalWindow}/>
+                <div className={classes.addFormBottomLine}/>
             </Paper>
         </>
     );

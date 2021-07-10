@@ -10,7 +10,9 @@ import ListIcon from "@material-ui/icons/ListAltOutlined";
 import PersonIcon from "@material-ui/icons/PersonOutlineOutlined";
 import CreateIcon from '@material-ui/icons/Create';
 import HomeIcon from '@material-ui/icons/HomeOutlined';
+import classNames from 'classnames';
 
+import {home, search, notifications, messages, bookmarks, lists, profile, more} from "../../icons";
 import {useHomeStyles} from "../../pages/Home/HomeStyles";
 import ModalBlock from "../ModalBlock/ModalBlock";
 import {AddTweetForm} from "../AddTweetForm/AddTweetForm";
@@ -37,9 +39,9 @@ const SideMenu: FC<SideMenuProps> = ({classes}: SideMenuProps): ReactElement => 
     return (
         <>
             <ul className={classes.sideMenuList}>
-                <li className={classes.sideMenuListItem}>
+                <li className={classes.sideMenuListItem} style={{marginBottom: 2,}}>
                     <Link to="/home">
-                        <IconButton className={classes.logo} color="primary">
+                        <IconButton color="primary">
                             <TwitterIcon className={classes.logoIcon}/>
                         </IconButton>
                     </Link>
@@ -47,10 +49,9 @@ const SideMenu: FC<SideMenuProps> = ({classes}: SideMenuProps): ReactElement => 
                 <li className={classes.sideMenuListItem}>
                     <Link to="/home">
                         <div>
-                            <HomeIcon className={classes.sideMenuListItemIcon}/>
                             <Hidden smDown>
                                 <Typography className={classes.sideMenuListItemLabel} variant="h6">
-                                    Home
+                                    <span>{home}</span> Home
                                 </Typography>
                             </Hidden>
                         </div>
@@ -59,10 +60,9 @@ const SideMenu: FC<SideMenuProps> = ({classes}: SideMenuProps): ReactElement => 
                 <li className={classes.sideMenuListItem}>
                     <Link to="/search">
                         <div>
-                            <SearchIcon className={classes.sideMenuListItemIcon}/>
                             <Hidden smDown>
                                 <Typography className={classes.sideMenuListItemLabel} variant="h6">
-                                    Explore
+                                    <span>{search}</span> Explore
                                 </Typography>
                             </Hidden>
                         </div>
@@ -70,40 +70,36 @@ const SideMenu: FC<SideMenuProps> = ({classes}: SideMenuProps): ReactElement => 
                 </li>
                 <li className={classes.sideMenuListItem}>
                     <div>
-                        <NotificationIcon className={classes.sideMenuListItemIcon}/>
                         <Hidden smDown>
                             <Typography className={classes.sideMenuListItemLabel} variant="h6">
-                                Notifications
+                                <span>{notifications}</span> Notifications
                             </Typography>
                         </Hidden>
                     </div>
                 </li>
                 <li className={classes.sideMenuListItem}>
                     <div>
-                        <MessageIcon className={classes.sideMenuListItemIcon}/>
                         <Hidden smDown>
                             <Typography className={classes.sideMenuListItemLabel} variant="h6">
-                                Messages
+                                <span>{messages}</span> Messages
                             </Typography>
                         </Hidden>
                     </div>
                 </li>
                 <li className={classes.sideMenuListItem}>
                     <div>
-                        <BookmarkIcon className={classes.sideMenuListItemIcon}/>
                         <Hidden smDown>
                             <Typography className={classes.sideMenuListItemLabel} variant="h6">
-                                Bookmarks
+                                <span>{bookmarks}</span> Bookmarks
                             </Typography>
                         </Hidden>
                     </div>
                 </li>
                 <li className={classes.sideMenuListItem}>
                     <div>
-                        <ListIcon className={classes.sideMenuListItemIcon}/>
                         <Hidden smDown>
                             <Typography className={classes.sideMenuListItemLabel} variant="h6">
-                                Lists
+                                <span>{lists}</span> Lists
                             </Typography>
                         </Hidden>
                     </div>
@@ -111,14 +107,22 @@ const SideMenu: FC<SideMenuProps> = ({classes}: SideMenuProps): ReactElement => 
                 <li className={classes.sideMenuListItem}>
                     <Link to={`/user/${userData?.user.id}`}>
                         <div>
-                            <PersonIcon className={classes.sideMenuListItemIcon}/>
                             <Hidden smDown>
                                 <Typography className={classes.sideMenuListItemLabel} variant="h6">
-                                    Profile
+                                    <span>{profile}</span> Profile
                                 </Typography>
                             </Hidden>
                         </div>
                     </Link>
+                </li>
+                <li className={classes.sideMenuListItem}>
+                    <div>
+                        <Hidden smDown>
+                            <Typography className={classes.sideMenuListItemLabel} variant="h6">
+                                <span>{more}</span> More
+                            </Typography>
+                        </Hidden>
+                    </div>
                 </li>
                 <li className={classes.sideMenuListItem}>
                     <Button
