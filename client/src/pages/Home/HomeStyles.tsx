@@ -134,6 +134,8 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
     tweetFooter: {
         display: 'flex',
         position: 'relative',
+        paddingTop: 5,
+        paddingBottom: 5,
         left: -13,
         justifyContent: 'space-between',
         maxWidth: 450,
@@ -144,6 +146,21 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
     },
     tweetUserName: {
         color: grey[500],
+    },
+    tweetIconSvg: {
+        "& .MuiIconButton-root": {
+            marginBottom: 6,
+            width: 40,
+            height: 40,
+            color: "rgb(83, 100, 113)",
+            "& span": {
+                paddingBottom: 3,
+                "& svg" : {
+                    verticalAlign: "bottom",
+                    height: "0.80em",
+                }
+            },
+        },
     },
     fullTweet: {
         padding: "10px 22px 0px 22px",
@@ -172,6 +189,15 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         '& a': {
             color: "#000",
             textDecoration: 'none'
+        },
+    },
+    fullTweetReplying: {
+        margin: "16px 68px",
+        color: "rgb(83, 100, 113)",
+        fontSize: 15,
+        "& a": {
+            textDecoration: "none",
+            color: "rgb(27, 149, 224)",
         },
     },
     fullTweetRetweetWrapper: {

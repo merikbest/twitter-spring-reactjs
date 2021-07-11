@@ -11,6 +11,15 @@ import DateRangeIcon from '@material-ui/icons/DateRange';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import LinkOutlinedIcon from '@material-ui/icons/LinkOutlined';
 
+import {
+    LikeOutlinedIcon,
+    LikeIcon,
+    RetweetIcon,
+    RetweetOutlinedIcon,
+    ReplyIcon,
+    ShareIcon,
+    LocationIcon, LinkIcon, CalendarIcon
+} from "../../icons";
 import {useHomeStyles} from '../Home/HomeStyles';
 import {BackButton} from "../../components/BackButton/BackButton";
 import EditProfileModal from "../../components/EditProfileModal/EditProfileModal";
@@ -121,11 +130,11 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
                 <ul className="user__info-details">
                     {userProfile?.location ?
                         <li>
-                            <LocationOnOutlinedIcon className="user__info-icon"/>{userProfile?.location}
+                            <span>{LocationIcon}</span><span>{userProfile?.location}</span>
                         </li> : null}
                     {userProfile?.website ?
                         <li>
-                            <LinkOutlinedIcon className="user__info-icon"/>
+                            <span>{LinkIcon}</span>
                             <a className="link" href={userProfile?.website}>{userProfile?.website}</a>
                         </li> : null}
                     {userProfile?.dateOfBirth ?
@@ -134,9 +143,9 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
                         </li> : null}
                     {userProfile?.registration ?
                         <li>
-                            <DateRangeIcon className="user__info-icon"/> Joined: {userProfile?.registration}
+                            <span>{CalendarIcon}</span> Joined: {userProfile?.registration}
                         </li> : null}
-                    <li><DateRangeIcon className="user__info-icon"/> Joined: June 2021</li>
+                    <li><span>{CalendarIcon}</span> Joined: June 2021</li>
                 </ul>
                 <ul className="user__info-details">
                     <Link to={`/user/${userProfile?.id}/following`}

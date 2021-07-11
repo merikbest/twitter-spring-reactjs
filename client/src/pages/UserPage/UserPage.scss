@@ -14,7 +14,7 @@
     margin-top: -70px;
     padding: 20px;
     padding-top: 0;
-    font-size: 16px;
+    font-size: 15px;
 
     .MuiAvatar-root {
       width: 140px !important;
@@ -32,6 +32,12 @@
       li {
         color: rgb(83, 100, 113);
         margin-right: 20px;
+
+        svg {
+          margin-right: 4px;
+          height: 1.3em;
+          vertical-align: bottom;
+        }
       }
 
       li:hover {
@@ -60,7 +66,7 @@
     }
 
     &-description {
-      font-size: 16px;
+      font-size: 15px;
       margin-top: 12px;
     }
   }

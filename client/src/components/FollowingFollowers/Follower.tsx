@@ -9,7 +9,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import {User} from "../../store/ducks/user/contracts/state";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {useHomeStyles} from "../../pages/Home/HomeStyles";
-import {FollowerButton} from "./FollowerButton";
 
 interface FollowerProps {
     classes: ReturnType<typeof useHomeStyles>;
