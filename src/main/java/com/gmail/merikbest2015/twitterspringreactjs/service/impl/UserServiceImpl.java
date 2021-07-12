@@ -74,6 +74,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<Tweet> getUserMediaTweets(Long userId) {
+        User user = userRepository.getOne(userId);
+        return tweetRepository.findByImagesIsNotNullAndUserOrderByDateTimeDesc(user);
+    }
+
+    @Override
     public Image uploadImage(MultipartFile multipartFile) {
         Image image = new Image();
         if (multipartFile != null) {

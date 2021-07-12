@@ -32,6 +32,11 @@ public class TweetController {
         return ResponseEntity.ok(tweetMapper.getTweetsByUser(userRequest));
     }
 
+    @GetMapping("/media")
+    public ResponseEntity<List<TweetResponse>> getMediaTweets() {
+        return ResponseEntity.ok(tweetMapper.getMediaTweets());
+    }
+
     @PostMapping
     public ResponseEntity<TweetResponse> createTweet(@RequestBody TweetRequest tweetRequest) {
         return ResponseEntity.ok(tweetMapper.createTweet(tweetRequest));

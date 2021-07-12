@@ -20,7 +20,7 @@ import green from '@material-ui/core/colors/green';
 import {selectIsTweetLoading, selectTweetData} from '../../store/ducks/tweet/selectors';
 import {fetchTweetData, setTweetData} from '../../store/ducks/tweet/actionCreators';
 import ImageList from "../../components/ImageList/ImageList";
-import {fetchLikeTweet} from "../../store/ducks/tweets/actionCreators";
+import {fetchLikeTweet, fetchRetweet} from "../../store/ducks/tweets/actionCreators";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import UsersListModal from "../../components/UsersListModal/UsersListModal";
 import {AddTweetForm} from "../../components/AddTweetForm/AddTweetForm";
@@ -59,6 +59,10 @@ export const FullTweet: FC<FullTweetProps> = ({classes}): ReactElement | null =>
 
     const handleLike = (): void => {
         dispatch(fetchLikeTweet(params.id));
+    };
+
+    const handleRetweet = (): void => {
+        dispatch(fetchRetweet(params.id));
     };
 
     const onOpenLikesModalWindow = (): void => {
@@ -154,7 +158,7 @@ export const FullTweet: FC<FullTweetProps> = ({classes}): ReactElement | null =>
                         <IconButton>
                             <CommentIcon style={{fontSize: 25}}/>
                         </IconButton>
-                        <IconButton>
+                        <IconButton onClick={handleRetweet}>
                             {isTweetRetweeted ? (
                                 <RepostIcon style={{fontSize: 25, color: green[500]}}/>
                             ) : (

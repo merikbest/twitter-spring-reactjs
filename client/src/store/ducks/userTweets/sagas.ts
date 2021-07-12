@@ -3,7 +3,7 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 import {setUserTweets, setUserTweetsLoadingStatus} from "./actionCreators";
 import {Tweet} from "./contracts/state";
 import {
-    FetchUserLikedTweetsActionInterface,
+    FetchUserLikedTweetsActionInterface, FetchUserMediaTweetsActionInterface,
     FetchUserTweetsActionInterface,
     UserTweetsActionType
 } from "./contracts/actionTypes";
@@ -30,7 +30,18 @@ export function* fetchUserLikedTweetsRequest({payload}: FetchUserLikedTweetsActi
     }
 }
 
+export function* fetchUserMediaTweetsRequest({payload}: FetchUserMediaTweetsActionInterface) {
+    try {
+        yield put(setUserTweetsLoadingStatus(LoadingStatus.LOADING));
+        const items: Tweet[] = yield call(UserApi.getUserMediaTweets, payload);
+        yield put(setUserTweets(items));
+    } catch (e) {
+        yield put(setUserTweetsLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
 export function* userTweetsSaga() {
     yield takeLatest(UserTweetsActionType.FETCH_TWEETS, fetchUserTweetsRequest);
     yield takeLatest(UserTweetsActionType.FETCH_LIKED_TWEETS, fetchUserLikedTweetsRequest);
+    yield takeLatest(UserTweetsActionType.FETCH_MEDIA_TWEETS, fetchUserMediaTweetsRequest);
 }

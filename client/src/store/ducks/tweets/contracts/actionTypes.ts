@@ -14,6 +14,7 @@ export enum TweetsActionType {
     FETCH_RETWEET = 'tweets/FETCH_RETWEET',
     FETCH_ADD_TWEET = "tweets/FETCH_ADD_TWEET",
     FETCH_TWEETS = "tweets/FETCH_TWEETS",
+    FETCH_MEDIA_TWEETS = "tweets/FETCH_MEDIA_TWEETS",
     FETCH_TWEETS_BY_USER = "tweets/FETCH_TWEETS_BY_USER",
     FETCH_TWEETS_BY_TAG = "tweets/FETCH_TWEETS_BY_TAG",
     FETCH_TWEETS_BY_TEXT = "tweets/FETCH_TWEETS_BY_TEXT",
@@ -81,6 +82,10 @@ export interface FetchTweetsActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_TWEETS;
 }
 
+export interface FetchMediaTweetsActionInterface extends Action<TweetsActionType> {
+    type: TweetsActionType.FETCH_MEDIA_TWEETS;
+}
+
 export interface FetchTweetsByUserActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_TWEETS_BY_USER;
     payload: User;
@@ -109,6 +114,7 @@ export interface FetchUserTweetsActionInterface extends Action<TweetsActionType>
 export type TweetsActions =
     | SetTweetsActionInterface
     | FetchTweetsActionInterface
+    | FetchMediaTweetsActionInterface
     | SetTweetsLoadingStateInterface
     | AddTweetActionInterface
     | FetchAddTweetActionInterface

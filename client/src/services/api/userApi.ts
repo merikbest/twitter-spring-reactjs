@@ -52,4 +52,8 @@ export const UserApi = {
         const data = await axios.get<Response<Tweet[]>>(`http://localhost:8080/api/v1/user/${id}/liked`);
         return data.data;
     },
+    async getUserMediaTweets(id: string): Promise<Response<Tweet[]>> {
+        const data = await axios.get<Response<Tweet[]>>(`http://localhost:8080/api/v1/user/${id}/media`);
+        return data.data;
+    },
 };

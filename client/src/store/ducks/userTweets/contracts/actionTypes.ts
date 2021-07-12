@@ -8,6 +8,7 @@ export enum UserTweetsActionType {
     FETCH_TWEETS = "userTweets/FETCH_TWEETS",
     SET_LIKED_TWEET = 'userTweets/SET_LIKED_TWEET',
     FETCH_LIKED_TWEETS = "userTweets/FETCH_LIKED_TWEETS",
+    FETCH_MEDIA_TWEETS = "userTweets/FETCH_MEDIA_TWEETS",
     SET_RETWEET = 'userTweets/SET_RETWEET',
     SET_LOADING_STATUS = "userTweets/SET_LOADING_STATUS",
 }
@@ -29,6 +30,11 @@ export interface SetUserLikedTweetActionInterface extends Action<UserTweetsActio
 
 export interface FetchUserLikedTweetsActionInterface extends Action<UserTweetsActionType> {
     type: UserTweetsActionType.FETCH_LIKED_TWEETS;
+    payload: string;
+}
+
+export interface FetchUserMediaTweetsActionInterface extends Action<UserTweetsActionType> {
+    type: UserTweetsActionType.FETCH_MEDIA_TWEETS;
     payload: string;
 }
 

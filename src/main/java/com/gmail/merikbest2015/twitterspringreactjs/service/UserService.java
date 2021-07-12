@@ -21,6 +21,8 @@ public interface UserService {
 
     List<Tweet> getUserLikedTweets(Long userId);
 
+    List<Tweet> getUserMediaTweets(Long userId);
+
     Image uploadImage(MultipartFile multipartFile);
 
     User updateUserProfile(User userInfo);

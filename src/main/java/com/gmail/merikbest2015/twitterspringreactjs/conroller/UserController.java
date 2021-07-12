@@ -49,6 +49,11 @@ public class UserController {
         return ResponseEntity.ok(userMapper.getUserLikedTweets(userId));
     }
 
+    @GetMapping("/{userId}/media")
+    public ResponseEntity<List<TweetResponse>> getUserMediaTweets(@PathVariable Long userId) {
+        return ResponseEntity.ok(userMapper.getUserMediaTweets(userId));
+    }
+
     @PutMapping
     public ResponseEntity<UserResponse> updateUserProfile(@RequestBody UserRequest userRequest) {
         return ResponseEntity.ok(userMapper.updateUserProfile(userRequest));

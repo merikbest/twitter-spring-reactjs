@@ -41,6 +41,11 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
+    public List<Tweet> getMediaTweets() {
+        return tweetRepository.findByImagesIsNotNullOrderByDateTimeDesc();
+    }
+
+    @Override
     public Tweet createTweet(Tweet tweet) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());

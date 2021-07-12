@@ -72,7 +72,7 @@ const UserPageTweets: FC<UserPageTweetsProps> = ({tweets, classes, activeTab, us
                     </Typography>
                 </div>
             )
-        } else if (activeTab === 2) {
+        } else if (tweets?.length === 0 && activeTab === 2) {
             return (
                 <div className={classes.userPageTextWrapper}>
                     <Typography className={classes.userPageTopic}>

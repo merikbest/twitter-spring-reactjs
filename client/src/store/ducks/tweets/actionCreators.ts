@@ -1,7 +1,7 @@
 import {AddFormState, Image, Tweet, TweetsState} from "./contracts/state";
 import {
     FetchLikedTweetsActionInterface,
-    FetchLikeTweetActionInterface,
+    FetchLikeTweetActionInterface, FetchMediaTweetsActionInterface,
     FetchRetweetActionInterface,
     FetchTweetsByTagActionInterface,
     FetchTweetsByTextActionInterface,
@@ -100,4 +100,8 @@ export const retweet = (payload: Tweet): RetweetActionInterface => ({
 
 export const fetchTweets = (): FetchTweetsActionInterface => ({
     type: TweetsActionType.FETCH_TWEETS,
+});
+
+export const fetchMediaTweets = (): FetchMediaTweetsActionInterface => ({
+    type: TweetsActionType.FETCH_MEDIA_TWEETS,
 });

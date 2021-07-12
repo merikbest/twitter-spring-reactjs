@@ -17,4 +17,8 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     List<Tweet> findAllByTextContaining(String text);
 
     List<Tweet> findByAddressedUsernameIsNullAndUserOrderByDateTimeDesc(User user);
+
+    List<Tweet> findByImagesIsNotNullOrderByDateTimeDesc();
+
+    List<Tweet> findByImagesIsNotNullAndUserOrderByDateTimeDesc(User user);
 }

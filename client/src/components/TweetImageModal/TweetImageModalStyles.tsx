@@ -20,7 +20,7 @@ export const useTweetImageStyles = makeStyles((theme: Theme) => ({
         maxHeight: "80%",
     },
     tweetImageModalContent: {
-        padding: "0 16px",
+
         backgroundColor: "white",
         width: 332,
         height: "100%",

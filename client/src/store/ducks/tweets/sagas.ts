@@ -30,6 +30,15 @@ export function* fetchTweetsRequest() {
     }
 }
 
+export function* fetchMediaTweetsRequest() {
+    try {
+        const items: Tweet[] = yield call(TweetApi.fetchMediaTweets);
+        yield put(setTweets(items));
+    } catch (e) {
+        yield put(setTweetsLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
 export function* fetchTweetsByUserRequest({payload}: FetchTweetsByUserActionInterface) {
     try {
         const item: Tweet[] = yield call(TweetApi.fetchTweetsByUser, payload);
@@ -108,6 +117,7 @@ export function* fetchRetweetRequest({payload}: FetchRetweetActionInterface) {
 
 export function* tweetsSaga() {
     yield takeLatest(TweetsActionType.FETCH_TWEETS, fetchTweetsRequest);
+    yield takeLatest(TweetsActionType.FETCH_MEDIA_TWEETS, fetchMediaTweetsRequest);
     yield takeLatest(TweetsActionType.FETCH_ADD_TWEET, fetchAddTweetRequest);
     yield takeLatest(TweetsActionType.REMOVE_TWEET, fetchRemoveTweetRequest);
     yield takeLatest(TweetsActionType.FETCH_LIKE_TWEET, fetchLikeTweetRequest);

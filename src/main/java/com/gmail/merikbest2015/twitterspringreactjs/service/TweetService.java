@@ -12,6 +12,8 @@ public interface TweetService {
 
     List<Tweet> getTweetsByUser(User user);
 
+    List<Tweet> getMediaTweets();
+
     Tweet createTweet(Tweet tweet);
 
     List<Tweet> deleteTweet(Long tweetId);

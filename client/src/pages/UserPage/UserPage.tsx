@@ -7,19 +7,8 @@ import {Avatar, Button, CircularProgress, Typography} from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Skeleton from '@material-ui/lab/Skeleton';
-import DateRangeIcon from '@material-ui/icons/DateRange';
-import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
-import LinkOutlinedIcon from '@material-ui/icons/LinkOutlined';
 
-import {
-    LikeOutlinedIcon,
-    LikeIcon,
-    RetweetIcon,
-    RetweetOutlinedIcon,
-    ReplyIcon,
-    ShareIcon,
-    LocationIcon, LinkIcon, CalendarIcon
-} from "../../icons";
+import {LocationIcon, LinkIcon, CalendarIcon} from "../../icons";
 import {useHomeStyles} from '../Home/HomeStyles';
 import {BackButton} from "../../components/BackButton/BackButton";
 import EditProfileModal from "../../components/EditProfileModal/EditProfileModal";
@@ -28,7 +17,7 @@ import {selectUserData} from "../../store/ducks/user/selectors";
 import {fetchRelevantUsers} from "../../store/ducks/users/actionCreators";
 import {fetchTags} from "../../store/ducks/tags/actionCreators";
 import {selectIsUserTweetsLoading, selectUserTweetsItems} from "../../store/ducks/userTweets/selectors";
-import {fetchUserTweets, fetchUserLikedTweets} from "../../store/ducks/userTweets/actionCreators";
+import {fetchUserTweets, fetchUserLikedTweets, fetchUserMediaTweets} from "../../store/ducks/userTweets/actionCreators";
 import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
 import {fetchUserProfile, followUserProfile, unfollowUserProfile} from "../../store/ducks/userProfile/actionCreators";
 import UserPageTweets from "./UserPageTweets";
@@ -86,6 +75,10 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
 
     const handleShowLikedTweets = () => {
         dispatch(fetchUserLikedTweets(match.params.id));
+    };
+
+    const handleShowMediaTweets = () => {
+        dispatch(fetchUserMediaTweets(match.params.id));
     };
 
     return (
@@ -162,7 +155,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
             <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChange}>
                 <Tab onClick={handleShowUserTweets} label="Tweets"/>
                 <Tab onClick={handleShowUserTweets} label="Tweets & replies"/>
-                <Tab label="Media"/>
+                <Tab onClick={handleShowMediaTweets} label="Media"/>
                 <Tab onClick={handleShowLikedTweets} label="Likes"/>
             </Tabs>
             <div className="user__tweets">

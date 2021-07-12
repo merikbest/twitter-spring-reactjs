@@ -8,7 +8,12 @@ import SearchIcon from "@material-ui/icons/SearchOutlined";
 import {CircularProgress, Paper, Typography} from "@material-ui/core";
 
 import {MainSearchTextField} from "../SearchTextField/MainSearchTextField";
-import {fetchTweets, fetchTweetsByTag, fetchTweetsByText} from "../../store/ducks/tweets/actionCreators";
+import {
+    fetchMediaTweets,
+    fetchTweets,
+    fetchTweetsByTag,
+    fetchTweetsByText
+} from "../../store/ducks/tweets/actionCreators";
 import {BackButton} from "../BackButton/BackButton";
 import {useHomeStyles} from "../../pages/Home/HomeStyles";
 import Tweet from "../Tweet/Tweet";
@@ -64,6 +69,10 @@ const Search: FC = () => {
         });
     };
 
+    const showMediaTweets = (): void => {
+        dispatch(fetchMediaTweets());
+    };
+
     const handleFollow = (user: User): void => {
         dispatch(followUser(user));
     };
@@ -96,7 +105,7 @@ const Search: FC = () => {
                         <Tab onClick={showTopTweets} style={{minWidth: "120px"}} label="Top"/>
                         <Tab style={{minWidth: "120px"}} label="Latest"/>
                         <Tab onClick={showUsers} style={{minWidth: "120px"}} label="People"/>
-                        <Tab style={{minWidth: "120px"}} label="Photos"/>
+                        <Tab onClick={showMediaTweets} style={{minWidth: "120px"}} label="Photos"/>
                         <Tab style={{minWidth: "120px"}} label="Videos"/>
                     </Tabs>
                 </div>

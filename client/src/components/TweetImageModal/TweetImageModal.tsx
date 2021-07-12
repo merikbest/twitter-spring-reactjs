@@ -23,7 +23,7 @@ import {User} from "../../store/ducks/user/contracts/state";
 import {AddTweetForm} from "../AddTweetForm/AddTweetForm";
 import UsersListModal from "../UsersListModal/UsersListModal";
 import Tweet from '../Tweet/Tweet';
-import {fetchLikeTweet} from "../../store/ducks/tweets/actionCreators";
+import {fetchLikeTweet, fetchRetweet} from "../../store/ducks/tweets/actionCreators";
 import {useTweetImageStyles} from "./TweetImageModalStyles";
 
 interface TweetImageModalProps {
@@ -79,6 +79,10 @@ const TweetImageModal: FC<TweetImageModalProps> = ({
         dispatch(fetchLikeTweet(tweetId));
     };
 
+    const handleRetweet = (): void => {
+        dispatch(fetchRetweet(tweetId));
+    };
+
     if (!visible) {
         return null;
     }
@@ -87,97 +91,99 @@ const TweetImageModal: FC<TweetImageModalProps> = ({
         <div className={tweetImageClasses.backdrop} onClick={onClose}>
             <div className={tweetImageClasses.tweetImageModalContent}>
                 <img className={tweetImageClasses.tweetImageModalImg} alt={tweetImg} src={tweetImg}/>
-                <div style={{display: 'flex', alignItems: 'center',}}>
-                    <Avatar
-                        style={{margin: "12px 12px 16px 5px"}}
-                        className={tweetHomeClasses.tweetAvatar}
-                        alt={`avatar ${user.id}`}
-                        src={user.avatar?.src ? user.avatar?.src :
-                            "https://abs.twimg.com/sticky/default_profile_images/default_profile_reasonably_small.png"}/>
-                    <Typography>
-                        <b>{user.fullName}</b>&nbsp;
-                        <div>
-                            <span style={{color: grey[500],}}>@{user.username}</span>&nbsp;
-                        </div>
+                <div style={{padding: "0 16px",}}>
+                    <div style={{display: 'flex', alignItems: 'center',}}>
+                        <Avatar
+                            style={{margin: "12px 12px 16px 5px"}}
+                            className={tweetHomeClasses.tweetAvatar}
+                            alt={`avatar ${user.id}`}
+                            src={user.avatar?.src ? user.avatar?.src :
+                                "https://abs.twimg.com/sticky/default_profile_images/default_profile_reasonably_small.png"}/>
+                        <Typography>
+                            <b>{user.fullName}</b>&nbsp;
+                            <div>
+                                <span style={{color: grey[500],}}>@{user.username}</span>&nbsp;
+                            </div>
+                        </Typography>
+                    </div>
+                    <Typography className={tweetHomeClasses.fullTweetText} gutterBottom>
+                        {text}
                     </Typography>
-                </div>
-                <Typography className={tweetHomeClasses.fullTweetText} gutterBottom>
-                    {text}
-                </Typography>
-                <Typography style={{marginBottom: 16}}>
+                    <Typography style={{marginBottom: 16}}>
                         <span className={tweetHomeClasses.tweetUserName}>
                             {format(new Date(dateTime), 'H:mm', {locale: ruLang})} ·
                         </span>
-                    <span className={tweetHomeClasses.tweetUserName}>
+                        <span className={tweetHomeClasses.tweetUserName}>
                             {format(new Date(dateTime), 'dd MMM. yyyy')} · Twitter Web App
                         </span>
-                </Typography>
-                <Divider/>
-                {retweets.length !== 0 || likes.length !== 0 ? (
-                    <div className={tweetHomeClasses.fullTweetInfo}>
-                        {retweets.length !== 0 ? (
-                            <a href={"javascript:void(0);"} onClick={onOpenRetweetsModalWindow}>
+                    </Typography>
+                    <Divider/>
+                    {retweets.length !== 0 || likes.length !== 0 ? (
+                        <div className={tweetHomeClasses.fullTweetInfo}>
+                            {retweets.length !== 0 ? (
+                                <a href={"javascript:void(0);"} onClick={onOpenRetweetsModalWindow}>
                                     <span style={{marginRight: 20}}>
                                         <b>{retweets.length}</b>
                                         <span style={{marginLeft: 5, color: "rgb(83, 100, 113)"}}>
                                             Retweets
                                         </span>
                                     </span>
-                            </a>
-                        ) : null}
-                        {likes.length !== 0 ? (
-                            <a href={"javascript:void(0);"} onClick={onOpenLikesModalWindow}>
+                                </a>
+                            ) : null}
+                            {likes.length !== 0 ? (
+                                <a href={"javascript:void(0);"} onClick={onOpenLikesModalWindow}>
                                     <span style={{marginRight: 20}}>
                                         <b>{likes.length}</b>
                                         <span style={{marginLeft: 5, color: "rgb(83, 100, 113)"}}>
                                             Likes
                                         </span>
                                     </span>
-                            </a>
-                        ) : null}
+                                </a>
+                            ) : null}
+                        </div>
+                    ) : null}
+                    <div className={classNames(tweetHomeClasses.tweetFooter, tweetHomeClasses.fullTweetFooter)}>
+                        <div className={tweetHomeClasses.tweetIconSvg}>
+                            <IconButton>
+                                <span>{ReplyIcon}</span>
+                            </IconButton>
+                        </div>
+                        <div className={tweetHomeClasses.tweetIconSvg}>
+                            <IconButton onClick={handleRetweet}>
+                                {isTweetRetweeted ? (
+                                    <span style={{color: "rgb(23, 191, 99)"}}>{RetweetIcon}</span>
+                                ) : (
+                                    <span>{RetweetOutlinedIcon}</span>
+                                )}
+                            </IconButton>
+                        </div>
+                        <div className={tweetHomeClasses.tweetIconSvg}>
+                            <IconButton onClick={handleLike}>
+                                {isTweetLiked ? (
+                                    <span style={{color: "rgb(224, 36, 94)"}}>{LikeIcon}</span>
+                                ) : (
+                                    <span>{LikeOutlinedIcon}</span>
+                                )}
+                            </IconButton>
+                        </div>
+                        <div className={tweetHomeClasses.tweetIconSvg}>
+                            <IconButton>
+                                <span>{ShareIcon}</span>
+                            </IconButton>
+                        </div>
                     </div>
-                ) : null}
-                <div className={classNames(tweetHomeClasses.tweetFooter, tweetHomeClasses.fullTweetFooter)}>
-                    <div className={tweetHomeClasses.tweetIconSvg}>
-                        <IconButton>
-                            <span>{ReplyIcon}</span>
-                        </IconButton>
-                    </div>
-                    <div className={tweetHomeClasses.tweetIconSvg}>
-                        <IconButton>
-                            {isTweetRetweeted ? (
-                                <span style={{color: "rgb(23, 191, 99)"}}>{RetweetIcon}</span>
-                            ) : (
-                                <span>{RetweetOutlinedIcon}</span>
-                            )}
-                        </IconButton>
-                    </div>
-                    <div className={tweetHomeClasses.tweetIconSvg}>
-                        <IconButton onClick={handleLike}>
-                            {isTweetLiked ? (
-                                <span style={{color: "rgb(224, 36, 94)"}}>{LikeIcon}</span>
-                            ) : (
-                                <span>{LikeOutlinedIcon}</span>
-                            )}
-                        </IconButton>
-                    </div>
-                    <div className={tweetHomeClasses.tweetIconSvg}>
-                        <IconButton>
-                            <span>{ShareIcon}</span>
-                        </IconButton>
-                    </div>
+                    <Divider/>
+                    <Typography className={tweetHomeClasses.fullTweetReplying}>
+                        Replying to <Link to={`/user/${user.id}`}>@{user.username}</Link>
+                    </Typography>
+                    <AddTweetForm
+                        tweetId={tweetId}
+                        addressedUsername={user.username}
+                        maxRows={15}
+                        classes={tweetHomeClasses}
+                        title={"Tweet your reply"}
+                        buttonName={"Reply"}/>
                 </div>
-                <Divider/>
-                <Typography className={tweetHomeClasses.fullTweetReplying}>
-                    Replying to <Link to={`/user/${user.id}`}>@{user.username}</Link>
-                </Typography>
-                <AddTweetForm
-                    tweetId={tweetId}
-                    addressedUsername={user.username}
-                    maxRows={15}
-                    classes={tweetHomeClasses}
-                    title={"Tweet your reply"}
-                    buttonName={"Reply"}/>
                 <div className={tweetHomeClasses.addFormBottomLine}/>
                 {(visibleModalWindow && modalWindowTitle === "Liked by") ? (
                     <UsersListModal
@@ -211,11 +217,11 @@ const TweetImageModal: FC<TweetImageModalProps> = ({
                             <span>{ReplyIcon}</span>
                         </IconButton>
                         {replies?.length === 0 || replies === null ? null : (
-                            <span>{replies?.length}</span>
+                            <span style={{color: "#fff"}}>{replies?.length}</span>
                         )}
                     </div>
                     <div className={tweetHomeClasses.tweetIconSvg}>
-                        <IconButton>
+                        <IconButton onClick={handleRetweet}>
                             {isTweetRetweeted ? (
                                 <span>{RetweetIcon}</span>
                             ) : (
