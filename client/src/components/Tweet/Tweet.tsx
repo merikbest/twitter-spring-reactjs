@@ -227,17 +227,7 @@ const Tweet: FC<TweetProps> = ({
                         </div>
                     </div>
                 </div>
-                <TweetImageModal
-                    tweetId={id}
-                    tweetImg={image?.src}
-                    user={user}
-                    dateTime={dateTime}
-                    replies={replies}
-                    likes={likes}
-                    retweets={retweets}
-                    text={text}
-                    visible={visibleModalWindow}
-                    onClose={onCloseImageModalWindow}/>
+                <TweetImageModal tweetId={id} visible={visibleModalWindow} onClose={onCloseImageModalWindow}/>
                 <div className={classes.addFormBottomLine}/>
             </Paper>
         </>

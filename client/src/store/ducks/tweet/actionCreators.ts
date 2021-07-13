@@ -23,7 +23,15 @@ export const fetchTweetData = (payload: string): FetchTweetDataActionInterface =
     payload
 });
 
-export const fetchReplyTweet = (payload: { id: string; text: string; addressedUsername: string; }): FetchReplyTweetActionInterface => ({
+export const fetchReplyTweet = (
+    payload: {
+        id: string;
+        text: string;
+        addressedUsername: string;
+        images: [];
+        likes: [];
+        retweets: [];
+    }): FetchReplyTweetActionInterface => ({
     type: TweetActionType.FETCH_REPLY_TWEET,
     payload
 });

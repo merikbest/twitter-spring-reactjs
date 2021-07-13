@@ -31,6 +31,9 @@ export interface FetchReplyTweetActionInterface extends Action<TweetActionType> 
         id: string;
         text: string;
         addressedUsername: string;
+        images: [];
+        likes: [];
+        retweets: [];
     };
 }
 

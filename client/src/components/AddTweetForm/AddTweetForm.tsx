@@ -73,7 +73,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
 
     const handleClickReplyTweet = (): void => {
         if (addressedUsername) {
-            dispatch(fetchReplyTweet({id: tweetId!, text, addressedUsername}));
+            dispatch(fetchReplyTweet({id: tweetId!, text, addressedUsername, images: [], likes: [], retweets: []}));
             setText("");
         }
     };

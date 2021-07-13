@@ -32,6 +32,7 @@ const Home: FC = (): ReactElement => {
         if (location.pathname !== "/home/connect") {
             dispatch(fetchRelevantUsers());
         }
+        document.body.style.overflow = 'unset';
     }, [location]);
 
     return (

@@ -40,9 +40,11 @@ export const TweetApi = {
         const data = await axios.get<Response<Tweet>>('http://localhost:8080/api/v1/tweets/retweet/' + id);
         return data.data;
     },
-    async replyTweet(payload: { id: string, text: string; addressedUsername: string; }): Promise<Response<Tweet>> {
+    async replyTweet(payload: { id: string, text: string; addressedUsername: string;
+        images: []; likes: []; retweets: []; }): Promise<Response<Tweet>> {
         const data = await axios.post<Response<Tweet>>(`http://localhost:8080/api/v1/tweets/reply/${payload.id}`,
-            {text: payload.text, addressedUsername: payload.addressedUsername});
+            {text: payload.text, addressedUsername: payload.addressedUsername,
+                images: payload.images, likes: payload.likes, retweets: payload.retweets,});
         return data.data;
     },
     removeTweet: (id: string): Promise<void> => axios.delete('/tweets/' + id),

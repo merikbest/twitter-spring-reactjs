@@ -41,6 +41,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
         dispatch(fetchUserData());
         dispatch(fetchRelevantUsers());
         dispatch(fetchTags());
+        document.body.style.overflow = 'unset';
     }, [match.params.id]);
 
     useEffect(() => {
