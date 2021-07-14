@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Link} from "react-router-dom";
+import {Link, useHistory, useParams} from "react-router-dom";
 import {Avatar, Divider, IconButton} from '@material-ui/core';
 import classNames from "classnames";
 import Typography from "@material-ui/core/Typography";
@@ -27,26 +27,35 @@ import {useTweetImageStyles} from "./TweetImageModalStyles";
 import {fetchTweetData} from "../../store/ducks/tweet/actionCreators";
 import {selectTweetData} from "../../store/ducks/tweet/selectors";
 
-interface TweetImageModalProps {
-    tweetId: string;
-    visible?: boolean;
-    onClose: (event: any) => void;
-}
-
-const TweetImageModal: FC<TweetImageModalProps> = ({tweetId, visible, onClose}): ReactElement | null => {
+const TweetImageModal: FC = (): ReactElement | null => {
     const dispatch = useDispatch();
     const tweetImageClasses = useTweetImageStyles();
     const tweetHomeClasses = useHomeStyles();
     const tweetData = useSelector(selectTweetData);
     const myProfile = useSelector(selectUserData);
+    const params: { id: string } = useParams();
+    const history = useHistory();
     const isTweetLiked = tweetData?.likes.find((user) => user.id === myProfile?.user.id);
     const isTweetRetweeted = tweetData?.retweets.find((user) => user.id === myProfile?.user?.id);
+    const [visibleTweetImageModalWindow, setVisibleTweetImageModalWindow] = useState<boolean>(false);
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
     const [modalWindowTitle, setModalWindowTitle] = useState<string>("");
 
     useEffect(() => {
-        dispatch(fetchTweetData(tweetId));
+        dispatch(fetchTweetData(params.id));
+        setVisibleTweetImageModalWindow(true);
+        document.body.style.overflow = 'hidden';
     }, []);
+
+    const onCloseImageModalWindow = (event: any): void => {
+        if (event.target.classList[0]) {
+            if (event.target.classList[0].includes('backdrop')) {
+                setVisibleTweetImageModalWindow(false);
+                document.body.style.overflow = 'unset';
+                history.goBack();
+            }
+        }
+    };
 
     const onOpenLikesModalWindow = (): void => {
         setVisibleModalWindow(true);
@@ -64,20 +73,20 @@ const TweetImageModal: FC<TweetImageModalProps> = ({tweetId, visible, onClose}):
     };
 
     const handleLike = (): void => {
-        dispatch(fetchLikeTweet(tweetId));
+        dispatch(fetchLikeTweet(params.id));
     };
 
     const handleRetweet = (): void => {
-        dispatch(fetchRetweet(tweetId));
+        dispatch(fetchRetweet(params.id));
     };
 
-    if (!visible) {
+    if (!visibleTweetImageModalWindow) {
         return null;
     }
 
     if (tweetData) {
         return (
-            <div className={tweetImageClasses.backdrop} onClick={onClose}>
+            <div className={tweetImageClasses.backdrop} onClick={onCloseImageModalWindow}>
                 <div className={tweetImageClasses.tweetImageModalContent}>
                     <img className={tweetImageClasses.tweetImageModalImg}
                          alt={tweetData?.images?.[0]?.src}
@@ -168,7 +177,7 @@ const TweetImageModal: FC<TweetImageModalProps> = ({tweetId, visible, onClose}):
                             Replying to <Link to={`/user/${tweetData.user.id}`}>@{tweetData.user.username}</Link>
                         </Typography>
                         <AddTweetForm
-                            tweetId={tweetId}
+                            tweetId={params.id}
                             addressedUsername={tweetData.user.username}
                             maxRows={15}
                             classes={tweetHomeClasses}

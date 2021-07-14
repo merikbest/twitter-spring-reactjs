@@ -1,5 +1,5 @@
 import React, {FC, ReactElement, MouseEvent, useState} from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import {Link, Route, useHistory, useLocation} from 'react-router-dom';
 import classNames from "classnames";
 import {Avatar, IconButton, Menu, MenuItem, Paper, Typography} from '@material-ui/core';
 import RepostIcon from "@material-ui/icons/RepeatOutlined";
@@ -48,6 +48,7 @@ const Tweet: FC<TweetProps> = ({
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
     const history = useHistory();
+    const location = useLocation();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const isTweetLiked = likes.find((user) => user.id === myProfile?.user?.id);
@@ -162,22 +163,26 @@ const Tweet: FC<TweetProps> = ({
                         <a onClick={handleClickTweet} className={classes.tweetWrapper} href={`/home/tweet/${id}`}>
                             <div dangerouslySetInnerHTML={{__html: text}}></div>
                         </a>
-                        {images?.length !== 0 ? (<a href={"javascript:void(0);"} onClick={onOpenImageModalWindow}>
-                            <div style={{height: 280, position: "relative"}}>
-                                <img style={{
-                                    objectFit: "cover",
-                                    position: "absolute",
-                                    marginTop: 10,
-                                    width: 504,
-                                    height: 280,
-                                    borderRadius: 20,
-                                    borderColor: "rgb(83, 100, 113)",
-                                }}
-                                     src={image?.src}
-                                     alt={"123"}
-                                />
-                            </div>
-                        </a>) : null
+                        {images?.length !== 0 ? (
+                            // <a href={"javascript:void(0);"} onClick={onOpenImageModalWindow}>
+                            <Link to={{pathname: `/modal/${id}`, state: { background: location }}}>
+                                <div style={{height: 280, position: "relative"}}>
+                                    <img style={{
+                                        objectFit: "cover",
+                                        position: "absolute",
+                                        marginTop: 10,
+                                        width: 504,
+                                        height: 280,
+                                        borderRadius: 20,
+                                        borderColor: "rgb(83, 100, 113)",
+                                    }}
+                                         src={image?.src}
+                                         alt={"123"}
+                                    />
+                                </div>
+                            </Link>
+                        // </a>
+                        ) : null
                         }
                         {/*{images && <ImageList classes={classes} images={images}/>}*/}
                     </Typography>
@@ -227,7 +232,10 @@ const Tweet: FC<TweetProps> = ({
                         </div>
                     </div>
                 </div>
-                <TweetImageModal tweetId={id} visible={visibleModalWindow} onClose={onCloseImageModalWindow}/>
+                {/*<TweetImageModal tweetId={id}/>*/}
+                {/*<Route path="/:id/media" exact>*/}
+                {/*    <TweetImageModal/>*/}
+                {/*</Route>*/}
                 <div className={classes.addFormBottomLine}/>
             </Paper>
         </>

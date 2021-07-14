@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {Route, Switch, useHistory} from 'react-router-dom';
+import {Route, Switch, useHistory, useLocation} from 'react-router-dom';
 
 import SignIn from './pages/SignIn/SignIn';
 import Home from "./pages/Home/Home";
@@ -14,6 +14,7 @@ import {fetchUserData} from './store/ducks/user/actionCreators';
 import ActivatePage from "./pages/ActivatePage/ActivatePage";
 import Search from './components/Search/Search';
 import FollowingFollowers from "./components/FollowingFollowers/FollowingFollowers";
+import TweetImageModal from "./components/TweetImageModal/TweetImageModal";
 
 const App: FC = (): ReactElement => {
     const classes = useHomeStyles();
@@ -22,6 +23,9 @@ const App: FC = (): ReactElement => {
     const isAuth = useSelector(selectIsAuth);
     const loadingStatus = useSelector(selectUserStatus);
     const isReady = loadingStatus !== LoadingStatus.NEVER && loadingStatus !== LoadingStatus.LOADING;
+
+    const location = useLocation<{ background: any }>();
+    const background = location.state && location.state.background;
 
     // useEffect(() => {
     //     // dispatch(fetchUserData());
@@ -46,16 +50,17 @@ const App: FC = (): ReactElement => {
 
     return (
         <div className="App">
-            <Switch>
-                <Route path="/signin" component={SignIn} exact/>
-                <Layout>
+            <Layout>
+                <Switch location={background || location}>
+                    <Route path="/signin" component={SignIn} exact/>
                     <Route path="/home" component={Home}/>
-                    <Route path="/search" component={Search} />
-                    <Route path="/user/:id" component={UserPage} exact />
+                    <Route path="/search" component={Search}/>
+                    <Route path="/user/:id" component={UserPage} exact/>
                     <Route path="/user/:id/:follow" component={FollowingFollowers}/>
-                    <Route path="/user/activate/:hash" component={ActivatePage} exact />
-                </Layout>
-            </Switch>
+                    <Route path="/user/activate/:hash" component={ActivatePage} exact/>
+                </Switch>
+                {background && <Route path="/modal/:id" children={<TweetImageModal/>}/>}
+            </Layout>
         </div>
     );
 }
