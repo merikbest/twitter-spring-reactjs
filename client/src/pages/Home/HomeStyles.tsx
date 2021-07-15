@@ -118,6 +118,15 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
     tweetWrapper: {
         color: 'inherit',
         textDecoration: 'none',
+        '& #hashtag': {
+            color: "rgb(27, 149, 224)",
+        },
+    },
+    tweetHashtagWrapper: {
+        '& #hashtag': {
+            fontWeight: "bold",
+            color: "rgb(27, 149, 224)",
+        },
     },
     tweetAvatar: {
         width: theme.spacing(6.5),

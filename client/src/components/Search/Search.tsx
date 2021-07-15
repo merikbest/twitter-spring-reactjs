@@ -1,5 +1,5 @@
 import React, {ChangeEvent, FC, FormEvent, useEffect, useState} from 'react';
-import {useLocation} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -29,19 +29,23 @@ const Search: FC = () => {
     const isLoading = useSelector(selectIsTweetsLoading);
     const tweets = useSelector(selectTweetsItems);
     const location = useLocation<{ tag: string | undefined }>();
+    const history = useHistory();
 
     const [text, setText] = React.useState<string>("");
     const [activeTab, setActiveTab] = useState<number>(0);
     const [users, setUsers] = useState<User[]>();
 
     useEffect(() => {
+        console.log(location);
         if (location.state?.tag !== undefined) {
             dispatch(fetchTweetsByTag(location.state?.tag));
             setText(decodeURIComponent(location.state?.tag));
         }
-    }, [location]);
+    }, [location.state?.tag]);
 
     const handleChangeTab = (event: ChangeEvent<{}>, newValue: number): void => {
+        setText("");
+        history.replace({pathname: location.pathname, state: {}});
         setActiveTab(newValue);
     };
 
@@ -52,9 +56,8 @@ const Search: FC = () => {
             if (activeTab !== 2) {
                 dispatch(fetchTweetsByText(encodeURIComponent(text)));
             } else {
-                UserApi.searchUsersByUsername(encodeURIComponent(text)).then((data) => {
-                    setUsers(data);
-                });
+                UserApi.searchUsersByUsername(encodeURIComponent(text))
+                    .then(data => setUsers(data))
             }
         }
     };

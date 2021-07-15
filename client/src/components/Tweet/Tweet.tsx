@@ -164,7 +164,6 @@ const Tweet: FC<TweetProps> = ({
                             <div dangerouslySetInnerHTML={{__html: text}}></div>
                         </a>
                         {images?.length !== 0 ? (
-                            // <a href={"javascript:void(0);"} onClick={onOpenImageModalWindow}>
                             <Link to={{pathname: `/modal/${id}`, state: { background: location }}}>
                                 <div style={{height: 280, position: "relative"}}>
                                     <img style={{
@@ -181,7 +180,6 @@ const Tweet: FC<TweetProps> = ({
                                     />
                                 </div>
                             </Link>
-                        // </a>
                         ) : null
                         }
                         {/*{images && <ImageList classes={classes} images={images}/>}*/}

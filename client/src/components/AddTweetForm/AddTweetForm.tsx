@@ -66,16 +66,25 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
             const image: Image = await uploadImage(file);
             result.push(image);
         }
-        dispatch(fetchAddTweet({ text, images: result, likes: [], retweets: [] }));
+
+        dispatch(fetchAddTweet({
+            text: parseHashtags(text), images: result, likes: [], retweets: []
+        }));
         setText('');
         setImages([]);
     };
 
     const handleClickReplyTweet = (): void => {
         if (addressedUsername) {
-            dispatch(fetchReplyTweet({id: tweetId!, text, addressedUsername, images: [], likes: [], retweets: []}));
+            dispatch(fetchReplyTweet({
+                id: tweetId!, text: parseHashtags(text), addressedUsername, images: [], likes: [], retweets: []
+            }));
             setText("");
         }
+    };
+
+    const parseHashtags = (text: string): string => {
+        return text.replace(/(#\w+)\b/ig, (hashtag) => `<b id="hashtag">${hashtag}</b>`);
     };
 
     return (

@@ -116,7 +116,7 @@ export const FullTweet: FC<FullTweetProps> = ({classes}): ReactElement | null =>
                         </Typography>
                     </div>
                     <Typography className={classes.fullTweetText} gutterBottom>
-                        {tweetData.text}
+                        <div className={classes.tweetHashtagWrapper} dangerouslySetInnerHTML={{__html: tweetData.text}}></div>
                         <div className="tweet-images">
                             {tweetData.images && <ImageList classes={classes} images={tweetData.images}/>}
                         </div>
