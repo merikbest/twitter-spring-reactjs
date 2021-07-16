@@ -180,7 +180,6 @@ const TweetImageModal: FC = (): ReactElement | null => {
                             tweetId={params.id}
                             addressedUsername={tweetData.user.username}
                             maxRows={15}
-                            classes={tweetHomeClasses}
                             title={"Tweet your reply"}
                             buttonName={"Reply"}/>
                     </div>
@@ -203,7 +202,6 @@ const TweetImageModal: FC = (): ReactElement | null => {
                     {tweetData.replies.map((tweet: any) =>
                         <Tweet
                             key={tweet.id}
-                            classes={tweetHomeClasses}
                             images={tweet.images}
                             addressedUser={tweetData.user.username}
                             addressedId={tweetData.user.id}

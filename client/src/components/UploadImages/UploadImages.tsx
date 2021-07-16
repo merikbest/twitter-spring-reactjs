@@ -2,17 +2,15 @@ import React, {FC, useCallback, useEffect, useRef} from 'react';
 import {IconButton} from '@material-ui/core';
 import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
 
-import {useHomeStyles} from '../../pages/Home/HomeStyles';
 import {ImageObj} from "../AddTweetForm/AddTweetForm";
 import ImageList from "../ImageList/ImageList";
 
 interface UploadImageProps {
-    classes: ReturnType<typeof useHomeStyles>;
     images: ImageObj[];
     onChangeImages: (callback: (prev: ImageObj[]) => ImageObj[]) => void;
 }
 
-const UploadImages: FC<UploadImageProps> = ({classes, images, onChangeImages}) => {
+const UploadImages: FC<UploadImageProps> = ({images, onChangeImages}) => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleClickImage = () => {
@@ -55,11 +53,7 @@ const UploadImages: FC<UploadImageProps> = ({classes, images, onChangeImages}) =
 
     return (
         <div>
-            <ImageList
-                images={images}
-                classes={classes}
-                removeImage={removeImage}
-            />
+            <ImageList images={images} removeImage={removeImage}/>
             <IconButton onClick={handleClickImage} color="primary">
                 <ImageOutlinedIcon style={{fontSize: 26}}/>
             </IconButton>

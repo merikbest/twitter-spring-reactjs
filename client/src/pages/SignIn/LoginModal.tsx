@@ -10,7 +10,7 @@ import {Button} from "@material-ui/core";
 import {Color} from '@material-ui/lab/Alert';
 
 import ModalBlock from "../../components/ModalBlock/ModalBlock";
-import {useStylesSignIn} from "./SignIn";
+import {useStylesSignIn} from "./SignInStyles";
 import {selectUserStatus} from "../../store/ducks/user/selectors";
 import {fetchSignIn} from "../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../store/types";

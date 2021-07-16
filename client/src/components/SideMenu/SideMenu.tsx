@@ -143,7 +143,6 @@ const SideMenu: FC<SideMenuProps> = ({classes}: SideMenuProps): ReactElement => 
                         <div style={{width: 550}}>
                             <AddTweetForm
                                 maxRows={15}
-                                classes={classes}
                                 title={"What's happening?"}
                                 buttonName={"Tweet"}/>
                         </div>

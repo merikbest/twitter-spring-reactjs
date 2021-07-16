@@ -45,7 +45,7 @@ export const theme = createMuiTheme({
             root: {
                 borderRadius: 30,
                 textTransform: 'none',
-                fontSize: 16,
+                // fontSize: 16,
                 // height: 40,
                 fontWeight: 700,
             },

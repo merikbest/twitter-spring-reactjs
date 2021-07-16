@@ -1,24 +1,20 @@
 import React, {FC, ReactElement, MouseEvent, useState} from 'react';
-import {Link, Route, useHistory, useLocation} from 'react-router-dom';
-import classNames from "classnames";
+import {Link, useHistory, useLocation} from 'react-router-dom';
 import {Avatar, IconButton, Menu, MenuItem, Paper, Typography} from '@material-ui/core';
 import RepostIcon from "@material-ui/icons/RepeatOutlined";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import {LikeOutlinedIcon, LikeIcon, RetweetIcon, RetweetOutlinedIcon, ReplyIcon, ShareIcon} from "../../icons";
-import {useHomeStyles} from "../../pages/Home/HomeStyles";
+import {useTweetStyles} from "./TweetStyles";
 import {formatDate} from '../../util/formatDate';
-import ImageList from "../ImageList/ImageList";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchLikeTweet, fetchRetweet, removeTweet} from "../../store/ducks/tweets/actionCreators";
 import {Image} from "../../store/ducks/tweets/contracts/state";
 import {User} from "../../store/ducks/user/contracts/state";
 import {selectUserData} from "../../store/ducks/user/selectors";
-import TweetImageModal from "../TweetImageModal/TweetImageModal";
 
 interface TweetProps {
     id: string;
-    classes: ReturnType<typeof useHomeStyles>;
     text: string;
     likes: User[];
     retweets: User[];
@@ -26,14 +22,12 @@ interface TweetProps {
     dateTime: string;
     images?: Image[];
     user: User;
-    activeTab?: number;
     addressedUser?: string;
     addressedId?: number;
 }
 
 const Tweet: FC<TweetProps> = ({
                                    id,
-                                   classes,
                                    text,
                                    images,
                                    user,
@@ -41,10 +35,10 @@ const Tweet: FC<TweetProps> = ({
                                    likes,
                                    retweets,
                                    replies,
-                                   activeTab,
                                    addressedUser,
                                    addressedId
                                }: TweetProps): ReactElement => {
+    const classes = useTweetStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
     const history = useHistory();
@@ -53,7 +47,6 @@ const Tweet: FC<TweetProps> = ({
     const open = Boolean(anchorEl);
     const isTweetLiked = likes.find((user) => user.id === myProfile?.user?.id);
     const isTweetRetweeted = retweets.find((user) => user.id === myProfile?.user?.id);
-    const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
     const image = images?.[0];
 
     const handleClickTweet = (event: React.MouseEvent<HTMLAnchorElement>): void => {
@@ -88,54 +81,34 @@ const Tweet: FC<TweetProps> = ({
         dispatch(fetchRetweet(id));
     };
 
-    const onOpenImageModalWindow = (): void => {
-        setVisibleModalWindow(true);
-        document.body.style.overflow = 'hidden';
-    };
-
-    const onCloseImageModalWindow = (event: any): void => {
-        if (event.target.classList[0]) {
-            if (event.target.classList[0].includes('backdrop')) {
-                setVisibleModalWindow(false);
-                document.body.style.overflow = 'unset';
-            }
-        }
-    };
-
     return (
         <>
-            {isTweetRetweeted ?
-                <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    marginLeft: 45,
-                    marginTop: 5,
-                    color: "rgb(83, 100, 113)"
-                }}>
-                    <RepostIcon style={{fontSize: 16}}/>
-                    <Typography style={{marginLeft: 15, fontSize: 14, fontWeight: 700}}>
+            {isTweetRetweeted &&
+                <div className={classes.retweetWrapper}>
+                    <RepostIcon/>
+                    <Typography>
                         You Retweeted
                     </Typography>
-                </div> : null}
-            <Paper className={classNames(classes.tweet, classes.tweetsHeader)} variant="outlined">
+                </div>
+            }
+            <Paper className={classes.container} variant="outlined">
                 <Avatar
-                    className={classes.tweetAvatar}
+                    className={classes.avatar}
                     alt={`avatar ${user.id}`}
                     src={user.avatar?.src ? user.avatar?.src :
-                        "https://abs.twimg.com/sticky/default_profile_images/default_profile_reasonably_small.png"}
-                />
-                <div className={classes.tweetContent}>
-                    <a onClick={handleClickTweet} className={classes.tweetWrapper} href={`/home/tweet/${id}`}>
-                        <div className={classes.tweetHeader}>
+                        "https://abs.twimg.com/sticky/default_profile_images/default_profile_reasonably_small.png"}/>
+                <div style={{flex: 1}}>
+                    <a onClick={handleClickTweet} className={classes.headerWrapper} href={`/home/tweet/${id}`}>
+                        <div className={classes.header}>
                             <div>
                                 <b>{user.fullName}</b>&nbsp;
-                                <span className={classes.tweetUserName}>@{user.username}</span>&nbsp;
-                                <span className={classes.tweetUserName}>·</span>&nbsp;
-                                <span className={classes.tweetUserName}>{formatDate(new Date(dateTime))}</span>
+                                <span>@{user.username}</span>&nbsp;
+                                <span>·</span>&nbsp;
+                                <span>{formatDate(new Date(dateTime))}</span>
                             </div>
                             <div>
                                 <IconButton
-                                    className={classes.tweetIconButton}
+                                    className={classes.headerIcon}
                                     aria-label="more"
                                     aria-controls="long-menu"
                                     aria-haspopup="true"
@@ -150,50 +123,37 @@ const Tweet: FC<TweetProps> = ({
                         </div>
                     </a>
                     <Typography variant="body1" gutterBottom>
-                        {addressedUser ? (
+                        {addressedUser &&
                             <object>
-                                <Typography style={{zIndex: 2, color: "rgb(83, 100, 113)", fontSize: 15}}>
-                                    Replying to <Link to={`/user/${addressedId}`}
-                                                      style={{textDecoration: "none", color: "rgb(27, 149, 224)"}}>
+                                <Typography className={classes.replyWrapper}>
+                                    Replying to <Link to={`/user/${addressedId}`} className={classes.replyLink}>
                                     @{addressedUser}
                                 </Link>
                                 </Typography>
                             </object>
-                        ) : null}
-                        <a onClick={handleClickTweet} className={classes.tweetWrapper} href={`/home/tweet/${id}`}>
+                        }
+                        <a onClick={handleClickTweet} className={classes.text} href={`/home/tweet/${id}`}>
                             <div dangerouslySetInnerHTML={{__html: text}}></div>
                         </a>
-                        {images?.length !== 0 ? (
+                        {(images?.length !== 0) &&
                             <Link to={{pathname: `/modal/${id}`, state: { background: location }}}>
-                                <div style={{height: 280, position: "relative"}}>
-                                    <img style={{
-                                        objectFit: "cover",
-                                        position: "absolute",
-                                        marginTop: 10,
-                                        width: 504,
-                                        height: 280,
-                                        borderRadius: 20,
-                                        borderColor: "rgb(83, 100, 113)",
-                                    }}
-                                         src={image?.src}
-                                         alt={"123"}
-                                    />
+                                <div className={classes.image}>
+                                    <img src={image?.src} alt={image?.src}/>
                                 </div>
                             </Link>
-                        ) : null
                         }
                         {/*{images && <ImageList classes={classes} images={images}/>}*/}
                     </Typography>
-                    <div className={classes.tweetFooter}>
-                        <div className={classes.tweetIconSvg}>
+                    <div className={classes.footer}>
+                        <div className={classes.footerIcon}>
                             <IconButton>
                                 <span>{ReplyIcon}</span>
                             </IconButton>
-                            {replies?.length === 0 || replies === null ? null : (
+                            {(replies?.length === 0 || replies === null) ? null : (
                                 <span>{replies?.length}</span>
                             )}
                         </div>
-                        <div className={classes.tweetIconSvg}>
+                        <div className={classes.footerIcon}>
                             <IconButton onClick={handleRetweet}>
                                 {isTweetRetweeted ? (
                                     <span style={{color: "rgb(23, 191, 99)"}}>{RetweetIcon}</span>
@@ -201,14 +161,14 @@ const Tweet: FC<TweetProps> = ({
                                     <span>{RetweetOutlinedIcon}</span>)
                                 }
                             </IconButton>
-                            {retweets.length === 0 || retweets === null ? null : (
+                            {(retweets.length === 0 || retweets === null) ? null : (
                                 isTweetRetweeted ? (
                                     <span style={{color: "rgb(23, 191, 99)"}}>{retweets.length}</span>
                                 ) : (
                                     <span>{retweets.length}</span>)
                             )}
                         </div>
-                        <div className={classes.tweetIconSvg}>
+                        <div className={classes.footerIcon}>
                             <IconButton onClick={handleLike}>
                                 {isTweetLiked ? (
                                     <span style={{color: "rgb(224, 36, 94)"}}>{LikeIcon}</span>
@@ -216,25 +176,21 @@ const Tweet: FC<TweetProps> = ({
                                     <span>{LikeOutlinedIcon}</span>
                                 )}
                             </IconButton>
-                            {likes.length === 0 || likes === null ? null : (
+                            {(likes.length === 0 || likes === null) ? null : (
                                 isTweetLiked ? (
                                     <span style={{color: "rgb(224, 36, 94)"}}>{likes.length}</span>
                                 ) : (
                                     <span>{likes.length}</span>)
                             )}
                         </div>
-                        <div className={classes.tweetIconSvg}>
+                        <div className={classes.footerIcon}>
                             <IconButton>
                                 <span>{ShareIcon}</span>
                             </IconButton>
                         </div>
                     </div>
                 </div>
-                {/*<TweetImageModal tweetId={id}/>*/}
-                {/*<Route path="/:id/media" exact>*/}
-                {/*    <TweetImageModal/>*/}
-                {/*</Route>*/}
-                <div className={classes.addFormBottomLine}/>
+                <div className={classes.bottomLine}/>
             </Paper>
         </>
     );

@@ -1,15 +1,10 @@
 import React, {FC, ReactElement} from 'react';
-import classNames from 'classnames';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import IconButton from '@material-ui/core/IconButton';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
-import EmojiIcon from '@material-ui/icons/SentimentSatisfiedOutlined';
 import {Alert} from "@material-ui/lab";
 
-import {useHomeStyles} from '../../pages/Home/HomeStyles';
 import {useDispatch, useSelector} from "react-redux";
 import {fetchAddTweet, setAddFormState} from "../../store/ducks/tweets/actionCreators";
 import {selectAddFormState} from "../../store/ducks/tweets/selectors";
@@ -18,9 +13,10 @@ import UploadImages from '../UploadImages/UploadImages';
 import {uploadImage} from "../../util/uploadImage";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {fetchReplyTweet} from "../../store/ducks/tweet/actionCreators";
+import {useAddTweetFormStyles} from "./AddTweetFormStyles";
+import {DEFAULT_PROFILE_IMG} from "../../util/url";
 
 interface AddTweetFormProps {
-    classes: ReturnType<typeof useHomeStyles>;
     maxRows?: number;
     tweetId?: string;
     title: string;
@@ -36,13 +32,13 @@ export interface ImageObj {
 const MAX_LENGTH = 280;
 
 export const AddTweetForm: FC<AddTweetFormProps> = ({
-                                                        classes,
                                                         maxRows,
                                                         tweetId,
                                                         title,
                                                         buttonName,
                                                         addressedUsername
                                                     }: AddTweetFormProps): ReactElement => {
+    const classes = useAddTweetFormStyles();
     const dispatch = useDispatch();
     const addFormState = useSelector(selectAddFormState);
     const userData = useSelector(selectUserData);
@@ -89,33 +85,32 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
 
     return (
         <div>
-            <div className={classes.addFormBody}>
+            <div className={classes.content}>
                 <Avatar
-                    className={classes.tweetAvatar}
+                    className={classes.contentAvatar}
                     alt={`avatar ${userData?.user.id}`}
-                    src={userData?.user.avatar?.src ? userData?.user.avatar?.src :
-                        "https://abs.twimg.com/sticky/default_profile_images/default_profile_reasonably_small.png"}
+                    src={userData?.user.avatar?.src ? userData?.user.avatar?.src : DEFAULT_PROFILE_IMG}
                 />
                 <TextareaAutosize
                     onChange={handleChangeTextarea}
-                    className={classes.addFormTextarea}
+                    className={classes.contentTextarea}
                     placeholder={title}
                     value={text}
                     rowsMax={maxRows}
                 />
             </div>
-            <div className={classes.addFormBottom}>
-                <div className={classNames(classes.tweetFooter, classes.addFormBottomActions)}>
-                    <UploadImages classes={classes} images={images} onChangeImages={setImages}/>
+            <div className={classes.footer}>
+                <div className={classes.footerWrapper}>
+                    <UploadImages images={images} onChangeImages={setImages}/>
                     {/*<IconButton color="primary">*/}
                     {/*    <EmojiIcon style={{fontSize: 26}}/>*/}
                     {/*</IconButton>*/}
                 </div>
-                <div className={classes.addFormBottomRight}>
+                <div className={classes.footerAddForm}>
                     {text && (
                         <>
                             <span>{textCount}</span>
-                            <div className={classes.addFormCircleProgress}>
+                            <div className={classes.footerAddFormCircleProgress}>
                                 <CircularProgress
                                     variant="static"
                                     size={20}

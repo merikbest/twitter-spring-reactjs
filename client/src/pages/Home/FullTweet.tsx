@@ -118,7 +118,7 @@ export const FullTweet: FC<FullTweetProps> = ({classes}): ReactElement | null =>
                     <Typography className={classes.fullTweetText} gutterBottom>
                         <div className={classes.tweetHashtagWrapper} dangerouslySetInnerHTML={{__html: tweetData.text}}></div>
                         <div className="tweet-images">
-                            {tweetData.images && <ImageList classes={classes} images={tweetData.images}/>}
+                            {tweetData.images && <ImageList images={tweetData.images}/>}
                         </div>
                     </Typography>
                     <Typography style={{marginBottom: 16}}>
@@ -187,7 +187,6 @@ export const FullTweet: FC<FullTweetProps> = ({classes}): ReactElement | null =>
                         tweetId={tweetData?.id}
                         addressedUsername={tweetData.user.username}
                         maxRows={15}
-                        classes={classes}
                         title={"Tweet your reply"}
                         buttonName={"Reply"}/>
                     {(visibleModalWindow && modalWindowTitle === "Liked by") ? (
@@ -210,7 +209,6 @@ export const FullTweet: FC<FullTweetProps> = ({classes}): ReactElement | null =>
                 {tweetData.replies.map((tweet) =>
                     <Tweet
                         key={tweet.id}
-                        classes={classes}
                         images={tweet.images}
                         addressedUser={tweetData.user.username}
                         addressedId={tweetData.user.id}

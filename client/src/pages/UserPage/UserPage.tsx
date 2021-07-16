@@ -1,7 +1,6 @@
 import React, {ChangeEvent, FC, useEffect, useState} from 'react';
 import {RouteComponentProps, Link} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
-import classNames from "classnames";
 import Paper from '@material-ui/core/Paper';
 import {Avatar, Button, CircularProgress, Typography} from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
@@ -9,7 +8,7 @@ import Tab from '@material-ui/core/Tab';
 import Skeleton from '@material-ui/lab/Skeleton';
 
 import {LocationIcon, LinkIcon, CalendarIcon} from "../../icons";
-import {useHomeStyles} from '../Home/HomeStyles';
+import {useUserPageStyles} from "./UserPageStyles";
 import {BackButton} from "../../components/BackButton/BackButton";
 import EditProfileModal from "../../components/EditProfileModal/EditProfileModal";
 import {fetchUserData} from "../../store/ducks/user/actionCreators";
@@ -21,10 +20,10 @@ import {fetchUserTweets, fetchUserLikedTweets, fetchUserMediaTweets} from "../..
 import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
 import {fetchUserProfile, followUserProfile, unfollowUserProfile} from "../../store/ducks/userProfile/actionCreators";
 import UserPageTweets from "./UserPageTweets";
-import "./UserPage.scss";
+import {DEFAULT_PROFILE_IMG} from "../../util/url";
 
 const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
-    const classes = useHomeStyles();
+    const classes = useUserPageStyles();
     const dispatch = useDispatch();
     const tweets = useSelector(selectUserTweetsItems);
     const myProfile = useSelector(selectUserData);
@@ -83,8 +82,8 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
     };
 
     return (
-        <Paper className={classNames(classes.tweetsWrapper, 'user')} variant="outlined">
-            <Paper className={classes.tweetsHeader} variant="outlined">
+        <Paper className={classes.container} variant="outlined">
+            <Paper className={classes.header} variant="outlined">
                 <BackButton/>
                 <div>
                     <Typography variant="h6">{userProfile?.fullName}</Typography>
@@ -93,62 +92,62 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
                     </Typography>
                 </div>
             </Paper>
-            <div className="user__header">
-                <img className="user__header__img" key={userProfile?.wallpaper?.src} src={userProfile?.wallpaper?.src}/>
+            <div className={classes.wallpaper}>
+                <img key={userProfile?.wallpaper?.src} src={userProfile?.wallpaper?.src} alt={userProfile?.wallpaper?.src}/>
             </div>
-            <div className="user__info">
+            <div className={classes.info}>
                 <div style={{display: "inline-block"}}>
-                    <Avatar src={userProfile?.avatar?.src ? userProfile?.avatar.src :
-                        "https://abs.twimg.com/sticky/default_profile_images/default_profile_reasonably_small.png"}/>
+                    <Avatar src={userProfile?.avatar?.src ? userProfile?.avatar.src : DEFAULT_PROFILE_IMG}/>
                 </div>
                 {userProfile?.id === myProfile?.user.id ? (
-                    <Button onClick={onOpenEditProfile} color="primary" className={classes.profileMenuEditButton}>
+                    <Button onClick={onOpenEditProfile} color="primary" className={classes.editButton}>
                         Edit profile
                     </Button>
                 ) : (
-                    <Button onClick={handleFollow} color="primary" className={classes.profileMenuEditButton}>
+                    <Button onClick={handleFollow} color="primary" className={classes.editButton}>
                         {follower ? "Unfollow" : "Follow"}
                     </Button>
                 )}
                 {!userProfile ? (
                     <Skeleton variant="text" width={250} height={30}/>
                 ) : (
-                    <h2 className="user__info-fullname">{userProfile.fullName}</h2>
+                    <h2 className={classes.fullName}>{userProfile.fullName}</h2>
                 )}
                 {!userProfile ? (
                     <Skeleton variant="text" width={60}/>
                 ) : (
-                    <span className="user__info-username">@{userProfile.username}</span>
+                    <span className={classes.username}>@{userProfile.username}</span>
                 )}
-                <p className="user__info-description">{userProfile?.about}</p>
-                <ul className="user__info-details">
-                    {userProfile?.location ?
+                <p className={classes.description}>{userProfile?.about}</p>
+                <ul className={classes.details}>
+                    {userProfile?.location &&
                         <li>
                             <span>{LocationIcon}</span><span>{userProfile?.location}</span>
-                        </li> : null}
-                    {userProfile?.website ?
+                        </li>
+                    }
+                    {userProfile?.website &&
                         <li>
                             <span>{LinkIcon}</span>
                             <a className="link" href={userProfile?.website}>{userProfile?.website}</a>
-                        </li> : null}
-                    {userProfile?.dateOfBirth ?
+                        </li>
+                    }
+                    {userProfile?.dateOfBirth &&
                         <li>
                             Date of Birth: {userProfile?.dateOfBirth}
-                        </li> : null}
-                    {userProfile?.registration ?
+                        </li>
+                    }
+                    {userProfile?.registration &&
                         <li>
                             <span>{CalendarIcon}</span> Joined: {userProfile?.registration}
-                        </li> : null}
+                        </li>
+                    }
                     <li><span>{CalendarIcon}</span> Joined: June 2021</li>
                 </ul>
-                <ul className="user__info-details">
-                    <Link to={`/user/${userProfile?.id}/following`}
-                          style={{textDecoration: 'none',
-                              color: "rgb(83, 100, 113)",}}>
+                <ul className={classes.details}>
+                    <Link to={`/user/${userProfile?.id}/following`} className={classes.followLink}>
                         <li><b>{userProfile?.followers?.length ? userProfile?.followers?.length : 0}</b> Following</li>
                     </Link>
-                    <Link to={`/user/${userProfile?.id}/followers`}
-                          style={{textDecoration: 'none', color: "rgb(83, 100, 113)",}}>
+                    <Link to={`/user/${userProfile?.id}/followers`} className={classes.followLink}>
                         <li><b>{userProfile?.following?.length ? userProfile?.following?.length : 0}</b> Followers</li>
                     </Link>
                 </ul>
@@ -159,7 +158,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
                 <Tab onClick={handleShowMediaTweets} label="Media"/>
                 <Tab onClick={handleShowLikedTweets} label="Likes"/>
             </Tabs>
-            <div className="user__tweets">
+            <div className={classes.tweets}>
                 {isTweetsLoading ? (
                     <div className={classes.tweetsCentred}>
                         <CircularProgress/>
@@ -167,7 +166,6 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
                 ) : (
                     <UserPageTweets
                         tweets={tweets}
-                        classes={classes}
                         activeTab={activeTab}
                         userProfileId={userProfile?.id}
                         myProfileId={myProfile?.user.id}
@@ -175,10 +173,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
                     />
                 )}
             </div>
-            {visibleEditProfile ?
-                <EditProfileModal classes={classes} visible={visibleEditProfile} onClose={onCloseEditProfile}/>
-                : null
-            }
+            {visibleEditProfile && <EditProfileModal visible={visibleEditProfile} onClose={onCloseEditProfile}/>}
         </Paper>
     );
 };

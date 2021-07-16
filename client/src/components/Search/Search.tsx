@@ -119,7 +119,7 @@ const Search: FC = () => {
                 </div>
             ) : (activeTab !== 2 ? (
                     tweets.map((tweet) =>
-                        <Tweet key={tweet.id} classes={classes} images={tweet.images} {...tweet}/>)
+                        <Tweet key={tweet.id} images={tweet.images} {...tweet}/>)
                 ) : (
                     users?.map((user) =>
                         <Follower classes={classes} user={user} follow={handleFollow} unfollow={handleUnfollow}/>))

@@ -10,10 +10,10 @@ import {Button} from "@material-ui/core";
 import {Color} from '@material-ui/lab/Alert';
 
 import ModalBlock from "../../components/ModalBlock/ModalBlock";
-import {useStylesSignIn} from "./SignIn";
 import {selectUserStatus} from "../../store/ducks/user/selectors";
 import {fetchSignUp} from "../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../store/types";
+import {useStylesSignIn} from "./SignInStyles";
 
 interface RegisterModalProps {
     open: boolean;

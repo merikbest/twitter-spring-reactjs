@@ -14,7 +14,6 @@ import FormGroup from "@material-ui/core/FormGroup";
 
 import TweeterInput from "./TweetInput/TweeterInput";
 import {ImageObj} from "../AddTweetForm/AddTweetForm";
-import {useHomeStyles} from "../../pages/Home/HomeStyles";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {Image} from "../../store/ducks/tweets/contracts/state";
 import {uploadImage} from "../../util/uploadImage";
@@ -23,7 +22,6 @@ import UploadProfileImage from "./UploadProfileImage";
 import "./EditProfileModalStyles.scss";
 
 interface EditProfileModalProps {
-    classes: ReturnType<typeof useHomeStyles>;
     visible?: boolean;
     onClose: () => void;
 }
@@ -39,7 +37,7 @@ export const EditProfileFormSchema = yup.object().shape({
     username: yup.string().min(1, "Name can’t be blank").required(),
 });
 
-const EditProfileModal: FC<EditProfileModalProps> = ({classes, visible, onClose}) => {
+const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}) => {
     const dispatch = useDispatch();
     const userData = useSelector(selectUserData);
     const [avatar, setAvatar] = useState<ImageObj>();
@@ -81,7 +79,9 @@ const EditProfileModal: FC<EditProfileModalProps> = ({classes, visible, onClose}
                     Edit Profile
                     <Button
                         type="submit"
-                        className={classes.saveEditedProfileBtn}
+                        style={{marginLeft: "auto",
+                            marginRight: "-20px",
+                            height: "30px",}}
                         variant="contained"
                         color="primary">
                         Save

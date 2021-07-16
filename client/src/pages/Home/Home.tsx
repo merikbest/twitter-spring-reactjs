@@ -55,7 +55,7 @@ const Home: FC = (): ReactElement => {
             <Route path='/home' exact>
                 <Paper>
                     <div className={classes.addForm}>
-                        <AddTweetForm classes={classes} title={"What's happening?"} buttonName={"Tweet"}/>
+                        <AddTweetForm title={"What's happening?"} buttonName={"Tweet"}/>
                     </div>
                     <div className={classes.addFormBottomLine}/>
                 </Paper>
@@ -71,9 +71,7 @@ const Home: FC = (): ReactElement => {
                         <CircularProgress/>
                     </div>
                 ) : (
-                    tweets.map((tweet) => (
-                            <Tweet key={tweet.id} classes={classes} images={tweet.images} {...tweet} />
-                        )
+                    tweets.map((tweet) => <Tweet key={tweet.id} images={tweet.images} {...tweet} />
                     )
                 )}
             </Route>

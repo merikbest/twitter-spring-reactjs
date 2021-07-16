@@ -1,21 +1,21 @@
 import React, {FC, useState} from 'react';
 import {Button, Hidden, Typography} from "@material-ui/core";
 
-import {useHomeStyles} from "../Home/HomeStyles";
 import Tweet from '../../components/Tweet/Tweet';
 import {AddTweetForm} from "../../components/AddTweetForm/AddTweetForm";
 import ModalBlock from "../../components/ModalBlock/ModalBlock";
+import {useUserPageStyles} from "./UserPageStyles";
 
 interface UserPageTweetsProps {
     tweets?: any;
-    classes: ReturnType<typeof useHomeStyles>;
     activeTab: number;
     userProfileId?: number;
     myProfileId?: number;
     username?: string;
 }
 
-const UserPageTweets: FC<UserPageTweetsProps> = ({tweets, classes, activeTab, userProfileId, myProfileId, username}) => {
+const UserPageTweets: FC<UserPageTweetsProps> = ({tweets, activeTab, userProfileId, myProfileId, username}) => {
+    const classes = useUserPageStyles();
     const [visibleAddTweet, setSetVisibleAddTweet] = useState<boolean>(false);
 
     const handleClickOpenAddTweet = (): void => {
@@ -29,15 +29,15 @@ const UserPageTweets: FC<UserPageTweetsProps> = ({tweets, classes, activeTab, us
     const renderTweets = () => {
         if (tweets?.length === 0 && activeTab === 0) {
             return (
-                <div className={classes.userPageTextWrapper}>
-                    <Typography className={classes.userPageTopic}>
+                <div className={classes.textWrapper}>
+                    <Typography className={classes.topic}>
                         {userProfileId === myProfileId ? (
                             "You haven’t any Tweets yet"
                         ) : (
                             `@${username} hasn’t any Tweets`
                         )}
                     </Typography>
-                    <Typography className={classes.userPageText}>
+                    <Typography className={classes.text}>
                         {userProfileId === myProfileId ? (
                             "When you send Tweets, they will show up here."
                         ) : (
@@ -55,15 +55,15 @@ const UserPageTweets: FC<UserPageTweetsProps> = ({tweets, classes, activeTab, us
             )
         } else if (tweets?.length === 0 && activeTab === 1) {
             return (
-                <div className={classes.userPageTextWrapper}>
-                    <Typography className={classes.userPageTopic}>
+                <div className={classes.textWrapper}>
+                    <Typography className={classes.topic}>
                         {userProfileId === myProfileId ? (
                             "You haven’t any replies yet"
                         ) : (
                             `@${username} hasn’t any replies`
                         )}
                     </Typography>
-                    <Typography className={classes.userPageText}>
+                    <Typography className={classes.text}>
                         {userProfileId === myProfileId ? (
                             "When you reply Tweets, they will show up here."
                         ) : (
@@ -74,15 +74,15 @@ const UserPageTweets: FC<UserPageTweetsProps> = ({tweets, classes, activeTab, us
             )
         } else if (tweets?.length === 0 && activeTab === 2) {
             return (
-                <div className={classes.userPageTextWrapper}>
-                    <Typography className={classes.userPageTopic}>
+                <div className={classes.textWrapper}>
+                    <Typography className={classes.topic}>
                         {userProfileId === myProfileId ? (
                             "You haven’t Tweeted any photos or videos yet"
                         ) : (
                             `@${username} hasn’t Tweeted any photos or videos`
                         )}
                     </Typography>
-                    <Typography className={classes.userPageText}>
+                    <Typography className={classes.text}>
                         {userProfileId === myProfileId ? (
                             "When you send Tweets with photos or videos in them, it will show up here."
                         ) : (
@@ -100,15 +100,15 @@ const UserPageTweets: FC<UserPageTweetsProps> = ({tweets, classes, activeTab, us
             )
         } else if (tweets?.length === 0 && activeTab === 3) {
             return (
-                <div className={classes.userPageTextWrapper}>
-                    <Typography className={classes.userPageTopic}>
+                <div className={classes.textWrapper}>
+                    <Typography className={classes.topic}>
                         {userProfileId === myProfileId ? (
                             "You don’t have any likes yet"
                         ) : (
                             `@${username} hasn’t liked any Tweets`
                         )}
                     </Typography>
-                    <Typography className={classes.userPageText}>
+                    <Typography className={classes.text}>
                         {userProfileId === myProfileId ? (
                             "Tap the heart on any Tweet to show it some love. When you do, it’ll show up here."
                         ) : (
@@ -130,7 +130,6 @@ const UserPageTweets: FC<UserPageTweetsProps> = ({tweets, classes, activeTab, us
                 <div style={{width: 550}}>
                     <AddTweetForm
                         maxRows={15}
-                        classes={classes}
                         title={"What's happening?"}
                         buttonName={"Tweet"}/>
                 </div>
