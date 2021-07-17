@@ -9,16 +9,17 @@ import {AddTweetForm} from '../../components/AddTweetForm/AddTweetForm';
 import {fetchTweets} from "../../store/ducks/tweets/actionCreators";
 import {selectIsTweetsLoading, selectTweetsItems} from "../../store/ducks/tweets/selectors";
 import {BackButton} from "../../components/BackButton/BackButton";
-import {FullTweet} from "./FullTweet";
+import {FullTweet} from "../FullTweet/FullTweet";
 import {fetchUserData} from "../../store/ducks/user/actionCreators";
 import {fetchRelevantUsers} from "../../store/ducks/users/actionCreators";
 import {fetchTags} from "../../store/ducks/tags/actionCreators";
 import Connect from "../../components/Connect/Connect";
+import Trends from "../../components/Trends/Trends";
 
 const Home: FC = (): ReactElement => {
+    const classes = useHomeStyles();
     const dispatch = useDispatch();
     const location = useLocation<{ background: Location }>();
-    const classes = useHomeStyles();
     const tweets = useSelector(selectTweetsItems);
     const isLoading = useSelector(selectIsTweetsLoading);
 
@@ -36,8 +37,8 @@ const Home: FC = (): ReactElement => {
     }, []);
 
     return (
-        <Paper className={classes.tweetsWrapper} variant="outlined">
-            <Paper className={classes.tweetsHeader} variant="outlined">
+        <Paper className={classes.container} variant="outlined">
+            <Paper className={classes.header} variant="outlined">
                 <Route path='/home' exact>
                     <BackButton/>
                     <Typography variant="h6">Home</Typography>
@@ -50,24 +51,32 @@ const Home: FC = (): ReactElement => {
                     <BackButton/>
                     <Typography variant="h6">Connect</Typography>
                 </Route>
+                <Route path="/home/trends">
+                    <BackButton/>
+                    <Typography variant="h6">Trends</Typography>
+                </Route>
             </Paper>
 
             <Route path='/home' exact>
-                <Paper>
+                <Paper variant="outlined">
                     <div className={classes.addForm}>
                         <AddTweetForm title={"What's happening?"} buttonName={"Tweet"}/>
                     </div>
-                    <div className={classes.addFormBottomLine}/>
+                    <div className={classes.divider}/>
                 </Paper>
             </Route>
 
             <Route path="/home/connect" exact>
-                <Connect classes={classes}/>
+                <Connect/>
+            </Route>
+
+            <Route path="/home/trends" exact>
+                <Trends/>
             </Route>
 
             <Route path='/home' exact>
                 {isLoading ? (
-                    <div className={classes.tweetsCentred}>
+                    <div className={classes.loading}>
                         <CircularProgress/>
                     </div>
                 ) : (
@@ -77,7 +86,7 @@ const Home: FC = (): ReactElement => {
             </Route>
 
             <Route path="/home/tweet/:id" exact>
-                <FullTweet classes={classes}/>
+                <FullTweet/>
             </Route>
         </Paper>
     );

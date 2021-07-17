@@ -19,7 +19,8 @@ import {Image} from "../../store/ducks/tweets/contracts/state";
 import {uploadImage} from "../../util/uploadImage";
 import {setUpdatedUserData} from "../../store/ducks/user/actionCreators";
 import UploadProfileImage from "./UploadProfileImage";
-import "./EditProfileModalStyles.scss";
+import {useEditProfileModalStyles} from "./EditProfileModalStyles";
+import {DEFAULT_PROFILE_IMG} from "../../util/url";
 
 interface EditProfileModalProps {
     visible?: boolean;
@@ -38,6 +39,7 @@ export const EditProfileFormSchema = yup.object().shape({
 });
 
 const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}) => {
+    const classes = useEditProfileModalStyles();
     const dispatch = useDispatch();
     const userData = useSelector(selectUserData);
     const [avatar, setAvatar] = useState<ImageObj>();
@@ -78,36 +80,36 @@ const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}) => {
                     </IconButton>
                     Edit Profile
                     <Button
+                        className={classes.button}
                         type="submit"
-                        style={{marginLeft: "auto",
-                            marginRight: "-20px",
-                            height: "30px",}}
                         variant="contained"
-                        color="primary">
+                        color="primary"
+                    >
                         Save
                     </Button>
                 </DialogTitle>
-                <DialogContent style={{height: "550px", width: "600px", padding: "0px 0px"}}>
+                <DialogContent className={classes.content}>
                     <div>
-                        <div className="edit_header">
-                            <img className="wallpaper_img"
-                                 key={wallpaper?.src}
-                                 src={userData?.user.wallpaper?.src && wallpaper?.src === undefined ?
-                                     userData?.user.wallpaper?.src : wallpaper?.src}/>
-                            <div className="edit_header_image">
+                        <div className={classes.wallpaperWrapper}>
+                            <img
+                                className={classes.wallpaperImg}
+                                key={wallpaper?.src}
+                                src={(userData?.user.wallpaper?.src && wallpaper?.src === undefined) ?
+                                     userData?.user.wallpaper?.src : wallpaper?.src}
+                            />
+                            <div className={classes.wallpaperEditImg}>
                                 <UploadProfileImage name={"wallpaper"} image={wallpaper} onChangeImage={setWallpaper}/>
                             </div>
                         </div>
-                        <div className="edit_avatar">
+                        <div className={classes.avatarWrapper}>
                             <UploadProfileImage name={"avatar"} image={avatar} onChangeImage={setAvatar}/>
                             <Avatar key={avatar?.src}
                                     src={userData?.user.avatar?.src && avatar?.src === undefined ?
                                         userData?.user.avatar?.src : avatar?.src}>
-                                <img alt="default-img"
-                                     src="https://abs.twimg.com/sticky/default_profile_images/default_profile_reasonably_small.png"/>
+                                <img alt="default-img" src={DEFAULT_PROFILE_IMG}/>
                             </Avatar>
                         </div>
-                        <FormControl className={"input_form"} variant="outlined">
+                        <FormControl className={classes.inputWrapper} variant="outlined">
                             <FormGroup aria-label="position">
                                 <Controller
                                     name="username"

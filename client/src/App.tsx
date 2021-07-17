@@ -7,7 +7,6 @@ import Home from "./pages/Home/Home";
 import {Layout} from './pages/Layout';
 import UserPage from "./pages/UserPage/UserPage";
 import {selectIsAuth, selectUserStatus} from "./store/ducks/user/selectors";
-import {useHomeStyles} from './pages/Home/HomeStyles';
 import {LoadingStatus} from './store/types';
 import TwitterIcon from "@material-ui/icons/Twitter";
 import {fetchUserData} from './store/ducks/user/actionCreators';
@@ -17,7 +16,6 @@ import FollowingFollowers from "./components/FollowingFollowers/FollowingFollowe
 import TweetImageModal from "./components/TweetImageModal/TweetImageModal";
 
 const App: FC = (): ReactElement => {
-    const classes = useHomeStyles();
     const history = useHistory();
     const dispatch = useDispatch();
     const isAuth = useSelector(selectIsAuth);

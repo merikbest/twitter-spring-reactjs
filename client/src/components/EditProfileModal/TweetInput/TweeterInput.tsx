@@ -2,7 +2,7 @@ import React, {FC, useState} from 'react';
 import InputLabel from '@material-ui/core/InputLabel';
 
 import {TweetInputField} from "./TweetInputField";
-import "./TweeterInputStyles.scss";
+import {useTweetInputStyles} from "./TweetInputStyles";
 
 interface TweeterInputProps {
     onChange: (...event: any[]) => void;
@@ -15,23 +15,24 @@ interface TweeterInputProps {
 }
 
 const TweeterInput: FC<TweeterInputProps> = ({onChange, value, helperText, error, name, label, maxTextLength}) => {
+    const classes = useTweetInputStyles();
     const [focused, setFocused] = useState<boolean>(false);
 
     const onFocus = () => setFocused(true);
     const onBlur = () => setFocused(false);
 
     return (
-        <div className="input_form_wrapper">
-            <div className="input_form_content">
-                <div className="input_label">
-                    <InputLabel style={{fontSize: "13px"}}>{label}</InputLabel>
+        <div className={classes.container}>
+            <div className={classes.content}>
+                <div className={classes.inputLabel}>
+                    <InputLabel style={{fontSize: 13}}>{label}</InputLabel>
                 </div>
-                {focused ?
-                    <div className="input_label count">
-                        <InputLabel style={{fontSize: "13px"}}>
+                {focused &&
+                    <div className={classes.inputCount}>
+                        <InputLabel style={{fontSize: 13}}>
                             {value?.length === undefined ? 0 : value.length} / {maxTextLength}
                         </InputLabel>
-                    </div> : null
+                    </div>
                 }
             </div>
             <TweetInputField

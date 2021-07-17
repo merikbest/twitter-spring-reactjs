@@ -57,7 +57,6 @@ const LoginModal: FC<LoginModalProps> = ({open, onClose}): ReactElement => {
         <ModalBlock
             visible={open}
             onClose={onClose}
-            classes={classes}
             title="Войти в аккаунт">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <FormControl className={classes.loginFormControl} component="fieldset" fullWidth>

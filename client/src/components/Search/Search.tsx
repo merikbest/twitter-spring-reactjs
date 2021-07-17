@@ -5,7 +5,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import {InputAdornment} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
-import {CircularProgress, Paper, Typography} from "@material-ui/core";
+import {CircularProgress, Paper} from "@material-ui/core";
 
 import {MainSearchTextField} from "../SearchTextField/MainSearchTextField";
 import {
@@ -15,16 +15,16 @@ import {
     fetchTweetsByText
 } from "../../store/ducks/tweets/actionCreators";
 import {BackButton} from "../BackButton/BackButton";
-import {useHomeStyles} from "../../pages/Home/HomeStyles";
 import Tweet from "../Tweet/Tweet";
 import {selectIsTweetsLoading, selectTweetsItems} from "../../store/ducks/tweets/selectors";
 import {User} from "../../store/ducks/user/contracts/state";
-import Follower from "../FollowingFollowers/Follower";
+import Follower from "../Follower/Follower";
 import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 import {UserApi} from "../../services/api/userApi";
+import {useSearchStyles} from "./SearchStyles";
 
 const Search: FC = () => {
-    const classes = useHomeStyles();
+    const classes2 = useSearchStyles();
     const dispatch = useDispatch();
     const isLoading = useSelector(selectIsTweetsLoading);
     const tweets = useSelector(selectTweetsItems);
@@ -36,7 +36,6 @@ const Search: FC = () => {
     const [users, setUsers] = useState<User[]>();
 
     useEffect(() => {
-        console.log(location);
         if (location.state?.tag !== undefined) {
             dispatch(fetchTweetsByTag(location.state?.tag));
             setText(decodeURIComponent(location.state?.tag));
@@ -85,8 +84,8 @@ const Search: FC = () => {
     };
 
     return (
-        <Paper className={classes.tweetsWrapper} variant="outlined">
-            <Paper className={classes.tweetsHeader} variant="outlined">
+        <Paper className={classes2.container} variant="outlined">
+            <Paper className={classes2.header} variant="outlined">
                 <div>
                     <form onSubmit={handleClickSearch}>
                         <BackButton/>
@@ -105,24 +104,22 @@ const Search: FC = () => {
                         />
                     </form>
                     <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
-                        <Tab onClick={showTopTweets} style={{minWidth: "120px"}} label="Top"/>
+                        <Tab style={{minWidth: "120px"}} onClick={showTopTweets} label="Top"/>
                         <Tab style={{minWidth: "120px"}} label="Latest"/>
-                        <Tab onClick={showUsers} style={{minWidth: "120px"}} label="People"/>
-                        <Tab onClick={showMediaTweets} style={{minWidth: "120px"}} label="Photos"/>
+                        <Tab style={{minWidth: "120px"}} onClick={showUsers} label="People"/>
+                        <Tab style={{minWidth: "120px"}} onClick={showMediaTweets} label="Photos"/>
                         <Tab style={{minWidth: "120px"}} label="Videos"/>
                     </Tabs>
                 </div>
             </Paper>
             {isLoading ? (
-                <div className={classes.tweetsCentred}>
+                <div className={classes2.loading}>
                     <CircularProgress/>
                 </div>
             ) : (activeTab !== 2 ? (
-                    tweets.map((tweet) =>
-                        <Tweet key={tweet.id} images={tweet.images} {...tweet}/>)
+                    tweets.map((tweet) => <Tweet key={tweet.id} images={tweet.images} {...tweet}/>)
                 ) : (
-                    users?.map((user) =>
-                        <Follower classes={classes} user={user} follow={handleFollow} unfollow={handleUnfollow}/>))
+                    users?.map((user) => <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>))
             )}
         </Paper>
     );

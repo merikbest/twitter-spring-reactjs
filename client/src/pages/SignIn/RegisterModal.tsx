@@ -63,7 +63,6 @@ const RegisterModal: FC<RegisterModalProps> = ({open, onClose}): ReactElement =>
         <ModalBlock
             visible={open}
             onClose={onClose}
-            classes={classes}
             title="Создайте учетную запись">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <FormControl className={classes.loginFormControl} component="fieldset" fullWidth>

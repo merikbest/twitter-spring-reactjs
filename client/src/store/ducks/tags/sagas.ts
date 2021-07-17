@@ -16,6 +16,17 @@ export function* fetchTagsRequest() {
     }
 }
 
+export function* fetchTrendsRequest() {
+    try {
+        setTagsLoadingState(LoadingStatus.LOADING);
+        const items: Tag[] = yield call(TagApi.fetchTrends);
+        yield put(setTags(items));
+    } catch (error) {
+        yield put(setTagsLoadingState(LoadingStatus.ERROR));
+    }
+}
+
 export function* tagsSaga() {
     yield takeLatest(TagsActionsType.FETCH_TAGS, fetchTagsRequest);
+    yield takeLatest(TagsActionsType.FETCH_TRENDS, fetchTrendsRequest);
 }

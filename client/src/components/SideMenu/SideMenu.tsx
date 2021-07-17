@@ -14,18 +14,15 @@ import {
     ProfileIcon,
     ExploreIcon
 } from "../../icons";
-import {useHomeStyles} from "../../pages/Home/HomeStyles";
 import ModalBlock from "../ModalBlock/ModalBlock";
 import {AddTweetForm} from "../AddTweetForm/AddTweetForm";
 import UserSideProfile from "../UserSideProfile/UserSideProfile";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {useSelector} from "react-redux";
+import {useSideMenuStyles} from "./SideMenuStyles";
 
-interface SideMenuProps {
-    classes: ReturnType<typeof useHomeStyles>
-}
-
-const SideMenu: FC<SideMenuProps> = ({classes}: SideMenuProps): ReactElement => {
+const SideMenu: FC = (): ReactElement => {
+    const classes2 = useSideMenuStyles();
     const [visibleAddTweet, setSetVisibleAddTweet] = useState<boolean>(false);
     const userData = useSelector(selectUserData);
 
@@ -39,99 +36,100 @@ const SideMenu: FC<SideMenuProps> = ({classes}: SideMenuProps): ReactElement => 
 
     return (
         <>
-            <ul className={classes.sideMenuList}>
-                <li className={classes.sideMenuListItem} style={{marginBottom: 2,}}>
+            <ul className={classes2.container}>
+                <li className={classes2.itemWrapper} style={{marginBottom: 2,}}>
                     <Link to="/home">
                         <IconButton color="primary">
-                            <TwitterIcon className={classes.logoIcon}/>
+                            <TwitterIcon className={classes2.logoIcon}/>
                         </IconButton>
                     </Link>
                 </li>
-                <li className={classes.sideMenuListItem}>
+                <li className={classes2.itemWrapper}>
                     <Link to="/home">
                         <div>
                             <Hidden smDown>
-                                <Typography className={classes.sideMenuListItemLabel} variant="h6">
+                                <Typography className={classes2.label} variant="h6">
                                     <span>{HomeIcon}</span> Home
                                 </Typography>
                             </Hidden>
                         </div>
                     </Link>
                 </li>
-                <li className={classes.sideMenuListItem}>
+                <li className={classes2.itemWrapper}>
                     <Link to="/search">
                         <div>
                             <Hidden smDown>
-                                <Typography className={classes.sideMenuListItemLabel} variant="h6">
+                                <Typography className={classes2.label} variant="h6">
                                     <span>{ExploreIcon}</span> Explore
                                 </Typography>
                             </Hidden>
                         </div>
                     </Link>
                 </li>
-                <li className={classes.sideMenuListItem}>
+                <li className={classes2.itemWrapper}>
                     <div>
                         <Hidden smDown>
-                            <Typography className={classes.sideMenuListItemLabel} variant="h6">
+                            <Typography className={classes2.label} variant="h6">
                                 <span>{NotificationsIcon}</span> Notifications
                             </Typography>
                         </Hidden>
                     </div>
                 </li>
-                <li className={classes.sideMenuListItem}>
+                <li className={classes2.itemWrapper}>
                     <div>
                         <Hidden smDown>
-                            <Typography className={classes.sideMenuListItemLabel} variant="h6">
+                            <Typography className={classes2.label} variant="h6">
                                 <span>{MessagesIcon}</span> Messages
                             </Typography>
                         </Hidden>
                     </div>
                 </li>
-                <li className={classes.sideMenuListItem}>
+                <li className={classes2.itemWrapper}>
                     <div>
                         <Hidden smDown>
-                            <Typography className={classes.sideMenuListItemLabel} variant="h6">
+                            <Typography className={classes2.label} variant="h6">
                                 <span>{BookmarksIcon}</span> Bookmarks
                             </Typography>
                         </Hidden>
                     </div>
                 </li>
-                <li className={classes.sideMenuListItem}>
+                <li className={classes2.itemWrapper}>
                     <div>
                         <Hidden smDown>
-                            <Typography className={classes.sideMenuListItemLabel} variant="h6">
+                            <Typography className={classes2.label} variant="h6">
                                 <span>{ListsIcon}</span> Lists
                             </Typography>
                         </Hidden>
                     </div>
                 </li>
-                <li className={classes.sideMenuListItem}>
+                <li className={classes2.itemWrapper}>
                     <Link to={`/user/${userData?.user.id}`}>
                         <div>
                             <Hidden smDown>
-                                <Typography className={classes.sideMenuListItemLabel} variant="h6">
+                                <Typography className={classes2.label} variant="h6">
                                     <span>{ProfileIcon}</span> Profile
                                 </Typography>
                             </Hidden>
                         </div>
                     </Link>
                 </li>
-                <li className={classes.sideMenuListItem}>
+                <li className={classes2.itemWrapper}>
                     <div>
                         <Hidden smDown>
-                            <Typography className={classes.sideMenuListItemLabel} variant="h6">
+                            <Typography className={classes2.label} variant="h6">
                                 <span>{MoreIcon}</span> More
                             </Typography>
                         </Hidden>
                     </div>
                 </li>
-                <li className={classes.sideMenuListItem}>
+                <li className={classes2.itemWrapper}>
                     <Button
                         onClick={handleClickOpenAddTweet}
-                        className={classes.sideMenuTweetButton}
+                        className={classes2.button}
                         variant="contained"
                         color="primary"
-                        fullWidth>
+                        fullWidth
+                    >
                         <Hidden smDown>
                             Tweet
                         </Hidden>
@@ -144,12 +142,13 @@ const SideMenu: FC<SideMenuProps> = ({classes}: SideMenuProps): ReactElement => 
                             <AddTweetForm
                                 maxRows={15}
                                 title={"What's happening?"}
-                                buttonName={"Tweet"}/>
+                                buttonName={"Tweet"}
+                            />
                         </div>
                     </ModalBlock>
                 </li>
             </ul>
-            <UserSideProfile classes={classes}/>
+            <UserSideProfile/>
         </>
     );
 };

@@ -6,15 +6,13 @@ import Avatar from '@material-ui/core/Avatar';
 import ArrowBottomIcon from '@material-ui/icons/KeyboardArrowDown';
 import Typography from '@material-ui/core/Typography';
 
-import {useHomeStyles} from "../../pages/Home/HomeStyles";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {signOut} from "../../store/ducks/user/actionCreators";
+import {useUserSideProfileStyles} from "./UserSideProfileStyles";
+import {DEFAULT_PROFILE_IMG} from "../../util/url";
 
-interface UserSideProfileProps {
-    classes: ReturnType<typeof useHomeStyles>;
-}
-
-const UserSideProfile: FC<UserSideProfileProps> = ({classes}: UserSideProfileProps) => {
+const UserSideProfile: FC = () => {
+    const classes = useUserSideProfileStyles();
     const dispatch = useDispatch();
     const userData = useSelector(selectUserData);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -38,13 +36,12 @@ const UserSideProfile: FC<UserSideProfileProps> = ({classes}: UserSideProfilePro
 
     return (
         <>
-            <div onClick={handleOpenPopup} className={classes.sideProfile}>
+            <div onClick={handleOpenPopup} className={classes.container}>
                 <Avatar
                     alt={`avatar ${userData?.user.id}`}
-                    src={userData?.user.avatar?.src ? userData?.user.avatar?.src :
-                        "https://abs.twimg.com/sticky/default_profile_images/default_profile_reasonably_small.png"}
+                    src={userData?.user.avatar?.src ? userData?.user.avatar?.src : DEFAULT_PROFILE_IMG}
                 />
-                <div className={classes.sideProfileInfo}>
+                <div className={classes.info}>
                     <b>{userData.user.fullName}</b>
                     <Typography style={{color: colors.grey[500]}}>@{userData.user.username}</Typography>
                 </div>
@@ -52,12 +49,13 @@ const UserSideProfile: FC<UserSideProfileProps> = ({classes}: UserSideProfilePro
             </div>
             <Menu
                 classes={{
-                    paper: classes.profileMenu,
+                    paper: classes.menu,
                 }}
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
                 onClose={handleClosePopup}
-                keepMounted>
+                keepMounted
+            >
                 <Link to={`/user/${userData.user.id}`}>
                     <MenuItem onClick={handleClosePopup}>My profile</MenuItem>
                 </Link>

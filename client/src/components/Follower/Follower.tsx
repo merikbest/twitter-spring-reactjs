@@ -8,16 +8,17 @@ import DialogContent from "@material-ui/core/DialogContent";
 
 import {User} from "../../store/ducks/user/contracts/state";
 import {selectUserData} from "../../store/ducks/user/selectors";
-import {useHomeStyles} from "../../pages/Home/HomeStyles";
+import {useFollowerStyles} from "./FollowerStyles";
+import {DEFAULT_PROFILE_IMG} from "../../util/url";
 
 interface FollowerProps {
-    classes: ReturnType<typeof useHomeStyles>;
     user: User;
     follow: (user: User) => void;
     unfollow: (user: User) => void;
 }
 
-const Follower: FC<FollowerProps> = ({user, classes, follow, unfollow}) => {
+const Follower: FC<FollowerProps> = ({user, follow, unfollow}) => {
+    const classes = useFollowerStyles();
     const myProfile = useSelector(selectUserData);
     const [btnText, setBtnText] = useState<string>("Following");
     const [visibleUnfollowModal, setVisibleUnfollowModal] = useState<boolean>(false);
@@ -41,42 +42,42 @@ const Follower: FC<FollowerProps> = ({user, classes, follow, unfollow}) => {
     };
 
     return (
-        <Paper className={classes.follower} variant="outlined">
-            <Link to={`/user/${user.id}`} className={classes.followerLink}>
-                <Avatar className={classes.followerAvatar} src={user?.avatar?.src ? user?.avatar.src :
-                    "https://abs.twimg.com/sticky/default_profile_images/default_profile_reasonably_small.png"}/>
+        <Paper className={classes.container} variant="outlined">
+            <Link to={`/user/${user.id}`} className={classes.link}>
+                <Avatar className={classes.linkAvatar} src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}/>
             </Link>
             <div style={{flex: 1}}>
-                <div className={classes.followerWrapper}>
-                    <Link to={`/user/${user.id}`} className={classes.followerLink}>
+                <div className={classes.header}>
+                    <Link to={`/user/${user.id}`} className={classes.link}>
                         <div style={{width: 350}}>
-                            <Typography className={classes.followerFullName}>
+                            <Typography className={classes.fullName}>
                                 {user?.fullName}
                             </Typography>
-                            <Typography className={classes.followerUsername} variant="caption" display="block"
-                                        gutterBottom>
+                            <Typography className={classes.username} variant="caption" display="block" gutterBottom>
                                 @{user?.username}
                             </Typography>
                         </div>
                     </Link>
                     <div>
-                        {myProfile?.user.id === user.id ? null : (
+                        {myProfile?.user.id !== user.id && (
                             follower === -1 ? (
                                 <Button
-                                    className={classes.followerOutlinedBtn}
+                                    className={classes.outlinedButton}
                                     onClick={() => handleFollow(user)}
                                     color="primary"
-                                    variant="outlined">
+                                    variant="outlined"
+                                >
                                     Follow
                                 </Button>
                             ) : (
                                 <Button
-                                    className={classes.followerBtn}
+                                    className={classes.containedButton}
                                     onMouseOver={() => setBtnText("Unfollow")}
                                     onMouseLeave={() => setBtnText("Following")}
                                     onClick={handleClickOpenUnfollowModal}
+                                    color="primary"
                                     variant="contained"
-                                    color="primary">
+                                >
                                     {btnText}
                                 </Button>
                             )
@@ -86,26 +87,28 @@ const Follower: FC<FollowerProps> = ({user, classes, follow, unfollow}) => {
                 <Typography display="block">{user?.about}</Typography>
                 <Dialog open={visibleUnfollowModal} onClose={onCloseUnfollowModal} aria-labelledby="form-dialog-title">
                     <DialogContent style={{padding: "0px 0px"}}>
-                        <div className={classes.followerModalContentWrapper}>
-                            <Typography className={classes.followerModalFullName}>
+                        <div className={classes.modalWrapper}>
+                            <Typography className={classes.modalFullName}>
                                 Unfollow {user?.fullName}?
                             </Typography>
-                            <div className={classes.followerModalUsername}>
+                            <div className={classes.modalUsername}>
                                 Their Tweets will no longer show up in your home timeline. You can still view their
                                 profile, unless their Tweets are protected.
                             </div>
-                            <div className={classes.followerModalBtnContainer}>
+                            <div className={classes.modalButtonWrapper}>
                                 <Button
-                                    className={classes.followerModalCancelBtn}
+                                    className={classes.modalCancelButton}
                                     onClick={onCloseUnfollowModal}
-                                    variant="contained">
+                                    variant="contained"
+                                >
                                     Cancel
                                 </Button>
                                 <Button
-                                    className={classes.followerModalUnfollowBtn}
+                                    className={classes.modalUnfollowButton}
                                     onClick={() => handleUnfollow(user)}
                                     variant="contained"
-                                    color="primary">
+                                    color="primary"
+                                >
                                     Unfollow
                                 </Button>
                             </div>

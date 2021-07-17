@@ -17,7 +17,6 @@ import {
     ShareIcon,
     CloseIcon
 } from "../../icons";
-import {useHomeStyles} from "../../pages/Home/HomeStyles";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {AddTweetForm} from "../AddTweetForm/AddTweetForm";
 import UsersListModal from "../UsersListModal/UsersListModal";
@@ -26,11 +25,11 @@ import {fetchLikeTweet, fetchRetweet} from "../../store/ducks/tweets/actionCreat
 import {useTweetImageStyles} from "./TweetImageModalStyles";
 import {fetchTweetData} from "../../store/ducks/tweet/actionCreators";
 import {selectTweetData} from "../../store/ducks/tweet/selectors";
+import {DEFAULT_PROFILE_IMG} from "../../util/url";
 
 const TweetImageModal: FC = (): ReactElement | null => {
     const dispatch = useDispatch();
-    const tweetImageClasses = useTweetImageStyles();
-    const tweetHomeClasses = useHomeStyles();
+    const classes = useTweetImageStyles();
     const tweetData = useSelector(selectTweetData);
     const myProfile = useSelector(selectUserData);
     const params: { id: string } = useParams();
@@ -48,8 +47,9 @@ const TweetImageModal: FC = (): ReactElement | null => {
     }, []);
 
     const onCloseImageModalWindow = (event: any): void => {
+        console.log(event.target)
         if (event.target.classList[0]) {
-            if (event.target.classList[0].includes('backdrop')) {
+            if (event.target.classList[0].includes('container')) {
                 setVisibleTweetImageModalWindow(false);
                 document.body.style.overflow = 'unset';
                 history.goBack();
@@ -86,19 +86,17 @@ const TweetImageModal: FC = (): ReactElement | null => {
 
     if (tweetData) {
         return (
-            <div className={tweetImageClasses.backdrop} onClick={onCloseImageModalWindow}>
-                <div className={tweetImageClasses.tweetImageModalContent}>
-                    <img className={tweetImageClasses.tweetImageModalImg}
+            <div className={classes.container} onClick={onCloseImageModalWindow}>
+                <div className={classes.modalWrapper}>
+                    <img className={classes.imageModal}
                          alt={tweetData?.images?.[0]?.src}
                          src={tweetData?.images?.[0]?.src}/>
-                    <div style={{padding: "0 16px",}}>
-                        <div style={{display: 'flex', alignItems: 'center',}}>
+                    <div className={classes.tweetInfo}>
+                        <div className={classes.header}>
                             <Avatar
-                                style={{margin: "12px 12px 16px 5px"}}
-                                className={tweetHomeClasses.tweetAvatar}
+                                className={classes.avatar}
                                 alt={`avatar ${tweetData.user.id}`}
-                                src={tweetData.user.avatar?.src ? tweetData.user.avatar?.src :
-                                    "https://abs.twimg.com/sticky/default_profile_images/default_profile_reasonably_small.png"}/>
+                                src={tweetData.user.avatar?.src ? tweetData.user.avatar?.src : DEFAULT_PROFILE_IMG}/>
                             <Typography>
                                 <b>{tweetData.user.fullName}</b>&nbsp;
                                 <div>
@@ -106,25 +104,25 @@ const TweetImageModal: FC = (): ReactElement | null => {
                                 </div>
                             </Typography>
                         </div>
-                        <Typography className={tweetHomeClasses.fullTweetText} gutterBottom>
+                        <Typography className={classes.text} gutterBottom>
                             {tweetData.text}
                         </Typography>
                         <Typography style={{marginBottom: 16}}>
-                        <span className={tweetHomeClasses.tweetUserName}>
+                        <span style={{color: grey[500],}}>
                             {format(new Date(tweetData.dateTime), 'H:mm', {locale: ruLang})} ·
                         </span>
-                            <span className={tweetHomeClasses.tweetUserName}>
+                            <span style={{color: grey[500],}}>
                             {format(new Date(tweetData.dateTime), 'dd MMM. yyyy')} · Twitter Web App
                         </span>
                         </Typography>
                         <Divider/>
-                        {tweetData.retweets.length !== 0 || tweetData.likes.length !== 0 ? (
-                            <div className={tweetHomeClasses.fullTweetInfo}>
+                        {(tweetData.retweets.length !== 0 || tweetData.likes.length !== 0) ? (
+                            <div className={classes.content}>
                                 {tweetData.retweets.length !== 0 ? (
                                     <a href={"javascript:void(0);"} onClick={onOpenRetweetsModalWindow}>
                                     <span style={{marginRight: 20}}>
                                         <b>{tweetData.retweets.length}</b>
-                                        <span style={{marginLeft: 5, color: "rgb(83, 100, 113)"}}>
+                                        <span className={classes.contentItem}>
                                             Retweets
                                         </span>
                                     </span>
@@ -134,7 +132,7 @@ const TweetImageModal: FC = (): ReactElement | null => {
                                     <a href={"javascript:void(0);"} onClick={onOpenLikesModalWindow}>
                                     <span style={{marginRight: 20}}>
                                         <b>{tweetData.likes.length}</b>
-                                        <span style={{marginLeft: 5, color: "rgb(83, 100, 113)"}}>
+                                        <span className={classes.contentItem}>
                                             Likes
                                         </span>
                                     </span>
@@ -142,13 +140,13 @@ const TweetImageModal: FC = (): ReactElement | null => {
                                 ) : null}
                             </div>
                         ) : null}
-                        <div className={classNames(tweetHomeClasses.tweetFooter, tweetHomeClasses.fullTweetFooter)}>
-                            <div className={tweetHomeClasses.tweetIconSvg}>
+                        <div className={classes.tweetFooter}>
+                            <div className={classes.tweetIcon}>
                                 <IconButton>
                                     <span>{ReplyIcon}</span>
                                 </IconButton>
                             </div>
-                            <div className={tweetHomeClasses.tweetIconSvg}>
+                            <div className={classes.tweetIcon}>
                                 <IconButton onClick={handleRetweet}>
                                     {isTweetRetweeted ? (
                                         <span style={{color: "rgb(23, 191, 99)"}}>{RetweetIcon}</span>
@@ -157,7 +155,7 @@ const TweetImageModal: FC = (): ReactElement | null => {
                                     )}
                                 </IconButton>
                             </div>
-                            <div className={tweetHomeClasses.tweetIconSvg}>
+                            <div className={classes.tweetIcon}>
                                 <IconButton onClick={handleLike}>
                                     {isTweetLiked ? (
                                         <span style={{color: "rgb(224, 36, 94)"}}>{LikeIcon}</span>
@@ -166,14 +164,14 @@ const TweetImageModal: FC = (): ReactElement | null => {
                                     )}
                                 </IconButton>
                             </div>
-                            <div className={tweetHomeClasses.tweetIconSvg}>
+                            <div className={classes.tweetIcon}>
                                 <IconButton>
                                     <span>{ShareIcon}</span>
                                 </IconButton>
                             </div>
                         </div>
                         <Divider/>
-                        <Typography className={tweetHomeClasses.fullTweetReplying}>
+                        <Typography className={classes.replyWrapper}>
                             Replying to <Link to={`/user/${tweetData.user.id}`}>@{tweetData.user.username}</Link>
                         </Typography>
                         <AddTweetForm
@@ -183,17 +181,15 @@ const TweetImageModal: FC = (): ReactElement | null => {
                             title={"Tweet your reply"}
                             buttonName={"Reply"}/>
                     </div>
-                    <div className={tweetHomeClasses.addFormBottomLine}/>
+                    <div className={classes.divider}/>
                     {(visibleModalWindow && modalWindowTitle === "Liked by") ? (
                         <UsersListModal
-                            classes={tweetHomeClasses}
                             users={tweetData.likes}
                             title={modalWindowTitle}
                             visible={visibleModalWindow}
                             onClose={onCloseModalWindow}/>
                     ) : (
                         <UsersListModal
-                            classes={tweetHomeClasses}
                             users={tweetData.retweets}
                             title={modalWindowTitle}
                             visible={visibleModalWindow}
@@ -208,17 +204,17 @@ const TweetImageModal: FC = (): ReactElement | null => {
                             {...tweet} />)
                     }
                 </div>
-                <div className={tweetImageClasses.tweetImageModalFooterContainer}>
-                    <div className={classNames(tweetHomeClasses.tweetFooter)}>
-                        <div className={tweetHomeClasses.tweetIconSvg}>
+                <div className={classes.imageFooterContainer}>
+                    <div className={classNames(classes.imageFooterWrapper)}>
+                        <div className={classes.tweetIcon}>
                             <IconButton>
                                 <span>{ReplyIcon}</span>
                             </IconButton>
-                            {tweetData.replies?.length === 0 || tweetData.replies === null ? null : (
+                            {(tweetData.replies?.length === 0 || tweetData.replies === null) ? null : (
                                 <span style={{color: "#fff"}}>{tweetData.replies?.length}</span>
                             )}
                         </div>
-                        <div className={tweetHomeClasses.tweetIconSvg}>
+                        <div className={classes.tweetIcon}>
                             <IconButton onClick={handleRetweet}>
                                 {isTweetRetweeted ? (
                                     <span>{RetweetIcon}</span>
@@ -226,14 +222,14 @@ const TweetImageModal: FC = (): ReactElement | null => {
                                     <span>{RetweetOutlinedIcon}</span>
                                 )}
                             </IconButton>
-                            {tweetData.retweets.length === 0 || tweetData.retweets === null ? null : (
+                            {(tweetData.retweets.length === 0 || tweetData.retweets === null) ? null : (
                                 isTweetRetweeted ? (
                                     <span style={{color: "#fff"}}>{tweetData.retweets.length}</span>
                                 ) : (
                                     <span style={{color: "#fff"}}>{tweetData.retweets.length}</span>)
                             )}
                         </div>
-                        <div className={tweetHomeClasses.tweetIconSvg}>
+                        <div className={classes.tweetIcon}>
                             <IconButton onClick={handleLike}>
                                 {isTweetLiked ? (
                                     <span>{LikeIcon}</span>
@@ -241,21 +237,21 @@ const TweetImageModal: FC = (): ReactElement | null => {
                                     <span>{LikeOutlinedIcon}</span>
                                 )}
                             </IconButton>
-                            {tweetData.likes.length === 0 || tweetData.likes === null ? null : (
+                            {(tweetData.likes.length === 0 || tweetData.likes === null) ? null : (
                                 isTweetLiked ? (
                                     <span style={{color: "#fff"}}>{tweetData.likes.length}</span>
                                 ) : (
                                     <span style={{color: "#fff"}}>{tweetData.likes.length}</span>)
                             )}
                         </div>
-                        <div className={tweetHomeClasses.tweetIconSvg}>
+                        <div className={classes.tweetIcon}>
                             <IconButton>
                                 <span>{ShareIcon}</span>
                             </IconButton>
                         </div>
                     </div>
                 </div>
-                <div className={tweetImageClasses.tweetImageModalClose}>
+                <div className={classes.imageModalClose}>
                     <IconButton>
                         {CloseIcon}
                     </IconButton>

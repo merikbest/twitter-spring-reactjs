@@ -5,7 +5,7 @@ export const SideSearchTextField = withStyles((theme: Theme) => ({
     root: {
         '& .MuiOutlinedInput-root': {
             borderRadius: 30,
-            backgroundColor: '#E6ECF0',
+            backgroundColor: '#EFF3F4',
             padding: 0,
             paddingLeft: 15,
             '&.Mui-focused': {

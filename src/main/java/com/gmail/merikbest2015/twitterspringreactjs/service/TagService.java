@@ -8,5 +8,7 @@ import java.util.List;
 public interface TagService {
     List<Tag> getTags();
 
+    List<Tag> getTrends();
+
     List<Tweet> getTweetsByTag(String tagName);
 }

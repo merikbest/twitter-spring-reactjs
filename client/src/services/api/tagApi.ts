@@ -14,6 +14,10 @@ export const TagApi = {
         const data = await axios.get<Response<Tag[]>>(API_URL + "/tags");
         return data.data;
     },
+    async fetchTrends(): Promise<Response<Tag[]>> {
+        const data = await axios.get<Response<Tag[]>>(API_URL + "/tags/trends");
+        return data.data;
+    },
     async fetchTweetsByTag(tag: string): Promise<Response<Tweet[]>> {
         const data = await axios.get<Response<Tweet[]>>(API_URL + "/tags/" + tag);
         return data.data;

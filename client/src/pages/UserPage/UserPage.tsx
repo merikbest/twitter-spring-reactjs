@@ -29,6 +29,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
     const myProfile = useSelector(selectUserData);
     const userProfile = useSelector(selectUserProfile);
     const isTweetsLoading = useSelector(selectIsUserTweetsLoading);
+    const [btnText, setBtnText] = useState<string>("Following");
     const [activeTab, setActiveTab] = useState<number>(0);
     const [visibleEditProfile, setVisibleEditProfile] = useState<boolean>(false);
     const follower = userProfile?.following?.find((user) => user.id === myProfile?.user.id);
@@ -92,86 +93,109 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
                     </Typography>
                 </div>
             </Paper>
-            <div className={classes.wallpaper}>
-                <img key={userProfile?.wallpaper?.src} src={userProfile?.wallpaper?.src} alt={userProfile?.wallpaper?.src}/>
-            </div>
-            <div className={classes.info}>
-                <div style={{display: "inline-block"}}>
-                    <Avatar src={userProfile?.avatar?.src ? userProfile?.avatar.src : DEFAULT_PROFILE_IMG}/>
+            <div style={{paddingTop: 48,}}>
+                <div className={classes.wallpaper}>
+                    <img key={userProfile?.wallpaper?.src} src={userProfile?.wallpaper?.src}
+                         alt={userProfile?.wallpaper?.src}/>
                 </div>
-                {userProfile?.id === myProfile?.user.id ? (
-                    <Button onClick={onOpenEditProfile} color="primary" className={classes.editButton}>
-                        Edit profile
-                    </Button>
-                ) : (
-                    <Button onClick={handleFollow} color="primary" className={classes.editButton}>
-                        {follower ? "Unfollow" : "Follow"}
-                    </Button>
-                )}
-                {!userProfile ? (
-                    <Skeleton variant="text" width={250} height={30}/>
-                ) : (
-                    <h2 className={classes.fullName}>{userProfile.fullName}</h2>
-                )}
-                {!userProfile ? (
-                    <Skeleton variant="text" width={60}/>
-                ) : (
-                    <span className={classes.username}>@{userProfile.username}</span>
-                )}
-                <p className={classes.description}>{userProfile?.about}</p>
-                <ul className={classes.details}>
-                    {userProfile?.location &&
+                <div className={classes.info}>
+                    <div style={{display: "inline-block"}}>
+                        <Avatar src={userProfile?.avatar?.src ? userProfile?.avatar.src : DEFAULT_PROFILE_IMG}/>
+                    </div>
+                    {userProfile?.id === myProfile?.user.id ? (
+                        <Button onClick={onOpenEditProfile} color="primary" className={classes.editButton}>
+                            Edit profile
+                        </Button>
+                    ) : (follower ? (
+                            <Button
+                                onClick={handleFollow}
+                                className={classes.primaryButton}
+                                color="primary"
+                                variant="contained"
+                                onMouseOver={() => setBtnText("Unfollow")}
+                                onMouseLeave={() => setBtnText("Following")}
+                            >
+                                {btnText}
+                            </Button>
+                        ) : (
+                            <Button
+                                onClick={handleFollow}
+                                className={classes.editButton}
+                                color="primary"
+                            >
+                                Follow
+                            </Button>
+                        )
+                    )}
+                    {!userProfile ? (
+                        <Skeleton variant="text" width={250} height={30}/>
+                    ) : (
+                        <h2 className={classes.fullName}>{userProfile.fullName}</h2>
+                    )}
+                    {!userProfile ? (
+                        <Skeleton variant="text" width={60}/>
+                    ) : (
+                        <span className={classes.username}>@{userProfile.username}</span>
+                    )}
+                    <p className={classes.description}>{userProfile?.about}</p>
+                    <ul className={classes.details}>
+                        {userProfile?.location &&
                         <li>
                             <span>{LocationIcon}</span><span>{userProfile?.location}</span>
                         </li>
-                    }
-                    {userProfile?.website &&
+                        }
+                        {userProfile?.website &&
                         <li>
                             <span>{LinkIcon}</span>
                             <a className="link" href={userProfile?.website}>{userProfile?.website}</a>
                         </li>
-                    }
-                    {userProfile?.dateOfBirth &&
+                        }
+                        {userProfile?.dateOfBirth &&
                         <li>
                             Date of Birth: {userProfile?.dateOfBirth}
                         </li>
-                    }
-                    {userProfile?.registration &&
+                        }
+                        {userProfile?.registration &&
                         <li>
                             <span>{CalendarIcon}</span> Joined: {userProfile?.registration}
                         </li>
-                    }
-                    <li><span>{CalendarIcon}</span> Joined: June 2021</li>
-                </ul>
-                <ul className={classes.details}>
-                    <Link to={`/user/${userProfile?.id}/following`} className={classes.followLink}>
-                        <li><b>{userProfile?.followers?.length ? userProfile?.followers?.length : 0}</b> Following</li>
-                    </Link>
-                    <Link to={`/user/${userProfile?.id}/followers`} className={classes.followLink}>
-                        <li><b>{userProfile?.following?.length ? userProfile?.following?.length : 0}</b> Followers</li>
-                    </Link>
-                </ul>
-            </div>
-            <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChange}>
-                <Tab onClick={handleShowUserTweets} label="Tweets"/>
-                <Tab onClick={handleShowUserTweets} label="Tweets & replies"/>
-                <Tab onClick={handleShowMediaTweets} label="Media"/>
-                <Tab onClick={handleShowLikedTweets} label="Likes"/>
-            </Tabs>
-            <div className={classes.tweets}>
-                {isTweetsLoading ? (
-                    <div className={classes.tweetsCentred}>
-                        <CircularProgress/>
-                    </div>
-                ) : (
-                    <UserPageTweets
-                        tweets={tweets}
-                        activeTab={activeTab}
-                        userProfileId={userProfile?.id}
-                        myProfileId={myProfile?.user.id}
-                        username={userProfile?.username}
-                    />
-                )}
+                        }
+                        <li><span>{CalendarIcon}</span> Joined: June 2021</li>
+                    </ul>
+                    <ul className={classes.details}>
+                        <Link to={`/user/${userProfile?.id}/following`} className={classes.followLink}>
+                            <li><b>{userProfile?.followers?.length ? userProfile?.followers?.length : 0}</b> Following
+                            </li>
+                        </Link>
+                        <Link to={`/user/${userProfile?.id}/followers`} className={classes.followLink}>
+                            <li><b>{userProfile?.following?.length ? userProfile?.following?.length : 0}</b> Followers
+                            </li>
+                        </Link>
+                    </ul>
+                </div>
+                <div className={classes.tabs}>
+                    <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChange}>
+                        <Tab onClick={handleShowUserTweets} label="Tweets"/>
+                        <Tab onClick={handleShowUserTweets} label="Tweets & replies"/>
+                        <Tab onClick={handleShowMediaTweets} label="Media"/>
+                        <Tab onClick={handleShowLikedTweets} label="Likes"/>
+                    </Tabs>
+                </div>
+                <div className={classes.tweets}>
+                    {isTweetsLoading ? (
+                        <div className={classes.tweetsCentred}>
+                            <CircularProgress/>
+                        </div>
+                    ) : (
+                        <UserPageTweets
+                            tweets={tweets}
+                            activeTab={activeTab}
+                            userProfileId={userProfile?.id}
+                            myProfileId={myProfile?.user.id}
+                            username={userProfile?.username}
+                        />
+                    )}
+                </div>
             </div>
             {visibleEditProfile && <EditProfileModal visible={visibleEditProfile} onClose={onCloseEditProfile}/>}
         </Paper>

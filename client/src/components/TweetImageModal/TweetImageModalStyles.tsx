@@ -1,7 +1,7 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 export const useTweetImageStyles = makeStyles((theme: Theme) => ({
-    backdrop: {
+    container: {
         zIndex: 2,
         position: "fixed",
         top: 0,
@@ -11,7 +11,13 @@ export const useTweetImageStyles = makeStyles((theme: Theme) => ({
         background: "rgba(0, 0, 0, 0.85)",
         cursor: "auto",
     },
-    tweetImageModalImg: {
+    modalWrapper: {
+        backgroundColor: "white",
+        width: 332,
+        height: "100%",
+        float: 'right',
+    },
+    imageModal: {
         position: "absolute",
         top: "50%",
         left: "40%",
@@ -19,18 +25,80 @@ export const useTweetImageStyles = makeStyles((theme: Theme) => ({
         maxWidth: "80%",
         maxHeight: "80%",
     },
-    tweetImageModalContent: {
-
-        backgroundColor: "white",
-        width: 332,
-        height: "100%",
-        float: 'right',
+    tweetInfo: {
+        padding: "0 16px",
     },
-    tweetImageModalContentHeader: {
+    header: {
         display: 'flex',
         alignItems: 'center',
     },
-    tweetImageModalFooterContainer: {
+    avatar: {
+        width: theme.spacing(6.5),
+        height: theme.spacing(6.5),
+        marginRight: 15,
+        margin: "12px 12px 16px 5px",
+    },
+    text: {
+        fontSize: 24,
+        marginTop: 16,
+        marginBottom: 16,
+        lineHeight: 1.3125,
+        wordBreak: 'break-word',
+    },
+    content: {
+        display: 'flex',
+        alignItems: 'center',
+        margin: "16px 0",
+        fontSize: 15,
+        '& a': {
+            color: "#000",
+            textDecoration: 'none'
+        },
+    },
+    contentItem: {
+        marginLeft: 5, color: "rgb(83, 100, 113)"
+    },
+    tweetFooter: {
+        display: 'flex',
+        position: 'relative',
+        paddingTop: 5,
+        paddingBottom: 5,
+        margin: '0 auto',
+        borderTop: '1px solid #E6ECF0',
+        left: 0,
+        maxWidth: '100%',
+        justifyContent: 'space-around',
+        padding: '2px 0',
+    },
+    tweetIcon: {
+        "& .MuiIconButton-root": {
+            marginBottom: 6,
+            width: 40,
+            height: 40,
+            color: "rgb(83, 100, 113)",
+            "& span": {
+                paddingBottom: 3,
+                "& svg" : {
+                    verticalAlign: "bottom",
+                    height: "0.80em",
+                }
+            },
+        },
+    },
+    replyWrapper: {
+        margin: "16px 68px",
+        color: "rgb(83, 100, 113)",
+        fontSize: 15,
+        "& a": {
+            textDecoration: "none",
+            color: "rgb(27, 149, 224)",
+        },
+    },
+    divider: {
+        height: 12,
+        backgroundColor: '#F7F9F9',
+    },
+    imageFooterContainer: {
         position: "absolute",
         left: "28%",
         width: 568,
@@ -40,7 +108,16 @@ export const useTweetImageStyles = makeStyles((theme: Theme) => ({
             color: "#fff"
         },
     },
-    tweetImageModalClose: {
+    imageFooterWrapper: {
+        display: 'flex',
+        position: 'relative',
+        paddingTop: 5,
+        paddingBottom: 5,
+        left: -13,
+        justifyContent: 'space-between',
+        maxWidth: 450,
+    },
+    imageModalClose: {
         margin: 10,
         "& svg": {
             height: "0.9em",

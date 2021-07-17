@@ -21,6 +21,11 @@ public class TagController {
         return ResponseEntity.ok(tagMapper.getTags());
     }
 
+    @GetMapping("/trends")
+    public ResponseEntity<List<TagResponse>> getTrends() {
+        return ResponseEntity.ok(tagMapper.getTrends());
+    }
+
     @GetMapping("/{tagName}")
     public ResponseEntity<List<TweetResponse>> getTweetsByTag(@PathVariable String tagName) {
         return ResponseEntity.ok(tagMapper.getTweetsByTag(tagName));

@@ -10,17 +10,17 @@ import ListItem from "@material-ui/core/ListItem/ListItem";
 import DialogContent from "@material-ui/core/DialogContent";
 import Dialog from "@material-ui/core/Dialog";
 
-import {useHomeStyles} from "../../pages/Home/HomeStyles";
 import {User} from "../../store/ducks/user/contracts/state";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
+import {useUsersItemStyles} from "./UsersItemStyles";
 
 interface UsersItem {
     user: User
-    classes: ReturnType<typeof useHomeStyles>;
 }
 
-const UsersItem: FC<UsersItem> = ({user, classes}) => {
+const UsersItem: FC<UsersItem> = ({user}) => {
+    const classes = useUsersItemStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
     const [btnText, setBtnText] = useState<string>("Following");
@@ -43,11 +43,9 @@ const UsersItem: FC<UsersItem> = ({user, classes}) => {
         dispatch(unfollowUser(user));
         setVisibleUnfollowModal(false);
     };
-    //class="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-rightSideFollowBtn-32 MuiButton-containedPrimary"
-    //class="MuiButtonBase-root MuiButton-root MuiButton-outlined makeStyles-rightSideFollowOutlinedBtn-31 MuiButton-outlinedPrimary"
 
     return (
-        <ListItem key={user.id} className={classes.rightSideBlockItem}>
+        <ListItem key={user.id} className={classes.container}>
             <ListItemAvatar>
                 <Avatar alt={`${user.id}`} src={user.avatar?.src}/>
             </ListItemAvatar>
@@ -65,20 +63,22 @@ const UsersItem: FC<UsersItem> = ({user, classes}) => {
                 {myProfile?.user.id === user.id ? null : (
                     follower === -1 ? (
                         <Button
-                            className={classes.rightSideFollowOutlinedBtn}
+                            className={classes.outlinedButton}
                             onClick={() => handleFollow(user)}
                             color="primary"
-                            variant="outlined">
+                            variant="outlined"
+                        >
                             Follow
                         </Button>
                     ) : (
                         <Button
-                            className={classes.rightSideFollowBtn}
+                            className={classes.primaryButton}
                             onMouseOver={() => setBtnText("Unfollow")}
                             onMouseLeave={() => setBtnText("Following")}
                             onClick={handleClickOpenUnfollowModal}
+                            color="primary"
                             variant="contained"
-                            color="primary">
+                        >
                             {btnText}
                         </Button>
                     )
@@ -86,26 +86,28 @@ const UsersItem: FC<UsersItem> = ({user, classes}) => {
             </div>
             <Dialog open={visibleUnfollowModal} onClose={onCloseUnfollowModal} aria-labelledby="form-dialog-title">
                 <DialogContent style={{padding: "0px 0px"}}>
-                    <div className={classes.followerModalContentWrapper}>
-                        <Typography className={classes.followerModalFullName}>
+                    <div className={classes.modalWrapper}>
+                        <Typography className={classes.modalFullName}>
                             Unfollow {user?.fullName}?
                         </Typography>
-                        <div className={classes.followerModalUsername}>
+                        <div className={classes.modalUsername}>
                             Their Tweets will no longer show up in your home timeline. You can still view their
                             profile, unless their Tweets are protected.
                         </div>
-                        <div className={classes.followerModalBtnContainer}>
+                        <div className={classes.modalButtonContainer}>
                             <Button
-                                className={classes.followerModalCancelBtn}
+                                className={classes.modalCancelButton}
                                 onClick={onCloseUnfollowModal}
-                                variant="contained">
+                                variant="contained"
+                            >
                                 Cancel
                             </Button>
                             <Button
-                                className={classes.followerModalUnfollowBtn}
+                                className={classes.modalUnfollowButton}
                                 onClick={() => handleUnfollow(user)}
                                 variant="contained"
-                                color="primary">
+                                color="primary"
+                            >
                                 Unfollow
                             </Button>
                         </div>

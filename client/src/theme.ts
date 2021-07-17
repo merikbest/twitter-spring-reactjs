@@ -50,11 +50,21 @@ export const theme = createMuiTheme({
                 fontWeight: 700,
             },
             textPrimary: {
-                paddingLeft: 20,
-                paddingRight: 20,
+                // paddingLeft: 20,
+                // paddingRight: 20,
             },
             outlinedPrimary: {
                 borderColor: 'rgb(29, 161, 243)',
+            },
+        },
+        MuiPaper: {
+            root: {
+                borderRadius: 0,
+                border: "1px solid rgb(239, 243, 244)",
+            },
+            outlined: {
+                borderRadius: 0,
+                border: "1px solid rgb(239, 243, 244)",
             },
         },
         MuiFilledInput: {

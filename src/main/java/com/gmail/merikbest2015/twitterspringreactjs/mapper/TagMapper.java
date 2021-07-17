@@ -1,6 +1,5 @@
 package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
-import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TagRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TagResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tag;
@@ -32,6 +31,10 @@ public class TagMapper {
 
     public List<TagResponse> getTags() {
         return convertTagsListToResponseDto(tagService.getTags());
+    }
+
+    public List<TagResponse> getTrends() {
+        return convertTagsListToResponseDto(tagService.getTrends());
     }
 
     public List<TweetResponse> getTweetsByTag(String tagName) {

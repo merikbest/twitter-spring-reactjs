@@ -17,6 +17,9 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         },
     },
     header: {
+        position: "fixed",
+        width: 602,
+        zIndex: 1,
         display: 'flex',
         alignItems: 'center',
         flex: 1,
@@ -69,12 +72,39 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
             },
         },
     },
+    tabs: {
+        "& .MuiTabs-indicator": {
+            marginLeft: 50,
+            maxWidth: 50,
+            height: 4,
+            backgroundColor: "rgb(29, 161, 242)",
+        },
+        "& .MuiTab-root": {
+            fontWeight: 700,
+        },
+    },
     editButton: {
         float: 'right',
-        marginTop: '90px',
+        marginTop: '84px',
         border: '1px solid',
         borderRadius: '25px',
-        padding: '0 15px',
+        padding: '8px 15px',
+        fontSize: 15,
+        fontWeight: 700,
+    },
+    primaryButton: {
+        marginTop: '84px',
+        float: 'right',
+        fontSize: 15,
+        fontWeight: 700,
+        width: 102,
+        border: '1px solid',
+        borderRadius: '25px',
+        padding: '8px 15px',
+        // TODO '& .MuiButton-containedPrimary':
+        '&:hover': {
+            backgroundColor: 'rgb(202, 32, 85)',
+        },
     },
     fullName: {
         margin: "0 !important",

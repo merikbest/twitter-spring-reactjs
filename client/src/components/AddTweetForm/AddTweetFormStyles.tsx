@@ -4,6 +4,7 @@ export const useAddTweetFormStyles = makeStyles((theme: Theme) => ({
     content: {
         display: 'flex',
         width: '100%',
+        paddingTop: 48,
     },
     contentAvatar: {
         width: theme.spacing(6.5),

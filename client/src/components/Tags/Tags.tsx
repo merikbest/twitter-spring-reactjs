@@ -1,36 +1,36 @@
-import React, {FC, ReactElement, useEffect} from 'react';
+import React, {FC, ReactElement} from 'react';
 import {Link} from 'react-router-dom';
 import {useSelector} from "react-redux";
-import {CircularProgress, Divider, List, ListItem, ListItemText, Paper, Typography} from "@material-ui/core";
+import {CircularProgress, List, ListItem, ListItemText, Paper, Typography, IconButton} from "@material-ui/core";
 
-import {useHomeStyles} from "../../pages/Home/HomeStyles";
+import {SettingsIcon} from "../../icons";
 import {selectIsTagsLoading, selectTagsItems} from "../../store/ducks/tags/selectors";
 import {Tag} from "../../store/ducks/tags/contracts/state";
+import {useTagsStyles} from "./TagsStyles";
 
-
-interface TagsProps {
-    classes: ReturnType<typeof useHomeStyles>;
-}
-
-const Tags: FC<TagsProps> = ({classes}: TagsProps): ReactElement => {
+const Tags: FC = (): ReactElement => {
+    const classes = useTagsStyles();
     const tags = useSelector(selectTagsItems);
     const isTagsLoaded = useSelector(selectIsTagsLoading);
 
     return (
-        <Paper className={classes.rightSideBlock}>
-            <Paper className={classes.rightSideBlockHeader} variant="outlined">
+        <Paper className={classes.container}>
+            <Paper className={classes.header} variant="outlined">
                 <b>Trends for you</b>
+                <IconButton color="primary">
+                    <span>{SettingsIcon}</span>
+                </IconButton>
             </Paper>
             {isTagsLoaded ? (
-                <div className={classes.tweetsCentred}>
+                <div className={classes.loading}>
                     <CircularProgress/>
                 </div>
             ) : (
                 <List>
-                    {tags.map((tag: Tag) => (
+                    {tags.slice(0, 4).map((tag: Tag) => (
                         <Link to={{pathname: "/search", state: {tag: encodeURIComponent(tag.tagName)}}}>
                             <React.Fragment key={tag.id}>
-                                <ListItem className={classes.rightSideBlockItem}>
+                                <ListItem className={classes.item}>
                                     <ListItemText
                                         primary={tag.tagName}
                                         secondary={
@@ -40,10 +40,14 @@ const Tags: FC<TagsProps> = ({classes}: TagsProps): ReactElement => {
                                         }
                                     />
                                 </ListItem>
-                                <Divider component="li"/>
                             </React.Fragment>
                         </Link>
                     ))}
+                    <Link to={"/home/trends"}>
+                        <ListItem className={classes.footer}>
+                            Show more
+                        </ListItem>
+                    </Link>
                 </List>
             )}
         </Paper>
