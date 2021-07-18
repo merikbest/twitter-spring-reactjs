@@ -25,7 +25,7 @@ const Trends = () => {
                     <CircularProgress/>
                 </div>
             ) : (
-                <List style={{padding: 0}}>
+                <List style={{paddingTop: 48,}}>
                     {trends.map(item => (
                         <div className={classes.item} key={item.id}>
                             <Link to={{pathname: "/search", state: {tag: encodeURIComponent(item.tagName)}}}>

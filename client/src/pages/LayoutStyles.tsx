@@ -5,7 +5,7 @@ export const useLayoutStyles = makeStyles((theme: Theme) => ({
         height: '100vh',
     },
     rightSide: {
-        paddingTop: 20,
+        paddingTop: 4,
         position: 'sticky',
         top: 0,
     },

@@ -80,6 +80,21 @@ export const useFullTweetStyles = makeStyles((theme: Theme) => ({
             fontSize: 25,
         },
     },
+    infoIcon: {
+        "& .MuiIconButton-root": {
+            marginBottom: 6,
+            width: 40,
+            height: 40,
+            color: "#5b7083",
+            "& span": {
+                paddingBottom: 3,
+                "& svg" : {
+                    verticalAlign: "bottom",
+                    height: "0.9em",
+                }
+            },
+        },
+    },
     replyWrapper: {
         margin: "16px 60px",
         color: "rgb(83, 100, 113)",

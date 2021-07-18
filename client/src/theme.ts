@@ -45,13 +45,7 @@ export const theme = createMuiTheme({
             root: {
                 borderRadius: 30,
                 textTransform: 'none',
-                // fontSize: 16,
-                // height: 40,
                 fontWeight: 700,
-            },
-            textPrimary: {
-                // paddingLeft: 20,
-                // paddingRight: 20,
             },
             outlinedPrimary: {
                 borderColor: 'rgb(29, 161, 243)',

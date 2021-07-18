@@ -3,7 +3,7 @@ import {useHistory, useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import {InputAdornment} from "@material-ui/core";
+import {InputAdornment, IconButton} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
 import {CircularProgress, Paper} from "@material-ui/core";
 
@@ -22,9 +22,10 @@ import Follower from "../Follower/Follower";
 import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 import {UserApi} from "../../services/api/userApi";
 import {useSearchStyles} from "./SearchStyles";
+import {EditIcon} from "../../icons";
 
 const Search: FC = () => {
-    const classes2 = useSearchStyles();
+    const classes = useSearchStyles();
     const dispatch = useDispatch();
     const isLoading = useSelector(selectIsTweetsLoading);
     const tweets = useSelector(selectTweetsItems);
@@ -84,11 +85,13 @@ const Search: FC = () => {
     };
 
     return (
-        <Paper className={classes2.container} variant="outlined">
-            <Paper className={classes2.header} variant="outlined">
+        <Paper className={classes.container} variant="outlined">
+            <Paper className={classes.header} variant="outlined">
                 <div>
                     <form onSubmit={handleClickSearch}>
-                        <BackButton/>
+                        <div style={{display: "inline-block", paddingTop: 5}}>
+                            <BackButton/>
+                        </div>
                         <MainSearchTextField
                             variant="outlined"
                             placeholder="Search Twitter"
@@ -102,25 +105,34 @@ const Search: FC = () => {
                                 ),
                             }}
                         />
+                        <div className={classes.editButton}>
+                            <IconButton color="primary">
+                                <span>{EditIcon}</span>
+                            </IconButton>
+                        </div>
                     </form>
-                    <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
-                        <Tab style={{minWidth: "120px"}} onClick={showTopTweets} label="Top"/>
-                        <Tab style={{minWidth: "120px"}} label="Latest"/>
-                        <Tab style={{minWidth: "120px"}} onClick={showUsers} label="People"/>
-                        <Tab style={{minWidth: "120px"}} onClick={showMediaTweets} label="Photos"/>
-                        <Tab style={{minWidth: "120px"}} label="Videos"/>
-                    </Tabs>
+                    <div className={classes.tabs}>
+                        <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
+                            <Tab onClick={showTopTweets} label="Top"/>
+                            <Tab label="Latest"/>
+                            <Tab onClick={showUsers} label="People"/>
+                            <Tab onClick={showMediaTweets} label="Photos"/>
+                            <Tab label="Videos"/>
+                        </Tabs>
+                    </div>
                 </div>
             </Paper>
-            {isLoading ? (
-                <div className={classes2.loading}>
-                    <CircularProgress/>
-                </div>
-            ) : (activeTab !== 2 ? (
-                    tweets.map((tweet) => <Tweet key={tweet.id} images={tweet.images} {...tweet}/>)
-                ) : (
-                    users?.map((user) => <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>))
-            )}
+            <div style={{paddingTop: 97}}>
+                {isLoading ? (
+                    <div className={classes.loading}>
+                        <CircularProgress/>
+                    </div>
+                ) : (activeTab !== 2 ? (
+                        tweets.map((tweet) => <Tweet key={tweet.id} images={tweet.images} {...tweet}/>)
+                    ) : (
+                        users?.map((user) => <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>))
+                )}
+            </div>
         </Paper>
     );
 };

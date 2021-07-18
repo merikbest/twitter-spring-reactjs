@@ -71,65 +71,67 @@ const FollowingFollowers = () => {
                     <Typography variant="caption" display="block" gutterBottom>@{userProfile?.username}</Typography>
                 </div>
             </Paper>
-            <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
-                <Tab onClick={handleShowFollowing} className={classes.tab} label="Following"/>
-                <Tab onClick={handleShowFollowers} className={classes.tab} label="Followers"/>
-            </Tabs>
-            {isFollowersLoading ? (
-                <div className={classes.loading}>
-                    <CircularProgress/>
-                </div>
-            ) : ((activeTab === 0) ? (userProfile?.followers?.length !== 0 ? (
-                        userProfile?.followers?.map((user) =>
-                            <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>)
-                    ) : (
-                        <div className={classes.content}>
-                            <Typography className={classes.topic}>
-                                {(userProfile?.id === myProfile?.user.id) ? (
-                                    "You aren’t following anyone yet"
-                                ) : (
-                                    `@${userProfile.username} isn’t following anyone`
-                                )}
-                            </Typography>
-                            <Typography className={classes.text}>
-                                {(userProfile?.id === myProfile?.user.id) ? (
-                                    "When you do, they’ll be listed here and you’ll see their Tweets in your timeline."
-                                ) : (
-                                    "When they do, they’ll be listed here."
-                                )}
-                            </Typography>
-                            <Link to={"/home/connect"} className={classes.link}>
-                                {(userProfile?.id === myProfile?.user.id) && 
+            <div style={{paddingTop: 57,}}>
+                <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
+                    <Tab onClick={handleShowFollowing} className={classes.tab} label="Following"/>
+                    <Tab onClick={handleShowFollowers} className={classes.tab} label="Followers"/>
+                </Tabs>
+                {isFollowersLoading ? (
+                    <div className={classes.loading}>
+                        <CircularProgress/>
+                    </div>
+                ) : ((activeTab === 0) ? (userProfile?.followers?.length !== 0 ? (
+                            userProfile?.followers?.map((user) =>
+                                <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>)
+                        ) : (
+                            <div className={classes.content}>
+                                <Typography className={classes.topic}>
+                                    {(userProfile?.id === myProfile?.user.id) ? (
+                                        "You aren’t following anyone yet"
+                                    ) : (
+                                        `@${userProfile.username} isn’t following anyone`
+                                    )}
+                                </Typography>
+                                <Typography className={classes.text}>
+                                    {(userProfile?.id === myProfile?.user.id) ? (
+                                        "When you do, they’ll be listed here and you’ll see their Tweets in your timeline."
+                                    ) : (
+                                        "When they do, they’ll be listed here."
+                                    )}
+                                </Typography>
+                                <Link to={"/home/connect"} className={classes.link}>
+                                    {(userProfile?.id === myProfile?.user.id) &&
                                     <Button variant="contained" color="primary">
                                         Find people to follow
                                     </Button>
-                                }
-                            </Link>
-                        </div>
+                                    }
+                                </Link>
+                            </div>
+                        )
+                    ) : (userProfile?.following?.length !== 0 ? (
+                            userProfile?.following?.map((user) =>
+                                <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>)
+                        ) : (
+                            <div className={classes.content}>
+                                <Typography className={classes.topic}>
+                                    {(userProfile?.id === myProfile?.user.id) ? (
+                                        "You don’t have any followers yet"
+                                    ) : (
+                                        `@${userProfile.username} doesn’t have any followers`
+                                    )}
+                                </Typography>
+                                <Typography className={classes.text}>
+                                    {(userProfile?.id === myProfile?.user.id) ? (
+                                        "When someone follows you, you’ll see them here."
+                                    ) : (
+                                        "When someone follows them, they’ll be listed here."
+                                    )}
+                                </Typography>
+                            </div>
+                        )
                     )
-                ) : (userProfile?.following?.length !== 0 ? (
-                        userProfile?.following?.map((user) =>
-                            <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>)
-                    ) : (
-                        <div className={classes.content}>
-                            <Typography className={classes.topic}>
-                                {(userProfile?.id === myProfile?.user.id) ? (
-                                    "You don’t have any followers yet"
-                                ) : (
-                                    `@${userProfile.username} doesn’t have any followers`
-                                )}
-                            </Typography>
-                            <Typography className={classes.text}>
-                                {(userProfile?.id === myProfile?.user.id) ? (
-                                    "When someone follows you, you’ll see them here."
-                                ) : (
-                                    "When someone follows them, they’ll be listed here."
-                                )}
-                            </Typography>
-                        </div>
-                    )
-                )
-            )}
+                )}
+            </div>
         </Paper>
     );
 };

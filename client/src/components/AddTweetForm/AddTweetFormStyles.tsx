@@ -4,7 +4,7 @@ export const useAddTweetFormStyles = makeStyles((theme: Theme) => ({
     content: {
         display: 'flex',
         width: '100%',
-        paddingTop: 48,
+        paddingTop: 52,
     },
     contentAvatar: {
         width: theme.spacing(6.5),
@@ -34,6 +34,20 @@ export const useAddTweetFormStyles = makeStyles((theme: Theme) => ({
         maxWidth: 450,
         marginTop: 10,
         paddingLeft: 70,
+    },
+    footerImage: {
+        "& .MuiIconButton-root": {
+            marginBottom: 6,
+            width: 40,
+            height: 40,
+            "& span": {
+                paddingBottom: 3,
+                "& svg" : {
+                    verticalAlign: "bottom",
+                    height: "0.9em",
+                }
+            },
+        },
     },
     footerAddForm: {
         display: 'flex',

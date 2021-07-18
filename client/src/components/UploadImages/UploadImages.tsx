@@ -4,6 +4,8 @@ import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
 
 import {ImageObj} from "../AddTweetForm/AddTweetForm";
 import ImageList from "../ImageList/ImageList";
+import {MediaIcon} from "../../icons";
+import {useUploadImagesStyles} from "./UploadImagesStyles";
 
 interface UploadImageProps {
     images: ImageObj[];
@@ -11,6 +13,7 @@ interface UploadImageProps {
 }
 
 const UploadImages: FC<UploadImageProps> = ({images, onChangeImages}) => {
+    const classes = useUploadImagesStyles();
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleClickImage = () => {
@@ -54,9 +57,12 @@ const UploadImages: FC<UploadImageProps> = ({images, onChangeImages}) => {
     return (
         <div>
             <ImageList images={images} removeImage={removeImage}/>
-            <IconButton onClick={handleClickImage} color="primary">
-                <ImageOutlinedIcon style={{fontSize: 26}}/>
-            </IconButton>
+            <div className={classes.icon}>
+                <IconButton onClick={handleClickImage} color="primary">
+                    <span>{MediaIcon}</span>
+                </IconButton>
+            </div>
+
             <input ref={inputRef} type="file" id="upload-input" hidden/>
         </div>
     );

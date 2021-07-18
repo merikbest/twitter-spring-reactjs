@@ -15,6 +15,8 @@ import {selectUserData} from "../../store/ducks/user/selectors";
 import {fetchReplyTweet} from "../../store/ducks/tweet/actionCreators";
 import {useAddTweetFormStyles} from "./AddTweetFormStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
+import {IconButton} from "@material-ui/core";
+import {EmojiIcon, GifIcon, PullIcon, ScheduleIcon} from "../../icons";
 
 interface AddTweetFormProps {
     maxRows?: number;
@@ -102,9 +104,30 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
             <div className={classes.footer}>
                 <div className={classes.footerWrapper}>
                     <UploadImages images={images} onChangeImages={setImages}/>
-                    {/*<IconButton color="primary">*/}
-                    {/*    <EmojiIcon style={{fontSize: 26}}/>*/}
-                    {/*</IconButton>*/}
+                    <div className={classes.footerImage}>
+                        <IconButton color="primary">
+                            <span>{GifIcon}</span>
+                        </IconButton>
+                    </div>
+                    {(buttonName !== "Reply") && (
+                        <div className={classes.footerImage}>
+                            <IconButton color="primary">
+                                <span>{PullIcon}</span>
+                            </IconButton>
+                        </div>)
+                    }
+                    <div className={classes.footerImage}>
+                        <IconButton color="primary">
+                            <span>{EmojiIcon}</span>
+                        </IconButton>
+                    </div>
+                    {(buttonName !== "Reply") && (
+                        <div className={classes.footerImage}>
+                            <IconButton color="primary">
+                                <span>{ScheduleIcon}</span>
+                            </IconButton>
+                        </div>)
+                    }
                 </div>
                 <div className={classes.footerAddForm}>
                     {text && (

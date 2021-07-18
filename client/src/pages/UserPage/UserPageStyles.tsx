@@ -19,6 +19,7 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
     header: {
         position: "fixed",
         width: 602,
+        height: 53,
         zIndex: 1,
         display: 'flex',
         alignItems: 'center',

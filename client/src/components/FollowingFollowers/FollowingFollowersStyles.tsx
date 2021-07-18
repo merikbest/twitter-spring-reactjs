@@ -8,7 +8,10 @@ export const useFollowingFollowersStyles = makeStyles((theme) => ({
         borderBottom: '0',
     },
     header: {
+        position: "fixed",
         display: 'flex',
+        width: 602,
+        zIndex: 1,
         alignItems: 'center',
         flex: 1,
         '& h6': {

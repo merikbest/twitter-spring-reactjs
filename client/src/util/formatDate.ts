@@ -1,10 +1,5 @@
-import formatDistance from 'date-fns/formatDistance'
-import ruLang from 'date-fns/locale/ru'
+import format from "date-fns/format";
 
 export const formatDate = (date: Date): string => {
-    return formatDistance(
-        date,
-        new Date(),
-        { locale: ruLang }
-    );
+    return format(date, 'dd MMM.');
 }

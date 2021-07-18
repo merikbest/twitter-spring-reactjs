@@ -1,7 +1,7 @@
 import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Route, useLocation} from "react-router-dom";
-import {CircularProgress, Paper, Typography} from "@material-ui/core";
+import {CircularProgress, IconButton, Paper, Typography} from "@material-ui/core";
 
 import Tweet from "../../components/Tweet/Tweet";
 import {useHomeStyles} from './HomeStyles';
@@ -15,6 +15,7 @@ import {fetchRelevantUsers} from "../../store/ducks/users/actionCreators";
 import {fetchTags} from "../../store/ducks/tags/actionCreators";
 import Connect from "../../components/Connect/Connect";
 import Trends from "../../components/Trends/Trends";
+import {TopTweets} from "../../icons";
 
 const Home: FC = (): ReactElement => {
     const classes = useHomeStyles();
@@ -42,6 +43,11 @@ const Home: FC = (): ReactElement => {
                 <Route path='/home' exact>
                     <BackButton/>
                     <Typography variant="h6">Home</Typography>
+                    <div className={classes.headerIcon}>
+                        <IconButton color="primary">
+                            <span>{TopTweets}</span>
+                        </IconButton>
+                    </div>
                 </Route>
                 <Route path="/home/tweet">
                     <BackButton/>

@@ -5,9 +5,9 @@ export const MainSearchTextField = withStyles((theme: Theme) => ({
     root: {
         '& .MuiOutlinedInput-root': {
             borderRadius: 30,
-            backgroundColor: '#E6ECF0',
+            backgroundColor: '#EFF3F4',
             padding: 19,
-            width: 420,
+            width: 450,
             height: 20,
             marginTop: 6,
             '&.Mui-focused': {

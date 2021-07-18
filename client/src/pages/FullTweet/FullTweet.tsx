@@ -5,16 +5,10 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Paper from '@material-ui/core/Paper';
 import {Avatar, Divider, IconButton} from "@material-ui/core";
 import Typography from '@material-ui/core/Typography';
-import ShareIcon from "@material-ui/icons/ReplyOutlined";
 import RepostIcon from "@material-ui/icons/RepeatOutlined";
-import CommentIcon from "@material-ui/icons/ModeCommentOutlined";
-import LikeIcon from '@material-ui/icons/Favorite';
-import LikeIconOutlined from "@material-ui/icons/FavoriteBorderOutlined";
 import format from 'date-fns/format';
-import ruLang from 'date-fns/locale/ru';
+import usLang from 'date-fns/locale/en-US/index';
 import mediumZoom from "medium-zoom";
-import pink from '@material-ui/core/colors/pink';
-import green from '@material-ui/core/colors/green';
 
 import {selectIsTweetLoading, selectTweetData} from '../../store/ducks/tweet/selectors';
 import {fetchTweetData, setTweetData} from '../../store/ducks/tweet/actionCreators';
@@ -26,6 +20,7 @@ import {AddTweetForm} from "../../components/AddTweetForm/AddTweetForm";
 import Tweet from "../../components/Tweet/Tweet";
 import {useFullTweetStyles} from "./FullTweetStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
+import {LikeIcon, LikeOutlinedIcon, ReplyIcon, RetweetIcon, RetweetOutlinedIcon, ShareIcon} from "../../icons";
 
 export const FullTweet: FC = (): ReactElement | null => {
     const classes2 = useFullTweetStyles();
@@ -119,7 +114,7 @@ export const FullTweet: FC = (): ReactElement | null => {
                     </Typography>
                     <Typography style={{marginBottom: 16}}>
                         <span className={classes2.date}>
-                            {format(new Date(tweetData.dateTime), 'H:mm', {locale: ruLang})} ·
+                            {format(new Date(tweetData.dateTime), 'H:mm', {locale: usLang})} ·
                         </span>
                         <span className={classes2.date}>
                             {format(new Date(tweetData.dateTime), 'dd MMM. yyyy')}
@@ -151,26 +146,34 @@ export const FullTweet: FC = (): ReactElement | null => {
                         </div>)
                     }
                     <div className={classes2.info}>
-                        <IconButton>
-                            <CommentIcon/>
-                        </IconButton>
-                        <IconButton onClick={handleRetweet}>
-                            {isTweetRetweeted ? (
-                                <RepostIcon style={{color: green[500]}}/>
-                            ) : (
-                                <RepostIcon/>
-                            )}
-                        </IconButton>
-                        <IconButton onClick={handleLike}>
-                            {isTweetLiked ? (
-                                <LikeIcon style={{color: pink[500]}}/>
-                            ) : (
-                                <LikeIconOutlined/>
-                            )}
-                        </IconButton>
-                        <IconButton>
-                            <ShareIcon/>
-                        </IconButton>
+                        <div className={classes2.infoIcon}>
+                            <IconButton>
+                                <span>{ReplyIcon}</span>
+                            </IconButton>
+                        </div>
+                        <div className={classes2.infoIcon}>
+                            <IconButton onClick={handleRetweet}>
+                                {isTweetRetweeted ? (
+                                    <span style={{color: "rgb(23, 191, 99)"}}>{RetweetIcon}</span>
+                                ) : (
+                                    <span>{RetweetOutlinedIcon}</span>
+                                )}
+                            </IconButton>
+                        </div>
+                        <div className={classes2.infoIcon}>
+                            <IconButton onClick={handleLike}>
+                                {isTweetLiked ? (
+                                    <span style={{color: "rgb(224, 36, 94)"}}>{LikeIcon}</span>
+                                ) : (
+                                    <span>{LikeOutlinedIcon}</span>
+                                )}
+                            </IconButton>
+                        </div>
+                        <div className={classes2.infoIcon}>
+                            <IconButton>
+                                <span>{ShareIcon}</span>
+                            </IconButton>
+                        </div>
                     </div>
                     <Divider/>
                     <Typography className={classes2.replyWrapper}>
