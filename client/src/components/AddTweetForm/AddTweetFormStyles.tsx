@@ -4,7 +4,6 @@ export const useAddTweetFormStyles = makeStyles((theme: Theme) => ({
     content: {
         display: 'flex',
         width: '100%',
-        paddingTop: 52,
     },
     contentAvatar: {
         width: theme.spacing(6.5),
@@ -18,6 +17,30 @@ export const useAddTweetFormStyles = makeStyles((theme: Theme) => ({
         outline: 'none',
         fontFamily: 'inherit',
         resize: 'none',
+    },
+    image: {
+        position: 'relative',
+        '& img': {
+            marginLeft: "58px",
+            objectFit: "cover",
+            marginTop: 10,
+            width: 504,
+            height: 280,
+            borderRadius: 20,
+            borderColor: "#5b7083",
+        },
+        "& svg": {
+            verticalAlign: "top",
+            fill: '#fff',
+            height: "0.75em",
+        },
+    },
+    imageRemove: {
+        padding: 6,
+        top: 15,
+        left: 65,
+        position: 'absolute',
+        backgroundColor: '#322C28 !important',
     },
     footer: {
         display: 'flex',

@@ -1,5 +1,6 @@
 import React, {FC, ReactElement, useState} from 'react';
-import {Link} from 'react-router-dom';
+import {useSelector} from "react-redux";
+import {NavLink, useLocation} from 'react-router-dom';
 import {Button, Hidden, IconButton, Typography} from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import CreateIcon from '@material-ui/icons/Create';
@@ -12,19 +13,20 @@ import {
     MoreIcon,
     NotificationsIcon,
     ProfileIcon,
-    ExploreIcon
+    ExploreIcon, HomeIconFilled, ExploreIconFilled, ProfileIconFilled
 } from "../../icons";
 import ModalBlock from "../ModalBlock/ModalBlock";
 import {AddTweetForm} from "../AddTweetForm/AddTweetForm";
 import UserSideProfile from "../UserSideProfile/UserSideProfile";
 import {selectUserData} from "../../store/ducks/user/selectors";
-import {useSelector} from "react-redux";
 import {useSideMenuStyles} from "./SideMenuStyles";
 
 const SideMenu: FC = (): ReactElement => {
     const classes2 = useSideMenuStyles();
-    const [visibleAddTweet, setSetVisibleAddTweet] = useState<boolean>(false);
+    const location = useLocation();
+    const myProfile = useSelector(selectUserData);
     const userData = useSelector(selectUserData);
+    const [visibleAddTweet, setSetVisibleAddTweet] = useState<boolean>(false);
 
     const handleClickOpenAddTweet = () => {
         setSetVisibleAddTweet(true);
@@ -38,33 +40,41 @@ const SideMenu: FC = (): ReactElement => {
         <>
             <ul className={classes2.container}>
                 <li className={classes2.itemWrapper} style={{marginBottom: 2,}}>
-                    <Link to="/home">
+                    <NavLink to="/home" activeClassName={"selected"}>
                         <IconButton color="primary">
                             <TwitterIcon className={classes2.logoIcon}/>
                         </IconButton>
-                    </Link>
+                    </NavLink>
                 </li>
                 <li className={classes2.itemWrapper}>
-                    <Link to="/home">
+                    <NavLink to="/home" activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
                                 <Typography className={classes2.label} variant="h6">
-                                    <span>{HomeIcon}</span> Home
+                                    {(location.pathname.includes("/home")) ? (
+                                        <span>{HomeIconFilled}</span>
+                                    ) : (
+                                        <span>{HomeIcon}</span>
+                                    )} Home
                                 </Typography>
                             </Hidden>
                         </div>
-                    </Link>
+                    </NavLink>
                 </li>
                 <li className={classes2.itemWrapper}>
-                    <Link to="/search">
+                    <NavLink to="/search" activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
                                 <Typography className={classes2.label} variant="h6">
-                                    <span>{ExploreIcon}</span> Explore
+                                    {(location.pathname.includes("/search")) ? (
+                                        <span>{ExploreIconFilled}</span>
+                                    ) : (
+                                        <span>{ExploreIcon}</span>
+                                    )} Explore
                                 </Typography>
                             </Hidden>
                         </div>
-                    </Link>
+                    </NavLink>
                 </li>
                 <li className={classes2.itemWrapper}>
                     <div>
@@ -103,15 +113,19 @@ const SideMenu: FC = (): ReactElement => {
                     </div>
                 </li>
                 <li className={classes2.itemWrapper}>
-                    <Link to={`/user/${userData?.user.id}`}>
+                    <NavLink to={`/user/${userData?.user.id}`} activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
                                 <Typography className={classes2.label} variant="h6">
-                                    <span>{ProfileIcon}</span> Profile
+                                    {(location.pathname.includes(`/user/${myProfile?.user.id}`)) ? (
+                                        <span>{ProfileIconFilled}</span>
+                                    ) : (
+                                        <span>{ProfileIcon}</span>
+                                    )} Profile
                                 </Typography>
                             </Hidden>
                         </div>
-                    </Link>
+                    </NavLink>
                 </li>
                 <li className={classes2.itemWrapper}>
                     <div>

@@ -51,6 +51,15 @@ export const useFullTweetStyles = makeStyles((theme: Theme) => ({
             color: "rgb(27, 149, 224)",
         },
     },
+    image: {
+        "& img": {
+            objectFit: "cover",
+            marginTop: 10,
+            width: 564,
+            borderRadius: 20,
+            borderColor: "#5b7083",
+        },
+    },
     content: {
         display: 'flex',
         alignItems: 'center',

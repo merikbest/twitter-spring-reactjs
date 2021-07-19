@@ -5,9 +5,9 @@ export const useUserSideProfileStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         alignItems: 'center',
         position: 'fixed',
-        bottom: 30,
+        bottom: 13,
         padding: '10px 15px',
-        width: 260,
+        width: 245,
         borderRadius: 50,
         cursor: 'pointer',
         '&:hover': {
@@ -32,6 +32,47 @@ export const useUserSideProfileStyles = makeStyles((theme: Theme) => ({
         '& a': {
             color: 'black',
             textDecoration: 'none',
+        },
+    },
+    popover: {
+        width: 300,
+        height: 202,
+        boxShadow: "rgb(101 119 134 / 20%) 0px 0px 15px, rgb(101 119 134 / 15%) 0px 0px 3px 1px",
+        borderRadius: 16,
+        "& .MuiAvatar-root": {
+            width: "48px !important",
+            height: "48px !important",
+        },
+        '& .MuiListItemText-root': {
+            marginLeft: 8,
+        },
+        '& .MuiListItemText-primary': {
+            fontSize: 15,
+            fontWeight: 700,
+        },
+        '& .MuiTypography-body2': {
+            fontSize: 15,
+        },
+        "& span": {
+            "& svg" : {
+                color: "rgba(29, 161, 242, 1.00)",
+                height: "1.30em",
+            },
+
+        },
+    },
+    listItemWrapper: {
+        '& .MuiListItem-root': {
+            padding: 16,
+            fontWeight: 400,
+            fontSize: 15,
+            '&:hover': {
+                cursor: 'pointer',
+                backgroundColor: 'rgb(247, 249, 249)',
+            },
+        },
+        "& .MuiDivider-root": {
+            backgroundColor: 'rgb(239, 243, 244)',
         },
     },
 }));

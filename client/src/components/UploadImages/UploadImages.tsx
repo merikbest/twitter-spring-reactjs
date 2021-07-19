@@ -4,8 +4,9 @@ import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
 
 import {ImageObj} from "../AddTweetForm/AddTweetForm";
 import ImageList from "../ImageList/ImageList";
-import {MediaIcon} from "../../icons";
+import {CloseIcon, MediaIcon} from "../../icons";
 import {useUploadImagesStyles} from "./UploadImagesStyles";
+import {DEFAULT_PROFILE_IMG} from "../../util/url";
 
 interface UploadImageProps {
     images: ImageObj[];
@@ -22,8 +23,8 @@ const UploadImages: FC<UploadImageProps> = ({images, onChangeImages}) => {
         }
     };
 
-    const removeImage = (url: string) => {
-        onChangeImages((prev) => prev.filter((obj) => obj.src !== url));
+    const removeImage = (): void => {
+        onChangeImages((prev) => prev.filter((obj) => obj.src !== images[0].src));
     };
 
     const handleChangeFileInput = useCallback((event: Event) => {
@@ -56,7 +57,17 @@ const UploadImages: FC<UploadImageProps> = ({images, onChangeImages}) => {
 
     return (
         <div>
-            <ImageList images={images} removeImage={removeImage}/>
+            {/*<div className={classes.image}>*/}
+            {/*    {(images.length !== 0) &&*/}
+            {/*    <>*/}
+            {/*        <img src={images[0].src} alt={images[0].src}/>*/}
+            {/*        <IconButton className={classes.imageRemove} onClick={removeImage}>*/}
+            {/*            {CloseIcon}*/}
+            {/*        </IconButton>*/}
+            {/*    </>*/}
+            {/*    }*/}
+            {/*</div>*/}
+            {/*<ImageList images={images} removeImage={removeImage}/>*/}
             <div className={classes.icon}>
                 <IconButton onClick={handleClickImage} color="primary">
                     <span>{MediaIcon}</span>

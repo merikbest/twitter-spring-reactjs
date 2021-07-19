@@ -1,4 +1,4 @@
-import React, {FC, ReactElement} from 'react';
+import React, {FC, ReactElement, useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -16,7 +16,7 @@ import {fetchReplyTweet} from "../../store/ducks/tweet/actionCreators";
 import {useAddTweetFormStyles} from "./AddTweetFormStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {IconButton} from "@material-ui/core";
-import {EmojiIcon, GifIcon, PullIcon, ScheduleIcon} from "../../icons";
+import {CloseIcon, EmojiIcon, GifIcon, MediaIcon, PullIcon, ScheduleIcon} from "../../icons";
 
 interface AddTweetFormProps {
     maxRows?: number;
@@ -101,6 +101,21 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
                     rowsMax={maxRows}
                 />
             </div>
+            {/*<div className={classes.image}>*/}
+            {/*    <img src={images[0].src} alt={DEFAULT_PROFILE_IMG}/>*/}
+            {/*    <IconButton className={classes.imageRemove}>*/}
+            {/*        {CloseIcon}*/}
+            {/*    </IconButton>*/}
+            {/*</div>*/}
+
+            {(images.length !== 0) && (
+                <div className={classes.image}>
+                    <img src={images[0].src} alt={images[0].src}/>
+                    <IconButton className={classes.imageRemove}>
+                        {CloseIcon}
+                    </IconButton>
+                </div>)
+            }
             <div className={classes.footer}>
                 <div className={classes.footerWrapper}>
                     <UploadImages images={images} onChangeImages={setImages}/>

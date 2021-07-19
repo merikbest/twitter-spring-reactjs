@@ -1,5 +1,5 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
-import {Link, useParams} from 'react-router-dom';
+import {Link, useLocation, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Paper from '@material-ui/core/Paper';
@@ -23,8 +23,9 @@ import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {LikeIcon, LikeOutlinedIcon, ReplyIcon, RetweetIcon, RetweetOutlinedIcon, ShareIcon} from "../../icons";
 
 export const FullTweet: FC = (): ReactElement | null => {
-    const classes2 = useFullTweetStyles();
+    const classes = useFullTweetStyles();
     const dispatch = useDispatch();
+    const location = useLocation();
     const tweetData = useSelector(selectTweetData);
     const myProfile = useSelector(selectUserData);
     const isLoading = useSelector(selectIsTweetLoading);
@@ -33,6 +34,7 @@ export const FullTweet: FC = (): ReactElement | null => {
     const isTweetRetweeted = tweetData?.retweets.find((user) => user.id === myProfile?.user?.id);
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
     const [modalWindowTitle, setModalWindowTitle] = useState<string>("");
+    const image = tweetData?.images?.[0];
 
     useEffect(() => {
         if (params.id) {
@@ -74,7 +76,7 @@ export const FullTweet: FC = (): ReactElement | null => {
 
     if (isLoading) {
         return (
-            <div className={classes2.loading}>
+            <div className={classes.loading}>
                 <CircularProgress/>
             </div>
         );
@@ -84,16 +86,16 @@ export const FullTweet: FC = (): ReactElement | null => {
         return (
             <div style={{paddingTop: 48}}>
                 {isTweetRetweeted ?
-                    <div className={classes2.retweetWrapper}>
+                    <div className={classes.retweetWrapper}>
                         <RepostIcon style={{fontSize: 16}}/>
                         <Typography>
                             You Retweeted
                         </Typography>
                     </div> : null}
-                <Paper className={classes2.container}>
-                    <div className={classes2.header}>
+                <Paper className={classes.container}>
+                    <div className={classes.header}>
                         <Avatar
-                            className={classes2.avatar}
+                            className={classes.avatar}
                             alt={`avatar ${tweetData.user.id}`}
                             src={tweetData.user.avatar?.src ? tweetData.user.avatar?.src : DEFAULT_PROFILE_IMG}
                         />
@@ -102,32 +104,36 @@ export const FullTweet: FC = (): ReactElement | null => {
                                 <b>{tweetData.user.fullName}</b>&nbsp;
                             </Link>
                             <div>
-                                <span className={classes2.username}>@{tweetData.user.username}</span>&nbsp;
+                                <span className={classes.username}>@{tweetData.user.username}</span>&nbsp;
                             </div>
                         </Typography>
                     </div>
-                    <Typography className={classes2.textWrapper} gutterBottom>
+                    <Typography className={classes.textWrapper} gutterBottom>
                         <div dangerouslySetInnerHTML={{__html: tweetData.text}}></div>
-                        <div>
-                            {tweetData.images && <ImageList images={tweetData.images}/>}
-                        </div>
+                        {(tweetData.images?.length !== 0) &&
+                            <Link to={{pathname: `/modal/${params.id}`, state: { background: location }}}>
+                                <div className={classes.image}>
+                                    <img src={image?.src} alt={image?.src}/>
+                                </div>
+                            </Link>
+                        }
                     </Typography>
                     <Typography style={{marginBottom: 16}}>
-                        <span className={classes2.date}>
+                        <span className={classes.date}>
                             {format(new Date(tweetData.dateTime), 'H:mm', {locale: usLang})} ·
                         </span>
-                        <span className={classes2.date}>
+                        <span className={classes.date}>
                             {format(new Date(tweetData.dateTime), 'dd MMM. yyyy')}
                         </span>
                     </Typography>
                     <Divider/>
                     {(tweetData.retweets.length !== 0 || tweetData.likes.length !== 0) && (
-                        <div className={classes2.content}>
+                        <div className={classes.content}>
                             {(tweetData.retweets.length !== 0) && (
                                 <a href={"javascript:void(0);"} onClick={onOpenRetweetsModalWindow}>
                                     <span style={{marginRight: 20}}>
                                         <b>{tweetData.retweets.length}</b>
-                                        <span className={classes2.contentItem}>
+                                        <span className={classes.contentItem}>
                                             Retweets
                                         </span>
                                     </span>
@@ -137,7 +143,7 @@ export const FullTweet: FC = (): ReactElement | null => {
                                 <a href={"javascript:void(0);"} onClick={onOpenLikesModalWindow}>
                                     <span style={{marginRight: 20}}>
                                         <b>{tweetData.likes.length}</b>
-                                        <span className={classes2.contentItem}>
+                                        <span className={classes.contentItem}>
                                             Likes
                                         </span>
                                     </span>
@@ -145,13 +151,13 @@ export const FullTweet: FC = (): ReactElement | null => {
                             }
                         </div>)
                     }
-                    <div className={classes2.info}>
-                        <div className={classes2.infoIcon}>
+                    <div className={classes.info}>
+                        <div className={classes.infoIcon}>
                             <IconButton>
                                 <span>{ReplyIcon}</span>
                             </IconButton>
                         </div>
-                        <div className={classes2.infoIcon}>
+                        <div className={classes.infoIcon}>
                             <IconButton onClick={handleRetweet}>
                                 {isTweetRetweeted ? (
                                     <span style={{color: "rgb(23, 191, 99)"}}>{RetweetIcon}</span>
@@ -160,7 +166,7 @@ export const FullTweet: FC = (): ReactElement | null => {
                                 )}
                             </IconButton>
                         </div>
-                        <div className={classes2.infoIcon}>
+                        <div className={classes.infoIcon}>
                             <IconButton onClick={handleLike}>
                                 {isTweetLiked ? (
                                     <span style={{color: "rgb(224, 36, 94)"}}>{LikeIcon}</span>
@@ -169,14 +175,14 @@ export const FullTweet: FC = (): ReactElement | null => {
                                 )}
                             </IconButton>
                         </div>
-                        <div className={classes2.infoIcon}>
+                        <div className={classes.infoIcon}>
                             <IconButton>
                                 <span>{ShareIcon}</span>
                             </IconButton>
                         </div>
                     </div>
                     <Divider/>
-                    <Typography className={classes2.replyWrapper}>
+                    <Typography className={classes.replyWrapper}>
                         Replying to <Link to={`/user/${tweetData.user.id}`}>
                         @{tweetData.user.username}
                     </Link>
@@ -201,7 +207,7 @@ export const FullTweet: FC = (): ReactElement | null => {
                             onClose={onCloseModalWindow}/>
                     )}
                 </Paper>
-                <div className={classes2.divider}/>
+                <div className={classes.divider}/>
                 {tweetData.replies.map((tweet) =>
                     <Tweet
                         key={tweet.id}

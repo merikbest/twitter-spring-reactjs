@@ -39,7 +39,7 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         },
     },
     addForm: {
-        padding: "20px 20px 0px 20px",
+        padding: "72px 20px 0px 20px",
     },
     divider: {
         height: 12,

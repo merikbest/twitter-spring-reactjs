@@ -19,8 +19,9 @@ export const useImageListStyles = makeStyles((theme: Theme) => ({
             'object-fit': 'cover',
             borderRadius: 6,
         },
-        '& svg path': {
-            fill: 'white',
+        '& svg': {
+            color: "red",
+            height: "1.3em",
         },
     },
     itemRemove: {

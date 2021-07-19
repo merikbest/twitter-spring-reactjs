@@ -8,6 +8,12 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
         padding: 0,
         margin: 0,
         maxWidth: 230,
+        "& li .selected" : {
+            color: theme.palette.primary.main,
+            "& svg": {
+                fill: 'rgb(29, 161, 242)',
+            },
+        },
     },
     itemWrapper: {
         height: 58,
@@ -53,8 +59,11 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
         fontSize: 20,
     },
     button: {
-        height: 40,
+        height: 48,
         padding: theme.spacing(3.2),
         marginTop: theme.spacing(2),
+        "& .MuiButton-label": {
+            fontSize: 15,
+        },
     },
 }));
