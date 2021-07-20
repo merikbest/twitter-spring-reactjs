@@ -12,7 +12,6 @@ import mediumZoom from "medium-zoom";
 
 import {selectIsTweetLoading, selectTweetData} from '../../store/ducks/tweet/selectors';
 import {fetchTweetData, setTweetData} from '../../store/ducks/tweet/actionCreators';
-import ImageList from "../../components/ImageList/ImageList";
 import {fetchLikeTweet, fetchRetweet} from "../../store/ducks/tweets/actionCreators";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import UsersListModal from "../../components/UsersListModal/UsersListModal";

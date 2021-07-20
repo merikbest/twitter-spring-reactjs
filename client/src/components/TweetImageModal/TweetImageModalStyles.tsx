@@ -13,9 +13,11 @@ export const useTweetImageStyles = makeStyles((theme: Theme) => ({
     },
     modalWrapper: {
         backgroundColor: "white",
-        width: 332,
+        width: 359,
         height: "100%",
         float: 'right',
+        overflowY: "scroll",
+        overflowX: "hidden",
     },
     imageModal: {
         position: "absolute",
@@ -44,6 +46,9 @@ export const useTweetImageStyles = makeStyles((theme: Theme) => ({
         marginBottom: 16,
         lineHeight: 1.3125,
         wordBreak: 'break-word',
+        '& #hashtag': {
+            color: "rgb(27, 149, 224)",
+        },
     },
     content: {
         display: 'flex',

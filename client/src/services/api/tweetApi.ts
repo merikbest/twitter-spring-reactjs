@@ -42,7 +42,7 @@ export const TweetApi = {
         return data.data;
     },
     async replyTweet(payload: { id: string, text: string; addressedUsername: string;
-        images: []; likes: []; retweets: []; }): Promise<Response<Tweet>> {
+        images: Image[]; likes: []; retweets: []; }): Promise<Response<Tweet>> {
         const data = await axios.post<Response<Tweet>>(API_URL + `/tweets/reply/${payload.id}`,
             {text: payload.text, addressedUsername: payload.addressedUsername,
                 images: payload.images, likes: payload.likes, retweets: payload.retweets,});

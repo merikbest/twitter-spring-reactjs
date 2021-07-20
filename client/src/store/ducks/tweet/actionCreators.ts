@@ -7,6 +7,7 @@ import {
     TweetActionType
 } from "./contracts/actionTypes";
 import {TweetState} from "./contracts/state";
+import {Image} from "../tweets/contracts/state";
 
 export const setTweetData = (payload: TweetState["data"]): SetTweetDataActionInterface => ({
     type: TweetActionType.SET_TWEET_DATA,
@@ -28,7 +29,7 @@ export const fetchReplyTweet = (
         id: string;
         text: string;
         addressedUsername: string;
-        images: [];
+        images: Image[];
         likes: [];
         retweets: [];
     }): FetchReplyTweetActionInterface => ({

@@ -35,6 +35,23 @@ export const useAddTweetFormStyles = makeStyles((theme: Theme) => ({
             height: "0.75em",
         },
     },
+    imageSmall: {
+        position: 'relative',
+        '& img': {
+            marginLeft: "58px",
+            objectFit: "cover",
+            marginTop: 10,
+            width: 260,
+            height: 152,
+            borderRadius: 20,
+            borderColor: "#5b7083",
+        },
+        "& svg": {
+            verticalAlign: "top",
+            fill: '#fff',
+            height: "0.75em",
+        },
+    },
     imageRemove: {
         padding: 6,
         top: 15,

@@ -1,11 +1,12 @@
 import React, {FC, ReactElement, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import {Alert} from "@material-ui/lab";
+import {IconButton} from "@material-ui/core";
 
-import {useDispatch, useSelector} from "react-redux";
 import {fetchAddTweet, setAddFormState} from "../../store/ducks/tweets/actionCreators";
 import {selectAddFormState} from "../../store/ducks/tweets/selectors";
 import {AddFormState, Image} from '../../store/ducks/tweets/contracts/state';
@@ -15,8 +16,8 @@ import {selectUserData} from "../../store/ducks/user/selectors";
 import {fetchReplyTweet} from "../../store/ducks/tweet/actionCreators";
 import {useAddTweetFormStyles} from "./AddTweetFormStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
-import {IconButton} from "@material-ui/core";
-import {CloseIcon, EmojiIcon, GifIcon, MediaIcon, PullIcon, ScheduleIcon} from "../../icons";
+import {CloseIcon, EmojiIcon, GifIcon, PullIcon, ScheduleIcon} from "../../icons";
+import {useLocation} from "react-router-dom";
 
 interface AddTweetFormProps {
     maxRows?: number;
@@ -42,10 +43,11 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
                                                     }: AddTweetFormProps): ReactElement => {
     const classes = useAddTweetFormStyles();
     const dispatch = useDispatch();
+    const location = useLocation();
     const addFormState = useSelector(selectAddFormState);
     const userData = useSelector(selectUserData);
-    const [text, setText] = React.useState<string>('');
-    const [images, setImages] = React.useState<ImageObj[]>([]);
+    const [text, setText] = useState<string>('');
+    const [images, setImages] = useState<ImageObj[]>([]);
 
     const textLimitPercent = Math.round((text.length / 280) * 100);
     const textCount = MAX_LENGTH - text.length;
@@ -72,17 +74,30 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
         setImages([]);
     };
 
-    const handleClickReplyTweet = (): void => {
+    const handleClickReplyTweet = async (): Promise<void>  => {
+        let result: Array<Image> = [];
+        dispatch(setAddFormState(AddFormState.LOADING));
+        for (let i = 0; i < images.length; i++) {
+            const file: File = images[i].file;
+            const image: Image = await uploadImage(file);
+            result.push(image);
+        }
+
         if (addressedUsername) {
             dispatch(fetchReplyTweet({
-                id: tweetId!, text: parseHashtags(text), addressedUsername, images: [], likes: [], retweets: []
+                id: tweetId!, text: parseHashtags(text), addressedUsername, images: result, likes: [], retweets: []
             }));
             setText("");
+            setImages([]);
         }
     };
 
     const parseHashtags = (text: string): string => {
         return text.replace(/(#\w+)\b/ig, (hashtag) => `<b id="hashtag">${hashtag}</b>`);
+    };
+
+    const removeImage = (): void => {
+        setImages((prev) => prev.filter((obj) => obj.src !== images[0].src));
     };
 
     return (
@@ -101,24 +116,17 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
                     rowsMax={maxRows}
                 />
             </div>
-            {/*<div className={classes.image}>*/}
-            {/*    <img src={images[0].src} alt={DEFAULT_PROFILE_IMG}/>*/}
-            {/*    <IconButton className={classes.imageRemove}>*/}
-            {/*        {CloseIcon}*/}
-            {/*    </IconButton>*/}
-            {/*</div>*/}
-
             {(images.length !== 0) && (
-                <div className={classes.image}>
+                <div className={(location.pathname.includes("/modal")) ? classes.imageSmall : classes.image}>
                     <img src={images[0].src} alt={images[0].src}/>
-                    <IconButton className={classes.imageRemove}>
+                    <IconButton onClick={removeImage} className={classes.imageRemove}>
                         {CloseIcon}
                     </IconButton>
                 </div>)
             }
             <div className={classes.footer}>
                 <div className={classes.footerWrapper}>
-                    <UploadImages images={images} onChangeImages={setImages}/>
+                    <UploadImages onChangeImages={setImages}/>
                     <div className={classes.footerImage}>
                         <IconButton color="primary">
                             <span>{GifIcon}</span>

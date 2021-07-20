@@ -1,4 +1,5 @@
 import React, {FC, ReactElement, MouseEvent, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory, useLocation} from 'react-router-dom';
 import {Avatar, IconButton, Menu, MenuItem, Paper, Typography} from '@material-ui/core';
 import RepostIcon from "@material-ui/icons/RepeatOutlined";
@@ -7,11 +8,12 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import {LikeOutlinedIcon, LikeIcon, RetweetIcon, RetweetOutlinedIcon, ReplyIcon, ShareIcon} from "../../icons";
 import {useTweetStyles} from "./TweetStyles";
 import {formatDate} from '../../util/formatDate';
-import {useDispatch, useSelector} from "react-redux";
 import {fetchLikeTweet, fetchRetweet, removeTweet} from "../../store/ducks/tweets/actionCreators";
 import {Image} from "../../store/ducks/tweets/contracts/state";
 import {User} from "../../store/ducks/user/contracts/state";
 import {selectUserData} from "../../store/ducks/user/selectors";
+import {DEFAULT_PROFILE_IMG} from "../../util/url";
+import ReplyModal from "../ReplyModal/ReplyModal";
 
 interface TweetProps {
     id: string;
@@ -44,9 +46,11 @@ const Tweet: FC<TweetProps> = ({
     const history = useHistory();
     const location = useLocation();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
     const open = Boolean(anchorEl);
     const isTweetLiked = likes.find((user) => user.id === myProfile?.user?.id);
     const isTweetRetweeted = retweets.find((user) => user.id === myProfile?.user?.id);
+    const isModal = location.pathname.includes("/modal");
     const image = images?.[0];
 
     const handleClickTweet = (event: React.MouseEvent<HTMLAnchorElement>): void => {
@@ -73,6 +77,14 @@ const Tweet: FC<TweetProps> = ({
         }
     };
 
+    const onOpenReplyModalWindow = (): void => {
+        setVisibleModalWindow(true);
+    };
+
+    const onCloseReplyModalWindow = (): void => {
+        setVisibleModalWindow(false);
+    };
+
     const handleLike = (): void => {
         dispatch(fetchLikeTweet(id));
     };
@@ -84,19 +96,19 @@ const Tweet: FC<TweetProps> = ({
     return (
         <>
             {isTweetRetweeted &&
-                <div className={classes.retweetWrapper}>
-                    <RepostIcon/>
-                    <Typography>
-                        You Retweeted
-                    </Typography>
-                </div>
+            <div className={classes.retweetWrapper}>
+                <RepostIcon/>
+                <Typography>
+                    You Retweeted
+                </Typography>
+            </div>
             }
             <Paper className={classes.container} variant="outlined">
                 <Avatar
                     className={classes.avatar}
                     alt={`avatar ${user.id}`}
-                    src={user.avatar?.src ? user.avatar?.src :
-                        "https://abs.twimg.com/sticky/default_profile_images/default_profile_reasonably_small.png"}/>
+                    src={user.avatar?.src ? user.avatar?.src : DEFAULT_PROFILE_IMG}
+                />
                 <div style={{flex: 1}}>
                     <a onClick={handleClickTweet} className={classes.headerWrapper} href={`/home/tweet/${id}`}>
                         <div className={classes.header}>
@@ -124,29 +136,28 @@ const Tweet: FC<TweetProps> = ({
                     </a>
                     <Typography variant="body1" gutterBottom>
                         {addressedUser &&
-                            <object>
-                                <Typography className={classes.replyWrapper}>
-                                    Replying to <Link to={`/user/${addressedId}`} className={classes.replyLink}>
-                                    @{addressedUser}
-                                </Link>
-                                </Typography>
-                            </object>
+                        <object>
+                            <Typography className={classes.replyWrapper}>
+                                Replying to <Link to={`/user/${addressedId}`} className={classes.replyLink}>
+                                @{addressedUser}
+                            </Link>
+                            </Typography>
+                        </object>
                         }
                         <a onClick={handleClickTweet} className={classes.text} href={`/home/tweet/${id}`}>
                             <div dangerouslySetInnerHTML={{__html: text}}></div>
                         </a>
                         {(images?.length !== 0) &&
-                            <Link to={{pathname: `/modal/${id}`, state: { background: location }}}>
-                                <div className={classes.image}>
-                                    <img src={image?.src} alt={image?.src}/>
-                                </div>
-                            </Link>
+                        <Link to={{pathname: `/modal/${id}`, state: {background: location}}}>
+                            <div className={classes.image}>
+                                <img className={isModal ? "small" : ""} src={image?.src} alt={image?.src}/>
+                            </div>
+                        </Link>
                         }
-                        {/*{images && <ImageList classes={classes} images={images}/>}*/}
                     </Typography>
                     <div className={classes.footer}>
                         <div className={classes.footerIcon}>
-                            <IconButton>
+                            <IconButton onClick={onOpenReplyModalWindow}>
                                 <span>{ReplyIcon}</span>
                             </IconButton>
                             {(replies?.length === 0 || replies === null) ? null : (
@@ -191,6 +202,12 @@ const Tweet: FC<TweetProps> = ({
                     </div>
                 </div>
                 <div className={classes.bottomLine}/>
+                <ReplyModal
+                    user={user}
+                    text={text}
+                    dateTime={dateTime}
+                    visible={visibleModalWindow}
+                    onClose={onCloseReplyModalWindow}/>
             </Paper>
         </>
     );

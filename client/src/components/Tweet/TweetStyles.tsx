@@ -59,16 +59,18 @@ export const useTweetStyles = makeStyles((theme: Theme) => ({
         },
     },
     image: {
-        height: 280,
         position: "relative",
         "& img": {
             objectFit: "cover",
-            position: "absolute",
             marginTop: 10,
             width: 504,
             height: 280,
             borderRadius: 20,
             borderColor: "#5b7083",
+        },
+        "& .small": {
+            width: 260,
+            height: 152,
         },
     },
     footer: {
