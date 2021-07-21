@@ -8,7 +8,7 @@ import {
     FetchTweetsByUserActionInterface,
     FetchUserTweetsActionInterface,
     LikeTweetActionInterface,
-    RemoveTweetActionInterface,
+    RemoveTweetActionInterface, ReplyActionInterface,
     RetweetActionInterface,
     SetAddFormStateInterface
 } from "./contracts/actionTypes";
@@ -95,6 +95,11 @@ export const likeTweet = (payload: Tweet): LikeTweetActionInterface => ({
 
 export const retweet = (payload: Tweet): RetweetActionInterface => ({
     type: TweetsActionType.RETWEET,
+    payload,
+});
+
+export const reply = (payload: Tweet): ReplyActionInterface => ({
+    type: TweetsActionType.REPLY,
     payload,
 });
 

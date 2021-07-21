@@ -5,7 +5,7 @@ import {FetchReplyTweetActionInterface, FetchTweetDataActionInterface, TweetActi
 import {Tweet} from '../tweets/contracts/state';
 import {setTweetData, setTweetLoadingState} from './actionCreators';
 import {LoadingStatus} from '../../types';
-import {setTweetsLoadingState} from "../tweets/actionCreators";
+import {reply, setTweetsLoadingState} from "../tweets/actionCreators";
 
 export function* fetchTweetDataRequest({payload: tweetId}: FetchTweetDataActionInterface) {
     try {
@@ -18,9 +18,10 @@ export function* fetchTweetDataRequest({payload: tweetId}: FetchTweetDataActionI
 
 export function* fetchReplyTweetRequest({payload}: FetchReplyTweetActionInterface) {
     try {
+        yield put(setTweetLoadingState(LoadingStatus.LOADING));
         const data: Tweet = yield call(TweetApi.replyTweet, payload);
         yield put(setTweetData(data));
-        yield put(setTweetsLoadingState(LoadingStatus.LOADED));
+        yield put(reply(data));
     } catch (error) {
         yield put(setTweetLoadingState(LoadingStatus.ERROR));
     }

@@ -80,6 +80,11 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
             draft.items[retweetIndex] = action.payload;
             break;
 
+        case TweetsActionType.REPLY:
+            const replyIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.id);
+            draft.items[replyIndex] = action.payload;
+            break;
+
         default:
             break;
     }

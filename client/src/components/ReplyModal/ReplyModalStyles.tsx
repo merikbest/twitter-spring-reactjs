@@ -2,6 +2,11 @@ import {makeStyles, Theme} from "@material-ui/core";
 
 export const useReplyModalStyles = makeStyles((theme: Theme) => ({
     container: {
+        width: 598,
+        height: "100%",
+        padding: 0,
+    },
+    modalWrapper: {
         fontSize: 15,
         display: 'flex',
         alignItems: 'flex-start',
@@ -31,5 +36,18 @@ export const useReplyModalStyles = makeStyles((theme: Theme) => ({
         '& #hashtag': {
             color: "rgb(27, 149, 224)",
         },
+    },
+    replyWrapper: {
+        marginTop: 12,
+        zIndex: 2,
+        fontSize: 15,
+        color: "#5b7083",
+    },
+    replyLink: {
+        textDecoration: "none",
+        color: "rgb(27, 149, 224)",
+    },
+    addForm: {
+        padding: "20px 20px 0px 20px",
     },
 }));

@@ -1,6 +1,6 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 
-import {addTweet, likeTweet, setAddFormState, setTweets, setTweetsLoadingState} from "./actionCreators";
+import {addTweet, likeTweet, retweet, setAddFormState, setTweets, setTweetsLoadingState} from "./actionCreators";
 import {TweetApi} from "../../../services/api/tweetApi";
 import {AddFormState, Tweet} from "./contracts/state";
 import {
@@ -110,7 +110,7 @@ export function* fetchLikeTweetRequest({payload}: FetchLikeTweetActionInterface)
 
 export function* fetchRetweetRequest({payload}: FetchRetweetActionInterface) {
     const item: Tweet = yield call(TweetApi.retweet, payload);
-    yield put(likeTweet(item));
+    yield put(retweet(item));
     yield put(setTweetData(item));
     yield put(setUserRetweet(item));
 }

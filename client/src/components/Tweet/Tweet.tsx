@@ -204,6 +204,7 @@ const Tweet: FC<TweetProps> = ({
                 <div className={classes.bottomLine}/>
                 <ReplyModal
                     user={user}
+                    tweetId={id}
                     text={text}
                     dateTime={dateTime}
                     visible={visibleModalWindow}
