@@ -4,6 +4,7 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
     container: {
         borderRadius: 0,
         minHeight: '100vh',
+        marginBottom: 500,
         borderTop: 0,
         borderBottom: 0,
         "& .MuiTab-root": {

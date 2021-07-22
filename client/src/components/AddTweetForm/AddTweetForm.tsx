@@ -27,6 +27,7 @@ interface AddTweetFormProps {
     title: string;
     buttonName: string;
     addressedUsername?: string;
+    addressedId?: number;
 }
 
 export interface ImageObj {
@@ -42,7 +43,8 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
                                                         tweetId,
                                                         title,
                                                         buttonName,
-                                                        addressedUsername
+                                                        addressedUsername,
+                                                        addressedId
                                                     }: AddTweetFormProps): ReactElement => {
     const classes = useAddTweetFormStyles();
     const dispatch = useDispatch();
@@ -87,9 +89,9 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
             result.push(image);
         }
 
-        if (addressedUsername) {
+        if (addressedUsername && addressedId) {
             dispatch(fetchReplyTweet({
-                id: tweetId!, text: parseHashtags(text), addressedUsername, images: result, likes: [], retweets: []
+                id: tweetId!, text: parseHashtags(text), addressedUsername, addressedId, images: result, likes: [], retweets: []
             }));
             setText("");
             setImages([]);

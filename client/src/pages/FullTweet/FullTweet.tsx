@@ -189,6 +189,7 @@ export const FullTweet: FC = (): ReactElement | null => {
                     <AddTweetForm
                         tweetId={tweetData?.id}
                         addressedUsername={tweetData.user.username}
+                        addressedId={tweetData.user.id}
                         maxRows={15}
                         title={"Tweet your reply"}
                         buttonName={"Reply"}/>
@@ -207,13 +208,7 @@ export const FullTweet: FC = (): ReactElement | null => {
                     )}
                 </Paper>
                 <div className={classes.divider}/>
-                {tweetData.replies.map((tweet) =>
-                    <Tweet
-                        key={tweet.id}
-                        images={tweet.images}
-                        addressedUser={tweetData.user.username}
-                        addressedId={tweetData.user.id}
-                        {...tweet} />)}
+                {tweetData.replies.map((tweet) => <Tweet key={tweet.id} images={tweet.images} {...tweet} />)}
             </div>
         );
     }

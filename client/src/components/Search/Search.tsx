@@ -63,16 +63,19 @@ const Search: FC = () => {
     };
 
     const showTopTweets = (): void => {
+        window.scrollTo(0, 0);
         dispatch(fetchTweets());
     };
 
     const showUsers = (): void => {
+        window.scrollTo(0, 0);
         UserApi.getUsers().then((data) => {
             setUsers(data);
         });
     };
 
     const showMediaTweets = (): void => {
+        window.scrollTo(0, 0);
         dispatch(fetchMediaTweets());
     };
 

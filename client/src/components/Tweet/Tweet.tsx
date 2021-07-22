@@ -24,7 +24,7 @@ interface TweetProps {
     dateTime: string;
     images?: Image[];
     user: User;
-    addressedUser?: string;
+    addressedUsername: string;
     addressedId?: number;
 }
 
@@ -37,7 +37,7 @@ const Tweet: FC<TweetProps> = ({
                                    likes,
                                    retweets,
                                    replies,
-                                   addressedUser,
+                                   addressedUsername,
                                    addressedId
                                }: TweetProps): ReactElement => {
     const classes = useTweetStyles();
@@ -135,11 +135,11 @@ const Tweet: FC<TweetProps> = ({
                         </div>
                     </a>
                     <Typography variant="body1" gutterBottom>
-                        {addressedUser &&
+                        {addressedUsername &&
                         <object>
                             <Typography className={classes.replyWrapper}>
                                 Replying to <Link to={`/user/${addressedId}`} className={classes.replyLink}>
-                                @{addressedUser}
+                                @{addressedUsername}
                             </Link>
                             </Typography>
                         </object>

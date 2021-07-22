@@ -42,6 +42,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
         dispatch(fetchRelevantUsers());
         dispatch(fetchTags());
         document.body.style.overflow = 'unset';
+        window.scrollTo(0, 0);
     }, [match.params.id]);
 
     useEffect(() => {

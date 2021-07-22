@@ -35,6 +35,7 @@ const Home: FC = (): ReactElement => {
             dispatch(fetchRelevantUsers());
         }
         document.body.style.overflow = 'unset';
+        window.scrollTo(0, 0);
     }, []);
 
     return (

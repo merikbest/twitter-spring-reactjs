@@ -29,6 +29,7 @@ export const fetchReplyTweet = (
         id: string;
         text: string;
         addressedUsername: string;
+        addressedId: number;
         images: Image[];
         likes: [];
         retweets: [];
