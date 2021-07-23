@@ -29,7 +29,7 @@ const Search: FC = () => {
     const dispatch = useDispatch();
     const isLoading = useSelector(selectIsTweetsLoading);
     const tweets = useSelector(selectTweetsItems);
-    const location = useLocation<{ tag: string | undefined }>();
+    const location = useLocation<{ tag: string | undefined; text: string | undefined; }>();
     const history = useHistory();
 
     const [text, setText] = React.useState<string>("");
@@ -41,7 +41,12 @@ const Search: FC = () => {
             dispatch(fetchTweetsByTag(location.state?.tag));
             setText(decodeURIComponent(location.state?.tag));
         }
-    }, [location.state?.tag]);
+
+        if (location.state?.text !== undefined) {
+            dispatch(fetchTweetsByText(location.state?.text));
+            setText(decodeURIComponent(location.state?.text));
+        }
+    }, [location.state?.tag, location.state?.text]);
 
     const handleChangeTab = (event: ChangeEvent<{}>, newValue: number): void => {
         setText("");

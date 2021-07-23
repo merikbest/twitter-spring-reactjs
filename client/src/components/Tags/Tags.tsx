@@ -27,7 +27,7 @@ const Tags: FC = (): ReactElement => {
                 </div>
             ) : (
                 <List>
-                    {tags.slice(0, 4).map((tag: Tag) => (
+                    {tags.slice(0, 3).map((tag: Tag) => (
                         <Link to={{pathname: "/search", state: {tag: encodeURIComponent(tag.tagName)}}}>
                             <React.Fragment key={tag.id}>
                                 <ListItem className={classes.item}>

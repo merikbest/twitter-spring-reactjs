@@ -100,7 +100,7 @@ public class TweetServiceImpl implements TweetService {
     @Override
     public List<Tweet> searchTweets(String text) {
         Set<Tweet> tweets = new HashSet<>();
-        List<Tweet> tweetsByText = tweetRepository.findAllByTextContaining(text);
+        List<Tweet> tweetsByText = tweetRepository.findAllByTextIgnoreCaseContaining(text);
         List<Tag> tagsByText = tagRepository.findByTagNameContaining(text);
         List<User> usersByText = userRepository.findByFullNameOrUsernameContaining(text, text);
 

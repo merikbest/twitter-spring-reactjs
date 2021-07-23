@@ -6,6 +6,9 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import {IconButton} from "@material-ui/core";
+import {Picker} from 'emoji-mart'
+import 'emoji-mart/css/emoji-mart.css'
+import {EmojiData} from "emoji-mart";
 
 import {fetchAddTweet, setAddFormState} from "../../store/ducks/tweets/actionCreators";
 import {selectIsTweetsLoading} from "../../store/ducks/tweets/selectors";
@@ -62,6 +65,10 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
         if (e.currentTarget) {
             setText(e.currentTarget.value);
         }
+    };
+
+    const addEmoji = (emoji: EmojiData): void => {
+        setText((text + " " + emoji.colons).trim());
     };
 
     const handleClickAddTweet = async (): Promise<void> => {
@@ -192,6 +199,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
                             buttonName
                         )}
                     </Button>
+                    {/*<Picker onSelect={emojiTag => addEmoji(emojiTag)} set={"twitter"} />*/}
                 </div>
             </div>
         </div>
