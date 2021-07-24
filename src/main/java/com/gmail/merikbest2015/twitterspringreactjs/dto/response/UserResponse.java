@@ -13,6 +13,7 @@ public class UserResponse {
     private String location;
     private String about;
     private String website;
+    private Long tweetCount;
     private ImageResponse avatar;
     private ImageResponse wallpaper;
     private boolean confirmed;

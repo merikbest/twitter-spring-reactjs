@@ -90,7 +90,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
                 <div>
                     <Typography variant="h6">{userProfile?.fullName}</Typography>
                     <Typography variant="caption" display="block" gutterBottom>
-                        {tweets.length} Tweets
+                        {userProfile?.tweetCount} Tweets
                     </Typography>
                 </div>
             </Paper>

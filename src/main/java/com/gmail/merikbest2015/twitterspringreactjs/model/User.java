@@ -25,6 +25,7 @@ public class User {
     private String activationCode;
     private String passwordResetCode;
     private String role;
+    private Long tweetCount;
     private boolean active;
 
     @ManyToMany

@@ -18,6 +18,7 @@ public class UserRequest {
     private ImageResponse avatar;
     private ImageResponse wallpaper;
     private boolean confirmed;
+    private Long tweetCount;
     private List<TweetResponse> tweets;
     private List<UserRequest> followers;
     private List<UserRequest> following;

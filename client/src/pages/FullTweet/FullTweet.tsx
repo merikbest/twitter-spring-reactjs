@@ -20,6 +20,7 @@ import Tweet from "../../components/Tweet/Tweet";
 import {useFullTweetStyles} from "./FullTweetStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {LikeIcon, LikeOutlinedIcon, ReplyIcon, RetweetIcon, RetweetOutlinedIcon, ShareIcon} from "../../icons";
+import {textFormatter} from "../../util/textFormatter";
 
 export const FullTweet: FC = (): ReactElement | null => {
     const classes = useFullTweetStyles();
@@ -108,7 +109,7 @@ export const FullTweet: FC = (): ReactElement | null => {
                         </Typography>
                     </div>
                     <Typography className={classes.textWrapper} gutterBottom>
-                        <div dangerouslySetInnerHTML={{__html: tweetData.text}}></div>
+                        {textFormatter(tweetData.text)}
                         {(tweetData.images?.length !== 0) &&
                             <Link to={{pathname: `/modal/${params.id}`, state: { background: location }}}>
                                 <div className={classes.image}>

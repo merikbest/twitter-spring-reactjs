@@ -14,6 +14,7 @@ import {User} from "../../store/ducks/user/contracts/state";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import ReplyModal from "../ReplyModal/ReplyModal";
+import {textFormatter} from "../../util/textFormatter";
 
 interface TweetProps {
     id: string;
@@ -145,7 +146,7 @@ const Tweet: FC<TweetProps> = ({
                         </object>
                         }
                         <a onClick={handleClickTweet} className={classes.text} href={`/home/tweet/${id}`}>
-                            <div dangerouslySetInnerHTML={{__html: text}}></div>
+                            {textFormatter(text)}
                         </a>
                         {(images?.length !== 0) &&
                         <Link to={{pathname: `/modal/${id}`, state: {background: location}}}>
@@ -206,6 +207,7 @@ const Tweet: FC<TweetProps> = ({
                     user={user}
                     tweetId={id}
                     text={text}
+                    image={image}
                     dateTime={dateTime}
                     visible={visibleModalWindow}
                     onClose={onCloseReplyModalWindow}/>

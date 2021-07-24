@@ -14,17 +14,20 @@ import {User} from "../../store/ducks/user/contracts/state";
 import {AddTweetForm} from "../AddTweetForm/AddTweetForm";
 import {useSelector} from "react-redux";
 import {selectIsTweetLoading} from "../../store/ducks/tweet/selectors";
+import {textFormatter} from "../../util/textFormatter";
+import {Image} from "../../store/ducks/tweets/contracts/state";
 
 interface ReplyModalProps {
     user: User;
     tweetId: string;
     text: string;
+    image?: Image;
     dateTime: string;
     visible?: boolean;
     onClose: () => void;
 }
 
-const ReplyModal: FC<ReplyModalProps> = ({user, tweetId, text, dateTime, visible, onClose}) => {
+const ReplyModal: FC<ReplyModalProps> = ({user, tweetId, text, image, dateTime, visible, onClose}) => {
     const classes = useReplyModalStyles();
     const isReplyLoading = useSelector(selectIsTweetLoading);
 
@@ -37,14 +40,14 @@ const ReplyModal: FC<ReplyModalProps> = ({user, tweetId, text, dateTime, visible
     }
 
     return (
-        <Dialog style={{top: "-55%"}} open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
+        <Dialog style={{top: "-30%"}} open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title" style={{margin: 0}}>
                 <IconButton onClick={onClose} color="secondary" aria-label="close">
                     <CloseIcon style={{fontSize: 26}} color="secondary"/>
                 </IconButton>
             </DialogTitle>
             <DialogContent className={classes.container}>
-                <div className={classes.modalWrapper} >
+                <div className={classes.modalWrapper}>
                     <Avatar
                         className={classes.avatar}
                         alt={`avatar ${user.id}`}
@@ -60,8 +63,13 @@ const ReplyModal: FC<ReplyModalProps> = ({user, tweetId, text, dateTime, visible
                             </div>
                         </div>
                         <div className={classes.text}>
-                            <div dangerouslySetInnerHTML={{__html: text}}></div>
+                            {textFormatter(text)}
                         </div>
+                        {image && (
+                            <div className={classes.image}>
+                                <img src={image?.src} alt={image?.src}/>
+                            </div>
+                        )}
                         <object>
                             <Typography className={classes.replyWrapper}>
                                 Replying to <Link to={`/user/${user.id}`} className={classes.replyLink}>

@@ -47,7 +47,6 @@ export const useFullTweetStyles = makeStyles((theme: Theme) => ({
         lineHeight: 1.3125,
         wordBreak: 'break-word',
         '& #hashtag': {
-            fontWeight: "bold",
             color: "rgb(27, 149, 224)",
         },
     },
