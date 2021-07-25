@@ -19,7 +19,7 @@ export const useStylesSignIn = makeStyles((theme) => ({
         listStyle: 'none',
         padding: 0,
         margin: 0,
-        width: 380,
+        width: 400,
         '& h6': {
             display: 'flex',
             alignItems: 'center',
@@ -29,7 +29,13 @@ export const useStylesSignIn = makeStyles((theme) => ({
         }
     },
     leftSideListInfoItem: {
-        marginBottom: 40
+        marginBottom: 40,
+        "& svg": {
+            marginRight: 15,
+            verticalAlign: "centered",
+            fill: '#fff',
+            height: "1.5em",
+        },
     },
     leftSideIcon: {
         fontSize: 32,
@@ -69,5 +75,9 @@ export const useStylesSignIn = makeStyles((theme) => ({
     },
     loginFormControl: {
         marginBottom: theme.spacing(2),
-    }
+    },
+    signinButton: {
+        height: 45,
+        marginBottom: 20
+    },
 }));

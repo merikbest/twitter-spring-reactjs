@@ -1,5 +1,6 @@
-import React, {FC, ReactElement} from 'react';
-import {Container, Grid, InputAdornment} from '@material-ui/core';
+import React, {FC, ReactElement, ReactNode} from 'react';
+import {Container, Grid} from '@material-ui/core';
+import {useLocation} from "react-router-dom";
 
 import SideMenu from "../components/SideMenu/SideMenu";
 import Tags from "../components/Tags/Tags";
@@ -8,11 +9,16 @@ import {useLayoutStyles} from "./LayoutStyles";
 import SideSearch from "../components/SideSearch/SideSearch";
 
 interface Layout {
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 export const Layout: FC<Layout> = ({children}): ReactElement => {
     const classes = useLayoutStyles();
+    const location = useLocation();
+
+    if (location.pathname.includes("/signin") || location.pathname.includes("/login")) {
+        return <div>{children}</div>;
+    }
 
     return (
         <Container className={classes.wrapper} maxWidth="lg">

@@ -72,7 +72,7 @@ export const theme = createMuiTheme({
                 },
             },
             input: {
-                backgroundColor: 'rgb(245, 248, 250)',
+                // backgroundColor: 'rgb(245, 248, 250)',
             },
         },
         MuiDialog: {
