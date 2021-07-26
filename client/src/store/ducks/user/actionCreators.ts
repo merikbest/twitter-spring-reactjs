@@ -5,7 +5,7 @@ import {
     FetchUserDataActionInterface,
     FollowUserActionInterface,
     SetUserDataActionInterface,
-    SetUserLoadingStateActionInterface,
+    SetUserLoadingStateActionInterface, SignInErrorActionInterface,
     SignOutActionInterface, UnfollowUserActionInterface,
     UpdateUserDataActionInterface,
     UserActionsType
@@ -29,6 +29,11 @@ export const signOut = (): SignOutActionInterface => ({
 
 export const fetchSignIn = (payload: LoginFormProps): FetchSignInActionInterface => ({
     type: UserActionsType.FETCH_SIGN_IN,
+    payload,
+});
+
+export const signInError = (payload: number): SignInErrorActionInterface => ({
+    type: UserActionsType.SIGN_IN_ERROR,
     payload,
 });
 

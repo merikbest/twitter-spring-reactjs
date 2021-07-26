@@ -14,6 +14,8 @@ import {useStylesSignIn} from "./SignInStyles";
 import {selectUserStatus} from "../../store/ducks/user/selectors";
 import {fetchSignIn} from "../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../store/types";
+import {History, Location, LocationState} from "history";
+
 
 interface LoginModalProps {
     open: boolean;
@@ -23,6 +25,7 @@ interface LoginModalProps {
 export interface LoginFormProps {
     email: string;
     password: string;
+    history: History<LocationState>;
 }
 
 const LoginFormSchema = yup.object().shape({

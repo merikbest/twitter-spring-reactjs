@@ -8,7 +8,7 @@ import SignIn from './pages/SignIn/SignIn';
 import Home from "./pages/Home/Home";
 import {Layout} from './pages/Layout';
 import UserPage from "./pages/UserPage/UserPage";
-import {selectIsAuth, selectUserStatus} from "./store/ducks/user/selectors";
+import {selectIsAuth, selectLoginErrorStatus, selectUserStatus} from "./store/ducks/user/selectors";
 import {LoadingStatus} from './store/types';
 import {fetchUserData} from './store/ducks/user/actionCreators';
 import ActivatePage from "./pages/ActivatePage/ActivatePage";
@@ -36,6 +36,7 @@ const App: FC = (): ReactElement => {
     const dispatch = useDispatch();
     const isAuth = useSelector(selectIsAuth);
     const loadingStatus = useSelector(selectUserStatus);
+    const errorStatus = useSelector(selectLoginErrorStatus);
     const isReady = loadingStatus !== LoadingStatus.NEVER && loadingStatus !== LoadingStatus.LOADING;
 
     const location = useLocation<{ background: any }>();
@@ -43,15 +44,16 @@ const App: FC = (): ReactElement => {
 
     useEffect(() => {
         dispatch(fetchUserData());
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
-        if (!localStorage.getItem('token')) {
-            history.push('/signin');
-        } else {
+        if (errorStatus === 403) {
+            history.push('/login');
+        } else if (!isAuth && isReady) {
+            history.push("/signin");
+        } else if (history.location.pathname === '/') {
             history.push('/home');
         }
-
     }, [isAuth, isReady]);
 
     if (!isReady) {

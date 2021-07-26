@@ -1,5 +1,5 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
-import {setUpdatedUserData, setUserData, setUserLoadingStatus} from "./actionCreators";
+import {setUpdatedUserData, setUserData, setUserLoadingStatus, signInError} from "./actionCreators";
 import {AuthUser, User} from "./contracts/state";
 import {
     FetchSignInActionInterface,
@@ -9,7 +9,7 @@ import {
     UpdateUserDataActionInterface,
     UserActionsType
 } from "./contracts/actionTypes";
-import {AuthApi} from "../../../services/api/authApi";
+import {AuthApi, Response} from "../../../services/api/authApi";
 import {LoadingStatus} from "../../types";
 import {UserApi} from "../../../services/api/userApi";
 
@@ -19,7 +19,9 @@ export function* fetchSignInRequest({payload}: FetchSignInActionInterface) {
         const data: AuthUser = yield call(AuthApi.signIn, payload);
         localStorage.setItem("token", data.token);
         yield put(setUserData(data));
+        payload.history.push("/home");
     } catch (error) {
+        yield put(signInError(error.response.status));
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
 }

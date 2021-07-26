@@ -7,6 +7,7 @@ import {User, UserState} from "./state";
 
 export enum UserActionsType {
     FETCH_SIGN_IN = "user/FETCH_SIGN_IN",
+    SIGN_IN_ERROR = "user/SIGN_IN_ERROR",
     FETCH_SIGN_UP = 'user/FETCH_SIGN_UP',
     SET_USER_DATA = "user/SET_USER_DATA",
     UPDATE_USER_DATA = "user/UPDATE_USER_DATA",
@@ -24,6 +25,11 @@ export interface SignOutActionInterface extends Action<UserActionsType> {
 export interface FetchSignInActionInterface extends Action<UserActionsType> {
     type: UserActionsType.FETCH_SIGN_IN;
     payload: LoginFormProps;
+}
+
+export interface SignInErrorActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.SIGN_IN_ERROR;
+    payload: number;
 }
 
 export interface FetchSignUpActionInterface extends Action<UserActionsType> {
@@ -65,6 +71,7 @@ export type UserActions =
     | SetUserLoadingStateActionInterface
     | FetchUserDataActionInterface
     | SignOutActionInterface
+    | SignInErrorActionInterface
     | UpdateUserDataActionInterface
     | FollowUserActionInterface
     | UnfollowUserActionInterface;

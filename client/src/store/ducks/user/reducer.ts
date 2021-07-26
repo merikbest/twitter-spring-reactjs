@@ -6,7 +6,8 @@ import {LoadingStatus} from '../../types';
 
 const initialUserState: UserState = {
     data: undefined,
-    status: LoadingStatus.NEVER
+    status: LoadingStatus.NEVER,
+    errorStatus: 0
 };
 
 export const userReducer = produce((draft: Draft<UserState>, action: UserActions) => {
@@ -14,6 +15,7 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
     switch (action.type) {
         case UserActionsType.SET_USER_DATA:
             draft.data = action.payload;
+            draft.errorStatus = 0;
             draft.status = LoadingStatus.SUCCESS;
             break;
 
@@ -25,6 +27,10 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
         case UserActionsType.SIGN_OUT:
             draft.status = LoadingStatus.LOADED;
             draft.data = undefined;
+            break;
+
+        case UserActionsType.SIGN_IN_ERROR:
+            draft.errorStatus = action.payload;
             break;
 
         case UserActionsType.FOLLOW_USER:
