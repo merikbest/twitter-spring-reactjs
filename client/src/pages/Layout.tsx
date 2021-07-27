@@ -16,7 +16,7 @@ export const Layout: FC<Layout> = ({children}): ReactElement => {
     const classes = useLayoutStyles();
     const location = useLocation();
 
-    if (location.pathname.includes("/signin") || location.pathname.includes("/login")) {
+    if (location.pathname.includes("/account")) {
         return <div>{children}</div>;
     }
 

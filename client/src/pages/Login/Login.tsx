@@ -1,5 +1,6 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
+import {useHistory, Link} from "react-router-dom";
 import {Button} from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 
@@ -7,7 +8,6 @@ import {LoginTextField} from "./LoginInputField";
 import {useLoginStyles} from "./LoginStyles";
 import {selectLoginErrorStatus} from "../../store/ducks/user/selectors";
 import {fetchSignIn} from "../../store/ducks/user/actionCreators";
-import {useHistory} from "react-router-dom";
 
 const Login = () => {
     const classes = useLoginStyles();
@@ -17,7 +17,8 @@ const Login = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
-    const onSubmit = () => {
+    const onSubmit = (event: FormEvent<HTMLFormElement>): void => {
+        event.preventDefault();
         dispatch(fetchSignIn({email, password, history}));
     };
 
@@ -76,7 +77,8 @@ const Login = () => {
                 </Button>
             </form>
             <div className={classes.footer}>
-                <span><a href="">Forgot password?</a></span> · <span><a href="">Sign up for Twitter</a></span>
+                <span><Link to={"/account/forgot"}>Forgot password?</Link></span> ·
+                <span><Link to={"/account/signin"}>Sign up for Twitter</Link></span>
             </div>
         </div>
     );

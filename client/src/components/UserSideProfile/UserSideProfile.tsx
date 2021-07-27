@@ -44,7 +44,7 @@ const UserSideProfile: FC = () => {
     const handleSignOut = (): void => {
         window.localStorage.removeItem('token');
         dispatch(signOut());
-        history.push("/signin")
+        history.push("/account/signin")
     };
 
     if (!myProfile) {

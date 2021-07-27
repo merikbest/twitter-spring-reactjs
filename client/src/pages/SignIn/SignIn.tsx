@@ -15,7 +15,7 @@ const SignIn: FC = (): ReactElement => {
 
     const handleClickOpenSignIn = (): void => {
         // setVisibleModal("signIn");
-        history.push("/login");
+        history.push("/account/login");
     };
 
     const handleClickOpenSignUp = (): void => {

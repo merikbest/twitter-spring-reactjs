@@ -31,6 +31,8 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
 
         case UserActionsType.SIGN_IN_ERROR:
             draft.errorStatus = action.payload;
+            draft.data = undefined;
+            draft.status = LoadingStatus.ERROR;
             break;
 
         case UserActionsType.FOLLOW_USER:

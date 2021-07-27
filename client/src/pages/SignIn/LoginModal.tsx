@@ -14,7 +14,7 @@ import {useStylesSignIn} from "./SignInStyles";
 import {selectUserStatus} from "../../store/ducks/user/selectors";
 import {fetchSignIn} from "../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../store/types";
-import {History, Location, LocationState} from "history";
+import {History, LocationState} from "history";
 
 
 interface LoginModalProps {

@@ -16,6 +16,7 @@ import Search from './components/Search/Search';
 import FollowingFollowers from "./components/FollowingFollowers/FollowingFollowers";
 import TweetImageModal from "./components/TweetImageModal/TweetImageModal";
 import Login from "./pages/Login/Login";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 
 export const useAppStyles = makeStyles((theme: Theme) => ({
     centered: {
@@ -47,29 +48,26 @@ const App: FC = (): ReactElement => {
     }, [dispatch]);
 
     useEffect(() => {
-        if (errorStatus === 403) {
-            history.push('/login');
-        } else if (!isAuth && isReady) {
-            history.push("/signin");
-        } else if (history.location.pathname === '/') {
-            history.push('/home');
+        if (!isAuth && isReady && !location.pathname.includes("/account/login")) {
+            history.push('/account/signin');
         }
     }, [isAuth, isReady]);
 
-    if (!isReady) {
-        return (
-            <div className={classes.centered}>
-                <TwitterIcon color="primary" />
-            </div>
-        );
-    }
+    // if (!isReady) {
+    //     return (
+    //         <div className={classes.centered}>
+    //             <TwitterIcon color="primary" />
+    //         </div>
+    //     );
+    // }
 
     return (
         <div className="App">
             <Layout>
                 <Switch location={background || location}>
-                    <Route path="/signin" component={SignIn} exact/>
-                    <Route path="/login" component={Login} exact/>
+                    <Route path="/account/signin" component={SignIn} exact/>
+                    <Route path="/account/login" component={Login} exact/>
+                    <Route path="/account/forgot" component={ForgotPassword} exact/>
                     <Route path="/home" component={Home}/>
                     <Route path="/search" component={Search}/>
                     <Route path="/user/:id" component={UserPage} exact/>
