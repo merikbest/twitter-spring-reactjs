@@ -58,4 +58,8 @@ public class AuthenticationMapper {
     public String passwordReset(String email, String password) {
         return authenticationService.passwordReset(email, password);
     }
+
+    public boolean findEmail(String email) {
+        return authenticationService.findEmail(email);
+    }
 }

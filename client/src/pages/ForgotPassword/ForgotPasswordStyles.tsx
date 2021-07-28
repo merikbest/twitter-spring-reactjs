@@ -3,6 +3,9 @@ import {makeStyles, Theme} from "@material-ui/core";
 export const useForgotPasswordStyles = makeStyles((theme: Theme) => ({
     container: {
         fontFamily: "\"Helvetica Neue\",Helvetica,Arial,sans-serif",
+        "& a": {
+            textDecoration: "none",
+        }
     },
     header: {
         borderBottom: "0px solid #e1e8ed",
@@ -39,6 +42,22 @@ export const useForgotPasswordStyles = makeStyles((theme: Theme) => ({
         color: "#c33",
         fontWeight: 200,
     },
+    emailWrapper: {
+        margin: "16px 0",
+    },
+    radio: {
+        padding: 0,
+        marginRight: 5,
+        marginBottom: 5,
+        "& svg": {
+            width: 16,
+            height: 16
+        },
+    },
+    email: {
+        fontWeight: 400,
+        fontSize: 16,
+    },
     button: {
         padding: "5px 18px",
         marginTop: 25,
@@ -48,6 +67,16 @@ export const useForgotPasswordStyles = makeStyles((theme: Theme) => ({
             borderColor: "#006dbf",
             boxShadow: "0 0 0 2px #fff, 0 0 0 4px #1da1f2",
             color: "#fff",
+        },
+    },
+    footerText: {
+        marginBottom: 68,
+    },
+    link: {
+        fontSize: 13,
+        color: "#55acee",
+        "&:hover": {
+            cursor: 'pointer',
         },
     },
 }));

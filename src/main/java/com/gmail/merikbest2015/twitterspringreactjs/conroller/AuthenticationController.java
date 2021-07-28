@@ -65,6 +65,15 @@ public class AuthenticationController {
         }
     }
 
+    @PostMapping("/forgot/email")
+    public ResponseEntity<String> findExistingEmail(@RequestBody PasswordResetRequest passwordReset) {
+        boolean isEmailExist = authenticationMapper.findEmail(passwordReset.getEmail());
+        if (!isEmailExist) {
+            throw new ApiRequestException("Email not found", HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok("Reset password code is send to your E-mail");
+    }
+
     @PostMapping("/forgot")
     public ResponseEntity<String> forgotPassword(@RequestBody PasswordResetRequest passwordReset) {
         boolean forgotPassword = authenticationMapper.sendPasswordResetCode(passwordReset.getEmail());

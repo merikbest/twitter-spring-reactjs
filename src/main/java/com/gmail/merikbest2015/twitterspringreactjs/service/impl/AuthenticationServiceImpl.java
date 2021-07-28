@@ -29,6 +29,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private String hostname;
 
     @Override
+    public boolean findEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        return user != null;
+    }
+
+    @Override
     public Map<String, Object> login(String email) {
         User user = userRepository.findByEmail(email);
         String token = jwtProvider.createToken(email, "USER");

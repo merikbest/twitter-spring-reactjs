@@ -67,7 +67,7 @@ const App: FC = (): ReactElement => {
                 <Switch location={background || location}>
                     <Route path="/account/signin" component={SignIn} exact/>
                     <Route path="/account/login" component={Login} exact/>
-                    <Route path="/account/forgot" component={ForgotPassword} exact/>
+                    <Route path="/account/forgot" component={ForgotPassword}/>
                     <Route path="/home" component={Home}/>
                     <Route path="/search" component={Search}/>
                     <Route path="/user/:id" component={UserPage} exact/>
