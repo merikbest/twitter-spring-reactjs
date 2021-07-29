@@ -18,19 +18,17 @@ const ResetPasswordOption: FC<ResetPasswordOptionProps> = ({email, sendResetCode
             <p>You can use the information associated with your account.</p>
             <form style={{margin: "32px 0 16px 0",}} onSubmit={sendResetCode}>
                 <div className={classes.emailWrapper}>
-                    <Radio className={classes.radio} checked={true} color="primary" />
+                    <Radio className={classes.radio} checked={true} color="primary"/>
                     <span className={classes.email}>Send an email to <b>{email}</b></span>
                 </div>
-                <Link to={"/account/forgot/confirm_pin_reset"}>
-                    <Button
-                        className={classes.button}
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                    >
-                        Next
-                    </Button>
-                </Link>
+                <Button
+                    className={classes.button}
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                >
+                    Next
+                </Button>
             </form>
             <p className={classes.link}>Don’t have access to these?</p>
         </>

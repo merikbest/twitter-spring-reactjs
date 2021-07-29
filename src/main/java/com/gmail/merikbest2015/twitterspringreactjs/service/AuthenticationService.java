@@ -18,7 +18,7 @@ public interface AuthenticationService {
 
     User findByPasswordResetCode(String code);
 
-    boolean sendPasswordResetCode(String email);
+    void sendPasswordResetCode(String email);
 
     String passwordReset(String email, String password);
 }

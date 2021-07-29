@@ -38,9 +38,33 @@ export const useForgotPasswordStyles = makeStyles((theme: Theme) => ({
             marginBottom: 36,
         },
     },
+    avatar: {
+        marginRight: 5,
+        width: theme.spacing(6),
+        height: theme.spacing(6),
+    },
+    info: {
+        display: "inline",
+        flex: 1,
+        marginLeft: 10,
+        '& b': {
+            fontSize: 14,
+        },
+        "& p": {
+            fontSize: 14,
+            color: "#657786",
+        },
+    },
     warning: {
         color: "#c33",
         fontWeight: 200,
+    },
+    errorMessage: {
+        display: "inline-block",
+        marginTop: 10,
+        marginLeft: 15,
+        color: "#c33",
+        fontSize: 13,
     },
     emailWrapper: {
         margin: "16px 0",
@@ -77,6 +101,24 @@ export const useForgotPasswordStyles = makeStyles((theme: Theme) => ({
         color: "#55acee",
         "&:hover": {
             cursor: 'pointer',
+        },
+    },
+    more: {
+        marginLeft: 5,
+        fontSize: 14,
+        color: "#55acee",
+        "&:hover": {
+            cursor: 'pointer',
+        },
+    },
+    checkbox: {
+        marginTop: 10,
+        "& .MuiButtonBase-root": {
+            padding: "0 5px 0 0",
+            "& svg": {
+                width: 18,
+                height: 18,
+            },
         },
     },
 }));

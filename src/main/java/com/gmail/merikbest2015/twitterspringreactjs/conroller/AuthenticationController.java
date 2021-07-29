@@ -75,11 +75,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/forgot")
-    public ResponseEntity<String> forgotPassword(@RequestBody PasswordResetRequest passwordReset) {
-        boolean forgotPassword = authenticationMapper.sendPasswordResetCode(passwordReset.getEmail());
-        if (!forgotPassword) {
-            throw new ApiRequestException("Email not found", HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<String> sendPasswordResetCode(@RequestBody PasswordResetRequest passwordReset) {
+        authenticationMapper.sendPasswordResetCode(passwordReset.getEmail());
         return ResponseEntity.ok("Reset password code is send to your E-mail");
     }
 

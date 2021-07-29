@@ -75,19 +75,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public boolean sendPasswordResetCode(String email) {
+    public void sendPasswordResetCode(String email) {
         User user = userRepository.findByEmail(email);
-        if (user == null) return false;
-        user.setPasswordResetCode(UUID.randomUUID().toString());
+        user.setPasswordResetCode(UUID.randomUUID().toString().substring(0, 7));
         userRepository.save(user);
 
         String subject = "Password reset";
         String template = "password-reset-template";
         Map<String, Object> attributes = new HashMap<>();
         attributes.put("fullName", user.getFullName());
-        attributes.put("resetUrl", "http://" + hostname + "/reset/" + user.getPasswordResetCode());
+        attributes.put("passwordResetCode", user.getPasswordResetCode());
         mailSender.sendMessageHtml(user.getEmail(), subject, template, attributes);
-        return true;
     }
 
     @Override

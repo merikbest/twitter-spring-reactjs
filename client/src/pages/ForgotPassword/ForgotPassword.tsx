@@ -17,7 +17,6 @@ const ForgotPassword = () => {
 
     const findExistingEmail = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-
         AuthApi.findExistingEmail({email})
             .then(() => {
                 setError(false);
@@ -28,6 +27,8 @@ const ForgotPassword = () => {
 
     const sendResetCode = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
+        AuthApi.sendPasswordResetCode({email})
+            .then(() => history.push("/account/forgot/confirm_pin_reset"));
     };
 
     return (
@@ -39,22 +40,22 @@ const ForgotPassword = () => {
                 </div>
             </div>
             <div className={classes.content}>
-                <Route path="/account/forgot" component={() =>
+                <Route exact path="/account/forgot" component={() =>
                     <FindEmail
                         error={error}
                         email={email}
                         setEmail={setEmail}
                         findExistingEmail={findExistingEmail}
-                    />} exact
+                    />}
                 />
-                <Route path="/account/forgot/send_password_reset" component={() =>
+                <Route exact path="/account/forgot/send_password_reset" component={() =>
                     <ResetPasswordOption
                         email={email}
                         sendResetCode={sendResetCode}
-                    />} exact
+                    />}
                 />
-                <Route path="/account/forgot/confirm_pin_reset" component={CheckEmailCode} exact/>
-                <Route path="/account/forgot/reset_password" component={ResetPassword} exact/>
+                <Route exact path="/account/forgot/confirm_pin_reset" component={CheckEmailCode}/>
+                <Route exact path="/account/forgot/reset_password" component={ResetPassword}/>
             </div>
         </div>
     );

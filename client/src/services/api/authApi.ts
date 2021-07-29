@@ -26,6 +26,9 @@ export const AuthApi = {
     async findExistingEmail(postData: {email: string}): Promise<AxiosResponse<string>> {
         return await axios.post<string>(API_URL + "/auth/forgot/email", postData);
     },
+    async sendPasswordResetCode(postData: {email: string}): Promise<AxiosResponse<string>> {
+        return await axios.post<string>(API_URL + "/auth/forgot", postData);
+    },
     async getMe(): Promise<AuthUser> {
         const {data} = await axios.get<AuthUser>(API_URL + '/auth/user');
         return data;
