@@ -81,7 +81,7 @@ public class AuthenticationController {
     }
 
     @GetMapping("/reset/{code}")
-    public ResponseEntity<UserResponse> getPasswordResetCode(@PathVariable String code) {
+    public ResponseEntity<UserResponse> getUserByResetCode(@PathVariable String code) {
         UserResponse user = authenticationMapper.findByPasswordResetCode(code);
         if (user == null) {
             throw new ApiRequestException("Password reset code is invalid!", HttpStatus.BAD_REQUEST);

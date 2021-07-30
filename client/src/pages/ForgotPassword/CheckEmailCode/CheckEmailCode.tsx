@@ -1,12 +1,19 @@
-import React, {FormEvent, useState} from 'react';
+import React, {FC, FormEvent, useState} from 'react';
+import {useHistory} from "react-router-dom";
 import {Button} from "@material-ui/core";
-import {Link} from 'react-router-dom';
 
 import {ForgotPasswordTextField} from "../ForgotPasswordTextField/ForgotPasswordTextField";
 import {useForgotPasswordStyles} from "../ForgotPasswordStyles";
+import {AuthApi} from "../../../services/api/authApi";
+import {User} from "../../../store/ducks/user/contracts/state";
 
-const CheckEmailCode = () => {
+interface CheckEmailCodeProps {
+    setUser: (value: User | undefined | ((prevVar: User | undefined) => User | undefined)) => void;
+}
+
+const CheckEmailCode: FC<CheckEmailCodeProps> = ({setUser}) => {
     const classes = useForgotPasswordStyles();
+    const history = useHistory();
     const [resetCode, setResetCode] = useState<string>("");
     const [error, setError] = useState<boolean>(false);
 
@@ -16,7 +23,12 @@ const CheckEmailCode = () => {
         if (resetCode === "") {
             setError(true);
         } else {
-            setError(false);
+            AuthApi.getUserByResetCode(resetCode)
+                .then((data) => {
+                    setUser(data);
+                    history.push("/account/forgot/reset_password");
+                })
+                .catch(() => setError(true));
         }
     };
 

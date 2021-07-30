@@ -1,13 +1,43 @@
-import React from 'react';
-import {useForgotPasswordStyles} from "../ForgotPasswordStyles";
-import {ForgotPasswordTextField} from "../ForgotPasswordTextField/ForgotPasswordTextField";
+import React, {FC, useRef} from 'react';
+import {Controller, useForm} from "react-hook-form";
 import {Button, Checkbox} from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
-import {DEFAULT_PROFILE_IMG} from "../../../util/url";
 import Typography from "@material-ui/core/Typography";
+import {Color} from "@material-ui/lab/Alert";
+import {yupResolver} from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
-const ResetPassword = () => {
+import {useForgotPasswordStyles} from "../ForgotPasswordStyles";
+import {ForgotPasswordTextField} from "../ForgotPasswordTextField/ForgotPasswordTextField";
+import {DEFAULT_PROFILE_IMG} from "../../../util/url";
+import {User} from "../../../store/ducks/user/contracts/state";
+import {RegisterFormProps} from "../../SignIn/RegisterModal";
+
+interface ResetPasswordProps {
+    user: User | undefined;
+}
+
+interface ResetPasswordFormProps {
+    password: string;
+    password2: string;
+}
+
+const ResetPasswordFormSchema = yup.object().shape({
+    password: yup.string().min(6, "Too short").required(),
+    password2: yup.string().oneOf([yup.ref("password")], "Passwords do not match."),
+});
+
+const ResetPassword: FC<ResetPasswordProps> = ({user}) => {
     const classes = useForgotPasswordStyles();
+    const {control, register, handleSubmit, formState: {errors}} = useForm<ResetPasswordFormProps>({
+        resolver: yupResolver(ResetPasswordFormSchema)
+    });
+    const openNotificationRef = useRef<(text: string, type: Color) => void>(() => {
+    });
+
+    const onSubmit = (data: RegisterFormProps) => {
+        console.log(data)
+    };
 
     return (
         <>
@@ -16,36 +46,64 @@ const ResetPassword = () => {
                 <Avatar
                     alt={`avatar`}
                     className={classes.avatar}
-                    // src={myProfile?.user.avatar?.src ? myProfile?.user.avatar?.src : DEFAULT_PROFILE_IMG}
-                    src={DEFAULT_PROFILE_IMG}
+                    src={user?.avatar?.src ? user?.avatar?.src : DEFAULT_PROFILE_IMG}
                 />
                 <div className={classes.info}>
-                    <b>miroslav</b>
-                    <Typography>@mirosla28448210</Typography>
+                    <b>{user?.fullName}</b>
+                    <Typography>@{user?.username}</Typography>
                 </div>
             </div>
             <p>Strong passwords include numbers, letters, and punctuation marks.
                 <span className={classes.more}>Learn more</span>
             </p>
-            <form >
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <div><b>Enter your new password</b></div>
-                <ForgotPasswordTextField
-                    // error={error}
-                    variant="outlined"
-                    // onChange={(event) => setResetCode(event.target.value)}
-                    // value={resetCode}
+                <Controller
+                    name="password"
+                    control={control}
+                    defaultValue=""
+                    render={({field: {onChange, value}}) => (
+                        <ForgotPasswordTextField
+                            id="password"
+                            name="password"
+                            type="password"
+                            variant="outlined"
+                            value={value}
+                            onChange={onChange}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            error={!!errors.password}
+                            autoFocus
+                        />
+                    )}
                 />
+                <span className={classes.errorMessage}>{errors.password?.message}</span>
                 <div style={{marginTop: 10}}><b>Enter your password one more time</b></div>
-                <ForgotPasswordTextField
-                    // error={error}
-                    variant="outlined"
-                    // onChange={(event) => setResetCode(event.target.value)}
-                    // value={resetCode}
+                <Controller
+                    name="password2"
+                    control={control}
+                    defaultValue=""
+                    render={({field: {onChange, value}}) => (
+                        <ForgotPasswordTextField
+                            id="password2"
+                            name="password2"
+                            type="password"
+                            variant="outlined"
+                            value={value}
+                            onChange={onChange}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            error={!!errors.password2}
+                            autoFocus
+                        />
+                    )}
                 />
+                <span className={classes.errorMessage}>{errors.password2?.message}</span>
                 <div className={classes.checkbox}>
                     <Checkbox
                         checked={true}
-
                         name="checkedB"
                         color="primary"
                     />

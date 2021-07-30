@@ -1,6 +1,6 @@
 import {axios} from "../../core/axios";
 import {LoginFormProps} from "../../pages/SignIn/LoginModal";
-import {AuthUser} from "../../store/ducks/user/contracts/state";
+import {AuthUser, User} from "../../store/ducks/user/contracts/state";
 import {RegisterFormProps} from "../../pages/SignIn/RegisterModal";
 import {API_URL} from "../../util/url";
 import {AxiosResponse} from "axios";
@@ -28,6 +28,10 @@ export const AuthApi = {
     },
     async sendPasswordResetCode(postData: {email: string}): Promise<AxiosResponse<string>> {
         return await axios.post<string>(API_URL + "/auth/forgot", postData);
+    },
+    async getUserByResetCode(resetCode: string): Promise<User> {
+        const data = await axios.get<User>(API_URL + "/auth/reset/" + resetCode);
+        return data.data;
     },
     async getMe(): Promise<AuthUser> {
         const {data} = await axios.get<AuthUser>(API_URL + '/auth/user');

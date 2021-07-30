@@ -1,18 +1,30 @@
-import React, {FC, FormEvent} from 'react';
+import React, {FC, FormEvent, useState} from 'react';
 import {Button} from "@material-ui/core";
 
 import {useForgotPasswordStyles} from "../ForgotPasswordStyles";
 import {ForgotPasswordTextField} from "../ForgotPasswordTextField/ForgotPasswordTextField";
+import {AuthApi} from "../../../services/api/authApi";
+import {useHistory} from "react-router-dom";
 
 interface FindEmailProps {
-    error: boolean;
     email: string;
     setEmail: (value: string | ((prevVar: string) => string)) => void;
-    findExistingEmail: (event: FormEvent<HTMLFormElement>) => void;
 }
 
-const FindEmail: FC<FindEmailProps> = ({error, email, setEmail, findExistingEmail}) => {
+const FindEmail: FC<FindEmailProps> = ({email ,setEmail}) => {
     const classes = useForgotPasswordStyles();
+    const history = useHistory();
+    const [error, setError] = useState<boolean>(false);
+
+    const findExistingEmail = (event: FormEvent<HTMLFormElement>): void => {
+        event.preventDefault();
+        AuthApi.findExistingEmail({email})
+            .then(() => {
+                setError(false);
+                history.push("/account/forgot/send_password_reset");
+            })
+            .catch(() => setError(true));
+    };
 
     return (
         <>

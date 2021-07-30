@@ -1,16 +1,23 @@
 import React, {FC, FormEvent} from 'react';
 import {Button, Radio} from "@material-ui/core";
-import {Link} from 'react-router-dom';
 
 import {useForgotPasswordStyles} from "../ForgotPasswordStyles";
+import {AuthApi} from "../../../services/api/authApi";
+import {useHistory} from "react-router-dom";
 
 interface ResetPasswordOptionProps {
     email: string;
-    sendResetCode: (event: FormEvent<HTMLFormElement>) => void;
 }
 
-const ResetPasswordOption: FC<ResetPasswordOptionProps> = ({email, sendResetCode}) => {
+const ResetPasswordOption: FC<ResetPasswordOptionProps> = ({email}) => {
     const classes = useForgotPasswordStyles();
+    const history = useHistory();
+
+    const sendResetCode = (event: FormEvent<HTMLFormElement>): void => {
+        event.preventDefault();
+        AuthApi.sendPasswordResetCode({email})
+            .then(() => history.push("/account/forgot/confirm_pin_reset"));
+    };
 
     return (
         <>
