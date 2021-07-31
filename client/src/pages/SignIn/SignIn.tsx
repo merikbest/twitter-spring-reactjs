@@ -7,6 +7,8 @@ import RegisterModal from "./RegisterModal";
 import {useStylesSignIn} from "./SignInStyles";
 import {CommunityIcon, ReplyIcon, SearchIcon} from "../../icons";
 import {useHistory} from "react-router-dom";
+import RegistrationModal from "../RegistrationModal/RegistrationModal";
+import CustomizeModal from "../RegistrationModal/CustomizeModal/CustomizeModal";
 
 const SignIn: FC = (): ReactElement => {
     const classes = useStylesSignIn();
@@ -80,7 +82,8 @@ const SignIn: FC = (): ReactElement => {
                         Log in
                     </Button>
                     <LoginModal open={visibleModal === 'signIn'} onClose={handleCloseModal} />
-                    <RegisterModal open={visibleModal === 'signUp'} onClose={handleCloseModal} />
+                    <RegistrationModal open={visibleModal === 'signUp'} onClose={handleCloseModal} />
+                    {/*<CustomizeModal open={visibleModal  === 'signUp'} onClose={handleCloseModal}/>*/}
                 </div>
             </section>
         </div>

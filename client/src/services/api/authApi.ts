@@ -33,6 +33,10 @@ export const AuthApi = {
         const data = await axios.get<User>(API_URL + "/auth/reset/" + resetCode);
         return data.data;
     },
+    async passwordReset(postData: {email: string; password: string, password2: string}): Promise<string> {
+        const data = await axios.post<string>(API_URL + "/auth/reset", postData);
+        return data.data;
+    },
     async getMe(): Promise<AuthUser> {
         const {data} = await axios.get<AuthUser>(API_URL + '/auth/user');
         return data;

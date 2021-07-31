@@ -121,4 +121,12 @@ export const useForgotPasswordStyles = makeStyles((theme: Theme) => ({
             },
         },
     },
+    successHeader: {
+        display: "inline-block",
+        color: "#55acee",
+        fontSize: 18,
+        "&:hover": {
+            cursor: 'pointer',
+        },
+    },
 }));

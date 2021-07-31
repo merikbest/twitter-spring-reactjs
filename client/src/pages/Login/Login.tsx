@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent, FormEvent, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory, Link} from "react-router-dom";
 import {Button} from "@material-ui/core";
@@ -77,9 +77,8 @@ const Login = () => {
                 </Button>
             </form>
             <div className={classes.footer}>
-                {/*<span><Link to={"/account/forgot"}>Forgot password?</Link></span> ·*/}
-                <span><Link to={"/account/forgot/confirm_pin_reset"}>Forgot password?</Link></span> ·
-                <span><Link to={"/account/signin"}>Sign up for Twitter</Link></span>
+                <span><Link to={"/account/forgot"}>Forgot password?</Link></span> ·
+                <span><Link to={"/account/signin"}> Sign up for Twitter</Link></span>
             </div>
         </div>
     );

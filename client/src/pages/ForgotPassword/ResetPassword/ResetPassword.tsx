@@ -1,5 +1,6 @@
 import React, {FC, useRef} from 'react';
 import {Controller, useForm} from "react-hook-form";
+import {useHistory} from "react-router-dom";
 import {Button, Checkbox} from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
@@ -12,6 +13,7 @@ import {ForgotPasswordTextField} from "../ForgotPasswordTextField/ForgotPassword
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
 import {User} from "../../../store/ducks/user/contracts/state";
 import {RegisterFormProps} from "../../SignIn/RegisterModal";
+import {AuthApi} from "../../../services/api/authApi";
 
 interface ResetPasswordProps {
     user: User | undefined;
@@ -29,6 +31,7 @@ const ResetPasswordFormSchema = yup.object().shape({
 
 const ResetPassword: FC<ResetPasswordProps> = ({user}) => {
     const classes = useForgotPasswordStyles();
+    const history = useHistory();
     const {control, register, handleSubmit, formState: {errors}} = useForm<ResetPasswordFormProps>({
         resolver: yupResolver(ResetPasswordFormSchema)
     });
@@ -36,7 +39,12 @@ const ResetPassword: FC<ResetPasswordProps> = ({user}) => {
     });
 
     const onSubmit = (data: RegisterFormProps) => {
-        console.log(data)
+        AuthApi.passwordReset({email: user?.email!, password: data.password, password2: data.password2})
+            .then((data) => {
+                console.log(data);
+                history.push("/account/forgot/password_reset_complete");
+            })
+            .catch((error) => console.log(error));
     };
 
     return (

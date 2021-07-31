@@ -1,5 +1,5 @@
-import React, {FormEvent, useState} from 'react';
-import {Route, useHistory} from "react-router-dom";
+import React, {useState} from 'react';
+import {Route} from "react-router-dom";
 import TwitterIcon from "@material-ui/icons/Twitter";
 
 import {useForgotPasswordStyles} from "./ForgotPasswordStyles";
@@ -8,6 +8,7 @@ import FindEmail from "./FindEmail/FindEmail";
 import ResetPasswordOption from "./ResetPasswordOption/ResetPasswordOption";
 import ResetPassword from "./ResetPassword/ResetPassword";
 import {User} from "../../store/ducks/user/contracts/state";
+import ResetPasswordSuccess from "./ResetPasswordSuccess/ResetPasswordSuccess";
 
 const ForgotPassword = () => {
     const classes = useForgotPasswordStyles();
@@ -23,10 +24,11 @@ const ForgotPassword = () => {
                 </div>
             </div>
             <div className={classes.content}>
-                {/*<Route exact path="/account/forgot" component={() => <FindEmail email={email} setEmail={setEmail}/>}/>*/}
-                {/*<Route exact path="/account/forgot/send_password_reset" component={() => <ResetPasswordOption email={email}/>}/>*/}
+                <Route exact path="/account/forgot" component={() => <FindEmail email={email} setEmail={setEmail}/>}/>
+                <Route exact path="/account/forgot/send_password_reset" component={() => <ResetPasswordOption email={email}/>}/>
                 <Route exact path="/account/forgot/confirm_pin_reset" component={() => <CheckEmailCode setUser={setUser}/>}/>
                 <Route exact path="/account/forgot/reset_password" component={() => <ResetPassword user={user}/>}/>
+                <Route exact path="/account/forgot/password_reset_complete" component={ResetPasswordSuccess}/>
             </div>
         </div>
     );
