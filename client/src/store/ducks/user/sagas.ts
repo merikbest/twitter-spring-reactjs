@@ -29,7 +29,10 @@ export function* fetchSignInRequest({payload}: FetchSignInActionInterface) {
 export function* fetchSignUpRequest({payload}: FetchSignUpActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        yield call(AuthApi.signUp, payload);
+        const data: AuthUser = yield call(AuthApi.endRegistration, payload);
+        localStorage.setItem("token", data.token);
+        yield put(setUserData(data));
+        payload.history.push("/home");
         yield put(setUserLoadingStatus(LoadingStatus.SUCCESS));
     } catch (error) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));

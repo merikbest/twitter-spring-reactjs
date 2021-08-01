@@ -6,7 +6,6 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.request.RegistrationRequ
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.AuthenticationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
-import com.gmail.merikbest2015.twitterspringreactjs.exception.InputFieldException;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.AuthenticationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,10 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,32 +33,40 @@ public class AuthenticationController {
         }
     }
 
-    @PostMapping("/registration")
-    public ResponseEntity<String> registration(@Valid @RequestBody RegistrationRequest user, BindingResult bindingResult) {
-        if (ControllerUtils.isPasswordDifferent(user.getPassword(), user.getPassword2())) {
-            throw new ApiRequestException("Passwords do not match.", HttpStatus.BAD_REQUEST);
+    @PostMapping("/registration/check")
+    public ResponseEntity<String> checkEmail(@RequestBody RegistrationRequest request) {
+        boolean isRegistered = authenticationMapper.registration(request.getEmail(), request.getUsername(), request.getBirthday());
+
+        if (!isRegistered) {
+            throw new ApiRequestException("Email has already been taken.", HttpStatus.FORBIDDEN);
+        } else {
+            return ResponseEntity.ok("User successfully registered.");
         }
-        if (bindingResult.hasErrors()) {
-            throw new InputFieldException(bindingResult);
-        }
-        if (!authenticationMapper.registration(user)) {
-            throw new ApiRequestException("Email is already used.", HttpStatus.FORBIDDEN);
-        }
-        return ResponseEntity.ok("User successfully registered.");
     }
 
-    @GetMapping("/user")
-    public ResponseEntity<AuthenticationResponse> getUserByToken() {
-        return ResponseEntity.ok(authenticationMapper.getUserByToken());
+    @PostMapping("/registration/code")
+    public ResponseEntity<String> sendRegistrationCode(@RequestBody RegistrationRequest request) {
+        authenticationMapper.sendRegistrationCode(request.getEmail());
+        return ResponseEntity.ok("Registration code sent successfully");
     }
 
-    @GetMapping("/activate/{code}")
-    public ResponseEntity<String> activateEmailCode(@PathVariable String code) {
+    @GetMapping("/registration/activate/{code}")
+    public ResponseEntity<String> checkRegistrationCode(@PathVariable String code) {
         if (!authenticationMapper.activateUser(code)) {
             throw new ApiRequestException("Activation code not found.", HttpStatus.NOT_FOUND);
         } else {
             return ResponseEntity.ok("User successfully activated.");
         }
+    }
+
+    @PostMapping("/registration/confirm")
+    public ResponseEntity<AuthenticationResponse> endRegistration(@RequestBody RegistrationRequest request) {
+        return ResponseEntity.ok(authenticationMapper.endRegistration(request.getEmail(), request.getPassword()));
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<AuthenticationResponse> getUserByToken() {
+        return ResponseEntity.ok(authenticationMapper.getUserByToken());
     }
 
     @PostMapping("/forgot/email")

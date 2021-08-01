@@ -47,7 +47,7 @@ const RegisterModal: FC<RegisterModalProps> = ({open, onClose}): ReactElement =>
     const loadingStatus = useSelector(selectUserStatus);
 
     const onSubmit = async (data: RegisterFormProps) => {
-        dispatch(fetchSignUp(data));
+        // dispatch(fetchSignUp(data));
     };
 
     useEffect(() => {

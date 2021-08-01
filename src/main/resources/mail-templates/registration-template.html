@@ -18,8 +18,7 @@
         <td style="background-color: #ffffff; padding: 40px 30px 40px 30px; text-align: center">
             <h3>Hello <span th:text="${fullName}" th:remove="tag"></span>!</h3>
             <p>Welcome to Twitter clone!</p>
-            <p>To complete registration please follow the link: </p>
-            <a th:href="@{${registrationUrl}}">confirm registration</a>
+            <p>Your registration code : <span th:text="${registrationCode}" th:remove="tag"></span></p>
         </td>
     </tr>
 </table>

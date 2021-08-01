@@ -7,14 +7,21 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 interface CustomizeModalProps {
     open: boolean;
     onClose: () => void;
+    onOpenCreateAccount: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
 
-const CustomizeModal:FC<CustomizeModalProps> = ({open, onClose}) => {
+const CustomizeModal:FC<CustomizeModalProps> = ({open, onClose, onOpenCreateAccount}) => {
     const classes = useCustomizeModalStyles();
-    // hideBackdrop={true}
 
     return (
-        <Dialog style={{height: 666, marginTop: 92}} transitionDuration={0} open={open} onClose={onClose} aria-labelledby="form-dialog-title">
+        <Dialog
+            hideBackdrop={true}
+            style={{height: 666, marginTop: 92}}
+            transitionDuration={0}
+            open={open}
+            onClose={onClose}
+            aria-labelledby="form-dialog-title"
+        >
             <DialogContent style={{paddingTop: 0, paddingBottom: 0}} className={classes.container}>
                 <div className={classes.logoIcon}>
                     <TwitterIcon/>
@@ -35,7 +42,7 @@ const CustomizeModal:FC<CustomizeModalProps> = ({open, onClose}) => {
                 </div>
                 <Button
                     style={{marginTop: 285}}
-                    // type="submit"
+                    onClick={() => onOpenCreateAccount(true)}
                     variant="contained"
                     color="primary"
                     fullWidth

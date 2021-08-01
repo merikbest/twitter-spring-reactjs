@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -22,6 +23,8 @@ public class User {
     private String location;
     private String about;
     private String website;
+    private String birthday;
+    private LocalDateTime registrationDate;
     private String activationCode;
     private String passwordResetCode;
     private String role;
@@ -53,4 +56,8 @@ public class User {
             joinColumns = @JoinColumn(name = "subscriber_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> following;
+
+    public User() {
+        this.registrationDate = LocalDateTime.now().withNano(0);
+    }
 }

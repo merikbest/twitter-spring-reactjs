@@ -13,10 +13,14 @@ import TweeterInput from "../../components/EditProfileModal/TweetInput/TweeterIn
 import RegistrationInput from "./RegistrationInput/RegistrationInput";
 import {CustomSelect} from "./RegistrationSelect/CustomSelect";
 import CustomizeModal from "./CustomizeModal/CustomizeModal";
+import {RegistrationInfo} from "../SignIn/SignIn";
+import {AuthApi} from "../../services/api/authApi";
 
 interface RegistrationModalProps {
     open: boolean;
     onClose: () => void;
+    onOpenCustomize: (value: boolean | ((prevVar: boolean) => boolean)) => void;
+    onChangeRegistrationInfo: (data: RegistrationInfo) => void;
 }
 
 interface RegistrationFormProps {
@@ -29,10 +33,10 @@ const RegistrationFormSchema = yup.object().shape({
     email: yup.string().email("Please enter a valid email address."),
 });
 
-const RegistrationModal: FC<RegistrationModalProps> = ({open, onClose}) => {
+const RegistrationModal: FC<RegistrationModalProps> = ({open, onClose, onOpenCustomize, onChangeRegistrationInfo}) => {
     const classes = useRegistrationModalStyles();
-    const [visibleModal, setVisibleModal] = useState<boolean>(false);
-    const [month, setMonth] = useState<number>(0);
+    const [emailError, setEmailError] = useState<string>("");
+    const [month, setMonth] = useState<string>("");
     const [day, setDay] = useState<number>(0);
     const [year, setYear] = useState<number>(0);
     const {control, register, handleSubmit, formState: {errors}} = useForm<RegistrationFormProps>({
@@ -40,12 +44,22 @@ const RegistrationModal: FC<RegistrationModalProps> = ({open, onClose}) => {
     });
 
     const onSubmit = (data: RegistrationFormProps): void => {
-        // dispatch(fetchSignUp(data));
-        setVisibleModal(true);
+        let birthday = "";
+
+        if (month !== "" && day !== 0 && year !== 0) {
+            birthday = month + " " + day  + ", " + year;
+        }
+        const registrationData: RegistrationInfo = {username: data.username, email: data.email, birthday: birthday};
+        AuthApi.checkEmail(registrationData)
+            .then((response) => {
+                onChangeRegistrationInfo(registrationData);
+                onOpenCustomize(true);
+            })
+            .catch((error) => setEmailError(error.response.data));
     };
 
     const changeMonth = (event: ChangeEvent<{ value: unknown }>): void => {
-        setMonth(event.target.value as number);
+        setMonth(event.target.value as string);
     };
 
     const changeDay = (event: ChangeEvent<{ value: unknown }>): void => {
@@ -54,10 +68,6 @@ const RegistrationModal: FC<RegistrationModalProps> = ({open, onClose}) => {
 
     const changeYear = (event: ChangeEvent<{ value: unknown }>): void => {
         setYear(event.target.value as number);
-    };
-
-    const closeModal = (): void => {
-        setVisibleModal(false);
     };
 
     const showDays = () => {
@@ -114,8 +124,8 @@ const RegistrationModal: FC<RegistrationModalProps> = ({open, onClose}) => {
                                     render={({field: {onChange, value}}) => (
                                         <RegistrationInput
                                             name="email"
-                                            helperText={errors.email?.message}
-                                            error={!!errors.email}
+                                            helperText={errors.email?.message || emailError}
+                                            error={!!errors.email || emailError !== ""}
                                             label={"Email"}
                                             maxTextLength={50}
                                             onChange={onChange}
@@ -143,18 +153,18 @@ const RegistrationModal: FC<RegistrationModalProps> = ({open, onClose}) => {
                                         label="Month"
                                     >
                                         <option aria-label="None"/>
-                                        <option value={1}>January</option>
-                                        <option value={2}>February</option>
-                                        <option value={3}>March</option>
-                                        <option value={4}>April</option>
-                                        <option value={5}>May</option>
-                                        <option value={6}>June</option>
-                                        <option value={7}>July</option>
-                                        <option value={8}>August</option>
-                                        <option value={9}>September</option>
-                                        <option value={10}>October</option>
-                                        <option value={11}>November</option>
-                                        <option value={12}>December</option>
+                                        <option value={"Jan"}>January</option>
+                                        <option value={"Feb"}>February</option>
+                                        <option value={"Mar"}>March</option>
+                                        <option value={"Apr"}>April</option>
+                                        <option value={"May"}>May</option>
+                                        <option value={"Jun"}>June</option>
+                                        <option value={"Jul"}>July</option>
+                                        <option value={"Aug"}>August</option>
+                                        <option value={"Sep"}>September</option>
+                                        <option value={"Oct"}>October</option>
+                                        <option value={"Nov"}>November</option>
+                                        <option value={"Dec"}>December</option>
                                     </CustomSelect>
                                 </FormControl>
                                 <FormControl style={{margin: "16px 0"}} variant="outlined" className={classes.formControl}>
@@ -200,7 +210,7 @@ const RegistrationModal: FC<RegistrationModalProps> = ({open, onClose}) => {
                     </div>
                 </DialogContent>
             </Dialog>
-            <CustomizeModal open={visibleModal} onClose={closeModal}/>
+            {/*<CustomizeModal open={visibleModal} onClose={onClose}/>*/}
         </>
     );
 };

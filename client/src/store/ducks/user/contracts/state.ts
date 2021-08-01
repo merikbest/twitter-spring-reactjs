@@ -11,6 +11,8 @@ export interface User {
     location: string;
     about: string;
     website: string;
+    birthday?: string
+    registrationDate?: string
     confirmed?: boolean;
     registration?: string;
     dateOfBirth?: string;

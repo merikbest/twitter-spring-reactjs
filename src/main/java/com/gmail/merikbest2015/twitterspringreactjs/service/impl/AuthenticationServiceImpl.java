@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -45,22 +46,61 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public boolean registration(User user) {
-        User userFromDb = userRepository.findByEmail(user.getEmail());
-        if (userFromDb != null) return false;
-        user.setActive(false);
-        user.setRole("USER");
-        user.setActivationCode(UUID.randomUUID().toString());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    public boolean registration(String email, String username, String birthday) {
+        User existingUser = userRepository.findByEmail(email);
+
+        if (existingUser == null) {
+            User user = new User();
+            user.setEmail(email);
+            user.setUsername(username);
+            user.setFullName(username);
+            user.setBirthday(birthday);
+            user.setRole("USER");
+            user.setActive(false);
+            userRepository.save(user);
+            return true;
+        }
+
+        if (!existingUser.isActive()) {
+            existingUser.setUsername(username);
+            existingUser.setFullName(username);
+            existingUser.setBirthday(birthday);
+            existingUser.setRegistrationDate(LocalDateTime.now().withNano(0));
+            existingUser.setRole("USER");
+            existingUser.setActive(false);
+            userRepository.save(existingUser);
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public void sendRegistrationCode(String email) {
+        User user = userRepository.findByEmail(email);
+        user.setActivationCode(UUID.randomUUID().toString().substring(0, 7));
         userRepository.save(user);
 
-        String subject = "Activation code";
+        String subject = "Registration code";
         String template = "registration-template";
         Map<String, Object> attributes = new HashMap<>();
         attributes.put("fullName", user.getFullName());
-        attributes.put("registrationUrl", "http://" + hostname + "/activate/" + user.getActivationCode());
-//        mailSender.sendMessageHtml(user.getEmail(), subject, template, attributes);
-        return true;
+        attributes.put("registrationCode", user.getActivationCode());
+        mailSender.sendMessageHtml(user.getEmail(), subject, template, attributes);
+    }
+
+    @Override
+    public Map<String, Object> endRegistration(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setActive(true);
+        userRepository.save(user);
+
+        String token = jwtProvider.createToken(email, "USER");
+        Map<String, Object> response = new HashMap<>();
+        response.put("user", user);
+        response.put("token", token);
+        return response;
     }
 
     @Override
@@ -93,7 +133,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         User user = userRepository.findByActivationCode(code);
         if (user == null) return false;
         user.setActivationCode(null);
-        user.setActive(true);
         userRepository.save(user);
         return true;
     }

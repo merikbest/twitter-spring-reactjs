@@ -4,6 +4,7 @@ import {LoginFormProps} from "../../../../pages/SignIn/LoginModal";
 import {RegisterFormProps} from "../../../../pages/SignIn/RegisterModal";
 import {LoadingStatus} from "../../../types";
 import {User, UserState} from "./state";
+import {RegistrationProps} from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
 
 export enum UserActionsType {
     FETCH_SIGN_IN = "user/FETCH_SIGN_IN",
@@ -34,7 +35,7 @@ export interface SignInErrorActionInterface extends Action<UserActionsType> {
 
 export interface FetchSignUpActionInterface extends Action<UserActionsType> {
     type: UserActionsType.FETCH_SIGN_UP;
-    payload: RegisterFormProps;
+    payload: RegistrationProps;
 }
 
 export interface FetchUserDataActionInterface extends Action<UserActionsType> {

@@ -12,6 +12,7 @@ import {
 } from "./contracts/actionTypes";
 import {LoginFormProps} from "../../../pages/SignIn/LoginModal";
 import {RegisterFormProps} from "../../../pages/SignIn/RegisterModal";
+import {RegistrationProps} from "../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
 
 export const setUserData = (payload: UserState["data"]): SetUserDataActionInterface => ({
     type: UserActionsType.SET_USER_DATA,
@@ -37,7 +38,7 @@ export const signInError = (payload: number): SignInErrorActionInterface => ({
     payload,
 });
 
-export const fetchSignUp = (payload: RegisterFormProps): FetchSignUpActionInterface => ({
+export const fetchSignUp = (payload: RegistrationProps): FetchSignUpActionInterface => ({
     type: UserActionsType.FETCH_SIGN_UP,
     payload,
 });

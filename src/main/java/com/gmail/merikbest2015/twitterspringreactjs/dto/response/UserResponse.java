@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.dto.response;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -13,6 +14,8 @@ public class UserResponse {
     private String location;
     private String about;
     private String website;
+    private String birthday;
+    private LocalDateTime registrationDate;
     private Long tweetCount;
     private ImageResponse avatar;
     private ImageResponse wallpaper;

@@ -4,6 +4,8 @@ import {AuthUser, User} from "../../store/ducks/user/contracts/state";
 import {RegisterFormProps} from "../../pages/SignIn/RegisterModal";
 import {API_URL} from "../../util/url";
 import {AxiosResponse} from "axios";
+import {RegistrationInfo} from "../../pages/SignIn/SignIn";
+import {RegistrationProps} from "../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
 
 export interface Response<T> {
     status: string;
@@ -21,6 +23,22 @@ export const AuthApi = {
     },
     async signUp(postData: RegisterFormProps): Promise<Response<AuthUser>> {
         const data = await axios.post<Response<AuthUser>>(API_URL + "/auth/registration", postData);
+        return data.data;
+    },
+    async checkEmail(postData: RegistrationInfo): Promise<Response<string>> {
+        const data = await axios.post<Response<string>>(API_URL + "/auth/registration/check", postData);
+        return data.data;
+    },
+    async sendRegistrationCode(postData: RegistrationInfo): Promise<Response<string>> {
+        const data = await axios.post<Response<string>>(API_URL + "/auth/registration/code", postData);
+        return data.data;
+    },
+    async checkRegistrationCode(registrationCode: string): Promise<Response<string>> {
+        const data = await axios.get<Response<string>>(API_URL + "/auth/registration/activate/" + registrationCode);
+        return data.data;
+    },
+    async endRegistration(postData: RegistrationProps): Promise<Response<AuthUser>> {
+        const data = await axios.post<Response<AuthUser>>(API_URL + "/auth/registration/confirm", postData);
         return data.data;
     },
     async findExistingEmail(postData: {email: string}): Promise<AxiosResponse<string>> {

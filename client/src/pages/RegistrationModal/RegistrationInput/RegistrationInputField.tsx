@@ -30,6 +30,13 @@ const useStylesRegistration = makeStyles((theme: Theme) =>
                 boxShadow: "0 0 0 2px rgb(224, 36, 94)",
             },
         },
+        disabled: {
+            backgroundColor: '#fff',
+            color: "#849099",
+            '&:hover': {
+                backgroundColor: '#fff',
+            },
+        },
     }),
 );
 

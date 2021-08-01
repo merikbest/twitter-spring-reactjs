@@ -10,7 +10,11 @@ public interface AuthenticationService {
 
     Map<String, Object> login(String email);
 
-    boolean registration(User user);
+    boolean registration(String email, String username, String birthday);
+
+    void sendRegistrationCode(String email);
+
+    Map<String, Object> endRegistration(String email, String password);
 
     Map<String, Object> getUserByToken();
 

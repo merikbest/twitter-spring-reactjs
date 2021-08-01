@@ -1,19 +1,35 @@
-import React, {FC, ReactElement} from 'react';
+import React, {FC, ReactElement, useState} from 'react';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import {Button, Typography} from '@material-ui/core';
 
 import LoginModal from './LoginModal';
-import RegisterModal from "./RegisterModal";
 import {useStylesSignIn} from "./SignInStyles";
 import {CommunityIcon, ReplyIcon, SearchIcon} from "../../icons";
 import {useHistory} from "react-router-dom";
 import RegistrationModal from "../RegistrationModal/RegistrationModal";
 import CustomizeModal from "../RegistrationModal/CustomizeModal/CustomizeModal";
+import CreateAccountModal from "../RegistrationModal/CreateAccountModal/CreateAccountModal";
+import EmailVerificationModal from "../RegistrationModal/EmailVerificationModal/EmailVerificationModal";
+import SetPasswordModal from "../RegistrationModal/SetPasswordModal/SetPasswordModal";
+
+export interface RegistrationInfo {
+    username: string;
+    email: string;
+    birthday: string;
+}
 
 const SignIn: FC = (): ReactElement => {
     const classes = useStylesSignIn();
     const history = useHistory();
-    const [visibleModal, setVisibleModal] = React.useState<"signIn" | "signUp">();
+    const [visibleModal, setVisibleModal] = useState<"signIn" | "signUp">();
+    const [registrationInfo, setRegistrationInfo] = useState<RegistrationInfo>({
+        username: "", email: "", birthday: "",
+    });
+    const [visibleRegistrationModal, setVisibleRegistrationModal] = useState<boolean>(false);
+    const [visibleCustomizeModal, setVisibleCustomizeModal] = useState<boolean>(false);
+    const [visibleCreteAccountModal, setVisibleCreteAccountModal] = useState<boolean>(false);
+    const [visibleEmailVerificationModal, setVisibleEmailVerificationModal] = useState<boolean>(false);
+    const [visibleSetPasswordModal, setVisibleSetPasswordModal] = useState<boolean>(false);
 
     const handleClickOpenSignIn = (): void => {
         // setVisibleModal("signIn");
@@ -22,10 +38,19 @@ const SignIn: FC = (): ReactElement => {
 
     const handleClickOpenSignUp = (): void => {
         setVisibleModal("signUp");
+        setVisibleRegistrationModal(true);
     };
 
     const handleCloseModal = (): void => {
-        setVisibleModal(undefined);
+        setVisibleRegistrationModal(false);
+        setVisibleCustomizeModal(false);
+        setVisibleCreteAccountModal(false);
+        setVisibleEmailVerificationModal(false);
+        setVisibleSetPasswordModal(false);
+    };
+
+    const onChangeRegistrationInfo = (data: RegistrationInfo): void => {
+        setRegistrationInfo(data);
     };
 
     return (
@@ -82,8 +107,34 @@ const SignIn: FC = (): ReactElement => {
                         Log in
                     </Button>
                     <LoginModal open={visibleModal === 'signIn'} onClose={handleCloseModal} />
-                    <RegistrationModal open={visibleModal === 'signUp'} onClose={handleCloseModal} />
-                    {/*<CustomizeModal open={visibleModal  === 'signUp'} onClose={handleCloseModal}/>*/}
+                    <RegistrationModal
+                        open={visibleRegistrationModal}
+                        onClose={handleCloseModal}
+                        onOpenCustomize={setVisibleCustomizeModal}
+                        onChangeRegistrationInfo={onChangeRegistrationInfo}
+                    />
+                    <CustomizeModal
+                        open={visibleCustomizeModal}
+                        onClose={handleCloseModal}
+                        onOpenCreateAccount={setVisibleCreteAccountModal}
+                    />
+                    <CreateAccountModal
+                        open={visibleCreteAccountModal}
+                        onClose={handleCloseModal}
+                        registrationInfo={registrationInfo}
+                        onOpenEmailVerification={setVisibleEmailVerificationModal}
+                    />
+                    <EmailVerificationModal
+                        email={registrationInfo.email}
+                        open={visibleEmailVerificationModal}
+                        onClose={handleCloseModal}
+                        onOpenSetPassword={setVisibleSetPasswordModal}
+                    />
+                    <SetPasswordModal
+                        email={registrationInfo.email}
+                        open={visibleSetPasswordModal}
+                        onClose={handleCloseModal}
+                    />
                 </div>
             </section>
         </div>
