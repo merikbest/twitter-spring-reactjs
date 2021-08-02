@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, ReactElement, useState} from 'react';
 import {Button, Hidden, Typography} from "@material-ui/core";
 
 import Tweet from '../../components/Tweet/Tweet';
@@ -14,7 +14,13 @@ interface UserPageTweetsProps {
     username?: string;
 }
 
-const UserPageTweets: FC<UserPageTweetsProps> = ({tweets, activeTab, userProfileId, myProfileId, username}) => {
+const UserPageTweets: FC<UserPageTweetsProps> = ({
+                                                     tweets,
+                                                     activeTab,
+                                                     userProfileId,
+                                                     myProfileId,
+                                                     username
+                                                 }): ReactElement => {
     const classes = useUserPageStyles();
     const [visibleAddTweet, setSetVisibleAddTweet] = useState<boolean>(false);
 

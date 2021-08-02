@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, ReactElement} from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -17,7 +17,7 @@ const ModalBlock: FC<ModalBlockProps> = ({
                                              onClose,
                                              visible = false,
                                              children
-                                         }: ModalBlockProps): React.ReactElement | null => {
+                                         }: ModalBlockProps): ReactElement | null => {
     if (!visible) {
         return null;
     }

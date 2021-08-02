@@ -1,7 +1,6 @@
 import {Action} from "redux";
 import { LoadingStatus } from "../../../types";
-import {TweetState} from "./state";
-import {Image} from "../../tweets/contracts/state";
+import {ReplyTweet, TweetState} from "./state";
 
 export enum TweetActionType {
     SET_TWEET_DATA = "tweet/SET_TWEET_DATA",
@@ -27,15 +26,7 @@ export interface FetchTweetDataActionInterface extends Action<TweetActionType> {
 
 export interface FetchReplyTweetActionInterface extends Action<TweetActionType> {
     type: TweetActionType.FETCH_REPLY_TWEET;
-    payload: {
-        id: string;
-        text: string;
-        addressedUsername: string;
-        addressedId: number;
-        images: Image[];
-        likes: [];
-        retweets: [];
-    };
+    payload: ReplyTweet;
 }
 
 export type TweetActions =

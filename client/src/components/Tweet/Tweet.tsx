@@ -8,7 +8,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import {LikeOutlinedIcon, LikeIcon, RetweetIcon, RetweetOutlinedIcon, ReplyIcon, ShareIcon} from "../../icons";
 import {useTweetStyles} from "./TweetStyles";
 import {formatDate} from '../../util/formatDate';
-import {fetchLikeTweet, fetchRetweet, removeTweet} from "../../store/ducks/tweets/actionCreators";
+import {fetchLikeTweet, fetchRetweet} from "../../store/ducks/tweets/actionCreators";
 import {Image} from "../../store/ducks/tweets/contracts/state";
 import {User} from "../../store/ducks/user/contracts/state";
 import {selectUserData} from "../../store/ducks/user/selectors";
@@ -49,8 +49,8 @@ const Tweet: FC<TweetProps> = ({
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
     const open = Boolean(anchorEl);
-    const isTweetLiked = likes.find((user) => user.id === myProfile?.user?.id);
-    const isTweetRetweeted = retweets.find((user) => user.id === myProfile?.user?.id);
+    const isTweetLiked = likes.find((user) => user.id === myProfile?.id);
+    const isTweetRetweeted = retweets.find((user) => user.id === myProfile?.id);
     const isModal = location.pathname.includes("/modal");
     const image = images?.[0];
 
@@ -59,7 +59,7 @@ const Tweet: FC<TweetProps> = ({
         history.push(`/home/tweet/${id}`);
     }
 
-    const handleClick = (event: MouseEvent<HTMLElement>) => {
+    const handleClick = (event: MouseEvent<HTMLElement>): void => {
         event.stopPropagation();
         event.preventDefault();
         setAnchorEl(event.currentTarget);
@@ -73,9 +73,6 @@ const Tweet: FC<TweetProps> = ({
 
     const handleRemove = (event: MouseEvent<HTMLElement>): void => {
         handleClose(event);
-        if (window.confirm('Вы действительно хотите удалить твит?')) {
-            dispatch(removeTweet(id));
-        }
     };
 
     const onOpenReplyModalWindow = (): void => {

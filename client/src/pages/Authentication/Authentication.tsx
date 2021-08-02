@@ -1,11 +1,10 @@
 import React, {FC, ReactElement, useState} from 'react';
+import {useHistory} from "react-router-dom";
 import TwitterIcon from '@material-ui/icons/Twitter';
 import {Button, Typography} from '@material-ui/core';
 
-import LoginModal from './LoginModal';
-import {useStylesSignIn} from "./SignInStyles";
+import {useAuthenticationStyles} from "./AuthenticationStyles";
 import {CommunityIcon, ReplyIcon, SearchIcon} from "../../icons";
-import {useHistory} from "react-router-dom";
 import RegistrationModal from "../RegistrationModal/RegistrationModal";
 import CustomizeModal from "../RegistrationModal/CustomizeModal/CustomizeModal";
 import CreateAccountModal from "../RegistrationModal/CreateAccountModal/CreateAccountModal";
@@ -18,10 +17,9 @@ export interface RegistrationInfo {
     birthday: string;
 }
 
-const SignIn: FC = (): ReactElement => {
-    const classes = useStylesSignIn();
+const Authentication: FC = (): ReactElement => {
+    const classes = useAuthenticationStyles();
     const history = useHistory();
-    const [visibleModal, setVisibleModal] = useState<"signIn" | "signUp">();
     const [registrationInfo, setRegistrationInfo] = useState<RegistrationInfo>({
         username: "", email: "", birthday: "",
     });
@@ -32,12 +30,10 @@ const SignIn: FC = (): ReactElement => {
     const [visibleSetPasswordModal, setVisibleSetPasswordModal] = useState<boolean>(false);
 
     const handleClickOpenSignIn = (): void => {
-        // setVisibleModal("signIn");
         history.push("/account/login");
     };
 
     const handleClickOpenSignUp = (): void => {
-        setVisibleModal("signUp");
         setVisibleRegistrationModal(true);
     };
 
@@ -106,7 +102,6 @@ const SignIn: FC = (): ReactElement => {
                     >
                         Log in
                     </Button>
-                    <LoginModal open={visibleModal === 'signIn'} onClose={handleCloseModal} />
                     <RegistrationModal
                         open={visibleRegistrationModal}
                         onClose={handleCloseModal}
@@ -141,4 +136,4 @@ const SignIn: FC = (): ReactElement => {
     );
 };
 
-export default SignIn;
+export default Authentication;

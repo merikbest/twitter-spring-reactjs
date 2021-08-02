@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, FormEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent, FC, FormEvent, ReactElement, useEffect, useState} from 'react';
 import {useHistory, useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import Tabs from "@material-ui/core/Tabs";
@@ -20,21 +20,22 @@ import {selectIsTweetsLoading, selectTweetsItems} from "../../store/ducks/tweets
 import {User} from "../../store/ducks/user/contracts/state";
 import Follower from "../Follower/Follower";
 import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
-import {UserApi} from "../../services/api/userApi";
 import {useSearchStyles} from "./SearchStyles";
 import {EditIcon} from "../../icons";
+import {fetchUsersSearch, fetchUsersSearchByUsername} from "../../store/ducks/usersSearch/actionCreators";
+import {selectUsersSearch, selectUsersSearchIsLoading} from "../../store/ducks/usersSearch/selectors";
 
-const Search: FC = () => {
+const Search: FC = (): ReactElement => {
     const classes = useSearchStyles();
     const dispatch = useDispatch();
-    const isLoading = useSelector(selectIsTweetsLoading);
+    const isTweetsLoading = useSelector(selectIsTweetsLoading);
+    const isUsersLoading = useSelector(selectUsersSearchIsLoading);
     const tweets = useSelector(selectTweetsItems);
+    const users = useSelector(selectUsersSearch);
     const location = useLocation<{ tag: string | undefined; text: string | undefined; }>();
     const history = useHistory();
-
-    const [text, setText] = React.useState<string>("");
+    const [text, setText] = useState<string>("");
     const [activeTab, setActiveTab] = useState<number>(0);
-    const [users, setUsers] = useState<User[]>();
 
     useEffect(() => {
         if (location.state?.tag !== undefined) {
@@ -61,8 +62,7 @@ const Search: FC = () => {
             if (activeTab !== 2) {
                 dispatch(fetchTweetsByText(encodeURIComponent(text)));
             } else {
-                UserApi.searchUsersByUsername(encodeURIComponent(text))
-                    .then(data => setUsers(data))
+                dispatch(fetchUsersSearchByUsername(encodeURIComponent(text)));
             }
         }
     };
@@ -74,9 +74,7 @@ const Search: FC = () => {
 
     const showUsers = (): void => {
         window.scrollTo(0, 0);
-        UserApi.getUsers().then((data) => {
-            setUsers(data);
-        });
+        dispatch(fetchUsersSearch());
     };
 
     const showMediaTweets = (): void => {
@@ -131,7 +129,7 @@ const Search: FC = () => {
                 </div>
             </Paper>
             <div style={{paddingTop: 97}}>
-                {isLoading ? (
+                {isTweetsLoading || isUsersLoading ? (
                     <div className={classes.loading}>
                         <CircularProgress/>
                     </div>

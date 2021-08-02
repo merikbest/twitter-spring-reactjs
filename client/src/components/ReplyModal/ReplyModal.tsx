@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, ReactElement} from 'react';
 import {Link} from "react-router-dom";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -27,7 +27,15 @@ interface ReplyModalProps {
     onClose: () => void;
 }
 
-const ReplyModal: FC<ReplyModalProps> = ({user, tweetId, text, image, dateTime, visible, onClose}) => {
+const ReplyModal: FC<ReplyModalProps> = ({
+                                             user,
+                                             tweetId,
+                                             text,
+                                             image,
+                                             dateTime,
+                                             visible,
+                                             onClose
+                                         }): ReactElement | null => {
     const classes = useReplyModalStyles();
     const isReplyLoading = useSelector(selectIsTweetLoading);
 

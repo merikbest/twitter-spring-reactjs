@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, ReactElement, useState} from 'react';
 import {Button, Dialog, DialogContent} from "@material-ui/core";
 import {useForm, Controller} from "react-hook-form";
 import TwitterIcon from "@material-ui/icons/Twitter";
@@ -32,7 +32,7 @@ const SetPasswordFormSchema = yup.object().shape({
     password: yup.string().min(8, "Your password needs to be at least 8 characters. Please enter a longer one.").required(),
 });
 
-const SetPasswordModal: FC<SetPasswordProps> = ({email, open, onClose}) => {
+const SetPasswordModal: FC<SetPasswordProps> = ({email, open, onClose}): ReactElement => {
     const classes = useSetPasswordModalStyles();
     const dispatch = useDispatch();
     const history = useHistory();

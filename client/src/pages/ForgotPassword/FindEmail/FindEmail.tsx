@@ -1,4 +1,4 @@
-import React, {FC, FormEvent, useState} from 'react';
+import React, {FC, FormEvent, ReactElement, useState} from 'react';
 import {Button} from "@material-ui/core";
 
 import {useForgotPasswordStyles} from "../ForgotPasswordStyles";
@@ -11,7 +11,7 @@ interface FindEmailProps {
     setEmail: (value: string | ((prevVar: string) => string)) => void;
 }
 
-const FindEmail: FC<FindEmailProps> = ({email ,setEmail}) => {
+const FindEmail: FC<FindEmailProps> = ({email ,setEmail}): ReactElement => {
     const classes = useForgotPasswordStyles();
     const history = useHistory();
     const [error, setError] = useState<boolean>(false);

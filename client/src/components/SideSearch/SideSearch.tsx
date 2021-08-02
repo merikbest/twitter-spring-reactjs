@@ -1,11 +1,11 @@
-import React, {FormEvent} from 'react';
-import {Redirect, Link, useHistory} from 'react-router-dom';
+import React, {FC, FormEvent, ReactElement} from 'react';
+import {useHistory} from 'react-router-dom';
 import {InputAdornment} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
 
 import {SideSearchTextField} from "../SearchTextField/SideSearchTextField";
 
-const SideSearch = () => {
+const SideSearch: FC = (): ReactElement => {
     const history = useHistory();
     const [text, setText] = React.useState<string>("");
 

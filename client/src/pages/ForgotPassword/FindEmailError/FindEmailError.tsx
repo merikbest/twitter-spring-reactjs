@@ -1,4 +1,4 @@
-import React, {FC, FormEvent} from 'react';
+import React, {FC, FormEvent, ReactElement} from 'react';
 import {ForgotPasswordTextField} from "../ForgotPasswordTextField/ForgotPasswordTextField";
 import {Button} from "@material-ui/core";
 import {useForgotPasswordStyles} from "../ForgotPasswordStyles";
@@ -11,7 +11,13 @@ interface FindEmailErrorProps {
     findExistingEmail: (event: FormEvent<HTMLFormElement>) => void;
 }
 
-const FindEmailError: FC<FindEmailErrorProps> = ({classes, error,  email, setEmail, findExistingEmail}) => {
+const FindEmailError: FC<FindEmailErrorProps> = ({
+                                                     classes,
+                                                     error,
+                                                     email,
+                                                     setEmail,
+                                                     findExistingEmail
+                                                 }): ReactElement => {
 
     return (
         <>

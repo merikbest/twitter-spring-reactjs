@@ -1,13 +1,12 @@
 import {Action} from "redux";
 
 import {LoadingStatus} from "../../../types";
-import {AddFormState, Image, Tweet, TweetsState} from "./state";
+import {Image, Tweet, TweetsState} from "./state";
 import {User} from "../../user/contracts/state";
 
 export enum TweetsActionType {
     SET_TWEETS = "tweets/SET_TWEETS",
-    ADD_TWEET = "tweets/ADD_TWEET",
-    REMOVE_TWEET = 'tweets/REMOVE_TWEET',
+    SET_TWEET = "tweets/SET_TWEET",
     LIKE_TWEET = 'tweets/LIKE_TWEET',
     RETWEET = 'tweets/RETWEET',
     REPLY = 'tweets/REPLY',
@@ -21,7 +20,6 @@ export enum TweetsActionType {
     FETCH_TWEETS_BY_TEXT = "tweets/FETCH_TWEETS_BY_TEXT",
     FETCH_LIKED_TWEETS = "tweets/FETCH_LIKED_TWEETS",
     SET_LOADING_STATE = "tweets/SET_LOADING_STATE",
-    SET_ADD_FORM_STATE = "tweets/SET_ADD_FORM_STATE"
 }
 
 export interface SetTweetsActionInterface extends Action<TweetsActionType> {
@@ -29,8 +27,8 @@ export interface SetTweetsActionInterface extends Action<TweetsActionType> {
     payload: TweetsState["items"];
 }
 
-export interface AddTweetActionInterface extends Action<TweetsActionType> {
-    type: TweetsActionType.ADD_TWEET;
+export interface SetTweetActionInterface extends Action<TweetsActionType> {
+    type: TweetsActionType.SET_TWEET;
     payload: Tweet;
 }
 
@@ -42,11 +40,6 @@ export interface FetchAddTweetActionInterface extends Action<TweetsActionType> {
         likes: [];
         retweets: [];
     };
-}
-
-export interface RemoveTweetActionInterface extends Action<TweetsActionType> {
-    type: TweetsActionType.REMOVE_TWEET;
-    payload: string;
 }
 
 export interface FetchLikeTweetActionInterface extends Action<TweetsActionType> {
@@ -77,11 +70,6 @@ export interface ReplyActionInterface extends Action<TweetsActionType> {
 export interface SetTweetsLoadingStateInterface extends Action<TweetsActionType> {
     type: TweetsActionType.SET_LOADING_STATE;
     payload: LoadingStatus;
-}
-
-export interface SetAddFormStateInterface extends Action<TweetsActionType> {
-    type: TweetsActionType.SET_ADD_FORM_STATE;
-    payload: AddFormState;
 }
 
 export interface FetchTweetsActionInterface extends Action<TweetsActionType> {
@@ -119,18 +107,9 @@ export interface FetchUserTweetsActionInterface extends Action<TweetsActionType>
 
 export type TweetsActions =
     | SetTweetsActionInterface
-    | FetchTweetsActionInterface
-    | FetchMediaTweetsActionInterface
     | SetTweetsLoadingStateInterface
-    | AddTweetActionInterface
     | FetchAddTweetActionInterface
-    | SetAddFormStateInterface
-    | RemoveTweetActionInterface
+    | SetTweetActionInterface
     | LikeTweetActionInterface
     | RetweetActionInterface
-    | ReplyActionInterface
-    | FetchTweetsByUserActionInterface
-    | FetchTweetsByTagActionInterface
-    | FetchUserTweetsActionInterface
-    | FetchTweetsByTextActionInterface
-    | FetchLikedTweetsActionInterface;
+    | ReplyActionInterface;

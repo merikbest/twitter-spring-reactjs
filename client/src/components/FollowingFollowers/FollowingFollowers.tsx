@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
 import {Link, useHistory, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import Paper from '@material-ui/core/Paper';
@@ -16,7 +16,7 @@ import {fetchUserProfile, followProfile, unfollowProfile} from "../../store/duck
 import {useFollowingFollowersStyles} from "./FollowingFollowersStyles";
 import Follower from "../Follower/Follower";
 
-const FollowingFollowers = () => {
+const FollowingFollowers: FC = (): ReactElement => {
     const classes = useFollowingFollowersStyles();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -86,21 +86,21 @@ const FollowingFollowers = () => {
                         ) : (
                             <div className={classes.content}>
                                 <Typography className={classes.topic}>
-                                    {(userProfile?.id === myProfile?.user.id) ? (
+                                    {(userProfile?.id === myProfile?.id) ? (
                                         "You aren’t following anyone yet"
                                     ) : (
                                         `@${userProfile.username} isn’t following anyone`
                                     )}
                                 </Typography>
                                 <Typography className={classes.text}>
-                                    {(userProfile?.id === myProfile?.user.id) ? (
+                                    {(userProfile?.id === myProfile?.id) ? (
                                         "When you do, they’ll be listed here and you’ll see their Tweets in your timeline."
                                     ) : (
                                         "When they do, they’ll be listed here."
                                     )}
                                 </Typography>
                                 <Link to={"/home/connect"} className={classes.link}>
-                                    {(userProfile?.id === myProfile?.user.id) &&
+                                    {(userProfile?.id === myProfile?.id) &&
                                     <Button variant="contained" color="primary">
                                         Find people to follow
                                     </Button>
@@ -114,14 +114,14 @@ const FollowingFollowers = () => {
                         ) : (
                             <div className={classes.content}>
                                 <Typography className={classes.topic}>
-                                    {(userProfile?.id === myProfile?.user.id) ? (
+                                    {(userProfile?.id === myProfile?.id) ? (
                                         "You don’t have any followers yet"
                                     ) : (
                                         `@${userProfile.username} doesn’t have any followers`
                                     )}
                                 </Typography>
                                 <Typography className={classes.text}>
-                                    {(userProfile?.id === myProfile?.user.id) ? (
+                                    {(userProfile?.id === myProfile?.id) ? (
                                         "When someone follows you, you’ll see them here."
                                     ) : (
                                         "When someone follows them, they’ll be listed here."

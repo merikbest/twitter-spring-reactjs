@@ -5,21 +5,21 @@ import {
     FetchUserDataActionInterface,
     FollowUserActionInterface,
     SetUserDataActionInterface,
-    SetUserLoadingStateActionInterface, SignInErrorActionInterface,
-    SignOutActionInterface, UnfollowUserActionInterface,
+    SetUserLoadingStateActionInterface,
+    SignOutActionInterface,
+    UnfollowUserActionInterface,
     UpdateUserDataActionInterface,
     UserActionsType
 } from "./contracts/actionTypes";
-import {LoginFormProps} from "../../../pages/SignIn/LoginModal";
-import {RegisterFormProps} from "../../../pages/SignIn/RegisterModal";
 import {RegistrationProps} from "../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
+import {LoginProps} from "../../../pages/Login/Login";
 
 export const setUserData = (payload: UserState["data"]): SetUserDataActionInterface => ({
     type: UserActionsType.SET_USER_DATA,
     payload
 });
 
-export const setUpdatedUserData = (payload: User): UpdateUserDataActionInterface => ({
+export const updatedUserData = (payload: User): UpdateUserDataActionInterface => ({
     type: UserActionsType.UPDATE_USER_DATA,
     payload
 });
@@ -28,13 +28,8 @@ export const signOut = (): SignOutActionInterface => ({
     type: UserActionsType.SIGN_OUT,
 });
 
-export const fetchSignIn = (payload: LoginFormProps): FetchSignInActionInterface => ({
+export const fetchSignIn = (payload: LoginProps): FetchSignInActionInterface => ({
     type: UserActionsType.FETCH_SIGN_IN,
-    payload,
-});
-
-export const signInError = (payload: number): SignInErrorActionInterface => ({
-    type: UserActionsType.SIGN_IN_ERROR,
     payload,
 });
 

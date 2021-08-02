@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import Paper from '@material-ui/core/Paper';
 import {CircularProgress, Typography} from "@material-ui/core";
@@ -10,7 +10,7 @@ import Follower from "../Follower/Follower";
 import {User} from "../../store/ducks/user/contracts/state";
 import {useConnectStyles} from "./ConnetsStyles";
 
-const Connect = () => {
+const Connect: FC = (): ReactElement => {
     const classes2 = useConnectStyles();
     const dispatch = useDispatch();
     const users = useSelector(selectUsers);

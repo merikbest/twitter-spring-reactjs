@@ -1,4 +1,4 @@
-import React, {FC, useState,} from 'react';
+import React, {FC, ReactElement, useState,} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {Button, colors, Divider, List, ListItem, ListItemAvatar, Popover} from '@material-ui/core';
@@ -15,7 +15,7 @@ import {useUserSideProfileStyles} from "./UserSideProfileStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {CheckIcon, EditIcon} from "../../icons";
 
-const UserSideProfile: FC = () => {
+const UserSideProfile: FC = (): ReactElement | null => {
     const classes = useUserSideProfileStyles();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -55,12 +55,12 @@ const UserSideProfile: FC = () => {
         <>
             <div aria-describedby={id} onClick={handleOpenPopup} className={classes.container}>
                 <Avatar
-                    alt={`avatar ${myProfile?.user.id}`}
-                    src={myProfile?.user.avatar?.src ? myProfile?.user.avatar?.src : DEFAULT_PROFILE_IMG}
+                    alt={`avatar ${myProfile?.id}`}
+                    src={myProfile?.avatar?.src ? myProfile?.avatar?.src : DEFAULT_PROFILE_IMG}
                 />
                 <div className={classes.info}>
-                    <b>{myProfile.user.fullName}</b>
-                    <Typography style={{color: colors.grey[500]}}>@{myProfile.user.username}</Typography>
+                    <b>{myProfile.fullName}</b>
+                    <Typography style={{color: colors.grey[500]}}>@{myProfile.username}</Typography>
                 </div>
                 <div className={classes.icon}>
                     <span>{EditIcon}</span>
@@ -86,13 +86,13 @@ const UserSideProfile: FC = () => {
                 <List>
                     <ListItem>
                         <ListItemAvatar>
-                            <Avatar alt={`${myProfile?.user.id}`} src={myProfile?.user.avatar?.src}/>
+                            <Avatar alt={`${myProfile?.id}`} src={myProfile?.avatar?.src}/>
                         </ListItemAvatar>
                         <ListItemText
-                            primary={myProfile?.user.fullName}
+                            primary={myProfile?.fullName}
                             secondary={
                                 <Typography component="span" variant="body2" color="textSecondary">
-                                    @{myProfile?.user.username}
+                                    @{myProfile?.username}
                                 </Typography>
                             }
                         />
@@ -105,7 +105,7 @@ const UserSideProfile: FC = () => {
                         </ListItem>
                         <Divider component="li"/>
                         <ListItem onClick={onOpenLogoutModal}>
-                            Log out @{myProfile?.user.username}
+                            Log out @{myProfile?.username}
                         </ListItem>
                     </div>
                 </List>

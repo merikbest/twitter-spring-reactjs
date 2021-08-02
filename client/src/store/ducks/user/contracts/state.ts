@@ -28,8 +28,7 @@ export interface AuthUser {
 }
 
 export interface UserState {
-    data: AuthUser | undefined;
+    data: User | undefined;
     status: LoadingStatus;
-    errorStatus: number;
 }
 

@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useEffect, useRef} from 'react';
+import React, {FC, ReactElement, useCallback, useEffect, useRef} from 'react';
 import {IconButton} from '@material-ui/core';
 
 import {ImageObj} from "../AddTweetForm/AddTweetForm";
@@ -9,7 +9,7 @@ interface UploadImageProps {
     onChangeImages: (callback: (prev: ImageObj[]) => ImageObj[]) => void;
 }
 
-const UploadImages: FC<UploadImageProps> = ({onChangeImages}) => {
+const UploadImages: FC<UploadImageProps> = ({onChangeImages}): ReactElement => {
     const classes = useUploadImagesStyles();
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -19,7 +19,7 @@ const UploadImages: FC<UploadImageProps> = ({onChangeImages}) => {
         }
     };
 
-    const handleChangeFileInput = useCallback((event: Event) => {
+    const handleChangeFileInput = useCallback((event: Event): void => {
         if (event.target) {
             const target = event.target as HTMLInputElement;
             const file = target.files?.[0];

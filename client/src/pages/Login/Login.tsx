@@ -1,19 +1,27 @@
-import React, {ChangeEvent, FormEvent, useState} from 'react';
+import React, {ChangeEvent, FC, FormEvent, ReactElement, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {useHistory, Link} from "react-router-dom";
+import {History, LocationState} from "history";
+import {Link, useHistory} from "react-router-dom";
 import {Button} from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 
 import {LoginTextField} from "./LoginInputField";
 import {useLoginStyles} from "./LoginStyles";
-import {selectLoginErrorStatus} from "../../store/ducks/user/selectors";
+import {selectUserStatus} from "../../store/ducks/user/selectors";
 import {fetchSignIn} from "../../store/ducks/user/actionCreators";
+import {LoadingStatus} from "../../store/types";
 
-const Login = () => {
+export interface LoginProps {
+    email: string;
+    password: string;
+    history: History<LocationState>;
+}
+
+const Login: FC = (): ReactElement => {
     const classes = useLoginStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const errorStatus = useSelector(selectLoginErrorStatus);
+    const errorStatus = useSelector(selectUserStatus);
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
@@ -40,7 +48,7 @@ const Login = () => {
                 <TwitterIcon/>
             </div>
             <h1>Log in to Twitter</h1>
-            {(errorStatus === 403) && (
+            {(errorStatus === LoadingStatus.ERROR) && (
                 <div className={classes.error}>
                     The username and password you entered did not match our records.
                     Please double-check and try again.

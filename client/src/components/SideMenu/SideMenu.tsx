@@ -22,35 +22,35 @@ import {selectUserData} from "../../store/ducks/user/selectors";
 import {useSideMenuStyles} from "./SideMenuStyles";
 
 const SideMenu: FC = (): ReactElement => {
-    const classes2 = useSideMenuStyles();
+    const classes = useSideMenuStyles();
     const location = useLocation();
     const myProfile = useSelector(selectUserData);
     const userData = useSelector(selectUserData);
     const [visibleAddTweet, setSetVisibleAddTweet] = useState<boolean>(false);
 
-    const handleClickOpenAddTweet = () => {
+    const handleClickOpenAddTweet = (): void => {
         setSetVisibleAddTweet(true);
     };
 
-    const onCloseAddTweet = () => {
+    const onCloseAddTweet = (): void => {
         setSetVisibleAddTweet(false);
     };
 
     return (
         <>
-            <ul className={classes2.container}>
-                <li className={classes2.itemWrapper} style={{marginBottom: 2,}}>
+            <ul className={classes.container}>
+                <li className={classes.itemWrapper} style={{marginBottom: 2,}}>
                     <NavLink to="/home" activeClassName={"selected"}>
                         <IconButton color="primary">
-                            <TwitterIcon className={classes2.logoIcon}/>
+                            <TwitterIcon className={classes.logoIcon}/>
                         </IconButton>
                     </NavLink>
                 </li>
-                <li className={classes2.itemWrapper}>
+                <li className={classes.itemWrapper}>
                     <NavLink to="/home" activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
-                                <Typography className={classes2.label} variant="h6">
+                                <Typography className={classes.label} variant="h6">
                                     {(location.pathname.includes("/home")) ? (
                                         <span>{HomeIconFilled}</span>
                                     ) : (
@@ -61,11 +61,11 @@ const SideMenu: FC = (): ReactElement => {
                         </div>
                     </NavLink>
                 </li>
-                <li className={classes2.itemWrapper}>
+                <li className={classes.itemWrapper}>
                     <NavLink to="/search" activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
-                                <Typography className={classes2.label} variant="h6">
+                                <Typography className={classes.label} variant="h6">
                                     {(location.pathname.includes("/search")) ? (
                                         <span>{ExploreIconFilled}</span>
                                     ) : (
@@ -76,48 +76,48 @@ const SideMenu: FC = (): ReactElement => {
                         </div>
                     </NavLink>
                 </li>
-                <li className={classes2.itemWrapper}>
+                <li className={classes.itemWrapper}>
                     <div>
                         <Hidden smDown>
-                            <Typography className={classes2.label} variant="h6">
+                            <Typography className={classes.label} variant="h6">
                                 <span>{NotificationsIcon}</span> Notifications
                             </Typography>
                         </Hidden>
                     </div>
                 </li>
-                <li className={classes2.itemWrapper}>
+                <li className={classes.itemWrapper}>
                     <div>
                         <Hidden smDown>
-                            <Typography className={classes2.label} variant="h6">
+                            <Typography className={classes.label} variant="h6">
                                 <span>{MessagesIcon}</span> Messages
                             </Typography>
                         </Hidden>
                     </div>
                 </li>
-                <li className={classes2.itemWrapper}>
+                <li className={classes.itemWrapper}>
                     <div>
                         <Hidden smDown>
-                            <Typography className={classes2.label} variant="h6">
+                            <Typography className={classes.label} variant="h6">
                                 <span>{BookmarksIcon}</span> Bookmarks
                             </Typography>
                         </Hidden>
                     </div>
                 </li>
-                <li className={classes2.itemWrapper}>
+                <li className={classes.itemWrapper}>
                     <div>
                         <Hidden smDown>
-                            <Typography className={classes2.label} variant="h6">
+                            <Typography className={classes.label} variant="h6">
                                 <span>{ListsIcon}</span> Lists
                             </Typography>
                         </Hidden>
                     </div>
                 </li>
-                <li className={classes2.itemWrapper}>
-                    <NavLink to={`/user/${userData?.user.id}`} activeClassName={"selected"}>
+                <li className={classes.itemWrapper}>
+                    <NavLink to={`/user/${userData?.id}`} activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
-                                <Typography className={classes2.label} variant="h6">
-                                    {(location.pathname.includes(`/user/${myProfile?.user.id}`)) ? (
+                                <Typography className={classes.label} variant="h6">
+                                    {(location.pathname.includes(`/user/${myProfile?.id}`)) ? (
                                         <span>{ProfileIconFilled}</span>
                                     ) : (
                                         <span>{ProfileIcon}</span>
@@ -127,19 +127,19 @@ const SideMenu: FC = (): ReactElement => {
                         </div>
                     </NavLink>
                 </li>
-                <li className={classes2.itemWrapper}>
+                <li className={classes.itemWrapper}>
                     <div>
                         <Hidden smDown>
-                            <Typography className={classes2.label} variant="h6">
+                            <Typography className={classes.label} variant="h6">
                                 <span>{MoreIcon}</span> More
                             </Typography>
                         </Hidden>
                     </div>
                 </li>
-                <li className={classes2.itemWrapper}>
+                <li className={classes.itemWrapper}>
                     <Button
                         onClick={handleClickOpenAddTweet}
-                        className={classes2.button}
+                        className={classes.button}
                         variant="contained"
                         color="primary"
                         fullWidth

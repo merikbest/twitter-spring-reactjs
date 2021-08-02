@@ -10,9 +10,9 @@ import {EmojiData, Picker} from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
 import EmojiConvertor from 'emoji-js';
 
-import {fetchAddTweet, setAddFormState} from "../../store/ducks/tweets/actionCreators";
+import {fetchAddTweet, setTweetsLoadingState} from "../../store/ducks/tweets/actionCreators";
 import {selectIsTweetsLoading} from "../../store/ducks/tweets/selectors";
-import {AddFormState, Image} from '../../store/ducks/tweets/contracts/state';
+import {Image} from '../../store/ducks/tweets/contracts/state';
 import UploadImages from '../UploadImages/UploadImages';
 import {uploadImage} from "../../util/uploadImage";
 import {selectUserData} from "../../store/ducks/user/selectors";
@@ -97,7 +97,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
 
     const handleClickAddTweet = async (): Promise<void> => {
         let result: Array<Image> = [];
-        dispatch(setAddFormState(AddFormState.LOADING));
+        dispatch(setTweetsLoadingState(LoadingStatus.LOADING));
         for (let i = 0; i < images.length; i++) {
             const file: File = images[i].file;
             const image: Image = await uploadImage(file);
@@ -142,8 +142,8 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
             <div className={classes.content}>
                 <Avatar
                     className={classes.contentAvatar}
-                    alt={`avatar ${userData?.user.id}`}
-                    src={userData?.user.avatar?.src ? userData?.user.avatar?.src : DEFAULT_PROFILE_IMG}
+                    alt={`avatar ${userData?.id}`}
+                    src={userData?.avatar?.src ? userData?.avatar?.src : DEFAULT_PROFILE_IMG}
                 />
                 <TextareaAutosize
                     onChange={handleChangeTextarea}

@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Link, useHistory, useLocation, useParams} from "react-router-dom";
+import {Link, useHistory, useParams} from "react-router-dom";
 import {Avatar, Divider, IconButton} from '@material-ui/core';
 import classNames from "classnames";
 import Typography from "@material-ui/core/Typography";
@@ -34,8 +34,8 @@ const TweetImageModal: FC = (): ReactElement | null => {
     const myProfile = useSelector(selectUserData);
     const params: { id: string } = useParams();
     const history = useHistory();
-    const isTweetLiked = tweetData?.likes.find((user) => user.id === myProfile?.user.id);
-    const isTweetRetweeted = tweetData?.retweets.find((user) => user.id === myProfile?.user?.id);
+    const isTweetLiked = tweetData?.likes.find((user) => user.id === myProfile?.id);
+    const isTweetRetweeted = tweetData?.retweets.find((user) => user.id === myProfile?.id);
     const [visibleTweetImageModalWindow, setVisibleTweetImageModalWindow] = useState<boolean>(false);
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
     const [modalWindowTitle, setModalWindowTitle] = useState<string>("");

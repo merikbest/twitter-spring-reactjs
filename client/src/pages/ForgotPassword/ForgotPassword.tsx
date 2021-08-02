@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {FC, ReactElement, useState} from 'react';
 import {Route} from "react-router-dom";
 import TwitterIcon from "@material-ui/icons/Twitter";
 
@@ -10,7 +10,7 @@ import ResetPassword from "./ResetPassword/ResetPassword";
 import {User} from "../../store/ducks/user/contracts/state";
 import ResetPasswordSuccess from "./ResetPasswordSuccess/ResetPasswordSuccess";
 
-const ForgotPassword = () => {
+const ForgotPassword: FC = (): ReactElement => {
     const classes = useForgotPasswordStyles();
     const [email, setEmail] = useState<string>("");
     const [user, setUser] = useState<User | undefined>();

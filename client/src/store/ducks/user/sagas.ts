@@ -1,5 +1,5 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
-import {setUpdatedUserData, setUserData, setUserLoadingStatus, signInError} from "./actionCreators";
+import {setUserData, setUserLoadingStatus} from "./actionCreators";
 import {AuthUser, User} from "./contracts/state";
 import {
     FetchSignInActionInterface,
@@ -9,19 +9,18 @@ import {
     UpdateUserDataActionInterface,
     UserActionsType
 } from "./contracts/actionTypes";
-import {AuthApi, Response} from "../../../services/api/authApi";
-import {LoadingStatus} from "../../types";
+import {AuthApi} from "../../../services/api/authApi";
 import {UserApi} from "../../../services/api/userApi";
+import {LoadingStatus} from "../../types";
 
 export function* fetchSignInRequest({payload}: FetchSignInActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const data: AuthUser = yield call(AuthApi.signIn, payload);
         localStorage.setItem("token", data.token);
-        yield put(setUserData(data));
+        yield put(setUserData(data.user));
         payload.history.push("/home");
     } catch (error) {
-        yield put(signInError(error.response.status));
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
 }
@@ -31,9 +30,8 @@ export function* fetchSignUpRequest({payload}: FetchSignUpActionInterface) {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const data: AuthUser = yield call(AuthApi.endRegistration, payload);
         localStorage.setItem("token", data.token);
-        yield put(setUserData(data));
+        yield put(setUserData(data.user));
         payload.history.push("/home");
-        yield put(setUserLoadingStatus(LoadingStatus.SUCCESS));
     } catch (error) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -43,9 +41,10 @@ export function* fetchUserDataRequest() {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const data: AuthUser = yield call(AuthApi.getMe);
-        yield put(setUserData(data));
+        localStorage.setItem("token", data.token);
+        yield put(setUserData(data.user));
     } catch (error) {
-        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+        console.log(error.response);
     }
 }
 
@@ -53,7 +52,7 @@ export function* fetchUpdateUserDataRequest({payload}: UpdateUserDataActionInter
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const data: User = yield call(UserApi.updateUserProfile, payload);
-        yield put(setUpdatedUserData(data));
+        yield put(setUserData(data));
     } catch (error) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }

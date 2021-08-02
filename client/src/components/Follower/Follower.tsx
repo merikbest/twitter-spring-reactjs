@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, ReactElement, useState} from 'react';
 import {useSelector} from "react-redux";
 import {Link} from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
@@ -17,12 +17,12 @@ interface FollowerProps {
     unfollow: (user: User) => void;
 }
 
-const Follower: FC<FollowerProps> = ({user, follow, unfollow}) => {
+const Follower: FC<FollowerProps> = ({user, follow, unfollow}): ReactElement => {
     const classes = useFollowerStyles();
     const myProfile = useSelector(selectUserData);
     const [btnText, setBtnText] = useState<string>("Following");
     const [visibleUnfollowModal, setVisibleUnfollowModal] = useState<boolean>(false);
-    const follower = myProfile?.user?.followers?.findIndex(follower => follower.id === user.id);
+    const follower = myProfile?.followers?.findIndex(follower => follower.id === user.id);
 
     const handleClickOpenUnfollowModal = (): void => {
         setVisibleUnfollowModal(true);
@@ -59,7 +59,7 @@ const Follower: FC<FollowerProps> = ({user, follow, unfollow}) => {
                         </div>
                     </Link>
                     <div>
-                        {myProfile?.user.id !== user.id && (
+                        {myProfile?.id !== user.id && (
                             follower === -1 ? (
                                 <Button
                                     className={classes.outlinedButton}

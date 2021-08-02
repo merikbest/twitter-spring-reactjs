@@ -6,8 +6,7 @@ import {
     FetchReplyTweetActionInterface,
     TweetActionType
 } from "./contracts/actionTypes";
-import {TweetState} from "./contracts/state";
-import {Image} from "../tweets/contracts/state";
+import {ReplyTweet, TweetState} from "./contracts/state";
 
 export const setTweetData = (payload: TweetState["data"]): SetTweetDataActionInterface => ({
     type: TweetActionType.SET_TWEET_DATA,
@@ -24,16 +23,7 @@ export const fetchTweetData = (payload: string): FetchTweetDataActionInterface =
     payload
 });
 
-export const fetchReplyTweet = (
-    payload: {
-        id: string;
-        text: string;
-        addressedUsername: string;
-        addressedId: number;
-        images: Image[];
-        likes: [];
-        retweets: [];
-    }): FetchReplyTweetActionInterface => ({
+export const fetchReplyTweet = (payload: ReplyTweet): FetchReplyTweetActionInterface => ({
     type: TweetActionType.FETCH_REPLY_TWEET,
     payload
 });

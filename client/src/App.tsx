@@ -4,14 +4,13 @@ import {Route, Switch, useHistory, useLocation} from 'react-router-dom';
 import {makeStyles, Theme} from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 
-import SignIn from './pages/SignIn/SignIn';
+import Authentication from './pages/Authentication/Authentication';
 import Home from "./pages/Home/Home";
 import {Layout} from './pages/Layout';
 import UserPage from "./pages/UserPage/UserPage";
-import {selectIsAuth, selectLoginErrorStatus, selectUserStatus} from "./store/ducks/user/selectors";
+import {selectIsAuth, selectUserStatus} from "./store/ducks/user/selectors";
 import {LoadingStatus} from './store/types';
 import {fetchUserData} from './store/ducks/user/actionCreators';
-import ActivatePage from "./pages/ActivatePage/ActivatePage";
 import Search from './components/Search/Search';
 import FollowingFollowers from "./components/FollowingFollowers/FollowingFollowers";
 import TweetImageModal from "./components/TweetImageModal/TweetImageModal";
@@ -37,7 +36,6 @@ const App: FC = (): ReactElement => {
     const dispatch = useDispatch();
     const isAuth = useSelector(selectIsAuth);
     const loadingStatus = useSelector(selectUserStatus);
-    const errorStatus = useSelector(selectLoginErrorStatus);
     const isReady = loadingStatus !== LoadingStatus.NEVER && loadingStatus !== LoadingStatus.LOADING;
 
     const location = useLocation<{ background: any }>();
@@ -65,14 +63,13 @@ const App: FC = (): ReactElement => {
         <div className="App">
             <Layout>
                 <Switch location={background || location}>
-                    <Route path="/account/signin" component={SignIn} exact/>
+                    <Route path="/account/signin" component={Authentication} exact/>
                     <Route path="/account/login" component={Login} exact/>
                     <Route path="/account/forgot" component={ForgotPassword}/>
                     <Route path="/home" component={Home}/>
                     <Route path="/search" component={Search}/>
                     <Route path="/user/:id" component={UserPage} exact/>
                     <Route path="/user/:id/:follow" component={FollowingFollowers}/>
-                    <Route path="/user/activate/:hash" component={ActivatePage} exact/>
                 </Switch>
                 {background && <Route path="/modal/:id" children={<TweetImageModal/>}/>}
             </Layout>

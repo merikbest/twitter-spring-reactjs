@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, ReactElement} from 'react';
 import {useDispatch} from "react-redux";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -17,7 +17,7 @@ interface UsersListModalProps {
     onClose: () => void;
 }
 
-const UsersListModal: FC<UsersListModalProps> = ({users, visible, title, onClose}) => {
+const UsersListModal: FC<UsersListModalProps> = ({users, visible, title, onClose}): ReactElement | null => {
     const dispatch = useDispatch();
 
     const handleFollow = (user: User): void => {
@@ -40,7 +40,7 @@ const UsersListModal: FC<UsersListModalProps> = ({users, visible, title, onClose
                 </IconButton>
                 {title}
             </DialogTitle>
-            <DialogContent style={{height: 550, width: 598, padding: 0, }}>
+            <DialogContent style={{height: 550, width: 598, padding: 0,}}>
                 {users?.map((user) => <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>)}
             </DialogContent>
         </Dialog>

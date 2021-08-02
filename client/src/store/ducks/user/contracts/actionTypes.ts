@@ -1,14 +1,12 @@
 import {Action} from "redux";
 
-import {LoginFormProps} from "../../../../pages/SignIn/LoginModal";
-import {RegisterFormProps} from "../../../../pages/SignIn/RegisterModal";
 import {LoadingStatus} from "../../../types";
 import {User, UserState} from "./state";
 import {RegistrationProps} from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
+import {LoginProps} from "../../../../pages/Login/Login";
 
 export enum UserActionsType {
     FETCH_SIGN_IN = "user/FETCH_SIGN_IN",
-    SIGN_IN_ERROR = "user/SIGN_IN_ERROR",
     FETCH_SIGN_UP = 'user/FETCH_SIGN_UP',
     SET_USER_DATA = "user/SET_USER_DATA",
     UPDATE_USER_DATA = "user/UPDATE_USER_DATA",
@@ -25,12 +23,7 @@ export interface SignOutActionInterface extends Action<UserActionsType> {
 
 export interface FetchSignInActionInterface extends Action<UserActionsType> {
     type: UserActionsType.FETCH_SIGN_IN;
-    payload: LoginFormProps;
-}
-
-export interface SignInErrorActionInterface extends Action<UserActionsType> {
-    type: UserActionsType.SIGN_IN_ERROR;
-    payload: number;
+    payload: LoginProps;
 }
 
 export interface FetchSignUpActionInterface extends Action<UserActionsType> {
@@ -70,9 +63,6 @@ export interface UnfollowUserActionInterface extends Action<UserActionsType> {
 export type UserActions =
     | SetUserDataActionInterface
     | SetUserLoadingStateActionInterface
-    | FetchUserDataActionInterface
     | SignOutActionInterface
-    | SignInErrorActionInterface
-    | UpdateUserDataActionInterface
     | FollowUserActionInterface
     | UnfollowUserActionInterface;

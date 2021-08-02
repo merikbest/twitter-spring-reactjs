@@ -1,17 +1,17 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 
-import {addTweet, likeTweet, retweet, setAddFormState, setTweets, setTweetsLoadingState} from "./actionCreators";
+import {likeTweet, retweet, setTweet, setTweets, setTweetsLoadingState} from "./actionCreators";
 import {TweetApi} from "../../../services/api/tweetApi";
-import {AddFormState, Tweet} from "./contracts/state";
+import {Tweet} from "./contracts/state";
 import {
-    FetchAddTweetActionInterface, FetchLikedTweetsActionInterface,
+    FetchAddTweetActionInterface,
+    FetchLikedTweetsActionInterface,
     FetchLikeTweetActionInterface,
     FetchRetweetActionInterface,
     FetchTweetsByTagActionInterface,
     FetchTweetsByTextActionInterface,
     FetchTweetsByUserActionInterface,
     FetchUserTweetsActionInterface,
-    RemoveTweetActionInterface,
     TweetsActionType
 } from "./contracts/actionTypes";
 import {LoadingStatus} from '../../types';
@@ -22,7 +22,7 @@ import {setUserLikedTweet, setUserRetweet} from "../userTweets/actionCreators";
 
 export function* fetchTweetsRequest() {
     try {
-        // ?????????????????
+        yield put(setTweetsLoadingState(LoadingStatus.LOADING));
         const items: Tweet[] = yield call(TweetApi.fetchTweets);
         yield put(setTweets(items));
     } catch (e) {
@@ -32,6 +32,7 @@ export function* fetchTweetsRequest() {
 
 export function* fetchMediaTweetsRequest() {
     try {
+        yield put(setTweetsLoadingState(LoadingStatus.LOADING));
         const items: Tweet[] = yield call(TweetApi.fetchMediaTweets);
         yield put(setTweets(items));
     } catch (e) {
@@ -41,63 +42,61 @@ export function* fetchMediaTweetsRequest() {
 
 export function* fetchTweetsByUserRequest({payload}: FetchTweetsByUserActionInterface) {
     try {
+        yield put(setTweetsLoadingState(LoadingStatus.LOADING));
         const item: Tweet[] = yield call(TweetApi.fetchTweetsByUser, payload);
         yield put(setTweets(item));
     } catch (e) {
-        yield put(setAddFormState(AddFormState.ERROR));
+        yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }
 }
 
 export function* fetchTweetsByTagRequest({payload}: FetchTweetsByTagActionInterface) {
     try {
+        yield put(setTweetsLoadingState(LoadingStatus.LOADING));
         const item: Tweet[] = yield call(TagApi.fetchTweetsByTag, payload);
         yield put(setTweets(item));
     } catch (e) {
-        yield put(setAddFormState(AddFormState.ERROR));
+        yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }
 }
 
 export function* fetchTweetsByTextRequest({payload}: FetchTweetsByTextActionInterface) {
     try {
+        yield put(setTweetsLoadingState(LoadingStatus.LOADING));
         const item: Tweet[] = yield call(TweetApi.searchTweets, payload);
         yield put(setTweets(item));
     } catch (e) {
-        yield put(setAddFormState(AddFormState.ERROR));
+        yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }
 }
 
 export function* fetchLikedTweetsRequest({payload}: FetchLikedTweetsActionInterface) {
     try {
+        yield put(setTweetsLoadingState(LoadingStatus.LOADING));
         const item: Tweet[] = yield call(UserApi.getUserLikedTweets, payload);
         yield put(setTweets(item));
     } catch (e) {
-        yield put(setAddFormState(AddFormState.ERROR));
+        yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }
 }
 
 export function* fetchUserTweetsRequest({payload}: FetchUserTweetsActionInterface) {
     try {
+        yield put(setTweetsLoadingState(LoadingStatus.LOADING));
         const item: Tweet[] = yield call(UserApi.getUserTweets, payload);
         yield put(setTweets(item));
     } catch (e) {
-        yield put(setAddFormState(AddFormState.ERROR));
+        yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }
 }
 
 export function* fetchAddTweetRequest({payload}: FetchAddTweetActionInterface) {
     try {
+        yield put(setTweetsLoadingState(LoadingStatus.LOADING));
         const item: Tweet = yield call(TweetApi.addTweet, payload);
-        yield put(addTweet(item));
+        yield put(setTweet(item));
     } catch (e) {
-        yield put(setAddFormState(AddFormState.ERROR));
-    }
-}
-
-export function* fetchRemoveTweetRequest({payload}: RemoveTweetActionInterface) {
-    try {
-        yield call(TweetApi.removeTweet, payload);
-    } catch (error) {
-        alert('Ошибка при удалении твита');
+        yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }
 }
 
@@ -119,7 +118,6 @@ export function* tweetsSaga() {
     yield takeLatest(TweetsActionType.FETCH_TWEETS, fetchTweetsRequest);
     yield takeLatest(TweetsActionType.FETCH_MEDIA_TWEETS, fetchMediaTweetsRequest);
     yield takeLatest(TweetsActionType.FETCH_ADD_TWEET, fetchAddTweetRequest);
-    yield takeLatest(TweetsActionType.REMOVE_TWEET, fetchRemoveTweetRequest);
     yield takeLatest(TweetsActionType.FETCH_LIKE_TWEET, fetchLikeTweetRequest);
     yield takeLatest(TweetsActionType.FETCH_RETWEET, fetchRetweetRequest);
     yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_USER, fetchUserTweetsRequest);

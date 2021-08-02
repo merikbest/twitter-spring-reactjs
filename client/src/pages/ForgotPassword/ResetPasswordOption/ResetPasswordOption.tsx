@@ -1,15 +1,15 @@
-import React, {FC, FormEvent} from 'react';
+import React, {FC, FormEvent, ReactElement} from 'react';
+import {useHistory} from "react-router-dom";
 import {Button, Radio} from "@material-ui/core";
 
 import {useForgotPasswordStyles} from "../ForgotPasswordStyles";
 import {AuthApi} from "../../../services/api/authApi";
-import {useHistory} from "react-router-dom";
 
 interface ResetPasswordOptionProps {
     email: string;
 }
 
-const ResetPasswordOption: FC<ResetPasswordOptionProps> = ({email}) => {
+const ResetPasswordOption: FC<ResetPasswordOptionProps> = ({email}): ReactElement => {
     const classes = useForgotPasswordStyles();
     const history = useHistory();
 

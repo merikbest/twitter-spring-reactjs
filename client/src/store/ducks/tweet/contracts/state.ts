@@ -1,7 +1,17 @@
 import {LoadingStatus} from "../../../types";
-import {Tweet} from "../../tweets/contracts/state";
+import {Image, Tweet} from "../../tweets/contracts/state";
 
 export interface TweetState {
     data?: Tweet
     loadingState: LoadingStatus
+}
+
+export interface ReplyTweet {
+    id: string;
+    text: string;
+    addressedUsername: string;
+    addressedId: number;
+    images: Image[];
+    likes: [];
+    retweets: [];
 }

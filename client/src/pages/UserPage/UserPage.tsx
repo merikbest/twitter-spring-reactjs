@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, useEffect, useState} from 'react';
+import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
 import {RouteComponentProps, Link} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import Paper from '@material-ui/core/Paper';
@@ -22,7 +22,7 @@ import {fetchUserProfile, followUserProfile, unfollowUserProfile} from "../../st
 import UserPageTweets from "./UserPageTweets";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 
-const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
+const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElement => {
     const classes = useUserPageStyles();
     const dispatch = useDispatch();
     const tweets = useSelector(selectUserTweetsItems);
@@ -32,7 +32,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
     const [btnText, setBtnText] = useState<string>("Following");
     const [activeTab, setActiveTab] = useState<number>(0);
     const [visibleEditProfile, setVisibleEditProfile] = useState<boolean>(false);
-    const follower = userProfile?.following?.find((user) => user.id === myProfile?.user.id);
+    const follower = userProfile?.following?.find((user) => user.id === myProfile?.id);
 
     useEffect(() => {
         if (match.params.id) {
@@ -51,19 +51,19 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
         }
     }, [userProfile]);
 
-    const handleChange = (event: ChangeEvent<{}>, newValue: number) => {
+    const handleChange = (event: ChangeEvent<{}>, newValue: number): void => {
         setActiveTab(newValue);
     };
 
-    const onOpenEditProfile = () => {
+    const onOpenEditProfile = (): void => {
         setVisibleEditProfile(true);
     };
 
-    const onCloseEditProfile = () => {
+    const onCloseEditProfile = (): void => {
         setVisibleEditProfile(false);
     };
 
-    const handleFollow = () => {
+    const handleFollow = (): void => {
         if (follower) {
             dispatch(unfollowUserProfile(userProfile!));
         } else {
@@ -71,15 +71,15 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
         }
     };
 
-    const handleShowUserTweets = () => {
+    const handleShowUserTweets = (): void => {
         dispatch(fetchUserTweets(match.params.id));
     };
 
-    const handleShowLikedTweets = () => {
+    const handleShowLikedTweets = (): void => {
         dispatch(fetchUserLikedTweets(match.params.id));
     };
 
-    const handleShowMediaTweets = () => {
+    const handleShowMediaTweets = (): void => {
         dispatch(fetchUserMediaTweets(match.params.id));
     };
 
@@ -103,7 +103,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
                     <div style={{display: "inline-block"}}>
                         <Avatar src={userProfile?.avatar?.src ? userProfile?.avatar.src : DEFAULT_PROFILE_IMG}/>
                     </div>
-                    {userProfile?.id === myProfile?.user.id ? (
+                    {userProfile?.id === myProfile?.id ? (
                         <Button onClick={onOpenEditProfile} color="primary" className={classes.editButton}>
                             Edit profile
                         </Button>
@@ -192,7 +192,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}) => {
                             tweets={tweets}
                             activeTab={activeTab}
                             userProfileId={userProfile?.id}
-                            myProfileId={myProfile?.user.id}
+                            myProfileId={myProfile?.id}
                             username={userProfile?.username}
                         />
                     )}

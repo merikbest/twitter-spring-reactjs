@@ -1,6 +1,6 @@
 import {makeStyles} from "@material-ui/core";
 
-export const useStylesSignIn = makeStyles((theme) => ({
+export const useAuthenticationStyles= makeStyles((theme) => ({
     wrapper: {
         display: 'flex',
         height: '100vh'

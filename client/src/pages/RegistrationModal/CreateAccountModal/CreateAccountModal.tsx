@@ -1,9 +1,9 @@
-import React, {FC} from 'react';
+import React, {FC, ReactElement} from 'react';
 import {Button, Dialog, DialogContent} from "@material-ui/core";
 
 import {useCreateAccountModalStyles} from "./CreateAccountModalStyles";
 import {RegistrationInputField} from "../RegistrationInput/RegistrationInputField";
-import {RegistrationInfo} from "../../SignIn/SignIn";
+import {RegistrationInfo} from "../../Authentication/Authentication";
 import {AuthApi} from "../../../services/api/authApi";
 
 interface CustomizeModalProps {
@@ -13,7 +13,12 @@ interface CustomizeModalProps {
     onOpenEmailVerification: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
 
-const CreateAccountModal:FC<CustomizeModalProps> = ({open, onClose, registrationInfo, onOpenEmailVerification}) => {
+const CreateAccountModal: FC<CustomizeModalProps> = ({
+                                                         open,
+                                                         onClose,
+                                                         registrationInfo,
+                                                         onOpenEmailVerification
+                                                     }): ReactElement => {
     const classes = useCreateAccountModalStyles();
 
     const onSubmit = (): void => {

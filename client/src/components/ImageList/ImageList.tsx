@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, ReactElement} from 'react';
 import ClearIcon from '@material-ui/icons/Clear';
 import {IconButton} from '@material-ui/core';
 
@@ -11,7 +11,7 @@ interface ImageListProps {
     removeImage?: (url: string) => void;
 }
 
-const ImageList: FC<ImageListProps> = ({images, removeImage}) => {
+const ImageList: FC<ImageListProps> = ({images, removeImage}): ReactElement => {
     const classes = useImageListStyles();
 
     return (

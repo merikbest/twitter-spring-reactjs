@@ -30,8 +30,8 @@ export const FullTweet: FC = (): ReactElement | null => {
     const myProfile = useSelector(selectUserData);
     const isLoading = useSelector(selectIsTweetLoading);
     const params: { id: string } = useParams();
-    const isTweetLiked = tweetData?.likes.find((user) => user.id === myProfile?.user.id);
-    const isTweetRetweeted = tweetData?.retweets.find((user) => user.id === myProfile?.user?.id);
+    const isTweetLiked = tweetData?.likes.find((user) => user.id === myProfile?.id);
+    const isTweetRetweeted = tweetData?.retweets.find((user) => user.id === myProfile?.id);
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
     const [modalWindowTitle, setModalWindowTitle] = useState<string>("");
     const image = tweetData?.images?.[0];

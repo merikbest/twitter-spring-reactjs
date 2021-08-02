@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {FC, ReactElement} from 'react';
 import {Link} from "react-router-dom";
 
 import {useForgotPasswordStyles} from "../ForgotPasswordStyles";
 
-const ResetPasswordSuccess = () => {
+const ResetPasswordSuccess: FC = (): ReactElement => {
     const classes = useForgotPasswordStyles();
 
     return (

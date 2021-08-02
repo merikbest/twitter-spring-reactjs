@@ -1,8 +1,8 @@
-import React, {FC} from 'react';
-
-import {useCustomizeModalStyles} from "./CustomizeModalStyles";
+import React, {FC, ReactElement} from 'react';
 import {Button, Dialog, DialogContent, Radio} from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
+
+import {useCustomizeModalStyles} from "./CustomizeModalStyles";
 
 interface CustomizeModalProps {
     open: boolean;
@@ -10,7 +10,7 @@ interface CustomizeModalProps {
     onOpenCreateAccount: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
 
-const CustomizeModal:FC<CustomizeModalProps> = ({open, onClose, onOpenCreateAccount}) => {
+const CustomizeModal:FC<CustomizeModalProps> = ({open, onClose, onOpenCreateAccount}): ReactElement => {
     const classes = useCustomizeModalStyles();
 
     return (

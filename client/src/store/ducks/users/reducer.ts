@@ -13,7 +13,7 @@ export const usersReducer = produce((draft: Draft<UsersState>, action: UsersActi
     switch (action.type) {
         case UsersActionsType.SET_USERS:
             draft.users = action.payload;
-            draft.loadingState = LoadingStatus.LOADED;
+            draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
         case UsersActionsType.SET_USER_LOADING_STATE:

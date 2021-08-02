@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, ReactElement, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar/ListItemAvatar";
@@ -19,13 +19,13 @@ interface UsersItem {
     user: User
 }
 
-const UsersItem: FC<UsersItem> = ({user}) => {
+const UsersItem: FC<UsersItem> = ({user}): ReactElement => {
     const classes = useUsersItemStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
     const [btnText, setBtnText] = useState<string>("Following");
     const [visibleUnfollowModal, setVisibleUnfollowModal] = useState<boolean>(false);
-    const follower = myProfile?.user?.followers?.findIndex(follower => follower.id === user.id);
+    const follower = myProfile?.followers?.findIndex(follower => follower.id === user.id);
 
     const handleClickOpenUnfollowModal = (): void => {
         setVisibleUnfollowModal(true);
@@ -60,7 +60,7 @@ const UsersItem: FC<UsersItem> = ({user}) => {
                 />
             </Link>
             <div style={{flex: 1}}>
-                {myProfile?.user.id === user.id ? null : (
+                {myProfile?.id === user.id ? null : (
                     follower === -1 ? (
                         <Button
                             className={classes.outlinedButton}

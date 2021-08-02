@@ -1,9 +1,9 @@
-import React, {FC, useState} from 'react';
+import React, {FC, ReactElement, useState} from 'react';
+import TwitterIcon from "@material-ui/icons/Twitter";
+import {Button, Dialog, DialogContent} from "@material-ui/core";
 
 import {useEmailVerificationModalStyles} from "./EmailVerificationModalStyles";
-import {Button, Dialog, DialogContent} from "@material-ui/core";
 import {RegistrationInputField} from "../RegistrationInput/RegistrationInputField";
-import TwitterIcon from "@material-ui/icons/Twitter";
 import {AuthApi} from "../../../services/api/authApi";
 
 interface CustomizeModalProps {
@@ -13,7 +13,7 @@ interface CustomizeModalProps {
     onOpenSetPassword: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
 
-const EmailVerificationModal: FC<CustomizeModalProps> = ({email, open, onClose, onOpenSetPassword}) => {
+const EmailVerificationModal: FC<CustomizeModalProps> = ({email, open, onClose, onOpenSetPassword}): ReactElement => {
     const classes = useEmailVerificationModalStyles()
     const [verificationCode, setVerificationCode] = useState<string>("");
     const [error, setError] = useState<string>("");

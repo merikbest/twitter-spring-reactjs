@@ -1,19 +1,15 @@
-import React, {ChangeEvent, FC, FormEvent, useState} from 'react';
-import {Button, Dialog, FormControl, FormGroup, InputLabel, Select} from "@material-ui/core";
+import React, {ChangeEvent, FC, ReactElement, useState} from 'react';
+import {Controller, useForm} from "react-hook-form";
+import {Button, Dialog, FormControl, InputLabel} from "@material-ui/core";
 import DialogContent from "@material-ui/core/DialogContent";
 import TwitterIcon from "@material-ui/icons/Twitter"
+import {yupResolver} from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 import {useRegistrationModalStyles} from "./RegistrationModalStyles";
-import * as yup from "yup";
-import {Controller, useForm} from "react-hook-form";
-import {yupResolver} from "@hookform/resolvers/yup";
-import {fetchSignUp} from "../../store/ducks/user/actionCreators";
-import {RegisterFormProps} from "../SignIn/RegisterModal";
-import TweeterInput from "../../components/EditProfileModal/TweetInput/TweeterInput";
 import RegistrationInput from "./RegistrationInput/RegistrationInput";
-import {CustomSelect} from "./RegistrationSelect/CustomSelect";
-import CustomizeModal from "./CustomizeModal/CustomizeModal";
-import {RegistrationInfo} from "../SignIn/SignIn";
+import {RegistrationSelect} from "./RegistrationSelect/RegistrationSelect";
+import {RegistrationInfo} from "../Authentication/Authentication";
 import {AuthApi} from "../../services/api/authApi";
 
 interface RegistrationModalProps {
@@ -33,7 +29,12 @@ const RegistrationFormSchema = yup.object().shape({
     email: yup.string().email("Please enter a valid email address."),
 });
 
-const RegistrationModal: FC<RegistrationModalProps> = ({open, onClose, onOpenCustomize, onChangeRegistrationInfo}) => {
+const RegistrationModal: FC<RegistrationModalProps> = ({
+                                                           open,
+                                                           onClose,
+                                                           onOpenCustomize,
+                                                           onChangeRegistrationInfo
+                                                       }): ReactElement => {
     const classes = useRegistrationModalStyles();
     const [emailError, setEmailError] = useState<string>("");
     const [month, setMonth] = useState<string>("");
@@ -47,7 +48,7 @@ const RegistrationModal: FC<RegistrationModalProps> = ({open, onClose, onOpenCus
         let birthday = "";
 
         if (month !== "" && day !== 0 && year !== 0) {
-            birthday = month + " " + day  + ", " + year;
+            birthday = month + " " + day + ", " + year;
         }
         const registrationData: RegistrationInfo = {username: data.username, email: data.email, birthday: birthday};
         AuthApi.checkEmail(registrationData)
@@ -143,7 +144,7 @@ const RegistrationModal: FC<RegistrationModalProps> = ({open, onClose, onOpenCus
                                 </div>
                                 <FormControl variant="outlined" className={classes.formControl}>
                                     <InputLabel htmlFor="select-month">Month</InputLabel>
-                                    <CustomSelect
+                                    <RegistrationSelect
                                         style={{width: 240, marginRight: 12}}
                                         labelId="select-month"
                                         id="select-month"
@@ -165,11 +166,12 @@ const RegistrationModal: FC<RegistrationModalProps> = ({open, onClose, onOpenCus
                                         <option value={"Oct"}>October</option>
                                         <option value={"Nov"}>November</option>
                                         <option value={"Dec"}>December</option>
-                                    </CustomSelect>
+                                    </RegistrationSelect>
                                 </FormControl>
-                                <FormControl style={{margin: "16px 0"}} variant="outlined" className={classes.formControl}>
+                                <FormControl style={{margin: "16px 0"}} variant="outlined"
+                                             className={classes.formControl}>
                                     <InputLabel htmlFor="select-day">Day</InputLabel>
-                                    <CustomSelect
+                                    <RegistrationSelect
                                         style={{width: 100, marginRight: 12}}
                                         labelId="select-day"
                                         id="select-day"
@@ -180,11 +182,12 @@ const RegistrationModal: FC<RegistrationModalProps> = ({open, onClose, onOpenCus
                                     >
                                         <option aria-label="None"/>
                                         {showDays()}
-                                    </CustomSelect>
+                                    </RegistrationSelect>
                                 </FormControl>
-                                <FormControl style={{margin: "16px 0"}} variant="outlined" className={classes.formControl}>
+                                <FormControl style={{margin: "16px 0"}} variant="outlined"
+                                             className={classes.formControl}>
                                     <InputLabel htmlFor="select-year">Year</InputLabel>
-                                    <CustomSelect
+                                    <RegistrationSelect
                                         style={{width: 125,}}
                                         labelId="select-year"
                                         id="select-year"
@@ -195,7 +198,7 @@ const RegistrationModal: FC<RegistrationModalProps> = ({open, onClose, onOpenCus
                                     >
                                         <option aria-label="None"/>
                                         {showYears()}
-                                    </CustomSelect>
+                                    </RegistrationSelect>
                                 </FormControl>
                             </div>
                             <Button

@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, ReactElement, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Controller, useForm} from "react-hook-form";
 import * as yup from "yup";
@@ -17,7 +17,7 @@ import {ImageObj} from "../AddTweetForm/AddTweetForm";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {Image} from "../../store/ducks/tweets/contracts/state";
 import {uploadImage} from "../../util/uploadImage";
-import {setUpdatedUserData} from "../../store/ducks/user/actionCreators";
+import {updatedUserData} from "../../store/ducks/user/actionCreators";
 import UploadProfileImage from "./UploadProfileImage";
 import {useEditProfileModalStyles} from "./EditProfileModalStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
@@ -38,7 +38,7 @@ export const EditProfileFormSchema = yup.object().shape({
     username: yup.string().min(1, "Name can’t be blank").required(),
 });
 
-const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}) => {
+const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}): ReactElement | null => {
     const classes = useEditProfileModalStyles();
     const dispatch = useDispatch();
     const userData = useSelector(selectUserData);
@@ -47,10 +47,10 @@ const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}) => {
 
     const {control, register, handleSubmit, formState: {errors}} = useForm<EditProfileFormProps>({
         defaultValues: {
-            username: userData?.user.username,
-            about: userData?.user.about,
-            location: userData?.user.location,
-            website: userData?.user.website,
+            username: userData?.username,
+            about: userData?.about,
+            location: userData?.location,
+            website: userData?.website,
         },
         resolver: yupResolver(EditProfileFormSchema)
     });
@@ -64,7 +64,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}) => {
         if (wallpaper) {
             wallpaperResponse = await uploadImage(wallpaper.file);
         }
-        dispatch(setUpdatedUserData({...data, avatar: avatarResponse, wallpaper: wallpaperResponse}));
+        dispatch(updatedUserData({...data, avatar: avatarResponse, wallpaper: wallpaperResponse}));
     };
 
     if (!visible) {
@@ -94,8 +94,8 @@ const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}) => {
                             <img
                                 className={classes.wallpaperImg}
                                 key={wallpaper?.src}
-                                src={(userData?.user.wallpaper?.src && wallpaper?.src === undefined) ?
-                                     userData?.user.wallpaper?.src : wallpaper?.src}
+                                src={(userData?.wallpaper?.src && wallpaper?.src === undefined) ?
+                                     userData?.wallpaper?.src : wallpaper?.src}
                             />
                             <div className={classes.wallpaperEditImg}>
                                 <UploadProfileImage name={"wallpaper"} image={wallpaper} onChangeImage={setWallpaper}/>
@@ -104,8 +104,8 @@ const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}) => {
                         <div className={classes.avatarWrapper}>
                             <UploadProfileImage name={"avatar"} image={avatar} onChangeImage={setAvatar}/>
                             <Avatar key={avatar?.src}
-                                    src={userData?.user.avatar?.src && avatar?.src === undefined ?
-                                        userData?.user.avatar?.src : avatar?.src}>
+                                    src={userData?.avatar?.src && avatar?.src === undefined ?
+                                        userData?.avatar?.src : avatar?.src}>
                                 <img alt="default-img" src={DEFAULT_PROFILE_IMG}/>
                             </Avatar>
                         </div>

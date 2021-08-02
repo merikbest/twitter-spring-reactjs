@@ -59,5 +59,6 @@ public class User {
 
     public User() {
         this.registrationDate = LocalDateTime.now().withNano(0);
+        this.tweetCount = 0L;
     }
 }

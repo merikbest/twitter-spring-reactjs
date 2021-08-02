@@ -48,5 +48,4 @@ export const TweetApi = {
                 images: payload.images, likes: payload.likes, retweets: payload.retweets,});
         return data.data;
     },
-    removeTweet: (id: string): Promise<void> => axios.delete('/tweets/' + id),
 };

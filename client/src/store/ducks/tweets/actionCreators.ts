@@ -1,19 +1,18 @@
-import {AddFormState, Image, Tweet, TweetsState} from "./contracts/state";
+import {Image, Tweet, TweetsState} from "./contracts/state";
 import {
     FetchLikedTweetsActionInterface,
-    FetchLikeTweetActionInterface, FetchMediaTweetsActionInterface,
+    FetchLikeTweetActionInterface,
+    FetchMediaTweetsActionInterface,
     FetchRetweetActionInterface,
     FetchTweetsByTagActionInterface,
     FetchTweetsByTextActionInterface,
     FetchTweetsByUserActionInterface,
-    FetchUserTweetsActionInterface,
     LikeTweetActionInterface,
-    RemoveTweetActionInterface, ReplyActionInterface,
+    ReplyActionInterface,
     RetweetActionInterface,
-    SetAddFormStateInterface
+    SetTweetActionInterface,
 } from "./contracts/actionTypes";
 import {
-    AddTweetActionInterface,
     SetTweetsLoadingStateInterface,
     SetTweetsActionInterface,
     TweetsActionType,
@@ -28,8 +27,8 @@ export const setTweets = (payload: TweetsState["items"]): SetTweetsActionInterfa
     payload
 });
 
-export const addTweet = (payload: Tweet): AddTweetActionInterface => ({
-    type: TweetsActionType.ADD_TWEET,
+export const setTweet = (payload: Tweet): SetTweetActionInterface => ({
+    type: TweetsActionType.SET_TWEET,
     payload
 });
 
@@ -58,24 +57,9 @@ export const fetchLikedTweets = (payload: string): FetchLikedTweetsActionInterfa
     payload
 });
 
-export const fetchUserTweets = (payload: string): FetchUserTweetsActionInterface => ({
-    type: TweetsActionType.FETCH_TWEETS_BY_USER,
-    payload
-});
-
 export const setTweetsLoadingState = (payload: LoadingStatus): SetTweetsLoadingStateInterface => ({
     type: TweetsActionType.SET_LOADING_STATE,
     payload
-});
-
-export const setAddFormState = (payload: AddFormState): SetAddFormStateInterface => ({
-    type: TweetsActionType.SET_ADD_FORM_STATE,
-    payload
-});
-
-export const removeTweet = (payload: string): RemoveTweetActionInterface => ({
-    type: TweetsActionType.REMOVE_TWEET,
-    payload,
 });
 
 export const fetchLikeTweet = (payload: string): FetchLikeTweetActionInterface => ({

@@ -8,5 +8,3 @@ export const selectLoadingState = (state: RootState): LoadingStatus => selectTwe
 export const selectIsTweetLoading = (state: RootState): boolean => selectLoadingState(state) === LoadingStatus.LOADING;
 export const selectIsTweetLoaded = (state: RootState): boolean => selectLoadingState(state) === LoadingStatus.LOADED;
 export const selectTweetData = (state: RootState): Tweet | undefined => selectTweet(state).data;
-// export const selectTweetData = createSelector(selectTweet, (tweet) => tweet.data);
-// export const selectTweetData = (state: RootState): TweetState['data'] => selectTweet(state).data;

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {CircularProgress, List, ListItem, ListItemText, Typography} from "@material-ui/core";
 
@@ -8,7 +8,7 @@ import {fetchTrends} from "../../store/ducks/tags/actionCreators";
 import {Link} from "react-router-dom";
 import {EditIcon} from "../../icons";
 
-const Trends = () => {
+const Trends: FC = (): ReactElement => {
     const classes = useTrendsStyles();
     const dispatch = useDispatch();
     const isTrendsLoaded = useSelector(selectIsTagsLoading);
