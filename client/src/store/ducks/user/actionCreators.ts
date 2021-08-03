@@ -3,10 +3,12 @@ import {
     FetchSignInActionInterface,
     FetchSignUpActionInterface,
     FetchUserDataActionInterface,
+    FollowActionInterface,
     FollowUserActionInterface,
     SetUserDataActionInterface,
     SetUserLoadingStateActionInterface,
     SignOutActionInterface,
+    UnfollowActionInterface,
     UnfollowUserActionInterface,
     UpdateUserDataActionInterface,
     UserActionsType
@@ -54,5 +56,15 @@ export const followUser = (payload: User): FollowUserActionInterface => ({
 
 export const unfollowUser = (payload: User): UnfollowUserActionInterface => ({
     type: UserActionsType.UNFOLLOW_USER,
+    payload,
+});
+
+export const follow = (payload: User): FollowActionInterface => ({
+    type: UserActionsType.FOLLOW,
+    payload,
+});
+
+export const unfollow = (payload: User): UnfollowActionInterface => ({
+    type: UserActionsType.UNFOLLOW,
     payload,
 });

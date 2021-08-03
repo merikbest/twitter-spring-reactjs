@@ -22,9 +22,26 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
             draft.data = undefined;
             break;
 
+        case UserActionsType.FOLLOW:
+            if (draft.data?.followers) {
+                draft.data.followers = [...draft.data?.followers, action.payload];
+            }
+            draft.status = LoadingStatus.SUCCESS;
+            break;
+
         case UserActionsType.FOLLOW_USER:
             if (draft.data?.followers) {
                 draft.data.followers = [...draft.data?.followers, action.payload];
+            }
+            draft.status = LoadingStatus.SUCCESS;
+            break;
+
+        case UserActionsType.UNFOLLOW:
+            if (draft.data?.followers) {
+                const unfollowUserIndex = draft.data?.followers?.findIndex(follower => follower.id === action.payload.id);
+                draft.data.followers = [
+                    ...draft.data?.followers?.slice(0, unfollowUserIndex),
+                    ...draft.data?.followers?.slice(unfollowUserIndex + 1)];
             }
             draft.status = LoadingStatus.SUCCESS;
             break;

@@ -4,6 +4,7 @@ import {LoadingStatus} from "../../../types";
 import {User, UserState} from "./state";
 import {RegistrationProps} from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
 import {LoginProps} from "../../../../pages/Login/Login";
+import {UserProfileActionsType} from "../../userProfile/contracts/actionTypes";
 
 export enum UserActionsType {
     FETCH_SIGN_IN = "user/FETCH_SIGN_IN",
@@ -15,6 +16,8 @@ export enum UserActionsType {
     SIGN_OUT = 'user/SIGN_OUT',
     FOLLOW_USER = 'user/FOLLOW_USER',
     UNFOLLOW_USER = 'user/UNFOLLOW_USER',
+    FOLLOW  = 'user/FOLLOW',
+    UNFOLLOW  = 'user/UNFOLLOW',
 }
 
 export interface SignOutActionInterface extends Action<UserActionsType> {
@@ -60,9 +63,21 @@ export interface UnfollowUserActionInterface extends Action<UserActionsType> {
     payload: User;
 }
 
+export interface FollowActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.FOLLOW;
+    payload: User;
+}
+
+export interface UnfollowActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.UNFOLLOW;
+    payload: User;
+}
+
 export type UserActions =
     | SetUserDataActionInterface
     | SetUserLoadingStateActionInterface
     | SignOutActionInterface
     | FollowUserActionInterface
-    | UnfollowUserActionInterface;
+    | UnfollowUserActionInterface
+    | FollowActionInterface
+    | UnfollowActionInterface;

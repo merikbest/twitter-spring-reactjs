@@ -12,9 +12,10 @@ import {selectUserData, selectUserIsLoading} from "../../store/ducks/user/select
 import {User} from "../../store/ducks/user/contracts/state";
 import {fetchUserData} from "../../store/ducks/user/actionCreators";
 import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
-import {fetchUserProfile, followProfile, unfollowProfile} from "../../store/ducks/userProfile/actionCreators";
+import {fetchUserProfile} from "../../store/ducks/userProfile/actionCreators";
 import {useFollowingFollowersStyles} from "./FollowingFollowersStyles";
 import Follower from "../Follower/Follower";
+import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 
 const FollowingFollowers: FC = (): ReactElement => {
     const classes = useFollowingFollowersStyles();
@@ -53,11 +54,11 @@ const FollowingFollowers: FC = (): ReactElement => {
     };
 
     const handleFollow = (user: User): void => {
-        dispatch(followProfile(user));
+        dispatch(followUser(user));
     };
 
     const handleUnfollow = (user: User): void => {
-        dispatch(unfollowProfile(user));
+        dispatch(unfollowUser(user));
     };
 
     return (
@@ -80,9 +81,15 @@ const FollowingFollowers: FC = (): ReactElement => {
                     <div className={classes.loading}>
                         <CircularProgress/>
                     </div>
-                ) : ((activeTab === 0) ? (userProfile?.followers?.length !== 0 ? (
-                            userProfile?.followers?.map((user) =>
-                                <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>)
+                ) : (
+                    (activeTab === 0) ? (
+                        (userProfile?.followers?.length !== 0 || myProfile?.followers?.length !== 0) ? (
+                            (userProfile?.id === myProfile?.id) ? (
+                                myProfile?.followers?.map((user) =>
+                                    <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>)
+                            ) : (
+                                userProfile?.followers?.map((user) =>
+                                    <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>))
                         ) : (
                             <div className={classes.content}>
                                 <Typography className={classes.topic}>
@@ -106,11 +113,15 @@ const FollowingFollowers: FC = (): ReactElement => {
                                     </Button>
                                     }
                                 </Link>
-                            </div>
-                        )
-                    ) : (userProfile?.following?.length !== 0 ? (
-                            userProfile?.following?.map((user) =>
-                                <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>)
+                            </div>)
+                    ) : (
+                        (userProfile?.following?.length !== 0) ? (
+                            (userProfile?.id === myProfile?.id) ? (
+                                myProfile?.following?.map((user) =>
+                                    <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>)
+                            ) : (
+                                userProfile?.following?.map((user) =>
+                                    <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>))
                         ) : (
                             <div className={classes.content}>
                                 <Typography className={classes.topic}>

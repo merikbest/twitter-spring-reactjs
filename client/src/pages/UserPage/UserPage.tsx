@@ -11,7 +11,7 @@ import {LocationIcon, LinkIcon, CalendarIcon} from "../../icons";
 import {useUserPageStyles} from "./UserPageStyles";
 import {BackButton} from "../../components/BackButton/BackButton";
 import EditProfileModal from "../../components/EditProfileModal/EditProfileModal";
-import {fetchUserData} from "../../store/ducks/user/actionCreators";
+import {fetchUserData, follow, unfollow} from "../../store/ducks/user/actionCreators";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {fetchRelevantUsers} from "../../store/ducks/users/actionCreators";
 import {fetchTags} from "../../store/ducks/tags/actionCreators";
@@ -21,6 +21,7 @@ import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
 import {fetchUserProfile, followUserProfile, unfollowUserProfile} from "../../store/ducks/userProfile/actionCreators";
 import UserPageTweets from "./UserPageTweets";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
+import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 
 const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElement => {
     const classes = useUserPageStyles();
@@ -66,8 +67,10 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
     const handleFollow = (): void => {
         if (follower) {
             dispatch(unfollowUserProfile(userProfile!));
+            dispatch(unfollow(userProfile!));
         } else {
             dispatch(followUserProfile(userProfile!));
+            dispatch(follow(userProfile!));
         }
     };
 

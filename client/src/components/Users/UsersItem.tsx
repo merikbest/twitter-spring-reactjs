@@ -14,12 +14,14 @@ import {User} from "../../store/ducks/user/contracts/state";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 import {useUsersItemStyles} from "./UsersItemStyles";
+import {DEFAULT_PROFILE_IMG} from "../../util/url";
+import {followProfile, unfollowProfile} from "../../store/ducks/userProfile/actionCreators";
 
-interface UsersItem {
+interface UsersItemProps {
     user: User
 }
 
-const UsersItem: FC<UsersItem> = ({user}): ReactElement => {
+const UsersItem: FC<UsersItemProps> = ({user}): ReactElement => {
     const classes = useUsersItemStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
@@ -37,17 +39,19 @@ const UsersItem: FC<UsersItem> = ({user}): ReactElement => {
 
     const handleFollow = (user: User): void => {
         dispatch(followUser(user));
+        // dispatch(followProfile(user));
     };
 
     const handleUnfollow = (user: User): void => {
         dispatch(unfollowUser(user));
+        // dispatch(unfollowProfile(user));
         setVisibleUnfollowModal(false);
     };
 
     return (
         <ListItem key={user.id} className={classes.container}>
             <ListItemAvatar>
-                <Avatar alt={`${user.id}`} src={user.avatar?.src}/>
+                <Avatar alt={`${user.id}`} src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}/>
             </ListItemAvatar>
             <Link to={`/user/${user.id}`}>
                 <ListItemText
