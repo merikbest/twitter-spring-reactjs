@@ -40,7 +40,11 @@ export const useTweetStyles = makeStyles((theme: Theme) => ({
     },
     headerIcon: {
         padding: 0,
-        marginRight: 12
+        marginRight: 12,
+        "& svg": {
+            color: "rgb(83, 100, 113)",
+            height: "0.8em",
+        },
     },
     replyWrapper: {
         zIndex: 2,

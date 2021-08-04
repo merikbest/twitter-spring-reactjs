@@ -39,12 +39,12 @@ const UsersItem: FC<UsersItemProps> = ({user}): ReactElement => {
 
     const handleFollow = (user: User): void => {
         dispatch(followUser(user));
-        // dispatch(followProfile(user));
+        dispatch(followProfile(user));
     };
 
     const handleUnfollow = (user: User): void => {
         dispatch(unfollowUser(user));
-        // dispatch(unfollowProfile(user));
+        dispatch(unfollowProfile(user));
         setVisibleUnfollowModal(false);
     };
 
@@ -64,8 +64,8 @@ const UsersItem: FC<UsersItemProps> = ({user}): ReactElement => {
                 />
             </Link>
             <div style={{flex: 1}}>
-                {myProfile?.id === user.id ? null : (
-                    follower === -1 ? (
+                {(myProfile?.id === user.id) ? null : (
+                    (follower === -1) ? (
                         <Button
                             className={classes.outlinedButton}
                             onClick={() => handleFollow(user)}

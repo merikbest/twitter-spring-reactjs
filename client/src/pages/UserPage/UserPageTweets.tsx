@@ -2,9 +2,8 @@ import React, {FC, ReactElement, useState} from 'react';
 import {Button, Hidden, Typography} from "@material-ui/core";
 
 import Tweet from '../../components/Tweet/Tweet';
-import {AddTweetForm} from "../../components/AddTweetForm/AddTweetForm";
-import ModalBlock from "../../components/ModalBlock/ModalBlock";
 import {useUserPageStyles} from "./UserPageStyles";
+import AddTweetModal from "../../components/AddTweetModal/AddTweetModal";
 
 interface UserPageTweetsProps {
     tweets?: any;
@@ -132,14 +131,7 @@ const UserPageTweets: FC<UserPageTweetsProps> = ({
     return (
         <>
             {renderTweets()}
-            <ModalBlock onClose={onCloseAddTweet} visible={visibleAddTweet}>
-                <div style={{width: 550}}>
-                    <AddTweetForm
-                        maxRows={15}
-                        title={"What's happening?"}
-                        buttonName={"Tweet"}/>
-                </div>
-            </ModalBlock>
+            <AddTweetModal onClose={onCloseAddTweet} visible={visibleAddTweet}/>
         </>
     );
 };

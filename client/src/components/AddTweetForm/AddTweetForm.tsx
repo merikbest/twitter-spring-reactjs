@@ -1,11 +1,11 @@
-import React, {FC, ReactElement, useEffect, useRef, useState} from 'react';
+import React, {FC, FormEvent, MouseEvent, ReactElement, useState} from 'react';
 import {useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import {IconButton} from "@material-ui/core";
+import {IconButton, Popover} from "@material-ui/core";
 import {EmojiData, Picker} from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
 import EmojiConvertor from 'emoji-js';
@@ -55,30 +55,17 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
     const isTweetsLoading = useSelector(selectIsTweetsLoading);
     const isReplyLoading = useSelector(selectIsTweetLoading);
     const userData = useSelector(selectUserData);
-    const emojiRef = useRef<HTMLDivElement>(null);
     const [text, setText] = useState<string>('');
     const [images, setImages] = useState<ImageObj[]>([]);
-    const [emojiPickerVisible, setShowEmojiPicker] = useState<boolean>(false);
     const isModal = location.pathname.includes("/modal");
     const textLimitPercent = Math.round((text.length / 280) * 100);
     const textCount = MAX_LENGTH - text.length;
+    // Popover
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const id = open ? "simple-popover" : undefined;
 
-    useEffect(() => {
-        let handler = (event: any): void => {
-            if (emojiRef.current) {
-                if (!emojiRef.current.contains(event.target)) {
-                    setShowEmojiPicker(false);
-                }
-            }
-        }
-        document.addEventListener("click", handler);
-
-        return () => {
-            document.removeEventListener('click', handler);
-        };
-    }, []);
-
-    const handleChangeTextarea = (e: React.FormEvent<HTMLTextAreaElement>): void => {
+    const handleChangeTextarea = (e: FormEvent<HTMLTextAreaElement>): void => {
         if (e.currentTarget) {
             setText(e.currentTarget.value);
         }
@@ -91,10 +78,6 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
         setText(text + " " + convertedEmoji);
     };
 
-    const toggleEmojiPicker = (): void => {
-        setShowEmojiPicker(true);
-    };
-
     const handleClickAddTweet = async (): Promise<void> => {
         let result: Array<Image> = [];
         dispatch(setTweetsLoadingState(LoadingStatus.LOADING));
@@ -104,12 +87,17 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
             result.push(image);
         }
 
-        dispatch(fetchAddTweet({text: textConverter(), images: result, likes: [], retweets: []}));
+        dispatch(fetchAddTweet({
+            text: textConverter(),
+            images: result,
+            likes: [],
+            retweets: []
+        }));
         setText('');
         setImages([]);
     };
 
-    const handleClickReplyTweet = async (): Promise<void>  => {
+    const handleClickReplyTweet = async (): Promise<void> => {
         let result: Array<Image> = [];
         dispatch(setTweetLoadingState(LoadingStatus.LOADING));
         for (let i = 0; i < images.length; i++) {
@@ -120,11 +108,25 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
 
         if (addressedUsername && addressedId) {
             dispatch(fetchReplyTweet({
-                id: tweetId!, text: textConverter(), addressedUsername, addressedId, images: result, likes: [], retweets: []
+                id: tweetId!,
+                text: textConverter(),
+                addressedUsername,
+                addressedId,
+                images: result,
+                likes: [],
+                retweets: []
             }));
             setText("");
             setImages([]);
         }
+    };
+
+    const handleOpenPopup = (event: MouseEvent<HTMLDivElement>): void => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClosePopup = (): void => {
+        setAnchorEl(null);
     };
 
     const textConverter = (): string => {
@@ -151,7 +153,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
                     placeholder={title}
                     value={text}
                     rowsMax={maxRows}
-                    rowsMin={minRows}
+                    rowsMin={images.length !== 0 ? 1 : minRows}
                 />
             </div>
             {(images.length !== 0) && (
@@ -177,20 +179,12 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
                             </IconButton>
                         </div>)
                     }
-                    <div ref={emojiRef} className={classes.footerImage}>
-                        <IconButton onClick={toggleEmojiPicker} color="primary">
+                    <div onClick={handleOpenPopup} className={classes.footerImage}>
+                        <IconButton color="primary">
                             <span>{EmojiIcon}</span>
-                            {emojiPickerVisible && (
-                                <Picker
-                                    title='' emoji='wave'
-                                    style={{position: "absolute", marginTop: 500, zIndex: 2,}}
-                                    onSelect={emojiTag => addEmoji(emojiTag)}
-                                    set={'twitter'}
-                                />
-                            )}
                         </IconButton>
                     </div>
-                    {(!isModal)&& (
+                    {(!isModal) && (
                         <div className={classes.footerImage}>
                             <IconButton color="primary">
                                 <span>{ScheduleIcon}</span>
@@ -232,6 +226,20 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
                         )}
                     </Button>
                 </div>
+                <Popover
+                    id={id}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleClosePopup}
+                    anchorOrigin={{vertical: 'bottom', horizontal: 'center',}}
+                    transformOrigin={{vertical: 'top', horizontal: 'center',}}
+                >
+                    <Picker
+                        title=''
+                        emoji='wave'
+                        onSelect={emojiTag => addEmoji(emojiTag)}
+                        set={'twitter'}/>
+                </Popover>
             </div>
         </div>
     );

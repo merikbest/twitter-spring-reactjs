@@ -21,7 +21,6 @@ import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
 import {fetchUserProfile, followUserProfile, unfollowUserProfile} from "../../store/ducks/userProfile/actionCreators";
 import UserPageTweets from "./UserPageTweets";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
-import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 
 const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElement => {
     const classes = useUserPageStyles();
@@ -33,7 +32,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
     const [btnText, setBtnText] = useState<string>("Following");
     const [activeTab, setActiveTab] = useState<number>(0);
     const [visibleEditProfile, setVisibleEditProfile] = useState<boolean>(false);
-    const follower = userProfile?.following?.find((user) => user.id === myProfile?.id);
+    const follower = myProfile?.followers?.find((user) => user.id === userProfile?.id);
 
     useEffect(() => {
         if (match.params.id) {
@@ -168,12 +167,26 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
                     </ul>
                     <ul className={classes.details}>
                         <Link to={`/user/${userProfile?.id}/following`} className={classes.followLink}>
-                            <li><b>{userProfile?.followers?.length ? userProfile?.followers?.length : 0}</b> Following
-                            </li>
+                                {userProfile?.id === myProfile?.id ? (
+                                    <li>
+                                        <b>{myProfile?.followers?.length ? myProfile?.followers?.length : 0}</b> Following
+                                    </li>
+                                ) : (
+                                    <li>
+                                        <b>{userProfile?.followers?.length ? userProfile?.followers?.length : 0}</b> Following
+                                    </li>
+                                )}
                         </Link>
                         <Link to={`/user/${userProfile?.id}/followers`} className={classes.followLink}>
-                            <li><b>{userProfile?.following?.length ? userProfile?.following?.length : 0}</b> Followers
-                            </li>
+                            {userProfile?.id === myProfile?.id ? (
+                                <li>
+                                    <b>{myProfile?.following?.length ? myProfile?.following?.length : 0}</b> Followers
+                                </li>
+                            ) : (
+                                <li>
+                                    <b>{userProfile?.following?.length ? userProfile?.following?.length : 0}</b> Followers
+                                </li>
+                            )}
                         </Link>
                     </ul>
                 </div>

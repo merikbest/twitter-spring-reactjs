@@ -1,11 +1,19 @@
-import React, {FC, ReactElement, MouseEvent, useState} from 'react';
+import React, {FC, ReactElement, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory, useLocation} from 'react-router-dom';
-import {Avatar, IconButton, Menu, MenuItem, Paper, Typography} from '@material-ui/core';
+import {Avatar, IconButton, Paper, Typography} from '@material-ui/core';
 import RepostIcon from "@material-ui/icons/RepeatOutlined";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
-import {LikeOutlinedIcon, LikeIcon, RetweetIcon, RetweetOutlinedIcon, ReplyIcon, ShareIcon} from "../../icons";
+import {
+    EditIcon,
+    LikeIcon,
+    LikeOutlinedIcon,
+    ReplyIcon,
+    RetweetIcon,
+    RetweetOutlinedIcon,
+    ShareIcon
+} from "../../icons";
 import {useTweetStyles} from "./TweetStyles";
 import {formatDate} from '../../util/formatDate';
 import {fetchLikeTweet, fetchRetweet} from "../../store/ducks/tweets/actionCreators";
@@ -46,9 +54,7 @@ const Tweet: FC<TweetProps> = ({
     const myProfile = useSelector(selectUserData);
     const history = useHistory();
     const location = useLocation();
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
-    const open = Boolean(anchorEl);
     const isTweetLiked = likes.find((user) => user.id === myProfile?.id);
     const isTweetRetweeted = retweets.find((user) => user.id === myProfile?.id);
     const isModal = location.pathname.includes("/modal");
@@ -58,22 +64,6 @@ const Tweet: FC<TweetProps> = ({
         event.preventDefault();
         history.push(`/home/tweet/${id}`);
     }
-
-    const handleClick = (event: MouseEvent<HTMLElement>): void => {
-        event.stopPropagation();
-        event.preventDefault();
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = (event: MouseEvent<HTMLElement>): void => {
-        event.stopPropagation();
-        event.preventDefault();
-        setAnchorEl(null);
-    };
-
-    const handleRemove = (event: MouseEvent<HTMLElement>): void => {
-        handleClose(event);
-    };
 
     const onOpenReplyModalWindow = (): void => {
         setVisibleModalWindow(true);
@@ -122,13 +112,9 @@ const Tweet: FC<TweetProps> = ({
                                     aria-label="more"
                                     aria-controls="long-menu"
                                     aria-haspopup="true"
-                                    onClick={handleClick}>
-                                    <MoreVertIcon/>
+                                >
+                                    <span>{EditIcon}</span>
                                 </IconButton>
-                                <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-                                    <MenuItem onClick={handleClose}>Edit tweet</MenuItem>
-                                    <MenuItem onClick={handleRemove}>Delete tweet</MenuItem>
-                                </Menu>
                             </div>
                         </div>
                     </a>
