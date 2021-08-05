@@ -4,12 +4,13 @@ import IconButton from "@material-ui/core/IconButton";
 import PhotoCameraOutlinedIcon from "@material-ui/icons/PhotoCameraOutlined";
 
 interface UploadProfileImageProps {
+    setupProfile?: boolean;
     name: string;
     image?: ImageObj;
     onChangeImage: (imageObj: ImageObj) => void
 }
 
-const UploadProfileImage: FC<UploadProfileImageProps> = ({name, image, onChangeImage}) => {
+const UploadProfileImage: FC<UploadProfileImageProps> = ({setupProfile, name, image, onChangeImage}) => {
     const uploadRef = useRef<HTMLInputElement>(null);
 
     const handleClickImage = () => {
@@ -45,21 +46,22 @@ const UploadProfileImage: FC<UploadProfileImageProps> = ({name, image, onChangeI
             {name === "wallpaper" ?
                 <>
                     <IconButton onClick={handleClickImage} style={{color: "#fff"}}>
-                        <PhotoCameraOutlinedIcon />
+                        <PhotoCameraOutlinedIcon/>
                     </IconButton>
-                    <input ref={uploadRef} type="file" id="upload-wallpaper-input" hidden />
+                    <input ref={uploadRef} type="file" id="upload-wallpaper-input" hidden/>
                 </> :
                 <>
                     <IconButton onClick={handleClickImage}
                                 style={{
-                                    top: "38px",
-                                    left: "55px",
+                                    top: setupProfile ? 67 : 38,
+                                    left: setupProfile ? 68 : 55,
                                     position: "absolute",
                                     zIndex: 5,
-                                    color: "#fff"}}>
-                        <PhotoCameraOutlinedIcon />
+                                    color: "#fff"
+                                }}>
+                        <PhotoCameraOutlinedIcon/>
                     </IconButton>
-                    <input ref={uploadRef} type="file" id="upload-avatar-input" hidden />
+                    <input ref={uploadRef} type="file" id="upload-avatar-input" hidden/>
                 </>
             }
         </>

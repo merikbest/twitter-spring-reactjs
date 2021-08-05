@@ -42,7 +42,6 @@ const Home: FC = (): ReactElement => {
         <Paper className={classes.container} variant="outlined">
             <Paper className={classes.header} variant="outlined">
                 <Route path='/home' exact>
-                    <BackButton/>
                     <Typography variant="h6">Home</Typography>
                     <div className={classes.headerIcon}>
                         <IconButton color="primary">

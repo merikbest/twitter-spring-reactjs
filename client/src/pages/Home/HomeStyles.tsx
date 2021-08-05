@@ -21,12 +21,13 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         borderRadius: 0,
         '& h6': {
             fontWeight: 800,
+            marginLeft: 16,
         },
     },
     headerIcon: {
         display: "inline",
         "& .MuiIconButton-root": {
-            marginLeft: 425,
+            marginLeft: 475,
             width: 40,
             height: 40,
             color: "rgb(29, 161, 242)",

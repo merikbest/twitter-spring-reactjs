@@ -1,8 +1,8 @@
 import React, {FC, ReactElement} from 'react';
 import {useHistory} from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-import {ArrowIcon} from "../../icons";
 import {useBackButtonStyles} from "./BackButtonStyles";
 
 export const BackButton: FC = (): ReactElement => {
@@ -16,7 +16,7 @@ export const BackButton: FC = (): ReactElement => {
     return (
         <div className={classes.container}>
             <IconButton onClick={handleClickButton} color="primary">
-                <span>{ArrowIcon}</span>
+                <ArrowBackIcon />
             </IconButton>
         </div>
     );

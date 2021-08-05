@@ -3,8 +3,9 @@ import {makeStyles} from "@material-ui/core";
 export const useEditProfileModalStyles = makeStyles((theme) => ({
     content: {
         height: 550,
-        width: 600,
+        width: 598,
         padding: "0px 0px",
+        overflowX: "hidden",
     },
     button: {
         marginLeft: "auto",
