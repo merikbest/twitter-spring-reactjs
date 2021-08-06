@@ -10,16 +10,22 @@ import {ImageObj} from "../../../components/AddTweetForm/AddTweetForm";
 interface ProfilePictureModalProps {
     open: boolean;
     onClose: () => void;
-    onOpenCreateAccount: (value: boolean | ((prevVar: boolean) => boolean)) => void;
+    avatar?: ImageObj;
+    onChangeAvatar: (imageObj: ImageObj) => void
+    onOpenProfileHeaderModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
 
-const ProfilePictureModal: FC<ProfilePictureModalProps> = ({open, onClose, onOpenCreateAccount}): ReactElement => {
+const ProfilePictureModal: FC<ProfilePictureModalProps> = ({
+                                                               open,
+                                                               onClose,
+                                                               avatar,
+                                                               onChangeAvatar,
+                                                               onOpenProfileHeaderModal
+                                                           }): ReactElement => {
     const classes = useProfilePictureModalStyles();
-    const [avatar, setAvatar] = useState<ImageObj>();
 
     return (
         <Dialog
-            // hideBackdrop={true}
             style={{height: 666, marginTop: 92}}
             transitionDuration={0}
             open={open}
@@ -37,21 +43,24 @@ const ProfilePictureModal: FC<ProfilePictureModalProps> = ({open, onClose, onOpe
                     Have a favorite selfie? Upload it now.
                 </div>
                 <div className={classes.avatarWrapper}>
-                    <UploadProfileImage setupProfile={true} name={"avatar"} image={avatar} onChangeImage={setAvatar}/>
-                    <Avatar>
-                        <img alt="default-img" src={DEFAULT_PROFILE_IMG}/>
-                    </Avatar>
+                    <UploadProfileImage
+                        setupProfile={true}
+                        name={"avatar"}
+                        image={avatar}
+                        onChangeImage={onChangeAvatar}/>
+                    <Avatar
+                        key={avatar?.src}
+                        src={(avatar?.src === undefined) ? DEFAULT_PROFILE_IMG : avatar?.src}/>
                 </div>
-
-                {/*<Button*/}
-                {/*    style={{marginTop: 285}}*/}
-                {/*    onClick={() => onOpenCreateAccount(true)}*/}
-                {/*    variant="contained"*/}
-                {/*    color="primary"*/}
-                {/*    fullWidth*/}
-                {/*>*/}
-                {/*    Next*/}
-                {/*</Button>*/}
+                <Button
+                    className={classes.button}
+                    onClick={() => onOpenProfileHeaderModal(true)}
+                    variant={(avatar?.src !== undefined) ? "contained" : "text"}
+                    color="primary"
+                    fullWidth
+                >
+                    {(avatar?.src !== undefined) ? "Next" : "Skip for now"}
+                </Button>
             </DialogContent>
         </Dialog>
     );
