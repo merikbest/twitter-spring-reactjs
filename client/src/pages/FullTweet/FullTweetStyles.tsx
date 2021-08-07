@@ -35,10 +35,10 @@ export const useFullTweetStyles = makeStyles((theme: Theme) => ({
         marginRight: 15,
     },
     username: {
-        color: grey[500],
+        color: "rgb(83, 100, 113)",
     },
     date: {
-        color: grey[500],
+        color: "rgb(83, 100, 113)",
     },
     textWrapper: {
         fontSize: 24,

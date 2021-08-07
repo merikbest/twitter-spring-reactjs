@@ -56,7 +56,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             user.setFullName(username);
             user.setBirthday(birthday);
             user.setRole("USER");
-            user.setActive(false);
             userRepository.save(user);
             return true;
         }
@@ -67,7 +66,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             existingUser.setBirthday(birthday);
             existingUser.setRegistrationDate(LocalDateTime.now().withNano(0));
             existingUser.setRole("USER");
-            existingUser.setActive(false);
             userRepository.save(existingUser);
             return true;
         }

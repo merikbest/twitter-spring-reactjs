@@ -61,7 +61,8 @@ export const useTweetImageStyles = makeStyles((theme: Theme) => ({
         },
     },
     contentItem: {
-        marginLeft: 5, color: "rgb(83, 100, 113)"
+        marginLeft: 5,
+        color: "rgb(83, 100, 113)"
     },
     tweetFooter: {
         display: 'flex',
@@ -112,6 +113,9 @@ export const useTweetImageStyles = makeStyles((theme: Theme) => ({
         "& svg": {
             color: "#fff"
         },
+    },
+    grey: {
+        color: "rgb(83, 100, 113)",
     },
     imageFooterWrapper: {
         display: 'flex',

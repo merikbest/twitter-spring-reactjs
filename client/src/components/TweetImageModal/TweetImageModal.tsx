@@ -26,6 +26,8 @@ import {useTweetImageStyles} from "./TweetImageModalStyles";
 import {fetchTweetData} from "../../store/ducks/tweet/actionCreators";
 import {selectTweetData} from "../../store/ducks/tweet/selectors";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
+import {textFormatter} from "../../util/textFormatter";
+import usLang from "date-fns/locale/en-US/index";
 
 const TweetImageModal: FC = (): ReactElement | null => {
     const dispatch = useDispatch();
@@ -99,19 +101,19 @@ const TweetImageModal: FC = (): ReactElement | null => {
                             <Typography>
                                 <b>{tweetData.user.fullName}</b>&nbsp;
                                 <div>
-                                    <span style={{color: grey[500],}}>@{tweetData.user.username}</span>&nbsp;
+                                    <span className={classes.grey}>@{tweetData.user.username}</span>&nbsp;
                                 </div>
                             </Typography>
                         </div>
                         <Typography className={classes.text} gutterBottom>
-                            <div dangerouslySetInnerHTML={{__html: tweetData.text}}></div>
+                            {textFormatter(tweetData.text)}
                         </Typography>
                         <Typography style={{marginBottom: 16}}>
-                        <span style={{color: grey[500],}}>
-                            {format(new Date(tweetData.dateTime), 'H:mm', {locale: ruLang})} ·
+                        <span className={classes.grey}>
+                            {format(new Date(tweetData.dateTime), 'hh:mm a', {locale: usLang})} ·
                         </span>
-                        <span style={{color: grey[500],}}>
-                            {format(new Date(tweetData.dateTime), 'dd MMM. yyyy')} · Twitter Web App
+                        <span className={classes.grey}>
+                            {format(new Date(tweetData.dateTime), ' MMM dd, yyyy')} · Twitter Web App
                         </span>
                         </Typography>
                         <Divider/>

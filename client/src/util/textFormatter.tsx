@@ -6,7 +6,11 @@ import 'emoji-mart/css/emoji-mart.css'
 export const textFormatter = (text: string): ReactNodeArray => {
     let replacedText: ReactNodeArray;
 
-    replacedText = reactStringReplace(text, /(#\w+)\b/ig, (match, i) => (
+    replacedText = reactStringReplace(text, /(\n)/g, (match, i) => (
+        <>{match}<br/></>
+    ));
+
+    replacedText = reactStringReplace(replacedText, /(#\w+)\b/ig, (match, i) => (
         <b key={i} id="hashtag">{match}</b>
     ));
 

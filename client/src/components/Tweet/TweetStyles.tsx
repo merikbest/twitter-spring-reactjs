@@ -34,9 +34,9 @@ export const useTweetStyles = makeStyles((theme: Theme) => ({
     header: {
         display: 'flex',
         justifyContent: 'space-between',
-        "span": {
-            color: "#5b7083",
-        },
+    },
+    headerText: {
+        color: 'rgb(83, 100, 113)',
     },
     headerIcon: {
         padding: 0,

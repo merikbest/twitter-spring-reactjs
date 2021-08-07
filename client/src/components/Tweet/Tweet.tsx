@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory, useLocation} from 'react-router-dom';
 import {Avatar, IconButton, Paper, Typography} from '@material-ui/core';
 import RepostIcon from "@material-ui/icons/RepeatOutlined";
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import {
     EditIcon,
@@ -78,7 +77,9 @@ const Tweet: FC<TweetProps> = ({
     };
 
     const handleRetweet = (): void => {
-        dispatch(fetchRetweet(id));
+        if (user.id !== myProfile?.id) {
+            dispatch(fetchRetweet(id));
+        }
     };
 
     return (
@@ -102,9 +103,9 @@ const Tweet: FC<TweetProps> = ({
                         <div className={classes.header}>
                             <div>
                                 <b>{user.fullName}</b>&nbsp;
-                                <span>@{user.username}</span>&nbsp;
-                                <span>·</span>&nbsp;
-                                <span>{formatDate(new Date(dateTime))}</span>
+                                <span className={classes.headerText}>@{user.username}</span>&nbsp;
+                                <span className={classes.headerText}>·</span>&nbsp;
+                                <span className={classes.headerText}>{formatDate(new Date(dateTime))}</span>
                             </div>
                             <div>
                                 <IconButton
@@ -118,7 +119,7 @@ const Tweet: FC<TweetProps> = ({
                             </div>
                         </div>
                     </a>
-                    <Typography variant="body1" gutterBottom>
+                    <Typography style={{width: 500,}} variant="body1" gutterBottom>
                         {addressedUsername &&
                         <object>
                             <Typography className={classes.replyWrapper}>

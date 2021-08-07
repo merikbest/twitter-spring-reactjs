@@ -68,9 +68,6 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
                     height: "1.3em",
                     verticalAlign: "bottom",
                 },
-                "&:hover": {
-                    textDecoration: "underline",
-                },
             },
         },
     },
@@ -126,6 +123,9 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
     followLink: {
         textDecoration: 'none',
         color: "#5b7083",
+        "&:hover": {
+            textDecoration: "underline",
+        },
     },
     tweets: {
         borderTop: "1px solid rgba(0, 0, 0, 0.1)",

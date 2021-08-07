@@ -6,6 +6,8 @@ import {Avatar, Button, CircularProgress, Typography} from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Skeleton from '@material-ui/lab/Skeleton';
+import format from 'date-fns/format';
+import usLang from 'date-fns/locale/en-US/index';
 
 import {LocationIcon, LinkIcon, CalendarIcon} from "../../icons";
 import {useUserPageStyles} from "./UserPageStyles";
@@ -21,6 +23,7 @@ import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
 import {fetchUserProfile, followUserProfile, unfollowUserProfile} from "../../store/ducks/userProfile/actionCreators";
 import UserPageTweets from "./UserPageTweets";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
+import SetupProfileModal from "../SetupProfileModal/SetupProfileModal";
 
 const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElement => {
     const classes = useUserPageStyles();
@@ -158,24 +161,23 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
                             Date of Birth: {userProfile?.dateOfBirth}
                         </li>
                         }
-                        {userProfile?.registration &&
+                        {userProfile?.registrationDate &&
                         <li>
-                            <span>{CalendarIcon}</span> Joined: {userProfile?.registration}
+                            <span>{CalendarIcon}</span> Joined: {format(new Date(userProfile?.registrationDate), 'MMMM yyyy')}
                         </li>
                         }
-                        <li><span>{CalendarIcon}</span> Joined: June 2021</li>
                     </ul>
                     <ul className={classes.details}>
                         <Link to={`/user/${userProfile?.id}/following`} className={classes.followLink}>
-                                {userProfile?.id === myProfile?.id ? (
-                                    <li>
-                                        <b>{myProfile?.followers?.length ? myProfile?.followers?.length : 0}</b> Following
-                                    </li>
-                                ) : (
-                                    <li>
-                                        <b>{userProfile?.followers?.length ? userProfile?.followers?.length : 0}</b> Following
-                                    </li>
-                                )}
+                            {userProfile?.id === myProfile?.id ? (
+                                <li>
+                                    <b>{myProfile?.followers?.length ? myProfile?.followers?.length : 0}</b> Following
+                                </li>
+                            ) : (
+                                <li>
+                                    <b>{userProfile?.followers?.length ? userProfile?.followers?.length : 0}</b> Following
+                                </li>
+                            )}
                         </Link>
                         <Link to={`/user/${userProfile?.id}/followers`} className={classes.followLink}>
                             {userProfile?.id === myProfile?.id ? (
@@ -214,7 +216,8 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
                     )}
                 </div>
             </div>
-            {visibleEditProfile && <EditProfileModal visible={visibleEditProfile} onClose={onCloseEditProfile}/>}
+            {/*{visibleEditProfile && <EditProfileModal visible={visibleEditProfile} onClose={onCloseEditProfile}/>}*/}
+            {visibleEditProfile && <SetupProfileModal visible={visibleEditProfile} onClose={onCloseEditProfile}/>}
         </Paper>
     );
 };

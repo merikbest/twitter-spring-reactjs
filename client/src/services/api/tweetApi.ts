@@ -2,6 +2,7 @@ import {axios} from "../../core/axios";
 import {Image, Tweet} from "../../store/ducks/tweets/contracts/state";
 import {User} from "../../store/ducks/user/contracts/state";
 import {API_URL} from "../../util/url";
+import {ReplyTweet} from "../../store/ducks/tweet/contracts/state";
 
 interface Response<T> {
     status: string;
@@ -41,11 +42,8 @@ export const TweetApi = {
         const data = await axios.get<Response<Tweet>>(API_URL + '/tweets/retweet/' + id);
         return data.data;
     },
-    async replyTweet(payload: { id: string, text: string; addressedUsername: string;
-        images: Image[]; likes: []; retweets: []; }): Promise<Response<Tweet>> {
-        const data = await axios.post<Response<Tweet>>(API_URL + `/tweets/reply/${payload.id}`,
-            {text: payload.text, addressedUsername: payload.addressedUsername,
-                images: payload.images, likes: payload.likes, retweets: payload.retweets,});
+    async replyTweet(payload: ReplyTweet): Promise<Response<Tweet>> {
+        const data = await axios.post<Response<Tweet>>(API_URL + `/tweets/reply/${payload.id}`, payload);
         return data.data;
     },
 };

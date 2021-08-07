@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import RepostIcon from "@material-ui/icons/RepeatOutlined";
 import format from 'date-fns/format';
 import usLang from 'date-fns/locale/en-US/index';
-import mediumZoom from "medium-zoom";
 
 import {selectIsTweetLoading, selectTweetData} from '../../store/ducks/tweet/selectors';
 import {fetchTweetData, setTweetData} from '../../store/ducks/tweet/actionCreators';
@@ -37,6 +36,7 @@ export const FullTweet: FC = (): ReactElement | null => {
     const image = tweetData?.images?.[0];
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         if (params.id) {
             dispatch(fetchTweetData(params.id));
         }
@@ -44,12 +44,6 @@ export const FullTweet: FC = (): ReactElement | null => {
             dispatch(setTweetData(undefined));
         };
     }, [dispatch, params.id]);
-
-    useEffect(() => {
-        if (!isLoading) {
-            mediumZoom('.tweet-images img');
-        }
-    }, [isLoading]);
 
     const handleLike = (): void => {
         dispatch(fetchLikeTweet(params.id));
@@ -74,14 +68,6 @@ export const FullTweet: FC = (): ReactElement | null => {
         setModalWindowTitle("");
     };
 
-    if (isLoading) {
-        return (
-            <div className={classes.loading}>
-                <CircularProgress/>
-            </div>
-        );
-    }
-
     if (tweetData) {
         return (
             <div style={{paddingTop: 48}}>
@@ -93,119 +79,127 @@ export const FullTweet: FC = (): ReactElement | null => {
                         </Typography>
                     </div> : null}
                 <Paper className={classes.container}>
-                    <div className={classes.header}>
-                        <Avatar
-                            className={classes.avatar}
-                            alt={`avatar ${tweetData.user.id}`}
-                            src={tweetData.user.avatar?.src ? tweetData.user.avatar?.src : DEFAULT_PROFILE_IMG}
-                        />
-                        <Typography>
-                            <Link to={`/user/${tweetData.user.id}`}>
-                                <b>{tweetData.user.fullName}</b>&nbsp;
-                            </Link>
-                            <div>
-                                <span className={classes.username}>@{tweetData.user.username}</span>&nbsp;
+                    {isLoading ? (
+                        <div className={classes.loading}>
+                            <CircularProgress/>
+                        </div>
+                    ) : (
+                        <>
+                            <div className={classes.header}>
+                                <Avatar
+                                    className={classes.avatar}
+                                    alt={`avatar ${tweetData.user.id}`}
+                                    src={tweetData.user.avatar?.src ? tweetData.user.avatar?.src : DEFAULT_PROFILE_IMG}
+                                />
+                                <Typography>
+                                    <Link to={`/user/${tweetData.user.id}`}>
+                                        <b>{tweetData.user.fullName}</b>&nbsp;
+                                    </Link>
+                                    <div>
+                                        <span className={classes.username}>@{tweetData.user.username}</span>&nbsp;
+                                    </div>
+                                </Typography>
                             </div>
-                        </Typography>
-                    </div>
-                    <Typography className={classes.textWrapper} gutterBottom>
-                        {textFormatter(tweetData.text)}
-                        {(tweetData.images?.length !== 0) &&
-                            <Link to={{pathname: `/modal/${params.id}`, state: { background: location }}}>
-                                <div className={classes.image}>
-                                    <img src={image?.src} alt={image?.src}/>
-                                </div>
-                            </Link>
-                        }
-                    </Typography>
-                    <Typography style={{marginBottom: 16}}>
+                            <Typography className={classes.textWrapper} gutterBottom>
+                                {textFormatter(tweetData.text)}
+                                {(tweetData.images?.length !== 0) &&
+                                <Link to={{pathname: `/modal/${params.id}`, state: {background: location}}}>
+                                    <div className={classes.image}>
+                                        <img src={image?.src} alt={image?.src}/>
+                                    </div>
+                                </Link>
+                                }
+                            </Typography>
+                            <Typography style={{marginBottom: 16}}>
                         <span className={classes.date}>
-                            {format(new Date(tweetData.dateTime), 'H:mm', {locale: usLang})} ·
+                            {format(new Date(tweetData.dateTime), 'hh:mm a', {locale: usLang})} ·
                         </span>
                         <span className={classes.date}>
-                            {format(new Date(tweetData.dateTime), 'dd MMM. yyyy')}
+                            {format(new Date(tweetData.dateTime), ' MMM dd, yyyy')} · Twitter Web App
                         </span>
-                    </Typography>
-                    <Divider/>
-                    {(tweetData.retweets.length !== 0 || tweetData.likes.length !== 0) && (
-                        <div className={classes.content}>
-                            {(tweetData.retweets.length !== 0) && (
-                                <a href={"javascript:void(0);"} onClick={onOpenRetweetsModalWindow}>
+                            </Typography>
+                            <Divider/>
+                            {(tweetData.retweets.length !== 0 || tweetData.likes.length !== 0) && (
+                                <div className={classes.content}>
+                                    {(tweetData.retweets.length !== 0) && (
+                                        <a href={"javascript:void(0);"} onClick={onOpenRetweetsModalWindow}>
                                     <span style={{marginRight: 20}}>
                                         <b>{tweetData.retweets.length}</b>
                                         <span className={classes.contentItem}>
                                             Retweets
                                         </span>
                                     </span>
-                                </a>)
-                            }
-                            {(tweetData.likes.length !== 0) && (
-                                <a href={"javascript:void(0);"} onClick={onOpenLikesModalWindow}>
+                                        </a>)
+                                    }
+                                    {(tweetData.likes.length !== 0) && (
+                                        <a href={"javascript:void(0);"} onClick={onOpenLikesModalWindow}>
                                     <span style={{marginRight: 20}}>
                                         <b>{tweetData.likes.length}</b>
                                         <span className={classes.contentItem}>
                                             Likes
                                         </span>
                                     </span>
-                                </a>)
+                                        </a>)
+                                    }
+                                </div>)
                             }
-                        </div>)
-                    }
-                    <div className={classes.info}>
-                        <div className={classes.infoIcon}>
-                            <IconButton>
-                                <span>{ReplyIcon}</span>
-                            </IconButton>
-                        </div>
-                        <div className={classes.infoIcon}>
-                            <IconButton onClick={handleRetweet}>
-                                {isTweetRetweeted ? (
-                                    <span style={{color: "rgb(23, 191, 99)"}}>{RetweetIcon}</span>
-                                ) : (
-                                    <span>{RetweetOutlinedIcon}</span>
-                                )}
-                            </IconButton>
-                        </div>
-                        <div className={classes.infoIcon}>
-                            <IconButton onClick={handleLike}>
-                                {isTweetLiked ? (
-                                    <span style={{color: "rgb(224, 36, 94)"}}>{LikeIcon}</span>
-                                ) : (
-                                    <span>{LikeOutlinedIcon}</span>
-                                )}
-                            </IconButton>
-                        </div>
-                        <div className={classes.infoIcon}>
-                            <IconButton>
-                                <span>{ShareIcon}</span>
-                            </IconButton>
-                        </div>
-                    </div>
-                    <Divider/>
-                    <Typography className={classes.replyWrapper}>
-                        Replying to <Link to={`/user/${tweetData.user.id}`}>
-                        @{tweetData.user.username}
-                    </Link>
-                    </Typography>
-                    <AddTweetForm
-                        tweetId={tweetData?.id}
-                        addressedUsername={tweetData.user.username}
-                        addressedId={tweetData.user.id}
-                        maxRows={15}
-                        title={"Tweet your reply"}
-                        buttonName={"Reply"}/>
-                    {(visibleModalWindow && modalWindowTitle === "Liked by") ? (
-                        <UsersListModal
-                            users={tweetData.likes}
-                            title={modalWindowTitle}
-                            visible={visibleModalWindow}
-                            onClose={onCloseModalWindow}/>
-                    ) : (
-                        <UsersListModal
-                            users={tweetData.retweets}
-                            title={modalWindowTitle}
-                            visible={visibleModalWindow}
-                            onClose={onCloseModalWindow}/>
+                            <div className={classes.info}>
+                                <div className={classes.infoIcon}>
+                                    <IconButton>
+                                        <span>{ReplyIcon}</span>
+                                    </IconButton>
+                                </div>
+                                <div className={classes.infoIcon}>
+                                    <IconButton onClick={handleRetweet}>
+                                        {isTweetRetweeted ? (
+                                            <span style={{color: "rgb(23, 191, 99)"}}>{RetweetIcon}</span>
+                                        ) : (
+                                            <span>{RetweetOutlinedIcon}</span>
+                                        )}
+                                    </IconButton>
+                                </div>
+                                <div className={classes.infoIcon}>
+                                    <IconButton onClick={handleLike}>
+                                        {isTweetLiked ? (
+                                            <span style={{color: "rgb(224, 36, 94)"}}>{LikeIcon}</span>
+                                        ) : (
+                                            <span>{LikeOutlinedIcon}</span>
+                                        )}
+                                    </IconButton>
+                                </div>
+                                <div className={classes.infoIcon}>
+                                    <IconButton>
+                                        <span>{ShareIcon}</span>
+                                    </IconButton>
+                                </div>
+                            </div>
+                            <Divider/>
+                            <Typography className={classes.replyWrapper}>
+                                Replying to <Link to={`/user/${tweetData.user.id}`}>
+                                @{tweetData.user.username}
+                            </Link>
+                            </Typography>
+                            <AddTweetForm
+                                tweetId={tweetData.id}
+                                addressedUsername={tweetData.user.username}
+                                addressedId={tweetData.user.id}
+                                maxRows={15}
+                                title={"Tweet your reply"}
+                                buttonName={"Reply"}/>
+                            {(visibleModalWindow && modalWindowTitle === "Liked by") ? (
+                                <UsersListModal
+                                    users={tweetData.likes}
+                                    title={modalWindowTitle}
+                                    visible={visibleModalWindow}
+                                    onClose={onCloseModalWindow}/>
+                            ) : (
+                                <UsersListModal
+                                    users={tweetData.retweets}
+                                    title={modalWindowTitle}
+                                    visible={visibleModalWindow}
+                                    onClose={onCloseModalWindow}/>
+                            )}
+                        </>
                     )}
                 </Paper>
                 <div className={classes.divider}/>

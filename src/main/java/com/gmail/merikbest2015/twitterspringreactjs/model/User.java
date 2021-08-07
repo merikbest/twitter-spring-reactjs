@@ -16,20 +16,51 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "full_name")
     private String fullName;
+
+    @Column(name = "username")
     private String username;
+
+    @Column(name = "location")
     private String location;
+
+    @Column(name = "about")
     private String about;
+
+    @Column(name = "website")
     private String website;
+
+    @Column(name = "birthday")
     private String birthday;
+
+    @Column(name = "registration_date")
     private LocalDateTime registrationDate;
+
+    @Column(name = "activation_code")
     private String activationCode;
+
+    @Column(name = "password_reset_code")
     private String passwordResetCode;
+
+    @Column(name = "role")
     private String role;
+
+    @Column(name = "tweet_count", columnDefinition = "int default 0")
     private Long tweetCount;
+
+    @Column(name = "active", columnDefinition = "boolean default false")
     private boolean active;
+
+    @Column(name = "profile_customized", columnDefinition = "boolean default false")
+    private boolean profileCustomized;
 
     @ManyToMany
     private List<Tweet> tweets;
@@ -59,6 +90,5 @@ public class User {
 
     public User() {
         this.registrationDate = LocalDateTime.now().withNano(0);
-        this.tweetCount = 0L;
     }
 }

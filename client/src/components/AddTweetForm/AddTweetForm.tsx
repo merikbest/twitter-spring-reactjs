@@ -48,7 +48,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
                                                         buttonName,
                                                         addressedUsername,
                                                         addressedId
-                                                    }: AddTweetFormProps): ReactElement => {
+                                                    }): ReactElement => {
     const classes = useAddTweetFormStyles();
     const dispatch = useDispatch();
     const location = useLocation();
@@ -61,7 +61,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
     const textLimitPercent = Math.round((text.length / 280) * 100);
     const textCount = MAX_LENGTH - text.length;
     // Popover
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const id = open ? "simple-popover" : undefined;
 
@@ -106,19 +106,15 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
             result.push(image);
         }
 
-        if (addressedUsername && addressedId) {
-            dispatch(fetchReplyTweet({
-                id: tweetId!,
-                text: textConverter(),
-                addressedUsername,
-                addressedId,
-                images: result,
-                likes: [],
-                retweets: []
-            }));
-            setText("");
-            setImages([]);
-        }
+        dispatch(fetchReplyTweet({
+            id: tweetId!,
+            text: textConverter(),
+            addressedUsername: addressedUsername!,
+            addressedId: addressedId!,
+            images: result,
+        }));
+        setText("");
+        setImages([]);
     };
 
     const handleOpenPopup = (event: MouseEvent<HTMLDivElement>): void => {

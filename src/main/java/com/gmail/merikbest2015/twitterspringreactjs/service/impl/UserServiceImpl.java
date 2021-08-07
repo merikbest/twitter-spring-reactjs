@@ -112,6 +112,7 @@ public class UserServiceImpl implements UserService {
         user.setAbout(userInfo.getAbout());
         user.setLocation(userInfo.getLocation());
         user.setWebsite(userInfo.getWebsite());
+        user.setProfileCustomized(true);
         return userRepository.save(user);
     }
 

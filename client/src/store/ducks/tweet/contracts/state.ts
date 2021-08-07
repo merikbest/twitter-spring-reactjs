@@ -12,6 +12,4 @@ export interface ReplyTweet {
     addressedUsername: string;
     addressedId: number;
     images: Image[];
-    likes: [];
-    retweets: [];
 }

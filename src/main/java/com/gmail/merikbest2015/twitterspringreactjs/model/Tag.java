@@ -13,7 +13,11 @@ public class Tag {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "tag_name")
     private String tagName;
+
+    @Column(name = "tweets_quantity")
     private Long tweetsQuantity;
 
     @ManyToMany

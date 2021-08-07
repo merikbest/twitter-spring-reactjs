@@ -1,4 +1,4 @@
-import React, {FC, ReactElement} from 'react';
+import React, {FC, ReactElement, useEffect} from 'react';
 import {Link} from "react-router-dom";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -13,7 +13,7 @@ import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {User} from "../../store/ducks/user/contracts/state";
 import {AddTweetForm} from "../AddTweetForm/AddTweetForm";
 import {useSelector} from "react-redux";
-import {selectIsTweetLoading} from "../../store/ducks/tweet/selectors";
+import {selectIsTweetLoaded} from "../../store/ducks/tweet/selectors";
 import {textFormatter} from "../../util/textFormatter";
 import {Image} from "../../store/ducks/tweets/contracts/state";
 
@@ -37,11 +37,11 @@ const ReplyModal: FC<ReplyModalProps> = ({
                                              onClose
                                          }): ReactElement | null => {
     const classes = useReplyModalStyles();
-    const isReplyLoading = useSelector(selectIsTweetLoading);
+    const isReplyLoaded = useSelector(selectIsTweetLoaded);
 
-    if (isReplyLoading) {
+    useEffect(() => {
         onClose();
-    }
+    }, [isReplyLoaded]);
 
     if (!visible) {
         return null;
@@ -49,13 +49,14 @@ const ReplyModal: FC<ReplyModalProps> = ({
 
     return (
         <Dialog style={{top: "-30%"}} open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title" style={{margin: 0}}>
+            <DialogTitle id="form-dialog-title" style={{padding: "5px 15px", margin: 0}}>
                 <IconButton onClick={onClose} color="secondary" aria-label="close">
                     <CloseIcon style={{fontSize: 26}} color="secondary"/>
                 </IconButton>
             </DialogTitle>
             <DialogContent className={classes.container}>
                 <div className={classes.modalWrapper}>
+                    <div className={classes.verticalLine}></div>
                     <Avatar
                         className={classes.avatar}
                         alt={`avatar ${user.id}`}

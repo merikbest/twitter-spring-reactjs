@@ -10,6 +10,7 @@ export const useReplyModalStyles = makeStyles((theme: Theme) => ({
         fontSize: 15,
         display: 'flex',
         alignItems: 'flex-start',
+        position: "relative",
         paddingTop: 15,
         paddingLeft: 20,
         flex: 1,
@@ -18,7 +19,14 @@ export const useReplyModalStyles = makeStyles((theme: Theme) => ({
         borderRight: '0',
         borderRadius: 0,
     },
+    verticalLine: {
+        marginLeft: 18,
+        position: "absolute",
+        borderLeft: "2px solid rgb(207, 217, 222)",
+        height: "100%",
+    },
     avatar: {
+        zIndex: 1,
         width: theme.spacing(6.5),
         height: theme.spacing(6.5),
         marginRight: 15,
