@@ -80,6 +80,8 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
 
     const handleClickAddTweet = async (): Promise<void> => {
         let result: Array<Image> = [];
+        const profileId = parseInt(location.pathname.substring(location.pathname.length - 1));
+
         dispatch(setTweetsLoadingState(LoadingStatus.LOADING));
         for (let i = 0; i < images.length; i++) {
             const file: File = images[i].file;
@@ -87,12 +89,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
             result.push(image);
         }
 
-        dispatch(fetchAddTweet({
-            text: textConverter(),
-            images: result,
-            likes: [],
-            retweets: []
-        }));
+        dispatch(fetchAddTweet({profileId: profileId, text: textConverter(), images: result,}));
         setText('');
         setImages([]);
     };

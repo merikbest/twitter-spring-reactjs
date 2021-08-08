@@ -5,6 +5,7 @@ import {Tweet, UserTweetsState} from "./state";
 
 export enum UserTweetsActionType {
     SET_TWEETS = "userTweets/SET_TWEETS",
+    SET_ADDED_TWEET = "userTweets/SET_ADDED_TWEET",
     FETCH_TWEETS = "userTweets/FETCH_TWEETS",
     SET_LIKED_TWEET = 'userTweets/SET_LIKED_TWEET',
     FETCH_LIKED_TWEETS = "userTweets/FETCH_LIKED_TWEETS",
@@ -16,6 +17,11 @@ export enum UserTweetsActionType {
 export interface SetUserTweetsActionInterface extends Action<UserTweetsActionType> {
     type: UserTweetsActionType.SET_TWEETS;
     payload: UserTweetsState["items"];
+}
+
+export interface SetAddedUserTweetActionInterface extends Action<UserTweetsActionType> {
+    type: UserTweetsActionType.SET_ADDED_TWEET;
+    payload: Tweet;
 }
 
 export interface FetchUserTweetsActionInterface extends Action<UserTweetsActionType> {
@@ -50,6 +56,7 @@ export interface SetUserTweetsLoadingStatusInterface extends Action<UserTweetsAc
 
 export type UserTweetsActions =
     | SetUserTweetsActionInterface
+    | SetAddedUserTweetActionInterface
     | SetUserLikedTweetActionInterface
     | SetUserRetweetActionInterface
     | SetUserTweetsLoadingStatusInterface;

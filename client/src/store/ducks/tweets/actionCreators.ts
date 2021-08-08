@@ -1,4 +1,4 @@
-import {Image, Tweet, TweetsState} from "./contracts/state";
+import {AddTweet, Image, Tweet, TweetsState} from "./contracts/state";
 import {
     FetchLikedTweetsActionInterface,
     FetchLikeTweetActionInterface,
@@ -6,7 +6,6 @@ import {
     FetchRetweetActionInterface,
     FetchTweetsByTagActionInterface,
     FetchTweetsByTextActionInterface,
-    FetchTweetsByUserActionInterface,
     LikeTweetActionInterface,
     ReplyActionInterface,
     RetweetActionInterface,
@@ -20,7 +19,6 @@ import {
     FetchAddTweetActionInterface
 } from "./contracts/actionTypes";
 import {LoadingStatus} from "../../types";
-import {User} from "../user/contracts/state";
 
 export const setTweets = (payload: TweetsState["items"]): SetTweetsActionInterface => ({
     type: TweetsActionType.SET_TWEETS,
@@ -32,13 +30,8 @@ export const setTweet = (payload: Tweet): SetTweetActionInterface => ({
     payload
 });
 
-export const fetchAddTweet = (payload: { text: string; images: Image[]; likes: []; retweets: [] }): FetchAddTweetActionInterface => ({
+export const fetchAddTweet = (payload: AddTweet): FetchAddTweetActionInterface => ({
     type: TweetsActionType.FETCH_ADD_TWEET,
-    payload
-});
-
-export const fetchTweetsByUser = (payload: User): FetchTweetsByUserActionInterface => ({
-    type: TweetsActionType.FETCH_TWEETS_BY_USER,
     payload
 });
 

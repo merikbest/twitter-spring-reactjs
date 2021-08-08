@@ -47,6 +47,10 @@ const Search: FC = (): ReactElement => {
             dispatch(fetchTweetsByText(location.state?.text));
             setText(decodeURIComponent(location.state?.text));
         }
+
+        if (location.state?.tag === undefined && location.state?.text === undefined) {
+            dispatch(fetchTweets());
+        }
     }, [location.state?.tag, location.state?.text]);
 
     const handleChangeTab = (event: ChangeEvent<{}>, newValue: number): void => {

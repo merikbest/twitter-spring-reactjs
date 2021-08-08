@@ -1,8 +1,7 @@
 import {Action} from "redux";
 
 import {LoadingStatus} from "../../../types";
-import {Image, Tweet, TweetsState} from "./state";
-import {User} from "../../user/contracts/state";
+import {AddTweet, Tweet, TweetsState} from "./state";
 
 export enum TweetsActionType {
     SET_TWEETS = "tweets/SET_TWEETS",
@@ -15,7 +14,6 @@ export enum TweetsActionType {
     FETCH_ADD_TWEET = "tweets/FETCH_ADD_TWEET",
     FETCH_TWEETS = "tweets/FETCH_TWEETS",
     FETCH_MEDIA_TWEETS = "tweets/FETCH_MEDIA_TWEETS",
-    FETCH_TWEETS_BY_USER = "tweets/FETCH_TWEETS_BY_USER",
     FETCH_TWEETS_BY_TAG = "tweets/FETCH_TWEETS_BY_TAG",
     FETCH_TWEETS_BY_TEXT = "tweets/FETCH_TWEETS_BY_TEXT",
     FETCH_LIKED_TWEETS = "tweets/FETCH_LIKED_TWEETS",
@@ -34,12 +32,7 @@ export interface SetTweetActionInterface extends Action<TweetsActionType> {
 
 export interface FetchAddTweetActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_ADD_TWEET;
-    payload: {
-        text: string;
-        images: Image[];
-        likes: [];
-        retweets: [];
-    };
+    payload: AddTweet;
 }
 
 export interface FetchLikeTweetActionInterface extends Action<TweetsActionType> {
@@ -80,11 +73,6 @@ export interface FetchMediaTweetsActionInterface extends Action<TweetsActionType
     type: TweetsActionType.FETCH_MEDIA_TWEETS;
 }
 
-export interface FetchTweetsByUserActionInterface extends Action<TweetsActionType> {
-    type: TweetsActionType.FETCH_TWEETS_BY_USER;
-    payload: User;
-}
-
 export interface FetchTweetsByTagActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_TWEETS_BY_TAG;
     payload: string;
@@ -98,11 +86,6 @@ export interface FetchTweetsByTextActionInterface extends Action<TweetsActionTyp
 export interface FetchLikedTweetsActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_LIKED_TWEETS;
     payload: string;
-}
-
-export interface FetchUserTweetsActionInterface extends Action<TweetsActionType> {
-    type: TweetsActionType.FETCH_TWEETS_BY_USER;
-    payload: string
 }
 
 export type TweetsActions =

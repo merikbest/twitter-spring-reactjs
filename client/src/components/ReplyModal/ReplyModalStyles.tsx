@@ -29,6 +29,7 @@ export const useReplyModalStyles = makeStyles((theme: Theme) => ({
         zIndex: 1,
         width: theme.spacing(6.5),
         height: theme.spacing(6.5),
+        border: "1px solid white",
         marginRight: 15,
     },
     header: {

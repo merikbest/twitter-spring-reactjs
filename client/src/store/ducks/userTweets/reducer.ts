@@ -17,6 +17,11 @@ export const userTweetsReducer = produce((draft: Draft<UserTweetsState>, action:
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
+        case UserTweetsActionType.SET_ADDED_TWEET:
+            draft.items = [action.payload, ...draft.items];
+            draft.loadingState = LoadingStatus.LOADED
+            break;
+
         case UserTweetsActionType.SET_LIKED_TWEET:
             const tweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.id);
             draft.items[tweetIndex] = action.payload;

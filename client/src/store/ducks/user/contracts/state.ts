@@ -13,7 +13,6 @@ export interface User {
     website: string;
     birthday?: string
     registrationDate?: string
-    active?: boolean;
     profileCustomized?: boolean;
     dateOfBirth?: string;
     tweets?: Tweet[];

@@ -1,8 +1,10 @@
 import {Tweet, UserTweetsState} from "./contracts/state";
 import {LoadingStatus} from "../../types";
 import {
-    FetchUserLikedTweetsActionInterface, FetchUserMediaTweetsActionInterface,
+    FetchUserLikedTweetsActionInterface,
+    FetchUserMediaTweetsActionInterface,
     FetchUserTweetsActionInterface,
+    SetAddedUserTweetActionInterface,
     SetUserLikedTweetActionInterface,
     SetUserRetweetActionInterface,
     SetUserTweetsActionInterface,
@@ -12,6 +14,11 @@ import {
 
 export const setUserTweets = (payload: UserTweetsState["items"]): SetUserTweetsActionInterface => ({
     type: UserTweetsActionType.SET_TWEETS,
+    payload
+});
+
+export const setAddedUserTweet = (payload: Tweet): SetAddedUserTweetActionInterface => ({
+    type: UserTweetsActionType.SET_ADDED_TWEET,
     payload
 });
 

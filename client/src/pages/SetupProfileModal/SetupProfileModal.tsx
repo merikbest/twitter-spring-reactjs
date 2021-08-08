@@ -1,20 +1,24 @@
 import React, {FC, ReactElement, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 
-import {useSetupProfileModalStyles} from "./SetupProfileModalStyles";
 import ProfilePictureModal from "./ProfilePictureModal/ProfilePictureModal";
 import ProfileHeaderModal from "./ProfileHeaderModal/ProfileHeaderModal";
 import {ImageObj} from "../../components/AddTweetForm/AddTweetForm";
 import ProfileDescriptionModal from "./ProfileDescriptionModal/ProfileDescriptionModal";
 import ProfileUpdatedModal from "./ProfileUpdatedModal/ProfileUpdatedModal";
+import {Image} from "../../store/ducks/tweets/contracts/state";
+import {uploadImage} from "../../util/uploadImage";
+import {updatedUserData} from "../../store/ducks/user/actionCreators";
+import {selectUserData} from "../../store/ducks/user/selectors";
 
 interface SetupProfileModalProps {
-    visible?: boolean;
+    visible: boolean;
     onClose: () => void;
 }
 
 const SetupProfileModal: FC<SetupProfileModalProps> = ({visible, onClose}): ReactElement => {
-    const classes = useSetupProfileModalStyles();
-    const [visibleProfilePictureModal, setVisibleProfilePictureModal] = useState<boolean>(false);
+    const dispatch = useDispatch();
+    const myProfile = useSelector(selectUserData);
     const [visibleProfileHeaderModal, setVisibleProfileHeaderModal] = useState<boolean>(false);
     const [visibleProfileDescriptionModal, setVisibleProfileDescriptionModal] = useState<boolean>(false);
     const [visibleProfileUpdatedModal, setVisibleProfileUpdatedModal] = useState<boolean>(false);
@@ -23,16 +27,38 @@ const SetupProfileModal: FC<SetupProfileModalProps> = ({visible, onClose}): Reac
     const [bio, setBio] = useState<string>("");
 
     const handleCloseModal = (): void => {
-        setVisibleProfilePictureModal(false);
         setVisibleProfileHeaderModal(false);
         setVisibleProfileDescriptionModal(false);
         setVisibleProfileUpdatedModal(false);
+        onClose();
+    };
+
+    const onSubmit = async () => {
+        let avatarResponse: Image | undefined = undefined;
+        let wallpaperResponse: Image | undefined = undefined;
+
+        if (avatar) {
+            avatarResponse = await uploadImage(avatar.file);
+        }
+        if (wallpaper) {
+            wallpaperResponse = await uploadImage(wallpaper.file);
+        }
+
+        dispatch(updatedUserData({
+            username: myProfile?.username!,
+            location: myProfile?.location!,
+            website: myProfile?.website!,
+            avatar: avatarResponse,
+            wallpaper: wallpaperResponse,
+            about: bio
+        }));
+        handleCloseModal();
     };
 
     return (
         <div>
             <ProfilePictureModal
-                open={visible!}
+                open={visible}
                 onClose={handleCloseModal}
                 avatar={avatar}
                 onChangeAvatar={setAvatar}
@@ -52,7 +78,8 @@ const SetupProfileModal: FC<SetupProfileModalProps> = ({visible, onClose}): Reac
                 onOpenProfileUpdatedModal={setVisibleProfileUpdatedModal}/>
             <ProfileUpdatedModal
                 open={visibleProfileUpdatedModal}
-                onClose={handleCloseModal}/>
+                onClose={handleCloseModal}
+                onSubmit={onSubmit}/>
         </div>
     );
 };

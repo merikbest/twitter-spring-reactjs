@@ -1,10 +1,14 @@
-import React, {FC, ReactElement} from 'react';
-import {AddTweetForm} from "../AddTweetForm/AddTweetForm";
+import React, {FC, ReactElement, useEffect} from 'react';
 import DialogTitle from "@material-ui/core/DialogTitle";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import DialogContent from "@material-ui/core/DialogContent";
 import Dialog from "@material-ui/core/Dialog";
+import {useSelector} from "react-redux";
+
+import {useAddTweetModalStyles} from "./AddTweetModalStyles";
+import {AddTweetForm} from "../AddTweetForm/AddTweetForm";
+import {selectIsTweetsLoaded} from "../../store/ducks/tweets/selectors";
 
 interface AddTweetModalProps {
     title?: string;
@@ -13,20 +17,26 @@ interface AddTweetModalProps {
 }
 
 const AddTweetModal: FC<AddTweetModalProps> = ({title, visible, onClose}): ReactElement | null => {
+    const classes = useAddTweetModalStyles();
+    const isTweetAdded = useSelector(selectIsTweetsLoaded);
+
+    useEffect(() => {
+        onClose();
+    }, [isTweetAdded]);
 
     if (!visible) {
         return null;
     }
 
     return (
-        <Dialog style={{top: "-20%"}} open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">
+        <Dialog className={classes.content} open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
+            <DialogTitle className={classes.header} id="form-dialog-title">
                 <IconButton onClick={onClose} color="secondary" aria-label="close">
-                    <CloseIcon style={{fontSize: 26}} color="secondary"/>
+                    <CloseIcon color="secondary"/>
                 </IconButton>
                 {title}
             </DialogTitle>
-            <DialogContent style={{width: 598, minHeight: 230, padding: "0px 20px"}}>
+            <DialogContent className={classes.dialogContent}>
                 <AddTweetForm
                     maxRows={6}
                     minRows={6}

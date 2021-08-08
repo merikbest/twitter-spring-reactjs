@@ -6,9 +6,10 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 interface ProfileUpdatedModalProps {
     open: boolean;
     onClose: () => void;
+    onSubmit: () => Promise<void>;
 }
 
-const ProfileUpdatedModal: FC<ProfileUpdatedModalProps> = ({open, onClose}): ReactElement => {
+const ProfileUpdatedModal: FC<ProfileUpdatedModalProps> = ({open, onClose, onSubmit}): ReactElement => {
     const classes = useProfileUpdatedModalStyles();
 
     return (
@@ -30,7 +31,7 @@ const ProfileUpdatedModal: FC<ProfileUpdatedModalProps> = ({open, onClose}): Rea
                 <div className={classes.buttonWrapper}>
                     <Button
                         className={classes.button}
-                        // onClick={() => onOpenProfileUpdatedModal(true)}
+                        onClick={onSubmit}
                         variant="contained"
                         color="primary"
                     >

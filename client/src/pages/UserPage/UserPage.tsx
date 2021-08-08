@@ -7,7 +7,6 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Skeleton from '@material-ui/lab/Skeleton';
 import format from 'date-fns/format';
-import usLang from 'date-fns/locale/en-US/index';
 
 import {LocationIcon, LinkIcon, CalendarIcon} from "../../icons";
 import {useUserPageStyles} from "./UserPageStyles";
@@ -35,6 +34,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
     const [btnText, setBtnText] = useState<string>("Following");
     const [activeTab, setActiveTab] = useState<number>(0);
     const [visibleEditProfile, setVisibleEditProfile] = useState<boolean>(false);
+    const [visibleSetupProfile, setVisibleSetupProfile] = useState<boolean>(false);
     const follower = myProfile?.followers?.find((user) => user.id === userProfile?.id);
 
     useEffect(() => {
@@ -64,6 +64,14 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
 
     const onCloseEditProfile = (): void => {
         setVisibleEditProfile(false);
+    };
+
+    const onOpenSetupProfile = (): void => {
+        setVisibleSetupProfile(true);
+    };
+
+    const onCloseSetupProfile = (): void => {
+        setVisibleSetupProfile(false);
     };
 
     const handleFollow = (): void => {
@@ -109,8 +117,12 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
                         <Avatar src={userProfile?.avatar?.src ? userProfile?.avatar.src : DEFAULT_PROFILE_IMG}/>
                     </div>
                     {userProfile?.id === myProfile?.id ? (
-                        <Button onClick={onOpenEditProfile} color="primary" className={classes.editButton}>
-                            Edit profile
+                        <Button
+                            onClick={myProfile?.profileCustomized  ? onOpenEditProfile : onOpenSetupProfile}
+                            color="primary"
+                            className={classes.editButton}
+                        >
+                            {myProfile?.profileCustomized ? "Edit profile" : "Setup profile"}
                         </Button>
                     ) : (follower ? (
                             <Button
@@ -216,8 +228,8 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
                     )}
                 </div>
             </div>
-            {/*{visibleEditProfile && <EditProfileModal visible={visibleEditProfile} onClose={onCloseEditProfile}/>}*/}
-            {visibleEditProfile && <SetupProfileModal visible={visibleEditProfile} onClose={onCloseEditProfile}/>}
+            {visibleEditProfile && <EditProfileModal visible={visibleEditProfile} onClose={onCloseEditProfile}/>}
+            {visibleSetupProfile && <SetupProfileModal visible={visibleSetupProfile} onClose={onCloseSetupProfile}/>}
         </Paper>
     );
 };

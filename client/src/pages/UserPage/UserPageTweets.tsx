@@ -124,7 +124,13 @@ const UserPageTweets: FC<UserPageTweetsProps> = ({
             )
         } else {
             return tweets?.map((tweet: any) => (
-                <Tweet key={tweet.id} classes={classes} images={tweet.images} {...tweet} activeTab={activeTab}/>))
+                <Tweet
+                    {...tweet}
+                    key={tweet.id}
+                    images={tweet.images}
+                    userProfileId={userProfileId}
+                    activeTab={activeTab}/>
+            ))
         }
     };
 

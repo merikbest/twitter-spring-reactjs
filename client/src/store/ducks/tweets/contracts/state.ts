@@ -19,6 +19,12 @@ export interface Tweet {
     user: User;
 }
 
+export interface AddTweet {
+    profileId: number,
+    text: string;
+    images: Image[];
+}
+
 export interface TweetsState {
     items: Tweet[];
     loadingState: LoadingStatus;

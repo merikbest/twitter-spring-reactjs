@@ -4,7 +4,6 @@ import {LoadingStatus} from "../../../types";
 import {User, UserState} from "./state";
 import {RegistrationProps} from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
 import {LoginProps} from "../../../../pages/Login/Login";
-import {UserProfileActionsType} from "../../userProfile/contracts/actionTypes";
 
 export enum UserActionsType {
     FETCH_SIGN_IN = "user/FETCH_SIGN_IN",
