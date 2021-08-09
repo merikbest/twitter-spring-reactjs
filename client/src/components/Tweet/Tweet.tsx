@@ -16,7 +16,7 @@ import {
 import {useTweetStyles} from "./TweetStyles";
 import {formatDate} from '../../util/formatDate';
 import {fetchLikeTweet, fetchRetweet} from "../../store/ducks/tweets/actionCreators";
-import {Image} from "../../store/ducks/tweets/contracts/state";
+import {Image, Retweet, LikeTweet} from "../../store/ducks/tweets/contracts/state";
 import {User} from "../../store/ducks/user/contracts/state";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
@@ -27,14 +27,14 @@ import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
 interface TweetProps {
     id: string;
     text: string;
-    likes: User[];
-    retweets: User[];
-    replies: any;
-    dateTime: string;
-    images?: Image[];
-    user: User;
     addressedUsername: string;
     addressedId?: number;
+    dateTime: string;
+    images?: Image[];
+    likedTweets: LikeTweet[];
+    retweets: Retweet[];
+    replies: any;
+    user: User;
 }
 
 const Tweet: FC<TweetProps> = ({
@@ -43,12 +43,12 @@ const Tweet: FC<TweetProps> = ({
                                    images,
                                    user,
                                    dateTime,
-                                   likes,
+                                   likedTweets,
                                    retweets,
                                    replies,
                                    addressedUsername,
                                    addressedId
-                               }: TweetProps): ReactElement => {
+                               }): ReactElement => {
     const classes = useTweetStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
@@ -56,9 +56,9 @@ const Tweet: FC<TweetProps> = ({
     const history = useHistory();
     const location = useLocation();
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
-    const isTweetLiked = likes.find((user) => user.id === myProfile?.id);
-    const isTweetRetweetedByMe = retweets.find((user) => user.id === myProfile?.id);
-    const isTweetRetweetedByUser = retweets.find((user) => user.id === userProfile?.id);
+    const isTweetLiked = likedTweets.find((like) => like.user.id === myProfile?.id);
+    const isTweetRetweetedByMe = retweets.find((retweet) => retweet.user.id === myProfile?.id);
+    const isTweetRetweetedByUser = retweets.find((retweet) => retweet.user.id === userProfile?.id);
     const isModal = location.pathname.includes("/modal");
     const image = images?.[0];
 
@@ -175,11 +175,11 @@ const Tweet: FC<TweetProps> = ({
                                     <span>{LikeOutlinedIcon}</span>
                                 )}
                             </IconButton>
-                            {(likes.length === 0 || likes === null) ? null : (
+                            {(likedTweets.length === 0 || likedTweets === null) ? null : (
                                 isTweetLiked ? (
-                                    <span style={{color: "rgb(224, 36, 94)"}}>{likes.length}</span>
+                                    <span style={{color: "rgb(224, 36, 94)"}}>{likedTweets.length}</span>
                                 ) : (
-                                    <span>{likes.length}</span>)
+                                    <span>{likedTweets.length}</span>)
                             )}
                         </div>
                         <div className={classes.footerIcon}>

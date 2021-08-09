@@ -62,9 +62,6 @@ public class User {
     @Column(name = "profile_customized", columnDefinition = "boolean default false")
     private boolean profileCustomized;
 
-    @ManyToMany
-    private List<Tweet> tweets;
-
     @OneToOne
     @JoinColumn(name = "avatar_id")
     private Image avatar;
@@ -73,8 +70,14 @@ public class User {
     @JoinColumn(name = "wallpaper_id")
     private Image wallpaper;
 
-    @ManyToMany(mappedBy = "likes")
-    private List<Tweet> likedTweets;
+    @ManyToMany
+    private List<Tweet> tweets;
+
+    @OneToMany(mappedBy = "user")
+    private List<LikeTweet> likedTweets;
+
+    @OneToMany(mappedBy = "user")
+    private List<Retweet> retweets;
 
     @ManyToMany
     @JoinTable(name = "user_subscriptions",

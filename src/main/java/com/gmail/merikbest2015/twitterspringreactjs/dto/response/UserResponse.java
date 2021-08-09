@@ -19,7 +19,7 @@ public class UserResponse {
     private Long tweetCount;
     private ImageResponse avatar;
     private ImageResponse wallpaper;
-    private boolean confirmed;
+    private boolean profileCustomized;
     private List<FollowerResponse> followers;
     private List<FollowerResponse> following;
 }

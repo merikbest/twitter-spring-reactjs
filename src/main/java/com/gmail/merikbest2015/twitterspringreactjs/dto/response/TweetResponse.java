@@ -9,12 +9,12 @@ import java.util.List;
 public class TweetResponse {
     private Long id;
     private String text;
+    private LocalDateTime dateTime;
     private String addressedUsername;
     private Long addressedId;
-    private LocalDateTime dateTime;
-    private List<ImageResponse> images;
-    private List<UserResponse> retweets;
-    private List<UserResponse> likes;
-    private List<TweetReplyResponse> replies;
     private UserResponse user;
+    private List<ImageResponse> images;
+    private List<LikeTweetResponse> likedTweets;
+    private List<RetweetResponse> retweets;
+    private List<TweetReplyResponse> replies;
 }

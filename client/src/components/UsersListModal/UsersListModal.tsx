@@ -9,9 +9,10 @@ import IconButton from "@material-ui/core/IconButton";
 import {User} from "../../store/ducks/user/contracts/state";
 import Follower from "../Follower/Follower";
 import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
+import {LikeTweet, Retweet} from "../../store/ducks/tweets/contracts/state";
 
 interface UsersListModalProps {
-    users?: User[];
+    users?: LikeTweet[] | Retweet[];
     visible?: boolean;
     title: string;
     onClose: () => void;
@@ -41,7 +42,7 @@ const UsersListModal: FC<UsersListModalProps> = ({users, visible, title, onClose
                 {title}
             </DialogTitle>
             <DialogContent style={{height: 550, width: 598, padding: 0,}}>
-                {users?.map((user) => <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>)}
+                {users?.map((user) => <Follower user={user.user} follow={handleFollow} unfollow={handleUnfollow}/>)}
             </DialogContent>
         </Dialog>
     );

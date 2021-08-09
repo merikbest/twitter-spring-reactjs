@@ -13,10 +13,24 @@ export interface Tweet {
     addressedId: number;
     dateTime: string;
     images?: Image[];
-    likes: User[];
-    retweets: User[];
+    likedTweets: LikeTweet[];
+    retweets: Retweet[];
     replies: Tweet[];
     user: User;
+}
+
+export interface LikeTweet {
+    id: number;
+    likeTweetDate: string;
+    user: User;
+    tweet: Tweet;
+}
+
+export interface Retweet {
+    id: number;
+    retweetDate: string;
+    user: User;
+    tweet: Tweet;
 }
 
 export interface AddTweet {

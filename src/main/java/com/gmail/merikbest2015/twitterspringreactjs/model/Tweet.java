@@ -36,17 +36,11 @@ public class Tweet {
     @OneToMany
     private List<Image> images;
 
-    @ManyToMany
-    @JoinTable(name = "tweet_likes",
-            joinColumns = @JoinColumn(name = "tweets_id"),
-            inverseJoinColumns = @JoinColumn(name = "users_id"))
-    private List<User> likes;
+    @OneToMany(mappedBy = "tweet")
+    private List<LikeTweet> likedTweets;
 
-    @ManyToMany
-    @JoinTable(name = "retweets",
-            joinColumns = @JoinColumn(name = "tweets_id"),
-            inverseJoinColumns = @JoinColumn(name = "users_id"))
-    private List<User> retweets;
+    @OneToMany(mappedBy = "tweet")
+    private List<Retweet> retweets;
 
     @ManyToMany
     @JoinTable(name = "replies",
@@ -56,7 +50,7 @@ public class Tweet {
 
     public Tweet() {
         this.dateTime = LocalDateTime.now().withNano(0);
-        this.likes = new ArrayList<>();
+        this.likedTweets = new ArrayList<>();
         this.retweets = new ArrayList<>();
     }
 }

@@ -1,11 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 
-import com.gmail.merikbest2015.twitterspringreactjs.model.Tag;
-import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
-import com.gmail.merikbest2015.twitterspringreactjs.model.User;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.TagRepository;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.TweetRepository;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
+import com.gmail.merikbest2015.twitterspringreactjs.model.*;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.*;
 import com.gmail.merikbest2015.twitterspringreactjs.service.TweetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +19,8 @@ public class TweetServiceImpl implements TweetService {
 
     private final TweetRepository tweetRepository;
     private final UserRepository userRepository;
+    private final RetweetRepository retweetRepository;
+    private final LikeTweetRepository likeTweetRepository;
     private final TagRepository tagRepository;
 
     @Override
@@ -122,13 +120,24 @@ public class TweetServiceImpl implements TweetService {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());
         Tweet tweet = tweetRepository.getOne(tweetId);
-        List<User> tweetLikes = tweet.getLikes();
 
-        if (tweetLikes.contains(user)) {
-            tweetLikes.remove(user);
+        List<LikeTweet> likedTweets = user.getLikedTweets();
+        Optional<LikeTweet> likedTweet = likedTweets.stream()
+                .filter(t -> t.getTweet().equals(tweet))
+                .findFirst();
+
+        if (likedTweet.isPresent()) {
+            likedTweets.remove(likedTweet.get());
+            likeTweetRepository.delete(likedTweet.get());
         } else {
-            tweetLikes.add(user);
+            LikeTweet newLikedTweet = new LikeTweet();
+            newLikedTweet.setTweet(tweet);
+            newLikedTweet.setUser(user);
+            likeTweetRepository.save(newLikedTweet);
+            likedTweets.add(newLikedTweet);
         }
+
+        userRepository.save(user);
         return tweetRepository.save(tweet);
     }
 
@@ -136,20 +145,27 @@ public class TweetServiceImpl implements TweetService {
     public Tweet retweet(Long tweetId) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());
-        user.setTweetCount(user.getTweetCount() + 1);
-        userRepository.save(user);
-
         Tweet tweet = tweetRepository.getOne(tweetId);
-        List<Tweet> tweets = user.getTweets();
-        List<User> retweets = tweet.getRetweets();
 
-        if (tweets.contains(tweet)) {
-            tweets.remove(tweet);
-            retweets.remove(user);
+        List<Retweet> retweets = user.getRetweets();
+        Optional<Retweet> retweet = retweets.stream()
+                .filter(t -> t.getTweet().equals(tweet))
+                .findFirst();
+
+        if (retweet.isPresent()) {
+            retweets.remove(retweet.get());
+            retweetRepository.delete(retweet.get());
+            user.setTweetCount(user.getTweetCount() - 1);
         } else {
-            tweets.add(tweet);
-            retweets.add(user);
+            Retweet newRetweet = new Retweet();
+            newRetweet.setTweet(tweet);
+            newRetweet.setUser(user);
+            retweetRepository.save(newRetweet);
+            retweets.add(newRetweet);
+            user.setTweetCount(user.getTweetCount() + 1);
         }
+
+        userRepository.save(user);
         return tweetRepository.save(tweet);
     }
 

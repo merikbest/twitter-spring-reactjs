@@ -1,7 +1,6 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 
 import {setUserTweets, setUserTweetsLoadingStatus} from "./actionCreators";
-import {Tweet} from "./contracts/state";
 import {
     FetchUserLikedTweetsActionInterface, FetchUserMediaTweetsActionInterface,
     FetchUserTweetsActionInterface,
@@ -9,6 +8,7 @@ import {
 } from "./contracts/actionTypes";
 import {LoadingStatus} from '../../types';
 import {UserApi} from "../../../services/api/userApi";
+import {Tweet} from "../tweets/contracts/state";
 
 export function* fetchUserTweetsRequest({payload}: FetchUserTweetsActionInterface) {
     try {
