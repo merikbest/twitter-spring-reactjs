@@ -58,6 +58,10 @@ public class UserMapper {
         return convertToUserResponse(userService.updateUserProfile(convertToEntity(userRequest)));
     }
 
+    public UserResponse startUseTwitter(Long userId) {
+        return convertToUserResponse(userService.startUseTwitter(userId));
+    }
+
     public List<TweetResponse> getUserTweets(Long userId) {
         return tweetMapper.convertListToResponseDto(userService.getUserTweets(userId));
     }
@@ -68,6 +72,10 @@ public class UserMapper {
 
     public List<TweetResponse> getUserMediaTweets(Long userId) {
         return tweetMapper.convertListToResponseDto(userService.getUserMediaTweets(userId));
+    }
+
+    public List<TweetResponse> getUserRetweetsAndReplies(Long userId) {
+        return tweetMapper.convertListToResponseDto(userService.getUserRetweetsAndReplies(userId));
     }
 
     public UserResponse follow(Long userId) {

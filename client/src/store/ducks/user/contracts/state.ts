@@ -14,6 +14,7 @@ export interface User {
     birthday?: string
     registrationDate?: string
     profileCustomized?: boolean;
+    profileStarted?: boolean;
     dateOfBirth?: string;
     tweets?: Tweet[];
     tweetCount?: number;

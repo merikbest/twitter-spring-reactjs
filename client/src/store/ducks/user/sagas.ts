@@ -5,6 +5,7 @@ import {
     FetchSignInActionInterface,
     FetchSignUpActionInterface,
     FollowUserActionInterface,
+    StartUseTwitterActionInterface,
     UnfollowUserActionInterface,
     UpdateUserDataActionInterface,
     UserActionsType
@@ -74,6 +75,16 @@ export function* fetchUnfollowUserRequest({payload}: UnfollowUserActionInterface
     }
 }
 
+export function* fetchStartUseTwitter({payload}: StartUseTwitterActionInterface) {
+    try {
+        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+        const item: User = yield call(UserApi.startUseTwitter, payload);
+        yield put(setUserData(item));
+    } catch (e) {
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
 export function* userSaga() {
     yield takeLatest(UserActionsType.FETCH_SIGN_IN, fetchSignInRequest);
     yield takeLatest(UserActionsType.FETCH_SIGN_UP, fetchSignUpRequest);
@@ -81,4 +92,5 @@ export function* userSaga() {
     yield takeLatest(UserActionsType.UPDATE_USER_DATA, fetchUpdateUserDataRequest);
     yield takeLatest(UserActionsType.FOLLOW_USER, fetchFollowUserRequest);
     yield takeLatest(UserActionsType.UNFOLLOW_USER, fetchUnfollowUserRequest);
+    yield takeLatest(UserActionsType.START_USE_TWITTER, fetchStartUseTwitter);
 }

@@ -62,6 +62,9 @@ public class User {
     @Column(name = "profile_customized", columnDefinition = "boolean default false")
     private boolean profileCustomized;
 
+    @Column(name = "profile_started", columnDefinition = "boolean default false")
+    private boolean profileStarted;
+
     @OneToOne
     @JoinColumn(name = "avatar_id")
     private Image avatar;

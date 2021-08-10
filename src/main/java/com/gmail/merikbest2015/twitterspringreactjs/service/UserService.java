@@ -17,11 +17,15 @@ public interface UserService {
 
     List<User> searchUsersByUsername(String username);
 
+    User startUseTwitter(Long userId);
+
     List<Tweet> getUserTweets(Long userId);
 
     List<Tweet> getUserLikedTweets(Long userId);
 
     List<Tweet> getUserMediaTweets(Long userId);
+
+    List<Tweet> getUserRetweetsAndReplies(Long userId);
 
     Image uploadImage(MultipartFile multipartFile);
 

@@ -17,7 +17,12 @@ import {selectUserData} from "../../store/ducks/user/selectors";
 import {fetchRelevantUsers} from "../../store/ducks/users/actionCreators";
 import {fetchTags} from "../../store/ducks/tags/actionCreators";
 import {selectIsUserTweetsLoading, selectUserTweetsItems} from "../../store/ducks/userTweets/selectors";
-import {fetchUserTweets, fetchUserLikedTweets, fetchUserMediaTweets} from "../../store/ducks/userTweets/actionCreators";
+import {
+    fetchUserTweets,
+    fetchUserLikedTweets,
+    fetchUserMediaTweets,
+    fetchUserRetweetsAndReplies
+} from "../../store/ducks/userTweets/actionCreators";
 import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
 import {fetchUserProfile, followUserProfile, unfollowUserProfile} from "../../store/ducks/userProfile/actionCreators";
 import UserPageTweets from "./UserPageTweets";
@@ -86,6 +91,10 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
 
     const handleShowUserTweets = (): void => {
         dispatch(fetchUserTweets(match.params.id));
+    };
+
+    const handleShowUserRetweetsAndReplies = (): void => {
+        dispatch(fetchUserRetweetsAndReplies(match.params.id));
     };
 
     const handleShowLikedTweets = (): void => {
@@ -207,7 +216,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
                 <div className={classes.tabs}>
                     <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChange}>
                         <Tab onClick={handleShowUserTweets} label="Tweets"/>
-                        <Tab onClick={handleShowUserTweets} label="Tweets & replies"/>
+                        <Tab onClick={handleShowUserRetweetsAndReplies} label="Tweets & replies"/>
                         <Tab onClick={handleShowMediaTweets} label="Media"/>
                         <Tab onClick={handleShowLikedTweets} label="Likes"/>
                     </Tabs>

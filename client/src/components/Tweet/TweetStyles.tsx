@@ -56,8 +56,12 @@ export const useTweetStyles = makeStyles((theme: Theme) => ({
         color: "rgb(27, 149, 224)",
     },
     text: {
-        color: 'inherit',
-        textDecoration: 'none',
+        "& a": {
+            display: "block",
+            width: 490,
+            color: 'inherit',
+            textDecoration: 'none',
+        },
         '& #hashtag': {
             color: "rgb(27, 149, 224)",
         },
@@ -112,7 +116,8 @@ export const useTweetStyles = makeStyles((theme: Theme) => ({
         marginTop: 5,
         color: "#5b7083",
         "& svg": {
-            fontSize: 16
+            verticalAlign: "bottom",
+            height: "1.20em",
         },
         "& p": {
             marginLeft: 15,

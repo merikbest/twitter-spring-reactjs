@@ -2,7 +2,6 @@ import React, {FC, ReactElement, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory, useLocation} from 'react-router-dom';
 import {Avatar, IconButton, Paper, Typography} from '@material-ui/core';
-import RepostIcon from "@material-ui/icons/RepeatOutlined";
 
 import {
     EditIcon,
@@ -10,7 +9,7 @@ import {
     LikeOutlinedIcon,
     ReplyIcon,
     RetweetIcon,
-    RetweetOutlinedIcon,
+    RetweetOutlinedIcon, RetweetOutlinedIconSm,
     ShareIcon
 } from "../../icons";
 import {useTweetStyles} from "./TweetStyles";
@@ -89,7 +88,7 @@ const Tweet: FC<TweetProps> = ({
         <>
             {isTweetRetweetedByUser &&
                 <div className={classes.retweetWrapper}>
-                    <RepostIcon/>
+                    <span>{RetweetOutlinedIconSm}</span>
                     <Typography>
                         {(myProfile?.id === userProfile?.id) ? ("You") : (userProfile?.fullName)} Retweeted
                     </Typography>
@@ -132,9 +131,11 @@ const Tweet: FC<TweetProps> = ({
                             </Typography>
                         </object>
                         }
-                        <a onClick={handleClickTweet} className={classes.text} href={`/home/tweet/${id}`}>
-                            {textFormatter(text)}
-                        </a>
+                        <div className={classes.text} >
+                            <a onClick={handleClickTweet} href={`/home/tweet/${id}`}>
+                                {textFormatter(text)}
+                            </a>
+                        </div>
                         {(images?.length !== 0) &&
                         <Link to={{pathname: `/modal/${id}`, state: {background: location}}}>
                             <div className={classes.image}>

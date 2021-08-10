@@ -18,7 +18,7 @@ public class Tweet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "text")
+    @Column(name = "text", length = 1337, columnDefinition = "text")
     private String text;
 
     @Column(name = "date_time")

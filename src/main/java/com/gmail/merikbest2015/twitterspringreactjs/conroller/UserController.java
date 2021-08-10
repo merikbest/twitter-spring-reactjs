@@ -39,6 +39,11 @@ public class UserController {
         return ResponseEntity.ok(userMapper.searchUsersByUsername(username));
     }
 
+    @GetMapping("/{userId}/start")
+    public ResponseEntity<UserResponse> startUseTwitter(@PathVariable Long userId) {
+        return ResponseEntity.ok(userMapper.startUseTwitter(userId));
+    }
+
     @GetMapping("/{userId}/tweets")
     public ResponseEntity<List<TweetResponse>> getUserTweets(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.getUserTweets(userId));
@@ -52,6 +57,11 @@ public class UserController {
     @GetMapping("/{userId}/media")
     public ResponseEntity<List<TweetResponse>> getUserMediaTweets(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.getUserMediaTweets(userId));
+    }
+
+    @GetMapping("/{userId}/replies")
+    public ResponseEntity<List<TweetResponse>> getUserRetweetsAndReplies(@PathVariable Long userId) {
+        return ResponseEntity.ok(userMapper.getUserRetweetsAndReplies(userId));
     }
 
     @PutMapping

@@ -4,6 +4,7 @@ import {LoadingStatus} from "../../../types";
 import {User, UserState} from "./state";
 import {RegistrationProps} from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
 import {LoginProps} from "../../../../pages/Login/Login";
+import {TweetsActionType} from "../../tweets/contracts/actionTypes";
 
 export enum UserActionsType {
     FETCH_SIGN_IN = "user/FETCH_SIGN_IN",
@@ -17,6 +18,7 @@ export enum UserActionsType {
     UNFOLLOW_USER = 'user/UNFOLLOW_USER',
     FOLLOW  = 'user/FOLLOW',
     UNFOLLOW  = 'user/UNFOLLOW',
+    START_USE_TWITTER = 'user/START_USE_TWITTER',
 }
 
 export interface SignOutActionInterface extends Action<UserActionsType> {
@@ -70,6 +72,11 @@ export interface FollowActionInterface extends Action<UserActionsType> {
 export interface UnfollowActionInterface extends Action<UserActionsType> {
     type: UserActionsType.UNFOLLOW;
     payload: User;
+}
+
+export interface StartUseTwitterActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.START_USE_TWITTER;
+    payload: number;
 }
 
 export type UserActions =

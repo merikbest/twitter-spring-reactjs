@@ -3,6 +3,7 @@ import {LoadingStatus} from "../../types";
 import {
     FetchUserLikedTweetsActionInterface,
     FetchUserMediaTweetsActionInterface,
+    FetchUserRetweetsAndRepliesActionInterface,
     FetchUserTweetsActionInterface,
     SetAddedUserTweetActionInterface,
     SetUserLikedTweetActionInterface,
@@ -40,6 +41,11 @@ export const fetchUserLikedTweets = (payload: string): FetchUserLikedTweetsActio
 
 export const fetchUserMediaTweets = (payload: string): FetchUserMediaTweetsActionInterface => ({
     type: UserTweetsActionType.FETCH_MEDIA_TWEETS,
+    payload
+});
+
+export const fetchUserRetweetsAndReplies = (payload: string): FetchUserRetweetsAndRepliesActionInterface => ({
+    type: UserTweetsActionType.FETCH_RETWEETS_AND_REPLIES,
     payload
 });
 

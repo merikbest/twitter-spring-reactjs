@@ -57,4 +57,12 @@ export const UserApi = {
         const data = await axios.get<Response<Tweet[]>>(API_URL + `/user/${id}/media`);
         return data.data;
     },
+    async getUserRetweetsAndReplies(id: string): Promise<Response<Tweet[]>> {
+        const data = await axios.get<Response<Tweet[]>>(API_URL + `/user/${id}/replies`);
+        return data.data;
+    },
+    async startUseTwitter(id: number): Promise<Response<User>> {
+        const data = await axios.get<Response<User>>(API_URL + `/user/${id}/start`);
+        return data.data;
+    },
 };
