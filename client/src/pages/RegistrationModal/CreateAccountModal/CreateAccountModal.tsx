@@ -1,5 +1,5 @@
-import React, {FC, ReactElement} from 'react';
-import {Button, Dialog, DialogContent} from "@material-ui/core";
+import React, {FC, ReactElement, useState} from 'react';
+import {Button, CircularProgress, Dialog, DialogContent} from "@material-ui/core";
 
 import {useCreateAccountModalStyles} from "./CreateAccountModalStyles";
 import {RegistrationInputField} from "../RegistrationInput/RegistrationInputField";
@@ -20,11 +20,20 @@ const CreateAccountModal: FC<CustomizeModalProps> = ({
                                                          onOpenEmailVerification
                                                      }): ReactElement => {
     const classes = useCreateAccountModalStyles();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const onSubmit = (): void => {
+        setIsLoading(true);
+
         AuthApi.sendRegistrationCode(registrationInfo)
-            .then((response) => onOpenEmailVerification(true))
-            .catch((error) => console.log(error.reponse));
+            .then((response) => {
+                setIsLoading(false);
+                onOpenEmailVerification(true);
+            })
+            .catch((error) => {
+                console.log(error.reponse);
+                setIsLoading(false);
+            });
     };
 
     return (
@@ -40,46 +49,54 @@ const CreateAccountModal: FC<CustomizeModalProps> = ({
                 <div className={classes.title}>
                     Step 3 of 5
                 </div>
-                <div className={classes.subtitle}>
-                    Create your account
-                </div>
-                <div className={classes.form}>
-                    <RegistrationInputField
-                        disabled={true}
-                        label="Name"
-                        variant="filled"
-                        value={registrationInfo.username}
-                        fullWidth
-                    />
-                    <RegistrationInputField
-                        disabled={true}
-                        label="Email"
-                        variant="filled"
-                        value={registrationInfo.email}
-                        fullWidth
-                    />
-                    <RegistrationInputField
-                        disabled={true}
-                        label="Birth date"
-                        variant="filled"
-                        value={registrationInfo.birthday}
-                        fullWidth
-                    />
-                </div>
-                <div className={classes.text}>
-                    By signing up, you agree to the <span>Terms of Service</span> and <span>Privacy Policy</span>,
-                    including <span>Cookie Use</span>. Others will be able to find you by email or phone number when
-                    provided · <span>Privacy Options</span>
-                </div>
-                <Button
-                    className={classes.button}
-                    onClick={onSubmit}
-                    variant="contained"
-                    color="primary"
-                    fullWidth
-                >
-                    Sign up
-                </Button>
+                {isLoading ? (
+                    <div className={classes.spinner}>
+                        <CircularProgress/>
+                    </div>
+                ) : (
+                    <>
+                        <div className={classes.subtitle}>
+                            Create your account
+                        </div>
+                        <div className={classes.form}>
+                            <RegistrationInputField
+                                disabled={true}
+                                label="Name"
+                                variant="filled"
+                                value={registrationInfo.username}
+                                fullWidth
+                            />
+                            <RegistrationInputField
+                                disabled={true}
+                                label="Email"
+                                variant="filled"
+                                value={registrationInfo.email}
+                                fullWidth
+                            />
+                            <RegistrationInputField
+                                disabled={true}
+                                label="Birth date"
+                                variant="filled"
+                                value={registrationInfo.birthday}
+                                fullWidth
+                            />
+                        </div>
+                        <div className={classes.text}>
+                            By signing up, you agree to the <span>Terms of Service</span> and <span>Privacy Policy</span>,
+                            including <span>Cookie Use</span>. Others will be able to find you by email or phone number when
+                            provided · <span>Privacy Options</span>
+                        </div>
+                        <Button
+                            className={classes.button}
+                            onClick={onSubmit}
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                        >
+                            Sign up
+                        </Button>
+                    </>
+                )}
             </DialogContent>
         </Dialog>
     );

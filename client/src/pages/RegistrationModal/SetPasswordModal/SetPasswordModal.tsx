@@ -36,7 +36,6 @@ const SetPasswordModal: FC<SetPasswordProps> = ({email, open, onClose}): ReactEl
     const classes = useSetPasswordModalStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const [password, setPassword] = useState<string>("");
     const {control, register, handleSubmit, watch, formState: {errors}} = useForm<PasswordFormProps>({
         resolver: yupResolver(SetPasswordFormSchema),
         mode: "onChange",

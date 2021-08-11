@@ -32,7 +32,7 @@ export function* fetchSignUpRequest({payload}: FetchSignUpActionInterface) {
         const data: AuthUser = yield call(AuthApi.endRegistration, payload);
         localStorage.setItem("token", data.token);
         yield put(setUserData(data.user));
-        payload.history.push("/home");
+        payload.history.push({pathname: `/user/${data.user.id}`, state: {isRegistered: true}});
     } catch (error) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }

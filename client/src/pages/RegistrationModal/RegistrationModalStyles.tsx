@@ -3,6 +3,7 @@ import {makeStyles, Theme} from "@material-ui/core";
 export const useRegistrationModalStyles = makeStyles((theme: Theme) => ({
     container: {
         width: 550,
+        height: 600,
         marginTop: 5,
         padding: "0 30px",
     },

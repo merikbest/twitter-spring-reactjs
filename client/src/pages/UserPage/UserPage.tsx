@@ -1,5 +1,5 @@
 import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
-import {RouteComponentProps, Link} from 'react-router-dom';
+import {RouteComponentProps, Link, useLocation} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import Paper from '@material-ui/core/Paper';
 import {Avatar, Button, CircularProgress, Typography} from '@material-ui/core';
@@ -36,6 +36,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
     const myProfile = useSelector(selectUserData);
     const userProfile = useSelector(selectUserProfile);
     const isTweetsLoading = useSelector(selectIsUserTweetsLoading);
+    const location = useLocation<{ isRegistered: boolean; }>();
     const [btnText, setBtnText] = useState<string>("Following");
     const [activeTab, setActiveTab] = useState<number>(0);
     const [visibleEditProfile, setVisibleEditProfile] = useState<boolean>(false);
@@ -56,6 +57,10 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
     useEffect(() => {
         if (userProfile) {
             dispatch(fetchUserTweets(match.params.id));
+        }
+
+        if (location.state?.isRegistered) {
+            setVisibleSetupProfile(true);
         }
     }, [userProfile]);
 
@@ -127,7 +132,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
                     </div>
                     {userProfile?.id === myProfile?.id ? (
                         <Button
-                            onClick={myProfile?.profileCustomized  ? onOpenEditProfile : onOpenSetupProfile}
+                            onClick={myProfile?.profileCustomized ? onOpenEditProfile : onOpenSetupProfile}
                             color="primary"
                             className={classes.editButton}
                         >

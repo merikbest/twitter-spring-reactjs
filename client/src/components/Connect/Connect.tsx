@@ -30,22 +30,24 @@ const Connect: FC = (): ReactElement => {
 
     return (
         <>
-            {isUsersLoading ? (
-                <div className={classes2.loading}>
-                    <CircularProgress/>
-                </div>
-            ) : (
-                <div style={{paddingTop: 48,}}>
-                    <Paper className={classes2.header} variant="outlined">
-                        <Typography variant="h6">Suggested for you</Typography>
-                    </Paper>
-                    <Paper className={classes2.content} variant="outlined">
-                        {users && users.map(user =>
-                            <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>)
-                        }
-                    </Paper>
-                </div>
-            )}
+            <div style={{paddingTop: 48,}}>
+                {isUsersLoading ? (
+                    <div className={classes2.loading}>
+                        <CircularProgress/>
+                    </div>
+                ) : (
+                    <>
+                        <Paper className={classes2.header} variant="outlined">
+                            <Typography variant="h6">Suggested for you</Typography>
+                        </Paper>
+                        <Paper className={classes2.content} variant="outlined">
+                            {users && users.map(user =>
+                                <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>)
+                            }
+                        </Paper>
+                    </>
+                )}
+            </div>
         </>
     );
 };
