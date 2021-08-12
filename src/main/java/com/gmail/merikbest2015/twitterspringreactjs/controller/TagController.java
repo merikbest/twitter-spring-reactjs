@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.twitterspringreactjs.conroller;
+package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TagResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;

@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.twitterspringreactjs.conroller;
+package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
 import org.springframework.util.StringUtils;
 

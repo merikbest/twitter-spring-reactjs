@@ -14,6 +14,6 @@ public class TweetReplyResponse {
     private LocalDateTime dateTime;
     private List<ImageResponse> images;
     private List<UserResponse> retweets;
-    private List<UserResponse> likes;
+    private List<UserResponse> likedTweets;
     private UserResponse user;
 }
