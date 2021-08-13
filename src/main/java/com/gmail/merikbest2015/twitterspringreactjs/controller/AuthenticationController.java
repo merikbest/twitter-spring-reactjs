@@ -40,7 +40,7 @@ public class AuthenticationController {
         if (!isRegistered) {
             throw new ApiRequestException("Email has already been taken.", HttpStatus.FORBIDDEN);
         } else {
-            return ResponseEntity.ok("User successfully registered.");
+            return ResponseEntity.ok("User data checked.");
         }
     }
 
@@ -86,11 +86,7 @@ public class AuthenticationController {
 
     @GetMapping("/reset/{code}")
     public ResponseEntity<UserResponse> getUserByResetCode(@PathVariable String code) {
-        UserResponse user = authenticationMapper.findByPasswordResetCode(code);
-        if (user == null) {
-            throw new ApiRequestException("Password reset code is invalid!", HttpStatus.BAD_REQUEST);
-        }
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(authenticationMapper.findByPasswordResetCode(code));
     }
 
     @PostMapping("/reset")

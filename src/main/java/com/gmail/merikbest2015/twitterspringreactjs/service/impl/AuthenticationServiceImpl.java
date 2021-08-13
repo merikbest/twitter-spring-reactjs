@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 
+import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.security.JwtProvider;
@@ -7,6 +8,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationServic
 import com.gmail.merikbest2015.twitterspringreactjs.service.email.MailSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -137,7 +139,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public User findByPasswordResetCode(String code) {
-        return userRepository.findByPasswordResetCode(code);
+        User user = userRepository.findByPasswordResetCode(code);
+
+        if (user == null) {
+            throw new ApiRequestException("Password reset code is invalid!", HttpStatus.BAD_REQUEST);
+        }
+        return user;
     }
 
     @Override

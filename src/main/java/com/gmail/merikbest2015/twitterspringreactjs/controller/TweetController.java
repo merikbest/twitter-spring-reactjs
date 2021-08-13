@@ -1,7 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.TweetMapper;
 import lombok.RequiredArgsConstructor;
@@ -27,11 +26,6 @@ public class TweetController {
         return ResponseEntity.ok(tweetMapper.getTweetById(tweetId));
     }
 
-    @PostMapping("/user")
-    public ResponseEntity<List<TweetResponse>> getTweetsByUser(@RequestBody UserRequest userRequest) {
-        return ResponseEntity.ok(tweetMapper.getTweetsByUser(userRequest));
-    }
-
     @GetMapping("/media")
     public ResponseEntity<List<TweetResponse>> getMediaTweets() {
         return ResponseEntity.ok(tweetMapper.getMediaTweets());
@@ -40,11 +34,6 @@ public class TweetController {
     @PostMapping
     public ResponseEntity<TweetResponse> createTweet(@RequestBody TweetRequest tweetRequest) {
         return ResponseEntity.ok(tweetMapper.createTweet(tweetRequest));
-    }
-
-    @DeleteMapping("/{tweetId}")
-    public ResponseEntity<List<TweetResponse>> deleteTweet(@PathVariable Long tweetId) {
-        return ResponseEntity.ok(tweetMapper.deleteTweet(tweetId));
     }
 
     @GetMapping("/search/{text}")

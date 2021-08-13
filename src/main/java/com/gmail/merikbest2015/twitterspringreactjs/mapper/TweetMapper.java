@@ -51,16 +51,8 @@ public class TweetMapper {
         return convertToTweetResponse(tweetService.createTweet(convertToTweetEntity(tweetRequest)));
     }
 
-    public List<TweetResponse> deleteTweet(Long tweetId) {
-        return convertListToResponseDto(tweetService.deleteTweet(tweetId));
-    }
-
     public TweetResponse likeTweet(Long tweetId) {
         return convertToTweetResponse(tweetService.likeTweet(tweetId));
-    }
-
-    public List<TweetResponse> getTweetsByUser(UserRequest userRequest) {
-        return convertListToResponseDto(tweetService.getTweetsByUser(userMapper.convertToEntity(userRequest)));
     }
 
     public TweetResponse retweet(Long tweetId) {

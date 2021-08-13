@@ -61,7 +61,7 @@ public class UserControllerTest {
     public void getUsers() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/all"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(5)))
+                .andExpect(jsonPath("$[*]", hasSize(6)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
                 .andExpect(jsonPath("$[*].email").isNotEmpty())
                 .andExpect(jsonPath("$[*].fullName").isNotEmpty())
@@ -124,7 +124,7 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    public void searchUsersByUsernameNotFound() throws Exception {
+    public void searchUsersByUsername_NotFound() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/search/test"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(0)));
@@ -248,7 +248,7 @@ public class UserControllerTest {
         mockMvc.perform(get(URL_USER_BASIC + "/follow/50"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(50))
-                .andExpect(jsonPath("$.email").value("merikbest2019@gmail.com"))
+                .andExpect(jsonPath("$.email").value("test2019@test.test"))
                 .andExpect(jsonPath("$.fullName").value("Vbhjckfd5"))
                 .andExpect(jsonPath("$.username").value("Vbhjckfd5"))
                 .andExpect(jsonPath("$.location").value(LOCATION))
@@ -269,7 +269,7 @@ public class UserControllerTest {
         mockMvc.perform(get(URL_USER_BASIC + "/unfollow/50"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(50))
-                .andExpect(jsonPath("$.email").value("merikbest2019@gmail.com"))
+                .andExpect(jsonPath("$.email").value("test2019@test.test"))
                 .andExpect(jsonPath("$.fullName").value("Vbhjckfd5"))
                 .andExpect(jsonPath("$.username").value("Vbhjckfd5"))
                 .andExpect(jsonPath("$.location").value(LOCATION))

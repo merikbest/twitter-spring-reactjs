@@ -13,7 +13,8 @@ public class TestConstants {
     public static final String ABOUT = "Hello twitter!";
     public static final String ACTIVATION_CODE = "1234567890";
     public static final String BIRTHDAY = "Mar 10, 1991";
-    public static final String USER_EMAIL = "merikbest2015@gmail.com";
+    public static final String USER_EMAIL = "test2015@test.test";
+    public static final String PASSWORD = "qwerty";
     public static final String FULL_NAME = "Vbhjckfd1";
     public static final String LOCATION = "Kyiv";
     public static final String PASSWORD_RESET_CODE = "1234567890";

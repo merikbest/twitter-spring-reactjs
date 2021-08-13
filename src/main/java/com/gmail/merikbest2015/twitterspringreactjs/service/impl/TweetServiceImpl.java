@@ -34,11 +34,6 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
-    public List<Tweet> getTweetsByUser(User user) {
-        return tweetRepository.findByAddressedUsernameIsNullAndUserOrderByDateTimeDesc(user);
-    }
-
-    @Override
     public List<Tweet> getMediaTweets() {
         return tweetRepository.findByImagesIsNotNullOrderByDateTimeDesc();
     }
@@ -83,17 +78,6 @@ public class TweetServiceImpl implements TweetService {
             }
         }
         return createdTweet;
-    }
-
-    @Override
-    @Transactional
-    public List<Tweet> deleteTweet(Long tweetId) {
-        Tweet tweet = tweetRepository.getOne(tweetId);
-        tweetRepository.delete(tweet);
-        Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByEmail(principal.getName());
-        user.getTweets().remove(tweet);
-        return tweetRepository.findByAddressedUsernameIsNullOrderByDateTimeDesc();
     }
 
     @Override
