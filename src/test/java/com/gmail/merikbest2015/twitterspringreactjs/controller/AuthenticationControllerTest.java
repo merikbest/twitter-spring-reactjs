@@ -4,9 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.AuthenticationRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.PasswordResetRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.RegistrationRequest;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.gmail.merikbest2015.twitterspringreactjs.security.JwtAuthenticationException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.gmail.merikbest2015.twitterspringreactjs.util.TestConstants.*;
@@ -25,7 +25,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
 @Sql(value = {"/sql/populate-table-before.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
@@ -41,7 +40,7 @@ public class AuthenticationControllerTest {
     private AuthenticationRequest authenticationRequest;
     private RegistrationRequest registrationRequest;
 
-    @Before
+    @BeforeEach
     public void init() {
         authenticationRequest = new AuthenticationRequest();
         authenticationRequest.setEmail(USER_EMAIL);
@@ -161,6 +160,15 @@ public class AuthenticationControllerTest {
                 .andExpect(jsonPath("$.user.wallpaper.id").value(WALLPAPER_ID))
                 .andExpect(jsonPath("$.user.profileCustomized").value(true))
                 .andExpect(jsonPath("$.user.profileStarted").value(true));
+    }
+
+    @Test
+    public void getUserByToken_JwtExpired() throws Exception {
+        Assertions.assertThrows(JwtAuthenticationException.class, () -> {
+            mockMvc.perform(get(URL_AUTH_FORGOT + "/user")
+                    .header("Authorization", "jwt"))
+                    .andExpect(status().isUnauthorized());
+        });
     }
 
     @Test

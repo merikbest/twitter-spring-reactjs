@@ -2,8 +2,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetRequest;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,10 +10,10 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.gmail.merikbest2015.twitterspringreactjs.util.TestConstants.*;
+import static com.gmail.merikbest2015.twitterspringreactjs.util.TestConstants.URL_TWEETS_BASIC;
+import static com.gmail.merikbest2015.twitterspringreactjs.util.TestConstants.USER_EMAIL;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -22,7 +21,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
 @Sql(value = {"/sql/populate-table-before.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
@@ -92,14 +90,14 @@ public class TweetControllerTest {
     @WithUserDetails(USER_EMAIL)
     public void createTweet() throws Exception {
         TweetRequest tweetRequest = new TweetRequest();
-        tweetRequest.setText("test tweet");
+        tweetRequest.setText("test tweet #test");
 
         mockMvc.perform(post(URL_TWEETS_BASIC)
                 .content(mapper.writeValueAsString(tweetRequest))
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNotEmpty())
-                .andExpect(jsonPath("$.text").value("test tweet"))
+                .andExpect(jsonPath("$.text").value("test tweet #test"))
                 .andExpect(jsonPath("$.addressedUsername").isEmpty())
                 .andExpect(jsonPath("$.addressedId").isEmpty())
                 .andExpect(jsonPath("$.user").isNotEmpty())
@@ -130,6 +128,23 @@ public class TweetControllerTest {
     @Test
     @WithUserDetails(USER_EMAIL)
     public void likeTweet() throws Exception {
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/like/50"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(50))
+                .andExpect(jsonPath("$.text").value("my tweet"))
+                .andExpect(jsonPath("$.dateTime").value("2021-08-09T20:32:54"))
+                .andExpect(jsonPath("$.addressedUsername").isEmpty())
+                .andExpect(jsonPath("$.addressedId").isEmpty())
+                .andExpect(jsonPath("$.user").isNotEmpty())
+                .andExpect(jsonPath("$.images").isEmpty())
+                .andExpect(jsonPath("$.likedTweets").isNotEmpty())
+                .andExpect(jsonPath("$.retweets").isEmpty())
+                .andExpect(jsonPath("$.replies").isEmpty());
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    public void unlikeTweet() throws Exception {
         mockMvc.perform(get(URL_TWEETS_BASIC + "/like/10"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(10))
@@ -158,6 +173,23 @@ public class TweetControllerTest {
                 .andExpect(jsonPath("$.images").isEmpty())
                 .andExpect(jsonPath("$.likedTweets").isNotEmpty())
                 .andExpect(jsonPath("$.retweets").isNotEmpty())
+                .andExpect(jsonPath("$.replies").isEmpty());
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    public void unretweet() throws Exception {
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/retweet/20"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(20))
+                .andExpect(jsonPath("$.text").value("tweet (1)"))
+                .andExpect(jsonPath("$.dateTime").value("2021-08-09T19:36:41"))
+                .andExpect(jsonPath("$.addressedUsername").isEmpty())
+                .andExpect(jsonPath("$.addressedId").isEmpty())
+                .andExpect(jsonPath("$.user").isNotEmpty())
+                .andExpect(jsonPath("$.images").isEmpty())
+                .andExpect(jsonPath("$.likedTweets").isNotEmpty())
+                .andExpect(jsonPath("$.retweets").isEmpty())
                 .andExpect(jsonPath("$.replies").isEmpty());
     }
 
