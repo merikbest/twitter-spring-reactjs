@@ -28,8 +28,8 @@ script:
   - mvn clean install
 
 before_script:
-  - psql -c 'create database twittertest;' -U postgres
-  - psql -c 'create database twitter;' -U postgres
+  - psql -c 'create database twittertest;' -U postgres -p 5433
+  - psql -c 'create database twitter;' -U postgres -p 5433
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
@@ -37,7 +37,7 @@ after_success:
 env:
   global:
     - PGUSER=postgres
-    - PGPORT=5432
+    - PGPORT=5433
     - CODECOV_TOKEN="a57f9ff0-a15a-453a-b76c-750140eabd87"
   jobs:
-    - DB_PORT=5432 DB_USERNAME=postgres
+    - DB_PORT=5433 DB_USERNAME=postgres
