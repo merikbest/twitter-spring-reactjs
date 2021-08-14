@@ -34,6 +34,6 @@ public class MailSender {
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(htmlBody, true);
-        mailSender.send(message);
+//        mailSender.send(message);
     }
 }
