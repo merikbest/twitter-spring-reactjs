@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.AuthenticationRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.PasswordResetRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.RegistrationRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.security.JwtAuthenticationException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -161,6 +163,15 @@ public class AuthenticationControllerTest {
                 .andExpect(jsonPath("$.user.wallpaper.id").value(WALLPAPER_ID))
                 .andExpect(jsonPath("$.user.profileCustomized").value(true))
                 .andExpect(jsonPath("$.user.profileStarted").value(true));
+    }
+
+    @Test
+    public void getUserByToken_JwtExpired() throws Exception {
+        Assertions.assertThrows(JwtAuthenticationException.class, () -> {
+            mockMvc.perform(get(URL_AUTH_FORGOT + "/user")
+                    .header("Authorization", "jwt"))
+                    .andExpect(status().isUnauthorized());
+        });
     }
 
     @Test
