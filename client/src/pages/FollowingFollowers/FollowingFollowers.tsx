@@ -14,7 +14,7 @@ import {fetchUserData} from "../../store/ducks/user/actionCreators";
 import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
 import {fetchUserProfile} from "../../store/ducks/userProfile/actionCreators";
 import {useFollowingFollowersStyles} from "./FollowingFollowersStyles";
-import Follower from "../Follower/Follower";
+import Follower from "../../components/Follower/Follower";
 import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 
 const FollowingFollowers: FC = (): ReactElement => {

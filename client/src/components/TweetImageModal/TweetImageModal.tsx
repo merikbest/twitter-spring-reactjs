@@ -36,8 +36,8 @@ const TweetImageModal: FC = (): ReactElement | null => {
     const myProfile = useSelector(selectUserData);
     const params: { id: string } = useParams();
     const history = useHistory();
-    const isTweetLiked = tweetData?.likedTweets.find((user) => user.id === myProfile?.id);
-    const isTweetRetweeted = tweetData?.retweets.find((user) => user.id === myProfile?.id);
+    const isTweetLiked = tweetData?.likedTweets.find((like) => like.user.id === myProfile?.id);
+    const isTweetRetweeted = tweetData?.retweets.find((retweet) => retweet.user.id === myProfile?.id);
     const [visibleTweetImageModalWindow, setVisibleTweetImageModalWindow] = useState<boolean>(false);
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
     const [modalWindowTitle, setModalWindowTitle] = useState<string>("");

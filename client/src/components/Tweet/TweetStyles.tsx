@@ -72,13 +72,11 @@ export const useTweetStyles = makeStyles((theme: Theme) => ({
             objectFit: "cover",
             marginTop: 10,
             width: 504,
-            height: 280,
             borderRadius: 20,
             borderColor: "#5b7083",
         },
         "& .small": {
             width: 260,
-            height: 152,
         },
     },
     footer: {

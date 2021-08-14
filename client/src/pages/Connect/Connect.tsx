@@ -6,7 +6,7 @@ import {CircularProgress, Typography} from "@material-ui/core";
 import {fetchUsers} from "../../store/ducks/users/actionCreators";
 import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 import {selectUsersIsLoading, selectUsers} from "../../store/ducks/users/selectors";
-import Follower from "../Follower/Follower";
+import Follower from "../../components/Follower/Follower";
 import {User} from "../../store/ducks/user/contracts/state";
 import {useConnectStyles} from "./ConnetsStyles";
 

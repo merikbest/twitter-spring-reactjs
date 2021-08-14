@@ -7,18 +7,18 @@ import {InputAdornment, IconButton} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
 import {CircularProgress, Paper} from "@material-ui/core";
 
-import {MainSearchTextField} from "../SearchTextField/MainSearchTextField";
+import {MainSearchTextField} from "../../components/SearchTextField/MainSearchTextField";
 import {
     fetchMediaTweets,
     fetchTweets,
     fetchTweetsByTag,
     fetchTweetsByText
 } from "../../store/ducks/tweets/actionCreators";
-import {BackButton} from "../BackButton/BackButton";
-import Tweet from "../Tweet/Tweet";
+import {BackButton} from "../../components/BackButton/BackButton";
+import Tweet from "../../components/Tweet/Tweet";
 import {selectIsTweetsLoading, selectTweetsItems} from "../../store/ducks/tweets/selectors";
 import {User} from "../../store/ducks/user/contracts/state";
-import Follower from "../Follower/Follower";
+import Follower from "../../components/Follower/Follower";
 import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 import {useSearchStyles} from "./SearchStyles";
 import {EditIcon} from "../../icons";
