@@ -8,16 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+
+import java.io.FileInputStream;
 
 import static com.gmail.merikbest2015.twitterspringreactjs.util.TestConstants.*;
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -34,6 +38,9 @@ public class UserControllerTest {
 
     @Autowired
     private ObjectMapper mapper;
+
+    @Autowired
+    private WebApplicationContext webApplicationContext;
 
     @Test
     @WithUserDetails(USER_EMAIL)
@@ -240,6 +247,18 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.wallpaper.id").value(WALLPAPER_ID))
                 .andExpect(jsonPath("$.profileCustomized").value(true))
                 .andExpect(jsonPath("$.profileStarted").value(true));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    public void uploadImage() throws Exception {
+        FileInputStream inputFile = new FileInputStream( "src/test/resources/test.png");
+        MockMultipartFile file = new MockMultipartFile("file", "test.png", MediaType.MULTIPART_FORM_DATA_VALUE, inputFile);
+        MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+
+        mockMvc.perform(multipart(URL_USER_BASIC + "/upload")
+                .file(file))
+                .andExpect(status().isOk());
     }
 
     @Test

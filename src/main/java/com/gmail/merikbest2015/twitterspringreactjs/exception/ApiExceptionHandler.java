@@ -13,10 +13,4 @@ public class ApiExceptionHandler {
     public ResponseEntity<String> handleApiRequestException(ApiRequestException exception) {
         return ResponseEntity.status(exception.getStatus()).body(exception.getMessage());
     }
-
-    @ExceptionHandler(InputFieldException.class)
-    public ResponseEntity<Map<String, String>> handleInputFieldException(InputFieldException exception) {
-        InputFieldException inputFieldException = new InputFieldException(exception.getBindingResult());
-        return ResponseEntity.badRequest().body(inputFieldException.getErrorsMap());
-    }
 }
