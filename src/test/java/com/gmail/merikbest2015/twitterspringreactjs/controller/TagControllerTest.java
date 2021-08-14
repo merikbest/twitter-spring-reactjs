@@ -1,7 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -28,9 +27,6 @@ public class TagControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper mapper;
 
     @Test
     @WithUserDetails(USER_EMAIL)

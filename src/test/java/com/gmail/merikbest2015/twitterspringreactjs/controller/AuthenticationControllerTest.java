@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.AuthenticationRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.PasswordResetRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.RegistrationRequest;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -41,7 +41,7 @@ public class AuthenticationControllerTest {
     private AuthenticationRequest authenticationRequest;
     private RegistrationRequest registrationRequest;
 
-    @Before
+    @BeforeEach
     public void init() {
         authenticationRequest = new AuthenticationRequest();
         authenticationRequest.setEmail(USER_EMAIL);
