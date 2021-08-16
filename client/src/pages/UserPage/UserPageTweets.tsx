@@ -1,7 +1,7 @@
 import React, {FC, ReactElement, useState} from 'react';
 import {Button, Hidden, Typography} from "@material-ui/core";
 
-import Tweet from '../../components/Tweet/Tweet';
+import TweetComponent from '../../components/TweetComponent/TweetComponent';
 import {useUserPageStyles} from "./UserPageStyles";
 import AddTweetModal from "../../components/AddTweetModal/AddTweetModal";
 
@@ -124,7 +124,7 @@ const UserPageTweets: FC<UserPageTweetsProps> = ({
             )
         } else {
             return tweets?.map((tweet: any) => (
-                <Tweet
+                <TweetComponent
                     {...tweet}
                     key={tweet.id}
                     images={tweet.images}

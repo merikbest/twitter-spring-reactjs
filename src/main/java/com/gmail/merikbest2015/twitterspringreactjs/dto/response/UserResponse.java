@@ -17,6 +17,7 @@ public class UserResponse {
     private String birthday;
     private LocalDateTime registrationDate;
     private Long tweetCount;
+    private PinnedTweetResponse pinnedTweet;
     private ImageResponse avatar;
     private ImageResponse wallpaper;
     private boolean profileCustomized;

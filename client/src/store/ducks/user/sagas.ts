@@ -2,8 +2,10 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 import {setUserData, setUserLoadingStatus} from "./actionCreators";
 import {AuthUser, User} from "./contracts/state";
 import {
+    FetchPinTweetActionInterface,
     FetchSignInActionInterface,
     FetchSignUpActionInterface,
+    FetchUnpinTweetActionInterface,
     FollowUserActionInterface,
     StartUseTwitterActionInterface,
     UnfollowUserActionInterface,
@@ -85,6 +87,26 @@ export function* fetchStartUseTwitter({payload}: StartUseTwitterActionInterface)
     }
 }
 
+export function* fetchPinTweet({payload}: FetchPinTweetActionInterface) {
+    try {
+        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+        const item: User = yield call(UserApi.pinTweet, payload);
+        yield put(setUserData(item));
+    } catch (e) {
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
+export function* fetchUnpinTweet({payload}: FetchUnpinTweetActionInterface) {
+    try {
+        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+        const item: User = yield call(UserApi.unpinTweet, payload);
+        yield put(setUserData(item));
+    } catch (e) {
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
 export function* userSaga() {
     yield takeLatest(UserActionsType.FETCH_SIGN_IN, fetchSignInRequest);
     yield takeLatest(UserActionsType.FETCH_SIGN_UP, fetchSignUpRequest);
@@ -93,4 +115,6 @@ export function* userSaga() {
     yield takeLatest(UserActionsType.FOLLOW_USER, fetchFollowUserRequest);
     yield takeLatest(UserActionsType.UNFOLLOW_USER, fetchUnfollowUserRequest);
     yield takeLatest(UserActionsType.START_USE_TWITTER, fetchStartUseTwitter);
+    yield takeLatest(UserActionsType.FETCH_PIN_TWEET, fetchPinTweet);
+    yield takeLatest(UserActionsType.FETCH_UNPIN_TWEET, fetchUnpinTweet);
 }

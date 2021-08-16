@@ -2,7 +2,6 @@ import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Route, Switch, useHistory, useLocation} from 'react-router-dom';
 import {makeStyles, Theme} from "@material-ui/core";
-import TwitterIcon from "@material-ui/icons/Twitter";
 
 import Authentication from './pages/Authentication/Authentication';
 import Home from "./pages/Home/Home";
@@ -43,13 +42,19 @@ const App: FC = (): ReactElement => {
 
     useEffect(() => {
         dispatch(fetchUserData());
-    }, [dispatch]);
 
-    useEffect(() => {
         if (!isAuth && isReady && !location.pathname.includes("/account/login")) {
             history.push('/account/signin');
         }
-    }, [isAuth, isReady]);
+    }, []);
+
+    useEffect(() => {
+        dispatch(fetchUserData());
+
+        if (!localStorage.getItem('token')) {
+            history.push('/account/signin');
+        }
+    }, []);
 
     // if (!isReady) {
     //     return (

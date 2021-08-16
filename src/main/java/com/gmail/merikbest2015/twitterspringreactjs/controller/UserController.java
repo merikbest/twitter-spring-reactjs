@@ -83,4 +83,14 @@ public class UserController {
     public ResponseEntity<UserResponse> unfollow(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.unfollow(userId));
     }
+
+    @GetMapping("/pin/tweet/{tweetId}")
+    public ResponseEntity<UserResponse> pinTweet(@PathVariable Long tweetId) {
+        return ResponseEntity.ok(userMapper.pinTweet(tweetId));
+    }
+
+    @GetMapping("/unpin/tweet/{tweetId}")
+    public ResponseEntity<UserResponse> unpinTweet(@PathVariable Long tweetId) {
+        return ResponseEntity.ok(userMapper.unpinTweet(tweetId));
+    }
 }

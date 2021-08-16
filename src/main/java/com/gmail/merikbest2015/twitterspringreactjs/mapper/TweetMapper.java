@@ -1,7 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.service.TweetService;
@@ -10,7 +9,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -18,7 +16,6 @@ import java.util.stream.Collectors;
 public class TweetMapper {
 
     private final ModelMapper modelMapper;
-    private final UserMapper userMapper;
     private final TweetService tweetService;
 
     private Tweet convertToTweetEntity(TweetRequest tweetRequest) {

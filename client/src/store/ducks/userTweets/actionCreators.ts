@@ -1,18 +1,20 @@
-import {UserTweetsState} from "./contracts/state";
+import {PinnedTweet, UserTweetsState} from "./contracts/state";
 import {LoadingStatus} from "../../types";
 import {
     FetchUserLikedTweetsActionInterface,
     FetchUserMediaTweetsActionInterface,
     FetchUserRetweetsAndRepliesActionInterface,
     FetchUserTweetsActionInterface,
+    PinTweetActionInterface,
     SetAddedUserTweetActionInterface,
     SetUserLikedTweetActionInterface,
     SetUserRetweetActionInterface,
     SetUserTweetsActionInterface,
     SetUserTweetsLoadingStatusInterface,
+    UnpinTweetActionInterface,
     UserTweetsActionType
 } from "./contracts/actionTypes";
-import { Tweet } from "../tweets/contracts/state";
+import {Tweet} from "../tweets/contracts/state";
 
 export const setUserTweets = (payload: UserTweetsState["items"]): SetUserTweetsActionInterface => ({
     type: UserTweetsActionType.SET_TWEETS,
@@ -46,6 +48,16 @@ export const fetchUserMediaTweets = (payload: string): FetchUserMediaTweetsActio
 
 export const fetchUserRetweetsAndReplies = (payload: string): FetchUserRetweetsAndRepliesActionInterface => ({
     type: UserTweetsActionType.FETCH_RETWEETS_AND_REPLIES,
+    payload
+});
+
+export const pinTweet = (payload: PinnedTweet): PinTweetActionInterface => ({
+    type: UserTweetsActionType.PIN_TWEET,
+    payload
+});
+
+export const unpinTweet = (payload: PinnedTweet): UnpinTweetActionInterface => ({
+    type: UserTweetsActionType.UNPIN_TWEET,
     payload
 });
 

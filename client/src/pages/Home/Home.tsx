@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Route, useLocation} from "react-router-dom";
 import {CircularProgress, IconButton, Paper, Typography} from "@material-ui/core";
 
-import Tweet from "../../components/Tweet/Tweet";
+import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import {useHomeStyles} from './HomeStyles';
 import {AddTweetForm} from '../../components/AddTweetForm/AddTweetForm';
 import {fetchTweets} from "../../store/ducks/tweets/actionCreators";
@@ -92,7 +92,7 @@ const Home: FC = (): ReactElement => {
                     (!myProfile?.profileStarted) ? (
                         <Welcome/>
                     ) : (
-                        tweets.map((tweet) => <Tweet key={tweet.id} images={tweet.images} {...tweet} />)
+                        tweets.map((tweet) => <TweetComponent key={tweet.id} images={tweet.images} {...tweet} />)
                     )
                 )}
             </Route>

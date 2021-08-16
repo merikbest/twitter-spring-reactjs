@@ -2,7 +2,7 @@ import {Action} from "redux";
 
 import {LoadingStatus} from "../../../types";
 import {Tweet} from "../../tweets/contracts/state";
-import {UserTweetsState} from "./state";
+import {PinnedTweet, UserTweetsState} from "./state";
 
 export enum UserTweetsActionType {
     SET_TWEETS = "userTweets/SET_TWEETS",
@@ -12,6 +12,8 @@ export enum UserTweetsActionType {
     FETCH_LIKED_TWEETS = "userTweets/FETCH_LIKED_TWEETS",
     FETCH_MEDIA_TWEETS = "userTweets/FETCH_MEDIA_TWEETS",
     FETCH_RETWEETS_AND_REPLIES = "userTweets/FETCH_RETWEETS_AND_REPLIES",
+    PIN_TWEET = "userTweets/PIN_TWEET",
+    UNPIN_TWEET = "userTweets/UNPIN_TWEET",
     SET_RETWEET = 'userTweets/SET_RETWEET',
     SET_LOADING_STATUS = "userTweets/SET_LOADING_STATUS",
 }
@@ -51,6 +53,16 @@ export interface FetchUserRetweetsAndRepliesActionInterface extends Action<UserT
     payload: string;
 }
 
+export interface PinTweetActionInterface extends Action<UserTweetsActionType> {
+    type: UserTweetsActionType.PIN_TWEET;
+    payload: PinnedTweet;
+}
+
+export interface UnpinTweetActionInterface extends Action<UserTweetsActionType> {
+    type: UserTweetsActionType.UNPIN_TWEET;
+    payload: PinnedTweet;
+}
+
 export interface SetUserRetweetActionInterface extends Action<UserTweetsActionType> {
     type: UserTweetsActionType.SET_RETWEET;
     payload: Tweet;
@@ -66,4 +78,5 @@ export type UserTweetsActions =
     | SetAddedUserTweetActionInterface
     | SetUserLikedTweetActionInterface
     | SetUserRetweetActionInterface
-    | SetUserTweetsLoadingStatusInterface;
+    | SetUserTweetsLoadingStatusInterface
+    | PinTweetActionInterface;

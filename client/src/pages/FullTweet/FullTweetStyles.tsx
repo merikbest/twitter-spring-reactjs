@@ -13,12 +13,19 @@ export const useFullTweetStyles = makeStyles((theme: Theme) => ({
             fontSize: 14,
             fontWeight: 700
         },
+        "& svg": {
+            verticalAlign: "bottom",
+            height: "1.20em",
+        },
     },
     loading: {
         marginTop: 50,
         textAlign: 'center',
     },
     container: {
+        borderTop: '0',
+        borderLeft: '0',
+        borderRight: '0',
         padding: "10px 22px 0px 22px",
     },
     header: {

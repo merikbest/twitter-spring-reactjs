@@ -1,6 +1,6 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
-export const useTweetStyles = makeStyles((theme: Theme) => ({
+export const useTweetComponentStyles = makeStyles((theme: Theme) => ({
     container: {
         display: 'flex',
         cursor: 'pointer',

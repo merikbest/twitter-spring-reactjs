@@ -66,6 +66,10 @@ public class User {
     private boolean profileStarted;
 
     @OneToOne
+    @JoinColumn(name = "pinned_tweet_id")
+    private Tweet pinnedTweet;
+
+    @OneToOne
     @JoinColumn(name = "avatar_id")
     private Image avatar;
 

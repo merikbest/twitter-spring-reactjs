@@ -20,7 +20,7 @@ import {
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {AddTweetForm} from "../AddTweetForm/AddTweetForm";
 import UsersListModal from "../UsersListModal/UsersListModal";
-import Tweet from '../Tweet/Tweet';
+import TweetComponent from '../TweetComponent/TweetComponent';
 import {fetchLikeTweet, fetchRetweet} from "../../store/ducks/tweets/actionCreators";
 import {useTweetImageStyles} from "./TweetImageModalStyles";
 import {fetchTweetData} from "../../store/ducks/tweet/actionCreators";
@@ -197,7 +197,7 @@ const TweetImageModal: FC = (): ReactElement | null => {
                             onClose={onCloseModalWindow}/>
                     )}
                     {tweetData.replies.map((tweet: any) =>
-                        <Tweet
+                        <TweetComponent
                             key={tweet.id}
                             images={tweet.images}
                             addressedUser={tweetData.user.username}

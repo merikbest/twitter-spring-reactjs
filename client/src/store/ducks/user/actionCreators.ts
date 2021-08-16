@@ -1,7 +1,9 @@
 import {User, UserState} from "./contracts/state";
 import {
+    FetchPinTweetActionInterface,
     FetchSignInActionInterface,
     FetchSignUpActionInterface,
+    FetchUnpinTweetActionInterface,
     FetchUserDataActionInterface,
     FollowActionInterface,
     FollowUserActionInterface,
@@ -70,8 +72,17 @@ export const unfollow = (payload: User): UnfollowActionInterface => ({
     payload,
 });
 
+export const fetchPinTweet = (payload: string): FetchPinTweetActionInterface => ({
+    type: UserActionsType.FETCH_PIN_TWEET,
+    payload,
+});
+
+export const fetchUnpinTweet = (payload: string): FetchUnpinTweetActionInterface => ({
+    type: UserActionsType.FETCH_UNPIN_TWEET,
+    payload,
+});
+
 export const startUseTwitter = (payload: number): StartUseTwitterActionInterface => ({
     type: UserActionsType.START_USE_TWITTER,
     payload,
 });
-

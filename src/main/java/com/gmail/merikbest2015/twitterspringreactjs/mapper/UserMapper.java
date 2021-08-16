@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class UserMapper {
 
     private final ModelMapper modelMapper;
-    @Lazy private final TweetMapper tweetMapper;
+    private final TweetMapper tweetMapper;
     private final UserService userService;
 
     UserResponse convertToUserResponse(User user) {
@@ -92,5 +92,13 @@ public class UserMapper {
 
     public List<UserResponse> searchUsersByUsername(String username) {
         return convertListToResponseDto(userService.searchUsersByUsername(username));
+    }
+
+    public UserResponse pinTweet(Long tweetId) {
+        return convertToUserResponse(userService.pinTweet(tweetId));
+    }
+
+    public UserResponse unpinTweet(Long tweetId) {
+        return convertToUserResponse(userService.unpinTweet(tweetId));
     }
 }

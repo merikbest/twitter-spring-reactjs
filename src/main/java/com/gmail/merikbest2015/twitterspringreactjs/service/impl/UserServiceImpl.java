@@ -70,11 +70,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Tweet> getUserTweets(Long userId) {
         User user = userRepository.getOne(userId);
-        List<Tweet> tweets = user.getTweets();
+        List<Tweet> tweets = user.getTweets().stream()
+                .filter(tweet -> tweet.getAddressedUsername() == null)
+                .sorted(Comparator.comparing(Tweet::getDateTime).reversed())
+                .collect(Collectors.toList());
         List<Retweet> retweets = user.getRetweets();
-        tweets.sort(Comparator.comparing(Tweet::getDateTime).reversed());
         retweets.sort(Comparator.comparing(Retweet::getRetweetDate).reversed());
-        return combineTweetsArrays(tweets, retweets);
+        List<Tweet> userTweets = combineTweetsArrays(tweets, retweets);
+        boolean isTweetExist = userTweets.removeIf(tweet -> tweet.equals(user.getPinnedTweet()));
+        if (isTweetExist) {
+            userTweets.add(0, user.getPinnedTweet());
+        }
+        return userTweets;
     }
 
     @Override
@@ -160,6 +167,24 @@ public class UserServiceImpl implements UserService {
         user.getFollowers().remove(currentUser);
         userRepository.save(user);
         return currentUser;
+    }
+
+    @Override
+    public User pinTweet(Long tweetId) {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(principal.getName());
+        Tweet tweet = tweetRepository.getOne(tweetId);
+        user.setPinnedTweet(tweet);
+        userRepository.save(user);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User unpinTweet(Long tweetId) {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(principal.getName());
+        user.setPinnedTweet(null);
+        return userRepository.save(user);
     }
 
     private List<Tweet> combineTweetsArrays(List<Tweet> tweets, List<Retweet> retweets) {

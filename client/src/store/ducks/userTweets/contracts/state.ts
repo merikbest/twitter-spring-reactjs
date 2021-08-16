@@ -6,6 +6,11 @@ export interface Image {
     src: string;
 }
 
+export interface PinnedTweet {
+    tweet: Tweet;
+    activeTab: number | undefined;
+}
+
 export interface UserTweetsState {
     items: Tweet[];
     loadingState: LoadingStatus;

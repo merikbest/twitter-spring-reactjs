@@ -15,7 +15,7 @@ import {
     fetchTweetsByText
 } from "../../store/ducks/tweets/actionCreators";
 import {BackButton} from "../../components/BackButton/BackButton";
-import Tweet from "../../components/Tweet/Tweet";
+import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import {selectIsTweetsLoading, selectTweetsItems} from "../../store/ducks/tweets/selectors";
 import {User} from "../../store/ducks/user/contracts/state";
 import Follower from "../../components/Follower/Follower";
@@ -138,7 +138,7 @@ const Search: FC = (): ReactElement => {
                         <CircularProgress/>
                     </div>
                 ) : (activeTab !== 2 ? (
-                        tweets.map((tweet) => <Tweet key={tweet.id} images={tweet.images} {...tweet}/>)
+                        tweets.map((tweet) => <TweetComponent key={tweet.id} images={tweet.images} {...tweet}/>)
                     ) : (
                         users?.map((user) => <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>))
                 )}
