@@ -13,7 +13,6 @@ import {
     StartUseTwitterActionInterface,
     UnfollowActionInterface,
     UnfollowUserActionInterface,
-    UpdateUserDataActionInterface,
     UserActionsType
 } from "./contracts/actionTypes";
 import {RegistrationProps} from "../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
@@ -21,11 +20,6 @@ import {LoginProps} from "../../../pages/Login/Login";
 
 export const setUserData = (payload: UserState["data"]): SetUserDataActionInterface => ({
     type: UserActionsType.SET_USER_DATA,
-    payload
-});
-
-export const updatedUserData = (payload: User): UpdateUserDataActionInterface => ({
-    type: UserActionsType.UPDATE_USER_DATA,
     payload
 });
 

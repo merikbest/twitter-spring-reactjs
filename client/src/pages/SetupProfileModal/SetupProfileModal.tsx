@@ -8,8 +8,8 @@ import ProfileDescriptionModal from "./ProfileDescriptionModal/ProfileDescriptio
 import ProfileUpdatedModal from "./ProfileUpdatedModal/ProfileUpdatedModal";
 import {Image} from "../../store/ducks/tweets/contracts/state";
 import {uploadImage} from "../../util/uploadImage";
-import {updatedUserData} from "../../store/ducks/user/actionCreators";
 import {selectUserData} from "../../store/ducks/user/selectors";
+import {updatedUserData} from "../../store/ducks/userProfile/actionCreators";
 
 interface SetupProfileModalProps {
     visible: boolean;

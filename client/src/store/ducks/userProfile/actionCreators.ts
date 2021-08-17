@@ -7,12 +7,18 @@ import {
     SetUserProfileLoadingStatusActionInterface,
     UnfollowProfileActionInterface,
     UnfollowUserProfileActionInterface,
+    UpdateUserDataActionInterface,
     UserProfileActionsType,
 } from './contracts/actionTypes';
 import {UserProfileState} from "./contracts/state";
 
 export const setUserProfile = (payload: User): SetUserProfileActionInterface => ({
     type: UserProfileActionsType.SET_USER,
+    payload
+});
+
+export const updatedUserData = (payload: User): UpdateUserDataActionInterface => ({
+    type: UserProfileActionsType.UPDATE_USER_DATA,
     payload
 });
 

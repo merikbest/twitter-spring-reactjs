@@ -6,6 +6,7 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         minHeight: '100vh',
         borderTop: '0',
         borderBottom: '0',
+        marginBottom: 500,
     },
     header: {
         position: "fixed",

@@ -139,11 +139,13 @@ const TweetComponent: FC<TweetComponentProps> = ({
                         </a>
                         <TweetComponentActions
                             tweet={tweetData}
-                            userId={user.id!}
-                            username={user.username}
+                            user={user}
                             activeTab={activeTab}/>
                     </div>
-                    <Typography style={{width: 500,}} variant="body1" gutterBottom>
+                    <Typography
+                        style={addressedUsername ? {width: 250, marginBottom: 0} : {width: 500, marginBottom: 0}}
+                        variant="body1" gutterBottom
+                    >
                         {addressedUsername &&
                         <object>
                             <Typography className={classes.replyWrapper}>

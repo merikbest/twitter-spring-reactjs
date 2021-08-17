@@ -1,9 +1,11 @@
 import {Action} from "redux";
 import {User} from "../../user/contracts/state";
 import {LoadingStatus} from "../../../types";
+import {UserActionsType} from "../../user/contracts/actionTypes";
 
 export enum UserProfileActionsType {
     SET_USER = 'userProfile/SET_USER',
+    UPDATE_USER_DATA = "userProfile/UPDATE_USER_DATA",
     FETCH_USER  = 'userProfile/FETCH_USER',
     FOLLOW  = 'userProfile/FOLLOW',
     UNFOLLOW  = 'userProfile/UNFOLLOW',
@@ -14,6 +16,11 @@ export enum UserProfileActionsType {
 
 export interface SetUserProfileActionInterface extends Action<UserProfileActionsType> {
     type: UserProfileActionsType.SET_USER;
+    payload: User;
+}
+
+export interface UpdateUserDataActionInterface extends Action<UserProfileActionsType> {
+    type: UserProfileActionsType.UPDATE_USER_DATA;
     payload: User;
 }
 

@@ -33,6 +33,7 @@ export const useTweetComponentStyles = makeStyles((theme: Theme) => ({
     },
     header: {
         display: 'flex',
+        height: 20,
         justifyContent: 'space-between',
     },
     headerText: {
@@ -82,7 +83,7 @@ export const useTweetComponentStyles = makeStyles((theme: Theme) => ({
     footer: {
         display: 'flex',
         position: 'relative',
-        paddingTop: 5,
+        paddingTop: 0,
         paddingBottom: 5,
         left: -13,
         justifyContent: 'space-between',
