@@ -97,6 +97,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<Tweet> getUserBookmarks() {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(principal.getName());
+        return user.getBookmarks();
+    }
+
+    @Override
+    public User addTweetToBookmarks(Long tweetId) {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(principal.getName());
+        Tweet tweet = tweetRepository.getOne(tweetId);
+        List<Tweet> bookmarks = user.getBookmarks();
+        bookmarks.add(tweet);
+        return userRepository.save(user);
+    }
+
+    @Override
     public List<Tweet> getUserLikedTweets(Long userId) {
         User user = userRepository.getOne(userId);
         List<LikeTweet> likedTweets = user.getLikedTweets();

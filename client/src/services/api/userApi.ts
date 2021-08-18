@@ -61,6 +61,14 @@ export const UserApi = {
         const data = await axios.get<Response<Tweet[]>>(API_URL + `/user/${id}/replies`);
         return data.data;
     },
+    async getUserBookmarks(): Promise<Response<Tweet[]>> {
+        const data = await axios.get<Response<Tweet[]>>(API_URL + "/user/bookmarks");
+        return data.data;
+    },
+    async addTweetToBookmarks(tweetId: string): Promise<Response<User>> {
+        const data = await axios.get<Response<User>>(API_URL + '/user/bookmarks/' + tweetId);
+        return data.data;
+    },
     async startUseTwitter(id: number): Promise<Response<User>> {
         const data = await axios.get<Response<User>>(API_URL + `/user/${id}/start`);
         return data.data;

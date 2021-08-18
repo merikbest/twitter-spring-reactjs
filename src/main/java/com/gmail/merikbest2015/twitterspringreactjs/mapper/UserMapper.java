@@ -9,7 +9,6 @@ import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -76,6 +75,14 @@ public class UserMapper {
 
     public List<TweetResponse> getUserRetweetsAndReplies(Long userId) {
         return tweetMapper.convertListToResponseDto(userService.getUserRetweetsAndReplies(userId));
+    }
+
+    public List<TweetResponse> getUserBookmarks() {
+        return tweetMapper.convertListToResponseDto(userService.getUserBookmarks());
+    }
+
+    public UserResponse addTweetToBookmarks(Long tweetId) {
+        return convertToUserResponse(userService.addTweetToBookmarks(tweetId));
     }
 
     public UserResponse follow(Long userId) {

@@ -19,6 +19,7 @@ export interface User {
     tweets?: Tweet[];
     tweetCount?: number;
     pinnedTweet?: Tweet;
+    bookmarks?: Tweet[];
     followers?: User[];
     following?: User[];
 }

@@ -1,6 +1,12 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 
-import {likeTweet, retweet, setTweet, setTweets, setTweetsLoadingState} from "./actionCreators";
+import {
+    likeTweet,
+    retweet,
+    setTweet,
+    setTweets,
+    setTweetsLoadingState
+} from "./actionCreators";
 import {TweetApi} from "../../../services/api/tweetApi";
 import {Tweet} from "./contracts/state";
 import {
@@ -96,6 +102,16 @@ export function* fetchRetweetRequest({payload}: FetchRetweetActionInterface) {
     yield put(setUserRetweet(item));
 }
 
+export function* fetchUserBookmarksRequest() {
+    try {
+        yield put(setTweetsLoadingState(LoadingStatus.LOADING));
+        const item: Tweet[] = yield call(UserApi.getUserBookmarks);
+        yield put(setTweets(item));
+    } catch (e) {
+        yield put(setTweetsLoadingState(LoadingStatus.ERROR));
+    }
+}
+
 export function* tweetsSaga() {
     yield takeLatest(TweetsActionType.FETCH_TWEETS, fetchTweetsRequest);
     yield takeLatest(TweetsActionType.FETCH_MEDIA_TWEETS, fetchMediaTweetsRequest);
@@ -105,4 +121,5 @@ export function* tweetsSaga() {
     yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_TAG, fetchTweetsByTagRequest);
     yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_TEXT, fetchTweetsByTextRequest);
     yield takeLatest(TweetsActionType.FETCH_LIKED_TWEETS, fetchLikedTweetsRequest);
+    yield takeLatest(TweetsActionType.FETCH_BOOKMARKS, fetchUserBookmarksRequest);
 }

@@ -27,6 +27,10 @@ public interface UserService {
 
     List<Tweet> getUserRetweetsAndReplies(Long userId);
 
+    List<Tweet> getUserBookmarks();
+
+    User addTweetToBookmarks(Long tweetId);
+
     Image uploadImage(MultipartFile multipartFile);
 
     User updateUserProfile(User userInfo);

@@ -64,6 +64,16 @@ public class UserController {
         return ResponseEntity.ok(userMapper.getUserRetweetsAndReplies(userId));
     }
 
+    @GetMapping("/bookmarks")
+    public ResponseEntity<List<TweetResponse>> getUserBookmarks() {
+        return ResponseEntity.ok(userMapper.getUserBookmarks());
+    }
+
+    @GetMapping("/bookmarks/{tweetId}")
+    public ResponseEntity<UserResponse> addTweetToBookmarks(@PathVariable Long tweetId) {
+        return ResponseEntity.ok(userMapper.addTweetToBookmarks(tweetId));
+    }
+
     @PutMapping
     public ResponseEntity<UserResponse> updateUserProfile(@RequestBody UserRequest userRequest) {
         return ResponseEntity.ok(userMapper.updateUserProfile(userRequest));

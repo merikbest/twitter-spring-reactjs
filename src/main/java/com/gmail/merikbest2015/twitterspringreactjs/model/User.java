@@ -86,6 +86,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Retweet> retweets;
 
+    @OneToMany
+    private List<Tweet> bookmarks;
+
     @ManyToMany
     @JoinTable(name = "user_subscriptions",
             joinColumns = @JoinColumn(name = "user_id"),

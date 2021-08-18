@@ -5,10 +5,12 @@ import {Avatar, IconButton, Paper, Typography} from '@material-ui/core';
 
 import {
     LikeIcon,
-    LikeOutlinedIcon, PinOutlinedIcon,
+    LikeOutlinedIcon,
+    PinOutlinedIcon,
     ReplyIcon,
     RetweetIcon,
-    RetweetOutlinedIcon, RetweetOutlinedIconSm,
+    RetweetOutlinedIcon,
+    RetweetOutlinedIconSm,
     ShareIcon
 } from "../../icons";
 import {useTweetComponentStyles} from "./TweetComponentStyles";
@@ -22,6 +24,7 @@ import ReplyModal from "../ReplyModal/ReplyModal";
 import {textFormatter} from "../../util/textFormatter";
 import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
 import TweetComponentActions from "./TweetComponentActions/TweetComponentActions";
+import ShareTweet from "./ShareTweet/ShareTweet";
 
 interface TweetComponentProps {
     id: string;
@@ -207,11 +210,7 @@ const TweetComponent: FC<TweetComponentProps> = ({
                                     <span>{likedTweets.length}</span>)
                             )}
                         </div>
-                        <div className={classes.footerIcon}>
-                            <IconButton>
-                                <span>{ShareIcon}</span>
-                            </IconButton>
-                        </div>
+                        <ShareTweet tweetId={id}/>
                     </div>
                 </div>
                 <div className={classes.bottomLine}/>

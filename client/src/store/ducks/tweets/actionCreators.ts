@@ -1,5 +1,6 @@
-import {AddTweet, Image, Tweet, TweetsState} from "./contracts/state";
+import {AddTweet, Tweet, TweetsState} from "./contracts/state";
 import {
+    FetchBookmarksActionInterface,
     FetchLikedTweetsActionInterface,
     FetchLikeTweetActionInterface,
     FetchMediaTweetsActionInterface,
@@ -86,4 +87,8 @@ export const fetchTweets = (): FetchTweetsActionInterface => ({
 
 export const fetchMediaTweets = (): FetchMediaTweetsActionInterface => ({
     type: TweetsActionType.FETCH_MEDIA_TWEETS,
+});
+
+export const fetchUserBookmarks = (): FetchBookmarksActionInterface => ({
+    type: TweetsActionType.FETCH_BOOKMARKS,
 });

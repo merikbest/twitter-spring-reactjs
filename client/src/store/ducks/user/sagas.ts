@@ -2,6 +2,7 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 import {setUserData, setUserLoadingStatus} from "./actionCreators";
 import {AuthUser, User} from "./contracts/state";
 import {
+    AddTweetToBookmarksActionInterface,
     FetchPinTweetActionInterface,
     FetchSignInActionInterface,
     FetchSignUpActionInterface,
@@ -14,6 +15,9 @@ import {
 import {AuthApi} from "../../../services/api/authApi";
 import {UserApi} from "../../../services/api/userApi";
 import {LoadingStatus} from "../../types";
+import {setTweetsLoadingState} from "../tweets/actionCreators";
+import {Tweet} from "../tweets/contracts/state";
+import {TweetApi} from "../../../services/api/tweetApi";
 
 export function* fetchSignInRequest({payload}: FetchSignInActionInterface) {
     try {
@@ -96,6 +100,16 @@ export function* fetchUnpinTweet({payload}: FetchUnpinTweetActionInterface) {
     }
 }
 
+export function* fetchAddTweetToBookmarksRequest({payload}: AddTweetToBookmarksActionInterface) {
+    try {
+        yield put(setTweetsLoadingState(LoadingStatus.LOADING));
+        const item: User = yield call(UserApi.addTweetToBookmarks, payload);
+        yield put(setUserData(item));
+    } catch (e) {
+        yield put(setTweetsLoadingState(LoadingStatus.ERROR));
+    }
+}
+
 export function* userSaga() {
     yield takeLatest(UserActionsType.FETCH_SIGN_IN, fetchSignInRequest);
     yield takeLatest(UserActionsType.FETCH_SIGN_UP, fetchSignUpRequest);
@@ -105,4 +119,5 @@ export function* userSaga() {
     yield takeLatest(UserActionsType.START_USE_TWITTER, fetchStartUseTwitter);
     yield takeLatest(UserActionsType.FETCH_PIN_TWEET, fetchPinTweet);
     yield takeLatest(UserActionsType.FETCH_UNPIN_TWEET, fetchUnpinTweet);
+    yield takeLatest(UserActionsType.ADD_TWEET_TO_BOOKMARKS, fetchAddTweetToBookmarksRequest);
 }

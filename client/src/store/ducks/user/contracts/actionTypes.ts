@@ -4,6 +4,7 @@ import {LoadingStatus} from "../../../types";
 import {User, UserState} from "./state";
 import {RegistrationProps} from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
 import {LoginProps} from "../../../../pages/Login/Login";
+import {TweetsActionType} from "../../tweets/contracts/actionTypes";
 
 export enum UserActionsType {
     FETCH_SIGN_IN = "user/FETCH_SIGN_IN",
@@ -18,6 +19,7 @@ export enum UserActionsType {
     UNFOLLOW  = 'user/UNFOLLOW',
     FETCH_PIN_TWEET  = 'user/FETCH_PIN_TWEET',
     FETCH_UNPIN_TWEET  = 'user/FETCH_UNPIN_TWEET',
+    ADD_TWEET_TO_BOOKMARKS  = 'user/ADD_TWEET_TO_BOOKMARKS',
     START_USE_TWITTER = 'user/START_USE_TWITTER',
 }
 
@@ -76,6 +78,11 @@ export interface FetchPinTweetActionInterface extends Action<UserActionsType> {
 
 export interface FetchUnpinTweetActionInterface extends Action<UserActionsType> {
     type: UserActionsType.FETCH_UNPIN_TWEET;
+    payload: string;
+}
+
+export interface AddTweetToBookmarksActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.ADD_TWEET_TO_BOOKMARKS;
     payload: string;
 }
 
