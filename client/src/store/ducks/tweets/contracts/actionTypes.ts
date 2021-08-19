@@ -18,6 +18,7 @@ export enum TweetsActionType {
     FETCH_TWEETS_BY_TEXT = "tweets/FETCH_TWEETS_BY_TEXT",
     FETCH_LIKED_TWEETS = "tweets/FETCH_LIKED_TWEETS",
     FETCH_BOOKMARKS = "tweets/FETCH_BOOKMARKS",
+    REMOVE_TWEET_FROM_BOOKMARKS = "tweets/REMOVE_TWEET_FROM_BOOKMARKS",
     SET_LOADING_STATE = "tweets/SET_LOADING_STATE",
 }
 
@@ -93,6 +94,11 @@ export interface FetchBookmarksActionInterface extends Action<TweetsActionType> 
     type: TweetsActionType.FETCH_BOOKMARKS;
 }
 
+export interface RemoveTweetFromBookmarksActionInterface extends Action<TweetsActionType> {
+    type: TweetsActionType.REMOVE_TWEET_FROM_BOOKMARKS;
+    payload: string;
+}
+
 export type TweetsActions =
     | SetTweetsActionInterface
     | SetTweetsLoadingStateInterface
@@ -100,4 +106,5 @@ export type TweetsActions =
     | SetTweetActionInterface
     | LikeTweetActionInterface
     | RetweetActionInterface
-    | ReplyActionInterface;
+    | ReplyActionInterface
+    | RemoveTweetFromBookmarksActionInterface;

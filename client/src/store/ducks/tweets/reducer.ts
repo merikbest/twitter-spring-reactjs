@@ -41,6 +41,11 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
             draft.items[replyIndex] = action.payload;
             break;
 
+        case TweetsActionType.REMOVE_TWEET_FROM_BOOKMARKS:
+            draft.items = draft.items.filter((tweet) => tweet.id !== action.payload);
+            draft.loadingState = LoadingStatus.LOADED
+            break;
+
         default:
             break;
     }

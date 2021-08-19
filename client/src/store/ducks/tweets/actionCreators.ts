@@ -8,6 +8,7 @@ import {
     FetchTweetsByTagActionInterface,
     FetchTweetsByTextActionInterface,
     LikeTweetActionInterface,
+    RemoveTweetFromBookmarksActionInterface,
     ReplyActionInterface,
     RetweetActionInterface,
     SetTweetActionInterface,
@@ -91,4 +92,9 @@ export const fetchMediaTweets = (): FetchMediaTweetsActionInterface => ({
 
 export const fetchUserBookmarks = (): FetchBookmarksActionInterface => ({
     type: TweetsActionType.FETCH_BOOKMARKS,
+});
+
+export const removeTweetFromBookmarks = (payload: string): RemoveTweetFromBookmarksActionInterface => ({
+    type: TweetsActionType.REMOVE_TWEET_FROM_BOOKMARKS,
+    payload,
 });

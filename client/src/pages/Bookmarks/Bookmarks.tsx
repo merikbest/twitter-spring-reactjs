@@ -6,6 +6,7 @@ import {selectIsTweetsLoading, selectTweetsItems} from "../../store/ducks/tweets
 import {useBookmarksStyles} from "./BookmarksStyles";
 import {fetchUserBookmarks} from "../../store/ducks/tweets/actionCreators";
 import {selectUserData} from "../../store/ducks/user/selectors";
+import TweetComponent from "../../components/TweetComponent/TweetComponent";
 
 const Bookmarks: FC = (): ReactElement => {
     const classes = useBookmarksStyles();
@@ -16,6 +17,7 @@ const Bookmarks: FC = (): ReactElement => {
 
     useEffect(() => {
         dispatch(fetchUserBookmarks());
+        window.scrollTo(0, 0);
     }, []);
 
     return (
@@ -33,26 +35,18 @@ const Bookmarks: FC = (): ReactElement => {
                     <div className={classes.loading}>
                         <CircularProgress/>
                     </div>
-                ) : (tweets.length === 0 ? (
+                ) : ((tweets.length === 0) ? (
                         <div className={classes.infoWrapper}>
                             <div className={classes.infoTitle}>You haven’t added any Tweets to your Bookmarks yet</div>
                             <div className={classes.infoText}>When you do, they’ll show up here.</div>
                         </div>
                     ) : (
-                        <>
-                            {/*<Paper className={classes2.header} variant="outlined">*/}
-                            {/*    <Typography variant="h6">Suggested for you</Typography>*/}
-                            {/*</Paper>*/}
-                            {/*<Paper className={classes2.content} variant="outlined">*/}
-                            {/*    {users && users.map(user =>*/}
-                            {/*        <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>)*/}
-                            {/*    }*/}
-                            {/*</Paper>*/}
-                        </>
+                        <div>
+                            {tweets.map((tweet) => <TweetComponent key={tweet.id} images={tweet.images} {...tweet} />)}
+                        </div>
                     )
                 )}
             </div>
-
         </Paper>
 
     );

@@ -18,7 +18,7 @@ public class UserResponse {
     private LocalDateTime registrationDate;
     private Long tweetCount;
     private CommonTweetResponse pinnedTweet;
-    private List<CommonTweetResponse> bookmarks;
+    private List<BookmarkResponse> bookmarks;
     private ImageResponse avatar;
     private ImageResponse wallpaper;
     private boolean profileCustomized;

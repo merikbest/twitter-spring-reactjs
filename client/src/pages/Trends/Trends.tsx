@@ -16,6 +16,7 @@ const Trends: FC = (): ReactElement => {
 
     useEffect(() => {
         dispatch(fetchTrends());
+        window.scrollTo(0, 0);
     }, []);
 
     return (

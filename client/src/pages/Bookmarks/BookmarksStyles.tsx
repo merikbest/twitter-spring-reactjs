@@ -11,7 +11,7 @@ export const useBookmarksStyles= makeStyles((theme) => ({
     header: {
         marginLeft: 15,
         position: "fixed",
-        width: 602,
+        width: 580,
         height: 53,
         zIndex: 1,
         display: 'flex',

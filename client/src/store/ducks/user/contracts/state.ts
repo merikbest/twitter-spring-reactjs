@@ -19,9 +19,15 @@ export interface User {
     tweets?: Tweet[];
     tweetCount?: number;
     pinnedTweet?: Tweet;
-    bookmarks?: Tweet[];
+    bookmarks?: Bookmark[];
     followers?: User[];
     following?: User[];
+}
+
+export interface Bookmark {
+    id: number;
+    bookmarkDate: string;
+    tweet: Tweet;
 }
 
 export interface AuthUser {

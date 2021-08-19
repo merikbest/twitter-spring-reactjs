@@ -6,6 +6,8 @@ import {useShareTweetModalStyles} from "./ShareTweetStyles";
 import {AddBookmarksIcon, LinkIcon, MessagesIcon, ShareIcon} from "../../../icons";
 import {selectUserData} from "../../../store/ducks/user/selectors";
 import {addTweetToBookmarks} from "../../../store/ducks/user/actionCreators";
+import {useLocation} from "react-router-dom";
+import {removeTweetFromBookmarks} from "../../../store/ducks/tweets/actionCreators";
 
 interface ShareTweet {
     tweetId: string;
@@ -14,8 +16,10 @@ interface ShareTweet {
 const ShareTweet: FC<ShareTweet> = ({tweetId}): ReactElement => {
     const classes = useShareTweetModalStyles();
     const dispatch = useDispatch();
+    const location = useLocation();
     const myProfile = useSelector(selectUserData);
     const [open, setOpen] = useState<boolean>(false);
+    const isBookmarked = myProfile?.bookmarks?.find((bookmark) => bookmark.tweet.id === tweetId);
 
     const handleClick = (): void => {
         setOpen((prev) => !prev);
@@ -27,6 +31,11 @@ const ShareTweet: FC<ShareTweet> = ({tweetId}): ReactElement => {
 
     const onClickAddTweetToBookmarks = (): void => {
         dispatch(addTweetToBookmarks(tweetId));
+
+        if (location.pathname.includes("/bookmarks")) {
+            dispatch(removeTweetFromBookmarks(tweetId));
+        }
+        setOpen(false);
     };
 
     return (
@@ -45,7 +54,9 @@ const ShareTweet: FC<ShareTweet> = ({tweetId}): ReactElement => {
                                 </ListItem>
                                 <ListItem onClick={onClickAddTweetToBookmarks}>
                                     <span className={classes.textIcon}>{AddBookmarksIcon}</span>
-                                    <span className={classes.text}>Add Tweets to Bookmarks</span>
+                                    <span className={classes.text}>
+                                        {isBookmarked ? "Remove Tweet from Bookmarks" : "Add Tweet to Bookmarks"}
+                                    </span>
                                 </ListItem>
                                 <ListItem>
                                     <span className={classes.textIcon}>{LinkIcon}</span>

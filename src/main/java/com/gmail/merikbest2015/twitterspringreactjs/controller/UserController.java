@@ -70,8 +70,8 @@ public class UserController {
     }
 
     @GetMapping("/bookmarks/{tweetId}")
-    public ResponseEntity<UserResponse> addTweetToBookmarks(@PathVariable Long tweetId) {
-        return ResponseEntity.ok(userMapper.addTweetToBookmarks(tweetId));
+    public ResponseEntity<UserResponse> processUserBookmarks(@PathVariable Long tweetId) {
+        return ResponseEntity.ok(userMapper.processUserBookmarks(tweetId));
     }
 
     @PutMapping

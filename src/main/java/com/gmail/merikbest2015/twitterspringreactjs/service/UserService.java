@@ -29,7 +29,7 @@ public interface UserService {
 
     List<Tweet> getUserBookmarks();
 
-    User addTweetToBookmarks(Long tweetId);
+    User processUserBookmarks(Long tweetId);
 
     Image uploadImage(MultipartFile multipartFile);
 

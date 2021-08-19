@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.BookmarkRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.ImageRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.TweetRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
@@ -17,10 +18,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +28,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final TweetRepository tweetRepository;
     private final ImageRepository imageRepository;
+    private final BookmarkRepository bookmarkRepository;
     private final AmazonS3 amazonS3client;
 
     @Value("${amazon.s3.bucket.name}")
@@ -100,16 +99,34 @@ public class UserServiceImpl implements UserService {
     public List<Tweet> getUserBookmarks() {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());
-        return user.getBookmarks();
+        List<Bookmark> bookmarks = user.getBookmarks();
+        bookmarks.sort(Comparator.comparing(Bookmark::getBookmarkDate).reversed());
+        List<Tweet> allTweets = new ArrayList<>();
+        bookmarks.forEach(bookmark -> allTweets.add(bookmark.getTweet()));
+        return allTweets;
     }
 
     @Override
-    public User addTweetToBookmarks(Long tweetId) {
+    public User processUserBookmarks(Long tweetId) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());
         Tweet tweet = tweetRepository.getOne(tweetId);
-        List<Tweet> bookmarks = user.getBookmarks();
-        bookmarks.add(tweet);
+
+        List<Bookmark> bookmarks = user.getBookmarks();
+        Optional<Bookmark> bookmark = bookmarks.stream()
+                .filter(b -> b.getTweet().equals(tweet))
+                .findFirst();
+
+        if (bookmark.isPresent()) {
+            bookmarks.remove(bookmark.get());
+            bookmarkRepository.delete(bookmark.get());
+        } else {
+            Bookmark newBookmark = new Bookmark();
+            newBookmark.setTweet(tweet);
+            bookmarkRepository.save(newBookmark);
+            bookmarks.add(newBookmark);
+        }
+
         return userRepository.save(user);
     }
 

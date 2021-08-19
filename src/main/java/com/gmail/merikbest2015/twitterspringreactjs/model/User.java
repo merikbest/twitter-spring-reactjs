@@ -87,7 +87,7 @@ public class User {
     private List<Retweet> retweets;
 
     @OneToMany
-    private List<Tweet> bookmarks;
+    private List<Bookmark> bookmarks;
 
     @ManyToMany
     @JoinTable(name = "user_subscriptions",
