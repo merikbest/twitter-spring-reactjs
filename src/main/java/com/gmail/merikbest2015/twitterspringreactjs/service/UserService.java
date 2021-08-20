@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.Image;
+import com.gmail.merikbest2015.twitterspringreactjs.model.Notification;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +27,8 @@ public interface UserService {
     List<Tweet> getUserMediaTweets(Long userId);
 
     List<Tweet> getUserRetweetsAndReplies(Long userId);
+
+    List<Notification> getUserNotifications();
 
     List<Tweet> getUserBookmarks();
 

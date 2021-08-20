@@ -2,9 +2,11 @@ package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.NotificationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Image;
+import com.gmail.merikbest2015.twitterspringreactjs.model.Notification;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -23,12 +25,22 @@ public class UserMapper {
     private final TweetMapper tweetMapper;
     private final UserService userService;
 
-    UserResponse convertToUserResponse(User user) {
-        return modelMapper.map(user, UserResponse.class);
-    }
-
     private ImageResponse convertToImageResponse(Image image) {
         return modelMapper.map(image, ImageResponse.class);
+    }
+
+    private NotificationResponse convertToNotificationResponse(Notification notification) {
+        return modelMapper.map(notification, NotificationResponse.class);
+    }
+
+    private List<NotificationResponse> convertListToNotificationResponseDto(List<Notification> notifications) {
+        return notifications.stream()
+                .map(this::convertToNotificationResponse)
+                .collect(Collectors.toList());
+    }
+
+    UserResponse convertToUserResponse(User user) {
+        return modelMapper.map(user, UserResponse.class);
     }
 
     private List<UserResponse> convertListToResponseDto(List<User> users) {
@@ -107,5 +119,9 @@ public class UserMapper {
 
     public UserResponse unpinTweet(Long tweetId) {
         return convertToUserResponse(userService.unpinTweet(tweetId));
+    }
+
+    public List<NotificationResponse> getUserNotifications() {
+        return convertListToNotificationResponseDto(userService.getUserNotifications());
     }
 }

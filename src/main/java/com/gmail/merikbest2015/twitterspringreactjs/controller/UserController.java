@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.NotificationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.UserMapper;
@@ -62,6 +63,11 @@ public class UserController {
     @GetMapping("/{userId}/replies")
     public ResponseEntity<List<TweetResponse>> getUserRetweetsAndReplies(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.getUserRetweetsAndReplies(userId));
+    }
+
+    @GetMapping("/notifications")
+    public ResponseEntity<List<NotificationResponse>> getUserNotifications() {
+        return ResponseEntity.ok(userMapper.getUserNotifications());
     }
 
     @GetMapping("/bookmarks")

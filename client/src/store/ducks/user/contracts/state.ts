@@ -24,6 +24,14 @@ export interface User {
     following?: User[];
 }
 
+export interface Notification {
+    id: number;
+    date: string;
+    notificationType: string;
+    user: User;
+    tweet: Tweet;
+}
+
 export interface Bookmark {
     id: number;
     bookmarkDate: string;

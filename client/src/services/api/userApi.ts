@@ -1,4 +1,4 @@
-import {User} from "../../store/ducks/user/contracts/state";
+import {Notification, User} from "../../store/ducks/user/contracts/state";
 import {axios} from "../../core/axios";
 import {Tweet} from "../../store/ducks/tweets/contracts/state";
 import {API_URL} from "../../util/url";
@@ -59,6 +59,10 @@ export const UserApi = {
     },
     async getUserRetweetsAndReplies(id: string): Promise<Response<Tweet[]>> {
         const data = await axios.get<Response<Tweet[]>>(API_URL + `/user/${id}/replies`);
+        return data.data;
+    },
+    async getUserNotifications(): Promise<Response<Notification[]>> {
+        const data = await axios.get<Response<Notification[]>>(API_URL + "/user/notifications");
         return data.data;
     },
     async getUserBookmarks(): Promise<Response<Tweet[]>> {

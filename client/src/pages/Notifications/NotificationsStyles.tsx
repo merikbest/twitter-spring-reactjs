@@ -1,6 +1,6 @@
-import {makeStyles} from "@material-ui/core";
+import {makeStyles, Theme} from "@material-ui/core";
 
-export const useFollowingFollowersStyles = makeStyles((theme) => ({
+export const useNotificationsStyles = makeStyles((theme: Theme) => ({
     container: {
         borderRadius: 0,
         minHeight: '100vh',
@@ -8,9 +8,11 @@ export const useFollowingFollowersStyles = makeStyles((theme) => ({
         borderBottom: '0',
     },
     header: {
+        marginLeft: 15,
         position: "fixed",
         display: 'flex',
         width: 602,
+        height: 53,
         zIndex: 1,
         border: 0,
         alignItems: 'center',
@@ -21,6 +23,23 @@ export const useFollowingFollowersStyles = makeStyles((theme) => ({
         "& svg": {
             marginRight: 20
         },
+    },
+    loading: {
+        marginTop: 50,
+        textAlign: 'center',
+    },
+    title: {
+        textAlign: "center",
+        marginTop: 30,
+        marginBottom: 8,
+        fontSize: 29,
+        fontWeight: 800,
+    },
+    text: {
+        textAlign: "center",
+        fontSize: 14,
+        fontWeight: 400,
+        color: "rgb(83, 100, 113)",
     },
     tabs: {
         borderBottom: "1px solid rgb(239, 243, 244)",
@@ -37,27 +56,5 @@ export const useFollowingFollowersStyles = makeStyles((theme) => ({
     tab: {
         minWidth: 301,
         textTransform: 'none',
-    },
-    loading: {
-        marginTop: 50,
-        textAlign: 'center',
-    },
-    content: {
-        margin: "40px 20px",
-        textAlign: "center"
-    },
-    topic: {
-        fontSize: 20,
-        fontWeight: 700,
-        marginBottom: 12
-    },
-    text: {
-        fontSize: 15,
-        fontWeight: 400,
-        marginBottom: 16,
-        color: "rgb(83, 100, 113)"
-    },
-    link: {
-        textDecoration: 'none',
     },
 }));

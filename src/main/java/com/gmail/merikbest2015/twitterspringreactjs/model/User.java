@@ -56,6 +56,9 @@ public class User {
     @Column(name = "tweet_count", columnDefinition = "int default 0")
     private Long tweetCount;
 
+    @Column(name = "notifications_count", columnDefinition = "int default 0")
+    private Long notificationsCount;
+
     @Column(name = "active", columnDefinition = "boolean default false")
     private boolean active;
 
@@ -88,6 +91,9 @@ public class User {
 
     @OneToMany
     private List<Bookmark> bookmarks;
+
+    @OneToMany
+    private List<Notification> notifications;
 
     @ManyToMany
     @JoinTable(name = "user_subscriptions",

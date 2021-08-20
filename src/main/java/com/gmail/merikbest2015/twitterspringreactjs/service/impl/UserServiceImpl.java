@@ -96,6 +96,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<Notification> getUserNotifications() {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(principal.getName());
+        user.setNotificationsCount(0L);
+        List<Notification> notifications = user.getNotifications();
+        notifications.sort(Comparator.comparing(Notification::getDate).reversed());
+        userRepository.save(user);
+        return notifications;
+    }
+
+    @Override
     public List<Tweet> getUserBookmarks() {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());
