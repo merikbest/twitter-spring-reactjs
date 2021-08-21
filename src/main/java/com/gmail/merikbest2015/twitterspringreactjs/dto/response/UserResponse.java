@@ -17,6 +17,7 @@ public class UserResponse {
     private String birthday;
     private LocalDateTime registrationDate;
     private Long tweetCount;
+    private Long notificationsCount;
     private CommonTweetResponse pinnedTweet;
     private List<BookmarkResponse> bookmarks;
     private ImageResponse avatar;

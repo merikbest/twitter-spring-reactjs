@@ -18,8 +18,10 @@ export interface User {
     dateOfBirth?: string;
     tweets?: Tweet[];
     tweetCount?: number;
+    notificationsCount?: number;
     pinnedTweet?: Tweet;
     bookmarks?: Bookmark[];
+    notifications?: Notification[];
     followers?: User[];
     following?: User[];
 }

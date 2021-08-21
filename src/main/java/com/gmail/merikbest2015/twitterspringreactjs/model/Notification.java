@@ -20,6 +20,7 @@ public class Notification {
     private LocalDateTime date;
 
     @Column(name = "notification_type")
+    @Enumerated(EnumType.STRING)
     private NotificationType notificationType;
 
     @OneToOne

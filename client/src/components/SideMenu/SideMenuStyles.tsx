@@ -55,8 +55,21 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
         fontSize: 32,
     },
     label: {
+        position: "relative",
         fontWeight: 700,
         fontSize: 20,
+    },
+    count: {
+        position: "absolute",
+        padding: 0,
+        marginLeft: 13,
+        width: 16,
+        height: 16,
+        borderRadius: "50%",
+        backgroundColor: 'rgb(29, 161, 242)',
+        fontSize: 11,
+        color: "#fff",
+        textAlign: "center"
     },
     button: {
         height: 48,

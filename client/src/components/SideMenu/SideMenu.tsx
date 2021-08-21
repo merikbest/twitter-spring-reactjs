@@ -83,6 +83,11 @@ const SideMenu: FC = (): ReactElement => {
                         <div>
                             <Hidden smDown>
                                 <Typography className={classes.label} variant="h6">
+                                    {(myProfile?.notificationsCount !== 0) ? (
+                                        <span className={classes.count}>
+                                            {myProfile?.notificationsCount}
+                                        </span>
+                                    ) : null}
                                     {(location.pathname.includes("/notifications")) ? (
                                         <span>{NotificationsIconFilled}</span>
                                     ) : (
