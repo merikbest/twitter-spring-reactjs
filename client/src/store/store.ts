@@ -11,6 +11,8 @@ import {UsersState} from "./ducks/users/contracts/state";
 import {UserTweetsState} from "./ducks/userTweets/contracts/state";
 import {UserProfileState} from "./ducks/userProfile/contracts/state";
 import {UsersSearchState} from "./ducks/usersSearch/contracts/state";
+import {ChatsState} from "./ducks/chats/contracts/state";
+import {ChatMessageState} from "./ducks/chatMessages/contracts/state";
 
 export interface RootState {
     tweets: TweetsState;
@@ -21,6 +23,8 @@ export interface RootState {
     userProfile: UserProfileState;
     userTweets: UserTweetsState;
     usersSearch: UsersSearchState;
+    chats: ChatsState;
+    chatMessages: ChatMessageState;
 }
 
 const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;

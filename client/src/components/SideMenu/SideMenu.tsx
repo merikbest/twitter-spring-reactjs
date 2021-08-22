@@ -16,7 +16,7 @@ import {
     ExploreIcon, HomeIconFilled,
     ExploreIconFilled,
     ProfileIconFilled,
-    BookmarksIconFilled, NotificationsIconFilled
+    BookmarksIconFilled, NotificationsIconFilled, MessagesIconFilled
 } from "../../icons";
 import UserSideProfile from "../UserSideProfile/UserSideProfile";
 import {selectUserData} from "../../store/ducks/user/selectors";
@@ -99,13 +99,19 @@ const SideMenu: FC = (): ReactElement => {
                     </NavLink>
                 </li>
                 <li className={classes.itemWrapper}>
-                    <div>
-                        <Hidden smDown>
-                            <Typography className={classes.label} variant="h6">
-                                <span>{MessagesIcon}</span> Messages
-                            </Typography>
-                        </Hidden>
-                    </div>
+                    <NavLink to="/messages" activeClassName={"selected"}>
+                        <div>
+                            <Hidden smDown>
+                                <Typography className={classes.label} variant="h6">
+                                    {(location.pathname.includes("/messages")) ? (
+                                        <span>{MessagesIconFilled}</span>
+                                    ) : (
+                                        <span>{MessagesIcon}</span>
+                                    )} Messages
+                                </Typography>
+                            </Hidden>
+                        </div>
+                    </NavLink>
                 </li>
                 <li className={classes.itemWrapper}>
                     <NavLink to="/bookmarks" activeClassName={"selected"}>

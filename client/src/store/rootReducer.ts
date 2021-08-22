@@ -8,6 +8,8 @@ import {userReducer} from "./ducks/user/reducer";
 import {userTweetsReducer} from "./ducks/userTweets/reducer";
 import {userProfileReducer} from "./ducks/userProfile/reducer";
 import {usersSearchReducer} from "./ducks/usersSearch/reducer";
+import {chatsReducer} from "./ducks/chats/reducer";
+import {chatMessagesReducer} from "./ducks/chatMessages/reducer";
 
 export const rootReducer = combineReducers({
     tweets: tweetsReducer,
@@ -18,4 +20,6 @@ export const rootReducer = combineReducers({
     userProfile: userProfileReducer,
     userTweets: userTweetsReducer,
     usersSearch: usersSearchReducer,
+    chats: chatsReducer,
+    chatMessages: chatMessagesReducer,
 });

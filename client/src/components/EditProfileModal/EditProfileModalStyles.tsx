@@ -9,7 +9,6 @@ export const useEditProfileModalStyles = makeStyles((theme) => ({
     },
     button: {
         marginLeft: "auto",
-        marginRight: -20,
         height: 30,
     },
     wallpaperWrapper: {

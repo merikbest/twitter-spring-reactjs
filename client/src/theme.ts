@@ -97,7 +97,7 @@ export const theme = createMuiTheme({
                 },
                 '& button': {
                     padding: 8,
-                    marginRight: 20,
+                    // marginRight: 20,
                 },
             },
         },

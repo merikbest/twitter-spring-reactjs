@@ -95,6 +95,15 @@ public class User {
     @OneToMany
     private List<Notification> notifications;
 
+    @ManyToMany(mappedBy = "participants")
+    private List<Chat> chats;
+
+    @ManyToMany
+    @JoinTable(name = "unread_messages",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "chat_message_id"))
+    private List<ChatMessage> unreadMessages;
+
     @ManyToMany
     @JoinTable(name = "user_subscriptions",
             joinColumns = @JoinColumn(name = "user_id"),

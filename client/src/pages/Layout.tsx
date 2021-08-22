@@ -26,16 +26,24 @@ export const Layout: FC<Layout> = ({children}): ReactElement => {
                 <Grid sm={1} md={2} item style={{minWidth: "256px"}}>
                     <SideMenu/>
                 </Grid>
-                <Grid sm={8} md={6} item>
-                    {children}
-                </Grid>
-                <Grid sm={3} md={3} item style={{minWidth: "350px"}}>
-                    <div className={classes.rightSide}>
-                        <SideSearch/>
-                        <Tags/>
-                        <Users/>
-                    </div>
-                </Grid>
+                {location.pathname.includes("/message") ? (
+                    <>
+                        {children}
+                    </>
+                ) : (
+                    <>
+                        <Grid sm={8} md={6} item>
+                            {children}
+                        </Grid>
+                        <Grid sm={3} md={3} item style={{minWidth: "350px"}}>
+                            <div className={classes.rightSide}>
+                                <SideSearch/>
+                                <Tags/>
+                                <Users/>
+                            </div>
+                        </Grid>
+                    </>
+                )}
             </Grid>
         </Container>
     );
