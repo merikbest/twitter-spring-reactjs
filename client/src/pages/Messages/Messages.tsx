@@ -11,10 +11,11 @@ import {selectChatsItems} from "../../store/ducks/chats/selectors";
 import {selectUsers} from "../../store/ducks/users/selectors";
 import {PeopleSearchInput} from "./PeopleSearchInput/PeopleSearchInput";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
-import {EmojiIcon, GifIcon, MediaIcon, SandMessageIcon} from "../../icons";
+import {CheckIcon, EmojiIcon, GifIcon, MediaIcon, SandMessageIcon} from "../../icons";
 import {MessageInput} from "./MessageInput/MessageInput";
 import {Chat, ChatParticipant} from "../../store/ducks/chats/contracts/state";
-import {addChatMessage} from "../../store/ducks/chatMessages/actionCreators";
+import {addChatMessage, fetchChatMessages} from "../../store/ducks/chatMessages/actionCreators";
+import {selectChatMessagesItems} from "../../store/ducks/chatMessages/selectors";
 
 const Messages: FC = (): ReactElement => {
     const classes = useMessagesStyles();
@@ -22,6 +23,7 @@ const Messages: FC = (): ReactElement => {
     const myProfile = useSelector(selectUserData);
     const chats = useSelector(selectChatsItems);
     const users = useSelector(selectUsers);
+    const messages = useSelector(selectChatMessagesItems);
     const [text, setText] = useState<string>("");
     const [message, setMessage] = useState<string>("");
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
@@ -41,13 +43,16 @@ const Messages: FC = (): ReactElement => {
     };
 
     const handleListItemClick = (chat: Chat): void => {
+        dispatch(fetchChatMessages(chat?.id!));
         setParticipant(chat.participants[1]);
         setChat(chat);
     };
 
     const onSendMessage = (): void => {
-        dispatch(addChatMessage({chatId: chat?.id!, text: message}));
-        setMessage("");
+        if (message !== "") {
+            dispatch(addChatMessage({chatId: chat?.id!, text: message}));
+            setMessage("");
+        }
     };
 
     return (
@@ -60,7 +65,7 @@ const Messages: FC = (): ReactElement => {
                                 <Typography variant="h6">Messages</Typography>
                             </div>
                         </Paper>
-                        {chats.length === 0 ? (
+                        {(chats.length === 0) ? (
                             <>
                                 <div className={classes.messagesTitle}>
                                     Send a message, get a message
@@ -105,17 +110,37 @@ const Messages: FC = (): ReactElement => {
                                             onClick={() => handleListItemClick(chat)}
                                         >
                                             <div className={classes.userWrapper}>
-                                                <Avatar className={classes.userAvatar}
-                                                        src={chat.participants[1].avatar?.src ?
-                                                            chat.participants[1].avatar.src : DEFAULT_PROFILE_IMG}/>
+                                                <Avatar
+                                                    className={classes.userAvatar}
+                                                    src={(myProfile?.id === chat.participants[1].id!) ? (
+                                                        (chat.participants[0].avatar?.src) ? (
+                                                            chat.participants[0].avatar.src
+                                                        ) : (
+                                                            DEFAULT_PROFILE_IMG
+                                                        )
+                                                    ) : ((chat.participants[1].avatar?.src) ? (
+                                                            chat.participants[1].avatar.src
+                                                        ) : (
+                                                            DEFAULT_PROFILE_IMG
+                                                        )
+                                                    )}
+                                                />
                                                 <div style={{flex: 1}}>
                                                     <div className={classes.userHeader}>
                                                         <div style={{width: 300}}>
                                                             <Typography className={classes.userFullName}>
-                                                                {chat.participants[1].fullName}
+                                                                {(myProfile?.id === chat.participants[1].id!) ? (
+                                                                    chat.participants[0].fullName
+                                                                ) : (
+                                                                    chat.participants[1].fullName
+                                                                )}
                                                             </Typography>
                                                             <Typography className={classes.username}>
-                                                                @{chat.participants[1].username}
+                                                                {(myProfile?.id === chat.participants[1].id!) ? (
+                                                                    "@" + chat.participants[0].username
+                                                                ) : (
+                                                                    "@" + chat.participants[1].username
+                                                                )}
                                                             </Typography>
                                                         </div>
                                                     </div>
@@ -157,13 +182,52 @@ const Messages: FC = (): ReactElement => {
                             <Paper className={classes.chatHeader}>
                                 <Avatar
                                     className={classes.chatAvatar}
-                                    src={participant?.avatar?.src ? participant?.avatar.src : DEFAULT_PROFILE_IMG}/>
+                                    src={participant?.avatar?.src ? participant?.avatar.src : DEFAULT_PROFILE_IMG}
+                                />
                                 <div style={{flex: 1}}>
                                     <Typography variant="h6">{participant?.fullName}</Typography>
                                     <Typography variant="caption" display="block" gutterBottom>
                                         @{participant?.username}
                                     </Typography>
                                 </div>
+                            </Paper>
+                            <Paper className={classes.chat}>
+                                {messages.map(message => (
+                                    (message.author.id === myProfile?.id) ? (
+                                        <>
+                                            <div className={classes.myMessage}>
+                                                <span>{message.text}</span>
+                                            </div>
+                                            <div className={classes.myMessageDate}>
+                                                <span>{CheckIcon}</span><span>{message.date}</span>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <div className={classes.participantMessage}>
+                                                <Avatar
+                                                    className={classes.participantAvatar}
+                                                    src={(myProfile?.id === chat?.participants[1].id!) ? (
+                                                        (chat?.participants[0].avatar?.src) ? (
+                                                            chat?.participants[0].avatar.src
+                                                        ) : (
+                                                            DEFAULT_PROFILE_IMG
+                                                        )
+                                                    ) : ((chat?.participants[1].avatar?.src) ? (
+                                                            chat?.participants[1].avatar.src
+                                                        ) : (
+                                                            DEFAULT_PROFILE_IMG
+                                                        )
+                                                    )}
+                                                />
+                                                <span>{message.text}</span>
+                                            </div>
+                                            <div className={classes.participantMessageDate}>
+                                                {message.date}
+                                            </div>
+                                        </>
+                                    )
+                                ))}
                             </Paper>
                             <Paper className={classes.chatFooter}>
                                 <div className={classes.chatIcon}>

@@ -163,6 +163,58 @@ export const useMessagesStyles = makeStyles((theme: Theme) => ({
         height: theme.spacing(4),
         marginRight: 15,
     },
+    chat: {
+        padding: "53px 15px",
+        height: 900,
+        overflowY: "auto",
+    },
+    myMessage: {
+        marginTop: 10,
+        display: "flex",
+        flexDirection: "row-reverse",
+        "& span": {
+            borderRadius: "16px 16px 0px 16px",
+            backgroundColor: "rgb(29, 161, 242)",
+            color: "#fff",
+            padding: "11px 15px",
+            maxWidth: 384,
+        },
+    },
+    myMessageDate: {
+        fontSize: 12,
+        display: "flex",
+        flexDirection: "row-reverse",
+        marginTop: 5,
+        color: "rgb(83, 100, 113)",
+        "& svg": {
+            marginLeft: 5,
+            height: "1.2em",
+            color: "rgb(29, 161, 242)",
+        },
+    },
+    participantMessage: {
+        display: "flex",
+        alignItems: 'flex-start',
+        marginTop: 10,
+        "& span": {
+            borderRadius: "16px 16px 16px 0px",
+            backgroundColor: "rgb(239, 243, 244)",
+            padding: "11px 16px",
+            maxWidth: 384,
+        },
+    },
+    participantAvatar: {
+        marginTop: "auto",
+        width: theme.spacing(5),
+        height: theme.spacing(5),
+        marginRight: 10,
+    },
+    participantMessageDate: {
+        fontSize: 12,
+        marginLeft: 50,
+        marginTop: 5,
+        color: "rgb(83, 100, 113)",
+    },
     chatFooter: {
         display: 'flex',
         position: 'fixed',
@@ -179,7 +231,7 @@ export const useMessagesStyles = makeStyles((theme: Theme) => ({
             height: 30,
             "& span": {
                 paddingTop: 2,
-                "& svg" : {
+                "& svg": {
                     height: "0.82em",
                 }
             },
@@ -193,7 +245,7 @@ export const useMessagesStyles = makeStyles((theme: Theme) => ({
             height: 30,
             "& span": {
                 paddingTop: 2,
-                "& svg" : {
+                "& svg": {
                     height: "0.82em",
                 }
             },

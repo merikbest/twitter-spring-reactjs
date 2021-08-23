@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -46,18 +47,27 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
+    public User readChatMessages(Long chatId) {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(principal.getName());
+        user.setUnreadMessages(user.getUnreadMessages().stream()
+                .filter(message -> !message.getChat().getId().equals(chatId))
+                .collect(Collectors.toList()));
+        return userRepository.save(user);
+    }
+
+    @Override
     public ChatMessage addMessage(ChatMessage chatMessage, Long chatId) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User author = userRepository.findByEmail(principal.getName());
         Chat chat = chatRepository.getOne(chatId);
-        ChatMessage message = new ChatMessage();
-        message.setAuthor(author);
-        message.setChat(chat);
-        chatMessageRepository.save(message);
+        chatMessage.setAuthor(author);
+        chatMessage.setChat(chat);
+        chatMessageRepository.save(chatMessage);
         List<ChatMessage> messages = chat.getMessages();
-        messages.add(message);
+        messages.add(chatMessage);
         chatRepository.save(chat);
-        message.getChat().getParticipants()
+        chatMessage.getChat().getParticipants()
                 .forEach(user -> {
                     if (!user.getUsername().equals(author.getUsername())) {
                         List<ChatMessage> unread = user.getUnreadMessages();
@@ -66,6 +76,6 @@ public class ChatServiceImpl implements ChatService {
                         userRepository.save(user);
                     }
                 });
-        return message;
+        return chatMessage;
     }
 }
