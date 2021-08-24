@@ -56,6 +56,13 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
             draft.status = LoadingStatus.SUCCESS;
             break;
 
+        case UserActionsType.SET_UNREAD_MESSAGE:
+            if (draft.data?.unreadMessages) {
+                draft.data.unreadMessages = [...draft.data.unreadMessages, action.payload];
+            }
+            draft.status = LoadingStatus.SUCCESS;
+            break;
+
         case UserActionsType.SET_USER_LOADING_STATE:
             draft.status = action.payload;
             break;

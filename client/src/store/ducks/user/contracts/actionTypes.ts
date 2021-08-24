@@ -4,6 +4,7 @@ import {LoadingStatus} from "../../../types";
 import {User, UserState} from "./state";
 import {RegistrationProps} from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
 import {LoginProps} from "../../../../pages/Login/Login";
+import {ChatMessage} from "../../chatMessages/contracts/state";
 
 export enum UserActionsType {
     FETCH_SIGN_IN = "user/FETCH_SIGN_IN",
@@ -20,6 +21,8 @@ export enum UserActionsType {
     FETCH_UNPIN_TWEET  = 'user/FETCH_UNPIN_TWEET',
     ADD_TWEET_TO_BOOKMARKS  = 'user/ADD_TWEET_TO_BOOKMARKS',
     START_USE_TWITTER = 'user/START_USE_TWITTER',
+    FETCH_READ_MESSAGES = 'user/FETCH_READ_MESSAGES',
+    SET_UNREAD_MESSAGE = 'user/SET_UNREAD_MESSAGE',
 }
 
 export interface SignOutActionInterface extends Action<UserActionsType> {
@@ -90,9 +93,20 @@ export interface StartUseTwitterActionInterface extends Action<UserActionsType> 
     payload: number;
 }
 
+export interface FetchReadMessagesActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.FETCH_READ_MESSAGES;
+    payload: number;
+}
+
+export interface SetUnreadMessageActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.SET_UNREAD_MESSAGE;
+    payload: ChatMessage;
+}
+
 export type UserActions =
     | SetUserDataActionInterface
     | SetUserLoadingStateActionInterface
+    | SetUnreadMessageActionInterface
     | SignOutActionInterface
     | FollowUserActionInterface
     | UnfollowUserActionInterface

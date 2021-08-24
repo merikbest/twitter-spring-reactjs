@@ -7,7 +7,7 @@ import {
     FetchChatMessagesActionInterface
 } from "./contracts/actionTypes";
 import {ChatApi} from "../../../services/api/chatApi";
-import {setChatMessage, setChatMessages, setChatMessagesLoadingState} from "./actionCreators";
+import {setChatMessages, setChatMessagesLoadingState} from "./actionCreators";
 import {ChatMessage} from "./contracts/state";
 
 export function* fetchChatMessagesRequest({payload}: FetchChatMessagesActionInterface) {
@@ -23,8 +23,7 @@ export function* fetchChatMessagesRequest({payload}: FetchChatMessagesActionInte
 export function* addChatMessageRequest({payload}: AddChatMessageActionInterface) {
     try {
         setChatMessagesLoadingState(LoadingStatus.LOADING);
-        const item: ChatMessage = yield call(ChatApi.addMessage, payload);
-        yield put(setChatMessage(item));
+        yield call(ChatApi.addMessage, payload);
     } catch (error) {
         yield put(setChatMessagesLoadingState(LoadingStatus.ERROR));
     }

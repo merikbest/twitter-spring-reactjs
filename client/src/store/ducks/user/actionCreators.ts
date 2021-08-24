@@ -2,12 +2,14 @@ import {User, UserState} from "./contracts/state";
 import {
     AddTweetToBookmarksActionInterface,
     FetchPinTweetActionInterface,
+    FetchReadMessagesActionInterface,
     FetchSignInActionInterface,
     FetchSignUpActionInterface,
     FetchUnpinTweetActionInterface,
     FetchUserDataActionInterface,
     FollowActionInterface,
     FollowUserActionInterface,
+    SetUnreadMessageActionInterface,
     SetUserDataActionInterface,
     SetUserLoadingStateActionInterface,
     SignOutActionInterface,
@@ -18,6 +20,7 @@ import {
 } from "./contracts/actionTypes";
 import {RegistrationProps} from "../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
 import {LoginProps} from "../../../pages/Login/Login";
+import {ChatMessage} from "../chatMessages/contracts/state";
 
 export const setUserData = (payload: UserState["data"]): SetUserDataActionInterface => ({
     type: UserActionsType.SET_USER_DATA,
@@ -84,5 +87,15 @@ export const addTweetToBookmarks = (payload: string): AddTweetToBookmarksActionI
 
 export const startUseTwitter = (payload: number): StartUseTwitterActionInterface => ({
     type: UserActionsType.START_USE_TWITTER,
+    payload,
+});
+
+export const fetchReadMessages = (payload: number): FetchReadMessagesActionInterface => ({
+    type: UserActionsType.FETCH_READ_MESSAGES,
+    payload,
+});
+
+export const setUnreadMessage = (payload: ChatMessage): SetUnreadMessageActionInterface => ({
+    type: UserActionsType.SET_UNREAD_MESSAGE,
     payload,
 });

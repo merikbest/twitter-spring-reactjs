@@ -103,6 +103,11 @@ const SideMenu: FC = (): ReactElement => {
                         <div>
                             <Hidden smDown>
                                 <Typography className={classes.label} variant="h6">
+                                    {(myProfile?.unreadMessages?.length !== 0) ? (
+                                        <span className={classes.count}>
+                                            {myProfile?.unreadMessages?.length}
+                                        </span>
+                                    ) : null}
                                     {(location.pathname.includes("/messages")) ? (
                                         <span>{MessagesIconFilled}</span>
                                     ) : (

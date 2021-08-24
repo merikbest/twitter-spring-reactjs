@@ -24,6 +24,7 @@ public class UserResponse {
     private ImageResponse wallpaper;
     private boolean profileCustomized;
     private boolean profileStarted;
+    private List<ChatMessageResponse> unreadMessages;
     private List<FollowerResponse> followers;
     private List<FollowerResponse> following;
 }

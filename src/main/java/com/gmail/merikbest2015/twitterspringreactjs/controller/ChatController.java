@@ -7,6 +7,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.ChatMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 public class ChatController {
 
     private final ChatMapper chatMapper;
+    private final SimpMessagingTemplate messagingTemplate;
 
     @GetMapping("/users")
     public ResponseEntity<List<ChatResponse>> getUserChats() {
@@ -40,6 +42,9 @@ public class ChatController {
 
     @PostMapping("/add/message")
     public ResponseEntity<ChatMessageResponse> addMessage(@RequestBody ChatMessageRequest chatMessage) {
-        return ResponseEntity.ok(chatMapper.addMessage(chatMessage));
+        ChatMessageResponse message = chatMapper.addMessage(chatMessage);
+        message.getChat().getParticipants()
+                .forEach(user -> messagingTemplate.convertAndSend("/topic/chat/" + user.getId(), message));
+        return ResponseEntity.ok(message);
     }
 }

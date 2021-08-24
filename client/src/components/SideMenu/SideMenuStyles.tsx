@@ -61,10 +61,10 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
     },
     count: {
         position: "absolute",
-        padding: 0,
+        padding: -1,
         marginLeft: 13,
-        width: 16,
-        height: 16,
+        width: 18,
+        height: 18,
         borderRadius: "50%",
         backgroundColor: 'rgb(29, 161, 242)',
         fontSize: 11,

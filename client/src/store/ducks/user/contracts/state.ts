@@ -1,5 +1,6 @@
 import {LoadingStatus} from "../../../types";
 import {Image, Tweet} from "../../tweets/contracts/state";
+import {ChatMessage} from "../../chatMessages/contracts/state";
 
 export interface User {
     id?: number;
@@ -22,6 +23,7 @@ export interface User {
     pinnedTweet?: Tweet;
     bookmarks?: Bookmark[];
     notifications?: Notification[];
+    unreadMessages?: ChatMessage[];
     followers?: User[];
     following?: User[];
 }
