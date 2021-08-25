@@ -20,6 +20,7 @@ public class UserResponse {
     private Long notificationsCount;
     private CommonTweetResponse pinnedTweet;
     private List<BookmarkResponse> bookmarks;
+//    private List<NotificationResponse> notifications;
     private ImageResponse avatar;
     private ImageResponse wallpaper;
     private boolean profileCustomized;

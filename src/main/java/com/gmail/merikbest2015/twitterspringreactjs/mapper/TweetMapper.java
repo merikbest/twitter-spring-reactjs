@@ -1,11 +1,13 @@
 package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.NotificationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.service.TweetService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,6 +19,7 @@ public class TweetMapper {
 
     private final ModelMapper modelMapper;
     private final TweetService tweetService;
+    @Lazy private final UserMapper userMapper;
 
     private Tweet convertToTweetEntity(TweetRequest tweetRequest) {
         return modelMapper.map(tweetRequest, Tweet.class);
@@ -48,12 +51,12 @@ public class TweetMapper {
         return convertToTweetResponse(tweetService.createTweet(convertToTweetEntity(tweetRequest)));
     }
 
-    public TweetResponse likeTweet(Long tweetId) {
-        return convertToTweetResponse(tweetService.likeTweet(tweetId));
+    public NotificationResponse likeTweet(Long tweetId) {
+        return userMapper.convertToNotificationResponse(tweetService.likeTweet(tweetId));
     }
 
-    public TweetResponse retweet(Long tweetId) {
-        return convertToTweetResponse(tweetService.retweet(tweetId));
+    public NotificationResponse retweet(Long tweetId) {
+        return userMapper.convertToNotificationResponse(tweetService.retweet(tweetId));
     }
 
     public List<TweetResponse> searchTweets(String text) {

@@ -10,6 +10,6 @@ public class NotificationResponse {
     private Long id;
     private LocalDateTime date;
     private NotificationType notificationType;
-    private UserResponse user;
-    private TweetResponse tweet;
+    private NotificationUserResponse user;
+    private NotificationTweetResponse tweet;
 }

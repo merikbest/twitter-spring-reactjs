@@ -22,18 +22,9 @@ export interface User {
     notificationsCount?: number;
     pinnedTweet?: Tweet;
     bookmarks?: Bookmark[];
-    notifications?: Notification[];
     unreadMessages?: ChatMessage[];
     followers?: User[];
     following?: User[];
-}
-
-export interface Notification {
-    id: number;
-    date: string;
-    notificationType: string;
-    user: User;
-    tweet: Tweet;
 }
 
 export interface Bookmark {

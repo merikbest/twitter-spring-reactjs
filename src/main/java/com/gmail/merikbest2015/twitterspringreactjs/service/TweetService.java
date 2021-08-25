@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service;
 
+import com.gmail.merikbest2015.twitterspringreactjs.model.Notification;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 
 import java.util.List;
@@ -15,9 +16,9 @@ public interface TweetService {
 
     List<Tweet> searchTweets(String text);
 
-    Tweet likeTweet(Long tweetId);
+    Notification likeTweet(Long tweetId);
 
-    Tweet retweet(Long tweetId);
+    Notification retweet(Long tweetId);
 
     Tweet replyTweet(Long tweetId, Tweet reply);
 }

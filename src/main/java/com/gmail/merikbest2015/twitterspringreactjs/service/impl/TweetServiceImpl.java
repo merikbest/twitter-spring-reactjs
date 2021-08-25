@@ -100,7 +100,7 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
-    public Tweet likeTweet(Long tweetId) {
+    public Notification likeTweet(Long tweetId) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());
         Tweet tweet = tweetRepository.getOne(tweetId);
@@ -136,14 +136,13 @@ public class TweetServiceImpl implements TweetService {
             tweet.getUser().setNotificationsCount(tweet.getUser().getNotificationsCount() + 1);
             List<Notification> notifications = tweet.getUser().getNotifications();
             notifications.add(newNotification);
+            return newNotification;
         }
-
-        userRepository.save(user);
-        return tweetRepository.save(tweet);
+        return notification.get();
     }
 
     @Override
-    public Tweet retweet(Long tweetId) {
+    public Notification retweet(Long tweetId) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());
         Tweet tweet = tweetRepository.getOne(tweetId);
@@ -181,10 +180,9 @@ public class TweetServiceImpl implements TweetService {
             tweet.getUser().setNotificationsCount(tweet.getUser().getNotificationsCount() + 1);
             List<Notification> notifications = tweet.getUser().getNotifications();
             notifications.add(newNotification);
+            return newNotification;
         }
-
-        userRepository.save(user);
-        return tweetRepository.save(tweet);
+        return notification.get();
     }
 
     @Override

@@ -22,6 +22,7 @@ import NotificationInfo from "./pages/Notifications/NotificationInfo/Notificatio
 import Messages from "./pages/Messages/Messages";
 import {setChatMessage} from "./store/ducks/chatMessages/actionCreators";
 import {WS_URL} from "./util/url";
+import {setNotification} from "./store/ducks/notifications/actionCreators";
 
 let stompClient: CompatClient | null = null;
 
@@ -62,6 +63,9 @@ const App: FC = (): ReactElement => {
                     if (myProfile.id !== JSON.parse(response.body).author.id) {
                         dispatch(setUnreadMessage(JSON.parse(response.body)));
                     }
+                });
+                stompClient?.subscribe("/topic/notifications/" + myProfile.id, (response) => {
+                    dispatch(setNotification(JSON.parse(response.body)));
                 });
             });
         }

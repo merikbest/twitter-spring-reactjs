@@ -1,10 +1,13 @@
 package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.NotificationResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.NotificationTweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.TweetMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +18,7 @@ import java.util.List;
 public class TweetController {
 
     private final TweetMapper tweetMapper;
+    private final SimpMessagingTemplate messagingTemplate;
 
     @GetMapping
     public ResponseEntity<List<TweetResponse>> getTweets() {
@@ -42,13 +46,17 @@ public class TweetController {
     }
 
     @GetMapping("/like/{tweetId}")
-    public ResponseEntity<TweetResponse> likeTweet(@PathVariable Long tweetId) {
-        return ResponseEntity.ok(tweetMapper.likeTweet(tweetId));
+    public ResponseEntity<NotificationTweetResponse> likeTweet(@PathVariable Long tweetId) {
+        NotificationResponse notification = tweetMapper.likeTweet(tweetId);
+        messagingTemplate.convertAndSend("/topic/notifications/" + notification.getTweet().getUser().getId(), notification);
+        return ResponseEntity.ok(notification.getTweet());
     }
 
     @GetMapping("/retweet/{tweetId}")
-    public ResponseEntity<TweetResponse> retweet(@PathVariable Long tweetId) {
-        return ResponseEntity.ok(tweetMapper.retweet(tweetId));
+    public ResponseEntity<NotificationTweetResponse> retweet(@PathVariable Long tweetId) {
+        NotificationResponse notification = tweetMapper.retweet(tweetId);
+        messagingTemplate.convertAndSend("/topic/notifications/" + notification.getTweet().getUser().getId(), notification);
+        return ResponseEntity.ok(notification.getTweet());
     }
 
     @PostMapping("/reply/{tweetId}")

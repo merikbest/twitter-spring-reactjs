@@ -29,7 +29,7 @@ public class UserMapper {
         return modelMapper.map(image, ImageResponse.class);
     }
 
-    private NotificationResponse convertToNotificationResponse(Notification notification) {
+    NotificationResponse convertToNotificationResponse(Notification notification) {
         return modelMapper.map(notification, NotificationResponse.class);
     }
 

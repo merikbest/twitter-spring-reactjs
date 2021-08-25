@@ -1,5 +1,5 @@
 import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
 import {Avatar, CircularProgress, Typography} from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
@@ -7,31 +7,25 @@ import Tab from "@material-ui/core/Tab";
 import Paper from "@material-ui/core/Paper";
 
 import {useNotificationsStyles} from "./NotificationsStyles";
-import {UserApi} from "../../services/api/userApi";
-import {Notification} from "../../store/ducks/user/contracts/state";
 import {LikeIcon, RetweetIcon} from "../../icons";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {textFormatter} from "../../util/textFormatter";
+import {selectIsNotificationsLoading, selectNotificationsItems} from "../../store/ducks/notifications/selectors";
+import {fetchNotifications} from "../../store/ducks/notifications/actionCreators";
 import {fetchUserData} from "../../store/ducks/user/actionCreators";
 
 const Notifications: FC = (): ReactElement => {
     const classes = useNotificationsStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [notifications, setNotifications] = useState<Notification[]>();
+    const notifications = useSelector(selectNotificationsItems);
+    const isNotificationLoading = useSelector(selectIsNotificationsLoading);
     const [activeTab, setActiveTab] = useState<number>(0);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        setIsLoading(true);
-
-        UserApi.getUserNotifications()
-            .then((response) => {
-                setNotifications(response.data);
-                setIsLoading(false);
-            })
-            .then(() => dispatch(fetchUserData()));
+        dispatch(fetchNotifications());
+        dispatch(fetchUserData())
     }, []);
 
     const handleChangeTab = (event: ChangeEvent<{}>, newValue: number): void => {
@@ -44,10 +38,6 @@ const Notifications: FC = (): ReactElement => {
         history.push(`/user/${userId}`);
     };
 
-    const handleShowFollowing = (): void => {
-
-    };
-
     return (
         <Paper className={classes.container} variant="outlined">
             <Paper className={classes.header}>
@@ -58,17 +48,17 @@ const Notifications: FC = (): ReactElement => {
             <div style={{paddingTop: 57,}}>
                 <div className={classes.tabs}>
                     <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
-                        <Tab onClick={handleShowFollowing} className={classes.tab} label="All"/>
-                        <Tab onClick={handleShowFollowing} className={classes.tab} label="Mentions"/>
+                        <Tab className={classes.tab} label="All"/>
+                        <Tab className={classes.tab} label="Mentions"/>
                     </Tabs>
                 </div>
-                {isLoading ? (
+                {isNotificationLoading ? (
                     <div className={classes.loading}>
                         <CircularProgress/>
                     </div>
                 ) : (
                     (activeTab === 0) ? (
-                        (notifications?.length === 0) ? (
+                        (notifications.length === 0) ? (
                             <div>
                                 <div className={classes.title}>
                                     Nothing to see here — yet
@@ -79,7 +69,7 @@ const Notifications: FC = (): ReactElement => {
                             </div>
                         ) : (
                             <div>
-                                {notifications?.map((notification) => (
+                                {notifications.map((notification) => (
                                     <Link className={classes.notificationLink} to={{
                                         pathname: "/notification",
                                         state: {notification: notification}
