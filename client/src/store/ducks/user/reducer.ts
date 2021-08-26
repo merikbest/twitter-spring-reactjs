@@ -1,6 +1,6 @@
 import produce, {Draft} from 'immer';
 
-import {UserState} from "./contracts/state";
+import {User, UserState} from "./contracts/state";
 import {UserActions, UserActionsType} from './contracts/actionTypes';
 import {LoadingStatus} from '../../types';
 
@@ -60,6 +60,11 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
             if (draft.data?.unreadMessages) {
                 draft.data.unreadMessages = [...draft.data.unreadMessages, action.payload];
             }
+            draft.status = LoadingStatus.SUCCESS;
+            break;
+
+        case UserActionsType.SET_NEW_NOTIFICATION:
+            draft.data = {...draft.data as User, notificationsCount: draft.data?.notificationsCount! + 1};
             draft.status = LoadingStatus.SUCCESS;
             break;
 

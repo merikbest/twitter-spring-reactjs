@@ -17,7 +17,7 @@ export const notificationsReducer = produce((draft: Draft<NotificationsState>, a
             break;
 
         case NotificationsActionsType.SET_NOTIFICATION:
-            draft.items = [...draft.items, action.payload];
+            draft.items = [action.payload, ...draft.items];
             draft.loadingState = LoadingStatus.LOADED;
             break;
 

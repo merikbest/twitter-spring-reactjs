@@ -23,6 +23,7 @@ export enum UserActionsType {
     START_USE_TWITTER = 'user/START_USE_TWITTER',
     FETCH_READ_MESSAGES = 'user/FETCH_READ_MESSAGES',
     SET_UNREAD_MESSAGE = 'user/SET_UNREAD_MESSAGE',
+    SET_NEW_NOTIFICATION = 'user/SET_NEW_NOTIFICATION',
 }
 
 export interface SignOutActionInterface extends Action<UserActionsType> {
@@ -103,10 +104,15 @@ export interface SetUnreadMessageActionInterface extends Action<UserActionsType>
     payload: ChatMessage;
 }
 
+export interface SetNewNotificationActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.SET_NEW_NOTIFICATION;
+}
+
 export type UserActions =
     | SetUserDataActionInterface
     | SetUserLoadingStateActionInterface
     | SetUnreadMessageActionInterface
+    | SetNewNotificationActionInterface
     | SignOutActionInterface
     | FollowUserActionInterface
     | UnfollowUserActionInterface

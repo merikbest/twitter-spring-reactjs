@@ -9,6 +9,7 @@ import {
     FetchUserDataActionInterface,
     FollowActionInterface,
     FollowUserActionInterface,
+    SetNewNotificationActionInterface,
     SetUnreadMessageActionInterface,
     SetUserDataActionInterface,
     SetUserLoadingStateActionInterface,
@@ -98,4 +99,8 @@ export const fetchReadMessages = (payload: number): FetchReadMessagesActionInter
 export const setUnreadMessage = (payload: ChatMessage): SetUnreadMessageActionInterface => ({
     type: UserActionsType.SET_UNREAD_MESSAGE,
     payload,
+});
+
+export const setNewNotification = (): SetNewNotificationActionInterface => ({
+    type: UserActionsType.SET_NEW_NOTIFICATION,
 });

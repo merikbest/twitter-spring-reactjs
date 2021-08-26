@@ -122,9 +122,9 @@ public class TweetServiceImpl implements TweetService {
         }
 
         Optional<Notification> notification = tweet.getUser().getNotifications().stream()
-                .filter(n -> n.getNotificationType().equals(NotificationType.LIKE))
-                .filter(n -> n.getTweet().equals(tweet))
-                .filter(n -> n.getUser().equals(user))
+                .filter(n -> n.getNotificationType().equals(NotificationType.LIKE)
+                        && n.getTweet().equals(tweet)
+                        && n.getUser().equals(user))
                 .findFirst();
 
         if (notification.isEmpty()) {
@@ -136,8 +136,10 @@ public class TweetServiceImpl implements TweetService {
             tweet.getUser().setNotificationsCount(tweet.getUser().getNotificationsCount() + 1);
             List<Notification> notifications = tweet.getUser().getNotifications();
             notifications.add(newNotification);
+            userRepository.save(user);
             return newNotification;
         }
+        tweetRepository.save(tweet);
         return notification.get();
     }
 
@@ -166,9 +168,9 @@ public class TweetServiceImpl implements TweetService {
         }
 
         Optional<Notification> notification = tweet.getUser().getNotifications().stream()
-                .filter(n -> n.getNotificationType().equals(NotificationType.RETWEET))
-                .filter(n -> n.getTweet().equals(tweet))
-                .filter(n -> n.getUser().equals(user))
+                .filter(n -> n.getNotificationType().equals(NotificationType.RETWEET)
+                        && n.getTweet().equals(tweet)
+                        && n.getUser().equals(user))
                 .findFirst();
 
         if (notification.isEmpty()) {
@@ -180,8 +182,10 @@ public class TweetServiceImpl implements TweetService {
             tweet.getUser().setNotificationsCount(tweet.getUser().getNotificationsCount() + 1);
             List<Notification> notifications = tweet.getUser().getNotifications();
             notifications.add(newNotification);
+            userRepository.save(user);
             return newNotification;
         }
+        tweetRepository.save(tweet);
         return notification.get();
     }
 

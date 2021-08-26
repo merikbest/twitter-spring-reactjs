@@ -16,6 +16,7 @@ import {Chat, ChatParticipant} from "../../store/ducks/chats/contracts/state";
 import {addChatMessage, fetchChatMessages} from "../../store/ducks/chatMessages/actionCreators";
 import {selectChatMessagesItems} from "../../store/ducks/chatMessages/selectors";
 import {fetchReadMessages} from "../../store/ducks/user/actionCreators";
+import {formatChatMessageDate} from "../../util/formatDate";
 
 const Messages: FC = (): ReactElement => {
     const classes = useMessagesStyles();
@@ -42,7 +43,7 @@ const Messages: FC = (): ReactElement => {
 
     const scrollToBottom = () => {
         if (chatEndRef.current) {
-            chatEndRef.current.scrollIntoView({ behavior: 'smooth' })
+            chatEndRef.current.scrollIntoView({behavior: 'smooth'})
         }
     };
 
@@ -212,7 +213,8 @@ const Messages: FC = (): ReactElement => {
                                                 <span>{message.text}</span>
                                             </div>
                                             <div className={classes.myMessageDate}>
-                                                <span>{CheckIcon}</span><span>{message.date}</span>
+                                                <span>{CheckIcon}</span>
+                                                <span>{formatChatMessageDate(new Date(message.date))}</span>
                                             </div>
                                         </>
                                     ) : (
@@ -236,7 +238,7 @@ const Messages: FC = (): ReactElement => {
                                                 <span>{message.text}</span>
                                             </div>
                                             <div className={classes.participantMessageDate}>
-                                                {message.date}
+                                                {formatChatMessageDate(new Date(message.date))}
                                             </div>
                                         </>
                                     )

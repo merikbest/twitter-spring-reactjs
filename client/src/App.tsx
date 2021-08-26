@@ -10,7 +10,7 @@ import {Layout} from './pages/Layout';
 import UserPage from "./pages/UserPage/UserPage";
 import {selectIsAuth, selectUserData, selectUserStatus} from "./store/ducks/user/selectors";
 import {LoadingStatus} from './store/types';
-import {fetchUserData, setUnreadMessage} from './store/ducks/user/actionCreators';
+import {fetchUserData, setNewNotification, setUnreadMessage} from './store/ducks/user/actionCreators';
 import Search from './pages/Search/Search';
 import FollowingFollowers from "./pages/FollowingFollowers/FollowingFollowers";
 import TweetImageModal from "./components/TweetImageModal/TweetImageModal";
@@ -23,6 +23,7 @@ import Messages from "./pages/Messages/Messages";
 import {setChatMessage} from "./store/ducks/chatMessages/actionCreators";
 import {WS_URL} from "./util/url";
 import {setNotification} from "./store/ducks/notifications/actionCreators";
+import {selectNotificationsItems} from "./store/ducks/notifications/selectors";
 
 let stompClient: CompatClient | null = null;
 
@@ -30,6 +31,7 @@ const App: FC = (): ReactElement => {
     const history = useHistory();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
+    const notifications = useSelector(selectNotificationsItems);
     const isAuth = useSelector(selectIsAuth);
     const loadingStatus = useSelector(selectUserStatus);
     const isReady = loadingStatus !== LoadingStatus.NEVER && loadingStatus !== LoadingStatus.LOADING;
@@ -65,7 +67,11 @@ const App: FC = (): ReactElement => {
                     }
                 });
                 stompClient?.subscribe("/topic/notifications/" + myProfile.id, (response) => {
-                    dispatch(setNotification(JSON.parse(response.body)));
+                    const isExist = notifications.find(notification => notification.id === JSON.parse(response.body).id);
+                    if (!isExist) {
+                        dispatch(setNotification(JSON.parse(response.body)));
+                        dispatch(setNewNotification());
+                    }
                 });
             });
         }

@@ -10,8 +10,7 @@ import {
     ReplyIcon,
     RetweetIcon,
     RetweetOutlinedIcon,
-    RetweetOutlinedIconSm,
-    ShareIcon
+    RetweetOutlinedIconSm
 } from "../../icons";
 import {useTweetComponentStyles} from "./TweetComponentStyles";
 import {formatDate} from '../../util/formatDate';
@@ -117,7 +116,8 @@ const TweetComponent: FC<TweetComponentProps> = ({
                     </Typography>
                 </div>
             )}
-            {((myProfile?.id === userProfile?.id) && (activeTab === 0) && (myProfile?.pinnedTweet?.id === id)) && (
+            {(myProfile?.id === userProfile?.id && activeTab === 0 &&
+                myProfile?.pinnedTweet?.id === id || userProfile?.pinnedTweet?.id === id) && (
                 <div className={classes.retweetWrapper}>
                     <span>{PinOutlinedIcon}</span>
                     <Typography>

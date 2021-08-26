@@ -94,6 +94,7 @@ export const useNotificationsStyles = makeStyles((theme: Theme) => ({
         },
     },
     notificationAvatar: {
+        display: "inline-block",
         width: theme.spacing(4),
         height: theme.spacing(4),
         marginBottom: 11,
