@@ -37,7 +37,9 @@ public class TweetController {
 
     @PostMapping
     public ResponseEntity<TweetResponse> createTweet(@RequestBody TweetRequest tweetRequest) {
-        return ResponseEntity.ok(tweetMapper.createTweet(tweetRequest));
+        TweetResponse tweet = tweetMapper.createTweet(tweetRequest);
+        messagingTemplate.convertAndSend("/topic/feed", tweet);
+        return ResponseEntity.ok(tweet);
     }
 
     @GetMapping("/search/{text}")

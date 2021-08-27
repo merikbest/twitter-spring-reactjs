@@ -6,7 +6,7 @@ import {CircularProgress, IconButton, Paper, Typography} from "@material-ui/core
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import {useHomeStyles} from './HomeStyles';
 import {AddTweetForm} from '../../components/AddTweetForm/AddTweetForm';
-import {fetchTweets} from "../../store/ducks/tweets/actionCreators";
+import {fetchTweets, setTweetsLoadingState} from "../../store/ducks/tweets/actionCreators";
 import {selectIsTweetsLoading, selectTweetsItems} from "../../store/ducks/tweets/selectors";
 import {BackButton} from "../../components/BackButton/BackButton";
 import {FullTweet} from "../FullTweet/FullTweet";
@@ -18,6 +18,7 @@ import Trends from "../Trends/Trends";
 import {TopTweets} from "../../icons";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import Welcome from "../../components/Welcome/Welcome";
+import {LoadingStatus} from "../../store/types";
 
 const Home: FC = (): ReactElement => {
     const classes = useHomeStyles();
@@ -28,6 +29,7 @@ const Home: FC = (): ReactElement => {
     const isLoading = useSelector(selectIsTweetsLoading);
 
     useEffect(() => {
+        dispatch(setTweetsLoadingState(LoadingStatus.NEVER));
         dispatch(fetchUserData());
         dispatch(fetchTags());
 

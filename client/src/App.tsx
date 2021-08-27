@@ -24,6 +24,7 @@ import {setChatMessage} from "./store/ducks/chatMessages/actionCreators";
 import {WS_URL} from "./util/url";
 import {setNotification} from "./store/ducks/notifications/actionCreators";
 import {selectNotificationsItems} from "./store/ducks/notifications/selectors";
+import {setTweet} from "./store/ducks/tweets/actionCreators";
 
 let stompClient: CompatClient | null = null;
 
@@ -59,6 +60,7 @@ const App: FC = (): ReactElement => {
         if (myProfile) {
             stompClient = Stomp.over(new SockJS(WS_URL));
             stompClient.connect({}, () => {
+
                 stompClient?.subscribe("/topic/chat/" + myProfile.id, (response) => {
                     dispatch(setChatMessage(JSON.parse(response.body)));
 
@@ -66,12 +68,18 @@ const App: FC = (): ReactElement => {
                         dispatch(setUnreadMessage(JSON.parse(response.body)));
                     }
                 });
+
                 stompClient?.subscribe("/topic/notifications/" + myProfile.id, (response) => {
                     const isExist = notifications.find(notification => notification.id === JSON.parse(response.body).id);
+
                     if (!isExist) {
                         dispatch(setNotification(JSON.parse(response.body)));
                         dispatch(setNewNotification());
                     }
+                });
+
+                stompClient?.subscribe("/topic/feed", (response) => {
+                    dispatch(setTweet(JSON.parse(response.body)));
                 });
             });
         }
