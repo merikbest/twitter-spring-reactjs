@@ -1,6 +1,5 @@
 import {axios} from "../../core/axios";
 import {AddTweet, Tweet} from "../../store/ducks/tweets/contracts/state";
-import {User} from "../../store/ducks/user/contracts/state";
 import {API_URL} from "../../util/url";
 import {ReplyTweet} from "../../store/ducks/tweet/contracts/state";
 
@@ -14,11 +13,6 @@ export const TweetApi = {
         const data = await axios.get<Response<Tweet[]>>(API_URL + "/tweets");
         return data.data;
     },
-    // TODO DELETE (not needed (m.b. no))
-    async fetchTweetsByUser(payload: User): Promise<Response<Tweet[]>> {
-        const data = await axios.post<Response<Tweet[]>>(API_URL + "/tweets/user", payload);
-        return data.data;
-    },
     async fetchMediaTweets(): Promise<Response<Tweet[]>> {
         const data = await axios.get<Response<Tweet[]>>(API_URL + '/tweets/media');
         return data.data;
@@ -29,6 +23,10 @@ export const TweetApi = {
     },
     async addTweet(payload: AddTweet): Promise<Response<Tweet>> {
         const data = await axios.post<Response<Tweet>>(API_URL + '/tweets', payload);
+        return data.data;
+    },
+    async deleteTweet(tweetId: string): Promise<Response<string>> {
+        const data = await axios.delete<Response<string>>(API_URL + '/tweets/' + tweetId);
         return data.data;
     },
     async searchTweets(text: string): Promise<Response<Tweet[]>> {

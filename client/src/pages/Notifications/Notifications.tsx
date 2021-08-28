@@ -25,7 +25,7 @@ const Notifications: FC = (): ReactElement => {
     useEffect(() => {
         window.scrollTo(0, 0);
         dispatch(fetchNotifications());
-        dispatch(fetchUserData())
+        dispatch(fetchUserData());
     }, []);
 
     const handleChangeTab = (event: ChangeEvent<{}>, newValue: number): void => {

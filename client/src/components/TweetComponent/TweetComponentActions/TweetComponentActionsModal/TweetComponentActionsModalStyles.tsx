@@ -1,9 +1,9 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
-export const useTweetPinModalStyles = makeStyles((theme: Theme) => ({
+export const useTweetComponentActionsModalStyles = makeStyles((theme: Theme) => ({
     modalWrapper: {
         width: 280,
-        height: 150,
+        height: (props: { modalTitle: string }) => props.modalTitle === 'Delete' ? 190 : 150,
         textAlign: "center",
         margin: "32px 20px",
         "& svg": {
@@ -35,10 +35,27 @@ export const useTweetPinModalStyles = makeStyles((theme: Theme) => ({
         backgroundColor: "rgb(239, 243, 244)",
         borderRadius: '25px',
     },
-    modalPinButton: {
+    modalButton: {
         width: 134,
         height: 40,
-        border: '1px solid',
         borderRadius: '25px',
+    },
+    modalDeleteButton: {
+        "&.MuiButton-contained": {
+            color: "#fff",
+            backgroundColor: "rgb(244, 33, 46)",
+        },
+        "&.MuiButton-contained:hover": {
+            backgroundColor: "rgb(220, 30, 41)",
+        },
+    },
+    modalPrimaryButton: {
+        "&.MuiButton-contained": {
+            color: "#fff",
+            backgroundColor: "rgb(29, 161, 242)",
+        },
+        "&.MuiButton-contained:hover": {
+            backgroundColor: "rgb(26, 145, 218)",
+        },
     },
 }));

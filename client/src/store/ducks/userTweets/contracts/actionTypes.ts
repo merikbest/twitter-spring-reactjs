@@ -14,6 +14,7 @@ export enum UserTweetsActionType {
     FETCH_RETWEETS_AND_REPLIES = "userTweets/FETCH_RETWEETS_AND_REPLIES",
     PIN_TWEET = "userTweets/PIN_TWEET",
     UNPIN_TWEET = "userTweets/UNPIN_TWEET",
+    DELETE_TWEET = "userTweets/DELETE_TWEET",
     SET_RETWEET = 'userTweets/SET_RETWEET',
     SET_LOADING_STATUS = "userTweets/SET_LOADING_STATUS",
 }
@@ -63,6 +64,11 @@ export interface UnpinTweetActionInterface extends Action<UserTweetsActionType> 
     payload: PinnedTweet;
 }
 
+export interface DeleteTweetActionInterface extends Action<UserTweetsActionType> {
+    type: UserTweetsActionType.DELETE_TWEET;
+    payload: string;
+}
+
 export interface SetUserRetweetActionInterface extends Action<UserTweetsActionType> {
     type: UserTweetsActionType.SET_RETWEET;
     payload: Tweet;
@@ -79,4 +85,5 @@ export type UserTweetsActions =
     | SetUserLikedTweetActionInterface
     | SetUserRetweetActionInterface
     | SetUserTweetsLoadingStatusInterface
-    | PinTweetActionInterface;
+    | PinTweetActionInterface
+    | DeleteTweetActionInterface;

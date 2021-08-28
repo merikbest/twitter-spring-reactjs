@@ -20,22 +20,26 @@ import {
 import {selectUserData} from "../../../store/ducks/user/selectors";
 import {Tweet} from "../../../store/ducks/tweets/contracts/state";
 import {fetchPinTweet, fetchUnpinTweet, followUser, unfollowUser} from "../../../store/ducks/user/actionCreators";
-import {pinTweet} from "../../../store/ducks/userTweets/actionCreators";
-import TweetPinModal from "../TweetPinModal/TweetPinModal";
+import {deleteTweet, pinTweet} from "../../../store/ducks/userTweets/actionCreators";
+import TweetComponentActionsModal from "./TweetComponentActionsModal/TweetComponentActionsModal";
 import {User} from "../../../store/ducks/user/contracts/state";
+import {fetchDeleteTweet} from "../../../store/ducks/tweets/actionCreators";
 
-interface TweetMoreProps {
+interface TweetComponentActionsProps {
     tweet: Tweet;
     user: User;
     activeTab?: number;
 }
 
-const TweetComponentActions: FC<TweetMoreProps> = ({tweet, user, activeTab}): ReactElement => {
+const TweetComponentActions: FC<TweetComponentActionsProps> = ({tweet, user, activeTab}): ReactElement => {
     const classes = useTweetComponentMoreStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
+
     const [open, setOpen] = useState<boolean>(false);
     const [visibleTweetPinModal, setVisibleTweetPinModal] = useState<boolean>(false);
+    const [modalTitle, setModalTitle] = useState<string>("");
+
     const follower = myProfile?.followers?.find((follower) => follower.id === user.id);
     const isTweetPinned = myProfile?.pinnedTweet?.id === tweet.id;
 
@@ -58,6 +62,13 @@ const TweetComponentActions: FC<TweetMoreProps> = ({tweet, user, activeTab}): Re
         setVisibleTweetPinModal(false);
     };
 
+    const onDeleteUserTweet = (): void => {
+        dispatch(fetchDeleteTweet(tweet.id));
+        dispatch(deleteTweet(tweet.id));
+        setOpen(false);
+        setVisibleTweetPinModal(false);
+    };
+
     const handleFollow = (): void => {
         if (follower) {
             dispatch(unfollowUser(user!));
@@ -66,11 +77,12 @@ const TweetComponentActions: FC<TweetMoreProps> = ({tweet, user, activeTab}): Re
         }
     };
 
-    const onOpenTweetPinModal = (): void => {
+    const onOpenTweetComponentActionsModal = (title: string): void => {
+        setModalTitle(title);
         setVisibleTweetPinModal(true);
     };
 
-    const onCloseTweetPinModal = (): void => {
+    const onCloseTweetComponentActionsModal = (): void => {
         setVisibleTweetPinModal(false);
     };
 
@@ -86,11 +98,14 @@ const TweetComponentActions: FC<TweetMoreProps> = ({tweet, user, activeTab}): Re
                             <List>
                                 {(myProfile?.id === user.id) ? (
                                     <>
-                                        <ListItem className={classes.delete}>
+                                        <ListItem
+                                            className={classes.delete}
+                                            onClick={() => onOpenTweetComponentActionsModal("Delete")}
+                                        >
                                             <span>{DeleteIcon}</span>
                                             <span className={classes.text}>Delete</span>
                                         </ListItem>
-                                        <ListItem onClick={onOpenTweetPinModal}>
+                                        <ListItem onClick={() => onOpenTweetComponentActionsModal("Pin")}>
                                             <span className={classes.textIcon}>{PinIcon}</span>
                                             <span className={classes.text}>
                                             {(isTweetPinned) ? (
@@ -161,11 +176,13 @@ const TweetComponentActions: FC<TweetMoreProps> = ({tweet, user, activeTab}): Re
                     ) : null}
                 </div>
             </ClickAwayListener>
-            <TweetPinModal
+            <TweetComponentActionsModal
+                modalTitle={modalTitle}
                 isTweetPinned={isTweetPinned}
-                visibleTweetPinModal={visibleTweetPinModal}
-                onCloseTweetPinModal={onCloseTweetPinModal}
-                onPinUserTweet={onPinUserTweet}/>
+                visibleTweetComponentActionsModal={visibleTweetPinModal}
+                onCloseTweetComponentActionsModal={onCloseTweetComponentActionsModal}
+                onPinUserTweet={onPinUserTweet}
+                onDeleteUserTweet={onDeleteUserTweet}/>
         </div>
     );
 };

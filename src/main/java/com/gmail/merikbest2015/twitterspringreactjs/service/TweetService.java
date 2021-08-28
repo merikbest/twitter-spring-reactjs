@@ -6,6 +6,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import java.util.List;
 
 public interface TweetService {
+
     List<Tweet> getTweets();
 
     Tweet getTweetById(Long tweetId);
@@ -13,6 +14,8 @@ public interface TweetService {
     List<Tweet> getMediaTweets();
 
     Tweet createTweet(Tweet tweet);
+
+    String deleteTweet(Long tweetId);
 
     List<Tweet> searchTweets(String text);
 

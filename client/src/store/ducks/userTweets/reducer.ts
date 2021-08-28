@@ -39,6 +39,10 @@ export const userTweetsReducer = produce((draft: Draft<UserTweetsState>, action:
             }
             break;
 
+        case UserTweetsActionType.DELETE_TWEET:
+            draft.items = draft.items.filter((tweet) => tweet.id !== action.payload);
+            break;
+
         case UserTweetsActionType.SET_LOADING_STATUS:
             draft.loadingState = action.payload;
             break;

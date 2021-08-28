@@ -11,6 +11,7 @@ import {TweetApi} from "../../../services/api/tweetApi";
 import {Tweet} from "./contracts/state";
 import {
     FetchAddTweetActionInterface,
+    FetchDeleteTweetActionInterface,
     FetchLikedTweetsActionInterface,
     FetchLikeTweetActionInterface,
     FetchRetweetActionInterface,
@@ -88,6 +89,16 @@ export function* fetchAddTweetRequest({payload}: FetchAddTweetActionInterface) {
     }
 }
 
+export function* fetchDeleteTweetRequest({payload}: FetchDeleteTweetActionInterface) {
+    try {
+        yield put(setTweetsLoadingState(LoadingStatus.LOADING));
+        yield call(TweetApi.deleteTweet, payload);
+        yield put(setTweetsLoadingState(LoadingStatus.LOADED));
+    } catch (e) {
+        yield put(setTweetsLoadingState(LoadingStatus.ERROR));
+    }
+}
+
 export function* fetchLikeTweetRequest({payload}: FetchLikeTweetActionInterface) {
     const item: Tweet = yield call(TweetApi.likeTweet, payload);
     yield put(likeTweet(item));
@@ -116,6 +127,7 @@ export function* tweetsSaga() {
     yield takeLatest(TweetsActionType.FETCH_TWEETS, fetchTweetsRequest);
     yield takeLatest(TweetsActionType.FETCH_MEDIA_TWEETS, fetchMediaTweetsRequest);
     yield takeLatest(TweetsActionType.FETCH_ADD_TWEET, fetchAddTweetRequest);
+    yield takeLatest(TweetsActionType.FETCH_DELETE_TWEET, fetchDeleteTweetRequest);
     yield takeLatest(TweetsActionType.FETCH_LIKE_TWEET, fetchLikeTweetRequest);
     yield takeLatest(TweetsActionType.FETCH_RETWEET, fetchRetweetRequest);
     yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_TAG, fetchTweetsByTagRequest);

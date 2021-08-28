@@ -8,7 +8,7 @@ import {UserApi} from "../../../services/api/userApi";
 
 export function* fetchNotificationsRequest() {
     try {
-        setNotificationsLoadingState(LoadingStatus.LOADING);
+        yield put(setNotificationsLoadingState(LoadingStatus.LOADING));
         const items: Notification[] = yield call(UserApi.getUserNotifications);
         yield put(setNotifications(items));
     } catch (error) {

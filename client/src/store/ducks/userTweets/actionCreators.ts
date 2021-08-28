@@ -1,6 +1,7 @@
 import {PinnedTweet, UserTweetsState} from "./contracts/state";
 import {LoadingStatus} from "../../types";
 import {
+    DeleteTweetActionInterface,
     FetchUserLikedTweetsActionInterface,
     FetchUserMediaTweetsActionInterface,
     FetchUserRetweetsAndRepliesActionInterface,
@@ -58,6 +59,11 @@ export const pinTweet = (payload: PinnedTweet): PinTweetActionInterface => ({
 
 export const unpinTweet = (payload: PinnedTweet): UnpinTweetActionInterface => ({
     type: UserTweetsActionType.UNPIN_TWEET,
+    payload
+});
+
+export const deleteTweet = (payload: string): DeleteTweetActionInterface => ({
+    type: UserTweetsActionType.DELETE_TWEET,
     payload
 });
 

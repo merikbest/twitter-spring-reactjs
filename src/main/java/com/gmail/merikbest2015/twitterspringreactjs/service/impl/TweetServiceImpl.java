@@ -11,6 +11,7 @@ import java.security.Principal;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +22,7 @@ public class TweetServiceImpl implements TweetService {
     private final RetweetRepository retweetRepository;
     private final LikeTweetRepository likeTweetRepository;
     private final NotificationRepository notificationRepository;
+    private final ImageRepository imageRepository;
     private final TagRepository tagRepository;
 
     @Override
@@ -58,7 +60,7 @@ public class TweetServiceImpl implements TweetService {
         }
 
         if (!hashtags.isEmpty()) {
-            for (String hashtag : hashtags) {
+            hashtags.forEach(hashtag -> {
                 Tag tag = tagRepository.findByTagName(hashtag);
 
                 if (tag != null) {
@@ -75,9 +77,37 @@ public class TweetServiceImpl implements TweetService {
                     newTag.setTweets(Collections.singletonList(tweet));
                     tagRepository.save(newTag);
                 }
-            }
+            });
         }
         return createdTweet;
+    }
+
+    @Override
+    public String deleteTweet(Long tweetId) {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(principal.getName());
+        Tweet tweet = user.getTweets().stream()
+                .filter(t -> t.getId().equals(tweetId))
+                .findFirst().get();
+        tweet.getImages().forEach(imageRepository::delete);
+        tweet.getLikedTweets().forEach(likeTweetRepository::delete);
+        tweet.getRetweets().forEach(retweetRepository::delete);
+        tweet.getReplies().forEach(reply -> reply.getUser().getTweets()
+                .removeIf(replyingTweet -> replyingTweet.equals(reply)));
+        tweet.getReplies().removeAll(tweet.getReplies());
+        tweet.getReplies().stream()
+                .filter(reply -> reply.getAddressedId().equals(user.getId()))
+                .forEach(tweetRepository::delete);
+        List<Notification> notifications = user.getNotifications().stream()
+                .filter(notification -> notification.getTweet().equals(tweet))
+                .collect(Collectors.toList());
+        notifications.forEach(notification -> {
+            user.getNotifications().remove(notification);
+            notificationRepository.delete(notification);
+        });
+        user.getTweets().remove(tweet);
+        tweetRepository.delete(tweet);
+        return "Tweet successfully deleted.";
     }
 
     @Override
