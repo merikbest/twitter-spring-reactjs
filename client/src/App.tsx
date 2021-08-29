@@ -11,7 +11,7 @@ import UserPage from "./pages/UserPage/UserPage";
 import {selectIsAuth, selectUserData, selectUserStatus} from "./store/ducks/user/selectors";
 import {LoadingStatus} from './store/types';
 import {fetchUserData, setNewNotification, setUnreadMessage} from './store/ducks/user/actionCreators';
-import Search from './pages/Search/Search';
+import Explore from './pages/Explore/Explore';
 import FollowingFollowers from "./pages/FollowingFollowers/FollowingFollowers";
 import TweetImageModal from "./components/TweetImageModal/TweetImageModal";
 import Login from "./pages/Login/Login";
@@ -94,7 +94,7 @@ const App: FC = (): ReactElement => {
                     <Route path="/account/login" component={Login} exact/>
                     <Route path="/account/forgot" component={ForgotPassword}/>
                     <Route path="/home" component={Home}/>
-                    <Route path="/search" component={Search}/>
+                    <Route path="/search" component={Explore}/>
                     <Route path="/notifications" component={Notifications} exact/>
                     <Route path="/notification" component={NotificationInfo} exact/>
                     <Route path="/messages" component={Messages}/>

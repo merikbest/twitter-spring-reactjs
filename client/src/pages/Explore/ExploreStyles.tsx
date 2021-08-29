@@ -1,6 +1,6 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
-export const useSearchStyles = makeStyles((theme: Theme) => ({
+export const useExploreStyles = makeStyles((theme: Theme) => ({
     container: {
         borderRadius: 0,
         minHeight: '100vh',

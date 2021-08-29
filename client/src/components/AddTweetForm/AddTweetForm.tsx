@@ -22,6 +22,7 @@ import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {CloseIcon, EmojiIcon, GifIcon, PullIcon, ScheduleIcon} from "../../icons";
 import {selectIsTweetLoading} from "../../store/ducks/tweet/selectors";
 import {LoadingStatus} from "../../store/types";
+import Poll from "./Poll/Poll";
 
 interface AddTweetFormProps {
     maxRows?: number;
@@ -64,6 +65,15 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const id = open ? "simple-popover" : undefined;
+    // Poll
+    const [visiblePoll, setVisiblePoll] = useState<boolean>(false);
+    const [choice1, setChoice1] = useState<string>("");
+    const [choice2, setChoice2] = useState<string>("");
+    const [choice3, setChoice3] = useState<string>("");
+    const [choice4, setChoice4] = useState<string>("");
+    const [day, setDay] = useState<number>(1);
+    const [hour, setHour] = useState<number>(0);
+    const [minute, setMinute] = useState<number>(0);
 
     const handleChangeTextarea = (e: FormEvent<HTMLTextAreaElement>): void => {
         if (e.currentTarget) {
@@ -132,6 +142,21 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
         setImages((prev) => prev.filter((obj) => obj.src !== images[0].src));
     };
 
+    const onOpenPoll = (): void => {
+        setVisiblePoll(true);
+    };
+
+    const onClosePoll = (): void => {
+        setChoice1("");
+        setChoice2("");
+        setChoice3("");
+        setChoice4("");
+        setDay(1);
+        setHour(0);
+        setMinute(0);
+        setVisiblePoll(false);
+    };
+
     return (
         <div>
             <div className={classes.content}>
@@ -143,7 +168,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
                 <TextareaAutosize
                     onChange={handleChangeTextarea}
                     className={classes.contentTextarea}
-                    placeholder={title}
+                    placeholder={visiblePoll ? "Ask a question..." : title}
                     value={text}
                     rowsMax={maxRows}
                     rowsMin={images.length !== 0 ? 1 : minRows}
@@ -157,6 +182,24 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
                     </IconButton>
                 </div>)
             }
+            <Poll
+                choice1={choice1}
+                choice2={choice2}
+                choice3={choice3}
+                choice4={choice4}
+                setChoice1={setChoice1}
+                setChoice2={setChoice2}
+                setChoice3={setChoice3}
+                setChoice4={setChoice4}
+                day={day}
+                hour={hour}
+                minute={minute}
+                setDay={setDay}
+                setHour={setHour}
+                setMinute={setMinute}
+                visiblePoll={visiblePoll}
+                onClose={onClosePoll}
+            />
             <div className={classes.footer}>
                 <div className={classes.footerWrapper}>
                     <UploadImages onChangeImages={setImages}/>
@@ -167,7 +210,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
                     </div>
                     {(!isModal) && (
                         <div className={classes.footerImage}>
-                            <IconButton color="primary">
+                            <IconButton onClick={onOpenPoll} color="primary">
                                 <span>{PullIcon}</span>
                             </IconButton>
                         </div>)
@@ -209,7 +252,12 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
                     )}
                     <Button
                         onClick={buttonName === "Tweet" ? handleClickAddTweet : handleClickReplyTweet}
-                        disabled={isTweetsLoading || isReplyLoading || !text || text.length >= MAX_LENGTH}
+                        disabled={
+                            visiblePoll ? (
+                                !choice1 || !choice2 || !text || text.length >= MAX_LENGTH
+                            ) : (
+                                isTweetsLoading || isReplyLoading || !text || text.length >= MAX_LENGTH
+                            )}
                         color="primary"
                         variant="contained">
                         {isTweetsLoading || isReplyLoading ? (

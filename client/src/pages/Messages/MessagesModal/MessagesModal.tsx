@@ -68,7 +68,7 @@ const MessagesModal: FC<MessagesModalProps> = ({visible, onClose}): ReactElement
                 <form onSubmit={handleClickSearch}>
                     <MessagesModalInput
                         fullWidth
-                        placeholder="Search people"
+                        placeholder="Explore people"
                         variant="outlined"
                         onChange={(event) => setText(event.target.value)}
                         value={text}

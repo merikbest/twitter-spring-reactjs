@@ -101,7 +101,7 @@ const Messages: FC = (): ReactElement => {
                             <>
                                 <div className={classes.searchWrapper}>
                                     <PeopleSearchInput
-                                        placeholder="Search for people and groups"
+                                        placeholder="Explore for people and groups"
                                         variant="outlined"
                                         onChange={(event) => setText(event.target.value)}
                                         value={text}

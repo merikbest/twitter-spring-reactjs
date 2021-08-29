@@ -20,13 +20,13 @@ import {selectIsTweetsLoading, selectTweetsItems} from "../../store/ducks/tweets
 import {User} from "../../store/ducks/user/contracts/state";
 import Follower from "../../components/Follower/Follower";
 import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
-import {useSearchStyles} from "./SearchStyles";
+import {useExploreStyles} from "./ExploreStyles";
 import {EditIcon} from "../../icons";
 import {fetchUsersSearch, fetchUsersSearchByUsername} from "../../store/ducks/usersSearch/actionCreators";
 import {selectUsersSearch, selectUsersSearchIsLoading} from "../../store/ducks/usersSearch/selectors";
 
-const Search: FC = (): ReactElement => {
-    const classes = useSearchStyles();
+const Explore: FC = (): ReactElement => {
+    const classes = useExploreStyles();
     const dispatch = useDispatch();
     const isTweetsLoading = useSelector(selectIsTweetsLoading);
     const isUsersLoading = useSelector(selectUsersSearchIsLoading);
@@ -104,7 +104,7 @@ const Search: FC = (): ReactElement => {
                         </div>
                         <MainSearchTextField
                             variant="outlined"
-                            placeholder="Search Twitter"
+                            placeholder="Explore Twitter"
                             onChange={(event) => setText(event.target.value)}
                             value={text}
                             InputProps={{
@@ -147,4 +147,4 @@ const Search: FC = (): ReactElement => {
     );
 };
 
-export default Search;
+export default Explore;

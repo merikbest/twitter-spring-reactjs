@@ -69,12 +69,10 @@ const Home: FC = (): ReactElement => {
             </Paper>
 
             <Route path='/home' exact>
-                <Paper variant="outlined">
-                    <div className={classes.addForm}>
-                        <AddTweetForm title={"What's happening?"} buttonName={"Tweet"}/>
-                    </div>
-                    <div className={classes.divider}/>
-                </Paper>
+                <div className={classes.addForm}>
+                    <AddTweetForm title={"What's happening?"} buttonName={"Tweet"}/>
+                </div>
+                <div className={classes.divider}/>
             </Route>
 
             <Route path="/home/connect" exact>

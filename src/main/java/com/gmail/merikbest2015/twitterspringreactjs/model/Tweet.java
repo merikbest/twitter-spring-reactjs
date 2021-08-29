@@ -30,6 +30,9 @@ public class Tweet {
     @Column(name = "addressed_id")
     private Long addressedId;
 
+    @OneToOne
+    private Poll poll;
+
     @ManyToOne
     private User user;
 

@@ -94,10 +94,9 @@ public class TweetServiceImpl implements TweetService {
         tweet.getRetweets().forEach(retweetRepository::delete);
         tweet.getReplies().forEach(reply -> reply.getUser().getTweets()
                 .removeIf(replyingTweet -> replyingTweet.equals(reply)));
+        List<Tweet> replies = new ArrayList<>(tweet.getReplies());
         tweet.getReplies().removeAll(tweet.getReplies());
-        tweet.getReplies().stream()
-                .filter(reply -> reply.getAddressedId().equals(user.getId()))
-                .forEach(tweetRepository::delete);
+        tweetRepository.deleteAll(replies);
         List<Notification> notifications = user.getNotifications().stream()
                 .filter(notification -> notification.getTweet().equals(tweet))
                 .collect(Collectors.toList());
