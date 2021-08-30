@@ -11,4 +11,6 @@ public class TweetRequest {
     private String addressedUsername;
     private Long addressedId;
     private List<Image> images;
+    private Long pollDateTime;
+    private List<String> choices;
 }

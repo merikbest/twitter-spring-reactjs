@@ -10,7 +10,7 @@ import {EmojiData, Picker} from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
 import EmojiConvertor from 'emoji-js';
 
-import {fetchAddTweet, setTweetsLoadingState} from "../../store/ducks/tweets/actionCreators";
+import {fetchAddPoll, fetchAddTweet, setTweetsLoadingState} from "../../store/ducks/tweets/actionCreators";
 import {selectIsTweetsLoading} from "../../store/ducks/tweets/selectors";
 import {Image} from '../../store/ducks/tweets/contracts/state';
 import UploadImages from '../UploadImages/UploadImages';
@@ -89,7 +89,9 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
     };
 
     const handleClickAddTweet = async (): Promise<void> => {
-        let result: Array<Image> = [];
+        const pollDateTime = (day * 1440) + (hour * 60) + minute;
+        const choices = [choice1, choice2, choice3, choice4].filter(item => item);
+        const result: Array<Image> = [];
         const profileId = parseInt(location.pathname.substring(location.pathname.length - 1));
 
         dispatch(setTweetsLoadingState(LoadingStatus.LOADING));
@@ -99,9 +101,25 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
             result.push(image);
         }
 
-        dispatch(fetchAddTweet({profileId: profileId, text: textConverter(), images: result,}));
+        if (visiblePoll) {
+            dispatch(fetchAddPoll({
+                profileId: profileId,
+                text: textConverter(),
+                images: result,
+                pollDateTime: pollDateTime,
+                choices: choices
+            }));
+        } else {
+            dispatch(fetchAddTweet({
+                profileId: profileId,
+                text: textConverter(),
+                images: result
+            }));
+        }
+
         setText('');
         setImages([]);
+        setVisiblePoll(false);
     };
 
     const handleClickReplyTweet = async (): Promise<void> => {

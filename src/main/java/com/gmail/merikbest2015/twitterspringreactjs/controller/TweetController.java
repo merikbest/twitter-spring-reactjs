@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.request.VoteRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.NotificationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.NotificationTweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
@@ -42,6 +43,13 @@ public class TweetController {
         return ResponseEntity.ok(tweet);
     }
 
+    @PostMapping("/poll")
+    public ResponseEntity<TweetResponse> createPoll(@RequestBody TweetRequest tweetRequest) {
+        TweetResponse tweet = tweetMapper.createPoll(tweetRequest);
+        messagingTemplate.convertAndSend("/topic/feed", tweet);
+        return ResponseEntity.ok(tweet);
+    }
+
     @DeleteMapping("/{tweetId}")
     public ResponseEntity<String> deleteTweet(@PathVariable Long tweetId) {
         return ResponseEntity.ok(tweetMapper.deleteTweet(tweetId));
@@ -69,5 +77,10 @@ public class TweetController {
     @PostMapping("/reply/{tweetId}")
     public ResponseEntity<TweetResponse> replyTweet(@PathVariable Long tweetId, @RequestBody TweetRequest tweetRequest) {
         return ResponseEntity.ok(tweetMapper.replyTweet(tweetId, tweetRequest));
+    }
+
+    @PostMapping("/vote")
+    public ResponseEntity<TweetResponse> voteInPoll(@RequestBody VoteRequest voteRequest) {
+        return ResponseEntity.ok(tweetMapper.voteInPoll(voteRequest.getTweetId(), voteRequest.getPollChoiceId()));
     }
 }

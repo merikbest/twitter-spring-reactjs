@@ -20,5 +20,5 @@ public class PollChoice {
     private String choice;
 
     @OneToMany
-    private List<User> votedList;
+    private List<User> votedUser;
 }

@@ -15,7 +15,7 @@ import {
 import {useTweetComponentStyles} from "./TweetComponentStyles";
 import {formatDate} from '../../util/formatDate';
 import {fetchLikeTweet, fetchRetweet} from "../../store/ducks/tweets/actionCreators";
-import {Image, Retweet, LikeTweet, Tweet} from "../../store/ducks/tweets/contracts/state";
+import {Image, Retweet, LikeTweet, Tweet, Poll} from "../../store/ducks/tweets/contracts/state";
 import {User} from "../../store/ducks/user/contracts/state";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
@@ -24,6 +24,7 @@ import {textFormatter} from "../../util/textFormatter";
 import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
 import TweetComponentActions from "./TweetComponentActions/TweetComponentActions";
 import ShareTweet from "./ShareTweet/ShareTweet";
+import Vote from "./Vote/Vote";
 
 interface TweetComponentProps {
     id: string;
@@ -36,6 +37,7 @@ interface TweetComponentProps {
     retweets: Retweet[];
     replies: any;
     user: User;
+    poll?: Poll;
     activeTab?: number;
 }
 
@@ -44,6 +46,7 @@ const TweetComponent: FC<TweetComponentProps> = ({
                                                      text,
                                                      images,
                                                      user,
+                                                     poll,
                                                      dateTime,
                                                      likedTweets,
                                                      retweets,
@@ -170,6 +173,7 @@ const TweetComponent: FC<TweetComponentProps> = ({
                             </div>
                         </Link>
                         }
+                        {poll && <Vote tweetId={id} poll={poll}/>}
                     </Typography>
                     <div className={classes.footer}>
                         <div className={classes.footerIcon}>

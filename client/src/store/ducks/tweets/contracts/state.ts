@@ -17,6 +17,7 @@ export interface Tweet {
     retweets: Retweet[];
     replies: Tweet[];
     user: User;
+    poll?: Poll;
 }
 
 export interface LikeTweet {
@@ -33,10 +34,29 @@ export interface Retweet {
     tweet: Tweet;
 }
 
+export interface Poll {
+    id: number;
+    dateTime: string;
+    pollChoices: PollChoice[];
+}
+
+export interface PollChoice {
+    id: number;
+    choice: string;
+    votedUser: User[];
+}
+
 export interface AddTweet {
     profileId: number,
     text: string;
     images: Image[];
+    pollDateTime?: number;
+    choices?: string[];
+}
+
+export interface Vote {
+    tweetId: string;
+    pollChoiceId: number;
 }
 
 export interface TweetsState {

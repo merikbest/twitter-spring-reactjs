@@ -19,7 +19,8 @@ public class TweetMapper {
 
     private final ModelMapper modelMapper;
     private final TweetService tweetService;
-    @Lazy private final UserMapper userMapper;
+    @Lazy
+    private final UserMapper userMapper;
 
     private Tweet convertToTweetEntity(TweetRequest tweetRequest) {
         return modelMapper.map(tweetRequest, Tweet.class);
@@ -51,6 +52,11 @@ public class TweetMapper {
         return convertToTweetResponse(tweetService.createTweet(convertToTweetEntity(tweetRequest)));
     }
 
+    public TweetResponse createPoll(TweetRequest tweetRequest) {
+        return convertToTweetResponse(tweetService.createPoll(tweetRequest.getPollDateTime(), tweetRequest.getChoices(),
+                convertToTweetEntity(tweetRequest)));
+    }
+
     public String deleteTweet(Long tweetId) {
         return tweetService.deleteTweet(tweetId);
     }
@@ -69,5 +75,9 @@ public class TweetMapper {
 
     public TweetResponse replyTweet(Long tweetId, TweetRequest tweetRequest) {
         return convertToTweetResponse(tweetService.replyTweet(tweetId, convertToTweetEntity(tweetRequest)));
+    }
+
+    public TweetResponse voteInPoll(Long tweetId, Long pollChoiceId) {
+        return convertToTweetResponse(tweetService.voteInPoll(tweetId, pollChoiceId));
     }
 }

@@ -13,6 +13,7 @@ public class TweetResponse {
     private String addressedUsername;
     private Long addressedId;
     private UserResponse user;
+    private PollResponse poll;
     private List<ImageResponse> images;
     private List<LikeTweetResponse> likedTweets;
     private List<RetweetResponse> retweets;

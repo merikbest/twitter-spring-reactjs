@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,6 +25,8 @@ public class TweetServiceImpl implements TweetService {
     private final NotificationRepository notificationRepository;
     private final ImageRepository imageRepository;
     private final TagRepository tagRepository;
+    private final PollRepository pollRepository;
+    private final PollChoiceRepository pollChoiceRepository;
 
     @Override
     public List<Tweet> getTweets() {
@@ -80,6 +83,26 @@ public class TweetServiceImpl implements TweetService {
             });
         }
         return createdTweet;
+    }
+
+    @Override
+    public Tweet createPoll(Long pollDateTime, List<String> choices, Tweet tweet) {
+        Tweet createdTweet = createTweet(tweet);
+        LocalDateTime dateTime = LocalDateTime.now().plusMinutes(pollDateTime);
+        Poll poll = new Poll();
+        poll.setTweet(createdTweet);
+        poll.setDateTime(dateTime);
+        List<PollChoice> pollChoices = new ArrayList<>();
+        choices.forEach(choice -> {
+            PollChoice pollChoice = new PollChoice();
+            pollChoice.setChoice(choice);
+            pollChoiceRepository.save(pollChoice);
+            pollChoices.add(pollChoice);
+        });
+        poll.setPollChoices(pollChoices);
+        pollRepository.save(poll);
+        createdTweet.setPoll(poll);
+        return tweetRepository.save(createdTweet);
     }
 
     @Override
@@ -228,6 +251,18 @@ public class TweetServiceImpl implements TweetService {
         Tweet replyTweet = createTweet(reply);
         Tweet tweet = tweetRepository.getOne(tweetId);
         tweet.getReplies().add(replyTweet);
+        return tweetRepository.save(tweet);
+    }
+
+    @Override
+    public Tweet voteInPoll(Long tweetId, Long pollChoiceId) {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(principal.getName());
+        Tweet tweet = tweetRepository.getOne(tweetId);
+        PollChoice pollChoice = tweet.getPoll().getPollChoices().stream()
+                .filter(choice -> choice.getId().equals(pollChoiceId))
+                .findFirst().get();
+        pollChoice.getVotedUser().add(user);
         return tweetRepository.save(tweet);
     }
 }

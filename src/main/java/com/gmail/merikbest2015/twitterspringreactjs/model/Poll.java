@@ -25,8 +25,4 @@ public class Poll {
 
     @OneToMany
     private List<PollChoice> pollChoices;
-
-    public Poll() {
-        this.dateTime = LocalDateTime.now().withNano(0);
-    }
 }
