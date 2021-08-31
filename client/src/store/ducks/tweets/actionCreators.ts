@@ -14,7 +14,7 @@ import {
     RemoveTweetFromBookmarksActionInterface,
     ReplyActionInterface,
     RetweetActionInterface,
-    SetTweetActionInterface,
+    SetTweetActionInterface, SetVoteActionInterface,
 } from "./contracts/actionTypes";
 import {
     SetTweetsLoadingStateInterface,
@@ -47,6 +47,11 @@ export const fetchAddPoll = (payload: AddTweet): FetchAddPollActionInterface => 
 
 export const fetchVote = (payload: Vote): FetchVoteActionInterface => ({
     type: TweetsActionType.FETCH_VOTE,
+    payload
+});
+
+export const setVote = (payload: Tweet): SetVoteActionInterface => ({
+    type: TweetsActionType.SET_VOTE,
     payload
 });
 

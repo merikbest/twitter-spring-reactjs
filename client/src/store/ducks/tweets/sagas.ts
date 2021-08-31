@@ -5,6 +5,7 @@ import {
     retweet,
     setTweet,
     setTweets,
+    setVote,
     setTweetsLoadingState
 } from "./actionCreators";
 import {TweetApi} from "../../../services/api/tweetApi";
@@ -17,7 +18,8 @@ import {
     FetchLikeTweetActionInterface,
     FetchRetweetActionInterface,
     FetchTweetsByTagActionInterface,
-    FetchTweetsByTextActionInterface, FetchVoteActionInterface,
+    FetchTweetsByTextActionInterface,
+    FetchVoteActionInterface,
     TweetsActionType
 } from "./contracts/actionTypes";
 import {LoadingStatus} from '../../types';
@@ -106,9 +108,9 @@ export function* fetchAddPollRequest({payload}: FetchAddPollActionInterface) {
 
 export function* fetchVoteRequest({payload}: FetchVoteActionInterface) {
     try {
-        yield put(setTweetsLoadingState(LoadingStatus.LOADING));
+        // yield put(setTweetsLoadingState(LoadingStatus.LOADING));
         const item: Tweet = yield call(TweetApi.voteInPoll, payload);
-        yield put(setTweet(item));
+        yield put(setVote(item));
     } catch (e) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }

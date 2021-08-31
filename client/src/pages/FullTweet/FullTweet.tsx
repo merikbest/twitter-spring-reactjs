@@ -27,6 +27,7 @@ import {
     ShareIcon
 } from "../../icons";
 import {textFormatter} from "../../util/textFormatter";
+import VoteComponent from "../../components/VoteComponent/VoteComponent";
 
 export const FullTweet: FC = (): ReactElement | null => {
     const classes = useFullTweetStyles();
@@ -116,14 +117,15 @@ export const FullTweet: FC = (): ReactElement | null => {
                                     </div>
                                 </Link>
                                 }
+                                {tweetData.poll && <VoteComponent tweetId={tweetData.id} poll={tweetData.poll}/>}
                             </Typography>
                             <Typography style={{marginBottom: 16}}>
-                        <span className={classes.date}>
-                            {format(new Date(tweetData.dateTime), 'hh:mm a', {locale: usLang})} ·
-                        </span>
-                        <span className={classes.date}>
-                            {format(new Date(tweetData.dateTime), ' MMM dd, yyyy')} · Twitter Web App
-                        </span>
+                                <span className={classes.date}>
+                                    {format(new Date(tweetData.dateTime), 'hh:mm a', {locale: usLang})} ·
+                                </span>
+                                <span className={classes.date}>
+                                    {format(new Date(tweetData.dateTime), ' MMM dd, yyyy')} · Twitter Web App
+                                </span>
                             </Typography>
                             <Divider/>
                             {(tweetData.retweets.length !== 0 || tweetData.likedTweets.length !== 0) && (

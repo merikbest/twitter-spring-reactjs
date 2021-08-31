@@ -24,7 +24,7 @@ import {textFormatter} from "../../util/textFormatter";
 import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
 import TweetComponentActions from "./TweetComponentActions/TweetComponentActions";
 import ShareTweet from "./ShareTweet/ShareTweet";
-import Vote from "./Vote/Vote";
+import VoteComponent from "../VoteComponent/VoteComponent";
 
 interface TweetComponentProps {
     id: string;
@@ -173,7 +173,7 @@ const TweetComponent: FC<TweetComponentProps> = ({
                             </div>
                         </Link>
                         }
-                        {poll && <Vote tweetId={id} poll={poll}/>}
+                        {poll && <VoteComponent tweetId={id} poll={poll}/>}
                     </Typography>
                     <div className={classes.footer}>
                         <div className={classes.footerIcon}>

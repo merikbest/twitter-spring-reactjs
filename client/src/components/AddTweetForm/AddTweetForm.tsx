@@ -23,6 +23,7 @@ import {CloseIcon, EmojiIcon, GifIcon, PullIcon, ScheduleIcon} from "../../icons
 import {selectIsTweetLoading} from "../../store/ducks/tweet/selectors";
 import {LoadingStatus} from "../../store/types";
 import Poll from "./Poll/Poll";
+import Reply from "./Reply/Reply";
 
 interface AddTweetFormProps {
     maxRows?: number;
@@ -218,6 +219,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
                 visiblePoll={visiblePoll}
                 onClose={onClosePoll}
             />
+            <Reply/>
             <div className={classes.footer}>
                 <div className={classes.footerWrapper}>
                     <UploadImages onChangeImages={setImages}/>

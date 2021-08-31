@@ -1,6 +1,6 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
-export const useVoteStyles = makeStyles((theme: Theme) => ({
+export const useVoteComponentStyles = makeStyles((theme: Theme) => ({
     container: {
         position: "relative",
     },

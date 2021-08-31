@@ -1,26 +1,28 @@
 import React, {FC, ReactElement} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Button} from "@material-ui/core";
+import isAfter from "date-fns/isAfter";
 
-import {useVoteStyles} from "./VoteStyles";
-import {Poll} from "../../../store/ducks/tweets/contracts/state";
-import {selectUserData} from "../../../store/ducks/user/selectors";
-import {fetchVote} from "../../../store/ducks/tweets/actionCreators";
-import {voteFormatDate} from "../../../util/formatDate";
+import {useVoteComponentStyles} from "./VoteComponentStyles";
+import {Poll} from "../../store/ducks/tweets/contracts/state";
+import {selectUserData} from "../../store/ducks/user/selectors";
+import {fetchVote} from "../../store/ducks/tweets/actionCreators";
+import {voteFormatDate} from "../../util/formatDate";
 
-interface VoteProps {
+interface VoteComponentProps {
     tweetId: string;
     poll?: Poll;
 }
 
-const Vote: FC<VoteProps> = ({tweetId, poll}): ReactElement => {
-    const classes = useVoteStyles();
+const VoteComponent: FC<VoteComponentProps> = ({tweetId, poll}): ReactElement => {
+    const classes = useVoteComponentStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
 
     const userVoteSum = poll?.pollChoices.reduce((a, b) => a + b.votedUser.length, 0);
     const isUserVoted = poll?.pollChoices.map((pollChoice) =>
         pollChoice.votedUser.findIndex((user) => user.id === myProfile?.id)).filter(value => value !== -1);
+    const isPollEnded = isAfter(Date.now(), new Date(poll?.dateTime!));
 
     const onClickVote = (pollChoiceId: number): void => {
         dispatch(fetchVote({tweetId, pollChoiceId}))
@@ -28,7 +30,7 @@ const Vote: FC<VoteProps> = ({tweetId, poll}): ReactElement => {
 
     return (
         <>
-            {isUserVoted![0] === 0 ? (
+            {(isUserVoted![0] === 0 || isPollEnded) ? (
                 <>
                     {poll?.pollChoices.map((pollChoice) => {
                             const voteNumber = (pollChoice.votedUser.length / ((userVoteSum! === 0) ? 1 : userVoteSum!)) * 100;
@@ -39,7 +41,7 @@ const Vote: FC<VoteProps> = ({tweetId, poll}): ReactElement => {
                                             {pollChoice.choice}
                                         </div>
                                         <div className={classes.voteChoice}>
-                                            {`${(voteNumber === 0) ? 0 : voteNumber.toFixed(1)}%`}
+                                            {`${(voteNumber === 0) ? 0 : Math.round(voteNumber)}%`}
                                         </div>
                                     </div>
                                     <div className={classes.voteScale}
@@ -48,7 +50,9 @@ const Vote: FC<VoteProps> = ({tweetId, poll}): ReactElement => {
                             );
                         }
                     )}
-                    <div className={classes.voteInfo}>{userVoteSum} votes · {voteFormatDate(poll!)} left</div>
+                    <div className={classes.voteInfo}>
+                        {userVoteSum} votes · {isPollEnded ? ("Final results") : (`${voteFormatDate(poll!)} left`)}
+                    </div>
                 </>
             ) : (
                 <>
@@ -74,4 +78,4 @@ const Vote: FC<VoteProps> = ({tweetId, poll}): ReactElement => {
     );
 };
 
-export default Vote;
+export default VoteComponent;

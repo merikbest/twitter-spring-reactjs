@@ -14,6 +14,7 @@ export enum TweetsActionType {
     FETCH_ADD_TWEET = "tweets/FETCH_ADD_TWEET",
     FETCH_ADD_POLL = "tweets/FETCH_ADD_POLL",
     FETCH_VOTE = "tweets/FETCH_VOTE",
+    SET_VOTE = "tweets/SET_VOTE",
     FETCH_DELETE_TWEET = "tweets/FETCH_DELETE_TWEET",
     FETCH_TWEETS = "tweets/FETCH_TWEETS",
     FETCH_MEDIA_TWEETS = "tweets/FETCH_MEDIA_TWEETS",
@@ -48,6 +49,11 @@ export interface FetchAddPollActionInterface extends Action<TweetsActionType> {
 export interface FetchVoteActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_VOTE;
     payload: Vote;
+}
+
+export interface SetVoteActionInterface extends Action<TweetsActionType> {
+    type: TweetsActionType.SET_VOTE;
+    payload: Tweet;
 }
 
 export interface FetchDeleteTweetActionInterface extends Action<TweetsActionType> {
@@ -120,6 +126,7 @@ export interface RemoveTweetFromBookmarksActionInterface extends Action<TweetsAc
 export type TweetsActions =
     | SetTweetsActionInterface
     | SetTweetsLoadingStateInterface
+    | SetVoteActionInterface
     | FetchDeleteTweetActionInterface
     | SetTweetActionInterface
     | LikeTweetActionInterface
