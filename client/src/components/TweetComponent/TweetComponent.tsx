@@ -4,6 +4,8 @@ import {Link, useHistory, useLocation} from 'react-router-dom';
 import {Avatar, IconButton, Paper, Typography} from '@material-ui/core';
 
 import {
+    FollowReplyIcon,
+    FollowReplyOutlinedIcon,
     LikeIcon,
     LikeOutlinedIcon,
     PinOutlinedIcon,
@@ -15,7 +17,7 @@ import {
 import {useTweetComponentStyles} from "./TweetComponentStyles";
 import {formatDate} from '../../util/formatDate';
 import {fetchLikeTweet, fetchRetweet} from "../../store/ducks/tweets/actionCreators";
-import {Image, Retweet, LikeTweet, Tweet, Poll} from "../../store/ducks/tweets/contracts/state";
+import {Image, LikeTweet, Poll, ReplyType, Retweet, Tweet} from "../../store/ducks/tweets/contracts/state";
 import {User} from "../../store/ducks/user/contracts/state";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
@@ -32,6 +34,7 @@ interface TweetComponentProps {
     addressedUsername: string;
     addressedId?: number;
     dateTime: string;
+    replyType: ReplyType;
     images?: Image[];
     likedTweets: LikeTweet[];
     retweets: Retweet[];
@@ -48,6 +51,7 @@ const TweetComponent: FC<TweetComponentProps> = ({
                                                      user,
                                                      poll,
                                                      dateTime,
+                                                     replyType,
                                                      likedTweets,
                                                      retweets,
                                                      replies,
@@ -65,6 +69,7 @@ const TweetComponent: FC<TweetComponentProps> = ({
     const isTweetLiked = likedTweets.find((like) => like.user.id === myProfile?.id);
     const isTweetRetweetedByMe = retweets.find((retweet) => retweet.user.id === myProfile?.id);
     const isTweetRetweetedByUser = retweets.find((retweet) => retweet.user.id === userProfile?.id);
+    const follower = myProfile?.followers?.find((follower) => follower.id === user?.id);
     const isModal = location.pathname.includes("/modal");
     const image = images?.[0];
     const tweetData: Tweet = {
@@ -73,6 +78,7 @@ const TweetComponent: FC<TweetComponentProps> = ({
         images,
         user,
         dateTime,
+        replyType,
         likedTweets,
         retweets,
         replies,
@@ -174,10 +180,22 @@ const TweetComponent: FC<TweetComponentProps> = ({
                         </Link>
                         }
                         {poll && <VoteComponent tweetId={id} poll={poll}/>}
+                        {(follower && replyType === ReplyType.FOLLOW) && (
+                            <>
+                                <div className={classes.iconWrapper}>
+                                    <div className={classes.iconCircle}>
+                                        <span className={classes.icon}>
+                                            {FollowReplyIcon}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className={classes.replyText}>You can reply to this conversation</div>
+                            </>
+                        )}
                     </Typography>
                     <div className={classes.footer}>
                         <div className={classes.footerIcon}>
-                            <IconButton onClick={onOpenReplyModalWindow}>
+                            <IconButton disabled={(!follower && replyType === ReplyType.FOLLOW)} onClick={onOpenReplyModalWindow}>
                                 <span>{ReplyIcon}</span>
                             </IconButton>
                             {(replies?.length === 0 || replies === null) ? null : (

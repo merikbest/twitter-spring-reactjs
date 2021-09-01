@@ -12,7 +12,7 @@ import EmojiConvertor from 'emoji-js';
 
 import {fetchAddPoll, fetchAddTweet, setTweetsLoadingState} from "../../store/ducks/tweets/actionCreators";
 import {selectIsTweetsLoading} from "../../store/ducks/tweets/selectors";
-import {Image} from '../../store/ducks/tweets/contracts/state';
+import {Image, ReplyType} from '../../store/ducks/tweets/contracts/state';
 import UploadImages from '../UploadImages/UploadImages';
 import {uploadImage} from "../../util/uploadImage";
 import {selectUserData} from "../../store/ducks/user/selectors";
@@ -59,6 +59,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
     const userData = useSelector(selectUserData);
     const [text, setText] = useState<string>('');
     const [images, setImages] = useState<ImageObj[]>([]);
+    const [replyType, setReplyType] = useState<ReplyType>(ReplyType.EVERYONE);
     const isModal = location.pathname.includes("/modal");
     const textLimitPercent = Math.round((text.length / 280) * 100);
     const textCount = MAX_LENGTH - text.length;
@@ -108,13 +109,15 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
                 text: textConverter(),
                 images: result,
                 pollDateTime: pollDateTime,
-                choices: choices
+                choices: choices,
+                replyType: replyType
             }));
         } else {
             dispatch(fetchAddTweet({
                 profileId: profileId,
                 text: textConverter(),
-                images: result
+                images: result,
+                replyType: replyType
             }));
         }
 
@@ -219,7 +222,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
                 visiblePoll={visiblePoll}
                 onClose={onClosePoll}
             />
-            <Reply/>
+            <Reply replyType={replyType} setReplyType={setReplyType}/>
             <div className={classes.footer}>
                 <div className={classes.footerWrapper}>
                     <UploadImages onChangeImages={setImages}/>

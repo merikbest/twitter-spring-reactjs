@@ -16,6 +16,7 @@ export const useReplyStyles = makeStyles((theme: Theme) => ({
             },
         },
         "& .MuiDivider-root": {
+            marginLeft: 50,
             marginTop: 8,
             backgroundColor: "#EFF3F4",
         },
@@ -40,24 +41,34 @@ export const useReplyStyles = makeStyles((theme: Theme) => ({
         color: "rgb(83, 100, 113)",
     },
     listItem: {
+        fontSize: 15,
         height: 60,
         padding: 0,
         backgroundColor: "#fff",
-        "& :hover": {
-            backgroundColor: '#edf3f6',
+    },
+    iconCircle: {
+        marginRight: 12,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 40,
+        height: 40,
+        borderRadius: "50%",
+        backgroundColor: "rgb(29, 155, 240)",
+    },
+    icon: {
+        "& svg": {
+            marginTop: 5,
+            height: "1.35em",
+            fill: "#fff",
         },
-        "& span": {
-            width: 40,
-            height: 40,
-            zIndex: 1,
-            backgroundColor: "red",
-            "& svg": {
-                zIndex: 3,
-                marginTop: 3,
-                marginRight: 3,
-                height: "2.0em",
-
-            },
+    },
+    checkIcon: {
+        marginLeft: "auto",
+        "& svg": {
+            color: "rgb(29, 155, 240)",
+            marginTop: 5,
+            height: "1.3em",
         },
     },
 }));

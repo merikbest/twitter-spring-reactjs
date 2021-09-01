@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.dto.response;
 
+import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ public class NotificationTweetResponse {
     private LocalDateTime dateTime;
     private String addressedUsername;
     private Long addressedId;
+    private ReplyType replyType;
     private NotificationUserResponse user;
     private List<ImageResponse> images;
     private List<LikeTweetResponse> likedTweets;

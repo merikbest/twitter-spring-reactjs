@@ -80,6 +80,32 @@ export const useTweetComponentStyles = makeStyles((theme: Theme) => ({
             width: 260,
         },
     },
+    iconWrapper: {
+        display: "inline-block",
+        marginTop: 8,
+        marginBottom: 4,
+    },
+    iconCircle: {
+        marginRight: 5,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 20,
+        height: 20,
+        borderRadius: "50%",
+        backgroundColor: "rgb(29, 155, 240)",
+    },
+    icon: {
+        "& svg": {
+            height: "0.75em",
+            fill: "#fff",
+        },
+    },
+    replyText: {
+        display: "inline-block",
+        color: "rgb(83, 100, 113)",
+        fontSize: 13,
+    },
     footer: {
         display: 'flex',
         position: 'relative',

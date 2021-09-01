@@ -12,6 +12,7 @@ export interface Tweet {
     addressedUsername: string;
     addressedId: number;
     dateTime: string;
+    replyType: ReplyType;
     images?: Image[];
     likedTweets: LikeTweet[];
     retweets: Retweet[];
@@ -50,8 +51,15 @@ export interface AddTweet {
     profileId: number,
     text: string;
     images: Image[];
+    replyType: ReplyType;
     pollDateTime?: number;
     choices?: string[];
+}
+
+export enum ReplyType {
+    EVERYONE = "EVERYONE",
+    FOLLOW = "FOLLOW",
+    MENTION = "MENTION"
 }
 
 export interface Vote {
