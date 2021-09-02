@@ -94,6 +94,9 @@ export const useFullTweetStyles = makeStyles((theme: Theme) => ({
         "& svg": {
             fontSize: 25,
         },
+        "& .MuiDivider-root": {
+            color: "rgb(249, 243, 244)",
+        },
     },
     infoIcon: {
         "& .MuiIconButton-root": {
@@ -109,6 +112,49 @@ export const useFullTweetStyles = makeStyles((theme: Theme) => ({
                 }
             },
         },
+    },
+    replyInfoWrapper: {
+        width: "100%",
+        borderTop: 0,
+        borderLeft: 0,
+        borderRight: 0
+    },
+    replyInfo: {
+        height: 72,
+        backgroundColor: "rgb(215, 246, 255)",
+        margin: "16px 0px",
+        borderRadius: 16,
+        display: "flex",
+    },
+    iconWrapper: {
+        padding: "20px 13px 16px 16px",
+    },
+    iconCircle: {
+        marginRight: 5,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 28,
+        height: 28,
+        borderRadius: "50%",
+        backgroundColor: "rgb(29, 155, 240)",
+    },
+    icon: {
+        "& svg": {
+            marginTop: 3,
+            height: "1.2em",
+            fill: "#fff",
+        },
+    },
+    replyTextInfoWrapper: {
+        marginTop: 15,
+        fontSize: 15,
+    },
+    replyInfoTitle: {
+        fontWeight: 700,
+    },
+    replyInfoText: {
+        fontWeight: 400,
     },
     replyWrapper: {
         margin: "16px 60px",

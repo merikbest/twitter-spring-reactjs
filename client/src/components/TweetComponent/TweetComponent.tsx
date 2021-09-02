@@ -5,7 +5,6 @@ import {Avatar, IconButton, Paper, Typography} from '@material-ui/core';
 
 import {
     FollowReplyIcon,
-    FollowReplyOutlinedIcon,
     LikeIcon,
     LikeOutlinedIcon,
     PinOutlinedIcon,
@@ -69,7 +68,7 @@ const TweetComponent: FC<TweetComponentProps> = ({
     const isTweetLiked = likedTweets.find((like) => like.user.id === myProfile?.id);
     const isTweetRetweetedByMe = retweets.find((retweet) => retweet.user.id === myProfile?.id);
     const isTweetRetweetedByUser = retweets.find((retweet) => retweet.user.id === userProfile?.id);
-    const follower = myProfile?.followers?.find((follower) => follower.id === user?.id);
+    const isFollowing = myProfile?.following?.find((follower) => follower.id === user?.id);
     const isModal = location.pathname.includes("/modal");
     const image = images?.[0];
     const tweetData: Tweet = {
@@ -180,7 +179,7 @@ const TweetComponent: FC<TweetComponentProps> = ({
                         </Link>
                         }
                         {poll && <VoteComponent tweetId={id} poll={poll}/>}
-                        {(follower && replyType === ReplyType.FOLLOW) && (
+                        {(isFollowing && replyType === ReplyType.FOLLOW) && (
                             <>
                                 <div className={classes.iconWrapper}>
                                     <div className={classes.iconCircle}>
@@ -195,8 +194,18 @@ const TweetComponent: FC<TweetComponentProps> = ({
                     </Typography>
                     <div className={classes.footer}>
                         <div className={classes.footerIcon}>
-                            <IconButton disabled={(!follower && replyType === ReplyType.FOLLOW)} onClick={onOpenReplyModalWindow}>
-                                <span>{ReplyIcon}</span>
+                            <IconButton
+                                disabled={(!isFollowing && replyType === ReplyType.FOLLOW && myProfile?.id !== user.id) ||
+                                (!isFollowing && replyType === ReplyType.MENTION && myProfile?.id !== user.id)}
+                                onClick={onOpenReplyModalWindow}
+                            >
+                                <span
+                                    style={(!isFollowing && replyType === ReplyType.FOLLOW && myProfile?.id !== user.id) ||
+                                        (!isFollowing && replyType === ReplyType.MENTION && myProfile?.id !== user.id) ?
+                                        {color: "rgb(185, 192, 197)"} : {}}
+                                >
+                                    {ReplyIcon}
+                                </span>
                             </IconButton>
                             {(replies?.length === 0 || replies === null) ? null : (
                                 <span>{replies?.length}</span>

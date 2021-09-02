@@ -18,8 +18,10 @@ import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import {useFullTweetStyles} from "./FullTweetStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {
+    FollowReplyIcon,
     LikeIcon,
     LikeOutlinedIcon,
+    MentionReplyIcon,
     ReplyIcon,
     RetweetIcon,
     RetweetOutlinedIcon,
@@ -28,6 +30,7 @@ import {
 } from "../../icons";
 import {textFormatter} from "../../util/textFormatter";
 import VoteComponent from "../../components/VoteComponent/VoteComponent";
+import {ReplyType} from "../../store/ducks/tweets/contracts/state";
 
 export const FullTweet: FC = (): ReactElement | null => {
     const classes = useFullTweetStyles();
@@ -39,6 +42,7 @@ export const FullTweet: FC = (): ReactElement | null => {
     const params = useParams<{ id: string }>();
     const isTweetLiked = tweetData?.likedTweets.find((like) => like.user.id === myProfile?.id);
     const isTweetRetweeted = tweetData?.retweets.find((retweet) => retweet.user.id === myProfile?.id);
+    const isFollowing = myProfile?.following?.find((follower) => follower.id === tweetData?.user.id);
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
     const [modalWindowTitle, setModalWindowTitle] = useState<string>("");
     const image = tweetData?.images?.[0];
@@ -183,18 +187,48 @@ export const FullTweet: FC = (): ReactElement | null => {
                                 </div>
                             </div>
                             <Divider/>
-                            <Typography className={classes.replyWrapper}>
-                                Replying to <Link to={`/user/${tweetData.user.id}`}>
-                                @{tweetData.user.username}
-                            </Link>
-                            </Typography>
-                            <AddTweetForm
-                                tweetId={tweetData.id}
-                                addressedUsername={tweetData.user.username}
-                                addressedId={tweetData.user.id}
-                                maxRows={15}
-                                title={"Tweet your reply"}
-                                buttonName={"Reply"}/>
+                            {((tweetData.replyType === ReplyType.FOLLOW && myProfile?.id !== tweetData.user.id) ||
+                                (tweetData.replyType === ReplyType.MENTION && myProfile?.id !== tweetData.user.id)) && (
+                                <Paper variant="outlined" className={classes.replyInfoWrapper}>
+                                    <div className={classes.replyInfo}>
+                                        <div className={classes.iconWrapper}>
+                                            <div className={classes.iconCircle}>
+                                            <span className={classes.icon}>
+                                                {(tweetData.replyType === ReplyType.FOLLOW) && (FollowReplyIcon)}
+                                                {(tweetData.replyType === ReplyType.MENTION) && (MentionReplyIcon)}
+                                            </span>
+                                            </div>
+                                        </div>
+                                        <div className={classes.replyTextInfoWrapper}>
+                                            <div className={classes.replyInfoTitle}>
+                                                Who can reply?
+                                            </div>
+                                            <div className={classes.replyInfoText}>
+                                                People @{tweetData.user.fullName}
+                                                {(tweetData.replyType === ReplyType.FOLLOW) ? (" follows or ") : (" ")}
+                                                mentioned can reply
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Paper>
+                            )}
+                            {(!isFollowing && tweetData.replyType === ReplyType.FOLLOW && myProfile?.id !== tweetData.user.id) ||
+                            (!isFollowing && tweetData.replyType === ReplyType.MENTION && myProfile?.id !== tweetData.user.id) && (
+                                <>
+                                    <Typography className={classes.replyWrapper}>
+                                        Replying to <Link to={`/user/${tweetData.user.id}`}>
+                                        @{tweetData.user.username}
+                                    </Link>
+                                    </Typography>
+                                    <AddTweetForm
+                                        tweetId={tweetData.id}
+                                        addressedUsername={tweetData.user.username}
+                                        addressedId={tweetData.user.id}
+                                        maxRows={15}
+                                        title={"Tweet your reply"}
+                                        buttonName={"Reply"}/>
+                                </>
+                            )}
                             {(visibleModalWindow && modalWindowTitle === "Liked by") ? (
                                 <UsersListModal
                                     users={tweetData.likedTweets}
