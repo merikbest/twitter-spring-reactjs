@@ -42,7 +42,7 @@ export const FullTweet: FC = (): ReactElement | null => {
     const params = useParams<{ id: string }>();
     const isTweetLiked = tweetData?.likedTweets.find((like) => like.user.id === myProfile?.id);
     const isTweetRetweeted = tweetData?.retweets.find((retweet) => retweet.user.id === myProfile?.id);
-    const isFollowing = myProfile?.following?.find((follower) => follower.id === tweetData?.user.id);
+    const isFollower = myProfile?.followers?.findIndex((follower) => follower.id === tweetData?.user.id);
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
     const [modalWindowTitle, setModalWindowTitle] = useState<string>("");
     const image = tweetData?.images?.[0];
@@ -187,8 +187,7 @@ export const FullTweet: FC = (): ReactElement | null => {
                                 </div>
                             </div>
                             <Divider/>
-                            {((tweetData.replyType === ReplyType.FOLLOW && myProfile?.id !== tweetData.user.id) ||
-                                (tweetData.replyType === ReplyType.MENTION && myProfile?.id !== tweetData.user.id)) && (
+                            {(tweetData.replyType === ReplyType.FOLLOW || tweetData.replyType === ReplyType.MENTION) && (
                                 <Paper variant="outlined" className={classes.replyInfoWrapper}>
                                     <div className={classes.replyInfo}>
                                         <div className={classes.iconWrapper}>
@@ -212,8 +211,9 @@ export const FullTweet: FC = (): ReactElement | null => {
                                     </div>
                                 </Paper>
                             )}
-                            {(!isFollowing && tweetData.replyType === ReplyType.FOLLOW && myProfile?.id !== tweetData.user.id) ||
-                            (!isFollowing && tweetData.replyType === ReplyType.MENTION && myProfile?.id !== tweetData.user.id) && (
+                            {((tweetData.replyType !== ReplyType.FOLLOW) && (tweetData.replyType !== ReplyType.MENTION) ||
+                                (myProfile?.id === tweetData?.user.id) || (isFollower && tweetData.replyType === ReplyType.FOLLOW)
+                            ) ? (
                                 <>
                                     <Typography className={classes.replyWrapper}>
                                         Replying to <Link to={`/user/${tweetData.user.id}`}>
@@ -228,7 +228,7 @@ export const FullTweet: FC = (): ReactElement | null => {
                                         title={"Tweet your reply"}
                                         buttonName={"Reply"}/>
                                 </>
-                            )}
+                            ): null}
                             {(visibleModalWindow && modalWindowTitle === "Liked by") ? (
                                 <UsersListModal
                                     users={tweetData.likedTweets}
