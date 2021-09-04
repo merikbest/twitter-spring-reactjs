@@ -26,11 +26,12 @@ import {
     RetweetIcon,
     RetweetOutlinedIcon,
     RetweetOutlinedIconSm,
-    ShareIcon
 } from "../../icons";
 import {textFormatter} from "../../util/textFormatter";
 import VoteComponent from "../../components/VoteComponent/VoteComponent";
 import {ReplyType} from "../../store/ducks/tweets/contracts/state";
+import ShareTweet from "../../components/ShareTweet/ShareTweet";
+import TweetComponentActions from "../../components/TweetComponentActions/TweetComponentActions";
 
 export const FullTweet: FC = (): ReactElement | null => {
     const classes = useFullTweetStyles();
@@ -40,11 +41,13 @@ export const FullTweet: FC = (): ReactElement | null => {
     const myProfile = useSelector(selectUserData);
     const isLoading = useSelector(selectIsTweetLoading);
     const params = useParams<{ id: string }>();
+
+    const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
+    const [modalWindowTitle, setModalWindowTitle] = useState<string>("");
+
     const isTweetLiked = tweetData?.likedTweets.find((like) => like.user.id === myProfile?.id);
     const isTweetRetweeted = tweetData?.retweets.find((retweet) => retweet.user.id === myProfile?.id);
     const isFollower = myProfile?.followers?.findIndex((follower) => follower.id === tweetData?.user.id);
-    const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
-    const [modalWindowTitle, setModalWindowTitle] = useState<string>("");
     const image = tweetData?.images?.[0];
 
     useEffect(() => {
@@ -98,19 +101,22 @@ export const FullTweet: FC = (): ReactElement | null => {
                     ) : (
                         <>
                             <div className={classes.header}>
-                                <Avatar
-                                    className={classes.avatar}
-                                    alt={`avatar ${tweetData.user.id}`}
-                                    src={tweetData.user.avatar?.src ? tweetData.user.avatar?.src : DEFAULT_PROFILE_IMG}
-                                />
-                                <Typography>
-                                    <Link to={`/user/${tweetData.user.id}`}>
-                                        <b>{tweetData.user.fullName}</b>&nbsp;
-                                    </Link>
-                                    <div>
-                                        <span className={classes.username}>@{tweetData.user.username}</span>&nbsp;
-                                    </div>
-                                </Typography>
+                                <div className={classes.headerWrapper}>
+                                    <Avatar
+                                        className={classes.avatar}
+                                        alt={`avatar ${tweetData.user.id}`}
+                                        src={tweetData.user.avatar?.src ? tweetData.user.avatar?.src : DEFAULT_PROFILE_IMG}
+                                    />
+                                    <Typography>
+                                        <Link to={`/user/${tweetData.user.id}`}>
+                                            <b>{tweetData.user.fullName}</b>&nbsp;
+                                        </Link>
+                                        <div>
+                                            <span className={classes.username}>@{tweetData.user.username}</span>&nbsp;
+                                        </div>
+                                    </Typography>
+                                </div>
+                                <TweetComponentActions tweet={tweetData} isFullTweet={true}/>
                             </div>
                             <Typography className={classes.textWrapper} gutterBottom>
                                 {textFormatter(tweetData.text)}
@@ -180,11 +186,10 @@ export const FullTweet: FC = (): ReactElement | null => {
                                         )}
                                     </IconButton>
                                 </div>
-                                <div className={classes.infoIcon}>
-                                    <IconButton>
-                                        <span>{ShareIcon}</span>
-                                    </IconButton>
-                                </div>
+                                <ShareTweet
+                                    tweetId={tweetData.id}
+                                    isFullTweet={true}
+                                />
                             </div>
                             <Divider/>
                             {(tweetData.replyType === ReplyType.FOLLOW || tweetData.replyType === ReplyType.MENTION) && (

@@ -1,29 +1,38 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import {createStyles, makeStyles, Theme} from "@material-ui/core";
 
-export const useShareTweetModalStyles = makeStyles((theme: Theme) => ({
+export const useTweetComponentMoreStyles = makeStyles((theme: Theme) => createStyles({
     root: {
         position: 'relative',
         "& .MuiIconButton-root": {
-            marginBottom: 6,
-            width: 40,
-            height: 40,
+            marginRight: (props: { isFullTweet: boolean }) => props.isFullTweet ? 0 : 8,
+            width: 35,
+            height: 35,
             color: "rgb(83, 100, 113)",
             "& .MuiIconButton-label": {
                 "& span": {
-                    paddingBottom: 3,
+                    height: 25,
                     "& svg": {
-                        verticalAlign: "bottom",
+                        color: "rgb(83, 100, 113)",
                         height: "0.8em",
                     },
                 },
             },
         },
     },
+    delete: {
+        color: "rgb(244, 33, 46)",
+        "& svg": {
+            verticalAlign: "bottom",
+            marginRight: 15,
+            height: "1.30em",
+            fill: "rgb(244, 33, 46)",
+        },
+    },
     dropdown: {
         padding: 0,
         position: 'absolute',
-        width: 280,
-        height: 208,
+        width: 352,
+        height: 312,
         top: 10,
         right: 10,
         zIndex: 2,

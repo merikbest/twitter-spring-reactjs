@@ -3,18 +3,19 @@ import {useDispatch, useSelector} from "react-redux";
 import {ClickAwayListener, IconButton, List, ListItem} from "@material-ui/core";
 
 import {useShareTweetModalStyles} from "./ShareTweetStyles";
-import {AddBookmarksIcon, LinkIcon, MessagesIcon, ShareIcon} from "../../../icons";
-import {selectUserData} from "../../../store/ducks/user/selectors";
-import {addTweetToBookmarks} from "../../../store/ducks/user/actionCreators";
+import {AddBookmarksIcon, LinkIcon, MessagesIcon, ShareIcon} from "../../icons";
+import {selectUserData} from "../../store/ducks/user/selectors";
+import {addTweetToBookmarks} from "../../store/ducks/user/actionCreators";
 import {useLocation} from "react-router-dom";
-import {removeTweetFromBookmarks} from "../../../store/ducks/tweets/actionCreators";
+import {removeTweetFromBookmarks} from "../../store/ducks/tweets/actionCreators";
 
-interface ShareTweet {
+interface ShareTweetProps {
     tweetId: string;
+    isFullTweet: boolean;
 }
 
-const ShareTweet: FC<ShareTweet> = ({tweetId}): ReactElement => {
-    const classes = useShareTweetModalStyles();
+const ShareTweet: FC<ShareTweetProps> = ({tweetId, isFullTweet}): ReactElement => {
+    const classes = useShareTweetModalStyles({isFullTweet});
     const dispatch = useDispatch();
     const location = useLocation();
     const myProfile = useSelector(selectUserData);

@@ -27,6 +27,7 @@ public class TweetServiceImpl implements TweetService {
     private final TagRepository tagRepository;
     private final PollRepository pollRepository;
     private final PollChoiceRepository pollChoiceRepository;
+    private final BookmarkRepository bookmarkRepository;
 
     @Override
     public List<Tweet> getTweets() {
@@ -127,6 +128,14 @@ public class TweetServiceImpl implements TweetService {
             user.getNotifications().remove(notification);
             notificationRepository.delete(notification);
         });
+        List<Bookmark> bookmarks = user.getBookmarks();
+        Optional<Bookmark> bookmark = bookmarks.stream()
+                .filter(b -> b.getTweet().equals(tweet))
+                .findFirst();
+        if (bookmark.isPresent()) {
+            bookmarks.remove(bookmark.get());
+            bookmarkRepository.delete(bookmark.get());
+        }
         user.getTweets().remove(tweet);
         tweetRepository.delete(tweet);
         return "Tweet successfully deleted.";
@@ -251,6 +260,13 @@ public class TweetServiceImpl implements TweetService {
         Tweet replyTweet = createTweet(reply);
         Tweet tweet = tweetRepository.getOne(tweetId);
         tweet.getReplies().add(replyTweet);
+        return tweetRepository.save(tweet);
+    }
+
+    @Override
+    public Tweet changeTweetReplyType(Long tweetId, ReplyType replyType) {
+        Tweet tweet = tweetRepository.getOne(tweetId);
+        tweet.setReplyType(replyType);
         return tweetRepository.save(tweet);
     }
 

@@ -24,7 +24,9 @@ import {setChatMessage} from "./store/ducks/chatMessages/actionCreators";
 import {WS_URL} from "./util/url";
 import {setNotification} from "./store/ducks/notifications/actionCreators";
 import {selectNotificationsItems} from "./store/ducks/notifications/selectors";
-import {setTweet} from "./store/ducks/tweets/actionCreators";
+import {setTweet, setUpdatedTweet} from "./store/ducks/tweets/actionCreators";
+import {selectTweetsItems} from "./store/ducks/tweets/selectors";
+import {tweetsReducer} from "./store/ducks/tweets/reducer";
 
 let stompClient: CompatClient | null = null;
 
@@ -32,6 +34,7 @@ const App: FC = (): ReactElement => {
     const history = useHistory();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
+    const tweets = useSelector(selectTweetsItems);
     const notifications = useSelector(selectNotificationsItems);
     const isAuth = useSelector(selectIsAuth);
     const loadingStatus = useSelector(selectUserStatus);
@@ -70,16 +73,22 @@ const App: FC = (): ReactElement => {
                 });
 
                 stompClient?.subscribe("/topic/notifications/" + myProfile.id, (response) => {
-                    const isExist = notifications.find(notification => notification.id === JSON.parse(response.body).id);
+                    const isNotificationExist = notifications.find(notification => notification.id === JSON.parse(response.body).id);
 
-                    if (!isExist) {
+                    if (!isNotificationExist) {
                         dispatch(setNotification(JSON.parse(response.body)));
                         dispatch(setNewNotification());
                     }
                 });
 
                 stompClient?.subscribe("/topic/feed", (response) => {
-                    dispatch(setTweet(JSON.parse(response.body)));
+                    const isTweetExist = tweets.find((tweet) => tweet.id === JSON.parse(response.body).id);
+
+                    if (isTweetExist) {
+                        dispatch(setUpdatedTweet(JSON.parse(response.body)));
+                    } else {
+                        dispatch(setTweet(JSON.parse(response.body)));
+                    }
                 });
             });
         }

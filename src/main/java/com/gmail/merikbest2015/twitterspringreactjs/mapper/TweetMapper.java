@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.NotificationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.service.TweetService;
 import lombok.RequiredArgsConstructor;
@@ -75,6 +76,10 @@ public class TweetMapper {
 
     public TweetResponse replyTweet(Long tweetId, TweetRequest tweetRequest) {
         return convertToTweetResponse(tweetService.replyTweet(tweetId, convertToTweetEntity(tweetRequest)));
+    }
+
+    public TweetResponse changeTweetReplyType(Long tweetId, ReplyType replyType) {
+        return convertToTweetResponse(tweetService.changeTweetReplyType(tweetId, replyType));
     }
 
     public TweetResponse voteInPoll(Long tweetId, Long pollChoiceId) {

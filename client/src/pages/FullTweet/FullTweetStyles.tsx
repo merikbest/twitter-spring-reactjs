@@ -30,11 +30,15 @@ export const useFullTweetStyles = makeStyles((theme: Theme) => ({
     },
     header: {
         display: 'flex',
+        justifyContent: "space-between",
         alignItems: 'center',
         '& a': {
             color: "#000",
             textDecoration: 'none',
         },
+    },
+    headerWrapper: {
+        display: 'flex',
     },
     avatar: {
         width: theme.spacing(6.5),
@@ -91,9 +95,6 @@ export const useFullTweetStyles = makeStyles((theme: Theme) => ({
         maxWidth: '100%',
         justifyContent: 'space-around',
         padding: '2px 0',
-        "& svg": {
-            fontSize: 25,
-        },
         "& .MuiDivider-root": {
             color: "rgb(249, 243, 244)",
         },

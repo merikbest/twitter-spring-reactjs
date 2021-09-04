@@ -5,14 +5,15 @@ import {
     retweet,
     setTweet,
     setTweets,
-    setVote,
-    setTweetsLoadingState
+    setTweetsLoadingState,
+    setUpdatedTweet
 } from "./actionCreators";
 import {TweetApi} from "../../../services/api/tweetApi";
 import {Tweet} from "./contracts/state";
 import {
     FetchAddPollActionInterface,
     FetchAddTweetActionInterface,
+    FetchChangeReplyTypeActionInterface,
     FetchDeleteTweetActionInterface,
     FetchLikedTweetsActionInterface,
     FetchLikeTweetActionInterface,
@@ -82,8 +83,7 @@ export function* fetchAddTweetRequest({payload}: FetchAddTweetActionInterface) {
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
         const item: Tweet = yield call(TweetApi.createTweet, payload);
-        yield put(setTweet(item));
-
+        yield put(setTweetsLoadingState(LoadingStatus.LOADED));
         if (payload.profileId === item.user.id) {
             yield put(setAddedUserTweet(item));
         }
@@ -108,9 +108,15 @@ export function* fetchAddPollRequest({payload}: FetchAddPollActionInterface) {
 
 export function* fetchVoteRequest({payload}: FetchVoteActionInterface) {
     try {
-        // yield put(setTweetsLoadingState(LoadingStatus.LOADING));
-        const item: Tweet = yield call(TweetApi.voteInPoll, payload);
-        yield put(setVote(item));
+        yield call(TweetApi.voteInPoll, payload);
+    } catch (e) {
+        yield put(setTweetsLoadingState(LoadingStatus.ERROR));
+    }
+}
+
+export function* fetchChangeReplyTypeRequest({payload}: FetchChangeReplyTypeActionInterface) {
+    try {
+        yield call(TweetApi.changeTweetReplyType, payload);
     } catch (e) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }
@@ -156,6 +162,7 @@ export function* tweetsSaga() {
     yield takeLatest(TweetsActionType.FETCH_ADD_TWEET, fetchAddTweetRequest);
     yield takeLatest(TweetsActionType.FETCH_ADD_POLL, fetchAddPollRequest);
     yield takeLatest(TweetsActionType.FETCH_VOTE, fetchVoteRequest);
+    yield takeLatest(TweetsActionType.FETCH_CHANGE_REPLY_TYPE, fetchChangeReplyTypeRequest);
     yield takeLatest(TweetsActionType.FETCH_DELETE_TWEET, fetchDeleteTweetRequest);
     yield takeLatest(TweetsActionType.FETCH_LIKE_TWEET, fetchLikeTweetRequest);
     yield takeLatest(TweetsActionType.FETCH_RETWEET, fetchRetweetRequest);
