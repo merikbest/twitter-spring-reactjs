@@ -21,7 +21,8 @@ import {
     fetchUserTweets,
     fetchUserLikedTweets,
     fetchUserMediaTweets,
-    fetchUserRetweetsAndReplies
+    fetchUserRetweetsAndReplies,
+    setUserTweets
 } from "../../store/ducks/userTweets/actionCreators";
 import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
 import {fetchUserProfile, followUserProfile, unfollowUserProfile} from "../../store/ducks/userProfile/actionCreators";
@@ -37,10 +38,12 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
     const userProfile = useSelector(selectUserProfile);
     const isTweetsLoading = useSelector(selectIsUserTweetsLoading);
     const location = useLocation<{ isRegistered: boolean; }>();
+
     const [btnText, setBtnText] = useState<string>("Following");
     const [activeTab, setActiveTab] = useState<number>(0);
     const [visibleEditProfile, setVisibleEditProfile] = useState<boolean>(false);
     const [visibleSetupProfile, setVisibleSetupProfile] = useState<boolean>(false);
+
     const follower = myProfile?.followers?.find((user) => user.id === userProfile?.id);
 
     useEffect(() => {
@@ -62,6 +65,10 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
         if (location.state?.isRegistered) {
             setVisibleSetupProfile(true);
         }
+
+        return () => {
+            dispatch(setUserTweets([]));
+        };
     }, [userProfile]);
 
     const handleChange = (event: ChangeEvent<{}>, newValue: number): void => {

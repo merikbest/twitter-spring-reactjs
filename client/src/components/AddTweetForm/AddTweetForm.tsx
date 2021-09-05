@@ -16,7 +16,7 @@ import {Image, ReplyType} from '../../store/ducks/tweets/contracts/state';
 import UploadImages from '../UploadImages/UploadImages';
 import {uploadImage} from "../../util/uploadImage";
 import {selectUserData} from "../../store/ducks/user/selectors";
-import {fetchReplyTweet, setTweetLoadingState} from "../../store/ducks/tweet/actionCreators";
+import {fetchReplyTweet} from "../../store/ducks/tweet/actionCreators";
 import {useAddTweetFormStyles} from "./AddTweetFormStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {CloseIcon, EmojiIcon, GifIcon, PullIcon, ScheduleIcon} from "../../icons";
@@ -33,6 +33,7 @@ interface AddTweetFormProps {
     buttonName: string;
     addressedUsername?: string;
     addressedId?: number;
+    onCloseReplyModal?: () => void;
 }
 
 export interface ImageObj {
@@ -49,7 +50,8 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
                                                         title,
                                                         buttonName,
                                                         addressedUsername,
-                                                        addressedId
+                                                        addressedId,
+                                                        onCloseReplyModal
                                                     }): ReactElement => {
     const classes = useAddTweetFormStyles();
     const dispatch = useDispatch();
@@ -128,7 +130,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
 
     const handleClickReplyTweet = async (): Promise<void> => {
         let result: Array<Image> = [];
-        dispatch(setTweetLoadingState(LoadingStatus.LOADING));
+
         for (let i = 0; i < images.length; i++) {
             const file: File = images[i].file;
             const image: Image = await uploadImage(file);
@@ -141,9 +143,14 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
             addressedUsername: addressedUsername!,
             addressedId: addressedId!,
             images: result,
+            replyType: replyType
         }));
         setText("");
         setImages([]);
+
+        if (onCloseReplyModal) {
+            onCloseReplyModal();
+        }
     };
 
     const handleOpenPopup = (event: MouseEvent<HTMLDivElement>): void => {
@@ -231,7 +238,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
                             <span>{GifIcon}</span>
                         </IconButton>
                     </div>
-                    {(!isModal) && (
+                    {(buttonName !== "Reply") && (
                         <div className={classes.footerImage}>
                             <IconButton onClick={onOpenPoll} color="primary">
                                 <span>{PullIcon}</span>
@@ -243,7 +250,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
                             <span>{EmojiIcon}</span>
                         </IconButton>
                     </div>
-                    {(!isModal) && (
+                    {(buttonName !== "Reply") && (
                         <div className={classes.footerImage}>
                             <IconButton color="primary">
                                 <span>{ScheduleIcon}</span>

@@ -107,7 +107,7 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
-    public String deleteTweet(Long tweetId) {
+    public Tweet deleteTweet(Long tweetId) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());
         Tweet tweet = user.getTweets().stream()
@@ -136,9 +136,20 @@ public class TweetServiceImpl implements TweetService {
             bookmarks.remove(bookmark.get());
             bookmarkRepository.delete(bookmark.get());
         }
+        if (tweet.getAddressedTweetId() != null) {
+            Tweet addressedTweet = tweetRepository.getOne(tweet.getAddressedTweetId());
+            List<Tweet> addressedTweetReplies = addressedTweet.getReplies();
+            Tweet reply = addressedTweetReplies.stream()
+                    .filter(r -> r.equals(tweet))
+                    .findFirst().get();
+            addressedTweetReplies.remove(reply);
+            user.getTweets().remove(tweet);
+            tweetRepository.delete(tweet);
+            return addressedTweet;
+        }
         user.getTweets().remove(tweet);
         tweetRepository.delete(tweet);
-        return "Tweet successfully deleted.";
+        return tweet;
     }
 
     @Override
@@ -257,6 +268,7 @@ public class TweetServiceImpl implements TweetService {
         user.setTweetCount(user.getTweetCount() + 1);
         userRepository.save(user);
 
+        reply.setAddressedTweetId(tweetId);
         Tweet replyTweet = createTweet(reply);
         Tweet tweet = tweetRepository.getOne(tweetId);
         tweet.getReplies().add(replyTweet);

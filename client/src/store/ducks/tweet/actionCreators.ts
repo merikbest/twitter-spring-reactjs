@@ -4,7 +4,8 @@ import {
     SetTweetDataActionInterface,
     SetTweetDataLoadingStateInterface,
     FetchReplyTweetActionInterface,
-    TweetActionType
+    TweetActionType,
+    DeleteTweetReplyActionInterface
 } from "./contracts/actionTypes";
 import {ReplyTweet, TweetState} from "./contracts/state";
 
@@ -28,4 +29,7 @@ export const fetchReplyTweet = (payload: ReplyTweet): FetchReplyTweetActionInter
     payload
 });
 
-
+export const deleteTweetReply = (payload: string): DeleteTweetReplyActionInterface => ({
+    type: TweetActionType.DELETE_TWEET_REPLY,
+    payload
+});

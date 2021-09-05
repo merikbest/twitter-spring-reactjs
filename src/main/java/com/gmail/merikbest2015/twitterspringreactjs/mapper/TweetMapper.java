@@ -58,8 +58,8 @@ public class TweetMapper {
                 convertToTweetEntity(tweetRequest)));
     }
 
-    public String deleteTweet(Long tweetId) {
-        return tweetService.deleteTweet(tweetId);
+    public TweetResponse deleteTweet(Long tweetId) {
+        return convertToTweetResponse(tweetService.deleteTweet(tweetId));
     }
 
     public NotificationResponse likeTweet(Long tweetId) {

@@ -32,13 +32,6 @@ export const userTweetsReducer = produce((draft: Draft<UserTweetsState>, action:
             draft.items[retweetIndex] = action.payload;
             break;
 
-        case UserTweetsActionType.PIN_TWEET:
-            if (action.payload.activeTab === 0) {
-                let tweets = draft.items.filter((tweet) => tweet.id !== action.payload.tweet.id);
-                draft.items = [action.payload.tweet, ...tweets];
-            }
-            break;
-
         case UserTweetsActionType.DELETE_TWEET:
             draft.items = draft.items.filter((tweet) => tweet.id !== action.payload);
             break;

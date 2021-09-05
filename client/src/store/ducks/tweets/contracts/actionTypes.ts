@@ -6,9 +6,6 @@ import {AddTweet, ReplyType, Tweet, TweetsState, Vote} from "./state";
 export enum TweetsActionType {
     SET_TWEETS = "tweets/SET_TWEETS",
     SET_TWEET = "tweets/SET_TWEET",
-    LIKE_TWEET = 'tweets/LIKE_TWEET',
-    RETWEET = 'tweets/RETWEET',
-    REPLY = 'tweets/REPLY',
     FETCH_LIKE_TWEET = 'tweets/FETCH_LIKE_TWEET',
     FETCH_RETWEET = 'tweets/FETCH_RETWEET',
     FETCH_ADD_TWEET = "tweets/FETCH_ADD_TWEET",
@@ -77,21 +74,6 @@ export interface FetchRetweetActionInterface extends Action<TweetsActionType> {
     payload: string;
 }
 
-export interface LikeTweetActionInterface extends Action<TweetsActionType> {
-    type: TweetsActionType.LIKE_TWEET;
-    payload: Tweet;
-}
-
-export interface RetweetActionInterface extends Action<TweetsActionType> {
-    type: TweetsActionType.RETWEET;
-    payload: Tweet;
-}
-
-export interface ReplyActionInterface extends Action<TweetsActionType> {
-    type: TweetsActionType.REPLY;
-    payload: Tweet;
-}
-
 export interface SetTweetsLoadingStateInterface extends Action<TweetsActionType> {
     type: TweetsActionType.SET_LOADING_STATE;
     payload: LoadingStatus;
@@ -135,7 +117,4 @@ export type TweetsActions =
     | SetUpdatedTweetActionInterface
     | FetchDeleteTweetActionInterface
     | SetTweetActionInterface
-    | LikeTweetActionInterface
-    | RetweetActionInterface
-    | ReplyActionInterface
     | RemoveTweetFromBookmarksActionInterface;

@@ -30,6 +30,9 @@ public class Tweet {
     @Column(name = "addressed_id")
     private Long addressedId;
 
+    @Column(name = "addressed_tweet_id")
+    private Long addressedTweetId;
+
     @Column(name = "reply_type")
     @Enumerated(EnumType.STRING)
     private ReplyType replyType;

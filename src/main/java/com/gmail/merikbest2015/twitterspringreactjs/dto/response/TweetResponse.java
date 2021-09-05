@@ -13,6 +13,7 @@ public class TweetResponse {
     private LocalDateTime dateTime;
     private String addressedUsername;
     private Long addressedId;
+    private Long addressedTweetId;
     private ReplyType replyType;
     private UserResponse user;
     private PollResponse poll;

@@ -1,7 +1,8 @@
 import {AddTweet, ReplyType, Tweet, TweetsState, Vote} from "./contracts/state";
 import {
     FetchAddPollActionInterface,
-    FetchBookmarksActionInterface, FetchChangeReplyTypeActionInterface,
+    FetchBookmarksActionInterface,
+    FetchChangeReplyTypeActionInterface,
     FetchDeleteTweetActionInterface,
     FetchLikedTweetsActionInterface,
     FetchLikeTweetActionInterface,
@@ -10,10 +11,7 @@ import {
     FetchTweetsByTagActionInterface,
     FetchTweetsByTextActionInterface,
     FetchVoteActionInterface,
-    LikeTweetActionInterface,
     RemoveTweetFromBookmarksActionInterface,
-    ReplyActionInterface,
-    RetweetActionInterface,
     SetTweetActionInterface,
     SetUpdatedTweetActionInterface,
 } from "./contracts/actionTypes";
@@ -93,21 +91,6 @@ export const fetchLikeTweet = (payload: string): FetchLikeTweetActionInterface =
 
 export const fetchRetweet = (payload: string): FetchRetweetActionInterface => ({
     type: TweetsActionType.FETCH_RETWEET,
-    payload,
-});
-
-export const likeTweet = (payload: Tweet): LikeTweetActionInterface => ({
-    type: TweetsActionType.LIKE_TWEET,
-    payload,
-});
-
-export const retweet = (payload: Tweet): RetweetActionInterface => ({
-    type: TweetsActionType.RETWEET,
-    payload,
-});
-
-export const reply = (payload: Tweet): ReplyActionInterface => ({
-    type: TweetsActionType.REPLY,
     payload,
 });
 

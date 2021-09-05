@@ -11,6 +11,7 @@ export interface Tweet {
     text: string;
     addressedUsername: string;
     addressedId: number;
+    addressedTweetId?: number;
     dateTime: string;
     replyType: ReplyType;
     images?: Image[];

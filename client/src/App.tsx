@@ -1,7 +1,7 @@
 import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Route, Switch, useHistory, useLocation} from 'react-router-dom';
-import {CompatClient, Stomp} from '@stomp/stompjs';
+import {Stomp} from '@stomp/stompjs';
 import SockJS from "sockjs-client";
 
 import Authentication from './pages/Authentication/Authentication';
@@ -26,9 +26,6 @@ import {setNotification} from "./store/ducks/notifications/actionCreators";
 import {selectNotificationsItems} from "./store/ducks/notifications/selectors";
 import {setTweet, setUpdatedTweet} from "./store/ducks/tweets/actionCreators";
 import {selectTweetsItems} from "./store/ducks/tweets/selectors";
-import {tweetsReducer} from "./store/ducks/tweets/reducer";
-
-let stompClient: CompatClient | null = null;
 
 const App: FC = (): ReactElement => {
     const history = useHistory();
@@ -61,7 +58,7 @@ const App: FC = (): ReactElement => {
 
     useEffect(() => {
         if (myProfile) {
-            stompClient = Stomp.over(new SockJS(WS_URL));
+            let stompClient = Stomp.over(new SockJS(WS_URL));
             stompClient.connect({}, () => {
 
                 stompClient?.subscribe("/topic/chat/" + myProfile.id, (response) => {
@@ -92,8 +89,7 @@ const App: FC = (): ReactElement => {
                 });
             });
         }
-        return () => stompClient?.disconnect();
-    }, [myProfile]);
+    }, [myProfile?.id]);
 
     return (
         <div className="App">

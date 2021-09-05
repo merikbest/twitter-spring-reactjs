@@ -28,7 +28,7 @@ const Users: FC = (): ReactElement => {
                         </div>
                     ) : (
                         <List>
-                            {users.slice(0, 5).map((user) => <UsersItem user={user}/>)}
+                            {users.slice(0, 5).map((user) => <UsersItem key={user.id} user={user}/>)}
                             <Link to={"/home/connect"}>
                                 <ListItem className={classes.footer}>
                                     Show more

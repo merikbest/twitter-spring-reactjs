@@ -1,12 +1,9 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 
 import {
-    likeTweet,
-    retweet,
     setTweet,
     setTweets,
     setTweetsLoadingState,
-    setUpdatedTweet
 } from "./actionCreators";
 import {TweetApi} from "../../../services/api/tweetApi";
 import {Tweet} from "./contracts/state";
@@ -24,10 +21,9 @@ import {
     TweetsActionType
 } from "./contracts/actionTypes";
 import {LoadingStatus} from '../../types';
-import {setTweetData} from "../tweet/actionCreators";
 import {TagApi} from "../../../services/api/tagApi";
 import {UserApi} from "../../../services/api/userApi";
-import {setAddedUserTweet, setUserLikedTweet, setUserRetweet} from "../userTweets/actionCreators";
+import {setAddedUserTweet} from "../userTweets/actionCreators";
 
 export function* fetchTweetsRequest() {
     try {
@@ -133,17 +129,11 @@ export function* fetchDeleteTweetRequest({payload}: FetchDeleteTweetActionInterf
 }
 
 export function* fetchLikeTweetRequest({payload}: FetchLikeTweetActionInterface) {
-    const item: Tweet = yield call(TweetApi.likeTweet, payload);
-    yield put(likeTweet(item));
-    yield put(setTweetData(item));
-    yield put(setUserLikedTweet(item));
+    yield call(TweetApi.likeTweet, payload);
 }
 
 export function* fetchRetweetRequest({payload}: FetchRetweetActionInterface) {
-    const item: Tweet = yield call(TweetApi.retweet, payload);
-    yield put(retweet(item));
-    yield put(setTweetData(item));
-    yield put(setUserRetweet(item));
+    yield call(TweetApi.retweet, payload);
 }
 
 export function* fetchUserBookmarksRequest() {

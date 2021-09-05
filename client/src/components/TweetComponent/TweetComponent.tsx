@@ -126,8 +126,7 @@ const TweetComponent: FC<TweetComponentProps> = ({
                     </Typography>
                 </div>
             )}
-            {(myProfile?.id === userProfile?.id && activeTab === 0 &&
-                myProfile?.pinnedTweet?.id === id || userProfile?.pinnedTweet?.id === id) && (
+            {((myProfile?.id === userProfile?.id && activeTab === 0) && myProfile?.pinnedTweet?.id === id) && (
                 <div className={classes.retweetWrapper}>
                     <span>{PinOutlinedIcon}</span>
                     <Typography>

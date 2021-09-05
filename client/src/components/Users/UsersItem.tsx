@@ -49,7 +49,7 @@ const UsersItem: FC<UsersItemProps> = ({user}): ReactElement => {
     };
 
     return (
-        <ListItem key={user.id} className={classes.container}>
+        <ListItem className={classes.container}>
             <ListItemAvatar>
                 <Avatar alt={`${user.id}`} src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}/>
             </ListItemAvatar>

@@ -18,7 +18,7 @@ public interface TweetService {
 
     Tweet createPoll(Long pollDateTime, List<String> choices, Tweet tweet);
 
-    String deleteTweet(Long tweetId);
+    Tweet deleteTweet(Long tweetId);
 
     List<Tweet> searchTweets(String text);
 

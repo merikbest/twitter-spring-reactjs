@@ -12,8 +12,6 @@ import {formatDate} from "../../util/formatDate";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {User} from "../../store/ducks/user/contracts/state";
 import {AddTweetForm} from "../AddTweetForm/AddTweetForm";
-import {useSelector} from "react-redux";
-import {selectIsTweetLoaded} from "../../store/ducks/tweet/selectors";
 import {textFormatter} from "../../util/textFormatter";
 import {Image} from "../../store/ducks/tweets/contracts/state";
 
@@ -37,11 +35,6 @@ const ReplyModal: FC<ReplyModalProps> = ({
                                              onClose
                                          }): ReactElement | null => {
     const classes = useReplyModalStyles();
-    const isReplyLoaded = useSelector(selectIsTweetLoaded);
-
-    useEffect(() => {
-        onClose();
-    }, [isReplyLoaded]);
 
     if (!visible) {
         return null;
@@ -95,7 +88,9 @@ const ReplyModal: FC<ReplyModalProps> = ({
                         addressedUsername={user.username}
                         addressedId={user.id}
                         title={"Tweet your reply"}
-                        buttonName={"Reply"}/>
+                        buttonName={"Reply"}
+                        onCloseReplyModal={onClose}
+                    />
                 </div>
             </DialogContent>
         </Dialog>

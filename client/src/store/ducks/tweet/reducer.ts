@@ -1,7 +1,7 @@
 import produce, {Draft} from 'immer';
 
 import {TweetState} from "./contracts/state";
-import {TweetActionType, TweetActions} from './contracts/actionTypes';
+import {TweetActions, TweetActionType} from './contracts/actionTypes';
 import {LoadingStatus} from '../../types';
 
 const initialTweetState: TweetState = {

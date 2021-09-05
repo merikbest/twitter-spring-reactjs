@@ -52,8 +52,10 @@ public class TweetController {
     }
 
     @DeleteMapping("/{tweetId}")
-    public ResponseEntity<String> deleteTweet(@PathVariable Long tweetId) {
-        return ResponseEntity.ok(tweetMapper.deleteTweet(tweetId));
+    public ResponseEntity<TweetResponse> deleteTweet(@PathVariable Long tweetId) {
+        TweetResponse tweet = tweetMapper.deleteTweet(tweetId);
+        messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
+        return ResponseEntity.ok(tweet);
     }
 
     @GetMapping("/search/{text}")
@@ -64,26 +66,34 @@ public class TweetController {
     @GetMapping("/like/{tweetId}")
     public ResponseEntity<NotificationTweetResponse> likeTweet(@PathVariable Long tweetId) {
         NotificationResponse notification = tweetMapper.likeTweet(tweetId);
+        messagingTemplate.convertAndSend("/topic/feed", notification.getTweet());
         messagingTemplate.convertAndSend("/topic/notifications/" + notification.getTweet().getUser().getId(), notification);
+        messagingTemplate.convertAndSend("/topic/tweet/" + notification.getTweet().getId(), notification.getTweet());
         return ResponseEntity.ok(notification.getTweet());
     }
 
     @GetMapping("/retweet/{tweetId}")
     public ResponseEntity<NotificationTweetResponse> retweet(@PathVariable Long tweetId) {
         NotificationResponse notification = tweetMapper.retweet(tweetId);
+        messagingTemplate.convertAndSend("/topic/feed", notification.getTweet());
         messagingTemplate.convertAndSend("/topic/notifications/" + notification.getTweet().getUser().getId(), notification);
+        messagingTemplate.convertAndSend("/topic/tweet/" + notification.getTweet().getId(), notification.getTweet());
         return ResponseEntity.ok(notification.getTweet());
     }
 
     @PostMapping("/reply/{tweetId}")
     public ResponseEntity<TweetResponse> replyTweet(@PathVariable Long tweetId, @RequestBody TweetRequest tweetRequest) {
-        return ResponseEntity.ok(tweetMapper.replyTweet(tweetId, tweetRequest));
+        TweetResponse tweet = tweetMapper.replyTweet(tweetId, tweetRequest);
+        messagingTemplate.convertAndSend("/topic/feed", tweet);
+        messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
+        return ResponseEntity.ok(tweet);
     }
 
     @GetMapping("/reply/change/{tweetId}")
     public ResponseEntity<TweetResponse> changeTweetReplyType(@PathVariable Long tweetId, @RequestParam ReplyType replyType) {
         TweetResponse tweet = tweetMapper.changeTweetReplyType(tweetId, replyType);
         messagingTemplate.convertAndSend("/topic/feed", tweet);
+        messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
         return ResponseEntity.ok(tweet);
     }
 
@@ -91,6 +101,7 @@ public class TweetController {
     public ResponseEntity<TweetResponse> voteInPoll(@RequestBody VoteRequest voteRequest) {
         TweetResponse tweet = tweetMapper.voteInPoll(voteRequest.getTweetId(), voteRequest.getPollChoiceId());
         messagingTemplate.convertAndSend("/topic/feed", tweet);
+        messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
         return ResponseEntity.ok(tweet);
     }
 }
