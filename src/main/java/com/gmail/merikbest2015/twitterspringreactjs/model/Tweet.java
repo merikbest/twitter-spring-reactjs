@@ -38,6 +38,9 @@ public class Tweet {
     private ReplyType replyType;
 
     @OneToOne
+    private Tweet quoteTweet;
+
+    @OneToOne
     private Poll poll;
 
     @ManyToOne

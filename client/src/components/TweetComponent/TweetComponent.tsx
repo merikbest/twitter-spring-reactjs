@@ -9,8 +9,6 @@ import {
     LikeOutlinedIcon,
     PinOutlinedIcon,
     ReplyIcon,
-    RetweetIcon,
-    RetweetOutlinedIcon,
     RetweetOutlinedIconSm
 } from "../../icons";
 import {useTweetComponentStyles} from "./TweetComponentStyles";
@@ -26,6 +24,8 @@ import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
 import TweetComponentActions from "../TweetComponentActions/TweetComponentActions";
 import ShareTweet from "../ShareTweet/ShareTweet";
 import VoteComponent from "../VoteComponent/VoteComponent";
+import QuoteTweet from "../QuoteTweet/QuoteTweet";
+import Quote from "../Quote/Quote";
 
 interface TweetComponentProps {
     id: string;
@@ -36,6 +36,7 @@ interface TweetComponentProps {
     replyType: ReplyType;
     images?: Image[];
     likedTweets: LikeTweet[];
+    quoteTweet?: Tweet;
     retweets: Retweet[];
     replies: any;
     user: User;
@@ -52,6 +53,7 @@ const TweetComponent: FC<TweetComponentProps> = ({
                                                      dateTime,
                                                      replyType,
                                                      likedTweets,
+                                                     quoteTweet,
                                                      retweets,
                                                      replies,
                                                      addressedUsername,
@@ -193,6 +195,7 @@ const TweetComponent: FC<TweetComponentProps> = ({
                                 <div className={classes.replyText}>You can reply to this conversation</div>
                             </>
                         )}
+                        {quoteTweet && (<Quote quoteTweet={quoteTweet} isTweetQuoted={true}/>)}
                     </Typography>
                     <div className={classes.footer}>
                         <div className={classes.footerIcon}>
@@ -201,7 +204,8 @@ const TweetComponent: FC<TweetComponentProps> = ({
                                 onClick={onOpenReplyModalWindow}
                             >
                                 <span style={((replyType === ReplyType.MENTION) && (myProfile?.id !== user.id)) ?
-                                    {color: "rgb(185, 192, 197)"} : {}}>
+                                    {color: "rgb(185, 192, 197)"} : {}}
+                                >
                                     {ReplyIcon}
                                 </span>
                             </IconButton>
@@ -209,21 +213,12 @@ const TweetComponent: FC<TweetComponentProps> = ({
                                 <span>{replies?.length}</span>
                             )}
                         </div>
-                        <div className={classes.footerIcon}>
-                            <IconButton onClick={handleRetweet}>
-                                {isTweetRetweetedByMe ? (
-                                    <span style={{color: "rgb(23, 191, 99)"}}>{RetweetIcon}</span>
-                                ) : (
-                                    <span>{RetweetOutlinedIcon}</span>)
-                                }
-                            </IconButton>
-                            {(retweets.length === 0 || retweets === null) ? null : (
-                                isTweetRetweetedByMe ? (
-                                    <span style={{color: "rgb(23, 191, 99)"}}>{retweets.length}</span>
-                                ) : (
-                                    <span>{retweets.length}</span>)
-                            )}
-                        </div>
+                        <QuoteTweet
+                            quoteTweet={tweetData}
+                            retweets={retweets}
+                            isTweetRetweetedByMe={isTweetRetweetedByMe}
+                            handleRetweet={handleRetweet}
+                        />
                         <div className={classes.footerIcon}>
                             <IconButton onClick={handleLike}>
                                 {isTweetLiked ? (

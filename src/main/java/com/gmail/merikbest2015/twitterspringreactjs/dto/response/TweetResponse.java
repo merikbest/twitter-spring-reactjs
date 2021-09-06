@@ -15,6 +15,7 @@ public class TweetResponse {
     private Long addressedId;
     private Long addressedTweetId;
     private ReplyType replyType;
+    private QuoteTweetResponse quoteTweet;
     private UserResponse user;
     private PollResponse poll;
     private List<ImageResponse> images;

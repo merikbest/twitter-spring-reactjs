@@ -28,6 +28,8 @@ public interface TweetService {
 
     Tweet replyTweet(Long tweetId, Tweet reply);
 
+    Tweet quoteTweet(Long tweetId, Tweet quote);
+
     Tweet changeTweetReplyType(Long tweetId, ReplyType replyType);
 
     Tweet voteInPoll(Long tweetId, Long pollChoiceId);

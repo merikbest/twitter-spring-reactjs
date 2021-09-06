@@ -1,7 +1,7 @@
 import {Action} from "redux";
 
 import {LoadingStatus} from "../../../types";
-import {AddTweet, ReplyType, Tweet, TweetsState, Vote} from "./state";
+import {AddQuoteTweet, AddTweet, ReplyType, Tweet, TweetsState, Vote} from "./state";
 
 export enum TweetsActionType {
     SET_TWEETS = "tweets/SET_TWEETS",
@@ -10,6 +10,7 @@ export enum TweetsActionType {
     FETCH_RETWEET = 'tweets/FETCH_RETWEET',
     FETCH_ADD_TWEET = "tweets/FETCH_ADD_TWEET",
     FETCH_ADD_POLL = "tweets/FETCH_ADD_POLL",
+    FETCH_ADD_QUOTE_TWEET = "tweets/FETCH_ADD_QUOTE_TWEET",
     FETCH_VOTE = "tweets/FETCH_VOTE",
     FETCH_CHANGE_REPLY_TYPE = "tweets/FETCH_CHANGE_REPLY_TYPE",
     SET_UPDATED_TWEET = "tweets/SET_UPDATED_TWEET",
@@ -42,6 +43,11 @@ export interface FetchAddTweetActionInterface extends Action<TweetsActionType> {
 export interface FetchAddPollActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_ADD_POLL;
     payload: AddTweet;
+}
+
+export interface FetchAddQuoteTweetActionInterface extends Action<TweetsActionType> {
+    type: TweetsActionType.FETCH_ADD_QUOTE_TWEET;
+    payload: AddQuoteTweet;
 }
 
 export interface FetchVoteActionInterface extends Action<TweetsActionType> {

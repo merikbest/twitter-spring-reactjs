@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useEffect} from 'react';
+import React, {FC, ReactElement} from 'react';
 import {Link} from "react-router-dom";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -89,7 +89,7 @@ const ReplyModal: FC<ReplyModalProps> = ({
                         addressedId={user.id}
                         title={"Tweet your reply"}
                         buttonName={"Reply"}
-                        onCloseReplyModal={onClose}
+                        onCloseModal={onClose}
                     />
                 </div>
             </DialogContent>

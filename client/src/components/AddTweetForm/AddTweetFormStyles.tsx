@@ -38,7 +38,7 @@ export const useAddTweetFormStyles = makeStyles((theme: Theme) => ({
     imageSmall: {
         position: 'relative',
         '& img': {
-            marginLeft: "58px",
+            marginLeft: 58,
             objectFit: "cover",
             marginTop: 10,
             width: 260,
@@ -82,7 +82,7 @@ export const useAddTweetFormStyles = makeStyles((theme: Theme) => ({
             height: 40,
             "& span": {
                 paddingBottom: 3,
-                "& svg" : {
+                "& svg": {
                     verticalAlign: "bottom",
                     height: "0.9em",
                 }

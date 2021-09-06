@@ -35,6 +35,7 @@ import VoteComponent from "../../components/VoteComponent/VoteComponent";
 import {ReplyType} from "../../store/ducks/tweets/contracts/state";
 import ShareTweet from "../../components/ShareTweet/ShareTweet";
 import TweetComponentActions from "../../components/TweetComponentActions/TweetComponentActions";
+import Quote from "../../components/Quote/Quote";
 
 let stompClient: CompatClient | null = null;
 
@@ -143,6 +144,13 @@ export const FullTweet: FC = (): ReactElement | null => {
                             </div>
                             <Typography className={classes.textWrapper} gutterBottom>
                                 {textFormatter(tweetData.text)}
+                                {tweetData.quoteTweet && (
+                                    <Quote
+                                        quoteTweet={tweetData.quoteTweet}
+                                        isTweetQuoted={true}
+                                        isFullTweet={true}
+                                    />
+                                )}
                                 {(tweetData.images?.length !== 0) &&
                                 <Link to={{pathname: `/modal/${params.id}`, state: {background: location}}}>
                                     <div className={classes.image}>
@@ -256,7 +264,7 @@ export const FullTweet: FC = (): ReactElement | null => {
                                         title={"Tweet your reply"}
                                         buttonName={"Reply"}/>
                                 </>
-                            ): null}
+                            ) : null}
                             {(visibleModalWindow && modalWindowTitle === "Liked by") ? (
                                 <UsersListModal
                                     users={tweetData.likedTweets}

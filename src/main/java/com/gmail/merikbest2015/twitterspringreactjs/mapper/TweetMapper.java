@@ -78,6 +78,10 @@ public class TweetMapper {
         return convertToTweetResponse(tweetService.replyTweet(tweetId, convertToTweetEntity(tweetRequest)));
     }
 
+    public TweetResponse quoteTweet(Long tweetId, TweetRequest tweetRequest) {
+        return convertToTweetResponse(tweetService.quoteTweet(tweetId, convertToTweetEntity(tweetRequest)));
+    }
+
     public TweetResponse changeTweetReplyType(Long tweetId, ReplyType replyType) {
         return convertToTweetResponse(tweetService.changeTweetReplyType(tweetId, replyType));
     }

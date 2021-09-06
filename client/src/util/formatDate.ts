@@ -15,7 +15,7 @@ import differenceInMinutes from "date-fns/differenceInMinutes";
 import {Poll} from "../store/ducks/tweets/contracts/state";
 
 export const formatDate = (date: Date): string => {
-    return format(date, 'dd MMM.');
+    return format(date, 'MMM d');
 };
 
 export const formatChatMessageDate = (date: Date): string => {

@@ -276,6 +276,18 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
+    public Tweet quoteTweet(Long tweetId, Tweet quote) {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(principal.getName());
+        user.setTweetCount(user.getTweetCount() + 1);
+        userRepository.save(user);
+
+        Tweet tweet = tweetRepository.getOne(tweetId);
+        quote.setQuoteTweet(tweet);
+        return createTweet(quote);
+    }
+
+    @Override
     public Tweet changeTweetReplyType(Long tweetId, ReplyType replyType) {
         Tweet tweet = tweetRepository.getOne(tweetId);
         tweet.setReplyType(replyType);

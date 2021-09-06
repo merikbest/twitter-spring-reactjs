@@ -40,14 +40,14 @@ public class TweetController {
     @PostMapping
     public ResponseEntity<TweetResponse> createTweet(@RequestBody TweetRequest tweetRequest) {
         TweetResponse tweet = tweetMapper.createTweet(tweetRequest);
-        messagingTemplate.convertAndSend("/topic/feed", tweet);
+        messagingTemplate.convertAndSend("/topic/feed/add", tweet);
         return ResponseEntity.ok(tweet);
     }
 
     @PostMapping("/poll")
     public ResponseEntity<TweetResponse> createPoll(@RequestBody TweetRequest tweetRequest) {
         TweetResponse tweet = tweetMapper.createPoll(tweetRequest);
-        messagingTemplate.convertAndSend("/topic/feed", tweet);
+        messagingTemplate.convertAndSend("/topic/feed/add", tweet);
         return ResponseEntity.ok(tweet);
     }
 
@@ -85,6 +85,14 @@ public class TweetController {
     public ResponseEntity<TweetResponse> replyTweet(@PathVariable Long tweetId, @RequestBody TweetRequest tweetRequest) {
         TweetResponse tweet = tweetMapper.replyTweet(tweetId, tweetRequest);
         messagingTemplate.convertAndSend("/topic/feed", tweet);
+        messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
+        return ResponseEntity.ok(tweet);
+    }
+
+    @PostMapping("/quote/{tweetId}")
+    public ResponseEntity<TweetResponse> quoteTweet(@PathVariable Long tweetId, @RequestBody TweetRequest tweetRequest) {
+        TweetResponse tweet = tweetMapper.quoteTweet(tweetId, tweetRequest);
+        messagingTemplate.convertAndSend("/topic/feed/add", tweet);
         messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
         return ResponseEntity.ok(tweet);
     }
