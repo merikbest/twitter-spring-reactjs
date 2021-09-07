@@ -2,6 +2,7 @@ import {makeStyles, Theme} from "@material-ui/core";
 
 export const useTweetComponentStyles = makeStyles((theme: Theme) => ({
     container: {
+        position: "relative",
         display: 'flex',
         cursor: 'pointer',
         alignItems: 'flex-start',
@@ -32,6 +33,7 @@ export const useTweetComponentStyles = makeStyles((theme: Theme) => ({
         },
     },
     header: {
+        position: "relative",
         display: 'flex',
         height: 20,
         justifyContent: 'space-between',
@@ -149,5 +151,12 @@ export const useTweetComponentStyles = makeStyles((theme: Theme) => ({
             fontSize: 14,
             fontWeight: 700
         },
+    },
+    popperUserWindow: {
+        position: "absolute",
+        width: 100,
+        height: 100,
+        border: "1px solid black",
+        backgroundColor: "#fff",
     },
 }));

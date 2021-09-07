@@ -82,6 +82,10 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
             fontWeight: 700,
         },
     },
+    buttonWrapper: {
+        float: 'right',
+        display: "inline-block"
+    },
     editButton: {
         float: 'right',
         marginTop: '84px',
@@ -91,9 +95,21 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         fontSize: 15,
         fontWeight: 700,
     },
+    messageButton: {
+        marginTop: 84,
+        marginRight: 9,
+        fontSize: 15,
+        fontWeight: 700,
+        border: '1px solid',
+        borderRadius: '50%',
+        padding: 8,
+        "& svg": {
+            color: "rgb(27, 149, 224)",
+            height: "1.6em",
+        },
+    },
     primaryButton: {
         marginTop: '84px',
-        float: 'right',
         fontSize: 15,
         fontWeight: 700,
         width: 102,

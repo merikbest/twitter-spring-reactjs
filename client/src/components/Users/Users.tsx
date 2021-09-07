@@ -6,7 +6,7 @@ import List from "@material-ui/core/List/List";
 import ListItem from "@material-ui/core/ListItem/ListItem";
 
 import {selectUsersIsLoading, selectUsers} from "../../store/ducks/users/selectors";
-import UsersItem from "./UsersItem";
+import UsersItem from "./UsersItem/UsersItem";
 import {useUsersStyles} from "./UsersStyles";
 
 const Users: FC = (): ReactElement => {

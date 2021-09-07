@@ -10,6 +10,7 @@ import {User} from "../../store/ducks/user/contracts/state";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {useFollowerStyles} from "./FollowerStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
+import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
 
 interface FollowerProps {
     user: User;
@@ -22,6 +23,9 @@ const Follower: FC<FollowerProps> = ({user, follow, unfollow}): ReactElement => 
     const myProfile = useSelector(selectUserData);
     const [btnText, setBtnText] = useState<string>("Following");
     const [visibleUnfollowModal, setVisibleUnfollowModal] = useState<boolean>(false);
+    const [visiblePopperUserWindow, setVisiblePopperUserWindow] = useState<boolean>(false);
+    const [delayHandler, setDelayHandler] = useState<any>(null);
+
     const follower = myProfile?.followers?.findIndex(follower => follower.id === user.id);
 
     const handleClickOpenUnfollowModal = (): void => {
@@ -41,18 +45,29 @@ const Follower: FC<FollowerProps> = ({user, follow, unfollow}): ReactElement => 
         setVisibleUnfollowModal(false);
     };
 
+    const handleHover = (): void => {
+        setDelayHandler(setTimeout(() => setVisiblePopperUserWindow(true), 1337));
+    };
+
+    const handleLeave = (): void => {
+        clearTimeout(delayHandler);
+        setVisiblePopperUserWindow(false);
+    };
+
     return (
         <Paper className={classes.container} variant="outlined">
             <Link to={`/user/${user.id}`} className={classes.link}>
-                <Avatar className={classes.linkAvatar} src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}/>
+                <Avatar className={classes.linkAvatar}
+                        src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}/>
             </Link>
             <div style={{flex: 1}}>
                 <div className={classes.header}>
                     <Link to={`/user/${user.id}`} className={classes.link}>
-                        <div style={{width: 350}}>
-                            <Typography className={classes.fullName}>
+                        <div onMouseLeave={handleLeave} style={{position: "relative", width: 350}}>
+                            <Typography onMouseEnter={handleHover} className={classes.fullName}>
                                 {user?.fullName}
                             </Typography>
+                            {visiblePopperUserWindow && <PopperUserWindow user={user}/>}
                             <Typography className={classes.username} variant="caption" display="block" gutterBottom>
                                 @{user?.username}
                             </Typography>

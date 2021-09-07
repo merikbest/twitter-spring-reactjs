@@ -20,7 +20,7 @@ export const useQuoteStyles = makeStyles<Theme, QuoteStylesProps>((theme) => ({
         borderRadius: 16,
         border: "1px solid rgb(207, 217, 222)",
         '&:hover': {
-            backgroundColor: 'rgb(243, 243, 243)',
+            backgroundColor: 'rgb(242, 246, 248)',
         },
     },
     quoteTweetWrapper: {

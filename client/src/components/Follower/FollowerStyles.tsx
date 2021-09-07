@@ -17,6 +17,7 @@ export const useFollowerStyles = makeStyles((theme) => ({
         },
     },
     link: {
+        color: "#000",
         textDecoration: 'none',
     },
     linkAvatar: {

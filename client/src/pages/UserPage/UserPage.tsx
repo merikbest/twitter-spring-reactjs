@@ -2,13 +2,13 @@ import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
 import {RouteComponentProps, Link, useLocation} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import Paper from '@material-ui/core/Paper';
-import {Avatar, Button, CircularProgress, Typography} from '@material-ui/core';
+import {Avatar, Button, CircularProgress, IconButton, Typography} from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Skeleton from '@material-ui/lab/Skeleton';
 import format from 'date-fns/format';
 
-import {LocationIcon, LinkIcon, CalendarIcon} from "../../icons";
+import {LocationIcon, LinkIcon, CalendarIcon, MessagesIcon, EditIcon} from "../../icons";
 import {useUserPageStyles} from "./UserPageStyles";
 import {BackButton} from "../../components/BackButton/BackButton";
 import EditProfileModal from "../../components/EditProfileModal/EditProfileModal";
@@ -29,6 +29,7 @@ import {fetchUserProfile, followUserProfile, unfollowUserProfile} from "../../st
 import UserPageTweets from "./UserPageTweets";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import SetupProfileModal from "../SetupProfileModal/SetupProfileModal";
+import UserPageActions from "./UserPageActions/UserPageActions";
 
 const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElement => {
     const classes = useUserPageStyles();
@@ -146,6 +147,14 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
                             {myProfile?.profileCustomized ? "Edit profile" : "Setup profile"}
                         </Button>
                     ) : (follower ? (
+                        <div className={classes.buttonWrapper}>
+                            <UserPageActions user={userProfile!}/>
+                            <IconButton
+                                className={classes.messageButton}
+                                color="primary"
+                            >
+                                {MessagesIcon}
+                            </IconButton>
                             <Button
                                 onClick={handleFollow}
                                 className={classes.primaryButton}
@@ -156,6 +165,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
                             >
                                 {btnText}
                             </Button>
+                        </div>
                         ) : (
                             <Button
                                 onClick={handleFollow}

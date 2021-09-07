@@ -26,6 +26,7 @@ import ShareTweet from "../ShareTweet/ShareTweet";
 import VoteComponent from "../VoteComponent/VoteComponent";
 import QuoteTweet from "../QuoteTweet/QuoteTweet";
 import Quote from "../Quote/Quote";
+import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
 
 interface TweetComponentProps {
     id: string;
@@ -68,6 +69,8 @@ const TweetComponent: FC<TweetComponentProps> = ({
     const location = useLocation();
 
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
+    const [visiblePopperUserWindow, setVisiblePopperUserWindow] = useState<boolean>(false);
+    const [delayHandler, setDelayHandler] = useState<any>(null);
 
     const isTweetLiked = likedTweets.find((like) => like.user.id === myProfile?.id);
     const isTweetRetweetedByMe = retweets.find((retweet) => retweet.user.id === myProfile?.id);
@@ -118,6 +121,15 @@ const TweetComponent: FC<TweetComponentProps> = ({
         }
     };
 
+    const handleHover = (): void => {
+        setDelayHandler(setTimeout(() => setVisiblePopperUserWindow(true), 1337));
+    };
+
+    const handleLeave = (): void => {
+        clearTimeout(delayHandler);
+        setVisiblePopperUserWindow(false);
+    };
+
     return (
         <>
             {isTweetRetweetedByUser && (
@@ -144,7 +156,11 @@ const TweetComponent: FC<TweetComponentProps> = ({
                         src={user.avatar?.src ? user.avatar?.src : DEFAULT_PROFILE_IMG}/>
                 </a>
                 <div style={{flex: 1}}>
-                    <div className={classes.header}>
+                    <div
+                        className={classes.header}
+                        onMouseEnter={handleHover}
+                        onMouseLeave={handleLeave}
+                    >
                         <a onClick={handleClickUser}>
                             <b>{user.fullName}</b>&nbsp;
                             <span className={classes.headerText}>@{user.username}</span>&nbsp;
@@ -156,20 +172,21 @@ const TweetComponent: FC<TweetComponentProps> = ({
                             isFullTweet={false}
                             activeTab={activeTab}
                         />
+                        {visiblePopperUserWindow && <PopperUserWindow user={user} isTweetComponent={true}/>}
                     </div>
                     <Typography
                         style={addressedUsername ? {width: 250, marginBottom: 0} : {width: 500, marginBottom: 0}}
                         variant="body1" gutterBottom
                     >
-                        {addressedUsername &&
-                        <object>
-                            <Typography className={classes.replyWrapper}>
-                                Replying to <Link to={`/user/${addressedId}`} className={classes.replyLink}>
-                                @{addressedUsername}
-                            </Link>
-                            </Typography>
-                        </object>
-                        }
+                        {addressedUsername && (
+                            <object>
+                                <Typography className={classes.replyWrapper}>
+                                    Replying to <Link to={`/user/${addressedId}`} className={classes.replyLink}>
+                                    @{addressedUsername}
+                                </Link>
+                                </Typography>
+                            </object>
+                        )}
                         <div className={classes.text}>
                             <a onClick={handleClickTweet} href={`/home/tweet/${id}`}>
                                 {textFormatter(text)}

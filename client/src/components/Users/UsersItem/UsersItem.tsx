@@ -10,12 +10,13 @@ import ListItem from "@material-ui/core/ListItem/ListItem";
 import DialogContent from "@material-ui/core/DialogContent";
 import Dialog from "@material-ui/core/Dialog";
 
-import {User} from "../../store/ducks/user/contracts/state";
-import {selectUserData} from "../../store/ducks/user/selectors";
-import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
+import {User} from "../../../store/ducks/user/contracts/state";
+import {selectUserData} from "../../../store/ducks/user/selectors";
+import {followUser, unfollowUser} from "../../../store/ducks/user/actionCreators";
 import {useUsersItemStyles} from "./UsersItemStyles";
-import {DEFAULT_PROFILE_IMG} from "../../util/url";
-import {followProfile, unfollowProfile} from "../../store/ducks/userProfile/actionCreators";
+import {DEFAULT_PROFILE_IMG} from "../../../util/url";
+import {followProfile, unfollowProfile} from "../../../store/ducks/userProfile/actionCreators";
+import PopperUserWindow from "../../PopperUserWindow/PopperUserWindow";
 
 interface UsersItemProps {
     user: User
@@ -25,8 +26,12 @@ const UsersItem: FC<UsersItemProps> = ({user}): ReactElement => {
     const classes = useUsersItemStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
+
     const [btnText, setBtnText] = useState<string>("Following");
     const [visibleUnfollowModal, setVisibleUnfollowModal] = useState<boolean>(false);
+    const [visiblePopperUserWindow, setVisiblePopperUserWindow] = useState<boolean>(false);
+    const [delayHandler, setDelayHandler] = useState<any>(null);
+
     const follower = myProfile?.followers?.findIndex(follower => follower.id === user.id);
 
     const handleClickOpenUnfollowModal = (): void => {
@@ -48,21 +53,33 @@ const UsersItem: FC<UsersItemProps> = ({user}): ReactElement => {
         setVisibleUnfollowModal(false);
     };
 
+    const handleHover = (): void => {
+        setDelayHandler(setTimeout(() => setVisiblePopperUserWindow(true), 1337));
+    };
+
+    const handleLeave = (): void => {
+        clearTimeout(delayHandler);
+        setVisiblePopperUserWindow(false);
+    };
+
     return (
         <ListItem className={classes.container}>
             <ListItemAvatar>
                 <Avatar alt={`${user.id}`} src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}/>
             </ListItemAvatar>
-            <Link to={`/user/${user.id}`}>
-                <ListItemText
-                    primary={user.fullName}
-                    secondary={
-                        <Typography component="span" variant="body2" color="textSecondary">
-                            @{user.username}
-                        </Typography>
-                    }
-                />
-            </Link>
+            <div onMouseEnter={handleHover} onMouseLeave={handleLeave}>
+                <Link to={`/user/${user.id}`}>
+                    <ListItemText
+                        primary={user.fullName}
+                        secondary={
+                            <Typography component="span" variant="body2" color="textSecondary">
+                                @{user.username}
+                            </Typography>
+                        }
+                    />
+                    {visiblePopperUserWindow && <PopperUserWindow user={user}/>}
+                </Link>
+            </div>
             <div style={{flex: 1}}>
                 {(myProfile?.id === user.id) ? null : (
                     (follower === -1) ? (

@@ -129,9 +129,7 @@ export function* fetchChangeReplyTypeRequest({payload}: FetchChangeReplyTypeActi
 
 export function* fetchDeleteTweetRequest({payload}: FetchDeleteTweetActionInterface) {
     try {
-        yield put(setTweetsLoadingState(LoadingStatus.LOADING));
         yield call(TweetApi.deleteTweet, payload);
-        yield put(setTweetsLoadingState(LoadingStatus.LOADED));
     } catch (e) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }

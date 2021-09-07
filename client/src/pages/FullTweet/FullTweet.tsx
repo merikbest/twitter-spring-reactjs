@@ -36,6 +36,7 @@ import {ReplyType} from "../../store/ducks/tweets/contracts/state";
 import ShareTweet from "../../components/ShareTweet/ShareTweet";
 import TweetComponentActions from "../../components/TweetComponentActions/TweetComponentActions";
 import Quote from "../../components/Quote/Quote";
+import PopperUserWindow from "../../components/PopperUserWindow/PopperUserWindow";
 
 let stompClient: CompatClient | null = null;
 
@@ -50,6 +51,8 @@ export const FullTweet: FC = (): ReactElement | null => {
 
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
     const [modalWindowTitle, setModalWindowTitle] = useState<string>("");
+    const [visiblePopperUserWindow, setVisiblePopperUserWindow] = useState<boolean>(false);
+    const [delayHandler, setDelayHandler] = useState<any>(null);
 
     const isTweetLiked = tweetData?.likedTweets.find((like) => like.user.id === myProfile?.id);
     const isTweetRetweeted = tweetData?.retweets.find((retweet) => retweet.user.id === myProfile?.id);
@@ -98,6 +101,15 @@ export const FullTweet: FC = (): ReactElement | null => {
         setModalWindowTitle("");
     };
 
+    const handleHover = (): void => {
+        setDelayHandler(setTimeout(() => setVisiblePopperUserWindow(true), 1337));
+    };
+
+    const handleLeave = (): void => {
+        clearTimeout(delayHandler);
+        setVisiblePopperUserWindow(false);
+    };
+
     if (tweetData) {
         return (
             <div style={{paddingTop: 48}}>
@@ -131,13 +143,18 @@ export const FullTweet: FC = (): ReactElement | null => {
                                         alt={`avatar ${tweetData.user.id}`}
                                         src={tweetData.user.avatar?.src ? tweetData.user.avatar?.src : DEFAULT_PROFILE_IMG}
                                     />
-                                    <Typography>
+                                    <Typography
+                                        style={{position: "relative"}}
+                                        onMouseEnter={handleHover}
+                                        onMouseLeave={handleLeave}
+                                    >
                                         <Link to={`/user/${tweetData.user.id}`}>
                                             <b>{tweetData.user.fullName}</b>&nbsp;
                                         </Link>
                                         <div>
                                             <span className={classes.username}>@{tweetData.user.username}</span>&nbsp;
                                         </div>
+                                        {visiblePopperUserWindow && <PopperUserWindow user={tweetData.user}/>}
                                     </Typography>
                                 </div>
                                 <TweetComponentActions tweet={tweetData} isFullTweet={true}/>
