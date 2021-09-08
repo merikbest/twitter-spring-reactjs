@@ -28,15 +28,11 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
     headerIcon: {
         display: "inline",
         "& .MuiIconButton-root": {
+            padding: 7,
             marginLeft: 475,
-            width: 40,
-            height: 40,
             color: "rgb(29, 161, 242)",
-            "& span": {
-                paddingTop: 3,
-                "& svg": {
-                    height: "0.90em",
-                },
+            "& svg": {
+                height: "0.90em",
             },
         },
     },

@@ -24,7 +24,7 @@ import {setChatMessage} from "./store/ducks/chatMessages/actionCreators";
 import {WS_URL} from "./util/url";
 import {setNotification} from "./store/ducks/notifications/actionCreators";
 import {selectNotificationsItems} from "./store/ducks/notifications/selectors";
-import {setTweet, setUpdatedTweet} from "./store/ducks/tweets/actionCreators";
+import {deleteTweet, setTweet, setUpdatedTweet} from "./store/ducks/tweets/actionCreators";
 
 const App: FC = (): ReactElement => {
     const history = useHistory();
@@ -58,9 +58,12 @@ const App: FC = (): ReactElement => {
         let stompClient = Stomp.over(new SockJS(WS_URL));
 
         stompClient.connect({}, () => {
-
             stompClient?.subscribe("/topic/feed", (response) => {
-                dispatch(setUpdatedTweet(JSON.parse(response.body)));
+                if (JSON.parse(response.body).tweetDeleted) {
+                    dispatch(deleteTweet(JSON.parse(response.body)));
+                } else {
+                    dispatch(setUpdatedTweet(JSON.parse(response.body)));
+                }
             });
 
             stompClient?.subscribe("/topic/feed/add", (response) => {

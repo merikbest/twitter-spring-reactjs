@@ -21,6 +21,7 @@ export interface Tweet {
     quoteTweet?: Tweet;
     user: User;
     poll?: Poll;
+    tweetDeleted?: boolean;
 }
 
 export interface LikeTweet {
@@ -50,7 +51,6 @@ export interface PollChoice {
 }
 
 export interface AddTweet {
-    profileId: number,
     text: string;
     images: Image[];
     replyType: ReplyType;
@@ -59,7 +59,6 @@ export interface AddTweet {
 }
 
 export interface AddQuoteTweet {
-    profileId: number,
     text: string;
     images: Image[];
     replyType: ReplyType;

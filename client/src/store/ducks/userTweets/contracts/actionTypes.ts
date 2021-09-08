@@ -2,18 +2,17 @@ import {Action} from "redux";
 
 import {LoadingStatus} from "../../../types";
 import {Tweet} from "../../tweets/contracts/state";
-import {PinnedTweet, UserTweetsState} from "./state";
+import {UserTweetsState} from "./state";
 
 export enum UserTweetsActionType {
     SET_TWEETS = "userTweets/SET_TWEETS",
     SET_ADDED_TWEET = "userTweets/SET_ADDED_TWEET",
+    SET_UPDATED_TWEET = "userTweets/SET_UPDATED_TWEET",
+    DELETE_TWEET = "userTweets/DELETE_TWEET",
     FETCH_TWEETS = "userTweets/FETCH_TWEETS",
-    SET_LIKED_TWEET = 'userTweets/SET_LIKED_TWEET',
     FETCH_LIKED_TWEETS = "userTweets/FETCH_LIKED_TWEETS",
     FETCH_MEDIA_TWEETS = "userTweets/FETCH_MEDIA_TWEETS",
     FETCH_RETWEETS_AND_REPLIES = "userTweets/FETCH_RETWEETS_AND_REPLIES",
-    DELETE_TWEET = "userTweets/DELETE_TWEET",
-    SET_RETWEET = 'userTweets/SET_RETWEET',
     SET_LOADING_STATUS = "userTweets/SET_LOADING_STATUS",
 }
 
@@ -27,14 +26,19 @@ export interface SetAddedUserTweetActionInterface extends Action<UserTweetsActio
     payload: Tweet;
 }
 
+export interface SetUpdatedUserTweetActionInterface extends Action<UserTweetsActionType> {
+    type: UserTweetsActionType.SET_UPDATED_TWEET;
+    payload: Tweet;
+}
+
+export interface DeleteUserTweetActionInterface extends Action<UserTweetsActionType> {
+    type: UserTweetsActionType.DELETE_TWEET;
+    payload: Tweet;
+}
+
 export interface FetchUserTweetsActionInterface extends Action<UserTweetsActionType> {
     type: UserTweetsActionType.FETCH_TWEETS;
     payload: string;
-}
-
-export interface SetUserLikedTweetActionInterface extends Action<UserTweetsActionType> {
-    type: UserTweetsActionType.SET_LIKED_TWEET;
-    payload: Tweet;
 }
 
 export interface FetchUserLikedTweetsActionInterface extends Action<UserTweetsActionType> {
@@ -52,16 +56,6 @@ export interface FetchUserRetweetsAndRepliesActionInterface extends Action<UserT
     payload: string;
 }
 
-export interface DeleteTweetActionInterface extends Action<UserTweetsActionType> {
-    type: UserTweetsActionType.DELETE_TWEET;
-    payload: string;
-}
-
-export interface SetUserRetweetActionInterface extends Action<UserTweetsActionType> {
-    type: UserTweetsActionType.SET_RETWEET;
-    payload: Tweet;
-}
-
 export interface SetUserTweetsLoadingStatusInterface extends Action<UserTweetsActionType> {
     type: UserTweetsActionType.SET_LOADING_STATUS;
     payload: LoadingStatus;
@@ -70,7 +64,6 @@ export interface SetUserTweetsLoadingStatusInterface extends Action<UserTweetsAc
 export type UserTweetsActions =
     | SetUserTweetsActionInterface
     | SetAddedUserTweetActionInterface
-    | SetUserLikedTweetActionInterface
-    | SetUserRetweetActionInterface
-    | SetUserTweetsLoadingStatusInterface
-    | DeleteTweetActionInterface;
+    | SetUpdatedUserTweetActionInterface
+    | DeleteUserTweetActionInterface
+    | SetUserTweetsLoadingStatusInterface;

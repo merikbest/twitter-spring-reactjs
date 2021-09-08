@@ -1,5 +1,6 @@
 import {AddQuoteTweet, AddTweet, ReplyType, Tweet, TweetsState, Vote} from "./contracts/state";
 import {
+    DeleteTweetActionInterface,
     FetchAddPollActionInterface,
     FetchAddQuoteTweetActionInterface,
     FetchBookmarksActionInterface,
@@ -67,6 +68,11 @@ export const setUpdatedTweet = (payload: Tweet): SetUpdatedTweetActionInterface 
 
 export const fetchDeleteTweet = (payload: string): FetchDeleteTweetActionInterface => ({
     type: TweetsActionType.FETCH_DELETE_TWEET,
+    payload
+});
+
+export const deleteTweet = (payload: Tweet): DeleteTweetActionInterface => ({
+    type: TweetsActionType.DELETE_TWEET,
     payload
 });
 

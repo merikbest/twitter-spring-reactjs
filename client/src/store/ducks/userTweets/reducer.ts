@@ -22,18 +22,13 @@ export const userTweetsReducer = produce((draft: Draft<UserTweetsState>, action:
             draft.loadingState = LoadingStatus.LOADED
             break;
 
-        case UserTweetsActionType.SET_LIKED_TWEET:
-            const tweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.id);
-            draft.items[tweetIndex] = action.payload;
-            break;
-
-        case UserTweetsActionType.SET_RETWEET:
-            const retweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.id);
-            draft.items[retweetIndex] = action.payload;
+        case UserTweetsActionType.SET_UPDATED_TWEET:
+            const updatedTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.id);
+            if (updatedTweetIndex !== -1) draft.items[updatedTweetIndex] = action.payload;
             break;
 
         case UserTweetsActionType.DELETE_TWEET:
-            draft.items = draft.items.filter((tweet) => tweet.id !== action.payload);
+            draft.items = draft.items.filter((tweet) => tweet.id !== action.payload.id);
             break;
 
         case UserTweetsActionType.SET_LOADING_STATUS:

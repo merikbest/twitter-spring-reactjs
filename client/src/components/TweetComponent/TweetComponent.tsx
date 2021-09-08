@@ -61,7 +61,6 @@ const TweetComponent: FC<TweetComponentProps> = ({
                                                      addressedId,
                                                      activeTab
                                                  }): ReactElement => {
-    const classes = useTweetComponentStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
     const userProfile = useSelector(selectUserProfile);
@@ -77,6 +76,9 @@ const TweetComponent: FC<TweetComponentProps> = ({
     const isTweetRetweetedByUser = retweets.find((retweet) => retweet.user.id === userProfile?.id);
     const isFollower = myProfile?.following?.find((follower) => follower.id === user?.id);
     const isModal = location.pathname.includes("/modal");
+    const isUserCanReply = (replyType === ReplyType.MENTION) && (myProfile?.id !== user.id);
+    const classes = useTweetComponentStyles({isTweetLiked, isUserCanReply});
+
     const image = images?.[0];
     const tweetData: Tweet = {
         id,
@@ -215,16 +217,9 @@ const TweetComponent: FC<TweetComponentProps> = ({
                         {quoteTweet && (<Quote quoteTweet={quoteTweet} isTweetQuoted={true}/>)}
                     </Typography>
                     <div className={classes.footer}>
-                        <div className={classes.footerIcon}>
-                            <IconButton
-                                disabled={(replyType === ReplyType.MENTION) && (myProfile?.id !== user.id)}
-                                onClick={onOpenReplyModalWindow}
-                            >
-                                <span style={((replyType === ReplyType.MENTION) && (myProfile?.id !== user.id)) ?
-                                    {color: "rgb(185, 192, 197)"} : {}}
-                                >
-                                    {ReplyIcon}
-                                </span>
+                        <div className={classes.replyIcon}>
+                            <IconButton disabled={isUserCanReply} onClick={onOpenReplyModalWindow}>
+                                <>{ReplyIcon}</>
                             </IconButton>
                             {(replies?.length === 0 || replies === null) ? null : (
                                 <span>{replies?.length}</span>
@@ -236,17 +231,17 @@ const TweetComponent: FC<TweetComponentProps> = ({
                             isTweetRetweetedByMe={isTweetRetweetedByMe}
                             handleRetweet={handleRetweet}
                         />
-                        <div className={classes.footerIcon}>
+                        <div className={classes.likeIcon}>
                             <IconButton onClick={handleLike}>
                                 {isTweetLiked ? (
-                                    <span style={{color: "rgb(224, 36, 94)"}}>{LikeIcon}</span>
+                                    <>{LikeIcon}</>
                                 ) : (
-                                    <span>{LikeOutlinedIcon}</span>
+                                    <>{LikeOutlinedIcon}</>
                                 )}
                             </IconButton>
                             {(likedTweets.length === 0 || likedTweets === null) ? null : (
                                 isTweetLiked ? (
-                                    <span style={{color: "rgb(224, 36, 94)"}}>{likedTweets.length}</span>
+                                    <span>{likedTweets.length}</span>
                                 ) : (
                                     <span>{likedTweets.length}</span>)
                             )}

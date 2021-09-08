@@ -1,19 +1,22 @@
 import {makeStyles, Theme} from "@material-ui/core";
+import {Retweet} from "../../store/ducks/tweets/contracts/state";
 
-export const useQuoteTweetStyles = makeStyles((theme: Theme) => ({
+interface QuoteTweetStyles {
+    isTweetRetweetedByMe?: Retweet;
+}
+
+export const useQuoteTweetStyles = makeStyles<Theme, QuoteTweetStyles>((theme) => ({
     footerIcon: {
         "& .MuiIconButton-root": {
-            marginBottom: 6,
-            width: 40,
-            height: 40,
-            color: "#5b7083",
-            "& span": {
-                paddingBottom: 3,
-                "& svg" : {
-                    verticalAlign: "bottom",
-                    height: "0.80em",
-                }
-            },
+            padding: 7,
+            "& svg" : {
+                color: props => props.isTweetRetweetedByMe ? "rgb(23, 191, 99)" : "rgb(83, 100, 113)",
+                verticalAlign: "bottom",
+                height: "0.80em",
+            }
+        },
+        "& span": {
+            color: props => props.isTweetRetweetedByMe ? "rgb(23, 191, 99)" : "rgb(83, 100, 113)",
         },
     },
     dropdown: {

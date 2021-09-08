@@ -51,7 +51,7 @@ const UploadImages: FC<UploadImageProps> = ({onChangeImages}): ReactElement => {
         <div>
             <div className={classes.icon}>
                 <IconButton onClick={handleClickImage} color="primary">
-                    <span>{MediaIcon}</span>
+                    <>{MediaIcon}</>
                 </IconButton>
             </div>
             <input ref={inputRef} type="file" id="upload-input" hidden/>

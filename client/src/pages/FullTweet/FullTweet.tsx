@@ -41,7 +41,6 @@ import PopperUserWindow from "../../components/PopperUserWindow/PopperUserWindow
 let stompClient: CompatClient | null = null;
 
 export const FullTweet: FC = (): ReactElement | null => {
-    const classes = useFullTweetStyles();
     const dispatch = useDispatch();
     const location = useLocation();
     const tweetData = useSelector(selectTweetData);
@@ -58,6 +57,7 @@ export const FullTweet: FC = (): ReactElement | null => {
     const isTweetRetweeted = tweetData?.retweets.find((retweet) => retweet.user.id === myProfile?.id);
     const isFollower = myProfile?.followers?.findIndex((follower) => follower.id === tweetData?.user.id);
     const image = tweetData?.images?.[0];
+    const classes = useFullTweetStyles({isTweetRetweeted, isTweetLiked});
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -213,24 +213,24 @@ export const FullTweet: FC = (): ReactElement | null => {
                             <div className={classes.info}>
                                 <div className={classes.infoIcon}>
                                     <IconButton>
-                                        <span>{ReplyIcon}</span>
+                                        <>{ReplyIcon}</>
                                     </IconButton>
                                 </div>
-                                <div className={classes.infoIcon}>
+                                <div className={classes.retweetIcon}>
                                     <IconButton onClick={handleRetweet}>
                                         {isTweetRetweeted ? (
-                                            <span style={{color: "rgb(23, 191, 99)"}}>{RetweetIcon}</span>
+                                            <>{RetweetIcon}</>
                                         ) : (
-                                            <span>{RetweetOutlinedIcon}</span>
+                                            <>{RetweetOutlinedIcon}</>
                                         )}
                                     </IconButton>
                                 </div>
-                                <div className={classes.infoIcon}>
+                                <div className={classes.likeIcon}>
                                     <IconButton onClick={handleLike}>
                                         {isTweetLiked ? (
-                                            <span style={{color: "rgb(224, 36, 94)"}}>{LikeIcon}</span>
+                                            <>{LikeIcon}</>
                                         ) : (
-                                            <span>{LikeOutlinedIcon}</span>
+                                            <>{LikeOutlinedIcon}</>
                                         )}
                                     </IconButton>
                                 </div>

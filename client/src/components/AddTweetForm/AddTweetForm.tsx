@@ -59,7 +59,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
                                                         addressedId,
                                                         onCloseModal
                                                     }): ReactElement => {
-    const classes = useAddTweetFormStyles();
+    const classes = useAddTweetFormStyles({quoteTweet});
     const dispatch = useDispatch();
     const location = useLocation();
     const isTweetsLoading = useSelector(selectIsTweetsLoading);
@@ -68,7 +68,6 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
     const [text, setText] = useState<string>('');
     const [images, setImages] = useState<ImageObj[]>([]);
     const [replyType, setReplyType] = useState<ReplyType>(ReplyType.EVERYONE);
-    const isModal = location.pathname.includes("/modal");
     const textLimitPercent = Math.round((text.length / 280) * 100);
     const textCount = MAX_LENGTH - text.length;
     // Popover
@@ -102,7 +101,6 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
         const pollDateTime = (day * 1440) + (hour * 60) + minute;
         const choices = [choice1, choice2, choice3, choice4].filter(item => item);
         const result: Array<Image> = [];
-        const profileId = parseInt(location.pathname.substring(location.pathname.length - 1));
 
         for (let i = 0; i < images.length; i++) {
             const file: File = images[i].file;
@@ -112,7 +110,6 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
 
         if (visiblePoll) {
             dispatch(fetchAddPoll({
-                profileId: profileId,
                 text: textConverter(),
                 images: result,
                 pollDateTime: pollDateTime,
@@ -121,7 +118,6 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
             }));
         } else {
             dispatch(fetchAddTweet({
-                profileId: profileId,
                 text: textConverter(),
                 images: result,
                 replyType: replyType
@@ -135,7 +131,6 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
 
     const handleClickQuoteTweet = async (): Promise<void> => {
         let result: Array<Image> = [];
-        const profileId = parseInt(location.pathname.substring(location.pathname.length - 1));
 
         for (let i = 0; i < images.length; i++) {
             const file: File = images[i].file;
@@ -144,7 +139,6 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
         }
 
         dispatch(fetchAddQuoteTweet({
-            profileId: profileId,
             text: textConverter(),
             images: result,
             replyType: replyType,
@@ -267,32 +261,28 @@ export const AddTweetForm: FC<AddTweetFormProps> = ({
                     <UploadImages onChangeImages={setImages}/>
                     <div className={classes.footerImage}>
                         <IconButton color="primary">
-                            <span>{GifIcon}</span>
+                            <>{GifIcon}</>
                         </IconButton>
                     </div>
                     {(buttonName !== "Reply") && (
-                        <div className={classes.footerImage}>
+                        <div className={classes.quoteImage}>
                             <IconButton disabled={!!quoteTweet} onClick={onOpenPoll} color="primary">
-                                <span style={quoteTweet ? {color: "rgb(142, 205, 247)"} : {}}>
-                                    {PullIcon}
-                                </span>
+                                <>{PullIcon}</>
                             </IconButton>
-                        </div>)
-                    }
+                        </div>
+                    )}
                     <div onClick={handleOpenPopup} className={classes.footerImage}>
                         <IconButton color="primary">
-                            <span>{EmojiIcon}</span>
+                            <>{EmojiIcon}</>
                         </IconButton>
                     </div>
                     {(buttonName !== "Reply") && (
-                        <div className={classes.footerImage}>
+                        <div className={classes.quoteImage}>
                             <IconButton disabled={!!quoteTweet} color="primary">
-                                <span style={quoteTweet ? {color: "rgb(142, 205, 247)"} : {}}>
-                                    {ScheduleIcon}
-                                </span>
+                                <>{ScheduleIcon}</>
                             </IconButton>
-                        </div>)
-                    }
+                        </div>
+                    )}
                 </div>
                 <div className={classes.footerAddForm}>
                     {text && (

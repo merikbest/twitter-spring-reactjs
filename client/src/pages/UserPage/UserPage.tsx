@@ -7,8 +7,10 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Skeleton from '@material-ui/lab/Skeleton';
 import format from 'date-fns/format';
+import {CompatClient, Stomp} from "@stomp/stompjs";
+import SockJS from "sockjs-client";
 
-import {LocationIcon, LinkIcon, CalendarIcon, MessagesIcon, EditIcon} from "../../icons";
+import {LocationIcon, LinkIcon, CalendarIcon, MessagesIcon} from "../../icons";
 import {useUserPageStyles} from "./UserPageStyles";
 import {BackButton} from "../../components/BackButton/BackButton";
 import EditProfileModal from "../../components/EditProfileModal/EditProfileModal";
@@ -22,14 +24,19 @@ import {
     fetchUserLikedTweets,
     fetchUserMediaTweets,
     fetchUserRetweetsAndReplies,
-    setUserTweets
+    setUserTweets,
+    setAddedUserTweet,
+    setUpdatedUserTweet,
+    deleteUserTweet
 } from "../../store/ducks/userTweets/actionCreators";
 import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
 import {fetchUserProfile, followUserProfile, unfollowUserProfile} from "../../store/ducks/userProfile/actionCreators";
 import UserPageTweets from "./UserPageTweets";
-import {DEFAULT_PROFILE_IMG} from "../../util/url";
+import {DEFAULT_PROFILE_IMG, WS_URL} from "../../util/url";
 import SetupProfileModal from "../SetupProfileModal/SetupProfileModal";
 import UserPageActions from "./UserPageActions/UserPageActions";
+
+let stompClient: CompatClient | null = null;
 
 const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElement => {
     const classes = useUserPageStyles();
@@ -48,6 +55,8 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
     const follower = myProfile?.followers?.find((user) => user.id === userProfile?.id);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+
         if (match.params.id) {
             dispatch(fetchUserProfile(match.params.id));
         }
@@ -55,7 +64,24 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
         dispatch(fetchRelevantUsers());
         dispatch(fetchTags());
         document.body.style.overflow = 'unset';
-        window.scrollTo(0, 0);
+
+        stompClient = Stomp.over(new SockJS(WS_URL));
+        stompClient.connect({}, () => {
+            stompClient?.subscribe("/topic/user/add/tweet/" + match.params.id, (response) => {
+                dispatch(setAddedUserTweet(JSON.parse(response.body)));
+            });
+            stompClient?.subscribe("/topic/user/update/tweet/" + match.params.id, (response) => {
+                if (JSON.parse(response.body).tweetDeleted) {
+                    dispatch(deleteUserTweet(JSON.parse(response.body)));
+                } else {
+                    dispatch(setUpdatedUserTweet(JSON.parse(response.body)));
+                }
+            });
+        });
+
+        return () => {
+            stompClient?.disconnect();
+        };
     }, [match.params.id]);
 
     useEffect(() => {

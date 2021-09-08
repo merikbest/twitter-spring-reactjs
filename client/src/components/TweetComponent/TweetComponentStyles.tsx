@@ -1,6 +1,12 @@
 import {makeStyles, Theme} from "@material-ui/core";
+import {LikeTweet, Retweet} from "../../store/ducks/tweets/contracts/state";
 
-export const useTweetComponentStyles = makeStyles((theme: Theme) => ({
+interface TweetComponentStylesProps {
+    isTweetLiked?: LikeTweet;
+    isUserCanReply: boolean;
+}
+
+export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesProps>((theme) => ({
     container: {
         position: "relative",
         display: 'flex',
@@ -111,25 +117,36 @@ export const useTweetComponentStyles = makeStyles((theme: Theme) => ({
     footer: {
         display: 'flex',
         position: 'relative',
-        paddingTop: 0,
+        paddingTop: 5,
         paddingBottom: 5,
         left: -13,
         justifyContent: 'space-between',
         maxWidth: 450,
     },
-    footerIcon: {
+    replyIcon: {
         "& .MuiIconButton-root": {
-            marginBottom: 6,
-            width: 40,
-            height: 40,
-            color: "#5b7083",
-            "& span": {
-                paddingBottom: 3,
-                "& svg" : {
-                    verticalAlign: "bottom",
-                    height: "0.80em",
-                }
+            padding: 7,
+            "& svg" : {
+                color: props => props.isUserCanReply ? "rgb(185, 192, 197)" : "rgb(83, 100, 113)",
+                verticalAlign: "bottom",
+                height: "0.80em",
             },
+        },
+        "& span": {
+            color: props => props.isUserCanReply ? "rgb(224, 36, 94)" : "rgb(83, 100, 113)",
+        },
+    },
+    likeIcon: {
+        "& .MuiIconButton-root": {
+            padding: 7,
+            "& svg" : {
+                color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : "rgb(83, 100, 113)",
+                verticalAlign: "bottom",
+                height: "0.80em",
+            },
+        },
+        "& span": {
+            color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : "rgb(83, 100, 113)",
         },
     },
     bottomLine: {

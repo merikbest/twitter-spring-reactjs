@@ -59,7 +59,9 @@ public class TweetMapper {
     }
 
     public TweetResponse deleteTweet(Long tweetId) {
-        return convertToTweetResponse(tweetService.deleteTweet(tweetId));
+        TweetResponse tweetResponse = convertToTweetResponse(tweetService.deleteTweet(tweetId));
+        tweetResponse.setTweetDeleted(true);
+        return tweetResponse;
     }
 
     public NotificationResponse likeTweet(Long tweetId) {

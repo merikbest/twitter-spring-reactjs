@@ -44,7 +44,7 @@ const ShareTweet: FC<ShareTweetProps> = ({tweetId, isFullTweet}): ReactElement =
             <ClickAwayListener onClickAway={handleClickAway}>
                 <div className={classes.root}>
                     <IconButton onClick={handleClick}>
-                        <span>{ShareIcon}</span>
+                        <>{ShareIcon}</>
                     </IconButton>
                     {open ? (
                         <div className={classes.dropdown}>

@@ -15,6 +15,7 @@ export enum TweetsActionType {
     FETCH_CHANGE_REPLY_TYPE = "tweets/FETCH_CHANGE_REPLY_TYPE",
     SET_UPDATED_TWEET = "tweets/SET_UPDATED_TWEET",
     FETCH_DELETE_TWEET = "tweets/FETCH_DELETE_TWEET",
+    DELETE_TWEET = "tweets/DELETE_TWEET",
     FETCH_TWEETS = "tweets/FETCH_TWEETS",
     FETCH_MEDIA_TWEETS = "tweets/FETCH_MEDIA_TWEETS",
     FETCH_TWEETS_BY_TAG = "tweets/FETCH_TWEETS_BY_TAG",
@@ -70,6 +71,11 @@ export interface FetchDeleteTweetActionInterface extends Action<TweetsActionType
     payload: string;
 }
 
+export interface DeleteTweetActionInterface extends Action<TweetsActionType> {
+    type: TweetsActionType.DELETE_TWEET;
+    payload: Tweet;
+}
+
 export interface FetchLikeTweetActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_LIKE_TWEET;
     payload: string;
@@ -121,6 +127,6 @@ export type TweetsActions =
     | SetTweetsActionInterface
     | SetTweetsLoadingStateInterface
     | SetUpdatedTweetActionInterface
-    | FetchDeleteTweetActionInterface
+    | DeleteTweetActionInterface
     | SetTweetActionInterface
     | RemoveTweetFromBookmarksActionInterface;

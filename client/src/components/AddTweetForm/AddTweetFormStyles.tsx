@@ -1,6 +1,11 @@
 import {makeStyles, Theme} from "@material-ui/core";
+import {Tweet} from "../../store/ducks/tweets/contracts/state";
 
-export const useAddTweetFormStyles = makeStyles((theme: Theme) => ({
+interface AddTweetFormStyles {
+    quoteTweet?: Tweet;
+}
+
+export const useAddTweetFormStyles = makeStyles<Theme, AddTweetFormStyles>((theme) => ({
     content: {
         display: 'flex',
         width: '100%',
@@ -77,15 +82,20 @@ export const useAddTweetFormStyles = makeStyles((theme: Theme) => ({
     },
     footerImage: {
         "& .MuiIconButton-root": {
-            marginBottom: 6,
-            width: 40,
-            height: 40,
-            "& span": {
-                paddingBottom: 3,
-                "& svg": {
-                    verticalAlign: "bottom",
-                    height: "0.9em",
-                }
+            padding: 7,
+            "& svg": {
+                verticalAlign: "bottom",
+                height: "0.9em",
+            },
+        },
+    },
+    quoteImage: {
+        "& .MuiIconButton-root": {
+            padding: 7,
+            "& svg": {
+                color: props => props.quoteTweet ? "rgb(142, 205, 247)" : theme.palette.primary.main,
+                verticalAlign: "bottom",
+                height: "0.9em",
             },
         },
     },

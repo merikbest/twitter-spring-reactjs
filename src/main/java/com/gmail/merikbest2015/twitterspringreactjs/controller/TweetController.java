@@ -41,6 +41,7 @@ public class TweetController {
     public ResponseEntity<TweetResponse> createTweet(@RequestBody TweetRequest tweetRequest) {
         TweetResponse tweet = tweetMapper.createTweet(tweetRequest);
         messagingTemplate.convertAndSend("/topic/feed/add", tweet);
+        messagingTemplate.convertAndSend("/topic/user/add/tweet/" + tweet.getUser().getId(), tweet);
         return ResponseEntity.ok(tweet);
     }
 
@@ -48,13 +49,16 @@ public class TweetController {
     public ResponseEntity<TweetResponse> createPoll(@RequestBody TweetRequest tweetRequest) {
         TweetResponse tweet = tweetMapper.createPoll(tweetRequest);
         messagingTemplate.convertAndSend("/topic/feed/add", tweet);
+        messagingTemplate.convertAndSend("/topic/user/add/tweet/" + tweet.getUser().getId(), tweet);
         return ResponseEntity.ok(tweet);
     }
 
     @DeleteMapping("/{tweetId}")
     public ResponseEntity<TweetResponse> deleteTweet(@PathVariable Long tweetId) {
         TweetResponse tweet = tweetMapper.deleteTweet(tweetId);
+        messagingTemplate.convertAndSend("/topic/feed", tweet);
         messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
+        messagingTemplate.convertAndSend("/topic/user/update/tweet/" + tweet.getUser().getId(), tweet);
         return ResponseEntity.ok(tweet);
     }
 
@@ -69,6 +73,7 @@ public class TweetController {
         messagingTemplate.convertAndSend("/topic/feed", notification.getTweet());
         messagingTemplate.convertAndSend("/topic/notifications/" + notification.getTweet().getUser().getId(), notification);
         messagingTemplate.convertAndSend("/topic/tweet/" + notification.getTweet().getId(), notification.getTweet());
+        messagingTemplate.convertAndSend("/topic/user/update/tweet/" + notification.getTweet().getUser().getId(), notification.getTweet());
         return ResponseEntity.ok(notification.getTweet());
     }
 
@@ -78,6 +83,7 @@ public class TweetController {
         messagingTemplate.convertAndSend("/topic/feed", notification.getTweet());
         messagingTemplate.convertAndSend("/topic/notifications/" + notification.getTweet().getUser().getId(), notification);
         messagingTemplate.convertAndSend("/topic/tweet/" + notification.getTweet().getId(), notification.getTweet());
+        messagingTemplate.convertAndSend("/topic/user/update/tweet/" + notification.getTweet().getUser().getId(), notification.getTweet());
         return ResponseEntity.ok(notification.getTweet());
     }
 
@@ -86,6 +92,7 @@ public class TweetController {
         TweetResponse tweet = tweetMapper.replyTweet(tweetId, tweetRequest);
         messagingTemplate.convertAndSend("/topic/feed", tweet);
         messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
+        messagingTemplate.convertAndSend("/topic/user/update/tweet/" + tweet.getUser().getId(), tweet);
         return ResponseEntity.ok(tweet);
     }
 
@@ -94,6 +101,7 @@ public class TweetController {
         TweetResponse tweet = tweetMapper.quoteTweet(tweetId, tweetRequest);
         messagingTemplate.convertAndSend("/topic/feed/add", tweet);
         messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
+        messagingTemplate.convertAndSend("/topic/user/add/tweet/" + tweet.getUser().getId(), tweet);
         return ResponseEntity.ok(tweet);
     }
 
@@ -102,6 +110,7 @@ public class TweetController {
         TweetResponse tweet = tweetMapper.changeTweetReplyType(tweetId, replyType);
         messagingTemplate.convertAndSend("/topic/feed", tweet);
         messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
+        messagingTemplate.convertAndSend("/topic/user/update/tweet/" + tweet.getUser().getId(), tweet);
         return ResponseEntity.ok(tweet);
     }
 
@@ -110,6 +119,7 @@ public class TweetController {
         TweetResponse tweet = tweetMapper.voteInPoll(voteRequest.getTweetId(), voteRequest.getPollChoiceId());
         messagingTemplate.convertAndSend("/topic/feed", tweet);
         messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
+        messagingTemplate.convertAndSend("/topic/user/update/tweet/" + tweet.getUser().getId(), tweet);
         return ResponseEntity.ok(tweet);
     }
 }

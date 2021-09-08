@@ -14,7 +14,7 @@ interface QuoteTweetProps {
 }
 
 const QuoteTweet: FC<QuoteTweetProps> = ({quoteTweet, retweets, isTweetRetweetedByMe, handleRetweet}): ReactElement => {
-    const classes = useQuoteTweetStyles();
+    const classes = useQuoteTweetStyles({isTweetRetweetedByMe});
 
     const [open, setOpen] = useState<boolean>(false);
     const [visibleAddTweet, setVisibleAddTweet] = useState<boolean>(false);
@@ -46,14 +46,14 @@ const QuoteTweet: FC<QuoteTweetProps> = ({quoteTweet, retweets, isTweetRetweeted
             <div className={classes.footerIcon}>
                 <IconButton onClick={handleClick}>
                     {isTweetRetweetedByMe ? (
-                        <span style={{color: "rgb(23, 191, 99)"}}>{RetweetIcon}</span>
+                        <>{RetweetIcon}</>
                     ) : (
-                        <span>{RetweetOutlinedIcon}</span>)
+                        <>{RetweetOutlinedIcon}</>)
                     }
                 </IconButton>
                 {(retweets.length === 0 || retweets === null) ? null : (
                     isTweetRetweetedByMe ? (
-                        <span style={{color: "rgb(23, 191, 99)"}}>{retweets.length}</span>
+                        <span>{retweets.length}</span>
                     ) : (
                         <span>{retweets.length}</span>)
                 )}

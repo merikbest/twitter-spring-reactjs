@@ -35,9 +35,8 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
             draft.loadingState = LoadingStatus.LOADED
             break;
 
-        case TweetsActionType.FETCH_DELETE_TWEET:
-            draft.items = draft.items.filter((tweet) => tweet.id !== action.payload);
-            draft.loadingState = LoadingStatus.LOADED
+        case TweetsActionType.DELETE_TWEET:
+            draft.items = draft.items.filter((tweet) => tweet.id !== action.payload.id);
             break;
 
         default:

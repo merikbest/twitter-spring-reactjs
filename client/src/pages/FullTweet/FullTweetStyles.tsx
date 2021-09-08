@@ -1,7 +1,12 @@
 import {makeStyles, Theme} from "@material-ui/core";
-import grey from "@material-ui/core/colors/grey";
+import {LikeTweet, Retweet} from "../../store/ducks/tweets/contracts/state";
 
-export const useFullTweetStyles = makeStyles((theme: Theme) => ({
+interface FullTweetStyles {
+    isTweetLiked?: LikeTweet;
+    isTweetRetweeted?: Retweet;
+}
+
+export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => ({
     retweetWrapper: {
         display: "flex",
         alignItems: "center",
@@ -101,17 +106,29 @@ export const useFullTweetStyles = makeStyles((theme: Theme) => ({
     },
     infoIcon: {
         "& .MuiIconButton-root": {
-            marginBottom: 6,
-            width: 40,
-            height: 40,
-            color: "#5b7083",
-            "& span": {
-                paddingBottom: 3,
-                "& svg" : {
-                    verticalAlign: "bottom",
-                    height: "0.9em",
-                }
+            "& svg": {
+                color: "rgb(83, 100, 113)",
+                verticalAlign: "bottom",
+                height: "0.9em",
             },
+        },
+    },
+    retweetIcon: {
+        "& .MuiIconButton-root": {
+            "& svg": {
+                color: props => props.isTweetRetweeted ? "rgb(23, 191, 99)" : "rgb(83, 100, 113)",
+                verticalAlign: "bottom",
+                height: "0.9em",
+            }
+        },
+    },
+    likeIcon: {
+        "& .MuiIconButton-root": {
+            "& svg": {
+                color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : "rgb(83, 100, 113)",
+                verticalAlign: "bottom",
+                height: "0.9em",
+            }
         },
     },
     replyInfoWrapper: {

@@ -60,7 +60,7 @@ const Home: FC = (): ReactElement => {
                     <Typography variant="h6">Home</Typography>
                     <div className={classes.headerIcon}>
                         <IconButton color="primary">
-                            <span>{TopTweets}</span>
+                            <>{TopTweets}</>
                         </IconButton>
                     </div>
                 </Route>

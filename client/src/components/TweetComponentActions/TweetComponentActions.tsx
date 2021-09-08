@@ -20,7 +20,6 @@ import {
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {ReplyType, Tweet} from "../../store/ducks/tweets/contracts/state";
 import {fetchPinTweet, fetchUnpinTweet, followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
-import {deleteTweet} from "../../store/ducks/userTweets/actionCreators";
 import TweetComponentActionsModal from "./TweetComponentActionsModal/TweetComponentActionsModal";
 import {fetchChangeReplyType, fetchDeleteTweet} from "../../store/ducks/tweets/actionCreators";
 import TweetComponentChangeReply from "./TweetComponentChangeReply/TweetComponentChangeReply";
@@ -89,7 +88,6 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = ({tweet, isFullTwe
             dispatch(deleteTweetReply(tweet.id));
         } else {
             dispatch(fetchDeleteTweet(tweet.id));
-            dispatch(deleteTweet(tweet.id));
         }
         setOpenActionsDropdown(false);
         setVisibleTweetPinModal(false);
