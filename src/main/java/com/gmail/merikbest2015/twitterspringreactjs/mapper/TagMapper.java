@@ -23,21 +23,21 @@ public class TagMapper {
         return modelMapper.map(tag, TagResponse.class);
     }
 
-    private List<TagResponse> convertTagsListToResponseDto(List<Tag> tags) {
+    private List<TagResponse> convertTagsListToResponse(List<Tag> tags) {
         return tags.stream()
                 .map(this::convertToTagResponse)
                 .collect(Collectors.toList());
     }
 
     public List<TagResponse> getTags() {
-        return convertTagsListToResponseDto(tagService.getTags());
+        return convertTagsListToResponse(tagService.getTags());
     }
 
     public List<TagResponse> getTrends() {
-        return convertTagsListToResponseDto(tagService.getTrends());
+        return convertTagsListToResponse(tagService.getTrends());
     }
 
     public List<TweetResponse> getTweetsByTag(String tagName) {
-        return tweetMapper.convertListToResponseDto(tagService.getTweetsByTag(tagName));
+        return tweetMapper.convertListToResponse(tagService.getTweetsByTag(tagName));
     }
 }

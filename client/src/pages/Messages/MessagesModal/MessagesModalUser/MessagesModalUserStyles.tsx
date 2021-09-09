@@ -13,7 +13,7 @@ export const useMessagesModalUserStyles = makeStyles((theme: Theme) => ({
     link: {
         textDecoration: 'none',
     },
-    linkAvatar: {
+    listAvatar: {
         width: theme.spacing(5),
         height: theme.spacing(5),
         marginRight: 15,

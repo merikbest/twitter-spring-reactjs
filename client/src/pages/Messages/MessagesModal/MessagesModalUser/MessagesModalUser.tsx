@@ -14,7 +14,7 @@ const MessagesModalUser: FC<MessagesModalUser> = ({user}): ReactElement => {
 
     return (
         <div className={classes.container}>
-            <Avatar className={classes.linkAvatar} src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}/>
+            <Avatar className={classes.listAvatar} src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}/>
             <div style={{flex: 1}}>
                 <div className={classes.header}>
                     <div style={{width: 350}}>

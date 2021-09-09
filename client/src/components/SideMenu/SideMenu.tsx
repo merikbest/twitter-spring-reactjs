@@ -12,7 +12,7 @@ import {
     ExploreIconFilled,
     HomeIcon,
     HomeIconFilled,
-    ListsIcon,
+    ListsIcon, ListsIconFilled,
     MessagesIcon,
     MessagesIconFilled,
     MoreIcon,
@@ -151,13 +151,19 @@ const SideMenu: FC = (): ReactElement => {
                     </NavLink>
                 </li>
                 <li className={classes.itemWrapper}>
-                    <div>
-                        <Hidden smDown>
-                            <Typography className={classes.label} variant="h6">
-                                <span>{ListsIcon}</span> Lists
-                            </Typography>
-                        </Hidden>
-                    </div>
+                    <NavLink to={`/lists/${userData?.id}`} activeClassName={"selected"}>
+                        <div>
+                            <Hidden smDown>
+                                <Typography className={classes.label} variant="h6">
+                                    {(location.pathname.includes(`/lists/${userData?.id}`)) ? (
+                                        <span>{ListsIconFilled}</span>
+                                    ) : (
+                                        <span>{ListsIcon}</span>
+                                    )} Lists
+                                </Typography>
+                            </Hidden>
+                        </div>
+                    </NavLink>
                 </li>
                 <li className={classes.itemWrapper}>
                     <NavLink to={`/user/${userData?.id}`} activeClassName={"selected"}>

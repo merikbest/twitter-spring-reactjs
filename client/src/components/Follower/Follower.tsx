@@ -57,7 +57,7 @@ const Follower: FC<FollowerProps> = ({user, follow, unfollow}): ReactElement => 
     return (
         <Paper className={classes.container} variant="outlined">
             <Link to={`/user/${user.id}`} className={classes.link}>
-                <Avatar className={classes.linkAvatar}
+                <Avatar className={classes.listAvatar}
                         src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}/>
             </Link>
             <div style={{flex: 1}}>

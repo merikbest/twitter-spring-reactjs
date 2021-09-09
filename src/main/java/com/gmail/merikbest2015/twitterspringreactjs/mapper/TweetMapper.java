@@ -31,18 +31,18 @@ public class TweetMapper {
         return modelMapper.map(tweet, TweetResponse.class);
     }
 
-    List<TweetResponse> convertListToResponseDto(List<Tweet> tweets) {
+    List<TweetResponse> convertListToResponse(List<Tweet> tweets) {
         return tweets.stream()
                 .map(this::convertToTweetResponse)
                 .collect(Collectors.toList());
     }
 
     public List<TweetResponse> getTweets() {
-        return convertListToResponseDto(tweetService.getTweets());
+        return convertListToResponse(tweetService.getTweets());
     }
 
     public List<TweetResponse> getMediaTweets() {
-        return convertListToResponseDto(tweetService.getMediaTweets());
+        return convertListToResponse(tweetService.getMediaTweets());
     }
 
     public TweetResponse getTweetById(Long tweetId) {
@@ -73,7 +73,7 @@ public class TweetMapper {
     }
 
     public List<TweetResponse> searchTweets(String text) {
-        return convertListToResponseDto(tweetService.searchTweets(text));
+        return convertListToResponse(tweetService.searchTweets(text));
     }
 
     public TweetResponse replyTweet(Long tweetId, TweetRequest tweetRequest) {

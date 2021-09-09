@@ -33,7 +33,7 @@ public class UserMapper {
         return modelMapper.map(notification, NotificationResponse.class);
     }
 
-    private List<NotificationResponse> convertListToNotificationResponseDto(List<Notification> notifications) {
+    private List<NotificationResponse> convertListToNotificationResponse(List<Notification> notifications) {
         return notifications.stream()
                 .map(this::convertToNotificationResponse)
                 .collect(Collectors.toList());
@@ -43,7 +43,7 @@ public class UserMapper {
         return modelMapper.map(user, UserResponse.class);
     }
 
-    private List<UserResponse> convertListToResponseDto(List<User> users) {
+    private List<UserResponse> convertListToResponse(List<User> users) {
         return users.stream()
                 .map(this::convertToUserResponse)
                 .collect(Collectors.toList());
@@ -58,7 +58,7 @@ public class UserMapper {
     }
 
     public List<UserResponse> getUsers() {
-        return convertListToResponseDto(userService.getUsers());
+        return convertListToResponse(userService.getUsers());
     }
 
     public ImageResponse uploadImage(MultipartFile multipartFile) {
@@ -74,23 +74,23 @@ public class UserMapper {
     }
 
     public List<TweetResponse> getUserTweets(Long userId) {
-        return tweetMapper.convertListToResponseDto(userService.getUserTweets(userId));
+        return tweetMapper.convertListToResponse(userService.getUserTweets(userId));
     }
 
     public List<TweetResponse> getUserLikedTweets(Long userId) {
-        return tweetMapper.convertListToResponseDto(userService.getUserLikedTweets(userId));
+        return tweetMapper.convertListToResponse(userService.getUserLikedTweets(userId));
     }
 
     public List<TweetResponse> getUserMediaTweets(Long userId) {
-        return tweetMapper.convertListToResponseDto(userService.getUserMediaTweets(userId));
+        return tweetMapper.convertListToResponse(userService.getUserMediaTweets(userId));
     }
 
     public List<TweetResponse> getUserRetweetsAndReplies(Long userId) {
-        return tweetMapper.convertListToResponseDto(userService.getUserRetweetsAndReplies(userId));
+        return tweetMapper.convertListToResponse(userService.getUserRetweetsAndReplies(userId));
     }
 
     public List<TweetResponse> getUserBookmarks() {
-        return tweetMapper.convertListToResponseDto(userService.getUserBookmarks());
+        return tweetMapper.convertListToResponse(userService.getUserBookmarks());
     }
 
     public UserResponse processUserBookmarks(Long tweetId) {
@@ -106,11 +106,11 @@ public class UserMapper {
     }
 
     public List<UserResponse> getRelevantUsers() {
-        return convertListToResponseDto(userService.getRelevantUsers());
+        return convertListToResponse(userService.getRelevantUsers());
     }
 
     public List<UserResponse> searchUsersByUsername(String username) {
-        return convertListToResponseDto(userService.searchUsersByUsername(username));
+        return convertListToResponse(userService.searchUsersByUsername(username));
     }
 
     public UserResponse pinTweet(Long tweetId) {
@@ -122,6 +122,6 @@ public class UserMapper {
     }
 
     public List<NotificationResponse> getUserNotifications() {
-        return convertListToNotificationResponseDto(userService.getUserNotifications());
+        return convertListToNotificationResponse(userService.getUserNotifications());
     }
 }

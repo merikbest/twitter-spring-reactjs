@@ -20,7 +20,7 @@ export const useFollowerStyles = makeStyles((theme) => ({
         color: "#000",
         textDecoration: 'none',
     },
-    linkAvatar: {
+    listAvatar: {
         width: theme.spacing(6.7),
         height: theme.spacing(6.7),
         marginRight: 15,
