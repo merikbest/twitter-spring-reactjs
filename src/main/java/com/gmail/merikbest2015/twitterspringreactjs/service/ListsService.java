@@ -10,5 +10,9 @@ public interface ListsService {
 
     List<Lists> getUserTweetLists();
 
+    Lists getListById(Long listId);
+
     Lists createTweetList(Lists lists);
+
+    Lists followList(Long listId);
 }

@@ -16,8 +16,16 @@ export const ListsApi = {
         const data = await axios.get<Response<Lists[]>>(API_URL + "/lists/user");
         return data.data;
     },
+    async getListById(listId: string): Promise<Response<Lists>> {
+        const data = await axios.get<Response<Lists>>(API_URL + `/lists/${listId}`);
+        return data.data;
+    },
     async createTweetList(payload: AddLists): Promise<Response<Lists>> {
         const data = await axios.post<Response<Lists>>(API_URL + "/lists", payload);
+        return data.data;
+    },
+    async followList(listId: number): Promise<Response<Lists>> {
+        const data = await axios.get<Response<Lists>>(API_URL + `/lists/follow/${listId}`);
         return data.data;
     },
 };

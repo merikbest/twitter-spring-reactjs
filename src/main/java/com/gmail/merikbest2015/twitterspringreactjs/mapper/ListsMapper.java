@@ -40,7 +40,15 @@ public class ListsMapper {
         return convertListToResponse(listsService.getUserTweetLists());
     }
 
+    public ListsResponse getListById(Long listId) {
+        return convertToListsResponse(listsService.getListById(listId));
+    }
+
     public ListsResponse createTweetList(ListsRequest listsRequest) {
         return convertToListsResponse(listsService.createTweetList(convertToListsEntity(listsRequest)));
+    }
+
+    public ListsResponse followList(Long listId) {
+        return convertToListsResponse(listsService.followList(listId));
     }
 }

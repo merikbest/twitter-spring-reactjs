@@ -4,13 +4,13 @@ import {AddLists, Lists, ListsState} from "./state";
 import {LoadingStatus} from "../../../types";
 
 export enum ListsActionType {
-    SET_LISTS = "tweetLists/SET_LISTS",
-    SET_USER_LISTS = "tweetLists/SET_USER_LISTS",
-    SET_LIST = "tweetLists/SET_LIST",
-    CREATE_LIST = "tweetLists/CREATE_LIST",
-    FETCH_LISTS = "tweetLists/FETCH_LISTS",
-    FETCH_USER_LISTS = "tweetLists/FETCH_USER_LISTS",
-    SET_LOADING_STATE = "tweetLists/SET_LOADING_STATE",
+    SET_LISTS = "lists/SET_LISTS",
+    SET_USER_LISTS = "lists/SET_USER_LISTS",
+    SET_LIST = "lists/SET_LIST",
+    CREATE_LIST = "lists/CREATE_LIST",
+    FETCH_LISTS = "lists/FETCH_LISTS",
+    FETCH_USER_LISTS = "lists/FETCH_USER_LISTS",
+    SET_LOADING_STATE = "lists/SET_LOADING_STATE",
 }
 
 export interface SetListsActionInterface extends Action<ListsActionType> {

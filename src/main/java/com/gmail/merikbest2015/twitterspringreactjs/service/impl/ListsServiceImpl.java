@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +33,11 @@ public class ListsServiceImpl implements ListsService {
     }
 
     @Override
+    public Lists getListById(Long listId) {
+        return listsRepository.getOne(listId);
+    }
+
+    @Override
     public Lists createTweetList(Lists lists) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());
@@ -41,5 +47,23 @@ public class ListsServiceImpl implements ListsService {
         userLists.add(userTweetList);
         userRepository.save(user);
         return userTweetList;
+    }
+
+    @Override
+    public Lists followList(Long listId) {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(principal.getName());
+        Lists list = listsRepository.getOne(listId);
+        Optional<User> follower = list.getFollowers().stream()
+                .filter(f -> f.equals(user))
+                .findFirst();
+        List<User> listFollowers = list.getFollowers();
+
+        if (follower.isPresent()) {
+            listFollowers.remove(follower.get());
+        } else {
+            listFollowers.add(user);
+        }
+        return listsRepository.save(list);
     }
 }

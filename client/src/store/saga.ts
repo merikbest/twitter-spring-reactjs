@@ -12,8 +12,9 @@ import {chatsSaga} from "./ducks/chats/sagas";
 import {chatMessagesSaga} from "./ducks/chatMessages/sagas";
 import {notificationsSaga} from "./ducks/notifications/sagas";
 import {listsSaga} from "./ducks/lists/sagas";
+import {listSaga} from "./ducks/list/sagas";
 
 export default function* rootSaga() {
     yield all([tweetsSaga(), tweetSaga(), tagsSaga(), usersSaga(), userSaga(), userTweetsSaga(), userProfileSaga(),
-        usersSearchSaga(), chatsSaga(), chatMessagesSaga(), notificationsSaga(), listsSaga()])
+        usersSearchSaga(), chatsSaga(), chatMessagesSaga(), notificationsSaga(), listsSaga(), listSaga()])
 }

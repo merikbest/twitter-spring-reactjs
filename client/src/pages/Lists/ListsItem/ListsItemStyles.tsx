@@ -14,6 +14,9 @@ export const useListsItemStyles = makeStyles((theme: Theme) => ({
             backgroundColor: 'rgb(245, 248, 250)',
         },
     },
+    link: {
+        textDecoration: "none",
+    },
     listAvatar: {
         width: "50px !important",
         height: "50px !important",
@@ -52,6 +55,16 @@ export const useListsItemStyles = makeStyles((theme: Theme) => ({
     listOwnerUsername: {
         paddingBottom: 5,
         color: "rgb(83, 100, 113)",
+    },
+    listPrimaryButton: {
+        width: 105,
+        height: 32,
+        border: '1px solid',
+        borderRadius: '25px',
+        padding: '0 15px',
+        '&:hover': {
+            backgroundColor: 'rgb(202, 32, 85)',
+        },
     },
     listOutlinedButton: {
         width: 79,

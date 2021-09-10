@@ -26,8 +26,17 @@ public class ListsController {
         return ResponseEntity.ok(listsMapper.getUserTweetLists());
     }
 
+    @GetMapping("/{listId}")
+    public ResponseEntity<ListsResponse> getListById(@PathVariable Long listId) {
+        return ResponseEntity.ok(listsMapper.getListById(listId));
+    }
+
     @PostMapping
     public ResponseEntity<ListsResponse> createTweetList(@RequestBody ListsRequest listsRequest) {
         return ResponseEntity.ok(listsMapper.createTweetList(listsRequest));
+    }
+    @GetMapping("/follow/{listId}")
+    public ResponseEntity<ListsResponse> followList(@PathVariable Long listId) {
+        return ResponseEntity.ok(listsMapper.followList(listId));
     }
 }

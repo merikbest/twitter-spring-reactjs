@@ -151,11 +151,11 @@ const SideMenu: FC = (): ReactElement => {
                     </NavLink>
                 </li>
                 <li className={classes.itemWrapper}>
-                    <NavLink to={`/lists/${userData?.id}`} activeClassName={"selected"}>
+                    <NavLink to={"/lists"} activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
                                 <Typography className={classes.label} variant="h6">
-                                    {(location.pathname.includes(`/lists/${userData?.id}`)) ? (
+                                    {(location.pathname.includes("/lists")) ? (
                                         <span>{ListsIconFilled}</span>
                                     ) : (
                                         <span>{ListsIcon}</span>

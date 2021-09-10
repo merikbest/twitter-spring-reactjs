@@ -26,6 +26,7 @@ import {setNotification} from "./store/ducks/notifications/actionCreators";
 import {selectNotificationsItems} from "./store/ducks/notifications/selectors";
 import {deleteTweet, setTweet, setUpdatedTweet} from "./store/ducks/tweets/actionCreators";
 import Lists from "./pages/Lists/Lists";
+import FullList from "./pages/FullList/FullList";
 
 const App: FC = (): ReactElement => {
     const history = useHistory();
@@ -111,7 +112,8 @@ const App: FC = (): ReactElement => {
                     <Route path="/notification" component={NotificationInfo} exact/>
                     <Route path="/messages" component={Messages}/>
                     <Route path="/bookmarks" component={Bookmarks}/>
-                    <Route path="/lists/:userId" component={Lists} />
+                    <Route path="/lists" component={Lists} exact/>
+                    <Route path="/lists/:listId" component={FullList} exact/>
                     <Route path="/user/:id" component={UserPage} exact/>
                     <Route path="/user/:id/:follow" component={FollowingFollowers}/>
                 </Switch>
