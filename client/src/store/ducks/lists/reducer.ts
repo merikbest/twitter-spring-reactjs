@@ -23,6 +23,11 @@ export const listsReducer = produce((draft: Draft<ListsState>, action: ListsActi
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
+        case ListsActionType.SET_FOLLOW_LIST:
+            const index = draft.lists.findIndex((list) => list.id === action.payload.id);
+            if (index !== -1) draft.lists[index] = action.payload;
+            break;
+
         case ListsActionType.SET_LIST:
             draft.lists = [action.payload, ...draft.lists];
             draft.loadingState = LoadingStatus.LOADED;

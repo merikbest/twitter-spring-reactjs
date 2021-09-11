@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.NotificationResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.service.TweetService;
@@ -27,7 +27,7 @@ public class TweetMapper {
         return modelMapper.map(tweetRequest, Tweet.class);
     }
 
-    private TweetResponse convertToTweetResponse(Tweet tweet) {
+    protected TweetResponse convertToTweetResponse(Tweet tweet) {
         return modelMapper.map(tweet, TweetResponse.class);
     }
 

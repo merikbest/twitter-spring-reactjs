@@ -23,6 +23,11 @@ export interface AddLists {
     wallpaper?: Image;
 }
 
+export interface AddTweetToLists {
+    tweetId: string;
+    listsIds: number[];
+}
+
 export interface ListsState {
     lists: Lists[];
     userLists: Lists[];

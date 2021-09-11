@@ -2,8 +2,8 @@ package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.NotificationResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Image;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Notification;

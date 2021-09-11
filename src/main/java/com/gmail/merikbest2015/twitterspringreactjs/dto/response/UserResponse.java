@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.dto.response;
 
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.chat.ChatMessageResponse;
 import lombok.Data;
 
 import java.time.LocalDateTime;

@@ -158,12 +158,11 @@ const TweetComponent: FC<TweetComponentProps> = ({
                         src={user.avatar?.src ? user.avatar?.src : DEFAULT_PROFILE_IMG}/>
                 </a>
                 <div style={{flex: 1}}>
-                    <div
-                        className={classes.header}
-                        onMouseEnter={handleHover}
-                        onMouseLeave={handleLeave}
-                    >
-                        <a onClick={handleClickUser}>
+                    <div className={classes.header}>
+                        <a onClick={handleClickUser}
+                           onMouseEnter={handleHover}
+                           onMouseLeave={handleLeave}
+                        >
                             <b>{user.fullName}</b>&nbsp;
                             <span className={classes.headerText}>@{user.username}</span>&nbsp;
                             <span className={classes.headerText}>·</span>&nbsp;

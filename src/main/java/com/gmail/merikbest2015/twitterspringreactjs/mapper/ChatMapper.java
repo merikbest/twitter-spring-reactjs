@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.ChatMessageRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ChatMessageResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ChatResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.chat.ChatMessageResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.chat.ChatResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Chat;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ChatMessage;

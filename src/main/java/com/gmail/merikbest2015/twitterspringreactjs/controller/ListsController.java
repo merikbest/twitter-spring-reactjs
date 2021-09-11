@@ -1,7 +1,9 @@
 package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.ListsRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetToListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ListsResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.ListsMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,8 +37,14 @@ public class ListsController {
     public ResponseEntity<ListsResponse> createTweetList(@RequestBody ListsRequest listsRequest) {
         return ResponseEntity.ok(listsMapper.createTweetList(listsRequest));
     }
+
     @GetMapping("/follow/{listId}")
     public ResponseEntity<ListsResponse> followList(@PathVariable Long listId) {
         return ResponseEntity.ok(listsMapper.followList(listId));
+    }
+
+    @PostMapping("/add/tweet")
+    public ResponseEntity<TweetResponse> addTweetToLists(@RequestBody TweetToListsRequest tweetToListsRequest) {
+        return ResponseEntity.ok(listsMapper.addTweetToLists(tweetToListsRequest));
     }
 }

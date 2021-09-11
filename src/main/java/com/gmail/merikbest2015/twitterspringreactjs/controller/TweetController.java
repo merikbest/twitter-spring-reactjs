@@ -2,9 +2,9 @@ package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.VoteRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.NotificationResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.NotificationTweetResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationTweetResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.TweetMapper;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
 import lombok.RequiredArgsConstructor;

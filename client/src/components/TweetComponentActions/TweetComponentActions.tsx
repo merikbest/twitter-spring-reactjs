@@ -25,6 +25,7 @@ import {fetchChangeReplyType, fetchDeleteTweet} from "../../store/ducks/tweets/a
 import TweetComponentChangeReply from "./TweetComponentChangeReply/TweetComponentChangeReply";
 import {selectTweetData} from "../../store/ducks/tweet/selectors";
 import {deleteTweetReply} from "../../store/ducks/tweet/actionCreators";
+import ListsModal from "./ListsModal/ListsModal";
 
 interface TweetComponentActionsProps {
     tweet: Tweet;
@@ -42,6 +43,7 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = ({tweet, isFullTwe
     const [openActionsDropdown, setOpenActionsDropdown] = useState<boolean>(false);
     const [openChangeReplyDropdown, setChangeReplyDropdown] = useState<boolean>(false);
     const [visibleTweetPinModal, setVisibleTweetPinModal] = useState<boolean>(false);
+    const [visibleListsModal, setVisibleListsModal] = useState<boolean>(false);
     const [modalTitle, setModalTitle] = useState<string>("");
 
     const follower = myProfile?.followers?.find((follower) => follower.id === tweet.user.id);
@@ -116,6 +118,14 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = ({tweet, isFullTwe
         setVisibleTweetPinModal(false);
     };
 
+    const onOpenListsModal = (): void => {
+        setVisibleListsModal(true);
+    };
+
+    const onCloseListsModal = (): void => {
+        setVisibleListsModal(false);
+    };
+
     return (
         <div ref={ref}>
             <ClickAwayListener onClickAway={handleClickAwayActionsDropdown}>
@@ -147,16 +157,13 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = ({tweet, isFullTwe
                                                 )}
                                             </span>
                                         </ListItem>
-                                        <ListItem>
+                                        <ListItem onClick={onOpenListsModal}>
                                             <span className={classes.textIcon}>{AddListsIcon}</span>
                                             <span className={classes.text}>
                                                 {`Add/remove @${tweet.user.username} from Lists`}
                                             </span>
                                         </ListItem>
-                                        <ListItem
-
-                                            onClick={handleClickReplyDropdown}
-                                        >
+                                        <ListItem onClick={handleClickReplyDropdown}>
                                             <span className={classes.textIcon}>{ReplyIcon}</span>
                                             <span className={classes.text}>
                                                 Change who can reply
@@ -245,6 +252,7 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = ({tweet, isFullTwe
                 onPinUserTweet={onPinUserTweet}
                 onDeleteUserTweet={onDeleteUserTweet}
             />
+            {visibleListsModal && <ListsModal tweetId={tweet.id} visible={visibleListsModal} onClose={onCloseListsModal}/>}
         </div>
     );
 };

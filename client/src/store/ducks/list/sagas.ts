@@ -5,6 +5,7 @@ import {setList, setListLoadingState} from './actionCreators';
 import {LoadingStatus} from '../../types';
 import {ListsApi} from "../../../services/api/listsApi";
 import {Lists} from "../lists/contracts/state";
+import {setFollowList} from "../lists/actionCreators";
 
 export function* fetchListByIdRequest({payload}: FetchListByIdActionInterface) {
     try {
@@ -21,6 +22,7 @@ export function* followListRequest({payload}: FollowListActionInterface) {
         yield put(setListLoadingState(LoadingStatus.LOADING));
         const data: Lists = yield call(ListsApi.followList, payload);
         yield put(setList(data));
+        yield put(setFollowList(data));
     } catch (error) {
         yield put(setListLoadingState(LoadingStatus.ERROR));
     }

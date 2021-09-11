@@ -1,5 +1,5 @@
 import React, {FC, ReactElement, useState} from 'react';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {Link} from 'react-router-dom';
 import {Avatar, Button, Paper} from "@material-ui/core";
 
@@ -7,6 +7,7 @@ import {Lists} from "../../../store/ducks/lists/contracts/state";
 import {useListsItemStyles} from "./ListsItemStyles";
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
 import {selectUserData} from "../../../store/ducks/user/selectors";
+import {followList} from "../../../store/ducks/list/actionCreators";
 
 interface ListsItemProps {
     list: Lists;
@@ -14,6 +15,7 @@ interface ListsItemProps {
 
 const ListsItem: FC<ListsItemProps> = ({list}): ReactElement => {
     const classes = useListsItemStyles();
+    const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
 
     const [btnText, setBtnText] = useState<string>("Following");
@@ -23,13 +25,7 @@ const ListsItem: FC<ListsItemProps> = ({list}): ReactElement => {
     const handleFollow = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
         event.preventDefault();
         event.stopPropagation();
-        console.log(myProfile?.id)
-    };
-
-    const handleUnfollow = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-        event.preventDefault();
-        event.stopPropagation();
-        console.log(myProfile?.id)
+        dispatch(followList(list?.id!));
     };
 
     return (
@@ -60,7 +56,7 @@ const ListsItem: FC<ListsItemProps> = ({list}): ReactElement => {
                                 className={classes.listPrimaryButton}
                                 onMouseOver={() => setBtnText("Unfollow")}
                                 onMouseLeave={() => setBtnText("Following")}
-                                onClick={event => handleUnfollow(event)}
+                                onClick={event => handleFollow(event)}
                                 color="primary"
                                 variant="contained"
                             >

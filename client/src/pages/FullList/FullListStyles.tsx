@@ -72,6 +72,9 @@ export const useFullListStyles = makeStyles((theme: Theme) => ({
         marginLeft: 20,
         color: "rgb(83, 100, 113)",
         fontSize: 15,
+        "& b" : {
+            color: "#000"
+        },
     },
     buttonWrapper: {
         marginTop: 20,

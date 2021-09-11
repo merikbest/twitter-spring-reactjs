@@ -1,5 +1,7 @@
-package com.gmail.merikbest2015.twitterspringreactjs.dto.response;
+package com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification;
 
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.FollowerResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
 import lombok.Data;
 
 import java.util.List;

@@ -1,7 +1,9 @@
 package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.ListsRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetToListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ListsResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Lists;
 import com.gmail.merikbest2015.twitterspringreactjs.service.ListsService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
 public class ListsMapper {
 
     private final ModelMapper modelMapper;
+    private final TweetMapper tweetMapper;
     private final ListsService listsService;
 
     private Lists convertToListsEntity(ListsRequest listsRequest) {
@@ -50,5 +53,9 @@ public class ListsMapper {
 
     public ListsResponse followList(Long listId) {
         return convertToListsResponse(listsService.followList(listId));
+    }
+
+    public TweetResponse addTweetToLists(TweetToListsRequest request) {
+        return tweetMapper.convertToTweetResponse(listsService.addTweetToLists(request.getTweetId(), request.getListsIds()));
     }
 }

@@ -9,6 +9,7 @@ import {fetchListById, followList} from "../../store/ducks/list/actionCreators";
 import {BackButton} from "../../components/BackButton/BackButton";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {selectUserData} from "../../store/ducks/user/selectors";
+import TweetComponent from "../../components/TweetComponent/TweetComponent";
 
 const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactElement => {
     const classes = useFullListStyles();
@@ -21,9 +22,7 @@ const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactEl
     const follower = list?.followers.find((follower) => follower.id === myProfile?.id);
 
     // Follow | Unfollow
-    const handleFollow = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-        event.preventDefault();
-        event.stopPropagation();
+    const handleFollow = (): void => {
         dispatch(followList(list?.id!));
     };
 
@@ -64,14 +63,13 @@ const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactEl
                     <span className={classes.listOwnerFullName}>{list?.listOwner.fullName}</span>
                     <span className={classes.listOwnerUsername}>@{list?.listOwner.username}</span>
                     <div>
-                        <span className={classes.listMembers}><b>0</b> Members</span>
-                        <span className={classes.listMembers}><b>0</b> Followers</span>
+                        <span className={classes.listMembers}><b>{list?.members.length}</b> Members</span>
+                        <span className={classes.listMembers}><b>{list?.followers.length}</b> Followers</span>
                     </div>
                     <div className={classes.buttonWrapper}>
                         {(myProfile?.id === list?.listOwner.id) ? (
                             <Button
                                 className={classes.listOutlinedButton}
-                                // onClick={() => handleFollow(user)}
                                 color="primary"
                                 variant="outlined"
                             >
@@ -82,7 +80,7 @@ const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactEl
                                 className={classes.primaryButton}
                                 onMouseOver={() => setBtnText("Unfollow")}
                                 onMouseLeave={() => setBtnText("Following")}
-                                onClick={event => handleFollow(event)}
+                                onClick={handleFollow}
                                 color="primary"
                                 variant="contained"
                             >
@@ -91,7 +89,7 @@ const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactEl
                         ) : (
                             <Button
                                 className={classes.outlinedButton}
-                                onClick={event => handleFollow(event)}
+                                onClick={handleFollow}
                                 color="primary"
                                 variant="outlined"
                             >
@@ -100,6 +98,7 @@ const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactEl
                         ))}
                     </div>
                 </Paper>
+                {list?.tweets.map((tweet) => <TweetComponent {...tweet} key={tweet.id}/>)}
             </div>
         </Paper>
     );
