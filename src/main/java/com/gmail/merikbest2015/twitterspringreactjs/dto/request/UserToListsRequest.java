@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class TweetToListsRequest {
-    private Long tweetId;
+public class UserToListsRequest {
+    private Long userId;
     private List<ListsResponse> lists;
 }

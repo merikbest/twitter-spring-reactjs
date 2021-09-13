@@ -15,6 +15,7 @@ import {
     TopicIcon
 } from "../../../icons";
 import {User} from "../../../store/ducks/user/contracts/state";
+import ListsModal from "../../../components/ListsModal/ListsModal";
 
 interface UserPageActionsProps {
     user: User;
@@ -22,7 +23,9 @@ interface UserPageActionsProps {
 
 const UserPageActions: FC<UserPageActionsProps> = ({user}): ReactElement => {
     const classes = useUserPageActionsStyles();
+
     const [open, setOpen] = useState<boolean>(false);
+    const [visibleListsModal, setVisibleListsModal] = useState<boolean>(false);
 
     const handleClick = (): void => {
         setOpen((prev) => !prev);
@@ -30,6 +33,14 @@ const UserPageActions: FC<UserPageActionsProps> = ({user}): ReactElement => {
 
     const handleClickAway = (): void => {
         setOpen(false);
+    };
+
+    const onOpenListsModal = (): void => {
+        setVisibleListsModal(true);
+    };
+
+    const onCloseListsModal = (): void => {
+        setVisibleListsModal(false);
     };
 
     return (
@@ -49,7 +60,7 @@ const UserPageActions: FC<UserPageActionsProps> = ({user}): ReactElement => {
                                 <span className={classes.textIcon}>{TopicIcon}</span>
                                 <span className={classes.text}>View Topics</span>
                             </ListItem>
-                            <ListItem>
+                            <ListItem onClick={onOpenListsModal}>
                                 <span className={classes.textIcon}>{AddListsIcon}</span>
                                 <span className={classes.text}>Add/remove @{user.username} from Lists</span>
                             </ListItem>
@@ -84,6 +95,7 @@ const UserPageActions: FC<UserPageActionsProps> = ({user}): ReactElement => {
                         </List>
                     </div>
                 ) : null}
+                {visibleListsModal && <ListsModal user={user} visible={visibleListsModal} onClose={onCloseListsModal}/>}
             </div>
         </ClickAwayListener>
     );

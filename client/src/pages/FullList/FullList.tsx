@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {RouteComponentProps} from "react-router-dom";
+import {Link, RouteComponentProps} from "react-router-dom";
 import {Avatar, Button, Paper, Typography} from "@material-ui/core";
 
 import {useFullListStyles} from "./FullListStyles";
@@ -10,6 +10,8 @@ import {BackButton} from "../../components/BackButton/BackButton";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
+import EditListModal from "./EditListModal/EditListModal";
+import MembersAndFollowersModal from "./EditListModal/MembersAndFollowersModal/MembersAndFollowersModal";
 
 const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactElement => {
     const classes = useFullListStyles();
@@ -18,17 +20,44 @@ const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactEl
     const myProfile = useSelector(selectUserData);
 
     const [btnText, setBtnText] = useState<string>("Following");
+    const [visibleEditListModal, setVisibleEditListModal] = useState<boolean>(false);
+    const [visibleMembersAndFollowersModal, setVisibleMembersAndFollowersModal] = useState<boolean>(false);
+    const [modalWindowTitle, setModalWindowTitle] = useState<string>("");
 
     const follower = list?.followers.find((follower) => follower.id === myProfile?.id);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        dispatch(fetchListById(match.params.listId));
+    }, [match.params.listId]);
 
     // Follow | Unfollow
     const handleFollow = (): void => {
         dispatch(followList(list?.id!));
     };
 
-    useEffect(() => {
-        dispatch(fetchListById(match.params.listId));
-    }, [match.params.listId]);
+    const onOpenEditListModal = (): void => {
+        setVisibleEditListModal(true);
+    };
+
+    const onCloseCreateListModal = (): void => {
+        setVisibleEditListModal(false);
+    };
+
+    const onOpenMembersModalWindow = (): void => {
+        setVisibleMembersAndFollowersModal(true);
+        setModalWindowTitle("List members");
+    };
+
+    const onOpenFollowersModalWindow = (): void => {
+        setVisibleMembersAndFollowersModal(true);
+        setModalWindowTitle("List followers");
+    };
+
+    const onCloseModalWindow = (): void => {
+        setVisibleMembersAndFollowersModal(false);
+        setModalWindowTitle("");
+    };
 
     return (
         <Paper className={classes.container} variant="outlined">
@@ -54,22 +83,29 @@ const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactEl
                 <Paper className={classes.listInfo} variant="outlined">
                     <div className={classes.listTitle}>{list?.name}</div>
                     <div className={classes.listDescription}>{list?.description}</div>
-                    <div className={classes.listOwnerWrapper}>
-                        <Avatar
-                            className={classes.listOwnerAvatar}
-                            src={list?.listOwner.avatar?.src ? list?.listOwner.avatar?.src : DEFAULT_PROFILE_IMG}
-                        />
-                    </div>
-                    <span className={classes.listOwnerFullName}>{list?.listOwner.fullName}</span>
-                    <span className={classes.listOwnerUsername}>@{list?.listOwner.username}</span>
+                    <Link to={`/user/${list?.listOwner.id}`} className={classes.listOwnerLink}>
+                        <div className={classes.listOwnerWrapper}>
+                            <Avatar
+                                className={classes.listOwnerAvatar}
+                                src={list?.listOwner.avatar?.src ? list?.listOwner.avatar?.src : DEFAULT_PROFILE_IMG}
+                            />
+                        </div>
+                        <span className={classes.listOwnerFullName}>{list?.listOwner.fullName}</span>
+                        <span className={classes.listOwnerUsername}>@{list?.listOwner.username}</span>
+                    </Link>
                     <div>
-                        <span className={classes.listMembers}><b>{list?.members.length}</b> Members</span>
-                        <span className={classes.listMembers}><b>{list?.followers.length}</b> Followers</span>
+                        <span onClick={onOpenMembersModalWindow} className={classes.listMembers}>
+                            <b>{list?.members.length}</b> Members
+                        </span>
+                        <span onClick={onOpenFollowersModalWindow} className={classes.listMembers}>
+                            <b>{list?.followers.length}</b> Followers
+                        </span>
                     </div>
                     <div className={classes.buttonWrapper}>
                         {(myProfile?.id === list?.listOwner.id) ? (
                             <Button
                                 className={classes.listOutlinedButton}
+                                onClick={onOpenEditListModal}
                                 color="primary"
                                 variant="outlined"
                             >
@@ -98,8 +134,29 @@ const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactEl
                         ))}
                     </div>
                 </Paper>
-                {list?.tweets.map((tweet) => <TweetComponent {...tweet} key={tweet.id}/>)}
+                {(list?.tweets.length === 0) ? (
+                    <div className={classes.listInfoWrapper}>
+                        <div className={classes.listInfoTitle}>There aren’t any Tweets in this List</div>
+                        <div className={classes.listInfoText}>When anyone in this List Tweets, they’ll show up here.</div>
+                    </div>
+                ) : (
+                    <>
+                        {list?.tweets.map((tweet) => <TweetComponent {...tweet} key={tweet.id}/>)}
+                    </>
+                )}
             </div>
+            {visibleEditListModal && (
+                <EditListModal list={list!} visible={visibleEditListModal} onClose={onCloseCreateListModal}/>
+            )}
+            {visibleMembersAndFollowersModal && (
+                <MembersAndFollowersModal
+                    list={list!}
+                    users={(modalWindowTitle === "List members") ? list!.members : list!.followers}
+                    visible={visibleMembersAndFollowersModal}
+                    title={modalWindowTitle}
+                    onClose={onCloseModalWindow}
+                />
+            )}
         </Paper>
     );
 };

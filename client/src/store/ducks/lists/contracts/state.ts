@@ -25,7 +25,12 @@ export interface AddLists {
 
 export interface AddTweetToLists {
     tweetId: string;
-    listsIds: number[];
+    lists: Lists[];
+}
+
+export interface AddUserToLists {
+    userId: number;
+    lists: Lists[];
 }
 
 export interface ListsState {

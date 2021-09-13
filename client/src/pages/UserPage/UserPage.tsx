@@ -172,7 +172,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
                         >
                             {myProfile?.profileCustomized ? "Edit profile" : "Setup profile"}
                         </Button>
-                    ) : (follower ? (
+                    ) : (
                         <div className={classes.buttonWrapper}>
                             <UserPageActions user={userProfile!}/>
                             <IconButton
@@ -181,26 +181,27 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
                             >
                                 {MessagesIcon}
                             </IconButton>
-                            <Button
-                                onClick={handleFollow}
-                                className={classes.primaryButton}
-                                color="primary"
-                                variant="contained"
-                                onMouseOver={() => setBtnText("Unfollow")}
-                                onMouseLeave={() => setBtnText("Following")}
-                            >
-                                {btnText}
-                            </Button>
+                            {follower ? (
+                                <Button
+                                    onClick={handleFollow}
+                                    className={classes.primaryButton}
+                                    color="primary"
+                                    variant="contained"
+                                    onMouseOver={() => setBtnText("Unfollow")}
+                                    onMouseLeave={() => setBtnText("Following")}
+                                >
+                                    {btnText}
+                                </Button>
+                            ) : (
+                                <Button
+                                    onClick={handleFollow}
+                                    className={classes.editButton}
+                                    color="primary"
+                                >
+                                    Follow
+                                </Button>
+                            )}
                         </div>
-                        ) : (
-                            <Button
-                                onClick={handleFollow}
-                                className={classes.editButton}
-                                color="primary"
-                            >
-                                Follow
-                            </Button>
-                        )
                     )}
                     {!userProfile ? (
                         <Skeleton variant="text" width={250} height={30}/>

@@ -1,7 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.Lists;
-import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 
 import java.util.List;
 
@@ -17,5 +16,9 @@ public interface ListsService {
 
     Lists followList(Long listId);
 
-    Tweet addTweetToLists(Long tweetId, List<Long> listsIds);
+    List<Lists> addTweetToLists(Long tweetId, List<Lists> lists);
+
+    List<Lists> addUserToLists(Long userId, List<Lists> lists);
+
+    Lists addUserToList(Long userId, Long listId);
 }

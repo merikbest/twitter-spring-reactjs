@@ -1,6 +1,11 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
 
-import {AddTweetToListsActionInterface, CreateListActionInterface, ListsActionType} from "./contracts/actionTypes";
+import {
+    AddTweetToListsActionInterface,
+    AddUserToListsActionInterface,
+    CreateListActionInterface,
+    ListsActionType
+} from "./contracts/actionTypes";
 import {setList, setLists, setListsLoadingState, setUserLists} from './actionCreators';
 import {LoadingStatus} from '../../types';
 import {ListsApi} from "../../../services/api/listsApi";
@@ -38,7 +43,17 @@ export function* createListRequest({payload}: CreateListActionInterface) {
 
 export function* addTweetToListsRequest({payload}: AddTweetToListsActionInterface) {
     try {
-        yield call(ListsApi.addTweetToLists, payload);
+        const data: Lists[] = yield call(ListsApi.addTweetToLists, payload);
+        yield put(setUserLists(data));
+    } catch (error) {
+        yield put(setListsLoadingState(LoadingStatus.ERROR));
+    }
+}
+
+export function* addUserToListsRequest({payload}: AddUserToListsActionInterface) {
+    try {
+        const data: Lists[] = yield call(ListsApi.addUserToLists, payload);
+        yield put(setUserLists(data));
     } catch (error) {
         yield put(setListsLoadingState(LoadingStatus.ERROR));
     }
@@ -49,4 +64,5 @@ export function* listsSaga() {
     yield takeEvery(ListsActionType.FETCH_USER_LISTS, fetchUserListsRequest);
     yield takeEvery(ListsActionType.CREATE_LIST, createListRequest);
     yield takeEvery(ListsActionType.ADD_TWEET_TO_LISTS, addTweetToListsRequest);
+    yield takeEvery(ListsActionType.ADD_USER_TO_LISTS, addUserToListsRequest);
 }

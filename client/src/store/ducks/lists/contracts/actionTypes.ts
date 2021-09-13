@@ -1,6 +1,6 @@
 import {Action} from "redux";
 
-import {AddLists, AddTweetToLists, Lists, ListsState} from "./state";
+import {AddLists, AddTweetToLists, AddUserToLists, Lists, ListsState} from "./state";
 import {LoadingStatus} from "../../../types";
 
 export enum ListsActionType {
@@ -12,6 +12,7 @@ export enum ListsActionType {
     FETCH_LISTS = "lists/FETCH_LISTS",
     FETCH_USER_LISTS = "lists/FETCH_USER_LISTS",
     ADD_TWEET_TO_LISTS = "lists/ADD_TWEET_TO_LISTS",
+    ADD_USER_TO_LISTS = "lists/ADD_USER_TO_LISTS",
     SET_LOADING_STATE = "lists/SET_LOADING_STATE",
 }
 
@@ -51,6 +52,11 @@ export interface FetchUserListsActionInterface extends Action<ListsActionType> {
 export interface AddTweetToListsActionInterface extends Action<ListsActionType> {
     type: ListsActionType.ADD_TWEET_TO_LISTS;
     payload: AddTweetToLists;
+}
+
+export interface AddUserToListsActionInterface extends Action<ListsActionType> {
+    type: ListsActionType.ADD_USER_TO_LISTS;
+    payload: AddUserToLists;
 }
 
 export interface SetListsLoadingStateInterface extends Action<ListsActionType> {

@@ -9,13 +9,17 @@ interface CreateListsModalInputProps {
     value: string;
     label: string;
     maxTextLength: number;
+    helperText?: string;
+    error?: boolean;
 }
 
 const CreateListsModalInput: FC<CreateListsModalInputProps> = ({
                                                                    onChange,
                                                                    value,
                                                                    label,
-                                                                   maxTextLength
+                                                                   maxTextLength,
+                                                                   helperText,
+                                                                   error
                                                                }): ReactElement => {
     const classes = useCreateListsModalInputStyles();
     const [focused, setFocused] = useState<boolean>(false);
@@ -39,6 +43,8 @@ const CreateListsModalInput: FC<CreateListsModalInputProps> = ({
                 value={value}
                 onFocus={onFocus}
                 onBlur={onBlur}
+                helperText={helperText}
+                error={error}
                 inputProps={{
                     maxLength: maxTextLength,
                 }}

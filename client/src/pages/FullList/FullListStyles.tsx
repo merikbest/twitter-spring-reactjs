@@ -49,6 +49,10 @@ export const useFullListStyles = makeStyles((theme: Theme) => ({
         marginBottom: 12,
         fontSize: 15,
     },
+    listOwnerLink: {
+        color: "black",
+        textDecoration: "none",
+    },
     listOwnerWrapper: {
         display: "inline-block",
     },
@@ -62,6 +66,9 @@ export const useFullListStyles = makeStyles((theme: Theme) => ({
         fontSize: 15,
         fontWeight: 700,
         marginRight: 4,
+        "&:hover": {
+            textDecoration: "underline",
+        },
     },
     listOwnerUsername: {
         verticalAlign: "top",
@@ -74,6 +81,10 @@ export const useFullListStyles = makeStyles((theme: Theme) => ({
         fontSize: 15,
         "& b" : {
             color: "#000"
+        },
+        "&:hover": {
+           cursor: "pointer",
+            textDecoration: "underline",
         },
     },
     buttonWrapper: {
@@ -111,5 +122,20 @@ export const useFullListStyles = makeStyles((theme: Theme) => ({
         '&:hover': {
             backgroundColor: 'rgb(202, 32, 85)',
         },
+    },
+    listInfoWrapper: {
+        width: 350,
+        margin: "0 auto",
+        marginTop: 32,
+        textAlign: "center",
+    },
+    listInfoTitle: {
+        fontSize: 31,
+        fontWeight: 800,
+        marginBottom: 8,
+    },
+    listInfoText: {
+        fontSize: 15,
+        color: "rgb(83, 100, 113)",
     },
 }));

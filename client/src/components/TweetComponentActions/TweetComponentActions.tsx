@@ -25,7 +25,7 @@ import {fetchChangeReplyType, fetchDeleteTweet} from "../../store/ducks/tweets/a
 import TweetComponentChangeReply from "./TweetComponentChangeReply/TweetComponentChangeReply";
 import {selectTweetData} from "../../store/ducks/tweet/selectors";
 import {deleteTweetReply} from "../../store/ducks/tweet/actionCreators";
-import ListsModal from "./ListsModal/ListsModal";
+import ListsModal from "../ListsModal/ListsModal";
 
 interface TweetComponentActionsProps {
     tweet: Tweet;
@@ -252,7 +252,7 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = ({tweet, isFullTwe
                 onPinUserTweet={onPinUserTweet}
                 onDeleteUserTweet={onDeleteUserTweet}
             />
-            {visibleListsModal && <ListsModal tweetId={tweet.id} visible={visibleListsModal} onClose={onCloseListsModal}/>}
+            {visibleListsModal && <ListsModal tweet={tweet} visible={visibleListsModal} onClose={onCloseListsModal}/>}
         </div>
     );
 };

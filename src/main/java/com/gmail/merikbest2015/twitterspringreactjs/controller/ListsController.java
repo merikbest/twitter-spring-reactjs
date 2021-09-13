@@ -2,8 +2,8 @@ package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.ListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetToListsRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ListsResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.ListsMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +44,17 @@ public class ListsController {
     }
 
     @PostMapping("/add/tweet")
-    public ResponseEntity<TweetResponse> addTweetToLists(@RequestBody TweetToListsRequest tweetToListsRequest) {
-        return ResponseEntity.ok(listsMapper.addTweetToLists(tweetToListsRequest));
+    public ResponseEntity<List<ListsResponse>> addTweetToLists(@RequestBody TweetToListsRequest tweetToListsRequest) {
+        return ResponseEntity.ok(listsMapper.addTweetToLists(tweetToListsRequest.getTweetId(), tweetToListsRequest.getLists()));
+    }
+
+    @PostMapping("/add/user")
+    public ResponseEntity<List<ListsResponse>> addUserToLists(@RequestBody UserToListsRequest userToListsRequest) {
+        return ResponseEntity.ok(listsMapper.addUserToLists(userToListsRequest.getUserId(), userToListsRequest.getLists()));
+    }
+
+    @GetMapping("/add/user/{userId}/{listId}")
+    public ResponseEntity<ListsResponse> addUserToList(@PathVariable Long userId, @PathVariable Long listId) {
+        return ResponseEntity.ok(listsMapper.addUserToList(userId, listId));
     }
 }

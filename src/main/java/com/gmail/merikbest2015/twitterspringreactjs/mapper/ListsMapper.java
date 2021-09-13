@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.ListsRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetToListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ListsResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Lists;
 import com.gmail.merikbest2015.twitterspringreactjs.service.ListsService;
@@ -18,19 +18,24 @@ import java.util.stream.Collectors;
 public class ListsMapper {
 
     private final ModelMapper modelMapper;
-    private final TweetMapper tweetMapper;
     private final ListsService listsService;
 
     private Lists convertToListsEntity(ListsRequest listsRequest) {
         return modelMapper.map(listsRequest, Lists.class);
     }
 
+    private List<Lists> convertListsResponseToEntity(List<ListsResponse> listsResponse) {
+        return listsResponse.stream()
+                .map(list -> modelMapper.map(list, Lists.class))
+                .collect(Collectors.toList());
+    }
+
     private ListsResponse convertToListsResponse(Lists lists) {
         return modelMapper.map(lists, ListsResponse.class);
     }
 
-    private List<ListsResponse> convertListToResponse(List<Lists> tweets) {
-        return tweets.stream()
+    private List<ListsResponse> convertListToResponse(List<Lists> lists) {
+        return lists.stream()
                 .map(this::convertToListsResponse)
                 .collect(Collectors.toList());
     }
@@ -55,7 +60,15 @@ public class ListsMapper {
         return convertToListsResponse(listsService.followList(listId));
     }
 
-    public TweetResponse addTweetToLists(TweetToListsRequest request) {
-        return tweetMapper.convertToTweetResponse(listsService.addTweetToLists(request.getTweetId(), request.getListsIds()));
+    public List<ListsResponse> addTweetToLists(Long tweetId, List<ListsResponse> listsResponse) {
+        return convertListToResponse(listsService.addTweetToLists(tweetId, convertListsResponseToEntity(listsResponse)));
+    }
+
+    public List<ListsResponse> addUserToLists(Long userId, List<ListsResponse> listsResponse) {
+        return convertListToResponse(listsService.addUserToLists(userId, convertListsResponseToEntity(listsResponse)));
+    }
+
+    public ListsResponse addUserToList(Long userId, Long listId) {
+        return convertToListsResponse(listsService.addUserToList(userId, listId));
     }
 }

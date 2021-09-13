@@ -37,10 +37,10 @@ public class Lists {
     @JoinColumn(name = "user_id")
     private User listOwner;
 
-    @OneToMany
+    @ManyToMany
     private List<Tweet> tweets;
 
-    @OneToMany
+    @ManyToMany
     private List<User> members;
 
     @OneToMany

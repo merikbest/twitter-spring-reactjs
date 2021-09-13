@@ -11,11 +11,7 @@ import {fetchLists, fetchUserLists} from "../../store/ducks/lists/actionCreators
 import {selectListsItems, selectUserListsItems} from "../../store/ducks/lists/selectors";
 import ListsItem from "./ListsItem/ListsItem";
 
-interface ListProps {
-
-}
-
-const Lists: FC<ListProps> = (): ReactElement => {
+const Lists: FC = (): ReactElement => {
     const classes = useListsStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
@@ -25,6 +21,7 @@ const Lists: FC<ListProps> = (): ReactElement => {
     const [visibleCreateListModal, setVisibleCreateListModal] = useState<boolean>(false);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         dispatch(fetchLists());
         dispatch(fetchUserLists());
     }, []);
