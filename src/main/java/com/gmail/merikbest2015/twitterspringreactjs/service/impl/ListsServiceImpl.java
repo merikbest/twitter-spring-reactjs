@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +36,16 @@ public class ListsServiceImpl implements ListsService {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());
         return user.getUserLists();
+    }
+
+    @Override
+    public List<Lists> getUserPinnedLists() {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(principal.getName());
+        return user.getUserLists().stream()
+                .filter(list -> list.getPinnedDate() != null)
+                .sorted(Comparator.comparing(Lists::getPinnedDate).reversed())
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -69,8 +80,26 @@ public class ListsServiceImpl implements ListsService {
 
         if (follower.isPresent()) {
             listFollowers.remove(follower.get());
+            if (list.getPinnedDate() != null) {
+                list.setPinnedDate(null);
+            }
+            user.getUserLists().remove(list);
         } else {
             listFollowers.add(user);
+            user.getUserLists().add(list);
+        }
+        userRepository.save(user);
+        return listsRepository.save(list);
+    }
+
+    @Override
+    public Lists pinList(Long listId) {
+        Lists list = listsRepository.getOne(listId);
+
+        if (list.getPinnedDate() == null) {
+            list.setPinnedDate(LocalDateTime.now().withNano(0));
+        } else {
+            list.setPinnedDate(null);
         }
         return listsRepository.save(list);
     }

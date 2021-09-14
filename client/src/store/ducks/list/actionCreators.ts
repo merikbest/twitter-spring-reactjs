@@ -1,7 +1,6 @@
 import {
     AddUserToListActionInterface,
     FetchListByIdActionInterface,
-    FollowListActionInterface,
     ListActionType,
     SetListActionInterface,
     SetListLoadingStateInterface
@@ -17,11 +16,6 @@ export const setList = (payload: Lists): SetListActionInterface => ({
 
 export const fetchListById = (payload: string): FetchListByIdActionInterface => ({
     type: ListActionType.FETCH_LIST_BY_ID,
-    payload
-});
-
-export const followList = (payload: number): FollowListActionInterface => ({
-    type: ListActionType.FOLLOW_LIST,
     payload
 });
 

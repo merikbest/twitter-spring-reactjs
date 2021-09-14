@@ -1,7 +1,6 @@
 import {axios} from "../../core/axios";
 import {API_URL} from "../../util/url";
 import {AddLists, AddTweetToLists, AddUserToLists, Lists} from "../../store/ducks/lists/contracts/state";
-import {Tweet} from "../../store/ducks/tweets/contracts/state";
 import {AddUserToList} from "../../store/ducks/list/contracts/state";
 
 interface Response<T> {
@@ -18,6 +17,10 @@ export const ListsApi = {
         const data = await axios.get<Response<Lists[]>>(API_URL + "/lists/user");
         return data.data;
     },
+    async getUserPinnedLists(): Promise<Response<Lists[]>> {
+        const data = await axios.get<Response<Lists[]>>(API_URL + "/lists/pined");
+        return data.data;
+    },
     async getListById(listId: string): Promise<Response<Lists>> {
         const data = await axios.get<Response<Lists>>(API_URL + `/lists/${listId}`);
         return data.data;
@@ -28,6 +31,10 @@ export const ListsApi = {
     },
     async followList(listId: number): Promise<Response<Lists>> {
         const data = await axios.get<Response<Lists>>(API_URL + `/lists/follow/${listId}`);
+        return data.data;
+    },
+    async pinList(listId: number): Promise<Response<Lists>> {
+        const data = await axios.get<Response<Lists>>(API_URL + `/lists/pin/${listId}`);
         return data.data;
     },
     async addTweetToLists(payload: AddTweetToLists): Promise<Response<Lists[]>> {

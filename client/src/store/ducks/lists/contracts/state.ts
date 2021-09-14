@@ -7,6 +7,7 @@ export interface Lists {
     name: string;
     description: string;
     isPrivate: boolean;
+    pinnedDate?: string;
     listOwner: User;
     altWallpaper: string;
     wallpaper?: Image;
@@ -36,5 +37,6 @@ export interface AddUserToLists {
 export interface ListsState {
     lists: Lists[];
     userLists: Lists[];
+    pinnedLists: Lists[];
     loadingState: LoadingStatus;
 }

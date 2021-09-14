@@ -6,7 +6,6 @@ import {LoadingStatus} from "../../../types";
 export enum ListActionType {
     SET_LIST = "list/SET_LISTS",
     FETCH_LIST_BY_ID = "list/FETCH_LIST_BY_ID",
-    FOLLOW_LIST = "list/FOLLOW_LIST",
     ADD_USER_TO_LIST = "list/ADD_USER_TO_LIST",
     SET_LOADING_STATE = "list/SET_LOADING_STATE",
 }
@@ -19,11 +18,6 @@ export interface SetListActionInterface extends Action<ListActionType> {
 export interface FetchListByIdActionInterface extends Action<ListActionType> {
     type: ListActionType.FETCH_LIST_BY_ID;
     payload: string;
-}
-
-export interface FollowListActionInterface extends Action<ListActionType> {
-    type: ListActionType.FOLLOW_LIST;
-    payload: number;
 }
 
 export interface AddUserToListActionInterface extends Action<ListActionType> {

@@ -56,6 +56,16 @@ export const useListsItemStyles = makeStyles((theme: Theme) => ({
         paddingBottom: 5,
         color: "rgb(83, 100, 113)",
     },
+    listPinWrapper: {
+        "& .MuiIconButton-root": {
+            padding: 7,
+            "& svg": {
+                verticalAlign: "bottom",
+                color: "rgba(29, 161, 242, 1.00)",
+                height: "0.85em",
+            },
+        },
+    },
     listPrimaryButton: {
         width: 105,
         height: 32,

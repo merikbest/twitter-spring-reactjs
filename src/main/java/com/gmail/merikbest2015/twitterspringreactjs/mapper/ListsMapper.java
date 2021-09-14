@@ -48,6 +48,10 @@ public class ListsMapper {
         return convertListToResponse(listsService.getUserTweetLists());
     }
 
+    public List<ListsResponse> getUserPinnedLists() {
+        return convertListToResponse(listsService.getUserPinnedLists());
+    }
+
     public ListsResponse getListById(Long listId) {
         return convertToListsResponse(listsService.getListById(listId));
     }
@@ -58,6 +62,10 @@ public class ListsMapper {
 
     public ListsResponse followList(Long listId) {
         return convertToListsResponse(listsService.followList(listId));
+    }
+
+    public ListsResponse pinList(Long listId) {
+        return convertToListsResponse(listsService.pinList(listId));
     }
 
     public List<ListsResponse> addTweetToLists(Long tweetId, List<ListsResponse> listsResponse) {

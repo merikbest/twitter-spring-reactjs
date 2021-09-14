@@ -41,7 +41,7 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
     },
     pinnedLists: {
         paddingTop: 52,
-        height: 220,
+        minHeight: 220,
         borderTop: 0,
         borderLeft: 0,
         borderRight: 0,
@@ -57,6 +57,9 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
         marginTop: 32,
         marginLeft: 32,
     },
+    pinnedListsWrapper: {
+        padding: 4,
+    },
     newLists: {
         maxHeight: 316,
         borderTop: 0,
@@ -66,6 +69,19 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
         '& h6': {
             margin: "12px 16px",
             fontWeight: 800,
+        },
+    },
+    link: {
+        textDecoration: "none",
+    },
+    showMore: {
+
+        padding: 16,
+        fontSize: 15,
+        color: "rgb(29, 155, 240)",
+        "&:hover": {
+            cursor: "pointer",
+            backgroundColor: "rgba(0, 0, 0, 0.03)"
         },
     },
     myLists: {

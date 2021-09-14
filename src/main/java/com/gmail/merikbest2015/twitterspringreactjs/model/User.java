@@ -96,7 +96,7 @@ public class User {
     @OneToMany
     private List<Notification> notifications;
 
-    @OneToMany
+    @ManyToMany
     private List<Lists> userLists;
 
     @ManyToMany(mappedBy = "participants")

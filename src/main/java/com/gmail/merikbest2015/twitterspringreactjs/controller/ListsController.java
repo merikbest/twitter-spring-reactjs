@@ -28,6 +28,11 @@ public class ListsController {
         return ResponseEntity.ok(listsMapper.getUserTweetLists());
     }
 
+    @GetMapping("/pined")
+    public ResponseEntity<List<ListsResponse>> getUserPinnedLists() {
+        return ResponseEntity.ok(listsMapper.getUserPinnedLists());
+    }
+
     @GetMapping("/{listId}")
     public ResponseEntity<ListsResponse> getListById(@PathVariable Long listId) {
         return ResponseEntity.ok(listsMapper.getListById(listId));
@@ -41,6 +46,11 @@ public class ListsController {
     @GetMapping("/follow/{listId}")
     public ResponseEntity<ListsResponse> followList(@PathVariable Long listId) {
         return ResponseEntity.ok(listsMapper.followList(listId));
+    }
+
+    @GetMapping("/pin/{listId}")
+    public ResponseEntity<ListsResponse> pinList(@PathVariable Long listId) {
+        return ResponseEntity.ok(listsMapper.pinList(listId));
     }
 
     @PostMapping("/add/tweet")

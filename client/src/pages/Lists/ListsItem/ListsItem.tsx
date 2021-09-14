@@ -1,19 +1,22 @@
 import React, {FC, ReactElement, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
 import {Link} from 'react-router-dom';
-import {Avatar, Button, Paper} from "@material-ui/core";
+import {useDispatch, useSelector} from "react-redux";
+import {Avatar, Button, IconButton, Paper} from "@material-ui/core";
 
 import {Lists} from "../../../store/ducks/lists/contracts/state";
 import {useListsItemStyles} from "./ListsItemStyles";
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
 import {selectUserData} from "../../../store/ducks/user/selectors";
-import {followList} from "../../../store/ducks/list/actionCreators";
+import {PinIcon, PinIconFilled} from "../../../icons";
+import {followList, pinList, unfollowList, unpinList} from "../../../store/ducks/lists/actionCreators";
 
 interface ListsItemProps {
     list: Lists;
+    listIndex?: number;
+    isMyList?: boolean;
 }
 
-const ListsItem: FC<ListsItemProps> = ({list}): ReactElement => {
+const ListsItem: FC<ListsItemProps> = ({list, listIndex, isMyList}): ReactElement => {
     const classes = useListsItemStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
@@ -22,15 +25,31 @@ const ListsItem: FC<ListsItemProps> = ({list}): ReactElement => {
 
     const follower = list?.followers.find((follower) => follower.id === myProfile?.id);
 
-    const handleFollow = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+    const onClickFollow = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
         event.preventDefault();
         event.stopPropagation();
-        dispatch(followList(list?.id!));
+
+        if (follower) {
+            dispatch(unfollowList(list?.id!));
+        } else {
+            dispatch(followList(list?.id!));
+        }
+    };
+
+    const onClickPinList = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (list.pinnedDate) {
+            dispatch(unpinList(list.id));
+        } else {
+            dispatch(pinList(list.id));
+        }
     };
 
     return (
         <Link to={`/lists/${list.id}`} className={classes.link}>
-            <Paper className={classes.container} variant="outlined">
+            <Paper className={classes.container} style={{border: (listIndex === 2) ? 0 : 1}} variant="outlined">
                 <Avatar
                     variant="square"
                     className={classes.listAvatar}
@@ -50,13 +69,24 @@ const ListsItem: FC<ListsItemProps> = ({list}): ReactElement => {
                             <span className={classes.listOwnerUsername}>@{list.listOwner.username}</span>
                         </div>
                     </div>
-                    {(myProfile?.id === list?.listOwner.id) ? null : (
+                    {isMyList && (
+                        <div className={classes.listPinWrapper}>
+                            <IconButton onClick={event => onClickPinList(event)} color="primary">
+                                {list.pinnedDate ? (
+                                    <>{PinIconFilled}</>
+                                ) : (
+                                    <>{PinIcon}</>
+                                )}
+                            </IconButton>
+                        </div>
+                    )}
+                    {(myProfile?.id === list?.listOwner.id || isMyList) ? null : (
                         follower ? (
                             <Button
                                 className={classes.listPrimaryButton}
                                 onMouseOver={() => setBtnText("Unfollow")}
                                 onMouseLeave={() => setBtnText("Following")}
-                                onClick={event => handleFollow(event)}
+                                onClick={event => onClickFollow(event)}
                                 color="primary"
                                 variant="contained"
                             >
@@ -65,7 +95,7 @@ const ListsItem: FC<ListsItemProps> = ({list}): ReactElement => {
                         ) : (
                             <Button
                                 className={classes.listOutlinedButton}
-                                onClick={event => handleFollow(event)}
+                                onClick={event => onClickFollow(event)}
                                 color="primary"
                                 variant="outlined"
                             >

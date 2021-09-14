@@ -5,13 +5,14 @@ import {Avatar, Button, Paper, Typography} from "@material-ui/core";
 
 import {useFullListStyles} from "./FullListStyles";
 import {selectListItem} from "../../store/ducks/list/selectors";
-import {fetchListById, followList} from "../../store/ducks/list/actionCreators";
+import {fetchListById} from "../../store/ducks/list/actionCreators";
 import {BackButton} from "../../components/BackButton/BackButton";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import EditListModal from "./EditListModal/EditListModal";
 import MembersAndFollowersModal from "./EditListModal/MembersAndFollowersModal/MembersAndFollowersModal";
+import {followList} from "../../store/ducks/lists/actionCreators";
 
 const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactElement => {
     const classes = useFullListStyles();

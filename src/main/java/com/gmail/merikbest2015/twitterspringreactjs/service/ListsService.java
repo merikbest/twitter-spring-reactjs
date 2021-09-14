@@ -10,11 +10,15 @@ public interface ListsService {
 
     List<Lists> getUserTweetLists();
 
+    List<Lists> getUserPinnedLists();
+
     Lists getListById(Long listId);
 
     Lists createTweetList(Lists lists);
 
     Lists followList(Long listId);
+
+    Lists pinList(Long listId);
 
     List<Lists> addTweetToLists(Long tweetId, List<Lists> lists);
 
