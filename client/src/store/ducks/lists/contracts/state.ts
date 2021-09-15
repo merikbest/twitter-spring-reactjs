@@ -34,6 +34,11 @@ export interface AddUserToLists {
     lists: Lists[];
 }
 
+export interface MemberToList {
+    userId: number;
+    listId: number;
+}
+
 export interface ListsState {
     lists: Lists[];
     userLists: Lists[];

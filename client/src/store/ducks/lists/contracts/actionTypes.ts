@@ -1,6 +1,6 @@
 import {Action} from "redux";
 
-import {AddLists, AddTweetToLists, AddUserToLists, Lists, ListsState} from "./state";
+import {AddLists, AddTweetToLists, AddUserToLists, Lists, ListsState, MemberToList} from "./state";
 import {LoadingStatus} from "../../../types";
 
 export enum ListsActionType {
@@ -8,6 +8,7 @@ export enum ListsActionType {
     SET_USER_LISTS = "lists/SET_USER_LISTS",
     SET_PINNED_LISTS = "lists/SET_PINNED_LISTS",
     SET_LIST = "lists/SET_LIST",
+    SET_UPDATED_LISTS = "lists/SET_UPDATED_LISTS",
     FOLLOW_LIST = "lists/FOLLOW_LIST",
     UNFOLLOW_LIST = "lists/UNFOLLOW_LIST",
     SET_FOLLOW_LIST = "lists/SET_FOLLOW_LIST",
@@ -18,6 +19,7 @@ export enum ListsActionType {
     FETCH_PINNED_LISTS = "lists/FETCH_PINNED_LISTS",
     ADD_TWEET_TO_LISTS = "lists/ADD_TWEET_TO_LISTS",
     ADD_USER_TO_LISTS = "lists/ADD_USER_TO_LISTS",
+    PROCESS_LIST_MEMBER = "lists/PROCESS_LIST_MEMBER",
     PIN_LIST = "lists/PIN_LIST",
     UNPIN_LIST = "lists/UNPIN_LIST",
     SET_PINED_LIST = "lists/SET_PINED_LIST",
@@ -43,6 +45,11 @@ export interface SetPinnedListsActionInterface extends Action<ListsActionType> {
 
 export interface SetListActionInterface extends Action<ListsActionType> {
     type: ListsActionType.SET_LIST;
+    payload: Lists;
+}
+
+export interface SetUpdatedListActionInterface extends Action<ListsActionType> {
+    type: ListsActionType.SET_UPDATED_LISTS;
     payload: Lists;
 }
 
@@ -93,6 +100,11 @@ export interface AddUserToListsActionInterface extends Action<ListsActionType> {
     payload: AddUserToLists;
 }
 
+export interface ProcessListMemberActionInterface extends Action<ListsActionType> {
+    type: ListsActionType.PROCESS_LIST_MEMBER;
+    payload: MemberToList;
+}
+
 export interface PinListActionInterface extends Action<ListsActionType> {
     type: ListsActionType.PIN_LIST;
     payload: number;
@@ -127,6 +139,7 @@ export type ListsActions =
     | SetListsActionInterface
     | SetUserListsActionInterface
     | SetPinnedListsActionInterface
+    | SetUpdatedListActionInterface
     | SetFollowListActionInterface
     | SetUnfollowListActionInterface
     | SetListActionInterface

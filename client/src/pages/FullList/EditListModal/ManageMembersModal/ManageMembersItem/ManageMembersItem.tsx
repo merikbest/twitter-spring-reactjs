@@ -8,7 +8,7 @@ import {User} from "../../../../../store/ducks/user/contracts/state";
 import {DEFAULT_PROFILE_IMG} from "../../../../../util/url";
 import PopperUserWindow from "../../../../../components/PopperUserWindow/PopperUserWindow";
 import {Lists} from "../../../../../store/ducks/lists/contracts/state";
-import {addUserToList} from "../../../../../store/ducks/list/actionCreators";
+import {processListMember} from "../../../../../store/ducks/lists/actionCreators";
 
 interface ManageMembersItemProps {
     list: Lists;
@@ -29,7 +29,7 @@ const ManageMembersItem: FC<ManageMembersItemProps> = ({list, member}): ReactEle
     };
 
     const onClickAddUserToList = (): void  => {
-        dispatch(addUserToList({userId: member.id!, listId: list.id}));
+        dispatch(processListMember({userId: member.id!, listId: list.id}));
     }
 
     const handleLeave = (): void => {

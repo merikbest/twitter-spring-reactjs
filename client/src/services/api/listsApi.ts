@@ -1,7 +1,6 @@
 import {axios} from "../../core/axios";
 import {API_URL} from "../../util/url";
-import {AddLists, AddTweetToLists, AddUserToLists, Lists} from "../../store/ducks/lists/contracts/state";
-import {AddUserToList} from "../../store/ducks/list/contracts/state";
+import {AddLists, AddTweetToLists, AddUserToLists, Lists, MemberToList} from "../../store/ducks/lists/contracts/state";
 
 interface Response<T> {
     status: string;
@@ -45,7 +44,7 @@ export const ListsApi = {
         const data = await axios.post<Response<Lists[]>>(API_URL + "/lists/add/user", payload);
         return data.data;
     },
-    async addUserToList(payload: AddUserToList): Promise<Response<Lists>> {
+    async addUserToList(payload: MemberToList): Promise<Response<Lists>> {
         const data = await axios.get<Response<Lists>>(API_URL + `/lists/add/user/${payload.userId}/${payload.listId}`);
         return data.data;
     },

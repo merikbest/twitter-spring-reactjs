@@ -31,8 +31,18 @@ const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
         return null;
     }
 
+    const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+        event.stopPropagation();
+    };
+
     return (
-        <Dialog open={visible} onClose={onClose} className={classes.dialog} aria-labelledby="form-dialog-title">
+        <Dialog
+            open={visible}
+            onClose={onClose}
+            onClick={(event) => handleClick(event)}
+            className={classes.dialog}
+            aria-labelledby="form-dialog-title"
+        >
             <DialogTitle id="form-dialog-title">
                 <IconButton onClick={onClose} color="secondary" aria-label="close">
                     <CloseIcon style={{fontSize: 26}} color="secondary"/>

@@ -29,6 +29,15 @@ export const listsReducer = produce((draft: Draft<ListsState>, action: ListsActi
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
+        case ListsActionType.SET_UPDATED_LISTS:
+            const updatedListIndex = draft.lists.findIndex((list) => list.id === action.payload.id);
+            if (updatedListIndex !== -1) {
+                draft.lists[updatedListIndex].members = action.payload.members;
+                draft.userLists[updatedListIndex].members = action.payload.members;
+                draft.pinnedLists[updatedListIndex].members = action.payload.members;
+            }
+            break;
+
         case ListsActionType.SET_FOLLOW_LIST:
             const followListIndex = draft.lists.findIndex((list) => list.id === action.payload.id);
             if (followListIndex !== -1) draft.lists[followListIndex] = action.payload;

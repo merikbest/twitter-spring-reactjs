@@ -9,6 +9,7 @@ import {DEFAULT_PROFILE_IMG} from "../../../util/url";
 import {selectUserData} from "../../../store/ducks/user/selectors";
 import {PinIcon, PinIconFilled} from "../../../icons";
 import {followList, pinList, unfollowList, unpinList} from "../../../store/ducks/lists/actionCreators";
+import PopperListWindow from "../PopperListWindow/PopperListWindow";
 
 interface ListsItemProps {
     list: Lists;
@@ -20,10 +21,11 @@ const ListsItem: FC<ListsItemProps> = ({list, listIndex, isMyList}): ReactElemen
     const classes = useListsItemStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
+    const follower = list?.followers.find((follower) => follower.id === myProfile?.id);
 
     const [btnText, setBtnText] = useState<string>("Following");
-
-    const follower = list?.followers.find((follower) => follower.id === myProfile?.id);
+    const [visiblePopperListWindow, setVisiblePopperListWindow] = useState<boolean>(false);
+    const [delayHandler, setDelayHandler] = useState<any>(null);
 
     const onClickFollow = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
         event.preventDefault();
@@ -47,6 +49,15 @@ const ListsItem: FC<ListsItemProps> = ({list, listIndex, isMyList}): ReactElemen
         }
     };
 
+    const handleHover = (): void => {
+        setDelayHandler(setTimeout(() => setVisiblePopperListWindow(true), 1337));
+    };
+
+    const handleLeave = (): void => {
+        clearTimeout(delayHandler);
+        setVisiblePopperListWindow(false);
+    };
+
     return (
         <Link to={`/lists/${list.id}`} className={classes.link}>
             <Paper className={classes.container} style={{border: (listIndex === 2) ? 0 : 1}} variant="outlined">
@@ -56,7 +67,7 @@ const ListsItem: FC<ListsItemProps> = ({list, listIndex, isMyList}): ReactElemen
                     src={list.wallpaper?.src ? list.wallpaper?.src : list.altWallpaper}
                 />
                 <div className={classes.listInfoContainer}>
-                    <div className={classes.listInfoWrapper}>
+                    <div className={classes.listInfoWrapper} onMouseEnter={handleHover} onMouseLeave={handleLeave}>
                         <div className={classes.listTitle}>{list.name}</div>
                         <div className={classes.listOwnerWrapper}>
                             <Avatar
@@ -68,6 +79,7 @@ const ListsItem: FC<ListsItemProps> = ({list, listIndex, isMyList}): ReactElemen
                             <span className={classes.listOwnerFullName}>{list.listOwner.fullName}</span>
                             <span className={classes.listOwnerUsername}>@{list.listOwner.username}</span>
                         </div>
+                        {visiblePopperListWindow && <PopperListWindow list={list}/>}
                     </div>
                     {isMyList && (
                         <div className={classes.listPinWrapper}>

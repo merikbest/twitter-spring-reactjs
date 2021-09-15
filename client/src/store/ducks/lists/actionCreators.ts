@@ -8,6 +8,7 @@ import {
     FollowListActionInterface,
     ListsActionType,
     PinListActionInterface,
+    ProcessListMemberActionInterface,
     SetFollowListActionInterface,
     SetListActionInterface,
     SetListsActionInterface,
@@ -16,12 +17,12 @@ import {
     SetPinedListToUserListActionInterface,
     SetPinnedListsActionInterface,
     SetUnfollowListActionInterface,
-    SetUnpinListActionInterface,
+    SetUnpinListActionInterface, SetUpdatedListActionInterface,
     SetUserListsActionInterface,
     UnfollowListActionInterface,
     UnpinListActionInterface
 } from "./contracts/actionTypes";
-import {AddLists, AddTweetToLists, AddUserToLists, Lists, ListsState} from "./contracts/state";
+import {AddLists, AddTweetToLists, AddUserToLists, Lists, ListsState, MemberToList} from "./contracts/state";
 import {LoadingStatus} from "../../types";
 
 export const setLists = (payload: ListsState["lists"]): SetListsActionInterface => ({
@@ -41,6 +42,11 @@ export const setPinnedLists = (payload: ListsState["pinnedLists"]): SetPinnedLis
 
 export const setList = (payload: Lists): SetListActionInterface => ({
     type: ListsActionType.SET_LIST,
+    payload
+});
+
+export const setUpdatedList = (payload: Lists): SetUpdatedListActionInterface => ({
+    type: ListsActionType.SET_UPDATED_LISTS,
     payload
 });
 
@@ -71,6 +77,11 @@ export const addTweetToLists = (payload: AddTweetToLists): AddTweetToListsAction
 
 export const addUserToLists = (payload: AddUserToLists): AddUserToListsActionInterface => ({
     type: ListsActionType.ADD_USER_TO_LISTS,
+    payload
+});
+
+export const processListMember = (payload: MemberToList): ProcessListMemberActionInterface => ({
+    type: ListsActionType.PROCESS_LIST_MEMBER,
     payload
 });
 
