@@ -1,17 +1,18 @@
 import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Paper, Typography} from "@material-ui/core";
+import {CircularProgress, Paper, Typography} from "@material-ui/core";
 
 import {useSuggestedListsStyles} from "./SuggestedListsStyles";
 import {BackButton} from "../../components/BackButton/BackButton";
 import {fetchLists} from "../../store/ducks/lists/actionCreators";
-import {selectListsItems} from "../../store/ducks/lists/selectors";
+import {selectIsListsLoading, selectListsItems} from "../../store/ducks/lists/selectors";
 import ListsItem from "../Lists/ListsItem/ListsItem";
 
 const SuggestedLists: FC = (): ReactElement => {
     const classes = useSuggestedListsStyles();
     const dispatch = useDispatch();
     const lists = useSelector(selectListsItems);
+    const isLoading = useSelector(selectIsListsLoading);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -43,7 +44,13 @@ const SuggestedLists: FC = (): ReactElement => {
                 </div>
             </Paper>
             <div className={classes.listsTitle}>Discover new Lists</div>
-            {lists.map((list) => <ListsItem key={list.id} list={list}/>)}
+            {isLoading ? (
+                <div className={classes.loading}>
+                    <CircularProgress/>
+                </div>
+            ) : (
+                lists.map((list) => <ListsItem key={list.id} list={list}/>)
+            )}
         </Paper>
     );
 };

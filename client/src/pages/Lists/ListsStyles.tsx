@@ -8,6 +8,10 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
         borderBottom: '0',
         marginBottom: 500,
     },
+    loading: {
+        paddingTop: 250,
+        textAlign: 'center',
+    },
     header: {
         position: "fixed",
         width: 602,

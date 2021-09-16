@@ -8,6 +8,10 @@ export const useFullListStyles = makeStyles((theme: Theme) => ({
         borderTop: 0,
         borderBottom: 0,
     },
+    loading: {
+        paddingTop: 250,
+        textAlign: 'center',
+    },
     header: {
         position: "fixed",
         width: 602,
