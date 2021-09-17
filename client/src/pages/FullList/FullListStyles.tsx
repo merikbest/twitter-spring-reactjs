@@ -28,6 +28,10 @@ export const useFullListStyles = makeStyles((theme: Theme) => ({
             fontWeight: 800,
         },
     },
+    iconGroup: {
+        marginLeft: "auto",
+        marginRight: 10,
+    },
     wallpaper: {
         height: 200,
         "& img": {

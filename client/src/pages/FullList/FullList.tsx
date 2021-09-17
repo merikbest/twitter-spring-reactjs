@@ -1,7 +1,7 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link, RouteComponentProps} from "react-router-dom";
-import {Avatar, Button, CircularProgress, Paper, Typography} from "@material-ui/core";
+import {Avatar, Button, CircularProgress, IconButton, Paper, Typography} from "@material-ui/core";
 
 import {useFullListStyles} from "./FullListStyles";
 import {selectIsListLoading, selectListItem} from "../../store/ducks/list/selectors";
@@ -13,6 +13,9 @@ import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import EditListModal from "./EditListModal/EditListModal";
 import MembersAndFollowersModal from "./EditListModal/MembersAndFollowersModal/MembersAndFollowersModal";
 import {followList} from "../../store/ducks/lists/actionCreators";
+import {EditIcon, ShareIcon} from "../../icons";
+import ShareActionsModal from "./ShareActionsModal/ShareActionsModal";
+import TopTweetsActionsModal from "./TopTweetsActionsModal/TopTweetsActionsModal";
 
 const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactElement => {
     const classes = useFullListStyles();
@@ -72,6 +75,10 @@ const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactEl
                     <Typography variant="caption" display="block" gutterBottom>
                         @{list?.listOwner.username}
                     </Typography>
+                </div>
+                <div className={classes.iconGroup}>
+                    <ShareActionsModal/>
+                    <TopTweetsActionsModal/>
                 </div>
             </Paper>
             {isLoading ? (
@@ -145,7 +152,9 @@ const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactEl
                         {(list?.tweets.length === 0) ? (
                             <div className={classes.listInfoWrapper}>
                                 <div className={classes.listInfoTitle}>There aren’t any Tweets in this List</div>
-                                <div className={classes.listInfoText}>When anyone in this List Tweets, they’ll show up here.</div>
+                                <div className={classes.listInfoText}>When anyone in this List Tweets, they’ll show up
+                                    here.
+                                </div>
                             </div>
                         ) : (
                             <>
