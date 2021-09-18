@@ -42,7 +42,7 @@ const UsersListModal: FC<UsersListModalProps> = ({users, visible, title, onClose
                 {title}
             </DialogTitle>
             <DialogContent style={{height: 550, width: 598, padding: 0,}}>
-                {users?.map((user) => <Follower user={user.user} follow={handleFollow} unfollow={handleUnfollow}/>)}
+                {users?.map((user) => <Follower item={user.user} follow={handleFollow} unfollow={handleUnfollow}/>)}
             </DialogContent>
         </Dialog>
     );

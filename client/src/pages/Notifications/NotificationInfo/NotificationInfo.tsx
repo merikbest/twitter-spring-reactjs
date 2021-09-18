@@ -43,9 +43,9 @@ const NotificationInfo: FC = (): ReactElement => {
                 </div>
             </Paper>
             <div style={{paddingTop: 53,}}>
-                <TweetComponent {...location.state.notification.tweet}/>
+                <TweetComponent item={location.state.notification.tweet}/>
             </div>
-            <Follower user={location.state.notification.user} follow={handleFollow} unfollow={handleUnfollow}/>
+            <Follower item={location.state.notification.user} follow={handleFollow} unfollow={handleUnfollow}/>
         </Paper>
     );
 };

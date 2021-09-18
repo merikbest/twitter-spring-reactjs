@@ -1,5 +1,6 @@
 import React, {FC, ReactElement, useState} from 'react';
 import {ClickAwayListener, IconButton, List, ListItem} from "@material-ui/core";
+import {Link} from 'react-router-dom';
 
 import {useUserPageActionsStyles} from "./UserPageActionsStyles";
 import {
@@ -65,8 +66,10 @@ const UserPageActions: FC<UserPageActionsProps> = ({user}): ReactElement => {
                                 <span className={classes.text}>Add/remove @{user.username} from Lists</span>
                             </ListItem>
                             <ListItem>
-                                <span className={classes.textIcon}>{ListsIcon}</span>
-                                <span className={classes.text}>View Lists</span>
+                                <Link to={`/lists/memberships/${user?.id}`} className={classes.link}>
+                                    <span className={classes.textIcon}>{ListsIcon}</span>
+                                    <span className={classes.text}>View Lists</span>
+                                </Link>
                             </ListItem>
                             <ListItem>
                                 <span className={classes.textIcon}>{MomentsIcon}</span>

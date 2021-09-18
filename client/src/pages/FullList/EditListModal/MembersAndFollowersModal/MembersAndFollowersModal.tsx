@@ -51,7 +51,7 @@ const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
             </DialogTitle>
             <DialogContent className={classes.content}>
                 {(users.length !== 0) ? (
-                    users.map((user) => <ManageMembersItem list={list} member={user}/>)
+                    users.map((user) => <ManageMembersItem item={list} member={user}/>)
                 ) : (
                     (title === "List members") ? (
                         <div className={classes.infoWrapper}>

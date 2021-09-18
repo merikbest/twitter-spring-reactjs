@@ -27,6 +27,10 @@ export const useUserPageActionsStyles = makeStyles((theme: Theme) => ({
             },
         },
     },
+    link: {
+        color: "rgb(83, 100, 113)",
+        textDecoration: "none",
+    },
     messageButton: {
         marginTop: 84,
         marginRight: 9,

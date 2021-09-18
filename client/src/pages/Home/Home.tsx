@@ -13,7 +13,7 @@ import {
 } from "../../store/ducks/tweets/actionCreators";
 import {selectIsTweetsLoading, selectTweetsItems} from "../../store/ducks/tweets/selectors";
 import {BackButton} from "../../components/BackButton/BackButton";
-import {FullTweet} from "../FullTweet/FullTweet";
+
 import {fetchUserData} from "../../store/ducks/user/actionCreators";
 import {fetchRelevantUsers} from "../../store/ducks/users/actionCreators";
 import {fetchTags} from "../../store/ducks/tags/actionCreators";
@@ -24,6 +24,7 @@ import {selectUserData} from "../../store/ducks/user/selectors";
 import Welcome from "../../components/Welcome/Welcome";
 import {LoadingStatus} from "../../store/types";
 import {fetchNotifications} from "../../store/ducks/notifications/actionCreators";
+import FullTweet from "../FullTweet/FullTweet";
 
 const Home: FC = (): ReactElement => {
     const classes = useHomeStyles();
@@ -102,13 +103,13 @@ const Home: FC = (): ReactElement => {
                     (!myProfile?.profileStarted) ? (
                         <Welcome/>
                     ) : (
-                        tweets.map((tweet) => <TweetComponent key={tweet.id} images={tweet.images} {...tweet} />)
+                        tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)
                     )
                 )}
             </Route>
 
             <Route path="/home/tweet/:id" exact>
-                <FullTweet/>
+                <FullTweet />
             </Route>
         </Paper>
     );

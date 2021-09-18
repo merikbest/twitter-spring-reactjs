@@ -28,6 +28,7 @@ import {deleteTweet, setTweet, setUpdatedTweet} from "./store/ducks/tweets/actio
 import Lists from "./pages/Lists/Lists";
 import FullList from "./pages/FullList/FullList";
 import SuggestedLists from "./pages/SuggestedLists/SuggestedLists";
+import ListsMemberships from "./pages/Lists/ListsMemberships/ListsMemberships";
 
 const App: FC = (): ReactElement => {
     const history = useHistory();
@@ -115,6 +116,7 @@ const App: FC = (): ReactElement => {
                     <Route path="/bookmarks" component={Bookmarks}/>
                     <Route path="/suggested" component={SuggestedLists}/>
                     <Route path="/lists" component={Lists} exact/>
+                    <Route path="/lists/memberships/:id" component={ListsMemberships} exact/>
                     <Route path="/lists/:listId" component={FullList} exact/>
                     <Route path="/user/:id" component={UserPage} exact/>
                     <Route path="/user/:id/:follow" component={FollowingFollowers}/>

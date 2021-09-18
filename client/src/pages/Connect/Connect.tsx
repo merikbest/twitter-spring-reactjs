@@ -43,7 +43,7 @@ const Connect: FC = (): ReactElement => {
                         </Paper>
                         <Paper className={classes2.content} variant="outlined">
                             {users && users.map(user =>
-                                <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>)
+                                <Follower item={user} follow={handleFollow} unfollow={handleUnfollow}/>)
                             }
                         </Paper>
                     </>

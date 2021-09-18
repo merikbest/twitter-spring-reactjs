@@ -11,22 +11,33 @@ import {selectUserData} from "../../store/ducks/user/selectors";
 import {useFollowerStyles} from "./FollowerStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
+import {withHover} from "../../hoc/withHover";
 
-interface FollowerProps {
-    user: User;
-    follow: (user: User) => void;
-    unfollow: (user: User) => void;
+interface FollowerProps<T> {
+    item?: T;
+    follow?: (user: User) => void;
+    unfollow?: (user: User) => void;
+    visiblePopperWindow?: boolean;
+    handleHover?: () => void;
+    handleLeave?: () => void;
 }
 
-const Follower: FC<FollowerProps> = ({user, follow, unfollow}): ReactElement => {
+const Follower: FC<FollowerProps<User>> = (
+    {
+        item: user,
+        follow,
+        unfollow,
+        visiblePopperWindow,
+        handleHover,
+        handleLeave
+    }
+): ReactElement => {
     const classes = useFollowerStyles();
     const myProfile = useSelector(selectUserData);
     const [btnText, setBtnText] = useState<string>("Following");
     const [visibleUnfollowModal, setVisibleUnfollowModal] = useState<boolean>(false);
-    const [visiblePopperUserWindow, setVisiblePopperUserWindow] = useState<boolean>(false);
-    const [delayHandler, setDelayHandler] = useState<any>(null);
 
-    const follower = myProfile?.followers?.findIndex(follower => follower.id === user.id);
+    const follower = myProfile?.followers?.findIndex(follower => follower.id === user?.id);
 
     const handleClickOpenUnfollowModal = (): void => {
         setVisibleUnfollowModal(true);
@@ -37,48 +48,41 @@ const Follower: FC<FollowerProps> = ({user, follow, unfollow}): ReactElement => 
     };
 
     const handleFollow = (user: User): void => {
-        follow(user);
+        if (follow) follow(user);
     };
 
     const handleUnfollow = (user: User): void => {
-        unfollow(user);
+        if (unfollow) unfollow(user);
         setVisibleUnfollowModal(false);
-    };
-
-    const handleHover = (): void => {
-        setDelayHandler(setTimeout(() => setVisiblePopperUserWindow(true), 1337));
-    };
-
-    const handleLeave = (): void => {
-        clearTimeout(delayHandler);
-        setVisiblePopperUserWindow(false);
     };
 
     return (
         <Paper className={classes.container} variant="outlined">
-            <Link to={`/user/${user.id}`} className={classes.link}>
-                <Avatar className={classes.listAvatar}
-                        src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}/>
+            <Link to={`/user/${user?.id}`} className={classes.link}>
+                <Avatar
+                    className={classes.listAvatar}
+                    src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}
+                />
             </Link>
             <div style={{flex: 1}}>
                 <div className={classes.header}>
-                    <Link to={`/user/${user.id}`} className={classes.link}>
+                    <Link to={`/user/${user?.id}`} className={classes.link}>
                         <div onMouseLeave={handleLeave} style={{position: "relative", width: 350}}>
                             <Typography onMouseEnter={handleHover} className={classes.fullName}>
                                 {user?.fullName}
                             </Typography>
-                            {visiblePopperUserWindow && <PopperUserWindow user={user}/>}
+                            {visiblePopperWindow && <PopperUserWindow user={user!}/>}
                             <Typography className={classes.username} variant="caption" display="block" gutterBottom>
                                 @{user?.username}
                             </Typography>
                         </div>
                     </Link>
                     <div>
-                        {myProfile?.id !== user.id && (
+                        {(myProfile?.id !== user?.id) && (
                             follower === -1 ? (
                                 <Button
                                     className={classes.outlinedButton}
-                                    onClick={() => handleFollow(user)}
+                                    onClick={() => handleFollow(user!)}
                                     color="primary"
                                     variant="outlined"
                                 >
@@ -115,12 +119,12 @@ const Follower: FC<FollowerProps> = ({user, follow, unfollow}): ReactElement => 
                                     className={classes.modalCancelButton}
                                     onClick={onCloseUnfollowModal}
                                     variant="contained"
-                                >
+                                >!
                                     Cancel
                                 </Button>
                                 <Button
                                     className={classes.modalUnfollowButton}
-                                    onClick={() => handleUnfollow(user)}
+                                    onClick={() => handleUnfollow(user!)}
                                     variant="contained"
                                     color="primary"
                                 >
@@ -135,4 +139,4 @@ const Follower: FC<FollowerProps> = ({user, follow, unfollow}): ReactElement => 
     );
 };
 
-export default Follower;
+export default withHover(Follower);

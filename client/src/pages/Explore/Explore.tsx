@@ -138,9 +138,9 @@ const Explore: FC = (): ReactElement => {
                         <CircularProgress/>
                     </div>
                 ) : (activeTab !== 2 ? (
-                        tweets.map((tweet) => <TweetComponent key={tweet.id} images={tweet.images} {...tweet}/>)
+                        tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)
                     ) : (
-                        users?.map((user) => <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>))
+                        users?.map((user) => <Follower item={user} follow={handleFollow} unfollow={handleUnfollow}/>))
                 )}
             </div>
         </Paper>

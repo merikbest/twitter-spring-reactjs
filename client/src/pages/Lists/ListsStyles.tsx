@@ -36,11 +36,43 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
         display: "inline-block",
         "& .MuiIconButton-root": {
             padding: 7,
-            "& svg" : {
+            "& svg": {
                 color: "rgb(27, 149, 224)",
                 verticalAlign: "bottom",
                 height: "0.90em",
             },
+        },
+    },
+    dropdownLink: {
+        color: "black",
+        textDecoration: "none",
+    },
+    dropdown: {
+        padding: 16,
+        position: 'absolute',
+        width: 165,
+        height: 52,
+        top: 10,
+        right: 10,
+        zIndex: 2,
+        borderRadius: 4,
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: "rgb(101 119 134 / 20%) 0px 0px 15px, rgb(101 119 134 / 15%) 0px 0px 3px 1px",
+        '&:hover': {
+            cursor: 'pointer',
+            backgroundColor: 'rgb(247, 249, 249)',
+        },
+    },
+    text: {
+        fontSize: 15,
+        fontWeight: 400,
+    },
+    textIcon: {
+        "& svg": {
+            verticalAlign: "bottom",
+            marginRight: 15,
+            fill: "rgb(83, 100, 113)",
+            height: "1.30em",
         },
     },
     pinnedLists: {

@@ -42,7 +42,7 @@ const Bookmarks: FC = (): ReactElement => {
                         </div>
                     ) : (
                         <div>
-                            {tweets.map((tweet) => <TweetComponent key={tweet.id} images={tweet.images} {...tweet} />)}
+                            {tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}
                         </div>
                     )
                 )}

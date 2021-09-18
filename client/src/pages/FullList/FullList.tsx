@@ -13,7 +13,6 @@ import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import EditListModal from "./EditListModal/EditListModal";
 import MembersAndFollowersModal from "./EditListModal/MembersAndFollowersModal/MembersAndFollowersModal";
 import {followList} from "../../store/ducks/lists/actionCreators";
-import {EditIcon, ShareIcon} from "../../icons";
 import ShareActionsModal from "./ShareActionsModal/ShareActionsModal";
 import TopTweetsActionsModal from "./TopTweetsActionsModal/TopTweetsActionsModal";
 
@@ -158,7 +157,7 @@ const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactEl
                             </div>
                         ) : (
                             <>
-                                {list?.tweets.map((tweet) => <TweetComponent {...tweet} key={tweet.id}/>)}
+                                {list?.tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}
                             </>
                         )}
                     </div>

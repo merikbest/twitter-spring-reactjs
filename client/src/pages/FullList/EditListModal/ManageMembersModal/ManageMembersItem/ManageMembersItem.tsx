@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useState} from 'react';
+import React, {FC, ReactElement} from 'react';
 import {useDispatch} from "react-redux";
 import {Link} from 'react-router-dom';
 import {Avatar, Button, Paper, Typography} from "@material-ui/core";
@@ -9,37 +9,37 @@ import {DEFAULT_PROFILE_IMG} from "../../../../../util/url";
 import PopperUserWindow from "../../../../../components/PopperUserWindow/PopperUserWindow";
 import {Lists} from "../../../../../store/ducks/lists/contracts/state";
 import {processListMember} from "../../../../../store/ducks/lists/actionCreators";
+import {withHover} from "../../../../../hoc/withHover";
 
-interface ManageMembersItemProps {
-    list: Lists;
-    member: User;
+interface ManageMembersItemProps<T> {
+    item?: T;
+    member?: User;
+    visiblePopperWindow?: boolean;
+    handleHover?: () => void;
+    handleLeave?: () => void;
 }
 
-const ManageMembersItem: FC<ManageMembersItemProps> = ({list, member}): ReactElement => {
+const ManageMembersItem: FC<ManageMembersItemProps<Lists>> = (
+    {
+        item: list,
+        member,
+        visiblePopperWindow,
+        handleHover,
+        handleLeave
+    }
+): ReactElement => {
     const classes = useManageMembersItemStyles();
     const dispatch = useDispatch();
 
-    const [delayHandler, setDelayHandler] = useState<any>(null);
-    const [visiblePopperUserWindow, setVisiblePopperUserWindow] = useState<boolean>(false);
+    const isMember = list?.members?.findIndex((listMember) => listMember.id === member?.id);
 
-    const isMember = list.members?.findIndex((listMember) => listMember.id === member.id);
-
-    const handleHover = (): void => {
-        setDelayHandler(setTimeout(() => setVisiblePopperUserWindow(true), 1337));
-    };
-
-    const onClickAddUserToList = (): void  => {
-        dispatch(processListMember({userId: member.id!, listId: list.id}));
+    const onClickAddUserToList = (): void => {
+        dispatch(processListMember({userId: member?.id!, listId: list!.id}));
     }
-
-    const handleLeave = (): void => {
-        clearTimeout(delayHandler);
-        setVisiblePopperUserWindow(false);
-    };
 
     return (
         <Paper className={classes.container} variant="outlined">
-            <Link to={`/user/${member.id}`} className={classes.link}>
+            <Link to={`/user/${member?.id}`} className={classes.link}>
                 <Avatar
                     className={classes.listAvatar}
                     src={member?.avatar?.src ? member?.avatar.src : DEFAULT_PROFILE_IMG}
@@ -47,12 +47,12 @@ const ManageMembersItem: FC<ManageMembersItemProps> = ({list, member}): ReactEle
             </Link>
             <div style={{flex: 1}}>
                 <div className={classes.header}>
-                    <Link to={`/user/${member.id}`} className={classes.link}>
+                    <Link to={`/user/${member?.id}`} className={classes.link}>
                         <div onMouseLeave={handleLeave} style={{position: "relative", width: 350}}>
                             <Typography onMouseEnter={handleHover} className={classes.fullName}>
                                 {member?.fullName}
                             </Typography>
-                            {visiblePopperUserWindow && <PopperUserWindow user={member}/>}
+                            {visiblePopperWindow && <PopperUserWindow user={member!}/>}
                             <Typography className={classes.username} variant="caption" display="block" gutterBottom>
                                 @{member?.username}
                             </Typography>
@@ -88,4 +88,4 @@ const ManageMembersItem: FC<ManageMembersItemProps> = ({list, member}): ReactEle
     );
 };
 
-export default ManageMembersItem;
+export default withHover(ManageMembersItem);

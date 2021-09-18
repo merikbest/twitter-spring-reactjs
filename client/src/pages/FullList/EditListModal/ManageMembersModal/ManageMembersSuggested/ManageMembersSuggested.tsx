@@ -45,7 +45,7 @@ const ManageMembersSuggested: FC<ManageMembersSuggestedProps> = ({list}): ReactE
             </form>
             {(users.length !== 0) ? (
                 <>
-                    {users.map((user) => (<ManageMembersItem list={list} member={user}/>))}
+                    {users.map((user) => (<ManageMembersItem item={list} member={user}/>))}
                 </>
             ) : (
                 <div className={classes.suggestedInfoWrapper}>

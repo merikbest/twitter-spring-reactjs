@@ -17,22 +17,32 @@ import {useUsersItemStyles} from "./UsersItemStyles";
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
 import {followProfile, unfollowProfile} from "../../../store/ducks/userProfile/actionCreators";
 import PopperUserWindow from "../../PopperUserWindow/PopperUserWindow";
+import {withHover} from "../../../hoc/withHover";
 
-interface UsersItemProps {
-    user: User
+interface UsersItemProps<T> {
+    item?: T
+    visiblePopperWindow?: boolean;
+    handleHover?: () => void;
+    handleLeave?: () => void;
 }
 
-const UsersItem: FC<UsersItemProps> = ({user}): ReactElement => {
+const UsersItem: FC<UsersItemProps<User>> = (
+    {
+        item: user,
+        visiblePopperWindow,
+        handleHover,
+        handleLeave
+    }
+): ReactElement => {
+
     const classes = useUsersItemStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
 
     const [btnText, setBtnText] = useState<string>("Following");
     const [visibleUnfollowModal, setVisibleUnfollowModal] = useState<boolean>(false);
-    const [visiblePopperUserWindow, setVisiblePopperUserWindow] = useState<boolean>(false);
-    const [delayHandler, setDelayHandler] = useState<any>(null);
 
-    const follower = myProfile?.followers?.findIndex(follower => follower.id === user.id);
+    const follower = myProfile?.followers?.findIndex(follower => follower.id === user?.id);
 
     const handleClickOpenUnfollowModal = (): void => {
         setVisibleUnfollowModal(true);
@@ -53,39 +63,30 @@ const UsersItem: FC<UsersItemProps> = ({user}): ReactElement => {
         setVisibleUnfollowModal(false);
     };
 
-    const handleHover = (): void => {
-        setDelayHandler(setTimeout(() => setVisiblePopperUserWindow(true), 1337));
-    };
-
-    const handleLeave = (): void => {
-        clearTimeout(delayHandler);
-        setVisiblePopperUserWindow(false);
-    };
-
     return (
         <ListItem className={classes.container}>
             <ListItemAvatar>
-                <Avatar alt={`${user.id}`} src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}/>
+                <Avatar alt={`${user?.id}`} src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}/>
             </ListItemAvatar>
             <div onMouseEnter={handleHover} onMouseLeave={handleLeave}>
-                <Link to={`/user/${user.id}`}>
+                <Link to={`/user/${user?.id}`}>
                     <ListItemText
-                        primary={user.fullName}
+                        primary={user?.fullName}
                         secondary={
                             <Typography component="span" variant="body2" color="textSecondary">
-                                @{user.username}
+                                @{user?.username}
                             </Typography>
                         }
                     />
-                    {visiblePopperUserWindow && <PopperUserWindow user={user}/>}
+                    {visiblePopperWindow && <PopperUserWindow user={user!}/>}
                 </Link>
             </div>
             <div style={{flex: 1}}>
-                {(myProfile?.id === user.id) ? null : (
+                {(myProfile?.id === user?.id) ? null : (
                     (follower === -1) ? (
                         <Button
                             className={classes.outlinedButton}
-                            onClick={() => handleFollow(user)}
+                            onClick={() => handleFollow(user!)}
                             color="primary"
                             variant="outlined"
                         >
@@ -125,7 +126,7 @@ const UsersItem: FC<UsersItemProps> = ({user}): ReactElement => {
                             </Button>
                             <Button
                                 className={classes.modalUnfollowButton}
-                                onClick={() => handleUnfollow(user)}
+                                onClick={() => handleUnfollow(user!)}
                                 variant="contained"
                                 color="primary"
                             >
@@ -139,4 +140,4 @@ const UsersItem: FC<UsersItemProps> = ({user}): ReactElement => {
     );
 };
 
-export default UsersItem;
+export default withHover(UsersItem);

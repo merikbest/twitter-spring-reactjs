@@ -4,9 +4,10 @@ import {Button, Hidden, Typography} from "@material-ui/core";
 import TweetComponent from '../../components/TweetComponent/TweetComponent';
 import {useUserPageStyles} from "./UserPageStyles";
 import AddTweetModal from "../../components/AddTweetModal/AddTweetModal";
+import {Tweet} from "../../store/ducks/tweets/contracts/state";
 
 interface UserPageTweetsProps {
-    tweets?: any;
+    tweets?: Tweet[];
     activeTab: number;
     userProfileId?: number;
     myProfileId?: number;
@@ -123,13 +124,13 @@ const UserPageTweets: FC<UserPageTweetsProps> = ({
                 </div>
             )
         } else {
-            return tweets?.map((tweet: any) => (
+            return tweets?.map((tweet) => (
                 <TweetComponent
-                    {...tweet}
+                    item={tweet}
                     key={tweet.id}
-                    images={tweet.images}
                     userProfileId={userProfileId}
-                    activeTab={activeTab}/>
+                    activeTab={activeTab}
+                />
             ))
         }
     };

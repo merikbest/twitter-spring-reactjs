@@ -88,10 +88,10 @@ const FollowingFollowers: FC = (): ReactElement => {
                         (userProfile?.followers?.length !== 0 || myProfile?.followers?.length !== 0) ? (
                             (userProfile?.id === myProfile?.id) ? (
                                 myProfile?.followers?.map((user) =>
-                                    <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>)
+                                    <Follower item={user} follow={handleFollow} unfollow={handleUnfollow}/>)
                             ) : (
                                 userProfile?.followers?.map((user) =>
-                                    <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>))
+                                    <Follower item={user} follow={handleFollow} unfollow={handleUnfollow}/>))
                         ) : (
                             <div className={classes.content}>
                                 <Typography className={classes.topic}>
@@ -120,10 +120,10 @@ const FollowingFollowers: FC = (): ReactElement => {
                         (userProfile?.following?.length !== 0) ? (
                             (userProfile?.id === myProfile?.id) ? (
                                 myProfile?.following?.map((user) =>
-                                    <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>)
+                                    <Follower item={user} follow={handleFollow} unfollow={handleUnfollow}/>)
                             ) : (
                                 userProfile?.following?.map((user) =>
-                                    <Follower user={user} follow={handleFollow} unfollow={handleUnfollow}/>))
+                                    <Follower item={user} follow={handleFollow} unfollow={handleUnfollow}/>))
                         ) : (
                             <div className={classes.content}>
                                 <Typography className={classes.topic}>
