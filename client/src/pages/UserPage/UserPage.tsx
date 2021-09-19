@@ -1,5 +1,5 @@
 import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
-import {RouteComponentProps, Link, useLocation} from 'react-router-dom';
+import {RouteComponentProps, Link, useLocation, useHistory} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import Paper from '@material-ui/core/Paper';
 import {Avatar, Button, CircularProgress, IconButton, Typography} from '@material-ui/core';
@@ -35,6 +35,7 @@ import UserPageTweets from "./UserPageTweets";
 import {DEFAULT_PROFILE_IMG, WS_URL} from "../../util/url";
 import SetupProfileModal from "../SetupProfileModal/SetupProfileModal";
 import UserPageActions from "./UserPageActions/UserPageActions";
+import {createChat} from "../../store/ducks/chats/actionCreators";
 
 let stompClient: CompatClient | null = null;
 
@@ -46,6 +47,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
     const userProfile = useSelector(selectUserProfile);
     const isTweetsLoading = useSelector(selectIsUserTweetsLoading);
     const location = useLocation<{ isRegistered: boolean; }>();
+    const history = useHistory();
 
     const [btnText, setBtnText] = useState<string>("Following");
     const [activeTab, setActiveTab] = useState<number>(0);
@@ -144,6 +146,11 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
         dispatch(fetchUserMediaTweets(match.params.id));
     };
 
+    const handleClickAddUserToChat = (): void => {
+        dispatch(createChat(userProfile?.id!));
+        history.push("/messages");
+    };
+
     return (
         <Paper className={classes.container} variant="outlined">
             <Paper className={classes.header} variant="outlined">
@@ -177,6 +184,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
                             <UserPageActions user={userProfile!}/>
                             <IconButton
                                 className={classes.messageButton}
+                                onClick={handleClickAddUserToChat}
                                 color="primary"
                             >
                                 {MessagesIcon}

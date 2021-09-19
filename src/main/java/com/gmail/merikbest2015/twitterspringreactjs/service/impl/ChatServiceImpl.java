@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,9 +37,16 @@ public class ChatServiceImpl implements ChatService {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());
         User participant = userRepository.getOne(userId);
-        Chat chat = new Chat();
-        chat.setParticipants(Arrays.asList(user, participant));
-        return chatRepository.save(chat);
+        Optional<Chat> chatWithParticipant = user.getChats().stream()
+                .filter(chat1 -> chat1.getParticipants().get(0).getId().equals(participant.getId()))
+                .findFirst();
+
+        if (chatWithParticipant.isEmpty()) {
+            Chat chat = new Chat();
+            chat.setParticipants(Arrays.asList(user, participant));
+            return chatRepository.save(chat);
+        }
+        return chatWithParticipant.get();
     }
 
     @Override

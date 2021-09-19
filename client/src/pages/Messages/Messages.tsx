@@ -58,7 +58,7 @@ const Messages: FC = (): ReactElement => {
     const handleListItemClick = (chat: Chat): void => {
         dispatch(fetchChatMessages(chat?.id!));
         dispatch(fetchReadMessages(chat?.id!));
-        setParticipant(chat.participants[1]);
+        setParticipant(chat.participants[0]);
         setChat(chat);
     };
 
@@ -119,8 +119,8 @@ const Messages: FC = (): ReactElement => {
                                         <ListItem
                                             button
                                             className={classes.listItem}
-                                            id={(participant?.id === chat.participants[1].id!) ? ("selected") : ("")}
-                                            selected={participant?.id === chat.participants[1].id!}
+                                            id={(participant?.id === chat.participants[0].id!) ? ("selected") : ("")}
+                                            selected={participant?.id === chat.participants[0].id!}
                                             onClick={() => handleListItemClick(chat)}
                                         >
                                             <div className={classes.userWrapper}>

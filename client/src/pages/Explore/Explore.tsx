@@ -38,6 +38,8 @@ const Explore: FC = (): ReactElement => {
     const [activeTab, setActiveTab] = useState<number>(0);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+
         if (location.state?.tag !== undefined) {
             dispatch(fetchTweetsByTag(location.state?.tag));
             setText(decodeURIComponent(location.state?.tag));

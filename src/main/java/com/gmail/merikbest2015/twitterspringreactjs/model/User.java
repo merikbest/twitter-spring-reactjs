@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "users")
+@ToString(of = {"id"})
 public class User {
 
     @Id

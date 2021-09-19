@@ -28,6 +28,7 @@ export const useUserPageActionsStyles = makeStyles((theme: Theme) => ({
         },
     },
     link: {
+        width: "100%",
         color: "rgb(83, 100, 113)",
         textDecoration: "none",
     },
@@ -55,6 +56,19 @@ export const useUserPageActionsStyles = makeStyles((theme: Theme) => ({
             marginRight: 15,
             fill: "rgb(83, 100, 113)",
             height: "1.30em",
+        },
+    },
+    snackBar: {
+        "& .MuiSnackbarContent-root": {
+            width: 179,
+            height: 44,
+            padding: 0,
+            backgroundColor: "rgb(29, 161, 242)",
+            "& .MuiSnackbarContent-message": {
+                fontSize: 15,
+                margin: "0 auto",
+                textAlign: "center",
+            },
         },
     },
 }));
