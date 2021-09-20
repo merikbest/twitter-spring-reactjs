@@ -48,4 +48,18 @@ export const useShareTweetModalStyles = makeStyles((theme: Theme) => ({
             height: "1.30em",
         },
     },
+    snackBar: {
+        "& .MuiSnackbarContent-root": {
+            width: 179,
+            height: 44,
+            padding: 0,
+            borderRadius: 4,
+            backgroundColor: "rgb(29, 161, 242)",
+            "& .MuiSnackbarContent-message": {
+                fontSize: 15,
+                margin: "0 auto",
+                textAlign: "center",
+            },
+        },
+    },
 }));

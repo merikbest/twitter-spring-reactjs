@@ -13,6 +13,10 @@ export interface Tweet {
     addressedId: number;
     addressedTweetId?: number;
     dateTime: string;
+    link: string;
+    linkTitle: string;
+    linkDescription: string;
+    linkCover: string;
     replyType: ReplyType;
     images?: Image[];
     likedTweets: LikeTweet[];
