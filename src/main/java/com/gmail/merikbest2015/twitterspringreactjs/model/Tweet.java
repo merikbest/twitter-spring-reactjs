@@ -37,6 +37,18 @@ public class Tweet {
     @Enumerated(EnumType.STRING)
     private ReplyType replyType;
 
+    @Column(name = "link")
+    private String link;
+
+    @Column(name = "link_title")
+    private String linkTitle;
+
+    @Column(name = "link_description")
+    private String linkDescription;
+
+    @Column(name = "link_cover")
+    private String linkCover;
+
     @OneToOne
     private Tweet quoteTweet;
 

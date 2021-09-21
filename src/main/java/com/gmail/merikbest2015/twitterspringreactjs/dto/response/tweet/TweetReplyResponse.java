@@ -16,6 +16,10 @@ public class TweetReplyResponse {
     private Long addressedId;
     private ReplyType replyType;
     private LocalDateTime dateTime;
+    private String link;
+    private String linkTitle;
+    private String linkDescription;
+    private String linkCover;
     private List<ImageResponse> images;
     private List<UserResponse> retweets;
     private List<UserResponse> likedTweets;

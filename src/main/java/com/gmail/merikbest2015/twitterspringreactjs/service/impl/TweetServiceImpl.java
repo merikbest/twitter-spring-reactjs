@@ -4,8 +4,17 @@ import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.*;
 import com.gmail.merikbest2015.twitterspringreactjs.service.TweetService;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -28,6 +37,10 @@ public class TweetServiceImpl implements TweetService {
     private final PollRepository pollRepository;
     private final PollChoiceRepository pollChoiceRepository;
     private final BookmarkRepository bookmarkRepository;
+    private final RestTemplate restTemplate;
+
+    @Value("${google.api.key}")
+    private String googleApiKey;
 
     @Override
     public List<Tweet> getTweets() {
@@ -49,40 +62,12 @@ public class TweetServiceImpl implements TweetService {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());
         tweet.setUser(user);
+        parseMetadataInText(tweet); // find metadata in link
         Tweet createdTweet = tweetRepository.save(tweet);
         user.getTweets().add(createdTweet);
         user.setTweetCount(user.getTweetCount() + 1);
         userRepository.save(user);
-
-        // find hashtag in text
-        Pattern pattern = Pattern.compile("(#\\w+)\\b");
-        Matcher match = pattern.matcher(tweet.getText());
-        List<String> hashtags = new ArrayList<>();
-
-        while (match.find()) {
-            hashtags.add(match.group(1));
-        }
-
-        if (!hashtags.isEmpty()) {
-            hashtags.forEach(hashtag -> {
-                Tag tag = tagRepository.findByTagName(hashtag);
-
-                if (tag != null) {
-                    Long tweetsQuantity = tag.getTweetsQuantity();
-                    tweetsQuantity = tweetsQuantity + 1;
-                    tag.setTweetsQuantity(tweetsQuantity);
-                    List<Tweet> taggedTweets = tag.getTweets();
-                    taggedTweets.add(tweet);
-                    tagRepository.save(tag);
-                } else {
-                    Tag newTag = new Tag();
-                    newTag.setTagName(hashtag);
-                    newTag.setTweetsQuantity(1L);
-                    newTag.setTweets(Collections.singletonList(tweet));
-                    tagRepository.save(newTag);
-                }
-            });
-        }
+        parseHashtagInText(tweet); // find hashtag in text
         return createdTweet;
     }
 
@@ -304,5 +289,96 @@ public class TweetServiceImpl implements TweetService {
                 .findFirst().get();
         pollChoice.getVotedUser().add(user);
         return tweetRepository.save(tweet);
+    }
+
+    private void parseHashtagInText(Tweet tweet) {
+        Pattern pattern = Pattern.compile("(#\\w+)\\b");
+        Matcher match = pattern.matcher(tweet.getText());
+        List<String> hashtags = new ArrayList<>();
+
+        while (match.find()) {
+            hashtags.add(match.group(1));
+        }
+
+        if (!hashtags.isEmpty()) {
+            hashtags.forEach(hashtag -> {
+                Tag tag = tagRepository.findByTagName(hashtag);
+
+                if (tag != null) {
+                    Long tweetsQuantity = tag.getTweetsQuantity();
+                    tweetsQuantity = tweetsQuantity + 1;
+                    tag.setTweetsQuantity(tweetsQuantity);
+                    List<Tweet> taggedTweets = tag.getTweets();
+                    taggedTweets.add(tweet);
+                    tagRepository.save(tag);
+                } else {
+                    Tag newTag = new Tag();
+                    newTag.setTagName(hashtag);
+                    newTag.setTweetsQuantity(1L);
+                    newTag.setTweets(Collections.singletonList(tweet));
+                    tagRepository.save(newTag);
+                }
+            });
+        }
+    }
+
+    @SneakyThrows
+    private void parseMetadataInText(Tweet tweet) {
+        Pattern urlRegex = Pattern.compile("https?:\\/\\/?[\\w\\d\\._\\-%\\/\\?=&#]+", Pattern.CASE_INSENSITIVE);
+        Pattern imgRegex = Pattern.compile("\\.(jpeg|jpg|gif|png)$", Pattern.CASE_INSENSITIVE);
+        Pattern youTubeUrlRegex = Pattern.compile("(?<=watch\\?v=|/videos/|embed\\/|youtu.be\\/|\\/v\\/|\\/e\\/|watch\\?v%3D|watch\\?feature=player_embedded&v=|%2Fvideos%2F|embed%\u200C\u200B2F|youtu.be%2F|%2Fv%2F)[^#\\&\\?\\n]*", Pattern.CASE_INSENSITIVE);
+        String text = tweet.getText();
+        Matcher matcher = urlRegex.matcher(text);
+
+        if (matcher.find()) {
+            String url = text.substring(matcher.start(), matcher.end());
+            matcher = imgRegex.matcher(url);
+            tweet.setLink(url);
+
+            if (matcher.find()) {
+                tweet.setLinkCover(url);
+            } else if (!url.contains("youtu")) {
+                Document doc = Jsoup.connect(url).get(); // TODO add error handler
+                Elements title = doc.select("meta[name$=title],meta[property$=title]");
+                Elements description = doc.select("meta[name$=description],meta[property$=description]");
+                Elements cover = doc.select("meta[name$=image],meta[property$=image]");
+
+                tweet.setLinkTitle(getContent(title.first()));
+                tweet.setLinkDescription(getContent(description.first()));
+                tweet.setLinkCover(getContent(cover.first()));
+            } else {
+                String youTubeVideoId = null;
+                Matcher youTubeMatcher = youTubeUrlRegex.matcher(url);
+
+                if (youTubeMatcher.find()){
+                    youTubeVideoId = youTubeMatcher.group();
+                }
+                String youtubeUrl = String.format(
+                        "https://www.googleapis.com/youtube/v3/videos?id=%s&key=%s&part=snippet,contentDetails,statistics,status",
+                        youTubeVideoId, googleApiKey);
+                String youTubeVideData = restTemplate.getForObject(youtubeUrl, String.class);
+                JSONObject jsonObject = new JSONObject(youTubeVideData);
+                JSONArray items = jsonObject.getJSONArray("items");
+                String videoTitle = null;
+                String videoCoverImage = null;
+
+                for (int i = 0; i < items.length(); i++) {
+                    videoTitle = items.getJSONObject(i)
+                            .getJSONObject("snippet")
+                            .getString("title");
+                    videoCoverImage = items.getJSONObject(i)
+                            .getJSONObject("snippet")
+                            .getJSONObject("thumbnails")
+                            .getJSONObject("medium")
+                            .getString("url");
+                }
+                tweet.setLinkTitle(videoTitle);
+                tweet.setLinkCover(videoCoverImage);
+            }
+        }
+    }
+
+    private String getContent(Element element) {
+        return element == null ? "" : element.attr("content");
     }
 }
