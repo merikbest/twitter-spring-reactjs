@@ -27,6 +27,7 @@ import QuoteTweet from "../QuoteTweet/QuoteTweet";
 import Quote from "../Quote/Quote";
 import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
 import {withHover} from "../../hoc/withHover";
+import LinkPreview from "./LinkPreview/LinkPreview";
 
 interface TweetComponentProps<T> {
     item?: T;
@@ -61,7 +62,6 @@ const TweetComponent: FC<TweetComponentProps<Tweet>> = (
     const isModal = location.pathname.includes("/modal");
     const isUserCanReply = (tweet?.replyType === ReplyType.MENTION) && (myProfile?.id !== tweet?.user.id);
     const classes = useTweetComponentStyles({isTweetLiked, isUserCanReply});
-
     const image = tweet?.images?.[0];
 
     const handleClickTweet = (event: React.MouseEvent<HTMLAnchorElement>): void => {
@@ -175,6 +175,7 @@ const TweetComponent: FC<TweetComponentProps<Tweet>> = (
                             </>
                         )}
                         {tweet?.quoteTweet && (<Quote quoteTweet={tweet?.quoteTweet} isTweetQuoted={true}/>)}
+                        {tweet?.link && <LinkPreview tweet={tweet!}/>}
                     </Typography>
                     <div className={classes.footer}>
                         <div className={classes.replyIcon}>
