@@ -27,6 +27,8 @@ import QuoteTweet from "../QuoteTweet/QuoteTweet";
 import Quote from "../Quote/Quote";
 import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
 import {withHover} from "../../hoc/withHover";
+import YouTubeVideoPreview from "./YouTubeVideoPreview/YouTubeVideoPreview";
+import YouTubeVideo from "./YouTubeVideo/YouTubeVideo";
 import LinkPreview from "./LinkPreview/LinkPreview";
 
 interface TweetComponentProps<T> {
@@ -54,13 +56,15 @@ const TweetComponent: FC<TweetComponentProps<Tweet>> = (
     const location = useLocation();
 
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
+    const [openYouTubeVideo, setOpenYouTubeVideo] = useState<boolean>(false);
 
     const isTweetLiked = tweet?.likedTweets.find((like) => like.user.id === myProfile?.id);
     const isTweetRetweetedByMe = tweet?.retweets.find((retweet) => retweet.user.id === myProfile?.id);
     const isTweetRetweetedByUser = tweet?.retweets.find((retweet) => retweet.user.id === userProfile?.id);
     const isFollower = myProfile?.following?.find((follower) => follower.id === tweet?.user?.id);
-    const isModal = location.pathname.includes("/modal");
     const isUserCanReply = (tweet?.replyType === ReplyType.MENTION) && (myProfile?.id !== tweet?.user.id);
+    const isYouTubeLink = tweet?.link && tweet?.link.includes("youtu");
+    const isModal = location.pathname.includes("/modal");
     const classes = useTweetComponentStyles({isTweetLiked, isUserCanReply});
     const image = tweet?.images?.[0];
 
@@ -91,6 +95,10 @@ const TweetComponent: FC<TweetComponentProps<Tweet>> = (
         if (tweet?.user.id !== myProfile?.id) {
             dispatch(fetchRetweet(tweet!.id));
         }
+    };
+
+    const onOpenYouTubeVideo = (): void => {
+        setOpenYouTubeVideo(true)
     };
 
     return (
@@ -175,7 +183,17 @@ const TweetComponent: FC<TweetComponentProps<Tweet>> = (
                             </>
                         )}
                         {tweet?.quoteTweet && (<Quote quoteTweet={tweet?.quoteTweet} isTweetQuoted={true}/>)}
-                        {tweet?.link && <LinkPreview tweet={tweet!}/>}
+                        {tweet?.link ? (
+                            isYouTubeLink ? (
+                                openYouTubeVideo ? (
+                                    <YouTubeVideo tweet={tweet!}/>
+                                ) : (
+                                    <YouTubeVideoPreview tweet={tweet!} onOpenYouTubeVideo={onOpenYouTubeVideo}/>
+                                )
+                            ) : (
+                                <LinkPreview tweet={tweet!}/>
+                            )
+                        ) : null}
                     </Typography>
                     <div className={classes.footer}>
                         <div className={classes.replyIcon}>

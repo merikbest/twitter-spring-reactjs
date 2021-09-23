@@ -2,25 +2,27 @@ import React, {FC, ReactElement} from 'react';
 
 import {useLinkPreviewStyles} from "./LinkPreviewStyles";
 import {Tweet} from "../../../store/ducks/tweets/contracts/state";
-import {LinkIcon, PlayVideoIcon} from "../../../icons";
+import {LinkIcon} from "../../../icons";
 
 interface LinkPreviewProps {
     tweet: Tweet;
 }
 
 const LinkPreview: FC<LinkPreviewProps> = ({tweet}): ReactElement => {
-    const classes = useLinkPreviewStyles({linkCover: tweet.linkCover});
+    const classes = useLinkPreviewStyles();
+    const matches = tweet.link.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
+    const domain = matches && matches[1];
 
     return (
         <div className={classes.container}>
-            <div className={classes.videoPreviewImage}>
-                <div className={classes.videoIcon}>{PlayVideoIcon}</div>
-            </div>
-            <div className={classes.videoPreviewTitle}>
-                <div className={classes.linkTitle}>{tweet.linkTitle}</div>
-                <div className={classes.linkDescription}>{tweet.linkDescription}</div>
-                <div className={classes.youtubeLink}>{LinkIcon}youtube.com</div>
-            </div>
+            <img className={classes.linkCover} src={tweet.linkCover} alt={tweet.linkCover}/>
+            <a className={classes.siteLink} target="_blank" href={tweet.link}>
+                <div className={classes.siteInfoWrapper}>
+                    <div className={classes.siteInfoTitle}>{tweet.linkTitle}</div>
+                    <div className={classes.siteInfoDescription}>{tweet.linkDescription}</div>
+                    <div className={classes.siteTitle}>{LinkIcon}{domain}</div>
+                </div>
+            </a>
         </div>
     );
 };
