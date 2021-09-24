@@ -74,6 +74,9 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
         '& #hashtag': {
             color: "rgb(27, 149, 224)",
         },
+        "& #link": {
+            color: "rgb(27, 149, 224)",
+        }
     },
     image: {
         position: "relative",

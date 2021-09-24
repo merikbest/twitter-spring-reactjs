@@ -14,6 +14,10 @@ export const textFormatter = (text: string): ReactNodeArray => {
         <b key={i} id="hashtag">{match}</b>
     ));
 
+    replacedText = reactStringReplace(replacedText, /(https?:\/\/[^\s]+)/g, (match, i) => (
+        <a key={i} href={match} id="link" target="_blank">{match}</a>
+    ));
+
     replacedText = reactStringReplace(replacedText, /:(.+?):/g, (match, i) => (
         <Emoji native={false} key={i} emoji={match} set={'twitter'} size={20} />
     ));

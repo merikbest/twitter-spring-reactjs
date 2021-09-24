@@ -48,17 +48,19 @@ export interface ImageObj {
 
 const MAX_LENGTH = 280;
 
-export const AddTweetForm: FC<AddTweetFormProps> = ({
-                                                        quoteTweet,
-                                                        maxRows,
-                                                        minRows,
-                                                        tweetId,
-                                                        title,
-                                                        buttonName,
-                                                        addressedUsername,
-                                                        addressedId,
-                                                        onCloseModal
-                                                    }): ReactElement => {
+export const AddTweetForm: FC<AddTweetFormProps> = (
+    {
+        quoteTweet,
+        maxRows,
+        minRows,
+        tweetId,
+        title,
+        buttonName,
+        addressedUsername,
+        addressedId,
+        onCloseModal
+    }
+): ReactElement => {
     const classes = useAddTweetFormStyles({quoteTweet});
     const dispatch = useDispatch();
     const location = useLocation();

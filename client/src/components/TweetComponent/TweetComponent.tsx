@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useState} from 'react';
+import React, {FC, ReactElement, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory, useLocation} from 'react-router-dom';
 import {Avatar, IconButton, Paper, Typography} from '@material-ui/core';
@@ -54,9 +54,10 @@ const TweetComponent: FC<TweetComponentProps<Tweet>> = (
     const userProfile = useSelector(selectUserProfile);
     const history = useHistory();
     const location = useLocation();
-
+    const imgElement = useRef<HTMLImageElement>(null);
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
     const [openYouTubeVideo, setOpenYouTubeVideo] = useState<boolean>(false);
+    const [imageSize, setImageSize] = useState<number>(0);
 
     const isTweetLiked = tweet?.likedTweets.find((like) => like.user.id === myProfile?.id);
     const isTweetRetweetedByMe = tweet?.retweets.find((retweet) => retweet.user.id === myProfile?.id);
@@ -99,6 +100,13 @@ const TweetComponent: FC<TweetComponentProps<Tweet>> = (
 
     const onOpenYouTubeVideo = (): void => {
         setOpenYouTubeVideo(true)
+    };
+
+    const calculateImageSize = (): void => {
+        if (imgElement.current) {
+            const number = (504 / imgElement.current.naturalWidth) * imgElement.current.naturalHeight;
+            setImageSize(number);
+        }
     };
 
     return (
@@ -191,7 +199,12 @@ const TweetComponent: FC<TweetComponentProps<Tweet>> = (
                                     <YouTubeVideoPreview tweet={tweet!} onOpenYouTubeVideo={onOpenYouTubeVideo}/>
                                 )
                             ) : (
-                                <LinkPreview tweet={tweet!}/>
+                                <LinkPreview
+                                    tweet={tweet!}
+                                    imgElement={imgElement}
+                                    calculateImageSize={calculateImageSize}
+                                    imageSize={imageSize}
+                                />
                             )
                         ) : null}
                     </Typography>
