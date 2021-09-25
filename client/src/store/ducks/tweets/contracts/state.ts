@@ -18,6 +18,7 @@ export interface Tweet {
     linkDescription: string;
     linkCover: string;
     replyType: ReplyType;
+    linkCoverSize: LinkCoverSize;
     images?: Image[];
     likedTweets: LikeTweet[];
     retweets: Retweet[];
@@ -73,6 +74,12 @@ export enum ReplyType {
     EVERYONE = "EVERYONE",
     FOLLOW = "FOLLOW",
     MENTION = "MENTION"
+}
+
+export enum LinkCoverSize {
+    SMALL = "SMALL",
+    MEDIUM = "MEDIUM",
+    LARGE = "LARGE"
 }
 
 export interface Vote {

@@ -4,11 +4,11 @@ import {setTweets, setTweetsLoadingState,} from "./actionCreators";
 import {TweetApi} from "../../../services/api/tweetApi";
 import {Tweet} from "./contracts/state";
 import {
-    DeleteTweetActionInterface,
     FetchAddPollActionInterface,
     FetchAddQuoteTweetActionInterface,
     FetchAddTweetActionInterface,
-    FetchChangeReplyTypeActionInterface, FetchDeleteTweetActionInterface,
+    FetchChangeReplyTypeActionInterface,
+    FetchDeleteTweetActionInterface,
     FetchLikedTweetsActionInterface,
     FetchLikeTweetActionInterface,
     FetchRetweetActionInterface,

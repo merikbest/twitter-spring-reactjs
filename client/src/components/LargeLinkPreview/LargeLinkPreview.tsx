@@ -1,18 +1,16 @@
-import React, {FC, ReactElement, RefObject} from 'react';
+import React, {FC, ReactElement} from 'react';
 
-import {useLinkPreviewStyles} from "./LinkPreviewStyles";
-import {Tweet} from "../../../store/ducks/tweets/contracts/state";
-import {LinkIcon} from "../../../icons";
+import {useLargeLinkPreviewStyles} from "./LargeLinkPreviewStyles";
+import {Tweet} from "../../store/ducks/tweets/contracts/state";
+import {LinkIcon} from "../../icons";
 
-interface LinkPreviewProps {
+interface LargeLinkPreviewProps {
     tweet: Tweet;
-    imgElement: RefObject<HTMLImageElement>;
-    calculateImageSize: () => void;
-    imageSize: number;
+    isFullTweet?: boolean;
 }
 
-const LinkPreview: FC<LinkPreviewProps> = ({tweet, imgElement, calculateImageSize, imageSize}): ReactElement => {
-    const classes = useLinkPreviewStyles();
+const LargeLinkPreview: FC<LargeLinkPreviewProps> = ({tweet, isFullTweet}): ReactElement => {
+    const classes = useLargeLinkPreviewStyles({isFullTweet: isFullTweet});
     const matches = tweet.link.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
     const domain = matches && matches[1];
 
@@ -21,8 +19,6 @@ const LinkPreview: FC<LinkPreviewProps> = ({tweet, imgElement, calculateImageSiz
             <div className={classes.container}>
                 <img
                     className={classes.linkCover}
-                    ref={imgElement}
-                    onLoad={calculateImageSize}
                     src={tweet.linkCover}
                     alt={tweet.linkCover}
                 />
@@ -36,4 +32,4 @@ const LinkPreview: FC<LinkPreviewProps> = ({tweet, imgElement, calculateImageSiz
     );
 };
 
-export default LinkPreview;
+export default LargeLinkPreview;

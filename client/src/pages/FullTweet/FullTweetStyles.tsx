@@ -65,6 +65,10 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
         '& #hashtag': {
             color: "rgb(27, 149, 224)",
         },
+        "& #link": {
+            textDecoration: 'none',
+            color: "rgb(27, 149, 224)",
+        }
     },
     image: {
         "& img": {

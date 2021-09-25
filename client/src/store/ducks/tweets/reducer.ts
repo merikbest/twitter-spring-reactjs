@@ -23,7 +23,11 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
 
         case TweetsActionType.SET_UPDATED_TWEET:
             const updatedTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.id);
-            if (updatedTweetIndex !== -1) draft.items[updatedTweetIndex] = action.payload;
+            if (updatedTweetIndex !== -1) {
+                draft.items[updatedTweetIndex].likedTweets = action.payload.likedTweets;
+                draft.items[updatedTweetIndex].retweets = action.payload.retweets;
+                draft.items[updatedTweetIndex].replies = action.payload.replies;
+            }
             break;
 
         case TweetsActionType.SET_LOADING_STATE:

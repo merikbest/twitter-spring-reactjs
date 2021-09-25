@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useRef, useState} from 'react';
+import React, {FC, ReactElement, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory, useLocation} from 'react-router-dom';
 import {Avatar, IconButton, Paper, Typography} from '@material-ui/core';
@@ -14,7 +14,7 @@ import {
 import {useTweetComponentStyles} from "./TweetComponentStyles";
 import {formatDate} from '../../util/formatDate';
 import {fetchLikeTweet, fetchRetweet} from "../../store/ducks/tweets/actionCreators";
-import {ReplyType, Tweet} from "../../store/ducks/tweets/contracts/state";
+import {LinkCoverSize, ReplyType, Tweet} from "../../store/ducks/tweets/contracts/state";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import ReplyModal from "../ReplyModal/ReplyModal";
@@ -27,9 +27,9 @@ import QuoteTweet from "../QuoteTweet/QuoteTweet";
 import Quote from "../Quote/Quote";
 import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
 import {withHover} from "../../hoc/withHover";
-import YouTubeVideoPreview from "./YouTubeVideoPreview/YouTubeVideoPreview";
-import YouTubeVideo from "./YouTubeVideo/YouTubeVideo";
-import LinkPreview from "./LinkPreview/LinkPreview";
+import YouTubeVideo from "../YouTubeVideo/YouTubeVideo";
+import LargeLinkPreview from "../LargeLinkPreview/LargeLinkPreview";
+import SmallLinkPreview from "../SmallLinkPreview/SmallLinkPreview";
 
 interface TweetComponentProps<T> {
     item?: T;
@@ -54,10 +54,8 @@ const TweetComponent: FC<TweetComponentProps<Tweet>> = (
     const userProfile = useSelector(selectUserProfile);
     const history = useHistory();
     const location = useLocation();
-    const imgElement = useRef<HTMLImageElement>(null);
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
     const [openYouTubeVideo, setOpenYouTubeVideo] = useState<boolean>(false);
-    const [imageSize, setImageSize] = useState<number>(0);
 
     const isTweetLiked = tweet?.likedTweets.find((like) => like.user.id === myProfile?.id);
     const isTweetRetweetedByMe = tweet?.retweets.find((retweet) => retweet.user.id === myProfile?.id);
@@ -100,13 +98,6 @@ const TweetComponent: FC<TweetComponentProps<Tweet>> = (
 
     const onOpenYouTubeVideo = (): void => {
         setOpenYouTubeVideo(true)
-    };
-
-    const calculateImageSize = (): void => {
-        if (imgElement.current) {
-            const number = (504 / imgElement.current.naturalWidth) * imgElement.current.naturalHeight;
-            setImageSize(number);
-        }
     };
 
     return (
@@ -196,15 +187,14 @@ const TweetComponent: FC<TweetComponentProps<Tweet>> = (
                                 openYouTubeVideo ? (
                                     <YouTubeVideo tweet={tweet!}/>
                                 ) : (
-                                    <YouTubeVideoPreview tweet={tweet!} onOpenYouTubeVideo={onOpenYouTubeVideo}/>
+                                    <SmallLinkPreview tweet={tweet!} onOpenYouTubeVideo={onOpenYouTubeVideo}/>
                                 )
                             ) : (
-                                <LinkPreview
-                                    tweet={tweet!}
-                                    imgElement={imgElement}
-                                    calculateImageSize={calculateImageSize}
-                                    imageSize={imageSize}
-                                />
+                                (tweet?.linkCoverSize === LinkCoverSize.LARGE) ? (
+                                    <LargeLinkPreview tweet={tweet!}/>
+                                ) : (
+                                    <SmallLinkPreview tweet={tweet!}/>
+                                )
                             )
                         ) : null}
                     </Typography>

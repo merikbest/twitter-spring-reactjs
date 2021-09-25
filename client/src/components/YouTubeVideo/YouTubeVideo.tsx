@@ -1,8 +1,8 @@
 import React, {FC, ReactElement} from 'react';
 
 import {useYouTubeVideoStyles} from "./YouTubeVideoStyles";
-import {Tweet} from "../../../store/ducks/tweets/contracts/state";
-import {LinkIcon} from "../../../icons";
+import {Tweet} from "../../store/ducks/tweets/contracts/state";
+import {LinkIcon} from "../../icons";
 
 interface YouTubeVideoProps {
     tweet: Tweet;

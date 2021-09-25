@@ -32,12 +32,15 @@ import {
 } from "../../icons";
 import {textFormatter} from "../../util/textFormatter";
 import VoteComponent from "../../components/VoteComponent/VoteComponent";
-import {ReplyType} from "../../store/ducks/tweets/contracts/state";
+import {LinkCoverSize, ReplyType} from "../../store/ducks/tweets/contracts/state";
 import ShareTweet from "../../components/ShareTweet/ShareTweet";
 import TweetComponentActions from "../../components/TweetComponentActions/TweetComponentActions";
 import Quote from "../../components/Quote/Quote";
 import PopperUserWindow from "../../components/PopperUserWindow/PopperUserWindow";
 import {withHover} from "../../hoc/withHover";
+import YouTubeVideo from "../../components/YouTubeVideo/YouTubeVideo";
+import SmallLinkPreview from "../../components/SmallLinkPreview/SmallLinkPreview";
+import LargeLinkPreview from "../../components/LargeLinkPreview/LargeLinkPreview";
 
 let stompClient: CompatClient | null = null;
 
@@ -63,10 +66,12 @@ const FullTweet: FC<FullTweetProps> = (
 
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
     const [modalWindowTitle, setModalWindowTitle] = useState<string>("");
+    const [openYouTubeVideo, setOpenYouTubeVideo] = useState<boolean>(false);
 
     const isTweetLiked = tweetData?.likedTweets.find((like) => like.user.id === myProfile?.id);
     const isTweetRetweeted = tweetData?.retweets.find((retweet) => retweet.user.id === myProfile?.id);
     const isFollower = myProfile?.followers?.findIndex((follower) => follower.id === tweetData?.user.id);
+    const isYouTubeLink = tweetData?.link && tweetData?.link.includes("youtu");
     const image = tweetData?.images?.[0];
     const classes = useFullTweetStyles({isTweetRetweeted, isTweetLiked});
 
@@ -110,6 +115,10 @@ const FullTweet: FC<FullTweetProps> = (
     const onCloseModalWindow = (): void => {
         setVisibleModalWindow(false);
         setModalWindowTitle("");
+    };
+
+    const onOpenYouTubeVideo = (): void => {
+        setOpenYouTubeVideo(true);
     };
 
     if (tweetData) {
@@ -163,6 +172,14 @@ const FullTweet: FC<FullTweetProps> = (
                             </div>
                             <Typography className={classes.textWrapper} gutterBottom>
                                 {textFormatter(tweetData.text)}
+                                {(tweetData.images?.length !== 0) && (
+                                    <Link to={{pathname: `/modal/${params.id}`, state: {background: location}}}>
+                                        <div className={classes.image}>
+                                            <img src={image?.src} alt={image?.src}/>
+                                        </div>
+                                    </Link>
+                                )}
+                                {tweetData.poll && <VoteComponent tweetId={tweetData.id} poll={tweetData.poll}/>}
                                 {tweetData.quoteTweet && (
                                     <Quote
                                         quoteTweet={tweetData.quoteTweet}
@@ -170,14 +187,25 @@ const FullTweet: FC<FullTweetProps> = (
                                         isFullTweet={true}
                                     />
                                 )}
-                                {(tweetData.images?.length !== 0) &&
-                                <Link to={{pathname: `/modal/${params.id}`, state: {background: location}}}>
-                                    <div className={classes.image}>
-                                        <img src={image?.src} alt={image?.src}/>
-                                    </div>
-                                </Link>
-                                }
-                                {tweetData.poll && <VoteComponent tweetId={tweetData.id} poll={tweetData.poll}/>}
+                                {tweetData.link ? (
+                                    isYouTubeLink ? (
+                                        openYouTubeVideo ? (
+                                            <YouTubeVideo tweet={tweetData}/>
+                                        ) : (
+                                            <SmallLinkPreview
+                                                tweet={tweetData}
+                                                isFullTweet={true}
+                                                onOpenYouTubeVideo={onOpenYouTubeVideo}
+                                            />
+                                        )
+                                    ) : (
+                                        (tweetData.linkCoverSize === LinkCoverSize.LARGE) ? (
+                                            <LargeLinkPreview tweet={tweetData} isFullTweet={true}/>
+                                        ) : (
+                                            <SmallLinkPreview tweet={tweetData}/>
+                                        )
+                                    )
+                                ) : null}
                             </Typography>
                             <Typography style={{marginBottom: 16}}>
                                 <span className={classes.date}>

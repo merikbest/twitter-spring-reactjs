@@ -16,6 +16,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.net.URL;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -343,14 +346,18 @@ public class TweetServiceImpl implements TweetService {
                 Elements description = doc.select("meta[name$=description],meta[property$=description]");
                 Elements cover = doc.select("meta[name$=image],meta[property$=image]");
 
+                BufferedImage coverData = ImageIO.read(new URL(getContent(cover.first())));
+                int coverDataSize = (504 / coverData.getWidth()) * coverData.getHeight();
+
                 tweet.setLinkTitle(getContent(title.first()));
                 tweet.setLinkDescription(getContent(description.first()));
                 tweet.setLinkCover(getContent(cover.first()));
+                tweet.setLinkCoverSize(coverDataSize > 267 ? LinkCoverSize.SMALL : LinkCoverSize.LARGE);
             } else {
                 String youTubeVideoId = null;
                 Matcher youTubeMatcher = youTubeUrlRegex.matcher(url);
 
-                if (youTubeMatcher.find()){
+                if (youTubeMatcher.find()) {
                     youTubeVideoId = youTubeMatcher.group();
                 }
                 String youtubeUrl = String.format(

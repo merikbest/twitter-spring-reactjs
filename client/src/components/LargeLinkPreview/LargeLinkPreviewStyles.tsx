@@ -1,12 +1,20 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
-export const useLinkPreviewStyles = makeStyles<Theme>((theme) => ({
+interface LargeLinkPreviewStylesProps {
+    isFullTweet?: boolean;
+}
+
+export const useLargeLinkPreviewStyles = makeStyles<Theme, LargeLinkPreviewStylesProps>((theme) => ({
     container: {
-        width: 504,
-        height: 372,
+        width: "100%",
+        height: props => props.isFullTweet ? 382 : 372,
         marginTop: 5,
         borderRadius: 16,
         border: "1px solid rgb(207, 217, 222)",
+        "&:hover": {
+            cursor: "pointer",
+            backgroundColor: "rgba(0, 0, 0, 0.03)"
+        }
     },
     linkCover: {
         borderRadius: "16px 16px 0px 0px",

@@ -49,6 +49,10 @@ public class Tweet {
     @Column(name = "link_cover")
     private String linkCover;
 
+    @Column(name = "link_cover_size")
+    @Enumerated(EnumType.STRING)
+    private LinkCoverSize linkCoverSize;
+
     @OneToOne
     private Tweet quoteTweet;
 
