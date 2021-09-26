@@ -16,7 +16,6 @@ import {
 import {AuthApi} from "../../../services/api/authApi";
 import {UserApi} from "../../../services/api/userApi";
 import {LoadingStatus} from "../../types";
-import {setTweetsLoadingState} from "../tweets/actionCreators";
 import {ChatApi} from "../../../services/api/chatApi";
 
 export function* fetchSignInRequest({payload}: FetchSignInActionInterface) {
@@ -64,7 +63,7 @@ export function* fetchFollowUserRequest({payload}: FollowUserActionInterface) {
 
 export function* fetchUnfollowUserRequest({payload}: UnfollowUserActionInterface) {
     try {
-        yield call(UserApi.unfollow, payload);
+        yield call(UserApi.follow, payload);
     } catch (error) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }

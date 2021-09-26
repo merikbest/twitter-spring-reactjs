@@ -3,7 +3,6 @@ import {Notification} from "../../store/ducks/notifications/contracts/state";
 import {axios} from "../../core/axios";
 import {Tweet} from "../../store/ducks/tweets/contracts/state";
 import {API_URL} from "../../util/url";
-import {AxiosResponse} from "axios";
 
 export interface Response<T> {
     status: string;
@@ -41,10 +40,6 @@ export const UserApi = {
     },
     async follow(user: User): Promise<User | undefined> {
         const {data} = await axios.get<User | undefined>(API_URL + '/user/follow/' + user.id);
-        return data;
-    },
-    async unfollow(user: User): Promise<User | undefined> {
-        const {data} = await axios.get<User | undefined>(API_URL + '/user/unfollow/' + user.id);
         return data;
     },
     async getUserTweets(id: string): Promise<Response<Tweet[]>> {

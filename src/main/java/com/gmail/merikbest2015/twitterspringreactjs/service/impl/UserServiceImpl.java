@@ -3,10 +3,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.BookmarkRepository;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.ImageRepository;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.TweetRepository;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.*;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +26,7 @@ public class UserServiceImpl implements UserService {
     private final TweetRepository tweetRepository;
     private final ImageRepository imageRepository;
     private final BookmarkRepository bookmarkRepository;
+    private final NotificationRepository notificationRepository;
     private final AmazonS3 amazonS3client;
 
     @Value("${amazon.s3.bucket.name}")
@@ -195,23 +193,43 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User follow(Long userId) {
+    public Notification follow(Long userId) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());
         User currentUser = userRepository.getOne(userId);
-        user.getFollowers().add(currentUser);
-        userRepository.save(user);
-        return currentUser;
-    }
 
-    @Override
-    public User unfollow(Long userId) {
-        Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByEmail(principal.getName());
-        User currentUser = userRepository.getOne(userId);
-        user.getFollowers().remove(currentUser);
+        List<User> followers = user.getFollowers();
+        Optional<User> follower = followers.stream()
+                .filter(f -> f.getId().equals(currentUser.getId()))
+                .findFirst();
+
+        if (follower.isPresent()) {
+            followers.remove(follower.get());
+        } else {
+            followers.add(currentUser);
+        }
         userRepository.save(user);
-        return currentUser;
+
+        Notification notification = new Notification();
+        notification.setNotificationType(NotificationType.FOLLOW);
+        notification.setUser(user);
+        notification.setUserToFollow(currentUser);
+
+        if (!currentUser.getId().equals(user.getId())) {
+            Optional<Notification> userNotification = currentUser.getNotifications().stream()
+                    .filter(n -> n.getNotificationType().equals(NotificationType.FOLLOW) && n.getUser().equals(user))
+                    .findFirst();
+
+            if (userNotification.isEmpty()) {
+                Notification newNotification = notificationRepository.save(notification);
+                currentUser.setNotificationsCount(currentUser.getNotificationsCount() + 1);
+                List<Notification> notifications = currentUser.getNotifications();
+                notifications.add(newNotification);
+                userRepository.save(currentUser);
+                return newNotification;
+            }
+        }
+        return notification;
     }
 
     @Override

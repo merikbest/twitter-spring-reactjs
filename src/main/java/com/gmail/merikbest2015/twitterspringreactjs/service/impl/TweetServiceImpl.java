@@ -65,7 +65,7 @@ public class TweetServiceImpl implements TweetService {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());
         tweet.setUser(user);
-        parseMetadataInText(tweet); // find metadata in link
+        parseMetadataFromURL(tweet); // find metadata from url
         Tweet createdTweet = tweetRepository.save(tweet);
         user.getTweets().add(createdTweet);
         user.setTweetCount(user.getTweetCount() + 1);
@@ -180,27 +180,7 @@ public class TweetServiceImpl implements TweetService {
             likeTweetRepository.save(newLikedTweet);
             likedTweets.add(newLikedTweet);
         }
-
-        Optional<Notification> notification = tweet.getUser().getNotifications().stream()
-                .filter(n -> n.getNotificationType().equals(NotificationType.LIKE)
-                        && n.getTweet().equals(tweet)
-                        && n.getUser().equals(user))
-                .findFirst();
-
-        if (notification.isEmpty()) {
-            Notification newNotification = new Notification();
-            newNotification.setNotificationType(NotificationType.LIKE);
-            newNotification.setUser(user);
-            newNotification.setTweet(tweet);
-            notificationRepository.save(newNotification);
-            tweet.getUser().setNotificationsCount(tweet.getUser().getNotificationsCount() + 1);
-            List<Notification> notifications = tweet.getUser().getNotifications();
-            notifications.add(newNotification);
-            userRepository.save(user);
-            return newNotification;
-        }
-        tweetRepository.save(tweet);
-        return notification.get();
+        return notificationHandler(user, tweet, NotificationType.LIKE);
     }
 
     @Override
@@ -226,27 +206,7 @@ public class TweetServiceImpl implements TweetService {
             retweets.add(newRetweet);
             user.setTweetCount(user.getTweetCount() + 1);
         }
-
-        Optional<Notification> notification = tweet.getUser().getNotifications().stream()
-                .filter(n -> n.getNotificationType().equals(NotificationType.RETWEET)
-                        && n.getTweet().equals(tweet)
-                        && n.getUser().equals(user))
-                .findFirst();
-
-        if (notification.isEmpty()) {
-            Notification newNotification = new Notification();
-            newNotification.setNotificationType(NotificationType.RETWEET);
-            newNotification.setUser(user);
-            newNotification.setTweet(tweet);
-            notificationRepository.save(newNotification);
-            tweet.getUser().setNotificationsCount(tweet.getUser().getNotificationsCount() + 1);
-            List<Notification> notifications = tweet.getUser().getNotifications();
-            notifications.add(newNotification);
-            userRepository.save(user);
-            return newNotification;
-        }
-        tweetRepository.save(tweet);
-        return notification.get();
+        return notificationHandler(user, tweet, NotificationType.RETWEET);
     }
 
     @Override
@@ -294,6 +254,32 @@ public class TweetServiceImpl implements TweetService {
         return tweetRepository.save(tweet);
     }
 
+    private Notification notificationHandler(User user, Tweet tweet, NotificationType notificationType) {
+        Notification notification = new Notification();
+        notification.setNotificationType(notificationType);
+        notification.setUser(user);
+        notification.setTweet(tweet);
+
+        if (!tweet.getUser().getId().equals(user.getId())) {
+            Optional<Notification> userNotification = tweet.getUser().getNotifications().stream()
+                    .filter(n -> n.getNotificationType().equals(notificationType)
+                            && n.getTweet().equals(tweet)
+                            && n.getUser().equals(user))
+                    .findFirst();
+
+            if (userNotification.isEmpty()) {
+                Notification newNotification = notificationRepository.save(notification);
+                tweet.getUser().setNotificationsCount(tweet.getUser().getNotificationsCount() + 1);
+                List<Notification> notifications = tweet.getUser().getNotifications();
+                notifications.add(newNotification);
+                userRepository.save(user);
+                return newNotification;
+            }
+            tweetRepository.save(tweet);
+        }
+        return notification;
+    }
+
     private void parseHashtagInText(Tweet tweet) {
         Pattern pattern = Pattern.compile("(#\\w+)\\b");
         Matcher match = pattern.matcher(tweet.getText());
@@ -326,7 +312,7 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @SneakyThrows
-    private void parseMetadataInText(Tweet tweet) {
+    private void parseMetadataFromURL(Tweet tweet) {
         Pattern urlRegex = Pattern.compile("https?:\\/\\/?[\\w\\d\\._\\-%\\/\\?=&#]+", Pattern.CASE_INSENSITIVE);
         Pattern imgRegex = Pattern.compile("\\.(jpeg|jpg|gif|png)$", Pattern.CASE_INSENSITIVE);
         Pattern youTubeUrlRegex = Pattern.compile("(?<=watch\\?v=|/videos/|embed\\/|youtu.be\\/|\\/v\\/|\\/e\\/|watch\\?v%3D|watch\\?feature=player_embedded&v=|%2Fvideos%2F|embed%\u200C\u200B2F|youtu.be%2F|%2Fv%2F)[^#\\&\\?\\n]*", Pattern.CASE_INSENSITIVE);

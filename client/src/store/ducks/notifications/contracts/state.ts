@@ -5,9 +5,16 @@ import {Tweet} from "../../tweets/contracts/state";
 export interface Notification {
     id: number;
     date: string;
-    notificationType: string;
+    notificationType: NotificationType;
     user: User;
+    userToFollow: User;
     tweet: Tweet;
+}
+
+export enum NotificationType {
+    LIKE = "LIKE",
+    RETWEET = "RETWEET",
+    FOLLOW = "FOLLOW"
 }
 
 export interface NotificationsState {

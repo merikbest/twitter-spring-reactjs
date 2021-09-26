@@ -11,5 +11,6 @@ public class NotificationResponse {
     private LocalDateTime date;
     private NotificationType notificationType;
     private NotificationUserResponse user;
+    private NotificationUserResponse userToFollow;
     private NotificationTweetResponse tweet;
 }

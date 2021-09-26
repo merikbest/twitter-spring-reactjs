@@ -43,7 +43,7 @@ export function* fetchFollowUser({payload}: FollowUserProfileActionInterface) {
 
 export function* fetchUnfollowUser({payload}: UnfollowUserProfileActionInterface) {
     try {
-        const item: User = yield call(UserApi.unfollow, payload);
+        const item: User = yield call(UserApi.follow, payload);
         yield put(setUserProfile(item));
     } catch (error) {
         yield put(setUserProfileLoadingState(LoadingStatus.ERROR));

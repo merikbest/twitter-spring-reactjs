@@ -7,7 +7,7 @@ import Paper from "@material-ui/core/Paper";
 import {BackButton} from "../../../components/BackButton/BackButton";
 import {useNotificationInfoStyles} from "./NotificationInfoStyles";
 import {User} from "../../../store/ducks/user/contracts/state";
-import {Notification} from "../../../store/ducks/notifications/contracts/state";
+import {Notification, NotificationType} from "../../../store/ducks/notifications/contracts/state";
 import TweetComponent from "../../../components/TweetComponent/TweetComponent";
 import {followUser, unfollowUser} from "../../../store/ducks/user/actionCreators";
 import Follower from "../../../components/Follower/Follower";
@@ -35,7 +35,7 @@ const NotificationInfo: FC = (): ReactElement => {
                 <BackButton/>
                 <div>
                     <Typography variant="h6">
-                        {location.state.notification.notificationType === "LIKE" ? "Liked" : "Retweeted"}
+                        {location.state.notification.notificationType === NotificationType.LIKE ? "Liked" : "Retweeted"}
                     </Typography>
                     <Typography variant="caption" display="block" gutterBottom>
                         by {location.state.notification.user.fullName}

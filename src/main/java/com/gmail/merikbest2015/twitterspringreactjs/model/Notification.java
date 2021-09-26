@@ -27,6 +27,9 @@ public class Notification {
     private User user;
 
     @OneToOne
+    private User userToFollow;
+
+    @OneToOne
     private Tweet tweet;
 
     public Notification() {

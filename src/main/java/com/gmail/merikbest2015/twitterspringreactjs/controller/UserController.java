@@ -3,11 +3,13 @@ package com.gmail.merikbest2015.twitterspringreactjs.controller;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +21,7 @@ import java.util.List;
 public class UserController {
 
     private final UserMapper userMapper;
+    private final SimpMessagingTemplate messagingTemplate;
 
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable Long userId) {
@@ -91,13 +94,13 @@ public class UserController {
     }
 
     @GetMapping("/follow/{userId}")
-    public ResponseEntity<UserResponse> follow(@PathVariable Long userId) {
-        return ResponseEntity.ok(userMapper.follow(userId));
-    }
+    public ResponseEntity<NotificationUserResponse> follow(@PathVariable Long userId) {
+        NotificationResponse notification = userMapper.follow(userId);
 
-    @GetMapping("/unfollow/{userId}")
-    public ResponseEntity<UserResponse> unfollow(@PathVariable Long userId) {
-        return ResponseEntity.ok(userMapper.unfollow(userId));
+        if (notification.getId() != null) {
+            messagingTemplate.convertAndSend("/topic/notifications/" + notification.getUserToFollow().getId(), notification);
+        }
+        return ResponseEntity.ok(notification.getUserToFollow());
     }
 
     @GetMapping("/pin/tweet/{tweetId}")

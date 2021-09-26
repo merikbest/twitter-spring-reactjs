@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.response.FollowerRespons
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -12,8 +13,14 @@ public class NotificationUserResponse {
     private String email;
     private String fullName;
     private String username;
+    private String location;
     private String about;
+    private String website;
+    private String birthday;
+    private LocalDateTime registrationDate;
+    private Long tweetCount;
     private ImageResponse avatar;
+    private ImageResponse wallpaper;
     private List<FollowerResponse> followers;
     private List<FollowerResponse> following;
 }

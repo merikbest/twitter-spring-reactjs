@@ -97,12 +97,8 @@ public class UserMapper {
         return convertToUserResponse(userService.processUserBookmarks(tweetId));
     }
 
-    public UserResponse follow(Long userId) {
-        return convertToUserResponse(userService.follow(userId));
-    }
-
-    public UserResponse unfollow(Long userId) {
-        return convertToUserResponse(userService.unfollow(userId));
+    public NotificationResponse follow(Long userId) {
+        return convertToNotificationResponse(userService.follow(userId));
     }
 
     public List<UserResponse> getRelevantUsers() {

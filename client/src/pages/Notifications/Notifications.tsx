@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
+import React, {ChangeEvent, FC, ReactElement, ReactNode, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
 import {Avatar, CircularProgress, Typography} from "@material-ui/core";
@@ -7,12 +7,13 @@ import Tab from "@material-ui/core/Tab";
 import Paper from "@material-ui/core/Paper";
 
 import {useNotificationsStyles} from "./NotificationsStyles";
-import {LikeIcon, RetweetIcon} from "../../icons";
+import {LikeIcon, ProfileIconFilled, RetweetIcon} from "../../icons";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {textFormatter} from "../../util/textFormatter";
 import {selectIsNotificationsLoading, selectNotificationsItems} from "../../store/ducks/notifications/selectors";
 import {fetchNotifications} from "../../store/ducks/notifications/actionCreators";
 import {fetchUserData} from "../../store/ducks/user/actionCreators";
+import {Notification, NotificationType} from "../../store/ducks/notifications/contracts/state";
 
 const Notifications: FC = (): ReactElement => {
     const classes = useNotificationsStyles();
@@ -70,38 +71,53 @@ const Notifications: FC = (): ReactElement => {
                         ) : (
                             <div>
                                 {notifications.map((notification) => (
-                                    <Link className={classes.notificationLink} to={{
-                                        pathname: "/notification",
-                                        state: {notification: notification}
-                                    }}>
+                                    <NotificationWithLink classes={classes} notification={notification}>
                                         <Paper className={classes.notificationWrapper} variant="outlined">
                                             <div className={classes.notificationIcon}>
-                                                {(notification.notificationType === "LIKE") ? (
+                                                {(notification.notificationType === NotificationType.LIKE) && (
                                                     <span id={"like"}>{LikeIcon}</span>
-                                                ) : (
+                                                )}
+                                                {(notification.notificationType === NotificationType.RETWEET) && (
                                                     <span id={"retweet"}>{RetweetIcon}</span>
+                                                )}
+                                                {(notification.notificationType === NotificationType.FOLLOW) && (
+                                                    <span id={"follow"}>{ProfileIconFilled}</span>
                                                 )}
                                             </div>
                                             <div style={{flex: 1}}>
                                                 <a href={`/user/${notification.user.id!}`}
-                                                   onClick={event => handleClickUser(notification.user.id!, event)}>
+                                                   onClick={event => handleClickUser(notification.user.id!, event)}
+                                                >
                                                     <Avatar
                                                         className={classes.notificationAvatar}
                                                         alt={`avatar ${notification.id}`}
-                                                        src={(notification.user.avatar?.src) ?
-                                                            (notification.user.avatar?.src) : (DEFAULT_PROFILE_IMG)}/>
+                                                        src={(notification.user.avatar?.src) ? (
+                                                            notification.user.avatar?.src
+                                                        ) : (
+                                                            DEFAULT_PROFILE_IMG
+                                                        )}
+                                                    />
                                                 </a>
                                                 <div className={classes.notificationInfo}>
                                                     <b>{notification.user.username} </b>
-                                                    {(notification.notificationType === "LIKE") ? "liked" : "Retweeted"} your
-                                                    Tweet
+                                                    {notification.notificationType === NotificationType.FOLLOW ? (
+                                                        <>followed you</>
+                                                    ) : (
+                                                        <>
+                                                            {(notification.notificationType === NotificationType.LIKE) ? (
+                                                                "liked"
+                                                            ) : (
+                                                                "Retweeted"
+                                                            )} your Tweet
+                                                        </>
+                                                    )}
                                                 </div>
                                                 <div className={classes.notificationText}>
-                                                    {textFormatter(notification.tweet.text)}
+                                                    {notification.tweet && textFormatter(notification.tweet.text)}
                                                 </div>
                                             </div>
                                         </Paper>
-                                    </Link>
+                                    </NotificationWithLink>
                                 ))}
                             </div>
                         )
@@ -118,6 +134,31 @@ const Notifications: FC = (): ReactElement => {
                 )}
             </div>
         </Paper>
+    );
+};
+
+interface NotificationWithLinkProps {
+    classes: ReturnType<typeof useNotificationsStyles>;
+    notification: Notification,
+    children: ReactNode
+}
+
+const NotificationWithLink: FC<NotificationWithLinkProps> = ({classes, notification, children}) => {
+    return (
+        <>
+            {(notification.notificationType !== NotificationType.FOLLOW) ? (
+                <Link className={classes.notificationLink} to={{
+                    pathname: "/notification",
+                    state: {notification: notification}
+                }}>
+                    {children}
+                </Link>
+            ) : (
+                <Link className={classes.notificationLink} to={`/user/${notification.user.id}`}>
+                    {children}
+                </Link>
+            )}
+        </>
     );
 };
 

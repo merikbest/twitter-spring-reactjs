@@ -38,9 +38,7 @@ public interface UserService {
 
     User updateUserProfile(User userInfo);
 
-    User follow(Long userId);
-
-    User unfollow(Long userId);
+    Notification follow(Long userId);
 
     User pinTweet(Long tweetId);
 
