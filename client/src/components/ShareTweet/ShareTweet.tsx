@@ -52,7 +52,7 @@ const ShareTweet: FC<ShareTweetProps> = ({tweetId, isFullTweet}): ReactElement =
     };
 
     return (
-        <div>
+        <>
             <ClickAwayListener onClickAway={handleClickAway}>
                 <div className={classes.root}>
                     <IconButton onClick={handleClick}>
@@ -94,7 +94,7 @@ const ShareTweet: FC<ShareTweetProps> = ({tweetId, isFullTweet}): ReactElement =
                     />
                 </div>
             </ClickAwayListener>
-        </div>
+        </>
     );
 };
 

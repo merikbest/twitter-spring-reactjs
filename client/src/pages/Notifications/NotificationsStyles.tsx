@@ -6,6 +6,10 @@ export const useNotificationsStyles = makeStyles((theme: Theme) => ({
         minHeight: '100vh',
         borderTop: '0',
         borderBottom: '0',
+        "& a": {
+            color: "rgb(29, 161, 242)",
+            textDecoration: "none",
+        },
     },
     header: {
         marginLeft: 15,
@@ -59,9 +63,6 @@ export const useNotificationsStyles = makeStyles((theme: Theme) => ({
         '&:hover': {
             backgroundColor: 'rgb(29, 161, 242, 0.1)',
         },
-    },
-    notificationLink: {
-        textDecoration: "none",
     },
     notificationWrapper: {
         display: 'flex',

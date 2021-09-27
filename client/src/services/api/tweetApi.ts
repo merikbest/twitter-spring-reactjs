@@ -17,6 +17,10 @@ export const TweetApi = {
         const data = await axios.get<Response<Tweet[]>>(API_URL + '/tweets/media');
         return data.data;
     },
+    async fetchTweetsWithVideo(): Promise<Response<Tweet[]>> {
+        const data = await axios.get<Response<Tweet[]>>(API_URL + '/tweets/video');
+        return data.data;
+    },
     async fetchTweetData(id: string): Promise<Response<Tweet>> {
         const data = await axios.get<Response<Tweet>>(API_URL + '/tweets/' + id);
         return data.data;

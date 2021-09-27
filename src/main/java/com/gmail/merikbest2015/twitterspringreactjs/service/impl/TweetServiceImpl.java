@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 
+import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.*;
 import com.gmail.merikbest2015.twitterspringreactjs.service.TweetService;
@@ -12,6 +13,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -52,12 +54,18 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public Tweet getTweetById(Long tweetId) {
-        return tweetRepository.getOne(tweetId);
+        return tweetRepository.findById(tweetId)
+                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
     }
 
     @Override
     public List<Tweet> getMediaTweets() {
         return tweetRepository.findByImagesIsNotNullOrderByDateTimeDesc();
+    }
+
+    @Override
+    public List<Tweet> getTweetsWithVideo() {
+        return tweetRepository.findAllByTextIgnoreCaseContaining("youtu");
     }
 
     @Override

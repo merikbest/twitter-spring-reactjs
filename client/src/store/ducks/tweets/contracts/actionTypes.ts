@@ -18,6 +18,7 @@ export enum TweetsActionType {
     DELETE_TWEET = "tweets/DELETE_TWEET",
     FETCH_TWEETS = "tweets/FETCH_TWEETS",
     FETCH_MEDIA_TWEETS = "tweets/FETCH_MEDIA_TWEETS",
+    FETCH_TWEETS_WITH_VIDEO = "tweets/FETCH_TWEETS_WITH_VIDEO",
     FETCH_TWEETS_BY_TAG = "tweets/FETCH_TWEETS_BY_TAG",
     FETCH_TWEETS_BY_TEXT = "tweets/FETCH_TWEETS_BY_TEXT",
     FETCH_LIKED_TWEETS = "tweets/FETCH_LIKED_TWEETS",
@@ -97,6 +98,10 @@ export interface FetchTweetsActionInterface extends Action<TweetsActionType> {
 
 export interface FetchMediaTweetsActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_MEDIA_TWEETS;
+}
+
+export interface FetchTweetsWithVideoActionInterface extends Action<TweetsActionType> {
+    type: TweetsActionType.FETCH_TWEETS_WITH_VIDEO;
 }
 
 export interface FetchTweetsByTagActionInterface extends Action<TweetsActionType> {

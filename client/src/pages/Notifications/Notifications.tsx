@@ -71,7 +71,7 @@ const Notifications: FC = (): ReactElement => {
                         ) : (
                             <div>
                                 {notifications.map((notification) => (
-                                    <NotificationWithLink classes={classes} notification={notification}>
+                                    <NotificationWithLink notification={notification}>
                                         <Paper className={classes.notificationWrapper} variant="outlined">
                                             <div className={classes.notificationIcon}>
                                                 {(notification.notificationType === NotificationType.LIKE) && (
@@ -138,27 +138,23 @@ const Notifications: FC = (): ReactElement => {
 };
 
 interface NotificationWithLinkProps {
-    classes: ReturnType<typeof useNotificationsStyles>;
     notification: Notification,
     children: ReactNode
 }
 
-const NotificationWithLink: FC<NotificationWithLinkProps> = ({classes, notification, children}) => {
+const NotificationWithLink: FC<NotificationWithLinkProps> = ({notification, children}) => {
     return (
-        <>
+        <div>
             {(notification.notificationType !== NotificationType.FOLLOW) ? (
-                <Link className={classes.notificationLink} to={{
-                    pathname: "/notification",
-                    state: {notification: notification}
-                }}>
+                <Link to={{pathname: "/notification", state: {notification: notification}}}>
                     {children}
                 </Link>
             ) : (
-                <Link className={classes.notificationLink} to={`/user/${notification.user.id}`}>
+                <Link to={`/user/${notification.user.id}`}>
                     {children}
                 </Link>
             )}
-        </>
+        </div>
     );
 };
 

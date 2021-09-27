@@ -12,7 +12,8 @@ import {
     fetchMediaTweets,
     fetchTweets,
     fetchTweetsByTag,
-    fetchTweetsByText
+    fetchTweetsByText,
+    fetchTweetsWithVideo
 } from "../../store/ducks/tweets/actionCreators";
 import {BackButton} from "../../components/BackButton/BackButton";
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
@@ -88,6 +89,11 @@ const Explore: FC = (): ReactElement => {
         dispatch(fetchMediaTweets());
     };
 
+    const showTweetsWithVideos = (): void => {
+        window.scrollTo(0, 0);
+        dispatch(fetchTweetsWithVideo());
+    };
+
     const handleFollow = (user: User): void => {
         dispatch(followUser(user));
     };
@@ -126,10 +132,10 @@ const Explore: FC = (): ReactElement => {
                     <div className={classes.tabs}>
                         <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
                             <Tab onClick={showTopTweets} label="Top"/>
-                            <Tab label="Latest"/>
+                            <Tab onClick={showTopTweets} label="Latest"/>
                             <Tab onClick={showUsers} label="People"/>
                             <Tab onClick={showMediaTweets} label="Photos"/>
-                            <Tab label="Videos"/>
+                            <Tab onClick={showTweetsWithVideos} label="Videos"/>
                         </Tabs>
                     </div>
                 </div>

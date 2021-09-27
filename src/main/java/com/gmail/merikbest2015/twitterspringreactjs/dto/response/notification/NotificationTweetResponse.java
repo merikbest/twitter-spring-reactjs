@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.LikeTweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.RetweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetReplyResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.model.LinkCoverSize;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
 import lombok.Data;
 
@@ -18,6 +19,11 @@ public class NotificationTweetResponse {
     private String addressedUsername;
     private Long addressedId;
     private ReplyType replyType;
+    private String link;
+    private String linkTitle;
+    private String linkDescription;
+    private String linkCover;
+    private LinkCoverSize linkCoverSize;
     private NotificationUserResponse user;
     private List<ImageResponse> images;
     private List<LikeTweetResponse> likedTweets;

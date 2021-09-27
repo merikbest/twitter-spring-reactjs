@@ -2,13 +2,13 @@ import {makeStyles, Theme} from "@material-ui/core";
 
 export const useYouTubeVideoStyles = makeStyles<Theme>((theme) => ({
     container: {
-        width: 506,
+        width: "100%",
         height: 489,
         marginTop: 5,
         border: "1px solid rgb(207, 217, 222)",
         borderRadius: 16,
         "& iframe": {
-            width: 504,
+            width: "100%",
             height: 378,
             borderRadius: "16px 16px 0px 0px",
         },

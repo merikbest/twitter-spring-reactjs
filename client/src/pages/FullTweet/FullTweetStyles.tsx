@@ -24,7 +24,7 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
         },
     },
     loading: {
-        marginTop: 50,
+        paddingTop: 200,
         textAlign: 'center',
     },
     container: {
@@ -190,5 +190,13 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
     divider: {
         height: 12,
         backgroundColor: '#E6ECF0',
+    },
+    error: {
+        width: 350,
+        margin: "0 auto",
+        paddingTop: 200,
+        fontSize: 20,
+        fontWeight: 700,
+        textAlign: "center",
     },
 }));

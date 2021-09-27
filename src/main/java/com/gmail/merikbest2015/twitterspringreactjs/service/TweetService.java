@@ -14,6 +14,8 @@ public interface TweetService {
 
     List<Tweet> getMediaTweets();
 
+    List<Tweet> getTweetsWithVideo();
+
     Tweet createTweet(Tweet tweet);
 
     Tweet createPoll(Long pollDateTime, List<String> choices, Tweet tweet);

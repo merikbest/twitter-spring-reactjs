@@ -3,6 +3,7 @@ import {
     DeleteTweetActionInterface,
     FetchAddPollActionInterface,
     FetchAddQuoteTweetActionInterface,
+    FetchAddTweetActionInterface,
     FetchBookmarksActionInterface,
     FetchChangeReplyTypeActionInterface,
     FetchDeleteTweetActionInterface,
@@ -10,19 +11,17 @@ import {
     FetchLikeTweetActionInterface,
     FetchMediaTweetsActionInterface,
     FetchRetweetActionInterface,
+    FetchTweetsActionInterface,
     FetchTweetsByTagActionInterface,
     FetchTweetsByTextActionInterface,
+    FetchTweetsWithVideoActionInterface,
     FetchVoteActionInterface,
     RemoveTweetFromBookmarksActionInterface,
     SetTweetActionInterface,
-    SetUpdatedTweetActionInterface,
-} from "./contracts/actionTypes";
-import {
-    SetTweetsLoadingStateInterface,
     SetTweetsActionInterface,
+    SetTweetsLoadingStateInterface,
+    SetUpdatedTweetActionInterface,
     TweetsActionType,
-    FetchTweetsActionInterface,
-    FetchAddTweetActionInterface
 } from "./contracts/actionTypes";
 import {LoadingStatus} from "../../types";
 
@@ -112,6 +111,10 @@ export const fetchTweets = (): FetchTweetsActionInterface => ({
 
 export const fetchMediaTweets = (): FetchMediaTweetsActionInterface => ({
     type: TweetsActionType.FETCH_MEDIA_TWEETS,
+});
+
+export const fetchTweetsWithVideo = (): FetchTweetsWithVideoActionInterface => ({
+    type: TweetsActionType.FETCH_TWEETS_WITH_VIDEO,
 });
 
 export const fetchUserBookmarks = (): FetchBookmarksActionInterface => ({

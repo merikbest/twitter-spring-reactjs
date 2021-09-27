@@ -45,6 +45,10 @@ public class TweetMapper {
         return convertListToResponse(tweetService.getMediaTweets());
     }
 
+    public List<TweetResponse> getTweetsWithVideo() {
+        return convertListToResponse(tweetService.getTweetsWithVideo());
+    }
+
     public TweetResponse getTweetById(Long tweetId) {
         return convertToTweetResponse(tweetService.getTweetById(tweetId));
     }

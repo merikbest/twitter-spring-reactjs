@@ -41,6 +41,16 @@ export function* fetchMediaTweetsRequest() {
     }
 }
 
+export function* fetchTweetsWithVideoRequest() {
+    try {
+        yield put(setTweetsLoadingState(LoadingStatus.LOADING));
+        const items: Tweet[] = yield call(TweetApi.fetchTweetsWithVideo);
+        yield put(setTweets(items));
+    } catch (e) {
+        yield put(setTweetsLoadingState(LoadingStatus.ERROR));
+    }
+}
+
 export function* fetchTweetsByTagRequest({payload}: FetchTweetsByTagActionInterface) {
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
@@ -140,6 +150,7 @@ export function* fetchUserBookmarksRequest() {
 export function* tweetsSaga() {
     yield takeLatest(TweetsActionType.FETCH_TWEETS, fetchTweetsRequest);
     yield takeLatest(TweetsActionType.FETCH_MEDIA_TWEETS, fetchMediaTweetsRequest);
+    yield takeLatest(TweetsActionType.FETCH_TWEETS_WITH_VIDEO, fetchTweetsWithVideoRequest);
     yield takeLatest(TweetsActionType.FETCH_ADD_TWEET, fetchAddTweetRequest);
     yield takeLatest(TweetsActionType.FETCH_ADD_POLL, fetchAddPollRequest);
     yield takeLatest(TweetsActionType.FETCH_ADD_QUOTE_TWEET, fetchAddQuoteTweet);
