@@ -5,7 +5,7 @@ import {Avatar} from "@material-ui/core";
 import {usePinnedListsItemStyles} from "./PinnedListsItemStyles";
 import {Lists} from "../../../store/ducks/lists/contracts/state";
 import PopperListWindow from "../PopperListWindow/PopperListWindow";
-import {withHover} from "../../../hoc/withHover";
+import {withHoverUser} from "../../../hoc/withHoverUser";
 
 interface PinnedListsItemProps<T> {
     item?: T;
@@ -39,4 +39,4 @@ const PinnedListsItem: FC<PinnedListsItemProps<Lists>> = (
     );
 };
 
-export default withHover(PinnedListsItem);
+export default withHoverUser(PinnedListsItem);

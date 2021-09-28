@@ -10,7 +10,7 @@ import {selectUserData} from "../../../store/ducks/user/selectors";
 import {PinIcon, PinIconFilled} from "../../../icons";
 import {followList, pinList, unfollowList, unpinList} from "../../../store/ducks/lists/actionCreators";
 import PopperListWindow from "../PopperListWindow/PopperListWindow";
-import {withHover} from "../../../hoc/withHover";
+import {withHoverUser} from "../../../hoc/withHoverUser";
 
 interface ListsItemProps<T> {
     item?: T;
@@ -124,4 +124,4 @@ const ListsItem: FC<ListsItemProps<Lists>> = (
     );
 };
 
-export default withHover(ListsItem);
+export default withHoverUser(ListsItem);

@@ -37,7 +37,7 @@ import ShareTweet from "../../components/ShareTweet/ShareTweet";
 import TweetComponentActions from "../../components/TweetComponentActions/TweetComponentActions";
 import Quote from "../../components/Quote/Quote";
 import PopperUserWindow from "../../components/PopperUserWindow/PopperUserWindow";
-import {withHover} from "../../hoc/withHover";
+import {withHoverUser} from "../../hoc/withHoverUser";
 import YouTubeVideo from "../../components/YouTubeVideo/YouTubeVideo";
 import SmallLinkPreview from "../../components/SmallLinkPreview/SmallLinkPreview";
 import LargeLinkPreview from "../../components/LargeLinkPreview/LargeLinkPreview";
@@ -341,4 +341,4 @@ const FullTweet: FC<FullTweetProps> = (
     );
 };
 
-export default withHover(FullTweet);
+export default withHoverUser(FullTweet);

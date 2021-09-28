@@ -1,5 +1,6 @@
-import React, {FC, ReactElement, useState} from 'react';
+import React, {ComponentType, FC, ReactElement, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
+import {compose} from 'recompose'
 import {Link, useHistory, useLocation} from 'react-router-dom';
 import {Avatar, IconButton, Paper, Typography} from '@material-ui/core';
 
@@ -26,18 +27,23 @@ import VoteComponent from "../VoteComponent/VoteComponent";
 import QuoteTweet from "../QuoteTweet/QuoteTweet";
 import Quote from "../Quote/Quote";
 import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
-import {withHover} from "../../hoc/withHover";
+import {HoverUserProps, withHoverUser} from "../../hoc/withHoverUser";
 import YouTubeVideo from "../YouTubeVideo/YouTubeVideo";
 import LargeLinkPreview from "../LargeLinkPreview/LargeLinkPreview";
 import SmallLinkPreview from "../SmallLinkPreview/SmallLinkPreview";
+import HoverAction from "../HoverAction/HoverAction";
+import {HoverActionProps, withHoverAction} from "../../hoc/withHoverAction";
 
-interface TweetComponentProps<T> {
+export interface TweetComponentProps<T> {
     item?: T;
     activeTab?: number;
     userProfileId?: number;
     visiblePopperWindow?: boolean;
     handleHover?: () => void;
     handleLeave?: () => void;
+    visibleActionWindow?: boolean;
+    handleHoverAction?: () => void;
+    handleLeaveAction?: () => void;
 }
 
 const TweetComponent: FC<TweetComponentProps<Tweet>> = (
@@ -46,7 +52,10 @@ const TweetComponent: FC<TweetComponentProps<Tweet>> = (
         activeTab,
         visiblePopperWindow,
         handleHover,
-        handleLeave
+        handleLeave,
+        visibleActionWindow,
+        handleHoverAction,
+        handleLeaveAction
     }
 ): ReactElement => {
     const dispatch = useDispatch();
@@ -56,6 +65,7 @@ const TweetComponent: FC<TweetComponentProps<Tweet>> = (
     const location = useLocation();
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
     const [openYouTubeVideo, setOpenYouTubeVideo] = useState<boolean>(false);
+    console.log(tweet)
 
     const isTweetLiked = tweet?.likedTweets.find((like) => like.user.id === myProfile?.id);
     const isTweetRetweetedByMe = tweet?.retweets.find((retweet) => retweet.user.id === myProfile?.id);
@@ -211,12 +221,13 @@ const TweetComponent: FC<TweetComponentProps<Tweet>> = (
                             handleRetweet={handleRetweet}
                         />
                         <div className={classes.likeIcon}>
-                            <IconButton onClick={handleLike}>
+                            <IconButton onClick={handleLike} onMouseEnter={handleHoverAction} onMouseLeave={handleLeaveAction}>
                                 {isTweetLiked ? (
                                     <>{LikeIcon}</>
                                 ) : (
                                     <>{LikeOutlinedIcon}</>
                                 )}
+                                {visibleActionWindow && <HoverAction actionText={isTweetLiked ? "Unlike" : "Like"}/>}
                             </IconButton>
                             {(tweet?.likedTweets.length === 0 || tweet?.likedTweets === null) ? null : (
                                 isTweetLiked ? (
@@ -245,4 +256,6 @@ const TweetComponent: FC<TweetComponentProps<Tweet>> = (
     );
 };
 
-export default withHover(TweetComponent);
+// export default compose<HoverUserProps<Tweet> & HoverActionProps, TweetComponentProps<Tweet>>(withHoverUser, withHoverAction)(TweetComponent);
+// export default withHoverUser(TweetComponent);
+export default compose(withHoverUser, withHoverAction)(TweetComponent);

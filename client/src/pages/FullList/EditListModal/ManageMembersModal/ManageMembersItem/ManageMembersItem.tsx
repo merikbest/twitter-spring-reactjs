@@ -9,7 +9,7 @@ import {DEFAULT_PROFILE_IMG} from "../../../../../util/url";
 import PopperUserWindow from "../../../../../components/PopperUserWindow/PopperUserWindow";
 import {Lists} from "../../../../../store/ducks/lists/contracts/state";
 import {processListMember} from "../../../../../store/ducks/lists/actionCreators";
-import {withHover} from "../../../../../hoc/withHover";
+import {withHoverUser} from "../../../../../hoc/withHoverUser";
 
 interface ManageMembersItemProps<T> {
     item?: T;
@@ -88,4 +88,4 @@ const ManageMembersItem: FC<ManageMembersItemProps<Lists>> = (
     );
 };
 
-export default withHover(ManageMembersItem);
+export default withHoverUser(ManageMembersItem);

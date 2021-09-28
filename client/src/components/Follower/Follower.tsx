@@ -11,7 +11,7 @@ import {selectUserData} from "../../store/ducks/user/selectors";
 import {useFollowerStyles} from "./FollowerStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
-import {withHover} from "../../hoc/withHover";
+import {withHoverUser} from "../../hoc/withHoverUser";
 
 interface FollowerProps<T> {
     item?: T;
@@ -139,4 +139,4 @@ const Follower: FC<FollowerProps<User>> = (
     );
 };
 
-export default withHover(Follower);
+export default withHoverUser(Follower);

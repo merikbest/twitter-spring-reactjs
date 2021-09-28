@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {User} from "../store/ducks/user/contracts/state";
+import {HoverActionProps} from "./withHoverAction";
 
-interface Hover<T> extends ListHover, TweetHover, FollowerHover, MemberHover {
+export interface HoverUserProps<T> extends ListHover, TweetHover, FollowerHover, MemberHover, HoverActionProps {
     item?: T;
     visiblePopperWindow?: boolean;
     handleHover?: () => void;
@@ -27,8 +28,8 @@ interface MemberHover {
     member?: User;
 }
 
-export const withHover = <T extends object>(Component: React.FC<Hover<T>>): React.FC<Hover<T>> => {
-    return (props: Hover<T>) => {
+export const withHoverUser = <T extends object>(Component: React.FC<HoverUserProps<T>>): React.FC<HoverUserProps<T>> => {
+    return (props: HoverUserProps<T>) => {
         const [visiblePopperWindow, setVisiblePopperWindow] = useState<boolean>(false);
         const [delayHandler, setDelayHandler] = useState<any>(null);
 

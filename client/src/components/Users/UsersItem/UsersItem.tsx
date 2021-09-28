@@ -17,7 +17,7 @@ import {useUsersItemStyles} from "./UsersItemStyles";
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
 import {followProfile, unfollowProfile} from "../../../store/ducks/userProfile/actionCreators";
 import PopperUserWindow from "../../PopperUserWindow/PopperUserWindow";
-import {withHover} from "../../../hoc/withHover";
+import {withHoverUser} from "../../../hoc/withHoverUser";
 
 interface UsersItemProps<T> {
     item?: T
@@ -140,4 +140,4 @@ const UsersItem: FC<UsersItemProps<User>> = (
     );
 };
 
-export default withHover(UsersItem);
+export default withHoverUser(UsersItem);
