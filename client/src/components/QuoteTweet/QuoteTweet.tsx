@@ -5,15 +5,31 @@ import {useQuoteTweetStyles} from "./QuoteTweetSyles";
 import {Retweet, Tweet} from "../../store/ducks/tweets/contracts/state";
 import {QuoteTweetIcon, RetweetIcon, RetweetOutlinedIcon} from "../../icons";
 import QuoteTweetModal from "./QuoteTweetModal/QuoteTweetModal";
+import HoverAction from "../HoverAction/HoverAction";
+import {TweetActions} from "../TweetComponent/TweetComponent";
 
-interface QuoteTweetProps {
+export interface QuoteTweetProps {
     quoteTweet: Tweet;
     retweets: Retweet[];
     isTweetRetweetedByMe: Retweet | undefined;
     handleRetweet: () => void;
+    visibleActionWindow?: boolean;
+    visibleRetweetAction?: boolean;
+    handleHoverAction?: (action: TweetActions) => void;
+    handleLeaveAction?: () => void;
 }
 
-const QuoteTweet: FC<QuoteTweetProps> = ({quoteTweet, retweets, isTweetRetweetedByMe, handleRetweet}): ReactElement => {
+const QuoteTweet: FC<QuoteTweetProps> = (
+    {
+        quoteTweet,
+        retweets,
+        isTweetRetweetedByMe,
+        handleRetweet,
+        visibleRetweetAction,
+        handleHoverAction,
+        handleLeaveAction
+    }
+): ReactElement => {
     const classes = useQuoteTweetStyles({isTweetRetweetedByMe});
 
     const [open, setOpen] = useState<boolean>(false);
@@ -44,12 +60,17 @@ const QuoteTweet: FC<QuoteTweetProps> = ({quoteTweet, retweets, isTweetRetweeted
     return (
         <ClickAwayListener onClickAway={handleClickAway}>
             <div className={classes.footerIcon}>
-                <IconButton onClick={handleClick}>
+                <IconButton
+                    onClick={handleClick}
+                    onMouseEnter={() => handleHoverAction ? handleHoverAction(TweetActions.RETWEET) : null}
+                    onMouseLeave={handleLeaveAction}
+                >
                     {isTweetRetweetedByMe ? (
                         <>{RetweetIcon}</>
                     ) : (
                         <>{RetweetOutlinedIcon}</>)
                     }
+                    {visibleRetweetAction && <HoverAction actionText={isTweetRetweetedByMe ? "Undo Retweet" : "Retweet"}/>}
                 </IconButton>
                 {(retweets.length === 0 || retweets === null) ? null : (
                     isTweetRetweetedByMe ? (

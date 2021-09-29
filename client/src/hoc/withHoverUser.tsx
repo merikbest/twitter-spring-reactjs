@@ -1,12 +1,15 @@
 import React, {useState} from 'react';
+
 import {User} from "../store/ducks/user/contracts/state";
+import {TweetComponentProps} from "../components/TweetComponent/TweetComponent";
+import {UsersItemProps} from "../components/Users/UsersItem/UsersItem";
 import {HoverActionProps} from "./withHoverAction";
 
-export interface HoverUserProps<T> extends ListHover, TweetHover, FollowerHover, MemberHover, HoverActionProps {
-    item?: T;
+export interface HoverProps extends ListHover, TweetHover, FollowerHover, MemberHover {
+    // item?: T;
     visiblePopperWindow?: boolean;
-    handleHover?: () => void;
-    handleLeave?: () => void;
+    handleHoverPopper?: () => void;
+    handleLeavePopper?: () => void;
 }
 
 interface ListHover {
@@ -28,34 +31,34 @@ interface MemberHover {
     member?: User;
 }
 
-export const withHoverUser = <T extends object>(Component: React.FC<HoverUserProps<T>>): React.FC<HoverUserProps<T>> => {
-    return (props: HoverUserProps<T>) => {
-        const [visiblePopperWindow, setVisiblePopperWindow] = useState<boolean>(false);
-        const [delayHandler, setDelayHandler] = useState<any>(null);
+export const withHoverUser = <T extends object>(
+    Component: React.ComponentType<HoverProps & TweetComponentProps<T> & UsersItemProps<T>>
+) => (props: HoverProps & TweetComponentProps<T> & UsersItemProps<T>) => {
+    const [visiblePopperWindow, setVisiblePopperWindow] = useState<boolean>(false);
+    const [delayHandler, setDelayHandler] = useState<any>(null);
 
-        const handleHover = (): void => {
-            setDelayHandler(setTimeout(() => setVisiblePopperWindow(true), 1337));
-        };
-
-        const handleLeave = (): void => {
-            clearTimeout(delayHandler);
-            setVisiblePopperWindow(false);
-        };
-
-        return (
-            <Component
-                item={props.item}
-                visiblePopperWindow={visiblePopperWindow}
-                handleHover={handleHover}
-                handleLeave={handleLeave}
-                listIndex={props.listIndex}
-                isMyList={props.isMyList}
-                activeTab={props.activeTab}
-                userProfileId={props.userProfileId}
-                follow={props.follow}
-                unfollow={props.unfollow}
-                member={props.member}
-            />
-        );
+    const handleHoverPopper = (): void => {
+        setDelayHandler(setTimeout(() => setVisiblePopperWindow(true), 337));
     };
+
+    const handleLeavePopper = (): void => {
+        clearTimeout(delayHandler);
+        setVisiblePopperWindow(false);
+    };
+
+    return (
+        <Component
+            item={props.item}
+            visiblePopperWindow={visiblePopperWindow}
+            handleHoverPopper={handleHoverPopper}
+            handleLeavePopper={handleLeavePopper}
+            listIndex={props.listIndex}
+            isMyList={props.isMyList}
+            activeTab={props.activeTab}
+            userProfileId={props.userProfileId}
+            follow={props.follow}
+            unfollow={props.unfollow}
+            member={props.member}
+        />
+    );
 };

@@ -17,21 +17,18 @@ import {useUsersItemStyles} from "./UsersItemStyles";
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
 import {followProfile, unfollowProfile} from "../../../store/ducks/userProfile/actionCreators";
 import PopperUserWindow from "../../PopperUserWindow/PopperUserWindow";
-import {withHoverUser} from "../../../hoc/withHoverUser";
+import {HoverProps, withHoverUser} from "../../../hoc/withHoverUser";
 
-interface UsersItemProps<T> {
+export interface UsersItemProps<T> {
     item?: T
-    visiblePopperWindow?: boolean;
-    handleHover?: () => void;
-    handleLeave?: () => void;
 }
 
-const UsersItem: FC<UsersItemProps<User>> = (
+const UsersItem: FC<HoverProps & UsersItemProps<User>> = (
     {
         item: user,
         visiblePopperWindow,
-        handleHover,
-        handleLeave
+        handleHoverPopper,
+        handleLeavePopper,
     }
 ): ReactElement => {
 
@@ -68,7 +65,7 @@ const UsersItem: FC<UsersItemProps<User>> = (
             <ListItemAvatar>
                 <Avatar alt={`${user?.id}`} src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}/>
             </ListItemAvatar>
-            <div onMouseEnter={handleHover} onMouseLeave={handleLeave}>
+            <div onMouseEnter={handleHoverPopper} onMouseLeave={handleLeavePopper}>
                 <Link to={`/user/${user?.id}`}>
                     <ListItemText
                         primary={user?.fullName}

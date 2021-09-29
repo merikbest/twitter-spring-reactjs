@@ -26,14 +26,28 @@ import TweetComponentChangeReply from "./TweetComponentChangeReply/TweetComponen
 import {selectTweetData} from "../../store/ducks/tweet/selectors";
 import {deleteTweetReply} from "../../store/ducks/tweet/actionCreators";
 import ListsModal from "../ListsModal/ListsModal";
+import {TweetActions} from "../TweetComponent/TweetComponent";
+import HoverAction from "../HoverAction/HoverAction";
 
 interface TweetComponentActionsProps {
     tweet: Tweet;
     isFullTweet: boolean;
     activeTab?: number;
+    visibleMoreAction?: boolean;
+    handleHoverAction?: (action: TweetActions) => void;
+    handleLeaveAction?: () => void;
 }
 
-const TweetComponentActions: FC<TweetComponentActionsProps> = ({tweet, isFullTweet, activeTab}): ReactElement => {
+const TweetComponentActions: FC<TweetComponentActionsProps> = (
+    {
+        tweet,
+        isFullTweet,
+        activeTab,
+        visibleMoreAction,
+        handleHoverAction,
+        handleLeaveAction
+    }
+): ReactElement => {
     const classes = useTweetComponentMoreStyles({isFullTweet});
     const dispatch = useDispatch();
     const tweetData = useSelector(selectTweetData);
@@ -130,8 +144,13 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = ({tweet, isFullTwe
         <div ref={ref}>
             <ClickAwayListener onClickAway={handleClickAwayActionsDropdown}>
                 <div className={classes.root}>
-                    <IconButton onClick={handleClickActionsDropdown}>
+                    <IconButton
+                        onClick={handleClickActionsDropdown}
+                        onMouseEnter={() => handleHoverAction ? handleHoverAction(TweetActions.MORE) :null}
+                        onMouseLeave={handleLeaveAction}
+                    >
                         <span>{EditIcon}</span>
+                        {visibleMoreAction && <HoverAction actionText={"More"}/>}
                     </IconButton>
                     {openActionsDropdown ? (
                         <div className={classes.dropdown}>

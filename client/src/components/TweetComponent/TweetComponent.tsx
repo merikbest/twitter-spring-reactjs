@@ -1,8 +1,8 @@
 import React, {ComponentType, FC, ReactElement, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {compose} from 'recompose'
 import {Link, useHistory, useLocation} from 'react-router-dom';
 import {Avatar, IconButton, Paper, Typography} from '@material-ui/core';
+import {compose} from "redux";
 
 import {
     FollowReplyIcon,
@@ -27,33 +27,37 @@ import VoteComponent from "../VoteComponent/VoteComponent";
 import QuoteTweet from "../QuoteTweet/QuoteTweet";
 import Quote from "../Quote/Quote";
 import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
-import {HoverUserProps, withHoverUser} from "../../hoc/withHoverUser";
+import {HoverProps, withHoverUser} from "../../hoc/withHoverUser";
 import YouTubeVideo from "../YouTubeVideo/YouTubeVideo";
 import LargeLinkPreview from "../LargeLinkPreview/LargeLinkPreview";
 import SmallLinkPreview from "../SmallLinkPreview/SmallLinkPreview";
 import HoverAction from "../HoverAction/HoverAction";
 import {HoverActionProps, withHoverAction} from "../../hoc/withHoverAction";
 
-export interface TweetComponentProps<T> {
-    item?: T;
-    activeTab?: number;
-    userProfileId?: number;
-    visiblePopperWindow?: boolean;
-    handleHover?: () => void;
-    handleLeave?: () => void;
-    visibleActionWindow?: boolean;
-    handleHoverAction?: () => void;
-    handleLeaveAction?: () => void;
+export enum TweetActions {
+    REPLY = "REPLY",
+    RETWEET = "RETWEET",
+    LIKE = "LIKE",
+    SHARE = "SHARE",
+    MORE = "MORE",
 }
 
-const TweetComponent: FC<TweetComponentProps<Tweet>> = (
+export interface TweetComponentProps<T> {
+    item?: T;
+}
+
+const TweetComponent: FC<HoverProps & TweetComponentProps<Tweet> & HoverActionProps> = (
     {
         item: tweet,
         activeTab,
         visiblePopperWindow,
-        handleHover,
-        handleLeave,
-        visibleActionWindow,
+        handleHoverPopper,
+        handleLeavePopper,
+        visibleReplyAction,
+        visibleRetweetAction,
+        visibleLikeAction,
+        visibleShareAction,
+        visibleMoreAction,
         handleHoverAction,
         handleLeaveAction
     }
@@ -65,7 +69,6 @@ const TweetComponent: FC<TweetComponentProps<Tweet>> = (
     const location = useLocation();
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
     const [openYouTubeVideo, setOpenYouTubeVideo] = useState<boolean>(false);
-    console.log(tweet)
 
     const isTweetLiked = tweet?.likedTweets.find((like) => like.user.id === myProfile?.id);
     const isTweetRetweetedByMe = tweet?.retweets.find((retweet) => retweet.user.id === myProfile?.id);
@@ -110,6 +113,29 @@ const TweetComponent: FC<TweetComponentProps<Tweet>> = (
         setOpenYouTubeVideo(true)
     };
 
+    // const handleHoverAction = (action: TweetActions): void => {
+    //     if (action === TweetActions.REPLY) {
+    //         setDelayHandler(setTimeout(() => setVisibleReplyAction(true), 500));
+    //     } else if (action === TweetActions.RETWEET) {
+    //         setDelayHandler(setTimeout(() => setVisibleRetweetAction(true), 500));
+    //     } else if (action === TweetActions.LIKE) {
+    //         setDelayHandler(setTimeout(() => setVisibleLikeAction(true), 500));
+    //     } else if (action === TweetActions.SHARE) {
+    //         setDelayHandler(setTimeout(() => setVisibleShareAction(true), 500));
+    //     } else if (action === TweetActions.MORE) {
+    //         setDelayHandler(setTimeout(() => setVisibleMoreAction(true), 500));
+    //     }
+    // };
+    //
+    // const handleLeaveAction = (): void => {
+    //     clearTimeout(delayHandler);
+    //     setVisibleReplyAction(false);
+    //     setVisibleRetweetAction(false);
+    //     setVisibleLikeAction(false);
+    //     setVisibleShareAction(false);
+    //     setVisibleMoreAction(false);
+    // };
+
     return (
         <>
             {isTweetRetweetedByUser && (
@@ -136,7 +162,7 @@ const TweetComponent: FC<TweetComponentProps<Tweet>> = (
                         src={tweet?.user.avatar?.src ? tweet?.user.avatar?.src : DEFAULT_PROFILE_IMG}/>
                 </a>
                 <div style={{flex: 1}}>
-                    <div className={classes.header} onMouseEnter={handleHover} onMouseLeave={handleLeave}>
+                    <div className={classes.header} onMouseEnter={handleHoverPopper} onMouseLeave={handleLeavePopper}>
                         <a onClick={handleClickUser}>
                             <b>{tweet?.user.fullName}</b>&nbsp;
                             <span className={classes.headerText}>@{tweet?.user.username}</span>&nbsp;
@@ -147,6 +173,9 @@ const TweetComponent: FC<TweetComponentProps<Tweet>> = (
                             tweet={tweet!}
                             isFullTweet={false}
                             activeTab={activeTab}
+                            visibleMoreAction={visibleMoreAction}
+                            handleHoverAction={handleHoverAction}
+                            handleLeaveAction={handleLeaveAction}
                         />
                         {visiblePopperWindow && <PopperUserWindow user={tweet!.user} isTweetComponent={true}/>}
                     </div>
@@ -207,8 +236,14 @@ const TweetComponent: FC<TweetComponentProps<Tweet>> = (
                     </Typography>
                     <div className={classes.footer}>
                         <div className={classes.replyIcon}>
-                            <IconButton disabled={isUserCanReply} onClick={onOpenReplyModalWindow}>
+                            <IconButton
+                                disabled={isUserCanReply}
+                                onClick={onOpenReplyModalWindow}
+                                onMouseEnter={() => handleHoverAction ? handleHoverAction(TweetActions.REPLY) : null}
+                                onMouseLeave={handleLeaveAction}
+                            >
                                 <>{ReplyIcon}</>
+                                {visibleReplyAction && <HoverAction actionText={"Reply"}/>}
                             </IconButton>
                             {(tweet?.replies?.length === 0 || tweet?.replies === null) ? null : (
                                 <span>{tweet?.replies?.length}</span>
@@ -219,15 +254,22 @@ const TweetComponent: FC<TweetComponentProps<Tweet>> = (
                             retweets={tweet!.retweets}
                             isTweetRetweetedByMe={isTweetRetweetedByMe}
                             handleRetweet={handleRetweet}
+                            visibleRetweetAction={visibleRetweetAction}
+                            handleHoverAction={handleHoverAction}
+                            handleLeaveAction={handleLeaveAction}
                         />
                         <div className={classes.likeIcon}>
-                            <IconButton onClick={handleLike} onMouseEnter={handleHoverAction} onMouseLeave={handleLeaveAction}>
+                            <IconButton
+                                onClick={handleLike}
+                                onMouseEnter={() => handleHoverAction ? handleHoverAction(TweetActions.LIKE) : null}
+                                onMouseLeave={handleLeaveAction}
+                            >
                                 {isTweetLiked ? (
                                     <>{LikeIcon}</>
                                 ) : (
                                     <>{LikeOutlinedIcon}</>
                                 )}
-                                {visibleActionWindow && <HoverAction actionText={isTweetLiked ? "Unlike" : "Like"}/>}
+                                {visibleLikeAction && <HoverAction actionText={isTweetLiked ? "Unlike" : "Like"}/>}
                             </IconButton>
                             {(tweet?.likedTweets.length === 0 || tweet?.likedTweets === null) ? null : (
                                 isTweetLiked ? (
@@ -239,6 +281,9 @@ const TweetComponent: FC<TweetComponentProps<Tweet>> = (
                         <ShareTweet
                             tweetId={tweet!.id}
                             isFullTweet={false}
+                            visibleShareAction={visibleShareAction}
+                            handleHoverAction={handleHoverAction}
+                            handleLeaveAction={handleLeaveAction}
                         />
                     </div>
                 </div>
@@ -256,6 +301,5 @@ const TweetComponent: FC<TweetComponentProps<Tweet>> = (
     );
 };
 
-// export default compose<HoverUserProps<Tweet> & HoverActionProps, TweetComponentProps<Tweet>>(withHoverUser, withHoverAction)(TweetComponent);
+export default compose(withHoverUser, withHoverAction)(TweetComponent) as React.ComponentType<HoverProps & TweetComponentProps<Tweet> & HoverActionProps>;
 // export default withHoverUser(TweetComponent);
-export default compose(withHoverUser, withHoverAction)(TweetComponent);
