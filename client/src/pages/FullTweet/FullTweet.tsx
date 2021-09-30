@@ -53,7 +53,7 @@ interface FullTweetProps {
     handleLeave?: () => void;
 }
 
-const FullTweet: FC<HoverProps & FullTweetProps & HoverActionProps> = (
+const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
     {
         visiblePopperWindow,
         handleHoverPopper,
@@ -375,4 +375,4 @@ const FullTweet: FC<HoverProps & FullTweetProps & HoverActionProps> = (
     );
 };
 
-export default compose(withHoverUser, withHoverAction)(FullTweet) as React.ComponentType<HoverProps & FullTweetProps>;
+export default compose(withHoverUser, withHoverAction)(FullTweet) as React.ComponentType<HoverProps<Tweet> & FullTweetProps>;

@@ -28,6 +28,15 @@ import {selectIsTweetLoading} from "../../store/ducks/tweet/selectors";
 import Poll from "./Poll/Poll";
 import Reply from "./Reply/Reply";
 import Quote from "../Quote/Quote";
+import HoverAction from "../HoverAction/HoverAction";
+
+export enum AddTweetFormAction {
+    MEDIA = "MEDIA",
+    GIF = "GIF",
+    POLL = "POLL",
+    EMOJI = "EMOJI",
+    SCHEDULE = "SCHEDULE"
+}
 
 interface AddTweetFormProps {
     quoteTweet?: Tweet;
@@ -47,6 +56,7 @@ export interface ImageObj {
 }
 
 const MAX_LENGTH = 280;
+const HOVER_DELAY = 500;
 
 export const AddTweetForm: FC<AddTweetFormProps> = (
     {
@@ -70,8 +80,12 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
     const [text, setText] = useState<string>('');
     const [images, setImages] = useState<ImageObj[]>([]);
     const [replyType, setReplyType] = useState<ReplyType>(ReplyType.EVERYONE);
-    const textLimitPercent = Math.round((text.length / 280) * 100);
-    const textCount = MAX_LENGTH - text.length;
+    const [visibleAddMediaAction, setVisibleAddMediaAction] = useState<boolean>(false);
+    const [visibleAddGifAction, setVisibleAddGifAction] = useState<boolean>(false);
+    const [visibleAddPollAction, setVisibleAddPollAction] = useState<boolean>(false);
+    const [visibleAddEmojiAction, setVisibleAddEmojiAction] = useState<boolean>(false);
+    const [visibleAddScheduleAction, setVisibleAddScheduleAction] = useState<boolean>(false);
+    const [delayHandler, setDelayHandler] = useState<any>(null);
     // Popover
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -85,6 +99,9 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
     const [day, setDay] = useState<number>(1);
     const [hour, setHour] = useState<number>(0);
     const [minute, setMinute] = useState<number>(0);
+
+    const textLimitPercent = Math.round((text.length / 280) * 100);
+    const textCount = MAX_LENGTH - text.length;
 
     const handleChangeTextarea = (e: FormEvent<HTMLTextAreaElement>): void => {
         if (e.currentTarget) {
@@ -213,6 +230,29 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
         setVisiblePoll(false);
     };
 
+    const handleHoverAction = (action: AddTweetFormAction): void => {
+        if (action === AddTweetFormAction.MEDIA) {
+            setDelayHandler(setTimeout(() => setVisibleAddMediaAction(true), HOVER_DELAY));
+        } else if (action === AddTweetFormAction.GIF) {
+            setDelayHandler(setTimeout(() => setVisibleAddGifAction(true), HOVER_DELAY));
+        } else if (action === AddTweetFormAction.POLL) {
+            setDelayHandler(setTimeout(() => setVisibleAddPollAction(true), HOVER_DELAY));
+        } else if (action === AddTweetFormAction.EMOJI) {
+            setDelayHandler(setTimeout(() => setVisibleAddEmojiAction(true), HOVER_DELAY));
+        } else if (action === AddTweetFormAction.SCHEDULE) {
+            setDelayHandler(setTimeout(() => setVisibleAddScheduleAction(true), HOVER_DELAY));
+        }
+    };
+
+    const handleLeaveAction = (): void => {
+        clearTimeout(delayHandler);
+        setVisibleAddMediaAction(false);
+        setVisibleAddGifAction(false);
+        setVisibleAddPollAction(false);
+        setVisibleAddEmojiAction(false);
+        setVisibleAddScheduleAction(false);
+    };
+
     return (
         <div>
             <div className={classes.content}>
@@ -260,28 +300,56 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
             <Reply replyType={replyType} setReplyType={setReplyType}/>
             <div className={classes.footer}>
                 <div className={classes.footerWrapper}>
-                    <UploadImages onChangeImages={setImages}/>
+                    <UploadImages
+                        onChangeImages={setImages}
+                        visibleAddMediaAction={visibleAddMediaAction}
+                        handleHoverAction={handleHoverAction}
+                        handleLeaveAction={handleLeaveAction}
+                    />
                     <div className={classes.footerImage}>
-                        <IconButton color="primary">
+                        <IconButton
+                            color="primary"
+                            onMouseEnter={() => handleHoverAction(AddTweetFormAction.GIF)}
+                            onMouseLeave={handleLeaveAction}
+                        >
                             <>{GifIcon}</>
+                            {visibleAddGifAction && <HoverAction actionText={"GIF"}/>}
                         </IconButton>
                     </div>
                     {(buttonName !== "Reply") && (
                         <div className={classes.quoteImage}>
-                            <IconButton disabled={!!quoteTweet} onClick={onOpenPoll} color="primary">
+                            <IconButton
+                                disabled={!!quoteTweet}
+                                onClick={onOpenPoll}
+                                onMouseEnter={() => handleHoverAction(AddTweetFormAction.POLL)}
+                                onMouseLeave={handleLeaveAction}
+                                color="primary"
+                            >
                                 <>{PullIcon}</>
+                                {visibleAddPollAction && <HoverAction actionText={"Poll"}/>}
                             </IconButton>
                         </div>
                     )}
                     <div onClick={handleOpenPopup} className={classes.footerImage}>
-                        <IconButton color="primary">
+                        <IconButton
+                            onMouseEnter={() => handleHoverAction(AddTweetFormAction.EMOJI)}
+                            onMouseLeave={handleLeaveAction}
+                            color="primary"
+                        >
                             <>{EmojiIcon}</>
+                            {visibleAddEmojiAction && <HoverAction actionText={"Emoji"}/>}
                         </IconButton>
                     </div>
                     {(buttonName !== "Reply") && (
                         <div className={classes.quoteImage}>
-                            <IconButton disabled={!!quoteTweet} color="primary">
+                            <IconButton
+                                disabled={!!quoteTweet}
+                                onMouseEnter={() => handleHoverAction(AddTweetFormAction.SCHEDULE)}
+                                onMouseLeave={handleLeaveAction}
+                                color="primary"
+                            >
                                 <>{ScheduleIcon}</>
+                                {visibleAddScheduleAction && <HoverAction actionText={"Schedule"}/>}
                             </IconButton>
                         </div>
                     )}

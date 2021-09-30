@@ -24,6 +24,12 @@ import {
 } from "../../store/ducks/lists/selectors";
 import ListsItem from "./ListsItem/ListsItem";
 import PinnedListsItem from "./PinnedListsItem/PinnedListsItem";
+import HoverAction from "../../components/HoverAction/HoverAction";
+
+enum ListsAction {
+    NEW_LIST = "NEW_LIST",
+    MORE = "MORE"
+}
 
 const Lists: FC = (): ReactElement => {
     const classes = useListsStyles();
@@ -33,7 +39,9 @@ const Lists: FC = (): ReactElement => {
     const userLists = useSelector(selectUserListsItems);
     const pinnedLists = useSelector(selectPinnedListsItems);
     const isLoading = useSelector(selectIsListsLoading);
-
+    const [visibleCreateListAction, setVisibleCreateListAction] = useState<boolean>(false);
+    const [visibleMoreAction, setVisibleMoreAction] = useState<boolean>(false);
+    const [delayHandler, setDelayHandler] = useState<any>(null);
     const [visibleCreateListModal, setVisibleCreateListModal] = useState<boolean>(false);
     const [openPopover, setOpenPopover] = useState<boolean>(false);
 
@@ -66,6 +74,20 @@ const Lists: FC = (): ReactElement => {
         setOpenPopover(false);
     };
 
+    const handleHoverAction = (action: ListsAction): void => {
+        if (action === ListsAction.NEW_LIST) {
+            setDelayHandler(setTimeout(() => setVisibleCreateListAction(true), 500));
+        } else if (action === ListsAction.MORE) {
+            setDelayHandler(setTimeout(() => setVisibleMoreAction(true), 500));
+        }
+    };
+
+    const handleLeaveAction = (): void => {
+        clearTimeout(delayHandler);
+        setVisibleCreateListAction(false);
+        setVisibleMoreAction(false);
+    };
+
     return (
         <Paper className={classes.container} variant="outlined">
             <Paper className={classes.header} variant="outlined">
@@ -78,15 +100,25 @@ const Lists: FC = (): ReactElement => {
                 </div>
                 <div className={classes.iconGroup}>
                     <div className={classes.icon}>
-                        <IconButton onClick={onOpenCreateListModal}>
+                        <IconButton
+                            onClick={onOpenCreateListModal}
+                            onMouseEnter={() => handleHoverAction(ListsAction.NEW_LIST)}
+                            onMouseLeave={handleLeaveAction}
+                        >
                             <>{AddListsIcon}</>
+                            {visibleCreateListAction && <HoverAction actionText={"Create"}/>}
                         </IconButton>
                     </div>
                     <div className={classes.icon}>
                         <ClickAwayListener onClickAway={handleClickAway}>
                             <div>
-                                <IconButton onClick={handleClick}>
+                                <IconButton
+                                    onClick={handleClick}
+                                    onMouseEnter={() => handleHoverAction(ListsAction.MORE)}
+                                    onMouseLeave={handleLeaveAction}
+                                >
                                     <>{EditIcon}</>
+                                    {visibleMoreAction && <HoverAction actionText={"More"}/>}
                                 </IconButton>
                                 {openPopover ? (
                                     <Link to={`/lists/memberships/${myProfile?.id}`} className={classes.dropdownLink}>

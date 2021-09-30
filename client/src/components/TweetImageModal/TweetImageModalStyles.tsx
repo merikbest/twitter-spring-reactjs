@@ -1,6 +1,12 @@
 import {makeStyles, Theme} from "@material-ui/core";
+import {LikeTweet, Retweet} from "../../store/ducks/tweets/contracts/state";
 
-export const useTweetImageStyles = makeStyles((theme: Theme) => ({
+interface TweetImageStylesProps {
+    isTweetRetweeted?: Retweet;
+    isTweetLiked?: LikeTweet;
+}
+
+export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((theme) => ({
     container: {
         zIndex: 2,
         position: "fixed",
@@ -78,17 +84,45 @@ export const useTweetImageStyles = makeStyles((theme: Theme) => ({
     },
     tweetIcon: {
         "& .MuiIconButton-root": {
-            marginBottom: 6,
-            width: 40,
-            height: 40,
-            color: "rgb(83, 100, 113)",
-            "& span": {
-                paddingBottom: 3,
-                "& svg" : {
-                    verticalAlign: "bottom",
-                    height: "0.80em",
-                }
+            padding: 7,
+            "& svg" : {
+                color: "rgb(83, 100, 113)",
+                verticalAlign: "bottom",
+                height: "0.80em",
+            }
+        },
+    },
+    retweetIcon: {
+        "& .MuiIconButton-root": {
+            padding: 7,
+            "& svg" : {
+                color: props => props.isTweetRetweeted ? "rgb(23, 191, 99)" : "rgb(83, 100, 113)",
+                verticalAlign: "bottom",
+                height: "0.80em",
+            }
+        },
+    },
+    likeIcon: {
+        "& .MuiIconButton-root": {
+            padding: 7,
+            "& svg" : {
+                color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : "rgb(83, 100, 113)",
+                verticalAlign: "bottom",
+                height: "0.80em",
             },
+        },
+    },
+    imageFooterIcon: {
+        "& .MuiIconButton-root": {
+            padding: 7,
+            "& svg" : {
+                color: "#ffffff",
+                verticalAlign: "bottom",
+                height: "0.80em",
+            }
+        },
+        "& span": {
+            color: "#ffffff",
         },
     },
     replyWrapper: {

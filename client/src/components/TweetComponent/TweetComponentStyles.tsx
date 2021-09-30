@@ -84,6 +84,7 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
             objectFit: "cover",
             marginTop: 10,
             width: 504,
+            height: 252,
             borderRadius: 20,
             borderColor: "#5b7083",
         },

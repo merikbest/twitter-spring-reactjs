@@ -23,7 +23,7 @@ export interface UsersItemProps<T> {
     item?: T
 }
 
-const UsersItem: FC<HoverProps & UsersItemProps<User>> = (
+const UsersItem: FC<HoverProps<User> & UsersItemProps<User>> = (
     {
         item: user,
         visiblePopperWindow,

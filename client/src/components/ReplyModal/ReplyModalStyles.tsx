@@ -20,7 +20,7 @@ export const useReplyModalStyles = makeStyles((theme: Theme) => ({
         borderRadius: 0,
     },
     verticalLine: {
-        marginLeft: 18,
+        marginLeft: 25,
         position: "absolute",
         borderLeft: "2px solid rgb(207, 217, 222)",
         height: "100%",
@@ -72,6 +72,6 @@ export const useReplyModalStyles = makeStyles((theme: Theme) => ({
         color: "rgb(27, 149, 224)",
     },
     addForm: {
-        padding: "20px 20px 0px 20px",
+        padding: "20px 20px 11px 20px",
     },
 }));

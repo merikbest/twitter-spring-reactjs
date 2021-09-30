@@ -2,7 +2,7 @@ import React, {ComponentType, FC, ReactElement, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory, useLocation} from 'react-router-dom';
 import {Avatar, IconButton, Paper, Typography} from '@material-ui/core';
-import {compose} from "redux";
+import {compose} from "recompose";
 
 import {
     FollowReplyIcon,
@@ -46,7 +46,7 @@ export interface TweetComponentProps<T> {
     item?: T;
 }
 
-const TweetComponent: FC<HoverProps & TweetComponentProps<Tweet> & HoverActionProps> = (
+const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverActionProps> = (
     {
         item: tweet,
         activeTab,
@@ -112,29 +112,6 @@ const TweetComponent: FC<HoverProps & TweetComponentProps<Tweet> & HoverActionPr
     const onOpenYouTubeVideo = (): void => {
         setOpenYouTubeVideo(true)
     };
-
-    // const handleHoverAction = (action: TweetActions): void => {
-    //     if (action === TweetActions.REPLY) {
-    //         setDelayHandler(setTimeout(() => setVisibleReplyAction(true), 500));
-    //     } else if (action === TweetActions.RETWEET) {
-    //         setDelayHandler(setTimeout(() => setVisibleRetweetAction(true), 500));
-    //     } else if (action === TweetActions.LIKE) {
-    //         setDelayHandler(setTimeout(() => setVisibleLikeAction(true), 500));
-    //     } else if (action === TweetActions.SHARE) {
-    //         setDelayHandler(setTimeout(() => setVisibleShareAction(true), 500));
-    //     } else if (action === TweetActions.MORE) {
-    //         setDelayHandler(setTimeout(() => setVisibleMoreAction(true), 500));
-    //     }
-    // };
-    //
-    // const handleLeaveAction = (): void => {
-    //     clearTimeout(delayHandler);
-    //     setVisibleReplyAction(false);
-    //     setVisibleRetweetAction(false);
-    //     setVisibleLikeAction(false);
-    //     setVisibleShareAction(false);
-    //     setVisibleMoreAction(false);
-    // };
 
     return (
         <>
@@ -301,5 +278,4 @@ const TweetComponent: FC<HoverProps & TweetComponentProps<Tweet> & HoverActionPr
     );
 };
 
-export default compose(withHoverUser, withHoverAction)(TweetComponent) as React.ComponentType<HoverProps & TweetComponentProps<Tweet> & HoverActionProps>;
-// export default withHoverUser(TweetComponent);
+export default compose(withHoverUser, withHoverAction)(TweetComponent) as ComponentType<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverActionProps>;

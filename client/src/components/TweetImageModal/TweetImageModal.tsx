@@ -4,18 +4,16 @@ import {Link, useHistory, useParams} from "react-router-dom";
 import {Avatar, Divider, IconButton} from '@material-ui/core';
 import classNames from "classnames";
 import Typography from "@material-ui/core/Typography";
-import grey from "@material-ui/core/colors/grey";
 import format from "date-fns/format";
-import ruLang from "date-fns/locale/ru";
 
 import {
-    LikeOutlinedIcon,
+    CloseIcon,
     LikeIcon,
+    LikeOutlinedIcon,
+    ReplyIcon,
     RetweetIcon,
     RetweetOutlinedIcon,
-    ReplyIcon,
-    ShareIcon,
-    CloseIcon
+    ShareIcon
 } from "../../icons";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {AddTweetForm} from "../AddTweetForm/AddTweetForm";
@@ -31,7 +29,6 @@ import usLang from "date-fns/locale/en-US/index";
 
 const TweetImageModal: FC = (): ReactElement | null => {
     const dispatch = useDispatch();
-    const classes = useTweetImageStyles();
     const tweetData = useSelector(selectTweetData);
     const myProfile = useSelector(selectUserData);
     const params: { id: string } = useParams();
@@ -41,6 +38,7 @@ const TweetImageModal: FC = (): ReactElement | null => {
     const [visibleTweetImageModalWindow, setVisibleTweetImageModalWindow] = useState<boolean>(false);
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
     const [modalWindowTitle, setModalWindowTitle] = useState<string>("");
+    const classes = useTweetImageStyles({isTweetRetweeted, isTweetLiked});
 
     useEffect(() => {
         dispatch(fetchTweetData(params.id));
@@ -144,30 +142,30 @@ const TweetImageModal: FC = (): ReactElement | null => {
                         <div className={classes.tweetFooter}>
                             <div className={classes.tweetIcon}>
                                 <IconButton>
-                                    <span>{ReplyIcon}</span>
+                                    <>{ReplyIcon}</>
                                 </IconButton>
                             </div>
-                            <div className={classes.tweetIcon}>
+                            <div className={classes.retweetIcon}>
                                 <IconButton onClick={handleRetweet}>
                                     {isTweetRetweeted ? (
-                                        <span style={{color: "rgb(23, 191, 99)"}}>{RetweetIcon}</span>
+                                        <>{RetweetIcon}</>
                                     ) : (
-                                        <span>{RetweetOutlinedIcon}</span>
+                                        <>{RetweetOutlinedIcon}</>
                                     )}
                                 </IconButton>
                             </div>
-                            <div className={classes.tweetIcon}>
+                            <div className={classes.likeIcon}>
                                 <IconButton onClick={handleLike}>
                                     {isTweetLiked ? (
-                                        <span style={{color: "rgb(224, 36, 94)"}}>{LikeIcon}</span>
+                                        <>{LikeIcon}</>
                                     ) : (
-                                        <span>{LikeOutlinedIcon}</span>
+                                        <>{LikeOutlinedIcon}</>
                                     )}
                                 </IconButton>
                             </div>
                             <div className={classes.tweetIcon}>
                                 <IconButton>
-                                    <span>{ShareIcon}</span>
+                                    <>{ShareIcon}</>
                                 </IconButton>
                             </div>
                         </div>
@@ -207,47 +205,47 @@ const TweetImageModal: FC = (): ReactElement | null => {
                 </div>
                 <div className={classes.imageFooterContainer}>
                     <div className={classNames(classes.imageFooterWrapper)}>
-                        <div className={classes.tweetIcon}>
+                        <div className={classes.imageFooterIcon}>
                             <IconButton>
-                                <span>{ReplyIcon}</span>
+                                <>{ReplyIcon}</>
                             </IconButton>
                             {(tweetData.replies?.length === 0 || tweetData.replies === null) ? null : (
-                                <span style={{color: "#fff"}}>{tweetData.replies?.length}</span>
+                                <span>{tweetData.replies?.length}</span>
                             )}
                         </div>
-                        <div className={classes.tweetIcon}>
+                        <div className={classes.imageFooterIcon}>
                             <IconButton onClick={handleRetweet}>
                                 {isTweetRetweeted ? (
-                                    <span>{RetweetIcon}</span>
+                                    <>{RetweetIcon}</>
                                 ) : (
-                                    <span>{RetweetOutlinedIcon}</span>
+                                    <>{RetweetOutlinedIcon}</>
                                 )}
                             </IconButton>
                             {(tweetData.retweets.length === 0 || tweetData.retweets === null) ? null : (
                                 isTweetRetweeted ? (
-                                    <span style={{color: "#fff"}}>{tweetData.retweets.length}</span>
+                                    <span>{tweetData.retweets.length}</span>
                                 ) : (
-                                    <span style={{color: "#fff"}}>{tweetData.retweets.length}</span>)
+                                    <span>{tweetData.retweets.length}</span>)
                             )}
                         </div>
-                        <div className={classes.tweetIcon}>
+                        <div className={classes.imageFooterIcon}>
                             <IconButton onClick={handleLike}>
                                 {isTweetLiked ? (
-                                    <span>{LikeIcon}</span>
+                                    <>{LikeIcon}</>
                                 ) : (
-                                    <span>{LikeOutlinedIcon}</span>
+                                    <>{LikeOutlinedIcon}</>
                                 )}
                             </IconButton>
                             {(tweetData.likedTweets.length === 0 || tweetData.likedTweets === null) ? null : (
                                 isTweetLiked ? (
-                                    <span style={{color: "#fff"}}>{tweetData.likedTweets.length}</span>
+                                    <span>{tweetData.likedTweets.length}</span>
                                 ) : (
-                                    <span style={{color: "#fff"}}>{tweetData.likedTweets.length}</span>)
+                                    <span>{tweetData.likedTweets.length}</span>)
                             )}
                         </div>
-                        <div className={classes.tweetIcon}>
+                        <div className={classes.imageFooterIcon}>
                             <IconButton>
-                                <span>{ShareIcon}</span>
+                                <>{ShareIcon}</>
                             </IconButton>
                         </div>
                     </div>
