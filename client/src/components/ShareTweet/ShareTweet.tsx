@@ -70,7 +70,7 @@ const ShareTweet: FC<ShareTweetProps> = (
                 <div className={classes.root}>
                     <IconButton
                         onClick={handleClick}
-                        onMouseEnter={() => handleHoverAction ? handleHoverAction(TweetActions.SHARE) :null}
+                        onMouseEnter={() => handleHoverAction?.(TweetActions.SHARE)}
                         onMouseLeave={handleLeaveAction}
                     >
                         <>{ShareIcon}</>

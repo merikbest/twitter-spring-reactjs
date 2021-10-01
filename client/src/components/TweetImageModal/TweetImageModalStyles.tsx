@@ -40,9 +40,19 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         display: 'flex',
         alignItems: 'center',
     },
+    link: {
+        cursor: "pointer",
+        textDecoration: "none",
+        color: "#000",
+        "&:hover": {
+            "& #link": {
+                textDecoration: "underline",
+            },
+        },
+    },
     avatar: {
-        width: theme.spacing(6.5),
-        height: theme.spacing(6.5),
+        width: "46px !important",
+        height: "46px !important",
         marginRight: 15,
         margin: "12px 12px 16px 5px",
     },
@@ -85,7 +95,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
     tweetIcon: {
         "& .MuiIconButton-root": {
             padding: 7,
-            "& svg" : {
+            "& svg": {
                 color: "rgb(83, 100, 113)",
                 verticalAlign: "bottom",
                 height: "0.80em",
@@ -95,7 +105,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
     retweetIcon: {
         "& .MuiIconButton-root": {
             padding: 7,
-            "& svg" : {
+            "& svg": {
                 color: props => props.isTweetRetweeted ? "rgb(23, 191, 99)" : "rgb(83, 100, 113)",
                 verticalAlign: "bottom",
                 height: "0.80em",
@@ -105,7 +115,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
     likeIcon: {
         "& .MuiIconButton-root": {
             padding: 7,
-            "& svg" : {
+            "& svg": {
                 color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : "rgb(83, 100, 113)",
                 verticalAlign: "bottom",
                 height: "0.80em",
@@ -115,7 +125,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
     imageFooterIcon: {
         "& .MuiIconButton-root": {
             padding: 7,
-            "& svg" : {
+            "& svg": {
                 color: "#ffffff",
                 verticalAlign: "bottom",
                 height: "0.80em",

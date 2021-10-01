@@ -17,6 +17,12 @@ export const MainSearchTextField = withStyles((theme: Theme) => ({
                     fill: theme.palette.primary.main,
                 },
             },
+            "& .MuiInputAdornment-root": {
+                "& svg" : {
+                    color: "rgb(83, 100, 113)",
+                    height: "1.25em"
+                }
+            },
             '&:hover': {
                 '& fieldset': { borderColor: 'transparent' },
             },

@@ -14,6 +14,6 @@ export const useQuoteTweetModalStyles = makeStyles((theme: Theme) => ({
     dialogContent: {
         width: 598,
         minHeight: 230,
-        padding: "10px 20px 0px 20px",
+        padding: "10px 20px 15px 20px",
     },
 }));

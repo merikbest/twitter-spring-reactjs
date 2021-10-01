@@ -1,10 +1,12 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
+import React, {ComponentType, FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory, useParams} from "react-router-dom";
 import {Avatar, Divider, IconButton} from '@material-ui/core';
 import classNames from "classnames";
 import Typography from "@material-ui/core/Typography";
 import format from "date-fns/format";
+import usLang from "date-fns/locale/en-US/index";
+import {compose} from "recompose";
 
 import {
     CloseIcon,
@@ -18,16 +20,33 @@ import {
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {AddTweetForm} from "../AddTweetForm/AddTweetForm";
 import UsersListModal from "../UsersListModal/UsersListModal";
-import TweetComponent from '../TweetComponent/TweetComponent';
+import TweetComponent, {TweetActions} from '../TweetComponent/TweetComponent';
 import {fetchLikeTweet, fetchRetweet} from "../../store/ducks/tweets/actionCreators";
 import {useTweetImageStyles} from "./TweetImageModalStyles";
 import {fetchTweetData} from "../../store/ducks/tweet/actionCreators";
 import {selectTweetData} from "../../store/ducks/tweet/selectors";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {textFormatter} from "../../util/textFormatter";
-import usLang from "date-fns/locale/en-US/index";
+import {HoverProps, withHoverUser} from "../../hoc/withHoverUser";
+import {HoverActionProps, withHoverAction} from "../../hoc/withHoverAction";
+import {Tweet} from "../../store/ducks/tweets/contracts/state";
+import HoverAction from "../HoverAction/HoverAction";
+import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
+import ShareTweet from "../ShareTweet/ShareTweet";
 
-const TweetImageModal: FC = (): ReactElement | null => {
+const TweetImageModal: FC<HoverProps<Tweet> & HoverActionProps> = (
+    {
+        visiblePopperWindow,
+        handleHoverPopper,
+        handleLeavePopper,
+        visibleReplyAction,
+        visibleRetweetAction,
+        visibleLikeAction,
+        visibleShareAction,
+        handleHoverAction,
+        handleLeaveAction
+    }
+): ReactElement | null => {
     const dispatch = useDispatch();
     const tweetData = useSelector(selectTweetData);
     const myProfile = useSelector(selectUserData);
@@ -87,87 +106,117 @@ const TweetImageModal: FC = (): ReactElement | null => {
         return (
             <div className={classes.container} onClick={onCloseImageModalWindow}>
                 <div className={classes.modalWrapper}>
-                    <img className={classes.imageModal}
-                         alt={tweetData?.images?.[0]?.src}
-                         src={tweetData?.images?.[0]?.src}/>
+                    <img
+                        className={classes.imageModal}
+                        alt={tweetData?.images?.[0]?.src}
+                        src={tweetData?.images?.[0]?.src}
+                    />
                     <div className={classes.tweetInfo}>
                         <div className={classes.header}>
-                            <Avatar
-                                className={classes.avatar}
-                                alt={`avatar ${tweetData.user.id}`}
-                                src={tweetData.user.avatar?.src ? tweetData.user.avatar?.src : DEFAULT_PROFILE_IMG}/>
-                            <Typography>
-                                <b>{tweetData.user.fullName}</b>&nbsp;
-                                <div>
-                                    <span className={classes.grey}>@{tweetData.user.username}</span>&nbsp;
-                                </div>
-                            </Typography>
+                            <Link to={`/user/${tweetData?.user.id}`} className={classes.link}>
+                                <Avatar
+                                    className={classes.avatar}
+                                    alt={`avatar ${tweetData.user.id}`}
+                                    src={tweetData.user.avatar?.src ? tweetData.user.avatar?.src : DEFAULT_PROFILE_IMG}
+                                />
+                            </Link>
+                            <Link to={`/user/${tweetData?.user.id}`} className={classes.link}>
+                                <Typography
+                                    className={classes.userInfo}
+                                    onMouseEnter={handleHoverPopper}
+                                    onMouseLeave={handleLeavePopper}
+                                >
+                                    <b id={"link"}>{tweetData.user.fullName}</b>&nbsp;
+                                    <div>
+                                        <span className={classes.grey}>@{tweetData.user.username}</span>&nbsp;
+                                    </div>
+                                    {visiblePopperWindow &&
+                                    <PopperUserWindow user={tweetData!.user} isTweetImageModal={true}/>}
+                                </Typography>
+                            </Link>
                         </div>
                         <Typography className={classes.text} gutterBottom>
                             {textFormatter(tweetData.text)}
                         </Typography>
                         <Typography style={{marginBottom: 16}}>
-                        <span className={classes.grey}>
-                            {format(new Date(tweetData.dateTime), 'hh:mm a', {locale: usLang})} ·
-                        </span>
-                        <span className={classes.grey}>
-                            {format(new Date(tweetData.dateTime), ' MMM dd, yyyy')} · Twitter Web App
-                        </span>
+                            <span className={classes.grey}>
+                                {format(new Date(tweetData.dateTime), 'hh:mm a', {locale: usLang})} ·
+                            </span>
+                            <span className={classes.grey}>
+                                {format(new Date(tweetData.dateTime), ' MMM dd, yyyy')} · Twitter Web App
+                            </span>
                         </Typography>
                         <Divider/>
                         {(tweetData.retweets.length !== 0 || tweetData.likedTweets.length !== 0) && (
                             <div className={classes.content}>
                                 {(tweetData.retweets.length !== 0) && (
                                     <a href={"javascript:void(0);"} onClick={onOpenRetweetsModalWindow}>
-                                    <span style={{marginRight: 20}}>
-                                        <b>{tweetData.retweets.length}</b>
-                                        <span className={classes.contentItem}>
-                                            Retweets
+                                        <span style={{marginRight: 20}}>
+                                            <b>{tweetData.retweets.length}</b>
+                                            <span className={classes.contentItem}>
+                                                Retweets
+                                            </span>
                                         </span>
-                                    </span>
                                     </a>
                                 )}
-                                {(tweetData.likedTweets.length !== 0 ) && (
+                                {(tweetData.likedTweets.length !== 0) && (
                                     <a href={"javascript:void(0);"} onClick={onOpenLikesModalWindow}>
-                                    <span style={{marginRight: 20}}>
-                                        <b>{tweetData.likedTweets.length}</b>
-                                        <span className={classes.contentItem}>
-                                            Likes
+                                        <span style={{marginRight: 20}}>
+                                            <b>{tweetData.likedTweets.length}</b>
+                                            <span className={classes.contentItem}>
+                                                Likes
+                                            </span>
                                         </span>
-                                    </span>
                                     </a>
                                 )}
                             </div>
                         )}
                         <div className={classes.tweetFooter}>
                             <div className={classes.tweetIcon}>
-                                <IconButton>
+                                <IconButton
+                                    onMouseEnter={() => handleHoverAction?.(TweetActions.REPLY)}
+                                    onMouseLeave={handleLeaveAction}
+                                >
                                     <>{ReplyIcon}</>
+                                    {visibleReplyAction && <HoverAction actionText={"Reply"}/>}
                                 </IconButton>
                             </div>
                             <div className={classes.retweetIcon}>
-                                <IconButton onClick={handleRetweet}>
+                                <IconButton
+                                    onClick={handleRetweet}
+                                    onMouseEnter={() => handleHoverAction?.(TweetActions.RETWEET)}
+                                    onMouseLeave={handleLeaveAction}
+                                >
                                     {isTweetRetweeted ? (
                                         <>{RetweetIcon}</>
                                     ) : (
                                         <>{RetweetOutlinedIcon}</>
                                     )}
+                                    {visibleRetweetAction &&
+                                    <HoverAction actionText={isTweetRetweeted ? "Undo Retweet" : "Retweet"}/>}
                                 </IconButton>
                             </div>
                             <div className={classes.likeIcon}>
-                                <IconButton onClick={handleLike}>
+                                <IconButton
+                                    onClick={handleLike}
+                                    onMouseEnter={() => handleHoverAction?.(TweetActions.LIKE)}
+                                    onMouseLeave={handleLeaveAction}
+                                >
                                     {isTweetLiked ? (
                                         <>{LikeIcon}</>
                                     ) : (
                                         <>{LikeOutlinedIcon}</>
                                     )}
+                                    {visibleLikeAction && <HoverAction actionText={isTweetLiked ? "Unlike" : "Like"}/>}
                                 </IconButton>
                             </div>
-                            <div className={classes.tweetIcon}>
-                                <IconButton>
-                                    <>{ShareIcon}</>
-                                </IconButton>
-                            </div>
+                            <ShareTweet
+                                tweetId={tweetData!.id}
+                                isFullTweet={false}
+                                visibleShareAction={visibleShareAction}
+                                handleHoverAction={handleHoverAction}
+                                handleLeaveAction={handleLeaveAction}
+                            />
                         </div>
                         <Divider/>
                         <Typography className={classes.replyWrapper}>
@@ -237,10 +286,9 @@ const TweetImageModal: FC = (): ReactElement | null => {
                                 )}
                             </IconButton>
                             {(tweetData.likedTweets.length === 0 || tweetData.likedTweets === null) ? null : (
-                                isTweetLiked ? (
+                                isTweetLiked && (
                                     <span>{tweetData.likedTweets.length}</span>
-                                ) : (
-                                    <span>{tweetData.likedTweets.length}</span>)
+                                )
                             )}
                         </div>
                         <div className={classes.imageFooterIcon}>
@@ -261,4 +309,4 @@ const TweetImageModal: FC = (): ReactElement | null => {
     return null;
 };
 
-export default TweetImageModal;
+export default compose(withHoverUser, withHoverAction)(TweetImageModal) as ComponentType<HoverProps<Tweet> & HoverActionProps>;

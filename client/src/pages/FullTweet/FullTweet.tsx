@@ -260,7 +260,7 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
                     <div className={classes.info}>
                         <div className={classes.infoIcon}>
                             <IconButton
-                                onMouseEnter={() => handleHoverAction ? handleHoverAction(TweetActions.REPLY) : null}
+                                onMouseEnter={() => handleHoverAction?.(TweetActions.REPLY)}
                                 onMouseLeave={handleLeaveAction}
                             >
                                 <>{ReplyIcon}</>
@@ -270,7 +270,7 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
                         <div className={classes.retweetIcon}>
                             <IconButton
                                 onClick={handleRetweet}
-                                onMouseEnter={() => handleHoverAction ? handleHoverAction(TweetActions.RETWEET) : null}
+                                onMouseEnter={() => handleHoverAction?.(TweetActions.RETWEET)}
 
                                 onMouseLeave={handleLeaveAction}
                             >
@@ -285,8 +285,7 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
                         <div className={classes.likeIcon}>
                             <IconButton
                                 onClick={handleLike}
-                                onMouseEnter={() => handleHoverAction ? handleHoverAction(TweetActions.LIKE) : null}
-
+                                onMouseEnter={() => handleHoverAction?.(TweetActions.LIKE)}
                                 onMouseLeave={handleLeaveAction}
                             >
                                 {isTweetLiked ? (

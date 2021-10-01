@@ -62,7 +62,7 @@ const QuoteTweet: FC<QuoteTweetProps> = (
             <div className={classes.footerIcon}>
                 <IconButton
                     onClick={handleClick}
-                    onMouseEnter={() => handleHoverAction ? handleHoverAction(TweetActions.RETWEET) : null}
+                    onMouseEnter={() => handleHoverAction?.(TweetActions.RETWEET)}
                     onMouseLeave={handleLeaveAction}
                 >
                     {isTweetRetweetedByMe ? (
@@ -74,9 +74,9 @@ const QuoteTweet: FC<QuoteTweetProps> = (
                 </IconButton>
                 {(retweets.length === 0 || retweets === null) ? null : (
                     isTweetRetweetedByMe ? (
-                        <span>{retweets.length}</span>
+                        <span id={"retweets"}>{retweets.length}</span>
                     ) : (
-                        <span>{retweets.length}</span>)
+                        <span id={"retweets"}>{retweets.length}</span>)
                 )}
                 {open && (
                     <div className={classes.dropdown}>

@@ -15,7 +15,7 @@ export const useQuoteTweetStyles = makeStyles<Theme, QuoteTweetStyles>((theme) =
                 height: "0.80em",
             }
         },
-        "& span": {
+        "& #retweets": {
             color: props => props.isTweetRetweetedByMe ? "rgb(23, 191, 99)" : "rgb(83, 100, 113)",
         },
     },

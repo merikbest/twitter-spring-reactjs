@@ -25,15 +25,17 @@ interface ReplyModalProps {
     onClose: () => void;
 }
 
-const ReplyModal: FC<ReplyModalProps> = ({
-                                             user,
-                                             tweetId,
-                                             text,
-                                             image,
-                                             dateTime,
-                                             visible,
-                                             onClose
-                                         }): ReactElement | null => {
+const ReplyModal: FC<ReplyModalProps> = (
+    {
+        user,
+        tweetId,
+        text,
+        image,
+        dateTime,
+        visible,
+        onClose
+    }
+): ReactElement | null => {
     const classes = useReplyModalStyles();
 
     if (!visible) {
@@ -41,8 +43,14 @@ const ReplyModal: FC<ReplyModalProps> = ({
     }
 
     return (
-        <Dialog style={{top: "-30%"}} open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title" style={{padding: "5px 15px", margin: 0}}>
+        <Dialog
+            className={classes.dialogWrapper}
+            style={{top: "-10%"}}
+            open={visible}
+            onClose={onClose}
+            aria-labelledby="form-dialog-title"
+        >
+            <DialogTitle id="form-dialog-title">
                 <IconButton onClick={onClose} color="secondary" aria-label="close">
                     <CloseIcon style={{fontSize: 26}} color="secondary"/>
                 </IconButton>

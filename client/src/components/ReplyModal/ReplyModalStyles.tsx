@@ -1,10 +1,19 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 export const useReplyModalStyles = makeStyles((theme: Theme) => ({
+    dialogWrapper: {
+        "& .MuiDialogTitle-root": {
+            padding: "5px 15px",
+            margin: 0
+        }
+    },
     container: {
         width: 598,
         height: "100%",
         padding: 0,
+        "& #link": {
+            color: "rgb(27, 149, 224)"
+        },
     },
     modalWrapper: {
         fontSize: 15,
@@ -20,15 +29,15 @@ export const useReplyModalStyles = makeStyles((theme: Theme) => ({
         borderRadius: 0,
     },
     verticalLine: {
-        marginLeft: 25,
+        marginLeft: 21,
         position: "absolute",
         borderLeft: "2px solid rgb(207, 217, 222)",
         height: "100%",
     },
     avatar: {
         zIndex: 1,
-        width: theme.spacing(6.5),
-        height: theme.spacing(6.5),
+        width: "46px !important",
+        height: "46px !important",
         border: "1px solid white",
         marginRight: 15,
     },
@@ -72,6 +81,6 @@ export const useReplyModalStyles = makeStyles((theme: Theme) => ({
         color: "rgb(27, 149, 224)",
     },
     addForm: {
-        padding: "20px 20px 11px 20px",
+        padding: "20px 20px 15px 20px",
     },
 }));

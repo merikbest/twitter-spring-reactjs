@@ -9,6 +9,9 @@ export const useQuoteStyles = makeStyles<Theme, QuoteStylesProps>((theme) => ({
     quoteTweetLink: {
         textDecoration: "none",
         color: "#000",
+        "& #link": {
+            color: "rgb(27, 149, 224)"
+        }
     },
     quoteTweetContainer: {
         marginTop: 5,

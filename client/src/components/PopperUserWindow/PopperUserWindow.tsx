@@ -1,6 +1,7 @@
 import React, {FC, ReactElement, useState} from 'react';
 import {Link} from "react-router-dom";
 import {Avatar, Button} from "@material-ui/core";
+import classNames from "classnames";
 
 import {usePopperUserWindowStyles} from "./PopperUserWindowStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
@@ -12,10 +13,11 @@ import {followProfile, unfollowProfile} from "../../store/ducks/userProfile/acti
 
 interface PopperUserWindowProps {
     isTweetComponent?: boolean;
+    isTweetImageModal?: boolean;
     user: User;
 }
 
-const PopperUserWindow: FC<PopperUserWindowProps> = ({user, isTweetComponent}): ReactElement => {
+const PopperUserWindow: FC<PopperUserWindowProps> = ({user, isTweetComponent, isTweetImageModal}): ReactElement => {
     const classes = usePopperUserWindowStyles({isTweetComponent});
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
@@ -33,7 +35,13 @@ const PopperUserWindow: FC<PopperUserWindowProps> = ({user, isTweetComponent}): 
     };
 
     return (
-        <div className={classes.popperUserWindow}>
+        <div
+            className={classNames(
+                classes.popperUserWindow,
+                isTweetComponent && classes.tweetComponent,
+                isTweetImageModal && classes.tweetImageModal
+            )}
+        >
             <div className={classes.headerWrapper}>
                 <Link to={`/user/${user?.id}`}>
                     <Avatar

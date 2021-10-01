@@ -18,9 +18,6 @@ export const useFollowingFollowersStyles = makeStyles((theme) => ({
         '& h6': {
             fontWeight: 800,
         },
-        "& svg": {
-            marginRight: 20
-        },
     },
     tabs: {
         borderBottom: "1px solid rgb(239, 243, 244)",

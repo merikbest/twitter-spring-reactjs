@@ -21,8 +21,12 @@ export const useReplyStyles = makeStyles((theme: Theme) => ({
             backgroundColor: "#EFF3F4",
         },
     },
+    popover: {
+        "& .MuiPaper-root": {
+            borderRadius: 16,
+        }
+    },
     dropdown: {
-        position: 'absolute',
         width: 320,
         height: 284,
         zIndex: 2,

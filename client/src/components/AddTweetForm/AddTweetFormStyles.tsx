@@ -11,8 +11,8 @@ export const useAddTweetFormStyles = makeStyles<Theme, AddTweetFormStyles>((them
         width: '100%',
     },
     contentAvatar: {
-        width: theme.spacing(6.5),
-        height: theme.spacing(6.5),
+        width: "46px !important",
+        height: "46px !important",
         marginRight: 15,
     },
     contentTextarea: {

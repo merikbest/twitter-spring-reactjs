@@ -139,12 +139,13 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
                         src={tweet?.user.avatar?.src ? tweet?.user.avatar?.src : DEFAULT_PROFILE_IMG}/>
                 </a>
                 <div style={{flex: 1}}>
-                    <div className={classes.header} onMouseEnter={handleHoverPopper} onMouseLeave={handleLeavePopper}>
-                        <a onClick={handleClickUser}>
+                    <div className={classes.header}>
+                        <a onClick={handleClickUser} onMouseEnter={handleHoverPopper} onMouseLeave={handleLeavePopper}>
                             <b>{tweet?.user.fullName}</b>&nbsp;
                             <span className={classes.headerText}>@{tweet?.user.username}</span>&nbsp;
                             <span className={classes.headerText}>·</span>&nbsp;
                             <span className={classes.headerText}>{formatDate(new Date(tweet!.dateTime))}</span>
+                            {visiblePopperWindow && <PopperUserWindow user={tweet!.user} isTweetComponent={true}/>}
                         </a>
                         <TweetComponentActions
                             tweet={tweet!}
@@ -154,7 +155,6 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
                             handleHoverAction={handleHoverAction}
                             handleLeaveAction={handleLeaveAction}
                         />
-                        {visiblePopperWindow && <PopperUserWindow user={tweet!.user} isTweetComponent={true}/>}
                     </div>
                     <Typography
                         style={tweet?.addressedUsername ? {width: 250, marginBottom: 0} : {width: 500, marginBottom: 0}}
@@ -216,7 +216,7 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
                             <IconButton
                                 disabled={isUserCanReply}
                                 onClick={onOpenReplyModalWindow}
-                                onMouseEnter={() => handleHoverAction ? handleHoverAction(TweetActions.REPLY) : null}
+                                onMouseEnter={() => handleHoverAction?.(TweetActions.REPLY)}
                                 onMouseLeave={handleLeaveAction}
                             >
                                 <>{ReplyIcon}</>
@@ -238,7 +238,7 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
                         <div className={classes.likeIcon}>
                             <IconButton
                                 onClick={handleLike}
-                                onMouseEnter={() => handleHoverAction ? handleHoverAction(TweetActions.LIKE) : null}
+                                onMouseEnter={() => handleHoverAction?.(TweetActions.LIKE)}
                                 onMouseLeave={handleLeaveAction}
                             >
                                 {isTweetLiked ? (

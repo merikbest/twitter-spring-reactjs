@@ -4,7 +4,6 @@ import {useDispatch, useSelector} from "react-redux";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import {InputAdornment, IconButton} from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/SearchOutlined";
 import {CircularProgress, Paper} from "@material-ui/core";
 
 import {MainSearchTextField} from "../../components/SearchTextField/MainSearchTextField";
@@ -22,7 +21,7 @@ import {User} from "../../store/ducks/user/contracts/state";
 import Follower from "../../components/Follower/Follower";
 import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 import {useExploreStyles} from "./ExploreStyles";
-import {EditIcon} from "../../icons";
+import {EditIcon, SearchIcon} from "../../icons";
 import {fetchUsersSearch, fetchUsersSearchByUsername} from "../../store/ducks/usersSearch/actionCreators";
 import {selectUsersSearch, selectUsersSearchIsLoading} from "../../store/ducks/usersSearch/selectors";
 
@@ -118,7 +117,7 @@ const Explore: FC = (): ReactElement => {
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <SearchIcon/>
+                                        {SearchIcon}
                                     </InputAdornment>
                                 ),
                             }}

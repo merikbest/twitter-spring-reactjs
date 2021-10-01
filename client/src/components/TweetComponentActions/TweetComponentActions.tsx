@@ -146,7 +146,7 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
                 <div className={classes.root}>
                     <IconButton
                         onClick={handleClickActionsDropdown}
-                        onMouseEnter={() => handleHoverAction ? handleHoverAction(TweetActions.MORE) :null}
+                        onMouseEnter={() => handleHoverAction?.(TweetActions.MORE)}
                         onMouseLeave={handleLeaveAction}
                     >
                         <span>{EditIcon}</span>

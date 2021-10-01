@@ -1,9 +1,9 @@
 import React, {FC, FormEvent, ReactElement} from 'react';
 import {useHistory} from 'react-router-dom';
-import {InputAdornment} from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/SearchOutlined";
+import {InputAdornment,} from "@material-ui/core";
 
 import {SideSearchTextField} from "../SearchTextField/SideSearchTextField";
+import {SearchIcon} from "../../icons";
 
 const SideSearch: FC = (): ReactElement => {
     const history = useHistory();
@@ -24,7 +24,7 @@ const SideSearch: FC = (): ReactElement => {
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
-                            <SearchIcon/>
+                            {SearchIcon}
                         </InputAdornment>
                     ),
                 }}
