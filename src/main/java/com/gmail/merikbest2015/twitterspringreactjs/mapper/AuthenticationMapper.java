@@ -16,15 +16,15 @@ public class AuthenticationMapper {
     private final UserMapper userMapper;
     private final AuthenticationService authenticationService;
 
-    public AuthenticationResponse login(String email) {
-        Map<String, Object> credentials = authenticationService.login(email);
+    public AuthenticationResponse login(String email, String password) {
+        Map<String, Object> credentials = authenticationService.login(email, password);
         AuthenticationResponse response = new AuthenticationResponse();
         response.setUser(userMapper.convertToUserResponse((User) credentials.get("user")));
         response.setToken((String) credentials.get("token"));
         return response;
     }
 
-    public boolean registration(String email, String username, String birthday) {
+    public String registration(String email, String username, String birthday) {
         return authenticationService.registration(email, username, birthday);
     }
 
@@ -36,28 +36,28 @@ public class AuthenticationMapper {
         return authenticationResponse;
     }
 
-    public boolean activateUser(String code) {
+    public String activateUser(String code) {
         return authenticationService.activateUser(code);
     }
 
-    public void sendPasswordResetCode(String email) {
-        authenticationService.sendPasswordResetCode(email);
+    public String sendPasswordResetCode(String email) {
+        return authenticationService.sendPasswordResetCode(email);
     }
 
     public UserResponse findByPasswordResetCode(String code) {
         return userMapper.convertToUserResponse(authenticationService.findByPasswordResetCode(code));
     }
 
-    public String passwordReset(String email, String password) {
-        return authenticationService.passwordReset(email, password);
+    public String passwordReset(String email, String password, String password2) {
+        return authenticationService.passwordReset(email, password, password2);
     }
 
-    public boolean findEmail(String email) {
+    public String findEmail(String email) {
         return authenticationService.findEmail(email);
     }
 
-    public void sendRegistrationCode(String email) {
-        authenticationService.sendRegistrationCode(email);
+    public String sendRegistrationCode(String email) {
+        return authenticationService.sendRegistrationCode(email);
     }
 
     public AuthenticationResponse endRegistration(String email, String password) {

@@ -11,7 +11,7 @@ const HoverAction: FC<HoverActionProps> = ({actionText}): ReactElement => {
 
     return (
         <div className={classes.container}>
-            <span>{actionText}</span>
+            <span id={"action-text"}>{actionText}</span>
         </div>
     );
 };

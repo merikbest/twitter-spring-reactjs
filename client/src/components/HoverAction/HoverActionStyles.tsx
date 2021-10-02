@@ -9,7 +9,7 @@ export const useHoverActionStyles = makeStyles<Theme>((theme) => ({
         borderRadius: 2,
         fontSize: 11,
         padding: "2px 4px",
-        "& span": {
+        "& #action-text": {
             lineHeight: "12px",
             color: "#fff",
         },

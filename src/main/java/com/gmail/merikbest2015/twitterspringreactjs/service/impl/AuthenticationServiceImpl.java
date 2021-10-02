@@ -7,11 +7,14 @@ import com.gmail.merikbest2015.twitterspringreactjs.security.JwtProvider;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.email.MailSender;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -23,32 +26,29 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
 
+    private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
     private final MailSender mailSender;
 
-    @Value("${hostname}")
-    private String hostname;
-
     @Override
-    public boolean findEmail(String email) {
-        User user = userRepository.findByEmail(email);
-        return user != null;
+    public Map<String, Object> login(String email, String password) {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+            User user = userRepository.findByEmail(email);
+            String token = jwtProvider.createToken(email, "USER");
+            Map<String, Object> response = new HashMap<>();
+            response.put("user", user);
+            response.put("token", token);
+            return response;
+        } catch (AuthenticationException e) {
+            throw new ApiRequestException("Incorrect password or email", HttpStatus.FORBIDDEN);
+        }
     }
 
     @Override
-    public Map<String, Object> login(String email) {
-        User user = userRepository.findByEmail(email);
-        String token = jwtProvider.createToken(email, "USER");
-        Map<String, Object> response = new HashMap<>();
-        response.put("user", user);
-        response.put("token", token);
-        return response;
-    }
-
-    @Override
-    public boolean registration(String email, String username, String birthday) {
+    public String registration(String email, String username, String birthday) {
         User existingUser = userRepository.findByEmail(email);
 
         if (existingUser == null) {
@@ -59,7 +59,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             user.setBirthday(birthday);
             user.setRole("USER");
             userRepository.save(user);
-            return true;
+            return "User data checked.";
         }
 
         if (!existingUser.isActive()) {
@@ -69,14 +69,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             existingUser.setRegistrationDate(LocalDateTime.now().withNano(0));
             existingUser.setRole("USER");
             userRepository.save(existingUser);
-            return true;
+            return "User data checked.";
         }
-
-        return false;
+        throw new ApiRequestException("Email has already been taken.", HttpStatus.FORBIDDEN);
     }
 
     @Override
-    public void sendRegistrationCode(String email) {
+    public String sendRegistrationCode(String email) {
         User user = userRepository.findByEmail(email);
         user.setActivationCode(UUID.randomUUID().toString().substring(0, 7));
         userRepository.save(user);
@@ -87,6 +86,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         attributes.put("fullName", user.getFullName());
         attributes.put("registrationCode", user.getActivationCode());
         mailSender.sendMessageHtml(user.getEmail(), subject, template, attributes);
+        return "Registration code sent successfully";
+    }
+
+    @Override
+    public String activateUser(String code) {
+        User user = userRepository.findByActivationCode(code);
+
+        if (user == null) {
+            throw new ApiRequestException("Activation code not found.", HttpStatus.NOT_FOUND);
+        }
+        user.setActivationCode(null);
+        userRepository.save(user);
+        return "User successfully activated.";
     }
 
     @Override
@@ -115,26 +127,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public void sendPasswordResetCode(String email) {
+    public String findEmail(String email) {
         User user = userRepository.findByEmail(email);
-        user.setPasswordResetCode(UUID.randomUUID().toString().substring(0, 7));
-        userRepository.save(user);
 
-        String subject = "Password reset";
-        String template = "password-reset-template";
-        Map<String, Object> attributes = new HashMap<>();
-        attributes.put("fullName", user.getFullName());
-        attributes.put("passwordResetCode", user.getPasswordResetCode());
-        mailSender.sendMessageHtml(user.getEmail(), subject, template, attributes);
-    }
-
-    @Override
-    public boolean activateUser(String code) {
-        User user = userRepository.findByActivationCode(code);
-        if (user == null) return false;
-        user.setActivationCode(null);
-        userRepository.save(user);
-        return true;
+        if (user == null) {
+            throw new ApiRequestException("Email not found", HttpStatus.NOT_FOUND);
+        }
+        return "Reset password code is send to your E-mail";
     }
 
     @Override
@@ -148,7 +147,28 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public String passwordReset(String email, String password) {
+    public String sendPasswordResetCode(String email) {
+        User user = userRepository.findByEmail(email);
+        user.setPasswordResetCode(UUID.randomUUID().toString().substring(0, 7));
+        userRepository.save(user);
+
+        String subject = "Password reset";
+        String template = "password-reset-template";
+        Map<String, Object> attributes = new HashMap<>();
+        attributes.put("fullName", user.getFullName());
+        attributes.put("passwordResetCode", user.getPasswordResetCode());
+        mailSender.sendMessageHtml(user.getEmail(), subject, template, attributes);
+        return "Reset password code is send to your E-mail";
+    }
+
+    @Override
+    public String passwordReset(String email, String password, String password2) {
+        if (StringUtils.isEmpty(password2)) {
+            throw new ApiRequestException("Password confirmation cannot be empty.", HttpStatus.BAD_REQUEST);
+        }
+        if (password != null && !password.equals(password2)) {
+            throw new ApiRequestException("Passwords do not match.", HttpStatus.BAD_REQUEST);
+        }
         User user = userRepository.findByEmail(email);
         user.setPassword(passwordEncoder.encode(password));
         user.setPasswordResetCode(null);

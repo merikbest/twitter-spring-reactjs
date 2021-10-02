@@ -222,9 +222,7 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
                                 <>{ReplyIcon}</>
                                 {visibleReplyAction && <HoverAction actionText={"Reply"}/>}
                             </IconButton>
-                            {(tweet?.replies?.length === 0 || tweet?.replies === null) ? null : (
-                                <span>{tweet?.replies?.length}</span>
-                            )}
+                            {(tweet?.replies?.length !== 0) && (<span>{tweet?.replies?.length}</span>)}
                         </div>
                         <QuoteTweet
                             quoteTweet={tweet!}
@@ -248,12 +246,7 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
                                 )}
                                 {visibleLikeAction && <HoverAction actionText={isTweetLiked ? "Unlike" : "Like"}/>}
                             </IconButton>
-                            {(tweet?.likedTweets.length === 0 || tweet?.likedTweets === null) ? null : (
-                                isTweetLiked ? (
-                                    <span>{tweet?.likedTweets.length}</span>
-                                ) : (
-                                    <span>{tweet?.likedTweets.length}</span>)
-                            )}
+                            {(tweet?.likedTweets.length !== 0) && (<span>{tweet?.likedTweets.length}</span>)}
                         </div>
                         <ShareTweet
                             tweetId={tweet!.id}

@@ -6,23 +6,23 @@ import java.util.Map;
 
 public interface AuthenticationService {
 
-    boolean findEmail(String email);
+    Map<String, Object> login(String email, String password);
 
-    Map<String, Object> login(String email);
+    String registration(String email, String username, String birthday);
 
-    boolean registration(String email, String username, String birthday);
+    String sendRegistrationCode(String email);
 
-    void sendRegistrationCode(String email);
+    String activateUser(String code);
 
     Map<String, Object> endRegistration(String email, String password);
 
     Map<String, Object> getUserByToken();
 
-    boolean activateUser(String code);
+    String findEmail(String email);
 
     User findByPasswordResetCode(String code);
 
-    void sendPasswordResetCode(String email);
+    String sendPasswordResetCode(String email);
 
-    String passwordReset(String email, String password);
+    String passwordReset(String email, String password, String password2);
 }

@@ -5,14 +5,9 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.request.PasswordResetReq
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.RegistrationRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.AuthenticationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.AuthenticationMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,43 +15,26 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/auth")
 public class AuthenticationController {
 
-    private final AuthenticationManager authenticationManager;
     private final AuthenticationMapper authenticationMapper;
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest request) {
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-            return ResponseEntity.ok(authenticationMapper.login(request.getEmail()));
-        } catch (AuthenticationException e) {
-            throw new ApiRequestException("Incorrect password or email", HttpStatus.FORBIDDEN);
-        }
+        return ResponseEntity.ok(authenticationMapper.login(request.getEmail(), request.getPassword()));
     }
 
     @PostMapping("/registration/check")
     public ResponseEntity<String> checkEmail(@RequestBody RegistrationRequest request) {
-        boolean isRegistered = authenticationMapper.registration(request.getEmail(), request.getUsername(), request.getBirthday());
-
-        if (!isRegistered) {
-            throw new ApiRequestException("Email has already been taken.", HttpStatus.FORBIDDEN);
-        } else {
-            return ResponseEntity.ok("User data checked.");
-        }
+        return ResponseEntity.ok(authenticationMapper.registration(request.getEmail(), request.getUsername(), request.getBirthday()));
     }
 
     @PostMapping("/registration/code")
     public ResponseEntity<String> sendRegistrationCode(@RequestBody RegistrationRequest request) {
-        authenticationMapper.sendRegistrationCode(request.getEmail());
-        return ResponseEntity.ok("Registration code sent successfully");
+        return ResponseEntity.ok(authenticationMapper.sendRegistrationCode(request.getEmail()));
     }
 
     @GetMapping("/registration/activate/{code}")
     public ResponseEntity<String> checkRegistrationCode(@PathVariable String code) {
-        if (!authenticationMapper.activateUser(code)) {
-            throw new ApiRequestException("Activation code not found.", HttpStatus.NOT_FOUND);
-        } else {
-            return ResponseEntity.ok("User successfully activated.");
-        }
+        return ResponseEntity.ok(authenticationMapper.activateUser(code));
     }
 
     @PostMapping("/registration/confirm")
@@ -71,17 +49,12 @@ public class AuthenticationController {
 
     @PostMapping("/forgot/email")
     public ResponseEntity<String> findExistingEmail(@RequestBody PasswordResetRequest passwordReset) {
-        boolean isEmailExist = authenticationMapper.findEmail(passwordReset.getEmail());
-        if (!isEmailExist) {
-            throw new ApiRequestException("Email not found", HttpStatus.NOT_FOUND);
-        }
-        return ResponseEntity.ok("Reset password code is send to your E-mail");
+        return ResponseEntity.ok(authenticationMapper.findEmail(passwordReset.getEmail()));
     }
 
     @PostMapping("/forgot")
     public ResponseEntity<String> sendPasswordResetCode(@RequestBody PasswordResetRequest passwordReset) {
-        authenticationMapper.sendPasswordResetCode(passwordReset.getEmail());
-        return ResponseEntity.ok("Reset password code is send to your E-mail");
+        return ResponseEntity.ok(authenticationMapper.sendPasswordResetCode(passwordReset.getEmail()));
     }
 
     @GetMapping("/reset/{code}")
@@ -91,12 +64,6 @@ public class AuthenticationController {
 
     @PostMapping("/reset")
     public ResponseEntity<String> passwordReset(@RequestBody PasswordResetRequest passwordReset) {
-        if (ControllerUtils.isPasswordConfirmEmpty(passwordReset.getPassword2())) {
-            throw new ApiRequestException("Password confirmation cannot be empty.", HttpStatus.BAD_REQUEST);
-        }
-        if (ControllerUtils.isPasswordDifferent(passwordReset.getPassword(), passwordReset.getPassword2())) {
-            throw new ApiRequestException("Passwords do not match.", HttpStatus.BAD_REQUEST);
-        }
-        return ResponseEntity.ok(authenticationMapper.passwordReset(passwordReset.getEmail(), passwordReset.getPassword()));
+        return ResponseEntity.ok(authenticationMapper.passwordReset(passwordReset.getEmail(), passwordReset.getPassword(), passwordReset.getPassword2()));
     }
 }
