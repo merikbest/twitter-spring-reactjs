@@ -16,11 +16,13 @@ public interface ListsService {
 
     Lists createTweetList(Lists lists);
 
+    Lists editTweetList(Lists lists);
+
+    String deleteList(Long listId);
+
     Lists followList(Long listId);
 
     Lists pinList(Long listId);
-
-    List<Lists> addTweetToLists(Long tweetId, List<Lists> lists);
 
     List<Lists> addUserToLists(Long userId, List<Lists> lists);
 

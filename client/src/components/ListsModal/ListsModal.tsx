@@ -6,11 +6,12 @@ import CloseIcon from "@material-ui/icons/Close";
 
 import {useListsModalStyles} from "./ListsModalStyles";
 import {selectUserListsItems} from "../../store/ducks/lists/selectors";
-import {addTweetToLists, addUserToLists, fetchUserLists} from "../../store/ducks/lists/actionCreators";
+import {addUserToLists, fetchUserLists} from "../../store/ducks/lists/actionCreators";
 import {CheckIcon} from "../../icons";
 import {Lists} from "../../store/ducks/lists/contracts/state";
 import {Tweet} from "../../store/ducks/tweets/contracts/state";
 import {User} from "../../store/ducks/user/contracts/state";
+import {RouteComponentProps, useLocation, useParams} from "react-router-dom";
 
 interface ListsModalProps {
     tweet?: Tweet;
@@ -23,6 +24,7 @@ const ListsModal: FC<ListsModalProps> = ({tweet, user, visible, onClose}): React
     const classes = useListsModalStyles();
     const dispatch = useDispatch();
     const userLists = useSelector(selectUserListsItems);
+    const params = useParams<{ listId: string }>();
 
     const [checkedListsIndexes, setCheckedListsIndexes] = useState<number[]>([]);
     const [lists, setLists] = useState<Lists[]>([]);
@@ -36,12 +38,7 @@ const ListsModal: FC<ListsModalProps> = ({tweet, user, visible, onClose}): React
         const set = new Set([...checkedListsIndexes]);
 
         userLists.forEach((list, index) => {
-            let currentIndex;
-            if (tweet) {
-                currentIndex = list.tweets.findIndex((listTweet) => listTweet.id === tweet.id);
-            } else {
-                currentIndex = list.members.findIndex((listUser) => listUser.id === user!.id);
-            }
+            let currentIndex = list.members.findIndex((listUser) => listUser.id === user!.id);
 
             if (currentIndex !== -1) {
                 set.add(index)
@@ -53,12 +50,7 @@ const ListsModal: FC<ListsModalProps> = ({tweet, user, visible, onClose}): React
 
     const onSubmit = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-
-        if (tweet) {
-            dispatch(addTweetToLists({tweetId: tweet.id, lists: lists}));
-        } else {
-            dispatch(addUserToLists({userId: user?.id!, lists: lists}));
-        }
+        dispatch(addUserToLists({userId: user?.id!, listId: parseInt(params.listId), lists: lists}));
         onClose();
     };
 
@@ -67,50 +59,28 @@ const ListsModal: FC<ListsModalProps> = ({tweet, user, visible, onClose}): React
         const newCheckedListsIndexes = [...checkedListsIndexes];
 
         const newList = Object.assign({}, list);
-        const newTweets = Object.assign([], list.tweets);
         const newMembers = Object.assign([], list.members);
 
         const listsCopy = [...lists];
         const listsIndex = lists.findIndex((value) => value.id === newList.id);
 
-        if (tweet) {
-            if (currentIndex === -1) {
-                newCheckedListsIndexes.push(index);
+        if (currentIndex === -1) {
+            newCheckedListsIndexes.push(index);
 
-                newTweets.push(tweet);
-                newList.tweets = newTweets;
+            newMembers.push(user!);
+            newList.members = newMembers;
 
-                listsCopy[listsIndex] = newList;
-                setLists(listsCopy);
-            } else {
-                newCheckedListsIndexes.splice(currentIndex, 1);
-
-                const tweetIndex = list.tweets.findIndex((newTweet) => newTweet.id === tweet.id);
-                newTweets.splice(tweetIndex, 1);
-                newList.tweets = newTweets;
-
-                listsCopy[listsIndex] = newList;
-                setLists(listsCopy);
-            }
+            listsCopy[listsIndex] = newList;
+            setLists(listsCopy);
         } else {
-            if (currentIndex === -1) {
-                newCheckedListsIndexes.push(index);
+            newCheckedListsIndexes.splice(currentIndex, 1);
 
-                newMembers.push(user!);
-                newList.members = newMembers;
+            const memberIndex = list.members.findIndex((newMember) => newMember.id === user?.id!);
+            newMembers.splice(memberIndex, 1);
+            newList.members = newMembers;
 
-                listsCopy[listsIndex] = newList;
-                setLists(listsCopy);
-            } else {
-                newCheckedListsIndexes.splice(currentIndex, 1);
-
-                const memberIndex = list.members.findIndex((newMember) => newMember.id === user?.id!);
-                newMembers.splice(memberIndex, 1);
-                newList.members = newMembers;
-
-                listsCopy[listsIndex] = newList;
-                setLists(listsCopy);
-            }
+            listsCopy[listsIndex] = newList;
+            setLists(listsCopy);
         }
         setCheckedListsIndexes(newCheckedListsIndexes);
     };

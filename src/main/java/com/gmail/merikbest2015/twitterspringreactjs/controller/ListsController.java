@@ -1,7 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.ListsRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetToListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ListsResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.ListsMapper;
@@ -43,6 +42,16 @@ public class ListsController {
         return ResponseEntity.ok(listsMapper.createTweetList(listsRequest));
     }
 
+    @PutMapping
+    public ResponseEntity<ListsResponse> editTweetList(@RequestBody ListsRequest listsRequest) {
+        return ResponseEntity.ok(listsMapper.editTweetList(listsRequest));
+    }
+
+    @DeleteMapping("/{listId}")
+    public ResponseEntity<String> deleteList(@PathVariable Long listId) {
+        return ResponseEntity.ok(listsMapper.deleteList(listId));
+    }
+
     @GetMapping("/follow/{listId}")
     public ResponseEntity<ListsResponse> followList(@PathVariable Long listId) {
         return ResponseEntity.ok(listsMapper.followList(listId));
@@ -51,11 +60,6 @@ public class ListsController {
     @GetMapping("/pin/{listId}")
     public ResponseEntity<ListsResponse> pinList(@PathVariable Long listId) {
         return ResponseEntity.ok(listsMapper.pinList(listId));
-    }
-
-    @PostMapping("/add/tweet")
-    public ResponseEntity<List<ListsResponse>> addTweetToLists(@RequestBody TweetToListsRequest tweetToListsRequest) {
-        return ResponseEntity.ok(listsMapper.addTweetToLists(tweetToListsRequest.getTweetId(), tweetToListsRequest.getLists()));
     }
 
     @PostMapping("/add/user")

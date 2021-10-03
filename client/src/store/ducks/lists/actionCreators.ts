@@ -1,5 +1,4 @@
 import {
-    AddTweetToListsActionInterface,
     AddUserToListsActionInterface,
     CreateListActionInterface,
     FetchListsActionInterface,
@@ -17,12 +16,13 @@ import {
     SetPinedListToUserListActionInterface,
     SetPinnedListsActionInterface,
     SetUnfollowListActionInterface,
-    SetUnpinListActionInterface, SetUpdatedListActionInterface,
+    SetUnpinListActionInterface,
+    SetUpdatedListActionInterface,
     SetUserListsActionInterface,
     UnfollowListActionInterface,
     UnpinListActionInterface
 } from "./contracts/actionTypes";
-import {AddLists, AddTweetToLists, AddUserToLists, Lists, ListsState, MemberToList} from "./contracts/state";
+import {AddLists, AddUserToLists, Lists, ListsState, MemberToList} from "./contracts/state";
 import {LoadingStatus} from "../../types";
 
 export const setLists = (payload: ListsState["lists"]): SetListsActionInterface => ({
@@ -67,11 +67,6 @@ export const setFollowList = (payload: Lists): SetFollowListActionInterface => (
 
 export const setUnfollowList = (payload: Lists): SetUnfollowListActionInterface => ({
     type: ListsActionType.SET_UNFOLLOW_LIST,
-    payload
-});
-
-export const addTweetToLists = (payload: AddTweetToLists): AddTweetToListsActionInterface => ({
-    type: ListsActionType.ADD_TWEET_TO_LISTS,
     payload
 });
 

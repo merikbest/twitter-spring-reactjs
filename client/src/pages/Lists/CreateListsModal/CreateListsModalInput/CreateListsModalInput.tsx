@@ -6,21 +6,23 @@ import {ListModalInputField} from "./ListsModalInputField";
 
 interface CreateListsModalInputProps {
     onChange: (...event: any[]) => void;
-    value: string;
+    value?: string;
     label: string;
     maxTextLength: number;
     helperText?: string;
     error?: boolean;
 }
 
-const CreateListsModalInput: FC<CreateListsModalInputProps> = ({
-                                                                   onChange,
-                                                                   value,
-                                                                   label,
-                                                                   maxTextLength,
-                                                                   helperText,
-                                                                   error
-                                                               }): ReactElement => {
+const CreateListsModalInput: FC<CreateListsModalInputProps> = (
+    {
+        onChange,
+        value,
+        label,
+        maxTextLength,
+        helperText,
+        error
+    }
+): ReactElement => {
     const classes = useCreateListsModalInputStyles();
     const [focused, setFocused] = useState<boolean>(false);
 

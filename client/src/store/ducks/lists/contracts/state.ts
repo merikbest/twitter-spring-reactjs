@@ -24,13 +24,17 @@ export interface AddLists {
     wallpaper?: Image;
 }
 
-export interface AddTweetToLists {
-    tweetId: string;
-    lists: Lists[];
+export interface EditLists {
+    id?: number;
+    name?: string;
+    description?: string;
+    isPrivate?: boolean;
+    wallpaper?: Image;
 }
 
 export interface AddUserToLists {
     userId: number;
+    listId: number;
     lists: Lists[];
 }
 

@@ -72,7 +72,9 @@ public class User {
     private boolean profileStarted;
 
     @OneToOne
-    @JoinColumn(name = "pinned_tweet_id")
+    @JoinTable(name = "user_pinned_tweet",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "tweet_id"))
     private Tweet pinnedTweet;
 
     @OneToOne

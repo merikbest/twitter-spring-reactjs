@@ -54,9 +54,15 @@ public class Tweet {
     private LinkCoverSize linkCoverSize;
 
     @OneToOne
+    @JoinTable(name = "tweet_quote",
+            joinColumns = @JoinColumn(name = "tweets_id"),
+            inverseJoinColumns = @JoinColumn(name = "quote_tweet_id"))
     private Tweet quoteTweet;
 
     @OneToOne
+    @JoinTable(name = "tweet_pool",
+            joinColumns = @JoinColumn(name = "tweet_id"),
+            inverseJoinColumns = @JoinColumn(name = "pool_id"))
     private Poll poll;
 
     @ManyToOne

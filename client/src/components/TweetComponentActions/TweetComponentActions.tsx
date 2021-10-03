@@ -220,10 +220,9 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
                                                 </>
                                             )}
                                         </ListItem>
-                                        <ListItem>
+                                        <ListItem onClick={onOpenListsModal}>
                                             <span className={classes.textIcon}>{AddListsIcon}</span>
-                                            <span
-                                                className={classes.text}>
+                                            <span className={classes.text}>
                                                 {`Add/remove @${tweet.user.username} from Lists`}
                                             </span>
                                         </ListItem>
@@ -271,7 +270,7 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
                 onPinUserTweet={onPinUserTweet}
                 onDeleteUserTweet={onDeleteUserTweet}
             />
-            {visibleListsModal && <ListsModal tweet={tweet} visible={visibleListsModal} onClose={onCloseListsModal}/>}
+            {visibleListsModal && <ListsModal user={tweet.user} visible={visibleListsModal} onClose={onCloseListsModal}/>}
         </div>
     );
 };

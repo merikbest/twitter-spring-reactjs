@@ -1,5 +1,6 @@
-import React, {ChangeEvent, FC, FormEvent, ReactElement, useState} from 'react';
+import React, {ChangeEvent, FC, ReactElement, useState} from 'react';
 import {useDispatch} from "react-redux";
+import {useHistory} from "react-router-dom";
 import {Button, Checkbox, Dialog, DialogContent, DialogTitle} from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
@@ -14,6 +15,10 @@ import {ImageObj} from "../../../components/AddTweetForm/AddTweetForm";
 import {Lists} from "../../../store/ducks/lists/contracts/state";
 import {ForwardArrowIcon} from "../../../icons";
 import ManageMembersModal from "./ManageMembersModal/ManageMembersModal";
+import DeleteListModal from "./DeleteListModal/DeleteListModal";
+import {deleteList, editList} from "../../../store/ducks/list/actionCreators";
+import {Image} from "../../../store/ducks/tweets/contracts/state";
+import {uploadImage} from "../../../util/uploadImage";
 
 interface EditListModalProps {
     list: Lists;
@@ -22,8 +27,11 @@ interface EditListModalProps {
 }
 
 export interface EditListModalFormProps {
-    name: string;
-    description: string;
+    id: number;
+    name?: string;
+    description?: string;
+    isPrivate: boolean;
+    wallpaper?: Image;
 }
 
 export const EditListModalFormSchema = yup.object().shape({
@@ -33,22 +41,33 @@ export const EditListModalFormSchema = yup.object().shape({
 const EditListModal: FC<EditListModalProps> = ({list, visible, onClose}): ReactElement | null => {
     const classes = useEditListModalStyles();
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const [wallpaper, setWallpaper] = useState<ImageObj>();
     const [isListPrivate, setIsListPrivate] = useState<boolean>(list.isPrivate);
     const [visibleManageMembersModal, setVisibleManageMembersModal] = useState<boolean>(false);
+    const [visibleDeleteListModal, setVisibleDeleteListModal] = useState<boolean>(false);
 
     const {control, register, handleSubmit, formState: {errors}} = useForm<EditListModalFormProps>({
         defaultValues: {
+            id: list.id,
             name: list.name,
             description: list.description,
+            isPrivate: list.isPrivate,
+            wallpaper: list.wallpaper,
         },
         resolver: yupResolver(EditListModalFormSchema),
         mode: "onChange",
     });
 
-    const onSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
+    const onSubmit = async (data: EditListModalFormProps): Promise<void> => {
+        let wallpaperResponse: Image | undefined = undefined;
 
+        if (wallpaper) {
+            wallpaperResponse = await uploadImage(wallpaper.file);
+        }
+        dispatch(editList({...data, wallpaper: wallpaperResponse}));
+        onClose();
     };
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -61,6 +80,20 @@ const EditListModal: FC<EditListModalProps> = ({list, visible, onClose}): ReactE
 
     const onCloseManageMembersModal = (): void => {
         setVisibleManageMembersModal(false);
+    };
+
+    const onOpenDeleteListModal = (): void => {
+        setVisibleDeleteListModal(true);
+    };
+
+    const onCloseDeleteListModal = (): void => {
+        setVisibleDeleteListModal(false);
+    };
+
+    const onDeleteList = (): void => {
+        setVisibleDeleteListModal(false);
+        dispatch(deleteList(list.id));
+        history.push("/lists");
     };
 
     if (!visible) {
@@ -141,14 +174,25 @@ const EditListModal: FC<EditListModalProps> = ({list, visible, onClose}): ReactE
                             Manage members
                             <>{ForwardArrowIcon}</>
                         </div>
-                        <div className={classes.deleteList}>
+                        <div className={classes.deleteList} onClick={onOpenDeleteListModal}>
                             Delete List
                         </div>
                     </div>
                 </DialogContent>
             </form>
             {visibleManageMembersModal && (
-                <ManageMembersModal list={list} visible={visibleManageMembersModal} onClose={onCloseManageMembersModal}/>
+                <ManageMembersModal
+                    list={list}
+                    visible={visibleManageMembersModal}
+                    onClose={onCloseManageMembersModal}
+                />
+            )}
+            {visibleDeleteListModal && (
+                <DeleteListModal
+                    visible={visibleDeleteListModal}
+                    onClose={onCloseDeleteListModal}
+                    onDeleteList={onDeleteList}
+                />
             )}
         </Dialog>
     );
