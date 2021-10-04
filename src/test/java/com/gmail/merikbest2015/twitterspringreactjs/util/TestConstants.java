@@ -9,20 +9,35 @@ public class TestConstants {
     public static final String URL_TWEETS_BASIC = "/api/v1/tweets";
     public static final String URL_USER_BASIC = "/api/v1/user";
 
-    public static final Long USER_ID = 10L;
+    public static final String HASHTAG = "#JetBrains";
+
+    public static final Long USER_ID = 2L;
     public static final String ABOUT = "Hello twitter!";
     public static final String ACTIVATION_CODE = "1234567890";
-    public static final String BIRTHDAY = "Mar 10, 1991";
+    public static final Boolean ACTIVE = true;
+    public static final String BIRTHDAY = "Mar 10, 1991"; // null
     public static final String USER_EMAIL = "test2015@test.test";
     public static final String PASSWORD = "qwerty";
-    public static final String FULL_NAME = "Vbhjckfd1";
-    public static final String LOCATION = "Kyiv";
-    public static final String PASSWORD_RESET_CODE = "1234567890";
+    public static final String FULL_NAME = "MrCat";
+    public static final String LOCATION = "New York";
+    public static final String PASSWORD_RESET_CODE = "1234567890"; // null
     public static final String REGISTRATION_DATE = "2021-08-01T23:34:32";
     public static final String ROLE = "USER";
-    public static final String USERNAME = "Vbhjckfd1";
-    public static final String WEBSITE = "http://localhost:3000/user/1";
-    public static final Long TWEET_COUNT = 8L;
-    public static final Long AVATAR_ID = 10001L;
-    public static final Long WALLPAPER_ID = 10001L;
+    public static final String USERNAME = "MrCat";
+    public static final String WEBSITE = "https://www.google.com";
+    public static final Long TWEET_COUNT = 126L;
+    public static final Long AVATAR_ID = 33L;
+    public static final Long WALLPAPER_ID = 44L;
+
+    public static final String TWEET_TEXT = "#JetBrains https://www.jetbrains.com/ ";
+    public static final String TWEET_DATETIME = "2021-10-03T20:34:15";
+    public static final String LINK = "https://www.jetbrains.com/";
+    public static final String LINK_TITLE = "JetBrains";
+    public static final String LINK_DESCRIPTION = "JetBrains is a cutting-edge software vendor specializing in the creation of intelligent development tools, including IntelliJ IDEA – the leading Java IDE, and the Kotlin programming language.";
+    public static final String LINK_COVER = "https://resources.jetbrains.com/storage/products/jetbrains/img/meta/preview.png";
+
+    public static final String TEXT_WITH_YOUTUBE_LINK = "tweet test https://www.youtube.com/watch?v=ewZZNeYDiLo&ab_channel=TeamSESH";
+    public static final String YOUTUBE_LINK = "https://www.youtube.com/watch?v=ewZZNeYDiLo&ab_channel=TeamSESH";
+    public static final String YOUTUBE_LINK_TITLE = "Bones - RestInPeace";
+    public static final String YOUTUBE_LINK_COVER = "https://i.ytimg.com/vi/ewZZNeYDiLo/mqdefault.jpg";
 }

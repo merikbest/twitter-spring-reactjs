@@ -118,7 +118,8 @@ public class TweetServiceImpl implements TweetService {
         tweet.getReplies().removeAll(tweet.getReplies());
         tweetRepository.deleteAll(replies);
         List<Notification> notifications = user.getNotifications().stream()
-                .filter(notification -> notification.getTweet().equals(tweet))
+                .filter(notification -> !notification.getNotificationType().equals(NotificationType.FOLLOW)
+                        && notification.getTweet().getId().equals(tweet.getId()))
                 .collect(Collectors.toList());
         notifications.forEach(notification -> {
             user.getNotifications().remove(notification);
@@ -142,6 +143,10 @@ public class TweetServiceImpl implements TweetService {
             user.getTweets().remove(tweet);
             tweetRepository.delete(tweet);
             return addressedTweet;
+        }
+
+        if (user.getPinnedTweet() != null) {
+            user.setPinnedTweet(null);
         }
         user.getTweets().remove(tweet);
         tweetRepository.delete(tweet);

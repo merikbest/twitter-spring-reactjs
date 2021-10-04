@@ -9,8 +9,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.gmail.merikbest2015.twitterspringreactjs.util.TestConstants.URL_TAG_BASIC;
-import static com.gmail.merikbest2015.twitterspringreactjs.util.TestConstants.USER_EMAIL;
+import static com.gmail.merikbest2015.twitterspringreactjs.util.TestConstants.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -51,7 +50,7 @@ public class TagControllerTest {
     @Test
     @WithUserDetails(USER_EMAIL)
     public void getTweetsByTag() throws Exception {
-        mockMvc.perform(get(URL_TAG_BASIC + "/#tweet"))
+        mockMvc.perform(get(URL_TAG_BASIC + "/" + HASHTAG))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())

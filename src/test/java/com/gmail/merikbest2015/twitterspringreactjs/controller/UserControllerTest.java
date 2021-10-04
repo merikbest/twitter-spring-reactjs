@@ -42,7 +42,7 @@ public class UserControllerTest {
     @Test
     @WithUserDetails(USER_EMAIL)
     public void getUserById() throws Exception {
-        mockMvc.perform(get(URL_USER_BASIC + "/10"))
+        mockMvc.perform(get(URL_USER_BASIC + "/" + USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(USER_ID))
                 .andExpect(jsonPath("$.email").value(USER_EMAIL))
@@ -54,10 +54,16 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.birthday").value(BIRTHDAY))
                 .andExpect(jsonPath("$.registrationDate").value(REGISTRATION_DATE))
                 .andExpect(jsonPath("$.tweetCount").value(TWEET_COUNT))
+                .andExpect(jsonPath("$.notificationsCount").value(3))
+                .andExpect(jsonPath("$.pinnedTweet").isNotEmpty())
+                .andExpect(jsonPath("$.bookmarks").isNotEmpty())
                 .andExpect(jsonPath("$.avatar.id").value(AVATAR_ID))
                 .andExpect(jsonPath("$.wallpaper.id").value(WALLPAPER_ID))
                 .andExpect(jsonPath("$.profileCustomized").value(true))
-                .andExpect(jsonPath("$.profileStarted").value(true));
+                .andExpect(jsonPath("$.profileStarted").value(true))
+                .andExpect(jsonPath("$.unreadMessages").isNotEmpty())
+                .andExpect(jsonPath("$.followers").isNotEmpty())
+                .andExpect(jsonPath("$.following").isNotEmpty());
     }
 
     @Test
@@ -65,7 +71,7 @@ public class UserControllerTest {
     public void getUsers() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/all"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(6)))
+                .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
                 .andExpect(jsonPath("$[*].email").isNotEmpty())
                 .andExpect(jsonPath("$[*].fullName").isNotEmpty())
@@ -76,10 +82,16 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$[*].birthday").isNotEmpty())
                 .andExpect(jsonPath("$[*].registrationDate").isNotEmpty())
                 .andExpect(jsonPath("$[*].tweetCount").isNotEmpty())
+                .andExpect(jsonPath("$[*].notificationsCount").isNotEmpty())
+                .andExpect(jsonPath("$[*].pinnedTweet").isNotEmpty())
+                .andExpect(jsonPath("$[*].bookmarks").isNotEmpty())
                 .andExpect(jsonPath("$[*].avatar.id").isNotEmpty())
                 .andExpect(jsonPath("$[*].wallpaper.id").isNotEmpty())
                 .andExpect(jsonPath("$[*].profileCustomized").isNotEmpty())
-                .andExpect(jsonPath("$[*].profileStarted").isNotEmpty());
+                .andExpect(jsonPath("$[*].profileStarted").isNotEmpty())
+                .andExpect(jsonPath("$[*].unreadMessages").isNotEmpty())
+                .andExpect(jsonPath("$[*].followers").isNotEmpty())
+                .andExpect(jsonPath("$[*].following").isNotEmpty());
     }
 
     @Test
@@ -87,7 +99,7 @@ public class UserControllerTest {
     public void getRelevantUsers() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/relevant"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(5)))
+                .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
                 .andExpect(jsonPath("$[*].email").isNotEmpty())
                 .andExpect(jsonPath("$[*].fullName").isNotEmpty())
@@ -98,10 +110,16 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$[*].birthday").isNotEmpty())
                 .andExpect(jsonPath("$[*].registrationDate").isNotEmpty())
                 .andExpect(jsonPath("$[*].tweetCount").isNotEmpty())
+                .andExpect(jsonPath("$[*].notificationsCount").isNotEmpty())
+                .andExpect(jsonPath("$[*].pinnedTweet").isNotEmpty())
+                .andExpect(jsonPath("$[*].bookmarks").isNotEmpty())
                 .andExpect(jsonPath("$[*].avatar.id").isNotEmpty())
                 .andExpect(jsonPath("$[*].wallpaper.id").isNotEmpty())
                 .andExpect(jsonPath("$[*].profileCustomized").isNotEmpty())
-                .andExpect(jsonPath("$[*].profileStarted").isNotEmpty());
+                .andExpect(jsonPath("$[*].profileStarted").isNotEmpty())
+                .andExpect(jsonPath("$[*].unreadMessages").isNotEmpty())
+                .andExpect(jsonPath("$[*].followers").isNotEmpty())
+                .andExpect(jsonPath("$[*].following").isNotEmpty());
     }
 
     @Test
@@ -120,10 +138,16 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$[0].birthday").value(BIRTHDAY))
                 .andExpect(jsonPath("$[0].registrationDate").value(REGISTRATION_DATE))
                 .andExpect(jsonPath("$[0].tweetCount").value(TWEET_COUNT))
+                .andExpect(jsonPath("$[0].notificationsCount").value(3))
+                .andExpect(jsonPath("$[0].pinnedTweet").isNotEmpty())
+                .andExpect(jsonPath("$[0].bookmarks").isNotEmpty())
                 .andExpect(jsonPath("$[0].avatar.id").value(AVATAR_ID))
                 .andExpect(jsonPath("$[0].wallpaper.id").value(WALLPAPER_ID))
                 .andExpect(jsonPath("$[0].profileCustomized").value(true))
-                .andExpect(jsonPath("$[0].profileStarted").value(true));
+                .andExpect(jsonPath("$[0].profileStarted").value(true))
+                .andExpect(jsonPath("$[0].unreadMessages").isNotEmpty())
+                .andExpect(jsonPath("$[0].followers").isNotEmpty())
+                .andExpect(jsonPath("$[0].following").isNotEmpty());
     }
 
     @Test
@@ -149,10 +173,16 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.birthday").value(BIRTHDAY))
                 .andExpect(jsonPath("$.registrationDate").value(REGISTRATION_DATE))
                 .andExpect(jsonPath("$.tweetCount").value(TWEET_COUNT))
+                .andExpect(jsonPath("$.notificationsCount").value(3))
+                .andExpect(jsonPath("$.pinnedTweet").isNotEmpty())
+                .andExpect(jsonPath("$.bookmarks").isNotEmpty())
                 .andExpect(jsonPath("$.avatar.id").value(AVATAR_ID))
                 .andExpect(jsonPath("$.wallpaper.id").value(WALLPAPER_ID))
                 .andExpect(jsonPath("$.profileCustomized").value(true))
-                .andExpect(jsonPath("$.profileStarted").value(true));
+                .andExpect(jsonPath("$.profileStarted").value(true))
+                .andExpect(jsonPath("$.unreadMessages").isNotEmpty())
+                .andExpect(jsonPath("$.followers").isNotEmpty())
+                .andExpect(jsonPath("$.following").isNotEmpty());
     }
 
     @Test
@@ -160,13 +190,22 @@ public class UserControllerTest {
     public void getUserTweets() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/" + USER_ID + "/tweets"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(7)))
+                .andExpect(jsonPath("$[*]", hasSize(5)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
                 .andExpect(jsonPath("$[*].text").isNotEmpty())
                 .andExpect(jsonPath("$[*].dateTime").isNotEmpty())
                 .andExpect(jsonPath("$[*].addressedUsername").isNotEmpty())
                 .andExpect(jsonPath("$[*].addressedId").isNotEmpty())
+                .andExpect(jsonPath("$[*].addressedTweetId").isNotEmpty())
+                .andExpect(jsonPath("$[*].replyType").isNotEmpty())
+                .andExpect(jsonPath("$[*].link").isNotEmpty())
+                .andExpect(jsonPath("$[*].linkTitle").isNotEmpty())
+                .andExpect(jsonPath("$[*].linkDescription").isNotEmpty())
+                .andExpect(jsonPath("$[*].linkCover").isNotEmpty())
+                .andExpect(jsonPath("$[*].linkCoverSize").isNotEmpty())
+                .andExpect(jsonPath("$[*].quoteTweet").isNotEmpty())
                 .andExpect(jsonPath("$[*].user").isNotEmpty())
+                .andExpect(jsonPath("$[*].poll").isNotEmpty())
                 .andExpect(jsonPath("$[*].images").isNotEmpty())
                 .andExpect(jsonPath("$[*].likedTweets").isNotEmpty())
                 .andExpect(jsonPath("$[*].retweets").isNotEmpty())
@@ -178,13 +217,22 @@ public class UserControllerTest {
     public void getUserLikedTweets() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/" + USER_ID + "/liked"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(4)))
+                .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
                 .andExpect(jsonPath("$[*].text").isNotEmpty())
                 .andExpect(jsonPath("$[*].dateTime").isNotEmpty())
                 .andExpect(jsonPath("$[*].addressedUsername").isNotEmpty())
                 .andExpect(jsonPath("$[*].addressedId").isNotEmpty())
+                .andExpect(jsonPath("$[*].addressedTweetId").isNotEmpty())
+                .andExpect(jsonPath("$[*].replyType").isNotEmpty())
+                .andExpect(jsonPath("$[*].link").isNotEmpty())
+                .andExpect(jsonPath("$[*].linkTitle").isNotEmpty())
+                .andExpect(jsonPath("$[*].linkDescription").isNotEmpty())
+                .andExpect(jsonPath("$[*].linkCover").isNotEmpty())
+                .andExpect(jsonPath("$[*].linkCoverSize").isNotEmpty())
+                .andExpect(jsonPath("$[*].quoteTweet").isNotEmpty())
                 .andExpect(jsonPath("$[*].user").isNotEmpty())
+                .andExpect(jsonPath("$[*].poll").isNotEmpty())
                 .andExpect(jsonPath("$[*].images").isNotEmpty())
                 .andExpect(jsonPath("$[*].likedTweets").isNotEmpty())
                 .andExpect(jsonPath("$[*].retweets").isNotEmpty())
@@ -204,13 +252,22 @@ public class UserControllerTest {
     public void getUserRetweetsAndReplies() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/" + USER_ID + "/replies"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(4)))
+                .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
                 .andExpect(jsonPath("$[*].text").isNotEmpty())
                 .andExpect(jsonPath("$[*].dateTime").isNotEmpty())
                 .andExpect(jsonPath("$[*].addressedUsername").isNotEmpty())
                 .andExpect(jsonPath("$[*].addressedId").isNotEmpty())
+                .andExpect(jsonPath("$[*].addressedTweetId").isNotEmpty())
+                .andExpect(jsonPath("$[*].replyType").isNotEmpty())
+                .andExpect(jsonPath("$[*].link").isNotEmpty())
+                .andExpect(jsonPath("$[*].linkTitle").isNotEmpty())
+                .andExpect(jsonPath("$[*].linkDescription").isNotEmpty())
+                .andExpect(jsonPath("$[*].linkCover").isNotEmpty())
+                .andExpect(jsonPath("$[*].linkCoverSize").isNotEmpty())
+                .andExpect(jsonPath("$[*].quoteTweet").isNotEmpty())
                 .andExpect(jsonPath("$[*].user").isNotEmpty())
+                .andExpect(jsonPath("$[*].poll").isNotEmpty())
                 .andExpect(jsonPath("$[*].images").isNotEmpty())
                 .andExpect(jsonPath("$[*].likedTweets").isNotEmpty())
                 .andExpect(jsonPath("$[*].retweets").isNotEmpty())
@@ -227,8 +284,8 @@ public class UserControllerTest {
         userRequest.setWebsite("test");
 
         mockMvc.perform(put(URL_USER_BASIC)
-                .content(mapper.writeValueAsString(userRequest))
-                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .content(mapper.writeValueAsString(userRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(USER_ID))
                 .andExpect(jsonPath("$.email").value(USER_EMAIL))
@@ -240,63 +297,70 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.birthday").value(BIRTHDAY))
                 .andExpect(jsonPath("$.registrationDate").value(REGISTRATION_DATE))
                 .andExpect(jsonPath("$.tweetCount").value(TWEET_COUNT))
+                .andExpect(jsonPath("$.notificationsCount").value(3))
+                .andExpect(jsonPath("$.pinnedTweet").isNotEmpty())
+                .andExpect(jsonPath("$.bookmarks").isNotEmpty())
                 .andExpect(jsonPath("$.avatar.id").value(AVATAR_ID))
                 .andExpect(jsonPath("$.wallpaper.id").value(WALLPAPER_ID))
                 .andExpect(jsonPath("$.profileCustomized").value(true))
-                .andExpect(jsonPath("$.profileStarted").value(true));
+                .andExpect(jsonPath("$.profileStarted").value(true))
+                .andExpect(jsonPath("$.unreadMessages").isNotEmpty())
+                .andExpect(jsonPath("$.followers").isNotEmpty())
+                .andExpect(jsonPath("$.following").isNotEmpty());
     }
 
     @Test
     @WithUserDetails(USER_EMAIL)
     public void uploadImage() throws Exception {
-        FileInputStream inputFile = new FileInputStream( "src/test/resources/test.png");
+        FileInputStream inputFile = new FileInputStream("src/test/resources/test.png");
         MockMultipartFile file = new MockMultipartFile("file", "test.png", MediaType.MULTIPART_FORM_DATA_VALUE, inputFile);
         MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
-        mockMvc.perform(multipart(URL_USER_BASIC + "/upload")
-                .file(file))
-                .andExpect(status().isOk());
+        // TODO create new s3 bucket
+//        mockMvc.perform(multipart(URL_USER_BASIC + "/upload")
+//                .file(file))
+//                .andExpect(status().isOk());
     }
 
     @Test
     @WithUserDetails(USER_EMAIL)
     public void follow() throws Exception {
-        mockMvc.perform(get(URL_USER_BASIC + "/follow/50"))
+        mockMvc.perform(get(URL_USER_BASIC + "/follow/3"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(50))
-                .andExpect(jsonPath("$.email").value("test2019@test.test"))
-                .andExpect(jsonPath("$.fullName").value("Vbhjckfd5"))
-                .andExpect(jsonPath("$.username").value("Vbhjckfd5"))
+                .andExpect(jsonPath("$.id").value(3))
+                .andExpect(jsonPath("$.email").value("test2016@test.test"))
+                .andExpect(jsonPath("$.fullName").value(FULL_NAME))
+                .andExpect(jsonPath("$.username").value(USERNAME))
                 .andExpect(jsonPath("$.location").value(LOCATION))
                 .andExpect(jsonPath("$.about").value(ABOUT))
                 .andExpect(jsonPath("$.website").value(WEBSITE))
-                .andExpect(jsonPath("$.birthday").doesNotExist())
+                .andExpect(jsonPath("$.birthday").value(BIRTHDAY))
                 .andExpect(jsonPath("$.registrationDate").value(REGISTRATION_DATE))
-                .andExpect(jsonPath("$.tweetCount").doesNotExist())
-                .andExpect(jsonPath("$.avatar.id").doesNotExist())
-                .andExpect(jsonPath("$.wallpaper.id").doesNotExist())
-                .andExpect(jsonPath("$.profileCustomized").value(true))
-                .andExpect(jsonPath("$.profileStarted").value(false));
+                .andExpect(jsonPath("$.tweetCount").value(TWEET_COUNT))
+                .andExpect(jsonPath("$.avatar.id").value(AVATAR_ID))
+                .andExpect(jsonPath("$.wallpaper.id").value(WALLPAPER_ID))
+                .andExpect(jsonPath("$.followers").isEmpty())
+                .andExpect(jsonPath("$.following[0].id").value(2));
     }
 
     @Test
     @WithUserDetails(USER_EMAIL)
     public void unfollow() throws Exception {
-        mockMvc.perform(get(URL_USER_BASIC + "/unfollow/50"))
+        mockMvc.perform(get(URL_USER_BASIC + "/follow/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(50))
-                .andExpect(jsonPath("$.email").value("test2019@test.test"))
-                .andExpect(jsonPath("$.fullName").value("Vbhjckfd5"))
-                .andExpect(jsonPath("$.username").value("Vbhjckfd5"))
-                .andExpect(jsonPath("$.location").value(LOCATION))
-                .andExpect(jsonPath("$.about").value(ABOUT))
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.email").value("merikbest2015@gmail.com"))
+                .andExpect(jsonPath("$.fullName").value("Vbhjckfd1"))
+                .andExpect(jsonPath("$.username").value("Vbhjckfd1"))
+                .andExpect(jsonPath("$.location").value("Kyiv"))
+                .andExpect(jsonPath("$.about").value("Hello2"))
                 .andExpect(jsonPath("$.website").value(WEBSITE))
-                .andExpect(jsonPath("$.birthday").doesNotExist())
+                .andExpect(jsonPath("$.birthday").isEmpty())
                 .andExpect(jsonPath("$.registrationDate").value(REGISTRATION_DATE))
-                .andExpect(jsonPath("$.tweetCount").doesNotExist())
-                .andExpect(jsonPath("$.avatar.id").doesNotExist())
-                .andExpect(jsonPath("$.wallpaper.id").doesNotExist())
-                .andExpect(jsonPath("$.profileCustomized").value(true))
-                .andExpect(jsonPath("$.profileStarted").value(false));
+                .andExpect(jsonPath("$.tweetCount").value(64))
+                .andExpect(jsonPath("$.avatar.id").value(11))
+                .andExpect(jsonPath("$.wallpaper.id").value(22))
+                .andExpect(jsonPath("$.followers[0].id").value(2))
+                .andExpect(jsonPath("$.following").isEmpty());
     }
 }
