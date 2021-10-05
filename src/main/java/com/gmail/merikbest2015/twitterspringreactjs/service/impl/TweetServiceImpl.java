@@ -260,10 +260,14 @@ public class TweetServiceImpl implements TweetService {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());
         Tweet tweet = tweetRepository.getOne(tweetId);
-        PollChoice pollChoice = tweet.getPoll().getPollChoices().stream()
-                .filter(choice -> choice.getId().equals(pollChoiceId))
-                .findFirst().get();
-        pollChoice.getVotedUser().add(user);
+        List<PollChoice> pollChoices = tweet.getPoll().getPollChoices().stream()
+                .peek(choice -> {
+                    if (choice.getId().equals(pollChoiceId)) {
+                        choice.getVotedUser().add(user);
+                    }
+                })
+                .collect(Collectors.toList());
+        tweet.getPoll().setPollChoices(pollChoices);
         return tweetRepository.save(tweet);
     }
 
@@ -346,12 +350,15 @@ public class TweetServiceImpl implements TweetService {
                 Elements cover = doc.select("meta[name$=image],meta[property$=image]");
 
                 BufferedImage coverData = ImageIO.read(new URL(getContent(cover.first())));
-                int coverDataSize = (504 / coverData.getWidth()) * coverData.getHeight();
+                double coverDataSize = (504.0 / (double) coverData.getWidth()) * coverData.getHeight();
+                System.out.println(coverData.getWidth());
+                System.out.println(coverDataSize);
+                System.out.println(504 / coverData.getWidth());
 
                 tweet.setLinkTitle(getContent(title.first()));
                 tweet.setLinkDescription(getContent(description.first()));
                 tweet.setLinkCover(getContent(cover.first()));
-                tweet.setLinkCoverSize(coverDataSize > 267 ? LinkCoverSize.SMALL : LinkCoverSize.LARGE);
+                tweet.setLinkCoverSize(coverDataSize > 267.0 ? LinkCoverSize.SMALL : LinkCoverSize.LARGE);
             } else {
                 String youTubeVideoId = null;
                 Matcher youTubeMatcher = youTubeUrlRegex.matcher(url);

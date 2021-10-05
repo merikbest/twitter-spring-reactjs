@@ -10,6 +10,7 @@ import {
     UnfollowListActionInterface
 } from "./contracts/actionTypes";
 import {
+    setCreatedList,
     setFollowList,
     setLists,
     setListsLoadingState,
@@ -60,7 +61,7 @@ export function* createListRequest({payload}: CreateListActionInterface) {
     try {
         yield put(setListsLoadingState(LoadingStatus.LOADING));
         const data: Lists = yield call(ListsApi.createTweetList, payload);
-        yield put(setList(data));
+        yield put(setCreatedList(data));
     } catch (error) {
         yield put(setListsLoadingState(LoadingStatus.ERROR));
     }

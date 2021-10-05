@@ -1,3 +1,5 @@
+alter sequence users_id_seq restart with 10;
+
 -- images
 INSERT INTO images (id, src) VALUES (1, 'https://twitterclonestorage.s3.eu-central-1.amazonaws.com/0a6c735d-def8-4587-a29f-221915ef6cb4_ff2d023b3220f93bbc79233614dea542.jpg');
 INSERT INTO images (id, src) VALUES (11, 'https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg');
@@ -8,7 +10,7 @@ INSERT INTO images (id, src) VALUES (44, 'https://twitterclonestorage.s3.eu-cent
 -- users
 INSERT INTO users (id, about, activation_code, active, birthday, email, full_name, location, notifications_count, password, password_reset_code, profile_customized, profile_started, registration_date, role, tweet_count, username, website, avatar_id, wallpaper_id) VALUES (1, 'Hello2', null, true, null, 'merikbest2015@gmail.com', 'Vbhjckfd1', 'Kyiv', 0, '$2a$08$T1SpeJPoOfEDpMdhPKMp.elE6XBXIGN2wNMuDNh0vNnsOice4K4cu', null, true, true, '2021-08-01 23:34:32.000000', 'USER', 64, 'Vbhjckfd1', 'https://www.google.com', 11, 22);
 INSERT INTO users (id, about, activation_code, active, birthday, email, full_name, location, notifications_count, password, password_reset_code, profile_customized, profile_started, registration_date, role, tweet_count, username, website, avatar_id, wallpaper_id) VALUES (2, 'Hello twitter!', null, true, 'Mar 10, 1991', 'test2015@test.test', 'MrCat', 'New York', 3, '$2a$08$T1SpeJPoOfEDpMdhPKMp.elE6XBXIGN2wNMuDNh0vNnsOice4K4cu', null, true, true, '2021-08-01 23:34:32.000000', 'USER', 126, 'MrCat', 'https://www.google.com', 33, 44);
-INSERT INTO users (id, about, activation_code, active, birthday, email, full_name, location, notifications_count, password, password_reset_code, profile_customized, profile_started, registration_date, role, tweet_count, username, website, avatar_id, wallpaper_id) VALUES (3, 'Hello twitter!', null, true, 'Mar 10, 1991', 'test2016@test.test', 'MrCat', 'New York', 3, '$2a$08$T1SpeJPoOfEDpMdhPKMp.elE6XBXIGN2wNMuDNh0vNnsOice4K4cu', null, true, true, '2021-08-01 23:34:32.000000', 'USER', 126, 'MrCat', 'https://www.google.com', 33, 44);
+INSERT INTO users (id, about, activation_code, active, birthday, email, full_name, location, notifications_count, password, password_reset_code, profile_customized, profile_started, registration_date, role, tweet_count, username, website, avatar_id, wallpaper_id) VALUES (3, 'Hello twitter!', '1234567890', true, 'Mar 10, 1991', 'test2016@test.test', 'MrCat', 'New York', 3, '$2a$08$T1SpeJPoOfEDpMdhPKMp.elE6XBXIGN2wNMuDNh0vNnsOice4K4cu', '1234567890', true, true, '2021-08-01 23:34:32.000000', 'USER', 126, 'MrCat', 'https://www.google.com', 33, 44);
 
 -- tweets
 INSERT INTO tweets (id, addressed_id, addressed_tweet_id, addressed_username, date_time, reply_type, text, user_id, link, link_cover, link_description, link_title, link_cover_size) VALUES (40, null, null, null, '2021-10-03 20:29:03.00vo0000', 'EVERYONE', 'test tweet',  2, null, null, null, null, null);
@@ -61,7 +63,6 @@ INSERT INTO pools_poll_choices (poll_id, poll_choices_id) VALUES (2, 3);
 INSERT INTO pools_poll_choices (poll_id, poll_choices_id) VALUES (2, 4);
 
 -- pool_choices_voted_user
--- INSERT INTO pool_choices_voted_user (poll_choice_id, voted_user_id) VALUES (3, 2);
 INSERT INTO pool_choices_voted_user (poll_choice_id, voted_user_id) VALUES (4, 1);
 
 -- tags
@@ -71,7 +72,7 @@ INSERT INTO tags (id, tag_name, tweets_quantity) VALUES (2, '#JetBrains', 1);
 INSERT INTO tweets_tags (tags_id, tweets_id) VALUES (2, 43);
 
 -- bookmarks
-INSERT INTO bookmarks (id, bookmark_date, tweet_id) VALUES (1, '2021-10-03 20:35:53.000000', 40);
+INSERT INTO bookmarks (id, bookmark_date, tweet_id) VALUES (2, '2021-10-03 20:35:53.000000', 40);
 
 -- chats
 INSERT INTO chats (id) VALUES (8);
@@ -90,6 +91,8 @@ INSERT INTO unread_messages (user_id, chat_message_id) VALUES (2, 7);
 
 -- lists
 INSERT INTO lists (id, alt_wallpaper, description, private, name, user_id, wallpaper_id, pinned_date) VALUES (4, 'https://pbs.twimg.com/media/EXZ2rMvVAAAAfrN?format=png&name=small', 'test list description', false, 'test list name', 2, null, '2021-10-03 20:42:53.000000');
+INSERT INTO lists (id, alt_wallpaper, description, private, name, user_id, wallpaper_id, pinned_date) VALUES (5, 'https://pbs.twimg.com/media/EXZ2rMvVAAAAfrN?format=png&name=small', 'test list description', false, 'test list name', 1, null, '2021-10-03 20:42:53.000000');
+INSERT INTO lists (id, alt_wallpaper, description, private, name, user_id, wallpaper_id, pinned_date) VALUES (6, 'https://pbs.twimg.com/media/EXZ2rMvVAAAAfrN?format=png&name=small', 'test list description', false, 'test list name', 2, null, '2021-10-03 20:42:53.000000');
 
 -- lists_followers
 INSERT INTO lists_followers (lists_id, followers_id) VALUES (4, 1);
@@ -112,7 +115,7 @@ INSERT INTO user_subscriptions (subscriber_id, user_id) VALUES (1, 2);
 INSERT INTO user_subscriptions (subscriber_id, user_id) VALUES (2, 1);
 
 -- users_bookmarks
-INSERT INTO users_bookmarks (user_id, bookmarks_id) VALUES (2, 1);
+INSERT INTO users_bookmarks (user_id, bookmarks_id) VALUES (2, 2);
 
 -- users_notifications
 INSERT INTO users_notifications (user_id, notifications_id) VALUES (1, 39);

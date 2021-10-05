@@ -193,7 +193,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Notification follow(Long userId) {
+    public Notification processFollow(Long userId) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());
         User currentUser = userRepository.getOne(userId);
@@ -233,20 +233,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User pinTweet(Long tweetId) {
+    public User processPinTweet(Long tweetId) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());
         Tweet tweet = tweetRepository.getOne(tweetId);
-        user.setPinnedTweet(tweet);
-        userRepository.save(user);
-        return userRepository.save(user);
-    }
 
-    @Override
-    public User unpinTweet(Long tweetId) {
-        Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByEmail(principal.getName());
-        user.setPinnedTweet(null);
+        if (user.getPinnedTweet() == null || !user.getPinnedTweet().getId().equals(tweet.getId())) {
+            user.setPinnedTweet(tweet);
+        } else {
+            user.setPinnedTweet(null);
+        }
         return userRepository.save(user);
     }
 

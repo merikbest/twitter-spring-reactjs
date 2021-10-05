@@ -78,8 +78,4 @@ export const UserApi = {
         const data = await axios.get<Response<User>>(API_URL + '/user/pin/tweet/' + tweetId);
         return data.data;
     },
-    async unpinTweet(tweetId: string): Promise<Response<User>> {
-        const data = await axios.get<Response<User>>(API_URL + '/user/unpin/tweet/' + tweetId);
-        return data.data;
-    },
 };

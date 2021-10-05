@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -19,6 +20,10 @@ public class PollChoice {
     @Column(name = "choice")
     private String choice;
 
-    @OneToMany
+    @ManyToMany
     private List<User> votedUser;
+
+    public PollChoice() {
+        this.votedUser = new ArrayList<>();
+    }
 }

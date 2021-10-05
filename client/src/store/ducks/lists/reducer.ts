@@ -53,6 +53,7 @@ export const listsReducer = produce((draft: Draft<ListsState>, action: ListsActi
 
         case ListsActionType.SET_LIST:
             draft.lists = [action.payload, ...draft.lists];
+            draft.userLists = [action.payload, ...draft.userLists];
             draft.loadingState = LoadingStatus.LOADED;
             break;
 

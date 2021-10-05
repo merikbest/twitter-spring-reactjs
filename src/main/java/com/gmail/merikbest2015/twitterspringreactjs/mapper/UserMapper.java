@@ -97,8 +97,8 @@ public class UserMapper {
         return convertToUserResponse(userService.processUserBookmarks(tweetId));
     }
 
-    public NotificationResponse follow(Long userId) {
-        return convertToNotificationResponse(userService.follow(userId));
+    public NotificationResponse processFollow(Long userId) {
+        return convertToNotificationResponse(userService.processFollow(userId));
     }
 
     public List<UserResponse> getRelevantUsers() {
@@ -109,12 +109,8 @@ public class UserMapper {
         return convertListToResponse(userService.searchUsersByUsername(username));
     }
 
-    public UserResponse pinTweet(Long tweetId) {
-        return convertToUserResponse(userService.pinTweet(tweetId));
-    }
-
-    public UserResponse unpinTweet(Long tweetId) {
-        return convertToUserResponse(userService.unpinTweet(tweetId));
+    public UserResponse processPinTweet(Long tweetId) {
+        return convertToUserResponse(userService.processPinTweet(tweetId));
     }
 
     public List<NotificationResponse> getUserNotifications() {

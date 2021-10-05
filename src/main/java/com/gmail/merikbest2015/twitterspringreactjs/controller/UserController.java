@@ -94,8 +94,8 @@ public class UserController {
     }
 
     @GetMapping("/follow/{userId}")
-    public ResponseEntity<NotificationUserResponse> follow(@PathVariable Long userId) {
-        NotificationResponse notification = userMapper.follow(userId);
+    public ResponseEntity<NotificationUserResponse> processFollow(@PathVariable Long userId) {
+        NotificationResponse notification = userMapper.processFollow(userId);
 
         if (notification.getId() != null) {
             messagingTemplate.convertAndSend("/topic/notifications/" + notification.getUserToFollow().getId(), notification);
@@ -104,12 +104,7 @@ public class UserController {
     }
 
     @GetMapping("/pin/tweet/{tweetId}")
-    public ResponseEntity<UserResponse> pinTweet(@PathVariable Long tweetId) {
-        return ResponseEntity.ok(userMapper.pinTweet(tweetId));
-    }
-
-    @GetMapping("/unpin/tweet/{tweetId}")
-    public ResponseEntity<UserResponse> unpinTweet(@PathVariable Long tweetId) {
-        return ResponseEntity.ok(userMapper.unpinTweet(tweetId));
+    public ResponseEntity<UserResponse> processPinTweet(@PathVariable Long tweetId) {
+        return ResponseEntity.ok(userMapper.processPinTweet(tweetId));
     }
 }

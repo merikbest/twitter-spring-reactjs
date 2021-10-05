@@ -18,7 +18,6 @@ export enum UserActionsType {
     FOLLOW  = 'user/FOLLOW',
     UNFOLLOW  = 'user/UNFOLLOW',
     FETCH_PIN_TWEET  = 'user/FETCH_PIN_TWEET',
-    FETCH_UNPIN_TWEET  = 'user/FETCH_UNPIN_TWEET',
     ADD_TWEET_TO_BOOKMARKS  = 'user/ADD_TWEET_TO_BOOKMARKS',
     START_USE_TWITTER = 'user/START_USE_TWITTER',
     FETCH_READ_MESSAGES = 'user/FETCH_READ_MESSAGES',
@@ -76,11 +75,6 @@ export interface UnfollowActionInterface extends Action<UserActionsType> {
 
 export interface FetchPinTweetActionInterface extends Action<UserActionsType> {
     type: UserActionsType.FETCH_PIN_TWEET;
-    payload: string;
-}
-
-export interface FetchUnpinTweetActionInterface extends Action<UserActionsType> {
-    type: UserActionsType.FETCH_UNPIN_TWEET;
     payload: string;
 }
 

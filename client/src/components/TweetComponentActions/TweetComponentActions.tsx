@@ -19,7 +19,7 @@ import {
 } from "../../icons";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {ReplyType, Tweet} from "../../store/ducks/tweets/contracts/state";
-import {fetchPinTweet, fetchUnpinTweet, followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
+import {fetchPinTweet, followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 import TweetComponentActionsModal from "./TweetComponentActionsModal/TweetComponentActionsModal";
 import {fetchChangeReplyType, fetchDeleteTweet} from "../../store/ducks/tweets/actionCreators";
 import TweetComponentChangeReply from "./TweetComponentChangeReply/TweetComponentChangeReply";
@@ -88,11 +88,7 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
     };
 
     const onPinUserTweet = (): void => {
-        if (isTweetPinned) {
-            dispatch(fetchUnpinTweet(tweet.id));
-        } else {
-            dispatch(fetchPinTweet(tweet.id));
-        }
+        dispatch(fetchPinTweet(tweet.id));
         setOpenActionsDropdown(false);
         setVisibleTweetPinModal(false);
     };

@@ -8,6 +8,8 @@ public class TestConstants {
     public static final String URL_TAG_BASIC = "/api/v1/tags";
     public static final String URL_TWEETS_BASIC = "/api/v1/tweets";
     public static final String URL_USER_BASIC = "/api/v1/user";
+    public static final String URL_LISTS_BASIC = "/api/v1/lists";
+    public static final String URL_CHAT_BASIC = "/api/v1/chat";
 
     public static final String HASHTAG = "#JetBrains";
 
@@ -40,4 +42,11 @@ public class TestConstants {
     public static final String YOUTUBE_LINK = "https://www.youtube.com/watch?v=ewZZNeYDiLo&ab_channel=TeamSESH";
     public static final String YOUTUBE_LINK_TITLE = "Bones - RestInPeace";
     public static final String YOUTUBE_LINK_COVER = "https://i.ytimg.com/vi/ewZZNeYDiLo/mqdefault.jpg";
+
+    public static final Long LIST_USER_ID = 2L;
+    public static final String LIST_ALT_WALLPAPER = "https://pbs.twimg.com/media/EXZ2rMvVAAAAfrN?format=png&name=small";
+    public static final String LIST_NAME = "test list name";
+    public static final String LIST_DESCRIPTION = "test list description";
+    public static final String LIST_PINNED_DATE = "2021-10-03T20:42:53";
+
 }

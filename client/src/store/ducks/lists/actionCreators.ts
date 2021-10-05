@@ -40,7 +40,7 @@ export const setPinnedLists = (payload: ListsState["pinnedLists"]): SetPinnedLis
     payload
 });
 
-export const setList = (payload: Lists): SetListActionInterface => ({
+export const setCreatedList = (payload: Lists): SetListActionInterface => ({
     type: ListsActionType.SET_LIST,
     payload
 });

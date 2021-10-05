@@ -5,7 +5,6 @@ import {
     FetchReadMessagesActionInterface,
     FetchSignInActionInterface,
     FetchSignUpActionInterface,
-    FetchUnpinTweetActionInterface,
     FetchUserDataActionInterface,
     FollowActionInterface,
     FollowUserActionInterface,
@@ -73,11 +72,6 @@ export const unfollow = (payload: User): UnfollowActionInterface => ({
 
 export const fetchPinTweet = (payload: string): FetchPinTweetActionInterface => ({
     type: UserActionsType.FETCH_PIN_TWEET,
-    payload,
-});
-
-export const fetchUnpinTweet = (payload: string): FetchUnpinTweetActionInterface => ({
-    type: UserActionsType.FETCH_UNPIN_TWEET,
     payload,
 });
 
