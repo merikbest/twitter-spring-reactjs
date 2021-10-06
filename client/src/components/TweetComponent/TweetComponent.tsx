@@ -249,7 +249,7 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
                             {(tweet?.likedTweets.length !== 0) && (<span>{tweet?.likedTweets.length}</span>)}
                         </div>
                         <ShareTweet
-                            tweetId={tweet!.id}
+                            tweet={tweet!}
                             isFullTweet={false}
                             visibleShareAction={visibleShareAction}
                             handleHoverAction={handleHoverAction}

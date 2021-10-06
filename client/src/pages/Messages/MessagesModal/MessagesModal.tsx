@@ -5,7 +5,6 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
-import SearchIcon from "@material-ui/icons/SearchOutlined";
 
 import {useMessagesModalStyles} from "./MessagesModalStyles";
 import {MessagesModalInput} from "./MessagesModalInput/MessagesModalInput"
@@ -14,6 +13,7 @@ import {selectUsersSearch} from "../../../store/ducks/usersSearch/selectors";
 import MessagesModalUser from './MessagesModalUser/MessagesModalUser';
 import {User} from "../../../store/ducks/user/contracts/state";
 import {createChat} from "../../../store/ducks/chats/actionCreators";
+import {SearchIcon} from "../../../icons";
 
 interface MessagesModalProps {
     visible?: boolean;
@@ -75,7 +75,7 @@ const MessagesModal: FC<MessagesModalProps> = ({visible, onClose}): ReactElement
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
-                                    <SearchIcon/>
+                                    {SearchIcon}
                                 </InputAdornment>
                             ),
                         }}

@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.request.VoteRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
@@ -92,7 +93,7 @@ public class TweetMapper {
         return convertToTweetResponse(tweetService.changeTweetReplyType(tweetId, replyType));
     }
 
-    public TweetResponse voteInPoll(Long tweetId, Long pollChoiceId) {
-        return convertToTweetResponse(tweetService.voteInPoll(tweetId, pollChoiceId));
+    public TweetResponse voteInPoll(VoteRequest voteRequest) {
+        return convertToTweetResponse(tweetService.voteInPoll(voteRequest.getTweetId(), voteRequest.getPollChoiceId()));
     }
 }

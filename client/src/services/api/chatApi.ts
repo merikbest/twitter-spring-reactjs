@@ -2,7 +2,11 @@ import axios from "axios";
 
 import {API_URL} from "../../util/url";
 import {Chat} from "../../store/ducks/chats/contracts/state";
-import {ChatMessage, ChatMessageRequest} from "../../store/ducks/chatMessages/contracts/state";
+import {
+    ChatMessage,
+    ChatMessageRequest,
+    ChatMessageWithTweetRequest
+} from "../../store/ducks/chatMessages/contracts/state";
 import {User} from "../../store/ducks/user/contracts/state";
 
 export interface Response<T> {
@@ -29,6 +33,10 @@ export const ChatApi = {
     },
     async addMessage(chatMessage: ChatMessageRequest): Promise<Response<ChatMessage>> {
         const data = await axios.post<Response<ChatMessage>>(API_URL + "/chat/add/message", chatMessage);
+        return data.data;
+    },
+    async addMessageWithTweet(chatMessage: ChatMessageWithTweetRequest): Promise<Response<ChatMessage[]>> {
+        const data = await axios.post<Response<ChatMessage[]>>(API_URL + "/chat/add/message/tweet", chatMessage);
         return data.data;
     },
 };

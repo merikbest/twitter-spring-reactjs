@@ -21,6 +21,9 @@ public class ChatMessage {
     @Column(name = "date")
     private LocalDateTime date;
 
+    @OneToOne
+    private Tweet tweet;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User author;

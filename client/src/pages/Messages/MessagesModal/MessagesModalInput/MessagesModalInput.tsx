@@ -12,6 +12,12 @@ export const MessagesModalInput = withStyles((theme: Theme) => ({
             '& fieldset': {
                 border: 0,
             },
+            "& .MuiInputAdornment-root": {
+                "& svg" : {
+                    color: "rgb(83, 100, 113)",
+                    height: "1.25em"
+                }
+            },
         },
         '& .MuiOutlinedInput-input': {
             padding: '12px 14px 14px 5px',

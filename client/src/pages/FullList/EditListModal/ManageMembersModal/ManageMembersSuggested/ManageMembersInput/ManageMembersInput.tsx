@@ -23,6 +23,12 @@ export const ManageMembersInput = withStyles((theme: Theme) => ({
                 borderColor: 'transparent',
                 borderWidth: 1,
             },
+            "& .MuiInputAdornment-root": {
+                "& svg" : {
+                    color: "rgb(83, 100, 113)",
+                    height: "1.25em"
+                }
+            },
         },
         '& .MuiOutlinedInput-input': {
             padding: "12px 0px",

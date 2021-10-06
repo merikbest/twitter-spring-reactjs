@@ -18,18 +18,18 @@ public class AuthenticationController {
     private final AuthenticationMapper authenticationMapper;
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest request) {
-        return ResponseEntity.ok(authenticationMapper.login(request.getEmail(), request.getPassword()));
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest authenticationRequest) {
+        return ResponseEntity.ok(authenticationMapper.login(authenticationRequest));
     }
 
     @PostMapping("/registration/check")
-    public ResponseEntity<String> checkEmail(@RequestBody RegistrationRequest request) {
-        return ResponseEntity.ok(authenticationMapper.registration(request.getEmail(), request.getUsername(), request.getBirthday()));
+    public ResponseEntity<String> checkEmail(@RequestBody RegistrationRequest registrationRequest) {
+        return ResponseEntity.ok(authenticationMapper.registration(registrationRequest));
     }
 
     @PostMapping("/registration/code")
-    public ResponseEntity<String> sendRegistrationCode(@RequestBody RegistrationRequest request) {
-        return ResponseEntity.ok(authenticationMapper.sendRegistrationCode(request.getEmail()));
+    public ResponseEntity<String> sendRegistrationCode(@RequestBody RegistrationRequest registrationRequest) {
+        return ResponseEntity.ok(authenticationMapper.sendRegistrationCode(registrationRequest.getEmail()));
     }
 
     @GetMapping("/registration/activate/{code}")
@@ -38,8 +38,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/registration/confirm")
-    public ResponseEntity<AuthenticationResponse> endRegistration(@RequestBody RegistrationRequest request) {
-        return ResponseEntity.ok(authenticationMapper.endRegistration(request.getEmail(), request.getPassword()));
+    public ResponseEntity<AuthenticationResponse> endRegistration(@RequestBody RegistrationRequest registrationRequest) {
+        return ResponseEntity.ok(authenticationMapper.endRegistration(registrationRequest));
     }
 
     @GetMapping("/user")
@@ -64,6 +64,6 @@ public class AuthenticationController {
 
     @PostMapping("/reset")
     public ResponseEntity<String> passwordReset(@RequestBody PasswordResetRequest passwordReset) {
-        return ResponseEntity.ok(authenticationMapper.passwordReset(passwordReset.getEmail(), passwordReset.getPassword(), passwordReset.getPassword2()));
+        return ResponseEntity.ok(authenticationMapper.passwordReset(passwordReset));
     }
 }

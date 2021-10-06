@@ -64,7 +64,7 @@ public class ListsController {
 
     @PostMapping("/add/user")
     public ResponseEntity<List<ListsResponse>> addUserToLists(@RequestBody UserToListsRequest userToListsRequest) {
-        return ResponseEntity.ok(listsMapper.addUserToLists(userToListsRequest.getUserId(), userToListsRequest.getLists()));
+        return ResponseEntity.ok(listsMapper.addUserToLists(userToListsRequest));
     }
 
     @GetMapping("/add/user/{userId}/{listId}")

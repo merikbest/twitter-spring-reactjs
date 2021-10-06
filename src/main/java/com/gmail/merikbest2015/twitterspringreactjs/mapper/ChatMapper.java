@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.ChatMessageRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.request.MessageWithTweetRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.chat.ChatMessageResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.chat.ChatResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
@@ -65,5 +66,10 @@ public class ChatMapper {
     public ChatMessageResponse addMessage(ChatMessageRequest chatMessageRequest) {
         return convertToChatMessageResponse(chatService.addMessage(
                 convertToChatMessageEntity(chatMessageRequest), chatMessageRequest.getChatId()));
+    }
+
+    public List<ChatMessageResponse> addMessageWithTweet(MessageWithTweetRequest request) {
+        return convertListToChatMessageResponse(chatService.addMessageWithTweet(
+                request.getText(), request.getTweet(), request.getUsers()));
     }
 }

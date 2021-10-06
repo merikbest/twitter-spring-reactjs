@@ -73,7 +73,7 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    public void checkEmail() throws Exception { // ++
+    public void checkEmail() throws Exception {
         mockMvc.perform(post(URL_AUTH_REGISTRATION + "/check")
                 .content(mapper.writeValueAsString(registrationRequest))
                 .contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -93,7 +93,7 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    public void sendRegistrationCode() throws Exception { // ++
+    public void sendRegistrationCode() throws Exception {
         registrationRequest.setEmail(USER_EMAIL);
 
         mockMvc.perform(post(URL_AUTH_REGISTRATION + "/code")
@@ -104,7 +104,7 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    public void checkRegistrationCode() throws Exception { // ++
+    public void checkRegistrationCode() throws Exception {
         mockMvc.perform(get(URL_AUTH_REGISTRATION + "/activate/1234567890"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is("User successfully activated.")));
@@ -196,7 +196,7 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    public void sendPasswordResetCode() throws Exception { // ++
+    public void sendPasswordResetCode() throws Exception {
         PasswordResetRequest passwordResetRequest = new PasswordResetRequest();
         passwordResetRequest.setEmail(USER_EMAIL);
 
@@ -208,7 +208,7 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    public void getUserByResetCode() throws Exception { // ++
+    public void getUserByResetCode() throws Exception {
         mockMvc.perform(get(URL_AUTH_RESET + "/1234567890"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(3))

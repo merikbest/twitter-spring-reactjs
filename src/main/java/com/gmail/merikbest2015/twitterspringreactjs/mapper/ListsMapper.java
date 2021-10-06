@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.ListsRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ListsResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Lists;
 import com.gmail.merikbest2015.twitterspringreactjs.service.ListsService;
@@ -74,8 +75,9 @@ public class ListsMapper {
         return convertToListsResponse(listsService.pinList(listId));
     }
 
-    public List<ListsResponse> addUserToLists(Long userId, List<ListsResponse> listsResponse) {
-        return convertListToResponse(listsService.addUserToLists(userId, convertListsResponseToEntity(listsResponse)));
+    public List<ListsResponse> addUserToLists(UserToListsRequest userToListsRequest) {
+        return convertListToResponse(listsService.addUserToLists(
+                userToListsRequest.getUserId(), convertListsResponseToEntity(userToListsRequest.getLists())));
     }
 
     public ListsResponse addUserToList(Long userId, Long listId) {

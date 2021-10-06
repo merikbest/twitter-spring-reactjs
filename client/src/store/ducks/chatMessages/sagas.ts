@@ -2,7 +2,7 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 
 import {LoadingStatus} from '../../types';
 import {
-    AddChatMessageActionInterface,
+    AddChatMessageActionInterface, AddChatMessageWithTweetActionInterface,
     ChatMessagesActionsType,
     FetchChatMessagesActionInterface
 } from "./contracts/actionTypes";
@@ -29,7 +29,17 @@ export function* addChatMessageRequest({payload}: AddChatMessageActionInterface)
     }
 }
 
+export function* addChatMessageWithTweetRequest({payload}: AddChatMessageWithTweetActionInterface) {
+    try {
+        setChatMessagesLoadingState(LoadingStatus.LOADING);
+        yield call(ChatApi.addMessageWithTweet, payload);
+    } catch (error) {
+        yield put(setChatMessagesLoadingState(LoadingStatus.ERROR));
+    }
+}
+
 export function* chatMessagesSaga() {
     yield takeLatest(ChatMessagesActionsType.FETCH_CHAT_MESSAGES, fetchChatMessagesRequest);
     yield takeLatest(ChatMessagesActionsType.ADD_CHAT_MESSAGE, addChatMessageRequest);
+    yield takeLatest(ChatMessagesActionsType.ADD_CHAT_MESSAGE_WITH_TWEET, addChatMessageWithTweetRequest);
 }

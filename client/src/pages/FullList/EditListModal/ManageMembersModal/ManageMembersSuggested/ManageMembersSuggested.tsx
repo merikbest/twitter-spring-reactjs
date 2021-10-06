@@ -1,6 +1,5 @@
 import React, {FC, FormEvent, ReactElement, useState} from 'react';
 import {InputAdornment} from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/SearchOutlined";
 
 import {useManageMembersSuggestedStyles} from "./ManageMembersSuggestedStyles";
 import {ManageMembersInput} from "./ManageMembersInput/ManageMembersInput";
@@ -8,6 +7,7 @@ import {User} from "../../../../../store/ducks/user/contracts/state";
 import {UserApi} from "../../../../../services/api/userApi";
 import ManageMembersItem from "../ManageMembersItem/ManageMembersItem";
 import {Lists} from "../../../../../store/ducks/lists/contracts/state";
+import {SearchIcon} from "../../../../../icons";
 
 interface ManageMembersSuggestedProps {
     list: Lists;
@@ -37,7 +37,7 @@ const ManageMembersSuggested: FC<ManageMembersSuggestedProps> = ({list}): ReactE
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
-                                <SearchIcon/>
+                                {SearchIcon}
                             </InputAdornment>
                         ),
                     }}

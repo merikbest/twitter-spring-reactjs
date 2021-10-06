@@ -1,7 +1,6 @@
 import React, {FC, ReactElement, useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Avatar, Button, Grid, IconButton, InputAdornment, List, ListItem, Paper, Typography} from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/SearchOutlined";
 
 import {useMessagesStyles} from "./MessagesStyles";
 import MessagesModal from "./MessagesModal/MessagesModal";
@@ -10,7 +9,7 @@ import {selectUserData} from "../../store/ducks/user/selectors";
 import {selectChatsItems} from "../../store/ducks/chats/selectors";
 import {PeopleSearchInput} from "./PeopleSearchInput/PeopleSearchInput";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
-import {CheckIcon, EmojiIcon, GifIcon, MediaIcon, SandMessageIcon} from "../../icons";
+import {CheckIcon, EmojiIcon, GifIcon, MediaIcon, SandMessageIcon, SearchIcon} from "../../icons";
 import {MessageInput} from "./MessageInput/MessageInput";
 import {Chat, ChatParticipant} from "../../store/ducks/chats/contracts/state";
 import {addChatMessage, fetchChatMessages} from "../../store/ducks/chatMessages/actionCreators";
@@ -58,7 +57,7 @@ const Messages: FC = (): ReactElement => {
     const handleListItemClick = (chat: Chat): void => {
         dispatch(fetchChatMessages(chat?.id!));
         dispatch(fetchReadMessages(chat?.id!));
-        setParticipant(chat.participants[0]);
+        setParticipant(chat.participants[1]);
         setChat(chat);
     };
 
@@ -108,7 +107,7 @@ const Messages: FC = (): ReactElement => {
                                         InputProps={{
                                             startAdornment: (
                                                 <InputAdornment position="start">
-                                                    <SearchIcon/>
+                                                    {SearchIcon}
                                                 </InputAdornment>
                                             ),
                                         }}

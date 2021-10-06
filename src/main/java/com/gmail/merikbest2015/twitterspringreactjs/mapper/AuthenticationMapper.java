@@ -1,5 +1,8 @@
 package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
+import com.gmail.merikbest2015.twitterspringreactjs.dto.request.AuthenticationRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.request.PasswordResetRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.request.RegistrationRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.AuthenticationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
@@ -16,16 +19,16 @@ public class AuthenticationMapper {
     private final UserMapper userMapper;
     private final AuthenticationService authenticationService;
 
-    public AuthenticationResponse login(String email, String password) {
-        Map<String, Object> credentials = authenticationService.login(email, password);
+    public AuthenticationResponse login(AuthenticationRequest request) {
+        Map<String, Object> credentials = authenticationService.login(request.getEmail(), request.getPassword());
         AuthenticationResponse response = new AuthenticationResponse();
         response.setUser(userMapper.convertToUserResponse((User) credentials.get("user")));
         response.setToken((String) credentials.get("token"));
         return response;
     }
 
-    public String registration(String email, String username, String birthday) {
-        return authenticationService.registration(email, username, birthday);
+    public String registration(RegistrationRequest request) {
+        return authenticationService.registration(request.getEmail(), request.getUsername(), request.getBirthday());
     }
 
     public AuthenticationResponse getUserByToken() {
@@ -48,8 +51,8 @@ public class AuthenticationMapper {
         return userMapper.convertToUserResponse(authenticationService.findByPasswordResetCode(code));
     }
 
-    public String passwordReset(String email, String password, String password2) {
-        return authenticationService.passwordReset(email, password, password2);
+    public String passwordReset(PasswordResetRequest request) {
+        return authenticationService.passwordReset(request.getEmail(), request.getPassword(), request.getPassword2());
     }
 
     public String findEmail(String email) {
@@ -60,8 +63,8 @@ public class AuthenticationMapper {
         return authenticationService.sendRegistrationCode(email);
     }
 
-    public AuthenticationResponse endRegistration(String email, String password) {
-        Map<String, Object> credentials = authenticationService.endRegistration(email, password);
+    public AuthenticationResponse endRegistration(RegistrationRequest request) {
+        Map<String, Object> credentials = authenticationService.endRegistration(request.getEmail(), request.getPassword());
         AuthenticationResponse authenticationResponse = new AuthenticationResponse();
         authenticationResponse.setUser(userMapper.convertToUserResponse((User) credentials.get("user")));
         authenticationResponse.setToken((String) credentials.get("token"));

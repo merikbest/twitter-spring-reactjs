@@ -127,7 +127,7 @@ public class TweetController {
 
     @PostMapping("/vote")
     public ResponseEntity<TweetResponse> voteInPoll(@RequestBody VoteRequest voteRequest) {
-        TweetResponse tweet = tweetMapper.voteInPoll(voteRequest.getTweetId(), voteRequest.getPollChoiceId());
+        TweetResponse tweet = tweetMapper.voteInPoll(voteRequest);
         messagingTemplate.convertAndSend("/topic/feed", tweet);
         messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
         messagingTemplate.convertAndSend("/topic/user/update/tweet/" + tweet.getUser().getId(), tweet);

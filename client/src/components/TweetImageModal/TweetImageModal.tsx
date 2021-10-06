@@ -233,7 +233,7 @@ const TweetImageModal: FC<HoverProps<Tweet> & HoverActionProps> = (
                                 </IconButton>
                             </div>
                             <ShareTweet
-                                tweetId={tweetData!.id}
+                                tweet={tweetData}
                                 isFullTweet={false}
                                 visibleShareAction={visibleShareAction}
                                 handleHoverAction={handleHoverAction}
