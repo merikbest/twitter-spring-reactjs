@@ -40,7 +40,7 @@ public class ChatServiceImpl implements ChatService {
         User user = userRepository.findByEmail(principal.getName());
         User participant = userRepository.getOne(userId);
         Optional<Chat> chatWithParticipant = user.getChats().stream()
-                .filter(chat -> chat.getParticipants().get(0).getId().equals(participant.getId()))
+                .filter(chat -> chat.getParticipants().get(1).getId().equals(participant.getId()))
                 .findFirst();
 
         if (chatWithParticipant.isEmpty()) {
@@ -92,7 +92,7 @@ public class ChatServiceImpl implements ChatService {
         chatMessage.setTweet(tweet);
         users.forEach(user -> {
             Optional<Chat> chatWithParticipant = author.getChats().stream()
-                    .filter(c -> c.getParticipants().get(0).getId().equals(user.getId()))
+                    .filter(c -> c.getParticipants().get(1).getId().equals(user.getId()))
                     .findFirst();
 
             if (chatWithParticipant.isEmpty()) {
@@ -100,9 +100,7 @@ public class ChatServiceImpl implements ChatService {
                 chat.setParticipants(Arrays.asList(author, user));
                 Chat newChat = chatRepository.save(chat);
                 chatMessage.setChat(newChat);
-                ChatMessage newChatMessage = chatMessageRepository.save(chatMessage);
-//                List<ChatMessage> messages = chat.getMessages();
-//                messages.add(newChatMessage);
+                chatMessageRepository.save(chatMessage);
             } else {
                 chatMessage.setChat(chatWithParticipant.get());
                 ChatMessage newChatMessage = chatMessageRepository.save(chatMessage);

@@ -22,10 +22,20 @@ import {Tweet} from "../../../store/ducks/tweets/contracts/state";
 interface SendDirectTweetModalProps {
     tweet: Tweet;
     visible?: boolean;
+    onSendDirectTweet: () => void;
+    closeShareTweet: () => void;
     onClose: () => void;
 }
 
-const SendDirectTweetModal: FC<SendDirectTweetModalProps> = ({tweet, visible, onClose}): ReactElement | null => {
+const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
+    {
+        tweet,
+        visible,
+        onSendDirectTweet,
+        closeShareTweet,
+        onClose
+    }
+): ReactElement | null => {
     const classes = useSendDirectTweetModalStyles();
     const dispatch = useDispatch();
     const users = useSelector(selectUsersSearch);
@@ -72,11 +82,13 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = ({tweet, visible, on
 
     const handleClickSendMessage = (): void => {
         dispatch(addChatMessageWithTweet({text: message, tweet: tweet, users: selectedUsers}));
+        onSendDirectTweet();
         setSearchText("");
         setMessage("");
         setSelectedIndexes([]);
         setSelectedUsers([]);
         onClose();
+        closeShareTweet();
     };
 
     const DirectUserItems = (user: User): JSX.Element => {
@@ -141,7 +153,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = ({tweet, visible, on
                     {searchText ? (
                         users.map((user) => <DirectUserItems {...user}/>)
                     ) : (
-                        chats.map((chat) => <DirectUserItems {...chat.participants[0] as User}/>)
+                        chats.map((chat) => <DirectUserItems {...chat.participants[1] as User}/>)
                     )}
                 </List>
                 <div className={classes.footer}>

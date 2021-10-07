@@ -12,7 +12,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByEmail(String email);
 
-    List<User> findByFullNameOrUsernameContaining(@Param("fullName") String fullName, @Param("username") String username);
+    List<User> findByFullNameOrUsernameContainingIgnoreCase(
+            @Param("fullName") String fullName,
+            @Param("username") String username);
 
     User findByActivationCode(String code);
 

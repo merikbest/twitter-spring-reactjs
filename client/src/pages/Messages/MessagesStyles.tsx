@@ -168,16 +168,61 @@ export const useMessagesStyles = makeStyles((theme: Theme) => ({
         height: 900,
         overflowY: "auto",
     },
-    myMessage: {
+    tweetContainer: {
         marginTop: 10,
         display: "flex",
         flexDirection: "row-reverse",
+        "& a": {
+            color: "inherit",
+            textDecoration: "none",
+        },
+    },
+    tweetWrapper: {
+        border: "1px solid rgb(29, 161, 242)",
+        borderRadius: "16px 16px 0px 16px",
+        padding: 12,
+        width: 384,
+        "&:hover": {
+            cursor: "pointer",
+            backgroundColor: "rgb(247, 249, 249)",
+        },
+    },
+    tweetUserInfoWrapper: {
+        display: "flex",
+    },
+    tweetAvatar: {
+        width: "18px !important",
+        height: "18px !important",
+    },
+    tweetUserFullName: {
+        marginLeft: 3,
+        fontWeight: 700,
+        fontSize: 15,
+    },
+    tweetUsername: {
+        marginLeft: 3,
+        color: "rgb(83, 100, 113)",
+        fontSize: 15,
+    },
+    myMessage: {
+        display: "flex",
+        flexDirection: "row-reverse",
         "& span": {
-            borderRadius: "16px 16px 0px 16px",
             backgroundColor: "rgb(29, 161, 242)",
             color: "#fff",
             padding: "11px 15px",
             maxWidth: 384,
+        },
+    },
+    myMessageCommon: {
+        marginTop: 10,
+        "& span": {
+            borderRadius: "16px 16px 0px 16px",
+        },
+    },
+    myMessageWithTweet: {
+        "& span": {
+            borderRadius: "0px 0px 0px 16px",
         },
     },
     myMessageDate: {
@@ -189,15 +234,64 @@ export const useMessagesStyles = makeStyles((theme: Theme) => ({
         "& svg": {
             marginLeft: 5,
             height: "1.2em",
-            color: "rgb(29, 161, 242)",
+            color: "rgb(29, 161, 242)"
+        },
+    },
+    participantContainer: {
+        display: "flex",
+        flexDirection: "row",
+    },
+    participantTweetContainer: {
+        marginTop: 10,
+        display: "flex",
+        alignItems: "flex-start",
+        "& a": {
+            color: "inherit",
+            textDecoration: "none"
+        },
+    },
+    participantTweetWrapper: {
+        border: "1px solid rgb(239, 243, 244)",
+        borderRadius: "16px 16px 16px 0px",
+        padding: 12,
+        width: 384,
+        "&:hover": {
+            cursor: "pointer",
+            backgroundColor: "rgb(247, 249, 249)"
+        },
+    },
+    participantTweetInfoWrapper: {
+        display: "flex",
+    },
+    participantTweetAvatar: {
+        width: "18px !important",
+        height: "18px !important",
+    },
+    participantTweetFullName: {
+        marginLeft: 3,
+        fontWeight: 700,
+        fontSize: 15,
+    },
+    participantTweetUsername: {
+        marginLeft: 3,
+        color: "rgb(83, 100, 113)",
+        fontSize: 15,
+    },
+    participantMessageCommon: {
+        marginTop: 10,
+        "& span": {
+            borderRadius: "16px 16px 16px 0px",
+        },
+    },
+    participantMessageWithTweet: {
+        "& span": {
+            borderRadius: "0px 0px 16px 0px",
         },
     },
     participantMessage: {
         display: "flex",
-        alignItems: 'flex-start',
-        marginTop: 10,
+        alignItems: "flex-start",
         "& span": {
-            borderRadius: "16px 16px 16px 0px",
             backgroundColor: "rgb(239, 243, 244)",
             padding: "11px 16px",
             maxWidth: 384,

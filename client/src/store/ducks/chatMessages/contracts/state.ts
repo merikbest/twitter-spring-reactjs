@@ -9,7 +9,7 @@ export interface ChatMessage {
     date: string;
     author: ChatParticipant;
     chat: Chat;
-    tweet: Tweet;
+    tweet?: Tweet;
 }
 
 export interface ChatMessageRequest {

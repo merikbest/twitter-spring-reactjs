@@ -8,7 +8,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 
 import {useMessagesModalStyles} from "./MessagesModalStyles";
 import {MessagesModalInput} from "./MessagesModalInput/MessagesModalInput"
-import {fetchUsersSearchByUsername} from "../../../store/ducks/usersSearch/actionCreators";
+import {fetchUsersSearchByUsername, setUsersSearch} from "../../../store/ducks/usersSearch/actionCreators";
 import {selectUsersSearch} from "../../../store/ducks/usersSearch/selectors";
 import MessagesModalUser from './MessagesModalUser/MessagesModalUser';
 import {User} from "../../../store/ducks/user/contracts/state";
@@ -33,8 +33,20 @@ const MessagesModal: FC<MessagesModalProps> = ({visible, onClose}): ReactElement
         dispatch(fetchUsersSearchByUsername(encodeURIComponent(text)));
     };
 
+    const onSearch = (text: string): void => {
+        if (text) {
+            setText(text);
+            dispatch(fetchUsersSearchByUsername(encodeURIComponent(text)));
+        } else {
+            setText("");
+            dispatch(setUsersSearch([]));
+        }
+    };
+
     const handleClickAddUserToChat = (): void => {
         dispatch(createChat(selectedUser?.id!));
+        dispatch(setUsersSearch([]));
+        onClose();
     };
 
     const handleListItemClick = (user: User): void => {
@@ -70,7 +82,7 @@ const MessagesModal: FC<MessagesModalProps> = ({visible, onClose}): ReactElement
                         fullWidth
                         placeholder="Explore people"
                         variant="outlined"
-                        onChange={(event) => setText(event.target.value)}
+                        onChange={(event) => onSearch(event.target.value)}
                         value={text}
                         InputProps={{
                             startAdornment: (

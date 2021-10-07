@@ -1,6 +1,7 @@
 import React, {FC, ReactElement, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useLocation} from "react-router-dom";
+import CopyToClipboard from 'react-copy-to-clipboard';
 import {ClickAwayListener, IconButton, List, ListItem, Snackbar} from "@material-ui/core";
 
 import {useShareTweetModalStyles} from "./ShareTweetStyles";
@@ -9,7 +10,6 @@ import {selectUserData} from "../../store/ducks/user/selectors";
 import {addTweetToBookmarks} from "../../store/ducks/user/actionCreators";
 import {removeTweetFromBookmarks} from "../../store/ducks/tweets/actionCreators";
 import {CLIENT_URL} from "../../util/url";
-import CopyToClipboard from 'react-copy-to-clipboard';
 import {TweetActions} from "../TweetComponent/TweetComponent";
 import HoverAction from "../HoverAction/HoverAction";
 import SendDirectTweetModal from "./SendDirectTweetModal/SendDirectTweetModal";
@@ -38,6 +38,7 @@ const ShareTweet: FC<ShareTweetProps> = (
     const myProfile = useSelector(selectUserData);
     const [open, setOpen] = useState<boolean>(false);
     const [openSnackBar, setOpenSnackBar] = useState<boolean>(false);
+    const [snackBarMessage, setSnackBarMessage] = useState<string>("");
     const [visibleSendDirectTweetModal, setVisibleSendDirectTweetModal] = useState<boolean>(false);
     const isBookmarked = myProfile?.bookmarks?.find((bookmark) => bookmark.tweet.id === tweet.id);
 
@@ -63,16 +64,29 @@ const ShareTweet: FC<ShareTweetProps> = (
         if (location.pathname.includes("/bookmarks")) {
             dispatch(removeTweetFromBookmarks(tweet.id));
         }
+        setOpenSnackBar(true);
+        setSnackBarMessage("Tweet added to your Bookmarks");
         setOpen(false);
     };
 
     const onCopyLinkToTweet = (): void => {
         setOpenSnackBar(true);
+        setSnackBarMessage("Copied to clipboard");
+        setOpen(false);
+    };
+
+    const onSendDirectTweet = (): void => {
+        setOpenSnackBar(true);
+        setSnackBarMessage("Your Tweet was sent");
         setOpen(false);
     };
 
     const onCloseSnackBar = (): void => {
         setOpenSnackBar(false);
+    };
+
+    const closeShareTweet = (): void => {
+        setOpen(false);
     };
 
     return (
@@ -116,13 +130,15 @@ const ShareTweet: FC<ShareTweetProps> = (
                     <SendDirectTweetModal
                         tweet={tweet}
                         visible={visibleSendDirectTweetModal}
+                        onSendDirectTweet={onSendDirectTweet}
+                        closeShareTweet={closeShareTweet}
                         onClose={onCloseSendViaDirectMessage}
                     />
                     <Snackbar
                         className={classes.snackBar}
                         anchorOrigin={{horizontal: "center", vertical: "bottom"}}
                         open={openSnackBar}
-                        message="Copied to clipboard"
+                        message={snackBarMessage}
                         onClose={onCloseSnackBar}
                         autoHideDuration={3000}
                     />
