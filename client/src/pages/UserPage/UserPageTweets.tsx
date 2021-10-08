@@ -14,13 +14,15 @@ interface UserPageTweetsProps {
     username?: string;
 }
 
-const UserPageTweets: FC<UserPageTweetsProps> = ({
-                                                     tweets,
-                                                     activeTab,
-                                                     userProfileId,
-                                                     myProfileId,
-                                                     username
-                                                 }): ReactElement => {
+const UserPageTweets: FC<UserPageTweetsProps> = (
+    {
+        tweets,
+        activeTab,
+        userProfileId,
+        myProfileId,
+        username
+    }
+): ReactElement => {
     const classes = useUserPageStyles();
     const [visibleAddTweet, setSetVisibleAddTweet] = useState<boolean>(false);
 

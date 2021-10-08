@@ -27,8 +27,8 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
         },
     },
     avatar: {
-        width: theme.spacing(6.5),
-        height: theme.spacing(6.5),
+        width: "46px !important",
+        height: "46px !important",
         marginRight: 15,
     },
     headerWrapper: {

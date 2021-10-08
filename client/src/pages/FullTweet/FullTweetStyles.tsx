@@ -46,8 +46,8 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
         display: 'flex',
     },
     avatar: {
-        width: theme.spacing(6.5),
-        height: theme.spacing(6.5),
+        width: "46px !important",
+        height: "46px !important",
         marginRight: 15,
     },
     username: {

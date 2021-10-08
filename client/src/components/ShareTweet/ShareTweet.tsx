@@ -65,7 +65,7 @@ const ShareTweet: FC<ShareTweetProps> = (
             dispatch(removeTweetFromBookmarks(tweet.id));
         }
         setOpenSnackBar(true);
-        setSnackBarMessage("Tweet added to your Bookmarks");
+        setSnackBarMessage(isBookmarked ? "Tweet removed to your Bookmarks" : "Tweet added to your Bookmarks");
         setOpen(false);
     };
 

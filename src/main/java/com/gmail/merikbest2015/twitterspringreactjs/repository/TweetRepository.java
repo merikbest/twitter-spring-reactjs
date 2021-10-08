@@ -21,4 +21,6 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     List<Tweet> findByImagesIsNotNullOrderByDateTimeDesc();
 
     List<Tweet> findByImagesIsNotNullAndUserOrderByDateTimeDesc(User user);
+
+    List<Tweet> findByQuoteTweet_Id(Long id);
 }

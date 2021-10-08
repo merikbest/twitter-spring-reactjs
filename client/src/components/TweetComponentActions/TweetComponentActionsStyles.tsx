@@ -62,4 +62,17 @@ export const useTweetComponentMoreStyles = makeStyles((theme: Theme) => createSt
             height: "1.30em",
         },
     },
+    snackBar: {
+        "& .MuiSnackbarContent-root": {
+            minWidth: 179,
+            height: 44,
+            padding: "0px 10px",
+            backgroundColor: "rgb(29, 161, 242)",
+            "& .MuiSnackbarContent-message": {
+                fontSize: 15,
+                margin: "0 auto",
+                textAlign: "center",
+            },
+        },
+    },
 }));

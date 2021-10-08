@@ -42,6 +42,7 @@ public class TweetServiceImpl implements TweetService {
     private final PollRepository pollRepository;
     private final PollChoiceRepository pollChoiceRepository;
     private final BookmarkRepository bookmarkRepository;
+    private final ChatMessageRepository chatMessageRepository;
     private final RestTemplate restTemplate;
 
     @Value("${google.api.key}")
@@ -109,9 +110,9 @@ public class TweetServiceImpl implements TweetService {
         Tweet tweet = user.getTweets().stream()
                 .filter(t -> t.getId().equals(tweetId))
                 .findFirst().get();
-        tweet.getImages().forEach(imageRepository::delete);
-        tweet.getLikedTweets().forEach(likeTweetRepository::delete);
-        tweet.getRetweets().forEach(retweetRepository::delete);
+        imageRepository.deleteAll(tweet.getImages());
+        likeTweetRepository.deleteAll(tweet.getLikedTweets());
+        retweetRepository.deleteAll(tweet.getRetweets());
         tweet.getReplies().forEach(reply -> reply.getUser().getTweets()
                 .removeIf(replyingTweet -> replyingTweet.equals(reply)));
         List<Tweet> replies = new ArrayList<>(tweet.getReplies());
@@ -144,6 +145,28 @@ public class TweetServiceImpl implements TweetService {
             tweetRepository.delete(tweet);
             return addressedTweet;
         }
+        List<Tag> tags = tagRepository.findByTweets_Id(tweetId);
+        tags.forEach(tag -> {
+            tag.getTweets().remove(tweet);
+            long tweetsQuantity = tag.getTweetsQuantity() - 1;
+
+            if (tweetsQuantity == 0) {
+                tagRepository.delete(tag);
+            } else {
+                tag.setTweetsQuantity(tweetsQuantity);
+            }
+        });
+        List<ChatMessage> messagesWithTweet = chatMessageRepository.findByTweet_Id(tweet.getId());
+        messagesWithTweet
+                .forEach(chatMessage -> chatMessage.getChat().getParticipants()
+                        .forEach(participant -> {
+                            participant.getUnreadMessages().remove(chatMessage);
+//                            System.out.println("=> " + participant);
+                        }));
+//        chatMessageRepository.deleteAll(messagesWithTweet);
+
+        List<Tweet> tweetsWithQuote = tweetRepository.findByQuoteTweet_Id(tweetId);
+        tweetsWithQuote.forEach(quote -> quote.setQuoteTweet(null));
 
         if (user.getPinnedTweet() != null) {
             user.setPinnedTweet(null);

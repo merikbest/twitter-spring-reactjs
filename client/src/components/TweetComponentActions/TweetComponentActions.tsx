@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {ClickAwayListener, IconButton, List, ListItem} from "@material-ui/core";
+import {ClickAwayListener, IconButton, List, ListItem, Snackbar} from "@material-ui/core";
 
 import {useTweetComponentMoreStyles} from "./TweetComponentActionsStyles";
 import {
@@ -58,6 +58,8 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
     const [openChangeReplyDropdown, setChangeReplyDropdown] = useState<boolean>(false);
     const [visibleTweetPinModal, setVisibleTweetPinModal] = useState<boolean>(false);
     const [visibleListsModal, setVisibleListsModal] = useState<boolean>(false);
+    const [openSnackBar, setOpenSnackBar] = useState<boolean>(false);
+    const [snackBarMessage, setSnackBarMessage] = useState<string>("");
     const [modalTitle, setModalTitle] = useState<string>("");
 
     const follower = myProfile?.followers?.find((follower) => follower.id === tweet.user.id);
@@ -88,7 +90,14 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
     };
 
     const onPinUserTweet = (): void => {
-        dispatch(fetchPinTweet(tweet.id));
+        if (isTweetPinned) {
+            dispatch(fetchPinTweet(tweet.id));
+            setSnackBarMessage("Your Tweet was unpinned from your profile");
+        } else {
+            dispatch(fetchPinTweet(tweet.id));
+            setSnackBarMessage("Your Tweet was pinned to your profile.");
+        }
+        setOpenSnackBar(true);
         setOpenActionsDropdown(false);
         setVisibleTweetPinModal(false);
     };
@@ -101,6 +110,8 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
         } else {
             dispatch(fetchDeleteTweet(tweet.id));
         }
+        setSnackBarMessage("Your Tweet was deleted");
+        setOpenSnackBar(true);
         setOpenActionsDropdown(false);
         setVisibleTweetPinModal(false);
     };
@@ -114,7 +125,16 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
     };
 
     const onChangeTweetReplyType = (replyType: ReplyType): void => {
-        dispatch(fetchChangeReplyType({tweetId: tweet.id, replyType}))
+        dispatch(fetchChangeReplyType({tweetId: tweet.id, replyType}));
+
+        if (replyType === ReplyType.EVERYONE) {
+            setSnackBarMessage("Everyone can reply now");
+        } else if (replyType === ReplyType.FOLLOW) {
+            setSnackBarMessage("People you follow can reply now");
+        } else {
+            setSnackBarMessage("Only you can reply now");
+        }
+        setOpenSnackBar(true);
         setChangeReplyDropdown(false);
         setOpenActionsDropdown(false);
     };
@@ -134,6 +154,10 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
 
     const onCloseListsModal = (): void => {
         setVisibleListsModal(false);
+    };
+
+    const onCloseSnackBar = (): void => {
+        setOpenSnackBar(false);
     };
 
     return (
@@ -255,6 +279,14 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
                         replyType={tweet.replyType}
                         openChangeReplyDropdown={openChangeReplyDropdown}
                         onChangeTweetReplyType={onChangeTweetReplyType}
+                    />
+                    <Snackbar
+                        className={classes.snackBar}
+                        anchorOrigin={{horizontal: "center", vertical: "bottom"}}
+                        open={openSnackBar}
+                        message={snackBarMessage}
+                        onClose={onCloseSnackBar}
+                        autoHideDuration={3000}
                     />
                 </div>
             </ClickAwayListener>

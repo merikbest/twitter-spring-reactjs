@@ -12,6 +12,10 @@ export const useUsersItemStyles = makeStyles((theme: Theme) => ({
         },
         '& .MuiListItemAvatar-root': {
             minWidth: 50,
+            "& .MuiAvatar-root": {
+                width: "46px !important",
+                height: "46px !important",
+            },
         },
         '& .MuiListItemText-root': {
             // marginRight: 45,

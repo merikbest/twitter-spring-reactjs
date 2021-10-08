@@ -16,14 +16,16 @@ interface TweetComponentActionsModalProps {
     onDeleteUserTweet: () => void;
 }
 
-const TweetComponentActionsModal: FC<TweetComponentActionsModalProps> = ({
-                                                                             modalTitle,
-                                                                             isTweetPinned,
-                                                                             visibleTweetComponentActionsModal,
-                                                                             onCloseTweetComponentActionsModal,
-                                                                             onPinUserTweet,
-                                                                             onDeleteUserTweet
-                                                                         }): ReactElement => {
+const TweetComponentActionsModal: FC<TweetComponentActionsModalProps> = (
+    {
+        modalTitle,
+        isTweetPinned,
+        visibleTweetComponentActionsModal,
+        onCloseTweetComponentActionsModal,
+        onPinUserTweet,
+        onDeleteUserTweet
+    }
+): ReactElement => {
     const classes = useTweetComponentActionsModalStyles({modalTitle});
 
     return (

@@ -16,11 +16,13 @@ interface TweetComponentChangeReplyProps {
     onChangeTweetReplyType: (replyType: ReplyType) => void
 }
 
-const TweetComponentChangeReply: FC<TweetComponentChangeReplyProps> = ({
-                                                                           replyType,
-                                                                           openChangeReplyDropdown,
-                                                                           onChangeTweetReplyType
-                                                                       }): ReactElement => {
+const TweetComponentChangeReply: FC<TweetComponentChangeReplyProps> = (
+    {
+        replyType,
+        openChangeReplyDropdown,
+        onChangeTweetReplyType
+    }
+): ReactElement => {
     const classes = useTweetComponentChangeReplyStyles();
 
     return (

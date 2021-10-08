@@ -5,7 +5,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import {IconButton, Popover} from "@material-ui/core";
+import {IconButton, Popover, Snackbar} from "@material-ui/core";
 import {EmojiData, Picker} from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
 import EmojiConvertor from 'emoji-js';
@@ -77,6 +77,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
     const isTweetsLoading = useSelector(selectIsTweetsLoading);
     const isReplyLoading = useSelector(selectIsTweetLoading);
     const userData = useSelector(selectUserData);
+
     const [text, setText] = useState<string>('');
     const [images, setImages] = useState<ImageObj[]>([]);
     const [replyType, setReplyType] = useState<ReplyType>(ReplyType.EVERYONE);
@@ -86,6 +87,8 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
     const [visibleAddEmojiAction, setVisibleAddEmojiAction] = useState<boolean>(false);
     const [visibleAddScheduleAction, setVisibleAddScheduleAction] = useState<boolean>(false);
     const [delayHandler, setDelayHandler] = useState<any>(null);
+    const [openSnackBar, setOpenSnackBar] = useState<boolean>(false);
+    const [snackBarMessage, setSnackBarMessage] = useState<string>("");
     // Popover
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -143,6 +146,8 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
             }));
         }
 
+        setSnackBarMessage("Your tweet was added.");
+        setOpenSnackBar(true);
         setText('');
         setImages([]);
         setVisiblePoll(false);
@@ -164,6 +169,8 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
             tweetId: quoteTweet!.id,
         }));
 
+        setSnackBarMessage("Your tweet was sent.");
+        setOpenSnackBar(true);
         setText("");
         setImages([]);
 
@@ -189,6 +196,9 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
             images: result,
             replyType: replyType
         }));
+
+        setSnackBarMessage("Your tweet was sent.");
+        setOpenSnackBar(true);
         setText("");
         setImages([]);
 
@@ -251,6 +261,10 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
         setVisibleAddPollAction(false);
         setVisibleAddEmojiAction(false);
         setVisibleAddScheduleAction(false);
+    };
+
+    const onCloseSnackBar = (): void => {
+        setOpenSnackBar(false);
     };
 
     return (
@@ -408,6 +422,14 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
                         onSelect={emojiTag => addEmoji(emojiTag)}
                         set={'twitter'}/>
                 </Popover>
+                <Snackbar
+                    className={classes.snackBar}
+                    anchorOrigin={{horizontal: "center", vertical: "bottom"}}
+                    open={openSnackBar}
+                    message={snackBarMessage}
+                    onClose={onCloseSnackBar}
+                    autoHideDuration={3000}
+                />
             </div>
         </div>
     );
