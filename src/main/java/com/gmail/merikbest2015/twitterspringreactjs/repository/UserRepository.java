@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.repository;
 
+import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
@@ -21,4 +22,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByPasswordResetCode(String code);
 
     List<User> findTop5By();
+
+    List<User> findByUnreadMessages_Tweet(Tweet tweet);
 }

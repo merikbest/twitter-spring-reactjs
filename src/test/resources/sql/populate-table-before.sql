@@ -36,6 +36,7 @@ INSERT INTO tweet_pool (tweet_id, pool_id) VALUES (40 ,2);
 
 -- tweet_quote
 INSERT INTO tweet_quote (tweets_id, quote_tweet_id) VALUES (44, 43);
+INSERT INTO tweet_quote (tweets_id, quote_tweet_id) VALUES (45, 40);
 
 -- tweets_images
 INSERT INTO tweets_images (tweet_id, images_id) VALUES (45, 1);
@@ -67,9 +68,11 @@ INSERT INTO pool_choices_voted_user (poll_choice_id, voted_user_id) VALUES (4, 1
 
 -- tags
 INSERT INTO tags (id, tag_name, tweets_quantity) VALUES (2, '#JetBrains', 1);
+INSERT INTO tags (id, tag_name, tweets_quantity) VALUES (3, '#test', 1);
 
 -- tweets_tags
 INSERT INTO tweets_tags (tags_id, tweets_id) VALUES (2, 43);
+INSERT INTO tweets_tags (tags_id, tweets_id) VALUES (3, 40);
 
 -- bookmarks
 INSERT INTO bookmarks (id, bookmark_date, tweet_id) VALUES (2, '2021-10-03 20:35:53.000000', 40);
@@ -82,12 +85,13 @@ INSERT INTO chat_to_user (chat_id, user_id) VALUES (8, 2);
 INSERT INTO chat_to_user (chat_id, user_id) VALUES (8, 1);
 
 -- chat_messages
-INSERT INTO chat_messages (id, date, text, user_id, chat_id) VALUES (5, '2021-10-03 20:39:55.000000', 'hello from MrCat', 2, 8);
-INSERT INTO chat_messages (id, date, text, user_id, chat_id) VALUES (6, '2021-10-03 20:40:19.000000', 'hello from Vbhjckfd1', 1, 8);
-INSERT INTO chat_messages (id, date, text, user_id, chat_id) VALUES (7, '2021-10-03 20:41:03.000000', 'test message 2 from Vbhjckfd1', 1, 8);
+INSERT INTO chat_messages (id, date, text, user_id, chat_id, tweet_id) VALUES (5, '2021-10-03 20:39:55.000000', 'hello from MrCat', 2, 8, 40);
+INSERT INTO chat_messages (id, date, text, user_id, chat_id, tweet_id) VALUES (6, '2021-10-03 20:40:19.000000', 'hello from Vbhjckfd1', 1, 8, null);
+INSERT INTO chat_messages (id, date, text, user_id, chat_id, tweet_id) VALUES (7, '2021-10-03 20:41:03.000000', 'test message 2 from Vbhjckfd1', 1, 8, null);
 
 -- unread_messages
 INSERT INTO unread_messages (user_id, chat_message_id) VALUES (2, 7);
+INSERT INTO unread_messages (user_id, chat_message_id) VALUES (1, 5);
 
 -- lists
 INSERT INTO lists (id, alt_wallpaper, description, private, name, user_id, wallpaper_id, pinned_date) VALUES (4, 'https://pbs.twimg.com/media/EXZ2rMvVAAAAfrN?format=png&name=small', 'test list description', false, 'test list name', 2, null, '2021-10-03 20:42:53.000000');

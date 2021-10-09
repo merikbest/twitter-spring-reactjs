@@ -202,7 +202,7 @@ public class TweetControllerTest {
                 .andExpect(jsonPath("$.linkTitle").value(LINK_TITLE))
                 .andExpect(jsonPath("$.linkDescription").value(LINK_DESCRIPTION))
                 .andExpect(jsonPath("$.linkCover").value(LINK_COVER))
-                .andExpect(jsonPath("$.linkCoverSize").value(LinkCoverSize.LARGE.toString()))
+                .andExpect(jsonPath("$.linkCoverSize").value(LinkCoverSize.SMALL.toString()))
                 .andExpect(jsonPath("$.quoteTweet").isEmpty())
                 .andExpect(jsonPath("$.user.id").value(2))
                 .andExpect(jsonPath("$.poll").isEmpty())

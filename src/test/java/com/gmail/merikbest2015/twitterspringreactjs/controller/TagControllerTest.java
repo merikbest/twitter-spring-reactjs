@@ -30,7 +30,7 @@ public class TagControllerTest {
     public void getTags() throws Exception {
         mockMvc.perform(get(URL_TAG_BASIC))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(1)))
+                .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
                 .andExpect(jsonPath("$[*].tagName").isNotEmpty())
                 .andExpect(jsonPath("$[*].tweetsQuantity").isNotEmpty());
@@ -41,7 +41,7 @@ public class TagControllerTest {
     public void getTrends() throws Exception {
         mockMvc.perform(get(URL_TAG_BASIC + "/trends"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(1)))
+                .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
                 .andExpect(jsonPath("$[*].tagName").isNotEmpty())
                 .andExpect(jsonPath("$[*].tweetsQuantity").isNotEmpty());
@@ -52,7 +52,7 @@ public class TagControllerTest {
     public void getTweetsByTag() throws Exception {
         mockMvc.perform(get(URL_TAG_BASIC + "/" + HASHTAG))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(1)))
+                .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
                 .andExpect(jsonPath("$[*].tagName").isNotEmpty())
                 .andExpect(jsonPath("$[*].tweetsQuantity").isNotEmpty());

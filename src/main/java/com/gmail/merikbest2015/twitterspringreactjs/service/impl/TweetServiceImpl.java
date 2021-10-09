@@ -156,14 +156,13 @@ public class TweetServiceImpl implements TweetService {
                 tag.setTweetsQuantity(tweetsQuantity);
             }
         });
-        List<ChatMessage> messagesWithTweet = chatMessageRepository.findByTweet_Id(tweet.getId());
-        messagesWithTweet
-                .forEach(chatMessage -> chatMessage.getChat().getParticipants()
-                        .forEach(participant -> {
-                            participant.getUnreadMessages().remove(chatMessage);
-//                            System.out.println("=> " + participant);
-                        }));
-//        chatMessageRepository.deleteAll(messagesWithTweet);
+        List<User> unreadMessagesWithTweet = userRepository.findByUnreadMessages_Tweet(tweet);
+        unreadMessagesWithTweet
+                .forEach(user1 -> user1.getUnreadMessages()
+                        .removeIf(chatMessage -> chatMessage.getTweet() != null
+                                && chatMessage.getTweet().getId().equals(tweet.getId())));
+        List<ChatMessage> messagesWithTweet = chatMessageRepository.findByTweet(tweet);
+        chatMessageRepository.deleteAll(messagesWithTweet);
 
         List<Tweet> tweetsWithQuote = tweetRepository.findByQuoteTweet_Id(tweetId);
         tweetsWithQuote.forEach(quote -> quote.setQuoteTweet(null));

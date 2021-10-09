@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.model;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Table(name = "chat_messages")
+@ToString(of = {"id"})
 public class ChatMessage {
 
     @Id
