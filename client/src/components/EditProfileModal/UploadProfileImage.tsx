@@ -13,7 +13,7 @@ interface UploadProfileImageProps {
 const UploadProfileImage: FC<UploadProfileImageProps> = ({setupProfile, name, image, onChangeImage}) => {
     const uploadRef = useRef<HTMLInputElement>(null);
 
-    const handleClickImage = () => {
+    const handleClickImage = (): void => {
         if (uploadRef.current) {
             uploadRef.current.click();
         }
@@ -51,14 +51,16 @@ const UploadProfileImage: FC<UploadProfileImageProps> = ({setupProfile, name, im
                     <input ref={uploadRef} type="file" id="upload-wallpaper-input" hidden/>
                 </> :
                 <>
-                    <IconButton onClick={handleClickImage}
-                                style={{
-                                    top: setupProfile ? 67 : 38,
-                                    left: setupProfile ? 68 : 55,
-                                    position: "absolute",
-                                    zIndex: 5,
-                                    color: "#fff"
-                                }}>
+                    <IconButton
+                        onClick={handleClickImage}
+                        style={{
+                            top: setupProfile ? 67 : 38,
+                            left: setupProfile ? 68 : 55,
+                            position: "absolute",
+                            zIndex: 5,
+                            color: "#fff"
+                        }}
+                    >
                         <PhotoCameraOutlinedIcon/>
                     </IconButton>
                     <input ref={uploadRef} type="file" id="upload-avatar-input" hidden/>

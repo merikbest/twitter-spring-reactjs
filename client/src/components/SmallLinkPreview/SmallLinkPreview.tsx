@@ -20,7 +20,9 @@ const SmallLinkPreview: FC<SmallLinkPreviewProps> = ({tweet, onOpenYouTubeVideo,
             return (
                 <div className={classes.container} onClick={onOpenYouTubeVideo}>
                     <div className={classes.linkPreviewImage}>
-                        <div className={classes.videoIcon}>{PlayVideoIcon}</div>
+                        <div className={classes.videoIcon}>
+                            {PlayVideoIcon}
+                        </div>
                     </div>
                     <LinkPreviewInfo/>
                 </div>
@@ -40,9 +42,15 @@ const SmallLinkPreview: FC<SmallLinkPreviewProps> = ({tweet, onOpenYouTubeVideo,
     const LinkPreviewInfo = (): JSX.Element => {
         return (
             <div className={classes.linkPreviewTitle}>
-                <div className={classes.linkTitle}>{tweet.linkTitle}</div>
-                <div className={classes.linkDescription}>{tweet.linkDescription}</div>
-                <div className={classes.link}>{LinkIcon}{domain}</div>
+                <div className={classes.linkTitle}>
+                    {tweet.linkTitle}
+                </div>
+                <div className={classes.linkDescription}>
+                    {tweet.linkDescription}
+                </div>
+                <div className={classes.link}>
+                    {LinkIcon}{domain}
+                </div>
             </div>
         );
     };

@@ -26,6 +26,16 @@ export const useUserPageActionsStyles = makeStyles((theme: Theme) => ({
                 backgroundColor: 'rgb(247, 249, 249)',
             },
         },
+        "& .MuiTypography-root": {
+            marginLeft: 12,
+            fontSize: 15,
+            fontWeight: 400,
+        },
+        "& svg": {
+            verticalAlign: "bottom",
+            fill: "rgb(83, 100, 113)",
+            height: "1.30em",
+        },
     },
     link: {
         width: "100%",
@@ -43,19 +53,6 @@ export const useUserPageActionsStyles = makeStyles((theme: Theme) => ({
         "& svg": {
             color: "rgb(27, 149, 224)",
             height: "1.6em",
-        },
-    },
-    text: {
-        fontSize: 15,
-        fontWeight: 400,
-    },
-    textIcon: {
-        marginRight: 12,
-        "& svg": {
-            verticalAlign: "bottom",
-            marginRight: 15,
-            fill: "rgb(83, 100, 113)",
-            height: "1.30em",
         },
     },
     snackBar: {

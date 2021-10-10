@@ -57,7 +57,7 @@ const SideMenu: FC = (): ReactElement => {
     return (
         <>
             <ul className={classes.container}>
-                <li className={classes.itemWrapper} style={{marginBottom: 2,}}>
+                <li className={classes.itemWrapper}>
                     <NavLink to="/home" activeClassName={"selected"}>
                         <IconButton color="primary">
                             <TwitterIcon className={classes.logoIcon}/>

@@ -1,6 +1,9 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 export const useConnectStyles = makeStyles((theme: Theme) => ({
+    container: {
+        paddingTop: 48,
+    },
     loading: {
         marginTop: 50,
         textAlign: 'center',

@@ -80,7 +80,9 @@ const PopperUserWindow: FC<PopperUserWindowProps> = ({user, isTweetComponent, is
                 </Link>
                 <div>@{user.username}</div>
             </div>
-            <div className={classes.userInfo}>{user.about}</div>
+            <div className={classes.userInfo}>
+                {user.about}
+            </div>
             <div className={classes.userFollowersWrapper}>
                 <Link to={`/user/${user?.id}/following`} className={classes.followLink}>
                     <span>

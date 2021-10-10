@@ -77,14 +77,20 @@ const QuoteTweet: FC<QuoteTweetProps> = (
                     <div className={classes.dropdown}>
                         <List>
                             <ListItem onClick={onClickRetweet}>
-                                <span className={classes.textIcon}>{RetweetOutlinedIcon}</span>
+                                <span className={classes.textIcon}>
+                                    {RetweetOutlinedIcon}
+                                </span>
                                 <span className={classes.text}>
                                     {isTweetRetweetedByMe ? ("Undo Retweet") : ("Retweet")}
                                 </span>
                             </ListItem>
                             <ListItem onClick={handleClickOpenAddTweet}>
-                                <span className={classes.textIcon}>{QuoteTweetIcon}</span>
-                                <span className={classes.text}>Quote Tweet</span>
+                                <span className={classes.textIcon}>
+                                    {QuoteTweetIcon}
+                                </span>
+                                <span className={classes.text}>
+                                    Quote Tweet
+                                </span>
                             </ListItem>
                         </List>
                     </div>

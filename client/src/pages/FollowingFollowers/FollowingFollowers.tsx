@@ -5,8 +5,6 @@ import Paper from '@material-ui/core/Paper';
 import {Button, CircularProgress, Typography} from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import IconButton from "@material-ui/core/IconButton";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 import {selectUserData, selectUserIsLoading} from "../../store/ducks/user/selectors";
 import {User} from "../../store/ducks/user/contracts/state";
@@ -27,6 +25,9 @@ const FollowingFollowers: FC = (): ReactElement => {
     const userProfile = useSelector(selectUserProfile);
     const isFollowersLoading = useSelector(selectUserIsLoading);
     const [activeTab, setActiveTab] = useState<number>(0);
+
+    const isMyProfile = (userProfile?.id === myProfile?.id);
+    const profileData = (isMyProfile) ? (myProfile) : (userProfile);
 
     useEffect(() => {
         if (params.follow === "following") {
@@ -67,73 +68,71 @@ const FollowingFollowers: FC = (): ReactElement => {
             <Paper className={classes.header}>
                 <BackButton/>
                 <div>
-                    <Typography variant="h6">{userProfile?.fullName}</Typography>
-                    <Typography variant="caption" display="block" gutterBottom>@{userProfile?.username}</Typography>
+                    <Typography component={"div"} className={classes.headerFullName}>
+                        {userProfile?.fullName}
+                    </Typography>
+                    <Typography component={"div"} className={classes.headerUsername}>
+                        @{userProfile?.username}
+                    </Typography>
                 </div>
             </Paper>
-            <div style={{paddingTop: 57,}}>
+            <div className={classes.contentWrapper}>
                 <div className={classes.tabs}>
                     <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
                         <Tab onClick={handleShowFollowing} className={classes.tab} label="Following"/>
                         <Tab onClick={handleShowFollowers} className={classes.tab} label="Followers"/>
                     </Tabs>
                 </div>
-                {isFollowersLoading ? (
+                {(isFollowersLoading) ? (
                     <div className={classes.loading}>
                         <CircularProgress/>
                     </div>
                 ) : (
                     (activeTab === 0) ? (
                         (userProfile?.followers?.length !== 0) ? (
-                            (userProfile?.id === myProfile?.id) ? (
-                                myProfile?.followers?.map((user) =>
-                                    <Follower item={user} follow={handleFollow} unfollow={handleUnfollow}/>)
-                            ) : (
-                                userProfile?.followers?.map((user) =>
-                                    <Follower item={user} follow={handleFollow} unfollow={handleUnfollow}/>))
+                            profileData?.followers?.map((user) => (
+                                <Follower key={user.id} item={user} follow={handleFollow} unfollow={handleUnfollow}/>
+                            ))
                         ) : (
                             <div className={classes.content}>
                                 <Typography className={classes.topic}>
-                                    {(userProfile?.id === myProfile?.id) ? (
+                                    {(isMyProfile) ? (
                                         "You aren’t following anyone yet"
                                     ) : (
                                         `@${userProfile.username} isn’t following anyone`
                                     )}
                                 </Typography>
                                 <Typography className={classes.text}>
-                                    {(userProfile?.id === myProfile?.id) ? (
+                                    {(isMyProfile) ? (
                                         "When you do, they’ll be listed here and you’ll see their Tweets in your timeline."
                                     ) : (
                                         "When they do, they’ll be listed here."
                                     )}
                                 </Typography>
                                 <Link to={"/home/connect"} className={classes.link}>
-                                    {(userProfile?.id === myProfile?.id) &&
-                                    <Button variant="contained" color="primary">
-                                        Find people to follow
-                                    </Button>
-                                    }
+                                    {(isMyProfile) && (
+                                        <Button variant="contained" color="primary">
+                                            Find people to follow
+                                        </Button>
+                                    )}
                                 </Link>
                             </div>)
                     ) : (
                         (userProfile?.following?.length !== 0) ? (
-                            (userProfile?.id === myProfile?.id) ? (
-                                myProfile?.following?.map((user) =>
-                                    <Follower item={user} follow={handleFollow} unfollow={handleUnfollow}/>)
-                            ) : (
-                                userProfile?.following?.map((user) =>
-                                    <Follower item={user} follow={handleFollow} unfollow={handleUnfollow}/>))
+                            profileData?.following?.map((user) => (
+                                <Follower key={user.id} item={user} follow={handleFollow} unfollow={handleUnfollow}/>
+                            ))
                         ) : (
                             <div className={classes.content}>
                                 <Typography className={classes.topic}>
-                                    {(userProfile?.id === myProfile?.id) ? (
+                                    {(isMyProfile) ? (
                                         "You don’t have any followers yet"
                                     ) : (
                                         `@${userProfile.username} doesn’t have any followers`
                                     )}
                                 </Typography>
                                 <Typography className={classes.text}>
-                                    {(userProfile?.id === myProfile?.id) ? (
+                                    {(isMyProfile) ? (
                                         "When someone follows you, you’ll see them here."
                                     ) : (
                                         "When someone follows them, they’ll be listed here."

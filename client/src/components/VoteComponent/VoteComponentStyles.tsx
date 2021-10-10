@@ -25,7 +25,6 @@ export const useVoteComponentStyles = makeStyles((theme: Theme) => ({
         borderRadius: 4,
         position: "absolute",
         height: 30,
-        // backgroundColor: "rgba(29, 155, 240, 0.58)",
         backgroundColor: "rgb(207, 217, 222)",
     },
     voteInfo: {

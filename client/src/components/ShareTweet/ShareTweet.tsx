@@ -105,24 +105,38 @@ const ShareTweet: FC<ShareTweetProps> = (
                         <div className={classes.dropdown}>
                             <List>
                                 <ListItem onClick={onClickSendViaDirectMessage}>
-                                    <span className={classes.textIcon}>{MessagesIcon}</span>
-                                    <span className={classes.text}>Send via Direct Message</span>
+                                    <span className={classes.textIcon}>
+                                        {MessagesIcon}
+                                    </span>
+                                    <span className={classes.text}>
+                                        Send via Direct Message
+                                    </span>
                                 </ListItem>
                                 <ListItem onClick={onClickAddTweetToBookmarks}>
-                                    <span className={classes.textIcon}>{AddBookmarksIcon}</span>
+                                    <span className={classes.textIcon}>
+                                        {AddBookmarksIcon}
+                                    </span>
                                     <span className={classes.text}>
                                         {isBookmarked ? "Remove Tweet from Bookmarks" : "Add Tweet to Bookmarks"}
                                     </span>
                                 </ListItem>
                                 <CopyToClipboard text={CLIENT_URL + location.pathname}>
                                     <ListItem onClick={onCopyLinkToTweet}>
-                                        <span className={classes.textIcon}>{LinkIcon}</span>
-                                        <span className={classes.text}>Copy link to Tweet</span>
+                                        <span className={classes.textIcon}>
+                                            {LinkIcon}
+                                        </span>
+                                        <span className={classes.text}>
+                                            Copy link to Tweet
+                                        </span>
                                     </ListItem>
                                 </CopyToClipboard>
                                 <ListItem>
-                                    <span className={classes.textIcon}>{ShareIcon}</span>
-                                    <span className={classes.text}>Share Tweet via ...</span>
+                                    <span className={classes.textIcon}>
+                                        {ShareIcon}
+                                    </span>
+                                    <span className={classes.text}>
+                                        Share Tweet via ...
+                                    </span>
                                 </ListItem>
                             </List>
                         </div>

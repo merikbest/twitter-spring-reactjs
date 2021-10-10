@@ -55,7 +55,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}): ReactE
         resolver: yupResolver(EditProfileFormSchema)
     });
 
-    const onSubmit = async (data: EditProfileFormProps) => {
+    const onSubmit = async (data: EditProfileFormProps): Promise<void> => {
         let avatarResponse: Image | undefined = undefined;
         let wallpaperResponse: Image | undefined = undefined;
         if (avatar) {
@@ -96,7 +96,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}): ReactE
                                 className={classes.wallpaperImg}
                                 key={wallpaper?.src}
                                 src={(userData?.wallpaper?.src && wallpaper?.src === undefined) ?
-                                     userData?.wallpaper?.src : wallpaper?.src}
+                                    userData?.wallpaper?.src : wallpaper?.src}
                             />
                             <div className={classes.wallpaperEditImg}>
                                 <UploadProfileImage name={"wallpaper"} image={wallpaper} onChangeImage={setWallpaper}/>
@@ -104,9 +104,10 @@ const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}): ReactE
                         </div>
                         <div className={classes.avatarWrapper}>
                             <UploadProfileImage name={"avatar"} image={avatar} onChangeImage={setAvatar}/>
-                            <Avatar key={avatar?.src}
-                                    src={userData?.avatar?.src && avatar?.src === undefined ?
-                                        userData?.avatar?.src : avatar?.src}>
+                            <Avatar
+                                key={avatar?.src}
+                                src={userData?.avatar?.src && avatar?.src === undefined ? userData?.avatar?.src : avatar?.src}
+                            >
                                 <img alt="default-img" src={DEFAULT_PROFILE_IMG}/>
                             </Avatar>
                         </div>

@@ -27,13 +27,15 @@ const Quote: FC<QuoteProps> = ({quoteTweet, isTweetQuoted, isFullTweet}): ReactE
                         src={quoteTweet.user.avatar?.src ? quoteTweet.user.avatar?.src : DEFAULT_PROFILE_IMG}
                     />
                     <span className={classes.quoteTweetFullName}>
-                    {quoteTweet.user.fullName}
-                </span>
+                        {quoteTweet.user.fullName}
+                    </span>
                     <span className={classes.quoteTweetUsername}>
-                    @{quoteTweet.user.username}
-                </span>&nbsp;
+                        @{quoteTweet.user.username}
+                    </span>&nbsp;
                     <span className={classes.quoteTweetUsername}>·</span>&nbsp;
-                    <span className={classes.quoteTweetUsername}>{formatDate(new Date(quoteTweet.dateTime))}</span>
+                    <span className={classes.quoteTweetUsername}>
+                        {formatDate(new Date(quoteTweet.dateTime))}
+                    </span>
                 </div>
                 <div className={classes.quoteTweetText}>
                     {textFormatter(quoteTweet.text)}

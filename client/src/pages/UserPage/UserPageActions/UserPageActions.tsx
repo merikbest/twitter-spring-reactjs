@@ -1,5 +1,5 @@
 import React, {FC, ReactElement, useState} from 'react';
-import {ClickAwayListener, IconButton, List, ListItem, Snackbar} from "@material-ui/core";
+import {ClickAwayListener, IconButton, List, ListItem, Snackbar, Typography} from "@material-ui/core";
 import {Link, useLocation} from 'react-router-dom';
 
 import {useUserPageActionsStyles} from "./UserPageActionsStyles";
@@ -71,44 +71,62 @@ const UserPageActions: FC<UserPageActionsProps> = ({user}): ReactElement => {
                     <div className={classes.dropdown}>
                         <List>
                             <ListItem>
-                                <span className={classes.textIcon}>{TopicIcon}</span>
-                                <span className={classes.text}>View Topics</span>
+                                <>{TopicIcon}</>
+                                <Typography component={"span"}>
+                                    View Topics
+                                </Typography>
                             </ListItem>
                             <ListItem onClick={onOpenListsModal}>
-                                <span className={classes.textIcon}>{AddListsIcon}</span>
-                                <span className={classes.text}>Add/remove @{user.username} from Lists</span>
+                                <>{AddListsIcon}</>
+                                <Typography component={"span"}>
+                                    Add/remove @{user.username} from Lists
+                                </Typography>
                             </ListItem>
                             <Link to={`/lists/memberships/${user?.id}`} className={classes.link}>
                                 <ListItem>
-                                    <span className={classes.textIcon}>{ListsIcon}</span>
-                                    <span className={classes.text}>View Lists</span>
+                                    <>{ListsIcon}</>
+                                    <Typography component={"span"}>
+                                        View Lists
+                                    </Typography>
                                 </ListItem>
                             </Link>
                             <ListItem>
-                                <span className={classes.textIcon}>{MomentsIcon}</span>
-                                <span className={classes.text}>View Moments</span>
+                                <>{MomentsIcon}</>
+                                <Typography component={"span"}>
+                                    View Moments
+                                </Typography>
                             </ListItem>
                             <ListItem>
-                                <span className={classes.textIcon}>{ShareIcon}</span>
-                                <span className={classes.text}>Share profile via...</span>
+                                <>{ShareIcon}</>
+                                <Typography component={"span"}>
+                                    Share profile via...
+                                </Typography>
                             </ListItem>
                             <CopyToClipboard text={CLIENT_URL + location.pathname}>
                                 <ListItem onClick={onCopyLinkToProfile}>
-                                    <span className={classes.textIcon}>{LinkIcon}</span>
-                                    <span className={classes.text}>Copy link to profile</span>
+                                    <>{LinkIcon}</>
+                                    <Typography component={"span"}>
+                                        Copy link to profile
+                                    </Typography>
                                 </ListItem>
                             </CopyToClipboard>
                             <ListItem>
-                                <span className={classes.textIcon}>{MuteIcon}</span>
-                                <span className={classes.text}>Mute @{user.username}</span>
+                                <>{MuteIcon}</>
+                                <Typography component={"span"}>
+                                    Mute @{user.username}
+                                </Typography>
                             </ListItem>
                             <ListItem>
-                                <span className={classes.textIcon}>{BlockIcon}</span>
-                                <span className={classes.text}>Block @{user.username}</span>
+                                <>{BlockIcon}</>
+                                <Typography component={"span"}>
+                                    Block @{user.username}
+                                </Typography>
                             </ListItem>
                             <ListItem>
-                                <span className={classes.textIcon}>{ReportIcon}</span>
-                                <span className={classes.text}>Report @{user.username}</span>
+                                <>{ReportIcon}</>
+                                <Typography component={"span"}>
+                                    Report @{user.username}
+                                </Typography>
                             </ListItem>
                         </List>
                     </div>

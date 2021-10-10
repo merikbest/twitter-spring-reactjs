@@ -116,7 +116,9 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
                 <IconButton onClick={onClose} color="secondary" aria-label="close">
                     <CloseIcon color="secondary"/>
                 </IconButton>
-                <span className={classes.headerMessage}>Send Tweet</span>
+                <span className={classes.headerMessage}>
+                    Send Tweet
+                </span>
             </DialogTitle>
             <DialogContent className={classes.content}>
                 <MessagesModalInput

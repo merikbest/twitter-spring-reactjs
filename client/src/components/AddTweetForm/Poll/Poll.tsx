@@ -102,7 +102,7 @@ const Poll: FC<PollProps> = (
                         <Grid md={1} item>
                             <div
                                 className={classes.addPollInputWrapper}
-                                style={(pollInputSize === 0) ? {minHeight: 115} : {minHeight: 185}}
+                                style={{minHeight: (pollInputSize === 0) ? 115 : 185}}
                             >
                                 <IconButton
                                     className={classes.addPollInputButton}
@@ -118,9 +118,13 @@ const Poll: FC<PollProps> = (
                 </Grid>
             </div>
             <Paper className={classes.pollLength} variant="outlined">
-                <div className={classes.pollLengthTitle}>Poll length</div>
+                <div className={classes.pollLengthTitle}>
+                    Poll length
+                </div>
                 <FormControl variant="outlined">
-                    <InputLabel variant="filled" htmlFor="select-days">Days</InputLabel>
+                    <InputLabel variant="filled" htmlFor="select-days">
+                        Days
+                    </InputLabel>
                     <PollSelect
                         className={classes.pollSelect}
                         style={{width: 140}}
@@ -134,7 +138,9 @@ const Poll: FC<PollProps> = (
                     </PollSelect>
                 </FormControl>
                 <FormControl variant="outlined">
-                    <InputLabel variant="filled" htmlFor="select-hours">Hours</InputLabel>
+                    <InputLabel variant="filled" htmlFor="select-hours">
+                        Hours
+                    </InputLabel>
                     <PollSelect
                         className={classes.pollSelect}
                         style={{width: 149}}
@@ -148,7 +154,9 @@ const Poll: FC<PollProps> = (
                     </PollSelect>
                 </FormControl>
                 <FormControl variant="outlined">
-                    <InputLabel variant="filled" htmlFor="select-minutes">Minutes</InputLabel>
+                    <InputLabel variant="filled" htmlFor="select-minutes">
+                        Minutes
+                    </InputLabel>
                     <PollSelect
                         className={classes.pollSelect}
                         style={{width: 150, marginRight: 0}}

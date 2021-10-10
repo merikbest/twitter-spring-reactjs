@@ -24,31 +24,37 @@ const Bookmarks: FC = (): ReactElement => {
         <Paper className={classes.container} variant="outlined">
             <Paper className={classes.header} variant="outlined">
                 <div>
-                    <Typography variant="h6">Bookmarks</Typography>
-                    <Typography variant="caption" display="block" gutterBottom>
+                    <Typography component={"div"} className={classes.headerFullName}>
+                        Bookmarks
+                    </Typography>
+                    <Typography component={"div"} className={classes.headerUsername}>
                         @{myProfile?.username}
                     </Typography>
                 </div>
             </Paper>
-            <div style={{paddingTop: 48,}}>
+            <div className={classes.contentWrapper}>
                 {isLoading ? (
                     <div className={classes.loading}>
                         <CircularProgress/>
                     </div>
-                ) : ((tweets.length === 0) ? (
+                ) : (
+                    (tweets.length === 0) ? (
                         <div className={classes.infoWrapper}>
-                            <div className={classes.infoTitle}>You haven’t added any Tweets to your Bookmarks yet</div>
-                            <div className={classes.infoText}>When you do, they’ll show up here.</div>
+                            <Typography component={"div"} className={classes.infoTitle}>
+                                You haven’t added any Tweets to your Bookmarks yet
+                            </Typography>
+                            <Typography component={"div"} className={classes.infoText}>
+                                When you do, they’ll show up here.
+                            </Typography>
                         </div>
                     ) : (
-                        <div>
+                        <>
                             {tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}
-                        </div>
+                        </>
                     )
                 )}
             </div>
         </Paper>
-
     );
 };
 

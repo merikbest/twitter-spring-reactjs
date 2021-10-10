@@ -1,4 +1,5 @@
 import React, {FC, FormEvent, ReactElement, useEffect, useState} from 'react';
+import {RouteComponentProps, useLocation, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {Button, Dialog, DialogContent, DialogTitle, List, ListItem} from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
@@ -11,7 +12,6 @@ import {CheckIcon} from "../../icons";
 import {Lists} from "../../store/ducks/lists/contracts/state";
 import {Tweet} from "../../store/ducks/tweets/contracts/state";
 import {User} from "../../store/ducks/user/contracts/state";
-import {RouteComponentProps, useLocation, useParams} from "react-router-dom";
 
 interface ListsModalProps {
     tweet?: Tweet;
@@ -34,7 +34,6 @@ const ListsModal: FC<ListsModalProps> = ({tweet, user, visible, onClose}): React
     }, []);
 
     useEffect(() => {
-        // TODO REWRITE THIS CRA... CRUTCH
         const set = new Set([...checkedListsIndexes]);
 
         userLists.forEach((list, index) => {
@@ -96,7 +95,7 @@ const ListsModal: FC<ListsModalProps> = ({tweet, user, visible, onClose}): React
     return (
         <Dialog open={visible} onClose={onClose} className={classes.dialog} aria-labelledby="form-dialog-title">
             <form onSubmit={onSubmit}>
-                <DialogTitle id="form-dialog-title" style={{borderBottom: "1px solid rgb(239, 243, 244)",}}>
+                <DialogTitle id="form-dialog-title">
                     <IconButton onClick={onClose} color="secondary" aria-label="close">
                         <CloseIcon style={{fontSize: 26}} color="secondary"/>
                     </IconButton>
@@ -111,7 +110,9 @@ const ListsModal: FC<ListsModalProps> = ({tweet, user, visible, onClose}): React
                     </Button>
                 </DialogTitle>
                 <DialogContent className={classes.content}>
-                    <div className={classes.createList}>Create a new List</div>
+                    <div className={classes.createList}>
+                        Create a new List
+                    </div>
                     <div className={classes.list}>
                         <List>
                             {userLists.map((list, index) => (

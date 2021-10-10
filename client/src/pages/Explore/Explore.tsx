@@ -105,8 +105,8 @@ const Explore: FC = (): ReactElement => {
         <Paper className={classes.container} variant="outlined">
             <Paper className={classes.header} variant="outlined">
                 <div>
-                    <form onSubmit={handleClickSearch}>
-                        <div style={{display: "inline-block", paddingTop: 5}}>
+                    <form style={{display: "block"}} onSubmit={handleClickSearch}>
+                        <div className={classes.backButtonWrapper}>
                             <BackButton/>
                         </div>
                         <MainSearchTextField
@@ -139,15 +139,24 @@ const Explore: FC = (): ReactElement => {
                     </div>
                 </div>
             </Paper>
-            <div style={{paddingTop: 97}}>
-                {isTweetsLoading || isUsersLoading ? (
+            <div className={classes.contentWrapper}>
+                {(isTweetsLoading || isUsersLoading) ? (
                     <div className={classes.loading}>
                         <CircularProgress/>
                     </div>
-                ) : (activeTab !== 2 ? (
+                ) : (
+                    (activeTab !== 2) ? (
                         tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)
                     ) : (
-                        users?.map((user) => <Follower item={user} follow={handleFollow} unfollow={handleUnfollow}/>))
+                        users?.map((user) => (
+                            <Follower
+                                key={user.id}
+                                item={user}
+                                follow={handleFollow}
+                                unfollow={handleUnfollow}
+                            />
+                        ))
+                    )
                 )}
             </div>
         </Paper>

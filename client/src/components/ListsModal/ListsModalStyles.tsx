@@ -4,6 +4,7 @@ export const useListsModalStyles = makeStyles<Theme>((theme) => ({
     dialog: {
         "& .MuiDialogTitle-root": {
             marginBottom: 0,
+            borderBottom: "1px solid rgb(239, 243, 244)"
         },
         "& .MuiIconButton-root": {
             marginRight: 15,

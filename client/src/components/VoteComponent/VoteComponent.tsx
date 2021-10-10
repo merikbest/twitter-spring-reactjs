@@ -1,6 +1,6 @@
 import React, {FC, ReactElement} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Button} from "@material-ui/core";
+import {Button, Typography} from "@material-ui/core";
 import isAfter from "date-fns/isAfter";
 
 import {useVoteComponentStyles} from "./VoteComponentStyles";
@@ -35,43 +35,44 @@ const VoteComponent: FC<VoteComponentProps> = ({tweetId, poll}): ReactElement =>
                     {poll?.pollChoices.map((pollChoice) => {
                             const voteNumber = (pollChoice.votedUser.length / ((userVoteSum! === 0) ? 1 : userVoteSum!)) * 100;
                             return (
-                                <div className={classes.container}>
+                                <div key={pollChoice.id} className={classes.container}>
                                     <div className={classes.voteOption}>
-                                        <div className={classes.voteChoice}>
+                                        <Typography component={"div"} className={classes.voteChoice}>
                                             {pollChoice.choice}
-                                        </div>
-                                        <div className={classes.voteChoice}>
+                                        </Typography>
+                                        <Typography component={"div"} className={classes.voteChoice}>
                                             {`${(voteNumber === 0) ? 0 : Math.round(voteNumber)}%`}
-                                        </div>
+                                        </Typography>
                                     </div>
-                                    <div className={classes.voteScale}
-                                         style={{width: `${(voteNumber === 0) ? 1 : voteNumber}%`}}></div>
+                                    <div
+                                        className={classes.voteScale}
+                                        style={{width: `${(voteNumber === 0) ? 1 : voteNumber}%`}}
+                                    />
                                 </div>
                             );
                         }
                     )}
-                    <div className={classes.voteInfo}>
+                    <Typography component={"div"} className={classes.voteInfo}>
                         {userVoteSum} votes · {isPollEnded ? ("Final results") : (`${voteFormatDate(poll!)} left`)}
-                    </div>
+                    </Typography>
                 </>
             ) : (
                 <>
-                    {poll?.pollChoices.map((pollChoice) => {
-                            return (
-                                <div className={classes.container}>
-                                    <Button
-                                        onClick={() => onClickVote(pollChoice.id)}
-                                        className={classes.voteButton}
-                                        color="primary"
-                                        fullWidth
-                                    >
-                                        {pollChoice.choice}
-                                    </Button>
-                                </div>
-                            );
-                        }
+                    {poll?.pollChoices.map((pollChoice) => (
+                        <div className={classes.container}>
+                            <Button
+                                onClick={() => onClickVote(pollChoice.id)}
+                                className={classes.voteButton}
+                                color="primary"
+                                fullWidth
+                            >
+                                {pollChoice.choice}
+                            </Button>
+                        </div>)
                     )}
-                    <div className={classes.voteInfo}>{userVoteSum} votes · {voteFormatDate(poll!)} left</div>
+                    <Typography component={"div"} className={classes.voteInfo}>
+                        {userVoteSum} votes · {voteFormatDate(poll!)} left
+                    </Typography>
                 </>
             )}
         </>

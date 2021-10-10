@@ -57,7 +57,7 @@ const ReplyModal: FC<ReplyModalProps> = (
             </DialogTitle>
             <DialogContent className={classes.container}>
                 <div className={classes.modalWrapper}>
-                    <div className={classes.verticalLine}></div>
+                    <div className={classes.verticalLine}/>
                     <Avatar
                         className={classes.avatar}
                         alt={`avatar ${user.id}`}
@@ -82,9 +82,10 @@ const ReplyModal: FC<ReplyModalProps> = (
                         )}
                         <object>
                             <Typography className={classes.replyWrapper}>
-                                Replying to <Link to={`/user/${user.id}`} className={classes.replyLink}>
-                                @{user.username}
-                            </Link>
+                                {"Replying to "}
+                                <Link to={`/user/${user.id}`} className={classes.replyLink}>
+                                    @{user.username}
+                                </Link>
                             </Typography>
                         </object>
                     </div>

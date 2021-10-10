@@ -23,7 +23,8 @@ const ImageList: FC<ImageListProps> = ({images, removeImage}): ReactElement => {
                             {removeImage && (
                                 <IconButton
                                     className={classes.itemRemove}
-                                    onClick={(): void => removeImage(image.src)}>
+                                    onClick={(): void => removeImage(image.src)}
+                                >
                                     <ClearIcon style={{fontSize: 15}}/>
                                 </IconButton>
                             )}

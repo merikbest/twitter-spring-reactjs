@@ -16,6 +16,7 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
         },
     },
     itemWrapper: {
+        marginBottom: 2,
         height: 58,
         '& a': {
             color: 'inherit',

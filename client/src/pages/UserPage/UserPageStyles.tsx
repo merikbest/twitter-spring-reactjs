@@ -29,9 +29,16 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         borderLeft: 0,
         borderRight: 0,
         borderRadius: 0,
-        '& h6': {
-            fontWeight: 800,
-        },
+    },
+    headerFullName: {
+        fontWeight: 800,
+        fontSize: 20,
+        lineHeight: "24px",
+    },
+    headerTweetCount: {
+        fontSize: 13,
+        lineHeight: "16px",
+        color: "rgb(83, 100, 113)",
     },
     wallpaper: {
         height: 200,
@@ -49,24 +56,28 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         padding: 20,
         paddingTop: 0,
         fontSize: 15,
-        "& .MuiAvatar-root" :{
+        "& .MuiAvatar-root": {
             width: "140px !important",
             height: "140px !important",
             border: "4px solid white",
         },
-        "& ul": {
+    },
+    infoList: {
+        "& .MuiList-root": {
             display: "flex",
-            margin: "12px 0 0 0",
+            marginTop: 12,
             padding: 0,
             listStyle: "none",
             flexWrap: "wrap",
-            "& li": {
-                color: "#5b7083",
+            "& .MuiListItem-root": {
+                width: "auto",
+                color: "rgb(83, 100, 113)",
                 marginRight: 20,
+                padding: 0,
                 "& svg": {
                     marginRight: 4,
                     height: "1.3em",
-                    verticalAlign: "bottom",
+                    verticalAlign: "top",
                 },
             },
         },
@@ -116,29 +127,38 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         border: '1px solid',
         borderRadius: '25px',
         padding: '8px 15px',
-        // TODO '& .MuiButton-containedPrimary':
         '&:hover': {
             backgroundColor: 'rgb(202, 32, 85)',
         },
     },
     fullName: {
-        margin: "0 !important",
-        fontWeight: 900,
+        fontWeight: 800,
         fontSize: 20,
+        lineHeight: "24px",
     },
     username: {
-        color: "#5b7083",
+        fontSize: 15,
+        color: "rgb(83, 100, 113)",
+        lineHeight: "20px",
     },
     description: {
         fontSize: 15,
         marginTop: 12,
+        lineHeight: "20px",
     },
     details: {
-        color: "#5b7083",
+        lineHeight: "20px",
+        "& b": {
+            marginRight: 3,
+        },
     },
     followLink: {
         textDecoration: 'none',
-        color: "#5b7083",
+        lineHeight: "20px",
+        color: "rgb(83, 100, 113)",
+        "& span": {
+            lineHeight: "20px",
+        },
         "&:hover": {
             textDecoration: "underline",
         },
@@ -163,6 +183,6 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         fontSize: 15,
         fontWeight: 400,
         marginBottom: 16,
-        color: "#5b7083",
+        color: "rgb(83, 100, 113)",
     },
 }));

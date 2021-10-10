@@ -1,7 +1,7 @@
 import React, {FC, ReactElement, useState,} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
-import {Button, colors, Divider, List, ListItem, ListItemAvatar, Popover} from '@material-ui/core';
+import {Button, Divider, List, ListItem, ListItemAvatar, Popover} from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import DialogContent from "@material-ui/core/DialogContent";
@@ -60,7 +60,9 @@ const UserSideProfile: FC = (): ReactElement | null => {
                 />
                 <div className={classes.info}>
                     <b>{myProfile.fullName}</b>
-                    <Typography style={{color: "rgb(83, 100, 113)"}}>@{myProfile.username}</Typography>
+                    <Typography style={{color: "rgb(83, 100, 113)"}}>
+                        @{myProfile.username}
+                    </Typography>
                 </div>
                 <div className={classes.icon}>
                     <span>{EditIcon}</span>
@@ -111,7 +113,7 @@ const UserSideProfile: FC = (): ReactElement | null => {
                 </List>
             </Popover>
             <Dialog open={visibleLogoutModal} onClose={onCloseLogoutModal} aria-labelledby="form-dialog-title">
-                <DialogContent style={{padding: "0px 0px"}}>
+                <DialogContent style={{padding: 0}}>
                     <div className={classes.modalWrapper}>
                         <TwitterIcon />
                         <Typography className={classes.modalFullName}>

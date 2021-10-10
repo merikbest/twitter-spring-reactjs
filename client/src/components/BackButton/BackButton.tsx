@@ -12,7 +12,7 @@ export const BackButton: FC = (): ReactElement => {
     const [visibleBackAction, setVisibleBackAction] = useState<boolean>(false);
     const [delayHandler, setDelayHandler] = useState<any>(null);
 
-    const handleClickButton = () => {
+    const handleClickButton = (): void => {
         history.goBack();
     };
 

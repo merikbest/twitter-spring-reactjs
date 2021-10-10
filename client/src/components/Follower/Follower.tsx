@@ -11,25 +11,20 @@ import {selectUserData} from "../../store/ducks/user/selectors";
 import {useFollowerStyles} from "./FollowerStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
-import {withHoverUser} from "../../hoc/withHoverUser";
+import {HoverProps, withHoverUser} from "../../hoc/withHoverUser";
 
 interface FollowerProps<T> {
     item?: T;
-    follow?: (user: User) => void;
-    unfollow?: (user: User) => void;
-    visiblePopperWindow?: boolean;
-    handleHover?: () => void;
-    handleLeave?: () => void;
 }
 
-const Follower: FC<FollowerProps<User>> = (
+const Follower: FC<HoverProps<User> & FollowerProps<User>> = (
     {
         item: user,
         follow,
         unfollow,
         visiblePopperWindow,
-        handleHover,
-        handleLeave
+        handleHoverPopper,
+        handleLeavePopper
     }
 ): ReactElement => {
     const classes = useFollowerStyles();
@@ -66,20 +61,22 @@ const Follower: FC<FollowerProps<User>> = (
             </Link>
             <div style={{flex: 1}}>
                 <div className={classes.header}>
-                    <Link to={`/user/${user?.id}`} className={classes.link}>
-                        <div onMouseLeave={handleLeave} style={{position: "relative", width: 350}}>
-                            <Typography onMouseEnter={handleHover} className={classes.fullName}>
-                                {user?.fullName}
-                            </Typography>
-                            {visiblePopperWindow && <PopperUserWindow user={user!}/>}
-                            <Typography className={classes.username} variant="caption" display="block" gutterBottom>
-                                @{user?.username}
-                            </Typography>
-                        </div>
-                    </Link>
+                    <div onMouseEnter={handleHoverPopper} onMouseLeave={handleLeavePopper}>
+                        <Link to={`/user/${user?.id}`} className={classes.link}>
+                            <div className={classes.followerInfo}>
+                                <Typography component={"div"} className={classes.fullName}>
+                                    {user?.fullName}
+                                </Typography>
+                                <Typography component={"div"} className={classes.username}>
+                                    @{user?.username}
+                                </Typography>
+                            </div>
+                        </Link>
+                        {visiblePopperWindow && <PopperUserWindow user={user!}/>}
+                    </div>
                     <div>
                         {(myProfile?.id !== user?.id) && (
-                            follower === -1 ? (
+                            (follower === -1) ? (
                                 <Button
                                     className={classes.outlinedButton}
                                     onClick={() => handleFollow(user!)}
@@ -103,9 +100,11 @@ const Follower: FC<FollowerProps<User>> = (
                         )}
                     </div>
                 </div>
-                <Typography display="block">{user?.about}</Typography>
+                <Typography display="block">
+                    {user?.about}
+                </Typography>
                 <Dialog open={visibleUnfollowModal} onClose={onCloseUnfollowModal} aria-labelledby="form-dialog-title">
-                    <DialogContent style={{padding: "0px 0px"}}>
+                    <DialogContent style={{padding: 0}}>
                         <div className={classes.modalWrapper}>
                             <Typography className={classes.modalFullName}>
                                 Unfollow {user?.fullName}?

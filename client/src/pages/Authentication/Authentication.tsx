@@ -1,7 +1,7 @@
 import React, {FC, ReactElement, useState} from 'react';
 import {useHistory} from "react-router-dom";
 import TwitterIcon from '@material-ui/icons/Twitter';
-import {Button, Typography} from '@material-ui/core';
+import {Button, List, ListItem, Typography} from '@material-ui/core';
 
 import {useAuthenticationStyles} from "./AuthenticationStyles";
 import {CommunityIcon, ReplyIcon, SearchIcon} from "../../icons";
@@ -53,26 +53,23 @@ const Authentication: FC = (): ReactElement => {
         <div className={classes.wrapper}>
             <section className={classes.leftSide}>
                 <TwitterIcon color="primary" className={classes.leftSideTwitterIcon}/>
-                <ul className={classes.leftSideListInfo}>
-                    <li className={classes.leftSideListInfoItem}>
+                <List className={classes.leftSideListInfo}>
+                    <ListItem>
                         <Typography variant="h6">
-                            <span>{SearchIcon}</span>
-                            Follow your interests.
+                            <>{SearchIcon}</> Follow your interests.
                         </Typography>
-                    </li>
-                    <li className={classes.leftSideListInfoItem}>
+                    </ListItem>
+                    <ListItem>
                         <Typography variant="h6">
-                            <span>{CommunityIcon}</span>
-                            Hear what people are talking about.
+                            <>{CommunityIcon}</> Hear what people are talking about.
                         </Typography>
-                    </li>
-                    <li className={classes.leftSideListInfoItem}>
+                    </ListItem>
+                    <ListItem>
                         <Typography variant="h6">
-                            <span>{ReplyIcon}</span>
-                            Join the conversation.
+                            <>{ReplyIcon}</> Join the conversation.
                         </Typography>
-                    </li>
-                </ul>
+                    </ListItem>
+                </List>
             </section>
             <section className={classes.rightSide}>
                 <div className={classes.rightSideWrapper}>

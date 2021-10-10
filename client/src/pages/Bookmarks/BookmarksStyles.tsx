@@ -25,6 +25,19 @@ export const useBookmarksStyles= makeStyles((theme) => ({
             fontWeight: 800,
         },
     },
+    headerFullName: {
+        fontWeight: 800,
+        fontSize: 20,
+        lineHeight: "24px",
+    },
+    headerUsername: {
+        fontSize: 13,
+        lineHeight: "16px",
+        color: "rgb(83, 100, 113)",
+    },
+    contentWrapper: {
+        paddingTop: 48
+    },
     loading: {
         marginTop: 50,
         textAlign: 'center',

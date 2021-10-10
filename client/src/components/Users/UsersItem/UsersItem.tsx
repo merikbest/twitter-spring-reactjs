@@ -63,7 +63,10 @@ const UsersItem: FC<HoverProps<User> & UsersItemProps<User>> = (
     return (
         <ListItem className={classes.container}>
             <ListItemAvatar>
-                <Avatar alt={`${user?.id}`} src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}/>
+                <Avatar
+                    alt={`${user?.id}`}
+                    src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}
+                />
             </ListItemAvatar>
             <div onMouseEnter={handleHoverPopper} onMouseLeave={handleLeavePopper}>
                 <Link to={`/user/${user?.id}`}>
@@ -104,7 +107,7 @@ const UsersItem: FC<HoverProps<User> & UsersItemProps<User>> = (
                 )}
             </div>
             <Dialog open={visibleUnfollowModal} onClose={onCloseUnfollowModal} aria-labelledby="form-dialog-title">
-                <DialogContent style={{padding: "0px 0px"}}>
+                <DialogContent style={{padding: 0}}>
                     <div className={classes.modalWrapper}>
                         <Typography className={classes.modalFullName}>
                             Unfollow {user?.fullName}?

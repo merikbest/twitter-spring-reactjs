@@ -14,15 +14,17 @@ interface TweeterInputProps {
     maxTextLength: number
 }
 
-const TweeterInput: FC<TweeterInputProps> = ({
-                                                 onChange,
-                                                 value,
-                                                 helperText,
-                                                 error,
-                                                 name,
-                                                 label,
-                                                 maxTextLength
-                                             }): ReactElement => {
+const TweeterInput: FC<TweeterInputProps> = (
+    {
+        onChange,
+        value,
+        helperText,
+        error,
+        name,
+        label,
+        maxTextLength
+    }
+): ReactElement => {
     const classes = useTweetInputStyles();
     const [focused, setFocused] = useState<boolean>(false);
 
@@ -33,7 +35,9 @@ const TweeterInput: FC<TweeterInputProps> = ({
         <div className={classes.container}>
             <div className={classes.content}>
                 <div className={classes.inputLabel}>
-                    <InputLabel style={{fontSize: 13}}>{label}</InputLabel>
+                    <InputLabel style={{fontSize: 13}}>
+                        {label}
+                    </InputLabel>
                 </div>
                 {focused && (
                     <div className={classes.inputCount}>

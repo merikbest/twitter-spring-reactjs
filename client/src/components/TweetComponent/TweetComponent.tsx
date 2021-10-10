@@ -84,12 +84,12 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
         event.preventDefault();
         event.stopPropagation();
         history.push(`/home/tweet/${tweet?.id}`);
-    }
+    };
 
     const handleClickUser = (event: React.MouseEvent<HTMLAnchorElement>): void => {
         event.stopPropagation();
         history.push(`/user/${tweet?.user.id}`);
-    }
+    };
 
     const onOpenReplyModalWindow = (): void => {
         setVisibleModalWindow(true);
@@ -136,11 +136,16 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
                     <Avatar
                         className={classes.avatar}
                         alt={`avatar ${tweet?.user.id}`}
-                        src={tweet?.user.avatar?.src ? tweet?.user.avatar?.src : DEFAULT_PROFILE_IMG}/>
+                        src={tweet?.user.avatar?.src ? tweet?.user.avatar?.src : DEFAULT_PROFILE_IMG}
+                    />
                 </a>
                 <div style={{flex: 1}}>
                     <div className={classes.header}>
-                        <a onClick={handleClickUser} onMouseEnter={handleHoverPopper} onMouseLeave={handleLeavePopper}>
+                        <a
+                            onClick={handleClickUser}
+                            onMouseEnter={handleHoverPopper}
+                            onMouseLeave={handleLeavePopper}
+                        >
                             <b>{tweet?.user.fullName}</b>&nbsp;
                             <span className={classes.headerText}>@{tweet?.user.username}</span>&nbsp;
                             <span className={classes.headerText}>·</span>&nbsp;
@@ -163,9 +168,10 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
                         {tweet?.addressedUsername && (
                             <object>
                                 <Typography className={classes.replyWrapper}>
-                                    Replying to <Link to={`/user/${tweet?.addressedId}`} className={classes.replyLink}>
-                                    @{tweet?.addressedUsername}
-                                </Link>
+                                    {"Replying to "}
+                                    <Link to={`/user/${tweet?.addressedId}`} className={classes.replyLink}>
+                                        @{tweet?.addressedUsername}
+                                    </Link>
                                 </Typography>
                             </object>
                         )}
@@ -191,7 +197,9 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
                                         </span>
                                     </div>
                                 </div>
-                                <div className={classes.replyText}>You can reply to this conversation</div>
+                                <div className={classes.replyText}>
+                                    You can reply to this conversation
+                                </div>
                             </>
                         )}
                         {tweet?.quoteTweet && (<Quote quoteTweet={tweet?.quoteTweet} isTweetQuoted={true}/>)}
@@ -265,7 +273,8 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
                     image={image}
                     dateTime={tweet!.dateTime}
                     visible={visibleModalWindow}
-                    onClose={onCloseReplyModalWindow}/>
+                    onClose={onCloseReplyModalWindow}
+                />
             </Paper>
         </>
     );

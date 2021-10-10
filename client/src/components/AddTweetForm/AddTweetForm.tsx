@@ -400,8 +400,9 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
                                 isTweetsLoading || isReplyLoading || !text || text.length >= MAX_LENGTH
                             )}
                         color="primary"
-                        variant="contained">
-                        {isTweetsLoading || isReplyLoading ? (
+                        variant="contained"
+                    >
+                        {(isTweetsLoading || isReplyLoading) ? (
                             <CircularProgress color="inherit" size={16}/>
                         ) : (
                             buttonName
@@ -413,8 +414,8 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
                     open={open}
                     anchorEl={anchorEl}
                     onClose={handleClosePopup}
-                    anchorOrigin={{vertical: 'bottom', horizontal: 'center',}}
-                    transformOrigin={{vertical: 'top', horizontal: 'center',}}
+                    anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
+                    transformOrigin={{vertical: 'top', horizontal: 'center'}}
                 >
                     <Picker
                         title=''

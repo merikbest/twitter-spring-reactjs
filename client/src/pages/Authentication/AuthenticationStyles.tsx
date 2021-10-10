@@ -20,6 +20,18 @@ export const useAuthenticationStyles= makeStyles((theme) => ({
         padding: 0,
         margin: 0,
         width: 400,
+        "& .MuiListItem-root": {
+            width: "auto",
+            color: "rgb(83, 100, 113)",
+            padding: 0,
+            marginBottom: 40,
+            "& svg": {
+                marginRight: 15,
+                verticalAlign: "centered",
+                fill: '#fff',
+                height: "1.5em",
+            },
+        },
         '& h6': {
             display: 'flex',
             alignItems: 'center',
@@ -27,15 +39,6 @@ export const useAuthenticationStyles= makeStyles((theme) => ({
             fontWeight: 700,
             fontSize: 20
         }
-    },
-    leftSideListInfoItem: {
-        marginBottom: 40,
-        "& svg": {
-            marginRight: 15,
-            verticalAlign: "centered",
-            fill: '#fff',
-            height: "1.5em",
-        },
     },
     leftSideIcon: {
         fontSize: 32,

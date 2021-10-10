@@ -15,9 +15,19 @@ export const useFollowingFollowersStyles = makeStyles((theme) => ({
         border: 0,
         alignItems: 'center',
         flex: 1,
-        '& h6': {
-            fontWeight: 800,
-        },
+    },
+    headerFullName: {
+        fontWeight: 800,
+        fontSize: 20,
+        lineHeight: "24px",
+    },
+    headerUsername: {
+        fontSize: 13,
+        lineHeight: "16px",
+        color: "rgb(83, 100, 113)",
+    },
+    contentWrapper: {
+        paddingTop: 57
     },
     tabs: {
         borderBottom: "1px solid rgb(239, 243, 244)",

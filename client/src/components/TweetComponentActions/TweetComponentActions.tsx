@@ -187,7 +187,9 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
                                             </span>
                                         </ListItem>
                                         <ListItem onClick={() => onOpenTweetComponentActionsModal("Pin")}>
-                                            <span className={classes.textIcon}>{PinIcon}</span>
+                                            <span className={classes.textIcon}>
+                                                {PinIcon}
+                                            </span>
                                             <span className={classes.text}>
                                                 {(isTweetPinned) ? (
                                                     "Unpin from profile"
@@ -197,25 +199,33 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
                                             </span>
                                         </ListItem>
                                         <ListItem onClick={onOpenListsModal}>
-                                            <span className={classes.textIcon}>{AddListsIcon}</span>
+                                            <span className={classes.textIcon}>
+                                                {AddListsIcon}
+                                            </span>
                                             <span className={classes.text}>
                                                 {`Add/remove @${tweet.user.username} from Lists`}
                                             </span>
                                         </ListItem>
                                         <ListItem onClick={handleClickReplyDropdown}>
-                                            <span className={classes.textIcon}>{ReplyIcon}</span>
+                                            <span className={classes.textIcon}>
+                                                {ReplyIcon}
+                                            </span>
                                             <span className={classes.text}>
                                                 Change who can reply
                                             </span>
                                         </ListItem>
                                         <ListItem>
-                                            <span className={classes.textIcon}>{EmbedTweetIcon}</span>
+                                            <span className={classes.textIcon}>
+                                                {EmbedTweetIcon}
+                                            </span>
                                             <span className={classes.text}>
                                                 Embed Tweet
                                             </span>
                                         </ListItem>
                                         <ListItem>
-                                            <span className={classes.textIcon}>{TweetActivityIcon}</span>
+                                            <span className={classes.textIcon}>
+                                                {TweetActivityIcon}
+                                            </span>
                                             <span className={classes.text}>
                                                 View Tweet activity
                                             </span>
@@ -226,14 +236,18 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
                                         <ListItem onClick={handleFollow}>
                                             {follower ? (
                                                 <>
-                                                    <span className={classes.textIcon}>{UnfollowIcon}</span>
+                                                    <span className={classes.textIcon}>
+                                                        {UnfollowIcon}
+                                                    </span>
                                                     <span className={classes.text}>
                                                         {`Unfollow @${tweet.user.username}`}
                                                     </span>
                                                 </>
                                             ) : (
                                                 <>
-                                                    <span className={classes.textIcon}>{FollowIcon}</span>
+                                                    <span className={classes.textIcon}>
+                                                        {FollowIcon}
+                                                    </span>
                                                     <span className={classes.text}>
                                                         {`Follow @${tweet.user.username}`}
                                                     </span>
@@ -241,31 +255,41 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
                                             )}
                                         </ListItem>
                                         <ListItem onClick={onOpenListsModal}>
-                                            <span className={classes.textIcon}>{AddListsIcon}</span>
+                                            <span className={classes.textIcon}>
+                                                {AddListsIcon}
+                                            </span>
                                             <span className={classes.text}>
                                                 {`Add/remove @${tweet.user.username} from Lists`}
                                             </span>
                                         </ListItem>
                                         <ListItem>
-                                            <span className={classes.textIcon}>{MuteIcon}</span>
+                                            <span className={classes.textIcon}>
+                                                {MuteIcon}
+                                            </span>
                                             <span className={classes.text}>
                                                 {`Mute @${tweet.user.username}`}
                                             </span>
                                         </ListItem>
                                         <ListItem>
-                                            <span className={classes.textIcon}>{BlockIcon}</span>
+                                            <span className={classes.textIcon}>
+                                                {BlockIcon}
+                                            </span>
                                             <span className={classes.text}>
                                                 {`Block @${tweet.user.username}`}
                                             </span>
                                         </ListItem>
                                         <ListItem>
-                                            <span className={classes.textIcon}>{EmbedTweetIcon}</span>
+                                            <span className={classes.textIcon}>
+                                                {EmbedTweetIcon}
+                                            </span>
                                             <span className={classes.text}>
                                                 Embed Tweet
                                             </span>
                                         </ListItem>
                                         <ListItem>
-                                            <span className={classes.textIcon}>{ReportIcon}</span>
+                                            <span className={classes.textIcon}>
+                                                {ReportIcon}
+                                            </span>
                                             <span className={classes.text}>
                                                 Report Tweet
                                             </span>

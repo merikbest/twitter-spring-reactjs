@@ -21,9 +21,13 @@ export const useFollowerStyles = makeStyles((theme) => ({
         textDecoration: 'none',
     },
     listAvatar: {
-        width: theme.spacing(6.7),
-        height: theme.spacing(6.7),
+        width: "46px !important",
+        height: "46px !important",
         marginRight: 15,
+    },
+    followerInfo: {
+        position: "relative",
+        maxWidth: 350
     },
     header: {
         display: "flex",
@@ -31,11 +35,13 @@ export const useFollowerStyles = makeStyles((theme) => ({
         justifyContent: "space-between"
     },
     fullName: {
+        lineHeight: "20px",
         color: "rgb(15, 20, 25)",
         fontWeight: 800,
         fontSize: 15,
     },
     username: {
+        lineHeight: "20px",
         color: "rgb(83, 100, 113)",
         fontWeight: 400,
         fontSize: 15,

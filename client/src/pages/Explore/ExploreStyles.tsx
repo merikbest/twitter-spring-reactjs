@@ -11,7 +11,7 @@ export const useExploreStyles = makeStyles((theme: Theme) => ({
     header: {
         position: "fixed",
         width: 602,
-        zIndex: 1,
+        zIndex: 10,
         display: 'flex',
         alignItems: 'center',
         flex: 1,
@@ -22,6 +22,10 @@ export const useExploreStyles = makeStyles((theme: Theme) => ({
         '& h6': {
             fontWeight: 800,
         },
+    },
+    backButtonWrapper: {
+        display: "inline-block",
+        paddingTop: 5
     },
     editButton: {
         display: "inline-block",
@@ -37,6 +41,9 @@ export const useExploreStyles = makeStyles((theme: Theme) => ({
                 },
             },
         },
+    },
+    contentWrapper: {
+        paddingTop: 97
     },
     loading: {
         marginTop: 50,
