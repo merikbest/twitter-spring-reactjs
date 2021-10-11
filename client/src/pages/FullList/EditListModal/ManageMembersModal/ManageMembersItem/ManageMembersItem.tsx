@@ -48,12 +48,12 @@ const ManageMembersItem: FC<ManageMembersItemProps<Lists>> = (
             <div style={{flex: 1}}>
                 <div className={classes.header}>
                     <Link to={`/user/${member?.id}`} className={classes.link}>
-                        <div onMouseLeave={handleLeave} style={{position: "relative", width: 350}}>
+                        <div onMouseLeave={handleLeave} className={classes.headerUserInfo}>
                             <Typography onMouseEnter={handleHover} className={classes.fullName}>
                                 {member?.fullName}
                             </Typography>
                             {visiblePopperWindow && <PopperUserWindow user={member!}/>}
-                            <Typography className={classes.username} variant="caption" display="block" gutterBottom>
+                            <Typography className={classes.username}>
                                 @{member?.username}
                             </Typography>
                             <Typography className={classes.about}>

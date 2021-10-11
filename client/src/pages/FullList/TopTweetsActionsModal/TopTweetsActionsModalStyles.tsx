@@ -30,7 +30,7 @@ export const useTopTweetsActionsModalStyles = makeStyles((theme: Theme) => ({
         },
         '& .MuiListItem-root': {
             display: "block",
-            padding: 16,
+            padding: 13,
             '&:hover': {
                 borderRadius: 4,
                 cursor: 'pointer',

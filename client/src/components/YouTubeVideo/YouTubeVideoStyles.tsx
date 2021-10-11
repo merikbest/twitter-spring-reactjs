@@ -3,7 +3,7 @@ import {makeStyles, Theme} from "@material-ui/core";
 export const useYouTubeVideoStyles = makeStyles<Theme>((theme) => ({
     container: {
         width: "100%",
-        height: 489,
+        minHeight: 469,
         marginTop: 5,
         border: "1px solid rgb(207, 217, 222)",
         borderRadius: 16,

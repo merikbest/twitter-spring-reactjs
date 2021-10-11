@@ -30,17 +30,24 @@ export const useManageMembersItemStyles = makeStyles((theme: Theme) => ({
         alignItems: "center",
         justifyContent: "space-between"
     },
+    headerUserInfo: {
+        position: "relative",
+        width: 350
+    },
     fullName: {
+        lineHeight: "20px",
         color: "rgb(15, 20, 25)",
         fontWeight: 800,
         fontSize: 15,
     },
     username: {
+        lineHeight: "20px",
         color: "rgb(83, 100, 113)",
         fontWeight: 400,
         fontSize: 15,
     },
     about: {
+        lineHeight: "20px",
         marginLeft: 5,
         fontWeight: 400,
         fontSize: 15,

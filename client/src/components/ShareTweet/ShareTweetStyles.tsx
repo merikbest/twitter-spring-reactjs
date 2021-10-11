@@ -28,22 +28,18 @@ export const useShareTweetModalStyles = makeStyles((theme: Theme) => ({
         },
         '& .MuiListItem-root': {
             height: 52,
+            fontSize: 15,
+            fontWeight: 400,
+            "& svg": {
+                verticalAlign: "bottom",
+                marginRight: 15,
+                fill: "rgb(83, 100, 113)",
+                height: "1.30em",
+            },
             '&:hover': {
                 cursor: 'pointer',
                 backgroundColor: 'rgb(247, 249, 249)',
             },
-        },
-    },
-    text: {
-        fontSize: 15,
-        fontWeight: 400,
-    },
-    textIcon: {
-        "& svg": {
-            verticalAlign: "bottom",
-            marginRight: 15,
-            fill: "rgb(83, 100, 113)",
-            height: "1.30em",
         },
     },
     snackBar: {

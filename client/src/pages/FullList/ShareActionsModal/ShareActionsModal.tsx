@@ -1,5 +1,5 @@
 import React, {FC, ReactElement, useState} from 'react';
-import {ClickAwayListener, IconButton, List, ListItem} from "@material-ui/core";
+import {ClickAwayListener, IconButton, List, ListItem, Typography} from "@material-ui/core";
 
 import {useShareActionsModalStyles} from "./ShareActionsModalStyles";
 import {LinkIcon, MessagesIcon, ShareIcon, TweetThisIcon} from "../../../icons";
@@ -27,20 +27,28 @@ const ShareActionsModal: FC = (): ReactElement => {
                         <div className={classes.dropdown}>
                             <List>
                                 <ListItem>
-                                    <span className={classes.textIcon}>{TweetThisIcon}</span>
-                                    <span className={classes.text}>Tweet this</span>
+                                    <>{TweetThisIcon}</>
+                                    <Typography component={"span"} className={classes.text}>
+                                        Tweet this
+                                    </Typography>
                                 </ListItem>
                                 <ListItem>
-                                    <span className={classes.textIcon}>{MessagesIcon}</span>
-                                    <span className={classes.text}>Send via Direct Message</span>
+                                    <>{MessagesIcon}</>
+                                    <Typography component={"span"} className={classes.text}>
+                                        Send via Direct Message
+                                    </Typography>
                                 </ListItem>
                                 <ListItem>
-                                    <span className={classes.textIcon}>{LinkIcon}</span>
-                                    <span className={classes.text}>Copy link to Tweet</span>
+                                    <>{LinkIcon}</>
+                                    <Typography component={"span"} className={classes.text}>
+                                        Copy link to List
+                                    </Typography>
                                 </ListItem>
                                 <ListItem>
-                                    <span className={classes.textIcon}>{ShareIcon}</span>
-                                    <span className={classes.text}>Share Tweet via ...</span>
+                                    <>{ShareIcon}</>
+                                    <Typography component={"span"} className={classes.text}>
+                                        Share List
+                                    </Typography>
                                 </ListItem>
                             </List>
                         </div>

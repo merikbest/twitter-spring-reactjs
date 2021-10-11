@@ -1,7 +1,7 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link, RouteComponentProps} from "react-router-dom";
-import {Avatar, Button, CircularProgress, IconButton, Paper, Typography} from "@material-ui/core";
+import {Avatar, Button, CircularProgress, Paper, Typography} from "@material-ui/core";
 
 import {useFullListStyles} from "./FullListStyles";
 import {selectIsListLoading, selectListItem} from "../../store/ducks/list/selectors";
@@ -68,10 +68,10 @@ const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactEl
             <Paper className={classes.header} variant="outlined">
                 <BackButton/>
                 <div>
-                    <Typography variant="h6">
+                    <Typography component={"div"} className={classes.headerFullName}>
                         {list?.name}
                     </Typography>
-                    <Typography variant="caption" display="block" gutterBottom>
+                    <Typography component={"div"} className={classes.headerUsername}>
                         @{list?.listOwner.username}
                     </Typography>
                 </div>
@@ -86,7 +86,7 @@ const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactEl
                 </div>
             ) : (
                 <>
-                    <div style={{paddingTop: 53}}>
+                    <div className={classes.content}>
                         <div className={classes.wallpaper}>
                             <img
                                 key={list?.wallpaper?.src ? list?.wallpaper?.src : list?.altWallpaper}
@@ -95,8 +95,12 @@ const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactEl
                             />
                         </div>
                         <Paper className={classes.listInfo} variant="outlined">
-                            <div className={classes.listTitle}>{list?.name}</div>
-                            <div className={classes.listDescription}>{list?.description}</div>
+                            <Typography component={"div"} className={classes.listTitle}>
+                                {list?.name}
+                            </Typography>
+                            <Typography component={"div"} className={classes.listDescription}>
+                                {list?.description}
+                            </Typography>
                             <Link to={`/user/${list?.listOwner.id}`} className={classes.listOwnerLink}>
                                 <div className={classes.listOwnerWrapper}>
                                     <Avatar
@@ -104,16 +108,20 @@ const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactEl
                                         src={list?.listOwner.avatar?.src ? list?.listOwner.avatar?.src : DEFAULT_PROFILE_IMG}
                                     />
                                 </div>
-                                <span className={classes.listOwnerFullName}>{list?.listOwner.fullName}</span>
-                                <span className={classes.listOwnerUsername}>@{list?.listOwner.username}</span>
+                                <Typography component={"span"} className={classes.listOwnerFullName}>
+                                    {list?.listOwner.fullName}
+                                </Typography>
+                                <Typography component={"span"} className={classes.listOwnerUsername}>
+                                    @{list?.listOwner.username}
+                                </Typography>
                             </Link>
                             <div>
-                        <span onClick={onOpenMembersModalWindow} className={classes.listMembers}>
-                            <b>{list?.members.length}</b> Members
-                        </span>
-                                <span onClick={onOpenFollowersModalWindow} className={classes.listMembers}>
-                            <b>{list?.followers.length}</b> Followers
-                        </span>
+                                <Typography component={"span"} onClick={onOpenMembersModalWindow} className={classes.listMembers}>
+                                    <b>{list?.members.length}</b> Members
+                                </Typography>
+                                <Typography component={"span"} onClick={onOpenFollowersModalWindow} className={classes.listMembers}>
+                                    <b>{list?.followers.length}</b> Followers
+                                </Typography>
                             </div>
                             <div className={classes.buttonWrapper}>
                                 {(myProfile?.id === list?.listOwner.id) ? (
@@ -150,10 +158,12 @@ const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactEl
                         </Paper>
                         {(list?.tweets.length === 0) ? (
                             <div className={classes.listInfoWrapper}>
-                                <div className={classes.listInfoTitle}>There aren’t any Tweets in this List</div>
-                                <div className={classes.listInfoText}>When anyone in this List Tweets, they’ll show up
-                                    here.
-                                </div>
+                                <Typography component={"div"} className={classes.listInfoTitle}>
+                                    There aren’t any Tweets in this List
+                                </Typography>
+                                <Typography component={"div"} className={classes.listInfoText}>
+                                    When anyone in this List Tweets, they’ll show up here.
+                                </Typography>
                             </div>
                         ) : (
                             <>

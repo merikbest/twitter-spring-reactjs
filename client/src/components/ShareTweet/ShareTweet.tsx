@@ -2,7 +2,7 @@ import React, {FC, ReactElement, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useLocation} from "react-router-dom";
 import CopyToClipboard from 'react-copy-to-clipboard';
-import {ClickAwayListener, IconButton, List, ListItem, Snackbar} from "@material-ui/core";
+import {ClickAwayListener, IconButton, List, ListItem, Snackbar, Typography} from "@material-ui/core";
 
 import {useShareTweetModalStyles} from "./ShareTweetStyles";
 import {AddBookmarksIcon, LinkIcon, MessagesIcon, ShareIcon} from "../../icons";
@@ -105,38 +105,30 @@ const ShareTweet: FC<ShareTweetProps> = (
                         <div className={classes.dropdown}>
                             <List>
                                 <ListItem onClick={onClickSendViaDirectMessage}>
-                                    <span className={classes.textIcon}>
-                                        {MessagesIcon}
-                                    </span>
-                                    <span className={classes.text}>
+                                    <>{MessagesIcon}</>
+                                    <Typography component={"span"}>
                                         Send via Direct Message
-                                    </span>
+                                    </Typography>
                                 </ListItem>
                                 <ListItem onClick={onClickAddTweetToBookmarks}>
-                                    <span className={classes.textIcon}>
-                                        {AddBookmarksIcon}
-                                    </span>
-                                    <span className={classes.text}>
+                                    <>{AddBookmarksIcon}</>
+                                    <Typography component={"span"}>
                                         {isBookmarked ? "Remove Tweet from Bookmarks" : "Add Tweet to Bookmarks"}
-                                    </span>
+                                    </Typography>
                                 </ListItem>
                                 <CopyToClipboard text={CLIENT_URL + location.pathname}>
                                     <ListItem onClick={onCopyLinkToTweet}>
-                                        <span className={classes.textIcon}>
-                                            {LinkIcon}
-                                        </span>
-                                        <span className={classes.text}>
+                                        <>{LinkIcon}</>
+                                        <Typography component={"span"}>
                                             Copy link to Tweet
-                                        </span>
+                                        </Typography>
                                     </ListItem>
                                 </CopyToClipboard>
                                 <ListItem>
-                                    <span className={classes.textIcon}>
-                                        {ShareIcon}
-                                    </span>
-                                    <span className={classes.text}>
+                                    <>{ShareIcon}</>
+                                    <Typography component={"span"}>
                                         Share Tweet via ...
-                                    </span>
+                                    </Typography>
                                 </ListItem>
                             </List>
                         </div>

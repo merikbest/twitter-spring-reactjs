@@ -1,8 +1,8 @@
 import React, {FC, ReactElement, useState} from 'react';
-import {ClickAwayListener, IconButton, List, ListItem} from "@material-ui/core";
+import {ClickAwayListener, IconButton, List, ListItem, Typography} from "@material-ui/core";
 
 import {useTopTweetsActionsModalStyles} from "./TopTweetsActionsModalStyles";
-import {EditIcon, NotShowIcon, SeeLatestIcon, TweetThisIcon} from "../../../icons";
+import {EditIcon, NotShowIcon, SeeLatestIcon} from "../../../icons";
 
 const TopTweetsActionsModal: FC = (): ReactElement => {
     const classes = useTopTweetsActionsModalStyles();
@@ -28,26 +28,33 @@ const TopTweetsActionsModal: FC = (): ReactElement => {
                             <List>
                                 <ListItem>
                                     <div className={classes.listItemWrapper}>
-                                        <span className={classes.textIcon}>{SeeLatestIcon}</span>
+                                        <span className={classes.textIcon}>
+                                            {SeeLatestIcon}
+                                        </span>
                                         <div>
-                                            <div className={classes.title}>See top Tweets</div>
-                                            <div className={classes.text}>
+                                            <Typography component={"div"} className={classes.title}>
+                                                See top Tweets
+                                            </Typography>
+                                            <Typography component={"div"} className={classes.text}>
                                                 You’re seeing top Tweets first. Latest Tweets will show up as they happen.
-                                            </div>
+                                            </Typography>
                                         </div>
                                     </div>
                                 </ListItem>
                                 <ListItem>
                                     <div className={classes.listItemWrapper}>
-                                        <span className={classes.textIcon}>{NotShowIcon}</span>
+                                        <span className={classes.textIcon}>
+                                            {NotShowIcon}
+                                        </span>
                                         <div>
-                                            <div className={classes.title}>Don’t show these Tweets in Home</div>
-                                            <div className={classes.text}>
+                                            <Typography component={"div"} className={classes.title}>
+                                                Don’t show these Tweets in Home
+                                            </Typography>
+                                            <Typography component={"div"} className={classes.text}>
                                                 Top Tweets from this List will no longer show up in your Home timeline.
-                                            </div>
+                                            </Typography>
                                         </div>
                                     </div>
-
                                 </ListItem>
                             </List>
                         </div>

@@ -1,6 +1,7 @@
 import React, {FC, ReactElement} from 'react';
 import {Link} from 'react-router-dom';
 import Avatar from "@material-ui/core/Avatar";
+import {Typography} from "@material-ui/core";
 
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {formatDate} from "../../util/formatDate";
@@ -26,20 +27,20 @@ const Quote: FC<QuoteProps> = ({quoteTweet, isTweetQuoted, isFullTweet}): ReactE
                         alt={`avatar ${quoteTweet.user.avatar?.id}`}
                         src={quoteTweet.user.avatar?.src ? quoteTweet.user.avatar?.src : DEFAULT_PROFILE_IMG}
                     />
-                    <span className={classes.quoteTweetFullName}>
+                    <Typography component={"span"} className={classes.quoteTweetFullName}>
                         {quoteTweet.user.fullName}
-                    </span>
-                    <span className={classes.quoteTweetUsername}>
+                    </Typography>
+                    <Typography component={"span"} className={classes.quoteTweetUsername}>
                         @{quoteTweet.user.username}
-                    </span>&nbsp;
-                    <span className={classes.quoteTweetUsername}>·</span>&nbsp;
-                    <span className={classes.quoteTweetUsername}>
+                    </Typography>&nbsp;
+                    <Typography component={"span"} className={classes.quoteTweetUsername}>·</Typography>&nbsp;
+                    <Typography component={"span"} className={classes.quoteTweetUsername}>
                         {formatDate(new Date(quoteTweet.dateTime))}
-                    </span>
+                    </Typography>
                 </div>
-                <div className={classes.quoteTweetText}>
+                <Typography component={"div"} className={classes.quoteTweetText}>
                     {textFormatter(quoteTweet.text)}
-                </div>
+                </Typography>
             </div>
         </Link>
     );

@@ -11,11 +11,13 @@ export const useManageMembersSuggestedStyles = makeStyles((theme: Theme) => ({
         textAlign: "center",
     },
     suggestedTitle: {
+        lineHeight: "36px",
         fontSize: 31,
         marginBottom: 8,
         fontWeight: 800,
     },
     suggestedText: {
+        lineHeight: "20px",
         fontSize: 15,
         color: "rgb(83, 100, 113)",
     },

@@ -165,8 +165,8 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
                                 alt={`avatar ${tweetData.user.id}`}
                                 src={tweetData.user.avatar?.src ? tweetData.user.avatar?.src : DEFAULT_PROFILE_IMG}
                             />
-                            <Typography
-                                style={{position: "relative"}}
+                            <div
+                                className={classes.headerUserInfo}
                                 onMouseEnter={handleHoverPopper}
                                 onMouseLeave={handleLeavePopper}
                             >
@@ -174,10 +174,12 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
                                     <b>{tweetData.user.fullName}</b>&nbsp;
                                 </Link>
                                 <div>
-                                    <span className={classes.username}>@{tweetData.user.username}</span>&nbsp;
+                                    <Typography component={"span"} className={classes.username}>
+                                        @{tweetData.user.username}
+                                    </Typography>&nbsp;
                                 </div>
                                 {visiblePopperWindow && <PopperUserWindow user={tweetData.user}/>}
-                            </Typography>
+                            </div>
                         </div>
                         <TweetComponentActions
                             tweet={tweetData}
@@ -224,39 +226,41 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
                             )
                         ) : null}
                     </Typography>
-                    <Typography style={{marginBottom: 16}}>
-                        <span className={classes.date}>
+                    <div className={classes.dateWrapper}>
+                        <Typography component={"span"} className={classes.date}>
                             {format(new Date(tweetData.dateTime), 'hh:mm a', {locale: usLang})} ·
-                        </span>
-                         <span className={classes.date}>
+                        </Typography>
+                        <Typography component={"span"} className={classes.date}>
                             {format(new Date(tweetData.dateTime), ' MMM dd, yyyy')} · Twitter Web App
-                        </span>
-                    </Typography>
-                    <Divider/>
+                        </Typography>
+                    </div>
                     {(tweetData.retweets.length !== 0 || tweetData.likedTweets.length !== 0) && (
-                        <div className={classes.content}>
-                            {(tweetData.retweets.length !== 0) && (
-                                <a href={"javascript:void(0);"} onClick={onOpenRetweetsModalWindow}>
-                                    <span style={{marginRight: 20}}>
-                                        <b>{tweetData.retweets.length}</b>
-                                        <span className={classes.contentItem}>
-                                            Retweets
-                                        </span>
-                                    </span>
-                                </a>)
-                            }
-                            {(tweetData.likedTweets.length !== 0) && (
-                                <a href={"javascript:void(0);"} onClick={onOpenLikesModalWindow}>
-                                    <span style={{marginRight: 20}}>
-                                        <b>{tweetData.likedTweets.length}</b>
-                                        <span className={classes.contentItem}>
-                                            Likes
-                                        </span>
-                                    </span>
-                                </a>)
-                            }
-                        </div>)
-                    }
+                        <>
+                            <Divider/>
+                            <div className={classes.content}>
+                                {(tweetData.retweets.length !== 0) && (
+                                    <a href={"javascript:void(0);"} onClick={onOpenRetweetsModalWindow}>
+                                        <div className={classes.contentItem}>
+                                            <b>{tweetData.retweets.length}</b>
+                                            <Typography component={"span"}>
+                                                Retweets
+                                            </Typography>
+                                        </div>
+                                    </a>
+                                )}
+                                {(tweetData.likedTweets.length !== 0) && (
+                                    <a href={"javascript:void(0);"} onClick={onOpenLikesModalWindow}>
+                                        <div className={classes.contentItem}>
+                                            <b>{tweetData.likedTweets.length}</b>
+                                            <Typography component={"span"}>
+                                                Likes
+                                            </Typography>
+                                        </div>
+                                    </a>
+                                )}
+                            </div>
+                        </>
+                    )}
                     <div className={classes.info}>
                         <div className={classes.infoIcon}>
                             <IconButton
@@ -271,7 +275,6 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
                             <IconButton
                                 onClick={handleRetweet}
                                 onMouseEnter={() => handleHoverAction?.(TweetActions.RETWEET)}
-
                                 onMouseLeave={handleLeaveAction}
                             >
                                 {isTweetRetweeted ? (
@@ -279,7 +282,8 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
                                 ) : (
                                     <>{RetweetOutlinedIcon}</>
                                 )}
-                                {visibleRetweetAction && <HoverAction actionText={isTweetRetweeted ? "Undo Retweet" : "Retweet"}/>}
+                                {visibleRetweetAction &&
+                                <HoverAction actionText={isTweetRetweeted ? "Undo Retweet" : "Retweet"}/>}
                             </IconButton>
                         </div>
                         <div className={classes.likeIcon}>

@@ -1,5 +1,5 @@
-import React, {FC, FormEvent, ReactElement, useState} from 'react';
-import {InputAdornment} from "@material-ui/core";
+import React, {FC, ReactElement, useState} from 'react';
+import {InputAdornment, Typography} from "@material-ui/core";
 
 import {useManageMembersSuggestedStyles} from "./ManageMembersSuggestedStyles";
 import {ManageMembersInput} from "./ManageMembersInput/ManageMembersInput";
@@ -15,46 +15,48 @@ interface ManageMembersSuggestedProps {
 
 const ManageMembersSuggested: FC<ManageMembersSuggestedProps> = ({list}): ReactElement => {
     const classes = useManageMembersSuggestedStyles();
-
-    const [text, setText] = useState<string>("");
+    const [searchText, setSearchText] = useState<string>("");
     const [users, setUsers] = useState<User[]>([]);
 
-    const handleClickSearch = (event: FormEvent<HTMLFormElement>): void => {
-        event.preventDefault();
-        UserApi.searchUsersByUsername(encodeURIComponent(text))
-            .then((response) => setUsers(response!));
+    const onSearch = (text: string): void => {
+        if (text) {
+            setSearchText(text);
+            UserApi.searchUsersByUsername(encodeURIComponent(text))
+                .then((response) => setUsers(response!));
+        } else {
+            setSearchText("");
+            setUsers([]);
+        }
     };
 
     return (
         <div className={classes.container}>
-            <form onSubmit={handleClickSearch}>
-                <ManageMembersInput
-                    fullWidth
-                    placeholder="Search people"
-                    variant="outlined"
-                    onChange={(event) => setText(event.target.value)}
-                    value={text}
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                {SearchIcon}
-                            </InputAdornment>
-                        ),
-                    }}
-                />
-            </form>
+            <ManageMembersInput
+                fullWidth
+                placeholder="Search people"
+                variant="outlined"
+                onChange={(event) => onSearch(event.target.value)}
+                value={searchText}
+                InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">
+                            {SearchIcon}
+                        </InputAdornment>
+                    ),
+                }}
+            />
             {(users.length !== 0) ? (
                 <>
-                    {users.map((user) => (<ManageMembersItem item={list} member={user}/>))}
+                    {users.map((user) => (<ManageMembersItem key={user.id} item={list} member={user}/>))}
                 </>
             ) : (
                 <div className={classes.suggestedInfoWrapper}>
-                    <div className={classes.suggestedTitle}>
+                    <Typography className={classes.suggestedTitle}>
                         There aren’t any suggested members
-                    </div>
-                    <div className={classes.suggestedText}>
+                    </Typography>
+                    <Typography className={classes.suggestedText}>
                         To see suggestions to add to this List, try searching for accounts.
-                    </div>
+                    </Typography>
                 </div>
             )}
         </div>

@@ -1,4 +1,5 @@
 import React, {FC, ReactElement} from 'react';
+import {Typography} from "@material-ui/core";
 
 import {useSmallLinkPreviewStyles} from "./SmallLinkPreviewStyles";
 import {Tweet} from "../../store/ducks/tweets/contracts/state";
@@ -42,15 +43,15 @@ const SmallLinkPreview: FC<SmallLinkPreviewProps> = ({tweet, onOpenYouTubeVideo,
     const LinkPreviewInfo = (): JSX.Element => {
         return (
             <div className={classes.linkPreviewTitle}>
-                <div className={classes.linkTitle}>
+                <Typography component={"div"} className={classes.linkTitle}>
                     {tweet.linkTitle}
-                </div>
-                <div className={classes.linkDescription}>
+                </Typography>
+                <Typography component={"div"} className={classes.linkDescription}>
                     {tweet.linkDescription}
-                </div>
-                <div className={classes.link}>
+                </Typography>
+                <Typography component={"div"} className={classes.link}>
                     {LinkIcon}{domain}
-                </div>
+                </Typography>
             </div>
         );
     };

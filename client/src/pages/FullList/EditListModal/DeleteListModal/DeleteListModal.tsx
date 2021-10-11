@@ -25,14 +25,14 @@ const DeleteListModal: FC<DeleteListModalProps> = ({visible, onClose, onDeleteLi
             onClose={onClose}
             aria-labelledby="form-dialog-title"
         >
-            <DialogContent style={{padding: "0px 0px"}}>
+            <DialogContent style={{padding: 0}}>
                 <div className={classes.modalWrapper}>
                     <Typography className={classes.modalFullName}>
                         Delete List?
                     </Typography>
-                    <div className={classes.modalUsername}>
+                    <Typography className={classes.modalUsername}>
                         This can’t be undone and you’ll lose your List.
-                    </div>
+                    </Typography>
                     <div className={classes.modalButtonWrapper}>
                         <Button
                             className={classes.modalCancelButton}

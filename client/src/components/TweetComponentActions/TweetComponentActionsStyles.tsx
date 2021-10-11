@@ -19,15 +19,6 @@ export const useTweetComponentMoreStyles = makeStyles((theme: Theme) => createSt
             },
         },
     },
-    delete: {
-        color: "rgb(244, 33, 46)",
-        "& svg": {
-            verticalAlign: "bottom",
-            marginRight: 15,
-            height: "1.30em",
-            fill: "rgb(244, 33, 46)",
-        },
-    },
     dropdown: {
         padding: 0,
         position: 'absolute',
@@ -42,24 +33,29 @@ export const useTweetComponentMoreStyles = makeStyles((theme: Theme) => createSt
         "& .MuiList-root": {
             padding: 0,
         },
+        "& #delete": {
+            color: "rgb(244, 33, 46)",
+            "& svg": {
+                verticalAlign: "bottom",
+                marginRight: 15,
+                height: "1.30em",
+                fill: "rgb(244, 33, 46)",
+            },
+        },
         '& .MuiListItem-root': {
             height: 52,
+            fontSize: 15,
+            fontWeight: 400,
             '&:hover': {
                 cursor: 'pointer',
                 backgroundColor: 'rgb(247, 249, 249)',
             },
-        },
-    },
-    text: {
-        fontSize: 15,
-        fontWeight: 400,
-    },
-    textIcon: {
-        "& svg": {
-            verticalAlign: "bottom",
-            marginRight: 15,
-            fill: "rgb(83, 100, 113)",
-            height: "1.30em",
+            "& svg": {
+                verticalAlign: "bottom",
+                marginRight: 15,
+                fill: "rgb(83, 100, 113)",
+                height: "1.30em",
+            },
         },
     },
     snackBar: {

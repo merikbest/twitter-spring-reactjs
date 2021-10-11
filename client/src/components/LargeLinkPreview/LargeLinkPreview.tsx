@@ -1,4 +1,5 @@
 import React, {FC, ReactElement} from 'react';
+import {Typography} from "@material-ui/core";
 
 import {useLargeLinkPreviewStyles} from "./LargeLinkPreviewStyles";
 import {Tweet} from "../../store/ducks/tweets/contracts/state";
@@ -23,15 +24,15 @@ const LargeLinkPreview: FC<LargeLinkPreviewProps> = ({tweet, isFullTweet}): Reac
                     alt={tweet.linkCover}
                 />
                 <div className={classes.siteInfoWrapper}>
-                    <div className={classes.siteInfoTitle}>
+                    <Typography component={"div"} className={classes.siteInfoTitle}>
                         {tweet.linkTitle}
-                    </div>
-                    <div className={classes.siteInfoDescription}>
+                    </Typography>
+                    <Typography component={"div"} className={classes.siteInfoDescription}>
                         {tweet.linkDescription}
-                    </div>
-                    <div className={classes.siteTitle}>
+                    </Typography>
+                    <Typography component={"div"} className={classes.siteTitle}>
                         {LinkIcon}{domain}
-                    </div>
+                    </Typography>
                 </div>
             </div>
         </a>

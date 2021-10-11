@@ -50,11 +50,22 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
         height: "46px !important",
         marginRight: 15,
     },
+    headerUserInfo: {
+        position: "relative",
+        fontSize: 15,
+        "& b": {
+            lineHeight: "20px"
+        },
+    },
     username: {
         color: "rgb(83, 100, 113)",
+        lineHeight: "20px"
     },
     date: {
         color: "rgb(83, 100, 113)",
+    },
+    dateWrapper: {
+        marginBottom: 16
     },
     textWrapper: {
         fontSize: 24,
@@ -90,8 +101,11 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
         },
     },
     contentItem: {
-        marginLeft: 5,
-        color: "rgb(83, 100, 113)",
+        marginRight: 20,
+        "& span": {
+            marginLeft: 5,
+            color: "rgb(83, 100, 113)",
+        },
     },
     info: {
         display: 'flex',

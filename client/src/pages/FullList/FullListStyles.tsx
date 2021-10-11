@@ -24,13 +24,23 @@ export const useFullListStyles = makeStyles((theme: Theme) => ({
         borderLeft: 0,
         borderRight: 0,
         borderRadius: 0,
-        '& h6': {
-            fontWeight: 800,
-        },
+    },
+    headerFullName: {
+        fontWeight: 800,
+        fontSize: 20,
+        lineHeight: "24px",
+    },
+    headerUsername: {
+        fontSize: 13,
+        lineHeight: "16px",
+        color: "rgb(83, 100, 113)",
     },
     iconGroup: {
         marginLeft: "auto",
         marginRight: 10,
+    },
+    content: {
+        paddingTop: 53
     },
     wallpaper: {
         height: 200,
@@ -138,11 +148,13 @@ export const useFullListStyles = makeStyles((theme: Theme) => ({
         textAlign: "center",
     },
     listInfoTitle: {
+        lineHeight: "36px",
         fontSize: 31,
         fontWeight: 800,
         marginBottom: 8,
     },
     listInfoText: {
+        lineHeight: "20px",
         fontSize: 15,
         color: "rgb(83, 100, 113)",
     },

@@ -1,7 +1,7 @@
 import React, {ChangeEvent, FC, ReactElement, useState} from 'react';
 import {useDispatch} from "react-redux";
 import {useHistory} from "react-router-dom";
-import {Button, Checkbox, Dialog, DialogContent, DialogTitle} from "@material-ui/core";
+import {Button, Checkbox, Dialog, DialogContent, DialogTitle, Typography} from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 import {Controller, useForm} from "react-hook-form";
@@ -160,7 +160,9 @@ const EditListModal: FC<EditListModalProps> = ({list, visible, onClose}): ReactE
                         />
                         <div className={classes.footer}>
                             <div className={classes.footerWrapper}>
-                                <div className={classes.footerTitle}>Make private</div>
+                                <Typography component={"div"} className={classes.footerTitle}>
+                                    Make private
+                                </Typography>
                                 <Checkbox
                                     checked={isListPrivate}
                                     onChange={handleChange}
@@ -168,15 +170,17 @@ const EditListModal: FC<EditListModalProps> = ({list, visible, onClose}): ReactE
                                     color="primary"
                                 />
                             </div>
-                            <div className={classes.footerText}>When you make a List private, only you can see it.</div>
+                            <Typography component={"div"} className={classes.footerText}>
+                                When you make a List private, only you can see it.
+                            </Typography>
                         </div>
-                        <div className={classes.manageMembers} onClick={onOpenManageMembersModal}>
+                        <Typography component={"div"} className={classes.manageMembers} onClick={onOpenManageMembersModal}>
                             Manage members
                             <>{ForwardArrowIcon}</>
-                        </div>
-                        <div className={classes.deleteList} onClick={onOpenDeleteListModal}>
+                        </Typography>
+                        <Typography component={"div"} className={classes.deleteList} onClick={onOpenDeleteListModal}>
                             Delete List
-                        </div>
+                        </Typography>
                     </div>
                 </DialogContent>
             </form>
