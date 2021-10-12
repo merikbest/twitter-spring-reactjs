@@ -43,7 +43,9 @@ const Notifications: FC = (): ReactElement => {
         <Paper className={classes.container} variant="outlined">
             <Paper className={classes.header}>
                 <div>
-                    <Typography variant="h6">Notifications</Typography>
+                    <Typography variant="h6">
+                        Notifications
+                    </Typography>
                 </div>
             </Paper>
             <div style={{paddingTop: 57,}}>
@@ -61,12 +63,12 @@ const Notifications: FC = (): ReactElement => {
                     (activeTab === 0) ? (
                         (notifications.length === 0) ? (
                             <div>
-                                <div className={classes.title}>
+                                <Typography component={"div"} className={classes.title}>
                                     Nothing to see here — yet
-                                </div>
-                                <div className={classes.text}>
+                                </Typography>
+                                <Typography component={"div"} className={classes.text}>
                                     From like to Retweets and whole lot more, this is where all the actions happens.
-                                </div>
+                                </Typography>
                             </div>
                         ) : (
                             <div>
@@ -123,12 +125,12 @@ const Notifications: FC = (): ReactElement => {
                         )
                     ) : (
                         <div>
-                            <div className={classes.title}>
+                            <Typography component={"div"} className={classes.title}>
                                 Nothing to see here — yet
-                            </div>
-                            <div className={classes.text}>
+                            </Typography>
+                            <Typography component={"div"}  className={classes.text}>
                                 When someone mentions you, you’ll find it here.
-                            </div>
+                            </Typography>
                         </div>
                     )
                 )}

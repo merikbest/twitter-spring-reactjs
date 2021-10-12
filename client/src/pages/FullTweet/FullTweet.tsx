@@ -314,21 +314,21 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
                             <div className={classes.replyInfo}>
                                 <div className={classes.iconWrapper}>
                                     <div className={classes.iconCircle}>
-                                            <span className={classes.icon}>
-                                                {(tweetData.replyType === ReplyType.FOLLOW) && (FollowReplyIcon)}
-                                                {(tweetData.replyType === ReplyType.MENTION) && (MentionReplyIcon)}
-                                            </span>
+                                        <span className={classes.icon}>
+                                            {(tweetData.replyType === ReplyType.FOLLOW) && (FollowReplyIcon)}
+                                            {(tweetData.replyType === ReplyType.MENTION) && (MentionReplyIcon)}
+                                        </span>
                                     </div>
                                 </div>
                                 <div className={classes.replyTextInfoWrapper}>
-                                    <div className={classes.replyInfoTitle}>
+                                    <Typography component={"div"} className={classes.replyInfoTitle}>
                                         Who can reply?
-                                    </div>
-                                    <div className={classes.replyInfoText}>
+                                    </Typography>
+                                    <Typography component={"div"} className={classes.replyInfoText}>
                                         People @{tweetData.user.fullName}
                                         {(tweetData.replyType === ReplyType.FOLLOW) ? (" follows or ") : (" ")}
                                         mentioned can reply
-                                    </div>
+                                    </Typography>
                                 </div>
                             </div>
                         </Paper>
@@ -338,9 +338,10 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
                     ) ? (
                         <>
                             <Typography className={classes.replyWrapper}>
-                                Replying to <Link to={`/user/${tweetData.user.id}`}>
-                                @{tweetData.user.username}
-                            </Link>
+                                {"Replying to "}
+                                <Link to={`/user/${tweetData.user.id}`}>
+                                    @{tweetData.user.username}
+                                </Link>
                             </Typography>
                             <AddTweetForm
                                 tweetId={tweetData.id}
@@ -348,7 +349,8 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
                                 addressedId={tweetData.user.id}
                                 maxRows={15}
                                 title={"Tweet your reply"}
-                                buttonName={"Reply"}/>
+                                buttonName={"Reply"}
+                            />
                         </>
                     ) : null}
                     {(visibleModalWindow && modalWindowTitle === "Liked by") ? (
@@ -356,13 +358,15 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
                             users={tweetData.likedTweets}
                             title={modalWindowTitle}
                             visible={visibleModalWindow}
-                            onClose={onCloseModalWindow}/>
+                            onClose={onCloseModalWindow}
+                        />
                     ) : (
                         <UsersListModal
                             users={tweetData.retweets}
                             title={modalWindowTitle}
                             visible={visibleModalWindow}
-                            onClose={onCloseModalWindow}/>
+                            onClose={onCloseModalWindow}
+                        />
                     )}
                 </Paper>
                 <div className={classes.divider}/>
@@ -371,10 +375,10 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
         );
     }
     return (
-        <div className={classes.error}>
+        <Typography component={"div"} className={classes.error}>
             Hmm...this page doesn’t exist. <br/>
             Try searching for something else.
-        </div>
+        </Typography>
     );
 };
 

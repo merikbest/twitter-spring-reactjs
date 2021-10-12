@@ -65,8 +65,12 @@ const PopperListWindow: FC<PopperListWindowProps> = ({list}): ReactElement => {
                 alt={list?.wallpaper?.src ? list?.wallpaper?.src : list?.altWallpaper}
             />
             <div className={classes.popperListInfo}>
-                <div className={classes.popperListTitle}>{list?.name}</div>
-                <div className={classes.popperListDescription}>{list?.description}</div>
+                <div className={classes.popperListTitle}>
+                    {list?.name}
+                </div>
+                <div className={classes.popperListDescription}>
+                    {list?.description}
+                </div>
                 <Link to={`/user/${list?.listOwner.id}`} className={classes.popperListOwnerLink}>
                     <div className={classes.popperListOwnerWrapper}>
                         <Avatar
@@ -74,8 +78,12 @@ const PopperListWindow: FC<PopperListWindowProps> = ({list}): ReactElement => {
                             src={list?.listOwner.avatar?.src ? list?.listOwner.avatar?.src : DEFAULT_PROFILE_IMG}
                         />
                     </div>
-                    <span className={classes.popperListOwnerFullName}>{list?.listOwner.fullName}</span>
-                    <span className={classes.popperListOwnerUsername}>@{list?.listOwner.username}</span>
+                    <span className={classes.popperListOwnerFullName}>
+                        {list?.listOwner.fullName}
+                    </span>
+                    <span className={classes.popperListOwnerUsername}>
+                        @{list?.listOwner.username}
+                    </span>
                 </Link>
                 <div>
                     <span onClick={event => onOpenMembersModalWindow(event)} className={classes.popperListMembers}>

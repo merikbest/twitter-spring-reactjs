@@ -77,7 +77,9 @@ const Messages: FC = (): ReactElement => {
                     <Paper variant="outlined">
                         <Paper className={classes.header}>
                             <div>
-                                <Typography variant="h6">Messages</Typography>
+                                <Typography variant="h6">
+                                    Messages
+                                </Typography>
                             </div>
                         </Paper>
                         {(chats.length === 0) ? (

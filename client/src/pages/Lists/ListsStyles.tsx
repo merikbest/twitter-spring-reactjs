@@ -28,6 +28,16 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
             fontWeight: 800,
         },
     },
+    headerFullName: {
+        fontWeight: 800,
+        fontSize: 20,
+        lineHeight: "24px",
+    },
+    headerUsername: {
+        fontSize: 13,
+        lineHeight: "16px",
+        color: "rgb(83, 100, 113)",
+    },
     iconGroup: {
         marginLeft: "auto",
         marginRight: 10,
@@ -69,7 +79,7 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
     },
     textIcon: {
         "& svg": {
-            verticalAlign: "bottom",
+            verticalAlign: -3,
             marginRight: 15,
             fill: "rgb(83, 100, 113)",
             height: "1.30em",

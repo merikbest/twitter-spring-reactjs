@@ -2,7 +2,7 @@ import React, {ChangeEvent, FC, FormEvent, ReactElement, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {History, LocationState} from "history";
 import {Link, useHistory} from "react-router-dom";
-import {Button} from "@material-ui/core";
+import {Button, Typography} from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 
 import {LoginTextField} from "./LoginInputField";

@@ -1,6 +1,6 @@
 import React, {ChangeEvent, FC, FormEvent, ReactElement, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Button, Checkbox, Dialog, DialogContent, DialogTitle} from "@material-ui/core";
+import {Button, Checkbox, Dialog, DialogContent, DialogTitle, Typography} from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 
@@ -100,7 +100,9 @@ const CreateListsModal: FC<CreateListsModalProps> = ({visible, onClose}): ReactE
                         />
                         <div className={classes.footer}>
                             <div className={classes.footerWrapper}>
-                                <div className={classes.footerTitle}>Make private</div>
+                                <Typography component={"div"} className={classes.footerTitle}>
+                                    Make private
+                                </Typography>
                                 <Checkbox
                                     checked={isListPrivate}
                                     onChange={handleChange}
@@ -108,7 +110,9 @@ const CreateListsModal: FC<CreateListsModalProps> = ({visible, onClose}): ReactE
                                     color="primary"
                                 />
                             </div>
-                            <div className={classes.footerText}>When you make a List private, only you can see it.</div>
+                            <Typography component={"div"} className={classes.footerText}>
+                                When you make a List private, only you can see it.
+                            </Typography>
                         </div>
                     </div>
                 </DialogContent>

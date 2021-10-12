@@ -93,8 +93,10 @@ const Lists: FC = (): ReactElement => {
             <Paper className={classes.header} variant="outlined">
                 <BackButton/>
                 <div>
-                    <Typography variant="h6">Lists</Typography>
-                    <Typography variant="caption" display="block" gutterBottom>
+                    <Typography component={"div"} className={classes.headerFullName}>
+                        Lists
+                    </Typography>
+                    <Typography component={"div"} className={classes.headerUsername}>
                         @{myProfile?.username}
                     </Typography>
                 </div>
@@ -123,8 +125,12 @@ const Lists: FC = (): ReactElement => {
                                 {openPopover ? (
                                     <Link to={`/lists/memberships/${myProfile?.id}`} className={classes.dropdownLink}>
                                         <div className={classes.dropdown}>
-                                            <span className={classes.textIcon}>{ListsIcon}</span>
-                                            <span className={classes.text}>Lists you’re on</span>
+                                            <span className={classes.textIcon}>
+                                                {ListsIcon}
+                                            </span>
+                                            <Typography component={"span"} className={classes.text}>
+                                                Lists you’re on
+                                            </Typography>
                                         </div>
                                     </Link>
                                 ) : null}
@@ -140,28 +146,36 @@ const Lists: FC = (): ReactElement => {
             ) : (
                 <>
                     <Paper className={classes.pinnedLists} variant="outlined">
-                        <Typography variant="h6">Pinned Lists</Typography>
+                        <Typography variant="h6">
+                            Pinned Lists
+                        </Typography>
                         {(pinnedLists.length === 0) ? (
-                            <div className={classes.pinnedListsText}>
+                            <Typography component={"div"} className={classes.pinnedListsText}>
                                 Nothing to see here yet — pin your favorite Lists to access them quickly.
-                            </div>
+                            </Typography>
                         ) : (
-                            <div className={classes.pinnedListsWrapper}>
+                            <Typography component={"div"} className={classes.pinnedListsWrapper}>
                                 {pinnedLists.map((pinnedList) => (<PinnedListsItem item={pinnedList}/>))}
-                            </div>
+                            </Typography>
                         )}
                     </Paper>
                     <Paper className={classes.newLists} variant="outlined">
-                        <Typography variant="h6">Discover new Lists</Typography>
+                        <Typography variant="h6">
+                            Discover new Lists
+                        </Typography>
                         {lists.slice(0, 3).map((list, index) => (
                             <ListsItem key={list.id} item={list} listIndex={index}/>
                         ))}
                         <Link to={"/suggested"} className={classes.link}>
-                            <div className={classes.showMore}>Show more</div>
+                            <Typography component={"div"} className={classes.showMore}>
+                                Show more
+                            </Typography>
                         </Link>
                     </Paper>
                     <Paper className={classes.myLists} variant="outlined">
-                        <Typography variant="h6">Your Lists</Typography>
+                        <Typography variant="h6">
+                            Your Lists
+                        </Typography>
                         {userLists.map((list) => (<ListsItem isMyList={true} key={list.id} item={list}/>))}
                     </Paper>
                     {visibleCreateListModal && (

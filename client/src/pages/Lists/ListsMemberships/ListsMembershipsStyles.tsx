@@ -24,19 +24,31 @@ export const useListsMembershipsStyles = makeStyles((theme: Theme) => ({
             fontWeight: 800,
         },
     },
+    headerFullName: {
+        fontWeight: 800,
+        fontSize: 20,
+        lineHeight: "24px",
+    },
+    headerUsername: {
+        fontSize: 13,
+        lineHeight: "16px",
+        color: "rgb(83, 100, 113)",
+    },
     infoWrapper: {
         paddingTop: 84,
         margin: "0 auto",
         width: 336,
         textAlign: "center",
-
     },
     title: {
         fontWeight: 800,
         fontSize: 31,
+        lineHeight: "36px",
+        marginBottom: 8
     },
     text: {
         fontSize: 15,
         color: "rgb(83, 100, 113)",
+        lineHeight: "20px"
     },
 }));

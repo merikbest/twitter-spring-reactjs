@@ -58,7 +58,9 @@ const Home: FC = (): ReactElement => {
         <Paper className={classes.container} variant="outlined">
             <Paper className={classes.header} variant="outlined">
                 <Route path='/home' exact>
-                    <Typography variant="h6">Home</Typography>
+                    <Typography variant="h6">
+                        Home
+                    </Typography>
                     <div className={classes.headerIcon}>
                         <IconButton color="primary">
                             <>{TopTweets}</>
@@ -67,15 +69,21 @@ const Home: FC = (): ReactElement => {
                 </Route>
                 <Route path="/home/tweet">
                     <BackButton/>
-                    <Typography variant="h6">Tweet</Typography>
+                    <Typography variant="h6">
+                        Tweet
+                    </Typography>
                 </Route>
                 <Route path="/home/connect">
                     <BackButton/>
-                    <Typography variant="h6">Connect</Typography>
+                    <Typography variant="h6">
+                        Connect
+                    </Typography>
                 </Route>
                 <Route path="/home/trends">
                     <BackButton/>
-                    <Typography variant="h6">Trends</Typography>
+                    <Typography variant="h6">
+                        Trends
+                    </Typography>
                 </Route>
             </Paper>
 

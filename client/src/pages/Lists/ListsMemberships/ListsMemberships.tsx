@@ -25,10 +25,10 @@ const ListsMemberships: FC<RouteComponentProps<{ id: string }>> = ({match}): Rea
             <Paper className={classes.header} variant="outlined">
                 <BackButton/>
                 <div>
-                    <Typography variant="h6">
+                    <Typography component={"div"} className={classes.headerFullName}>
                         Lists {(myProfile?.id === userProfile?.id) && ("you’re on")}
                     </Typography>
-                    <Typography variant="caption" display="block" gutterBottom>
+                    <Typography component={"div"} className={classes.headerUsername}>
                         @{userProfile?.username}
                     </Typography>
                 </div>
@@ -36,13 +36,21 @@ const ListsMemberships: FC<RouteComponentProps<{ id: string }>> = ({match}): Rea
             <div className={classes.infoWrapper}>
                 {(myProfile?.id === userProfile?.id) ? (
                     <>
-                        <div className={classes.title}>You haven’t been added to any Lists yet</div>
-                        <div className={classes.text}>When someone adds you to a List, it’ll show up here.</div>
+                        <Typography component={"div"} className={classes.title}>
+                            You haven’t been added to any Lists yet
+                        </Typography>
+                        <Typography component={"div"} className={classes.text}>
+                            When someone adds you to a List, it’ll show up here.
+                        </Typography>
                     </>
                 ) : (
                     <>
-                        <div className={classes.title}>@{userProfile?.username} hasn’t created any Lists</div>
-                        <div className={classes.text}>When they do, they’ll show up here.</div>
+                        <Typography component={"div"} className={classes.title}>
+                            @{userProfile?.username} hasn’t created any Lists
+                        </Typography>
+                        <Typography component={"div"} className={classes.text}>
+                            When they do, they’ll show up here.
+                        </Typography>
                     </>
                 )}
             </div>

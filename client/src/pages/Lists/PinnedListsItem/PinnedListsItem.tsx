@@ -1,6 +1,6 @@
 import React, {FC, ReactElement} from 'react';
 import {Link} from 'react-router-dom';
-import {Avatar} from "@material-ui/core";
+import {Avatar, Typography} from "@material-ui/core";
 
 import {usePinnedListsItemStyles} from "./PinnedListsItemStyles";
 import {Lists} from "../../../store/ducks/lists/contracts/state";
@@ -32,7 +32,9 @@ const PinnedListsItem: FC<PinnedListsItemProps<Lists>> = (
                     className={classes.listAvatar}
                     src={pinnedList?.wallpaper?.src ? pinnedList?.wallpaper?.src : pinnedList?.altWallpaper}
                 />
-                <div className={classes.pinnedListName}>{pinnedList?.name}</div>
+                <Typography component={"div"} className={classes.pinnedListName}>
+                    {pinnedList?.name}
+                </Typography>
                 {visiblePopperWindow && <PopperListWindow list={pinnedList!}/>}
             </div>
         </Link>
