@@ -24,7 +24,9 @@ const SuggestedLists: FC = (): ReactElement => {
             <Paper className={classes.header} variant="outlined">
                 <BackButton/>
                 <div>
-                    <Typography variant="h6">Suggested Lists</Typography>
+                    <Typography variant="h6">
+                        Suggested Lists
+                    </Typography>
                 </div>
             </Paper>
             <Paper className={classes.content} variant="outlined">
@@ -34,16 +36,18 @@ const SuggestedLists: FC = (): ReactElement => {
                     alt="contentImage"
                 />
                 <div className={classes.infoWrapper}>
-                    <div className={classes.infoTitle}>
+                    <Typography component={"div"} className={classes.infoTitle}>
                         Choose your Lists
-                    </div>
-                    <div className={classes.infoText}>
+                    </Typography>
+                    <Typography component={"div"} className={classes.infoText}>
                         When you follow a List, you'll be able to quickly keep up with the experts on what you care
                         about most.
-                    </div>
+                    </Typography>
                 </div>
             </Paper>
-            <div className={classes.listsTitle}>Discover new Lists</div>
+            <Typography component={"div"} className={classes.listsTitle}>
+                Discover new Lists
+            </Typography>
             {isLoading ? (
                 <div className={classes.loading}>
                     <CircularProgress/>

@@ -1,5 +1,5 @@
 import React, {FC, ReactElement} from 'react';
-import {Button, Dialog, DialogContent} from "@material-ui/core";
+import {Button, Dialog, DialogContent, Typography} from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 
 import {useProfileDescriptionModalStyles} from "./ProfileDescriptionModalStyles";
@@ -13,34 +13,35 @@ interface ProfileDescriptionModalProps {
     onOpenProfileUpdatedModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
 
-const ProfileDescriptionModal: FC<ProfileDescriptionModalProps> = ({
-                                                                       open,
-                                                                       onClose,
-                                                                       text,
-                                                                       onChangeText,
-                                                                       onOpenProfileUpdatedModal
-                                                                   }): ReactElement => {
+const ProfileDescriptionModal: FC<ProfileDescriptionModalProps> = (
+    {
+        open,
+        onClose,
+        text,
+        onChangeText,
+        onOpenProfileUpdatedModal
+    }
+): ReactElement => {
     const classes = useProfileDescriptionModalStyles();
 
     return (
         <Dialog
             hideBackdrop={true}
-            style={{height: 666, marginTop: 92}}
             transitionDuration={0}
             open={open}
             onClose={onClose}
             aria-labelledby="form-dialog-title"
         >
-            <DialogContent style={{padding: "0 32px"}} className={classes.container}>
+            <DialogContent className={classes.container}>
                 <div className={classes.logoIcon}>
                     <TwitterIcon/>
                 </div>
-                <div className={classes.title}>
+                <Typography component={"div"} className={classes.title}>
                     Describe yourself
-                </div>
-                <div className={classes.text}>
+                </Typography>
+                <Typography component={"div"} className={classes.text}>
                     What makes you special? Don't think too hard, just have fun with it.
-                </div>
+                </Typography>
                 <ProfileDescriptionInput
                     value={text}
                     onChange={(event) => onChangeText(event.target.value)}

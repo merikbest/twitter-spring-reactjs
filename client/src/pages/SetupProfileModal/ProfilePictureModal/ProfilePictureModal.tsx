@@ -1,5 +1,5 @@
-import React, {FC, ReactElement, useState} from 'react';
-import {Avatar, Button, Dialog, DialogContent} from "@material-ui/core";
+import React, {FC, ReactElement} from 'react';
+import {Avatar, Button, Dialog, DialogContent, Typography} from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 
 import {useProfilePictureModalStyles} from "./ProfilePictureModalStyles";
@@ -15,42 +15,45 @@ interface ProfilePictureModalProps {
     onOpenProfileHeaderModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
 
-const ProfilePictureModal: FC<ProfilePictureModalProps> = ({
-                                                               open,
-                                                               onClose,
-                                                               avatar,
-                                                               onChangeAvatar,
-                                                               onOpenProfileHeaderModal
-                                                           }): ReactElement => {
+const ProfilePictureModal: FC<ProfilePictureModalProps> = (
+    {
+        open,
+        onClose,
+        avatar,
+        onChangeAvatar,
+        onOpenProfileHeaderModal
+    }
+): ReactElement => {
     const classes = useProfilePictureModalStyles();
 
     return (
         <Dialog
-            style={{height: 666, marginTop: 92}}
             transitionDuration={0}
             open={open}
             onClose={onClose}
             aria-labelledby="form-dialog-title"
         >
-            <DialogContent style={{padding: "0 32px"}} className={classes.container}>
+            <DialogContent className={classes.container}>
                 <div className={classes.logoIcon}>
                     <TwitterIcon/>
                 </div>
-                <div className={classes.title}>
+                <Typography component={"div"} className={classes.title}>
                     Pick a profile picture
-                </div>
-                <div className={classes.text}>
+                </Typography>
+                <Typography component={"div"} className={classes.text}>
                     Have a favorite selfie? Upload it now.
-                </div>
+                </Typography>
                 <div className={classes.avatarWrapper}>
                     <UploadProfileImage
                         setupProfile={true}
                         name={"avatar"}
                         image={avatar}
-                        onChangeImage={onChangeAvatar}/>
+                        onChangeImage={onChangeAvatar}
+                    />
                     <Avatar
                         key={avatar?.src}
-                        src={(avatar?.src === undefined) ? DEFAULT_PROFILE_IMG : avatar?.src}/>
+                        src={(avatar?.src === undefined) ? DEFAULT_PROFILE_IMG : avatar?.src}
+                    />
                 </div>
                 <Button
                     className={classes.button}

@@ -10,6 +10,7 @@ import {Image} from "../../store/ducks/tweets/contracts/state";
 import {uploadImage} from "../../util/uploadImage";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {updatedUserData} from "../../store/ducks/userProfile/actionCreators";
+import {useSetupProfileModalStyles} from "./SetupProfileModalStyles";
 
 interface SetupProfileModalProps {
     visible: boolean;
@@ -17,6 +18,7 @@ interface SetupProfileModalProps {
 }
 
 const SetupProfileModal: FC<SetupProfileModalProps> = ({visible, onClose}): ReactElement => {
+    const classes = useSetupProfileModalStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
     const [visibleProfileHeaderModal, setVisibleProfileHeaderModal] = useState<boolean>(false);
@@ -56,30 +58,34 @@ const SetupProfileModal: FC<SetupProfileModalProps> = ({visible, onClose}): Reac
     };
 
     return (
-        <div>
+        <div className={classes.container}>
             <ProfilePictureModal
                 open={visible}
                 onClose={handleCloseModal}
                 avatar={avatar}
                 onChangeAvatar={setAvatar}
-                onOpenProfileHeaderModal={setVisibleProfileHeaderModal}/>
+                onOpenProfileHeaderModal={setVisibleProfileHeaderModal}
+            />
             <ProfileHeaderModal
                 open={visibleProfileHeaderModal}
                 avatar={avatar}
                 wallpaper={wallpaper}
                 onChangeWallpaper={setWallpaper}
                 onClose={handleCloseModal}
-                onOpenProfileDescriptionModal={setVisibleProfileDescriptionModal}/>
+                onOpenProfileDescriptionModal={setVisibleProfileDescriptionModal}
+            />
             <ProfileDescriptionModal
                 open={visibleProfileDescriptionModal}
                 onClose={handleCloseModal}
                 text={bio}
                 onChangeText={setBio}
-                onOpenProfileUpdatedModal={setVisibleProfileUpdatedModal}/>
+                onOpenProfileUpdatedModal={setVisibleProfileUpdatedModal}
+            />
             <ProfileUpdatedModal
                 open={visibleProfileUpdatedModal}
                 onClose={handleCloseModal}
-                onSubmit={onSubmit}/>
+                onSubmit={onSubmit}
+            />
         </div>
     );
 };

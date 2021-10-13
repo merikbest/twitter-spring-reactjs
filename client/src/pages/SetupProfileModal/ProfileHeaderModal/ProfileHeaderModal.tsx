@@ -1,6 +1,6 @@
 import React, {FC, ReactElement} from 'react';
 import {useSelector} from "react-redux";
-import {Avatar, Button, Dialog, DialogContent} from "@material-ui/core";
+import {Avatar, Button, Dialog, DialogContent, Typography} from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 
 import {useProfileHeaderModalStyles} from "./ProfileHeaderModalStyles";
@@ -18,41 +18,43 @@ interface ProfileHeaderModalProps {
     onOpenProfileDescriptionModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
 
-const ProfileHeaderModal: FC<ProfileHeaderModalProps> = ({
-                                                             open,
-                                                             avatar,
-                                                             wallpaper,
-                                                             onChangeWallpaper,
-                                                             onClose,
-                                                             onOpenProfileDescriptionModal
-                                                         }): ReactElement => {
+const ProfileHeaderModal: FC<ProfileHeaderModalProps> = (
+    {
+        open,
+        avatar,
+        wallpaper,
+        onChangeWallpaper,
+        onClose,
+        onOpenProfileDescriptionModal
+    }
+): ReactElement => {
     const classes = useProfileHeaderModalStyles();
     const myProfile = useSelector(selectUserData);
 
     return (
         <Dialog
             hideBackdrop={true}
-            style={{height: 666, marginTop: 92}}
             transitionDuration={0}
             open={open}
             onClose={onClose}
             aria-labelledby="form-dialog-title"
         >
-            <DialogContent style={{padding: "0 32px"}} className={classes.container}>
+            <DialogContent className={classes.container}>
                 <div className={classes.logoIcon}>
                     <TwitterIcon/>
                 </div>
-                <div className={classes.title}>
+                <Typography component={"div"} className={classes.title}>
                     Pick a header
-                </div>
-                <div className={classes.text}>
+                </Typography>
+                <Typography component={"div"} className={classes.text}>
                     People who visit your profile will see it. Show your style.
-                </div>
+                </Typography>
                 <div className={classes.wallpaperWrapper}>
                     <img
                         className={classes.wallpaperImg}
                         key={wallpaper?.src}
-                        src={(wallpaper?.src === undefined) ? "" : wallpaper?.src}/>
+                        src={(wallpaper?.src === undefined) ? "" : wallpaper?.src}
+                    />
                     <div className={classes.wallpaperEditImg}>
                         <UploadProfileImage name={"wallpaper"} image={wallpaper} onChangeImage={onChangeWallpaper}/>
                     </div>
@@ -65,12 +67,12 @@ const ProfileHeaderModal: FC<ProfileHeaderModalProps> = ({
                         <img alt="default-img" src={DEFAULT_PROFILE_IMG}/>
                     </Avatar>
                 </div>
-                <div className={classes.fullName}>
+                <Typography component={"div"} className={classes.fullName}>
                     {myProfile?.fullName}
-                </div>
-                <div className={classes.username}>
+                </Typography>
+                <Typography component={"div"} className={classes.username}>
                     @{myProfile?.username}
-                </div>
+                </Typography>
                 <Button
                     className={classes.button}
                     onClick={() => onOpenProfileDescriptionModal(true)}
