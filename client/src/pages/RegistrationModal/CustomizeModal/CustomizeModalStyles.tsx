@@ -3,7 +3,7 @@ import {makeStyles, Theme} from "@material-ui/core";
 export const useCustomizeModalStyles = makeStyles((theme: Theme) => ({
     container: {
         width: 550,
-        height: 600,
+        minHeight: 600,
         marginTop: 5,
         padding: "0 30px",
     },
@@ -19,22 +19,26 @@ export const useCustomizeModalStyles = makeStyles((theme: Theme) => ({
         fontWeight: 700,
         fontSize: 21,
         marginBottom: 44,
+        lineHeight: "28px",
     },
     subtitle: {
         fontWeight: 700,
         fontSize: 18,
         marginBottom: 12,
+        lineHeight: "20px",
     },
     text: {
         width: 450,
         display: "inline-block",
         marginBottom: 40,
+        lineHeight: "20px",
+        fontSize: 15,
     },
     radio: {
         display: "inline-block",
         padding: 0,
         marginLeft: 15,
-        marginBottom: 15,
+        marginBottom: 45,
         "& svg": {
             width: 16,
             height: 16
@@ -47,5 +51,8 @@ export const useCustomizeModalStyles = makeStyles((theme: Theme) => ({
         "&:hover": {
             cursor: "pointer",
         },
+    },
+    buttonWrapper: {
+        marginTop: 285
     },
 }));

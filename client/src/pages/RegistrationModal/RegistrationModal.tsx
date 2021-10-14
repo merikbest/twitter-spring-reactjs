@@ -1,6 +1,6 @@
 import React, {ChangeEvent, FC, ReactElement, ReactNode, useState} from 'react';
 import {Controller, useForm} from "react-hook-form";
-import {Button, Dialog, FormControl, InputLabel} from "@material-ui/core";
+import {Button, Dialog, FormControl, InputLabel, Typography} from "@material-ui/core";
 import DialogContent from "@material-ui/core/DialogContent";
 import TwitterIcon from "@material-ui/icons/Twitter"
 import {yupResolver} from "@hookform/resolvers/yup";
@@ -26,15 +26,17 @@ interface RegistrationFormProps {
 
 const RegistrationFormSchema = yup.object().shape({
     username: yup.string().min(1, "What is your name?").required(),
-    email: yup.string().email("Please enter a valid email address."),
+    email: yup.string().email("Invalid mail").required("Please enter a valid email address."),
 });
 
-const RegistrationModal: FC<RegistrationModalProps> = ({
-                                                           open,
-                                                           onClose,
-                                                           onOpenCustomize,
-                                                           onChangeRegistrationInfo
-                                                       }): ReactElement => {
+const RegistrationModal: FC<RegistrationModalProps> = (
+    {
+        open,
+        onClose,
+        onOpenCustomize,
+        onChangeRegistrationInfo
+    }
+): ReactElement => {
     const classes = useRegistrationModalStyles();
     const [emailError, setEmailError] = useState<string>("");
     const [month, setMonth] = useState<string>("");
@@ -93,7 +95,6 @@ const RegistrationModal: FC<RegistrationModalProps> = ({
         <>
             <Dialog
                 transitionDuration={0}
-                style={{height: 666, marginTop: 92,}}
                 open={open}
                 onClose={onClose}
                 aria-labelledby="form-dialog-title"
@@ -102,10 +103,10 @@ const RegistrationModal: FC<RegistrationModalProps> = ({
                     <div className={classes.logoIcon}>
                         <TwitterIcon/>
                     </div>
-                    <div className={classes.formWrapper}>
-                        <div className={classes.title}>
+                    <div>
+                        <Typography component={"div"} className={classes.title}>
                             Create your account
-                        </div>
+                        </Typography>
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <FormControl className={classes.inputWrapper} variant="outlined">
                                 <Controller
@@ -141,15 +142,19 @@ const RegistrationModal: FC<RegistrationModalProps> = ({
                                     )}
                                 />
                             </FormControl>
-                            <div className={classes.link}>Use phone instead</div>
+                            <Typography component={"div"} className={classes.link}>
+                                Use phone instead
+                            </Typography>
                             <div className={classes.footer}>
                                 <b>Date of birth</b>
-                                <div className={classes.footerText}>
+                                <Typography component={"div"} className={classes.footerText}>
                                     This will not be shown publicly. Confirm your own age, even if this account is for a
                                     business, a pet, or something else.
-                                </div>
+                                </Typography>
                                 <FormControl variant="outlined" className={classes.formControl}>
-                                    <InputLabel htmlFor="select-month">Month</InputLabel>
+                                    <InputLabel htmlFor="select-month">
+                                        Month
+                                    </InputLabel>
                                     <RegistrationSelect
                                         style={{width: 240, marginRight: 12}}
                                         labelId="select-month"
@@ -176,7 +181,9 @@ const RegistrationModal: FC<RegistrationModalProps> = ({
                                 </FormControl>
                                 <FormControl style={{margin: "16px 0"}} variant="outlined"
                                              className={classes.formControl}>
-                                    <InputLabel htmlFor="select-day">Day</InputLabel>
+                                    <InputLabel htmlFor="select-day">
+                                        Day
+                                    </InputLabel>
                                     <RegistrationSelect
                                         style={{width: 100, marginRight: 12}}
                                         labelId="select-day"
@@ -192,7 +199,9 @@ const RegistrationModal: FC<RegistrationModalProps> = ({
                                 </FormControl>
                                 <FormControl style={{margin: "16px 0"}} variant="outlined"
                                              className={classes.formControl}>
-                                    <InputLabel htmlFor="select-year">Year</InputLabel>
+                                    <InputLabel htmlFor="select-year">
+                                        Year
+                                    </InputLabel>
                                     <RegistrationSelect
                                         style={{width: 125,}}
                                         labelId="select-year"
@@ -207,14 +216,16 @@ const RegistrationModal: FC<RegistrationModalProps> = ({
                                     </RegistrationSelect>
                                 </FormControl>
                             </div>
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                                fullWidth
-                            >
-                                Next
-                            </Button>
+                            <div className={classes.buttonWrapper}>
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    color="primary"
+                                    fullWidth
+                                >
+                                    Next
+                                </Button>
+                            </div>
                         </form>
                     </div>
                 </DialogContent>

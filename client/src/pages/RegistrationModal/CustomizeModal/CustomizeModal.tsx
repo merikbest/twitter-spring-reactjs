@@ -1,5 +1,5 @@
 import React, {FC, ReactElement} from 'react';
-import {Button, Dialog, DialogContent, Radio} from "@material-ui/core";
+import {Button, Dialog, DialogContent, Radio, Typography} from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 
 import {useCustomizeModalStyles} from "./CustomizeModalStyles";
@@ -16,7 +16,6 @@ const CustomizeModal:FC<CustomizeModalProps> = ({open, onClose, onOpenCreateAcco
     return (
         <Dialog
             hideBackdrop={true}
-            style={{height: 666, marginTop: 92}}
             transitionDuration={0}
             open={open}
             onClose={onClose}
@@ -26,29 +25,30 @@ const CustomizeModal:FC<CustomizeModalProps> = ({open, onClose, onOpenCreateAcco
                 <div className={classes.logoIcon}>
                     <TwitterIcon/>
                 </div>
-                <div className={classes.title}>
+                <Typography component={"div"} className={classes.title}>
                     Customize your experience
-                </div>
-                <div className={classes.subtitle}>
+                </Typography>
+                <Typography component={"div"} className={classes.subtitle}>
                     Track where you see Twitter content across the web
-                </div>
-                <div className={classes.text}>
+                </Typography>
+                <Typography component={"div"} className={classes.text}>
                     Twitter uses this data to personalize your experience. This web browsing history will never be
                     stored with your name, email, or phone number.
-                </div>
+                </Typography>
                 <Radio className={classes.radio} checked={true} color="primary"/>
-                <div>
+                <Typography component={"div"}>
                     For more details about these settings, visit the <span className={classes.link}>Help Center</span>.
+                </Typography>
+                <div className={classes.buttonWrapper}>
+                    <Button
+                        onClick={() => onOpenCreateAccount(true)}
+                        variant="contained"
+                        color="primary"
+                        fullWidth
+                    >
+                        Next
+                    </Button>
                 </div>
-                <Button
-                    style={{marginTop: 285}}
-                    onClick={() => onOpenCreateAccount(true)}
-                    variant="contained"
-                    color="primary"
-                    fullWidth
-                >
-                    Next
-                </Button>
             </DialogContent>
         </Dialog>
     );

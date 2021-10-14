@@ -1,5 +1,8 @@
-import React, {FC, ReactElement, useState} from 'react';
-import {Button, Dialog, DialogContent} from "@material-ui/core";
+import React, {FC, ReactElement} from 'react';
+import {History, LocationState} from "history";
+import {useHistory} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {Button, Dialog, DialogContent, Typography} from "@material-ui/core";
 import {useForm, Controller} from "react-hook-form";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import {yupResolver} from "@hookform/resolvers/yup";
@@ -7,9 +10,6 @@ import * as yup from "yup";
 
 import {useSetPasswordModalStyles} from "./SetPasswordModalStyles";
 import {RegistrationInputField} from "../RegistrationInput/RegistrationInputField";
-import {History, LocationState} from "history";
-import {useHistory} from "react-router-dom";
-import {useDispatch} from "react-redux";
 import {fetchSignUp} from "../../../store/ducks/user/actionCreators";
 
 interface SetPasswordProps {
@@ -49,7 +49,6 @@ const SetPasswordModal: FC<SetPasswordProps> = ({email, open, onClose}): ReactEl
     return (
         <Dialog
             hideBackdrop={true}
-            style={{height: 666, marginTop: 92}}
             transitionDuration={0}
             open={open}
             onClose={onClose}
@@ -59,12 +58,12 @@ const SetPasswordModal: FC<SetPasswordProps> = ({email, open, onClose}): ReactEl
                 <div className={classes.logoIcon}>
                     <TwitterIcon/>
                 </div>
-                <div className={classes.title}>
+                <Typography component={"div"} className={classes.title}>
                     You'll need a password
-                </div>
-                <div className={classes.text}>
+                </Typography>
+                <Typography component={"div"} className={classes.text}>
                     Make sure it’s 8 characters or more.
-                </div>
+                </Typography>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div style={{marginTop: 10}}>
                         <Controller

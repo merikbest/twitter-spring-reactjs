@@ -11,6 +11,7 @@ export const useCreateAccountModalStyles = makeStyles((theme: Theme) => ({
         fontSize: 18,
         fontWeight: 800,
         marginBottom: 22,
+        linHeight: "24px"
     },
     spinner: {
         marginTop: 50,
@@ -28,6 +29,8 @@ export const useCreateAccountModalStyles = makeStyles((theme: Theme) => ({
     text: {
         marginTop: 76,
         fontWeight: 400,
+        fontSize: 15,
+        linHeight: "20px",
         "& span": {
             fontSize: 14,
             color: "rgb(27, 149, 224)",

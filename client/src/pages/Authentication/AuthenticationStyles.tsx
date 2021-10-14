@@ -3,7 +3,14 @@ import {makeStyles} from "@material-ui/core";
 export const useAuthenticationStyles= makeStyles((theme) => ({
     wrapper: {
         display: 'flex',
-        height: '100vh'
+        height: '100vh',
+        "& .MuiDialog-root": {
+            marginTop: 92
+        },
+        "& .MuiDialog-container": {
+            paddingTop: 0,
+            paddingBottom: 0
+        },
     },
     leftSide: {
         display: 'flex',

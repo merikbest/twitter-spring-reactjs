@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useState} from 'react';
 import TwitterIcon from "@material-ui/icons/Twitter";
-import {Button, Dialog, DialogContent} from "@material-ui/core";
+import {Button, Dialog, DialogContent, Typography} from "@material-ui/core";
 
 import {useEmailVerificationModalStyles} from "./EmailVerificationModalStyles";
 import {RegistrationInputField} from "../RegistrationInput/RegistrationInputField";
@@ -27,7 +27,6 @@ const EmailVerificationModal: FC<CustomizeModalProps> = ({email, open, onClose, 
     return (
         <Dialog
             hideBackdrop={true}
-            style={{height: 666, marginTop: 92}}
             transitionDuration={0}
             open={open}
             onClose={onClose}
@@ -37,12 +36,12 @@ const EmailVerificationModal: FC<CustomizeModalProps> = ({email, open, onClose, 
                 <div className={classes.logoIcon}>
                     <TwitterIcon/>
                 </div>
-                <div className={classes.title}>
+                <Typography component={"div"} className={classes.title}>
                     We sent you a code
-                </div>
-                <div className={classes.text}>
+                </Typography>
+                <Typography component={"div"} className={classes.text}>
                     Enter it below to verify {email}.
-                </div>
+                </Typography>
                 <div style={{marginTop: 10}}>
                     <RegistrationInputField
                         label="Verification code"
@@ -54,19 +53,20 @@ const EmailVerificationModal: FC<CustomizeModalProps> = ({email, open, onClose, 
                         fullWidth
                     />
                 </div>
-                <div className={classes.link}>
+                <Typography component={"div"} className={classes.link}>
                     Didn't receive email?
+                </Typography>
+                <div className={classes.buttonWrapper}>
+                    <Button
+                        disabled={verificationCode === ""}
+                        onClick={checkEmailVerificationCode}
+                        variant="contained"
+                        color="primary"
+                        fullWidth
+                    >
+                        Next
+                    </Button>
                 </div>
-                <Button
-                    style={{marginTop: 320}}
-                    disabled={verificationCode === ""}
-                    onClick={checkEmailVerificationCode}
-                    variant="contained"
-                    color="primary"
-                    fullWidth
-                >
-                    Next
-                </Button>
             </DialogContent>
         </Dialog>
     );

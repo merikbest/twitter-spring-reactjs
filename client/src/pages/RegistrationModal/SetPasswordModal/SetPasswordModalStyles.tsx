@@ -20,10 +20,13 @@ export const useSetPasswordModalStyles = makeStyles((theme: Theme) => ({
         marginTop: 20,
         fontSize: 21,
         fontWeight: 700,
+        linHeight: "24px"
     },
     text: {
+        fontSize: 15,
         marginTop: 15,
         color: "rgb(83, 100, 113)",
+        linHeight: "20px",
     },
     button: {
         position: "absolute",

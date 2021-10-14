@@ -1,5 +1,5 @@
 import React, {FC, ReactElement, useState} from 'react';
-import {Button, CircularProgress, Dialog, DialogContent} from "@material-ui/core";
+import {Button, CircularProgress, Dialog, DialogContent, Typography} from "@material-ui/core";
 
 import {useCreateAccountModalStyles} from "./CreateAccountModalStyles";
 import {RegistrationInputField} from "../RegistrationInput/RegistrationInputField";
@@ -13,12 +13,14 @@ interface CustomizeModalProps {
     onOpenEmailVerification: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
 
-const CreateAccountModal: FC<CustomizeModalProps> = ({
-                                                         open,
-                                                         onClose,
-                                                         registrationInfo,
-                                                         onOpenEmailVerification
-                                                     }): ReactElement => {
+const CreateAccountModal: FC<CustomizeModalProps> = (
+    {
+        open,
+        onClose,
+        registrationInfo,
+        onOpenEmailVerification
+    }
+): ReactElement => {
     const classes = useCreateAccountModalStyles();
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -39,25 +41,24 @@ const CreateAccountModal: FC<CustomizeModalProps> = ({
     return (
         <Dialog
             hideBackdrop={true}
-            style={{height: 666, marginTop: 92}}
             transitionDuration={0}
             open={open}
             onClose={onClose}
             aria-labelledby="form-dialog-title"
         >
             <DialogContent style={{paddingTop: 0, paddingBottom: 0}} className={classes.container}>
-                <div className={classes.title}>
+                <Typography component={"div"} className={classes.title}>
                     Step 3 of 5
-                </div>
+                </Typography>
                 {isLoading ? (
                     <div className={classes.spinner}>
                         <CircularProgress/>
                     </div>
                 ) : (
                     <>
-                        <div className={classes.subtitle}>
+                        <Typography component={"div"} className={classes.subtitle}>
                             Create your account
-                        </div>
+                        </Typography>
                         <div className={classes.form}>
                             <RegistrationInputField
                                 disabled={true}
@@ -81,11 +82,13 @@ const CreateAccountModal: FC<CustomizeModalProps> = ({
                                 fullWidth
                             />
                         </div>
-                        <div className={classes.text}>
-                            By signing up, you agree to the <span>Terms of Service</span> and <span>Privacy Policy</span>,
-                            including <span>Cookie Use</span>. Others will be able to find you by email or phone number when
+                        <Typography component={"div"} className={classes.text}>
+                            By signing up, you agree to
+                            the <span>Terms of Service</span> and <span>Privacy Policy</span>,
+                            including <span>Cookie Use</span>. Others will be able to find you by email or phone number
+                            when
                             provided · <span>Privacy Options</span>
-                        </div>
+                        </Typography>
                         <Button
                             className={classes.button}
                             onClick={onSubmit}
