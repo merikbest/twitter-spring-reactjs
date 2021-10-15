@@ -11,29 +11,34 @@ See demo screenshots below.
 
 ## Used Technologies:
 
-* Back-end: Spring (Boot, Data, Security), JPA / Hibernate, PostgreSQL, JUnit, Mockito
+* Back-end: Java, Spring (Boot, Data, Security), JPA / Hibernate, PostgreSQL, JUnit, Mockito
 * Front-end: TypeScript, React.js, Redux-Saga, Material-UI
 * Security: JWT
 * AWS S3 bucket
 
 ## Features
 
-* Authentication with JWT and Email validation.
-* Users can add tweets, like tweets, retweet and reply.
+* Authentication with JWT and Email validation. Password change.
+* Users can Add tweets, Like, Retweet, Reply and Quote tweets.
+* Users can Delete tweets, Send tweet via Direct Message, Add tweet to Bookmarks, Pin Lists.
+* Users can Create Lists, Edit Lists, Add other users to Lists, Follow List, Pin Lists.
+* Users get notifications when someone subscribed, retweet or liked tweet.
+* Users can add Images to tweet, Create Poll and vote, Post tweets with link preview, Posts tweets with YouTube video link.
+* Websocket online chats.
 * Users can subscribe to each other.
-* Users can edit own profile.
-* Users can search tweets by hashtags and search other users tweets.
-* All images downloads on Amazon S3 bucket
+* User can edit profile.
+* Users can search tweets by hashtags and search other users and users tweets.
+* All images downloads on Amazon S3 bucket.
 
 ## Next Updates
 
-* Bookmarks
-* Lists
-* Notifications
-* Online chat
-* Poll component
+* Infinity scroll
 * Scheduled tweets
 * Advanced search
+* Private User profile and Lists
+* User settings
+* Adaptive layout
+* Refactoring
 
 ## Screenshots
 
