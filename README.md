@@ -5,9 +5,9 @@
 
 Twitter clone developed using Spring Boot and React.js. </br>
 The project is always updated with new features. </br>
-See demo screenshots below.
+See more demo screenshots below.
 
-![Home page](screenshots/Home.png)
+![Home page](screenshots/1.%20Home%20page.png)
 
 ## Used Technologies:
 
@@ -42,27 +42,53 @@ See demo screenshots below.
 
 ## Screenshots
 
-#### User page
-![Home](screenshots/Home.png)
 #### Add tweet
-![AddTweet](screenshots/AddTweet.png)
+![AddTweet](screenshots/2.%20Add%20tweet.png)
+___
+#### Add Poll
+![AddTPoll](screenshots/3.%20Add%20poll.png)
+___
 #### Reply tweet
-![TweetReply](screenshots/TweetReply.png)
+![Reply](screenshots/4.%20Reply.png)
+___
 #### Tweet image modal
-![TweetModal](screenshots/TweetModal.png)
+![TweetImageModal](screenshots/5.%20Tweet%20Image.png)
+___
+#### Notifications
+![Notifications](screenshots/6.%20Notifications.png)
+___
+#### Full Notifications
+![FullNotifications](screenshots/7.%20Full%20Notification.png)
+___
 #### Search
-![Search](screenshots/Search.png)
+![Search](screenshots/8.%20Search.png)
+___
+#### Search Videos
+![SearchVideos](screenshots/9.%20Search%20YouTube%20videos.png)
+___
 #### Full tweet
-![Full](screenshots/Full%20tweet.png)
-#### Liked by modal
-![Search](screenshots/liked%20by%20modal.png)
+![FullTweet](screenshots/10.%20Full%20Tweet.png)
+___
+#### Liked by Modal window
+![LikedByModalWindow](screenshots/11.%20Liked%20by%20Modal.png)
+___
 #### Following and Followers
-![Search](screenshots/FollowingAndFollowers.png)
-#### Connect
-![Search](screenshots/Connect.png)
+![FollowingAndFollowers](screenshots/12.%20Followers.png)
+___
 #### Trends
-![Search](screenshots/Trends.png)
-#### Registration
-![Search](screenshots/Registration.png)
-#### Login
-![Search](screenshots/Login.png)
+![Trends](screenshots/13.%20Trends.png)
+___
+#### Bookmarks
+![Bookmarks](screenshots/14.%20Bookmarks.png)
+___
+#### Chat
+![Chat](screenshots/15.%20Chat.png)
+___
+#### Lists
+![Lists](screenshots/16.%20Lists.png)
+___
+#### Full List
+![FullList](screenshots/17.%20Full%20List.png)
+___
+#### Suggested Lists
+![SuggestedLists](screenshots/18.%20Suggested%20Lists.png)
