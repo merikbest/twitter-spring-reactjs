@@ -18,6 +18,7 @@ addons:
       - postgresql-client-13
 
 before_install:
+  - chmod +x mvnw
   - sudo apt-get update
   - sudo apt-get --yes remove postgresql\*
   - sudo apt-get install -y postgresql-13 postgresql-client-13
