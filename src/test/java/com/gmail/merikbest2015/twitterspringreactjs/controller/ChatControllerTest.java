@@ -54,7 +54,6 @@ public class ChatControllerTest {
         mockMvc.perform(get(URL_CHAT_BASIC + "/create/3"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNotEmpty())
-                .andExpect(jsonPath("$.id").value(2))
                 .andExpect(jsonPath("$.participants").isNotEmpty())
                 .andExpect(jsonPath("$.participants[1].id").value(3));
     }
