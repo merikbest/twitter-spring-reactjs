@@ -411,10 +411,9 @@ public class UserControllerTest {
         MockMultipartFile file = new MockMultipartFile("file", "test.png", MediaType.MULTIPART_FORM_DATA_VALUE, inputFile);
         MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 
-        // TODO create new s3 bucket
-//        mockMvc.perform(multipart(URL_USER_BASIC + "/upload")
-//                .file(file))
-//                .andExpect(status().isOk());
+        mockMvc.perform(multipart(URL_USER_BASIC + "/upload")
+                .file(file))
+                .andExpect(status().isOk());
     }
 
     @Test

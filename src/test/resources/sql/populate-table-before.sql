@@ -1,7 +1,7 @@
 alter sequence users_id_seq restart with 10;
 
 -- images
-INSERT INTO images (id, src) VALUES (1, 'https://twitterclonestorage.s3.eu-central-1.amazonaws.com/0a6c735d-def8-4587-a29f-221915ef6cb4_ff2d023b3220f93bbc79233614dea542.jpg');
+INSERT INTO images (id, src) VALUES (2, 'https://twitterclonestorage.s3.eu-central-1.amazonaws.com/0a6c735d-def8-4587-a29f-221915ef6cb4_ff2d023b3220f93bbc79233614dea542.jpg');
 INSERT INTO images (id, src) VALUES (11, 'https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg');
 INSERT INTO images (id, src) VALUES (22, 'https://twitterclonestorage.s3.eu-central-1.amazonaws.com/dfc8a223-45fc-43da-8b7c-f76e2c2507cd_82ecbca14eb4999212c07257f41c70e7.jpg');
 INSERT INTO images (id, src) VALUES (33, 'https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg');
@@ -39,7 +39,7 @@ INSERT INTO tweet_quote (tweets_id, quote_tweet_id) VALUES (44, 43);
 INSERT INTO tweet_quote (tweets_id, quote_tweet_id) VALUES (45, 40);
 
 -- tweets_images
-INSERT INTO tweets_images (tweet_id, images_id) VALUES (45, 1);
+INSERT INTO tweets_images (tweet_id, images_id) VALUES (45, 2);
 
 -- like_tweets
 INSERT INTO like_tweets (id, like_tweet_date, tweets_id, users_id) VALUES (80, '2021-10-03 20:31:44.000000', 40, 1);
