@@ -1,5 +1,5 @@
-[![Build Status](https://www.travis-ci.com/merikbest/twitter-spring-reactjs.svg?branch=travis-ci)](https://www.travis-ci.com/merikbest/twitter-spring-reactjs)
-[![codecov](https://codecov.io/gh/merikbest/twitter-spring-reactjs/branch/travis-ci/graph/badge.svg?token=ETUNQVOX2Q)](https://codecov.io/gh/merikbest/twitter-spring-reactjs)
+[![Build Status](https://app.travis-ci.com/merikbest/twitter-spring-reactjs.svg?branch=travis-ci-2)](https://app.travis-ci.com/merikbest/twitter-spring-reactjs)
+[![codecov](https://codecov.io/gh/merikbest/twitter-spring-reactjs/branch/travis-ci-2/graph/badge.svg?token=ETUNQVOX2Q)](https://codecov.io/gh/merikbest/twitter-spring-reactjs)
 
 # Twitter clone
 

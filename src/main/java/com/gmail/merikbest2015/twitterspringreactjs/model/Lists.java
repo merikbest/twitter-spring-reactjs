@@ -47,7 +47,7 @@ public class Lists {
     @ManyToMany
     private List<User> members;
 
-    @OneToMany
+    @ManyToMany
     private List<User> followers;
 
     public Lists() {
