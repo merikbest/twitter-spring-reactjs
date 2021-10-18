@@ -41,14 +41,12 @@ public class UserServiceImpl implements UserService {
     public List<User> getUsers() {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());
-        List<User> users = userRepository.findAll();
-        users.remove(user);
-        return users;
+        return userRepository.findByActiveTrueAndIdNot(user.getId());
     }
 
     @Override
     public List<User> getRelevantUsers() {
-        return userRepository.findTop5By();
+        return userRepository.findTop5ByActiveTrue();
     }
 
     @Override

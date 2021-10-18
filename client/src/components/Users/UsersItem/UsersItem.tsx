@@ -68,16 +68,14 @@ const UsersItem: FC<HoverProps<User> & UsersItemProps<User>> = (
                     src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}
                 />
             </ListItemAvatar>
-            <div onMouseEnter={handleHoverPopper} onMouseLeave={handleLeavePopper}>
+            <div className={classes.userInfo} onMouseEnter={handleHoverPopper} onMouseLeave={handleLeavePopper}>
                 <Link to={`/user/${user?.id}`}>
-                    <ListItemText
-                        primary={user?.fullName}
-                        secondary={
-                            <Typography component="span" variant="body2" color="textSecondary">
-                                @{user?.username}
-                            </Typography>
-                        }
-                    />
+                    <Typography component={"div"} className={classes.fullName}>
+                        {user?.fullName}
+                    </Typography>
+                    <Typography component={"div"} className={classes.username}>
+                        @{user?.username}
+                    </Typography>
                     {visiblePopperWindow && <PopperUserWindow user={user!}/>}
                 </Link>
             </div>

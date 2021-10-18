@@ -7,18 +7,12 @@ export const useUsersItemStyles = makeStyles((theme: Theme) => ({
         '& .MuiListItem-root .MuiListItem-gutters': {
             padding: "0px 0px 0px 0px",
         },
-        '& .MuiTypography-body1': {
-            fontWeight: 700,
-        },
         '& .MuiListItemAvatar-root': {
             minWidth: 50,
             "& .MuiAvatar-root": {
                 width: "46px !important",
                 height: "46px !important",
             },
-        },
-        '& .MuiListItemText-root': {
-            // marginRight: 45,
         },
         '&:hover': {
             backgroundColor: '#edf3f6',
@@ -28,8 +22,28 @@ export const useUsersItemStyles = makeStyles((theme: Theme) => ({
             textDecoration: 'none',
         },
     },
+    userInfo: {
+        width: 120,
+    },
+    fullName: {
+        lineHeight: "20px",
+        color: "rgb(15, 20, 25)",
+        fontWeight: 700,
+        fontSize: 15,
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+    },
+    username: {
+        lineHeight: "20px",
+        color: "rgb(83, 100, 113)",
+        fontWeight: 400,
+        fontSize: 15,
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+    },
     outlinedButton: {
-        marginLeft: 49,
         float: 'right',
         fontSize: 15,
         fontWeight: 700,

@@ -11,6 +11,8 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
+    List<User> findByActiveTrueAndIdNot(Long id);
+
     User findByEmail(String email);
 
     List<User> findByFullNameOrUsernameContainingIgnoreCase(
@@ -21,7 +23,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByPasswordResetCode(String code);
 
-    List<User> findTop5By();
+    List<User> findTop5ByActiveTrue();
 
     List<User> findByUnreadMessages_Tweet(Tweet tweet);
 }
