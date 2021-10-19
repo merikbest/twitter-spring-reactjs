@@ -5,6 +5,7 @@ import {Avatar, IconButton, Paper, Typography} from '@material-ui/core';
 import {compose} from "recompose";
 
 import {
+    AnalyticsIcon,
     FollowReplyIcon,
     LikeIcon,
     LikeOutlinedIcon,
@@ -33,12 +34,14 @@ import LargeLinkPreview from "../LargeLinkPreview/LargeLinkPreview";
 import SmallLinkPreview from "../SmallLinkPreview/SmallLinkPreview";
 import HoverAction from "../HoverAction/HoverAction";
 import {HoverActionProps, withHoverAction} from "../../hoc/withHoverAction";
+import TweetAnalyticsModal from "../TweetAnalyticsModal/TweetAnalyticsModal";
 
 export enum TweetActions {
     REPLY = "REPLY",
     RETWEET = "RETWEET",
     LIKE = "LIKE",
     SHARE = "SHARE",
+    ANALYTICS = "ANALYTICS",
     MORE = "MORE",
 }
 
@@ -57,6 +60,7 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
         visibleRetweetAction,
         visibleLikeAction,
         visibleShareAction,
+        visibleAnalyticsAction,
         visibleMoreAction,
         handleHoverAction,
         handleLeaveAction
@@ -67,7 +71,8 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
     const userProfile = useSelector(selectUserProfile);
     const history = useHistory();
     const location = useLocation();
-    const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
+    const [visibleReplyModalWindow, setVisibleReplyModalWindow] = useState<boolean>(false);
+    const [visibleAnalyticsModalWindow, setVisibleAnalyticsModalWindow] = useState<boolean>(false);
     const [openYouTubeVideo, setOpenYouTubeVideo] = useState<boolean>(false);
 
     const isTweetLiked = tweet?.likedTweets.find((like) => like.user.id === myProfile?.id);
@@ -92,11 +97,19 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
     };
 
     const onOpenReplyModalWindow = (): void => {
-        setVisibleModalWindow(true);
+        setVisibleReplyModalWindow(true);
     };
 
     const onCloseReplyModalWindow = (): void => {
-        setVisibleModalWindow(false);
+        setVisibleReplyModalWindow(false);
+    };
+
+    const onOpenTweetAnalyticsModalWindow = (): void => {
+        setVisibleAnalyticsModalWindow(true);
+    };
+
+    const onCloseTweetAnalyticsModalWindow = (): void => {
+        setVisibleAnalyticsModalWindow(false);
     };
 
     const handleLike = (): void => {
@@ -263,6 +276,18 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
                             handleHoverAction={handleHoverAction}
                             handleLeaveAction={handleLeaveAction}
                         />
+                        {(myProfile?.id === tweet?.user.id) && (
+                            <div className={classes.replyIcon}>
+                                <IconButton
+                                    onClick={onOpenTweetAnalyticsModalWindow}
+                                    onMouseEnter={() => handleHoverAction?.(TweetActions.ANALYTICS)}
+                                    onMouseLeave={handleLeaveAction}
+                                >
+                                    <>{AnalyticsIcon}</>
+                                    {visibleAnalyticsAction && <HoverAction actionText={"Analytics"}/>}
+                                </IconButton>
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div className={classes.bottomLine}/>
@@ -272,8 +297,13 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
                     text={tweet!.text}
                     image={image}
                     dateTime={tweet!.dateTime}
-                    visible={visibleModalWindow}
+                    visible={visibleReplyModalWindow}
                     onClose={onCloseReplyModalWindow}
+                />
+                <TweetAnalyticsModal
+                    tweet={tweet!}
+                    visible={visibleAnalyticsModalWindow}
+                    onClose={onCloseTweetAnalyticsModalWindow}
                 />
             </Paper>
         </>

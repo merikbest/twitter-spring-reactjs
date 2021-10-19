@@ -17,7 +17,9 @@ export const chatMessagesReducer = produce((draft: Draft<ChatMessageState>, acti
             break;
 
         case ChatMessagesActionsType.SET_CHAT_MESSAGE:
-            draft.items = [...draft.items, action.payload];
+            if (draft.items[0].chat.id === action.payload.chat.id) {
+                draft.items = [...draft.items, action.payload];
+            }
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
