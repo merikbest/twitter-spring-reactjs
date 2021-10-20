@@ -1,5 +1,5 @@
 import React, {FC, ReactElement} from 'react';
-import {Dialog, Typography} from "@material-ui/core";
+import {Button, Dialog, Typography} from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
@@ -61,8 +61,34 @@ const TweetAnalyticsModal: FC<TweetAnalyticsModalStyles> = ({tweet, visible, onC
                             </Typography>
                         </div>
                     </div>
-                    <div>
-
+                    <div className={classes.engagementsButton}>
+                        <Button
+                            variant="outlined"
+                            color="primary"
+                            fullWidth
+                        >
+                            View all engagements
+                        </Button>
+                    </div>
+                    <div className={classes.promoteWrapper}>
+                        <img className={classes.promoteImage}
+                             src="https://ton.twimg.com/tfb/promote-a54f43f3904fb8073e4f16564fe00058.png"/>
+                        <Typography className={classes.promoteTitle} component={"div"}>
+                            Promote your Tweet
+                        </Typography>
+                        <Typography className={classes.promoteText} component={"div"}>
+                            Your Tweet has 0 total impressions so far. <br/>
+                            Get more impressions on this Tweet!
+                        </Typography>
+                    </div>
+                    <div className={classes.engagementsButton}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                        >
+                            Promote your Tweet
+                        </Button>
                     </div>
                 </div>
             </DialogContent>

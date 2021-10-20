@@ -20,8 +20,7 @@ export const useTweetAnalyticsModalStyles = makeStyles<Theme>((theme) => ({
     },
     tweetInfoContainer: {
         margin: "22px 12px",
-
-        borderRadius: 4,
+        // borderRadius: 4,
     },
     tweetInfoWrapper: {
         padding: 12,
@@ -62,5 +61,29 @@ export const useTweetAnalyticsModalStyles = makeStyles<Theme>((theme) => ({
     engagementsWrapper: {
         paddingTop: 30
     },
-
+    engagementsButton: {
+        "& .MuiButton-root": {
+            borderRadius: 5
+        },
+    },
+    promoteWrapper: {
+        margin: "22px 12px",
+    },
+    promoteImage: {
+        display: "block",
+        margin: "0px auto",
+        width: 40
+    },
+    promoteTitle: {
+        textAlign: "center",
+        fontSize: 21,
+        lineHeight: "28px"
+    },
+    promoteText: {
+        textAlign: "center",
+        color: "#8899a6",
+        fontSize: 14,
+        lineHeight: "15px",
+        marginTop: 2
+    }
 }));
