@@ -8,7 +8,7 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
         padding: 0,
         margin: 0,
         maxWidth: 230,
-        "& li .selected" : {
+        "& li .selected": {
             color: theme.palette.primary.main,
             "& svg": {
                 fill: 'rgb(29, 161, 242)',
@@ -79,6 +79,60 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
         fontSize: 11,
         color: "#fff",
         textAlign: "center",
+    },
+    popover: {
+        width: 198,
+        height: "auto",
+        boxShadow: "rgb(101 119 134 / 20%) 0px 0px 15px, rgb(101 119 134 / 15%) 0px 0px 3px 1px",
+        marginLeft: 40,
+        marginTop: 50,
+        "& .MuiAvatar-root": {
+            width: "48px !important",
+            height: "48px !important",
+        },
+        '& .MuiListItemText-root': {
+            marginLeft: 8,
+        },
+        '& .MuiListItemText-primary': {
+            fontSize: 15,
+            fontWeight: 700,
+        },
+        '& .MuiTypography-body2': {
+            fontSize: 15,
+        },
+        "& svg": {
+            marginRight: 12,
+            color: "rgb(15, 20, 25)",
+            height: "1.30em",
+        },
+    },
+    listItemWrapper: {
+        "& a": {
+            textDecoration: "none"
+        },
+        "& .MuiList-root": {
+            padding: 0,
+        },
+        '& .MuiListItem-root': {
+            color: "rgb(15, 20, 25)",
+            padding: "16px 0px 16px 16px",
+            '&:hover': {
+                cursor: 'pointer',
+                backgroundColor: 'rgb(247, 249, 249)',
+            },
+            "& .MuiTypography-root": {
+                fontWeight: 400,
+                fontSize: 15,
+                lineHeight: "20px",
+            },
+        },
+        "& .MuiDivider-root": {
+            backgroundColor: 'rgb(239, 243, 244)',
+        },
+    },
+    divider: {
+        height: 1,
+        backgroundColor: "rgb(239, 243, 244)",
     },
     button: {
         height: 48,

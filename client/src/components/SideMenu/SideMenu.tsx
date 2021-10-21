@@ -1,25 +1,26 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useSelector} from "react-redux";
 import {NavLink, useLocation} from 'react-router-dom';
-import {Button, Hidden, IconButton, Typography} from "@material-ui/core";
+import {Button, Hidden, IconButton, List, ListItem, Popover, Typography} from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import CreateIcon from '@material-ui/icons/Create';
 
 import {
+    AnalyticsIcon,
     BookmarksIcon,
-    BookmarksIconFilled,
+    BookmarksIconFilled, DisplayIcon,
     ExploreIcon,
-    ExploreIconFilled,
+    ExploreIconFilled, HelpCenterIcon,
     HomeIcon,
-    HomeIconFilled,
+    HomeIconFilled, KeyboardShortcutsIcon,
     ListsIcon, ListsIconFilled,
     MessagesIcon,
-    MessagesIconFilled,
-    MoreIcon,
+    MessagesIconFilled, MomentsIcon,
+    MoreIcon, NewslettersIcon,
     NotificationsIcon,
     NotificationsIconFilled,
     ProfileIcon,
-    ProfileIconFilled
+    ProfileIconFilled, SettingsIcon, TopicIcon, TwitterAdsIcon
 } from "../../icons";
 import UserSideProfile from "../UserSideProfile/UserSideProfile";
 import {selectUserData} from "../../store/ducks/user/selectors";
@@ -37,6 +38,9 @@ const SideMenu: FC = (): ReactElement => {
 
     const [visibleAddTweet, setVisibleAddTweet] = useState<boolean>(false);
     const [visibleHomeNotification, setVisibleHomeNotification] = useState<boolean>(false);
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const id = open ? "simple-popover" : undefined;
 
     useEffect(() => {
         if (loadingStatus === LoadingStatus.SUCCESS) {
@@ -54,6 +58,14 @@ const SideMenu: FC = (): ReactElement => {
         setVisibleAddTweet(false);
     };
 
+    const handleOpenPopup = (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClosePopup = (): void => {
+        setAnchorEl(null);
+    };
+
     return (
         <>
             <ul className={classes.container}>
@@ -69,7 +81,7 @@ const SideMenu: FC = (): ReactElement => {
                         <div>
                             <Hidden smDown>
                                 <Typography className={classes.label} variant="h6">
-                                    {visibleHomeNotification && <span className={classes.homeNotification}></span>}
+                                    {visibleHomeNotification && <span className={classes.homeNotification}/>}
                                     {(location.pathname.includes("/home")) ? (
                                         <span>{HomeIconFilled}</span>
                                     ) : (
@@ -181,13 +193,96 @@ const SideMenu: FC = (): ReactElement => {
                     </NavLink>
                 </li>
                 <li className={classes.itemWrapper}>
-                    <div>
+                    <div aria-describedby={id} onClick={handleOpenPopup}>
                         <Hidden smDown>
                             <Typography className={classes.label} variant="h6">
                                 <span>{MoreIcon}</span> More
                             </Typography>
                         </Hidden>
                     </div>
+                    <Popover
+                        id={id}
+                        open={open}
+                        anchorEl={anchorEl}
+                        onClose={handleClosePopup}
+                        classes={{
+                            paper: classes.popover,
+                        }}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'center',
+                        }}
+                        transformOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'center',
+                        }}
+                    >
+                        <div className={classes.listItemWrapper}>
+                            <List>
+                                {/*<ListItem>*/}
+                                {/*    {TopicIcon}*/}
+                                {/*    <Typography component={"span"}>*/}
+                                {/*        Topics*/}
+                                {/*    </Typography>*/}
+                                {/*</ListItem>*/}
+                                {/*<ListItem>*/}
+                                {/*    {MomentsIcon}*/}
+                                {/*    <Typography component={"span"}>*/}
+                                {/*        Moments*/}
+                                {/*    </Typography>*/}
+                                {/*</ListItem>*/}
+                                <ListItem>
+                                    {NewslettersIcon}
+                                    <Typography component={"span"}>
+                                        Newsletters
+                                    </Typography>
+                                </ListItem>
+                                <a href="https://ads.twitter.com/login" target="_blank">
+                                    <ListItem>
+                                        {TwitterAdsIcon}
+                                        <Typography component={"span"}>
+                                            Twitter Ads
+                                        </Typography>
+                                    </ListItem>
+                                </a>
+                                <a href="https://analytics.twitter.com/about" target="_blank">
+                                    <ListItem>
+                                        {AnalyticsIcon}
+                                        <Typography component={"span"}>
+                                            Analytics
+                                        </Typography>
+                                    </ListItem>
+                                </a>
+                                <div className={classes.divider}/>
+                                <ListItem>
+                                    {SettingsIcon}
+                                    <Typography component={"span"}>
+                                        Settings and privacy
+                                    </Typography>
+                                </ListItem>
+                                <a href="https://help.twitter.com" target="_blank">
+                                    <ListItem>
+                                        {HelpCenterIcon}
+                                        <Typography component={"span"}>
+                                            Help Center
+                                        </Typography>
+                                    </ListItem>
+                                </a>
+                                {/*<ListItem>*/}
+                                {/*    {DisplayIcon}*/}
+                                {/*    <Typography component={"span"}>*/}
+                                {/*        Display*/}
+                                {/*    </Typography>*/}
+                                {/*</ListItem>*/}
+                                <ListItem>
+                                    {KeyboardShortcutsIcon}
+                                    <Typography component={"span"}>
+                                        Keyboard shortcuts
+                                    </Typography>
+                                </ListItem>
+                            </List>
+                        </div>
+                    </Popover>
                 </li>
                 <li className={classes.itemWrapper}>
                     <Button
