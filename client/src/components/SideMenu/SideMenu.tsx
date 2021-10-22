@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useSelector} from "react-redux";
-import {NavLink, useLocation} from 'react-router-dom';
+import {Link, NavLink, useLocation} from 'react-router-dom';
 import {Button, Hidden, IconButton, List, ListItem, Popover, Typography} from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import CreateIcon from '@material-ui/icons/Create';
@@ -8,19 +8,25 @@ import CreateIcon from '@material-ui/icons/Create';
 import {
     AnalyticsIcon,
     BookmarksIcon,
-    BookmarksIconFilled, DisplayIcon,
+    BookmarksIconFilled,
     ExploreIcon,
-    ExploreIconFilled, HelpCenterIcon,
+    ExploreIconFilled,
+    HelpCenterIcon,
     HomeIcon,
-    HomeIconFilled, KeyboardShortcutsIcon,
-    ListsIcon, ListsIconFilled,
+    HomeIconFilled,
+    KeyboardShortcutsIcon,
+    ListsIcon,
+    ListsIconFilled,
     MessagesIcon,
-    MessagesIconFilled, MomentsIcon,
-    MoreIcon, NewslettersIcon,
+    MessagesIconFilled,
+    MoreIcon,
+    NewslettersIcon,
     NotificationsIcon,
     NotificationsIconFilled,
     ProfileIcon,
-    ProfileIconFilled, SettingsIcon, TopicIcon, TwitterAdsIcon
+    ProfileIconFilled,
+    SettingsIcon,
+    TwitterAdsIcon
 } from "../../icons";
 import UserSideProfile from "../UserSideProfile/UserSideProfile";
 import {selectUserData} from "../../store/ducks/user/selectors";
@@ -38,7 +44,7 @@ const SideMenu: FC = (): ReactElement => {
 
     const [visibleAddTweet, setVisibleAddTweet] = useState<boolean>(false);
     const [visibleHomeNotification, setVisibleHomeNotification] = useState<boolean>(false);
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const id = open ? "simple-popover" : undefined;
 
@@ -254,12 +260,14 @@ const SideMenu: FC = (): ReactElement => {
                                     </ListItem>
                                 </a>
                                 <div className={classes.divider}/>
-                                <ListItem>
-                                    {SettingsIcon}
-                                    <Typography component={"span"}>
-                                        Settings and privacy
-                                    </Typography>
-                                </ListItem>
+                                <Link to={"/settings"}>
+                                    <ListItem onClick={handleClosePopup}>
+                                        {SettingsIcon}
+                                        <Typography component={"span"}>
+                                            Settings and privacy
+                                        </Typography>
+                                    </ListItem>
+                                </Link>
                                 <a href="https://help.twitter.com" target="_blank">
                                     <ListItem>
                                         {HelpCenterIcon}

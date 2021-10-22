@@ -29,6 +29,7 @@ import Lists from "./pages/Lists/Lists";
 import FullList from "./pages/FullList/FullList";
 import SuggestedLists from "./pages/SuggestedLists/SuggestedLists";
 import ListsMemberships from "./pages/Lists/ListsMemberships/ListsMemberships";
+import Settings from "./pages/Settings/Settings";
 
 const App: FC = (): ReactElement => {
     const history = useHistory();
@@ -113,6 +114,7 @@ const App: FC = (): ReactElement => {
                     <Route path="/notifications" component={Notifications} exact/>
                     <Route path="/notification" component={NotificationInfo} exact/>
                     <Route path="/messages" component={Messages}/>
+                    <Route path="/settings" component={Settings}/>
                     <Route path="/bookmarks" component={Bookmarks}/>
                     <Route path="/suggested" component={SuggestedLists}/>
                     <Route path="/lists" component={Lists} exact/>

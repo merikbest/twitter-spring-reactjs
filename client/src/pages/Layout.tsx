@@ -26,7 +26,7 @@ export const Layout: FC<Layout> = ({children}): ReactElement => {
                 <Grid sm={1} md={2} item style={{minWidth: "256px"}}>
                     <SideMenu/>
                 </Grid>
-                {location.pathname.includes("/message") ? (
+                {(location.pathname.includes("/message") || location.pathname.includes("/settings")) ? (
                     <>
                         {children}
                     </>
