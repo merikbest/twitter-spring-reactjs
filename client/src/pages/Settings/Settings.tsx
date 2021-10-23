@@ -1,9 +1,16 @@
 import React, {FC, ReactElement} from 'react';
-import {Link} from 'react-router-dom';
+import {NavLink, Route} from 'react-router-dom';
+import {Grid, List, ListItem, Paper, Typography} from "@material-ui/core";
 
 import {useSettingsStyles} from "./SettingsStyles";
-import {Grid, List, ListItem, Paper, Typography} from "@material-ui/core";
 import {ArrowRightIcon} from "../../icons";
+import Account from "./Account/Account";
+import AccountInformation from "./Account/AccountInformation/AccountInformation";
+import {BackButton} from "../../components/BackButton/BackButton";
+import ChangeUsername from "./Account/AccountInformation/ChangeUsername/ChangeUsername";
+import ChangePhone from "./Account/AccountInformation/ChangePhone/ChangePhone";
+import ChangeEmail from "./Account/AccountInformation/ChangeEmail/ChangeEmail";
+import ChangeCountry from "./Account/AccountInformation/ChangeCountry/ChangeCountry";
 
 const Settings: FC = (): ReactElement => {
     const classes = useSettingsStyles();
@@ -16,9 +23,9 @@ const Settings: FC = (): ReactElement => {
     return (
         <>
             <Grid className={classes.grid} md={4} item>
-                <div className={classes.messagesContainer}>
+                <div className={classes.container}>
                     <Paper variant="outlined">
-                        <Paper className={classes.header}>
+                        <Paper className={classes.leftSideHeader}>
                             <div>
                                 <Typography variant="h6">
                                     Settings
@@ -27,15 +34,17 @@ const Settings: FC = (): ReactElement => {
                         </Paper>
                         <div className={classes.listWrapper}>
                             <List component="nav" aria-label="main mailbox folders">
-                                <ListItem
-                                    selected={selectedIndex === 1}
-                                    onClick={(event) => handleListItemClick(event, 1)}
-                                >
-                                    <Typography component={"span"}>
-                                        Your account
-                                    </Typography>
-                                    {ArrowRightIcon}
-                                </ListItem>
+                                <NavLink to={"/settings"}>
+                                    <ListItem
+                                        selected={selectedIndex === 1}
+                                        onClick={(event) => handleListItemClick(event, 1)}
+                                    >
+                                        <Typography component={"span"}>
+                                            Your account
+                                        </Typography>
+                                        {ArrowRightIcon}
+                                    </ListItem>
+                                </NavLink>
                                 <ListItem
                                     selected={selectedIndex === 2}
                                     onClick={(event) => handleListItemClick(event, 2)}
@@ -84,11 +93,52 @@ const Settings: FC = (): ReactElement => {
                             </List>
                         </div>
                     </Paper>
-
                 </div>
             </Grid>
             <Grid className={classes.grid} md={5} item>
-                123
+                <Paper className={classes.rightSideHeader}>
+                    <Route exact path="/settings">
+                        <Typography variant="h6">
+                            Your Account
+                        </Typography>
+                    </Route>
+                    <Route exact path="/settings/info">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Account information
+                        </Typography>
+                    </Route>
+                    <Route exact path="/settings/info/username">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Change username
+                        </Typography>
+                    </Route>
+                    <Route exact path="/settings/info/phone">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Change phone
+                        </Typography>
+                    </Route>
+                    <Route exact path="/settings/info/email">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Change email
+                        </Typography>
+                    </Route>
+                    <Route exact path="/settings/info/country">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Change country
+                        </Typography>
+                    </Route>
+                </Paper>
+                <Route exact path="/settings" component={Account}/>
+                <Route exact path="/settings/info" component={AccountInformation}/>
+                <Route exact path="/settings/info/username" component={ChangeUsername}/>
+                <Route exact path="/settings/info/phone" component={ChangePhone}/>
+                <Route exact path="/settings/info/email" component={ChangeEmail}/>
+                <Route exact path="/settings/info/country" component={ChangeCountry}/>
             </Grid>
         </>
 

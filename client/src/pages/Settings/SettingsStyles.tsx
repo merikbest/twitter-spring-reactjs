@@ -4,7 +4,7 @@ export const useSettingsStyles = makeStyles((theme: Theme) => ({
     grid: {
         padding: "12px 0px 0px 0px !important",
     },
-    messagesContainer: {
+    container: {
         "& .MuiPaper-outlined": {
             padding: 0,
             borderRadius: 0,
@@ -13,7 +13,7 @@ export const useSettingsStyles = makeStyles((theme: Theme) => ({
             borderBottom: 0,
         },
     },
-    header: {
+    leftSideHeader: {
         position: "fixed",
         display: 'flex',
         margin: 0,
@@ -31,12 +31,31 @@ export const useSettingsStyles = makeStyles((theme: Theme) => ({
             marginLeft: 15,
             fontWeight: 800,
         },
-        "& svg": {
-            marginRight: 20
+    },
+    rightSideHeader: {
+        position: "fixed",
+        display: 'flex',
+        margin: 0,
+        padding: 0,
+        width: 599,
+        height: 53,
+        zIndex: 1,
+        borderTop: 0,
+        borderLeft: 0,
+        borderRight: 0,
+        borderRadius: 0,
+        alignItems: 'center',
+        flex: 1,
+        '& h6': {
+            marginLeft: 15,
+            fontWeight: 800,
         },
     },
     listWrapper: {
         paddingTop: 53,
+        "& a": {
+            textDecoration: "none"
+        },
         "& .MuiList-root": {
             padding: 0,
         },
