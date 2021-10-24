@@ -104,19 +104,21 @@ const AccountInformation: FC = (): ReactElement => {
                                 </div>
                             </ListItem>
                         </NavLink>
-                        <ListItem>
-                            <div>
-                                <Typography component={"div"} className={classes.title}>
-                                    Languages
-                                </Typography>
-                                <Typography component={"div"} className={classes.text}>
-                                    English
-                                </Typography>
-                            </div>
-                            <div className={classes.arrowIcon}>
-                                {ArrowRightIcon}
-                            </div>
-                        </ListItem>
+                        <NavLink to={"/settings/info/languages"}>
+                            <ListItem>
+                                <div>
+                                    <Typography component={"div"} className={classes.title}>
+                                        Languages
+                                    </Typography>
+                                    <Typography component={"div"} className={classes.text}>
+                                        English
+                                    </Typography>
+                                </div>
+                                <div className={classes.arrowIcon}>
+                                    {ArrowRightIcon}
+                                </div>
+                            </ListItem>
+                        </NavLink>
                         <ListItem>
                             <div>
                                 <Typography component={"div"} className={classes.title}>

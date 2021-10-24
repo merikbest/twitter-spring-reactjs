@@ -11,6 +11,7 @@ import ChangeUsername from "./Account/AccountInformation/ChangeUsername/ChangeUs
 import ChangePhone from "./Account/AccountInformation/ChangePhone/ChangePhone";
 import ChangeEmail from "./Account/AccountInformation/ChangeEmail/ChangeEmail";
 import ChangeCountry from "./Account/AccountInformation/ChangeCountry/ChangeCountry";
+import ChangeLanguage from "./Account/AccountInformation/ChangeLanguage/ChangeLanguage";
 
 const Settings: FC = (): ReactElement => {
     const classes = useSettingsStyles();
@@ -132,6 +133,12 @@ const Settings: FC = (): ReactElement => {
                             Change country
                         </Typography>
                     </Route>
+                    <Route exact path="/settings/info/languages">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Languages
+                        </Typography>
+                    </Route>
                 </Paper>
                 <Route exact path="/settings" component={Account}/>
                 <Route exact path="/settings/info" component={AccountInformation}/>
@@ -139,6 +146,7 @@ const Settings: FC = (): ReactElement => {
                 <Route exact path="/settings/info/phone" component={ChangePhone}/>
                 <Route exact path="/settings/info/email" component={ChangeEmail}/>
                 <Route exact path="/settings/info/country" component={ChangeCountry}/>
+                <Route exact path="/settings/info/languages" component={ChangeLanguage}/>
             </Grid>
         </>
 
