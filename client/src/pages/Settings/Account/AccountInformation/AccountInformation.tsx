@@ -119,19 +119,21 @@ const AccountInformation: FC = (): ReactElement => {
                                 </div>
                             </ListItem>
                         </NavLink>
-                        <ListItem>
-                            <div>
-                                <Typography component={"div"} className={classes.title}>
-                                    Gender
-                                </Typography>
-                                <Typography component={"div"} className={classes.text}>
-                                    Male
-                                </Typography>
-                            </div>
-                            <div className={classes.arrowIcon}>
-                                {ArrowRightIcon}
-                            </div>
-                        </ListItem>
+                        <NavLink to={"/settings/info/gender"}>
+                            <ListItem>
+                                <div>
+                                    <Typography component={"div"} className={classes.title}>
+                                        Gender
+                                    </Typography>
+                                    <Typography component={"div"} className={classes.text}>
+                                        Male
+                                    </Typography>
+                                </div>
+                                <div className={classes.arrowIcon}>
+                                    {ArrowRightIcon}
+                                </div>
+                            </ListItem>
+                        </NavLink>
                         <div className={classes.informationItem}>
                             <Typography component={"div"} className={classes.title}>
                                 Birth date

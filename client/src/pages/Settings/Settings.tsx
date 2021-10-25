@@ -4,14 +4,15 @@ import {Grid, List, ListItem, Paper, Typography} from "@material-ui/core";
 
 import {useSettingsStyles} from "./SettingsStyles";
 import {ArrowRightIcon} from "../../icons";
+import {BackButton} from "../../components/BackButton/BackButton";
 import Account from "./Account/Account";
 import AccountInformation from "./Account/AccountInformation/AccountInformation";
-import {BackButton} from "../../components/BackButton/BackButton";
 import ChangeUsername from "./Account/AccountInformation/ChangeUsername/ChangeUsername";
 import ChangePhone from "./Account/AccountInformation/ChangePhone/ChangePhone";
 import ChangeEmail from "./Account/AccountInformation/ChangeEmail/ChangeEmail";
 import ChangeCountry from "./Account/AccountInformation/ChangeCountry/ChangeCountry";
 import ChangeLanguage from "./Account/AccountInformation/ChangeLanguage/ChangeLanguage";
+import ChangeGender from "./Account/AccountInformation/ChangeGender/ChangeGender";
 
 const Settings: FC = (): ReactElement => {
     const classes = useSettingsStyles();
@@ -139,6 +140,12 @@ const Settings: FC = (): ReactElement => {
                             Languages
                         </Typography>
                     </Route>
+                    <Route exact path="/settings/info/gender">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Gender
+                        </Typography>
+                    </Route>
                 </Paper>
                 <Route exact path="/settings" component={Account}/>
                 <Route exact path="/settings/info" component={AccountInformation}/>
@@ -147,9 +154,9 @@ const Settings: FC = (): ReactElement => {
                 <Route exact path="/settings/info/email" component={ChangeEmail}/>
                 <Route exact path="/settings/info/country" component={ChangeCountry}/>
                 <Route exact path="/settings/info/languages" component={ChangeLanguage}/>
+                <Route exact path="/settings/info/gender" component={ChangeGender}/>
             </Grid>
         </>
-
     );
 };
 
