@@ -13,6 +13,9 @@ import ChangeEmail from "./Account/AccountInformation/ChangeEmail/ChangeEmail";
 import ChangeCountry from "./Account/AccountInformation/ChangeCountry/ChangeCountry";
 import ChangeLanguage from "./Account/AccountInformation/ChangeLanguage/ChangeLanguage";
 import ChangeGender from "./Account/AccountInformation/ChangeGender/ChangeGender";
+import ChangeAge from "./Account/AccountInformation/ChangeAge/ChangeAge";
+import ChangeYourPassword from "./Account/ChangeYourPassword/ChangeYourPassword";
+import TweetDeckTeams from "./Account/TweetDeckTeams/TweetDeckTeams";
 
 const Settings: FC = (): ReactElement => {
     const classes = useSettingsStyles();
@@ -146,6 +149,24 @@ const Settings: FC = (): ReactElement => {
                             Gender
                         </Typography>
                     </Route>
+                    <Route exact path="/settings/info/age">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Age
+                        </Typography>
+                    </Route>
+                    <Route exact path="/settings/password">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Change your password
+                        </Typography>
+                    </Route>
+                    <Route exact path="/settings/teams">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            TweetDeck Teams
+                        </Typography>
+                    </Route>
                 </Paper>
                 <Route exact path="/settings" component={Account}/>
                 <Route exact path="/settings/info" component={AccountInformation}/>
@@ -155,6 +176,9 @@ const Settings: FC = (): ReactElement => {
                 <Route exact path="/settings/info/country" component={ChangeCountry}/>
                 <Route exact path="/settings/info/languages" component={ChangeLanguage}/>
                 <Route exact path="/settings/info/gender" component={ChangeGender}/>
+                <Route exact path="/settings/info/age" component={ChangeAge}/>
+                <Route exact path="/settings/password" component={ChangeYourPassword}/>
+                <Route exact path="/settings/teams" component={TweetDeckTeams}/>
             </Grid>
         </>
     );

@@ -143,19 +143,21 @@ const AccountInformation: FC = (): ReactElement => {
                             </Typography>
                         </div>
                         <div className={classes.divider}/>
-                        <ListItem>
-                            <div>
-                                <Typography component={"div"} className={classes.title}>
-                                    Age
-                                </Typography>
-                                <Typography component={"div"} className={classes.text}>
-                                    13-64
-                                </Typography>
-                            </div>
-                            <div className={classes.arrowIcon}>
-                                {ArrowRightIcon}
-                            </div>
-                        </ListItem>
+                        <NavLink to={"/settings/info/age"}>
+                            <ListItem>
+                                <div>
+                                    <Typography component={"div"} className={classes.title}>
+                                        Age
+                                    </Typography>
+                                    <Typography component={"div"} className={classes.text}>
+                                        13-64
+                                    </Typography>
+                                </div>
+                                <div className={classes.arrowIcon}>
+                                    {ArrowRightIcon}
+                                </div>
+                            </ListItem>
+                        </NavLink>
                     </List>
                 </div>
             </Paper>
