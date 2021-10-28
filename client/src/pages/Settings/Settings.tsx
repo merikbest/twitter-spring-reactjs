@@ -16,6 +16,7 @@ import ChangeGender from "./Account/AccountInformation/ChangeGender/ChangeGender
 import ChangeAge from "./Account/AccountInformation/ChangeAge/ChangeAge";
 import ChangeYourPassword from "./Account/ChangeYourPassword/ChangeYourPassword";
 import TweetDeckTeams from "./Account/TweetDeckTeams/TweetDeckTeams";
+import SecurityAndAccountAccess from "./SecurityAndAccountAccess/SecurityAndAccountAccess";
 
 const Settings: FC = (): ReactElement => {
     const classes = useSettingsStyles();
@@ -50,15 +51,17 @@ const Settings: FC = (): ReactElement => {
                                         {ArrowRightIcon}
                                     </ListItem>
                                 </NavLink>
-                                <ListItem
-                                    selected={selectedIndex === 2}
-                                    onClick={(event) => handleListItemClick(event, 2)}
-                                >
-                                    <Typography component={"span"}>
-                                        Security and account access
-                                    </Typography>
-                                    {ArrowRightIcon}
-                                </ListItem>
+                                <NavLink to={"/settings/security_and_account_access"}>
+                                    <ListItem
+                                        selected={selectedIndex === 2}
+                                        onClick={(event) => handleListItemClick(event, 2)}
+                                    >
+                                        <Typography component={"span"}>
+                                            Security and account access
+                                        </Typography>
+                                        {ArrowRightIcon}
+                                    </ListItem>
+                                </NavLink>
                                 <ListItem
                                     selected={selectedIndex === 3}
                                     onClick={(event) => handleListItemClick(event, 3)}
@@ -167,6 +170,11 @@ const Settings: FC = (): ReactElement => {
                             TweetDeck Teams
                         </Typography>
                     </Route>
+                    <Route exact path="/settings/security_and_account_access">
+                        <Typography variant="h6">
+                            Security and account access
+                        </Typography>
+                    </Route>
                 </Paper>
                 <Route exact path="/settings" component={Account}/>
                 <Route exact path="/settings/info" component={AccountInformation}/>
@@ -179,6 +187,7 @@ const Settings: FC = (): ReactElement => {
                 <Route exact path="/settings/info/age" component={ChangeAge}/>
                 <Route exact path="/settings/password" component={ChangeYourPassword}/>
                 <Route exact path="/settings/teams" component={TweetDeckTeams}/>
+                <Route exact path="/settings/security_and_account_access" component={SecurityAndAccountAccess}/>
             </Grid>
         </>
     );
