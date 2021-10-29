@@ -89,22 +89,24 @@ const Account: FC = (): ReactElement => {
                                     </div>
                                 </ListItem>
                             </NavLink>
-                            <ListItem>
-                                <div className={classes.icon}>
-                                    {DeleteAccountIcon}
-                                </div>
-                                <div>
-                                    <Typography component={"div"} className={classes.title}>
-                                        Deactivate your account
-                                    </Typography>
-                                    <Typography component={"div"} className={classes.text}>
-                                        Find out how you can deactivate your account.
-                                    </Typography>
-                                </div>
-                                <div className={classes.arrowIcon}>
-                                    {ArrowRightIcon}
-                                </div>
-                            </ListItem>
+                            <NavLink to={"/settings/deactivate"}>
+                                <ListItem>
+                                    <div className={classes.icon}>
+                                        {DeleteAccountIcon}
+                                    </div>
+                                    <div>
+                                        <Typography component={"div"} className={classes.title}>
+                                            Deactivate your account
+                                        </Typography>
+                                        <Typography component={"div"} className={classes.text}>
+                                            Find out how you can deactivate your account.
+                                        </Typography>
+                                    </div>
+                                    <div className={classes.arrowIcon}>
+                                        {ArrowRightIcon}
+                                    </div>
+                                </ListItem>
+                            </NavLink>
                         </List>
                     </div>
                 </div>

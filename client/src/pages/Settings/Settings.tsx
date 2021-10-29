@@ -17,12 +17,13 @@ import ChangeAge from "./Account/AccountInformation/ChangeAge/ChangeAge";
 import ChangeYourPassword from "./Account/ChangeYourPassword/ChangeYourPassword";
 import TweetDeckTeams from "./Account/TweetDeckTeams/TweetDeckTeams";
 import SecurityAndAccountAccess from "./SecurityAndAccountAccess/SecurityAndAccountAccess";
+import DeactivateAccount from "./Account/DeactivateAccount/DeactivateAccount";
 
 const Settings: FC = (): ReactElement => {
     const classes = useSettingsStyles();
     const [selectedIndex, setSelectedIndex] = React.useState(1);
 
-    const handleListItemClick = (event: React.MouseEvent<HTMLLIElement, MouseEvent>, index: number) => {
+    const handleListItemClick = (index: number) => {
         setSelectedIndex(index);
     };
 
@@ -43,7 +44,7 @@ const Settings: FC = (): ReactElement => {
                                 <NavLink to={"/settings"}>
                                     <ListItem
                                         selected={selectedIndex === 1}
-                                        onClick={(event) => handleListItemClick(event, 1)}
+                                        onClick={() => handleListItemClick(1)}
                                     >
                                         <Typography component={"span"}>
                                             Your account
@@ -54,7 +55,7 @@ const Settings: FC = (): ReactElement => {
                                 <NavLink to={"/settings/security_and_account_access"}>
                                     <ListItem
                                         selected={selectedIndex === 2}
-                                        onClick={(event) => handleListItemClick(event, 2)}
+                                        onClick={() => handleListItemClick(2)}
                                     >
                                         <Typography component={"span"}>
                                             Security and account access
@@ -64,7 +65,7 @@ const Settings: FC = (): ReactElement => {
                                 </NavLink>
                                 <ListItem
                                     selected={selectedIndex === 3}
-                                    onClick={(event) => handleListItemClick(event, 3)}
+                                    onClick={() => handleListItemClick(3)}
                                 >
                                     <Typography component={"span"}>
                                         Privacy and safety
@@ -73,7 +74,7 @@ const Settings: FC = (): ReactElement => {
                                 </ListItem>
                                 <ListItem
                                     selected={selectedIndex === 4}
-                                    onClick={(event) => handleListItemClick(event, 4)}
+                                    onClick={() => handleListItemClick(4)}
                                 >
                                     <Typography component={"span"}>
                                         Notifications
@@ -82,7 +83,7 @@ const Settings: FC = (): ReactElement => {
                                 </ListItem>
                                 <ListItem
                                     selected={selectedIndex === 5}
-                                    onClick={(event) => handleListItemClick(event, 5)}
+                                    onClick={() => handleListItemClick(5)}
                                 >
                                     <Typography component={"span"}>
                                         Accessibility, display, and languages
@@ -91,7 +92,7 @@ const Settings: FC = (): ReactElement => {
                                 </ListItem>
                                 <ListItem
                                     selected={selectedIndex === 6}
-                                    onClick={(event) => handleListItemClick(event, 6)}
+                                    onClick={() => handleListItemClick(6)}
                                 >
                                     <Typography component={"span"}>
                                         Additional resources
@@ -170,6 +171,12 @@ const Settings: FC = (): ReactElement => {
                             TweetDeck Teams
                         </Typography>
                     </Route>
+                    <Route exact path="/settings/deactivate">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Deactivate account
+                        </Typography>
+                    </Route>
                     <Route exact path="/settings/security_and_account_access">
                         <Typography variant="h6">
                             Security and account access
@@ -187,6 +194,7 @@ const Settings: FC = (): ReactElement => {
                 <Route exact path="/settings/info/age" component={ChangeAge}/>
                 <Route exact path="/settings/password" component={ChangeYourPassword}/>
                 <Route exact path="/settings/teams" component={TweetDeckTeams}/>
+                <Route exact path="/settings/deactivate" component={DeactivateAccount}/>
                 <Route exact path="/settings/security_and_account_access" component={SecurityAndAccountAccess}/>
             </Grid>
         </>
