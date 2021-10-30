@@ -18,6 +18,13 @@ import ChangeYourPassword from "./Account/ChangeYourPassword/ChangeYourPassword"
 import TweetDeckTeams from "./Account/TweetDeckTeams/TweetDeckTeams";
 import SecurityAndAccountAccess from "./SecurityAndAccountAccess/SecurityAndAccountAccess";
 import DeactivateAccount from "./Account/DeactivateAccount/DeactivateAccount";
+import Security from "./SecurityAndAccountAccess/Security/Security";
+import TwoFactorAuthentication from "./SecurityAndAccountAccess/Security/TwoFactorAuthentication/TwoFactorAuthentication";
+import AppsAndSessions from "./SecurityAndAccountAccess/AppsAndSessions/AppsAndSessions";
+import ConnectedApps from "./SecurityAndAccountAccess/AppsAndSessions/ConnectedApps/ConnectedApps";
+import Sessions from "./SecurityAndAccountAccess/AppsAndSessions/Sessions/Sessions";
+import AccountAccessHistory from "./SecurityAndAccountAccess/AppsAndSessions/AccountAccessHistory/AccountAccessHistory";
+import LoggedDevices from "./SecurityAndAccountAccess/AppsAndSessions/LoggedDevices/LoggedDevices";
 
 const Settings: FC = (): ReactElement => {
     const classes = useSettingsStyles();
@@ -182,6 +189,48 @@ const Settings: FC = (): ReactElement => {
                             Security and account access
                         </Typography>
                     </Route>
+                    <Route exact path="/settings/security">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Security
+                        </Typography>
+                    </Route>
+                    <Route exact path="/settings/security/login_verification">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Two-factor authentication
+                        </Typography>
+                    </Route>
+                    <Route exact path="/settings/security/apps_and_sessions">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Apps and sessions
+                        </Typography>
+                    </Route>
+                    <Route exact path="/settings/security/connected_apps">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Connected apps
+                        </Typography>
+                    </Route>
+                    <Route exact path="/settings/security/sessions">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Sessions
+                        </Typography>
+                    </Route>
+                    <Route exact path="/settings/security/login_history">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Account access history
+                        </Typography>
+                    </Route>
+                    <Route exact path="/settings/security/devices">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Logged-in devices and apps
+                        </Typography>
+                    </Route>
                 </Paper>
                 <Route exact path="/settings" component={Account}/>
                 <Route exact path="/settings/info" component={AccountInformation}/>
@@ -196,6 +245,13 @@ const Settings: FC = (): ReactElement => {
                 <Route exact path="/settings/teams" component={TweetDeckTeams}/>
                 <Route exact path="/settings/deactivate" component={DeactivateAccount}/>
                 <Route exact path="/settings/security_and_account_access" component={SecurityAndAccountAccess}/>
+                <Route exact path="/settings/security" component={Security}/>
+                <Route exact path="/settings/security/login_verification" component={TwoFactorAuthentication}/>
+                <Route exact path="/settings/security/apps_and_sessions" component={AppsAndSessions}/>
+                <Route exact path="/settings/security/connected_apps" component={ConnectedApps}/>
+                <Route exact path="/settings/security/sessions" component={Sessions}/>
+                <Route exact path="/settings/security/login_history" component={AccountAccessHistory}/>
+                <Route exact path="/settings/security/devices" component={LoggedDevices}/>
             </Grid>
         </>
     );
