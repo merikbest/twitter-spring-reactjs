@@ -25,6 +25,7 @@ import ConnectedApps from "./SecurityAndAccountAccess/AppsAndSessions/ConnectedA
 import Sessions from "./SecurityAndAccountAccess/AppsAndSessions/Sessions/Sessions";
 import AccountAccessHistory from "./SecurityAndAccountAccess/AppsAndSessions/AccountAccessHistory/AccountAccessHistory";
 import LoggedDevices from "./SecurityAndAccountAccess/AppsAndSessions/LoggedDevices/LoggedDevices";
+import CurrentSession from "./SecurityAndAccountAccess/AppsAndSessions/Sessions/CurrentSession/CurrentSession";
 
 const Settings: FC = (): ReactElement => {
     const classes = useSettingsStyles();
@@ -219,6 +220,12 @@ const Settings: FC = (): ReactElement => {
                             Sessions
                         </Typography>
                     </Route>
+                    <Route exact path="/settings/security/sessions/current">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Current session
+                        </Typography>
+                    </Route>
                     <Route exact path="/settings/security/login_history">
                         <BackButton/>
                         <Typography variant="h6">
@@ -250,6 +257,7 @@ const Settings: FC = (): ReactElement => {
                 <Route exact path="/settings/security/apps_and_sessions" component={AppsAndSessions}/>
                 <Route exact path="/settings/security/connected_apps" component={ConnectedApps}/>
                 <Route exact path="/settings/security/sessions" component={Sessions}/>
+                <Route exact path="/settings/security/sessions/current" component={CurrentSession}/>
                 <Route exact path="/settings/security/login_history" component={AccountAccessHistory}/>
                 <Route exact path="/settings/security/devices" component={LoggedDevices}/>
             </Grid>

@@ -1,6 +1,6 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
-export const useSessionsStyles = makeStyles((theme: Theme) => ({
+export const useCurrentSessionStyles = makeStyles((theme: Theme) => ({
     container: {
         minWidth: 600,
         "& .MuiPaper-outlined": {
@@ -18,27 +18,17 @@ export const useSessionsStyles = makeStyles((theme: Theme) => ({
     infoItemWrapper: {
         padding: "12px 16px"
     },
-    text: {
-        fontSize: 13,
-        color: "rgb(83, 100, 113)",
-        fontWeight: 400,
-        lineHeight: "16px",
-    },
     title: {
         fontWeight: 800,
         lineHeight: "24px",
         fontSize: 20,
         color: "rgb(15, 20, 25)",
     },
-    sessionWrapper: {
-        textDecoration: "none",
-    },
-    sessionLink: {
-        padding: "12px 16px",
-        "&:hover": {
-            backgroundColor: "rgb(247, 249, 249)",
-            cursor: "pointer"
-        },
+    text: {
+        fontSize: 13,
+        color: "rgb(83, 100, 113)",
+        fontWeight: 400,
+        lineHeight: "16px",
     },
     sessionInfo: {
         display: "inline-flex",
@@ -75,35 +65,8 @@ export const useSessionsStyles = makeStyles((theme: Theme) => ({
             height: "1.7em"
         },
     },
-    arrowIcon: {
-        "& svg": {
-            marginTop: 15,
-            float: "right",
-            color: "rgb(83, 100, 113)",
-            height: "1.4em"
-        },
-    },
     divider: {
         height: 1,
         backgroundColor: "rgb(239, 243, 244)",
-    },
-    link: {
-        textDecoration: "none",
-        color: "rgb(29, 155, 240)",
-        cursor: "pointer",
-        "&:hover": {
-            textDecoration: "underline",
-        }
-    },
-    logOut: {
-        padding: 16,
-        color: "rgb(244, 33, 46)",
-        fontWeight: 400,
-        fontSize: 15,
-        lineHeight: "20px",
-        cursor: "pointer",
-        "&:hover": {
-            backgroundColor: "rgba(244, 33, 46, 0.1)"
-        }
     },
 }));
