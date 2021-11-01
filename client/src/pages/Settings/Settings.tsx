@@ -19,13 +19,15 @@ import TweetDeckTeams from "./Account/TweetDeckTeams/TweetDeckTeams";
 import SecurityAndAccountAccess from "./SecurityAndAccountAccess/SecurityAndAccountAccess";
 import DeactivateAccount from "./Account/DeactivateAccount/DeactivateAccount";
 import Security from "./SecurityAndAccountAccess/Security/Security";
-import TwoFactorAuthentication from "./SecurityAndAccountAccess/Security/TwoFactorAuthentication/TwoFactorAuthentication";
+import TwoFactorAuthentication
+    from "./SecurityAndAccountAccess/Security/TwoFactorAuthentication/TwoFactorAuthentication";
 import AppsAndSessions from "./SecurityAndAccountAccess/AppsAndSessions/AppsAndSessions";
 import ConnectedApps from "./SecurityAndAccountAccess/AppsAndSessions/ConnectedApps/ConnectedApps";
 import Sessions from "./SecurityAndAccountAccess/AppsAndSessions/Sessions/Sessions";
 import AccountAccessHistory from "./SecurityAndAccountAccess/AppsAndSessions/AccountAccessHistory/AccountAccessHistory";
 import LoggedDevices from "./SecurityAndAccountAccess/AppsAndSessions/LoggedDevices/LoggedDevices";
 import CurrentSession from "./SecurityAndAccountAccess/AppsAndSessions/Sessions/CurrentSession/CurrentSession";
+import PrivacyAndSafety from "./PrivacyAndSafety/PrivacyAndSafety";
 
 const Settings: FC = (): ReactElement => {
     const classes = useSettingsStyles();
@@ -71,15 +73,17 @@ const Settings: FC = (): ReactElement => {
                                         {ArrowRightIcon}
                                     </ListItem>
                                 </NavLink>
-                                <ListItem
-                                    selected={selectedIndex === 3}
-                                    onClick={() => handleListItemClick(3)}
-                                >
-                                    <Typography component={"span"}>
-                                        Privacy and safety
-                                    </Typography>
-                                    {ArrowRightIcon}
-                                </ListItem>
+                                <NavLink to={"/settings/privacy_and_safety"}>
+                                    <ListItem
+                                        selected={selectedIndex === 3}
+                                        onClick={() => handleListItemClick(3)}
+                                    >
+                                        <Typography component={"span"}>
+                                            Privacy and safety
+                                        </Typography>
+                                        {ArrowRightIcon}
+                                    </ListItem>
+                                </NavLink>
                                 <ListItem
                                     selected={selectedIndex === 4}
                                     onClick={() => handleListItemClick(4)}
@@ -238,6 +242,11 @@ const Settings: FC = (): ReactElement => {
                             Logged-in devices and apps
                         </Typography>
                     </Route>
+                    <Route exact path="/settings/privacy_and_safety">
+                        <Typography variant="h6">
+                            Privacy and safety
+                        </Typography>
+                    </Route>
                 </Paper>
                 <Route exact path="/settings" component={Account}/>
                 <Route exact path="/settings/info" component={AccountInformation}/>
@@ -260,6 +269,7 @@ const Settings: FC = (): ReactElement => {
                 <Route exact path="/settings/security/sessions/current" component={CurrentSession}/>
                 <Route exact path="/settings/security/login_history" component={AccountAccessHistory}/>
                 <Route exact path="/settings/security/devices" component={LoggedDevices}/>
+                <Route exact path="/settings/privacy_and_safety" component={PrivacyAndSafety}/>
             </Grid>
         </>
     );
