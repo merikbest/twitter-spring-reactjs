@@ -19,8 +19,7 @@ import TweetDeckTeams from "./Account/TweetDeckTeams/TweetDeckTeams";
 import SecurityAndAccountAccess from "./SecurityAndAccountAccess/SecurityAndAccountAccess";
 import DeactivateAccount from "./Account/DeactivateAccount/DeactivateAccount";
 import Security from "./SecurityAndAccountAccess/Security/Security";
-import TwoFactorAuthentication
-    from "./SecurityAndAccountAccess/Security/TwoFactorAuthentication/TwoFactorAuthentication";
+import TwoFactorAuthentication from "./SecurityAndAccountAccess/Security/TwoFactorAuthentication/TwoFactorAuthentication";
 import AppsAndSessions from "./SecurityAndAccountAccess/AppsAndSessions/AppsAndSessions";
 import ConnectedApps from "./SecurityAndAccountAccess/AppsAndSessions/ConnectedApps/ConnectedApps";
 import Sessions from "./SecurityAndAccountAccess/AppsAndSessions/Sessions/Sessions";
@@ -28,6 +27,9 @@ import AccountAccessHistory from "./SecurityAndAccountAccess/AppsAndSessions/Acc
 import LoggedDevices from "./SecurityAndAccountAccess/AppsAndSessions/LoggedDevices/LoggedDevices";
 import CurrentSession from "./SecurityAndAccountAccess/AppsAndSessions/Sessions/CurrentSession/CurrentSession";
 import PrivacyAndSafety from "./PrivacyAndSafety/PrivacyAndSafety";
+import Notifications from "./Notifications/Notifications";
+import Accessibility from "./Accessibility/Accessibility";
+import AdditionalResources from "./AdditionalResources/AdditionalResources";
 
 const Settings: FC = (): ReactElement => {
     const classes = useSettingsStyles();
@@ -84,33 +86,39 @@ const Settings: FC = (): ReactElement => {
                                         {ArrowRightIcon}
                                     </ListItem>
                                 </NavLink>
-                                <ListItem
-                                    selected={selectedIndex === 4}
-                                    onClick={() => handleListItemClick(4)}
-                                >
-                                    <Typography component={"span"}>
-                                        Notifications
-                                    </Typography>
-                                    {ArrowRightIcon}
-                                </ListItem>
-                                <ListItem
-                                    selected={selectedIndex === 5}
-                                    onClick={() => handleListItemClick(5)}
-                                >
-                                    <Typography component={"span"}>
-                                        Accessibility, display, and languages
-                                    </Typography>
-                                    {ArrowRightIcon}
-                                </ListItem>
-                                <ListItem
-                                    selected={selectedIndex === 6}
-                                    onClick={() => handleListItemClick(6)}
-                                >
-                                    <Typography component={"span"}>
-                                        Additional resources
-                                    </Typography>
-                                    {ArrowRightIcon}
-                                </ListItem>
+                                <NavLink to={"/settings/notification"}>
+                                    <ListItem
+                                        selected={selectedIndex === 4}
+                                        onClick={() => handleListItemClick(4)}
+                                    >
+                                        <Typography component={"span"}>
+                                            Notifications
+                                        </Typography>
+                                        {ArrowRightIcon}
+                                    </ListItem>
+                                </NavLink>
+                                <NavLink to={"/settings/accessibility_display_and_languages"}>
+                                    <ListItem
+                                        selected={selectedIndex === 5}
+                                        onClick={() => handleListItemClick(5)}
+                                    >
+                                        <Typography component={"span"}>
+                                            Accessibility, display, and languages
+                                        </Typography>
+                                        {ArrowRightIcon}
+                                    </ListItem>
+                                </NavLink>
+                                <NavLink to={"/settings/about"}>
+                                    <ListItem
+                                        selected={selectedIndex === 6}
+                                        onClick={() => handleListItemClick(6)}
+                                    >
+                                        <Typography component={"span"}>
+                                            Additional resources
+                                        </Typography>
+                                        {ArrowRightIcon}
+                                    </ListItem>
+                                </NavLink>
                             </List>
                         </div>
                     </Paper>
@@ -247,6 +255,21 @@ const Settings: FC = (): ReactElement => {
                             Privacy and safety
                         </Typography>
                     </Route>
+                    <Route exact path="/settings/notification">
+                        <Typography variant="h6">
+                            Notifications
+                        </Typography>
+                    </Route>
+                    <Route exact path="/settings/accessibility_display_and_languages">
+                        <Typography variant="h6">
+                            Accessibility, display and languages
+                        </Typography>
+                    </Route>
+                    <Route exact path="/settings/about">
+                        <Typography variant="h6">
+                            Additional resources
+                        </Typography>
+                    </Route>
                 </Paper>
                 <Route exact path="/settings" component={Account}/>
                 <Route exact path="/settings/info" component={AccountInformation}/>
@@ -270,6 +293,9 @@ const Settings: FC = (): ReactElement => {
                 <Route exact path="/settings/security/login_history" component={AccountAccessHistory}/>
                 <Route exact path="/settings/security/devices" component={LoggedDevices}/>
                 <Route exact path="/settings/privacy_and_safety" component={PrivacyAndSafety}/>
+                <Route exact path="/settings/notification" component={Notifications}/>
+                <Route exact path="/settings/accessibility_display_and_languages" component={Accessibility}/>
+                <Route exact path="/settings/about" component={AdditionalResources}/>
             </Grid>
         </>
     );
