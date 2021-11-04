@@ -84,5 +84,21 @@ export const useSettingsStyles = makeStyles((theme: Theme) => ({
             marginLeft: "auto",
         },
     },
-
+    pageContainer: {
+        minWidth: 600,
+        "& .MuiPaper-outlined": {
+            padding: 0,
+            borderRadius: 0,
+            minHeight: '100vh',
+            borderLeft: 0,
+            borderTop: 0,
+            borderBottom: 0,
+        },
+    },
+    pageInfoWrapper: {
+        paddingTop: 53
+    },
+    pageInfoItemWrapper: {
+        padding: "12px 16px"
+    },
 }));

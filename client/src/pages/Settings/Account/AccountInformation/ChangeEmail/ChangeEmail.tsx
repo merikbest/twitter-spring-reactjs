@@ -1,5 +1,5 @@
 import React, {ChangeEvent, FC, ReactElement, useState} from 'react';
-import {Paper, Typography} from "@material-ui/core";
+import {Typography} from "@material-ui/core";
 
 import {useChangeEmailStyles} from "./ChangeEmailStyles";
 import {ChangeInfoTextField} from "../../../ChangeInfoTextField/ChangeInfoTextField";
@@ -15,28 +15,24 @@ const ChangeEmail: FC = (): ReactElement => {
     };
 
     return (
-        <div className={classes.container}>
-            <Paper variant="outlined">
-                <div className={classes.infoWrapper}>
-                    <div className={classes.textFieldWrapper}>
-                        <ChangeInfoTextField
-                            disabled={true}
-                            label="Current"
-                            type="text"
-                            variant="filled"
-                            value={email}
-                            fullWidth
-                        />
-                    </div>
-                    <div className={classes.divider}/>
-                    <div className={classes.updateEmailAddress}>
-                        <Typography component={"span"}>
-                            Update email address
-                        </Typography>
-                    </div>
-                </div>
-            </Paper>
-        </div>
+        <>
+            <div className={classes.textFieldWrapper}>
+                <ChangeInfoTextField
+                    disabled={true}
+                    label="Current"
+                    type="text"
+                    variant="filled"
+                    value={email}
+                    fullWidth
+                />
+            </div>
+            <div className={classes.divider}/>
+            <div className={classes.updateEmailAddress}>
+                <Typography component={"span"}>
+                    Update email address
+                </Typography>
+            </div>
+        </>
     );
 };
 

@@ -271,31 +271,37 @@ const Settings: FC = (): ReactElement => {
                         </Typography>
                     </Route>
                 </Paper>
-                <Route exact path="/settings" component={Account}/>
-                <Route exact path="/settings/info" component={AccountInformation}/>
-                <Route exact path="/settings/info/username" component={ChangeUsername}/>
-                <Route exact path="/settings/info/phone" component={ChangePhone}/>
-                <Route exact path="/settings/info/email" component={ChangeEmail}/>
-                <Route exact path="/settings/info/country" component={ChangeCountry}/>
-                <Route exact path="/settings/info/languages" component={ChangeLanguage}/>
-                <Route exact path="/settings/info/gender" component={ChangeGender}/>
-                <Route exact path="/settings/info/age" component={ChangeAge}/>
-                <Route exact path="/settings/password" component={ChangeYourPassword}/>
-                <Route exact path="/settings/teams" component={TweetDeckTeams}/>
-                <Route exact path="/settings/deactivate" component={DeactivateAccount}/>
-                <Route exact path="/settings/security_and_account_access" component={SecurityAndAccountAccess}/>
-                <Route exact path="/settings/security" component={Security}/>
-                <Route exact path="/settings/security/login_verification" component={TwoFactorAuthentication}/>
-                <Route exact path="/settings/security/apps_and_sessions" component={AppsAndSessions}/>
-                <Route exact path="/settings/security/connected_apps" component={ConnectedApps}/>
-                <Route exact path="/settings/security/sessions" component={Sessions}/>
-                <Route exact path="/settings/security/sessions/current" component={CurrentSession}/>
-                <Route exact path="/settings/security/login_history" component={AccountAccessHistory}/>
-                <Route exact path="/settings/security/devices" component={LoggedDevices}/>
-                <Route exact path="/settings/privacy_and_safety" component={PrivacyAndSafety}/>
-                <Route exact path="/settings/notification" component={Notifications}/>
-                <Route exact path="/settings/accessibility_display_and_languages" component={Accessibility}/>
-                <Route exact path="/settings/about" component={AdditionalResources}/>
+                <div className={classes.pageContainer}>
+                    <Paper variant="outlined">
+                        <div className={classes.pageInfoWrapper}>
+                            <Route exact path="/settings" component={Account}/>
+                            <Route exact path="/settings/info" component={AccountInformation}/>
+                            <Route exact path="/settings/info/username" component={ChangeUsername}/>
+                            <Route exact path="/settings/info/phone" component={ChangePhone}/>
+                            <Route exact path="/settings/info/email" component={ChangeEmail}/>
+                            <Route exact path="/settings/info/country" component={ChangeCountry}/>
+                            <Route exact path="/settings/info/languages" component={ChangeLanguage}/>
+                            <Route exact path="/settings/info/gender" component={ChangeGender}/>
+                            <Route exact path="/settings/info/age" component={ChangeAge}/>
+                            <Route exact path="/settings/password" component={ChangeYourPassword}/>
+                            <Route exact path="/settings/teams" component={TweetDeckTeams}/>
+                            <Route exact path="/settings/deactivate" component={DeactivateAccount}/>
+                            <Route exact path="/settings/security_and_account_access" component={SecurityAndAccountAccess}/>
+                            <Route exact path="/settings/security" component={Security}/>
+                            <Route exact path="/settings/security/login_verification" component={TwoFactorAuthentication}/>
+                            <Route exact path="/settings/security/apps_and_sessions" component={AppsAndSessions}/>
+                            <Route exact path="/settings/security/connected_apps" component={ConnectedApps}/>
+                            <Route exact path="/settings/security/sessions" component={Sessions}/>
+                            <Route exact path="/settings/security/sessions/current" component={CurrentSession}/>
+                            <Route exact path="/settings/security/login_history" component={AccountAccessHistory}/>
+                            <Route exact path="/settings/security/devices" component={LoggedDevices}/>
+                            <Route exact path="/settings/privacy_and_safety" component={PrivacyAndSafety}/>
+                            <Route exact path="/settings/notification" component={Notifications}/>
+                            <Route exact path="/settings/accessibility_display_and_languages" component={Accessibility}/>
+                            <Route exact path="/settings/about" component={AdditionalResources}/>
+                        </div>
+                    </Paper>
+                </div>
             </Grid>
         </>
     );
