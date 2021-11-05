@@ -1,4 +1,5 @@
 import React, {FC, ReactElement} from 'react';
+import {Link} from 'react-router-dom';
 import {List, ListItem, Typography} from "@material-ui/core";
 
 import {usePrivacyAndSafetyStyles} from "./PrivacyAndSafetyStyles";
@@ -35,22 +36,24 @@ const PrivacyAndSafety: FC = (): ReactElement => {
             </div>
             <div className={classes.listWrapper}>
                 <List component="nav" aria-label="main mailbox folders">
-                    <ListItem>
-                        <div className={classes.icon}>
-                            {AudienceIcon}
-                        </div>
-                        <div>
-                            <Typography component={"div"} className={classes.subtitle}>
-                                Audience and tagging
-                            </Typography>
-                            <Typography component={"div"} className={classes.text}>
-                                Manage what information you allow other people on Twitter to see.
-                            </Typography>
-                        </div>
-                        <div className={classes.arrowIcon}>
-                            {ArrowRightIcon}
-                        </div>
-                    </ListItem>
+                    <Link to={"/settings/privacy_and_safety/audience"}>
+                        <ListItem>
+                            <div className={classes.icon}>
+                                {AudienceIcon}
+                            </div>
+                            <div>
+                                <Typography component={"div"} className={classes.subtitle}>
+                                    Audience and tagging
+                                </Typography>
+                                <Typography component={"div"} className={classes.text}>
+                                    Manage what information you allow other people on Twitter to see.
+                                </Typography>
+                            </div>
+                            <div className={classes.arrowIcon}>
+                                {ArrowRightIcon}
+                            </div>
+                        </ListItem>
+                    </Link>
                     <ListItem>
                         <div className={classes.icon}>
                             {QuoteTweetIcon}

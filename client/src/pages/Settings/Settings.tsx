@@ -30,6 +30,7 @@ import PrivacyAndSafety from "./PrivacyAndSafety/PrivacyAndSafety";
 import Notifications from "./Notifications/Notifications";
 import Accessibility from "./Accessibility/Accessibility";
 import AdditionalResources from "./AdditionalResources/AdditionalResources";
+import AudienceAndTagging from "./PrivacyAndSafety/AudienceAndTagging/AudienceAndTagging";
 
 const Settings: FC = (): ReactElement => {
     const classes = useSettingsStyles();
@@ -255,6 +256,18 @@ const Settings: FC = (): ReactElement => {
                             Privacy and safety
                         </Typography>
                     </Route>
+                    <Route exact path="/settings/privacy_and_safety/audience">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Audience and tagging
+                        </Typography>
+                    </Route>
+                    <Route exact path="/settings/privacy_and_safety/tagging">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Photo tagging
+                        </Typography>
+                    </Route>
                     <Route exact path="/settings/notification">
                         <Typography variant="h6">
                             Notifications
@@ -296,6 +309,7 @@ const Settings: FC = (): ReactElement => {
                             <Route exact path="/settings/security/login_history" component={AccountAccessHistory}/>
                             <Route exact path="/settings/security/devices" component={LoggedDevices}/>
                             <Route exact path="/settings/privacy_and_safety" component={PrivacyAndSafety}/>
+                            <Route exact path="/settings/privacy_and_safety/audience" component={AudienceAndTagging}/>
                             <Route exact path="/settings/notification" component={Notifications}/>
                             <Route exact path="/settings/accessibility_display_and_languages" component={Accessibility}/>
                             <Route exact path="/settings/about" component={AdditionalResources}/>
