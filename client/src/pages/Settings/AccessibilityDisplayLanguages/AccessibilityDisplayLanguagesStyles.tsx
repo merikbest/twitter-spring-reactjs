@@ -1,6 +1,6 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
-export const useAccessibilityStyles = makeStyles((theme: Theme) => ({
+export const useAccessibilityDisplayLanguagesStyles = makeStyles((theme: Theme) => ({
     infoItemWrapper: {
         padding: "12px 16px"
     },

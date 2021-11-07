@@ -28,7 +28,7 @@ import LoggedDevices from "./SecurityAndAccountAccess/AppsAndSessions/LoggedDevi
 import CurrentSession from "./SecurityAndAccountAccess/AppsAndSessions/Sessions/CurrentSession/CurrentSession";
 import PrivacyAndSafety from "./PrivacyAndSafety/PrivacyAndSafety";
 import Notifications from "./Notifications/Notifications";
-import Accessibility from "./Accessibility/Accessibility";
+import AccessibilityDisplayLanguages from "./AccessibilityDisplayLanguages/AccessibilityDisplayLanguages";
 import AdditionalResources from "./AdditionalResources/AdditionalResources";
 import AudienceAndTagging from "./PrivacyAndSafety/AudienceAndTagging/AudienceAndTagging";
 import PhotoTagging from "./PrivacyAndSafety/AudienceAndTagging/PhotoTagging/PhotoTagging";
@@ -50,6 +50,15 @@ import OffTwitterActivity from "./PrivacyAndSafety/OffTwitterActivity/OffTwitter
 import DataSharing from "./PrivacyAndSafety/DataSharing/DataSharing";
 import Location from "./PrivacyAndSafety/Location/Location";
 import Places from "./PrivacyAndSafety/Location/Places/Places";
+import Filters from "./Notifications/Filters/Filters";
+import Preferences from "./Notifications/Preferences/Preferences";
+import PushNotifications from "./Notifications/Preferences/PushNotifications/PushNotifications";
+import EmailNotifications from "./Notifications/Preferences/EmailNotifications/EmailNotifications";
+import Accessibility from "./AccessibilityDisplayLanguages/Accessibility/Accessibility";
+import DataUsage from "./AccessibilityDisplayLanguages/DataUsage/DataUsage";
+import Display from "./AccessibilityDisplayLanguages/Display/Display";
+import Languages from "./AccessibilityDisplayLanguages/Languages/Languages";
+import Autoplay from "./AccessibilityDisplayLanguages/DataUsage/Autoplay/Autoplay";
 
 const Settings: FC = (): ReactElement => {
     const classes = useSettingsStyles();
@@ -184,7 +193,7 @@ const Settings: FC = (): ReactElement => {
                     <Route exact path="/settings/info/languages">
                         <BackButton/>
                         <Typography variant="h6">
-                            Languages
+                            Change display language
                         </Typography>
                     </Route>
                     <Route exact path="/settings/info/gender">
@@ -395,15 +404,68 @@ const Settings: FC = (): ReactElement => {
                             See places you’ve been
                         </Typography>
                     </Route>
-
                     <Route exact path="/settings/notification">
                         <Typography variant="h6">
                             Notifications
                         </Typography>
                     </Route>
+                    <Route exact path="/settings/notification/filters">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Filters
+                        </Typography>
+                    </Route>
+                    <Route exact path="/settings/notification/preferences">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Preferences
+                        </Typography>
+                    </Route>
+                    <Route exact path="/settings/notification/push_notifications">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Push notifications
+                        </Typography>
+                    </Route>
+                    <Route exact path="/settings/notification/email_notifications">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Email notifications
+                        </Typography>
+                    </Route>
                     <Route exact path="/settings/accessibility_display_and_languages">
                         <Typography variant="h6">
                             Accessibility, display and languages
+                        </Typography>
+                    </Route>
+                    <Route exact path="/settings/accessibility_display_and_languages/accessibility">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Accessibility
+                        </Typography>
+                    </Route>
+                    <Route exact path="/settings/accessibility_display_and_languages/display">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Display
+                        </Typography>
+                    </Route>
+                    <Route exact path="/settings/accessibility_display_and_languages/languages">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Languages
+                        </Typography>
+                    </Route>
+                    <Route exact path="/settings/accessibility_display_and_languages/data">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Data usage
+                        </Typography>
+                    </Route>
+                    <Route exact path="/settings/accessibility_display_and_languages/autoplay">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Autoplay
                         </Typography>
                     </Route>
                     <Route exact path="/settings/about">
@@ -457,9 +519,17 @@ const Settings: FC = (): ReactElement => {
                             <Route exact path="/settings/privacy_and_safety/data_sharing_with_business_partners" component={DataSharing}/>
                             <Route exact path="/settings/privacy_and_safety/location_information" component={Location}/>
                             <Route exact path="/settings/privacy_and_safety/locations" component={Places}/>
-
                             <Route exact path="/settings/notification" component={Notifications}/>
-                            <Route exact path="/settings/accessibility_display_and_languages" component={Accessibility}/>
+                            <Route exact path="/settings/notification/filters" component={Filters}/>
+                            <Route exact path="/settings/notification/preferences" component={Preferences}/>
+                            <Route exact path="/settings/notification/push_notifications" component={PushNotifications}/>
+                            <Route exact path="/settings/notification/email_notifications" component={EmailNotifications}/>
+                            <Route exact path="/settings/accessibility_display_and_languages" component={AccessibilityDisplayLanguages}/>
+                            <Route exact path="/settings/accessibility_display_and_languages/accessibility" component={Accessibility}/>
+                            <Route exact path="/settings/accessibility_display_and_languages/display" component={Display}/>
+                            <Route exact path="/settings/accessibility_display_and_languages/languages" component={Languages}/>
+                            <Route exact path="/settings/accessibility_display_and_languages/data" component={DataUsage}/>
+                            <Route exact path="/settings/accessibility_display_and_languages/autoplay" component={Autoplay}/>
                             <Route exact path="/settings/about" component={AdditionalResources}/>
                         </div>
                     </Paper>

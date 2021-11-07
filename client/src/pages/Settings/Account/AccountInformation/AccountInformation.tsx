@@ -102,7 +102,7 @@ const AccountInformation: FC = (): ReactElement => {
                         </div>
                     </ListItem>
                 </NavLink>
-                <NavLink to={"/settings/info/languages"}>
+                <NavLink to={"/settings/accessibility_display_and_languages/languages"}>
                     <ListItem>
                         <div>
                             <Typography component={"div"} className={classes.title}>
