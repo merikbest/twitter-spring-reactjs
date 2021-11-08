@@ -17,7 +17,9 @@ import {
     FetchTweetsWithVideoActionInterface,
     FetchVoteActionInterface,
     RemoveTweetFromBookmarksActionInterface,
+    ResetTweetsActionInterface,
     SetTweetActionInterface,
+    SetTweets2ActionInterface,
     SetTweetsActionInterface,
     SetTweetsLoadingStateInterface,
     SetUpdatedTweetActionInterface,
@@ -30,9 +32,18 @@ export const setTweets = (payload: TweetsState["items"]): SetTweetsActionInterfa
     payload
 });
 
+export const setTweets2 = (payload: { items: TweetsState["items"], pagesCount: TweetsState["pagesCount"] }): SetTweets2ActionInterface => ({
+    type: TweetsActionType.SET_TWEETS2,
+    payload
+});
+
 export const setTweet = (payload: Tweet): SetTweetActionInterface => ({
     type: TweetsActionType.SET_TWEET,
     payload
+});
+
+export const resetTweets = (): ResetTweetsActionInterface => ({
+    type: TweetsActionType.RESET_TWEETS,
 });
 
 export const fetchAddTweet = (payload: AddTweet): FetchAddTweetActionInterface => ({
@@ -105,8 +116,9 @@ export const fetchRetweet = (payload: string): FetchRetweetActionInterface => ({
     payload,
 });
 
-export const fetchTweets = (): FetchTweetsActionInterface => ({
+export const fetchTweets = (payload: number): FetchTweetsActionInterface => ({
     type: TweetsActionType.FETCH_TWEETS,
+    payload,
 });
 
 export const fetchMediaTweets = (): FetchMediaTweetsActionInterface => ({

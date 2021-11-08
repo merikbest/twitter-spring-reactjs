@@ -6,14 +6,9 @@ import {CircularProgress, IconButton, Paper, Typography} from "@material-ui/core
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import {useHomeStyles} from './HomeStyles';
 import {AddTweetForm} from '../../components/AddTweetForm/AddTweetForm';
-import {
-    fetchTweets,
-    setTweets,
-    setTweetsLoadingState,
-} from "../../store/ducks/tweets/actionCreators";
+import {fetchTweets, resetTweets, setTweetsLoadingState,} from "../../store/ducks/tweets/actionCreators";
 import {selectIsTweetsLoading, selectTweetsItems} from "../../store/ducks/tweets/selectors";
 import {BackButton} from "../../components/BackButton/BackButton";
-
 import {fetchUserData} from "../../store/ducks/user/actionCreators";
 import {fetchRelevantUsers} from "../../store/ducks/users/actionCreators";
 import {fetchTags} from "../../store/ducks/tags/actionCreators";
@@ -25,8 +20,9 @@ import Welcome from "../../components/Welcome/Welcome";
 import {LoadingStatus} from "../../store/types";
 import {fetchNotifications} from "../../store/ducks/notifications/actionCreators";
 import FullTweet from "../FullTweet/FullTweet";
+import {InfiniteScrollProps, withInfiniteScroll} from "../../hoc/withInfiniteScroll";
 
-const Home: FC = (): ReactElement => {
+const Home: FC<InfiniteScrollProps> = ({page, isScrolled, setPage, setIsScrolled}): ReactElement => {
     const classes = useHomeStyles();
     const dispatch = useDispatch();
     const location = useLocation<{ background: Location }>();
@@ -41,7 +37,8 @@ const Home: FC = (): ReactElement => {
         dispatch(fetchTags());
 
         if (location.pathname !== "/search") {
-            dispatch(fetchTweets());
+            dispatch(fetchTweets(page));
+            setPage(prevState => prevState + 1);
         }
         if (location.pathname !== "/home/connect") {
             dispatch(fetchRelevantUsers());
@@ -50,9 +47,20 @@ const Home: FC = (): ReactElement => {
         window.scrollTo(0, 0);
 
         return () => {
-            dispatch(setTweets([]))
+            dispatch(resetTweets());
+            setPage(0);
         };
     }, []);
+
+    useEffect(() => {
+        if (isScrolled) {
+            dispatch(fetchTweets(page));
+        }
+        if (isLoading) {
+            setPage(prevState => prevState + 1);
+        }
+        setIsScrolled(false);
+    }, [isScrolled]);
 
     return (
         <Paper className={classes.container} variant="outlined">
@@ -103,24 +111,20 @@ const Home: FC = (): ReactElement => {
             </Route>
 
             <Route path='/home' exact>
-                {isLoading ? (
+                {(!myProfile?.profileStarted && !isLoading) && (<Welcome/>)}
+                {tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}
+                {isLoading && (
                     <div className={classes.loading}>
                         <CircularProgress/>
                     </div>
-                ) : (
-                    (!myProfile?.profileStarted) ? (
-                        <Welcome/>
-                    ) : (
-                        tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)
-                    )
                 )}
             </Route>
 
             <Route path="/home/tweet/:id" exact>
-                <FullTweet />
+                <FullTweet/>
             </Route>
         </Paper>
     );
 };
 
-export default Home;
+export default withInfiniteScroll(Home);

@@ -1,3 +1,5 @@
+import {AxiosResponse} from "axios";
+
 import {axios} from "../../core/axios";
 import {AddQuoteTweet, AddTweet, ReplyType, Tweet, Vote} from "../../store/ducks/tweets/contracts/state";
 import {API_URL} from "../../util/url";
@@ -9,9 +11,8 @@ interface Response<T> {
 }
 
 export const TweetApi = {
-    async fetchTweets(): Promise<Response<Tweet[]>> {
-        const data = await axios.get<Response<Tweet[]>>(API_URL + "/tweets");
-        return data.data;
+    async fetchTweets(payload: number): Promise<AxiosResponse<Tweet[]>> {
+        return await axios.get<Tweet[]>(API_URL + "/tweets", {params: {page: payload}});
     },
     async fetchMediaTweets(): Promise<Response<Tweet[]>> {
         const data = await axios.get<Response<Tweet[]>>(API_URL + '/tweets/media');

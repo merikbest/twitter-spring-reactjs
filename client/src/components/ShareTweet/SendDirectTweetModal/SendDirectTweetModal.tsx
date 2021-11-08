@@ -46,8 +46,10 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
     const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
 
     useEffect(() => {
-        dispatch(fetchChats());
-    }, []);
+        if (visible) {
+            dispatch(fetchChats());
+        }
+    }, [visible]);
 
     const onSearch = (text: string): void => {
         if (text) {

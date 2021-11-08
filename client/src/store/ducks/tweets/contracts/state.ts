@@ -89,5 +89,6 @@ export interface Vote {
 
 export interface TweetsState {
     items: Tweet[];
+    pagesCount: number;
     loadingState: LoadingStatus;
 }

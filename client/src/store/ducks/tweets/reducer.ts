@@ -6,6 +6,7 @@ import {LoadingStatus} from '../../types';
 
 const initialTweetsState: TweetsState = {
     items: [],
+    pagesCount: 1,
     loadingState: LoadingStatus.NEVER
 };
 
@@ -13,12 +14,25 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
 
     switch (action.type) {
         case TweetsActionType.SET_TWEETS:
-            draft.items = action.payload;
+            // draft.items = action.payload;
+            draft.items = [...draft.items, ...action.payload];
+            draft.loadingState = LoadingStatus.LOADED;
+            break;
+
+        case TweetsActionType.SET_TWEETS2:
+            // draft.items = action.payload;
+            draft.items = [...draft.items, ...action.payload.items];
+            draft.pagesCount = action.payload.pagesCount;
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
         case TweetsActionType.SET_TWEET:
             draft.items = [action.payload, ...draft.items];
+            break;
+
+        case TweetsActionType.RESET_TWEETS:
+            draft.items = [];
+            draft.pagesCount = 1;
             break;
 
         case TweetsActionType.SET_UPDATED_TWEET:

@@ -12,7 +12,8 @@ import {
     fetchTweets,
     fetchTweetsByTag,
     fetchTweetsByText,
-    fetchTweetsWithVideo
+    fetchTweetsWithVideo,
+    resetTweets
 } from "../../store/ducks/tweets/actionCreators";
 import {BackButton} from "../../components/BackButton/BackButton";
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
@@ -24,8 +25,9 @@ import {useExploreStyles} from "./ExploreStyles";
 import {EditIcon, SearchIcon} from "../../icons";
 import {fetchUsersSearch, fetchUsersSearchByUsername} from "../../store/ducks/usersSearch/actionCreators";
 import {selectUsersSearch, selectUsersSearchIsLoading} from "../../store/ducks/usersSearch/selectors";
+import {InfiniteScrollProps, withInfiniteScroll} from "../../hoc/withInfiniteScroll";
 
-const Explore: FC = (): ReactElement => {
+const Explore: FC<InfiniteScrollProps> = ({page, isScrolled, setPage, setIsScrolled}): ReactElement => {
     const classes = useExploreStyles();
     const dispatch = useDispatch();
     const isTweetsLoading = useSelector(selectIsTweetsLoading);
@@ -51,9 +53,25 @@ const Explore: FC = (): ReactElement => {
         }
 
         if (location.state?.tag === undefined && location.state?.text === undefined) {
-            dispatch(fetchTweets());
+            dispatch(fetchTweets(page));
+            setPage(prevState => prevState + 1);
         }
+
+        return () => {
+            dispatch(resetTweets());
+            setPage(0);
+        };
     }, [location.state?.tag, location.state?.text]);
+
+    useEffect(() => {
+        if (isScrolled) {
+            dispatch(fetchTweets(page));
+        }
+        if (isTweetsLoading) {
+            setPage(prevState => prevState + 1);
+        }
+        setIsScrolled(false);
+    }, [isScrolled]);
 
     const handleChangeTab = (event: ChangeEvent<{}>, newValue: number): void => {
         setText("");
@@ -75,7 +93,12 @@ const Explore: FC = (): ReactElement => {
 
     const showTopTweets = (): void => {
         window.scrollTo(0, 0);
-        dispatch(fetchTweets());
+        setPage(0);
+        dispatch(resetTweets());
+        dispatch(fetchTweets(page));
+        if (isTweetsLoading) {
+            setPage(prevState => prevState + 1);
+        }
     };
 
     const showUsers = (): void => {
@@ -140,7 +163,7 @@ const Explore: FC = (): ReactElement => {
                 </div>
             </Paper>
             <div className={classes.contentWrapper}>
-                {(isTweetsLoading || isUsersLoading) ? (
+                {(isUsersLoading) ? (
                     <div className={classes.loading}>
                         <CircularProgress/>
                     </div>
@@ -158,9 +181,14 @@ const Explore: FC = (): ReactElement => {
                         ))
                     )
                 )}
+                {isTweetsLoading && (
+                    <div className={classes.loading}>
+                        <CircularProgress/>
+                    </div>
+                )}
             </div>
         </Paper>
     );
 };
 
-export default Explore;
+export default withInfiniteScroll(Explore);

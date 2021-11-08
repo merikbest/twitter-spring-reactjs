@@ -49,11 +49,6 @@ const App: FC = (): ReactElement => {
         if (!isAuth && isReady && !location.pathname.includes("/account/login")) {
             history.push('/account/signin');
         }
-    }, []);
-
-    useEffect(() => {
-        dispatch(fetchUserData());
-
         if (!localStorage.getItem('token')) {
             history.push('/account/signin');
         }

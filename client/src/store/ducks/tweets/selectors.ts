@@ -8,3 +8,4 @@ export const selectIsTweetsLoading = (state: RootState): boolean => selectLoadin
 export const selectIsTweetsLoaded = (state: RootState): boolean => selectLoadingState(state) === LoadingStatus.LOADED;
 
 export const selectTweetsItems = (state: RootState) => selectTweetsState(state).items;
+export const selectPagesCount = (state: RootState) => selectTweetsState(state).pagesCount;

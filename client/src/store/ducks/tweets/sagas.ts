@@ -1,6 +1,6 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 
-import {setTweets, setTweetsLoadingState,} from "./actionCreators";
+import {setTweets, setTweets2, setTweetsLoadingState,} from "./actionCreators";
 import {TweetApi} from "../../../services/api/tweetApi";
 import {Tweet} from "./contracts/state";
 import {
@@ -12,6 +12,7 @@ import {
     FetchLikedTweetsActionInterface,
     FetchLikeTweetActionInterface,
     FetchRetweetActionInterface,
+    FetchTweetsActionInterface,
     FetchTweetsByTagActionInterface,
     FetchTweetsByTextActionInterface,
     FetchVoteActionInterface,
@@ -20,12 +21,13 @@ import {
 import {LoadingStatus} from '../../types';
 import {TagApi} from "../../../services/api/tagApi";
 import {UserApi} from "../../../services/api/userApi";
+import {AxiosResponse} from "axios";
 
-export function* fetchTweetsRequest() {
+export function* fetchTweetsRequest({payload}: FetchTweetsActionInterface) {
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
-        const items: Tweet[] = yield call(TweetApi.fetchTweets);
-        yield put(setTweets(items));
+        const response: AxiosResponse<Tweet[]> = yield call(TweetApi.fetchTweets, payload);
+        yield put(setTweets2({items: response.data, pagesCount: parseInt(response.headers["page-total-count"])}));
     } catch (e) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }

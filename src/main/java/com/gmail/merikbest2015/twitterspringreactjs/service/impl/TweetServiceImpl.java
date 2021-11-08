@@ -13,6 +13,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -49,8 +51,8 @@ public class TweetServiceImpl implements TweetService {
     private String googleApiKey;
 
     @Override
-    public List<Tweet> getTweets() {
-        return tweetRepository.findByAddressedUsernameIsNullOrderByDateTimeDesc();
+    public Page<Tweet> getTweets(Pageable pageable) {
+        return tweetRepository.findByAddressedUsernameIsNullOrderByDateTimeDesc(pageable);
     }
 
     @Override
@@ -373,9 +375,6 @@ public class TweetServiceImpl implements TweetService {
 
                 BufferedImage coverData = ImageIO.read(new URL(getContent(cover.first())));
                 double coverDataSize = (504.0 / (double) coverData.getWidth()) * coverData.getHeight();
-                System.out.println(coverData.getWidth());
-                System.out.println(coverDataSize);
-                System.out.println(504 / coverData.getWidth());
 
                 tweet.setLinkTitle(getContent(title.first()));
                 tweet.setLinkDescription(getContent(description.first()));

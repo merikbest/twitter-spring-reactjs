@@ -5,7 +5,9 @@ import {AddQuoteTweet, AddTweet, ReplyType, Tweet, TweetsState, Vote} from "./st
 
 export enum TweetsActionType {
     SET_TWEETS = "tweets/SET_TWEETS",
+    SET_TWEETS2 = "tweets/SET_TWEETS2",
     SET_TWEET = "tweets/SET_TWEET",
+    RESET_TWEETS = "tweets/RESET_TWEETS",
     FETCH_LIKE_TWEET = 'tweets/FETCH_LIKE_TWEET',
     FETCH_RETWEET = 'tweets/FETCH_RETWEET',
     FETCH_ADD_TWEET = "tweets/FETCH_ADD_TWEET",
@@ -32,9 +34,18 @@ export interface SetTweetsActionInterface extends Action<TweetsActionType> {
     payload: TweetsState["items"];
 }
 
+export interface SetTweets2ActionInterface extends Action<TweetsActionType> {
+    type: TweetsActionType.SET_TWEETS2;
+    payload: { items: TweetsState["items"], pagesCount: TweetsState["pagesCount"] };
+}
+
 export interface SetTweetActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.SET_TWEET;
     payload: Tweet;
+}
+
+export interface ResetTweetsActionInterface extends Action<TweetsActionType> {
+    type: TweetsActionType.RESET_TWEETS;
 }
 
 export interface FetchAddTweetActionInterface extends Action<TweetsActionType> {
@@ -94,6 +105,7 @@ export interface SetTweetsLoadingStateInterface extends Action<TweetsActionType>
 
 export interface FetchTweetsActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_TWEETS;
+    payload: number;
 }
 
 export interface FetchMediaTweetsActionInterface extends Action<TweetsActionType> {
@@ -130,7 +142,9 @@ export interface RemoveTweetFromBookmarksActionInterface extends Action<TweetsAc
 
 export type TweetsActions =
     | SetTweetsActionInterface
+    | SetTweets2ActionInterface
     | SetTweetsLoadingStateInterface
+    | ResetTweetsActionInterface
     | SetUpdatedTweetActionInterface
     | DeleteTweetActionInterface
     | SetTweetActionInterface
