@@ -62,13 +62,13 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
-    public List<Tweet> getMediaTweets() {
-        return tweetRepository.findByImagesIsNotNullOrderByDateTimeDesc();
+    public Page<Tweet> getMediaTweets(Pageable pageable) {
+        return tweetRepository.findByImagesIsNotNullOrderByDateTimeDesc(pageable);
     }
 
     @Override
-    public List<Tweet> getTweetsWithVideo() {
-        return tweetRepository.findAllByTextIgnoreCaseContaining("youtu");
+    public Page<Tweet> getTweetsWithVideo(Pageable pageable) {
+        return tweetRepository.findAllByTextIgnoreCaseContaining("youtu", pageable);
     }
 
     @Override

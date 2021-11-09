@@ -11,10 +11,12 @@ import {
     FetchDeleteTweetActionInterface,
     FetchLikedTweetsActionInterface,
     FetchLikeTweetActionInterface,
+    FetchMediaTweetsActionInterface,
     FetchRetweetActionInterface,
     FetchTweetsActionInterface,
     FetchTweetsByTagActionInterface,
     FetchTweetsByTextActionInterface,
+    FetchTweetsWithVideoActionInterface,
     FetchVoteActionInterface,
     TweetsActionType
 } from "./contracts/actionTypes";
@@ -33,21 +35,21 @@ export function* fetchTweetsRequest({payload}: FetchTweetsActionInterface) {
     }
 }
 
-export function* fetchMediaTweetsRequest() {
+export function* fetchMediaTweetsRequest({payload}: FetchMediaTweetsActionInterface) {
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
-        const items: Tweet[] = yield call(TweetApi.fetchMediaTweets);
-        yield put(setTweets(items));
+        const response: AxiosResponse<Tweet[]> = yield call(TweetApi.fetchMediaTweets, payload);
+        yield put(setTweets2({items: response.data, pagesCount: parseInt(response.headers["page-total-count"])}));
     } catch (e) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }
 }
 
-export function* fetchTweetsWithVideoRequest() {
+export function* fetchTweetsWithVideoRequest({payload}: FetchTweetsWithVideoActionInterface) {
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
-        const items: Tweet[] = yield call(TweetApi.fetchTweetsWithVideo);
-        yield put(setTweets(items));
+        const response: AxiosResponse<Tweet[]> = yield call(TweetApi.fetchTweetsWithVideo, payload);
+        yield put(setTweets2({items: response.data, pagesCount: parseInt(response.headers["page-total-count"])}));
     } catch (e) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }

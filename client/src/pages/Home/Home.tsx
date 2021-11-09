@@ -1,13 +1,14 @@
-import React, {FC, ReactElement, useEffect} from 'react';
+import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Route, useLocation} from "react-router-dom";
+import InfiniteScroll from "react-infinite-scroll-component";
 import {CircularProgress, IconButton, Paper, Typography} from "@material-ui/core";
 
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import {useHomeStyles} from './HomeStyles';
 import {AddTweetForm} from '../../components/AddTweetForm/AddTweetForm';
 import {fetchTweets, resetTweets, setTweetsLoadingState,} from "../../store/ducks/tweets/actionCreators";
-import {selectIsTweetsLoading, selectTweetsItems} from "../../store/ducks/tweets/selectors";
+import {selectIsTweetsLoading, selectPagesCount, selectTweetsItems} from "../../store/ducks/tweets/selectors";
 import {BackButton} from "../../components/BackButton/BackButton";
 import {fetchUserData} from "../../store/ducks/user/actionCreators";
 import {fetchRelevantUsers} from "../../store/ducks/users/actionCreators";
@@ -20,15 +21,16 @@ import Welcome from "../../components/Welcome/Welcome";
 import {LoadingStatus} from "../../store/types";
 import {fetchNotifications} from "../../store/ducks/notifications/actionCreators";
 import FullTweet from "../FullTweet/FullTweet";
-import {InfiniteScrollProps, withInfiniteScroll} from "../../hoc/withInfiniteScroll";
 
-const Home: FC<InfiniteScrollProps> = ({page, isScrolled, setPage, setIsScrolled}): ReactElement => {
+const Home: FC = (): ReactElement => {
     const classes = useHomeStyles();
     const dispatch = useDispatch();
     const location = useLocation<{ background: Location }>();
     const myProfile = useSelector(selectUserData);
     const tweets = useSelector(selectTweetsItems);
     const isLoading = useSelector(selectIsTweetsLoading);
+    const pagesCount = useSelector(selectPagesCount);
+    const [page, setPage] = useState<number>(0);
 
     useEffect(() => {
         dispatch(setTweetsLoadingState(LoadingStatus.NEVER));
@@ -37,8 +39,7 @@ const Home: FC<InfiniteScrollProps> = ({page, isScrolled, setPage, setIsScrolled
         dispatch(fetchTags());
 
         if (location.pathname !== "/search") {
-            dispatch(fetchTweets(page));
-            setPage(prevState => prevState + 1);
+            loadTweets();
         }
         if (location.pathname !== "/home/connect") {
             dispatch(fetchRelevantUsers());
@@ -48,83 +49,83 @@ const Home: FC<InfiniteScrollProps> = ({page, isScrolled, setPage, setIsScrolled
 
         return () => {
             dispatch(resetTweets());
-            setPage(0);
         };
     }, []);
 
-    useEffect(() => {
-        if (isScrolled) {
-            dispatch(fetchTweets(page));
-        }
-        if (isLoading) {
-            setPage(prevState => prevState + 1);
-        }
-        setIsScrolled(false);
-    }, [isScrolled]);
+    const loadTweets = () => {
+        dispatch(fetchTweets(page));
+        setPage(prevState => prevState + 1);
+    };
 
     return (
-        <Paper className={classes.container} variant="outlined">
-            <Paper className={classes.header} variant="outlined">
+        <InfiniteScroll
+            dataLength={tweets.length}
+            next={loadTweets}
+            hasMore={page < pagesCount}
+            loader={null}
+        >
+            <Paper className={classes.container} variant="outlined">
+                <Paper className={classes.header} variant="outlined">
+                    <Route path='/home' exact>
+                        <Typography variant="h6">
+                            Home
+                        </Typography>
+                        <div className={classes.headerIcon}>
+                            <IconButton color="primary">
+                                <>{TopTweets}</>
+                            </IconButton>
+                        </div>
+                    </Route>
+                    <Route path="/home/tweet">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Tweet
+                        </Typography>
+                    </Route>
+                    <Route path="/home/connect">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Connect
+                        </Typography>
+                    </Route>
+                    <Route path="/home/trends">
+                        <BackButton/>
+                        <Typography variant="h6">
+                            Trends
+                        </Typography>
+                    </Route>
+                </Paper>
+
                 <Route path='/home' exact>
-                    <Typography variant="h6">
-                        Home
-                    </Typography>
-                    <div className={classes.headerIcon}>
-                        <IconButton color="primary">
-                            <>{TopTweets}</>
-                        </IconButton>
+                    <div className={classes.addForm}>
+                        <AddTweetForm title={"What's happening?"} buttonName={"Tweet"}/>
                     </div>
+                    <div className={classes.divider}/>
                 </Route>
-                <Route path="/home/tweet">
-                    <BackButton/>
-                    <Typography variant="h6">
-                        Tweet
-                    </Typography>
+
+                <Route path="/home/connect" exact>
+                    <Connect/>
                 </Route>
-                <Route path="/home/connect">
-                    <BackButton/>
-                    <Typography variant="h6">
-                        Connect
-                    </Typography>
+
+                <Route path="/home/trends" exact>
+                    <Trends/>
                 </Route>
-                <Route path="/home/trends">
-                    <BackButton/>
-                    <Typography variant="h6">
-                        Trends
-                    </Typography>
+
+                <Route path='/home' exact>
+                    {(!myProfile?.profileStarted && !isLoading) && (<Welcome/>)}
+                    {tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}
+                    {isLoading && (
+                        <div className={classes.loading}>
+                            <CircularProgress/>
+                        </div>
+                    )}
+                </Route>
+                <Route path="/home/tweet/:id" exact>
+                    <FullTweet/>
                 </Route>
             </Paper>
-
-            <Route path='/home' exact>
-                <div className={classes.addForm}>
-                    <AddTweetForm title={"What's happening?"} buttonName={"Tweet"}/>
-                </div>
-                <div className={classes.divider}/>
-            </Route>
-
-            <Route path="/home/connect" exact>
-                <Connect/>
-            </Route>
-
-            <Route path="/home/trends" exact>
-                <Trends/>
-            </Route>
-
-            <Route path='/home' exact>
-                {(!myProfile?.profileStarted && !isLoading) && (<Welcome/>)}
-                {tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}
-                {isLoading && (
-                    <div className={classes.loading}>
-                        <CircularProgress/>
-                    </div>
-                )}
-            </Route>
-
-            <Route path="/home/tweet/:id" exact>
-                <FullTweet/>
-            </Route>
-        </Paper>
+        </InfiniteScroll>
     );
 };
 
-export default withInfiniteScroll(Home);
+export default Home;

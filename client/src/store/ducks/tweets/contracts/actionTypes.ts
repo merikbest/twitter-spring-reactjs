@@ -110,10 +110,12 @@ export interface FetchTweetsActionInterface extends Action<TweetsActionType> {
 
 export interface FetchMediaTweetsActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_MEDIA_TWEETS;
+    payload: number;
 }
 
 export interface FetchTweetsWithVideoActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_TWEETS_WITH_VIDEO;
+    payload: number;
 }
 
 export interface FetchTweetsByTagActionInterface extends Action<TweetsActionType> {

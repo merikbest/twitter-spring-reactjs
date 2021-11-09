@@ -14,9 +14,9 @@ public interface TweetService {
 
     Tweet getTweetById(Long tweetId);
 
-    List<Tweet> getMediaTweets();
+    Page<Tweet> getMediaTweets(Pageable pageable);
 
-    List<Tweet> getTweetsWithVideo();
+    Page<Tweet> getTweetsWithVideo(Pageable pageable);
 
     Tweet createTweet(Tweet tweet);
 

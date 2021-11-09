@@ -14,13 +14,11 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
 
     switch (action.type) {
         case TweetsActionType.SET_TWEETS:
-            // draft.items = action.payload;
             draft.items = [...draft.items, ...action.payload];
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
         case TweetsActionType.SET_TWEETS2:
-            // draft.items = action.payload;
             draft.items = [...draft.items, ...action.payload.items];
             draft.pagesCount = action.payload.pagesCount;
             draft.loadingState = LoadingStatus.LOADED;

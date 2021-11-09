@@ -18,9 +18,11 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     List<Tweet> findAllByTextIgnoreCaseContaining(String text);
 
+    Page<Tweet> findAllByTextIgnoreCaseContaining(String text, Pageable pageable);
+
     List<Tweet> findByAddressedUsernameIsNullAndUserOrderByDateTimeDesc(User user);
 
-    List<Tweet> findByImagesIsNotNullOrderByDateTimeDesc();
+    Page<Tweet> findByImagesIsNotNullOrderByDateTimeDesc(Pageable pageable);
 
     List<Tweet> findByImagesIsNotNullAndUserOrderByDateTimeDesc(User user);
 

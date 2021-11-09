@@ -42,20 +42,23 @@ public class TweetMapper {
                 .collect(Collectors.toList());
     }
 
-    public TweetHeaderResponse getTweets(Pageable pageable) {
-        Page<Tweet> tweets = tweetService.getTweets(pageable);
+    private TweetHeaderResponse getTweetHeaderResponse(Page<Tweet> tweets) {
         List<TweetResponse> tweetResponses = convertListToResponse(tweets.getContent());
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("page-total-count", String.valueOf(tweets.getTotalPages()));
         return new TweetHeaderResponse(tweetResponses, responseHeaders);
     }
 
-    public List<TweetResponse> getMediaTweets() {
-        return convertListToResponse(tweetService.getMediaTweets());
+    public TweetHeaderResponse getTweets(Pageable pageable) {
+        return getTweetHeaderResponse(tweetService.getTweets(pageable));
     }
 
-    public List<TweetResponse> getTweetsWithVideo() {
-        return convertListToResponse(tweetService.getTweetsWithVideo());
+    public TweetHeaderResponse getMediaTweets(Pageable pageable) {
+        return getTweetHeaderResponse(tweetService.getMediaTweets(pageable));
+    }
+
+    public TweetHeaderResponse getTweetsWithVideo(Pageable pageable) {
+        return getTweetHeaderResponse(tweetService.getTweetsWithVideo(pageable));
     }
 
     public TweetResponse getTweetById(Long tweetId) {

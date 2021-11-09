@@ -121,12 +121,14 @@ export const fetchTweets = (payload: number): FetchTweetsActionInterface => ({
     payload,
 });
 
-export const fetchMediaTweets = (): FetchMediaTweetsActionInterface => ({
+export const fetchMediaTweets = (payload: number): FetchMediaTweetsActionInterface => ({
     type: TweetsActionType.FETCH_MEDIA_TWEETS,
+    payload
 });
 
-export const fetchTweetsWithVideo = (): FetchTweetsWithVideoActionInterface => ({
+export const fetchTweetsWithVideo = (payload: number): FetchTweetsWithVideoActionInterface => ({
     type: TweetsActionType.FETCH_TWEETS_WITH_VIDEO,
+    payload
 });
 
 export const fetchUserBookmarks = (): FetchBookmarksActionInterface => ({
