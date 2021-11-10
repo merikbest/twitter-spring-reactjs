@@ -1,9 +1,8 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service;
 
-import com.gmail.merikbest2015.twitterspringreactjs.model.Image;
-import com.gmail.merikbest2015.twitterspringreactjs.model.Notification;
-import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
-import com.gmail.merikbest2015.twitterspringreactjs.model.User;
+import com.gmail.merikbest2015.twitterspringreactjs.model.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -20,17 +19,17 @@ public interface UserService {
 
     User startUseTwitter(Long userId);
 
-    List<Tweet> getUserTweets(Long userId);
+    Page<Tweet> getUserTweets(Long userId, Pageable pageable);
 
-    List<Tweet> getUserLikedTweets(Long userId);
+    Page<LikeTweet> getUserLikedTweets(Long userId, Pageable pageable);
 
-    List<Tweet> getUserMediaTweets(Long userId);
+    Page<Tweet> getUserMediaTweets(Long userId, Pageable pageable);
 
-    List<Tweet> getUserRetweetsAndReplies(Long userId);
+    Page<Tweet> getUserRetweetsAndReplies(Long userId, Pageable pageable);
 
     List<Notification> getUserNotifications();
 
-    List<Tweet> getUserBookmarks();
+    Page<Bookmark> getUserBookmarks(Pageable pageable);
 
     User processUserBookmarks(Long tweetId);
 

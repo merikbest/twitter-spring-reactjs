@@ -131,8 +131,9 @@ export const fetchTweetsWithVideo = (payload: number): FetchTweetsWithVideoActio
     payload
 });
 
-export const fetchUserBookmarks = (): FetchBookmarksActionInterface => ({
+export const fetchUserBookmarks = (payload: number): FetchBookmarksActionInterface => ({
     type: TweetsActionType.FETCH_BOOKMARKS,
+    payload
 });
 
 export const removeTweetFromBookmarks = (payload: string): RemoveTweetFromBookmarksActionInterface => ({

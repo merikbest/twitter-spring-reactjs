@@ -6,7 +6,7 @@ import {Tweet} from "./contracts/state";
 import {
     FetchAddPollActionInterface,
     FetchAddQuoteTweetActionInterface,
-    FetchAddTweetActionInterface,
+    FetchAddTweetActionInterface, FetchBookmarksActionInterface,
     FetchChangeReplyTypeActionInterface,
     FetchDeleteTweetActionInterface,
     FetchLikedTweetsActionInterface,
@@ -141,11 +141,11 @@ export function* fetchRetweetRequest({payload}: FetchRetweetActionInterface) {
     yield call(TweetApi.retweet, payload);
 }
 
-export function* fetchUserBookmarksRequest() {
+export function* fetchUserBookmarksRequest({payload}: FetchBookmarksActionInterface) {
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
-        const item: Tweet[] = yield call(UserApi.getUserBookmarks);
-        yield put(setTweets(item));
+        const response: AxiosResponse<Tweet[]> = yield call(UserApi.getUserBookmarks, payload);
+        yield put(setTweets2({items: response.data, pagesCount: parseInt(response.headers["page-total-count"])}));
     } catch (e) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }

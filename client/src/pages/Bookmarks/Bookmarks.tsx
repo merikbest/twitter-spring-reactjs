@@ -1,10 +1,11 @@
-import React, {FC, ReactElement, useEffect} from 'react';
+import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
+import InfiniteScroll from "react-infinite-scroll-component";
 import {CircularProgress, Paper, Typography} from "@material-ui/core";
 
-import {selectIsTweetsLoading, selectTweetsItems} from "../../store/ducks/tweets/selectors";
+import {selectIsTweetsLoading, selectPagesCount, selectTweetsItems} from "../../store/ducks/tweets/selectors";
 import {useBookmarksStyles} from "./BookmarksStyles";
-import {fetchUserBookmarks} from "../../store/ducks/tweets/actionCreators";
+import {fetchUserBookmarks, resetTweets} from "../../store/ducks/tweets/actionCreators";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
 
@@ -14,31 +15,43 @@ const Bookmarks: FC = (): ReactElement => {
     const myProfile = useSelector(selectUserData);
     const tweets = useSelector(selectTweetsItems);
     const isLoading = useSelector(selectIsTweetsLoading);
+    const pagesCount = useSelector(selectPagesCount);
+    const [page, setPage] = useState<number>(0);
 
     useEffect(() => {
-        dispatch(fetchUserBookmarks());
         window.scrollTo(0, 0);
+        loadBookmarks();
+
+        return () => {
+            dispatch(resetTweets());
+        };
     }, []);
 
+    const loadBookmarks = () => {
+        dispatch(fetchUserBookmarks(page));
+        setPage(prevState => prevState + 1);
+    };
+
     return (
-        <Paper className={classes.container} variant="outlined">
-            <Paper className={classes.header} variant="outlined">
-                <div>
-                    <Typography component={"div"} className={classes.headerFullName}>
-                        Bookmarks
-                    </Typography>
-                    <Typography component={"div"} className={classes.headerUsername}>
-                        @{myProfile?.username}
-                    </Typography>
-                </div>
-            </Paper>
-            <div className={classes.contentWrapper}>
-                {isLoading ? (
-                    <div className={classes.loading}>
-                        <CircularProgress/>
+        <InfiniteScroll
+            dataLength={tweets.length}
+            next={loadBookmarks}
+            hasMore={page < pagesCount}
+            loader={null}
+        >
+            <Paper className={classes.container} variant="outlined">
+                <Paper className={classes.header} variant="outlined">
+                    <div>
+                        <Typography component={"div"} className={classes.headerFullName}>
+                            Bookmarks
+                        </Typography>
+                        <Typography component={"div"} className={classes.headerUsername}>
+                            @{myProfile?.username}
+                        </Typography>
                     </div>
-                ) : (
-                    (tweets.length === 0) ? (
+                </Paper>
+                <div className={classes.contentWrapper}>
+                    {(tweets.length === 0 && !isLoading) ? (
                         <div className={classes.infoWrapper}>
                             <Typography component={"div"} className={classes.infoTitle}>
                                 You haven’t added any Tweets to your Bookmarks yet
@@ -50,11 +63,16 @@ const Bookmarks: FC = (): ReactElement => {
                     ) : (
                         <>
                             {tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}
+                            {isLoading && (
+                                <div className={classes.loading}>
+                                    <CircularProgress/>
+                                </div>
+                            )}
                         </>
-                    )
-                )}
-            </div>
-        </Paper>
+                    )}
+                </div>
+            </Paper>
+        </InfiniteScroll>
     );
 };
 

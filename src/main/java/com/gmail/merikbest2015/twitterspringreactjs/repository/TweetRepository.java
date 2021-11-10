@@ -24,7 +24,11 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     Page<Tweet> findByImagesIsNotNullOrderByDateTimeDesc(Pageable pageable);
 
-    List<Tweet> findByImagesIsNotNullAndUserOrderByDateTimeDesc(User user);
+    Page<Tweet> findByImagesIsNotNullAndUser_IdOrderByDateTimeDesc(Long userId, Pageable pageable);
 
     List<Tweet> findByQuoteTweet_Id(Long id);
+
+    List<Tweet> findByUserAndAddressedUsernameIsNullOrderByDateTimeDesc(User user);
+
+    List<Tweet> findByUserAndAddressedUsernameIsNotNullOrderByDateTimeDesc(User user);
 }

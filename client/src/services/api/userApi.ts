@@ -3,6 +3,7 @@ import {Notification} from "../../store/ducks/notifications/contracts/state";
 import {axios} from "../../core/axios";
 import {Tweet} from "../../store/ducks/tweets/contracts/state";
 import {API_URL} from "../../util/url";
+import {AxiosResponse} from "axios";
 
 export interface Response<T> {
     status: string;
@@ -42,29 +43,28 @@ export const UserApi = {
         const {data} = await axios.get<User | undefined>(API_URL + '/user/follow/' + user.id);
         return data;
     },
-    async getUserTweets(id: string): Promise<Response<Tweet[]>> {
-        const data = await axios.get<Response<Tweet[]>>(API_URL + `/user/${id}/tweets`);
-        return data.data;
+    async getUserTweets(payload: { userId: string, page: number }): Promise<AxiosResponse<Tweet[]>> {
+        return await axios.get<Tweet[]>(API_URL + `/user/${payload.userId}/tweets`, {params: {page: payload.page}});
     },
     async getUserLikedTweets(id: string): Promise<Response<Tweet[]>> {
         const data = await axios.get<Response<Tweet[]>>(API_URL + `/user/${id}/liked`);
         return data.data;
     },
-    async getUserMediaTweets(id: string): Promise<Response<Tweet[]>> {
-        const data = await axios.get<Response<Tweet[]>>(API_URL + `/user/${id}/media`);
-        return data.data;
+    async getUserLikedTweets2(payload: { userId: string, page: number }): Promise<AxiosResponse<Tweet[]>> {
+        return await axios.get<Tweet[]>(API_URL + `/user/${payload.userId}/liked`, {params: {page: payload.page}});
     },
-    async getUserRetweetsAndReplies(id: string): Promise<Response<Tweet[]>> {
-        const data = await axios.get<Response<Tweet[]>>(API_URL + `/user/${id}/replies`);
-        return data.data;
+    async getUserMediaTweets(payload: { userId: string, page: number }): Promise<AxiosResponse<Tweet[]>> {
+        return await axios.get<Tweet[]>(API_URL + `/user/${payload.userId}/media`, {params: {page: payload.page}});
+    },
+    async getUserRetweetsAndReplies(payload: { userId: string, page: number }): Promise<AxiosResponse<Tweet[]>> {
+        return await axios.get<Tweet[]>(API_URL + `/user/${payload.userId}/replies`, {params: {page: payload.page}});
     },
     async getUserNotifications(): Promise<Response<Notification[]>> {
         const data =  await axios.get<Response<Notification[]>>(API_URL + "/user/notifications");
         return data.data;
     },
-    async getUserBookmarks(): Promise<Response<Tweet[]>> {
-        const data = await axios.get<Response<Tweet[]>>(API_URL + "/user/bookmarks");
-        return data.data;
+    async getUserBookmarks(payload: number): Promise<AxiosResponse<Tweet[]>> {
+        return await axios.get<Tweet[]>(API_URL + "/user/bookmarks", {params: {page: payload}});
     },
     async addTweetToBookmarks(tweetId: string): Promise<Response<User>> {
         const data = await axios.get<Response<User>>(API_URL + '/user/bookmarks/' + tweetId);

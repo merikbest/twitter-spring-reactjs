@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "bookmarks")
+@ToString
 public class Bookmark {
 
     @Id
@@ -18,6 +20,10 @@ public class Bookmark {
 
     @Column(name = "bookmark_date")
     private LocalDateTime bookmarkDate;
+
+    @ManyToOne
+    @JoinColumn(name = "users_id")
+    private User user;
 
     @OneToOne
     private Tweet tweet;

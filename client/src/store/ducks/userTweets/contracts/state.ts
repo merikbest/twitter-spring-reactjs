@@ -13,5 +13,6 @@ export interface PinnedTweet {
 
 export interface UserTweetsState {
     items: Tweet[];
+    pagesCount: number;
     loadingState: LoadingStatus;
 }

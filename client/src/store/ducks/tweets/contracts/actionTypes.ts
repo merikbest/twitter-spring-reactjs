@@ -135,6 +135,7 @@ export interface FetchLikedTweetsActionInterface extends Action<TweetsActionType
 
 export interface FetchBookmarksActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_BOOKMARKS;
+    payload: number;
 }
 
 export interface RemoveTweetFromBookmarksActionInterface extends Action<TweetsActionType> {

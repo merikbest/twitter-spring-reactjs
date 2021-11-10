@@ -2,18 +2,21 @@ package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetHeaderResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.model.Image;
-import com.gmail.merikbest2015.twitterspringreactjs.model.Notification;
-import com.gmail.merikbest2015.twitterspringreactjs.model.User;
+import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,6 +56,13 @@ public class UserMapper {
         return modelMapper.map(userRequest, User.class);
     }
 
+    private TweetHeaderResponse getTweetHeaderResponse(List<Tweet> tweets, Integer totalPages) {
+        List<TweetResponse> tweetResponses = tweetMapper.convertListToResponse((tweets));
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("page-total-count", String.valueOf(totalPages));
+        return new TweetHeaderResponse(tweetResponses, responseHeaders);
+    }
+
     public UserResponse getUserById(Long userId) {
         return convertToUserResponse(userService.getUserById(userId));
     }
@@ -73,24 +83,33 @@ public class UserMapper {
         return convertToUserResponse(userService.startUseTwitter(userId));
     }
 
-    public List<TweetResponse> getUserTweets(Long userId) {
-        return tweetMapper.convertListToResponse(userService.getUserTweets(userId));
+    public TweetHeaderResponse getUserTweets(Long userId, Pageable pageable) {
+        Page<Tweet> userTweets = userService.getUserTweets(userId, pageable);
+        return getTweetHeaderResponse(userTweets.getContent(), userTweets.getTotalPages());
     }
 
-    public List<TweetResponse> getUserLikedTweets(Long userId) {
-        return tweetMapper.convertListToResponse(userService.getUserLikedTweets(userId));
+    public TweetHeaderResponse getUserLikedTweets(Long userId, Pageable pageable) {
+        Page<LikeTweet> userLikedTweets = userService.getUserLikedTweets(userId, pageable);
+        List<Tweet> tweets = new ArrayList<>();
+        userLikedTweets.getContent().forEach(likeTweet -> tweets.add(likeTweet.getTweet()));
+        return getTweetHeaderResponse(tweets, userLikedTweets.getTotalPages());
     }
 
-    public List<TweetResponse> getUserMediaTweets(Long userId) {
-        return tweetMapper.convertListToResponse(userService.getUserMediaTweets(userId));
+    public TweetHeaderResponse getUserMediaTweets(Long userId, Pageable pageable) {
+        Page<Tweet> mediaTweets = userService.getUserMediaTweets(userId, pageable);
+        return getTweetHeaderResponse(mediaTweets.getContent(), mediaTweets.getTotalPages());
     }
 
-    public List<TweetResponse> getUserRetweetsAndReplies(Long userId) {
-        return tweetMapper.convertListToResponse(userService.getUserRetweetsAndReplies(userId));
+    public TweetHeaderResponse getUserRetweetsAndReplies(Long userId, Pageable pageable) {
+        Page<Tweet> retweetsAndReplies = userService.getUserRetweetsAndReplies(userId, pageable);
+        return getTweetHeaderResponse(retweetsAndReplies.getContent(), retweetsAndReplies.getTotalPages());
     }
 
-    public List<TweetResponse> getUserBookmarks() {
-        return tweetMapper.convertListToResponse(userService.getUserBookmarks());
+    public TweetHeaderResponse getUserBookmarks(Pageable pageable) {
+        Page<Bookmark> bookmarks = userService.getUserBookmarks(pageable);
+        List<Tweet> tweets = new ArrayList<>();
+        bookmarks.getContent().forEach(bookmark -> tweets.add(bookmark.getTweet()));
+        return getTweetHeaderResponse(tweets, bookmarks.getTotalPages());
     }
 
     public UserResponse processUserBookmarks(Long tweetId) {

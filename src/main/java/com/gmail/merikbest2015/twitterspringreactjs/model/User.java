@@ -94,7 +94,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Retweet> retweets;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     private List<Bookmark> bookmarks;
 
     @OneToMany
