@@ -29,6 +29,7 @@ import Poll from "./Poll/Poll";
 import Reply from "./Reply/Reply";
 import Quote from "../Quote/Quote";
 import HoverAction from "../HoverAction/HoverAction";
+import ScheduleModal from "./ScheduleModal/ScheduleModal";
 
 export enum AddTweetFormAction {
     MEDIA = "MEDIA",
@@ -88,6 +89,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
     const [visibleAddScheduleAction, setVisibleAddScheduleAction] = useState<boolean>(false);
     const [delayHandler, setDelayHandler] = useState<any>(null);
     const [openSnackBar, setOpenSnackBar] = useState<boolean>(false);
+    const [visibleScheduleModal, setVisibleScheduleModal] = useState<boolean>(false);
     const [snackBarMessage, setSnackBarMessage] = useState<string>("");
     // Popover
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -267,6 +269,14 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
         setOpenSnackBar(false);
     };
 
+    const onOpenScheduleModal = (): void => {
+        setVisibleScheduleModal(true);
+    };
+
+    const onCloseScheduleModal = (): void => {
+        setVisibleScheduleModal(false);
+    };
+
     return (
         <div>
             <div className={classes.content}>
@@ -358,6 +368,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
                         <div className={classes.quoteImage}>
                             <IconButton
                                 disabled={!!quoteTweet}
+                                onClick={onOpenScheduleModal}
                                 onMouseEnter={() => handleHoverAction(AddTweetFormAction.SCHEDULE)}
                                 onMouseLeave={handleLeaveAction}
                                 color="primary"
@@ -431,6 +442,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
                     onClose={onCloseSnackBar}
                     autoHideDuration={3000}
                 />
+                {visibleScheduleModal && <ScheduleModal visible={visibleScheduleModal} onClose={onCloseScheduleModal}/>}
             </div>
         </div>
     );

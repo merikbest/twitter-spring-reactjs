@@ -24,6 +24,9 @@ public class Tweet {
     @Column(name = "date_time")
     private LocalDateTime dateTime;
 
+    @Column(name = "scheduled_date")
+    private LocalDateTime scheduledDate;
+
     @Column(name = "addressed_username")
     private String addressedUsername;
 

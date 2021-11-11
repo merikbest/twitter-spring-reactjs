@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "bookmarks")
-@ToString
 public class Bookmark {
 
     @Id

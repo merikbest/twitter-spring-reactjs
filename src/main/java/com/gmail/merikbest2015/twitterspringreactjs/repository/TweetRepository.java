@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -15,6 +16,8 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     Page<Tweet> findByAddressedUsernameIsNullOrderByDateTimeDesc(Pageable pageable);
 
     List<Tweet> findAllByUser(User user);
+
+    Tweet findByScheduledDateLessThanEqual(LocalDateTime scheduledDate);
 
     List<Tweet> findAllByTextIgnoreCaseContaining(String text);
 
