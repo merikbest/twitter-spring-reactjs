@@ -1,16 +1,16 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service.cron;
 
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.mapper.TweetMapper;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.TweetRepository;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @Transactional
@@ -19,12 +19,13 @@ public class CronService {
 
     private final SimpMessagingTemplate messagingTemplate;
     private final TweetRepository tweetRepository;
-    private final ModelMapper modelMapper;
+    private final TweetMapper tweetMapper;
 
-//    @Scheduled(initialDelay = 10000, fixedDelay = 2000)
+    @Scheduled(initialDelay = 10000, fixedDelay = 10000)
     public void sendTweetBySchedule() {
-        Tweet tweet = tweetRepository.findByScheduledDateLessThanEqual(LocalDateTime.now());
-        TweetResponse map = modelMapper.map(tweet, TweetResponse.class);
-        messagingTemplate.convertAndSend("/topic/feed/add", map);
+        List<Tweet> tweets = tweetRepository.findByScheduledDateLessThanEqual(LocalDateTime.now());
+        tweets.forEach(tweet -> tweet.setScheduledDate(null));
+        tweetRepository.saveAll(tweets);
+        messagingTemplate.convertAndSend("/topic/feed/schedule", tweetMapper.convertListToResponse(tweets));
     }
 }

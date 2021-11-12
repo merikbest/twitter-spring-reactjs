@@ -32,6 +32,10 @@ export const TweetApi = {
         const data = await axios.post<Response<Tweet>>(API_URL + '/tweets/poll', payload);
         return data.data;
     },
+    async createScheduledTweet(payload: AddTweet): Promise<Response<Tweet>> {
+        const data = await axios.post<Response<Tweet>>(API_URL + '/tweets/schedule', payload);
+        return data.data;
+    },
     async deleteTweet(tweetId: string): Promise<Response<string>> {
         const data = await axios.delete<Response<string>>(API_URL + '/tweets/' + tweetId);
         return data.data;

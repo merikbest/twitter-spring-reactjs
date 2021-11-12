@@ -1,68 +1,54 @@
 import React, {ChangeEvent, FC, ReactElement, ReactNode, useState} from 'react';
+import {addDays, getDate, getDaysInMonth, getMonth, getYear, isBefore} from "date-fns";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import {Button, Dialog, DialogContent, FormControl, InputLabel, Typography} from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import format from "date-fns/format";
 
 import {useScheduleModalStyles} from "./ScheduleModalStyles";
 import {ScheduleIcon} from "../../../icons";
 import {ScheduleModalSelect} from "./ScheduleModalSelect";
-import {getDate, getDay, getYear, getMonth, getDaysInMonth, addMonths, addDays} from "date-fns";
-import {getDayOfYear, getISODay} from "date-fns/esm";
+import {formatScheduleDate} from "../../../util/formatDate";
 
 interface ScheduleModalProps {
     visible?: boolean;
+    selectedScheduleDate: Date | null;
     onClose: () => void;
+    handleScheduleDate: (date: Date) => void;
+    clearScheduleDate: () => void;
 }
 
-const ScheduleModal: FC<ScheduleModalProps> = ({visible, onClose}): ReactElement | null => {
+const ScheduleModal: FC<ScheduleModalProps> = (
+    {
+        visible,
+        onClose,
+        handleScheduleDate,
+        selectedScheduleDate,
+        clearScheduleDate
+    }
+): ReactElement | null => {
     const classes = useScheduleModalStyles();
-    let dateNow = new Date(Date.now());
-    // const formatDay = "1";
+    let dateNow = new Date();
+    let scheduledDay = String(getDate(dateNow));
 
-    let day2 = String(getDate(dateNow));
-    let month2;
-    let year2;
-
-
-    const daysInMonth = getDaysInMonth(dateNow);
-    const scheduleDay = getDate(dateNow) + 22;
-
-    if (scheduleDay > daysInMonth) {
-        // dateNow = addMonths(dateNow, 1);
-        dateNow = addDays(dateNow, 22);
-        day2 = String(getDate(dateNow)) // day
-        // console.log(day2);
+    if (getDate(dateNow) + 2 > getDaysInMonth(dateNow)) {
+        dateNow = addDays(dateNow, 2);
+    } else {
+        scheduledDay = String(getDate(dateNow) + 2);
     }
 
-    // console.log(dateNow)
-
-
-    // dateNow = addMonths(Date.now(), 1);
-    // console.log(dateNow);
-    console.log(getDate(dateNow))
-
     const formatMonth = (getMonth(dateNow) < 10) ? ("0" + String(getMonth(dateNow) + 1)) : (String(getMonth(dateNow) + 1));
-    const formatDay = (getDate(dateNow) < 10) ? ("0" + day2) : (day2);
-
-    // console.log(dateNow)
-    // console.log(formatDay)
-
-
-
-
-
+    const formatDay = (getDate(dateNow) < 10) ? ("0" + String(scheduledDay)) : (String(scheduledDay));
     const [month, setMonth] = useState<string>(formatMonth);
     const [day, setDay] = useState<string>(formatDay);
-    const [year, setYear] = useState<string>(String(getYear(Date.now())));
+    const [year, setYear] = useState<string>(String(getYear(dateNow)));
     const [hour, setHour] = useState<string>("00");
     const [minute, setMinute] = useState<string>("00");
     const [daysCount, setDaysCount] = useState<number>(28);
 
-    // const dateFormat = format(new Date(`${year}-${month}-${day}T${hour}:${minute}:00Z`), "EEE, MMM d, yyyy 'at' hh:mm a");
-    // console.log(month + " " + day + " " + year)
-    // console.log(dateFormat)
+    const selectedDate = new Date(`${year}-${month}-${day}T${hour}:${minute}:00Z`);
+    const dateFormat = formatScheduleDate(selectedDate);
+    const isValidSelectedDate = isBefore(selectedDate, Date.now());
 
     const changeMonth = (event: ChangeEvent<{ value: unknown }>): void => {
         const monthNumber = event.target.value as string;
@@ -123,6 +109,16 @@ const ScheduleModal: FC<ScheduleModalProps> = ({visible, onClose}): ReactElement
         return days;
     };
 
+    const onSubmitScheduleDate = (): void => {
+        handleScheduleDate(selectedDate);
+        onClose();
+    };
+
+    const onSubmitClearScheduleDate = (): void => {
+        clearScheduleDate();
+        onClose();
+    };
+
     if (!visible) {
         return null;
     }
@@ -134,28 +130,46 @@ const ScheduleModal: FC<ScheduleModalProps> = ({visible, onClose}): ReactElement
                     <CloseIcon style={{fontSize: 26}} color="secondary"/>
                 </IconButton>
                 Schedule
-                <Button
-                    className={classes.button}
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                >
-                    Confirm
-                </Button>
+                <div className={classes.buttonWrapper}>
+                    {selectedScheduleDate && (
+                        <Button
+                            className={classes.clearButton}
+                            onClick={onSubmitClearScheduleDate}
+                            type="submit"
+                            variant="outlined"
+                            color="primary"
+                            disabled={isValidSelectedDate}
+                        >
+                            Clear
+                        </Button>
+                    )}
+                    <Button
+                        className={classes.submitButton}
+                        onClick={onSubmitScheduleDate}
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        disabled={isValidSelectedDate}
+                    >
+                        {selectedScheduleDate ? "Update" : "Confirm"}
+                    </Button>
+                </div>
             </DialogTitle>
             <DialogContent className={classes.content}>
                 <div className={classes.contentWrapper}>
-                    <div className={classes.infoWrapper}>
-                        {ScheduleIcon}
-                        <Typography component={"span"} className={classes.text}>
-                            {/*{`Will send on ${dateFormat}`}*/}
-                        </Typography>
-                    </div>
+                    {!isValidSelectedDate && (
+                        <div className={classes.infoWrapper}>
+                            {ScheduleIcon}
+                            <Typography component={"span"} className={classes.text}>
+                                {`Will send on ${dateFormat}`}
+                            </Typography>
+                        </div>
+                    )}
                     <div className={classes.dateWrapper}>
                         <Typography component={"div"} className={classes.subtitle}>
                             Date
                         </Typography>
-                        <FormControl variant="filled">
+                        <FormControl variant="filled" error={isValidSelectedDate}>
                             <InputLabel htmlFor="select-month">
                                 Month
                             </InputLabel>
@@ -183,7 +197,7 @@ const ScheduleModal: FC<ScheduleModalProps> = ({visible, onClose}): ReactElement
                                 <option value={"12"}>December</option>
                             </ScheduleModalSelect>
                         </FormControl>
-                        <FormControl variant="filled">
+                        <FormControl variant="filled" error={isValidSelectedDate}>
                             <InputLabel htmlFor="select-day">
                                 Day
                             </InputLabel>
@@ -207,7 +221,7 @@ const ScheduleModal: FC<ScheduleModalProps> = ({visible, onClose}): ReactElement
                                 {(daysCount === 31) && (<option value={"31"}>31</option>)}
                             </ScheduleModalSelect>
                         </FormControl>
-                        <FormControl variant="filled">
+                        <FormControl variant="filled" error={isValidSelectedDate}>
                             <InputLabel htmlFor="select-year">
                                 Year
                             </InputLabel>
@@ -226,12 +240,17 @@ const ScheduleModal: FC<ScheduleModalProps> = ({visible, onClose}): ReactElement
                                 <option value={"2023"}>2023</option>
                             </ScheduleModalSelect>
                         </FormControl>
+                        {isValidSelectedDate && (
+                            <Typography component={"div"} className={classes.errorText}>
+                                You can’t schedule a Tweet to send in the past.
+                            </Typography>
+                        )}
                     </div>
                     <div className={classes.dateWrapper}>
                         <Typography component={"div"} className={classes.subtitle}>
                             Time
                         </Typography>
-                        <FormControl variant="filled">
+                        <FormControl variant="filled" error={isValidSelectedDate}>
                             <InputLabel htmlFor="select-hour">
                                 Hour
                             </InputLabel>
@@ -248,7 +267,7 @@ const ScheduleModal: FC<ScheduleModalProps> = ({visible, onClose}): ReactElement
                                 {showHour()}
                             </ScheduleModalSelect>
                         </FormControl>
-                        <FormControl variant="filled">
+                        <FormControl variant="filled" error={isValidSelectedDate}>
                             <InputLabel htmlFor="select-minute">
                                 Minute
                             </InputLabel>

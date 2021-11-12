@@ -60,6 +60,7 @@ export interface AddTweet {
     images: Image[];
     replyType: ReplyType;
     pollDateTime?: number;
+    scheduledDate?: Date;
     choices?: string[];
 }
 

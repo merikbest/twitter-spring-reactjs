@@ -5,14 +5,14 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import {IconButton, Popover, Snackbar} from "@material-ui/core";
+import {IconButton, Popover, Snackbar, Typography} from "@material-ui/core";
 import {EmojiData, Picker} from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
 import EmojiConvertor from 'emoji-js';
 
 import {
     fetchAddPoll,
-    fetchAddQuoteTweet,
+    fetchAddQuoteTweet, fetchAddScheduledTweet,
     fetchAddTweet,
 } from "../../store/ducks/tweets/actionCreators";
 import {selectIsTweetsLoading} from "../../store/ducks/tweets/selectors";
@@ -30,6 +30,7 @@ import Reply from "./Reply/Reply";
 import Quote from "../Quote/Quote";
 import HoverAction from "../HoverAction/HoverAction";
 import ScheduleModal from "./ScheduleModal/ScheduleModal";
+import {formatScheduleDate} from "../../util/formatDate";
 
 export enum AddTweetFormAction {
     MEDIA = "MEDIA",
@@ -72,7 +73,6 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
         onCloseModal
     }
 ): ReactElement => {
-    const classes = useAddTweetFormStyles({quoteTweet});
     const dispatch = useDispatch();
     const location = useLocation();
     const isTweetsLoading = useSelector(selectIsTweetsLoading);
@@ -90,6 +90,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
     const [delayHandler, setDelayHandler] = useState<any>(null);
     const [openSnackBar, setOpenSnackBar] = useState<boolean>(false);
     const [visibleScheduleModal, setVisibleScheduleModal] = useState<boolean>(false);
+    const [selectedScheduleDate, setSelectedScheduleDate] = useState<Date | null>(null);
     const [snackBarMessage, setSnackBarMessage] = useState<string>("");
     // Popover
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -105,6 +106,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
     const [hour, setHour] = useState<number>(0);
     const [minute, setMinute] = useState<number>(0);
 
+    const classes = useAddTweetFormStyles({quoteTweet, isScheduled: selectedScheduleDate !== null});
     const textLimitPercent = Math.round((text.length / 280) * 100);
     const textCount = MAX_LENGTH - text.length;
 
@@ -140,6 +142,13 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
                 choices: choices,
                 replyType: replyType
             }));
+        } else if (selectedScheduleDate !== null) {
+            dispatch(fetchAddScheduledTweet({
+                text: textConverter(),
+                images: result,
+                replyType: replyType,
+                scheduledDate: selectedScheduleDate
+            }));
         } else {
             dispatch(fetchAddTweet({
                 text: textConverter(),
@@ -153,6 +162,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
         setText('');
         setImages([]);
         setVisiblePoll(false);
+        setSelectedScheduleDate(null);
     };
 
     const handleClickQuoteTweet = async (): Promise<void> => {
@@ -277,6 +287,15 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
         setVisibleScheduleModal(false);
     };
 
+    const handleScheduleDate = (date: Date): void => {
+        setSelectedScheduleDate(date);
+        onClosePoll();
+    };
+
+    const clearScheduleDate = (): void => {
+        setSelectedScheduleDate(null);
+    };
+
     return (
         <div>
             <div className={classes.content}>
@@ -285,14 +304,24 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
                     alt={`avatar ${userData?.id}`}
                     src={userData?.avatar?.src ? userData?.avatar?.src : DEFAULT_PROFILE_IMG}
                 />
-                <TextareaAutosize
-                    onChange={handleChangeTextarea}
-                    className={classes.contentTextarea}
-                    placeholder={visiblePoll ? "Ask a question..." : title}
-                    value={text}
-                    rowsMax={maxRows}
-                    rowsMin={images.length !== 0 ? 1 : minRows}
-                />
+                <div>
+                    {selectedScheduleDate && (
+                        <div className={classes.infoWrapper}>
+                            {ScheduleIcon}
+                            <Typography component={"span"} className={classes.text}>
+                                {`Will send on ${formatScheduleDate(selectedScheduleDate)}`}
+                            </Typography>
+                        </div>
+                    )}
+                    <TextareaAutosize
+                        onChange={handleChangeTextarea}
+                        className={classes.contentTextarea}
+                        placeholder={visiblePoll ? "Ask a question..." : title}
+                        value={text}
+                        rowsMax={maxRows}
+                        rowsMin={images.length !== 0 ? 1 : minRows}
+                    />
+                </div>
             </div>
             {(images.length !== 0) && (
                 <div className={(location.pathname.includes("/modal")) ? classes.imageSmall : classes.image}>
@@ -343,7 +372,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
                     {(buttonName !== "Reply") && (
                         <div className={classes.quoteImage}>
                             <IconButton
-                                disabled={!!quoteTweet}
+                                disabled={!!quoteTweet || selectedScheduleDate !== null}
                                 onClick={onOpenPoll}
                                 onMouseEnter={() => handleHoverAction(AddTweetFormAction.POLL)}
                                 onMouseLeave={handleLeaveAction}
@@ -365,7 +394,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
                         </IconButton>
                     </div>
                     {(buttonName !== "Reply") && (
-                        <div className={classes.quoteImage}>
+                        <div className={classes.footerImage}>
                             <IconButton
                                 disabled={!!quoteTweet}
                                 onClick={onOpenScheduleModal}
@@ -442,7 +471,15 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
                     onClose={onCloseSnackBar}
                     autoHideDuration={3000}
                 />
-                {visibleScheduleModal && <ScheduleModal visible={visibleScheduleModal} onClose={onCloseScheduleModal}/>}
+                {visibleScheduleModal && (
+                    <ScheduleModal
+                        visible={visibleScheduleModal}
+                        selectedScheduleDate={selectedScheduleDate}
+                        onClose={onCloseScheduleModal}
+                        handleScheduleDate={handleScheduleDate}
+                        clearScheduleDate={clearScheduleDate}
+                    />
+                )}
             </div>
         </div>
     );

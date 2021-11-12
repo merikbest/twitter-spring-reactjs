@@ -24,7 +24,7 @@ import {setChatMessage} from "./store/ducks/chatMessages/actionCreators";
 import {WS_URL} from "./util/url";
 import {setNotification} from "./store/ducks/notifications/actionCreators";
 import {selectNotificationsItems} from "./store/ducks/notifications/selectors";
-import {deleteTweet, setTweet, setUpdatedTweet} from "./store/ducks/tweets/actionCreators";
+import {deleteTweet, setScheduledTweets, setTweet, setUpdatedTweet} from "./store/ducks/tweets/actionCreators";
 import Lists from "./pages/Lists/Lists";
 import FullList from "./pages/FullList/FullList";
 import SuggestedLists from "./pages/SuggestedLists/SuggestedLists";
@@ -68,6 +68,10 @@ const App: FC = (): ReactElement => {
 
             stompClient?.subscribe("/topic/feed/add", (response) => {
                 dispatch(setTweet(JSON.parse(response.body)));
+            });
+
+            stompClient?.subscribe("/topic/feed/schedule", (response) => {
+                dispatch(setScheduledTweets(JSON.parse(response.body)));
             });
         });
     }, []);

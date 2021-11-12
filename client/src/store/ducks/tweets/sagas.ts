@@ -1,12 +1,13 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 
-import {setTweets, setTweets2, setTweetsLoadingState,} from "./actionCreators";
+import {fetchAddScheduledTweet, setPageableTweets, setTweets, setTweetsLoadingState,} from "./actionCreators";
 import {TweetApi} from "../../../services/api/tweetApi";
 import {Tweet} from "./contracts/state";
 import {
     FetchAddPollActionInterface,
-    FetchAddQuoteTweetActionInterface,
-    FetchAddTweetActionInterface, FetchBookmarksActionInterface,
+    FetchAddQuoteTweetActionInterface, FetchAddScheduledTweetActionInterface,
+    FetchAddTweetActionInterface,
+    FetchBookmarksActionInterface,
     FetchChangeReplyTypeActionInterface,
     FetchDeleteTweetActionInterface,
     FetchLikedTweetsActionInterface,
@@ -29,7 +30,10 @@ export function* fetchTweetsRequest({payload}: FetchTweetsActionInterface) {
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<Tweet[]> = yield call(TweetApi.fetchTweets, payload);
-        yield put(setTweets2({items: response.data, pagesCount: parseInt(response.headers["page-total-count"])}));
+        yield put(setPageableTweets({
+            items: response.data,
+            pagesCount: parseInt(response.headers["page-total-count"])
+        }));
     } catch (e) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }
@@ -39,7 +43,10 @@ export function* fetchMediaTweetsRequest({payload}: FetchMediaTweetsActionInterf
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<Tweet[]> = yield call(TweetApi.fetchMediaTweets, payload);
-        yield put(setTweets2({items: response.data, pagesCount: parseInt(response.headers["page-total-count"])}));
+        yield put(setPageableTweets({
+            items: response.data,
+            pagesCount: parseInt(response.headers["page-total-count"])
+        }));
     } catch (e) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }
@@ -49,7 +56,10 @@ export function* fetchTweetsWithVideoRequest({payload}: FetchTweetsWithVideoActi
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<Tweet[]> = yield call(TweetApi.fetchTweetsWithVideo, payload);
-        yield put(setTweets2({items: response.data, pagesCount: parseInt(response.headers["page-total-count"])}));
+        yield put(setPageableTweets({
+            items: response.data,
+            pagesCount: parseInt(response.headers["page-total-count"])
+        }));
     } catch (e) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }
@@ -101,6 +111,14 @@ export function* fetchAddPollRequest({payload}: FetchAddPollActionInterface) {
     }
 }
 
+export function* fetchAddScheduledTweetRequest({payload}: FetchAddScheduledTweetActionInterface) {
+    try {
+        yield call(TweetApi.createScheduledTweet, payload);
+    } catch (e) {
+        yield put(setTweetsLoadingState(LoadingStatus.ERROR));
+    }
+}
+
 export function* fetchAddQuoteTweet({payload}: FetchAddQuoteTweetActionInterface) {
     try {
         yield call(TweetApi.quoteTweet, payload);
@@ -145,7 +163,10 @@ export function* fetchUserBookmarksRequest({payload}: FetchBookmarksActionInterf
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<Tweet[]> = yield call(UserApi.getUserBookmarks, payload);
-        yield put(setTweets2({items: response.data, pagesCount: parseInt(response.headers["page-total-count"])}));
+        yield put(setPageableTweets({
+            items: response.data,
+            pagesCount: parseInt(response.headers["page-total-count"])
+        }));
     } catch (e) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }
@@ -157,6 +178,7 @@ export function* tweetsSaga() {
     yield takeLatest(TweetsActionType.FETCH_TWEETS_WITH_VIDEO, fetchTweetsWithVideoRequest);
     yield takeLatest(TweetsActionType.FETCH_ADD_TWEET, fetchAddTweetRequest);
     yield takeLatest(TweetsActionType.FETCH_ADD_POLL, fetchAddPollRequest);
+    yield takeLatest(TweetsActionType.FETCH_ADD_SCHEDULED_TWEET, fetchAddScheduledTweetRequest);
     yield takeLatest(TweetsActionType.FETCH_ADD_QUOTE_TWEET, fetchAddQuoteTweet);
     yield takeLatest(TweetsActionType.FETCH_VOTE, fetchVoteRequest);
     yield takeLatest(TweetsActionType.FETCH_CHANGE_REPLY_TYPE, fetchChangeReplyTypeRequest);

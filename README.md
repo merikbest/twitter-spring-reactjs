@@ -19,7 +19,7 @@ See more demo screenshots below.
 ## Features
 
 * Authentication with JWT and Email validation. Password change.
-* Users can Add tweets, Like, Retweet, Reply and Quote tweets.
+* Users can Add tweets, Like, Retweet, Reply, Quote tweets, Schedule tweets.
 * Users can Delete tweets, Send tweet via Direct Message, Add tweet to Bookmarks, Pin Lists.
 * Users can Create Lists, Edit Lists, Add other users to Lists, Follow List, Pin Lists.
 * Users get notifications when someone subscribed, retweet or liked tweet.
@@ -32,8 +32,6 @@ See more demo screenshots below.
 
 ## Next Updates
 
-* Infinity scroll
-* Scheduled tweets
 * Advanced search
 * Private User profile and Lists
 * User settings

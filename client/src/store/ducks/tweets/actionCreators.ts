@@ -3,6 +3,7 @@ import {
     DeleteTweetActionInterface,
     FetchAddPollActionInterface,
     FetchAddQuoteTweetActionInterface,
+    FetchAddScheduledTweetActionInterface,
     FetchAddTweetActionInterface,
     FetchBookmarksActionInterface,
     FetchChangeReplyTypeActionInterface,
@@ -18,8 +19,9 @@ import {
     FetchVoteActionInterface,
     RemoveTweetFromBookmarksActionInterface,
     ResetTweetsActionInterface,
+    SetPageableTweetsActionInterface,
+    SetScheduledTweetsActionInterface,
     SetTweetActionInterface,
-    SetTweets2ActionInterface,
     SetTweetsActionInterface,
     SetTweetsLoadingStateInterface,
     SetUpdatedTweetActionInterface,
@@ -32,8 +34,13 @@ export const setTweets = (payload: TweetsState["items"]): SetTweetsActionInterfa
     payload
 });
 
-export const setTweets2 = (payload: { items: TweetsState["items"], pagesCount: TweetsState["pagesCount"] }): SetTweets2ActionInterface => ({
-    type: TweetsActionType.SET_TWEETS2,
+export const setScheduledTweets = (payload: TweetsState["items"]): SetScheduledTweetsActionInterface => ({
+    type: TweetsActionType.SET_SCHEDULED_TWEETS,
+    payload
+});
+
+export const setPageableTweets = (payload: { items: TweetsState["items"], pagesCount: TweetsState["pagesCount"] }): SetPageableTweetsActionInterface => ({
+    type: TweetsActionType.SET_PAGEABLE_TWEETS,
     payload
 });
 
@@ -53,6 +60,11 @@ export const fetchAddTweet = (payload: AddTweet): FetchAddTweetActionInterface =
 
 export const fetchAddPoll = (payload: AddTweet): FetchAddPollActionInterface => ({
     type: TweetsActionType.FETCH_ADD_POLL,
+    payload
+});
+
+export const fetchAddScheduledTweet = (payload: AddTweet): FetchAddScheduledTweetActionInterface => ({
+    type: TweetsActionType.FETCH_ADD_SCHEDULED_TWEET,
     payload
 });
 

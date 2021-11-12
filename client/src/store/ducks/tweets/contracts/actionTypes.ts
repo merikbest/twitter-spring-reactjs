@@ -5,13 +5,15 @@ import {AddQuoteTweet, AddTweet, ReplyType, Tweet, TweetsState, Vote} from "./st
 
 export enum TweetsActionType {
     SET_TWEETS = "tweets/SET_TWEETS",
-    SET_TWEETS2 = "tweets/SET_TWEETS2",
+    SET_SCHEDULED_TWEETS = "tweets/SET_SCHEDULED_TWEETS",
+    SET_PAGEABLE_TWEETS = "tweets/SET_PAGEABLE_TWEETS",
     SET_TWEET = "tweets/SET_TWEET",
     RESET_TWEETS = "tweets/RESET_TWEETS",
     FETCH_LIKE_TWEET = 'tweets/FETCH_LIKE_TWEET',
     FETCH_RETWEET = 'tweets/FETCH_RETWEET',
     FETCH_ADD_TWEET = "tweets/FETCH_ADD_TWEET",
     FETCH_ADD_POLL = "tweets/FETCH_ADD_POLL",
+    FETCH_ADD_SCHEDULED_TWEET = "tweets/FETCH_ADD_SCHEDULED_TWEET",
     FETCH_ADD_QUOTE_TWEET = "tweets/FETCH_ADD_QUOTE_TWEET",
     FETCH_VOTE = "tweets/FETCH_VOTE",
     FETCH_CHANGE_REPLY_TYPE = "tweets/FETCH_CHANGE_REPLY_TYPE",
@@ -34,8 +36,13 @@ export interface SetTweetsActionInterface extends Action<TweetsActionType> {
     payload: TweetsState["items"];
 }
 
-export interface SetTweets2ActionInterface extends Action<TweetsActionType> {
-    type: TweetsActionType.SET_TWEETS2;
+export interface SetScheduledTweetsActionInterface extends Action<TweetsActionType> {
+    type: TweetsActionType.SET_SCHEDULED_TWEETS;
+    payload: TweetsState["items"];
+}
+
+export interface SetPageableTweetsActionInterface extends Action<TweetsActionType> {
+    type: TweetsActionType.SET_PAGEABLE_TWEETS;
     payload: { items: TweetsState["items"], pagesCount: TweetsState["pagesCount"] };
 }
 
@@ -55,6 +62,11 @@ export interface FetchAddTweetActionInterface extends Action<TweetsActionType> {
 
 export interface FetchAddPollActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_ADD_POLL;
+    payload: AddTweet;
+}
+
+export interface FetchAddScheduledTweetActionInterface extends Action<TweetsActionType> {
+    type: TweetsActionType.FETCH_ADD_SCHEDULED_TWEET;
     payload: AddTweet;
 }
 
@@ -145,7 +157,8 @@ export interface RemoveTweetFromBookmarksActionInterface extends Action<TweetsAc
 
 export type TweetsActions =
     | SetTweetsActionInterface
-    | SetTweets2ActionInterface
+    | SetScheduledTweetsActionInterface
+    | SetPageableTweetsActionInterface
     | SetTweetsLoadingStateInterface
     | ResetTweetsActionInterface
     | SetUpdatedTweetActionInterface

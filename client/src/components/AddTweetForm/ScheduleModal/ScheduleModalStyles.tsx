@@ -21,9 +21,23 @@ export const useScheduleModalStyles = makeStyles((theme: Theme) => ({
     contentWrapper: {
         padding: "12px 16px",
     },
-    button: {
+    buttonWrapper: {
         marginLeft: "auto",
-        height: 30,
+    },
+    clearButton: {
+        marginRight: 12,
+        "&.MuiButton-root": {
+            padding: "4px 16px",
+            border: 0,
+            '&:hover': {
+                border: 0,
+            },
+        },
+    },
+    submitButton: {
+        "&.MuiButton-root": {
+            padding: "4px 16px",
+        },
     },
     infoWrapper: {
         marginBottom: 20,
@@ -53,23 +67,32 @@ export const useScheduleModalStyles = makeStyles((theme: Theme) => ({
         lineHeight: "20px",
         color: "rgb(83, 100, 113)",
     },
+    errorText: {
+        fontSize: 15,
+        fontWeight: 400,
+        lineHeight: "20px",
+        color: "rgb(244, 33, 46)",
+    },
     dateWrapper: {
         marginBottom: 20,
     },
     footer: {
+        "& .MuiButton-root": {
+            marginRight: 15,
+            fontSize: 14,
+            fontWeight: 700,
+            lineHeight: "16px",
+            border: 0,
+            padding: '2px 15px',
+            '&:hover': {
+                border: 0,
+                backgroundColor: 'rgb(29, 161, 242, 0.1)',
+            },
+        },
         padding: "12px 16px",
         borderTop: "1px solid rgb(239, 243, 244)"
     },
     outlinedButton: {
-        marginRight: 15,
-        fontSize: 14,
-        fontWeight: 700,
-        lineHeight: "16px",
-        border: 0,
-        padding: '2px 15px',
-        '&:hover': {
-            border: 0,
-            backgroundColor: 'rgb(29, 161, 242, 0.1)',
-        },
+
     },
 }));

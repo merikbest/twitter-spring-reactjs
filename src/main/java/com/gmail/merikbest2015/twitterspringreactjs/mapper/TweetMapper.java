@@ -36,7 +36,7 @@ public class TweetMapper {
         return modelMapper.map(tweet, TweetResponse.class);
     }
 
-    List<TweetResponse> convertListToResponse(List<Tweet> tweets) {
+    public List<TweetResponse> convertListToResponse(List<Tweet> tweets) {
         return tweets.stream()
                 .map(this::convertToTweetResponse)
                 .collect(Collectors.toList());

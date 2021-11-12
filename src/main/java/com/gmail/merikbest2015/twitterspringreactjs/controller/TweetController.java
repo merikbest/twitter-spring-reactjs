@@ -64,6 +64,11 @@ public class TweetController {
         return ResponseEntity.ok(tweet);
     }
 
+    @PostMapping("/schedule")
+    public ResponseEntity<TweetResponse> createScheduledTweet(@RequestBody TweetRequest tweetRequest) {
+        return ResponseEntity.ok(tweetMapper.createTweet(tweetRequest));
+    }
+
     @DeleteMapping("/{tweetId}")
     public ResponseEntity<TweetResponse> deleteTweet(@PathVariable Long tweetId) {
         TweetResponse tweet = tweetMapper.deleteTweet(tweetId);
