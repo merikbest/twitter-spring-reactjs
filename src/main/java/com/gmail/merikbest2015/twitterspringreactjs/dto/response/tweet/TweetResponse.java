@@ -16,6 +16,7 @@ public class TweetResponse {
     private Long id;
     private String text;
     private LocalDateTime dateTime;
+    private LocalDateTime scheduledDate;
     private String addressedUsername;
     private Long addressedId;
     private Long addressedTweetId;

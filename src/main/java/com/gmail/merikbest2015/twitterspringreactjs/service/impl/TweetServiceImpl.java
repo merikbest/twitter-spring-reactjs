@@ -72,6 +72,13 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
+    public List<Tweet> getScheduledTweets() {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(principal.getName());
+        return tweetRepository.findByUserAndScheduledDateIsNotNullOrderByScheduledDateDesc(user);
+    }
+
+    @Override
     public Tweet createTweet(Tweet tweet) {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());

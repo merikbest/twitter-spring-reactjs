@@ -18,6 +18,8 @@ public interface TweetService {
 
     Page<Tweet> getTweetsWithVideo(Pageable pageable);
 
+    List<Tweet> getScheduledTweets();
+
     Tweet createTweet(Tweet tweet);
 
     Tweet createPoll(Long pollDateTime, List<String> choices, Tweet tweet);

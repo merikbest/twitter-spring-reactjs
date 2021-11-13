@@ -37,7 +37,7 @@ public class TweetController {
     }
 
     @GetMapping("/media")
-    public ResponseEntity<List<TweetResponse>> getMediaTweetsPageable(@PageableDefault(size = 10) Pageable pageable) {
+    public ResponseEntity<List<TweetResponse>> getMediaTweets(@PageableDefault(size = 10) Pageable pageable) {
         TweetHeaderResponse response = tweetMapper.getMediaTweets(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getTweets());
     }
@@ -46,6 +46,11 @@ public class TweetController {
     public ResponseEntity<List<TweetResponse>> getTweetsWithVideo(@PageableDefault(size = 10) Pageable pageable) {
         TweetHeaderResponse response = tweetMapper.getTweetsWithVideo(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getTweets());
+    }
+
+    @GetMapping("/schedule")
+    public ResponseEntity<List<TweetResponse>> getScheduledTweets() {
+        return ResponseEntity.ok(tweetMapper.getScheduledTweets());
     }
 
     @PostMapping

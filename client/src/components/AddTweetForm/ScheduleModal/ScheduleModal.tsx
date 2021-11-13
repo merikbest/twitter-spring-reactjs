@@ -16,6 +16,7 @@ interface ScheduleModalProps {
     onClose: () => void;
     handleScheduleDate: (date: Date) => void;
     clearScheduleDate: () => void;
+    onOpenUnsentTweetsModal: () => void;
 }
 
 const ScheduleModal: FC<ScheduleModalProps> = (
@@ -24,7 +25,8 @@ const ScheduleModal: FC<ScheduleModalProps> = (
         onClose,
         handleScheduleDate,
         selectedScheduleDate,
-        clearScheduleDate
+        clearScheduleDate,
+        onOpenUnsentTweetsModal
     }
 ): ReactElement | null => {
     const classes = useScheduleModalStyles();
@@ -124,7 +126,13 @@ const ScheduleModal: FC<ScheduleModalProps> = (
     }
 
     return (
-        <Dialog open={visible} onClose={onClose} className={classes.dialog} aria-labelledby="form-dialog-title">
+        <Dialog
+            transitionDuration={0}
+            open={visible}
+            onClose={onClose}
+            className={classes.dialog}
+            aria-labelledby="form-dialog-title"
+        >
             <DialogTitle id="form-dialog-title">
                 <IconButton onClick={onClose} color="secondary" aria-label="close">
                     <CloseIcon style={{fontSize: 26}} color="secondary"/>
@@ -299,6 +307,7 @@ const ScheduleModal: FC<ScheduleModalProps> = (
                         className={classes.outlinedButton}
                         color="primary"
                         variant="outlined"
+                        onClick={onOpenUnsentTweetsModal}
                     >
                         Scheduled Tweets
                     </Button>

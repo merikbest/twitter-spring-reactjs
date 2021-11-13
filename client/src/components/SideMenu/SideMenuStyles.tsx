@@ -2,7 +2,7 @@ import {makeStyles, Theme} from "@material-ui/core";
 
 export const useSideMenuStyles = makeStyles((theme: Theme) => ({
     container: {
-        position: 'sticky',
+        position: 'fixed',
         top: 0,
         listStyle: 'none',
         padding: 0,

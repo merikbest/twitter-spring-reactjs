@@ -191,6 +191,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
 
     return (
         <InfiniteScroll
+            style={{overflow: "unset"}}
             dataLength={tweets.length}
             next={loadUserTweets}
             hasMore={page < pagesCount}

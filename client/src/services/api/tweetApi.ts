@@ -20,6 +20,10 @@ export const TweetApi = {
     async fetchTweetsWithVideo(payload: number): Promise<AxiosResponse<Tweet[]>> {
         return await axios.get<Tweet[]>(API_URL + "/tweets/video", {params: {page: payload}});
     },
+    async fetchScheduledTweets(): Promise<Tweet[]> {
+        const data = await axios.get<Tweet[]>(API_URL + "/tweets/schedule");
+        return data.data;
+    },
     async fetchTweetData(id: string): Promise<Response<Tweet>> {
         const data = await axios.get<Response<Tweet>>(API_URL + '/tweets/' + id);
         return data.data;

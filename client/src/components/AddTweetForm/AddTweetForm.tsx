@@ -1,4 +1,4 @@
-import React, {FC, FormEvent, MouseEvent, ReactElement, useState} from 'react';
+import React, {FC, FormEvent, MouseEvent, ReactElement, useEffect, useState} from 'react';
 import {useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import Avatar from '@material-ui/core/Avatar';
@@ -31,6 +31,7 @@ import Quote from "../Quote/Quote";
 import HoverAction from "../HoverAction/HoverAction";
 import ScheduleModal from "./ScheduleModal/ScheduleModal";
 import {formatScheduleDate} from "../../util/formatDate";
+import UnsentTweetsModal from "./UnsentTweetsModal/UnsentTweetsModal";
 
 export enum AddTweetFormAction {
     MEDIA = "MEDIA",
@@ -41,6 +42,7 @@ export enum AddTweetFormAction {
 }
 
 interface AddTweetFormProps {
+    unsentTweet?: Tweet;
     quoteTweet?: Tweet;
     maxRows?: number;
     minRows?: number;
@@ -62,6 +64,7 @@ const HOVER_DELAY = 500;
 
 export const AddTweetForm: FC<AddTweetFormProps> = (
     {
+        unsentTweet,
         quoteTweet,
         maxRows,
         minRows,
@@ -90,6 +93,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
     const [delayHandler, setDelayHandler] = useState<any>(null);
     const [openSnackBar, setOpenSnackBar] = useState<boolean>(false);
     const [visibleScheduleModal, setVisibleScheduleModal] = useState<boolean>(false);
+    const [visibleUnsentTweetsModal, setVisibleUnsentTweetsModal] = useState<boolean>(false);
     const [selectedScheduleDate, setSelectedScheduleDate] = useState<Date | null>(null);
     const [snackBarMessage, setSnackBarMessage] = useState<string>("");
     // Popover
@@ -109,6 +113,13 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
     const classes = useAddTweetFormStyles({quoteTweet, isScheduled: selectedScheduleDate !== null});
     const textLimitPercent = Math.round((text.length / 280) * 100);
     const textCount = MAX_LENGTH - text.length;
+
+    useEffect(() => {
+        if (unsentTweet) {
+            setText(unsentTweet.text);
+            setSelectedScheduleDate(new Date(unsentTweet.scheduledDate!));
+        }
+    }, [unsentTweet]);
 
     const handleChangeTextarea = (e: FormEvent<HTMLTextAreaElement>): void => {
         if (e.currentTarget) {
@@ -296,6 +307,16 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
         setSelectedScheduleDate(null);
     };
 
+    const onOpenUnsentTweetsModal = (): void => {
+        setVisibleUnsentTweetsModal(true);
+        setVisibleScheduleModal(false);
+    };
+
+    const onCloseUnsentTweetsModal = (): void => {
+        setVisibleScheduleModal(true);
+        setVisibleUnsentTweetsModal(false);
+    };
+
     return (
         <div>
             <div className={classes.content}>
@@ -478,6 +499,13 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
                         onClose={onCloseScheduleModal}
                         handleScheduleDate={handleScheduleDate}
                         clearScheduleDate={clearScheduleDate}
+                        onOpenUnsentTweetsModal={onOpenUnsentTweetsModal}
+                    />
+                )}
+                {visibleUnsentTweetsModal && (
+                    <UnsentTweetsModal
+                        visible={visibleUnsentTweetsModal}
+                        onClose={onCloseUnsentTweetsModal}
                     />
                 )}
             </div>

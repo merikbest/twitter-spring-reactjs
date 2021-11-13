@@ -13,6 +13,7 @@ export interface Tweet {
     addressedId: number;
     addressedTweetId?: number;
     dateTime: string;
+    scheduledDate?: string;
     link: string;
     linkTitle: string;
     linkDescription: string;

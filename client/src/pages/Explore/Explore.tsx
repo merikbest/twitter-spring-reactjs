@@ -138,6 +138,7 @@ const Explore: FC = (): ReactElement => {
 
     return (
         <InfiniteScroll
+            style={{overflow: "unset"}}
             dataLength={tweets.length}
             next={loadTweets}
             hasMore={page < pagesCount}

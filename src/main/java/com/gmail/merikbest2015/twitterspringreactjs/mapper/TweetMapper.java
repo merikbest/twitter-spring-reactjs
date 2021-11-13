@@ -61,6 +61,10 @@ public class TweetMapper {
         return getTweetHeaderResponse(tweetService.getTweetsWithVideo(pageable));
     }
 
+    public List<TweetResponse> getScheduledTweets() {
+        return convertListToResponse(tweetService.getScheduledTweets());
+    }
+
     public TweetResponse getTweetById(Long tweetId) {
         return convertToTweetResponse(tweetService.getTweetById(tweetId));
     }

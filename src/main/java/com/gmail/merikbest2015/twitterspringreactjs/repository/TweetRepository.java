@@ -19,6 +19,8 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     List<Tweet> findByScheduledDateLessThanEqual(LocalDateTime scheduledDate);
 
+    List<Tweet> findByUserAndScheduledDateIsNotNullOrderByScheduledDateDesc(User user);
+
     List<Tweet> findAllByTextIgnoreCaseContaining(String text);
 
     Page<Tweet> findAllByTextIgnoreCaseContaining(String text, Pageable pageable);

@@ -34,6 +34,7 @@ const Bookmarks: FC = (): ReactElement => {
 
     return (
         <InfiniteScroll
+            style={{overflow: "unset"}}
             dataLength={tweets.length}
             next={loadBookmarks}
             hasMore={page < pagesCount}
