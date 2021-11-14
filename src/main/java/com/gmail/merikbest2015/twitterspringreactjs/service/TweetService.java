@@ -24,6 +24,10 @@ public interface TweetService {
 
     Tweet createPoll(Long pollDateTime, List<String> choices, Tweet tweet);
 
+    Tweet updateScheduledTweet(Tweet tweetInfo);
+
+    String deleteScheduledTweets(List<Long> tweetsIds);
+
     Tweet deleteTweet(Long tweetId);
 
     List<Tweet> searchTweets(String text);

@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
+import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetDeleteRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.VoteRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetHeaderResponse;
@@ -76,6 +77,14 @@ public class TweetMapper {
     public TweetResponse createPoll(TweetRequest tweetRequest) {
         return convertToTweetResponse(tweetService.createPoll(tweetRequest.getPollDateTime(), tweetRequest.getChoices(),
                 convertToTweetEntity(tweetRequest)));
+    }
+
+    public TweetResponse updateScheduledTweet(TweetRequest tweetRequest) {
+        return convertToTweetResponse(tweetService.updateScheduledTweet(convertToTweetEntity(tweetRequest)));
+    }
+
+    public String deleteScheduledTweets(TweetDeleteRequest tweetRequest) {
+        return tweetService.deleteScheduledTweets(tweetRequest.getTweetsIds());
     }
 
     public TweetResponse deleteTweet(Long tweetId) {

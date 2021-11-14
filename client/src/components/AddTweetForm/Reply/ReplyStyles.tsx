@@ -15,6 +15,9 @@ export const useReplyStyles = makeStyles((theme: Theme) => ({
                 height: "1.2em",
             },
         },
+        "& .MuiButton-root.Mui-disabled": {
+            color: "rgb(142, 205, 247)"
+        },
         "& .MuiDivider-root": {
             marginLeft: 50,
             marginTop: 8,

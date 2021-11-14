@@ -14,11 +14,13 @@ export enum TweetsActionType {
     FETCH_ADD_TWEET = "tweets/FETCH_ADD_TWEET",
     FETCH_ADD_POLL = "tweets/FETCH_ADD_POLL",
     FETCH_ADD_SCHEDULED_TWEET = "tweets/FETCH_ADD_SCHEDULED_TWEET",
+    FETCH_UPDATE_SCHEDULED_TWEET = "tweets/FETCH_UPDATE_SCHEDULED_TWEET",
     FETCH_ADD_QUOTE_TWEET = "tweets/FETCH_ADD_QUOTE_TWEET",
     FETCH_VOTE = "tweets/FETCH_VOTE",
     FETCH_CHANGE_REPLY_TYPE = "tweets/FETCH_CHANGE_REPLY_TYPE",
     SET_UPDATED_TWEET = "tweets/SET_UPDATED_TWEET",
     FETCH_DELETE_TWEET = "tweets/FETCH_DELETE_TWEET",
+    FETCH_DELETE_SCHEDULED_TWEETS = "tweets/FETCH_DELETE_SCHEDULED_TWEETS",
     DELETE_TWEET = "tweets/DELETE_TWEET",
     FETCH_TWEETS = "tweets/FETCH_TWEETS",
     FETCH_MEDIA_TWEETS = "tweets/FETCH_MEDIA_TWEETS",
@@ -70,6 +72,11 @@ export interface FetchAddScheduledTweetActionInterface extends Action<TweetsActi
     payload: AddTweet;
 }
 
+export interface FetchUpdateScheduledTweetActionInterface extends Action<TweetsActionType> {
+    type: TweetsActionType.FETCH_UPDATE_SCHEDULED_TWEET;
+    payload: AddTweet;
+}
+
 export interface FetchAddQuoteTweetActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_ADD_QUOTE_TWEET;
     payload: AddQuoteTweet;
@@ -93,6 +100,11 @@ export interface SetUpdatedTweetActionInterface extends Action<TweetsActionType>
 export interface FetchDeleteTweetActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_DELETE_TWEET;
     payload: string;
+}
+
+export interface FetchDeleteScheduledTweetsActionInterface extends Action<TweetsActionType> {
+    type: TweetsActionType.FETCH_DELETE_SCHEDULED_TWEETS;
+    payload: { tweetsIds: number[] };
 }
 
 export interface DeleteTweetActionInterface extends Action<TweetsActionType> {

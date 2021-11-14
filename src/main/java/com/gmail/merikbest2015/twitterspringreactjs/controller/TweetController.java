@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
+import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetDeleteRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.VoteRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetHeaderResponse;
@@ -72,6 +73,16 @@ public class TweetController {
     @PostMapping("/schedule")
     public ResponseEntity<TweetResponse> createScheduledTweet(@RequestBody TweetRequest tweetRequest) {
         return ResponseEntity.ok(tweetMapper.createTweet(tweetRequest));
+    }
+
+    @PutMapping("/schedule")
+    public ResponseEntity<TweetResponse> updateScheduledTweet(@RequestBody TweetRequest tweetRequest) {
+        return ResponseEntity.ok(tweetMapper.updateScheduledTweet(tweetRequest));
+    }
+
+    @DeleteMapping("/schedule")
+    public ResponseEntity<String> deleteScheduledTweets(@RequestBody TweetDeleteRequest tweetRequest) {
+        return ResponseEntity.ok(tweetMapper.deleteScheduledTweets(tweetRequest));
     }
 
     @DeleteMapping("/{tweetId}")

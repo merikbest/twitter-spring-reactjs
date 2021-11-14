@@ -8,7 +8,7 @@ import {
     FetchAddQuoteTweetActionInterface, FetchAddScheduledTweetActionInterface,
     FetchAddTweetActionInterface,
     FetchBookmarksActionInterface,
-    FetchChangeReplyTypeActionInterface,
+    FetchChangeReplyTypeActionInterface, FetchDeleteScheduledTweetsActionInterface,
     FetchDeleteTweetActionInterface,
     FetchLikedTweetsActionInterface,
     FetchLikeTweetActionInterface,
@@ -17,7 +17,7 @@ import {
     FetchTweetsActionInterface,
     FetchTweetsByTagActionInterface,
     FetchTweetsByTextActionInterface,
-    FetchTweetsWithVideoActionInterface,
+    FetchTweetsWithVideoActionInterface, FetchUpdateScheduledTweetActionInterface,
     FetchVoteActionInterface,
     TweetsActionType
 } from "./contracts/actionTypes";
@@ -119,6 +119,14 @@ export function* fetchAddScheduledTweetRequest({payload}: FetchAddScheduledTweet
     }
 }
 
+export function* fetchUpdateScheduledTweetRequest({payload}: FetchUpdateScheduledTweetActionInterface) {
+    try {
+        yield call(TweetApi.updateScheduledTweet, payload);
+    } catch (e) {
+        yield put(setTweetsLoadingState(LoadingStatus.ERROR));
+    }
+}
+
 export function* fetchAddQuoteTweet({payload}: FetchAddQuoteTweetActionInterface) {
     try {
         yield call(TweetApi.quoteTweet, payload);
@@ -146,6 +154,14 @@ export function* fetchChangeReplyTypeRequest({payload}: FetchChangeReplyTypeActi
 export function* fetchDeleteTweetRequest({payload}: FetchDeleteTweetActionInterface) {
     try {
         yield call(TweetApi.deleteTweet, payload);
+    } catch (e) {
+        yield put(setTweetsLoadingState(LoadingStatus.ERROR));
+    }
+}
+
+export function* fetchDeleteScheduledTweetsTweetRequest({payload}: FetchDeleteScheduledTweetsActionInterface) {
+    try {
+        yield call(TweetApi.deleteScheduledTweets, payload);
     } catch (e) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }
@@ -179,10 +195,12 @@ export function* tweetsSaga() {
     yield takeLatest(TweetsActionType.FETCH_ADD_TWEET, fetchAddTweetRequest);
     yield takeLatest(TweetsActionType.FETCH_ADD_POLL, fetchAddPollRequest);
     yield takeLatest(TweetsActionType.FETCH_ADD_SCHEDULED_TWEET, fetchAddScheduledTweetRequest);
+    yield takeLatest(TweetsActionType.FETCH_UPDATE_SCHEDULED_TWEET, fetchUpdateScheduledTweetRequest);
     yield takeLatest(TweetsActionType.FETCH_ADD_QUOTE_TWEET, fetchAddQuoteTweet);
     yield takeLatest(TweetsActionType.FETCH_VOTE, fetchVoteRequest);
     yield takeLatest(TweetsActionType.FETCH_CHANGE_REPLY_TYPE, fetchChangeReplyTypeRequest);
     yield takeLatest(TweetsActionType.FETCH_DELETE_TWEET, fetchDeleteTweetRequest);
+    yield takeLatest(TweetsActionType.FETCH_DELETE_SCHEDULED_TWEETS, fetchDeleteScheduledTweetsTweetRequest);
     yield takeLatest(TweetsActionType.FETCH_LIKE_TWEET, fetchLikeTweetRequest);
     yield takeLatest(TweetsActionType.FETCH_RETWEET, fetchRetweetRequest);
     yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_TAG, fetchTweetsByTagRequest);

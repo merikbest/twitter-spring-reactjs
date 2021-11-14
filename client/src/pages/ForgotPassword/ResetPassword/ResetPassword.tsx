@@ -37,7 +37,6 @@ const ResetPassword: FC<ResetPasswordProps> = ({user}): ReactElement => {
     const onSubmit = (data: ResetPasswordFormProps): void => {
         AuthApi.passwordReset({email: user?.email!, password: data.password, password2: data.password2})
             .then((data) => {
-                console.log(data);
                 history.push("/account/forgot/password_reset_complete");
             })
             .catch((error) => console.log(error));

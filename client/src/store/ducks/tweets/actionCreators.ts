@@ -7,6 +7,7 @@ import {
     FetchAddTweetActionInterface,
     FetchBookmarksActionInterface,
     FetchChangeReplyTypeActionInterface,
+    FetchDeleteScheduledTweetsActionInterface,
     FetchDeleteTweetActionInterface,
     FetchLikedTweetsActionInterface,
     FetchLikeTweetActionInterface,
@@ -16,6 +17,7 @@ import {
     FetchTweetsByTagActionInterface,
     FetchTweetsByTextActionInterface,
     FetchTweetsWithVideoActionInterface,
+    FetchUpdateScheduledTweetActionInterface,
     FetchVoteActionInterface,
     RemoveTweetFromBookmarksActionInterface,
     ResetTweetsActionInterface,
@@ -68,6 +70,11 @@ export const fetchAddScheduledTweet = (payload: AddTweet): FetchAddScheduledTwee
     payload
 });
 
+export const fetchUpdateScheduledTweet = (payload: AddTweet): FetchUpdateScheduledTweetActionInterface => ({
+    type: TweetsActionType.FETCH_UPDATE_SCHEDULED_TWEET,
+    payload
+});
+
 export const fetchAddQuoteTweet = (payload: AddQuoteTweet): FetchAddQuoteTweetActionInterface => ({
     type: TweetsActionType.FETCH_ADD_QUOTE_TWEET,
     payload
@@ -90,6 +97,11 @@ export const setUpdatedTweet = (payload: Tweet): SetUpdatedTweetActionInterface 
 
 export const fetchDeleteTweet = (payload: string): FetchDeleteTweetActionInterface => ({
     type: TweetsActionType.FETCH_DELETE_TWEET,
+    payload
+});
+
+export const fetchDeleteScheduledTweets = (payload: { tweetsIds: number[] }): FetchDeleteScheduledTweetsActionInterface => ({
+    type: TweetsActionType.FETCH_DELETE_SCHEDULED_TWEETS,
     payload
 });
 

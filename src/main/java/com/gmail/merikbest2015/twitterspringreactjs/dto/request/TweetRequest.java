@@ -10,6 +10,7 @@ import java.util.List;
 
 @Data
 public class TweetRequest {
+    private Long id;
     private String text;
     private String addressedUsername;
     private Long addressedId;

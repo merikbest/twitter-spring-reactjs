@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<Tweet> getUserTweets(Long userId, Pageable pageable) {
         User user = userRepository.getOne(userId);
-        List<Tweet> tweets = tweetRepository.findByUserAndAddressedUsernameIsNullOrderByDateTimeDesc(user);
+        List<Tweet> tweets = tweetRepository.findByScheduledDateIsNullAndUserAndAddressedUsernameIsNullOrderByDateTimeDesc(user);
         List<Retweet> retweets = retweetRepository.findByUserOrderByRetweetDateDesc(user);
         List<Tweet> userTweets = combineTweetsArrays(tweets, retweets);
         boolean isTweetExist = userTweets.removeIf(tweet -> tweet.equals(user.getPinnedTweet()));
@@ -145,7 +145,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<Tweet> getUserMediaTweets(Long userId, Pageable pageable) {
-        return tweetRepository.findByImagesIsNotNullAndUser_IdOrderByDateTimeDesc(userId, pageable);
+        return tweetRepository.findByScheduledDateIsNullAndImagesIsNotNullAndUser_IdOrderByDateTimeDesc(userId, pageable);
     }
 
     @Override

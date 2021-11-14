@@ -14,11 +14,28 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
             },
         },
     },
+    outlinedButton: {
+        marginLeft: "auto",
+        marginRight: 12,
+        "&.MuiButton-root": {
+            padding: "4px 16px",
+            border: 0,
+            '&:hover': {
+                border: 0,
+            },
+        },
+    },
+    containedButton: {
+        marginLeft: "auto",
+        "&.MuiButton-root": {
+            padding: "4px 16px",
+        },
+    },
     content: {
         width: 598,
         overflowX: "hidden",
         padding: 0,
-        minHeight: props => props.visibleEditTweetModal ? 300 : 600,
+        minHeight: props => props.visibleEditTweetModal ? 220 : 600,
     },
     tabs: {
         borderBottom: "1px solid rgb(239, 243, 244)",
@@ -35,6 +52,10 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
     tab: {
         minWidth: 299,
         textTransform: 'none',
+    },
+    loading: {
+        marginTop: 50,
+        textAlign: 'center',
     },
     infoWrapper: {
         margin: "32px auto",
@@ -55,17 +76,21 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
         textAlign: "center",
         color: "rgb(83, 100, 113)",
     },
-    tweetWrapper: {
+    tweetContainer: {
         padding: "12px 16px",
         borderBottom: "1px solid rgb(239, 243, 244)",
+        display: "flex",
         "&:hover": {
             cursor: "pointer",
             backgroundColor: "rgb(247, 249, 249)"
         },
     },
+    tweetWrapper: {
+        width: "100%"
+    },
     tweetInfo: {
         display: "flex",
-        justifyContent: "space-between"
+        justifyContent: "flex-start"
     },
     tweetText: {
         fontSize: 15,
@@ -76,6 +101,7 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
     imageWrapper: {
         width: 75,
         height: 75,
+        marginLeft: "auto",
         "& img": {
             width: "100%",
         },
@@ -96,6 +122,39 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
         color: "rgb(83, 100, 113)",
     },
     addTweetWrapper: {
-      padding: "4px 16px",
+      padding: "4px 16px 20px 16px",
+    },
+    footer: {
+        width: "100%",
+        padding: 4,
+        bottom: 0,
+        position: "absolute",
+        display: "flex",
+        justifyContent: "space-between",
+        borderTop: "1px solid rgb(239, 243, 244)",
+    },
+    footerOutlinedButton: {
+        "&.MuiButton-root": {
+            padding: "4px 16px",
+            border: 0,
+            '&:hover': {
+                border: 0,
+            },
+        },
+    },
+    footerDeleteButton: {
+        "&.MuiButton-root": {
+            color: "rgb(244, 33, 46)",
+            padding: "4px 16px",
+            border: 0,
+            '&:hover': {
+                backgroundColor: "rgba(244, 33, 46, 0.1)",
+                border: 0,
+            },
+            "&.Mui-disabled": {
+                color: "rgb(249, 144, 150)",
+                border: "none",
+            },
+        },
     },
 }));

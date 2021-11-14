@@ -1,6 +1,7 @@
 import React, {FC, ReactElement, ReactNode} from 'react';
 import {Container, Grid, Typography} from '@material-ui/core';
 import {useLocation} from "react-router-dom";
+import {getYear} from "date-fns";
 
 import SideMenu from "../components/SideMenu/SideMenu";
 import Tags from "../components/Tags/Tags";
@@ -74,7 +75,7 @@ export const Layout: FC<Layout> = ({children}): ReactElement => {
                                                 More {EditIcon}
                                             </Typography>
                                             <Typography component={"span"}>
-                                                © 2021 Twitter, Inc.
+                                                {`© ${getYear(Date.now())} Twitter, Inc.`}
                                             </Typography>
                                         </div>
                                     </div>

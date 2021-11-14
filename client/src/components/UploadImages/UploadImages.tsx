@@ -37,7 +37,6 @@ const UploadImages: FC<UploadImageProps> = (
             if (file) {
                 const fileObj = new Blob([file]);
                 onChangeImages((prev) => [
-                    ...prev,
                     {
                         src: URL.createObjectURL(fileObj),
                         file,

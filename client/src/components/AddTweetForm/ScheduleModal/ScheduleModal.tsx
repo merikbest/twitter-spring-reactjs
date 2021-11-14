@@ -81,6 +81,10 @@ const ScheduleModal: FC<ScheduleModalProps> = (
         setMinute(event.target.value as string);
     };
 
+    const showYear = (count: number): string => {
+        return String(getYear(Date.now()) + count);
+    };
+
     const showDays = (): ReactNode[] => {
         let days = [];
 
@@ -243,9 +247,15 @@ const ScheduleModal: FC<ScheduleModalProps> = (
                                 onChange={changeYear}
                                 label="Year"
                             >
-                                <option value={"2021"}>2021</option>
-                                <option value={"2022"}>2022</option>
-                                <option value={"2023"}>2023</option>
+                                <option value={showYear(0)}>
+                                    {showYear(0)}
+                                </option>
+                                <option value={showYear(1)}>
+                                    {showYear(1)}
+                                </option>
+                                <option value={showYear(2)}>
+                                    {showYear(2)}
+                                </option>
                             </ScheduleModalSelect>
                         </FormControl>
                         {isValidSelectedDate && (

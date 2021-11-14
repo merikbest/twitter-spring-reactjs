@@ -12,8 +12,10 @@ import EmojiConvertor from 'emoji-js';
 
 import {
     fetchAddPoll,
-    fetchAddQuoteTweet, fetchAddScheduledTweet,
+    fetchAddQuoteTweet,
+    fetchAddScheduledTweet,
     fetchAddTweet,
+    fetchUpdateScheduledTweet,
 } from "../../store/ducks/tweets/actionCreators";
 import {selectIsTweetsLoading} from "../../store/ducks/tweets/selectors";
 import {Image, ReplyType, Tweet} from '../../store/ducks/tweets/contracts/state';
@@ -118,6 +120,13 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
         if (unsentTweet) {
             setText(unsentTweet.text);
             setSelectedScheduleDate(new Date(unsentTweet.scheduledDate!));
+            if (unsentTweet.images?.length !== 0) {
+                const newImages = [...images];
+                const newImage = {...images[0]};
+                newImage.src = unsentTweet.images![0].src;
+                newImages[0] = newImage;
+                setImages(newImages);
+            }
         }
     }, [unsentTweet]);
 
@@ -153,13 +162,21 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
                 choices: choices,
                 replyType: replyType
             }));
-        } else if (selectedScheduleDate !== null) {
+        } else if (selectedScheduleDate !== null && unsentTweet === undefined) {
             dispatch(fetchAddScheduledTweet({
                 text: textConverter(),
                 images: result,
                 replyType: replyType,
                 scheduledDate: selectedScheduleDate
             }));
+        } else if (unsentTweet) {
+            dispatch(fetchUpdateScheduledTweet({
+                id: unsentTweet?.id,
+                text: textConverter(),
+                images: result,
+                replyType: replyType,
+            }));
+            if (onCloseModal) onCloseModal();
         } else {
             dispatch(fetchAddTweet({
                 text: textConverter(),
@@ -168,7 +185,11 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
             }));
         }
 
-        setSnackBarMessage("Your tweet was added.");
+        setSnackBarMessage(selectedScheduleDate ? (
+            `Your Tweet will be sent on ${formatScheduleDate(selectedScheduleDate)}`
+        ) : (
+            "Your tweet was sent."
+        ));
         setOpenSnackBar(true);
         setText('');
         setImages([]);
@@ -197,9 +218,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
         setText("");
         setImages([]);
 
-        if (onCloseModal) {
-            onCloseModal();
-        }
+        if (onCloseModal) onCloseModal();
     };
 
     const handleClickReplyTweet = async (): Promise<void> => {
@@ -225,9 +244,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
         setText("");
         setImages([]);
 
-        if (onCloseModal) {
-            onCloseModal();
-        }
+        if (onCloseModal) onCloseModal();
     };
 
     const handleOpenPopup = (event: MouseEvent<HTMLDivElement>): void => {
@@ -371,7 +388,11 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
                 visiblePoll={visiblePoll}
                 onClose={onClosePoll}
             />
-            <Reply replyType={replyType} setReplyType={setReplyType}/>
+            <Reply
+                replyType={replyType}
+                setReplyType={setReplyType}
+                isUnsentTweet={!!unsentTweet}
+            />
             <div className={classes.footer}>
                 <div className={classes.footerWrapper}>
                     <UploadImages
@@ -452,7 +473,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
                         </>
                     )}
                     <Button
-                        onClick={(buttonName === "Tweet") ?
+                        onClick={(buttonName === "Tweet" || "Schedule") ?
                             (quoteTweet ? handleClickQuoteTweet : handleClickAddTweet) : handleClickReplyTweet}
                         disabled={
                             visiblePoll ? (
