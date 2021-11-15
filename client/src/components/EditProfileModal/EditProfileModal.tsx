@@ -4,8 +4,6 @@ import {Controller, useForm} from "react-hook-form";
 import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
 import DialogContent from "@material-ui/core/DialogContent";
 import Dialog from "@material-ui/core/Dialog";
 import {Avatar, Button} from "@material-ui/core";
@@ -21,6 +19,7 @@ import UploadProfileImage from "./UploadProfileImage";
 import {useEditProfileModalStyles} from "./EditProfileModalStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {updatedUserData} from "../../store/ducks/userProfile/actionCreators";
+import CloseButton from "../CloseButton/CloseButton";
 
 interface EditProfileModalProps {
     visible?: boolean;
@@ -73,12 +72,10 @@ const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}): ReactE
     }
 
     return (
-        <Dialog open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
+        <Dialog className={classes.dialog} open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <DialogTitle id="form-dialog-title">
-                    <IconButton onClick={onClose} color="secondary" aria-label="close">
-                        <CloseIcon style={{fontSize: 26}} color="secondary"/>
-                    </IconButton>
+                    <CloseButton onClose={onClose}/>
                     Edit Profile
                     <Button
                         className={classes.button}

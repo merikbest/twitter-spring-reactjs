@@ -3,14 +3,9 @@ import {makeStyles, Theme} from "@material-ui/core";
 export const useTweetAnalyticsModalStyles = makeStyles<Theme>((theme) => ({
     container: {
         "& .MuiDialogTitle-root": {
+            padding: "5px 15px",
             margin: 0,
             borderBottom: "1px solid rgb(239, 243, 244)",
-            "& .MuiIconButton-root": {
-                marginRight: 15,
-                "& .MuiSvgIcon-root": {
-                    fontSize: 26
-                },
-            },
         },
         "& .MuiDialogContent-root": {
             width: 597,

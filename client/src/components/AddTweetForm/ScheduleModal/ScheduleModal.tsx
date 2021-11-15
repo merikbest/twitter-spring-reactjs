@@ -1,14 +1,13 @@
 import React, {ChangeEvent, FC, ReactElement, ReactNode, useState} from 'react';
 import {addDays, getDate, getDaysInMonth, getMonth, getYear, isBefore} from "date-fns";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
 import {Button, Dialog, DialogContent, FormControl, InputLabel, Typography} from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 import {useScheduleModalStyles} from "./ScheduleModalStyles";
 import {ScheduleIcon} from "../../../icons";
-import {ScheduleModalSelect} from "./ScheduleModalSelect";
+import {FilledSelect} from "../../FilledSelect/FilledSelect";
 import {formatScheduleDate} from "../../../util/formatDate";
+import CloseButton from "../../CloseButton/CloseButton";
 
 interface ScheduleModalProps {
     visible?: boolean;
@@ -138,9 +137,7 @@ const ScheduleModal: FC<ScheduleModalProps> = (
             aria-labelledby="form-dialog-title"
         >
             <DialogTitle id="form-dialog-title">
-                <IconButton onClick={onClose} color="secondary" aria-label="close">
-                    <CloseIcon style={{fontSize: 26}} color="secondary"/>
-                </IconButton>
+                <CloseButton onClose={onClose}/>
                 Schedule
                 <div className={classes.buttonWrapper}>
                     {selectedScheduleDate && (
@@ -185,7 +182,7 @@ const ScheduleModal: FC<ScheduleModalProps> = (
                             <InputLabel htmlFor="select-month">
                                 Month
                             </InputLabel>
-                            <ScheduleModalSelect
+                            <FilledSelect
                                 variant="filled"
                                 style={{width: 273, marginRight: 12}}
                                 labelId="select-month"
@@ -207,13 +204,13 @@ const ScheduleModal: FC<ScheduleModalProps> = (
                                 <option value={"10"}>October</option>
                                 <option value={"11"}>November</option>
                                 <option value={"12"}>December</option>
-                            </ScheduleModalSelect>
+                            </FilledSelect>
                         </FormControl>
                         <FormControl variant="filled" error={isValidSelectedDate}>
                             <InputLabel htmlFor="select-day">
                                 Day
                             </InputLabel>
-                            <ScheduleModalSelect
+                            <FilledSelect
                                 variant="filled"
                                 style={{width: 123, marginRight: 12}}
                                 labelId="select-day"
@@ -231,13 +228,13 @@ const ScheduleModal: FC<ScheduleModalProps> = (
                                     </>
                                 )}
                                 {(daysCount === 31) && (<option value={"31"}>31</option>)}
-                            </ScheduleModalSelect>
+                            </FilledSelect>
                         </FormControl>
                         <FormControl variant="filled" error={isValidSelectedDate}>
                             <InputLabel htmlFor="select-year">
                                 Year
                             </InputLabel>
-                            <ScheduleModalSelect
+                            <FilledSelect
                                 variant="filled"
                                 style={{width: 144,}}
                                 labelId="select-year"
@@ -256,7 +253,7 @@ const ScheduleModal: FC<ScheduleModalProps> = (
                                 <option value={showYear(2)}>
                                     {showYear(2)}
                                 </option>
-                            </ScheduleModalSelect>
+                            </FilledSelect>
                         </FormControl>
                         {isValidSelectedDate && (
                             <Typography component={"div"} className={classes.errorText}>
@@ -272,7 +269,7 @@ const ScheduleModal: FC<ScheduleModalProps> = (
                             <InputLabel htmlFor="select-hour">
                                 Hour
                             </InputLabel>
-                            <ScheduleModalSelect
+                            <FilledSelect
                                 variant="filled"
                                 style={{width: 179, marginRight: 12}}
                                 labelId="select-hour"
@@ -283,13 +280,13 @@ const ScheduleModal: FC<ScheduleModalProps> = (
                                 label="Hour"
                             >
                                 {showHour()}
-                            </ScheduleModalSelect>
+                            </FilledSelect>
                         </FormControl>
                         <FormControl variant="filled" error={isValidSelectedDate}>
                             <InputLabel htmlFor="select-minute">
                                 Minute
                             </InputLabel>
-                            <ScheduleModalSelect
+                            <FilledSelect
                                 variant="filled"
                                 style={{width: 179, marginRight: 12}}
                                 labelId="select-minute"
@@ -300,7 +297,7 @@ const ScheduleModal: FC<ScheduleModalProps> = (
                                 label="Minute"
                             >
                                 {showMinute()}
-                            </ScheduleModalSelect>
+                            </FilledSelect>
                         </FormControl>
                     </div>
                     <div className={classes.dateWrapper}>

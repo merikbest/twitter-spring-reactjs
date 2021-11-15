@@ -13,10 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,7 +28,13 @@ public class ChatServiceImpl implements ChatService {
     public List<Chat> getUserChats() {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());
-        return user.getChats();
+        List<Chat> chats = user.getChats();
+        chats.forEach(chat -> {
+            if (chat.getParticipants().get(1).getId().equals(user.getId())) {
+                Collections.swap(chat.getParticipants(), 1, 0);
+            }
+        });
+        return chats;
     }
 
     @Override
@@ -40,7 +43,7 @@ public class ChatServiceImpl implements ChatService {
         User user = userRepository.findByEmail(principal.getName());
         User participant = userRepository.getOne(userId);
         Optional<Chat> chatWithParticipant = user.getChats().stream()
-                .filter(chat -> chat.getParticipants().get(1).getId().equals(participant.getId()))
+                .filter(chat -> chat.getParticipants().get(0).getId().equals(participant.getId()))
                 .findFirst();
 
         if (chatWithParticipant.isEmpty()) {
@@ -92,7 +95,7 @@ public class ChatServiceImpl implements ChatService {
         chatMessage.setTweet(tweet);
         users.forEach(user -> {
             Optional<Chat> chatWithParticipant = author.getChats().stream()
-                    .filter(c -> c.getParticipants().get(1).getId().equals(user.getId()))
+                    .filter(c -> c.getParticipants().get(0).getId().equals(user.getId()))
                     .findFirst();
 
             if (chatWithParticipant.isEmpty()) {

@@ -7,6 +7,7 @@ export enum UserProfileActionsType {
     SET_USER = 'userProfile/SET_USER',
     UPDATE_USER_DATA = "userProfile/UPDATE_USER_DATA",
     FETCH_USER  = 'userProfile/FETCH_USER',
+    RESET_USER  = 'userProfile/RESET_USER',
     FOLLOW  = 'userProfile/FOLLOW',
     UNFOLLOW  = 'userProfile/UNFOLLOW',
     FOLLOW_USER  = 'userProfile/FOLLOW_USER',
@@ -27,6 +28,10 @@ export interface UpdateUserDataActionInterface extends Action<UserProfileActions
 export interface FetchUserProfileActionInterface extends Action<UserProfileActionsType> {
     type: UserProfileActionsType.FETCH_USER;
     payload: string;
+}
+
+export interface ResetUserProfileActionInterface extends Action<UserProfileActionsType> {
+    type: UserProfileActionsType.RESET_USER;
 }
 
 export interface FollowProfileActionInterface extends Action<UserProfileActionsType> {
@@ -56,6 +61,7 @@ export interface SetUserProfileLoadingStatusActionInterface extends Action<UserP
 
 export type UserProfileActions =
     | SetUserProfileActionInterface
+    | ResetUserProfileActionInterface
     | FollowProfileActionInterface
     | UnfollowProfileActionInterface
     | SetUserProfileLoadingStatusActionInterface;

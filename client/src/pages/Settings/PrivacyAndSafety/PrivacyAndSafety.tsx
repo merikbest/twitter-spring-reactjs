@@ -37,7 +37,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
             </div>
             <div className={classes.listWrapper}>
                 <List component="nav" aria-label="main mailbox folders">
-                    <Link to={"/"}>
+                    <Link to={"/settings/privacy_and_safety/audience"}>
                         <ListItem>
                             <div className={classes.icon}>
                                 {AudienceIcon}

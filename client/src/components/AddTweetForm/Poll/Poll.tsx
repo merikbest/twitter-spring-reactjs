@@ -5,7 +5,7 @@ import IconButton from "@material-ui/core/IconButton";
 
 import {usePollStyles} from "./PollStyles";
 import PollInput from "./PollInput/PollInput";
-import {PollSelect} from "./PollSelect/PollSelect";
+import {FilledSelect} from "../../FilledSelect/FilledSelect";
 
 interface PollProps {
     choice1: string;
@@ -121,11 +121,12 @@ const Poll: FC<PollProps> = (
                 <div className={classes.pollLengthTitle}>
                     Poll length
                 </div>
-                <FormControl variant="outlined">
+                <FormControl variant="filled">
                     <InputLabel variant="filled" htmlFor="select-days">
                         Days
                     </InputLabel>
-                    <PollSelect
+                    <FilledSelect
+                        variant="filled"
                         className={classes.pollSelect}
                         style={{width: 140}}
                         labelId="select-days"
@@ -135,13 +136,14 @@ const Poll: FC<PollProps> = (
                         onChange={changeDay}
                     >
                         {showOptions(7)}
-                    </PollSelect>
+                    </FilledSelect>
                 </FormControl>
-                <FormControl variant="outlined">
+                <FormControl variant="filled">
                     <InputLabel variant="filled" htmlFor="select-hours">
                         Hours
                     </InputLabel>
-                    <PollSelect
+                    <FilledSelect
+                        variant="filled"
                         className={classes.pollSelect}
                         style={{width: 149}}
                         labelId="select-hours"
@@ -151,13 +153,14 @@ const Poll: FC<PollProps> = (
                         onChange={changeHour}
                     >
                         {showOptions(23)}
-                    </PollSelect>
+                    </FilledSelect>
                 </FormControl>
-                <FormControl variant="outlined">
+                <FormControl variant="filled">
                     <InputLabel variant="filled" htmlFor="select-minutes">
                         Minutes
                     </InputLabel>
-                    <PollSelect
+                    <FilledSelect
+                        variant="filled"
                         className={classes.pollSelect}
                         style={{width: 150, marginRight: 0}}
                         labelId="select-minutes"
@@ -167,7 +170,7 @@ const Poll: FC<PollProps> = (
                         onChange={changeMinute}
                     >
                         {showOptions(59)}
-                    </PollSelect>
+                    </FilledSelect>
                 </FormControl>
             </Paper>
             <Paper onClick={onClosePool} className={classes.footer} variant="outlined">

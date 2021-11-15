@@ -15,6 +15,11 @@ export const userProfileReducer = produce((draft: Draft<UserProfileState>, actio
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
+        case UserProfileActionsType.RESET_USER:
+            draft.user = undefined;
+            draft.loadingState = LoadingStatus.SUCCESS;
+            break;
+
         case UserProfileActionsType.FOLLOW:
             if (draft.user?.following) {
                 draft.user.following = [...draft.user.following, action.payload];

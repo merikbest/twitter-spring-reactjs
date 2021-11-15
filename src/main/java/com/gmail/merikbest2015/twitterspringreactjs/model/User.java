@@ -2,7 +2,6 @@ package com.gmail.merikbest2015.twitterspringreactjs.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -57,6 +56,12 @@ public class User {
 
     @Column(name = "tweet_count", columnDefinition = "int default 0")
     private Long tweetCount;
+
+    @Column(name = "media_tweet_count", columnDefinition = "int default 0")
+    private Long mediaTweetCount;
+
+    @Column(name = "like_count", columnDefinition = "int default 0")
+    private Long likeCount;
 
     @Column(name = "notifications_count", columnDefinition = "int default 0")
     private Long notificationsCount;

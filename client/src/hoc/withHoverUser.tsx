@@ -35,7 +35,7 @@ export const withHoverUser = <T extends object>(
     const [delayHandler, setDelayHandler] = useState<any>(null);
 
     const handleHoverPopper = (): void => {
-        setDelayHandler(setTimeout(() => setVisiblePopperWindow(true), 337));
+        setDelayHandler(setTimeout(() => setVisiblePopperWindow(true), 1337));
     };
 
     const handleLeavePopper = (): void => {

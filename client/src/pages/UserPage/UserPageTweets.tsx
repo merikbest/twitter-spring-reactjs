@@ -1,5 +1,5 @@
 import React, {FC, ReactElement, useState} from 'react';
-import {Button, Hidden, Typography} from "@material-ui/core";
+import {Button, CircularProgress, Hidden, Typography} from "@material-ui/core";
 
 import TweetComponent from '../../components/TweetComponent/TweetComponent';
 import {useUserPageStyles} from "./UserPageStyles";
@@ -8,6 +8,7 @@ import {Tweet} from "../../store/ducks/tweets/contracts/state";
 
 interface UserPageTweetsProps {
     tweets?: Tweet[];
+    isTweetsLoading: boolean;
     activeTab: number;
     userProfileId?: number;
     myProfileId?: number;
@@ -17,6 +18,7 @@ interface UserPageTweetsProps {
 const UserPageTweets: FC<UserPageTweetsProps> = (
     {
         tweets,
+        isTweetsLoading,
         activeTab,
         userProfileId,
         myProfileId,
@@ -35,7 +37,7 @@ const UserPageTweets: FC<UserPageTweetsProps> = (
     };
 
     const renderTweets = () => {
-        if (tweets?.length === 0 && activeTab === 0) {
+        if (tweets?.length === 0 && activeTab === 0 && !isTweetsLoading) {
             return (
                 <div className={classes.textWrapper}>
                     <Typography className={classes.topic}>
@@ -61,7 +63,7 @@ const UserPageTweets: FC<UserPageTweetsProps> = (
                     ) : null}
                 </div>
             )
-        } else if (tweets?.length === 0 && activeTab === 1) {
+        } else if (tweets?.length === 0 && activeTab === 1 && !isTweetsLoading) {
             return (
                 <div className={classes.textWrapper}>
                     <Typography className={classes.topic}>
@@ -80,7 +82,7 @@ const UserPageTweets: FC<UserPageTweetsProps> = (
                     </Typography>
                 </div>
             )
-        } else if (tweets?.length === 0 && activeTab === 2) {
+        } else if (tweets?.length === 0 && activeTab === 2 && !isTweetsLoading) {
             return (
                 <div className={classes.textWrapper}>
                     <Typography className={classes.topic}>
@@ -106,7 +108,7 @@ const UserPageTweets: FC<UserPageTweetsProps> = (
                     ) : null}
                 </div>
             )
-        } else if (tweets?.length === 0 && activeTab === 3) {
+        } else if (tweets?.length === 0 && activeTab === 3 && !isTweetsLoading) {
             return (
                 <div className={classes.textWrapper}>
                     <Typography className={classes.topic}>
@@ -126,14 +128,23 @@ const UserPageTweets: FC<UserPageTweetsProps> = (
                 </div>
             )
         } else {
-            return tweets?.map((tweet) => (
-                <TweetComponent
-                    item={tweet}
-                    key={tweet.id}
-                    userProfileId={userProfileId}
-                    activeTab={activeTab}
-                />
-            ))
+            return (
+                <>
+                    {tweets?.map((tweet) => (
+                        <TweetComponent
+                            item={tweet}
+                            key={tweet.id}
+                            userProfileId={userProfileId}
+                            activeTab={activeTab}
+                        />
+                    ))}
+                    {isTweetsLoading && (
+                        <div className={classes.tweetsCentred}>
+                            <CircularProgress/>
+                        </div>
+                    )}
+                </>
+            );
         }
     };
 

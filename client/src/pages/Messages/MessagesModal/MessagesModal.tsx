@@ -14,6 +14,7 @@ import MessagesModalUser from './MessagesModalUser/MessagesModalUser';
 import {User} from "../../../store/ducks/user/contracts/state";
 import {createChat} from "../../../store/ducks/chats/actionCreators";
 import {SearchIcon} from "../../../icons";
+import CloseButton from "../../../components/CloseButton/CloseButton";
 
 interface MessagesModalProps {
     visible?: boolean;
@@ -61,10 +62,8 @@ const MessagesModal: FC<MessagesModalProps> = ({visible, onClose}): ReactElement
     return (
         <Dialog open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title" className={classes.header}>
-                <IconButton onClick={onClose} color="secondary" aria-label="close">
-                    <CloseIcon color="secondary"/>
-                </IconButton>
-                <span className={classes.headerMessage}>New message</span>
+                <CloseButton onClose={onClose}/>
+                New message
                 <Button
                     onClick={handleClickAddUserToChat}
                     className={classes.button}

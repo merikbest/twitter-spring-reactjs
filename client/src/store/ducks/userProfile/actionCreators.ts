@@ -2,7 +2,7 @@ import {User} from "../user/contracts/state";
 import {
     FetchUserProfileActionInterface,
     FollowProfileActionInterface,
-    FollowUserProfileActionInterface,
+    FollowUserProfileActionInterface, ResetUserProfileActionInterface,
     SetUserProfileActionInterface,
     SetUserProfileLoadingStatusActionInterface,
     UnfollowProfileActionInterface,
@@ -25,6 +25,10 @@ export const updatedUserData = (payload: User): UpdateUserDataActionInterface =>
 export const fetchUserProfile = (payload: string): FetchUserProfileActionInterface => ({
     type: UserProfileActionsType.FETCH_USER,
     payload
+});
+
+export const resetUserProfile = (): ResetUserProfileActionInterface => ({
+    type: UserProfileActionsType.RESET_USER,
 });
 
 export const followProfile = (payload: User): FollowProfileActionInterface => ({

@@ -13,6 +13,7 @@ import {Image} from "../../../store/ducks/tweets/contracts/state";
 import CreateListsModalInput from "./CreateListsModalInput/CreateListsModalInput";
 import {createList} from "../../../store/ducks/lists/actionCreators";
 import {wallpapers} from "../../../util/wallpapers";
+import CloseButton from "../../../components/CloseButton/CloseButton";
 
 interface CreateListsModalProps {
     visible?: boolean;
@@ -57,12 +58,10 @@ const CreateListsModal: FC<CreateListsModalProps> = ({visible, onClose}): ReactE
     }
 
     return (
-        <Dialog open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
+        <Dialog className={classes.dialog} open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
             <form onSubmit={onSubmit}>
                 <DialogTitle id="form-dialog-title">
-                    <IconButton onClick={onClose} color="secondary" aria-label="close">
-                        <CloseIcon style={{fontSize: 26}} color="secondary"/>
-                    </IconButton>
+                    <CloseButton onClose={onClose}/>
                     Create a new List
                     <Button
                         className={classes.button}

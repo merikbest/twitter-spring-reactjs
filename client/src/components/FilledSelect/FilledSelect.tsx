@@ -1,9 +1,9 @@
 import React from "react";
 import {InputAdornment, Select, SelectProps, styled} from "@material-ui/core";
 
-import {ArrowBottomIcon} from "../../../icons";
+import {ArrowBottomIcon} from "../../icons";
 
-export const ScheduleModalSelect = styled((props: SelectProps) => (
+export const FilledSelect = styled((props: SelectProps) => (
     <Select
         {...props}
         endAdornment={
@@ -80,5 +80,4 @@ export const ScheduleModalSelect = styled((props: SelectProps) => (
             },
         },
     },
-
 }));

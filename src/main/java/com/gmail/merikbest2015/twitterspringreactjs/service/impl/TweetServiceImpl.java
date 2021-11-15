@@ -83,10 +83,15 @@ public class TweetServiceImpl implements TweetService {
         Principal principal = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(principal.getName());
         tweet.setUser(user);
-        parseMetadataFromURL(tweet); // find metadata from url
+        boolean isMediaTweetCreated = parseMetadataFromURL(tweet); // find metadata from url
         Tweet createdTweet = tweetRepository.save(tweet);
+
+        if (isMediaTweetCreated || !createdTweet.getImages().isEmpty()) {
+            user.setMediaTweetCount(user.getMediaTweetCount() + 1);
+        } else {
+            user.setTweetCount(user.getTweetCount() + 1);
+        }
         user.getTweets().add(createdTweet);
-        user.setTweetCount(user.getTweetCount() + 1);
         userRepository.save(user);
         parseHashtagInText(tweet); // find hashtag in text
         return createdTweet;
@@ -231,10 +236,12 @@ public class TweetServiceImpl implements TweetService {
         if (likedTweet.isPresent()) {
             likedTweets.remove(likedTweet.get());
             likeTweetRepository.delete(likedTweet.get());
+            user.setLikeCount(user.getLikeCount() - 1);
         } else {
             LikeTweet newLikedTweet = new LikeTweet();
             newLikedTweet.setTweet(tweet);
             newLikedTweet.setUser(user);
+            user.setLikeCount(user.getLikeCount() + 1);
             likeTweetRepository.save(newLikedTweet);
             likedTweets.add(newLikedTweet);
         }
@@ -334,11 +341,11 @@ public class TweetServiceImpl implements TweetService {
                 tweet.getUser().setNotificationsCount(tweet.getUser().getNotificationsCount() + 1);
                 List<Notification> notifications = tweet.getUser().getNotifications();
                 notifications.add(newNotification);
-                userRepository.save(user);
                 return newNotification;
             }
             tweetRepository.save(tweet);
         }
+        userRepository.save(user);
         return notification;
     }
 
@@ -374,7 +381,7 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @SneakyThrows
-    private void parseMetadataFromURL(Tweet tweet) {
+    private boolean parseMetadataFromURL(Tweet tweet) {
         Pattern urlRegex = Pattern.compile("https?:\\/\\/?[\\w\\d\\._\\-%\\/\\?=&#]+", Pattern.CASE_INSENSITIVE);
         Pattern imgRegex = Pattern.compile("\\.(jpeg|jpg|gif|png)$", Pattern.CASE_INSENSITIVE);
         Pattern youTubeUrlRegex = Pattern.compile("(?<=watch\\?v=|/videos/|embed\\/|youtu.be\\/|\\/v\\/|\\/e\\/|watch\\?v%3D|watch\\?feature=player_embedded&v=|%2Fvideos%2F|embed%\u200C\u200B2F|youtu.be%2F|%2Fv%2F)[^#\\&\\?\\n]*", Pattern.CASE_INSENSITIVE);
@@ -429,8 +436,10 @@ public class TweetServiceImpl implements TweetService {
                 }
                 tweet.setLinkTitle(videoTitle);
                 tweet.setLinkCover(videoCoverImage);
+                return true;
             }
         }
+        return false;
     }
 
     private String getContent(Element element) {

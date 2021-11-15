@@ -5,12 +5,9 @@ export const useEditListModalStyles = makeStyles((theme: Theme) => ({
         "& .MuiDialogTitle-root": {
             marginBottom: 0,
         },
-        "& .MuiIconButton-root": {
-            marginRight: 15,
-        },
     },
     content: {
-        height: 579,
+        height: 580,
         width: 598,
         padding: "0px 0px",
         overflowX: "hidden",

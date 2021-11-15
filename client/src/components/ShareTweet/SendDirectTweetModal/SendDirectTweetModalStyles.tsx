@@ -8,9 +8,6 @@ export const useSendDirectTweetModalStyles = makeStyles((theme: Theme) => ({
             fontSize: 26,
         },
     },
-    headerMessage: {
-        marginLeft: 15,
-    },
     button: {
         marginLeft: "auto",
         height: 30,

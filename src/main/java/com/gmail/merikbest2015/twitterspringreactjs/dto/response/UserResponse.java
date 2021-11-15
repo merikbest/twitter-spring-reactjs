@@ -18,6 +18,8 @@ public class UserResponse {
     private String birthday;
     private LocalDateTime registrationDate;
     private Long tweetCount;
+    private Long mediaTweetCount;
+    private Long likeCount;
     private Long notificationsCount;
     private CommonTweetResponse pinnedTweet;
     private List<BookmarkResponse> bookmarks;

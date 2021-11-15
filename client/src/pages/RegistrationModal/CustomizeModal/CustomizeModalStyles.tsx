@@ -45,11 +45,13 @@ export const useCustomizeModalStyles = makeStyles((theme: Theme) => ({
         },
     },
     link: {
+        textDecoration: "none",
         margin: "16px 0 32px 0",
         fontSize: 14,
         color: "rgb(27, 149, 224)",
         "&:hover": {
             cursor: "pointer",
+            textDecoration: "underline",
         },
     },
     buttonWrapper: {

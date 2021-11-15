@@ -4,8 +4,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import Dialog from "@material-ui/core/Dialog";
 import {Avatar, Typography} from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
-import IconButton from "@material-ui/core/IconButton";
 
 import {useReplyModalStyles} from "./ReplyModalStyles";
 import {formatDate} from "../../util/formatDate";
@@ -14,6 +12,7 @@ import {User} from "../../store/ducks/user/contracts/state";
 import {AddTweetForm} from "../AddTweetForm/AddTweetForm";
 import {textFormatter} from "../../util/textFormatter";
 import {Image} from "../../store/ducks/tweets/contracts/state";
+import CloseButton from "../CloseButton/CloseButton";
 
 interface ReplyModalProps {
     user: User;
@@ -51,9 +50,7 @@ const ReplyModal: FC<ReplyModalProps> = (
             aria-labelledby="form-dialog-title"
         >
             <DialogTitle id="form-dialog-title">
-                <IconButton onClick={onClose} color="secondary" aria-label="close">
-                    <CloseIcon style={{fontSize: 26}} color="secondary"/>
-                </IconButton>
+                <CloseButton onClose={onClose}/>
             </DialogTitle>
             <DialogContent className={classes.container}>
                 <div className={classes.modalWrapper}>

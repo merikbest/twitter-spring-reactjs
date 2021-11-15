@@ -1,7 +1,5 @@
 import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
-import {Dialog, DialogTitle, DialogContent, Typography, Button, CircularProgress, Checkbox} from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
+import {Button, Checkbox, CircularProgress, Dialog, DialogContent, DialogTitle, Typography} from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
@@ -11,6 +9,7 @@ import {TweetApi} from "../../../services/api/tweetApi";
 import {ScheduleIcon} from "../../../icons";
 import {formatScheduleDate} from "../../../util/formatDate";
 import {AddTweetForm} from "../AddTweetForm";
+import CloseButton from "../../CloseButton/CloseButton";
 
 interface UnsentTweetsModalProps {
     visible?: boolean;
@@ -113,13 +112,7 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
             aria-labelledby="form-dialog-title"
         >
             <DialogTitle id="form-dialog-title">
-                <IconButton
-                    onClick={!visibleEditTweetModal ? onClose : onCloseEditTweetModal}
-                    color="secondary"
-                    aria-label="close"
-                >
-                    <CloseIcon style={{fontSize: 26}} color="secondary"/>
-                </IconButton>
+                <CloseButton onClose={!visibleEditTweetModal ? onClose : onCloseEditTweetModal}/>
                 {!visibleEditTweetModal && "Unsent Tweets"}
                 {visibleEditTweetModal ? (
                     <Button

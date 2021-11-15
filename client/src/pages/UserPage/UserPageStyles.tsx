@@ -146,6 +146,12 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         marginTop: 12,
         lineHeight: "20px",
     },
+    skeletonDetails: {
+        "& .MuiSkeleton-root": {
+            display: "inline-block",
+            marginRight: 20,
+        },
+    },
     details: {
         lineHeight: "20px",
         "& b": {

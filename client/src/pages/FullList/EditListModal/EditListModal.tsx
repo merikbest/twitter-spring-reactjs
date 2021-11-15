@@ -2,8 +2,6 @@ import React, {ChangeEvent, FC, ReactElement, useState} from 'react';
 import {useDispatch} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {Button, Checkbox, Dialog, DialogContent, DialogTitle, Typography} from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
-import IconButton from "@material-ui/core/IconButton";
 import {Controller, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -19,6 +17,7 @@ import DeleteListModal from "./DeleteListModal/DeleteListModal";
 import {deleteList, editList} from "../../../store/ducks/list/actionCreators";
 import {Image} from "../../../store/ducks/tweets/contracts/state";
 import {uploadImage} from "../../../util/uploadImage";
+import CloseButton from "../../../components/CloseButton/CloseButton";
 
 interface EditListModalProps {
     list: Lists;
@@ -104,9 +103,7 @@ const EditListModal: FC<EditListModalProps> = ({list, visible, onClose}): ReactE
         <Dialog open={visible} onClose={onClose} className={classes.dialog} aria-labelledby="form-dialog-title">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <DialogTitle id="form-dialog-title">
-                    <IconButton onClick={onClose} color="secondary" aria-label="close">
-                        <CloseIcon style={{fontSize: 26}} color="secondary"/>
-                    </IconButton>
+                    <CloseButton onClose={onClose}/>
                     Edit List
                     <Button
                         className={classes.button}

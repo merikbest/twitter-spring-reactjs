@@ -1,7 +1,8 @@
 import React, {FC, ReactElement} from 'react';
-import {FormControl, InputLabel, Select, Typography} from "@material-ui/core";
+import {FormControl, InputLabel, Typography} from "@material-ui/core";
 
 import {useChangeCountryStyles} from "./ChangeCountryStyles";
+import {FilledSelect} from "../../../../../components/FilledSelect/FilledSelect";
 
 const ChangeCountry: FC = (): ReactElement => {
     const classes = useChangeCountryStyles();
@@ -9,11 +10,12 @@ const ChangeCountry: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.selectWrapper}>
-                <FormControl variant="outlined">
+                <FormControl variant="filled">
                     <InputLabel htmlFor="select-country">
                         Country
                     </InputLabel>
-                    <Select
+                    <FilledSelect
+                        variant="filled"
                         labelId="select-country"
                         id="select-country"
                         native
@@ -24,7 +26,7 @@ const ChangeCountry: FC = (): ReactElement => {
                     >
                         <option aria-label="None"/>
                         <option value={"England"}>England</option>
-                    </Select>
+                    </FilledSelect>
                 </FormControl>
                 <Typography component={"div"} className={classes.countryInfo}>
                     This is the primary country associated with your account. Your country helps us to customize

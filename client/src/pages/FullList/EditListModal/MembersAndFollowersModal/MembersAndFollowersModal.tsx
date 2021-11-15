@@ -1,12 +1,11 @@
 import React, {FC, ReactElement} from 'react';
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
 import {Dialog, DialogContent, DialogTitle} from "@material-ui/core";
 
 import {useMembersAndFollowersModalStyles} from "./MembersAndFollowersModalStyles";
 import {User} from "../../../../store/ducks/user/contracts/state";
 import ManageMembersItem from "../ManageMembersModal/ManageMembersItem/ManageMembersItem";
 import {Lists} from "../../../../store/ducks/lists/contracts/state";
+import CloseButton from "../../../../components/CloseButton/CloseButton";
 
 interface MembersAndFollowersModalProps {
     list: Lists;
@@ -44,9 +43,7 @@ const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
             aria-labelledby="form-dialog-title"
         >
             <DialogTitle id="form-dialog-title">
-                <IconButton onClick={onClose} color="secondary" aria-label="close">
-                    <CloseIcon style={{fontSize: 26}} color="secondary"/>
-                </IconButton>
+                <CloseButton onClose={onClose}/>
                 {title}
             </DialogTitle>
             <DialogContent className={classes.content}>

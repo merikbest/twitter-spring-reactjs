@@ -9,9 +9,6 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
         "& .MuiDialogTitle-root": {
             marginBottom: 0,
             borderBottom: props => props.visibleEditTweetModal ? "1px solid rgb(239, 243, 244)" : "1px solid transparent",
-            "& .MuiIconButton-root": {
-                marginRight: 15,
-            },
         },
     },
     outlinedButton: {

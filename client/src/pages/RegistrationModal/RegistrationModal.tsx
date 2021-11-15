@@ -8,9 +8,9 @@ import * as yup from "yup";
 
 import {useRegistrationModalStyles} from "./RegistrationModalStyles";
 import RegistrationInput from "./RegistrationInput/RegistrationInput";
-import {RegistrationSelect} from "./RegistrationSelect/RegistrationSelect";
 import {RegistrationInfo} from "../Authentication/Authentication";
 import {AuthApi} from "../../services/api/authApi";
+import {FilledSelect} from "../../components/FilledSelect/FilledSelect";
 
 interface RegistrationModalProps {
     open: boolean;
@@ -151,11 +151,12 @@ const RegistrationModal: FC<RegistrationModalProps> = (
                                     This will not be shown publicly. Confirm your own age, even if this account is for a
                                     business, a pet, or something else.
                                 </Typography>
-                                <FormControl variant="outlined" className={classes.formControl}>
+                                <FormControl variant="filled" className={classes.formControl}>
                                     <InputLabel htmlFor="select-month">
                                         Month
                                     </InputLabel>
-                                    <RegistrationSelect
+                                    <FilledSelect
+                                        variant="filled"
                                         style={{width: 240, marginRight: 12}}
                                         labelId="select-month"
                                         id="select-month"
@@ -177,14 +178,14 @@ const RegistrationModal: FC<RegistrationModalProps> = (
                                         <option value={"Oct"}>October</option>
                                         <option value={"Nov"}>November</option>
                                         <option value={"Dec"}>December</option>
-                                    </RegistrationSelect>
+                                    </FilledSelect>
                                 </FormControl>
-                                <FormControl style={{margin: "16px 0"}} variant="outlined"
-                                             className={classes.formControl}>
+                                <FormControl style={{margin: "16px 0"}} variant="filled" className={classes.formControl}>
                                     <InputLabel htmlFor="select-day">
                                         Day
                                     </InputLabel>
-                                    <RegistrationSelect
+                                    <FilledSelect
+                                        variant="filled"
                                         style={{width: 100, marginRight: 12}}
                                         labelId="select-day"
                                         id="select-day"
@@ -195,14 +196,14 @@ const RegistrationModal: FC<RegistrationModalProps> = (
                                     >
                                         <option aria-label="None"/>
                                         {showDays()}
-                                    </RegistrationSelect>
+                                    </FilledSelect>
                                 </FormControl>
-                                <FormControl style={{margin: "16px 0"}} variant="outlined"
-                                             className={classes.formControl}>
+                                <FormControl style={{margin: "16px 0"}} variant="filled" className={classes.formControl}>
                                     <InputLabel htmlFor="select-year">
                                         Year
                                     </InputLabel>
-                                    <RegistrationSelect
+                                    <FilledSelect
+                                        variant="filled"
                                         style={{width: 125,}}
                                         labelId="select-year"
                                         id="select-year"
@@ -213,7 +214,7 @@ const RegistrationModal: FC<RegistrationModalProps> = (
                                     >
                                         <option aria-label="None"/>
                                         {showYears()}
-                                    </RegistrationSelect>
+                                    </FilledSelect>
                                 </FormControl>
                             </div>
                             <div className={classes.buttonWrapper}>

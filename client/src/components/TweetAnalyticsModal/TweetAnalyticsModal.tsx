@@ -1,13 +1,12 @@
 import React, {FC, ReactElement} from 'react';
 import {Button, Dialog, Typography} from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
 import DialogContent from "@material-ui/core/DialogContent";
 
 import {useTweetAnalyticsModalStyles} from "./TweetAnalyticsModalStyles";
 import {Tweet} from "../../store/ducks/tweets/contracts/state";
 import {textFormatter} from "../../util/textFormatter";
+import CloseButton from "../CloseButton/CloseButton";
 
 interface TweetAnalyticsModalStyles {
     tweet: Tweet;
@@ -25,9 +24,7 @@ const TweetAnalyticsModal: FC<TweetAnalyticsModalStyles> = ({tweet, visible, onC
     return (
         <Dialog open={visible} onClose={onClose} className={classes.container} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">
-                <IconButton onClick={onClose} color="secondary" aria-label="close">
-                    <CloseIcon color="secondary"/>
-                </IconButton>
+                <CloseButton onClose={onClose}/>
                 Tweet Analytics
             </DialogTitle>
             <DialogContent>

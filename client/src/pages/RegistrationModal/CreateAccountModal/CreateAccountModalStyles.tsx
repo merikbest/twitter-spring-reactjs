@@ -31,13 +31,21 @@ export const useCreateAccountModalStyles = makeStyles((theme: Theme) => ({
         fontWeight: 400,
         fontSize: 15,
         linHeight: "20px",
-        "& span": {
-            fontSize: 14,
-            color: "rgb(27, 149, 224)",
-            "&:hover": {
-                cursor: "pointer",
-            },
-        },
+        // "& span": {
+        //     fontSize: 14,
+        //     color: "rgb(27, 149, 224)",
+        //     "&:hover": {
+        //         cursor: "pointer",
+        //     },
+        // },
+    },
+    link: {
+        textDecoration: "none",
+        color: "rgb(29, 155, 240)",
+        cursor: "pointer",
+        "&:hover": {
+            textDecoration: "underline",
+        }
     },
     button: {
         marginTop: 15,

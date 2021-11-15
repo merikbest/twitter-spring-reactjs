@@ -1,6 +1,13 @@
 import {makeStyles} from "@material-ui/core";
 
 export const useEditProfileModalStyles = makeStyles((theme) => ({
+    dialog: {
+        "& .MuiDialogTitle-root": {
+            padding: "5px 15px",
+            marginBottom: 0,
+            borderBottom: "1px solid rgb(239, 243, 244)"
+        },
+    },
     content: {
         height: 550,
         width: 598,

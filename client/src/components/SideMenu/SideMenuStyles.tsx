@@ -53,7 +53,11 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
         },
     },
     logoIcon: {
-        fontSize: 32,
+        marginLeft: 7,
+        "& svg" : {
+            color: "rgb(29, 161, 242)",
+            height: "1.25em"
+        },
     },
     label: {
         position: "relative",

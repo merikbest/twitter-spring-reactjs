@@ -10,7 +10,7 @@ interface CustomizeModalProps {
     onOpenCreateAccount: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
 
-const CustomizeModal:FC<CustomizeModalProps> = ({open, onClose, onOpenCreateAccount}): ReactElement => {
+const CustomizeModal: FC<CustomizeModalProps> = ({open, onClose, onOpenCreateAccount}): ReactElement => {
     const classes = useCustomizeModalStyles();
 
     return (
@@ -37,7 +37,9 @@ const CustomizeModal:FC<CustomizeModalProps> = ({open, onClose, onOpenCreateAcco
                 </Typography>
                 <Radio className={classes.radio} checked={true} color="primary"/>
                 <Typography component={"div"}>
-                    For more details about these settings, visit the <span className={classes.link}>Help Center</span>.
+                    For more details about these settings, visit the <a
+                    href={"https://help.twitter.com/managing-your-account/new-account-settings"} target={"_blank"}
+                    className={classes.link}>Help Center</a>.
                 </Typography>
                 <div className={classes.buttonWrapper}>
                     <Button

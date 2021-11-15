@@ -15,7 +15,7 @@ export const useShareTweetModalStyles = makeStyles((theme: Theme) => ({
     dropdown: {
         padding: 0,
         position: 'absolute',
-        width: 280,
+        width: 290,
         height: 208,
         top: 10,
         right: 10,

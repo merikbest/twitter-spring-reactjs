@@ -1,6 +1,13 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 export const useCreateListsModalStyles = makeStyles((theme: Theme) => ({
+    dialog: {
+        "& .MuiDialogTitle-root": {
+            padding: "5px 15px",
+            margin: 0,
+            borderBottom: "1px solid rgb(239, 243, 244)",
+        },
+    },
     content: {
         height: 650,
         width: 598,

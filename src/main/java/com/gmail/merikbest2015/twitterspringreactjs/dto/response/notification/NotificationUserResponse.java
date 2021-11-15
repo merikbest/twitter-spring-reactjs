@@ -19,6 +19,8 @@ public class NotificationUserResponse {
     private String birthday;
     private LocalDateTime registrationDate;
     private Long tweetCount;
+    private Long mediaTweetCount;
+    private Long likeCount;
     private ImageResponse avatar;
     private ImageResponse wallpaper;
     private List<FollowerResponse> followers;

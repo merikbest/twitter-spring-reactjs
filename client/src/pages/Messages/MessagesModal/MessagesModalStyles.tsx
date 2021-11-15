@@ -4,12 +4,6 @@ export const useMessagesModalStyles = makeStyles((theme: Theme) => ({
     header: {
         margin: 0,
         border: 0,
-        "& svg": {
-            fontSize: 26,
-        },
-    },
-    headerMessage: {
-        marginLeft: 15,
     },
     button: {
         marginLeft: "auto",

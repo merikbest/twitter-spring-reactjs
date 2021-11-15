@@ -4,8 +4,9 @@ export const useReplyModalStyles = makeStyles((theme: Theme) => ({
     dialogWrapper: {
         "& .MuiDialogTitle-root": {
             padding: "5px 15px",
-            margin: 0
-        }
+            marginBottom: 0,
+            borderBottom: "1px solid rgb(239, 243, 244)"
+        },
     },
     container: {
         width: 598,
