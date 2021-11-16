@@ -1,12 +1,17 @@
 import React, {FC, ReactElement} from 'react';
+import {useSelector} from "react-redux";
 import {List, ListItem, Typography} from "@material-ui/core";
 import {NavLink} from 'react-router-dom';
 
 import {useAccountInformationStyles} from "./AccountInformationStyles";
 import {ArrowRightIcon} from "../../../../icons";
+import {selectUserData} from "../../../../store/ducks/user/selectors";
+import {formatScheduleDate} from "../../../../util/formatDate";
+import {getPhoneCode} from "../../../../util/countryCodes";
 
 const AccountInformation: FC = (): ReactElement => {
     const classes = useAccountInformationStyles();
+    const myProfile = useSelector(selectUserData);
 
     return (
         <div className={classes.listWrapper}>
@@ -18,7 +23,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 Username
                             </Typography>
                             <Typography component={"div"} className={classes.text}>
-                                @Vbhjckfd1
+                                @{myProfile?.username}
                             </Typography>
                         </div>
                         <div className={classes.arrowIcon}>
@@ -33,7 +38,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 Phone
                             </Typography>
                             <Typography component={"div"} className={classes.text}>
-                                +380123456789
+                                {`${getPhoneCode(myProfile)}${myProfile?.phone}`}
                             </Typography>
                         </div>
                         <div className={classes.arrowIcon}>
@@ -48,7 +53,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 Email
                             </Typography>
                             <Typography component={"div"} className={classes.text}>
-                                test@test.com
+                                {myProfile?.email}
                             </Typography>
                         </div>
                         <div className={classes.arrowIcon}>
@@ -71,7 +76,7 @@ const AccountInformation: FC = (): ReactElement => {
                             Protected Tweets
                         </Typography>
                         <Typography component={"div"} className={classes.text}>
-                            No
+                            {myProfile?.mutedDirectMessages ? "Yes" : "No"}
                         </Typography>
                     </div>
                     <div className={classes.arrowIcon}>
@@ -83,7 +88,7 @@ const AccountInformation: FC = (): ReactElement => {
                         Account creation
                     </Typography>
                     <Typography component={"div"} className={classes.text}>
-                        Jun 26, 2016, 7:32:47 PM
+                        {formatScheduleDate(new Date(myProfile?.registrationDate!))}
                     </Typography>
                 </div>
                 <div className={classes.divider}/>
@@ -94,7 +99,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 Country
                             </Typography>
                             <Typography component={"div"} className={classes.text}>
-                                England
+                                {myProfile?.country}
                             </Typography>
                         </div>
                         <div className={classes.arrowIcon}>
@@ -109,7 +114,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 Languages
                             </Typography>
                             <Typography component={"div"} className={classes.text}>
-                                English
+                                {myProfile?.language}
                             </Typography>
                         </div>
                         <div className={classes.arrowIcon}>
@@ -124,7 +129,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 Gender
                             </Typography>
                             <Typography component={"div"} className={classes.text}>
-                                Male
+                                {myProfile?.gender}
                             </Typography>
                         </div>
                         <div className={classes.arrowIcon}>

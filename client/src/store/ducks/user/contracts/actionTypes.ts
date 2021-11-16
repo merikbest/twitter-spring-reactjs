@@ -1,7 +1,7 @@
 import {Action} from "redux";
 
 import {LoadingStatus} from "../../../types";
-import {User, UserState} from "./state";
+import {Settings, User, UserState} from "./state";
 import {RegistrationProps} from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
 import {LoginProps} from "../../../../pages/Login/Login";
 import {ChatMessage} from "../../chatMessages/contracts/state";
@@ -23,6 +23,14 @@ export enum UserActionsType {
     FETCH_READ_MESSAGES = 'user/FETCH_READ_MESSAGES',
     SET_UNREAD_MESSAGE = 'user/SET_UNREAD_MESSAGE',
     SET_NEW_NOTIFICATION = 'user/SET_NEW_NOTIFICATION',
+    UPDATE_USERNAME = 'user/UPDATE_USERNAME',
+    UPDATE_EMAIL = 'user/UPDATE_EMAIL',
+    UPDATE_PHONE = 'user/UPDATE_PHONE',
+    UPDATE_COUNTRY = 'user/UPDATE_COUNTRY',
+    UPDATE_GENDER = 'user/UPDATE_GENDER',
+    UPDATE_LANGUAGE = 'user/UPDATE_LANGUAGE',
+    UPDATE_DIRECT = 'user/UPDATE_DIRECT',
+    UPDATE_PRIVATE_PROFILE = 'user/UPDATE_PRIVATE_PROFILE',
 }
 
 export interface SignOutActionInterface extends Action<UserActionsType> {
@@ -100,6 +108,46 @@ export interface SetUnreadMessageActionInterface extends Action<UserActionsType>
 
 export interface SetNewNotificationActionInterface extends Action<UserActionsType> {
     type: UserActionsType.SET_NEW_NOTIFICATION;
+}
+
+export interface UpdateUsernameActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.UPDATE_USERNAME;
+    payload: Settings;
+}
+
+export interface UpdateEmailActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.UPDATE_EMAIL;
+    payload: Settings;
+}
+
+export interface UpdatePhoneActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.UPDATE_PHONE;
+    payload: Settings;
+}
+
+export interface UpdateCountryActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.UPDATE_COUNTRY;
+    payload: Settings;
+}
+
+export interface UpdateGenderActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.UPDATE_GENDER;
+    payload: Settings;
+}
+
+export interface UpdateLanguageActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.UPDATE_LANGUAGE;
+    payload: Settings;
+}
+
+export interface UpdateDirectActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.UPDATE_DIRECT;
+    payload: Settings;
+}
+
+export interface UpdatePrivateProfileActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.UPDATE_PRIVATE_PROFILE;
+    payload: Settings;
 }
 
 export type UserActions =

@@ -39,6 +39,21 @@ public class User {
     @Column(name = "website")
     private String website;
 
+    @Column(name = "country_code")
+    private String countryCode;
+
+    @Column(name = "phone")
+    private Long phone;
+
+    @Column(name = "country")
+    private String country;
+
+    @Column(name = "gender")
+    private String gender;
+
+    @Column(name = "language")
+    private String language;
+
     @Column(name = "birthday")
     private String birthday;
 
@@ -74,6 +89,12 @@ public class User {
 
     @Column(name = "profile_started", columnDefinition = "boolean default false")
     private boolean profileStarted;
+
+    @Column(name = "muted_direct_messages", columnDefinition = "boolean default false")
+    private boolean mutedDirectMessages;
+
+    @Column(name = "private_profile", columnDefinition = "boolean default false")
+    private boolean privateProfile;
 
     @OneToOne
     @JoinTable(name = "user_pinned_tweet",

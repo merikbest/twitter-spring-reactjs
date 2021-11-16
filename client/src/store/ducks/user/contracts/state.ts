@@ -13,6 +13,13 @@ export interface User {
     about: string;
     website: string;
     birthday?: string
+    countryCode?: string;
+    phone?: number;
+    country?: string;
+    gender?: string;
+    language?: string;
+    mutedDirectMessages?: boolean;
+    privateProfile?: boolean;
     registrationDate?: string
     profileCustomized?: boolean;
     profileStarted?: boolean;
@@ -38,6 +45,18 @@ export interface Bookmark {
 export interface AuthUser {
     user: User;
     token: string;
+}
+
+export interface Settings {
+    username?: string;
+    email?: string;
+    countryCode?: string;
+    phone?: number;
+    country?: string;
+    gender?: string;
+    language?: string;
+    mutedDirectMessages?: boolean;
+    privateProfile?: boolean;
 }
 
 export interface UserState {

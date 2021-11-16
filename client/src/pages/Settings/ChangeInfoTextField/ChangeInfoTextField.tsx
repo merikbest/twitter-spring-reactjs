@@ -5,7 +5,7 @@ export const useChangeInfoTextFieldStyles = makeStyles((theme: Theme) =>
         root: {
             width: "100%",
             height: 58,
-            border: '1px solid #e2e2e1',
+            border: '1px solid #C4C4C4',
             overflow: 'hidden',
             borderRadius: 4,
             backgroundColor: '#fff',
@@ -15,7 +15,19 @@ export const useChangeInfoTextFieldStyles = makeStyles((theme: Theme) =>
             },
             '&$focused': {
                 backgroundColor: '#fff',
+                borderWidth: 2,
                 borderColor: theme.palette.primary.main,
+            },
+        },
+        error: {
+            border: '1px solid rgb(224, 36, 94)',
+            backgroundColor: '#fff',
+            '&:hover': {
+                backgroundColor: '#fff',
+            },
+            '&$focused': {
+                backgroundColor: '#fff',
+                border: '2px solid rgb(224, 36, 94)',
             },
         },
         disabled: {

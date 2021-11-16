@@ -1,4 +1,4 @@
-import {User, UserState} from "./contracts/state";
+import {Settings, User, UserState} from "./contracts/state";
 import {
     AddTweetToBookmarksActionInterface,
     FetchPinTweetActionInterface,
@@ -16,6 +16,14 @@ import {
     StartUseTwitterActionInterface,
     UnfollowActionInterface,
     UnfollowUserActionInterface,
+    UpdateCountryActionInterface,
+    UpdateDirectActionInterface,
+    UpdateEmailActionInterface,
+    UpdateGenderActionInterface,
+    UpdateLanguageActionInterface,
+    UpdatePhoneActionInterface,
+    UpdatePrivateProfileActionInterface,
+    UpdateUsernameActionInterface,
     UserActionsType
 } from "./contracts/actionTypes";
 import {RegistrationProps} from "../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
@@ -97,4 +105,44 @@ export const setUnreadMessage = (payload: ChatMessage): SetUnreadMessageActionIn
 
 export const setNewNotification = (): SetNewNotificationActionInterface => ({
     type: UserActionsType.SET_NEW_NOTIFICATION,
+});
+
+export const updateUsername = (payload: Settings): UpdateUsernameActionInterface => ({
+    type: UserActionsType.UPDATE_USERNAME,
+    payload,
+});
+
+export const updateEmail = (payload: Settings): UpdateEmailActionInterface => ({
+    type: UserActionsType.UPDATE_EMAIL,
+    payload,
+});
+
+export const updatePhone = (payload: Settings): UpdatePhoneActionInterface => ({
+    type: UserActionsType.UPDATE_PHONE,
+    payload,
+});
+
+export const updateCountry = (payload: Settings): UpdateCountryActionInterface => ({
+    type: UserActionsType.UPDATE_COUNTRY,
+    payload,
+});
+
+export const updateGender = (payload: Settings): UpdateGenderActionInterface => ({
+    type: UserActionsType.UPDATE_GENDER,
+    payload,
+});
+
+export const updateLanguage = (payload: Settings): UpdateLanguageActionInterface => ({
+    type: UserActionsType.UPDATE_LANGUAGE,
+    payload,
+});
+
+export const updateDirect = (payload: Settings): UpdateDirectActionInterface => ({
+    type: UserActionsType.UPDATE_DIRECT,
+    payload,
+});
+
+export const updatePrivateProfile = (payload: Settings): UpdatePrivateProfileActionInterface => ({
+    type: UserActionsType.UPDATE_PRIVATE_PROFILE,
+    payload,
 });

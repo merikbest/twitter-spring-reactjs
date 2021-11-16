@@ -10,12 +10,21 @@ import {
     FollowUserActionInterface,
     StartUseTwitterActionInterface,
     UnfollowUserActionInterface,
+    UpdateCountryActionInterface,
+    UpdateDirectActionInterface,
+    UpdateEmailActionInterface,
+    UpdateGenderActionInterface,
+    UpdateLanguageActionInterface,
+    UpdatePhoneActionInterface,
+    UpdatePrivateProfileActionInterface,
+    UpdateUsernameActionInterface,
     UserActionsType
 } from "./contracts/actionTypes";
 import {AuthApi} from "../../../services/api/authApi";
 import {UserApi} from "../../../services/api/userApi";
 import {LoadingStatus} from "../../types";
 import {ChatApi} from "../../../services/api/chatApi";
+import {UserSettingsApi} from "../../../services/api/userSettingsApi";
 
 export function* fetchSignInRequest({payload}: FetchSignInActionInterface) {
     try {
@@ -108,6 +117,86 @@ export function* fetchReadMessagesRequest({payload}: FetchReadMessagesActionInte
     }
 }
 
+export function* updateUsernameRequest({payload}: UpdateUsernameActionInterface) {
+    try {
+        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+        const item: User = yield call(UserSettingsApi.updateUsername, payload);
+        yield put(setUserData(item));
+    } catch (e) {
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
+export function* updateEmailRequest({payload}: UpdateEmailActionInterface) {
+    try {
+        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+        const item: User = yield call(UserSettingsApi.updateEmail, payload);
+        yield put(setUserData(item));
+    } catch (e) {
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
+export function* updatePhoneRequest({payload}: UpdatePhoneActionInterface) {
+    try {
+        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+        const item: User = yield call(UserSettingsApi.updatePhone, payload);
+        yield put(setUserData(item));
+    } catch (e) {
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
+export function* updateCountryRequest({payload}: UpdateCountryActionInterface) {
+    try {
+        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+        const item: User = yield call(UserSettingsApi.updateCountry, payload);
+        yield put(setUserData(item));
+    } catch (e) {
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
+export function* updateGenderRequest({payload}: UpdateGenderActionInterface) {
+    try {
+        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+        const item: User = yield call(UserSettingsApi.updateGender, payload);
+        yield put(setUserData(item));
+    } catch (e) {
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
+export function* updateLanguageRequest({payload}: UpdateLanguageActionInterface) {
+    try {
+        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+        const item: User = yield call(UserSettingsApi.updateLanguage, payload);
+        yield put(setUserData(item));
+    } catch (e) {
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
+export function* updateDirectRequest({payload}: UpdateDirectActionInterface) {
+    try {
+        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+        const item: User = yield call(UserSettingsApi.updateDirectMessageRequests, payload);
+        yield put(setUserData(item));
+    } catch (e) {
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
+export function* updatePrivateProfileRequest({payload}: UpdatePrivateProfileActionInterface) {
+    try {
+        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+        const item: User = yield call(UserSettingsApi.updatePrivateProfile, payload);
+        yield put(setUserData(item));
+    } catch (e) {
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
 export function* userSaga() {
     yield takeLatest(UserActionsType.FETCH_SIGN_IN, fetchSignInRequest);
     yield takeLatest(UserActionsType.FETCH_SIGN_UP, fetchSignUpRequest);
@@ -118,4 +207,12 @@ export function* userSaga() {
     yield takeLatest(UserActionsType.FETCH_PIN_TWEET, fetchPinTweet);
     yield takeLatest(UserActionsType.ADD_TWEET_TO_BOOKMARKS, fetchAddTweetToBookmarksRequest);
     yield takeLatest(UserActionsType.FETCH_READ_MESSAGES, fetchReadMessagesRequest);
+    yield takeLatest(UserActionsType.UPDATE_USERNAME, updateUsernameRequest);
+    yield takeLatest(UserActionsType.UPDATE_EMAIL, updateEmailRequest);
+    yield takeLatest(UserActionsType.UPDATE_PHONE, updatePhoneRequest);
+    yield takeLatest(UserActionsType.UPDATE_COUNTRY, updateCountryRequest);
+    yield takeLatest(UserActionsType.UPDATE_GENDER, updateGenderRequest);
+    yield takeLatest(UserActionsType.UPDATE_LANGUAGE, updateLanguageRequest);
+    yield takeLatest(UserActionsType.UPDATE_DIRECT, updateDirectRequest);
+    yield takeLatest(UserActionsType.UPDATE_PRIVATE_PROFILE, updatePrivateProfileRequest);
 }

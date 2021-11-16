@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
+import com.gmail.merikbest2015.twitterspringreactjs.dto.request.SettingsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetHeaderResponse;
@@ -8,6 +9,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResp
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserService;
+import com.gmail.merikbest2015.twitterspringreactjs.service.UserSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -27,6 +29,7 @@ public class UserMapper {
     private final ModelMapper modelMapper;
     private final TweetMapper tweetMapper;
     private final UserService userService;
+    private final UserSettingsService userSettingsService;
 
     private ImageResponse convertToImageResponse(Image image) {
         return modelMapper.map(image, ImageResponse.class);
@@ -134,5 +137,37 @@ public class UserMapper {
 
     public List<NotificationResponse> getUserNotifications() {
         return convertListToNotificationResponse(userService.getUserNotifications());
+    }
+
+    public UserResponse updateUsername(SettingsRequest request) {
+        return convertToUserResponse(userSettingsService.updateUsername(request.getUsername()));
+    }
+
+    public UserResponse updateEmail(SettingsRequest request) {
+        return convertToUserResponse(userSettingsService.updateEmail(request.getEmail()));
+    }
+
+    public UserResponse updatePhone(SettingsRequest request) {
+        return convertToUserResponse(userSettingsService.updatePhone(request.getCountryCode(), request.getPhone()));
+    }
+
+    public UserResponse updateCountry(SettingsRequest request) {
+        return convertToUserResponse(userSettingsService.updateCountry(request.getCountry()));
+    }
+
+    public UserResponse updateGender(SettingsRequest request) {
+        return convertToUserResponse(userSettingsService.updateGender(request.getGender()));
+    }
+
+    public UserResponse updateLanguage(SettingsRequest request) {
+        return convertToUserResponse(userSettingsService.updateLanguage(request.getLanguage()));
+    }
+
+    public UserResponse updateDirectMessageRequests(SettingsRequest request) {
+        return convertToUserResponse(userSettingsService.updateDirectMessageRequests(request.isMutedDirectMessages()));
+    }
+
+    public UserResponse updatePrivateProfile(SettingsRequest request) {
+        return convertToUserResponse(userSettingsService.updatePrivateProfile(request.isPrivateProfile()));
     }
 }
