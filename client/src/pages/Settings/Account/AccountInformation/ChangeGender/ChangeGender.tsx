@@ -1,17 +1,52 @@
-import React, {FC, ReactElement, useState} from 'react';
+import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import {Button, Radio, Typography} from "@material-ui/core";
 import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
 
 import {useChangeGenderStyles} from "./ChangeGenderStyles";
 import {ChangeInfoTextField} from "../../../ChangeInfoTextField/ChangeInfoTextField";
+import {setUserLoadingStatus, updateGender} from "../../../../../store/ducks/user/actionCreators";
+import {LoadingStatus} from "../../../../../store/types";
+import {selectUserData, selectUserIsLoading} from "../../../../../store/ducks/user/selectors";
 
 const ChangeGender: FC = (): ReactElement => {
     const classes = useChangeGenderStyles();
-    const [selectedValue, setSelectedValue] = useState<string>("Female");
+    const dispatch = useDispatch();
+    const myProfile = useSelector(selectUserData);
+    const isLoading = useSelector(selectUserIsLoading);
+    const [selectedGender, setSelectedGender] = useState<string>("Female");
     const [otherGender, setOtherGender] = useState<string>("");
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        setSelectedValue(event.target.value);
+    useEffect(() => {
+        if (myProfile) {
+            if (myProfile.gender === "Female" || myProfile.gender === "Male") {
+                setSelectedGender(myProfile.gender);
+            } else {
+                setOtherGender(myProfile?.gender ? myProfile.gender : "");
+            }
+        }
+
+        return () => {
+            dispatch(setUserLoadingStatus(LoadingStatus.NEVER));
+        };
+    }, []);
+
+    const handleSelectedGender = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        setSelectedGender(event.target.value);
+    };
+
+    const handleChangeGender = (event: ChangeEvent<HTMLInputElement>): void => {
+        if (event.currentTarget) {
+            setOtherGender(event.currentTarget.value);
+        }
+    };
+
+    const onSubmit = (): void => {
+        if (otherGender !== "") {
+            dispatch(updateGender({gender: otherGender}));
+        } else {
+            dispatch(updateGender({gender: selectedGender}));
+        }
     };
 
     return (
@@ -27,8 +62,8 @@ const ChangeGender: FC = (): ReactElement => {
                         Female
                     </Typography>
                     <Radio
-                        checked={selectedValue === "Female"}
-                        onChange={handleChange}
+                        checked={selectedGender === "Female"}
+                        onChange={handleSelectedGender}
                         value="Female"
                         name="radio-buttons"
                         inputProps={{"aria-label": "Female"}}
@@ -42,8 +77,8 @@ const ChangeGender: FC = (): ReactElement => {
                         Male
                     </Typography>
                     <Radio
-                        checked={selectedValue === "Male"}
-                        onChange={handleChange}
+                        checked={selectedGender === "Male"}
+                        onChange={handleSelectedGender}
                         value="Male"
                         name="radio-buttons"
                         inputProps={{"aria-label": "Male"}}
@@ -57,8 +92,8 @@ const ChangeGender: FC = (): ReactElement => {
                         Other
                     </Typography>
                     <Radio
-                        checked={selectedValue === "Other"}
-                        onChange={handleChange}
+                        checked={selectedGender === "Other"}
+                        onChange={handleSelectedGender}
                         value="Other"
                         name="radio-buttons"
                         inputProps={{"aria-label": "Other"}}
@@ -67,9 +102,10 @@ const ChangeGender: FC = (): ReactElement => {
                         size="small"
                     />
                 </div>
-                {(selectedValue === "Other") && (
+                {(selectedGender === "Other") && (
                     <div className={classes.textFieldWrapper}>
                         <ChangeInfoTextField
+                            onChange={handleChangeGender}
                             label="Gender"
                             type="text"
                             variant="filled"
@@ -82,6 +118,8 @@ const ChangeGender: FC = (): ReactElement => {
             <div className={classes.divider}/>
             <div className={classes.buttonWrapper}>
                 <Button
+                    onClick={onSubmit}
+                    disabled={isLoading}
                     type="submit"
                     variant="contained"
                     color="primary"

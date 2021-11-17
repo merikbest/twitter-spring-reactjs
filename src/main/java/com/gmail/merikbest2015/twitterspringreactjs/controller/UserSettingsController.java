@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.SettingsRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.AuthenticationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class UserSettingsController {
     }
 
     @PutMapping("/update/email")
-    public ResponseEntity<UserResponse> updateEmail(@RequestBody SettingsRequest request) {
+    public ResponseEntity<AuthenticationResponse> updateEmail(@RequestBody SettingsRequest request) {
         return ResponseEntity.ok(userMapper.updateEmail(request));
     }
 

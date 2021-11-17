@@ -2,11 +2,13 @@ package com.gmail.merikbest2015.twitterspringreactjs.service;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 
+import java.util.Map;
+
 public interface UserSettingsService {
 
     User updateUsername(String username);
 
-    User updateEmail(String email);
+    Map<String, Object> updateEmail(String email);
 
     User updatePhone(String countryCode, Long phone);
 

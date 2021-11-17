@@ -1,17 +1,32 @@
-import React, {ChangeEvent, FC, ReactElement, useState} from 'react';
+import React, {FC, ReactElement, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import {Typography} from "@material-ui/core";
 
 import {useChangeEmailStyles} from "./ChangeEmailStyles";
 import {ChangeInfoTextField} from "../../../ChangeInfoTextField/ChangeInfoTextField";
+import {selectUserData, selectUserIsSuccess} from "../../../../../store/ducks/user/selectors";
+import ChangeEmailModal from "./ChangeEmailModal/ChangeEmailModal";
+import {setUserLoadingStatus} from "../../../../../store/ducks/user/actionCreators";
+import {LoadingStatus} from "../../../../../store/types";
 
 const ChangeEmail: FC = (): ReactElement => {
     const classes = useChangeEmailStyles();
-    const [email, setEmail] = useState<string>("");
+    const dispatch = useDispatch();
+    const myProfile = useSelector(selectUserData);
+    const isUpdatedSuccess = useSelector(selectUserIsSuccess);
+    const [visibleChangeEmailModal, setVisibleChangeEmailModal] = useState<boolean>(false);
 
-    const handleChangeEmail = (event: ChangeEvent<HTMLInputElement>): void => {
-        if (event.currentTarget) {
-            setEmail(event.currentTarget.value);
-        }
+    useEffect(() => {
+        setVisibleChangeEmailModal(false);
+        dispatch(setUserLoadingStatus(LoadingStatus.NEVER));
+    }, [isUpdatedSuccess]);
+
+    const onOpenChangeEmailModal = (): void => {
+        setVisibleChangeEmailModal(true);
+    };
+
+    const onCloseChangeEmailModal = (): void => {
+        setVisibleChangeEmailModal(false);
     };
 
     return (
@@ -22,16 +37,22 @@ const ChangeEmail: FC = (): ReactElement => {
                     label="Current"
                     type="text"
                     variant="filled"
-                    value={email}
+                    value={myProfile?.email}
                     fullWidth
                 />
             </div>
             <div className={classes.divider}/>
-            <div className={classes.updateEmailAddress}>
+            <div className={classes.updateEmailAddress} onClick={onOpenChangeEmailModal}>
                 <Typography component={"span"}>
                     Update email address
                 </Typography>
             </div>
+            {visibleChangeEmailModal && (
+                <ChangeEmailModal
+                    visible={visibleChangeEmailModal}
+                    onClose={onCloseChangeEmailModal}
+                />
+            )}
         </>
     );
 };

@@ -1,12 +1,15 @@
 import React, {FC, ReactElement} from 'react';
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 import {Typography} from "@material-ui/core";
 
 import {useLanguagesStyles} from "./LanguagesStyles";
 import {ArrowRightIcon} from "../../../../icons";
+import {selectUserData} from "../../../../store/ducks/user/selectors";
 
 const Languages: FC = (): ReactElement => {
     const classes = useLanguagesStyles();
+    const myProfile = useSelector(selectUserData);
 
     return (
         <>
@@ -30,7 +33,7 @@ const Languages: FC = (): ReactElement => {
                     <div className={classes.accessibilityInfo}>
                         <div>Display language</div>
                         <Typography component={"div"} className={classes.text}>
-                            English
+                            {myProfile?.language}
                         </Typography>
                     </div>
                     {ArrowRightIcon}

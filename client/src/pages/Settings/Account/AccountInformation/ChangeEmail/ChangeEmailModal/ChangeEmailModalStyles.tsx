@@ -1,6 +1,6 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
-export const useChangePhoneModalStyles = makeStyles((theme: Theme) => ({
+export const useChangeEmailModalStyles = makeStyles((theme: Theme) => ({
     dialog: {
         "& .MuiDialogTitle-root": {
             padding: "5px 15px",

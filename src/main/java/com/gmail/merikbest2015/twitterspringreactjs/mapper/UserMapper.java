@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.SettingsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.AuthenticationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetHeaderResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
@@ -143,8 +145,12 @@ public class UserMapper {
         return convertToUserResponse(userSettingsService.updateUsername(request.getUsername()));
     }
 
-    public UserResponse updateEmail(SettingsRequest request) {
-        return convertToUserResponse(userSettingsService.updateEmail(request.getEmail()));
+    public AuthenticationResponse updateEmail(SettingsRequest request) {
+        Map<String, Object> credentials = userSettingsService.updateEmail(request.getEmail());
+        AuthenticationResponse response = new AuthenticationResponse();
+        response.setUser(convertToUserResponse((User) credentials.get("user")));
+        response.setToken((String) credentials.get("token"));
+        return response;
     }
 
     public UserResponse updatePhone(SettingsRequest request) {

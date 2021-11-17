@@ -1,5 +1,5 @@
-import React, {FC, ReactElement} from 'react';
-import {useSelector} from "react-redux";
+import React, {FC, ReactElement, useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import {List, ListItem, Typography} from "@material-ui/core";
 import {NavLink} from 'react-router-dom';
 
@@ -7,11 +7,17 @@ import {useAccountInformationStyles} from "./AccountInformationStyles";
 import {ArrowRightIcon} from "../../../../icons";
 import {selectUserData} from "../../../../store/ducks/user/selectors";
 import {formatScheduleDate} from "../../../../util/formatDate";
-import {getPhoneCode} from "../../../../util/countryCodes";
+import {getCountry, getPhoneCode} from "../../../../util/countryCodes";
+import {fetchUserData} from "../../../../store/ducks/user/actionCreators";
 
 const AccountInformation: FC = (): ReactElement => {
     const classes = useAccountInformationStyles();
+    const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
+
+    useEffect(() => {
+        dispatch(fetchUserData());
+    }, []);
 
     return (
         <div className={classes.listWrapper}>
@@ -70,19 +76,21 @@ const AccountInformation: FC = (): ReactElement => {
                     </Typography>
                 </div>
                 <div className={classes.divider}/>
-                <ListItem>
-                    <div>
-                        <Typography component={"div"} className={classes.title}>
-                            Protected Tweets
-                        </Typography>
-                        <Typography component={"div"} className={classes.text}>
-                            {myProfile?.mutedDirectMessages ? "Yes" : "No"}
-                        </Typography>
-                    </div>
-                    <div className={classes.arrowIcon}>
-                        {ArrowRightIcon}
-                    </div>
-                </ListItem>
+                <NavLink to={"/settings/privacy_and_safety/audience"}>
+                    <ListItem>
+                        <div>
+                            <Typography component={"div"} className={classes.title}>
+                                Protected Tweets
+                            </Typography>
+                            <Typography component={"div"} className={classes.text}>
+                                {myProfile?.mutedDirectMessages ? "Yes" : "No"}
+                            </Typography>
+                        </div>
+                        <div className={classes.arrowIcon}>
+                            {ArrowRightIcon}
+                        </div>
+                    </ListItem>
+                </NavLink>
                 <div className={classes.informationItem}>
                     <Typography component={"div"} className={classes.title}>
                         Account creation
@@ -99,7 +107,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 Country
                             </Typography>
                             <Typography component={"div"} className={classes.text}>
-                                {myProfile?.country}
+                                {getCountry(myProfile)}
                             </Typography>
                         </div>
                         <div className={classes.arrowIcon}>

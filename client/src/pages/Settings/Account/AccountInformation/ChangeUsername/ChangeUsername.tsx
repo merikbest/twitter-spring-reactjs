@@ -18,6 +18,8 @@ const ChangeUsername: FC = (): ReactElement => {
         if (myProfile) {
             setUsername(myProfile.username);
         }
+
+
     }, []);
 
     const changeUsername = (): void => {

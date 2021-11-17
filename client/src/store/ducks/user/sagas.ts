@@ -122,6 +122,7 @@ export function* updateUsernameRequest({payload}: UpdateUsernameActionInterface)
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const item: User = yield call(UserSettingsApi.updateUsername, payload);
         yield put(setUserData(item));
+        yield put(setUserLoadingStatus(LoadingStatus.SUCCESS));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -130,8 +131,10 @@ export function* updateUsernameRequest({payload}: UpdateUsernameActionInterface)
 export function* updateEmailRequest({payload}: UpdateEmailActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: User = yield call(UserSettingsApi.updateEmail, payload);
-        yield put(setUserData(item));
+        const item: AuthUser = yield call(UserSettingsApi.updateEmail, payload);
+        localStorage.setItem("token", item.token);
+        yield put(setUserData(item.user));
+        yield put(setUserLoadingStatus(LoadingStatus.SUCCESS));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -142,6 +145,7 @@ export function* updatePhoneRequest({payload}: UpdatePhoneActionInterface) {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const item: User = yield call(UserSettingsApi.updatePhone, payload);
         yield put(setUserData(item));
+        yield put(setUserLoadingStatus(LoadingStatus.SUCCESS));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -152,6 +156,7 @@ export function* updateCountryRequest({payload}: UpdateCountryActionInterface) {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const item: User = yield call(UserSettingsApi.updateCountry, payload);
         yield put(setUserData(item));
+        yield put(setUserLoadingStatus(LoadingStatus.SUCCESS));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -172,6 +177,7 @@ export function* updateLanguageRequest({payload}: UpdateLanguageActionInterface)
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const item: User = yield call(UserSettingsApi.updateLanguage, payload);
         yield put(setUserData(item));
+        yield put(setUserLoadingStatus(LoadingStatus.SUCCESS));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -182,6 +188,7 @@ export function* updateDirectRequest({payload}: UpdateDirectActionInterface) {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const item: User = yield call(UserSettingsApi.updateDirectMessageRequests, payload);
         yield put(setUserData(item));
+        yield put(setUserLoadingStatus(LoadingStatus.SUCCESS));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -192,6 +199,7 @@ export function* updatePrivateProfileRequest({payload}: UpdatePrivateProfileActi
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const item: User = yield call(UserSettingsApi.updatePrivateProfile, payload);
         yield put(setUserData(item));
+        yield put(setUserLoadingStatus(LoadingStatus.SUCCESS));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }

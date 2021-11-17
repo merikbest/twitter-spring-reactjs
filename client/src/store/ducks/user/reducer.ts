@@ -14,7 +14,7 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
     switch (action.type) {
         case UserActionsType.SET_USER_DATA:
             draft.data = action.payload;
-            draft.status = LoadingStatus.SUCCESS;
+            draft.status = LoadingStatus.LOADED;
             break;
 
         case UserActionsType.SIGN_OUT:
@@ -26,14 +26,14 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
             if (draft.data?.followers) {
                 draft.data.followers = [...draft.data?.followers, action.payload];
             }
-            draft.status = LoadingStatus.SUCCESS;
+            draft.status = LoadingStatus.LOADED;
             break;
 
         case UserActionsType.FOLLOW_USER:
             if (draft.data?.followers) {
                 draft.data.followers = [...draft.data?.followers, action.payload];
             }
-            draft.status = LoadingStatus.SUCCESS;
+            draft.status = LoadingStatus.LOADED;
             break;
 
         case UserActionsType.UNFOLLOW:
@@ -43,7 +43,7 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
                     ...draft.data?.followers?.slice(0, unfollowUserIndex),
                     ...draft.data?.followers?.slice(unfollowUserIndex + 1)];
             }
-            draft.status = LoadingStatus.SUCCESS;
+            draft.status = LoadingStatus.LOADED;
             break;
 
         case UserActionsType.UNFOLLOW_USER:
@@ -53,19 +53,19 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
                     ...draft.data?.followers?.slice(0, unfollowUserIndex),
                     ...draft.data?.followers?.slice(unfollowUserIndex + 1)];
             }
-            draft.status = LoadingStatus.SUCCESS;
+            draft.status = LoadingStatus.LOADED;
             break;
 
         case UserActionsType.SET_UNREAD_MESSAGE:
             if (draft.data?.unreadMessages) {
                 draft.data.unreadMessages = [...draft.data.unreadMessages, action.payload];
             }
-            draft.status = LoadingStatus.SUCCESS;
+            draft.status = LoadingStatus.LOADED;
             break;
 
         case UserActionsType.SET_NEW_NOTIFICATION:
             draft.data = {...draft.data as User, notificationsCount: draft.data?.notificationsCount! + 1};
-            draft.status = LoadingStatus.SUCCESS;
+            draft.status = LoadingStatus.LOADED;
             break;
 
         case UserActionsType.SET_USER_LOADING_STATE:

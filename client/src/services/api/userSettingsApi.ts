@@ -1,4 +1,4 @@
-import {Settings, User} from "../../store/ducks/user/contracts/state";
+import {AuthUser, Settings, User} from "../../store/ducks/user/contracts/state";
 import {axios} from "../../core/axios";
 import {API_URL} from "../../util/url";
 
@@ -7,8 +7,8 @@ export const UserSettingsApi = {
         const {data} = await axios.put<User>(API_URL + "/settings/update/username", settings);
         return data;
     },
-    async updateEmail(settings: Settings): Promise<User> {
-        const {data} = await axios.put<User>(API_URL + "/settings/update/email", settings);
+    async updateEmail(settings: Settings): Promise<AuthUser> {
+        const {data} = await axios.put<AuthUser>(API_URL + "/settings/update/email", settings);
         return data;
     },
     async updatePhone(settings: Settings): Promise<User> {

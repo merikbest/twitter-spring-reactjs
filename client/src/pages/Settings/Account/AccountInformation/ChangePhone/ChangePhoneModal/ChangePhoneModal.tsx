@@ -124,9 +124,7 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = ({visible, onClose}): ReactE
                             href="https://help.twitter.com/safety-and-security/email-and-phone-discoverability-settings"
                             target={"_blank"} className={classes.link}>Learn more</a>
                         </Typography>
-                        <span>
-                        <Checkbox/>
-                    </span>
+                        <span><Checkbox/></span>
                     </div>
                     <div className={classes.footer}>
                         <Button

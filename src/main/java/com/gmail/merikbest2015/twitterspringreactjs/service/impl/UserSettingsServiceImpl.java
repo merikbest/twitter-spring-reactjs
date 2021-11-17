@@ -1,19 +1,25 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 
+import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
+import com.gmail.merikbest2015.twitterspringreactjs.security.JwtProvider;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserSettingsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class UserSettingsServiceImpl implements UserSettingsService {
 
     private final UserRepository userRepository;
+    private final JwtProvider jwtProvider;
 
     @Override
     public User updateUsername(String username) {
@@ -23,10 +29,20 @@ public class UserSettingsServiceImpl implements UserSettingsService {
     }
 
     @Override
-    public User updateEmail(String email) {
+    public Map<String, Object> updateEmail(String email) {
         User user = getAuthenticatedUser();
-        user.setEmail(email);
-        return userRepository.save(user);
+        User userByEmail = userRepository.findByEmail(email);
+
+        if (userByEmail == null) {
+            user.setEmail(email);
+            userRepository.save(user);
+            String token = jwtProvider.createToken(email, "USER");
+            Map<String, Object> response = new HashMap<>();
+            response.put("user", user);
+            response.put("token", token);
+            return response;
+        }
+        throw new ApiRequestException("Email has already been taken.", HttpStatus.FORBIDDEN);
     }
 
     @Override

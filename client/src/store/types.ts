@@ -3,5 +3,5 @@ export enum LoadingStatus {
     LOADING = "LOADING",
     ERROR = "ERROR",
     NEVER = "NEVER",
-    SUCCESS = 'SUCCESS'
+    SUCCESS = "SUCCESS"
 }

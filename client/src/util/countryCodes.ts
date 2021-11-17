@@ -12,6 +12,12 @@ export const getCountryCode = (myProfile: User | undefined): string => {
     return (countryCode !== undefined) ? countryCode.countryCode : "";
 };
 
+export const getCountry = (myProfile: User | undefined): string => {
+    const countryCode = countryCodes.find((value) => (value.countryCode === myProfile?.country));
+
+    return (countryCode !== undefined) ? countryCode.country : "";
+};
+
 export const countryCodes = [
     {countryCode: "AF", phoneCode: "+93", country: "Afghanistan"},
     {countryCode: "AL", phoneCode: "+355", country: "Albania"},
