@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.*;
+import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.TweetService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -16,14 +17,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.net.URL;
-import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -34,6 +33,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TweetServiceImpl implements TweetService {
 
+    private final AuthenticationService authenticationService;
     private final TweetRepository tweetRepository;
     private final UserRepository userRepository;
     private final RetweetRepository retweetRepository;
@@ -73,15 +73,13 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public List<Tweet> getScheduledTweets() {
-        Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByEmail(principal.getName());
+        User user = authenticationService.getAuthenticatedUser();
         return tweetRepository.findByUserAndScheduledDateIsNotNullOrderByScheduledDateDesc(user);
     }
 
     @Override
     public Tweet createTweet(Tweet tweet) {
-        Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByEmail(principal.getName());
+        User user = authenticationService.getAuthenticatedUser();
         tweet.setUser(user);
         boolean isMediaTweetCreated = parseMetadataFromURL(tweet); // find metadata from url
         Tweet createdTweet = tweetRepository.save(tweet);
@@ -133,8 +131,7 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public Tweet deleteTweet(Long tweetId) {
-        Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByEmail(principal.getName());
+        User user = authenticationService.getAuthenticatedUser();
         Tweet tweet = user.getTweets().stream()
                 .filter(t -> t.getId().equals(tweetId))
                 .findFirst().get();
@@ -224,8 +221,7 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public Notification likeTweet(Long tweetId) {
-        Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByEmail(principal.getName());
+        User user = authenticationService.getAuthenticatedUser();
         Tweet tweet = tweetRepository.getOne(tweetId);
 
         List<LikeTweet> likedTweets = user.getLikedTweets();
@@ -250,8 +246,7 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public Notification retweet(Long tweetId) {
-        Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByEmail(principal.getName());
+        User user = authenticationService.getAuthenticatedUser();
         Tweet tweet = tweetRepository.getOne(tweetId);
 
         List<Retweet> retweets = user.getRetweets();
@@ -276,8 +271,7 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public Tweet replyTweet(Long tweetId, Tweet reply) {
-        Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByEmail(principal.getName());
+        User user = authenticationService.getAuthenticatedUser();
         user.setTweetCount(user.getTweetCount() + 1);
         userRepository.save(user);
 
@@ -290,8 +284,7 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public Tweet quoteTweet(Long tweetId, Tweet quote) {
-        Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByEmail(principal.getName());
+        User user = authenticationService.getAuthenticatedUser();
         user.setTweetCount(user.getTweetCount() + 1);
         userRepository.save(user);
 
@@ -309,8 +302,7 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public Tweet voteInPoll(Long tweetId, Long pollChoiceId) {
-        Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByEmail(principal.getName());
+        User user = authenticationService.getAuthenticatedUser();
         Tweet tweet = tweetRepository.getOne(tweetId);
         List<PollChoice> pollChoices = tweet.getPoll().getPollChoices().stream()
                 .peek(choice -> {

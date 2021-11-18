@@ -8,7 +8,6 @@ export const useUserPageActionsStyles = makeStyles((theme: Theme) => ({
     dropdown: {
         position: 'absolute',
         width: 358,
-        height: 468,
         zIndex: 2,
         borderRadius: 4,
         backgroundColor: theme.palette.background.paper,

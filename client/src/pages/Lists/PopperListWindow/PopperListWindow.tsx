@@ -12,9 +12,10 @@ import MembersAndFollowersModal from "../../FullList/EditListModal/MembersAndFol
 
 interface PopperListWindowProps {
     list: Lists;
+    visible: boolean;
 }
 
-const PopperListWindow: FC<PopperListWindowProps> = ({list}): ReactElement => {
+const PopperListWindow: FC<PopperListWindowProps> = ({list, visible}): ReactElement | null => {
     const classes = usePopperListWindowStyles();
     const myProfile = useSelector(selectUserData);
     const dispatch = useDispatch();
@@ -55,6 +56,10 @@ const PopperListWindow: FC<PopperListWindowProps> = ({list}): ReactElement => {
         setVisibleMembersAndFollowersModal(false);
         setModalWindowTitle("");
     };
+
+    if (!visible) {
+        return null;
+    }
 
     return (
         <div className={classes.popperListWindow}>
@@ -118,15 +123,11 @@ const PopperListWindow: FC<PopperListWindowProps> = ({list}): ReactElement => {
                         ))}
                 </div>
             </div>
-            {visibleMembersAndFollowersModal && (
-                <MembersAndFollowersModal
-                    list={list!}
-                    users={(modalWindowTitle === "List members") ? list!.members : list!.followers}
-                    visible={visibleMembersAndFollowersModal}
-                    title={modalWindowTitle}
-                    onClose={onCloseModalWindow}
-                />
-            )}
+            <MembersAndFollowersModal
+                visible={visibleMembersAndFollowersModal}
+                title={modalWindowTitle}
+                onClose={onCloseModalWindow}
+            />
         </div>
     );
 };

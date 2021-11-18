@@ -108,7 +108,7 @@ const Lists: FC = (): ReactElement => {
                             onMouseLeave={handleLeaveAction}
                         >
                             <>{AddListsIcon}</>
-                            {visibleCreateListAction && <HoverAction actionText={"Create"}/>}
+                            <HoverAction visible={visibleCreateListAction} actionText={"Create"}/>
                         </IconButton>
                     </div>
                     <div className={classes.icon}>
@@ -120,7 +120,7 @@ const Lists: FC = (): ReactElement => {
                                     onMouseLeave={handleLeaveAction}
                                 >
                                     <>{EditIcon}</>
-                                    {visibleMoreAction && <HoverAction actionText={"More"}/>}
+                                    <HoverAction visible={visibleMoreAction} actionText={"More"}/>
                                 </IconButton>
                                 {openPopover ? (
                                     <Link to={`/lists/memberships/${myProfile?.id}`} className={classes.dropdownLink}>
@@ -155,7 +155,7 @@ const Lists: FC = (): ReactElement => {
                             </Typography>
                         ) : (
                             <Typography component={"div"} className={classes.pinnedListsWrapper}>
-                                {pinnedLists.map((pinnedList) => (<PinnedListsItem item={pinnedList}/>))}
+                                {pinnedLists.map((pinnedList) => (<PinnedListsItem pinnedList={pinnedList}/>))}
                             </Typography>
                         )}
                     </Paper>
@@ -178,9 +178,7 @@ const Lists: FC = (): ReactElement => {
                         </Typography>
                         {userLists.map((list) => (<ListsItem isMyList={true} key={list.id} item={list}/>))}
                     </Paper>
-                    {visibleCreateListModal && (
-                        <CreateListsModal visible={visibleCreateListModal} onClose={onCloseCreateListModal}/>
-                    )}
+                    <CreateListsModal visible={visibleCreateListModal} onClose={onCloseCreateListModal}/>
                 </>
             )}
         </Paper>

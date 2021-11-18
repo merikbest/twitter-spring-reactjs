@@ -14,12 +14,18 @@ import {
     PinIcon,
     ReplyIcon,
     ReportIcon,
-    TweetActivityIcon,
-    UnfollowIcon
+    TweetActivityIcon, UnblockIcon,
+    UnfollowIcon, UnmuteIcon
 } from "../../icons";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {ReplyType, Tweet} from "../../store/ducks/tweets/contracts/state";
-import {fetchPinTweet, followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
+import {
+    addUserToBlocklist,
+    addUserToMuteList,
+    fetchPinTweet,
+    followUser,
+    unfollowUser
+} from "../../store/ducks/user/actionCreators";
 import TweetComponentActionsModal from "./TweetComponentActionsModal/TweetComponentActionsModal";
 import {fetchChangeReplyType, fetchDeleteTweet} from "../../store/ducks/tweets/actionCreators";
 import TweetComponentChangeReply from "./TweetComponentChangeReply/TweetComponentChangeReply";
@@ -28,6 +34,7 @@ import {deleteTweetReply} from "../../store/ducks/tweet/actionCreators";
 import ListsModal from "../ListsModal/ListsModal";
 import {TweetActions} from "../TweetComponent/TweetComponent";
 import HoverAction from "../HoverAction/HoverAction";
+import BlockUserModal from "../BlockUserModal/BlockUserModal";
 
 interface TweetComponentActionsProps {
     tweet: Tweet;
@@ -36,6 +43,7 @@ interface TweetComponentActionsProps {
     visibleMoreAction?: boolean;
     handleHoverAction?: (action: TweetActions) => void;
     handleLeaveAction?: () => void;
+    onOpenTweetAnalytics: () => void;
 }
 
 const TweetComponentActions: FC<TweetComponentActionsProps> = (
@@ -45,7 +53,8 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
         activeTab,
         visibleMoreAction,
         handleHoverAction,
-        handleLeaveAction
+        handleLeaveAction,
+        onOpenTweetAnalytics
     }
 ): ReactElement => {
     const classes = useTweetComponentMoreStyles({isFullTweet});
@@ -58,11 +67,14 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
     const [openChangeReplyDropdown, setChangeReplyDropdown] = useState<boolean>(false);
     const [visibleTweetPinModal, setVisibleTweetPinModal] = useState<boolean>(false);
     const [visibleListsModal, setVisibleListsModal] = useState<boolean>(false);
+    const [visibleBlockUserModal, setVisibleBlockUserModal] = useState<boolean>(false);
     const [openSnackBar, setOpenSnackBar] = useState<boolean>(false);
     const [snackBarMessage, setSnackBarMessage] = useState<string>("");
     const [modalTitle, setModalTitle] = useState<string>("");
 
     const follower = myProfile?.followers?.find((follower) => follower.id === tweet.user.id);
+    const isUserMuted = myProfile?.userMutedList?.findIndex(mutedUser => mutedUser.id === tweet.user.id) !== -1;
+    const isUserBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === tweet.user.id) !== -1;
     const isTweetPinned = myProfile?.pinnedTweet?.id === tweet.id;
 
     useEffect(() => {
@@ -160,6 +172,27 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
         setOpenSnackBar(false);
     };
 
+    const onMuteUser = (): void => {
+        dispatch(addUserToMuteList(tweet.user.id!));
+        setSnackBarMessage(`@${tweet.user.username} has been ${isUserMuted ? "unmuted" : "muted"}.`);
+        setOpenSnackBar(true);
+    };
+
+    const onBlockUser = (): void => {
+        dispatch(addUserToBlocklist(tweet.user.id!));
+        setVisibleBlockUserModal(false);
+        setSnackBarMessage(`@${tweet.user.username} has been ${isUserBlocked ? "unblocked" : "blocked"}.`);
+        setOpenSnackBar(true);
+    };
+
+    const onOpenBlockUserModal = (): void => {
+        setVisibleBlockUserModal(true);
+    };
+
+    const onCloseBlockUserModal = (): void => {
+        setVisibleBlockUserModal(false);
+    };
+
     return (
         <div ref={ref}>
             <ClickAwayListener onClickAway={handleClickAwayActionsDropdown}>
@@ -170,7 +203,7 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
                         onMouseLeave={handleLeaveAction}
                     >
                         <span>{EditIcon}</span>
-                        {visibleMoreAction && <HoverAction actionText={"More"}/>}
+                        <HoverAction visible={visibleMoreAction} actionText={"More"}/>
                     </IconButton>
                     {openActionsDropdown ? (
                         <div className={classes.dropdown}>
@@ -214,7 +247,7 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
                                                 Embed Tweet
                                             </Typography>
                                         </ListItem>
-                                        <ListItem>
+                                        <ListItem onClick={onOpenTweetAnalytics}>
                                             <>{TweetActivityIcon}</>
                                             <Typography component={"span"}>
                                                 View Tweet activity
@@ -224,21 +257,12 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
                                 ) : (
                                     <>
                                         <ListItem onClick={handleFollow}>
-                                            {follower ? (
-                                                <>
-                                                    <>{UnfollowIcon}</>
-                                                    <Typography component={"span"}>
-                                                        {`Unfollow @${tweet.user.username}`}
-                                                    </Typography>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <>{FollowIcon}</>
-                                                    <Typography component={"span"}>
-                                                        {`Follow @${tweet.user.username}`}
-                                                    </Typography>
-                                                </>
-                                            )}
+                                            <>
+                                                <>{follower ? UnfollowIcon : FollowIcon}</>
+                                                <Typography component={"span"}>
+                                                    {follower ? "Unfollow" : "Follow"} @{tweet.user.username}
+                                                </Typography>
+                                            </>
                                         </ListItem>
                                         <ListItem onClick={onOpenListsModal}>
                                             <>{AddListsIcon}</>
@@ -246,16 +270,16 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
                                                 {`Add/remove @${tweet.user.username} from Lists`}
                                             </Typography>
                                         </ListItem>
-                                        <ListItem>
-                                            <>{MuteIcon}</>
+                                        <ListItem onClick={onMuteUser}>
+                                            <>{isUserMuted ? UnmuteIcon : MuteIcon}</>
                                             <Typography component={"span"}>
-                                                {`Mute @${tweet.user.username}`}
+                                                {isUserMuted ? "Unmute" : "Mute"} @{tweet.user.username}
                                             </Typography>
                                         </ListItem>
-                                        <ListItem>
-                                            <>{BlockIcon}</>
+                                        <ListItem onClick={onOpenBlockUserModal}>
+                                            <>{isUserBlocked ? UnblockIcon : BlockIcon}</>
                                             <Typography component={"span"}>
-                                                {`Block @${tweet.user.username}`}
+                                                {isUserBlocked ? "Unblock" : "Block"} @{tweet.user.username}
                                             </Typography>
                                         </ListItem>
                                         <ListItem>
@@ -298,7 +322,14 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
                 onPinUserTweet={onPinUserTweet}
                 onDeleteUserTweet={onDeleteUserTweet}
             />
-            {visibleListsModal && <ListsModal user={tweet.user} visible={visibleListsModal} onClose={onCloseListsModal}/>}
+            <BlockUserModal
+                username={tweet.user.username}
+                isUserBlocked={isUserBlocked}
+                visible={visibleBlockUserModal}
+                onClose={onCloseBlockUserModal}
+                onBlockUser={onBlockUser}
+            />
+            <ListsModal user={tweet.user} visible={visibleListsModal} onClose={onCloseListsModal}/>
         </div>
     );
 };

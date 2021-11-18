@@ -67,7 +67,7 @@ const UploadImages: FC<UploadImageProps> = (
                     color="primary"
                 >
                     <>{MediaIcon}</>
-                    {visibleAddMediaAction && <HoverAction actionText={"Media"}/>}
+                    <HoverAction visible={visibleAddMediaAction} actionText={"Media"}/>
                 </IconButton>
             </div>
             <input ref={inputRef} type="file" id="upload-input" hidden/>

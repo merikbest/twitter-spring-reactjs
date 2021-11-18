@@ -33,7 +33,7 @@ const CloseButton: FC<CloseButtonProps> = ({onClose}): ReactElement => {
                 aria-label="close"
             >
                 <CloseIcon style={{fontSize: 26}} color="secondary"/>
-                {visibleCloseAction && <HoverAction actionText={"Close"}/>}
+                <HoverAction visible={visibleCloseAction} actionText={"Close"}/>
             </IconButton>
         </div>
     );

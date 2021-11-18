@@ -9,15 +9,17 @@ import {Lists} from "../../../../store/ducks/lists/contracts/state";
 import ManageMembersItem from "./ManageMembersItem/ManageMembersItem";
 import ManageMembersSuggested from "./ManageMembersSuggested/ManageMembersSuggested";
 import {ArrowIcon} from "../../../../icons";
+import {useSelector} from "react-redux";
+import {selectListItem} from "../../../../store/ducks/list/selectors";
 
 interface ManageMembersModalProps {
-    list: Lists;
     visible?: boolean;
     onClose: () => void;
 }
 
-const ManageMembersModal: FC<ManageMembersModalProps> = ({list, visible, onClose}): ReactElement | null => {
+const ManageMembersModal: FC<ManageMembersModalProps> = ({visible, onClose}): ReactElement | null => {
     const classes = useManageMembersModalStyles();
+    const list = useSelector(selectListItem);
     const [activeTab, setActiveTab] = useState<number>(0);
 
     const handleChangeTab = (event: ChangeEvent<{}>, newValue: number): void => {
@@ -45,12 +47,12 @@ const ManageMembersModal: FC<ManageMembersModalProps> = ({list, visible, onClose
             <DialogContent className={classes.content}>
                 <div className={classes.tabs}>
                     <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
-                        <Tab className={classes.tab} label={`Members (${list.members.length})`}/>
+                        <Tab className={classes.tab} label={`Members (${list?.members.length})`}/>
                         <Tab className={classes.tab} label="Suggested"/>
                     </Tabs>
                 </div>
-                {(activeTab === 0) && (list.members.map((member) => <ManageMembersItem item={list} member={member}/>))}
-                {(activeTab === 1) && (<ManageMembersSuggested list={list}/>)}
+                {(activeTab === 0) && (list?.members.map((member) => <ManageMembersItem item={list} member={member}/>))}
+                {(activeTab === 1) && (<ManageMembersSuggested/>)}
             </DialogContent>
         </Dialog>
     );

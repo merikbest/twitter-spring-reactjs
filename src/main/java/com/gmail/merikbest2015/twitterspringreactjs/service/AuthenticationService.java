@@ -6,6 +6,8 @@ import java.util.Map;
 
 public interface AuthenticationService {
 
+    User getAuthenticatedUser();
+
     Map<String, Object> login(String email, String password);
 
     String registration(String email, String username, String birthday);

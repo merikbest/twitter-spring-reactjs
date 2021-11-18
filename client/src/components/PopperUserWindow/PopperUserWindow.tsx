@@ -12,12 +12,20 @@ import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 import {followProfile, unfollowProfile} from "../../store/ducks/userProfile/actionCreators";
 
 interface PopperUserWindowProps {
+    visible?: boolean;
     isTweetComponent?: boolean;
     isTweetImageModal?: boolean;
     user: User;
 }
 
-const PopperUserWindow: FC<PopperUserWindowProps> = ({user, isTweetComponent, isTweetImageModal}): ReactElement => {
+const PopperUserWindow: FC<PopperUserWindowProps> = (
+    {
+        visible,
+        user,
+        isTweetComponent,
+        isTweetImageModal
+    }
+): ReactElement | null => {
     const classes = usePopperUserWindowStyles({isTweetComponent});
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
@@ -33,6 +41,10 @@ const PopperUserWindow: FC<PopperUserWindowProps> = ({user, isTweetComponent, is
         dispatch(unfollowUser(user));
         dispatch(unfollowProfile(user));
     };
+
+    if (!visible) {
+        return null;
+    }
 
     return (
         <div

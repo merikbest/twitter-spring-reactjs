@@ -116,6 +116,23 @@ public class UserController {
         return ResponseEntity.ok(userMapper.processPinTweet(tweetId));
     }
 
+    @GetMapping("/blocked")
+    public ResponseEntity<List<UserResponse>> getBlockList() {
+        return ResponseEntity.ok(userMapper.getBlockList());
+    }
 
+    @GetMapping("/blocked/{userId}")
+    public ResponseEntity<UserResponse> processBlockList(@PathVariable Long userId) {
+        return ResponseEntity.ok(userMapper.processBlockList(userId));
+    }
 
+    @GetMapping("/muted")
+    public ResponseEntity<List<UserResponse>> getMutedList() {
+        return ResponseEntity.ok(userMapper.getMutedList());
+    }
+
+    @GetMapping("/muted/{userId}")
+    public ResponseEntity<UserResponse> processMutedList(@PathVariable Long userId) {
+        return ResponseEntity.ok(userMapper.processMutedList(userId));
+    }
 }

@@ -34,7 +34,7 @@ export const BackButton: FC = (): ReactElement => {
                 color="primary"
             >
                 <ArrowBackIcon/>
-                {visibleBackAction && <HoverAction actionText={"Back"}/>}
+                <HoverAction visible={visibleBackAction} actionText={"Back"}/>
             </IconButton>
         </div>
     );

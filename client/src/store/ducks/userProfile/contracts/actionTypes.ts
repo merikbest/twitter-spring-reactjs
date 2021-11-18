@@ -1,7 +1,6 @@
 import {Action} from "redux";
 import {User} from "../../user/contracts/state";
 import {LoadingStatus} from "../../../types";
-import {UserActionsType} from "../../user/contracts/actionTypes";
 
 export enum UserProfileActionsType {
     SET_USER = 'userProfile/SET_USER',

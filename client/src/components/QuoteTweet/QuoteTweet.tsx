@@ -70,7 +70,10 @@ const QuoteTweet: FC<QuoteTweetProps> = (
                     ) : (
                         <>{RetweetOutlinedIcon}</>)
                     }
-                    {visibleRetweetAction && <HoverAction actionText={isTweetRetweetedByMe ? "Undo Retweet" : "Retweet"}/>}
+                    <HoverAction
+                        visible={visibleRetweetAction}
+                        actionText={isTweetRetweetedByMe ? "Undo Retweet" : "Retweet"}
+                    />
                 </IconButton>
                 {(retweets.length !== 0) && (<span id={"retweets"}>{retweets.length}</span>)}
                 {open && (

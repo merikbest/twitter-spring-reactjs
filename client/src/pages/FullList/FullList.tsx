@@ -171,18 +171,12 @@ const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactEl
                             </>
                         )}
                     </div>
-                    {visibleEditListModal && (
-                        <EditListModal list={list!} visible={visibleEditListModal} onClose={onCloseCreateListModal}/>
-                    )}
-                    {visibleMembersAndFollowersModal && (
-                        <MembersAndFollowersModal
-                            list={list!}
-                            users={(modalWindowTitle === "List members") ? list!.members : list!.followers}
-                            visible={visibleMembersAndFollowersModal}
-                            title={modalWindowTitle}
-                            onClose={onCloseModalWindow}
-                        />
-                    )}
+                    <EditListModal visible={visibleEditListModal} onClose={onCloseCreateListModal}/>
+                    <MembersAndFollowersModal
+                        visible={visibleMembersAndFollowersModal}
+                        title={modalWindowTitle}
+                        onClose={onCloseModalWindow}
+                    />
                 </>
             )}
         </Paper>

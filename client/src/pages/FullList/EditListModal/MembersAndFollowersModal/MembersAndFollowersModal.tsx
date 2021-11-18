@@ -1,15 +1,14 @@
-import React, {FC, ReactElement} from 'react';
-import {Dialog, DialogContent, DialogTitle} from "@material-ui/core";
+import React, {FC, ReactElement, useEffect, useState} from 'react';
+import {useSelector} from "react-redux";
+import {Dialog, DialogContent, DialogTitle, Typography} from "@material-ui/core";
 
 import {useMembersAndFollowersModalStyles} from "./MembersAndFollowersModalStyles";
 import {User} from "../../../../store/ducks/user/contracts/state";
 import ManageMembersItem from "../ManageMembersModal/ManageMembersItem/ManageMembersItem";
-import {Lists} from "../../../../store/ducks/lists/contracts/state";
 import CloseButton from "../../../../components/CloseButton/CloseButton";
+import {selectListItem} from "../../../../store/ducks/list/selectors";
 
 interface MembersAndFollowersModalProps {
-    list: Lists;
-    users: User[];
     visible: boolean;
     title: string;
     onClose: () => void;
@@ -17,14 +16,22 @@ interface MembersAndFollowersModalProps {
 
 const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
     {
-        list,
-        users,
         visible,
         title,
         onClose
     }
 ): ReactElement | null => {
     const classes = useMembersAndFollowersModalStyles();
+    const [users, setUsers] = useState<User[]>([]);
+    const list = useSelector(selectListItem);
+
+    useEffect(() => {
+        if (title === "List members") {
+            setUsers(list?.members!);
+        } else {
+            setUsers(list?.followers!);
+        }
+    }, [visible]);
 
     if (!visible) {
         return null;
@@ -44,23 +51,30 @@ const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
         >
             <DialogTitle id="form-dialog-title">
                 <CloseButton onClose={onClose}/>
-                {title}
+                <Typography component={"span"}>
+                    {title}
+                </Typography>
             </DialogTitle>
             <DialogContent className={classes.content}>
                 {(users.length !== 0) ? (
                     users.map((user) => <ManageMembersItem item={list} member={user}/>)
                 ) : (
-                    (title === "List members") ? (
-                        <div className={classes.infoWrapper}>
-                            <div className={classes.title}>There isn’t anyone in this List</div>
-                            <div className={classes.text}>When people get added, they’ll show up here.</div>
-                        </div>
-                    ) : (
-                        <div className={classes.infoWrapper}>
-                            <div className={classes.title}>There aren’t any followers of this List</div>
-                            <div className={classes.text}>When people follow, they’ll show up here.</div>
-                        </div>
-                    )
+                    <div className={classes.infoWrapper}>
+                        <Typography component={"div"} className={classes.title}>
+                            {(title === "List members") ? (
+                                "There isn’t anyone in this List"
+                            ) : (
+                                "There aren’t any followers of this List"
+                            )}
+                        </Typography>
+                        <Typography component={"div"} className={classes.text}>
+                            {(title === "List members") ? (
+                                "When people get added, they’ll show up here."
+                            ) : (
+                                "When people follow, they’ll show up here."
+                            )}
+                        </Typography>
+                    </div>
                 )}
             </DialogContent>
         </Dialog>

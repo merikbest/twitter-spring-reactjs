@@ -176,4 +176,19 @@ public class UserMapper {
     public UserResponse updatePrivateProfile(SettingsRequest request) {
         return convertToUserResponse(userSettingsService.updatePrivateProfile(request.isPrivateProfile()));
     }
+
+    public List<UserResponse> getBlockList() {
+        return convertListToResponse(userService.getBlockList());
+    }
+
+    public UserResponse processBlockList(Long userId) {
+        return convertToUserResponse(userService.processBlockList(userId));
+    }
+    public List<UserResponse> getMutedList() {
+        return convertListToResponse(userService.getMutedList());
+    }
+
+    public UserResponse processMutedList(Long userId) {
+        return convertToUserResponse(userService.processMutedList(userId));
+    }
 }

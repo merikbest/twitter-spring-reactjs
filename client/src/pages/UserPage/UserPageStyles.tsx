@@ -120,16 +120,21 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         },
     },
     primaryButton: {
-        marginTop: '84px',
-        fontSize: 15,
-        fontWeight: 700,
-        width: 102,
-        border: '1px solid',
-        borderRadius: '25px',
-        padding: '8px 15px',
-        '&:hover': {
-            backgroundColor: 'rgb(202, 32, 85)',
+        "&.MuiButtonBase-root": {
+            marginTop: '84px',
+            fontSize: 15,
+            fontWeight: 700,
+            width: 102,
+            border: '1px solid',
+            borderRadius: '25px',
+            padding: '8px 15px',
+            '&:hover': {
+                backgroundColor: 'rgb(202, 32, 85)',
+            },
         },
+    },
+    blockButton: {
+        backgroundColor: "rgb(244, 33, 46)",
     },
     fullName: {
         fontWeight: 800,
@@ -190,5 +195,18 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         fontWeight: 400,
         marginBottom: 16,
         color: "rgb(83, 100, 113)",
+    },
+    snackBar: {
+        "& .MuiSnackbarContent-root": {
+            width: 179,
+            height: 44,
+            padding: 0,
+            backgroundColor: "rgb(29, 161, 242)",
+            "& .MuiSnackbarContent-message": {
+                fontSize: 15,
+                margin: "0 auto",
+                textAlign: "center",
+            },
+        },
     },
 }));

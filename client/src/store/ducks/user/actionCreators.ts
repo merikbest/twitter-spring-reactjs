@@ -1,6 +1,8 @@
 import {Settings, User, UserState} from "./contracts/state";
 import {
     AddTweetToBookmarksActionInterface,
+    AddUserToBlocklistActionInterface,
+    AddUserToMuteListActionInterface,
     FetchPinTweetActionInterface,
     FetchReadMessagesActionInterface,
     FetchSignInActionInterface,
@@ -105,6 +107,16 @@ export const setUnreadMessage = (payload: ChatMessage): SetUnreadMessageActionIn
 
 export const setNewNotification = (): SetNewNotificationActionInterface => ({
     type: UserActionsType.SET_NEW_NOTIFICATION,
+});
+
+export const addUserToBlocklist = (payload: number): AddUserToBlocklistActionInterface => ({
+    type: UserActionsType.ADD_USER_TO_BLOCKLIST,
+    payload,
+});
+
+export const addUserToMuteList = (payload: number): AddUserToMuteListActionInterface => ({
+    type: UserActionsType.ADD_USER_TO_MUTELIST,
+    payload,
 });
 
 export const updateUsername = (payload: Settings): UpdateUsernameActionInterface => ({

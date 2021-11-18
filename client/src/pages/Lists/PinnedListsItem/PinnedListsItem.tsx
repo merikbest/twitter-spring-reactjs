@@ -1,32 +1,32 @@
-import React, {FC, ReactElement} from 'react';
+import React, {FC, ReactElement, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {Avatar, Typography} from "@material-ui/core";
 
 import {usePinnedListsItemStyles} from "./PinnedListsItemStyles";
 import {Lists} from "../../../store/ducks/lists/contracts/state";
 import PopperListWindow from "../PopperListWindow/PopperListWindow";
-import {withHoverUser} from "../../../hoc/withHoverUser";
 
-interface PinnedListsItemProps<T> {
-    item?: T;
-    visiblePopperWindow?: boolean;
-    handleHover?: () => void;
-    handleLeave?: () => void;
+interface PinnedListsItemProps {
+    pinnedList: Lists;
 }
 
-const PinnedListsItem: FC<PinnedListsItemProps<Lists>> = (
-    {
-        item: pinnedList,
-        visiblePopperWindow,
-        handleHover,
-        handleLeave
-    }
-): ReactElement => {
+const PinnedListsItem: FC<PinnedListsItemProps> = ({pinnedList}): ReactElement => {
     const classes = usePinnedListsItemStyles();
+    const [visiblePopperListWindow, setVisiblePopperListWindow] = useState<boolean>(false);
+    const [delayHandler, setDelayHandler] = useState<any>(null);
+
+    const handleHoverList = (): void => {
+        setDelayHandler(setTimeout(() => setVisiblePopperListWindow(true), 1000));
+    };
+
+    const handleLeaveList  = (): void => {
+        clearTimeout(delayHandler);
+        setVisiblePopperListWindow(false);
+    };
 
     return (
         <Link to={`/lists/${pinnedList?.id}`} className={classes.link}>
-            <div className={classes.pinnedListWrapper} onMouseEnter={handleHover} onMouseLeave={handleLeave}>
+            <div className={classes.pinnedListWrapper} onMouseEnter={handleHoverList} onMouseLeave={handleLeaveList}>
                 <Avatar
                     variant="square"
                     className={classes.listAvatar}
@@ -35,10 +35,10 @@ const PinnedListsItem: FC<PinnedListsItemProps<Lists>> = (
                 <Typography component={"div"} className={classes.pinnedListName}>
                     {pinnedList?.name}
                 </Typography>
-                {visiblePopperWindow && <PopperListWindow list={pinnedList!}/>}
+                <PopperListWindow visible={visiblePopperListWindow} list={pinnedList!}/>
             </div>
         </Link>
     );
 };
 
-export default withHoverUser(PinnedListsItem);
+export default PinnedListsItem;

@@ -1,4 +1,5 @@
 import React, {FC, ReactElement, useState} from 'react';
+import {useSelector} from "react-redux";
 import {InputAdornment, Typography} from "@material-ui/core";
 
 import {useManageMembersSuggestedStyles} from "./ManageMembersSuggestedStyles";
@@ -6,15 +7,12 @@ import {ManageMembersInput} from "./ManageMembersInput/ManageMembersInput";
 import {User} from "../../../../../store/ducks/user/contracts/state";
 import {UserApi} from "../../../../../services/api/userApi";
 import ManageMembersItem from "../ManageMembersItem/ManageMembersItem";
-import {Lists} from "../../../../../store/ducks/lists/contracts/state";
 import {SearchIcon} from "../../../../../icons";
+import {selectListItem} from "../../../../../store/ducks/list/selectors";
 
-interface ManageMembersSuggestedProps {
-    list: Lists;
-}
-
-const ManageMembersSuggested: FC<ManageMembersSuggestedProps> = ({list}): ReactElement => {
+const ManageMembersSuggested: FC = (): ReactElement => {
     const classes = useManageMembersSuggestedStyles();
+    const list = useSelector(selectListItem);
     const [searchText, setSearchText] = useState<string>("");
     const [users, setUsers] = useState<User[]>([]);
 

@@ -33,6 +33,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final MailSender mailSender;
 
     @Override
+    public User getAuthenticatedUser() {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        return userRepository.findByEmail(principal.getName());
+    }
+
+    @Override
     public Map<String, Object> login(String email, String password) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));

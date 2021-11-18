@@ -16,6 +16,7 @@ public class NotificationUserResponse {
     private String location;
     private String about;
     private String website;
+    private boolean privateProfile;
     private String birthday;
     private LocalDateTime registrationDate;
     private Long tweetCount;

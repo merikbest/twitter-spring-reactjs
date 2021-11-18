@@ -32,6 +32,8 @@ export interface User {
     pinnedTweet?: Tweet;
     bookmarks?: Bookmark[];
     unreadMessages?: ChatMessage[];
+    userMutedList?: User[];
+    userBlockedList?: User[];
     followers?: User[];
     following?: User[];
 }

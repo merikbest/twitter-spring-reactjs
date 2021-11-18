@@ -3,6 +3,8 @@ import {setUserData, setUserLoadingStatus} from "./actionCreators";
 import {AuthUser, User} from "./contracts/state";
 import {
     AddTweetToBookmarksActionInterface,
+    AddUserToBlocklistActionInterface,
+    AddUserToMuteListActionInterface,
     FetchPinTweetActionInterface,
     FetchReadMessagesActionInterface,
     FetchSignInActionInterface,
@@ -117,6 +119,26 @@ export function* fetchReadMessagesRequest({payload}: FetchReadMessagesActionInte
     }
 }
 
+export function* addUserToBlocklistRequest({payload}: AddUserToBlocklistActionInterface) {
+    try {
+        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+        const item: User = yield call(UserApi.processBlockList, payload);
+        yield put(setUserData(item));
+    } catch (e) {
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
+export function* addUserToMuteListRequest({payload}: AddUserToMuteListActionInterface) {
+    try {
+        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+        const item: User = yield call(UserApi.processMutedList, payload);
+        yield put(setUserData(item));
+    } catch (e) {
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
 export function* updateUsernameRequest({payload}: UpdateUsernameActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
@@ -215,6 +237,8 @@ export function* userSaga() {
     yield takeLatest(UserActionsType.FETCH_PIN_TWEET, fetchPinTweet);
     yield takeLatest(UserActionsType.ADD_TWEET_TO_BOOKMARKS, fetchAddTweetToBookmarksRequest);
     yield takeLatest(UserActionsType.FETCH_READ_MESSAGES, fetchReadMessagesRequest);
+    yield takeLatest(UserActionsType.ADD_USER_TO_BLOCKLIST, addUserToBlocklistRequest);
+    yield takeLatest(UserActionsType.ADD_USER_TO_MUTELIST, addUserToMuteListRequest);
     yield takeLatest(UserActionsType.UPDATE_USERNAME, updateUsernameRequest);
     yield takeLatest(UserActionsType.UPDATE_EMAIL, updateEmailRequest);
     yield takeLatest(UserActionsType.UPDATE_PHONE, updatePhoneRequest);

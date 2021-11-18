@@ -408,7 +408,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
                             onMouseLeave={handleLeaveAction}
                         >
                             <>{GifIcon}</>
-                            {visibleAddGifAction && <HoverAction actionText={"GIF"}/>}
+                            <HoverAction visible={visibleAddGifAction} actionText={"GIF"}/>
                         </IconButton>
                     </div>
                     {(buttonName !== "Reply") && (
@@ -421,7 +421,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
                                 color="primary"
                             >
                                 <>{PullIcon}</>
-                                {visibleAddPollAction && <HoverAction actionText={"Poll"}/>}
+                                <HoverAction visible={visibleAddPollAction} actionText={"Poll"}/>
                             </IconButton>
                         </div>
                     )}
@@ -432,7 +432,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
                             color="primary"
                         >
                             <>{EmojiIcon}</>
-                            {visibleAddEmojiAction && <HoverAction actionText={"Emoji"}/>}
+                            <HoverAction visible={visibleAddEmojiAction} actionText={"Emoji"}/>
                         </IconButton>
                     </div>
                     {(buttonName !== "Reply") && (
@@ -445,7 +445,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
                                 color="primary"
                             >
                                 <>{ScheduleIcon}</>
-                                {visibleAddScheduleAction && <HoverAction actionText={"Schedule"}/>}
+                                <HoverAction visible={visibleAddScheduleAction} actionText={"Schedule"}/>
                             </IconButton>
                         </div>
                     )}
@@ -513,22 +513,18 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
                     onClose={onCloseSnackBar}
                     autoHideDuration={3000}
                 />
-                {visibleScheduleModal && (
-                    <ScheduleModal
-                        visible={visibleScheduleModal}
-                        selectedScheduleDate={selectedScheduleDate}
-                        onClose={onCloseScheduleModal}
-                        handleScheduleDate={handleScheduleDate}
-                        clearScheduleDate={clearScheduleDate}
-                        onOpenUnsentTweetsModal={onOpenUnsentTweetsModal}
-                    />
-                )}
-                {visibleUnsentTweetsModal && (
-                    <UnsentTweetsModal
-                        visible={visibleUnsentTweetsModal}
-                        onClose={onCloseUnsentTweetsModal}
-                    />
-                )}
+                <ScheduleModal
+                    visible={visibleScheduleModal}
+                    selectedScheduleDate={selectedScheduleDate}
+                    onClose={onCloseScheduleModal}
+                    handleScheduleDate={handleScheduleDate}
+                    clearScheduleDate={clearScheduleDate}
+                    onOpenUnsentTweetsModal={onOpenUnsentTweetsModal}
+                />
+                <UnsentTweetsModal
+                    visible={visibleUnsentTweetsModal}
+                    onClose={onCloseUnsentTweetsModal}
+                />
             </div>
         </div>
     );

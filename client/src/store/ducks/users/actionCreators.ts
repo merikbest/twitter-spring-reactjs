@@ -1,10 +1,12 @@
 import {User} from "../user/contracts/state";
 import {
+    FetchBlockedUsersActionInterface,
+    FetchMutedUsersActionInterface,
     FetchRelevantUsersActionInterface,
+    FetchUsersActionInterface,
     SetUsersActionInterface,
     SetUsersLoadingStatusActionInterface,
-    UsersActionsType,
-    FetchUsersActionInterface
+    UsersActionsType
 } from './contracts/actionTypes';
 import {UsersState} from "./contracts/state";
 
@@ -19,6 +21,14 @@ export const fetchUsers = (): FetchUsersActionInterface => ({
 
 export const fetchRelevantUsers = (): FetchRelevantUsersActionInterface => ({
     type: UsersActionsType.FETCH_RELEVANT_USERS
+});
+
+export const fetchBlockedUsers = (): FetchBlockedUsersActionInterface => ({
+    type: UsersActionsType.FETCH_BLOCKED_USERS
+});
+
+export const fetchMutedUsers = (): FetchMutedUsersActionInterface => ({
+    type: UsersActionsType.FETCH_MUTED_USERS
 });
 
 export const setUsersLoadingState = (payload: UsersState["loadingState"]): SetUsersLoadingStatusActionInterface => ({

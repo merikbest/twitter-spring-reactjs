@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useState} from 'react';
-import {ClickAwayListener, IconButton, List, ListItem, Snackbar, Typography} from "@material-ui/core";
 import {Link, useLocation} from 'react-router-dom';
+import {ClickAwayListener, IconButton, List, ListItem, Snackbar, Typography} from "@material-ui/core";
 
 import {useUserPageActionsStyles} from "./UserPageActionsStyles";
 import {
@@ -13,7 +13,9 @@ import {
     MuteIcon,
     ReportIcon,
     ShareIcon,
-    TopicIcon
+    TopicIcon,
+    UnblockIcon,
+    UnmuteIcon
 } from "../../../icons";
 import {User} from "../../../store/ducks/user/contracts/state";
 import ListsModal from "../../../components/ListsModal/ListsModal";
@@ -22,9 +24,21 @@ import {CLIENT_URL} from "../../../util/url";
 
 interface UserPageActionsProps {
     user: User;
+    isUserMuted: boolean;
+    isUserBlocked: boolean;
+    onMuteUser: () => void;
+    onOpenBlockUserModal: () => void;
 }
 
-const UserPageActions: FC<UserPageActionsProps> = ({user}): ReactElement => {
+const UserPageActions: FC<UserPageActionsProps> = (
+    {
+        user,
+        isUserMuted,
+        isUserBlocked,
+        onMuteUser,
+        onOpenBlockUserModal
+    }
+): ReactElement => {
     const classes = useUserPageActionsStyles();
     const location = useLocation();
 
@@ -50,6 +64,11 @@ const UserPageActions: FC<UserPageActionsProps> = ({user}): ReactElement => {
 
     const onCopyLinkToProfile = (): void => {
         setOpenSnackBar(true);
+        setOpen(false);
+    };
+
+    const handleMuteUser = () => {
+        onMuteUser();
         setOpen(false);
     };
 
@@ -96,30 +115,34 @@ const UserPageActions: FC<UserPageActionsProps> = ({user}): ReactElement => {
                                     View Moments
                                 </Typography>
                             </ListItem>
-                            <ListItem>
-                                <>{ShareIcon}</>
+                            {!isUserBlocked && (
+                                <>
+                                    <ListItem>
+                                        <>{ShareIcon}</>
+                                        <Typography component={"span"}>
+                                            Share profile via...
+                                        </Typography>
+                                    </ListItem>
+                                    <CopyToClipboard text={CLIENT_URL + location.pathname}>
+                                        <ListItem onClick={onCopyLinkToProfile}>
+                                            <>{LinkIcon}</>
+                                            <Typography component={"span"}>
+                                                Copy link to profile
+                                            </Typography>
+                                        </ListItem>
+                                    </CopyToClipboard>
+                                    <ListItem onClick={handleMuteUser}>
+                                        <>{isUserMuted ? UnmuteIcon : MuteIcon}</>
+                                        <Typography component={"span"}>
+                                            {isUserMuted ? "Unmute" : "Mute"} @{user.username}
+                                        </Typography>
+                                    </ListItem>
+                                </>
+                            )}
+                            <ListItem onClick={onOpenBlockUserModal}>
+                                <>{isUserBlocked ? UnblockIcon : BlockIcon}</>
                                 <Typography component={"span"}>
-                                    Share profile via...
-                                </Typography>
-                            </ListItem>
-                            <CopyToClipboard text={CLIENT_URL + location.pathname}>
-                                <ListItem onClick={onCopyLinkToProfile}>
-                                    <>{LinkIcon}</>
-                                    <Typography component={"span"}>
-                                        Copy link to profile
-                                    </Typography>
-                                </ListItem>
-                            </CopyToClipboard>
-                            <ListItem>
-                                <>{MuteIcon}</>
-                                <Typography component={"span"}>
-                                    Mute @{user.username}
-                                </Typography>
-                            </ListItem>
-                            <ListItem>
-                                <>{BlockIcon}</>
-                                <Typography component={"span"}>
-                                    Block @{user.username}
+                                    {isUserBlocked ? "Unblock" : "Block"} @{user.username}
                                 </Typography>
                             </ListItem>
                             <ListItem>
@@ -131,7 +154,7 @@ const UserPageActions: FC<UserPageActionsProps> = ({user}): ReactElement => {
                         </List>
                     </div>
                 ) : null}
-                {visibleListsModal && <ListsModal user={user} visible={visibleListsModal} onClose={onCloseListsModal}/>}
+                <ListsModal user={user} visible={visibleListsModal} onClose={onCloseListsModal}/>
                 <Snackbar
                     className={classes.snackBar}
                     anchorOrigin={{horizontal: "center", vertical: "bottom"}}

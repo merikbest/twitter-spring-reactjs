@@ -23,6 +23,8 @@ export enum UserActionsType {
     FETCH_READ_MESSAGES = 'user/FETCH_READ_MESSAGES',
     SET_UNREAD_MESSAGE = 'user/SET_UNREAD_MESSAGE',
     SET_NEW_NOTIFICATION = 'user/SET_NEW_NOTIFICATION',
+    ADD_USER_TO_BLOCKLIST = 'user/ADD_USER_TO_BLOCKLIST',
+    ADD_USER_TO_MUTELIST = 'user/ADD_USER_TO_MUTELIST',
     UPDATE_USERNAME = 'user/UPDATE_USERNAME',
     UPDATE_EMAIL = 'user/UPDATE_EMAIL',
     UPDATE_PHONE = 'user/UPDATE_PHONE',
@@ -108,6 +110,16 @@ export interface SetUnreadMessageActionInterface extends Action<UserActionsType>
 
 export interface SetNewNotificationActionInterface extends Action<UserActionsType> {
     type: UserActionsType.SET_NEW_NOTIFICATION;
+}
+
+export interface AddUserToBlocklistActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.ADD_USER_TO_BLOCKLIST;
+    payload: number;
+}
+
+export interface AddUserToMuteListActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.ADD_USER_TO_MUTELIST;
+    payload: number;
 }
 
 export interface UpdateUsernameActionInterface extends Action<UserActionsType> {

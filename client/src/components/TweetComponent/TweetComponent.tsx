@@ -163,7 +163,7 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
                             <span className={classes.headerText}>@{tweet?.user.username}</span>&nbsp;
                             <span className={classes.headerText}>·</span>&nbsp;
                             <span className={classes.headerText}>{formatDate(new Date(tweet!.dateTime))}</span>
-                            {visiblePopperWindow && <PopperUserWindow user={tweet!.user} isTweetComponent={true}/>}
+                            <PopperUserWindow visible={visiblePopperWindow} user={tweet!.user} isTweetComponent={true}/>
                         </a>
                         <TweetComponentActions
                             tweet={tweet!}
@@ -172,6 +172,7 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
                             visibleMoreAction={visibleMoreAction}
                             handleHoverAction={handleHoverAction}
                             handleLeaveAction={handleLeaveAction}
+                            onOpenTweetAnalytics={onOpenTweetAnalyticsModalWindow}
                         />
                     </div>
                     <Typography
@@ -241,7 +242,7 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
                                 onMouseLeave={handleLeaveAction}
                             >
                                 <>{ReplyIcon}</>
-                                {visibleReplyAction && <HoverAction actionText={"Reply"}/>}
+                                <HoverAction visible={visibleReplyAction} actionText={"Reply"}/>
                             </IconButton>
                             {(tweet?.replies?.length !== 0) && (<span>{tweet?.replies?.length}</span>)}
                         </div>
@@ -265,7 +266,7 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
                                 ) : (
                                     <>{LikeOutlinedIcon}</>
                                 )}
-                                {visibleLikeAction && <HoverAction actionText={isTweetLiked ? "Unlike" : "Like"}/>}
+                                <HoverAction visible={visibleLikeAction} actionText={isTweetLiked ? "Unlike" : "Like"}/>
                             </IconButton>
                             {(tweet?.likedTweets.length !== 0) && (<span>{tweet?.likedTweets.length}</span>)}
                         </div>
@@ -284,7 +285,7 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
                                     onMouseLeave={handleLeaveAction}
                                 >
                                     <>{AnalyticsIcon}</>
-                                    {visibleAnalyticsAction && <HoverAction actionText={"Analytics"}/>}
+                                    <HoverAction visible={visibleAnalyticsAction} actionText={"Analytics"}/>
                                 </IconButton>
                             </div>
                         )}

@@ -131,6 +131,18 @@ public class User {
     @ManyToMany(mappedBy = "participants")
     private List<Chat> chats;
 
+    @OneToMany
+    @JoinTable(name = "user_muted",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "muted_user_id"))
+    private List<User> userMutedList;
+
+    @OneToMany
+    @JoinTable(name = "user_blocked",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "blocked_user_id"))
+    private List<User> userBlockedList;
+
     @ManyToMany
     @JoinTable(name = "unread_messages",
             joinColumns = @JoinColumn(name = "user_id"),

@@ -99,7 +99,7 @@ const ShareTweet: FC<ShareTweetProps> = (
                         onMouseLeave={handleLeaveAction}
                     >
                         <>{ShareIcon}</>
-                        {visibleShareAction && <HoverAction actionText={"Share"}/>}
+                        <HoverAction visible={visibleShareAction} actionText={"Share"}/>
                     </IconButton>
                     {open ? (
                         <div className={classes.dropdown}>

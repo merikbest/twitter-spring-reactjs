@@ -78,4 +78,20 @@ export const UserApi = {
         const data = await axios.get<Response<User>>(API_URL + '/user/pin/tweet/' + tweetId);
         return data.data;
     },
+    async getBlockList(): Promise<User[]> {
+        const {data} = await axios.get<User[]>(API_URL + '/user/blocked');
+        return data;
+    },
+    async getMutedList(): Promise<User[]> {
+        const {data} = await axios.get<User[]>(API_URL + '/user/muted');
+        return data;
+    },
+    async processBlockList(userId: number): Promise<User> {
+        const {data} = await axios.get<User>(API_URL + `/user/blocked/${userId}`);
+        return data;
+    },
+    async processMutedList(userId: number): Promise<User> {
+        const {data} = await axios.get<User>(API_URL + `/user/muted/${userId}`);
+        return data;
+    },
 };

@@ -9,6 +9,7 @@ import format from 'date-fns/format';
 import usLang from 'date-fns/locale/en-US/index';
 import SockJS from "sockjs-client";
 import {CompatClient, Stomp} from "@stomp/stompjs";
+import {compose} from "redux";
 
 import {selectIsTweetLoading, selectTweetData} from '../../store/ducks/tweet/selectors';
 import {fetchTweetData, setTweetData} from '../../store/ducks/tweet/actionCreators';
@@ -16,7 +17,7 @@ import {fetchLikeTweet, fetchRetweet} from "../../store/ducks/tweets/actionCreat
 import {selectUserData} from "../../store/ducks/user/selectors";
 import UsersListModal from "../../components/UsersListModal/UsersListModal";
 import {AddTweetForm} from "../../components/AddTweetForm/AddTweetForm";
-import TweetComponent, {TweetActions, TweetComponentProps} from "../../components/TweetComponent/TweetComponent";
+import TweetComponent, {TweetActions} from "../../components/TweetComponent/TweetComponent";
 import {useFullTweetStyles} from "./FullTweetStyles";
 import {DEFAULT_PROFILE_IMG, WS_URL} from "../../util/url";
 import {
@@ -42,8 +43,8 @@ import YouTubeVideo from "../../components/YouTubeVideo/YouTubeVideo";
 import SmallLinkPreview from "../../components/SmallLinkPreview/SmallLinkPreview";
 import LargeLinkPreview from "../../components/LargeLinkPreview/LargeLinkPreview";
 import HoverAction from "../../components/HoverAction/HoverAction";
-import {compose} from "redux";
 import {HoverActionProps, withHoverAction} from "../../hoc/withHoverAction";
+import TweetAnalyticsModal from "../../components/TweetAnalyticsModal/TweetAnalyticsModal";
 
 let stompClient: CompatClient | null = null;
 
@@ -74,6 +75,7 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
     const isLoading = useSelector(selectIsTweetLoading);
     const params = useParams<{ id: string }>();
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
+    const [visibleAnalyticsModalWindow, setVisibleAnalyticsModalWindow] = useState<boolean>(false);
     const [modalWindowTitle, setModalWindowTitle] = useState<string>("");
     const [openYouTubeVideo, setOpenYouTubeVideo] = useState<boolean>(false);
 
@@ -130,6 +132,14 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
         setOpenYouTubeVideo(true);
     };
 
+    const onOpenTweetAnalyticsModalWindow = (): void => {
+        setVisibleAnalyticsModalWindow(true);
+    };
+
+    const onCloseTweetAnalyticsModalWindow = (): void => {
+        setVisibleAnalyticsModalWindow(false);
+    };
+
     if (isLoading) {
         return (
             <div className={classes.loading}>
@@ -178,7 +188,7 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
                                         @{tweetData.user.username}
                                     </Typography>&nbsp;
                                 </div>
-                                {visiblePopperWindow && <PopperUserWindow user={tweetData.user}/>}
+                                <PopperUserWindow visible={visiblePopperWindow} user={tweetData.user}/>
                             </div>
                         </div>
                         <TweetComponentActions
@@ -187,6 +197,7 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
                             visibleMoreAction={visibleMoreAction}
                             handleHoverAction={handleHoverAction}
                             handleLeaveAction={handleLeaveAction}
+                            onOpenTweetAnalytics={onOpenTweetAnalyticsModalWindow}
                         />
                     </div>
                     <Typography className={classes.textWrapper} gutterBottom>
@@ -268,7 +279,7 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
                                 onMouseLeave={handleLeaveAction}
                             >
                                 <>{ReplyIcon}</>
-                                {visibleReplyAction && <HoverAction actionText={"Reply"}/>}
+                                <HoverAction visible={visibleReplyAction} actionText={"Reply"}/>
                             </IconButton>
                         </div>
                         <div className={classes.retweetIcon}>
@@ -282,8 +293,7 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
                                 ) : (
                                     <>{RetweetOutlinedIcon}</>
                                 )}
-                                {visibleRetweetAction &&
-                                <HoverAction actionText={isTweetRetweeted ? "Undo Retweet" : "Retweet"}/>}
+                                <HoverAction visible={visibleRetweetAction} actionText={isTweetRetweeted ? "Undo Retweet" : "Retweet"}/>
                             </IconButton>
                         </div>
                         <div className={classes.likeIcon}>
@@ -297,7 +307,7 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
                                 ) : (
                                     <>{LikeOutlinedIcon}</>
                                 )}
-                                {visibleLikeAction && <HoverAction actionText={isTweetLiked ? "Unlike" : "Like"}/>}
+                                <HoverAction visible={visibleLikeAction} actionText={isTweetLiked ? "Unlike" : "Like"}/>
                             </IconButton>
                         </div>
                         <ShareTweet
@@ -353,21 +363,17 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
                             />
                         </>
                     ) : null}
-                    {(visibleModalWindow && modalWindowTitle === "Liked by") ? (
-                        <UsersListModal
-                            users={tweetData.likedTweets}
-                            title={modalWindowTitle}
-                            visible={visibleModalWindow}
-                            onClose={onCloseModalWindow}
-                        />
-                    ) : (
-                        <UsersListModal
-                            users={tweetData.retweets}
-                            title={modalWindowTitle}
-                            visible={visibleModalWindow}
-                            onClose={onCloseModalWindow}
-                        />
-                    )}
+                    <UsersListModal
+                        users={(modalWindowTitle === "Liked by") ? tweetData.likedTweets : tweetData.retweets}
+                        title={(modalWindowTitle === "Liked by") ? "Liked by" : "Retweeted by"}
+                        visible={visibleModalWindow}
+                        onClose={onCloseModalWindow}
+                    />
+                    <TweetAnalyticsModal
+                        tweet={tweetData}
+                        visible={visibleAnalyticsModalWindow}
+                        onClose={onCloseTweetAnalyticsModalWindow}
+                    />
                 </Paper>
                 <div className={classes.divider}/>
                 {tweetData.replies.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}

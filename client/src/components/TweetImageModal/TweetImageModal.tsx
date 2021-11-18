@@ -151,8 +151,11 @@ const TweetImageModal: FC<HoverProps<Tweet> & HoverActionProps> = (
                                     <div>
                                         <span className={classes.grey}>@{tweetData.user.username}</span>&nbsp;
                                     </div>
-                                    {visiblePopperWindow &&
-                                    <PopperUserWindow user={tweetData!.user} isTweetImageModal={true}/>}
+                                    <PopperUserWindow
+                                        visible={visiblePopperWindow}
+                                        user={tweetData!.user}
+                                        isTweetImageModal={true}
+                                    />
                                 </Typography>
                             </Link>
                         </div>
@@ -200,7 +203,7 @@ const TweetImageModal: FC<HoverProps<Tweet> & HoverActionProps> = (
                                     onMouseLeave={handleLeaveAction}
                                 >
                                     <>{ReplyIcon}</>
-                                    {visibleReplyAction && <HoverAction actionText={"Reply"}/>}
+                                    <HoverAction visible={visibleReplyAction} actionText={"Reply"}/>
                                 </IconButton>
                             </div>
                             <div className={classes.retweetIcon}>
@@ -214,8 +217,10 @@ const TweetImageModal: FC<HoverProps<Tweet> & HoverActionProps> = (
                                     ) : (
                                         <>{RetweetOutlinedIcon}</>
                                     )}
-                                    {visibleRetweetAction &&
-                                    <HoverAction actionText={isTweetRetweeted ? "Undo Retweet" : "Retweet"}/>}
+                                    <HoverAction
+                                        visible={visibleRetweetAction}
+                                        actionText={isTweetRetweeted ? "Undo Retweet" : "Retweet"}
+                                    />
                                 </IconButton>
                             </div>
                             <div className={classes.likeIcon}>
@@ -229,7 +234,8 @@ const TweetImageModal: FC<HoverProps<Tweet> & HoverActionProps> = (
                                     ) : (
                                         <>{LikeOutlinedIcon}</>
                                     )}
-                                    {visibleLikeAction && <HoverAction actionText={isTweetLiked ? "Unlike" : "Like"}/>}
+                                    <HoverAction visible={visibleLikeAction}
+                                                 actionText={isTweetLiked ? "Unlike" : "Like"}/>
                                 </IconButton>
                             </div>
                             <ShareTweet
@@ -256,21 +262,12 @@ const TweetImageModal: FC<HoverProps<Tweet> & HoverActionProps> = (
                         />
                     </div>
                     <div className={classes.divider}/>
-                    {(visibleUsersListModalWindow && modalWindowTitle === "Liked by") ? (
-                        <UsersListModal
-                            users={tweetData.likedTweets}
-                            title={modalWindowTitle}
-                            visible={visibleUsersListModalWindow}
-                            onClose={onCloseUsersListModalWindow}
-                        />
-                    ) : (
-                        <UsersListModal
-                            users={tweetData.retweets}
-                            title={modalWindowTitle}
-                            visible={visibleUsersListModalWindow}
-                            onClose={onCloseUsersListModalWindow}
-                        />
-                    )}
+                    <UsersListModal
+                        users={(modalWindowTitle === "Liked by") ? tweetData.likedTweets : tweetData.retweets}
+                        title={(modalWindowTitle === "Liked by") ? "Liked by" : "Retweeted by"}
+                        visible={visibleUsersListModalWindow}
+                        onClose={onCloseUsersListModalWindow}
+                    />
                     {tweetData.replies.map((tweet: any) => <TweetComponent key={tweet.id} item={tweet}/>)}
                     <ReplyModal
                         user={tweetData.user}

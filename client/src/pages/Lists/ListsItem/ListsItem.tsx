@@ -73,7 +73,7 @@ const ListsItem: FC<ListsItemProps<Lists>> = (
         setDelayHandler(setTimeout(() => setVisiblePopperListWindow(true), 1000));
     };
 
-    const handleLeaveList  = (): void => {
+    const handleLeaveList = (): void => {
         clearTimeout(delayHandler);
         setVisiblePopperListWindow(false);
     };
@@ -105,7 +105,7 @@ const ListsItem: FC<ListsItemProps<Lists>> = (
                                 @{list?.listOwner.username}
                             </Typography>
                         </div>
-                        {visiblePopperListWindow && <PopperListWindow list={list!}/>}
+                        <PopperListWindow visible={visiblePopperListWindow} list={list!}/>
                     </div>
                     {isMyList && (
                         <div className={classes.listPinWrapper}>
@@ -120,7 +120,7 @@ const ListsItem: FC<ListsItemProps<Lists>> = (
                                 ) : (
                                     <>{PinIcon}</>
                                 )}
-                                {visiblePinAction && <HoverAction actionText={list?.pinnedDate ? "Unpin" : "Pin"}/>}
+                                <HoverAction visible={visiblePinAction} actionText={list?.pinnedDate ? "Unpin" : "Pin"}/>
                             </IconButton>
                         </div>
                     )}

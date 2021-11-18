@@ -7,12 +7,11 @@ import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.ChatMessageRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.ChatRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
+import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.ChatService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -20,14 +19,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ChatServiceImpl implements ChatService {
 
+    private final AuthenticationService authenticationService;
     private final ChatRepository chatRepository;
     private final UserRepository userRepository;
     private final ChatMessageRepository chatMessageRepository;
 
     @Override
     public List<Chat> getUserChats() {
-        Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByEmail(principal.getName());
+        User user = authenticationService.getAuthenticatedUser();
         List<Chat> chats = user.getChats();
         chats.forEach(chat -> {
             if (chat.getParticipants().get(1).getId().equals(user.getId())) {
@@ -39,8 +38,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public Chat createChat(Long userId) {
-        Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByEmail(principal.getName());
+        User user = authenticationService.getAuthenticatedUser();
         User participant = userRepository.getOne(userId);
         Optional<Chat> chatWithParticipant = user.getChats().stream()
                 .filter(chat -> chat.getParticipants().get(0).getId().equals(participant.getId()))
@@ -61,8 +59,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public User readChatMessages(Long chatId) {
-        Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByEmail(principal.getName());
+        User user = authenticationService.getAuthenticatedUser();
         user.setUnreadMessages(user.getUnreadMessages().stream()
                 .filter(message -> !message.getChat().getId().equals(chatId))
                 .collect(Collectors.toList()));
@@ -71,8 +68,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public ChatMessage addMessage(ChatMessage chatMessage, Long chatId) {
-        Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        User author = userRepository.findByEmail(principal.getName());
+        User author = authenticationService.getAuthenticatedUser();
         Chat chat = chatRepository.getOne(chatId);
         chatMessage.setAuthor(author);
         chatMessage.setChat(chat);
@@ -86,8 +82,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public List<ChatMessage> addMessageWithTweet(String text, Tweet tweet, List<User> users) {
-        Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        User author = userRepository.findByEmail(principal.getName());
+        User author = authenticationService.getAuthenticatedUser();
         List<ChatMessage> chatMessages = new ArrayList<>();
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.setAuthor(author);

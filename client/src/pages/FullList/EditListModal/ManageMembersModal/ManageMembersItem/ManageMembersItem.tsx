@@ -52,7 +52,7 @@ const ManageMembersItem: FC<ManageMembersItemProps<Lists>> = (
                             <Typography onMouseEnter={handleHover} className={classes.fullName}>
                                 {member?.fullName}
                             </Typography>
-                            {visiblePopperWindow && <PopperUserWindow user={member!}/>}
+                            <PopperUserWindow visible={visiblePopperWindow} user={member!}/>
                             <Typography className={classes.username}>
                                 @{member?.username}
                             </Typography>
