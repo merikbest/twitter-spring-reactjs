@@ -1,6 +1,8 @@
 delete from replies;
 delete from tweets_images;
 delete from tweets_tags;
+delete from user_blocked;
+delete from user_muted;
 delete from users_tweets;
 delete from user_subscriptions;
 delete from users_bookmarks;

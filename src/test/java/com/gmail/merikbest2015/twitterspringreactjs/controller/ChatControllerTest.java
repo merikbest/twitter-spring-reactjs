@@ -123,7 +123,7 @@ public class ChatControllerTest {
         Tweet tweet = new Tweet();
         tweet.setId(40L);
         User user = new User();
-        user.setId(1L);
+        user.setId(2L);
         MessageWithTweetRequest request = new MessageWithTweetRequest();
         request.setText("test text");
         request.setTweet(tweet);

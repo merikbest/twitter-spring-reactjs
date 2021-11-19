@@ -84,7 +84,7 @@ public class TweetServiceImpl implements TweetService {
         boolean isMediaTweetCreated = parseMetadataFromURL(tweet); // find metadata from url
         Tweet createdTweet = tweetRepository.save(tweet);
 
-        if (isMediaTweetCreated || !createdTweet.getImages().isEmpty()) {
+        if (isMediaTweetCreated || createdTweet.getImages() != null) {
             user.setMediaTweetCount(user.getMediaTweetCount() + 1);
         } else {
             user.setTweetCount(user.getTweetCount() + 1);

@@ -8,6 +8,8 @@ public class TestConstants {
     public static final String URL_TAG_BASIC = "/api/v1/tags";
     public static final String URL_TWEETS_BASIC = "/api/v1/tweets";
     public static final String URL_USER_BASIC = "/api/v1/user";
+    public static final String URL_USER_SETTINGS_BASIC = "/api/v1/settings";
+    public static final String URL_USER_SETTINGS_UPDATE = URL_USER_SETTINGS_BASIC + "/update";
     public static final String URL_LISTS_BASIC = "/api/v1/lists";
     public static final String URL_CHAT_BASIC = "/api/v1/chat";
 
@@ -30,9 +32,26 @@ public class TestConstants {
     public static final Long TWEET_COUNT = 126L;
     public static final Long AVATAR_ID = 33L;
     public static final Long WALLPAPER_ID = 44L;
+    public static final String COUNTRY_CODE = "UA";
+    public static final Long PHONE = 666966623L;
+    public static final String COUNTRY = "UA";
+    public static final String GENDER = "Cat";
+    public static final String LANGUAGE = "Ukrainian - українська";
+    public static final boolean MUTED_DIRECT_MESSAGES = true;
+    public static final boolean PRIVATE_PROFILE = false;
 
+//    private String countryCode;
+//    private Long phone;
+//    private String country;
+//    private String gender;
+//    private String language;
+//    private boolean mutedDirectMessages;
+//    private boolean privateProfile;
+//userMutedList
+//        userBlockedList
     public static final String TWEET_TEXT = "#JetBrains https://www.jetbrains.com/ ";
     public static final String TWEET_DATETIME = "2021-10-03T20:34:15";
+    public static final String TWEET_SCHEDULED_DATETIME = "3021-10-03T20:33:36";
     public static final String LINK = "https://www.jetbrains.com/";
     public static final String LINK_TITLE = "JetBrains";
     public static final String LINK_DESCRIPTION = "JetBrains is a cutting-edge software vendor specializing in the creation of intelligent development tools, including IntelliJ IDEA – the leading Java IDE, and the Kotlin programming language.";
