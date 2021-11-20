@@ -1,13 +1,10 @@
 import React, {ChangeEvent, FC, FormEvent, ReactElement, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {Button, Checkbox, Dialog, DialogContent, DialogTitle, Typography} from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
 
 import {useCreateListsModalStyles} from "./CreateListsModalStyles";
 import UploadProfileImage from "../../../components/EditProfileModal/UploadProfileImage";
 import {ImageObj} from "../../../components/AddTweetForm/AddTweetForm";
-import {selectUserData} from "../../../store/ducks/user/selectors";
 import {uploadImage} from "../../../util/uploadImage";
 import {Image} from "../../../store/ducks/tweets/contracts/state";
 import CreateListsModalInput from "./CreateListsModalInput/CreateListsModalInput";
@@ -23,7 +20,6 @@ interface CreateListsModalProps {
 const CreateListsModal: FC<CreateListsModalProps> = ({visible, onClose}): ReactElement | null => {
     const classes = useCreateListsModalStyles();
     const dispatch = useDispatch();
-    const myProfile = useSelector(selectUserData);
 
     const [wallpaper, setWallpaper] = useState<ImageObj>();
     const [listName, setListName] = useState<string>("");

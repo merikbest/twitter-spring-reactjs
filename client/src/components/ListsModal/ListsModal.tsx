@@ -29,8 +29,10 @@ const ListsModal: FC<ListsModalProps> = ({tweet, user, visible, onClose}): React
     const [lists, setLists] = useState<Lists[]>([]);
 
     useEffect(() => {
-        dispatch(fetchUserLists());
-    }, []);
+        if (visible) {
+            dispatch(fetchUserLists());
+        }
+    }, [visible]);
 
     useEffect(() => {
         const set = new Set([...checkedListsIndexes]);

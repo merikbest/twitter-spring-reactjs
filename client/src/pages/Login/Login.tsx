@@ -49,11 +49,11 @@ const Login: FC = (): ReactElement => {
             </div>
             <h1>Log in to Twitter</h1>
             {(errorStatus === LoadingStatus.ERROR) && (
-                <div className={classes.error}>
+                <Typography component={"div"} className={classes.error}>
                     The username and password you entered did not match our records.
                     Please double-check and try again.
-                </div>)
-            }
+                </Typography>
+            )}
             <form onSubmit={onSubmit}>
                 <div className={classes.input}>
                     <LoginTextField
@@ -85,8 +85,8 @@ const Login: FC = (): ReactElement => {
                 </Button>
             </form>
             <div className={classes.footer}>
-                <span><Link to={"/account/forgot"}>Forgot password?</Link></span> ·
-                <span><Link to={"/account/signin"}> Sign up for Twitter</Link></span>
+                <Typography component={"span"}><Link to={"/account/forgot"}>Forgot password?</Link></Typography> ·
+                <Typography component={"span"}><Link to={"/account/signin"}> Sign up for Twitter</Link></Typography>
             </div>
         </div>
     );

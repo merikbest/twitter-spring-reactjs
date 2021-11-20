@@ -38,15 +38,16 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public Chat createChat(Long userId) {
-        User user = authenticationService.getAuthenticatedUser();
+        User authUser = authenticationService.getAuthenticatedUser();
         User participant = userRepository.getOne(userId);
-        Optional<Chat> chatWithParticipant = user.getChats().stream()
-                .filter(chat -> chat.getParticipants().get(0).getId().equals(participant.getId()))
+        Optional<Chat> chatWithParticipant = authUser.getChats().stream()
+                .filter(chat -> chat.getParticipants().stream()
+                        .anyMatch(user -> user.getId().equals(participant.getId())))
                 .findFirst();
 
         if (chatWithParticipant.isEmpty()) {
             Chat chat = new Chat();
-            chat.setParticipants(Arrays.asList(user, participant));
+            chat.setParticipants(Arrays.asList(authUser, participant));
             return chatRepository.save(chat);
         }
         return chatWithParticipant.get();
@@ -90,7 +91,8 @@ public class ChatServiceImpl implements ChatService {
         chatMessage.setTweet(tweet);
         users.forEach(user -> {
             Optional<Chat> chatWithParticipant = author.getChats().stream()
-                    .filter(c -> c.getParticipants().get(0).getId().equals(user.getId()))
+                    .filter(chat -> chat.getParticipants().stream()
+                            .anyMatch(participant -> participant.getId().equals(user.getId())))
                     .findFirst();
 
             if (chatWithParticipant.isEmpty()) {

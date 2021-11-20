@@ -34,25 +34,20 @@ const ListsMemberships: FC<RouteComponentProps<{ id: string }>> = ({match}): Rea
                 </div>
             </Paper>
             <div className={classes.infoWrapper}>
-                {(myProfile?.id === userProfile?.id) ? (
-                    <>
-                        <Typography component={"div"} className={classes.title}>
-                            You haven’t been added to any Lists yet
-                        </Typography>
-                        <Typography component={"div"} className={classes.text}>
-                            When someone adds you to a List, it’ll show up here.
-                        </Typography>
-                    </>
-                ) : (
-                    <>
-                        <Typography component={"div"} className={classes.title}>
-                            @{userProfile?.username} hasn’t created any Lists
-                        </Typography>
-                        <Typography component={"div"} className={classes.text}>
-                            When they do, they’ll show up here.
-                        </Typography>
-                    </>
-                )}
+                <Typography component={"div"} className={classes.title}>
+                    {(myProfile?.id === userProfile?.id) ? (
+                        "You haven’t been added to any Lists yet"
+                    ) : (
+                        `@${userProfile?.username} hasn’t created any Lists`
+                    )}
+                </Typography>
+                <Typography component={"div"} className={classes.text}>
+                    {(myProfile?.id === userProfile?.id) ? (
+                        "When someone adds you to a List, it’ll show up here."
+                    ) : (
+                        "When they do, they’ll show up here."
+                    )}
+                </Typography>
             </div>
         </Paper>
     );
