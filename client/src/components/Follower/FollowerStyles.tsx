@@ -46,6 +46,13 @@ export const useFollowerStyles = makeStyles((theme) => ({
         fontWeight: 400,
         fontSize: 15,
     },
+    lockIcon: {
+        "& svg": {
+            marginLeft: 3,
+            marginBottom: -3,
+            height: "1.2em",
+        },
+    },
     outlinedButton: {
         float: 'right',
         marginRight: 15,

@@ -11,6 +11,7 @@ import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
 import {HoverProps, withHoverUser} from "../../hoc/withHoverUser";
 import UnfollowModal from "../UnfollowModal/UnfollowModal";
+import {LockIcon} from "../../icons";
 
 interface FollowerProps<T> {
     item?: T;
@@ -63,9 +64,16 @@ const Follower: FC<HoverProps<User> & FollowerProps<User>> = (
                     <div onMouseEnter={handleHoverPopper} onMouseLeave={handleLeavePopper}>
                         <Link to={`/user/${user?.id}`} className={classes.link}>
                             <div className={classes.followerInfo}>
-                                <Typography component={"div"} className={classes.fullName}>
-                                    {user?.fullName}
-                                </Typography>
+                                <div>
+                                    <Typography component={"span"} className={classes.fullName}>
+                                        {user?.fullName}
+                                    </Typography>
+                                    {user?.privateProfile && (
+                                        <span className={classes.lockIcon}>
+                                            {LockIcon}
+                                        </span>
+                                    )}
+                                </div>
                                 <Typography component={"div"} className={classes.username}>
                                     @{user?.username}
                                 </Typography>

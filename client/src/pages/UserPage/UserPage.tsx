@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
+import React, {ChangeEvent, FC, ReactElement, ReactNode, useEffect, useState} from 'react';
 import {Link, RouteComponentProps, useHistory, useLocation} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -12,7 +12,7 @@ import {CompatClient, Stomp} from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import classNames from "classnames";
 
-import {CalendarIcon, LinkIcon, LocationIcon, MessagesIcon} from "../../icons";
+import {CalendarIcon, LinkIcon, LocationIcon, LockIcon, MessagesIcon} from "../../icons";
 import {useUserPageStyles} from "./UserPageStyles";
 import {BackButton} from "../../components/BackButton/BackButton";
 import EditProfileModal from "../../components/EditProfileModal/EditProfileModal";
@@ -56,6 +56,11 @@ import UserPageActions from "./UserPageActions/UserPageActions";
 import {createChat} from "../../store/ducks/chats/actionCreators";
 import BlockUserModal from "../../components/BlockUserModal/BlockUserModal";
 
+interface LinkToFollowersProps {
+    children: ReactNode;
+    linkTo: string;
+}
+
 let stompClient: CompatClient | null = null;
 
 const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElement => {
@@ -79,7 +84,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
     const pagesCount = useSelector(selectPagesCount);
     const [page, setPage] = useState<number>(0);
 
-    const follower = myProfile?.followers?.find((user) => user.id === userProfile?.id);
+    const isFollower = myProfile?.followers?.findIndex(follower => follower.id === userProfile?.id) !== -1;
     const isUserMuted = myProfile?.userMutedList?.findIndex(mutedUser => mutedUser.id === userProfile?.id) !== -1;
     const isUserBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === userProfile?.id) !== -1;
 
@@ -192,8 +197,16 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
         setVisibleSetupProfile(false);
     };
 
+    const LinkToFollowers = ({children, linkTo}: LinkToFollowersProps): JSX.Element => {
+        if (userProfile?.privateProfile && linkTo) {
+            return <div className={classes.followLink}>{children}</div>;
+        } else {
+            return <Link to={`/user/${userProfile?.id}/${linkTo}`} className={classes.followLink}>{children}</Link>
+        }
+    };
+
     const handleFollow = (): void => {
-        if (follower) {
+        if (isFollower) {
             dispatch(unfollowUserProfile(userProfile!));
             dispatch(unfollow(userProfile!));
         } else {
@@ -265,9 +278,14 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
                 <Paper className={classes.header} variant="outlined">
                     <BackButton/>
                     <div>
-                        <Typography component={"div"} className={classes.headerFullName}>
+                        <Typography component={"span"} className={classes.headerFullName}>
                             {userProfile?.fullName}
                         </Typography>
+                        {userProfile?.privateProfile && (
+                            <span className={classes.lockIcon}>
+                                {LockIcon}
+                            </span>
+                        )}
                         <Typography component={"div"} className={classes.headerTweetCount}>
                             {showTweetCount()}
                         </Typography>
@@ -304,13 +322,15 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
                                         onOpenBlockUserModal={onOpenBlockUserModal}
                                     />
                                     {!isUserBlocked && (
-                                        <IconButton
-                                            className={classes.messageButton}
-                                            onClick={handleClickAddUserToChat}
-                                            color="primary"
-                                        >
-                                            {MessagesIcon}
-                                        </IconButton>
+                                        !userProfile?.mutedDirectMessages || isFollower ? (
+                                            <IconButton
+                                                className={classes.messageButton}
+                                                onClick={handleClickAddUserToChat}
+                                                color="primary"
+                                            >
+                                                {MessagesIcon}
+                                            </IconButton>
+                                        ) : null
                                     )}
                                     {isUserBlocked ? (
                                         <Button
@@ -324,7 +344,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
                                             {btnText}
                                         </Button>
                                     ) : (
-                                        follower ? (
+                                        isFollower ? (
                                             <Button
                                                 onClick={handleFollow}
                                                 className={classes.primaryButton}
@@ -351,9 +371,16 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
                         {!userProfile ? (
                             <Skeleton variant="text" width={250} height={30}/>
                         ) : (
-                            <Typography className={classes.fullName}>
-                                {userProfile.fullName}
-                            </Typography>
+                            <div>
+                                <Typography component={"span"} className={classes.fullName}>
+                                    {userProfile.fullName}
+                                </Typography>
+                                {userProfile?.privateProfile && (
+                                    <span className={classes.lockIcon}>
+                                        {LockIcon}
+                                    </span>
+                                )}
+                            </div>
                         )}
                         {!userProfile ? (
                             <Skeleton variant="text" width={60}/>
@@ -411,7 +438,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
                                 </div>
                             ) : (
                                 <List className={classes.details}>
-                                    <Link to={`/user/${userProfile?.id}/following`} className={classes.followLink}>
+                                    <LinkToFollowers linkTo={"following"}>
                                         <ListItem>
                                             <b>
                                                 {(userProfile?.id === myProfile?.id) ? (
@@ -424,8 +451,8 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
                                                 {" Following"}
                                             </Typography>
                                         </ListItem>
-                                    </Link>
-                                    <Link to={`/user/${userProfile?.id}/followers`} className={classes.followLink}>
+                                    </LinkToFollowers>
+                                    <LinkToFollowers linkTo={"followers"}>
                                         <ListItem>
                                             <b>
                                                 {(userProfile?.id === myProfile?.id) ? (
@@ -438,35 +465,51 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
                                                 {" Followers"}
                                             </Typography>
                                         </ListItem>
-                                    </Link>
+                                    </LinkToFollowers>
                                 </List>
                             )}
                         </div>
                     </div>
-                    <div className={classes.tabs}>
-                        <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChange}>
-                            <Tab onClick={() => handleShowTweets(handleShowUserTweets)} label="Tweets"/>
-                            <Tab onClick={() => handleShowTweets(handleShowUserRetweetsAndReplies)} label="Tweets & replies"/>
-                            <Tab onClick={() => handleShowTweets(handleShowMediaTweets)} label="Media"/>
-                            <Tab onClick={() => handleShowTweets(handleShowLikedTweets)} label="Likes"/>
-                        </Tabs>
-                    </div>
-                    <div className={classes.tweets}>
-                        {(userProfile === undefined) ? (
-                            <div className={classes.tweetsCentred}>
-                                <CircularProgress/>
+                    {(userProfile === undefined) ? (
+                        <div className={classes.tweetsCentred}>
+                            <CircularProgress/>
+                        </div>
+                    ) : (
+                        userProfile?.privateProfile ? (
+                            <div className={classes.privateProfileInfo}>
+                                <Typography component={"div"} className={classes.privateProfileInfoTitle}>
+                                    These Tweets are protected
+                                </Typography>
+                                <Typography component={"div"} className={classes.privateProfileInfoText}>
+                                    {`Only approved followers can see @${userProfile?.username}’s Tweets. To request access, 
+                                    click Follow. `} <a
+                                    href={"https://help.twitter.com/safety-and-security/public-and-protected-tweets"}
+                                    target={"_blank"} className={classes.link}>Learn more</a>
+                                </Typography>
                             </div>
                         ) : (
-                            <UserPageTweets
-                                tweets={tweets}
-                                isTweetsLoading={isTweetsLoading}
-                                activeTab={activeTab}
-                                userProfileId={userProfile?.id}
-                                myProfileId={myProfile?.id}
-                                username={userProfile?.username}
-                            />
-                        )}
-                    </div>
+                            <>
+                                <div className={classes.tabs}>
+                                    <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChange}>
+                                        <Tab onClick={() => handleShowTweets(handleShowUserTweets)} label="Tweets"/>
+                                        <Tab onClick={() => handleShowTweets(handleShowUserRetweetsAndReplies)} label="Tweets & replies"/>
+                                        <Tab onClick={() => handleShowTweets(handleShowMediaTweets)} label="Media"/>
+                                        <Tab onClick={() => handleShowTweets(handleShowLikedTweets)} label="Likes"/>
+                                    </Tabs>
+                                </div>
+                                <div className={classes.tweets}>
+                                    <UserPageTweets
+                                        tweets={tweets}
+                                        isTweetsLoading={isTweetsLoading}
+                                        activeTab={activeTab}
+                                        userProfileId={userProfile?.id}
+                                        myProfileId={myProfile?.id}
+                                        username={userProfile?.username}
+                                    />
+                                </div>
+                            </>
+                        )
+                    )}
                 </div>
                 <EditProfileModal visible={visibleEditProfile} onClose={onCloseEditProfile}/>
                 <SetupProfileModal visible={visibleSetupProfile} onClose={onCloseSetupProfile}/>

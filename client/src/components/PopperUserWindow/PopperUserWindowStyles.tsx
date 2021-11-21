@@ -72,6 +72,13 @@ export const usePopperUserWindowStyles = makeStyles<Theme, PopperUserWindowStyle
             },
         },
     },
+    lockIcon: {
+        "& svg": {
+            marginLeft: 3,
+            marginBottom: -3,
+            height: "1.2em",
+        },
+    },
     userInfo: {
         marginTop: 12,
         marginBottom: 12,

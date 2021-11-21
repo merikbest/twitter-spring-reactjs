@@ -16,6 +16,7 @@ import {followProfile, unfollowProfile} from "../../../store/ducks/userProfile/a
 import PopperUserWindow from "../../PopperUserWindow/PopperUserWindow";
 import {HoverProps, withHoverUser} from "../../../hoc/withHoverUser";
 import UnfollowModal from "../../UnfollowModal/UnfollowModal";
+import {LockIcon} from "../../../icons";
 
 export interface UsersItemProps<T> {
     item?: T
@@ -68,9 +69,16 @@ const UsersItem: FC<HoverProps<User> & UsersItemProps<User>> = (
             </ListItemAvatar>
             <div className={classes.userInfo} onMouseEnter={handleHoverPopper} onMouseLeave={handleLeavePopper}>
                 <Link to={`/user/${user?.id}`}>
-                    <Typography component={"div"} className={classes.fullName}>
-                        {user?.fullName}
-                    </Typography>
+                    <div>
+                        <Typography component={"span"} className={classes.fullName}>
+                            {user?.fullName}
+                        </Typography>
+                        {user?.privateProfile && (
+                            <span className={classes.lockIcon}>
+                                {LockIcon}
+                            </span>
+                        )}
+                    </div>
                     <Typography component={"div"} className={classes.username}>
                         @{user?.username}
                     </Typography>

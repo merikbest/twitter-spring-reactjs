@@ -89,55 +89,61 @@ const UserPageActions: FC<UserPageActionsProps> = (
                 {open ? (
                     <div className={classes.dropdown}>
                         <List>
-                            <ListItem>
-                                <>{TopicIcon}</>
-                                <Typography component={"span"}>
-                                    View Topics
-                                </Typography>
-                            </ListItem>
-                            <ListItem onClick={onOpenListsModal}>
-                                <>{AddListsIcon}</>
-                                <Typography component={"span"}>
-                                    Add/remove @{user.username} from Lists
-                                </Typography>
-                            </ListItem>
-                            <Link to={`/lists/memberships/${user?.id}`} className={classes.link}>
-                                <ListItem>
-                                    <>{ListsIcon}</>
-                                    <Typography component={"span"}>
-                                        View Lists
-                                    </Typography>
-                                </ListItem>
-                            </Link>
-                            <ListItem>
-                                <>{MomentsIcon}</>
-                                <Typography component={"span"}>
-                                    View Moments
-                                </Typography>
-                            </ListItem>
-                            {!isUserBlocked && (
+                            {!user.privateProfile && (
                                 <>
                                     <ListItem>
-                                        <>{ShareIcon}</>
+                                        <>{TopicIcon}</>
                                         <Typography component={"span"}>
-                                            Share profile via...
+                                            View Topics
                                         </Typography>
                                     </ListItem>
-                                    <CopyToClipboard text={CLIENT_URL + location.pathname}>
-                                        <ListItem onClick={onCopyLinkToProfile}>
-                                            <>{LinkIcon}</>
+                                    <ListItem onClick={onOpenListsModal}>
+                                        <>{AddListsIcon}</>
+                                        <Typography component={"span"}>
+                                            Add/remove @{user.username} from Lists
+                                        </Typography>
+                                    </ListItem>
+                                    <Link to={`/lists/memberships/${user?.id}`} className={classes.link}>
+                                        <ListItem>
+                                            <>{ListsIcon}</>
                                             <Typography component={"span"}>
-                                                Copy link to profile
+                                                View Lists
                                             </Typography>
                                         </ListItem>
-                                    </CopyToClipboard>
-                                    <ListItem onClick={handleMuteUser}>
-                                        <>{isUserMuted ? UnmuteIcon : MuteIcon}</>
+                                    </Link>
+                                    <ListItem>
+                                        <>{MomentsIcon}</>
                                         <Typography component={"span"}>
-                                            {isUserMuted ? "Unmute" : "Mute"} @{user.username}
+                                            View Moments
                                         </Typography>
                                     </ListItem>
+                                    {!isUserBlocked && (
+                                        <>
+                                            <ListItem>
+                                                <>{ShareIcon}</>
+                                                <Typography component={"span"}>
+                                                    Share profile via...
+                                                </Typography>
+                                            </ListItem>
+                                            <CopyToClipboard text={CLIENT_URL + location.pathname}>
+                                                <ListItem onClick={onCopyLinkToProfile}>
+                                                    <>{LinkIcon}</>
+                                                    <Typography component={"span"}>
+                                                        Copy link to profile
+                                                    </Typography>
+                                                </ListItem>
+                                            </CopyToClipboard>
+                                        </>
+                                    )}
                                 </>
+                            )}
+                            {!isUserBlocked && (
+                                <ListItem onClick={handleMuteUser}>
+                                    <>{isUserMuted ? UnmuteIcon : MuteIcon}</>
+                                    <Typography component={"span"}>
+                                        {isUserMuted ? "Unmute" : "Mute"} @{user.username}
+                                    </Typography>
+                                </ListItem>
                             )}
                             <ListItem onClick={onOpenBlockUserModal}>
                                 <>{isUserBlocked ? UnblockIcon : BlockIcon}</>

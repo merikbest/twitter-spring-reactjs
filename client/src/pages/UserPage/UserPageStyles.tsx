@@ -35,6 +35,13 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         fontSize: 20,
         lineHeight: "24px",
     },
+    lockIcon: {
+        "& svg": {
+            marginLeft: 3,
+            marginBottom: -3,
+            height: "1.4em",
+        },
+    },
     headerTweetCount: {
         fontSize: 13,
         lineHeight: "16px",
@@ -81,6 +88,33 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
                 },
             },
         },
+    },
+    privateProfileInfo: {
+        margin: "72px auto",
+        width: 360
+    },
+    privateProfileInfoTitle: {
+        marginBottom: 8,
+        fontSize: 31,
+        lineHeight: "36px",
+        textAlign: "center",
+        fontWeight: 800,
+        color: "rgb(15, 20, 25)",
+    },
+    privateProfileInfoText: {
+        fontSize: 15,
+        lineHeight: "20px",
+        textAlign: "center",
+        fontWeight: 400,
+        color: "rgb(83, 100, 113)",
+    },
+    link: {
+        textDecoration: "none",
+        color: "rgb(29, 155, 240)",
+        cursor: "pointer",
+        "&:hover": {
+            textDecoration: "underline",
+        }
     },
     tabs: {
         "& .MuiTabs-indicator": {
@@ -164,6 +198,7 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         },
     },
     followLink: {
+        cursor: "pointer",
         textDecoration: 'none',
         lineHeight: "20px",
         color: "rgb(83, 100, 113)",

@@ -8,7 +8,7 @@ import {
     AnalyticsIcon,
     FollowReplyIcon,
     LikeIcon,
-    LikeOutlinedIcon,
+    LikeOutlinedIcon, LockIcon,
     PinOutlinedIcon,
     ReplyIcon,
     RetweetOutlinedIconSm
@@ -159,7 +159,12 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
                             onMouseEnter={handleHoverPopper}
                             onMouseLeave={handleLeavePopper}
                         >
-                            <b>{tweet?.user.fullName}</b>&nbsp;
+                            <b>{tweet?.user.fullName}</b>
+                            {tweet?.user.privateProfile && (
+                                <span className={classes.lockIcon}>
+                                    {LockIcon}
+                                </span>
+                            )}&nbsp;
                             <span className={classes.headerText}>@{tweet?.user.username}</span>&nbsp;
                             <span className={classes.headerText}>·</span>&nbsp;
                             <span className={classes.headerText}>{formatDate(new Date(tweet!.dateTime))}</span>

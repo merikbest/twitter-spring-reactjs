@@ -44,6 +44,13 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
         height: 20,
         justifyContent: 'space-between',
     },
+    lockIcon: {
+        "& svg": {
+            marginLeft: 3,
+            marginBottom: -3,
+            height: "1.2em",
+        },
+    },
     headerText: {
         color: 'rgb(83, 100, 113)',
     },

@@ -10,6 +10,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 import {followProfile, unfollowProfile} from "../../store/ducks/userProfile/actionCreators";
+import {LockIcon} from "../../icons";
 
 interface PopperUserWindowProps {
     visible?: boolean;
@@ -88,7 +89,14 @@ const PopperUserWindow: FC<PopperUserWindowProps> = (
             </div>
             <div className={classes.userInfoWrapper}>
                 <Link to={`/user/${user?.id}`}>
-                    <div><b>{user.fullName}</b></div>
+                    <div>
+                        <b>{user.fullName}</b>
+                        {user?.privateProfile && (
+                            <span className={classes.lockIcon}>
+                                {LockIcon}
+                            </span>
+                        )}
+                    </div>
                 </Link>
                 <div>@{user.username}</div>
             </div>
