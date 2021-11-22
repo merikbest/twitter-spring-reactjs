@@ -7,7 +7,7 @@ export interface TweetState {
 }
 
 export interface ReplyTweet {
-    id: string;
+    tweetId: string;
     text: string;
     addressedUsername: string;
     addressedId: number;

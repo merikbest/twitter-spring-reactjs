@@ -28,7 +28,9 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
     const classes = useUnsentTweetsModalStyles({visibleEditTweetModal});
 
     useEffect(() => {
-        getScheduledTweets();
+        if (visible) {
+            getScheduledTweets();
+        }
     }, [visible, visibleEditTweetModal]);
 
     const getScheduledTweets = (): void => {

@@ -64,11 +64,12 @@ public class Tweet {
 
     @OneToOne
     @JoinTable(name = "tweet_pool",
-            joinColumns = @JoinColumn(name = "tweet_id"),
-            inverseJoinColumns = @JoinColumn(name = "pool_id"))
+            joinColumns = @JoinColumn(name = "tweets_id"),
+            inverseJoinColumns = @JoinColumn(name = "pools_id"))
     private Poll poll;
 
     @ManyToOne
+    @JoinColumn(name = "users_id")
     private User user;
 
     @OneToMany
@@ -88,7 +89,9 @@ public class Tweet {
 
     public Tweet() {
         this.dateTime = LocalDateTime.now().withNano(0);
+        this.images = new ArrayList<>();
         this.likedTweets = new ArrayList<>();
         this.retweets = new ArrayList<>();
+        this.replies = new ArrayList<>();
     }
 }

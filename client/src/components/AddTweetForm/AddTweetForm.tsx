@@ -231,7 +231,7 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
         }
 
         dispatch(fetchReplyTweet({
-            id: tweetId!,
+            tweetId: tweetId!,
             text: textConverter(),
             addressedUsername: addressedUsername!,
             addressedId: addressedId!,
@@ -473,8 +473,8 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
                         </>
                     )}
                     <Button
-                        onClick={(buttonName === "Tweet" || "Schedule") ?
-                            (quoteTweet ? handleClickQuoteTweet : handleClickAddTweet) : handleClickReplyTweet}
+                        onClick={(buttonName === "Reply") ? handleClickReplyTweet :
+                            (quoteTweet !== undefined ? handleClickQuoteTweet : handleClickAddTweet)}
                         disabled={
                             visiblePoll ? (
                                 !choice1 || !choice2 || !text || text.length >= MAX_LENGTH

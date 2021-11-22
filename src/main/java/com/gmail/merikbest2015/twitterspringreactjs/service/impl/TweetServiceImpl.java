@@ -52,7 +52,7 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public Page<Tweet> getTweets(Pageable pageable) {
-        return tweetRepository.findByAddressedUsernameIsNullAndScheduledDateIsNullOrderByDateTimeDesc(pageable);
+        return tweetRepository.findAllTweets(pageable);
     }
 
     @Override
@@ -63,18 +63,18 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public Page<Tweet> getMediaTweets(Pageable pageable) {
-        return tweetRepository.findByScheduledDateIsNullAndImagesIsNotNullOrderByDateTimeDesc(pageable);
+        return tweetRepository.findAllTweetsWithImages(pageable);
     }
 
     @Override
     public Page<Tweet> getTweetsWithVideo(Pageable pageable) {
-        return tweetRepository.findAllByScheduledDateIsNullAndTextIgnoreCaseContaining("youtu", pageable);
+        return tweetRepository.findAllTweetsWithVideo(pageable);
     }
 
     @Override
     public List<Tweet> getScheduledTweets() {
         User user = authenticationService.getAuthenticatedUser();
-        return tweetRepository.findByUserAndScheduledDateIsNotNullOrderByScheduledDateDesc(user);
+        return tweetRepository.findAllScheduledTweetsByUserId(user.getId());
     }
 
     @Override
@@ -189,7 +189,7 @@ public class TweetServiceImpl implements TweetService {
         List<ChatMessage> messagesWithTweet = chatMessageRepository.findByTweet(tweet);
         chatMessageRepository.deleteAll(messagesWithTweet);
 
-        List<Tweet> tweetsWithQuote = tweetRepository.findByQuoteTweet_Id(tweetId);
+        List<Tweet> tweetsWithQuote = tweetRepository.findByQuoteTweetId(tweetId);
         tweetsWithQuote.forEach(quote -> quote.setQuoteTweet(null));
 
         if (user.getPinnedTweet() != null) {
@@ -203,7 +203,7 @@ public class TweetServiceImpl implements TweetService {
     @Override
     public List<Tweet> searchTweets(String text) {
         Set<Tweet> tweets = new HashSet<>();
-        List<Tweet> tweetsByText = tweetRepository.findAllByScheduledDateIsNullAndTextIgnoreCaseContaining(text);
+        List<Tweet> tweetsByText = tweetRepository.findAllByText(text);
         List<Tag> tagsByText = tagRepository.findByTagNameContaining(text);
         List<User> usersByText = userRepository.findByFullNameOrUsernameContainingIgnoreCase(text, text);
 
@@ -214,7 +214,7 @@ public class TweetServiceImpl implements TweetService {
             tagsByText.forEach(tag -> tweets.addAll(tag.getTweets()));
         }
         if (usersByText != null) {
-            usersByText.forEach(user -> tweets.addAll(tweetRepository.findAllByUserAndScheduledDateIsNull(user)));
+            usersByText.forEach(user -> tweets.addAll(tweetRepository.findAllByUserId(user.getId())));
         }
         return List.copyOf(tweets);
     }
@@ -271,10 +271,6 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public Tweet replyTweet(Long tweetId, Tweet reply) {
-        User user = authenticationService.getAuthenticatedUser();
-        user.setTweetCount(user.getTweetCount() + 1);
-        userRepository.save(user);
-
         reply.setAddressedTweetId(tweetId);
         Tweet replyTweet = createTweet(reply);
         Tweet tweet = tweetRepository.getOne(tweetId);

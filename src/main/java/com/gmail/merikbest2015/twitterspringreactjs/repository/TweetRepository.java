@@ -1,10 +1,10 @@
 package com.gmail.merikbest2015.twitterspringreactjs.repository;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
-import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -13,27 +13,88 @@ import java.util.List;
 @Repository
 public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
-    Page<Tweet> findByAddressedUsernameIsNullAndScheduledDateIsNullOrderByDateTimeDesc(Pageable pageable);
+    @Query(value = "SELECT * FROM tweets " +
+            "LEFT JOIN tweet_quote ON tweets.id = tweet_quote.tweets_id " +
+            "LEFT JOIN tweet_pool ON tweets.id = tweet_pool.tweets_id " +
+            "WHERE tweets.addressed_username IS NULL " +
+            "AND tweets.scheduled_date IS NULL " +
+            "ORDER BY tweets.date_time DESC", nativeQuery = true)
+    Page<Tweet> findAllTweets(Pageable pageable);
 
-    List<Tweet> findAllByUserAndScheduledDateIsNull(User user);
+    @Query(value = "SELECT * FROM tweets WHERE users_id = ?1 AND tweets.scheduled_date IS NULL", nativeQuery = true)
+    List<Tweet> findAllByUserId(Long userId);
 
-    List<Tweet> findByScheduledDateLessThanEqual(LocalDateTime scheduledDate);
+    @Query(value = "SELECT * FROM tweets WHERE tweets.scheduled_date <= ?1", nativeQuery = true)
+    List<Tweet> findAllByScheduledDate(LocalDateTime scheduledDate);
 
-    List<Tweet> findByUserAndScheduledDateIsNotNullOrderByScheduledDateDesc(User user);
+    @Query(value = "SELECT * FROM tweets " +
+            "LEFT JOIN tweet_quote ON tweets.id = tweet_quote.tweets_id " +
+            "LEFT JOIN tweet_pool ON tweets.id = tweet_pool.tweets_id " +
+            "WHERE tweets.users_id = ?1 " +
+            "AND tweets.scheduled_date IS NOT NULL " +
+            "ORDER BY tweets.scheduled_date DESC", nativeQuery = true)
+    List<Tweet> findAllScheduledTweetsByUserId(Long userId);
 
-    List<Tweet> findAllByScheduledDateIsNullAndTextIgnoreCaseContaining(String text);
+    @Query(value = "SELECT * FROM tweets " +
+            "WHERE tweets.scheduled_date IS NULL " +
+            "AND UPPER(text) LIKE UPPER(?1)", nativeQuery = true)
+    List<Tweet> findAllByText(String text);
 
-    Page<Tweet> findAllByScheduledDateIsNullAndTextIgnoreCaseContaining(String text, Pageable pageable);
+    @Query(value = "SELECT * FROM tweets " +
+            "LEFT JOIN tweet_quote ON tweets.id = tweet_quote.tweets_id " +
+            "LEFT JOIN tweet_pool ON tweets.id = tweet_pool.tweets_id " +
+            "WHERE tweets.scheduled_date IS NULL " +
+            "AND UPPER(text) LIKE UPPER('%youtu%')", nativeQuery = true)
+    Page<Tweet> findAllTweetsWithVideo(Pageable pageable);
 
-    List<Tweet> findByAddressedUsernameIsNullAndUserOrderByDateTimeDesc(User user); // TODO delete?
+    @Query(value = "SELECT * FROM tweets " +
+            "LEFT JOIN tweets_images ON tweets.id = tweets_images.tweet_id " +
+            "LEFT JOIN tweet_quote ON tweets.id = tweet_quote.tweets_id " +
+            "LEFT JOIN tweet_pool ON tweets.id = tweet_pool.tweets_id " +
+            "WHERE tweets.scheduled_date IS NULL " +
+            "AND tweets_images.images_id IS NOT NULL " +
+            "ORDER BY tweets.date_time DESC", nativeQuery = true)
+    Page<Tweet> findAllTweetsWithImages(Pageable pageable);
 
-    Page<Tweet> findByScheduledDateIsNullAndImagesIsNotNullOrderByDateTimeDesc(Pageable pageable);
+    @Query(value = "SELECT * FROM tweets " +
+            "LEFT JOIN users_tweets ON tweets.id = users_tweets.tweets_id " +
+            "LEFT JOIN tweets_images ON tweets.id = tweets_images.tweet_id " +
+            "LEFT JOIN tweet_quote ON tweets.id = tweet_quote.tweets_id " +
+            "LEFT JOIN tweet_pool ON tweets.id = tweet_pool.tweets_id " +
+            "WHERE tweets.scheduled_date IS NULL " +
+            "AND tweets_images.images_id IS NOT NULL " +
+            "AND users_tweets.user_id = ?1 " +
+            "OR UPPER(text) LIKE UPPER('%youtu%') " +
+            "ORDER BY tweets.date_time DESC", nativeQuery = true)
+    Page<Tweet> findAllUserMediaTweets(Long userId, Pageable pageable);
 
-    Page<Tweet> findByScheduledDateIsNullAndImagesIsNotNullAndUser_IdOrderByDateTimeDesc(Long userId, Pageable pageable);
+    @Query(value = "SELECT * FROM tweets " +
+            "LEFT JOIN users_tweets ON tweets.id = users_tweets.tweets_id " +
+            "LEFT JOIN tweets_images ON tweets.id = tweets_images.tweet_id " +
+            "LEFT JOIN tweet_quote ON tweets.id = tweet_quote.tweets_id " +
+            "LEFT JOIN tweet_pool ON tweets.id = tweet_pool.tweets_id " +
+            "WHERE tweet_quote.quote_tweet_id = ?1", nativeQuery = true)
+    List<Tweet> findByQuoteTweetId(Long quoteId);
 
-    List<Tweet> findByQuoteTweet_Id(Long id);
+    @Query(value = "SELECT * FROM tweets " +
+            "LEFT JOIN users_tweets ON tweets.id = users_tweets.tweets_id " +
+            "LEFT JOIN tweets_images ON tweets.id = tweets_images.tweet_id " +
+            "LEFT JOIN tweet_quote ON tweets.id = tweet_quote.tweets_id " +
+            "LEFT JOIN tweet_pool ON tweets.id = tweet_pool.tweets_id " +
+            "WHERE tweets.users_id = ?1 " +
+            "AND tweets.addressed_username IS NULL " +
+            "AND tweets.scheduled_date IS NULL " +
+            "ORDER BY tweets.date_time DESC", nativeQuery = true)
+    List<Tweet> findTweetsByUserId(Long userId);
 
-    List<Tweet> findByScheduledDateIsNullAndUserAndAddressedUsernameIsNullOrderByDateTimeDesc(User user);
-
-    List<Tweet> findByUserAndAddressedUsernameIsNotNullOrderByDateTimeDesc(User user);
+    @Query(value = "SELECT * FROM tweets " +
+            "LEFT JOIN users_tweets ON tweets.id = users_tweets.tweets_id " +
+            "LEFT JOIN tweets_images ON tweets.id = tweets_images.tweet_id " +
+            "LEFT JOIN tweet_quote ON tweets.id = tweet_quote.tweets_id " +
+            "LEFT JOIN tweet_pool ON tweets.id = tweet_pool.tweets_id " +
+            "WHERE tweets.users_id = ?1 " +
+            "AND tweets.addressed_username IS NOT NULL " +
+            "AND tweets.scheduled_date IS NULL " +
+            "ORDER BY tweets.date_time DESC", nativeQuery = true)
+    List<Tweet> findRepliesByUserId(Long userId);
 }
