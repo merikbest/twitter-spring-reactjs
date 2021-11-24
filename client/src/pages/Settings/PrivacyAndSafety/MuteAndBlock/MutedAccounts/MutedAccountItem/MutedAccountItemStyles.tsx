@@ -1,10 +1,10 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
-interface BlockedAccountItemStylesProps {
-    isUserBlocked: boolean;
+interface MutedAccountItemStylesProps {
+    isUserMuted: boolean;
 }
 
-export const useBlockedAccountItemStyles = makeStyles<Theme, BlockedAccountItemStylesProps>((theme) => ({
+export const useMutedAccountItemStyles = makeStyles<Theme, MutedAccountItemStylesProps>((theme) => ({
     container: {
         borderTop: 0,
         borderLeft: 0,
@@ -53,21 +53,19 @@ export const useBlockedAccountItemStyles = makeStyles<Theme, BlockedAccountItemS
         fontWeight: 400,
         fontSize: 15,
     },
-    blockButton: {
+    muteButton: {
         marginRight: 16,
-        "& .MuiButtonBase-root": {
-            padding: "8px 16px",
-            color: props => props.isUserBlocked ? "rgb(255, 255, 255)" : "rgb(244, 33, 46)",
-            backgroundColor: props => props.isUserBlocked ? "rgb(244, 33, 46)" : "rgb(255, 255, 255)",
+        "& .MuiIconButton-root": {
+            padding: 7,
+            borderColor: props => props.isUserMuted ? "rgb(255, 221, 237)" : "rgb(207, 217, 222)",
             border: "1px solid",
-            borderColor: props => props.isUserBlocked ? "rgb(244, 33, 46)" : "rgb(255, 221, 237)",
-            "& .MuiButton-label": {
-                fontSize: 15,
-                fontWeight: 700,
-                lineHeight: "20px",
+            borderRadius: "50%",
+            "& svg": {
+                color: props => props.isUserMuted ? "rgb(244, 33, 46)" : "rgb(29, 155, 240)",
+                height: "0.85em",
             },
             "&:hover": {
-                backgroundColor: props => props.isUserBlocked ? "rgb(220, 30, 41)" : "rgb(255, 221, 237)",
+                backgroundColor: props => props.isUserMuted ? "rgba(244, 33, 46, 0.1)" : "rgba(29, 155, 240, 0.1)",
             },
         },
     },

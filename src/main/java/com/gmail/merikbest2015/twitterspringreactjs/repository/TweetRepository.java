@@ -21,10 +21,17 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "ORDER BY tweets.date_time DESC", nativeQuery = true)
     Page<Tweet> findAllTweets(Pageable pageable);
 
-    @Query(value = "SELECT * FROM tweets WHERE users_id = ?1 AND tweets.scheduled_date IS NULL", nativeQuery = true)
+    @Query(value = "SELECT * FROM tweets " +
+            "LEFT JOIN tweet_quote ON tweets.id = tweet_quote.tweets_id " +
+            "LEFT JOIN tweet_pool ON tweets.id = tweet_pool.tweets_id " +
+            "WHERE users_id = ?1 " +
+            "AND tweets.scheduled_date IS NULL", nativeQuery = true)
     List<Tweet> findAllByUserId(Long userId);
 
-    @Query(value = "SELECT * FROM tweets WHERE tweets.scheduled_date <= ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM tweets " +
+            "LEFT JOIN tweet_quote ON tweets.id = tweet_quote.tweets_id " +
+            "LEFT JOIN tweet_pool ON tweets.id = tweet_pool.tweets_id " +
+            "WHERE tweets.scheduled_date <= ?1", nativeQuery = true)
     List<Tweet> findAllByScheduledDate(LocalDateTime scheduledDate);
 
     @Query(value = "SELECT * FROM tweets " +

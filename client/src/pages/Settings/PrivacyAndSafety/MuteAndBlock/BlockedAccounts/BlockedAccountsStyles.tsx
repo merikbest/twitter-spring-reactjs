@@ -58,4 +58,8 @@ export const useBlockedAccountsStyles = makeStyles((theme: Theme) => ({
         height: 1,
         backgroundColor: "rgb(239, 243, 244)",
     },
+    loading: {
+        marginTop: 50,
+        textAlign: 'center',
+    },
 }));
