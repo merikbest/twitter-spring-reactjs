@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useState} from 'react';
 import {Link, useLocation} from 'react-router-dom';
-import {ClickAwayListener, IconButton, List, ListItem, Snackbar, Typography} from "@material-ui/core";
+import {ClickAwayListener, IconButton, List, ListItem, Typography} from "@material-ui/core";
 
 import {useUserPageActionsStyles} from "./UserPageActionsStyles";
 import {
@@ -21,6 +21,7 @@ import {User} from "../../../store/ducks/user/contracts/state";
 import ListsModal from "../../../components/ListsModal/ListsModal";
 import CopyToClipboard from 'react-copy-to-clipboard';
 import {CLIENT_URL} from "../../../util/url";
+import ActionSnackbar from "../../../components/ActionSnackbar/ActionSnackbar";
 
 interface UserPageActionsProps {
     user: User;
@@ -161,13 +162,10 @@ const UserPageActions: FC<UserPageActionsProps> = (
                     </div>
                 ) : null}
                 <ListsModal user={user} visible={visibleListsModal} onClose={onCloseListsModal}/>
-                <Snackbar
-                    className={classes.snackBar}
-                    anchorOrigin={{horizontal: "center", vertical: "bottom"}}
-                    open={openSnackBar}
-                    message="Copied to clipboard"
-                    onClose={onCloseSnackBar}
-                    autoHideDuration={3000}
+                <ActionSnackbar
+                    snackBarMessage={"Copied to clipboard"}
+                    openSnackBar={openSnackBar}
+                    onCloseSnackBar={onCloseSnackBar}
                 />
             </div>
         </ClickAwayListener>

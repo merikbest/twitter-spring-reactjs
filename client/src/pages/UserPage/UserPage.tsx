@@ -3,7 +3,7 @@ import {Link, RouteComponentProps, useHistory, useLocation} from 'react-router-d
 import {useDispatch, useSelector} from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Paper from '@material-ui/core/Paper';
-import {Avatar, Button, CircularProgress, IconButton, List, ListItem, Snackbar, Typography} from '@material-ui/core';
+import {Avatar, Button, CircularProgress, IconButton, List, ListItem, Typography} from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Skeleton from '@material-ui/lab/Skeleton';
@@ -55,6 +55,7 @@ import SetupProfileModal from "../SetupProfileModal/SetupProfileModal";
 import UserPageActions from "./UserPageActions/UserPageActions";
 import {createChat} from "../../store/ducks/chats/actionCreators";
 import BlockUserModal from "../../components/BlockUserModal/BlockUserModal";
+import ActionSnackbar from "../../components/ActionSnackbar/ActionSnackbar";
 
 interface LinkToFollowersProps {
     children: ReactNode;
@@ -520,13 +521,10 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
                     onClose={onCloseBlockUserModal}
                     onBlockUser={onBlockUser}
                 />
-                <Snackbar
-                    className={classes.snackBar}
-                    anchorOrigin={{horizontal: "center", vertical: "bottom"}}
-                    open={openSnackBar}
-                    message={snackBarMessage}
-                    onClose={onCloseSnackBar}
-                    autoHideDuration={3000}
+                <ActionSnackbar
+                    snackBarMessage={snackBarMessage}
+                    openSnackBar={openSnackBar}
+                    onCloseSnackBar={onCloseSnackBar}
                 />
             </Paper>
         </InfiniteScroll>

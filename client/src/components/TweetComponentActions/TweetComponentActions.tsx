@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {ClickAwayListener, IconButton, List, ListItem, Snackbar, Typography} from "@material-ui/core";
+import {ClickAwayListener, IconButton, List, ListItem, Typography} from "@material-ui/core";
 
 import {useTweetComponentMoreStyles} from "./TweetComponentActionsStyles";
 import {
@@ -14,8 +14,10 @@ import {
     PinIcon,
     ReplyIcon,
     ReportIcon,
-    TweetActivityIcon, UnblockIcon,
-    UnfollowIcon, UnmuteIcon
+    TweetActivityIcon,
+    UnblockIcon,
+    UnfollowIcon,
+    UnmuteIcon
 } from "../../icons";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {ReplyType, Tweet} from "../../store/ducks/tweets/contracts/state";
@@ -35,6 +37,7 @@ import ListsModal from "../ListsModal/ListsModal";
 import {TweetActions} from "../TweetComponent/TweetComponent";
 import HoverAction from "../HoverAction/HoverAction";
 import BlockUserModal from "../BlockUserModal/BlockUserModal";
+import ActionSnackbar from "../ActionSnackbar/ActionSnackbar";
 
 interface TweetComponentActionsProps {
     tweet: Tweet;
@@ -304,13 +307,10 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
                         openChangeReplyDropdown={openChangeReplyDropdown}
                         onChangeTweetReplyType={onChangeTweetReplyType}
                     />
-                    <Snackbar
-                        className={classes.snackBar}
-                        anchorOrigin={{horizontal: "center", vertical: "bottom"}}
-                        open={openSnackBar}
-                        message={snackBarMessage}
-                        onClose={onCloseSnackBar}
-                        autoHideDuration={3000}
+                    <ActionSnackbar
+                        snackBarMessage={snackBarMessage}
+                        openSnackBar={openSnackBar}
+                        onCloseSnackBar={onCloseSnackBar}
                     />
                 </div>
             </ClickAwayListener>

@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Avatar, Button, Paper, Snackbar, Typography} from "@material-ui/core";
+import {Avatar, Button, Paper, Typography} from "@material-ui/core";
 import {Link} from "react-router-dom";
 
 import {useBlockedAccountItemStyles} from "./BlockedAccountItemStyles";
@@ -8,8 +8,9 @@ import {User} from "../../../../../../store/ducks/user/contracts/state";
 import {DEFAULT_PROFILE_IMG} from "../../../../../../util/url";
 import {selectUserData} from "../../../../../../store/ducks/user/selectors";
 import {addUserToBlocklist} from "../../../../../../store/ducks/user/actionCreators";
+import ActionSnackbar from "../../../../../../components/ActionSnackbar/ActionSnackbar";
 
-interface BlockedAccountItemProps {
+export interface BlockedAccountItemProps {
     blockedUser: User;
 }
 
@@ -67,13 +68,10 @@ const BlockedAccountItem: FC<BlockedAccountItemProps> = ({blockedUser}): ReactEl
                     {blockedUser?.about}
                 </Typography>
             </div>
-            <Snackbar
-                className={classes.snackBar}
-                anchorOrigin={{horizontal: "center", vertical: "bottom"}}
-                open={openSnackBar}
-                message={`@${blockedUser.username} has been ${snackBarMessage}.`}
-                onClose={onCloseSnackBar}
-                autoHideDuration={3000}
+            <ActionSnackbar
+                onCloseSnackBar={onCloseSnackBar}
+                openSnackBar={openSnackBar}
+                snackBarMessage={snackBarMessage}
             />
         </Paper>
     );

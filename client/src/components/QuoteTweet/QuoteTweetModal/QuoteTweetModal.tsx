@@ -4,7 +4,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import Dialog from "@material-ui/core/Dialog";
 
 import {useQuoteTweetModalStyles} from "./QuoteTweetModalStyles";
-import {AddTweetForm} from "../../AddTweetForm/AddTweetForm";
+import AddTweetForm from "../../AddTweetForm/AddTweetForm";
 import {Tweet} from "../../../store/ducks/tweets/contracts/state";
 import CloseButton from "../../CloseButton/CloseButton";
 

@@ -231,17 +231,4 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         marginBottom: 16,
         color: "rgb(83, 100, 113)",
     },
-    snackBar: {
-        "& .MuiSnackbarContent-root": {
-            width: 179,
-            height: 44,
-            padding: 0,
-            backgroundColor: "rgb(29, 161, 242)",
-            "& .MuiSnackbarContent-message": {
-                fontSize: 15,
-                margin: "0 auto",
-                textAlign: "center",
-            },
-        },
-    },
 }));

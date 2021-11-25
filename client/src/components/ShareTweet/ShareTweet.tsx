@@ -2,7 +2,7 @@ import React, {FC, ReactElement, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useLocation} from "react-router-dom";
 import CopyToClipboard from 'react-copy-to-clipboard';
-import {ClickAwayListener, IconButton, List, ListItem, Snackbar, Typography} from "@material-ui/core";
+import {ClickAwayListener, IconButton, List, ListItem, Typography} from "@material-ui/core";
 
 import {useShareTweetModalStyles} from "./ShareTweetStyles";
 import {AddBookmarksIcon, LinkIcon, MessagesIcon, ShareIcon} from "../../icons";
@@ -14,6 +14,7 @@ import {TweetActions} from "../TweetComponent/TweetComponent";
 import HoverAction from "../HoverAction/HoverAction";
 import SendDirectTweetModal from "./SendDirectTweetModal/SendDirectTweetModal";
 import {Tweet} from "../../store/ducks/tweets/contracts/state";
+import ActionSnackbar from "../ActionSnackbar/ActionSnackbar";
 
 interface ShareTweetProps {
     tweet: Tweet;
@@ -140,13 +141,10 @@ const ShareTweet: FC<ShareTweetProps> = (
                         closeShareTweet={closeShareTweet}
                         onClose={onCloseSendViaDirectMessage}
                     />
-                    <Snackbar
-                        className={classes.snackBar}
-                        anchorOrigin={{horizontal: "center", vertical: "bottom"}}
-                        open={openSnackBar}
-                        message={snackBarMessage}
-                        onClose={onCloseSnackBar}
-                        autoHideDuration={3000}
+                    <ActionSnackbar
+                        snackBarMessage={snackBarMessage}
+                        openSnackBar={openSnackBar}
+                        onCloseSnackBar={onCloseSnackBar}
                     />
                 </div>
             </ClickAwayListener>

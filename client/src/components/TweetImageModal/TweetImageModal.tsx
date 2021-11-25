@@ -20,7 +20,7 @@ import {
     ShareIcon
 } from "../../icons";
 import {selectUserData} from "../../store/ducks/user/selectors";
-import {AddTweetForm} from "../AddTweetForm/AddTweetForm";
+import AddTweetForm from "../AddTweetForm/AddTweetForm";
 import UsersListModal from "../UsersListModal/UsersListModal";
 import TweetComponent, {TweetActions} from '../TweetComponent/TweetComponent';
 import {fetchLikeTweet, fetchRetweet} from "../../store/ducks/tweets/actionCreators";

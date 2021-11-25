@@ -6,7 +6,7 @@ import {CircularProgress, IconButton, Paper, Typography} from "@material-ui/core
 
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import {useHomeStyles} from './HomeStyles';
-import {AddTweetForm} from '../../components/AddTweetForm/AddTweetForm';
+import AddTweetForm from '../../components/AddTweetForm/AddTweetForm';
 import {fetchTweets, resetTweets, setTweetsLoadingState,} from "../../store/ducks/tweets/actionCreators";
 import {selectIsTweetsLoading, selectPagesCount, selectTweetsItems} from "../../store/ducks/tweets/selectors";
 import {BackButton} from "../../components/BackButton/BackButton";

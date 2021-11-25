@@ -8,7 +8,7 @@ import {Tweet} from "../../../store/ducks/tweets/contracts/state";
 import {TweetApi} from "../../../services/api/tweetApi";
 import {ScheduleIcon} from "../../../icons";
 import {formatScheduleDate} from "../../../util/formatDate";
-import {AddTweetForm} from "../AddTweetForm";
+import AddTweetForm from "../AddTweetForm";
 import CloseButton from "../../CloseButton/CloseButton";
 
 interface UnsentTweetsModalProps {

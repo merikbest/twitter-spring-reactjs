@@ -5,7 +5,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import {IconButton, Popover, Snackbar, Typography} from "@material-ui/core";
+import {IconButton, Popover, Typography} from "@material-ui/core";
 import {EmojiData, Picker} from 'emoji-mart'
 import 'emoji-mart/css/emoji-mart.css'
 import EmojiConvertor from 'emoji-js';
@@ -34,6 +34,7 @@ import HoverAction from "../HoverAction/HoverAction";
 import ScheduleModal from "./ScheduleModal/ScheduleModal";
 import {formatScheduleDate} from "../../util/formatDate";
 import UnsentTweetsModal from "./UnsentTweetsModal/UnsentTweetsModal";
+import ActionSnackbar from "../ActionSnackbar/ActionSnackbar";
 
 export enum AddTweetFormAction {
     MEDIA = "MEDIA",
@@ -43,7 +44,7 @@ export enum AddTweetFormAction {
     SCHEDULE = "SCHEDULE"
 }
 
-interface AddTweetFormProps {
+export interface AddTweetFormProps {
     unsentTweet?: Tweet;
     quoteTweet?: Tweet;
     maxRows?: number;
@@ -64,7 +65,7 @@ export interface ImageObj {
 const MAX_LENGTH = 280;
 const HOVER_DELAY = 500;
 
-export const AddTweetForm: FC<AddTweetFormProps> = (
+const AddTweetForm: FC<AddTweetFormProps> = (
     {
         unsentTweet,
         quoteTweet,
@@ -505,13 +506,10 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
                         onSelect={emojiTag => addEmoji(emojiTag)}
                         set={'twitter'}/>
                 </Popover>
-                <Snackbar
-                    className={classes.snackBar}
-                    anchorOrigin={{horizontal: "center", vertical: "bottom"}}
-                    open={openSnackBar}
-                    message={snackBarMessage}
-                    onClose={onCloseSnackBar}
-                    autoHideDuration={3000}
+                <ActionSnackbar
+                    snackBarMessage={snackBarMessage}
+                    openSnackBar={openSnackBar}
+                    onCloseSnackBar={onCloseSnackBar}
                 />
                 <ScheduleModal
                     visible={visibleScheduleModal}
@@ -529,3 +527,5 @@ export const AddTweetForm: FC<AddTweetFormProps> = (
         </div>
     );
 };
+
+export default AddTweetForm;

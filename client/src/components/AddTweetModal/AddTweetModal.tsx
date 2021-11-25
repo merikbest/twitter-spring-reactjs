@@ -5,7 +5,7 @@ import Dialog from "@material-ui/core/Dialog";
 import {useSelector} from "react-redux";
 
 import {useAddTweetModalStyles} from "./AddTweetModalStyles";
-import {AddTweetForm} from "../AddTweetForm/AddTweetForm";
+import AddTweetForm from "../AddTweetForm/AddTweetForm";
 import {selectIsTweetsLoaded} from "../../store/ducks/tweets/selectors";
 import CloseButton from "../CloseButton/CloseButton";
 

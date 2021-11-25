@@ -1,7 +1,7 @@
 import React, {FC, ReactElement, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
-import {Avatar, IconButton, Paper, Snackbar, Typography} from "@material-ui/core";
+import {Avatar, IconButton, Paper, Typography} from "@material-ui/core";
 
 import {useMutedAccountItemStyles} from "./MutedAccountItemStyles";
 import {DEFAULT_PROFILE_IMG} from "../../../../../../util/url";
@@ -10,6 +10,7 @@ import {User} from "../../../../../../store/ducks/user/contracts/state";
 import {MuteIcon, UnmuteIcon} from "../../../../../../icons";
 import {addUserToMuteList} from "../../../../../../store/ducks/user/actionCreators";
 import HoverAction from "../../../../../../components/HoverAction/HoverAction";
+import ActionSnackbar from "../../../../../../components/ActionSnackbar/ActionSnackbar";
 
 interface MutedAccountItemProps {
     mutedUser: User;
@@ -82,13 +83,10 @@ const MutedAccountItem: FC<MutedAccountItemProps> = ({mutedUser}): ReactElement 
                     {mutedUser?.about}
                 </Typography>
             </div>
-            <Snackbar
-                className={classes.snackBar}
-                anchorOrigin={{horizontal: "center", vertical: "bottom"}}
-                open={openSnackBar}
-                message={`@${mutedUser.username} has been ${snackBarMessage}.`}
-                onClose={onCloseSnackBar}
-                autoHideDuration={3000}
+            <ActionSnackbar
+                snackBarMessage={snackBarMessage}
+                openSnackBar={openSnackBar}
+                onCloseSnackBar={onCloseSnackBar}
             />
         </Paper>
     );

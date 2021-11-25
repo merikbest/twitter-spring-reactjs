@@ -16,7 +16,7 @@ import {fetchTweetData, setTweetData} from '../../store/ducks/tweet/actionCreato
 import {fetchLikeTweet, fetchRetweet} from "../../store/ducks/tweets/actionCreators";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import UsersListModal from "../../components/UsersListModal/UsersListModal";
-import {AddTweetForm} from "../../components/AddTweetForm/AddTweetForm";
+import AddTweetForm from "../../components/AddTweetForm/AddTweetForm";
 import TweetComponent, {TweetActions} from "../../components/TweetComponent/TweetComponent";
 import {useFullTweetStyles} from "./FullTweetStyles";
 import {DEFAULT_PROFILE_IMG, WS_URL} from "../../util/url";
