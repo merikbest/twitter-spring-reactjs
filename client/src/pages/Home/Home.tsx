@@ -2,14 +2,14 @@ import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Route, useLocation} from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {CircularProgress, IconButton, Paper, Typography} from "@material-ui/core";
+import {IconButton, Paper, Typography} from "@material-ui/core";
 
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import {useHomeStyles} from './HomeStyles';
 import AddTweetForm from '../../components/AddTweetForm/AddTweetForm';
 import {fetchTweets, resetTweets, setTweetsLoadingState,} from "../../store/ducks/tweets/actionCreators";
 import {selectIsTweetsLoading, selectPagesCount, selectTweetsItems} from "../../store/ducks/tweets/selectors";
-import {BackButton} from "../../components/BackButton/BackButton";
+import BackButton from "../../components/BackButton/BackButton";
 import {fetchUserData} from "../../store/ducks/user/actionCreators";
 import {fetchRelevantUsers} from "../../store/ducks/users/actionCreators";
 import {fetchTags} from "../../store/ducks/tags/actionCreators";
@@ -21,6 +21,7 @@ import Welcome from "../../components/Welcome/Welcome";
 import {LoadingStatus} from "../../store/types";
 import {fetchNotifications} from "../../store/ducks/notifications/actionCreators";
 import FullTweet from "../FullTweet/FullTweet";
+import Spinner from "../../components/Spinner/Spinner";
 
 const Home: FC = (): ReactElement => {
     const classes = useHomeStyles();
@@ -115,11 +116,7 @@ const Home: FC = (): ReactElement => {
                 <Route path='/home' exact>
                     {(!myProfile?.profileStarted && !isLoading) && (<Welcome/>)}
                     {tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}
-                    {isLoading && (
-                        <div className={classes.loading}>
-                            <CircularProgress/>
-                        </div>
-                    )}
+                    {isLoading && <Spinner/>}
                 </Route>
                 <Route path="/home/tweet/:id" exact>
                     <FullTweet/>

@@ -38,6 +38,7 @@ import {TweetActions} from "../TweetComponent/TweetComponent";
 import HoverAction from "../HoverAction/HoverAction";
 import BlockUserModal from "../BlockUserModal/BlockUserModal";
 import ActionSnackbar from "../ActionSnackbar/ActionSnackbar";
+import {SnackbarProps, withSnackbar} from "../../hoc/withSnackbar";
 
 interface TweetComponentActionsProps {
     tweet: Tweet;
@@ -49,7 +50,7 @@ interface TweetComponentActionsProps {
     onOpenTweetAnalytics: () => void;
 }
 
-const TweetComponentActions: FC<TweetComponentActionsProps> = (
+const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
     {
         tweet,
         isFullTweet,
@@ -57,7 +58,12 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
         visibleMoreAction,
         handleHoverAction,
         handleLeaveAction,
-        onOpenTweetAnalytics
+        onOpenTweetAnalytics,
+        snackBarMessage,
+        openSnackBar,
+        setSnackBarMessage,
+        setOpenSnackBar,
+        onCloseSnackBar
     }
 ): ReactElement => {
     const classes = useTweetComponentMoreStyles({isFullTweet});
@@ -71,8 +77,6 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
     const [visibleTweetPinModal, setVisibleTweetPinModal] = useState<boolean>(false);
     const [visibleListsModal, setVisibleListsModal] = useState<boolean>(false);
     const [visibleBlockUserModal, setVisibleBlockUserModal] = useState<boolean>(false);
-    const [openSnackBar, setOpenSnackBar] = useState<boolean>(false);
-    const [snackBarMessage, setSnackBarMessage] = useState<string>("");
     const [modalTitle, setModalTitle] = useState<string>("");
 
     const follower = myProfile?.followers?.find((follower) => follower.id === tweet.user.id);
@@ -107,12 +111,12 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
     const onPinUserTweet = (): void => {
         if (isTweetPinned) {
             dispatch(fetchPinTweet(tweet.id));
-            setSnackBarMessage("Your Tweet was unpinned from your profile");
+            setSnackBarMessage!("Your Tweet was unpinned from your profile");
         } else {
             dispatch(fetchPinTweet(tweet.id));
-            setSnackBarMessage("Your Tweet was pinned to your profile.");
+            setSnackBarMessage!("Your Tweet was pinned to your profile.");
         }
-        setOpenSnackBar(true);
+        setOpenSnackBar!(true);
         setOpenActionsDropdown(false);
         setVisibleTweetPinModal(false);
     };
@@ -125,8 +129,8 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
         } else {
             dispatch(fetchDeleteTweet(tweet.id));
         }
-        setSnackBarMessage("Your Tweet was deleted");
-        setOpenSnackBar(true);
+        setSnackBarMessage!("Your Tweet was deleted");
+        setOpenSnackBar!(true);
         setOpenActionsDropdown(false);
         setVisibleTweetPinModal(false);
     };
@@ -143,13 +147,13 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
         dispatch(fetchChangeReplyType({tweetId: tweet.id, replyType}));
 
         if (replyType === ReplyType.EVERYONE) {
-            setSnackBarMessage("Everyone can reply now");
+            setSnackBarMessage!("Everyone can reply now");
         } else if (replyType === ReplyType.FOLLOW) {
-            setSnackBarMessage("People you follow can reply now");
+            setSnackBarMessage!("People you follow can reply now");
         } else {
-            setSnackBarMessage("Only you can reply now");
+            setSnackBarMessage!("Only you can reply now");
         }
-        setOpenSnackBar(true);
+        setOpenSnackBar!(true);
         setChangeReplyDropdown(false);
         setOpenActionsDropdown(false);
     };
@@ -171,21 +175,17 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
         setVisibleListsModal(false);
     };
 
-    const onCloseSnackBar = (): void => {
-        setOpenSnackBar(false);
-    };
-
     const onMuteUser = (): void => {
         dispatch(addUserToMuteList(tweet.user.id!));
-        setSnackBarMessage(`@${tweet.user.username} has been ${isUserMuted ? "unmuted" : "muted"}.`);
-        setOpenSnackBar(true);
+        setSnackBarMessage!(`@${tweet.user.username} has been ${isUserMuted ? "unmuted" : "muted"}.`);
+        setOpenSnackBar!(true);
     };
 
     const onBlockUser = (): void => {
         dispatch(addUserToBlocklist(tweet.user.id!));
         setVisibleBlockUserModal(false);
-        setSnackBarMessage(`@${tweet.user.username} has been ${isUserBlocked ? "unblocked" : "blocked"}.`);
-        setOpenSnackBar(true);
+        setSnackBarMessage!(`@${tweet.user.username} has been ${isUserBlocked ? "unblocked" : "blocked"}.`);
+        setOpenSnackBar!(true);
     };
 
     const onOpenBlockUserModal = (): void => {
@@ -308,9 +308,9 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
                         onChangeTweetReplyType={onChangeTweetReplyType}
                     />
                     <ActionSnackbar
-                        snackBarMessage={snackBarMessage}
-                        openSnackBar={openSnackBar}
-                        onCloseSnackBar={onCloseSnackBar}
+                        snackBarMessage={snackBarMessage!}
+                        openSnackBar={openSnackBar!}
+                        onCloseSnackBar={onCloseSnackBar!}
                     />
                 </div>
             </ClickAwayListener>
@@ -334,4 +334,4 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = (
     );
 };
 
-export default TweetComponentActions;
+export default withSnackbar(TweetComponentActions);

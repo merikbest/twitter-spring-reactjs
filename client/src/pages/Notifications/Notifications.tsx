@@ -1,7 +1,7 @@
 import React, {ChangeEvent, FC, ReactElement, ReactNode, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
-import {Avatar, CircularProgress, Typography} from "@material-ui/core";
+import {Avatar, Typography} from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Paper from "@material-ui/core/Paper";
@@ -14,6 +14,7 @@ import {selectIsNotificationsLoading, selectNotificationsItems} from "../../stor
 import {fetchNotifications} from "../../store/ducks/notifications/actionCreators";
 import {fetchUserData} from "../../store/ducks/user/actionCreators";
 import {Notification, NotificationType} from "../../store/ducks/notifications/contracts/state";
+import Spinner from "../../components/Spinner/Spinner";
 
 const Notifications: FC = (): ReactElement => {
     const classes = useNotificationsStyles();
@@ -56,9 +57,7 @@ const Notifications: FC = (): ReactElement => {
                     </Tabs>
                 </div>
                 {isNotificationLoading ? (
-                    <div className={classes.loading}>
-                        <CircularProgress/>
-                    </div>
+                    <Spinner/>
                 ) : (
                     (activeTab === 0) ? (
                         (notifications.length === 0) ? (

@@ -8,7 +8,7 @@ export interface SnackbarProps {
     onCloseSnackBar?: () => void;
 }
 
-export const withSnackbar = <T extends object>(Component: React.ComponentType<SnackbarProps>) => (props: SnackbarProps) => {
+export const withSnackbar = <T extends SnackbarProps>(Component: React.ComponentType<T>) => (props: T) => {
     const [snackBarMessage, setSnackBarMessage] = useState<string>("");
     const [openSnackBar, setOpenSnackBar] = useState<boolean>(false);
 
@@ -18,7 +18,7 @@ export const withSnackbar = <T extends object>(Component: React.ComponentType<Sn
 
     return (
         <Component
-            {...props as SnackbarProps}
+            {...props as T}
             snackBarMessage={snackBarMessage}
             openSnackBar={openSnackBar}
             setSnackBarMessage={setSnackBarMessage}

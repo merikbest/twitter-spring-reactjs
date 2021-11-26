@@ -1,11 +1,12 @@
 import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {CircularProgress, Typography} from "@material-ui/core";
+import {Typography} from "@material-ui/core";
 
 import {useMutedAccountsStyles} from "./MutedAccountsStyles";
 import {fetchMutedUsers, setUsers} from "../../../../../store/ducks/users/actionCreators";
 import {selectUsers, selectUsersIsLoading, selectUsersLoadedSuccess} from "../../../../../store/ducks/users/selectors";
 import MutedAccountItem from "./MutedAccountItem/MutedAccountItem";
+import Spinner from "../../../../../components/Spinner/Spinner";
 
 const MutedAccounts: FC = (): ReactElement => {
     const classes = useMutedAccountsStyles();
@@ -34,9 +35,7 @@ const MutedAccounts: FC = (): ReactElement => {
             </div>
             <div className={classes.divider}/>
             {isUsersLoading ? (
-                <div className={classes.loading}>
-                    <CircularProgress/>
-                </div>
+                <Spinner/>
             ) : (
                 (mutedUsers.length === 0 && isUsersLoadedSuccess) ? (
                     <div className={classes.mutedAccountsInfo}>

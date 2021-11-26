@@ -45,10 +45,6 @@ export const useFollowingFollowersStyles = makeStyles((theme) => ({
         minWidth: 301,
         textTransform: 'none',
     },
-    loading: {
-        marginTop: 50,
-        textAlign: 'center',
-    },
     content: {
         margin: "40px 20px",
         textAlign: "center"

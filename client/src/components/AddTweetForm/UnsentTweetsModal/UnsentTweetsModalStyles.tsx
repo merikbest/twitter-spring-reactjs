@@ -50,10 +50,6 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
         minWidth: 299,
         textTransform: 'none',
     },
-    loading: {
-        marginTop: 50,
-        textAlign: 'center',
-    },
     infoWrapper: {
         margin: "32px auto",
         width: 336,

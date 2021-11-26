@@ -212,10 +212,6 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
     tweets: {
         borderTop: "1px solid rgba(0, 0, 0, 0.1)",
     },
-    tweetsCentred: {
-        marginTop: 50,
-        textAlign: 'center',
-    },
     topic: {
         fontSize: 20,
         fontWeight: 700,

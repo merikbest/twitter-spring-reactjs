@@ -39,8 +39,4 @@ export const useMutedAccountsStyles = makeStyles((theme: Theme) => ({
         fontWeight: 400,
         fontSize: 15,
     },
-    loading: {
-        marginTop: 50,
-        textAlign: 'center',
-    },
 }));

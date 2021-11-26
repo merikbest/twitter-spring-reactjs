@@ -28,10 +28,6 @@ export const useNotificationsStyles = makeStyles((theme: Theme) => ({
             marginRight: 20
         },
     },
-    loading: {
-        marginTop: 50,
-        textAlign: 'center',
-    },
     title: {
         textAlign: "center",
         marginTop: 30,

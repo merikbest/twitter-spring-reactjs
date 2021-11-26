@@ -7,6 +7,7 @@ import {SettingsIcon} from "../../icons";
 import {selectIsTagsLoading, selectTagsItems} from "../../store/ducks/tags/selectors";
 import {Tag} from "../../store/ducks/tags/contracts/state";
 import {useTagsStyles} from "./TagsStyles";
+import Spinner from "../Spinner/Spinner";
 
 const Tags: FC = (): ReactElement => {
     const classes = useTagsStyles();
@@ -22,9 +23,7 @@ const Tags: FC = (): ReactElement => {
                 </IconButton>
             </Paper>
             {isTagsLoaded ? (
-                <div className={classes.loading}>
-                    <CircularProgress/>
-                </div>
+                <Spinner/>
             ) : (
                 <List>
                     {tags.slice(0, 3).map((tag: Tag) => (

@@ -23,10 +23,6 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
             height: "1.20em",
         },
     },
-    loading: {
-        paddingTop: 200,
-        textAlign: 'center',
-    },
     container: {
         borderTop: '0',
         borderLeft: '0',

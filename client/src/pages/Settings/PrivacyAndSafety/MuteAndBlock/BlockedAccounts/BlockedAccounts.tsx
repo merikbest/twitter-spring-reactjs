@@ -2,12 +2,13 @@ import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import {CircularProgress, Typography} from "@material-ui/core";
+import {Typography} from "@material-ui/core";
 
 import {useBlockedAccountsStyles} from "./BlockedAccountsStyles";
 import BlockedAccountItem from "./BlockedAccountItem/BlockedAccountItem";
 import {fetchBlockedUsers, setUsers} from "../../../../../store/ducks/users/actionCreators";
 import {selectUsers, selectUsersIsLoading, selectUsersLoadedSuccess} from "../../../../../store/ducks/users/selectors";
+import Spinner from "../../../../../components/Spinner/Spinner";
 
 const BlockedAccounts: FC = (): ReactElement => {
     const classes = useBlockedAccountsStyles();
@@ -48,9 +49,7 @@ const BlockedAccounts: FC = (): ReactElement => {
             </div>
             <div className={classes.divider}/>
             {isUsersLoading ? (
-                <div className={classes.loading}>
-                    <CircularProgress/>
-                </div>
+                <Spinner/>
             ) : (
                 (blockedUsers.length === 0 && isUsersLoadedSuccess) ? (
                     <div className={classes.blockedAccountsInfo}>

@@ -4,7 +4,7 @@ import {RouteComponentProps} from "react-router-dom";
 import {Paper, Typography} from "@material-ui/core";
 
 import {useListsMembershipsStyles} from "./ListsMembershipsStyles";
-import {BackButton} from "../../../components/BackButton/BackButton";
+import BackButton from "../../../components/BackButton/BackButton";
 import {fetchUserProfile} from "../../../store/ducks/userProfile/actionCreators";
 import {selectUserProfile} from "../../../store/ducks/userProfile/selectors";
 import {selectUserData} from "../../../store/ducks/user/selectors";

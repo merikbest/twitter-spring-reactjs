@@ -4,7 +4,7 @@ import {Grid, List, ListItem, Paper, Typography} from "@material-ui/core";
 
 import {useSettingsStyles} from "./SettingsStyles";
 import {ArrowRightIcon} from "../../icons";
-import {BackButton} from "../../components/BackButton/BackButton";
+import BackButton from "../../components/BackButton/BackButton";
 import Account from "./Account/Account";
 import AccountInformation from "./Account/AccountInformation/AccountInformation";
 import ChangeUsername from "./Account/AccountInformation/ChangeUsername/ChangeUsername";

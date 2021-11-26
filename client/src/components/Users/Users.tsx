@@ -1,13 +1,14 @@
 import React, {FC, ReactElement} from 'react';
 import {Link, useLocation} from 'react-router-dom';
 import {useSelector} from "react-redux";
-import {CircularProgress, Paper} from "@material-ui/core";
+import {Paper} from "@material-ui/core";
 import List from "@material-ui/core/List/List";
 import ListItem from "@material-ui/core/ListItem/ListItem";
 
-import {selectUsersIsLoading, selectUsers} from "../../store/ducks/users/selectors";
+import {selectUsers, selectUsersIsLoading} from "../../store/ducks/users/selectors";
 import UsersItem from "./UsersItem/UsersItem";
 import {useUsersStyles} from "./UsersStyles";
+import Spinner from "../Spinner/Spinner";
 
 const Users: FC = (): ReactElement => {
     const classes = useUsersStyles();
@@ -23,9 +24,7 @@ const Users: FC = (): ReactElement => {
                         <b>Who to follow</b>
                     </Paper>
                     {isUsersLoading ? (
-                        <div className={classes.loading}>
-                            <CircularProgress/>
-                        </div>
+                        <Spinner/>
                     ) : (
                         <List>
                             {users.slice(0, 5).map((user) => <UsersItem key={user.id} item={user}/>)}

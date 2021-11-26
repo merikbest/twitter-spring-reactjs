@@ -4,10 +4,6 @@ export const useConnectStyles = makeStyles((theme: Theme) => ({
     container: {
         paddingTop: 48,
     },
-    loading: {
-        marginTop: 50,
-        textAlign: 'center',
-    },
     header: {
         display: 'flex',
         alignItems: 'center',

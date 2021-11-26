@@ -5,6 +5,7 @@ import TweetComponent from '../../components/TweetComponent/TweetComponent';
 import {useUserPageStyles} from "./UserPageStyles";
 import AddTweetModal from "../../components/AddTweetModal/AddTweetModal";
 import {Tweet} from "../../store/ducks/tweets/contracts/state";
+import Spinner from "../../components/Spinner/Spinner";
 
 interface UserPageTweetsProps {
     tweets?: Tweet[];
@@ -138,11 +139,7 @@ const UserPageTweets: FC<UserPageTweetsProps> = (
                             activeTab={activeTab}
                         />
                     ))}
-                    {isTweetsLoading && (
-                        <div className={classes.tweetsCentred}>
-                            <CircularProgress/>
-                        </div>
-                    )}
+                    {isTweetsLoading && <Spinner/>}
                 </>
             );
         }

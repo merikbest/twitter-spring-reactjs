@@ -1,10 +1,10 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {CircularProgress, ClickAwayListener, IconButton, Paper, Typography} from "@material-ui/core";
+import {ClickAwayListener, IconButton, Paper, Typography} from "@material-ui/core";
 import {Link} from 'react-router-dom';
 
 import {useListsStyles} from "./ListsStyles";
-import {BackButton} from "../../components/BackButton/BackButton";
+import BackButton from "../../components/BackButton/BackButton";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {AddListsIcon, EditIcon, ListsIcon} from "../../icons";
 import CreateListsModal from "./CreateListsModal/CreateListsModal";
@@ -25,6 +25,7 @@ import {
 import ListsItem from "./ListsItem/ListsItem";
 import PinnedListsItem from "./PinnedListsItem/PinnedListsItem";
 import HoverAction from "../../components/HoverAction/HoverAction";
+import Spinner from "../../components/Spinner/Spinner";
 
 enum ListsAction {
     NEW_LIST = "NEW_LIST",
@@ -140,9 +141,7 @@ const Lists: FC = (): ReactElement => {
                 </div>
             </Paper>
             {isLoading ? (
-                <div className={classes.loading}>
-                    <CircularProgress/>
-                </div>
+                <Spinner paddingTop={250}/>
             ) : (
                 <>
                     <Paper className={classes.pinnedLists} variant="outlined">

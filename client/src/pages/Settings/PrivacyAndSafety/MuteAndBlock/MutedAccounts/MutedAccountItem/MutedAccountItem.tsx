@@ -11,25 +11,33 @@ import {MuteIcon, UnmuteIcon} from "../../../../../../icons";
 import {addUserToMuteList} from "../../../../../../store/ducks/user/actionCreators";
 import HoverAction from "../../../../../../components/HoverAction/HoverAction";
 import ActionSnackbar from "../../../../../../components/ActionSnackbar/ActionSnackbar";
+import {SnackbarProps, withSnackbar} from "../../../../../../hoc/withSnackbar";
 
 interface MutedAccountItemProps {
     mutedUser: User;
 }
 
-const MutedAccountItem: FC<MutedAccountItemProps> = ({mutedUser}): ReactElement => {
+const MutedAccountItem: FC<MutedAccountItemProps & SnackbarProps> = (
+    {
+        mutedUser,
+        snackBarMessage,
+        openSnackBar,
+        setSnackBarMessage,
+        setOpenSnackBar,
+        onCloseSnackBar
+    }
+): ReactElement => {
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
     const isUserMuted = myProfile?.userMutedList?.findIndex(user => user.id === mutedUser?.id) !== -1;
     const classes = useMutedAccountItemStyles({isUserMuted});
     const [visibleCloseAction, setVisibleCloseAction] = useState<boolean>(false);
     const [delayHandler, setDelayHandler] = useState<any>(null);
-    const [snackBarMessage, setSnackBarMessage] = useState<string>("");
-    const [openSnackBar, setOpenSnackBar] = useState<boolean>(false);
 
     const unmuteUser = (): void => {
         dispatch(addUserToMuteList(mutedUser?.id!));
-        setSnackBarMessage(isUserMuted ? "unmuted" : "muted");
-        setOpenSnackBar(true);
+        setSnackBarMessage!(`@${mutedUser.username} has been ${isUserMuted ? "unmuted" : "muted"}.`);
+        setOpenSnackBar!(true);
     };
 
     const handleHoverAction = (): void => {
@@ -39,10 +47,6 @@ const MutedAccountItem: FC<MutedAccountItemProps> = ({mutedUser}): ReactElement 
     const handleLeaveAction = (): void => {
         clearTimeout(delayHandler);
         setVisibleCloseAction(false);
-    };
-
-    const onCloseSnackBar = (): void => {
-        setOpenSnackBar(false);
     };
 
     return (
@@ -84,12 +88,12 @@ const MutedAccountItem: FC<MutedAccountItemProps> = ({mutedUser}): ReactElement 
                 </Typography>
             </div>
             <ActionSnackbar
-                snackBarMessage={snackBarMessage}
-                openSnackBar={openSnackBar}
-                onCloseSnackBar={onCloseSnackBar}
+                snackBarMessage={snackBarMessage!}
+                openSnackBar={openSnackBar!}
+                onCloseSnackBar={onCloseSnackBar!}
             />
         </Paper>
     );
 };
 
-export default MutedAccountItem;
+export default withSnackbar(MutedAccountItem);

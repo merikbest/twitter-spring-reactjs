@@ -5,6 +5,7 @@ import {useCreateAccountModalStyles} from "./CreateAccountModalStyles";
 import {RegistrationInputField} from "../RegistrationInput/RegistrationInputField";
 import {RegistrationInfo} from "../../Authentication/Authentication";
 import {AuthApi} from "../../../services/api/authApi";
+import Spinner from "../../../components/Spinner/Spinner";
 
 interface CustomizeModalProps {
     open: boolean;
@@ -51,9 +52,7 @@ const CreateAccountModal: FC<CustomizeModalProps> = (
                     Step 3 of 5
                 </Typography>
                 {isLoading ? (
-                    <div className={classes.spinner}>
-                        <CircularProgress/>
-                    </div>
+                    <Spinner/>
                 ) : (
                     <>
                         <Typography component={"div"} className={classes.subtitle}>

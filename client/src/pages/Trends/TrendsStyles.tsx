@@ -1,10 +1,6 @@
 import {makeStyles} from "@material-ui/core";
 
 export const useTrendsStyles = makeStyles((theme) => ({
-    loading: {
-        marginTop: 50,
-        textAlign: 'center',
-    },
     item: {
         cursor: 'pointer',
         borderBottom: "1px solid rgb(239, 243, 244)",

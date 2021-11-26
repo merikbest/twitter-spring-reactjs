@@ -3,7 +3,7 @@ import {Link, RouteComponentProps, useHistory, useLocation} from 'react-router-d
 import {useDispatch, useSelector} from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Paper from '@material-ui/core/Paper';
-import {Avatar, Button, CircularProgress, IconButton, List, ListItem, Typography} from '@material-ui/core';
+import {Avatar, Button, IconButton, List, ListItem, Typography} from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Skeleton from '@material-ui/lab/Skeleton';
@@ -14,7 +14,7 @@ import classNames from "classnames";
 
 import {CalendarIcon, LinkIcon, LocationIcon, LockIcon, MessagesIcon} from "../../icons";
 import {useUserPageStyles} from "./UserPageStyles";
-import {BackButton} from "../../components/BackButton/BackButton";
+import BackButton from "../../components/BackButton/BackButton";
 import EditProfileModal from "../../components/EditProfileModal/EditProfileModal";
 import {
     addUserToBlocklist,
@@ -56,6 +56,8 @@ import UserPageActions from "./UserPageActions/UserPageActions";
 import {createChat} from "../../store/ducks/chats/actionCreators";
 import BlockUserModal from "../../components/BlockUserModal/BlockUserModal";
 import ActionSnackbar from "../../components/ActionSnackbar/ActionSnackbar";
+import {SnackbarProps, withSnackbar} from "../../hoc/withSnackbar";
+import Spinner from "../../components/Spinner/Spinner";
 
 interface LinkToFollowersProps {
     children: ReactNode;
@@ -64,7 +66,16 @@ interface LinkToFollowersProps {
 
 let stompClient: CompatClient | null = null;
 
-const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElement => {
+const UserPage: FC<RouteComponentProps<{ id: string }> & SnackbarProps> = (
+    {
+        match,
+        snackBarMessage,
+        openSnackBar,
+        setSnackBarMessage,
+        setOpenSnackBar,
+        onCloseSnackBar
+    }
+): ReactElement => {
     const classes = useUserPageStyles();
     const dispatch = useDispatch();
     const tweets = useSelector(selectUserTweetsItems);
@@ -80,8 +91,6 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
     const [visibleBlockUserModal, setVisibleBlockUserModal] = useState<boolean>(false);
     const [visibleEditProfile, setVisibleEditProfile] = useState<boolean>(false);
     const [visibleSetupProfile, setVisibleSetupProfile] = useState<boolean>(false);
-    const [snackBarMessage, setSnackBarMessage] = useState<string>("");
-    const [openSnackBar, setOpenSnackBar] = useState<boolean>(false);
     const pagesCount = useSelector(selectPagesCount);
     const [page, setPage] = useState<number>(0);
 
@@ -243,16 +252,16 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
 
     const onMuteUser = (): void => {
         dispatch(addUserToMuteList(userProfile?.id!));
-        setSnackBarMessage(`@${userProfile?.username} has been ${isUserMuted ? "unmuted" : "muted"}.`);
-        setOpenSnackBar(true);
+        setSnackBarMessage!(`@${userProfile?.username} has been ${isUserMuted ? "unmuted" : "muted"}.`);
+        setOpenSnackBar!(true);
     };
 
     const onBlockUser = (): void => {
         dispatch(addUserToBlocklist(userProfile?.id!));
         setVisibleBlockUserModal(false);
         setBtnText(isUserBlocked ? "Following" : "Blocked");
-        setSnackBarMessage(`@${userProfile?.username} has been ${isUserBlocked ? "unblocked" : "blocked"}.`);
-        setOpenSnackBar(true);
+        setSnackBarMessage!(`@${userProfile?.username} has been ${isUserBlocked ? "unblocked" : "blocked"}.`);
+        setOpenSnackBar!(true);
     };
 
     const onOpenBlockUserModal = (): void => {
@@ -261,10 +270,6 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
 
     const onCloseBlockUserModal = (): void => {
         setVisibleBlockUserModal(false);
-    };
-
-    const onCloseSnackBar = (): void => {
-        setOpenSnackBar(false);
     };
 
     return (
@@ -472,9 +477,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
                         </div>
                     </div>
                     {(userProfile === undefined) ? (
-                        <div className={classes.tweetsCentred}>
-                            <CircularProgress/>
-                        </div>
+                        <Spinner/>
                     ) : (
                         userProfile?.privateProfile ? (
                             <div className={classes.privateProfileInfo}>
@@ -522,13 +525,13 @@ const UserPage: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElemen
                     onBlockUser={onBlockUser}
                 />
                 <ActionSnackbar
-                    snackBarMessage={snackBarMessage}
-                    openSnackBar={openSnackBar}
-                    onCloseSnackBar={onCloseSnackBar}
+                    snackBarMessage={snackBarMessage!}
+                    openSnackBar={openSnackBar!}
+                    onCloseSnackBar={onCloseSnackBar!}
                 />
             </Paper>
         </InfiniteScroll>
     );
 };
 
-export default UserPage;
+export default withSnackbar(UserPage);

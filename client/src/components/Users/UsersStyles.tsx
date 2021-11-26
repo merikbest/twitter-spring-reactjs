@@ -30,10 +30,6 @@ export const useUsersStyles = makeStyles((theme: Theme) => ({
             fontWeight: 800,
         },
     },
-    loading: {
-        marginTop: 50,
-        textAlign: 'center',
-    },
     footer: {
         fontSize: 16,
         color: "rgb(27, 149, 224)",

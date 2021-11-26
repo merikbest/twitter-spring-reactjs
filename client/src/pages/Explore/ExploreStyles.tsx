@@ -45,10 +45,6 @@ export const useExploreStyles = makeStyles((theme: Theme) => ({
     contentWrapper: {
         paddingTop: 97
     },
-    loading: {
-        marginTop: 50,
-        textAlign: 'center',
-    },
     tabs: {
         "& .MuiTabs-indicator": {
             marginLeft: 35,

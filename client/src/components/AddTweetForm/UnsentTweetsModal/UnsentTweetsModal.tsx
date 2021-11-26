@@ -1,5 +1,5 @@
 import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
-import {Button, Checkbox, CircularProgress, Dialog, DialogContent, DialogTitle, Typography} from "@material-ui/core";
+import {Button, Checkbox, Dialog, DialogContent, DialogTitle, Typography} from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
@@ -10,6 +10,7 @@ import {ScheduleIcon} from "../../../icons";
 import {formatScheduleDate} from "../../../util/formatDate";
 import AddTweetForm from "../AddTweetForm";
 import CloseButton from "../../CloseButton/CloseButton";
+import Spinner from "../../Spinner/Spinner";
 
 interface UnsentTweetsModalProps {
     visible?: boolean;
@@ -147,9 +148,7 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
                         </Tabs>
                     </div>
                     {isLoading ? (
-                        <div className={classes.loading}>
-                            <CircularProgress/>
-                        </div>
+                        <Spinner/>
                     ) : (
                         (tweets.length === 0) ? (
                             <div className={classes.infoWrapper}>

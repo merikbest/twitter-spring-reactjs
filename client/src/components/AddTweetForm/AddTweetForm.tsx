@@ -35,6 +35,7 @@ import ScheduleModal from "./ScheduleModal/ScheduleModal";
 import {formatScheduleDate} from "../../util/formatDate";
 import UnsentTweetsModal from "./UnsentTweetsModal/UnsentTweetsModal";
 import ActionSnackbar from "../ActionSnackbar/ActionSnackbar";
+import {SnackbarProps, withSnackbar} from "../../hoc/withSnackbar";
 
 export enum AddTweetFormAction {
     MEDIA = "MEDIA",
@@ -65,7 +66,7 @@ export interface ImageObj {
 const MAX_LENGTH = 280;
 const HOVER_DELAY = 500;
 
-const AddTweetForm: FC<AddTweetFormProps> = (
+const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
     {
         unsentTweet,
         quoteTweet,
@@ -76,7 +77,12 @@ const AddTweetForm: FC<AddTweetFormProps> = (
         buttonName,
         addressedUsername,
         addressedId,
-        onCloseModal
+        onCloseModal,
+        snackBarMessage,
+        openSnackBar,
+        setSnackBarMessage,
+        setOpenSnackBar,
+        onCloseSnackBar
     }
 ): ReactElement => {
     const dispatch = useDispatch();
@@ -94,11 +100,9 @@ const AddTweetForm: FC<AddTweetFormProps> = (
     const [visibleAddEmojiAction, setVisibleAddEmojiAction] = useState<boolean>(false);
     const [visibleAddScheduleAction, setVisibleAddScheduleAction] = useState<boolean>(false);
     const [delayHandler, setDelayHandler] = useState<any>(null);
-    const [openSnackBar, setOpenSnackBar] = useState<boolean>(false);
     const [visibleScheduleModal, setVisibleScheduleModal] = useState<boolean>(false);
     const [visibleUnsentTweetsModal, setVisibleUnsentTweetsModal] = useState<boolean>(false);
     const [selectedScheduleDate, setSelectedScheduleDate] = useState<Date | null>(null);
-    const [snackBarMessage, setSnackBarMessage] = useState<string>("");
     // Popover
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -186,12 +190,12 @@ const AddTweetForm: FC<AddTweetFormProps> = (
             }));
         }
 
-        setSnackBarMessage(selectedScheduleDate ? (
+        setSnackBarMessage!(selectedScheduleDate ? (
             `Your Tweet will be sent on ${formatScheduleDate(selectedScheduleDate)}`
         ) : (
             "Your tweet was sent."
         ));
-        setOpenSnackBar(true);
+        setOpenSnackBar!(true);
         setText('');
         setImages([]);
         setVisiblePoll(false);
@@ -214,8 +218,8 @@ const AddTweetForm: FC<AddTweetFormProps> = (
             tweetId: quoteTweet!.id,
         }));
 
-        setSnackBarMessage("Your tweet was sent.");
-        setOpenSnackBar(true);
+        setSnackBarMessage!("Your tweet was sent.");
+        setOpenSnackBar!(true);
         setText("");
         setImages([]);
 
@@ -240,8 +244,8 @@ const AddTweetForm: FC<AddTweetFormProps> = (
             replyType: replyType
         }));
 
-        setSnackBarMessage("Your tweet was sent.");
-        setOpenSnackBar(true);
+        setSnackBarMessage!("Your tweet was sent.");
+        setOpenSnackBar!(true);
         setText("");
         setImages([]);
 
@@ -302,10 +306,6 @@ const AddTweetForm: FC<AddTweetFormProps> = (
         setVisibleAddPollAction(false);
         setVisibleAddEmojiAction(false);
         setVisibleAddScheduleAction(false);
-    };
-
-    const onCloseSnackBar = (): void => {
-        setOpenSnackBar(false);
     };
 
     const onOpenScheduleModal = (): void => {
@@ -507,9 +507,9 @@ const AddTweetForm: FC<AddTweetFormProps> = (
                         set={'twitter'}/>
                 </Popover>
                 <ActionSnackbar
-                    snackBarMessage={snackBarMessage}
-                    openSnackBar={openSnackBar}
-                    onCloseSnackBar={onCloseSnackBar}
+                    snackBarMessage={snackBarMessage!}
+                    openSnackBar={openSnackBar!}
+                    onCloseSnackBar={onCloseSnackBar!}
                 />
                 <ScheduleModal
                     visible={visibleScheduleModal}
@@ -528,4 +528,4 @@ const AddTweetForm: FC<AddTweetFormProps> = (
     );
 };
 
-export default AddTweetForm;
+export default withSnackbar(AddTweetForm);

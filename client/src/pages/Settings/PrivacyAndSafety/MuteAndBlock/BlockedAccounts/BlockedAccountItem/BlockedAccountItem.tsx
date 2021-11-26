@@ -9,27 +9,31 @@ import {DEFAULT_PROFILE_IMG} from "../../../../../../util/url";
 import {selectUserData} from "../../../../../../store/ducks/user/selectors";
 import {addUserToBlocklist} from "../../../../../../store/ducks/user/actionCreators";
 import ActionSnackbar from "../../../../../../components/ActionSnackbar/ActionSnackbar";
+import {SnackbarProps, withSnackbar} from "../../../../../../hoc/withSnackbar";
 
-export interface BlockedAccountItemProps {
+interface BlockedAccountItemProps {
     blockedUser: User;
 }
 
-const BlockedAccountItem: FC<BlockedAccountItemProps> = ({blockedUser}): ReactElement => {
+const BlockedAccountItem: FC<BlockedAccountItemProps & SnackbarProps> = (
+    {
+        blockedUser,
+        snackBarMessage,
+        openSnackBar,
+        setSnackBarMessage,
+        setOpenSnackBar,
+        onCloseSnackBar
+    }
+): ReactElement => {
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
     const isUserBlocked = myProfile?.userBlockedList?.findIndex(user => user.id === blockedUser?.id) !== -1;
     const classes = useBlockedAccountItemStyles({isUserBlocked});
-    const [snackBarMessage, setSnackBarMessage] = useState<string>("");
-    const [openSnackBar, setOpenSnackBar] = useState<boolean>(false);
 
     const unblockUser = (): void => {
         dispatch(addUserToBlocklist(blockedUser?.id!));
-        setSnackBarMessage(isUserBlocked ? "unblocked" : "blocked");
-        setOpenSnackBar(true);
-    };
-
-    const onCloseSnackBar = (): void => {
-        setOpenSnackBar(false);
+        setSnackBarMessage!(`@${blockedUser.username} has been ${isUserBlocked ? "unblocked" : "blocked"}.`);
+        setOpenSnackBar!(true);
     };
 
     return (
@@ -69,12 +73,12 @@ const BlockedAccountItem: FC<BlockedAccountItemProps> = ({blockedUser}): ReactEl
                 </Typography>
             </div>
             <ActionSnackbar
-                onCloseSnackBar={onCloseSnackBar}
-                openSnackBar={openSnackBar}
-                snackBarMessage={snackBarMessage}
+                onCloseSnackBar={onCloseSnackBar!}
+                openSnackBar={openSnackBar!}
+                snackBarMessage={snackBarMessage!}
             />
         </Paper>
     );
 };
 
-export default BlockedAccountItem;
+export default withSnackbar(BlockedAccountItem);

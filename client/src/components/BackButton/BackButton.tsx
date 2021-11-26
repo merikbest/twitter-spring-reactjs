@@ -6,7 +6,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {useBackButtonStyles} from "./BackButtonStyles";
 import HoverAction from "../HoverAction/HoverAction";
 
-export const BackButton: FC = (): ReactElement => {
+const BackButton: FC = (): ReactElement => {
     const classes = useBackButtonStyles();
     const history = useHistory();
     const [visibleBackAction, setVisibleBackAction] = useState<boolean>(false);
@@ -39,3 +39,5 @@ export const BackButton: FC = (): ReactElement => {
         </div>
     );
 };
+
+export default BackButton;

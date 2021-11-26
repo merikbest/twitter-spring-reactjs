@@ -1,7 +1,6 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {Link, useLocation, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Paper from '@material-ui/core/Paper';
 import {Avatar, Divider, IconButton} from "@material-ui/core";
 import Typography from '@material-ui/core/Typography';
@@ -45,6 +44,7 @@ import LargeLinkPreview from "../../components/LargeLinkPreview/LargeLinkPreview
 import HoverAction from "../../components/HoverAction/HoverAction";
 import {HoverActionProps, withHoverAction} from "../../hoc/withHoverAction";
 import TweetAnalyticsModal from "../../components/TweetAnalyticsModal/TweetAnalyticsModal";
+import Spinner from "../../components/Spinner/Spinner";
 
 let stompClient: CompatClient | null = null;
 
@@ -141,11 +141,7 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
     };
 
     if (isLoading) {
-        return (
-            <div className={classes.loading}>
-                <CircularProgress/>
-            </div>
-        );
+        return <Spinner paddingTop={200}/>;
     }
 
     if (tweetData) {

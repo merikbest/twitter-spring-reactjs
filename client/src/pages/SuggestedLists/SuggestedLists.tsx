@@ -1,12 +1,13 @@
 import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {CircularProgress, Paper, Typography} from "@material-ui/core";
+import {Paper, Typography} from "@material-ui/core";
 
 import {useSuggestedListsStyles} from "./SuggestedListsStyles";
-import {BackButton} from "../../components/BackButton/BackButton";
+import BackButton from "../../components/BackButton/BackButton";
 import {fetchLists} from "../../store/ducks/lists/actionCreators";
 import {selectIsListsLoading, selectListsItems} from "../../store/ducks/lists/selectors";
 import ListsItem from "../Lists/ListsItem/ListsItem";
+import Spinner from "../../components/Spinner/Spinner";
 
 const SuggestedLists: FC = (): ReactElement => {
     const classes = useSuggestedListsStyles();
@@ -49,9 +50,7 @@ const SuggestedLists: FC = (): ReactElement => {
                 Discover new Lists
             </Typography>
             {isLoading ? (
-                <div className={classes.loading}>
-                    <CircularProgress/>
-                </div>
+                <Spinner/>
             ) : (
                 lists.map((list) => <ListsItem key={list.id} item={list}/>)
             )}

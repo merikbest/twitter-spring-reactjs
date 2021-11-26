@@ -1,12 +1,13 @@
 import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {CircularProgress, List, ListItem, ListItemText, Typography} from "@material-ui/core";
+import {Link} from "react-router-dom";
+import {List, ListItem, ListItemText, Typography} from "@material-ui/core";
 
 import {useTrendsStyles} from "./TrendsStyles";
 import {selectIsTagsLoading, selectTagsItems} from "../../store/ducks/tags/selectors";
 import {fetchTrends} from "../../store/ducks/tags/actionCreators";
-import {Link} from "react-router-dom";
 import {EditIcon} from "../../icons";
+import Spinner from "../../components/Spinner/Spinner";
 
 const Trends: FC = (): ReactElement => {
     const classes = useTrendsStyles();
@@ -22,9 +23,7 @@ const Trends: FC = (): ReactElement => {
     return (
         <div>
             {isTrendsLoaded ? (
-                <div className={classes.loading}>
-                    <CircularProgress/>
-                </div>
+                <Spinner/>
             ) : (
                 <List style={{paddingTop: 48,}}>
                     {trends.map(item => (

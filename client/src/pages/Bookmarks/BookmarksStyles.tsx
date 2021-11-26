@@ -38,10 +38,6 @@ export const useBookmarksStyles= makeStyles((theme) => ({
     contentWrapper: {
         paddingTop: 48
     },
-    loading: {
-        marginTop: 50,
-        textAlign: 'center',
-    },
     infoWrapper: {
         marginTop: 32,
         margin: "0 auto",

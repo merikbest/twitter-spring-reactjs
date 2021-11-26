@@ -1,13 +1,14 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {CircularProgress, Paper, Typography} from "@material-ui/core";
+import {Paper, Typography} from "@material-ui/core";
 
 import {selectIsTweetsLoading, selectPagesCount, selectTweetsItems} from "../../store/ducks/tweets/selectors";
 import {useBookmarksStyles} from "./BookmarksStyles";
 import {fetchUserBookmarks, resetTweets} from "../../store/ducks/tweets/actionCreators";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
+import Spinner from "../../components/Spinner/Spinner";
 
 const Bookmarks: FC = (): ReactElement => {
     const classes = useBookmarksStyles();
@@ -64,11 +65,7 @@ const Bookmarks: FC = (): ReactElement => {
                     ) : (
                         <>
                             {tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}
-                            {isLoading && (
-                                <div className={classes.loading}>
-                                    <CircularProgress/>
-                                </div>
-                            )}
+                            {isLoading && <Spinner/>}
                         </>
                     )}
                 </div>

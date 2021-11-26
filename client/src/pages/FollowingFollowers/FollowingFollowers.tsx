@@ -2,19 +2,19 @@ import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
 import {Link, useHistory, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import Paper from '@material-ui/core/Paper';
-import {Button, CircularProgress, Typography} from "@material-ui/core";
+import {Button, Typography} from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
 import {selectUserData, selectUserIsLoading} from "../../store/ducks/user/selectors";
 import {User} from "../../store/ducks/user/contracts/state";
-import {fetchUserData} from "../../store/ducks/user/actionCreators";
+import {fetchUserData, followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
 import {fetchUserProfile} from "../../store/ducks/userProfile/actionCreators";
 import {useFollowingFollowersStyles} from "./FollowingFollowersStyles";
 import Follower from "../../components/Follower/Follower";
-import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
-import {BackButton} from "../../components/BackButton/BackButton";
+import BackButton from "../../components/BackButton/BackButton";
+import Spinner from "../../components/Spinner/Spinner";
 
 const FollowingFollowers: FC = (): ReactElement => {
     const classes = useFollowingFollowersStyles();
@@ -84,9 +84,7 @@ const FollowingFollowers: FC = (): ReactElement => {
                     </Tabs>
                 </div>
                 {(isFollowersLoading) ? (
-                    <div className={classes.loading}>
-                        <CircularProgress/>
-                    </div>
+                    <Spinner/>
                 ) : (
                     (activeTab === 0) ? (
                         (userProfile?.followers?.length !== 0) ? (

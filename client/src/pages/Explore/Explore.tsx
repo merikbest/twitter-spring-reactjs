@@ -4,8 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import {InputAdornment, IconButton} from "@material-ui/core";
-import {CircularProgress, Paper} from "@material-ui/core";
+import {IconButton, InputAdornment, Paper} from "@material-ui/core";
 
 import {MainSearchTextField} from "../../components/SearchTextField/MainSearchTextField";
 import {
@@ -16,7 +15,7 @@ import {
     fetchTweetsWithVideo,
     resetTweets
 } from "../../store/ducks/tweets/actionCreators";
-import {BackButton} from "../../components/BackButton/BackButton";
+import BackButton from "../../components/BackButton/BackButton";
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import {
     selectIsTweetsLoaded,
@@ -31,6 +30,7 @@ import {useExploreStyles} from "./ExploreStyles";
 import {EditIcon, SearchIcon} from "../../icons";
 import {fetchUsersSearch, fetchUsersSearchByUsername} from "../../store/ducks/usersSearch/actionCreators";
 import {selectUsersSearch, selectUsersSearchIsLoading} from "../../store/ducks/usersSearch/selectors";
+import Spinner from "../../components/Spinner/Spinner";
 
 const Explore: FC = (): ReactElement => {
     const classes = useExploreStyles();
@@ -183,9 +183,7 @@ const Explore: FC = (): ReactElement => {
                 </Paper>
                 <div className={classes.contentWrapper}>
                     {(isUsersLoading) ? (
-                        <div className={classes.loading}>
-                            <CircularProgress/>
-                        </div>
+                        <Spinner/>
                     ) : (
                         (activeTab !== 2) ? (
                             tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)
@@ -200,11 +198,7 @@ const Explore: FC = (): ReactElement => {
                             ))
                         )
                     )}
-                    {isTweetsLoading && (
-                        <div className={classes.loading}>
-                            <CircularProgress/>
-                        </div>
-                    )}
+                    {isTweetsLoading && <Spinner/>}
                 </div>
             </Paper>
         </InfiniteScroll>

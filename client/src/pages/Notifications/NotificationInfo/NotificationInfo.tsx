@@ -4,7 +4,7 @@ import {useLocation} from "react-router-dom";
 import {Typography} from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 
-import {BackButton} from "../../../components/BackButton/BackButton";
+import BackButton from "../../../components/BackButton/BackButton";
 import {useNotificationInfoStyles} from "./NotificationInfoStyles";
 import {User} from "../../../store/ducks/user/contracts/state";
 import {Notification, NotificationType} from "../../../store/ducks/notifications/contracts/state";

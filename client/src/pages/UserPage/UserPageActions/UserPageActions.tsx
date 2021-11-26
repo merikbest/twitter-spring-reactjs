@@ -22,6 +22,7 @@ import ListsModal from "../../../components/ListsModal/ListsModal";
 import CopyToClipboard from 'react-copy-to-clipboard';
 import {CLIENT_URL} from "../../../util/url";
 import ActionSnackbar from "../../../components/ActionSnackbar/ActionSnackbar";
+import {SnackbarProps, withSnackbar} from "../../../hoc/withSnackbar";
 
 interface UserPageActionsProps {
     user: User;
@@ -31,20 +32,22 @@ interface UserPageActionsProps {
     onOpenBlockUserModal: () => void;
 }
 
-const UserPageActions: FC<UserPageActionsProps> = (
+const UserPageActions: FC<UserPageActionsProps & SnackbarProps> = (
     {
         user,
         isUserMuted,
         isUserBlocked,
         onMuteUser,
-        onOpenBlockUserModal
+        onOpenBlockUserModal,
+        openSnackBar,
+        setOpenSnackBar,
+        onCloseSnackBar
     }
 ): ReactElement => {
     const classes = useUserPageActionsStyles();
     const location = useLocation();
 
     const [open, setOpen] = useState<boolean>(false);
-    const [openSnackBar, setOpenSnackBar] = useState<boolean>(false);
     const [visibleListsModal, setVisibleListsModal] = useState<boolean>(false);
 
     const handleClick = (): void => {
@@ -64,17 +67,13 @@ const UserPageActions: FC<UserPageActionsProps> = (
     };
 
     const onCopyLinkToProfile = (): void => {
-        setOpenSnackBar(true);
+        setOpenSnackBar!(true);
         setOpen(false);
     };
 
     const handleMuteUser = () => {
         onMuteUser();
         setOpen(false);
-    };
-
-    const onCloseSnackBar = (): void => {
-        setOpenSnackBar(false);
     };
 
     return (
@@ -164,12 +163,12 @@ const UserPageActions: FC<UserPageActionsProps> = (
                 <ListsModal user={user} visible={visibleListsModal} onClose={onCloseListsModal}/>
                 <ActionSnackbar
                     snackBarMessage={"Copied to clipboard"}
-                    openSnackBar={openSnackBar}
-                    onCloseSnackBar={onCloseSnackBar}
+                    openSnackBar={openSnackBar!}
+                    onCloseSnackBar={onCloseSnackBar!}
                 />
             </div>
         </ClickAwayListener>
     );
 };
 
-export default UserPageActions;
+export default withSnackbar(UserPageActions);

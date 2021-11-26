@@ -43,10 +43,6 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         height: 12,
         backgroundColor: '#F7F9F9',
     },
-    loading: {
-        marginTop: 50,
-        textAlign: 'center',
-    },
     info: {
         padding: "40px 20px",
 

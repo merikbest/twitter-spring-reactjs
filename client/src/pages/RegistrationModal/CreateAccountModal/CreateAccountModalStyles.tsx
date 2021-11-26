@@ -13,10 +13,6 @@ export const useCreateAccountModalStyles = makeStyles((theme: Theme) => ({
         marginBottom: 22,
         linHeight: "24px"
     },
-    spinner: {
-        marginTop: 50,
-        textAlign: 'center',
-    },
     subtitle: {
         fontSize: 21,
         fontWeight: 700,

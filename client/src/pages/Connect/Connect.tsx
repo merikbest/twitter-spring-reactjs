@@ -1,14 +1,15 @@
 import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import Paper from '@material-ui/core/Paper';
-import {CircularProgress, Typography} from "@material-ui/core";
+import {Typography} from "@material-ui/core";
 
 import {fetchUsers} from "../../store/ducks/users/actionCreators";
 import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
-import {selectUsersIsLoading, selectUsers} from "../../store/ducks/users/selectors";
+import {selectUsers, selectUsersIsLoading} from "../../store/ducks/users/selectors";
 import Follower from "../../components/Follower/Follower";
 import {User} from "../../store/ducks/user/contracts/state";
 import {useConnectStyles} from "./ConnetsStyles";
+import Spinner from "../../components/Spinner/Spinner";
 
 const Connect: FC = (): ReactElement => {
     const classes = useConnectStyles();
@@ -33,9 +34,7 @@ const Connect: FC = (): ReactElement => {
         <>
             <div className={classes.container}>
                 {isUsersLoading ? (
-                    <div className={classes.loading}>
-                        <CircularProgress/>
-                    </div>
+                    <Spinner/>
                 ) : (
                     <>
                         <Paper className={classes.header} variant="outlined">

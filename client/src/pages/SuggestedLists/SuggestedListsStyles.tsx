@@ -8,10 +8,6 @@ export const useSuggestedListsStyles = makeStyles((theme: Theme) => ({
         borderBottom: '0',
         marginBottom: 500,
     },
-    loading: {
-        paddingTop: 50,
-        textAlign: 'center',
-    },
     header: {
         position: "fixed",
         width: 602,

@@ -1,12 +1,12 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link, RouteComponentProps} from "react-router-dom";
-import {Avatar, Button, CircularProgress, Paper, Typography} from "@material-ui/core";
+import {Avatar, Button, Paper, Typography} from "@material-ui/core";
 
 import {useFullListStyles} from "./FullListStyles";
 import {selectIsListLoading, selectListItem} from "../../store/ducks/list/selectors";
 import {fetchListById} from "../../store/ducks/list/actionCreators";
-import {BackButton} from "../../components/BackButton/BackButton";
+import BackButton from "../../components/BackButton/BackButton";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
@@ -15,6 +15,7 @@ import MembersAndFollowersModal from "./EditListModal/MembersAndFollowersModal/M
 import {followList} from "../../store/ducks/lists/actionCreators";
 import ShareActionsModal from "./ShareActionsModal/ShareActionsModal";
 import TopTweetsActionsModal from "./TopTweetsActionsModal/TopTweetsActionsModal";
+import Spinner from "../../components/Spinner/Spinner";
 
 const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactElement => {
     const classes = useFullListStyles();
@@ -81,9 +82,7 @@ const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactEl
                 </div>
             </Paper>
             {isLoading ? (
-                <div className={classes.loading}>
-                    <CircularProgress/>
-                </div>
+                <Spinner paddingTop={250}/>
             ) : (
                 <>
                     <div className={classes.content}>
