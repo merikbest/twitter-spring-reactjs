@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
+import React, {ComponentType, FC, ReactElement, useEffect, useState} from 'react';
 import {Link, useLocation, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import Paper from '@material-ui/core/Paper';
@@ -16,7 +16,7 @@ import {fetchLikeTweet, fetchRetweet} from "../../store/ducks/tweets/actionCreat
 import {selectUserData} from "../../store/ducks/user/selectors";
 import UsersListModal from "../../components/UsersListModal/UsersListModal";
 import AddTweetForm from "../../components/AddTweetForm/AddTweetForm";
-import TweetComponent, {TweetActions} from "../../components/TweetComponent/TweetComponent";
+import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import {useFullTweetStyles} from "./FullTweetStyles";
 import {DEFAULT_PROFILE_IMG, WS_URL} from "../../util/url";
 import {
@@ -32,19 +32,19 @@ import {
 } from "../../icons";
 import {textFormatter} from "../../util/textFormatter";
 import VoteComponent from "../../components/VoteComponent/VoteComponent";
-import {LinkCoverSize, ReplyType, Tweet} from "../../store/ducks/tweets/contracts/state";
+import {LinkCoverSize, ReplyType} from "../../store/ducks/tweets/contracts/state";
 import ShareTweet from "../../components/ShareTweet/ShareTweet";
 import TweetComponentActions from "../../components/TweetComponentActions/TweetComponentActions";
 import Quote from "../../components/Quote/Quote";
 import PopperUserWindow from "../../components/PopperUserWindow/PopperUserWindow";
-import {HoverProps, withHoverUser} from "../../hoc/withHoverUser";
 import YouTubeVideo from "../../components/YouTubeVideo/YouTubeVideo";
 import SmallLinkPreview from "../../components/SmallLinkPreview/SmallLinkPreview";
 import LargeLinkPreview from "../../components/LargeLinkPreview/LargeLinkPreview";
 import HoverAction from "../../components/HoverAction/HoverAction";
-import {HoverActionProps, withHoverAction} from "../../hoc/withHoverAction";
+import {HoverActionProps, HoverActions, withHoverAction} from "../../hoc/withHoverAction";
 import TweetAnalyticsModal from "../../components/TweetAnalyticsModal/TweetAnalyticsModal";
 import Spinner from "../../components/Spinner/Spinner";
+import {withHoverUser, HoverUserProps} from "../../hoc/withHoverUser";
 
 let stompClient: CompatClient | null = null;
 
@@ -54,16 +54,12 @@ interface FullTweetProps {
     handleLeave?: () => void;
 }
 
-const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
+const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
     {
         visiblePopperWindow,
         handleHoverPopper,
         handleLeavePopper,
-        visibleReplyAction,
-        visibleRetweetAction,
-        visibleLikeAction,
-        visibleShareAction,
-        visibleMoreAction,
+        visibleHoverAction,
         handleHoverAction,
         handleLeaveAction
     }
@@ -190,7 +186,7 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
                         <TweetComponentActions
                             tweet={tweetData}
                             isFullTweet={true}
-                            visibleMoreAction={visibleMoreAction}
+                            visibleMoreAction={visibleHoverAction?.visibleMoreAction}
                             handleHoverAction={handleHoverAction}
                             handleLeaveAction={handleLeaveAction}
                             onOpenTweetAnalytics={onOpenTweetAnalyticsModalWindow}
@@ -271,17 +267,17 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
                     <div className={classes.info}>
                         <div className={classes.infoIcon}>
                             <IconButton
-                                onMouseEnter={() => handleHoverAction?.(TweetActions.REPLY)}
+                                onMouseEnter={() => handleHoverAction?.(HoverActions.REPLY)}
                                 onMouseLeave={handleLeaveAction}
                             >
                                 <>{ReplyIcon}</>
-                                <HoverAction visible={visibleReplyAction} actionText={"Reply"}/>
+                                <HoverAction visible={visibleHoverAction?.visibleReplyAction} actionText={"Reply"}/>
                             </IconButton>
                         </div>
                         <div className={classes.retweetIcon}>
                             <IconButton
                                 onClick={handleRetweet}
-                                onMouseEnter={() => handleHoverAction?.(TweetActions.RETWEET)}
+                                onMouseEnter={() => handleHoverAction?.(HoverActions.RETWEET)}
                                 onMouseLeave={handleLeaveAction}
                             >
                                 {isTweetRetweeted ? (
@@ -289,13 +285,13 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
                                 ) : (
                                     <>{RetweetOutlinedIcon}</>
                                 )}
-                                <HoverAction visible={visibleRetweetAction} actionText={isTweetRetweeted ? "Undo Retweet" : "Retweet"}/>
+                                <HoverAction visible={visibleHoverAction?.visibleRetweetAction} actionText={isTweetRetweeted ? "Undo Retweet" : "Retweet"}/>
                             </IconButton>
                         </div>
                         <div className={classes.likeIcon}>
                             <IconButton
                                 onClick={handleLike}
-                                onMouseEnter={() => handleHoverAction?.(TweetActions.LIKE)}
+                                onMouseEnter={() => handleHoverAction?.(HoverActions.LIKE)}
                                 onMouseLeave={handleLeaveAction}
                             >
                                 {isTweetLiked ? (
@@ -303,13 +299,13 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
                                 ) : (
                                     <>{LikeOutlinedIcon}</>
                                 )}
-                                <HoverAction visible={visibleLikeAction} actionText={isTweetLiked ? "Unlike" : "Like"}/>
+                                <HoverAction visible={visibleHoverAction?.visibleLikeAction} actionText={isTweetLiked ? "Unlike" : "Like"}/>
                             </IconButton>
                         </div>
                         <ShareTweet
                             tweet={tweetData}
                             isFullTweet={true}
-                            visibleShareAction={visibleShareAction}
+                            visibleShareAction={visibleHoverAction?.visibleShareAction}
                             handleHoverAction={handleHoverAction}
                             handleLeaveAction={handleLeaveAction}
                         />
@@ -384,4 +380,4 @@ const FullTweet: FC<HoverProps<Tweet> & FullTweetProps & HoverActionProps> = (
     );
 };
 
-export default compose(withHoverUser, withHoverAction)(FullTweet) as React.ComponentType<HoverProps<Tweet> & FullTweetProps>;
+export default compose(withHoverUser, withHoverAction)(FullTweet) as ComponentType<HoverUserProps & FullTweetProps>;

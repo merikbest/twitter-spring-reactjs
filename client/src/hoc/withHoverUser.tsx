@@ -1,36 +1,12 @@
-import React, {useState} from 'react';
+import React, {ComponentType, useState} from "react";
 
-import {User} from "../store/ducks/user/contracts/state";
-
-export interface HoverProps<T> extends ListHover, TweetHover, FollowerHover, MemberHover {
-    item?: T;
+export interface HoverUserProps {
     visiblePopperWindow?: boolean;
     handleHoverPopper?: () => void;
     handleLeavePopper?: () => void;
 }
 
-interface ListHover {
-    listIndex?: number;
-    isMyList?: boolean;
-}
-
-interface TweetHover {
-    activeTab?: number;
-    userProfileId?: number;
-}
-
-interface FollowerHover {
-    follow?: (user: User) => void;
-    unfollow?: (user: User) => void;
-}
-
-interface MemberHover {
-    member?: User;
-}
-
-export const withHoverUser = <T extends object>(
-    Component: React.ComponentType<HoverProps<T>>
-) => (props: HoverProps<T>) => {
+export const withHoverUser = <T extends HoverUserProps>(Component: ComponentType<T>) => (props: T) => {
     const [visiblePopperWindow, setVisiblePopperWindow] = useState<boolean>(false);
     const [delayHandler, setDelayHandler] = useState<any>(null);
 
@@ -45,18 +21,11 @@ export const withHoverUser = <T extends object>(
 
     return (
         <Component
-            {...props as HoverProps<T>}
-            item={props.item}
+            {...props as T}
             visiblePopperWindow={visiblePopperWindow}
             handleHoverPopper={handleHoverPopper}
             handleLeavePopper={handleLeavePopper}
-            listIndex={props.listIndex}
-            isMyList={props.isMyList}
-            activeTab={props.activeTab}
-            userProfileId={props.userProfileId}
-            follow={props.follow}
-            unfollow={props.unfollow}
-            member={props.member}
         />
     );
-};
+}
+

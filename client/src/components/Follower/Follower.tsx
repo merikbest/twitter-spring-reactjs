@@ -9,15 +9,17 @@ import {selectUserData} from "../../store/ducks/user/selectors";
 import {useFollowerStyles} from "./FollowerStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
-import {HoverProps, withHoverUser} from "../../hoc/withHoverUser";
+import {HoverUserProps, withHoverUser} from "../../hoc/withHoverUser";
 import UnfollowModal from "../UnfollowModal/UnfollowModal";
 import {LockIcon} from "../../icons";
 
 interface FollowerProps<T> {
     item?: T;
+    follow?: (user: User) => void;
+    unfollow?: (user: User) => void;
 }
 
-const Follower: FC<HoverProps<User> & FollowerProps<User>> = (
+const Follower: FC<FollowerProps<User> & HoverUserProps> = (
     {
         item: user,
         follow,

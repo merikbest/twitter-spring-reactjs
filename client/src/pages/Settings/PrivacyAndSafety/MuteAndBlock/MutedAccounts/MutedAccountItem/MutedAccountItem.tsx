@@ -1,5 +1,6 @@
-import React, {FC, ReactElement, useState} from 'react';
+import React, {ComponentType, FC, ReactElement} from 'react';
 import {useDispatch, useSelector} from "react-redux";
+import {compose} from "recompose";
 import {Link} from "react-router-dom";
 import {Avatar, IconButton, Paper, Typography} from "@material-ui/core";
 
@@ -12,41 +13,34 @@ import {addUserToMuteList} from "../../../../../../store/ducks/user/actionCreato
 import HoverAction from "../../../../../../components/HoverAction/HoverAction";
 import ActionSnackbar from "../../../../../../components/ActionSnackbar/ActionSnackbar";
 import {SnackbarProps, withSnackbar} from "../../../../../../hoc/withSnackbar";
+import {HoverActionProps, HoverActions, withHoverAction} from "../../../../../../hoc/withHoverAction";
 
 interface MutedAccountItemProps {
-    mutedUser: User;
+    mutedUser?: User;
 }
 
-const MutedAccountItem: FC<MutedAccountItemProps & SnackbarProps> = (
+const MutedAccountItem: FC<MutedAccountItemProps & SnackbarProps & HoverActionProps> = (
     {
         mutedUser,
         snackBarMessage,
         openSnackBar,
         setSnackBarMessage,
         setOpenSnackBar,
-        onCloseSnackBar
+        onCloseSnackBar,
+        visibleHoverAction,
+        handleHoverAction,
+        handleLeaveAction
     }
 ): ReactElement => {
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
     const isUserMuted = myProfile?.userMutedList?.findIndex(user => user.id === mutedUser?.id) !== -1;
     const classes = useMutedAccountItemStyles({isUserMuted});
-    const [visibleCloseAction, setVisibleCloseAction] = useState<boolean>(false);
-    const [delayHandler, setDelayHandler] = useState<any>(null);
 
     const unmuteUser = (): void => {
         dispatch(addUserToMuteList(mutedUser?.id!));
-        setSnackBarMessage!(`@${mutedUser.username} has been ${isUserMuted ? "unmuted" : "muted"}.`);
+        setSnackBarMessage!(`@${mutedUser?.username} has been ${isUserMuted ? "unmuted" : "muted"}.`);
         setOpenSnackBar!(true);
-    };
-
-    const handleHoverAction = (): void => {
-        setDelayHandler(setTimeout(() => setVisibleCloseAction(true), 500));
-    };
-
-    const handleLeaveAction = (): void => {
-        clearTimeout(delayHandler);
-        setVisibleCloseAction(false);
     };
 
     return (
@@ -74,12 +68,12 @@ const MutedAccountItem: FC<MutedAccountItemProps & SnackbarProps> = (
                     <div className={classes.muteButton}>
                         <IconButton
                             onClick={unmuteUser}
-                            onMouseEnter={handleHoverAction}
+                            onMouseEnter={() => handleHoverAction?.(HoverActions.OTHER)}
                             onMouseLeave={handleLeaveAction}
                             color="primary"
                         >
                             {isUserMuted ? MuteIcon : UnmuteIcon}
-                            <HoverAction visible={visibleCloseAction} actionText={isUserMuted ? "Unmute": "Mute"}/>
+                            <HoverAction visible={visibleHoverAction?.visibleOtherAction} actionText={isUserMuted ? "Unmute" : "Mute"}/>
                         </IconButton>
                     </div>
                 </div>
@@ -96,4 +90,4 @@ const MutedAccountItem: FC<MutedAccountItemProps & SnackbarProps> = (
     );
 };
 
-export default withSnackbar(MutedAccountItem);
+export default compose(withSnackbar, withHoverAction)(MutedAccountItem) as ComponentType<SnackbarProps & HoverActionProps & MutedAccountItemProps>;

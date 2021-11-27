@@ -6,7 +6,7 @@ import {Retweet, Tweet} from "../../store/ducks/tweets/contracts/state";
 import {QuoteTweetIcon, RetweetIcon, RetweetOutlinedIcon} from "../../icons";
 import QuoteTweetModal from "./QuoteTweetModal/QuoteTweetModal";
 import HoverAction from "../HoverAction/HoverAction";
-import {TweetActions} from "../TweetComponent/TweetComponent";
+import {HoverActions} from "../../hoc/withHoverAction";
 
 export interface QuoteTweetProps {
     quoteTweet: Tweet;
@@ -15,7 +15,7 @@ export interface QuoteTweetProps {
     handleRetweet: () => void;
     visibleActionWindow?: boolean;
     visibleRetweetAction?: boolean;
-    handleHoverAction?: (action: TweetActions) => void;
+    handleHoverAction?: (action: HoverActions) => void;
     handleLeaveAction?: () => void;
 }
 
@@ -62,7 +62,7 @@ const QuoteTweet: FC<QuoteTweetProps> = (
             <div className={classes.footerIcon}>
                 <IconButton
                     onClick={handleClick}
-                    onMouseEnter={() => handleHoverAction?.(TweetActions.RETWEET)}
+                    onMouseEnter={() => handleHoverAction?.(HoverActions.RETWEET)}
                     onMouseLeave={handleLeaveAction}
                 >
                     {isTweetRetweetedByMe ? (

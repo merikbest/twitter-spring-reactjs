@@ -8,7 +8,8 @@ import {
     AnalyticsIcon,
     FollowReplyIcon,
     LikeIcon,
-    LikeOutlinedIcon, LockIcon,
+    LikeOutlinedIcon,
+    LockIcon,
     PinOutlinedIcon,
     ReplyIcon,
     RetweetOutlinedIconSm
@@ -28,40 +29,28 @@ import VoteComponent from "../VoteComponent/VoteComponent";
 import QuoteTweet from "../QuoteTweet/QuoteTweet";
 import Quote from "../Quote/Quote";
 import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
-import {HoverProps, withHoverUser} from "../../hoc/withHoverUser";
 import YouTubeVideo from "../YouTubeVideo/YouTubeVideo";
 import LargeLinkPreview from "../LargeLinkPreview/LargeLinkPreview";
 import SmallLinkPreview from "../SmallLinkPreview/SmallLinkPreview";
 import HoverAction from "../HoverAction/HoverAction";
-import {HoverActionProps, withHoverAction} from "../../hoc/withHoverAction";
+import {HoverActionProps, HoverActions, withHoverAction} from "../../hoc/withHoverAction";
 import TweetAnalyticsModal from "../TweetAnalyticsModal/TweetAnalyticsModal";
-
-export enum TweetActions {
-    REPLY = "REPLY",
-    RETWEET = "RETWEET",
-    LIKE = "LIKE",
-    SHARE = "SHARE",
-    ANALYTICS = "ANALYTICS",
-    MORE = "MORE",
-}
+import {withHoverUser, HoverUserProps} from "../../hoc/withHoverUser";
 
 export interface TweetComponentProps<T> {
     item?: T;
+    activeTab?: number;
+    userProfileId?: number;
 }
 
-const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverActionProps> = (
+const TweetComponent: FC<HoverUserProps & TweetComponentProps<Tweet> & HoverActionProps> = (
     {
         item: tweet,
         activeTab,
         visiblePopperWindow,
         handleHoverPopper,
         handleLeavePopper,
-        visibleReplyAction,
-        visibleRetweetAction,
-        visibleLikeAction,
-        visibleShareAction,
-        visibleAnalyticsAction,
-        visibleMoreAction,
+        visibleHoverAction,
         handleHoverAction,
         handleLeaveAction
     }
@@ -174,7 +163,7 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
                             tweet={tweet!}
                             isFullTweet={false}
                             activeTab={activeTab}
-                            visibleMoreAction={visibleMoreAction}
+                            visibleMoreAction={visibleHoverAction?.visibleMoreAction}
                             handleHoverAction={handleHoverAction}
                             handleLeaveAction={handleLeaveAction}
                             onOpenTweetAnalytics={onOpenTweetAnalyticsModalWindow}
@@ -243,11 +232,11 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
                             <IconButton
                                 disabled={isUserCanReply}
                                 onClick={onOpenReplyModalWindow}
-                                onMouseEnter={() => handleHoverAction?.(TweetActions.REPLY)}
+                                onMouseEnter={() => handleHoverAction?.(HoverActions.REPLY)}
                                 onMouseLeave={handleLeaveAction}
                             >
                                 <>{ReplyIcon}</>
-                                <HoverAction visible={visibleReplyAction} actionText={"Reply"}/>
+                                <HoverAction visible={visibleHoverAction?.visibleReplyAction} actionText={"Reply"}/>
                             </IconButton>
                             {(tweet?.replies?.length !== 0) && (<span>{tweet?.replies?.length}</span>)}
                         </div>
@@ -256,14 +245,14 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
                             retweets={tweet!.retweets}
                             isTweetRetweetedByMe={isTweetRetweetedByMe}
                             handleRetweet={handleRetweet}
-                            visibleRetweetAction={visibleRetweetAction}
+                            visibleRetweetAction={visibleHoverAction?.visibleRetweetAction}
                             handleHoverAction={handleHoverAction}
                             handleLeaveAction={handleLeaveAction}
                         />
                         <div className={classes.likeIcon}>
                             <IconButton
                                 onClick={handleLike}
-                                onMouseEnter={() => handleHoverAction?.(TweetActions.LIKE)}
+                                onMouseEnter={() => handleHoverAction?.(HoverActions.LIKE)}
                                 onMouseLeave={handleLeaveAction}
                             >
                                 {isTweetLiked ? (
@@ -271,14 +260,14 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
                                 ) : (
                                     <>{LikeOutlinedIcon}</>
                                 )}
-                                <HoverAction visible={visibleLikeAction} actionText={isTweetLiked ? "Unlike" : "Like"}/>
+                                <HoverAction visible={visibleHoverAction?.visibleLikeAction} actionText={isTweetLiked ? "Unlike" : "Like"}/>
                             </IconButton>
                             {(tweet?.likedTweets.length !== 0) && (<span>{tweet?.likedTweets.length}</span>)}
                         </div>
                         <ShareTweet
                             tweet={tweet!}
                             isFullTweet={false}
-                            visibleShareAction={visibleShareAction}
+                            visibleShareAction={visibleHoverAction?.visibleShareAction}
                             handleHoverAction={handleHoverAction}
                             handleLeaveAction={handleLeaveAction}
                         />
@@ -286,11 +275,11 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
                             <div className={classes.replyIcon}>
                                 <IconButton
                                     onClick={onOpenTweetAnalyticsModalWindow}
-                                    onMouseEnter={() => handleHoverAction?.(TweetActions.ANALYTICS)}
+                                    onMouseEnter={() => handleHoverAction?.(HoverActions.ANALYTICS)}
                                     onMouseLeave={handleLeaveAction}
                                 >
                                     <>{AnalyticsIcon}</>
-                                    <HoverAction visible={visibleAnalyticsAction} actionText={"Analytics"}/>
+                                    <HoverAction visible={visibleHoverAction?.visibleAnalyticsAction} actionText={"Analytics"}/>
                                 </IconButton>
                             </div>
                         )}
@@ -316,4 +305,4 @@ const TweetComponent: FC<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverA
     );
 };
 
-export default compose(withHoverUser, withHoverAction)(TweetComponent) as ComponentType<HoverProps<Tweet> & TweetComponentProps<Tweet> & HoverActionProps>;
+export default compose(withHoverUser, withHoverAction)(TweetComponent) as ComponentType<HoverUserProps & TweetComponentProps<Tweet> & HoverActionProps>;

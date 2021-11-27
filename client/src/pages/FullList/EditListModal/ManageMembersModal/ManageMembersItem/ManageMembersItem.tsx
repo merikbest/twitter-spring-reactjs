@@ -9,23 +9,20 @@ import {DEFAULT_PROFILE_IMG} from "../../../../../util/url";
 import PopperUserWindow from "../../../../../components/PopperUserWindow/PopperUserWindow";
 import {Lists} from "../../../../../store/ducks/lists/contracts/state";
 import {processListMember} from "../../../../../store/ducks/lists/actionCreators";
-import {withHoverUser} from "../../../../../hoc/withHoverUser";
+import {HoverUserProps, withHoverUser} from "../../../../../hoc/withHoverUser";
 
 interface ManageMembersItemProps<T> {
     item?: T;
     member?: User;
-    visiblePopperWindow?: boolean;
-    handleHover?: () => void;
-    handleLeave?: () => void;
 }
 
-const ManageMembersItem: FC<ManageMembersItemProps<Lists>> = (
+const ManageMembersItem: FC<ManageMembersItemProps<Lists> & HoverUserProps> = (
     {
         item: list,
         member,
         visiblePopperWindow,
-        handleHover,
-        handleLeave
+        handleHoverPopper,
+        handleLeavePopper
     }
 ): ReactElement => {
     const classes = useManageMembersItemStyles();
@@ -48,8 +45,8 @@ const ManageMembersItem: FC<ManageMembersItemProps<Lists>> = (
             <div style={{flex: 1}}>
                 <div className={classes.header}>
                     <Link to={`/user/${member?.id}`} className={classes.link}>
-                        <div onMouseLeave={handleLeave} className={classes.headerUserInfo}>
-                            <Typography onMouseEnter={handleHover} className={classes.fullName}>
+                        <div onMouseLeave={handleLeavePopper} className={classes.headerUserInfo}>
+                            <Typography onMouseEnter={handleHoverPopper} className={classes.fullName}>
                                 {member?.fullName}
                             </Typography>
                             <PopperUserWindow visible={visiblePopperWindow} user={member!}/>

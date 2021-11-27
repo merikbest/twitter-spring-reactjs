@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {ComponentType, useState} from "react";
 
 export interface SnackbarProps {
     snackBarMessage?: string;
@@ -8,7 +8,7 @@ export interface SnackbarProps {
     onCloseSnackBar?: () => void;
 }
 
-export const withSnackbar = <T extends SnackbarProps>(Component: React.ComponentType<T>) => (props: T) => {
+export const withSnackbar = <T extends SnackbarProps>(Component: ComponentType<T>) => (props: T) => {
     const [snackBarMessage, setSnackBarMessage] = useState<string>("");
     const [openSnackBar, setOpenSnackBar] = useState<boolean>(false);
 

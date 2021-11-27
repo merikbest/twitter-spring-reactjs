@@ -14,15 +14,15 @@ import {useUsersItemStyles} from "./UsersItemStyles";
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
 import {followProfile, unfollowProfile} from "../../../store/ducks/userProfile/actionCreators";
 import PopperUserWindow from "../../PopperUserWindow/PopperUserWindow";
-import {HoverProps, withHoverUser} from "../../../hoc/withHoverUser";
 import UnfollowModal from "../../UnfollowModal/UnfollowModal";
 import {LockIcon} from "../../../icons";
+import {HoverUserProps, withHoverUser} from "../../../hoc/withHoverUser";
 
 export interface UsersItemProps<T> {
     item?: T
 }
 
-const UsersItem: FC<HoverProps<User> & UsersItemProps<User>> = (
+const UsersItem: FC<UsersItemProps<User> & HoverUserProps> = (
     {
         item: user,
         visiblePopperWindow,
@@ -30,7 +30,6 @@ const UsersItem: FC<HoverProps<User> & UsersItemProps<User>> = (
         handleLeavePopper,
     }
 ): ReactElement => {
-
     const classes = useUsersItemStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);

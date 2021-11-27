@@ -22,32 +22,28 @@ import {
 import {selectUserData} from "../../store/ducks/user/selectors";
 import AddTweetForm from "../AddTweetForm/AddTweetForm";
 import UsersListModal from "../UsersListModal/UsersListModal";
-import TweetComponent, {TweetActions} from '../TweetComponent/TweetComponent';
+import TweetComponent from '../TweetComponent/TweetComponent';
 import {fetchLikeTweet, fetchRetweet} from "../../store/ducks/tweets/actionCreators";
 import {useTweetImageStyles} from "./TweetImageModalStyles";
 import {fetchTweetData, setTweetData} from "../../store/ducks/tweet/actionCreators";
 import {selectTweetData} from "../../store/ducks/tweet/selectors";
 import {DEFAULT_PROFILE_IMG, WS_URL} from "../../util/url";
 import {textFormatter} from "../../util/textFormatter";
-import {HoverProps, withHoverUser} from "../../hoc/withHoverUser";
-import {HoverActionProps, withHoverAction} from "../../hoc/withHoverAction";
-import {Tweet} from "../../store/ducks/tweets/contracts/state";
+import {HoverActionProps, HoverActions, withHoverAction} from "../../hoc/withHoverAction";
 import HoverAction from "../HoverAction/HoverAction";
 import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
 import ShareTweet from "../ShareTweet/ShareTweet";
 import ReplyModal from "../ReplyModal/ReplyModal";
+import {HoverUserProps, withHoverUser} from "../../hoc/withHoverUser";
 
 let stompClient: CompatClient | null = null;
 
-const TweetImageModal: FC<HoverProps<Tweet> & HoverActionProps> = (
+const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
     {
         visiblePopperWindow,
         handleHoverPopper,
         handleLeavePopper,
-        visibleReplyAction,
-        visibleRetweetAction,
-        visibleLikeAction,
-        visibleShareAction,
+        visibleHoverAction,
         handleHoverAction,
         handleLeaveAction
     }
@@ -199,17 +195,17 @@ const TweetImageModal: FC<HoverProps<Tweet> & HoverActionProps> = (
                             <div className={classes.tweetIcon}>
                                 <IconButton
                                     onClick={onOpenReplyModalWindow}
-                                    onMouseEnter={() => handleHoverAction?.(TweetActions.REPLY)}
+                                    onMouseEnter={() => handleHoverAction?.(HoverActions.REPLY)}
                                     onMouseLeave={handleLeaveAction}
                                 >
                                     <>{ReplyIcon}</>
-                                    <HoverAction visible={visibleReplyAction} actionText={"Reply"}/>
+                                    <HoverAction visible={visibleHoverAction?.visibleReplyAction} actionText={"Reply"}/>
                                 </IconButton>
                             </div>
                             <div className={classes.retweetIcon}>
                                 <IconButton
                                     onClick={handleRetweet}
-                                    onMouseEnter={() => handleHoverAction?.(TweetActions.RETWEET)}
+                                    onMouseEnter={() => handleHoverAction?.(HoverActions.RETWEET)}
                                     onMouseLeave={handleLeaveAction}
                                 >
                                     {isTweetRetweeted ? (
@@ -217,16 +213,14 @@ const TweetImageModal: FC<HoverProps<Tweet> & HoverActionProps> = (
                                     ) : (
                                         <>{RetweetOutlinedIcon}</>
                                     )}
-                                    <HoverAction
-                                        visible={visibleRetweetAction}
-                                        actionText={isTweetRetweeted ? "Undo Retweet" : "Retweet"}
+                                    <HoverAction visible={visibleHoverAction?.visibleRetweetAction} actionText={isTweetRetweeted ? "Undo Retweet" : "Retweet"}
                                     />
                                 </IconButton>
                             </div>
                             <div className={classes.likeIcon}>
                                 <IconButton
                                     onClick={handleLike}
-                                    onMouseEnter={() => handleHoverAction?.(TweetActions.LIKE)}
+                                    onMouseEnter={() => handleHoverAction?.(HoverActions.LIKE)}
                                     onMouseLeave={handleLeaveAction}
                                 >
                                     {isTweetLiked ? (
@@ -234,14 +228,13 @@ const TweetImageModal: FC<HoverProps<Tweet> & HoverActionProps> = (
                                     ) : (
                                         <>{LikeOutlinedIcon}</>
                                     )}
-                                    <HoverAction visible={visibleLikeAction}
-                                                 actionText={isTweetLiked ? "Unlike" : "Like"}/>
+                                    <HoverAction visible={visibleHoverAction?.visibleLikeAction} actionText={isTweetLiked ? "Unlike" : "Like"}/>
                                 </IconButton>
                             </div>
                             <ShareTweet
                                 tweet={tweetData}
                                 isFullTweet={false}
-                                visibleShareAction={visibleShareAction}
+                                visibleShareAction={visibleHoverAction?.visibleShareAction}
                                 handleHoverAction={handleHoverAction}
                                 handleLeaveAction={handleLeaveAction}
                             />
@@ -268,7 +261,7 @@ const TweetImageModal: FC<HoverProps<Tweet> & HoverActionProps> = (
                         visible={visibleUsersListModalWindow}
                         onClose={onCloseUsersListModalWindow}
                     />
-                    {tweetData.replies.map((tweet: any) => <TweetComponent key={tweet.id} item={tweet}/>)}
+                    {tweetData.replies.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}
                     <ReplyModal
                         user={tweetData.user}
                         tweetId={tweetData.id}
@@ -331,4 +324,4 @@ const TweetImageModal: FC<HoverProps<Tweet> & HoverActionProps> = (
     return null;
 };
 
-export default compose(withHoverUser, withHoverAction)(TweetImageModal) as ComponentType<HoverProps<Tweet> & HoverActionProps>;
+export default compose(withHoverUser, withHoverAction)(TweetImageModal) as ComponentType<HoverUserProps & HoverActionProps>;

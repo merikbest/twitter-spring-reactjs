@@ -10,18 +10,18 @@ import {selectUserData} from "../../store/ducks/user/selectors";
 import {addTweetToBookmarks} from "../../store/ducks/user/actionCreators";
 import {removeTweetFromBookmarks} from "../../store/ducks/tweets/actionCreators";
 import {CLIENT_URL} from "../../util/url";
-import {TweetActions} from "../TweetComponent/TweetComponent";
 import HoverAction from "../HoverAction/HoverAction";
 import SendDirectTweetModal from "./SendDirectTweetModal/SendDirectTweetModal";
 import {Tweet} from "../../store/ducks/tweets/contracts/state";
 import ActionSnackbar from "../ActionSnackbar/ActionSnackbar";
 import {SnackbarProps, withSnackbar} from "../../hoc/withSnackbar";
+import {HoverActions} from "../../hoc/withHoverAction";
 
 interface ShareTweetProps {
     tweet: Tweet;
     isFullTweet: boolean;
     visibleShareAction?: boolean;
-    handleHoverAction?: (action: TweetActions) => void;
+    handleHoverAction?: (action: HoverActions) => void;
     handleLeaveAction?: () => void;
 }
 
@@ -96,7 +96,7 @@ const ShareTweet: FC<ShareTweetProps & SnackbarProps> = (
                 <div className={classes.root}>
                     <IconButton
                         onClick={handleClick}
-                        onMouseEnter={() => handleHoverAction?.(TweetActions.SHARE)}
+                        onMouseEnter={() => handleHoverAction?.(HoverActions.SHARE)}
                         onMouseLeave={handleLeaveAction}
                     >
                         <>{ShareIcon}</>

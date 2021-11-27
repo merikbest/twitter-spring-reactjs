@@ -34,18 +34,18 @@ import TweetComponentChangeReply from "./TweetComponentChangeReply/TweetComponen
 import {selectTweetData} from "../../store/ducks/tweet/selectors";
 import {deleteTweetReply} from "../../store/ducks/tweet/actionCreators";
 import ListsModal from "../ListsModal/ListsModal";
-import {TweetActions} from "../TweetComponent/TweetComponent";
 import HoverAction from "../HoverAction/HoverAction";
 import BlockUserModal from "../BlockUserModal/BlockUserModal";
 import ActionSnackbar from "../ActionSnackbar/ActionSnackbar";
 import {SnackbarProps, withSnackbar} from "../../hoc/withSnackbar";
+import {HoverActions} from "../../hoc/withHoverAction";
 
 interface TweetComponentActionsProps {
     tweet: Tweet;
     isFullTweet: boolean;
     activeTab?: number;
     visibleMoreAction?: boolean;
-    handleHoverAction?: (action: TweetActions) => void;
+    handleHoverAction?: (action: HoverActions) => void;
     handleLeaveAction?: () => void;
     onOpenTweetAnalytics: () => void;
 }
@@ -202,7 +202,7 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
                 <div className={classes.root}>
                     <IconButton
                         onClick={handleClickActionsDropdown}
-                        onMouseEnter={() => handleHoverAction?.(TweetActions.MORE)}
+                        onMouseEnter={() => handleHoverAction?.(HoverActions.MORE)}
                         onMouseLeave={handleLeaveAction}
                     >
                         <span>{EditIcon}</span>

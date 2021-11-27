@@ -10,23 +10,23 @@ import {selectUserData} from "../../../store/ducks/user/selectors";
 import {PinIcon, PinIconFilled} from "../../../icons";
 import {followList, pinList, unfollowList, unpinList} from "../../../store/ducks/lists/actionCreators";
 import PopperListWindow from "../PopperListWindow/PopperListWindow";
-import {withHoverUser} from "../../../hoc/withHoverUser";
 import HoverAction from "../../../components/HoverAction/HoverAction";
+import {HoverActionProps, HoverActions, withHoverAction} from "../../../hoc/withHoverAction";
 
 interface ListsItemProps<T> {
     item?: T;
     listIndex?: number;
     isMyList?: boolean;
-    // visiblePopperWindow?: boolean;
-    // handleHover?: () => void;
-    // handleLeave?: () => void;
 }
 
-const ListsItem: FC<ListsItemProps<Lists>> = (
+const ListsItem: FC<ListsItemProps<Lists> & HoverActionProps> = (
     {
         item: list,
         listIndex,
         isMyList,
+        visibleHoverAction,
+        handleHoverAction,
+        handleLeaveAction
     }
 ): ReactElement => {
     const classes = useListsItemStyles();
@@ -34,7 +34,6 @@ const ListsItem: FC<ListsItemProps<Lists>> = (
     const myProfile = useSelector(selectUserData);
     const follower = list?.followers.find((follower) => follower.id === myProfile?.id);
     const [btnText, setBtnText] = useState<string>("Following");
-    const [visiblePinAction, setVisiblePinAction] = useState<boolean>(false);
     const [visiblePopperListWindow, setVisiblePopperListWindow] = useState<boolean>(false);
     const [delayHandler, setDelayHandler] = useState<any>(null);
 
@@ -58,15 +57,6 @@ const ListsItem: FC<ListsItemProps<Lists>> = (
         } else {
             dispatch(pinList(list!.id));
         }
-    };
-
-    const handleHoverAction = (): void => {
-        setDelayHandler(setTimeout(() => setVisiblePinAction(true), 500));
-    };
-
-    const handleLeaveAction = (): void => {
-        clearTimeout(delayHandler);
-        setVisiblePinAction(false);
     };
 
     const handleHoverList = (): void => {
@@ -111,7 +101,7 @@ const ListsItem: FC<ListsItemProps<Lists>> = (
                         <div className={classes.listPinWrapper}>
                             <IconButton
                                 onClick={event => onClickPinList(event)}
-                                onMouseEnter={handleHoverAction}
+                                onMouseEnter={() => handleHoverAction?.(HoverActions.OTHER)}
                                 onMouseLeave={handleLeaveAction}
                                 color="primary"
                             >
@@ -120,7 +110,7 @@ const ListsItem: FC<ListsItemProps<Lists>> = (
                                 ) : (
                                     <>{PinIcon}</>
                                 )}
-                                <HoverAction visible={visiblePinAction} actionText={list?.pinnedDate ? "Unpin" : "Pin"}/>
+                                <HoverAction visible={visibleHoverAction?.visibleOtherAction} actionText={list?.pinnedDate ? "Unpin" : "Pin"}/>
                             </IconButton>
                         </div>
                     )}
@@ -153,4 +143,4 @@ const ListsItem: FC<ListsItemProps<Lists>> = (
     );
 };
 
-export default ListsItem;
+export default withHoverAction(ListsItem);
