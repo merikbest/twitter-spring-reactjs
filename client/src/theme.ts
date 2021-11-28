@@ -1,7 +1,6 @@
 // @ts-nocheck
 
 import { createMuiTheme } from '@material-ui/core/styles';
-import { red } from '@material-ui/core/colors';
 
 export const theme = createMuiTheme({
     typography: {
@@ -18,27 +17,39 @@ export const theme = createMuiTheme({
     },
     palette: {
         primary: {
-            main: 'rgb(29, 161, 242)',
-            dark: 'rgb(26, 145, 218)',
-            contrastText: '#fff',
+            light: "rgb(142, 205, 247)",
+            main: "rgb(29, 155, 240)",
+            dark: "rgb(26, 140, 216)",
+            contrastText: "rgb(255, 255, 255)",
         },
         secondary: {
-            main: 'rgb(26, 145, 218)',
+            main: "rgb(26, 145, 218)", // theme.palette.secondary.main
         },
         error: {
-            main: red.A400,
+            light: "rgb(255, 221, 237)",
+            main: "rgb(244, 33, 46)", // theme.palette.error.main
+            dark: "rgb(202, 32, 85)", // theme.palette.error.dark  (hover)
+        },
+        info: {
+            light: "",
+            main: "rgb(255, 255, 255)", // theme.palette.info.main
+            dark: "",
         },
         background: {
-            default: '#fff',
+            default: "rgb(255, 255, 255)",
         },
         text: {
-            primary: '#14171a',
+            primary: "rgb(15, 20, 25)",  // theme.palette.text.primary
+            secondary: "rgb(83, 100, 113)", // theme.palette.text.secondary
         },
         action: {
             disabledBackground: 'rgb(153 216 255)',
             disabled: '#fff',
         },
+        divider: "rgb(239, 243, 244)" // theme.palette.divider
+
     },
+
     shadows: [],
     overrides: {
         MuiButton: {

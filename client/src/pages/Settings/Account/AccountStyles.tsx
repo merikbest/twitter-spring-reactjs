@@ -35,7 +35,7 @@ export const useAccountStyles = makeStyles((theme: Theme) => ({
     },
     title: {
         fontSize: 15,
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         fontWeight: 400,
         lineHeight: "20px",
     },

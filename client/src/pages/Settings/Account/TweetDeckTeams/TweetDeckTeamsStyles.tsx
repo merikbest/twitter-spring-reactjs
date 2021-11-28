@@ -14,7 +14,7 @@ export const useTweetDeckTeamsStyles = makeStyles((theme: Theme) => ({
         paddingBottom: 4,
         fontWeight: 700,
         fontSize: 15,
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         lineHeight: "20px"
     },
     switch: {
@@ -22,19 +22,15 @@ export const useTweetDeckTeamsStyles = makeStyles((theme: Theme) => ({
     },
     link: {
         textDecoration: "none",
-        color: "rgb(29, 155, 240)",
+        color: theme.palette.primary.main,
         cursor: "pointer",
         "&:hover": {
             textDecoration: "underline",
         }
     },
-    divider: {
-        height: 1,
-        backgroundColor: "rgb(239, 243, 244)",
-    },
     checklistText: {
         padding: "4px 0px",
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         fontWeight: 400,
         fontSize: 15,
         lineHeight: "20px"
@@ -43,7 +39,7 @@ export const useTweetDeckTeamsStyles = makeStyles((theme: Theme) => ({
         padding: "4px 0px",
         "& .MuiTypography-root": {
             fontSize: 15,
-            color: "rgb(15, 20, 25)",
+            color: theme.palette.text.primary,
             fontWeight: 400,
             lineHeight: "20px",
         },

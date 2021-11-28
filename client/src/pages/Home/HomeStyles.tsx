@@ -41,7 +41,7 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
     },
     divider: {
         height: 12,
-        backgroundColor: '#F7F9F9',
+        backgroundColor: theme.palette.divider,
     },
     info: {
         padding: "40px 20px",

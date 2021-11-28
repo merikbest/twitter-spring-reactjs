@@ -17,7 +17,7 @@ export const useFollowerStyles = makeStyles((theme) => ({
         },
     },
     link: {
-        color: "#000",
+        color: theme.palette.text.primary,
         textDecoration: 'none',
     },
     listAvatar: {
@@ -36,13 +36,13 @@ export const useFollowerStyles = makeStyles((theme) => ({
     },
     fullName: {
         lineHeight: "20px",
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         fontWeight: 800,
         fontSize: 15,
     },
     username: {
         lineHeight: "20px",
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontWeight: 400,
         fontSize: 15,
     },
@@ -74,7 +74,7 @@ export const useFollowerStyles = makeStyles((theme) => ({
         borderRadius: '25px',
         padding: '0 15px',
         '&:hover': {
-            backgroundColor: 'rgb(202, 32, 85)',
+            backgroundColor: theme.palette.error.dark,
         },
     },
 }));

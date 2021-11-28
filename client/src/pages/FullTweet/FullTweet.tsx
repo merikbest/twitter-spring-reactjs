@@ -12,7 +12,7 @@ import {compose} from "redux";
 
 import {selectIsTweetLoading, selectTweetData} from '../../store/ducks/tweet/selectors';
 import {fetchTweetData, setTweetData} from '../../store/ducks/tweet/actionCreators';
-import {fetchLikeTweet, fetchRetweet} from "../../store/ducks/tweets/actionCreators";
+import {likeTweet, retweet} from "../../store/ducks/tweets/actionCreators";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import UsersListModal from "../../components/UsersListModal/UsersListModal";
 import AddTweetForm from "../../components/AddTweetForm/AddTweetForm";
@@ -102,11 +102,11 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
     }, [dispatch, params.id]);
 
     const handleLike = (): void => {
-        dispatch(fetchLikeTweet(params.id));
+        dispatch(likeTweet(params.id));
     };
 
     const handleRetweet = (): void => {
-        dispatch(fetchRetweet(params.id));
+        dispatch(retweet(params.id));
     };
 
     const onOpenLikesModalWindow = (): void => {

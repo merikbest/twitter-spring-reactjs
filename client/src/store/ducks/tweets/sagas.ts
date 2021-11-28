@@ -1,24 +1,27 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 
-import {fetchAddScheduledTweet, setPageableTweets, setTweets, setTweetsLoadingState,} from "./actionCreators";
+import {setPageableTweets, setTweets, setTweetsLoadingState,} from "./actionCreators";
 import {TweetApi} from "../../../services/api/tweetApi";
 import {Tweet} from "./contracts/state";
 import {
-    FetchAddPollActionInterface,
-    FetchAddQuoteTweetActionInterface, FetchAddScheduledTweetActionInterface,
-    FetchAddTweetActionInterface,
+    AddPollActionInterface,
+    AddQuoteTweetActionInterface,
+    AddScheduledTweetActionInterface,
+    AddTweetActionInterface,
     FetchBookmarksActionInterface,
-    FetchChangeReplyTypeActionInterface, FetchDeleteScheduledTweetsActionInterface,
+    ChangeReplyTypeActionInterface,
+    DeleteScheduledTweetsActionInterface,
     FetchDeleteTweetActionInterface,
     FetchLikedTweetsActionInterface,
-    FetchLikeTweetActionInterface,
+    LikeTweetActionInterface,
     FetchMediaTweetsActionInterface,
-    FetchRetweetActionInterface,
+    RetweetActionInterface,
     FetchTweetsActionInterface,
     FetchTweetsByTagActionInterface,
     FetchTweetsByTextActionInterface,
-    FetchTweetsWithVideoActionInterface, FetchUpdateScheduledTweetActionInterface,
-    FetchVoteActionInterface,
+    FetchTweetsWithVideoActionInterface,
+    UpdateScheduledTweetActionInterface,
+    VoteActionInterface,
     TweetsActionType
 } from "./contracts/actionTypes";
 import {LoadingStatus} from '../../types';
@@ -95,7 +98,7 @@ export function* fetchLikedTweetsRequest({payload}: FetchLikedTweetsActionInterf
     }
 }
 
-export function* fetchAddTweetRequest({payload}: FetchAddTweetActionInterface) {
+export function* addTweetRequest({payload}: AddTweetActionInterface) {
     try {
         yield call(TweetApi.createTweet, payload);
     } catch (e) {
@@ -103,7 +106,7 @@ export function* fetchAddTweetRequest({payload}: FetchAddTweetActionInterface) {
     }
 }
 
-export function* fetchAddPollRequest({payload}: FetchAddPollActionInterface) {
+export function* addPollRequest({payload}: AddPollActionInterface) {
     try {
         yield call(TweetApi.createPoll, payload);
     } catch (e) {
@@ -111,7 +114,7 @@ export function* fetchAddPollRequest({payload}: FetchAddPollActionInterface) {
     }
 }
 
-export function* fetchAddScheduledTweetRequest({payload}: FetchAddScheduledTweetActionInterface) {
+export function* addScheduledTweetRequest({payload}: AddScheduledTweetActionInterface) {
     try {
         yield call(TweetApi.createScheduledTweet, payload);
     } catch (e) {
@@ -119,7 +122,7 @@ export function* fetchAddScheduledTweetRequest({payload}: FetchAddScheduledTweet
     }
 }
 
-export function* fetchUpdateScheduledTweetRequest({payload}: FetchUpdateScheduledTweetActionInterface) {
+export function* updateScheduledTweetRequest({payload}: UpdateScheduledTweetActionInterface) {
     try {
         yield call(TweetApi.updateScheduledTweet, payload);
     } catch (e) {
@@ -127,7 +130,7 @@ export function* fetchUpdateScheduledTweetRequest({payload}: FetchUpdateSchedule
     }
 }
 
-export function* fetchAddQuoteTweet({payload}: FetchAddQuoteTweetActionInterface) {
+export function* addQuoteTweet({payload}: AddQuoteTweetActionInterface) {
     try {
         yield call(TweetApi.quoteTweet, payload);
     } catch (e) {
@@ -135,7 +138,7 @@ export function* fetchAddQuoteTweet({payload}: FetchAddQuoteTweetActionInterface
     }
 }
 
-export function* fetchVoteRequest({payload}: FetchVoteActionInterface) {
+export function* voteRequest({payload}: VoteActionInterface) {
     try {
         yield call(TweetApi.voteInPoll, payload);
     } catch (e) {
@@ -143,7 +146,7 @@ export function* fetchVoteRequest({payload}: FetchVoteActionInterface) {
     }
 }
 
-export function* fetchChangeReplyTypeRequest({payload}: FetchChangeReplyTypeActionInterface) {
+export function* changeReplyTypeRequest({payload}: ChangeReplyTypeActionInterface) {
     try {
         yield call(TweetApi.changeTweetReplyType, payload);
     } catch (e) {
@@ -159,7 +162,7 @@ export function* fetchDeleteTweetRequest({payload}: FetchDeleteTweetActionInterf
     }
 }
 
-export function* fetchDeleteScheduledTweetsTweetRequest({payload}: FetchDeleteScheduledTweetsActionInterface) {
+export function* deleteScheduledTweetsTweetRequest({payload}: DeleteScheduledTweetsActionInterface) {
     try {
         yield call(TweetApi.deleteScheduledTweets, payload);
     } catch (e) {
@@ -167,11 +170,11 @@ export function* fetchDeleteScheduledTweetsTweetRequest({payload}: FetchDeleteSc
     }
 }
 
-export function* fetchLikeTweetRequest({payload}: FetchLikeTweetActionInterface) {
+export function* likeTweetRequest({payload}: LikeTweetActionInterface) {
     yield call(TweetApi.likeTweet, payload);
 }
 
-export function* fetchRetweetRequest({payload}: FetchRetweetActionInterface) {
+export function* retweetRequest({payload}: RetweetActionInterface) {
     yield call(TweetApi.retweet, payload);
 }
 
@@ -192,17 +195,17 @@ export function* tweetsSaga() {
     yield takeLatest(TweetsActionType.FETCH_TWEETS, fetchTweetsRequest);
     yield takeLatest(TweetsActionType.FETCH_MEDIA_TWEETS, fetchMediaTweetsRequest);
     yield takeLatest(TweetsActionType.FETCH_TWEETS_WITH_VIDEO, fetchTweetsWithVideoRequest);
-    yield takeLatest(TweetsActionType.FETCH_ADD_TWEET, fetchAddTweetRequest);
-    yield takeLatest(TweetsActionType.FETCH_ADD_POLL, fetchAddPollRequest);
-    yield takeLatest(TweetsActionType.FETCH_ADD_SCHEDULED_TWEET, fetchAddScheduledTweetRequest);
-    yield takeLatest(TweetsActionType.FETCH_UPDATE_SCHEDULED_TWEET, fetchUpdateScheduledTweetRequest);
-    yield takeLatest(TweetsActionType.FETCH_ADD_QUOTE_TWEET, fetchAddQuoteTweet);
-    yield takeLatest(TweetsActionType.FETCH_VOTE, fetchVoteRequest);
-    yield takeLatest(TweetsActionType.FETCH_CHANGE_REPLY_TYPE, fetchChangeReplyTypeRequest);
+    yield takeLatest(TweetsActionType.ADD_TWEET, addTweetRequest);
+    yield takeLatest(TweetsActionType.ADD_POLL, addPollRequest);
+    yield takeLatest(TweetsActionType.ADD_SCHEDULED_TWEET, addScheduledTweetRequest);
+    yield takeLatest(TweetsActionType.UPDATE_SCHEDULED_TWEET, updateScheduledTweetRequest);
+    yield takeLatest(TweetsActionType.ADD_QUOTE_TWEET, addQuoteTweet);
+    yield takeLatest(TweetsActionType.VOTE, voteRequest);
+    yield takeLatest(TweetsActionType.CHANGE_REPLY_TYPE, changeReplyTypeRequest);
     yield takeLatest(TweetsActionType.FETCH_DELETE_TWEET, fetchDeleteTweetRequest);
-    yield takeLatest(TweetsActionType.FETCH_DELETE_SCHEDULED_TWEETS, fetchDeleteScheduledTweetsTweetRequest);
-    yield takeLatest(TweetsActionType.FETCH_LIKE_TWEET, fetchLikeTweetRequest);
-    yield takeLatest(TweetsActionType.FETCH_RETWEET, fetchRetweetRequest);
+    yield takeLatest(TweetsActionType.DELETE_SCHEDULED_TWEETS, deleteScheduledTweetsTweetRequest);
+    yield takeLatest(TweetsActionType.LIKE_TWEET, likeTweetRequest);
+    yield takeLatest(TweetsActionType.RETWEET, retweetRequest);
     yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_TAG, fetchTweetsByTagRequest);
     yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_TEXT, fetchTweetsByTextRequest);
     yield takeLatest(TweetsActionType.FETCH_LIKED_TWEETS, fetchLikedTweetsRequest);

@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Typography} from "@material-ui/core";
+import {Divider, Typography} from "@material-ui/core";
 
 import {useChangeEmailStyles} from "./ChangeEmailStyles";
 import {ChangeInfoTextField} from "../../../ChangeInfoTextField/ChangeInfoTextField";
@@ -41,7 +41,7 @@ const ChangeEmail: FC = (): ReactElement => {
                     fullWidth
                 />
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.updateEmailAddress} onClick={onOpenChangeEmailModal}>
                 <Typography component={"span"}>
                     Update email address

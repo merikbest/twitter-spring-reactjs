@@ -1,7 +1,7 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useSelector} from "react-redux";
 import {Link, NavLink, useLocation} from 'react-router-dom';
-import {Button, Hidden, IconButton, List, ListItem, Popover, Typography} from "@material-ui/core";
+import {Button, Divider, Hidden, IconButton, List, ListItem, Popover, Typography} from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import CreateIcon from '@material-ui/icons/Create';
 
@@ -261,7 +261,7 @@ const SideMenu: FC = (): ReactElement => {
                                         </Typography>
                                     </ListItem>
                                 </a>
-                                <div className={classes.divider}/>
+                                <Divider/>
                                 <Link to={"/settings"}>
                                     <ListItem onClick={handleClosePopup}>
                                         {SettingsIcon}

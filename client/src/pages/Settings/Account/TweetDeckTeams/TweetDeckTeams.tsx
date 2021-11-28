@@ -1,5 +1,5 @@
 import React, {FC, ReactElement, useState} from 'react';
-import {Radio, Switch, Typography} from "@material-ui/core";
+import {Divider, Radio, Switch, Typography} from "@material-ui/core";
 import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
 
 import {useTweetDeckTeamsStyles} from "./TweetDeckTeamsStyles";
@@ -32,7 +32,7 @@ const TweetDeckTeams: FC = (): ReactElement => {
                               className={classes.link}>Learn more</a>
                 </Typography>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.tweetDeckItemWrapper}>
                     <Typography component={"span"}>

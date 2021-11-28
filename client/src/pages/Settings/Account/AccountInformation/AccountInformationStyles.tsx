@@ -22,7 +22,7 @@ export const useAccountInformationStyles = makeStyles((theme: Theme) => ({
     },
     title: {
         fontSize: 15,
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         fontWeight: 400,
         lineHeight: "20px",
     },
@@ -41,10 +41,6 @@ export const useAccountInformationStyles = makeStyles((theme: Theme) => ({
     link: {
         fontSize: 13,
         cursor: "pointer",
-        color: "rgb(29, 155, 240)",
-    },
-    divider: {
-        height: 1,
-        backgroundColor: "rgb(239, 243, 244)",
+        color: theme.palette.primary.main,
     },
 }));

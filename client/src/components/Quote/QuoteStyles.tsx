@@ -8,7 +8,7 @@ interface QuoteStylesProps {
 export const useQuoteStyles = makeStyles<Theme, QuoteStylesProps>((theme) => ({
     quoteTweetLink: {
         textDecoration: "none",
-        color: "#000",
+        color: theme.palette.text.primary,
         "& #link": {
             color: "rgb(27, 149, 224)"
         }
@@ -40,7 +40,7 @@ export const useQuoteStyles = makeStyles<Theme, QuoteStylesProps>((theme) => ({
         marginRight: 3,
     },
     quoteTweetUsername: {
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
     quoteTweetText: {
         width: 490,

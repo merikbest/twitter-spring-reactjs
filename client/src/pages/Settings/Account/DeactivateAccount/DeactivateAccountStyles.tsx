@@ -27,7 +27,7 @@ export const useDeactivateAccountStyles = makeStyles((theme: Theme) => ({
     fullName: {
         fontWeight: 700,
         fontSize: 15,
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         lineHeight: "20px"
     },
     username: {
@@ -40,7 +40,7 @@ export const useDeactivateAccountStyles = makeStyles((theme: Theme) => ({
         fontWeight: 800,
         lineHeight: "24px",
         fontSize: 20,
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
     },
     text: {
         fontWeight: 400,
@@ -50,20 +50,16 @@ export const useDeactivateAccountStyles = makeStyles((theme: Theme) => ({
     },
     link: {
         textDecoration: "none",
-        color: "rgb(29, 155, 240)",
+        color: theme.palette.primary.main,
         cursor: "pointer",
         "&:hover": {
             textDecoration: "underline",
         }
     },
-    divider: {
-        height: 1,
-        backgroundColor: "rgb(239, 243, 244)",
-    },
     deleteUser: {
         textAlign: "center",
         padding: 16,
-        color: "rgb(244, 33, 46)",
+        color: theme.palette.error.main,
         fontWeight: 400,
         fontSize: 15,
         lineHeight: "20px",

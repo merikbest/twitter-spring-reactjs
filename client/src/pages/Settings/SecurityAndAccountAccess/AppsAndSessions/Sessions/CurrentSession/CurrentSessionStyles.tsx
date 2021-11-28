@@ -8,7 +8,7 @@ export const useCurrentSessionStyles = makeStyles((theme: Theme) => ({
         fontWeight: 800,
         lineHeight: "24px",
         fontSize: 20,
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
     },
     text: {
         fontSize: 13,
@@ -22,16 +22,16 @@ export const useCurrentSessionStyles = makeStyles((theme: Theme) => ({
     },
     OSTypeText: {
         fontSize: 15,
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         fontWeight: 400,
         lineHeight: "20px",
     },
     active: {
         padding: "1px 4px",
-        backgroundColor: "rgb(29, 155, 240)",
+        backgroundColor: theme.palette.primary.main,
         borderRadius: 4,
         height: 20,
-        color: "#fff",
+        color: theme.palette.info.main,
         fontSize: 13,
         lineHeight: "16px",
     },
@@ -47,12 +47,8 @@ export const useCurrentSessionStyles = makeStyles((theme: Theme) => ({
     },
     deviceIcon: {
         "& svg": {
-            color: "rgb(15, 20, 25)",
+            color: theme.palette.text.primary,
             height: "1.7em"
         },
-    },
-    divider: {
-        height: 1,
-        backgroundColor: "rgb(239, 243, 244)",
     },
 }));

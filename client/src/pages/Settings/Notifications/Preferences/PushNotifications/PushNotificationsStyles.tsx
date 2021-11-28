@@ -14,7 +14,7 @@ export const usePushNotificationsStyles = makeStyles((theme: Theme) => ({
         paddingBottom: 4,
         fontWeight: 700,
         fontSize: 15,
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         lineHeight: "20px"
     },
     switch: {
@@ -31,7 +31,7 @@ export const usePushNotificationsStyles = makeStyles((theme: Theme) => ({
         lineHeight: "36px",
         fontSize: 31,
         fontWeight: 800,
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
     },
     subtitle: {
         lineHeight: "20px",

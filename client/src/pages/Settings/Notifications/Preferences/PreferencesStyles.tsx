@@ -12,7 +12,7 @@ export const usePreferencesStyles = makeStyles((theme: Theme) => ({
     },
     link: {
         textDecoration: "none",
-        color: "rgb(29, 155, 240)",
+        color: theme.palette.primary.main,
         cursor: "pointer",
         "&:hover": {
             textDecoration: "underline",
@@ -24,7 +24,7 @@ export const usePreferencesStyles = makeStyles((theme: Theme) => ({
     preferencesLink: {
         padding: "12px 16px",
         fontSize: 15,
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         fontWeight: 400,
         lineHeight: "20px",
         "&:hover": {

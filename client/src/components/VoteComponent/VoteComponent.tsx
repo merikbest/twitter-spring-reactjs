@@ -6,7 +6,7 @@ import isAfter from "date-fns/isAfter";
 import {useVoteComponentStyles} from "./VoteComponentStyles";
 import {Poll} from "../../store/ducks/tweets/contracts/state";
 import {selectUserData} from "../../store/ducks/user/selectors";
-import {fetchVote} from "../../store/ducks/tweets/actionCreators";
+import {vote} from "../../store/ducks/tweets/actionCreators";
 import {voteFormatDate} from "../../util/formatDate";
 
 interface VoteComponentProps {
@@ -25,7 +25,7 @@ const VoteComponent: FC<VoteComponentProps> = ({tweetId, poll}): ReactElement =>
     const isPollEnded = isAfter(Date.now(), new Date(poll?.dateTime!));
 
     const onClickVote = (pollChoiceId: number): void => {
-        dispatch(fetchVote({tweetId, pollChoiceId}))
+        dispatch(vote({tweetId, pollChoiceId}))
     };
 
     return (

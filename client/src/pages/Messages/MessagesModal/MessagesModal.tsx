@@ -1,6 +1,6 @@
 import React, {FC, FormEvent, ReactElement, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Button, Dialog, InputAdornment, List, ListItem} from "@material-ui/core";
+import {Button, Dialog, Divider, InputAdornment, List, ListItem} from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -92,7 +92,7 @@ const MessagesModal: FC<MessagesModalProps> = ({visible, onClose}): ReactElement
                         }}
                     />
                 </form>
-                <div className={classes.divider}/>
+                <Divider/>
                 <List component="nav" aria-label="main mailbox folders">
                     {users.map((user) => (
                         <ListItem

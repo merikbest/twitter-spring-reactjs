@@ -94,7 +94,7 @@ export const useFullListStyles = makeStyles((theme: Theme) => ({
         color: "rgb(83, 100, 113)",
         fontSize: 15,
         "& b" : {
-            color: "#000"
+            color: theme.palette.text.primary,
         },
         "&:hover": {
            cursor: "pointer",
@@ -134,7 +134,7 @@ export const useFullListStyles = makeStyles((theme: Theme) => ({
         borderRadius: '25px',
         padding: '0 15px',
         '&:hover': {
-            backgroundColor: 'rgb(202, 32, 85)',
+            backgroundColor: theme.palette.error.dark,
         },
     },
     listInfoWrapper: {

@@ -2,7 +2,7 @@ import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import {Typography} from "@material-ui/core";
+import {Divider, Typography} from "@material-ui/core";
 
 import {useBlockedAccountsStyles} from "./BlockedAccountsStyles";
 import BlockedAccountItem from "./BlockedAccountItem/BlockedAccountItem";
@@ -47,7 +47,7 @@ const BlockedAccounts: FC = (): ReactElement => {
                     className={classes.link}>Learn more</a>
                 </Typography>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             {isUsersLoading ? (
                 <Spinner/>
             ) : (

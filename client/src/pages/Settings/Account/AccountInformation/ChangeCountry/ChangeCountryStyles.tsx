@@ -10,12 +10,12 @@ export const useChangeCountryStyles = makeStyles((theme: Theme) => ({
     countryInfo: {
         paddingTop: 2,
         fontSize: 13,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontWeight: 400
     },
     link: {
         textDecoration: "none",
-        color: "rgb(29, 155, 240)",
+        color: theme.palette.primary.main,
         cursor: "pointer",
         "&:hover": {
             textDecoration: "underline",

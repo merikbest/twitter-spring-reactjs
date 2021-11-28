@@ -11,7 +11,7 @@ export const usePinnedListsItemStyles = makeStyles((theme: Theme) => ({
         },
     },
     link: {
-        color: "#000",
+        color: theme.palette.text.primary,
         textDecoration: "none",
     },
     listAvatar: {

@@ -73,7 +73,7 @@ export const useListsItemStyles = makeStyles((theme: Theme) => ({
         borderRadius: '25px',
         padding: '0 15px',
         '&:hover': {
-            backgroundColor: 'rgb(202, 32, 85)',
+            backgroundColor: theme.palette.error.dark,
         },
     },
     listOutlinedButton: {

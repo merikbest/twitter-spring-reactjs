@@ -51,9 +51,7 @@ const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
         >
             <DialogTitle id="form-dialog-title">
                 <CloseButton onClose={onClose}/>
-                <Typography component={"span"}>
-                    {title}
-                </Typography>
+                {title}
             </DialogTitle>
             <DialogContent className={classes.content}>
                 {(users.length !== 0) ? (

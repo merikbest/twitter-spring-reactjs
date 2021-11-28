@@ -69,7 +69,7 @@ export const useEditListModalStyles = makeStyles((theme: Theme) => ({
         padding: "12px 16px",
         fontSize: 15,
         fontWeight: 500,
-        color: "rgb(244, 33, 46)",
+        color: theme.palette.error.main,
         border: 0,
         borderRadius: "0px 0px 16px 16px",
         textAlign: "center",

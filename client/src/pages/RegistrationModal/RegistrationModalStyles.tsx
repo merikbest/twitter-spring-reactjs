@@ -41,7 +41,7 @@ export const useRegistrationModalStyles = makeStyles((theme: Theme) => ({
     footerText: {
         fontSize: 15,
         lineHeight: "20px",
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
     formControl: {
         margin: "16px 0",

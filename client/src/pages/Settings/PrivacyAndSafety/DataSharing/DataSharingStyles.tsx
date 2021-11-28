@@ -13,7 +13,7 @@ export const useDataSharingStyles = makeStyles((theme: Theme) => ({
     infoItem: {
         paddingBottom: 12,
         fontSize: 15,
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         fontWeight: 400,
         lineHeight: "20px",
         "& .MuiCheckbox-root": {
@@ -23,7 +23,7 @@ export const useDataSharingStyles = makeStyles((theme: Theme) => ({
     },
     link: {
         textDecoration: "none",
-        color: "rgb(29, 155, 240)",
+        color: theme.palette.primary.main,
         cursor: "pointer",
         "&:hover": {
             textDecoration: "underline",

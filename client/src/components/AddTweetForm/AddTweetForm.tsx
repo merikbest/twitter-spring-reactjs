@@ -11,11 +11,11 @@ import 'emoji-mart/css/emoji-mart.css'
 import EmojiConvertor from 'emoji-js';
 
 import {
-    fetchAddPoll,
-    fetchAddQuoteTweet,
-    fetchAddScheduledTweet,
-    fetchAddTweet,
-    fetchUpdateScheduledTweet,
+    addPoll,
+    addQuoteTweet,
+    addScheduledTweet,
+    addTweet,
+    updateScheduledTweet,
 } from "../../store/ducks/tweets/actionCreators";
 import {selectIsTweetsLoading} from "../../store/ducks/tweets/selectors";
 import {Image, ReplyType, Tweet} from '../../store/ducks/tweets/contracts/state';
@@ -160,7 +160,7 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
         }
 
         if (visiblePoll) {
-            dispatch(fetchAddPoll({
+            dispatch(addPoll({
                 text: textConverter(),
                 images: result,
                 pollDateTime: pollDateTime,
@@ -168,14 +168,14 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
                 replyType: replyType
             }));
         } else if (selectedScheduleDate !== null && unsentTweet === undefined) {
-            dispatch(fetchAddScheduledTweet({
+            dispatch(addScheduledTweet({
                 text: textConverter(),
                 images: result,
                 replyType: replyType,
                 scheduledDate: selectedScheduleDate
             }));
         } else if (unsentTweet) {
-            dispatch(fetchUpdateScheduledTweet({
+            dispatch(updateScheduledTweet({
                 id: unsentTweet?.id,
                 text: textConverter(),
                 images: result,
@@ -183,7 +183,7 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
             }));
             if (onCloseModal) onCloseModal();
         } else {
-            dispatch(fetchAddTweet({
+            dispatch(addTweet({
                 text: textConverter(),
                 images: result,
                 replyType: replyType
@@ -211,7 +211,7 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
             result.push(image);
         }
 
-        dispatch(fetchAddQuoteTweet({
+        dispatch(addQuoteTweet({
             text: textConverter(),
             images: result,
             replyType: replyType,

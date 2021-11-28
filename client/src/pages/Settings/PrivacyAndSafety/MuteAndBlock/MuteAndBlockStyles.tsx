@@ -18,7 +18,7 @@ export const useMuteAndBlockStyles = makeStyles((theme: Theme) => ({
     contentLink: {
         padding: "12px 16px",
         fontSize: 15,
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         fontWeight: 400,
         lineHeight: "20px",
         "&:hover": {

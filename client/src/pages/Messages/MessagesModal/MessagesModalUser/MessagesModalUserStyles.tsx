@@ -24,7 +24,7 @@ export const useMessagesModalUserStyles = makeStyles((theme: Theme) => ({
         justifyContent: "space-between"
     },
     fullName: {
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         fontWeight: 800,
         fontSize: 15,
     },

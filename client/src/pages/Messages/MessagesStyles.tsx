@@ -61,12 +61,12 @@ export const useMessagesStyles = makeStyles((theme: Theme) => ({
     list: {
         "& .Mui-selected": {
             borderRight: "2px solid rgb(27, 149, 224)",
-            backgroundColor: "#fff",
+            backgroundColor: theme.palette.info.main,
         },
     },
     listItem: {
         padding: 0,
-        backgroundColor: "#fff",
+        backgroundColor: theme.palette.info.main,
         "& :hover": {
             backgroundColor: '#edf3f6',
         },
@@ -94,7 +94,7 @@ export const useMessagesStyles = makeStyles((theme: Theme) => ({
     },
     userFullName: {
         display: "inline-block",
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         fontWeight: 800,
         fontSize: 15,
     },
@@ -209,7 +209,7 @@ export const useMessagesStyles = makeStyles((theme: Theme) => ({
         flexDirection: "row-reverse",
         "& span": {
             backgroundColor: "rgb(29, 161, 242)",
-            color: "#fff",
+            color: theme.palette.info.main,
             padding: "11px 15px",
             maxWidth: 384,
         },

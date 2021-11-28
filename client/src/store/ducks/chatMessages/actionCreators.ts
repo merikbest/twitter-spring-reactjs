@@ -1,6 +1,7 @@
 import {ChatMessage, ChatMessageRequest, ChatMessageWithTweetRequest} from "./contracts/state";
 import {
-    AddChatMessageActionInterface, AddChatMessageWithTweetActionInterface,
+    AddChatMessageActionInterface,
+    AddChatMessageWithTweetActionInterface,
     ChatMessagesActionsType,
     FetchChatMessagesActionInterface,
     SetChatMessageActionInterface,
@@ -29,7 +30,7 @@ export const addChatMessageWithTweet = (payload: ChatMessageWithTweetRequest): A
     payload,
 });
 
-export const fetchChatMessages  = (payload: number): FetchChatMessagesActionInterface => ({
+export const fetchChatMessages = (payload: number): FetchChatMessagesActionInterface => ({
     type: ChatMessagesActionsType.FETCH_CHAT_MESSAGES,
     payload
 });

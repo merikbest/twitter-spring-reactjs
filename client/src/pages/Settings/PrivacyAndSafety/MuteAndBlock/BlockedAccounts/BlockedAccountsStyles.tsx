@@ -32,30 +32,26 @@ export const useBlockedAccountsStyles = makeStyles((theme: Theme) => ({
         lineHeight: "36px",
         fontSize: 31,
         fontWeight: 800,
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         marginBottom: 8
     },
     subTitle: {
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontWeight: 400,
         fontSize: 15,
     },
     text: {
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontWeight: 400,
         fontSize: 13,
         lineHeight: "16px"
     },
     link: {
         textDecoration: "none",
-        color: "rgb(29, 155, 240)",
+        color: theme.palette.primary.main,
         cursor: "pointer",
         "&:hover": {
             textDecoration: "underline",
         }
-    },
-    divider: {
-        height: 1,
-        backgroundColor: "rgb(239, 243, 244)",
     },
 }));

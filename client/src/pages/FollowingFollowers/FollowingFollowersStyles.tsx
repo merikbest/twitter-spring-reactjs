@@ -24,7 +24,7 @@ export const useFollowingFollowersStyles = makeStyles((theme) => ({
     headerUsername: {
         fontSize: 13,
         lineHeight: "16px",
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
     contentWrapper: {
         paddingTop: 57
@@ -58,7 +58,7 @@ export const useFollowingFollowersStyles = makeStyles((theme) => ({
         fontSize: 15,
         fontWeight: 400,
         marginBottom: 16,
-        color: "rgb(83, 100, 113)"
+        color: theme.palette.text.secondary
     },
     link: {
         textDecoration: 'none',

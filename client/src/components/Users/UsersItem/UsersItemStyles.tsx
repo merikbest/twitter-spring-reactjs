@@ -27,7 +27,7 @@ export const useUsersItemStyles = makeStyles((theme: Theme) => ({
     },
     fullName: {
         lineHeight: "20px",
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         fontWeight: 700,
         fontSize: 15,
         textOverflow: "ellipsis",
@@ -36,7 +36,7 @@ export const useUsersItemStyles = makeStyles((theme: Theme) => ({
     },
     username: {
         lineHeight: "20px",
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontWeight: 400,
         fontSize: 15,
         textOverflow: "ellipsis",
@@ -75,7 +75,7 @@ export const useUsersItemStyles = makeStyles((theme: Theme) => ({
         padding: '0 15px',
         // TODO '& .MuiButton-containedPrimary':
         '&:hover': {
-            backgroundColor: 'rgb(202, 32, 85)',
+            backgroundColor: theme.palette.error.dark,
         },
     },
     modalWrapper: {
@@ -85,12 +85,12 @@ export const useUsersItemStyles = makeStyles((theme: Theme) => ({
         margin: "32px 20px",
     },
     modalFullName: {
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         fontWeight: 700,
         fontSize: 20,
     },
     modalUsername: {
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontWeight: 400,
         fontSize: 15,
         marginTop: 8,
@@ -104,7 +104,7 @@ export const useUsersItemStyles = makeStyles((theme: Theme) => ({
     modalCancelButton: {
         width: 134,
         height: 40,
-        color: "#000",
+        color: theme.palette.text.primary,
         backgroundColor: "rgb(239, 243, 244)",
         borderRadius: '25px',
     },

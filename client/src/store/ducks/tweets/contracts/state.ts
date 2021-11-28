@@ -90,8 +90,6 @@ export interface Vote {
     pollChoiceId: number;
 }
 
-
-
 export interface TweetsState {
     items: Tweet[];
     pagesCount: number;

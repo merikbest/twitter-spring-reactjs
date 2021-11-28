@@ -81,7 +81,7 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
         border: "1px solid #fff",
         backgroundColor: 'rgb(29, 161, 242)',
         fontSize: 11,
-        color: "#fff",
+        color: theme.palette.info.main,
         textAlign: "center",
     },
     popover: {
@@ -106,7 +106,7 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
         },
         "& svg": {
             marginRight: 12,
-            color: "rgb(15, 20, 25)",
+            color: theme.palette.text.primary,
             height: "1.30em",
         },
     },
@@ -118,7 +118,7 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
             padding: 0,
         },
         '& .MuiListItem-root': {
-            color: "rgb(15, 20, 25)",
+            color: theme.palette.text.primary,
             padding: "16px 0px 16px 16px",
             '&:hover': {
                 cursor: 'pointer',
@@ -133,10 +133,6 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
         "& .MuiDivider-root": {
             backgroundColor: 'rgb(239, 243, 244)',
         },
-    },
-    divider: {
-        height: 1,
-        backgroundColor: "rgb(239, 243, 244)",
     },
     button: {
         height: 48,

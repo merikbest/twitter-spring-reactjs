@@ -1,5 +1,5 @@
 import React, {FC, ReactElement, useState} from 'react';
-import {Checkbox, Radio, Switch, Typography} from "@material-ui/core";
+import {Checkbox, Divider, Radio, Switch, Typography} from "@material-ui/core";
 
 import {useEmailNotificationsStyles} from "./EmailNotificationsStyles";
 import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
@@ -31,7 +31,7 @@ const EmailNotifications: FC = (): ReactElement => {
                         className={classes.link}> Learn more</a>
                 </Typography>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography component={"div"} className={classes.title}>
                     Related to you and your Tweets
@@ -126,7 +126,7 @@ const EmailNotifications: FC = (): ReactElement => {
                     <Checkbox/>
                 </div>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography component={"div"} className={classes.title}>
                     From Twitter

@@ -1,7 +1,7 @@
 import React, {FC, ReactElement, useState} from 'react';
 
 import {usePhotoTaggingStyles} from "./PhotoTaggingStyles";
-import {Radio, Switch, Typography} from "@material-ui/core";
+import {Divider, Radio, Switch, Typography} from "@material-ui/core";
 import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
 
 const PhotoTagging: FC = (): ReactElement => {
@@ -25,7 +25,7 @@ const PhotoTagging: FC = (): ReactElement => {
                     Allow people to tag you in their photos and receive notifications when they do so.
                 </Typography>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.photoTaggingItemWrapper}>
                     <Typography component={"span"}>

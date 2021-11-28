@@ -1,5 +1,5 @@
 import React, {FC, ReactElement} from 'react';
-import {List, ListItem, Typography} from "@material-ui/core";
+import {Divider, List, ListItem, Typography} from "@material-ui/core";
 
 import {useAdditionalResourcesStyles} from "./AdditionalResourcesStyles";
 import {ArrowTopIcon} from "../../../icons";
@@ -34,7 +34,7 @@ const AdditionalResources: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </a>
-                    <div className={classes.divider}/>
+                    <Divider/>
                     <div className={classes.infoItemWrapper}>
                         <Typography component={"div"} className={classes.title}>
                             Legal
@@ -89,7 +89,7 @@ const AdditionalResources: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </a>
-                    <div className={classes.divider}/>
+                    <Divider/>
                     <div className={classes.infoItemWrapper}>
                         <Typography component={"div"} className={classes.title}>
                             Miscellaneous

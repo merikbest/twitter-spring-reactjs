@@ -12,13 +12,13 @@ export const usePrivacyAndSafetyStyles = makeStyles((theme: Theme) => ({
     },
     title: {
         fontSize: 20,
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         fontWeight: 800,
         lineHeight: "24px",
     },
     subtitle: {
         fontSize: 15,
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         fontWeight: 400,
         lineHeight: "20px",
     },
@@ -47,9 +47,5 @@ export const usePrivacyAndSafetyStyles = makeStyles((theme: Theme) => ({
     },
     arrowIcon: {
         marginLeft: "auto"
-    },
-    divider: {
-        height: 1,
-        backgroundColor: "rgb(239, 243, 244)",
     },
 }));

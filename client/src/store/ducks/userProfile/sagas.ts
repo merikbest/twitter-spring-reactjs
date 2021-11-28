@@ -12,7 +12,7 @@ import {User} from "../user/contracts/state";
 import {UserApi} from "../../../services/api/userApi";
 import {setUserProfile, setUserProfileLoadingState} from "./actionCreators";
 
-export function* fetchUpdateUserDataRequest({payload}: UpdateUserDataActionInterface) {
+export function* updateUserDataRequest({payload}: UpdateUserDataActionInterface) {
     try {
         yield put(setUserProfileLoadingState(LoadingStatus.LOADING));
         const data: User = yield call(UserApi.updateUserProfile, payload);
@@ -32,7 +32,7 @@ export function* fetchUserRequest({payload}: FetchUserProfileActionInterface) {
     }
 }
 
-export function* fetchFollowUser({payload}: FollowUserProfileActionInterface) {
+export function* followUser({payload}: FollowUserProfileActionInterface) {
     try {
         const item: User = yield call(UserApi.follow, payload);
         yield put(setUserProfile(item));
@@ -41,7 +41,7 @@ export function* fetchFollowUser({payload}: FollowUserProfileActionInterface) {
     }
 }
 
-export function* fetchUnfollowUser({payload}: UnfollowUserProfileActionInterface) {
+export function* unfollowUser({payload}: UnfollowUserProfileActionInterface) {
     try {
         const item: User = yield call(UserApi.follow, payload);
         yield put(setUserProfile(item));
@@ -51,8 +51,8 @@ export function* fetchUnfollowUser({payload}: UnfollowUserProfileActionInterface
 }
 
 export function* userProfileSaga() {
-    yield takeLatest(UserProfileActionsType.UPDATE_USER_DATA, fetchUpdateUserDataRequest);
+    yield takeLatest(UserProfileActionsType.UPDATE_USER_DATA, updateUserDataRequest);
     yield takeLatest(UserProfileActionsType.FETCH_USER, fetchUserRequest);
-    yield takeLatest(UserProfileActionsType.FOLLOW_USER, fetchFollowUser);
-    yield takeLatest(UserProfileActionsType.UNFOLLOW_USER, fetchUnfollowUser);
+    yield takeLatest(UserProfileActionsType.FOLLOW_USER, followUser);
+    yield takeLatest(UserProfileActionsType.UNFOLLOW_USER, unfollowUser);
 }

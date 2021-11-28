@@ -29,7 +29,7 @@ export const useAddTweetFormStyles = makeStyles<Theme, AddTweetFormStyles>((them
         fontSize: 13,
         fontWeight: 400,
         lineHeight: "16px",
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
     contentTextarea: {
         width: '100%',
@@ -109,7 +109,7 @@ export const useAddTweetFormStyles = makeStyles<Theme, AddTweetFormStyles>((them
         "& .MuiIconButton-root": {
             padding: 7,
             "& svg": {
-                color: props => props.quoteTweet || props.isScheduled ? "rgb(142, 205, 247)" : theme.palette.primary.main,
+                color: props => props.quoteTweet || props.isScheduled ? theme.palette.primary.light : theme.palette.primary.main,
                 verticalAlign: "bottom",
                 height: "0.9em",
             },

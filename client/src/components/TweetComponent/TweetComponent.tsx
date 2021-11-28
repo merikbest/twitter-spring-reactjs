@@ -16,7 +16,7 @@ import {
 } from "../../icons";
 import {useTweetComponentStyles} from "./TweetComponentStyles";
 import {formatDate} from '../../util/formatDate';
-import {fetchLikeTweet, fetchRetweet} from "../../store/ducks/tweets/actionCreators";
+import {likeTweet, retweet} from "../../store/ducks/tweets/actionCreators";
 import {LinkCoverSize, ReplyType, Tweet} from "../../store/ducks/tweets/contracts/state";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
@@ -102,12 +102,12 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<Tweet> & HoverActi
     };
 
     const handleLike = (): void => {
-        dispatch(fetchLikeTweet(tweet!.id));
+        dispatch(likeTweet(tweet!.id));
     };
 
     const handleRetweet = (): void => {
         if (tweet?.user.id !== myProfile?.id) {
-            dispatch(fetchRetweet(tweet!.id));
+            dispatch(retweet(tweet!.id));
         }
     };
 

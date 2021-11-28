@@ -37,7 +37,7 @@ export const useCreateAccountModalStyles = makeStyles((theme: Theme) => ({
     },
     link: {
         textDecoration: "none",
-        color: "rgb(29, 155, 240)",
+        color: theme.palette.primary.main,
         cursor: "pointer",
         "&:hover": {
             textDecoration: "underline",

@@ -10,14 +10,10 @@ export const useLocationStyles = makeStyles((theme: Theme) => ({
         fontSize: 13,
         lineHeight: "16px"
     },
-    divider: {
-        height: 1,
-        backgroundColor: "rgb(239, 243, 244)",
-    },
     deleteUser: {
         textAlign: "center",
         padding: 16,
-        color: "rgb(244, 33, 46)",
+        color: theme.palette.error.main,
         fontWeight: 400,
         fontSize: 15,
         lineHeight: "20px",
@@ -45,7 +41,7 @@ export const useLocationStyles = makeStyles((theme: Theme) => ({
     locationIconIcon: {
         marginTop: 3,
         "& svg": {
-            color: "rgb(15, 20, 25)",
+            color: theme.palette.text.primary,
             height: "1.5em"
         },
     },

@@ -1,5 +1,5 @@
 import React, {FC, ReactElement, useState} from 'react';
-import {Button} from "@material-ui/core";
+import {Button, Divider} from "@material-ui/core";
 
 import {useChangeYourPasswordStyles} from "./ChangeYourPasswordStyles";
 import {ChangeInfoTextField} from "../../ChangeInfoTextField/ChangeInfoTextField";
@@ -22,7 +22,7 @@ const ChangeYourPassword: FC = (): ReactElement => {
                 />
                 <span className={classes.link}>Forgot password?</span>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.textFieldWrapper}>
                 <ChangeInfoTextField
                     label="New password"
@@ -41,7 +41,7 @@ const ChangeYourPassword: FC = (): ReactElement => {
                     fullWidth
                 />
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.buttonWrapper}>
                 <Button
                     type="submit"

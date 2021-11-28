@@ -1,5 +1,5 @@
 import React, {FC, ReactElement} from 'react';
-import {Typography} from "@material-ui/core";
+import {Divider, Typography} from "@material-ui/core";
 
 import {useLoggedDevicesStyles} from "./LoggedDevicesStyles";
 
@@ -19,7 +19,7 @@ const LoggedDevices: FC = (): ReactElement => {
                     className={classes.link}>Learn more</a>
                 </Typography>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography component={"div"} className={classes.title}>
                     Browsers
@@ -29,7 +29,7 @@ const LoggedDevices: FC = (): ReactElement => {
                     in your <span className={classes.link}>Off-Twitter activity</span> settings.
                 </Typography>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography component={"div"} className={classes.title}>
                     Mobile Devices
@@ -39,7 +39,7 @@ const LoggedDevices: FC = (): ReactElement => {
                     in your <span className={classes.link}>Off-Twitter activity</span> settings.
                 </Typography>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography component={"div"} className={classes.title}>
                     Email addresses

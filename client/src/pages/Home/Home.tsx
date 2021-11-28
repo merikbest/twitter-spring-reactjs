@@ -2,7 +2,7 @@ import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Route, useLocation} from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {IconButton, Paper, Typography} from "@material-ui/core";
+import {Divider, IconButton, Paper, Typography} from "@material-ui/core";
 
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import {useHomeStyles} from './HomeStyles';
@@ -102,7 +102,7 @@ const Home: FC = (): ReactElement => {
                     <div className={classes.addForm}>
                         <AddTweetForm title={"What's happening?"} buttonName={"Tweet"}/>
                     </div>
-                    <div className={classes.divider}/>
+                    <Divider/>
                 </Route>
 
                 <Route path="/home/connect" exact>

@@ -43,7 +43,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
     link: {
         cursor: "pointer",
         textDecoration: "none",
-        color: "#000",
+        color: theme.palette.text.primary,
         "&:hover": {
             "& #link": {
                 textDecoration: "underline",
@@ -72,7 +72,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         margin: "16px 0",
         fontSize: 15,
         '& a': {
-            color: "#000",
+            color: theme.palette.text.primary,
             textDecoration: 'none'
         },
     },
@@ -146,7 +146,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
     },
     divider: {
         height: 12,
-        backgroundColor: '#F7F9F9',
+        backgroundColor: theme.palette.divider,
     },
     imageFooterContainer: {
         position: "absolute",
@@ -155,7 +155,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         height: 48,
         bottom: 0,
         "& svg": {
-            color: "#fff"
+            color: theme.palette.info.main
         },
     },
     grey: {
@@ -174,7 +174,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         margin: 10,
         "& svg": {
             height: "0.9em",
-            color: "#fff"
+            color: theme.palette.info.main
         },
     },
 }));

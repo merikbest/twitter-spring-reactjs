@@ -25,7 +25,7 @@ export const useSetPasswordModalStyles = makeStyles((theme: Theme) => ({
     text: {
         fontSize: 15,
         marginTop: 15,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         linHeight: "20px",
     },
     button: {

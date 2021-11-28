@@ -13,7 +13,7 @@ export const usePopperUserWindowStyles = makeStyles<Theme, PopperUserWindowStyle
         zIndex: 2,
         marginTop: props => props.isTweetComponent ? 0 : -20,
         borderRadius: 16,
-        backgroundColor: "#fff",
+        backgroundColor: theme.palette.info.main,
         cursor: "default",
         boxShadow: "rgb(101 119 134 / 20%) 0px 0px 15px, rgb(101 119 134 / 15%) 0px 0px 3px 1px",
     },
@@ -65,7 +65,7 @@ export const usePopperUserWindowStyles = makeStyles<Theme, PopperUserWindowStyle
         marginTop: 4,
         fontSize: 15,
         "& a": {
-            color: "#000",
+            color: theme.palette.text.primary,
             textDecoration: "none",
             "&:hover": {
                 textDecoration: "underline !important",
@@ -98,7 +98,7 @@ export const usePopperUserWindowStyles = makeStyles<Theme, PopperUserWindowStyle
     },
     followLink: {
         textDecoration: 'none',
-        color: "#000",
+        color: theme.palette.text.primary,
         "&:hover": {
             textDecoration: "underline !important",
         },

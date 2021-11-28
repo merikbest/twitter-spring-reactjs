@@ -26,7 +26,7 @@ export const MessageInput = withStyles((theme: Theme) => ({
         },
         '& .MuiOutlinedInput-input': {
             "&::placeholder": {
-                color: "rgb(15, 20, 25)",
+                color: theme.palette.text.primary,
             },
         },
     },

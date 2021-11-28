@@ -36,7 +36,7 @@ export const useLargeLinkPreviewStyles = makeStyles<Theme, LargeLinkPreviewStyle
     },
     siteInfoDescription:{
         fontSize: 15,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         display: "-webkit-box",
         "-webkit-box-orient": "vertical",
         "-webkit-line-clamp": 2,

@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Typography} from "@material-ui/core";
+import {Divider, Typography} from "@material-ui/core";
 
 import {useMutedAccountsStyles} from "./MutedAccountsStyles";
 import {fetchMutedUsers, setUsers} from "../../../../../store/ducks/users/actionCreators";
@@ -33,7 +33,7 @@ const MutedAccounts: FC = (): ReactElement => {
                     className={classes.link}>Learn more</a>
                 </Typography>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             {isUsersLoading ? (
                 <Spinner/>
             ) : (

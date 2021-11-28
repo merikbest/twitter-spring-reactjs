@@ -23,7 +23,7 @@ import {selectUserData} from "../../store/ducks/user/selectors";
 import AddTweetForm from "../AddTweetForm/AddTweetForm";
 import UsersListModal from "../UsersListModal/UsersListModal";
 import TweetComponent from '../TweetComponent/TweetComponent';
-import {fetchLikeTweet, fetchRetweet} from "../../store/ducks/tweets/actionCreators";
+import {likeTweet, retweet} from "../../store/ducks/tweets/actionCreators";
 import {useTweetImageStyles} from "./TweetImageModalStyles";
 import {fetchTweetData, setTweetData} from "../../store/ducks/tweet/actionCreators";
 import {selectTweetData} from "../../store/ducks/tweet/selectors";
@@ -108,11 +108,11 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
     };
 
     const handleLike = (): void => {
-        dispatch(fetchLikeTweet(params.id));
+        dispatch(likeTweet(params.id));
     };
 
     const handleRetweet = (): void => {
-        dispatch(fetchRetweet(params.id));
+        dispatch(retweet(params.id));
     };
 
     if (!visibleTweetImageModalWindow) {
@@ -254,7 +254,7 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                             buttonName={"Reply"}
                         />
                     </div>
-                    <div className={classes.divider}/>
+                    <Divider/>
                     <UsersListModal
                         users={(modalWindowTitle === "Liked by") ? tweetData.likedTweets : tweetData.retweets}
                         title={(modalWindowTitle === "Liked by") ? "Liked by" : "Retweeted by"}

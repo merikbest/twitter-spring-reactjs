@@ -21,7 +21,7 @@ export const useProfileHeaderModalStyles = makeStyles((theme) => ({
         fontSize: 23,
     },
     text: {
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontSize: 15,
     },
     wallpaperWrapper: {
@@ -64,7 +64,7 @@ export const useProfileHeaderModalStyles = makeStyles((theme) => ({
     },
     username :{
         fontSize: 15,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
     button: {
         position: "absolute",

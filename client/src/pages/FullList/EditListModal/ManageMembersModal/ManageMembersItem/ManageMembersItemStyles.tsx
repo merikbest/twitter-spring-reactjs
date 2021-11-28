@@ -17,7 +17,7 @@ export const useManageMembersItemStyles = makeStyles((theme: Theme) => ({
         },
     },
     link: {
-        color: "#000",
+        color: theme.palette.text.primary,
         textDecoration: 'none',
     },
     listAvatar: {
@@ -36,7 +36,7 @@ export const useManageMembersItemStyles = makeStyles((theme: Theme) => ({
     },
     fullName: {
         lineHeight: "20px",
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         fontWeight: 800,
         fontSize: 15,
     },
@@ -73,7 +73,7 @@ export const useManageMembersItemStyles = makeStyles((theme: Theme) => ({
         borderRadius: '25px',
         padding: '0 15px',
         '&:hover': {
-            backgroundColor: 'rgb(202, 32, 85)',
+            backgroundColor: theme.palette.error.dark,
         },
     },
 }));

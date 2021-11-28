@@ -59,7 +59,7 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
         fontWeight: 800,
         textAlign: "center",
         lineHeight: "36px",
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         marginBottom: 8
     },
     text: {
@@ -67,7 +67,7 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
         fontWeight: 400,
         lineHeight: "20px",
         textAlign: "center",
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
     tweetContainer: {
         padding: "12px 16px",
@@ -89,7 +89,7 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
         fontSize: 15,
         fontWeight: 400,
         lineHeight: "20px",
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
     },
     imageWrapper: {
         width: 75,
@@ -112,7 +112,7 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
         fontSize: 13,
         fontWeight: 400,
         lineHeight: "16px",
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
     addTweetWrapper: {
       padding: "4px 16px 20px 16px",
@@ -137,7 +137,7 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
     },
     footerDeleteButton: {
         "&.MuiButton-root": {
-            color: "rgb(244, 33, 46)",
+            color: theme.palette.error.main,
             padding: "4px 16px",
             border: 0,
             '&:hover': {

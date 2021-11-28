@@ -53,7 +53,7 @@ export const useListsModalStyles = makeStyles<Theme>((theme) => ({
             },
         },
         "& .Mui-selected": {
-            backgroundColor: "#fff",
+            backgroundColor: theme.palette.info.main,
         },
     },
 }));

@@ -1,24 +1,24 @@
 import {AddQuoteTweet, AddTweet, ReplyType, Tweet, TweetsState, Vote} from "./contracts/state";
 import {
     DeleteTweetActionInterface,
-    FetchAddPollActionInterface,
-    FetchAddQuoteTweetActionInterface,
-    FetchAddScheduledTweetActionInterface,
-    FetchAddTweetActionInterface,
+    AddPollActionInterface,
+    AddQuoteTweetActionInterface,
+    AddScheduledTweetActionInterface,
+    AddTweetActionInterface,
     FetchBookmarksActionInterface,
-    FetchChangeReplyTypeActionInterface,
-    FetchDeleteScheduledTweetsActionInterface,
+    ChangeReplyTypeActionInterface,
+    DeleteScheduledTweetsActionInterface,
     FetchDeleteTweetActionInterface,
     FetchLikedTweetsActionInterface,
-    FetchLikeTweetActionInterface,
+    LikeTweetActionInterface,
     FetchMediaTweetsActionInterface,
-    FetchRetweetActionInterface,
+    RetweetActionInterface,
     FetchTweetsActionInterface,
     FetchTweetsByTagActionInterface,
     FetchTweetsByTextActionInterface,
     FetchTweetsWithVideoActionInterface,
-    FetchUpdateScheduledTweetActionInterface,
-    FetchVoteActionInterface,
+    UpdateScheduledTweetActionInterface,
+    VoteActionInterface,
     RemoveTweetFromBookmarksActionInterface,
     ResetTweetsActionInterface,
     SetPageableTweetsActionInterface,
@@ -55,38 +55,38 @@ export const resetTweets = (): ResetTweetsActionInterface => ({
     type: TweetsActionType.RESET_TWEETS,
 });
 
-export const fetchAddTweet = (payload: AddTweet): FetchAddTweetActionInterface => ({
-    type: TweetsActionType.FETCH_ADD_TWEET,
+export const addTweet = (payload: AddTweet): AddTweetActionInterface => ({
+    type: TweetsActionType.ADD_TWEET,
     payload
 });
 
-export const fetchAddPoll = (payload: AddTweet): FetchAddPollActionInterface => ({
-    type: TweetsActionType.FETCH_ADD_POLL,
+export const addPoll = (payload: AddTweet): AddPollActionInterface => ({
+    type: TweetsActionType.ADD_POLL,
     payload
 });
 
-export const fetchAddScheduledTweet = (payload: AddTweet): FetchAddScheduledTweetActionInterface => ({
-    type: TweetsActionType.FETCH_ADD_SCHEDULED_TWEET,
+export const addScheduledTweet = (payload: AddTweet): AddScheduledTweetActionInterface => ({
+    type: TweetsActionType.ADD_SCHEDULED_TWEET,
     payload
 });
 
-export const fetchUpdateScheduledTweet = (payload: AddTweet): FetchUpdateScheduledTweetActionInterface => ({
-    type: TweetsActionType.FETCH_UPDATE_SCHEDULED_TWEET,
+export const updateScheduledTweet = (payload: AddTweet): UpdateScheduledTweetActionInterface => ({
+    type: TweetsActionType.UPDATE_SCHEDULED_TWEET,
     payload
 });
 
-export const fetchAddQuoteTweet = (payload: AddQuoteTweet): FetchAddQuoteTweetActionInterface => ({
-    type: TweetsActionType.FETCH_ADD_QUOTE_TWEET,
+export const addQuoteTweet = (payload: AddQuoteTweet): AddQuoteTweetActionInterface => ({
+    type: TweetsActionType.ADD_QUOTE_TWEET,
     payload
 });
 
-export const fetchVote = (payload: Vote): FetchVoteActionInterface => ({
-    type: TweetsActionType.FETCH_VOTE,
+export const vote = (payload: Vote): VoteActionInterface => ({
+    type: TweetsActionType.VOTE,
     payload
 });
 
-export const fetchChangeReplyType = (payload: { tweetId: string; replyType: ReplyType; }): FetchChangeReplyTypeActionInterface => ({
-    type: TweetsActionType.FETCH_CHANGE_REPLY_TYPE,
+export const changeReplyType = (payload: { tweetId: string; replyType: ReplyType; }): ChangeReplyTypeActionInterface => ({
+    type: TweetsActionType.CHANGE_REPLY_TYPE,
     payload
 });
 
@@ -100,8 +100,8 @@ export const fetchDeleteTweet = (payload: string): FetchDeleteTweetActionInterfa
     payload
 });
 
-export const fetchDeleteScheduledTweets = (payload: { tweetsIds: number[] }): FetchDeleteScheduledTweetsActionInterface => ({
-    type: TweetsActionType.FETCH_DELETE_SCHEDULED_TWEETS,
+export const deleteScheduledTweets = (payload: { tweetsIds: number[] }): DeleteScheduledTweetsActionInterface => ({
+    type: TweetsActionType.DELETE_SCHEDULED_TWEETS,
     payload
 });
 
@@ -130,13 +130,13 @@ export const setTweetsLoadingState = (payload: LoadingStatus): SetTweetsLoadingS
     payload
 });
 
-export const fetchLikeTweet = (payload: string): FetchLikeTweetActionInterface => ({
-    type: TweetsActionType.FETCH_LIKE_TWEET,
+export const likeTweet = (payload: string): LikeTweetActionInterface => ({
+    type: TweetsActionType.LIKE_TWEET,
     payload,
 });
 
-export const fetchRetweet = (payload: string): FetchRetweetActionInterface => ({
-    type: TweetsActionType.FETCH_RETWEET,
+export const retweet = (payload: string): RetweetActionInterface => ({
+    type: TweetsActionType.RETWEET,
     payload,
 });
 

@@ -59,9 +59,7 @@ export const withHoverAction = <T extends HoverActionProps>(Component: Component
             setHoverAction({...initialState, visibleMoreAction: true});
         } else if (action === HoverActions.CREATE_LIST) {
             setHoverAction({...initialState, visibleCreateListAction: true});
-        }
-
-        else {
+        } else {
             setHoverAction({...initialState, visibleOtherAction: true});
         }
     };

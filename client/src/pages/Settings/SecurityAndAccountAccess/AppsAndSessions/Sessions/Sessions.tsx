@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
-import {Typography} from "@material-ui/core";
+import {Divider, Typography} from "@material-ui/core";
 import axios from 'axios'
 import bowser from "bowser";
 
@@ -70,7 +70,7 @@ const Sessions: FC = (): ReactElement => {
                             </span>
                 </div>
             </Link>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography component={"div"} className={classes.title}>
                     Log out of other sessions

@@ -120,7 +120,7 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
 
         padding: 16,
         fontSize: 15,
-        color: "rgb(29, 155, 240)",
+        color: theme.palette.primary.main,
         "&:hover": {
             cursor: "pointer",
             backgroundColor: "rgba(0, 0, 0, 0.03)"

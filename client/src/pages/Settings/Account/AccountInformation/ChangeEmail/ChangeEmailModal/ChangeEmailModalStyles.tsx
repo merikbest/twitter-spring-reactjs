@@ -31,7 +31,7 @@ export const useChangeEmailModalStyles = makeStyles((theme: Theme) => ({
         fontSize: 23,
         fontWeight: 700,
         lineHeight: "28px",
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
     },
     text: {
         marginBottom: 20,
@@ -40,11 +40,11 @@ export const useChangeEmailModalStyles = makeStyles((theme: Theme) => ({
         lineHeight: "20px",
     },
     textSecondary: {
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
     textPrimary: {
         width: 504,
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
     },
     infoWrapper: {
         marginTop: 38,
@@ -59,7 +59,7 @@ export const useChangeEmailModalStyles = makeStyles((theme: Theme) => ({
     },
     link: {
         textDecoration: "none",
-        color: "rgb(29, 155, 240)",
+        color: theme.palette.primary.main,
         cursor: "pointer",
         "&:hover": {
             textDecoration: "underline",

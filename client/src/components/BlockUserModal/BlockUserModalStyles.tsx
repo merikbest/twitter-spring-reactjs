@@ -12,7 +12,7 @@ export const useBlockUserModalStyles = makeStyles((theme: Theme) => ({
         fontWeight: 700,
         textAlign: "center",
         lineHeight: "24px",
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
     },
     text: {
         marginTop: 8,
@@ -37,7 +37,7 @@ export const useBlockUserModalStyles = makeStyles((theme: Theme) => ({
     },
     blockButton: {
         "&.MuiButtonBase-root": {
-            backgroundColor: "rgb(244, 33, 46)",
+            backgroundColor: theme.palette.error.main,
             "&:hover" : {
                 backgroundColor: "rgb(220, 30, 41)",
             },

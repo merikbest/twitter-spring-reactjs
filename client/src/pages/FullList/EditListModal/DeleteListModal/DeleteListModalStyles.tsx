@@ -12,7 +12,7 @@ export const useDeleteListModalStyles = makeStyles((theme: Theme) => ({
         },
     },
     modalFullName: {
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         fontWeight: 700,
         fontSize: 20,
     },
@@ -31,7 +31,7 @@ export const useDeleteListModalStyles = makeStyles((theme: Theme) => ({
     modalCancelButton: {
         width: 134,
         height: 40,
-        color: "#000",
+        color: theme.palette.text.primary,
         backgroundColor: "rgb(239, 243, 244)",
         borderRadius: '25px',
     },
@@ -40,8 +40,8 @@ export const useDeleteListModalStyles = makeStyles((theme: Theme) => ({
         height: 40,
         borderRadius: '25px',
         "&.MuiButton-contained": {
-            color: "#fff",
-            backgroundColor: "rgb(244, 33, 46)",
+            color: theme.palette.info.main,
+            backgroundColor: theme.palette.error.main,
         },
         "&.MuiButton-contained:hover": {
             backgroundColor: "rgb(220, 30, 41)",

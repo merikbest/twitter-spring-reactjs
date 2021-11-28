@@ -34,12 +34,12 @@ export const useTweetComponentMoreStyles = makeStyles((theme: Theme) => createSt
             padding: 0,
         },
         "& #delete": {
-            color: "rgb(244, 33, 46)",
+            color: theme.palette.error.main,
             "& svg": {
                 verticalAlign: "bottom",
                 marginRight: 15,
                 height: "1.30em",
-                fill: "rgb(244, 33, 46)",
+                fill: theme.palette.error.main,
             },
         },
         '& .MuiListItem-root': {

@@ -1,6 +1,6 @@
 import React, {FC, ReactElement} from 'react';
 import {Link} from "react-router-dom";
-import {Checkbox, Typography} from "@material-ui/core";
+import {Checkbox, Divider, Typography} from "@material-ui/core";
 
 import {useDiscoverabilityStyles} from "./DiscoverabilityStyles";
 import {ArrowRightIcon} from "../../../../icons";
@@ -52,7 +52,7 @@ const Discoverability: FC = (): ReactElement => {
                         className={classes.link}> Learn more</a>
                 </Typography>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography component={"div"} className={classes.title}>
                     Contacts

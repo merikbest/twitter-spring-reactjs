@@ -1,6 +1,6 @@
 import React, {FC, ReactElement} from 'react';
 import {Link} from 'react-router-dom';
-import {List, ListItem, Typography} from "@material-ui/core";
+import {Divider, List, ListItem, Typography} from "@material-ui/core";
 
 import {usePrivacyAndSafetyStyles} from "./PrivacyAndSafetyStyles";
 import {
@@ -29,7 +29,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                     Manage what information you see and share on Twitter.
                 </Typography>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography component={"div"} className={classes.title}>
                     Your Twitter activity
@@ -164,7 +164,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </Link>
-                    <div className={classes.divider}/>
+                    <Divider/>
                     <div className={classes.infoItemWrapper}>
                         <Typography component={"div"} className={classes.title}>
                             Data sharing and off-Twitter activity
@@ -243,7 +243,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </Link>
-                    <div className={classes.divider}/>
+                    <Divider/>
                     <div className={classes.infoItemWrapper}>
                         <Typography component={"div"} className={classes.title}>
                             Learn more about privacy on Twitter

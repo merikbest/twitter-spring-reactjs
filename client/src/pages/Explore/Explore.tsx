@@ -165,8 +165,8 @@ const Explore: FC = (): ReactElement => {
                                 }}
                             />
                             <div className={classes.editButton}>
-                                <IconButton color="primary">
-                                    <span>{EditIcon}</span>
+                                <IconButton>
+                                    <>{EditIcon}</>
                                 </IconButton>
                             </div>
                         </form>

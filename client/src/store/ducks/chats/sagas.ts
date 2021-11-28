@@ -16,7 +16,7 @@ export function* fetchChatsRequest() {
     }
 }
 
-export function* fetchCreateChatRequest({payload}: CreateChatActionInterface) {
+export function* createChatRequest({payload}: CreateChatActionInterface) {
     try {
         setChatsLoadingState(LoadingStatus.LOADING);
         const item: Chat = yield call(ChatApi.createChat, payload);
@@ -28,5 +28,5 @@ export function* fetchCreateChatRequest({payload}: CreateChatActionInterface) {
 
 export function* chatsSaga() {
     yield takeLatest(ChatsActionsType.FETCH_CHATS, fetchChatsRequest);
-    yield takeLatest(ChatsActionsType.CREATE_CHAT, fetchCreateChatRequest);
+    yield takeLatest(ChatsActionsType.CREATE_CHAT, createChatRequest);
 }

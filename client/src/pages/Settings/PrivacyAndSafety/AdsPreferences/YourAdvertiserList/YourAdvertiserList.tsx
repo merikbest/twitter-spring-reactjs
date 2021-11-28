@@ -1,5 +1,5 @@
 import React, {FC, ReactElement} from 'react';
-import {Typography} from "@material-ui/core";
+import {Divider, Typography} from "@material-ui/core";
 
 import {useYourAdvertiserListStyles} from "./YourAdvertiserListStyles";
 
@@ -17,13 +17,13 @@ const YourAdvertiserList: FC = (): ReactElement => {
                     className={classes.link}> Learn more</a>
                 </Typography>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography component={"div"} className={classes.text}>
                     You are currently a part of <b>0 audiences</b> from <b>0 advertisers</b>
                 </Typography>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography component={"div"} className={classes.text}>
                     You can opt out of interest-based advertising in your personalization and data settings. This will

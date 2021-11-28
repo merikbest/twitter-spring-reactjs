@@ -33,12 +33,11 @@ export const useExploreStyles = makeStyles((theme: Theme) => ({
             marginLeft: 25,
             width: 40,
             height: 40,
-            color: "rgb(29, 161, 242)",
-            "& span": {
-                paddingTop: 5,
-                "& svg" : {
-                    height: "0.90em",
-                },
+            "& svg": {
+                marginTop: 5,
+                verticalAlign: "bottom",
+                color: "rgb(29, 161, 242)",
+                height: "0.90em",
             },
         },
     },

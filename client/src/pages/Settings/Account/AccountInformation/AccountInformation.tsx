@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {List, ListItem, Typography} from "@material-ui/core";
+import {Divider, List, ListItem, Typography} from "@material-ui/core";
 import {NavLink} from 'react-router-dom';
 
 import {useAccountInformationStyles} from "./AccountInformationStyles";
@@ -75,7 +75,7 @@ const AccountInformation: FC = (): ReactElement => {
                         No. <span className={classes.link}>Request Verification</span>
                     </Typography>
                 </div>
-                <div className={classes.divider}/>
+                <Divider/>
                 <NavLink to={"/settings/privacy_and_safety/audience"}>
                     <ListItem>
                         <div>
@@ -99,7 +99,7 @@ const AccountInformation: FC = (): ReactElement => {
                         {formatScheduleDate(new Date(myProfile?.registrationDate!))}
                     </Typography>
                 </div>
-                <div className={classes.divider}/>
+                <Divider/>
                 <NavLink to={"/settings/info/country"}>
                     <ListItem>
                         <div>
@@ -153,7 +153,7 @@ const AccountInformation: FC = (): ReactElement => {
                         Add your date of birth to your <span className={classes.link}>profile</span>.
                     </Typography>
                 </div>
-                <div className={classes.divider}/>
+                <Divider/>
                 <NavLink to={"/settings/info/age"}>
                     <ListItem>
                         <div>

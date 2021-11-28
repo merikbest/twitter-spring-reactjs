@@ -18,7 +18,7 @@ export const useSendDirectTweetModalStyles = makeStyles((theme: Theme) => ({
         padding: 0,
         "& .MuiChip-root": {
             marginLeft: 8,
-            backgroundColor: "#fff",
+            backgroundColor: theme.palette.info.main,
             border: "1px solid rgb(207, 217, 222)",
             "& .MuiChip-label": {
                 fontSize: 15,
@@ -32,7 +32,7 @@ export const useSendDirectTweetModalStyles = makeStyles((theme: Theme) => ({
     divider: {
         marginTop: 8,
         height: 1,
-        backgroundColor: "rgb(207, 217, 222)",
+        backgroundColor: theme.palette.divider,
     },
     footer: {
         position: "absolute",
@@ -58,7 +58,7 @@ export const useSendDirectTweetModalStyles = makeStyles((theme: Theme) => ({
             display: "inline",
             padding: 7,
             "& svg": {
-                color: "rgb(142, 205, 247)",
+                color: theme.palette.primary.light,
                 paddingTop: 2,
                 height: "0.90em",
             },

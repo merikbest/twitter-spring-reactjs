@@ -2,7 +2,8 @@ import {User} from "../user/contracts/state";
 import {
     FetchUserProfileActionInterface,
     FollowProfileActionInterface,
-    FollowUserProfileActionInterface, ResetUserProfileActionInterface,
+    FollowUserProfileActionInterface,
+    ResetUserProfileActionInterface,
     SetUserProfileActionInterface,
     SetUserProfileLoadingStatusActionInterface,
     UnfollowProfileActionInterface,

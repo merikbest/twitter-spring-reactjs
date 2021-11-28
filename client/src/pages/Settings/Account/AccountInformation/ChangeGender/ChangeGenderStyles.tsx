@@ -4,13 +4,9 @@ export const useChangeGenderStyles = makeStyles((theme: Theme) => ({
     text: {
         padding: "12px 16px",
         fontSize: 15,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontWeight: 400,
         lineHeight: "20px",
-    },
-    divider: {
-        height: 1,
-        backgroundColor: "rgb(239, 243, 244)",
     },
     genderInfoWrapper: {
         padding: "12px 16px",
@@ -19,7 +15,7 @@ export const useChangeGenderStyles = makeStyles((theme: Theme) => ({
         padding: "4px 0px",
         "& .MuiTypography-root": {
             fontSize: 15,
-            color: "rgb(15, 20, 25)",
+            color: theme.palette.text.primary,
             fontWeight: 400,
             lineHeight: "20px",
         },

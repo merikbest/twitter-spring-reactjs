@@ -10,13 +10,13 @@ export const useQuoteTweetStyles = makeStyles<Theme, QuoteTweetStyles>((theme) =
         "& .MuiIconButton-root": {
             padding: 7,
             "& svg" : {
-                color: props => props.isTweetRetweetedByMe ? "rgb(23, 191, 99)" : "rgb(83, 100, 113)",
+                color: props => props.isTweetRetweetedByMe ? "rgb(23, 191, 99)" : theme.palette.text.secondary,
                 verticalAlign: "bottom",
                 height: "0.80em",
             }
         },
         "& #retweets": {
-            color: props => props.isTweetRetweetedByMe ? "rgb(23, 191, 99)" : "rgb(83, 100, 113)",
+            color: props => props.isTweetRetweetedByMe ? "rgb(23, 191, 99)" : theme.palette.text.secondary,
         },
     },
     dropdown: {

@@ -5,7 +5,7 @@ export const useLanguagesStyles = makeStyles((theme: Theme) => ({
         padding: "12px 16px"
     },
     text: {
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontWeight: 400,
         fontSize: 13,
         lineHeight: "16px"
@@ -14,7 +14,7 @@ export const useLanguagesStyles = makeStyles((theme: Theme) => ({
         fontWeight: 800,
         lineHeight: "24px",
         fontSize: 20,
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
     },
     accessibilityWrapper: {
         textDecoration: "none",
@@ -22,7 +22,7 @@ export const useLanguagesStyles = makeStyles((theme: Theme) => ({
     accessibilityLink: {
         padding: "12px 16px",
         fontSize: 15,
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         fontWeight: 400,
         lineHeight: "20px",
         "&:hover": {
@@ -37,9 +37,5 @@ export const useLanguagesStyles = makeStyles((theme: Theme) => ({
     },
     accessibilityInfo: {
         display: "inline-block",
-    },
-    divider: {
-        height: 1,
-        backgroundColor: "rgb(239, 243, 244)",
     },
 }));

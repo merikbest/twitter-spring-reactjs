@@ -14,8 +14,4 @@ export const useMessagesModalStyles = makeStyles((theme: Theme) => ({
         width: 598,
         padding: 0,
     },
-    divider: {
-        height: 1,
-        backgroundColor: "rgb(207, 217, 222)",
-    },
 }));

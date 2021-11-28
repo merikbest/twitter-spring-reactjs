@@ -24,7 +24,7 @@ export const useMutedAccountItemStyles = makeStyles<Theme, MutedAccountItemStyle
         },
     },
     link: {
-        color: "#000",
+        color: theme.palette.text.primary,
         textDecoration: 'none',
     },
     listAvatar: {
@@ -43,13 +43,13 @@ export const useMutedAccountItemStyles = makeStyles<Theme, MutedAccountItemStyle
     },
     fullName: {
         lineHeight: "20px",
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         fontWeight: 800,
         fontSize: 15,
     },
     username: {
         lineHeight: "20px",
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontWeight: 400,
         fontSize: 15,
     },
@@ -57,11 +57,11 @@ export const useMutedAccountItemStyles = makeStyles<Theme, MutedAccountItemStyle
         marginRight: 16,
         "& .MuiIconButton-root": {
             padding: 7,
-            borderColor: props => props.isUserMuted ? "rgb(255, 221, 237)" : "rgb(207, 217, 222)",
+            borderColor: props => props.isUserMuted ? theme.palette.error.light : "rgb(207, 217, 222)",
             border: "1px solid",
             borderRadius: "50%",
             "& svg": {
-                color: props => props.isUserMuted ? "rgb(244, 33, 46)" : "rgb(29, 155, 240)",
+                color: props => props.isUserMuted ? theme.palette.error.main : theme.palette.primary.main,
                 height: "0.85em",
             },
             "&:hover": {

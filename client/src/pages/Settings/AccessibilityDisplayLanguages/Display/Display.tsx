@@ -1,5 +1,5 @@
 import React, {FC, ReactElement, useState} from 'react';
-import {Radio, Typography} from "@material-ui/core";
+import {Divider, Radio, Typography} from "@material-ui/core";
 import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
 
 import {useDisplayStyles} from "./DisplayStyles";
@@ -83,7 +83,7 @@ const Display: FC = (): ReactElement => {
                     </div>
                 </div>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography component={"div"} className={classes.title}>
                     Font size
@@ -104,7 +104,7 @@ const Display: FC = (): ReactElement => {
                     </Typography>
                 </div>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography component={"div"} className={classes.title}>
                     Color
@@ -118,7 +118,7 @@ const Display: FC = (): ReactElement => {
                 <ColorSelector color={ColorScheme.ORANGE}/>
                 <ColorSelector color={ColorScheme.GREEN}/>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography component={"div"} className={classes.title}>
                     Background

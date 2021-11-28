@@ -1,7 +1,7 @@
 import React, {FC, ReactElement} from 'react';
 
 import {useAccessibilityStyles} from "./AccessibilityStyles";
-import {Checkbox, Typography} from "@material-ui/core";
+import {Checkbox, Divider, Typography} from "@material-ui/core";
 import {ArrowRightIcon} from "../../../../icons";
 import {Link} from "react-router-dom";
 
@@ -30,7 +30,7 @@ const Accessibility: FC = (): ReactElement => {
                     Improves legibility by increasing the contrast between text and background colors.
                 </Typography>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography component={"div"} className={classes.title}>
                     Motion

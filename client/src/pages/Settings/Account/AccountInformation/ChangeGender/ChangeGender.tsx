@@ -1,6 +1,6 @@
 import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Button, Radio, Typography} from "@material-ui/core";
+import {Button, Divider, Radio, Typography} from "@material-ui/core";
 import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
 
 import {useChangeGenderStyles} from "./ChangeGenderStyles";
@@ -55,7 +55,7 @@ const ChangeGender: FC = (): ReactElement => {
                 If you haven’t already specified a gender, this is the one associated with your account based on
                 your profile and activity. This information won’t be displayed publicly.
             </Typography>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.genderInfoWrapper}>
                 <div className={classes.genderItemWrapper}>
                     <Typography component={"span"}>
@@ -115,7 +115,7 @@ const ChangeGender: FC = (): ReactElement => {
                     </div>
                 )}
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.buttonWrapper}>
                 <Button
                     onClick={onSubmit}

@@ -99,7 +99,7 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         lineHeight: "36px",
         textAlign: "center",
         fontWeight: 800,
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
     },
     privateProfileInfoText: {
         fontSize: 15,
@@ -110,7 +110,7 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
     },
     link: {
         textDecoration: "none",
-        color: "rgb(29, 155, 240)",
+        color: theme.palette.primary.main,
         cursor: "pointer",
         "&:hover": {
             textDecoration: "underline",
@@ -163,12 +163,12 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
             borderRadius: '25px',
             padding: '8px 15px',
             '&:hover': {
-                backgroundColor: 'rgb(202, 32, 85)',
+                backgroundColor: theme.palette.error.dark,
             },
         },
     },
     blockButton: {
-        backgroundColor: "rgb(244, 33, 46)",
+        backgroundColor: theme.palette.error.main,
     },
     fullName: {
         fontWeight: 800,

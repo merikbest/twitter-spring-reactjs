@@ -1,7 +1,7 @@
 import React, {FC, ReactElement} from 'react';
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
-import {Typography} from "@material-ui/core";
+import {Divider, Typography} from "@material-ui/core";
 
 import {useLanguagesStyles} from "./LanguagesStyles";
 import {ArrowRightIcon} from "../../../../icons";
@@ -39,7 +39,7 @@ const Languages: FC = (): ReactElement => {
                     {ArrowRightIcon}
                 </div>
             </Link>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography component={"div"} className={classes.title}>
                     Select additional languages
@@ -56,7 +56,7 @@ const Languages: FC = (): ReactElement => {
                 </div>
                 {ArrowRightIcon}
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography component={"div"} className={classes.title}>
                     Languages you may know

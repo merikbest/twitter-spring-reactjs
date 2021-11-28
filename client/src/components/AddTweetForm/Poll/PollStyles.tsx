@@ -40,7 +40,7 @@ export const usePollStyles = makeStyles((theme: Theme) => ({
         "& div": {
             paddingTop: 13,
             fontSize: 14,
-            color: "rgb(244, 33, 46)",
+            color: theme.palette.error.main,
         },
         "&:hover": {
             cursor: "pointer",

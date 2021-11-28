@@ -12,12 +12,12 @@ export const useLogoutModalStyles = makeStyles((theme: Theme) => ({
         },
     },
     modalFullName: {
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         fontWeight: 700,
         fontSize: 20,
     },
     modalUsername: {
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontWeight: 400,
         fontSize: 15,
         marginTop: 8,
@@ -31,7 +31,7 @@ export const useLogoutModalStyles = makeStyles((theme: Theme) => ({
     modalCancelButton: {
         width: 134,
         height: 40,
-        color: "#000",
+        color: theme.palette.text.primary,
         backgroundColor: "rgb(239, 243, 244)",
         borderRadius: '25px',
     },

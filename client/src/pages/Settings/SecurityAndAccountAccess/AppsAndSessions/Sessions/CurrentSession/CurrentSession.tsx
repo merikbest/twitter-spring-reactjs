@@ -1,6 +1,6 @@
 import React, {FC, ReactElement} from 'react';
 import {useLocation} from "react-router-dom";
-import {Typography} from "@material-ui/core";
+import {Divider, Typography} from "@material-ui/core";
 
 import {useCurrentSessionStyles} from "./CurrentSessionStyles";
 import {DeviceIcon} from "../../../../../../icons";
@@ -30,7 +30,7 @@ const CurrentSession: FC = (): ReactElement => {
                     </div>
                 </div>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography component={"div"} className={classes.title}>
                     Date and time
@@ -41,7 +41,7 @@ const CurrentSession: FC = (): ReactElement => {
                     Active now
                 </Typography>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography component={"div"} className={classes.title}>
                     Location

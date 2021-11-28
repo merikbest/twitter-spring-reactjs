@@ -112,12 +112,12 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
         width: 20,
         height: 20,
         borderRadius: "50%",
-        backgroundColor: "rgb(29, 155, 240)",
+        backgroundColor: theme.palette.primary.main,
     },
     icon: {
         "& svg": {
             height: "0.75em",
-            fill: "#fff",
+            fill: theme.palette.info.main,
         },
     },
     replyText: {
@@ -185,6 +185,6 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
         width: 100,
         height: 100,
         border: "1px solid black",
-        backgroundColor: "#fff",
+        backgroundColor: theme.palette.info.main,
     },
 }));

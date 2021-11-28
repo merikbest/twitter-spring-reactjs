@@ -29,7 +29,7 @@ import {
     unfollowUser
 } from "../../store/ducks/user/actionCreators";
 import TweetComponentActionsModal from "./TweetComponentActionsModal/TweetComponentActionsModal";
-import {fetchChangeReplyType, fetchDeleteTweet} from "../../store/ducks/tweets/actionCreators";
+import {changeReplyType, fetchDeleteTweet} from "../../store/ducks/tweets/actionCreators";
 import TweetComponentChangeReply from "./TweetComponentChangeReply/TweetComponentChangeReply";
 import {selectTweetData} from "../../store/ducks/tweet/selectors";
 import {deleteTweetReply} from "../../store/ducks/tweet/actionCreators";
@@ -144,7 +144,7 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
     };
 
     const onChangeTweetReplyType = (replyType: ReplyType): void => {
-        dispatch(fetchChangeReplyType({tweetId: tweet.id, replyType}));
+        dispatch(changeReplyType({tweetId: tweet.id, replyType}));
 
         if (replyType === ReplyType.EVERYONE) {
             setSnackBarMessage!("Everyone can reply now");

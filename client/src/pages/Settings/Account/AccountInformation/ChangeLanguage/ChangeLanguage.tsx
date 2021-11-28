@@ -1,6 +1,6 @@
 import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Button, FormControl, InputLabel, Typography} from "@material-ui/core";
+import {Button, Divider, FormControl, InputLabel, Typography} from "@material-ui/core";
 
 import {useChangeLanguageStyles} from "./ChangeLanguageStyles";
 import {FilledSelect} from "../../../../../components/FilledSelect/FilledSelect";
@@ -59,7 +59,7 @@ const ChangeLanguage: FC = (): ReactElement => {
                     This does not change the language of the content you see in your timeline.
                 </Typography>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.buttonWrapper}>
                 <Button
                     onClick={onSubmit}

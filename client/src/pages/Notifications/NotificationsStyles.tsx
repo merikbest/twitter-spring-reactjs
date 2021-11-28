@@ -39,7 +39,7 @@ export const useNotificationsStyles = makeStyles((theme: Theme) => ({
         textAlign: "center",
         fontSize: 14,
         fontWeight: 400,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
     tabs: {
         borderBottom: "1px solid rgb(239, 243, 244)",

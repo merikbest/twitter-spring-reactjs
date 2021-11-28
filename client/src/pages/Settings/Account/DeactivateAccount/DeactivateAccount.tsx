@@ -1,7 +1,7 @@
 import React, {FC, ReactElement} from 'react';
 import {Link} from 'react-router-dom';
 import {useSelector} from "react-redux";
-import {Avatar, Typography} from "@material-ui/core";
+import {Avatar, Divider, Typography} from "@material-ui/core";
 
 import {useDeactivateAccountStyles} from "./DeactivateAccountStyles";
 import {selectUserData} from "../../../../store/ducks/user/selectors";
@@ -53,7 +53,7 @@ const DeactivateAccount: FC = (): ReactElement => {
                     to 30 days after deactivation.
                 </Typography>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography component={"div"} className={classes.text}>
                     Some account information may still be available in search engines, such as Google or Bing.
@@ -62,14 +62,14 @@ const DeactivateAccount: FC = (): ReactElement => {
                        className={classes.link}> Learn more</a>
                 </Typography>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography component={"div"} className={classes.text}>
                     If you just want to change your @username, you don’t need to deactivate your account — edit
                     it in your <Link to={"/settings/info"} className={classes.link}>settings.</Link>
                 </Typography>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography component={"div"} className={classes.text}>
                     To use your current @username or email address with a different Twitter account,
@@ -77,7 +77,7 @@ const DeactivateAccount: FC = (): ReactElement => {
                     before you deactivate this account.
                 </Typography>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography component={"div"} className={classes.text}>
                     If you want to download your Twitter data, you’ll need to complete both the request and
@@ -85,7 +85,7 @@ const DeactivateAccount: FC = (): ReactElement => {
                     sent to deactivated accounts.
                 </Typography>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.deleteUser}>
                 <Typography component={"span"}>
                     Deactivate

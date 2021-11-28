@@ -1,7 +1,7 @@
 import React, {FC, ReactElement} from 'react';
 
 import {useManageContactsStyles} from "./ManageContactsStyles";
-import {Typography} from "@material-ui/core";
+import {Divider, Typography} from "@material-ui/core";
 
 const ManageContacts: FC = (): ReactElement => {
     const classes = useManageContactsStyles();
@@ -24,7 +24,7 @@ const ManageContacts: FC = (): ReactElement => {
                     className={classes.link}> Learn more</a>
                 </Typography>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
         </>
     );
 };

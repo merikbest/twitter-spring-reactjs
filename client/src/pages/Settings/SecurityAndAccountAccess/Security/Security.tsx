@@ -1,6 +1,6 @@
 import React, {FC, ReactElement} from 'react';
 import {Link} from 'react-router-dom';
-import {Checkbox, Typography} from "@material-ui/core";
+import {Checkbox, Divider, Typography} from "@material-ui/core";
 
 import {useSecurityStyles} from "./SecurityStyles";
 import {ArrowRightIcon} from "../../../../icons";
@@ -36,7 +36,7 @@ const Security: FC = (): ReactElement => {
                     {ArrowRightIcon}
                 </div>
             </Link>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography component={"div"} className={classes.title}>
                     Additional password protection

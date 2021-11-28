@@ -24,7 +24,7 @@ export const useBlockedAccountItemStyles = makeStyles<Theme, BlockedAccountItemS
         },
     },
     link: {
-        color: "#000",
+        color: theme.palette.text.primary,
         textDecoration: 'none',
     },
     listAvatar: {
@@ -43,13 +43,13 @@ export const useBlockedAccountItemStyles = makeStyles<Theme, BlockedAccountItemS
     },
     fullName: {
         lineHeight: "20px",
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         fontWeight: 800,
         fontSize: 15,
     },
     username: {
         lineHeight: "20px",
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontWeight: 400,
         fontSize: 15,
     },
@@ -57,17 +57,17 @@ export const useBlockedAccountItemStyles = makeStyles<Theme, BlockedAccountItemS
         marginRight: 16,
         "& .MuiButtonBase-root": {
             padding: "8px 16px",
-            color: props => props.isUserBlocked ? "rgb(255, 255, 255)" : "rgb(244, 33, 46)",
-            backgroundColor: props => props.isUserBlocked ? "rgb(244, 33, 46)" : "rgb(255, 255, 255)",
+            color: props => props.isUserBlocked ? "rgb(255, 255, 255)" : theme.palette.error.main,
+            backgroundColor: props => props.isUserBlocked ? theme.palette.error.main : "rgb(255, 255, 255)",
             border: "1px solid",
-            borderColor: props => props.isUserBlocked ? "rgb(244, 33, 46)" : "rgb(255, 221, 237)",
+            borderColor: props => props.isUserBlocked ? theme.palette.error.main : theme.palette.error.light,
             "& .MuiButton-label": {
                 fontSize: 15,
                 fontWeight: 700,
                 lineHeight: "20px",
             },
             "&:hover": {
-                backgroundColor: props => props.isUserBlocked ? "rgb(220, 30, 41)" : "rgb(255, 221, 237)",
+                backgroundColor: props => props.isUserBlocked ? "rgb(220, 30, 41)" : theme.palette.error.light,
             },
         },
     },

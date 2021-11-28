@@ -33,7 +33,7 @@ export const useBookmarksStyles= makeStyles((theme) => ({
     headerUsername: {
         fontSize: 13,
         lineHeight: "16px",
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
     contentWrapper: {
         paddingTop: 48
@@ -52,9 +52,6 @@ export const useBookmarksStyles= makeStyles((theme) => ({
     },
     infoText: {
         fontSize: 15,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
-
-
-
 }));

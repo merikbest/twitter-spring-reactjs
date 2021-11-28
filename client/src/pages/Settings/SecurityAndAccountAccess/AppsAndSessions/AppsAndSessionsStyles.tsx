@@ -6,7 +6,7 @@ export const useAppsAndSessionsStyles = makeStyles((theme: Theme) => ({
     },
     text: {
         fontSize: 13,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontWeight: 400,
         lineHeight: "16px",
     },
@@ -28,7 +28,7 @@ export const useAppsAndSessionsStyles = makeStyles((theme: Theme) => ({
             fontSize: 15,
             fontWeight: 400,
             lineHeight: "20px",
-            color: "rgb(15, 20, 25)",
+            color: theme.palette.text.primary,
         },
         "& .Mui-selected": {
             borderRight: "2px solid rgb(27, 149, 224)",

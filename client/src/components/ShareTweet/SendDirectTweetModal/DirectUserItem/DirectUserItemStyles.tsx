@@ -22,19 +22,19 @@ export const useDirectUserItemStyles = makeStyles((theme: Theme) => ({
         justifyContent: "space-between"
     },
     fullName: {
-        color: "rgb(15, 20, 25)",
+        color: theme.palette.text.primary,
         fontWeight: 800,
         fontSize: 15,
     },
     username: {
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontWeight: 400,
         fontSize: 15,
     },
     checkIcon: {
         float: "right",
         "& svg": {
-            color: "rgb(29, 155, 240)",
+            color: theme.palette.primary.main,
             marginTop: 5,
             height: "1.3em",
         },

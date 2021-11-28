@@ -1,5 +1,5 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
-import {Typography} from "@material-ui/core";
+import {Divider, Typography} from "@material-ui/core";
 import axios from "axios";
 
 import {useLocationStyles} from "./PlacesStyles";
@@ -24,7 +24,7 @@ const Places: FC = (): ReactElement => {
                     here if you turned off “Personalize based on places you’ve been”.
                 </Typography>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.locationInfoWrapper}>
                     <div className={classes.locationIconWrapper}>
@@ -37,7 +37,7 @@ const Places: FC = (): ReactElement => {
                     </Typography>
                 </div>
             </div>
-            <div className={classes.divider}/>
+            <Divider/>
             <div className={classes.deleteUser}>
                 <Typography component={"span"}>
                     Remove

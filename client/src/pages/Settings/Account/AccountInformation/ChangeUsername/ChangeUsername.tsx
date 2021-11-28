@@ -1,5 +1,5 @@
 import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
-import {Button, Typography} from "@material-ui/core";
+import {Button, Divider, Typography} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 
 import {useChangeUsernameStyles} from "./ChangeUsernameStyles";
@@ -49,7 +49,7 @@ const ChangeUsername: FC = (): ReactElement => {
                         fullWidth
                     />
                 </div>
-                <div className={classes.divider}/>
+                <Divider/>
                 <div className={classes.suggestionsWrapper}>
                     <Typography component={"div"} className={classes.title}>
                         Suggestions
@@ -58,7 +58,7 @@ const ChangeUsername: FC = (): ReactElement => {
                         {`${myProfile?.username}123`}
                     </Typography>
                 </div>
-                <div className={classes.divider}/>
+                <Divider/>
             </div>
             <div className={classes.buttonWrapper}>
                 <Button
