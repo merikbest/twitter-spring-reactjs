@@ -20,7 +20,7 @@ export const useMutedAccountItemStyles = makeStyles<Theme, MutedAccountItemStyle
             minHeight: "1vh",
         },
         '&:hover': {
-            backgroundColor: 'rgb(245, 248, 250)',
+            backgroundColor: theme.palette.secondary.main,
         },
     },
     link: {

@@ -13,7 +13,7 @@ export const usePopperUserWindowStyles = makeStyles<Theme, PopperUserWindowStyle
         zIndex: 2,
         marginTop: props => props.isTweetComponent ? 0 : -20,
         borderRadius: 16,
-        backgroundColor: theme.palette.info.main,
+        backgroundColor: theme.palette.common.white,
         cursor: "default",
         boxShadow: "rgb(101 119 134 / 20%) 0px 0px 15px, rgb(101 119 134 / 15%) 0px 0px 3px 1px",
     },
@@ -43,7 +43,7 @@ export const usePopperUserWindowStyles = makeStyles<Theme, PopperUserWindowStyle
         borderRadius: '25px',
         padding: '0 15px !important',
         '&:hover': {
-            backgroundColor: 'rgb(29, 161, 242, 0.1)',
+            backgroundColor: theme.palette.secondary.light,
         },
     },
     primaryButton: {
@@ -88,7 +88,7 @@ export const usePopperUserWindowStyles = makeStyles<Theme, PopperUserWindowStyle
         display: "flex",
         listStyle: "none",
         flexWrap: "wrap",
-        color: "#5b7083",
+        color: theme.palette.info.light,
     },
     userFollowersWrapper: {
         fontSize: 15,

@@ -2,7 +2,7 @@ import {makeStyles, Theme} from "@material-ui/core";
 
 export const useUsersStyles = makeStyles((theme: Theme) => ({
     container: {
-        backgroundColor: '#F7F9F9',
+        backgroundColor: theme.palette.secondary.main,
         borderRadius: 15,
         marginTop: 20,
         '& .MuiList-root': {
@@ -32,7 +32,7 @@ export const useUsersStyles = makeStyles((theme: Theme) => ({
     },
     footer: {
         fontSize: 16,
-        color: "rgb(27, 149, 224)",
+        color: theme.palette.primary.main,
         cursor: 'pointer',
         '& .MuiListItem-root .MuiListItem-gutters': {
             padding: "0px 0px 0px 0px",
@@ -47,7 +47,7 @@ export const useUsersStyles = makeStyles((theme: Theme) => ({
             // marginRight: 45,
         },
         '&:hover': {
-            backgroundColor: '#edf3f6',
+            backgroundColor: theme.palette.secondary.dark,
         },
         '& a': {
             color: 'inherit',

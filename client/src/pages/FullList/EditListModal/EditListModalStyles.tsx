@@ -58,7 +58,7 @@ export const useEditListModalStyles = makeStyles((theme: Theme) => ({
         fontSize: 15,
         "&:hover": {
             cursor: "pointer",
-            backgroundColor: "rgb(245, 248, 250)",
+            backgroundColor: theme.palette.secondary.main,
         },
         "& svg": {
             fill: "rgb(83, 100, 113)",

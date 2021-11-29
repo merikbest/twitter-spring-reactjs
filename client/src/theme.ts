@@ -18,12 +18,14 @@ export const theme = createMuiTheme({
     palette: {
         primary: {
             light: "rgb(142, 205, 247)",
-            main: "rgb(29, 155, 240)",
+            main: "rgb(29, 155, 240)", // theme.palette.primary.main
             dark: "rgb(26, 140, 216)",
             contrastText: "rgb(255, 255, 255)",
         },
         secondary: {
-            main: "rgb(26, 145, 218)", // theme.palette.secondary.main
+            light: "rgb(29, 155, 240, 0.1)", // theme.palette.secondary.light (hover icons, buttons etc)
+            main: "rgb(245, 248, 250)", // theme.palette.secondary.main (hover icons, buttons etc)
+            dark: "rgb(239, 241, 242)", // theme.palette.secondary.dark (hover tweet)
         },
         error: {
             light: "rgb(255, 221, 237)",
@@ -31,8 +33,8 @@ export const theme = createMuiTheme({
             dark: "rgb(202, 32, 85)", // theme.palette.error.dark  (hover)
         },
         info: {
-            light: "",
-            main: "rgb(255, 255, 255)", // theme.palette.info.main
+            light: "rgb(207, 217, 222)", // theme.palette.info.light
+            main: "rgb(207, 217, 222)", // theme.palette.info.main WHITE
             dark: "",
         },
         background: {
@@ -45,9 +47,17 @@ export const theme = createMuiTheme({
         action: {
             disabledBackground: 'rgb(153 216 255)',
             disabled: '#fff',
-        },
-        divider: "rgb(239, 243, 244)" // theme.palette.divider
 
+        },
+        divider: "rgb(239, 243, 244)", // theme.palette.divider
+        common: {
+            black: "rgb(15, 20, 25)",  // theme.palette.common.black
+            white: "rgb(255, 255, 255)",  // theme.palette.common.white
+        },
+        // custom: {
+        //     hover: pale "rgb(29, 155, 240, 0.1)",  // theme.palette.custom.hover
+        // },
+        // background-color: rgb(244, 248, 251);
     },
 
     shadows: [],
@@ -60,6 +70,14 @@ export const theme = createMuiTheme({
             },
             outlinedPrimary: {
                 borderColor: 'rgb(29, 161, 243)',
+            },
+        },
+        MuiIconButton: {
+            root: {
+                // color: "rgb(29, 155, 240)",
+                "&:hover": {
+                    backgroundColor: "rgb(29, 155, 240, 0.1)",
+                },
             },
         },
         MuiPaper: {

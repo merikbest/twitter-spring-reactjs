@@ -29,7 +29,7 @@ const CloseButton: FC<CloseButtonProps & HoverActionProps> = (
                 color="secondary"
                 aria-label="close"
             >
-                <CloseIcon style={{fontSize: 26}} color="secondary"/>
+                <CloseIcon style={{fontSize: 26}} color="primary"/>
                 <HoverAction visible={visibleHoverAction?.visibleOtherAction} actionText={"Close"}/>
             </IconButton>
         </div>

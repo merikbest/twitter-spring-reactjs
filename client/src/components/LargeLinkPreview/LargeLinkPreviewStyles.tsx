@@ -10,7 +10,7 @@ export const useLargeLinkPreviewStyles = makeStyles<Theme, LargeLinkPreviewStyle
         height: props => props.isFullTweet ? 382 : 372,
         marginTop: 5,
         borderRadius: 16,
-        border: "1px solid rgb(207, 217, 222)",
+        border: `1px solid ${theme.palette.info.light}`,
         "&:hover": {
             cursor: "pointer",
             backgroundColor: "rgba(0, 0, 0, 0.03)"

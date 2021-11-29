@@ -12,7 +12,7 @@ export const useProfileUpdatedModalStyles = makeStyles((theme) => ({
         width: 54,
         "& svg": {
             fontSize: 50,
-            color: "rgb(29, 161, 245)",
+            color: theme.palette.primary.main,
         },
     },
     title: {

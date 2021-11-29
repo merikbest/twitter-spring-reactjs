@@ -6,7 +6,7 @@ export const useActionSnackbarStyles = makeStyles<Theme>((theme) => ({
             width: 179,
             height: 44,
             padding: 0,
-            backgroundColor: "rgb(29, 161, 242)",
+            backgroundColor: theme.palette.primary.main,
             "& .MuiSnackbarContent-message": {
                 fontSize: 15,
                 margin: "0 auto",

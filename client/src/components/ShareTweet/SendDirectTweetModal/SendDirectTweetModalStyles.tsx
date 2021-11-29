@@ -18,14 +18,14 @@ export const useSendDirectTweetModalStyles = makeStyles((theme: Theme) => ({
         padding: 0,
         "& .MuiChip-root": {
             marginLeft: 8,
-            backgroundColor: theme.palette.info.main,
-            border: "1px solid rgb(207, 217, 222)",
+            backgroundColor: theme.palette.common.white,
+            border: `1px solid ${theme.palette.info.light}`,
             "& .MuiChip-label": {
                 fontSize: 15,
                 fontWeight: 700,
             },
             "& .MuiChip-deleteIcon": {
-                color: "rgb(29, 161, 242)"
+                color: theme.palette.primary.main
             },
         },
     },

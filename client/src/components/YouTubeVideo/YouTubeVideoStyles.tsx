@@ -5,7 +5,7 @@ export const useYouTubeVideoStyles = makeStyles<Theme>((theme) => ({
         width: "100%",
         minHeight: 469,
         marginTop: 5,
-        border: "1px solid rgb(207, 217, 222)",
+        border: `1px solid ${theme.palette.info.light}`,
         borderRadius: 16,
         "& iframe": {
             width: "100%",

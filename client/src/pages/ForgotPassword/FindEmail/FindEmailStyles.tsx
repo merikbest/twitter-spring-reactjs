@@ -17,7 +17,7 @@ export const useFindEmailStyles = makeStyles((theme: Theme) => ({
             backgroundColor: "#006dbf",
             borderColor: "#006dbf",
             boxShadow: "0 0 0 2px #fff, 0 0 0 4px #1da1f2",
-            color: theme.palette.info.main,
+            color: theme.palette.common.white,
         },
     },
 }));

@@ -8,7 +8,7 @@ export const useBackButtonStyles = makeStyles((theme: Theme) => ({
             marginLeft: 10,
             width: 40,
             height: 40,
-            color: "rgb(29, 161, 242)",
+            color: theme.palette.primary.main,
         },
     },
 }));

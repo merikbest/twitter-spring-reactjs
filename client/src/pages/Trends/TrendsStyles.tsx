@@ -14,7 +14,7 @@ export const useTrendsStyles = makeStyles((theme) => ({
             minWidth: 50,
         },
         '&:hover': {
-            backgroundColor: '#edf3f6',
+            backgroundColor: theme.palette.secondary.dark,
         },
         '& a': {
             color: 'inherit',

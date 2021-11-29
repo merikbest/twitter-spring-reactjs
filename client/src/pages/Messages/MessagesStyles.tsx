@@ -61,14 +61,14 @@ export const useMessagesStyles = makeStyles((theme: Theme) => ({
     list: {
         "& .Mui-selected": {
             borderRight: "2px solid rgb(27, 149, 224)",
-            backgroundColor: theme.palette.info.main,
+            backgroundColor: theme.palette.common.white,
         },
     },
     listItem: {
         padding: 0,
-        backgroundColor: theme.palette.info.main,
+        backgroundColor: theme.palette.common.white,
         "& :hover": {
-            backgroundColor: '#edf3f6',
+            backgroundColor: theme.palette.secondary.dark,
         },
     },
     userWrapper: {
@@ -178,7 +178,7 @@ export const useMessagesStyles = makeStyles((theme: Theme) => ({
         },
     },
     tweetWrapper: {
-        border: "1px solid rgb(29, 161, 242)",
+        border: `1px solid ${theme.palette.primary.main}`,
         borderRadius: "16px 16px 0px 16px",
         padding: 12,
         width: 384,
@@ -208,8 +208,8 @@ export const useMessagesStyles = makeStyles((theme: Theme) => ({
         display: "flex",
         flexDirection: "row-reverse",
         "& span": {
-            backgroundColor: "rgb(29, 161, 242)",
-            color: theme.palette.info.main,
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.common.white,
             padding: "11px 15px",
             maxWidth: 384,
         },
@@ -234,7 +234,7 @@ export const useMessagesStyles = makeStyles((theme: Theme) => ({
         "& svg": {
             marginLeft: 5,
             height: "1.2em",
-            color: "rgb(29, 161, 242)"
+            color: theme.palette.primary.main
         },
     },
     participantContainer: {

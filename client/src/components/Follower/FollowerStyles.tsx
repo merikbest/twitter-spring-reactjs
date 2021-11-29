@@ -13,7 +13,7 @@ export const useFollowerStyles = makeStyles((theme) => ({
         paddingBottom: 8,
         cursor: 'pointer',
         '&:hover': {
-            backgroundColor: 'rgb(245, 248, 250)',
+            backgroundColor: theme.palette.secondary.main,
         },
     },
     link: {
@@ -62,7 +62,7 @@ export const useFollowerStyles = makeStyles((theme) => ({
         borderRadius: '25px',
         padding: '0 15px',
         '&:hover': {
-            backgroundColor: 'rgb(29, 161, 242, 0.1)',
+            backgroundColor: theme.palette.secondary.light,
         },
     },
     containedButton: {

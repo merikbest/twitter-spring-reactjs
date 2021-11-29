@@ -31,7 +31,7 @@ export const useBlockUserModalStyles = makeStyles((theme: Theme) => ({
                 fontSize: 15,
                 fontWeight: 700,
                 lineHeight: "20px",
-                color: "rgb(255, 255, 255)",
+                color: theme.palette.common.white,
             },
         },
     },
@@ -44,7 +44,7 @@ export const useBlockUserModalStyles = makeStyles((theme: Theme) => ({
         }
     },
     unblockButton: {
-        backgroundColor: "rgb(29, 161, 242)",
+        backgroundColor: theme.palette.primary.main,
     },
     cancelButton: {
         "&.MuiButtonBase-root": {
@@ -53,7 +53,7 @@ export const useBlockUserModalStyles = makeStyles((theme: Theme) => ({
                 fontSize: 15,
                 fontWeight: 700,
                 lineHeight: "20px",
-                color: "rgb(29, 161, 242)",
+                color: theme.palette.primary.main,
             },
         },
     },

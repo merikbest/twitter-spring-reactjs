@@ -5,13 +5,13 @@ export const PeopleSearchInput = withStyles((theme: Theme) => ({
     root: {
         '& .MuiOutlinedInput-root': {
             borderRadius: 30,
-            border: "1px solid rgb(207, 217, 222)",
+            border: `1px solid ${theme.palette.info.light}`,
             padding: 0,
             paddingLeft: 15,
             marginLeft: 15,
             width: 385,
             '&.Mui-focused': {
-                backgroundColor: '#fff',
+                backgroundColor: theme.palette.common.white,
                 '& fieldset': { borderWidth: 1, borderColor: theme.palette.primary.main },
                 '& svg path': {
                     fill: theme.palette.primary.main,

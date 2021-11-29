@@ -51,7 +51,7 @@ export const useReplyStyles = makeStyles((theme: Theme) => ({
         fontSize: 15,
         height: 60,
         padding: 0,
-        backgroundColor: theme.palette.info.main,
+        backgroundColor: theme.palette.common.white,
     },
     iconCircle: {
         marginRight: 12,
@@ -67,7 +67,7 @@ export const useReplyStyles = makeStyles((theme: Theme) => ({
         "& svg": {
             marginTop: 5,
             height: "1.35em",
-            fill: theme.palette.info.main,
+            fill: theme.palette.common.white,
         },
     },
     checkIcon: {

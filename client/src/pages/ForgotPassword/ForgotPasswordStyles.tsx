@@ -19,7 +19,7 @@ export const useForgotPasswordStyles = makeStyles((theme: Theme) => ({
         "& svg": {
             verticalAlign: "bottom",
             marginRight: 6,
-            fill: 'rgb(29, 161, 242)',
+            fill: theme.palette.primary.main,
             fontSize: 25,
         },
         "& p": {

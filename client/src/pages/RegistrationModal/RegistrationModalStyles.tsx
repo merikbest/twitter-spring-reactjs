@@ -12,7 +12,7 @@ export const useRegistrationModalStyles = makeStyles((theme: Theme) => ({
         width: 30,
         "& svg": {
             fontSize: 30,
-            color: "rgb(29, 161, 245)",
+            color: theme.palette.primary.main,
         },
     },
     title: {
@@ -30,7 +30,7 @@ export const useRegistrationModalStyles = makeStyles((theme: Theme) => ({
         lineHeight: "20px",
         margin: "16px 0 32px 0",
         fontSize: 15,
-        color: "rgb(27, 149, 224)",
+        color: theme.palette.primary.main,
         "&:hover": {
             cursor: "pointer",
         },

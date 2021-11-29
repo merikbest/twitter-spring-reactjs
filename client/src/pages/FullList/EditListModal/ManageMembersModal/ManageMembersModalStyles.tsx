@@ -10,7 +10,7 @@ export const useManageMembersModalStyles = makeStyles((theme: Theme) => ({
             marginRight: 15,
             "& svg": {
                 height: "1.0em",
-                fill: "rgb(29, 161, 242)",
+                fill: theme.palette.primary.main,
             },
         },
     },
@@ -26,7 +26,7 @@ export const useManageMembersModalStyles = makeStyles((theme: Theme) => ({
             marginLeft: 105,
             maxWidth: 90,
             height: 4,
-            backgroundColor: "rgb(29, 161, 242)",
+            backgroundColor: theme.palette.primary.main,
         },
         "& .MuiTab-root": {
             fontWeight: 700,

@@ -84,7 +84,7 @@ export const useScheduleModalStyles = makeStyles((theme: Theme) => ({
             padding: '2px 15px',
             '&:hover': {
                 border: 0,
-                backgroundColor: 'rgb(29, 161, 242, 0.1)',
+                backgroundColor: theme.palette.secondary.light,
             },
         },
         padding: "12px 16px",

@@ -8,25 +8,25 @@ export const useChangeInfoTextFieldStyles = makeStyles((theme: Theme) =>
             border: '1px solid #C4C4C4',
             overflow: 'hidden',
             borderRadius: 4,
-            backgroundColor: '#fff',
+            backgroundColor: theme.palette.common.white,
             transition: theme.transitions.create(['border-color', 'box-shadow']),
             '&:hover': {
-                backgroundColor: '#fff',
+                backgroundColor: theme.palette.common.white,
             },
             '&$focused': {
-                backgroundColor: '#fff',
+                backgroundColor: theme.palette.common.white,
                 borderWidth: 2,
                 borderColor: theme.palette.primary.main,
             },
         },
         error: {
             border: '1px solid rgb(224, 36, 94)',
-            backgroundColor: '#fff',
+            backgroundColor: theme.palette.common.white,
             '&:hover': {
-                backgroundColor: '#fff',
+                backgroundColor: theme.palette.common.white,
             },
             '&$focused': {
-                backgroundColor: '#fff',
+                backgroundColor: theme.palette.common.white,
                 border: '2px solid rgb(224, 36, 94)',
             },
         },

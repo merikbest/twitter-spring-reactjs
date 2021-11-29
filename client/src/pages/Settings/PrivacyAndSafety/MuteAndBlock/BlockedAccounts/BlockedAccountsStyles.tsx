@@ -7,7 +7,7 @@ export const useBlockedAccountsStyles = makeStyles((theme: Theme) => ({
             marginLeft: 116,
             maxWidth: 70,
             height: 4,
-            backgroundColor: "rgb(29, 161, 242)",
+            backgroundColor: theme.palette.primary.main,
         },
         "& .MuiTab-root": {
             fontWeight: 700,
@@ -17,7 +17,7 @@ export const useBlockedAccountsStyles = makeStyles((theme: Theme) => ({
         minWidth: 299,
         textTransform: 'none',
         '&:hover': {
-            backgroundColor: 'rgb(29, 161, 242, 0.1)',
+            backgroundColor: theme.palette.secondary.light,
         },
     },
     infoItemWrapper: {

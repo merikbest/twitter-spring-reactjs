@@ -31,7 +31,7 @@ export const useCurrentSessionStyles = makeStyles((theme: Theme) => ({
         backgroundColor: theme.palette.primary.main,
         borderRadius: 4,
         height: 20,
-        color: theme.palette.info.main,
+        color: theme.palette.common.white,
         fontSize: 13,
         lineHeight: "16px",
     },

@@ -29,7 +29,7 @@ export const useCreateAccountModalStyles = makeStyles((theme: Theme) => ({
         linHeight: "20px",
         // "& span": {
         //     fontSize: 14,
-        //     color: "rgb(27, 149, 224)",
+        //     color: theme.palette.primary.main,
         //     "&:hover": {
         //         cursor: "pointer",
         //     },

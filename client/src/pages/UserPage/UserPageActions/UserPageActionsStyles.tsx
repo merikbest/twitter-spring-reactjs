@@ -50,7 +50,7 @@ export const useUserPageActionsStyles = makeStyles((theme: Theme) => ({
         borderRadius: '50%',
         padding: 8,
         "& svg": {
-            color: "rgb(27, 149, 224)",
+            color: theme.palette.primary.main,
             height: "1.6em",
         },
     },

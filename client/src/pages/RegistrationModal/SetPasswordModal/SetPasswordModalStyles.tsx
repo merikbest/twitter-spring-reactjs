@@ -13,7 +13,7 @@ export const useSetPasswordModalStyles = makeStyles((theme: Theme) => ({
         width: 30,
         "& svg": {
             fontSize: 30,
-            color: "rgb(29, 161, 245)",
+            color: theme.palette.primary.main,
         },
     },
     title: {

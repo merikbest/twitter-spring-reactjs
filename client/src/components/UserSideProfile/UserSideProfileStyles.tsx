@@ -62,7 +62,7 @@ export const useUserSideProfileStyles = makeStyles((theme: Theme) => ({
         },
         "& span": {
             "& svg" : {
-                color: "rgba(29, 161, 242, 1.00)",
+                color: theme.palette.primary.main,
                 height: "1.30em",
             },
 

@@ -32,7 +32,7 @@ export const useReplyModalStyles = makeStyles((theme: Theme) => ({
     verticalLine: {
         marginLeft: 21,
         position: "absolute",
-        borderLeft: "2px solid rgb(207, 217, 222)",
+        borderLeft: `2px solid ${theme.palette.info.light}`,
         height: "100%",
     },
     avatar: {
@@ -46,14 +46,14 @@ export const useReplyModalStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
         "span": {
-            color: "#5b7083",
+            color: theme.palette.info.light,
         },
     },
     text: {
         color: 'inherit',
         textDecoration: 'none',
         '& #hashtag': {
-            color: "rgb(27, 149, 224)",
+            color: theme.palette.primary.main,
         },
     },
     image: {
@@ -64,7 +64,7 @@ export const useReplyModalStyles = makeStyles((theme: Theme) => ({
             width: 495,
             height: 280,
             borderRadius: 20,
-            borderColor: "#5b7083",
+            borderColor: theme.palette.info.light,
         },
         "& .small": {
             width: 260,
@@ -75,11 +75,11 @@ export const useReplyModalStyles = makeStyles((theme: Theme) => ({
         marginTop: 12,
         zIndex: 2,
         fontSize: 15,
-        color: "#5b7083",
+        color: theme.palette.info.light,
     },
     replyLink: {
         textDecoration: "none",
-        color: "rgb(27, 149, 224)",
+        color: theme.palette.primary.main,
     },
     addForm: {
         padding: "20px 20px 15px 20px",

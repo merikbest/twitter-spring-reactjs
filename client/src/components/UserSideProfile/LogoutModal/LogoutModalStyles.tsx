@@ -7,7 +7,7 @@ export const useLogoutModalStyles = makeStyles((theme: Theme) => ({
         textAlign: "center",
         margin: "32px 20px",
         "& svg": {
-            color: "rgb(29, 161, 242)",
+            color: theme.palette.primary.main,
             fontSize: 45,
         },
     },

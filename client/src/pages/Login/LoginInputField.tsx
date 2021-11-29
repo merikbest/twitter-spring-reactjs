@@ -8,13 +8,13 @@ export const useLoginTextFieldStyles = makeStyles((theme: Theme) =>
             border: '1px solid #e2e2e1',
             overflow: 'hidden',
             borderRadius: 4,
-            backgroundColor: '#fff',
+            backgroundColor: theme.palette.common.white,
             transition: theme.transitions.create(['border-color', 'box-shadow']),
             '&:hover': {
-                backgroundColor: '#fff',
+                backgroundColor: theme.palette.common.white,
             },
             '&$focused': {
-                backgroundColor: '#fff',
+                backgroundColor: theme.palette.common.white,
                 borderColor: theme.palette.primary.main,
             },
         },

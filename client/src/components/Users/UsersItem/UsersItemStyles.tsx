@@ -15,7 +15,7 @@ export const useUsersItemStyles = makeStyles((theme: Theme) => ({
             },
         },
         '&:hover': {
-            backgroundColor: '#edf3f6',
+            backgroundColor: theme.palette.secondary.dark,
         },
         '& a': {
             color: 'inherit',
@@ -60,7 +60,7 @@ export const useUsersItemStyles = makeStyles((theme: Theme) => ({
         borderRadius: '25px',
         padding: '0 15px',
         '&:hover': {
-            backgroundColor: 'rgb(29, 161, 242, 0.1)',
+            backgroundColor: theme.palette.secondary.light,
         },
     },
     primaryButton: {

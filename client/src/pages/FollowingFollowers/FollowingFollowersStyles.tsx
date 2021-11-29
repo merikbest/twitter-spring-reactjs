@@ -35,7 +35,7 @@ export const useFollowingFollowersStyles = makeStyles((theme) => ({
             marginLeft: 116,
             maxWidth: 70,
             height: 4,
-            backgroundColor: "rgb(29, 161, 242)",
+            backgroundColor: theme.palette.primary.main,
         },
         "& .MuiTab-root": {
             fontWeight: 700,

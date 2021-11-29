@@ -8,7 +8,7 @@ export const useResetPasswordSuccessStyles = makeStyles((theme: Theme) => ({
         marginBottom: 14,
     },
     successHeader: {
-        color: "rgb(29, 161, 242)",
+        color: theme.palette.primary.main,
         fontSize: 18,
         "&:hover": {
             cursor: 'pointer',
@@ -18,7 +18,7 @@ export const useResetPasswordSuccessStyles = makeStyles((theme: Theme) => ({
         display: "block",
         paddingTop: 36,
         fontSize: 13,
-        color: "rgb(29, 161, 242)",
+        color: theme.palette.primary.main,
         "&:hover": {
             cursor: 'pointer',
         },

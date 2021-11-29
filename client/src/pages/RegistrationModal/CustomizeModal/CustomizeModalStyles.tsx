@@ -12,7 +12,7 @@ export const useCustomizeModalStyles = makeStyles((theme: Theme) => ({
         width: 30,
         "& svg": {
             fontSize: 30,
-            color: "rgb(29, 161, 245)",
+            color: theme.palette.primary.main,
         },
     },
     title: {
@@ -48,7 +48,7 @@ export const useCustomizeModalStyles = makeStyles((theme: Theme) => ({
         textDecoration: "none",
         margin: "16px 0 32px 0",
         fontSize: 14,
-        color: "rgb(27, 149, 224)",
+        color: theme.palette.primary.main,
         "&:hover": {
             cursor: "pointer",
             textDecoration: "underline",

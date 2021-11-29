@@ -11,7 +11,7 @@ export const MainSearchTextField = withStyles((theme: Theme) => ({
             height: 20,
             marginTop: 6,
             '&.Mui-focused': {
-                backgroundColor: '#fff',
+                backgroundColor: theme.palette.common.white,
                 '& fieldset': { borderWidth: 1, borderColor: theme.palette.primary.main },
                 '& svg path': {
                     fill: theme.palette.primary.main,

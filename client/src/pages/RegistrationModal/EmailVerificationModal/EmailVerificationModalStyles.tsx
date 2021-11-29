@@ -12,7 +12,7 @@ export const useEmailVerificationModalStyles = makeStyles((theme: Theme) => ({
         width: 30,
         "& svg": {
             fontSize: 30,
-            color: "rgb(29, 161, 245)",
+            color: theme.palette.primary.main,
         },
     },
     title: {
@@ -32,7 +32,7 @@ export const useEmailVerificationModalStyles = makeStyles((theme: Theme) => ({
         marginLeft: 10,
         marginTop: 2,
         fontSize: 12,
-        color: "rgb(27, 149, 224)",
+        color: theme.palette.primary.main,
         "&:hover": {
             textDecoration: "underline",
             cursor: "pointer",

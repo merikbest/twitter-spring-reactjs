@@ -42,19 +42,19 @@ export const FilledSelect = styled((props: SelectProps) => (
         },
     },
     '&.Mui-focused': {
-        backgroundColor: '#fff',
+        backgroundColor: theme.palette.common.white,
         "& .MuiSelect-root": {
             borderColor: "transparent",
-            boxShadow: "0 0 0 2px rgb(29, 161, 242)",
+            boxShadow: `0 0 0 2px ${theme.palette.primary.main}`,
         },
         "& .MuiInputAdornment-root": {
             "& svg" : {
-                color: "rgb(29, 161, 242) !important",
+                color: `${theme.palette.primary.main} !important`,
             }
         },
     },
     "&.MuiFilledInput-underline": {
-        backgroundColor: '#fff',
+        backgroundColor: theme.palette.common.white,
         '&:before': {
             border: 0,
         },
@@ -73,7 +73,7 @@ export const FilledSelect = styled((props: SelectProps) => (
         },
         border: '1px solid rgb(224, 36, 94)',
         '&.Mui-focused': {
-            backgroundColor: '#fff',
+            backgroundColor: theme.palette.common.white,
             "& .MuiSelect-root": {
                 borderColor: "transparent",
                 boxShadow: "0 0 0 2px rgb(224, 36, 94)",

@@ -20,7 +20,7 @@ export const useBlockedAccountItemStyles = makeStyles<Theme, BlockedAccountItemS
             minHeight: "1vh",
         },
         '&:hover': {
-            backgroundColor: 'rgb(245, 248, 250)',
+            backgroundColor: theme.palette.secondary.main,
         },
     },
     link: {
@@ -57,8 +57,8 @@ export const useBlockedAccountItemStyles = makeStyles<Theme, BlockedAccountItemS
         marginRight: 16,
         "& .MuiButtonBase-root": {
             padding: "8px 16px",
-            color: props => props.isUserBlocked ? "rgb(255, 255, 255)" : theme.palette.error.main,
-            backgroundColor: props => props.isUserBlocked ? theme.palette.error.main : "rgb(255, 255, 255)",
+            color: props => props.isUserBlocked ? theme.palette.common.white : theme.palette.error.main,
+            backgroundColor: props => props.isUserBlocked ? theme.palette.error.main : theme.palette.common.white,
             border: "1px solid",
             borderColor: props => props.isUserBlocked ? theme.palette.error.main : theme.palette.error.light,
             "& .MuiButton-label": {

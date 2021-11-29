@@ -30,7 +30,7 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         "& .MuiIconButton-root": {
             padding: 7,
             marginLeft: 475,
-            color: "rgb(29, 161, 242)",
+            color: theme.palette.primary.main,
             "& svg": {
                 height: "0.90em",
             },

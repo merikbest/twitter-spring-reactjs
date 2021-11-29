@@ -5,7 +5,7 @@ export const useShareActionsModalStyles = makeStyles((theme: Theme) => ({
         display: "inline-block",
         "& .MuiIconButton-root": {
             padding: 7,
-            color: "rgb(27, 149, 224)",
+            color: theme.palette.primary.main,
             "& .MuiIconButton-label": {
                 "& svg": {
                     verticalAlign: "bottom",

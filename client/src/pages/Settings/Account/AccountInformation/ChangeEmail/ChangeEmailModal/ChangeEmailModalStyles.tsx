@@ -23,7 +23,7 @@ export const useChangeEmailModalStyles = makeStyles((theme: Theme) => ({
         width: 53,
         "& svg": {
             height: "2.30em",
-            color: "rgb(29, 161, 245)",
+            color: theme.palette.primary.main,
         },
     },
     title: {

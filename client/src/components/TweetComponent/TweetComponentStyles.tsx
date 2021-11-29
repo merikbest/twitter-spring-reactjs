@@ -20,7 +20,7 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
         borderRight: '0',
         borderRadius: 0,
         '&:hover': {
-            backgroundColor: 'rgb(245, 248, 250)',
+            backgroundColor: theme.palette.secondary.main,
         },
         '& h6': {
             fontWeight: 800,
@@ -35,7 +35,7 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
         color: 'inherit',
         textDecoration: 'none',
         '& #hashtag': {
-            color: "rgb(27, 149, 224)",
+            color: theme.palette.primary.main,
         },
     },
     header: {
@@ -65,11 +65,11 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
     replyWrapper: {
         zIndex: 2,
         fontSize: 15,
-        color: "#5b7083",
+        color: theme.palette.info.light,
     },
     replyLink: {
         textDecoration: "none",
-        color: "rgb(27, 149, 224)",
+        color: theme.palette.primary.main,
     },
     text: {
         "& a": {
@@ -79,10 +79,10 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
             textDecoration: 'none',
         },
         '& #hashtag': {
-            color: "rgb(27, 149, 224)",
+            color: theme.palette.primary.main,
         },
         "& #link": {
-            color: "rgb(27, 149, 224)",
+            color: theme.palette.primary.main,
         }
     },
     image: {
@@ -93,7 +93,7 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
             width: 504,
             height: 252,
             borderRadius: 20,
-            borderColor: "#5b7083",
+            borderColor: theme.palette.info.light,
         },
         "& .small": {
             width: 260,
@@ -117,7 +117,7 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
     icon: {
         "& svg": {
             height: "0.75em",
-            fill: theme.palette.info.main,
+            fill: theme.palette.common.white,
         },
     },
     replyText: {
@@ -169,7 +169,7 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
         alignItems: "center",
         marginLeft: 45,
         marginTop: 5,
-        color: "#5b7083",
+        color: theme.palette.info.light,
         "& svg": {
             verticalAlign: "bottom",
             height: "1.20em",
@@ -185,6 +185,6 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
         width: 100,
         height: 100,
         border: "1px solid black",
-        backgroundColor: theme.palette.info.main,
+        backgroundColor: theme.palette.common.white,
     },
 }));

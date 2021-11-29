@@ -33,7 +33,7 @@ export const useDisplayStyles = makeStyles((theme: Theme) => ({
     tweetIcon: {
         marginTop: 5,
         "& svg": {
-            color: theme.palette.info.main,
+            color: theme.palette.common.white,
             height: "1.7em"
         },
     },
@@ -83,8 +83,7 @@ export const useDisplayStyles = makeStyles((theme: Theme) => ({
         width: "100%",
         height: 4,
         margin: "0px 20px",
-        backgroundColor: "rgb(142, 205, 248)",
-
+        backgroundColor: theme.palette.primary.light,
     },
     stepperPoint: {
         marginTop: -3,
@@ -146,7 +145,7 @@ export const useDisplayStyles = makeStyles((theme: Theme) => ({
     checkIcon: {
         marginTop: 5,
         "& svg": {
-            color: theme.palette.info.main,
+            color: theme.palette.common.white,
             height: "1.9em"
         },
     },
@@ -168,12 +167,12 @@ export const useDisplayStyles = makeStyles((theme: Theme) => ({
         borderRadius: 4,
         cursor: "pointer",
         "&#default": {
-            backgroundColor: "rgb(255, 255, 255)",
+            backgroundColor: theme.palette.common.white,
             color: theme.palette.text.primary,
         },
         "&#dim": {
             backgroundColor: "rgb(21, 32, 43)",
-            color: "rgb(255, 255, 255)",
+            color: theme.palette.common.white,
         },
         "&#lights-out": {
             backgroundColor: "rgb(0, 0, 0)",

@@ -40,7 +40,7 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
             marginLeft: 105,
             maxWidth: 90,
             height: 4,
-            backgroundColor: "rgb(29, 161, 242)",
+            backgroundColor: theme.palette.primary.main,
         },
         "& .MuiTab-root": {
             fontWeight: 700,

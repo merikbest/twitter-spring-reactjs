@@ -7,7 +7,7 @@ export const useDeleteListModalStyles = makeStyles((theme: Theme) => ({
         textAlign: "center",
         margin: "32px 20px",
         "& svg": {
-            color: "rgb(29, 161, 242)",
+            color: theme.palette.primary.main,
             fontSize: 45,
         },
     },
@@ -40,7 +40,7 @@ export const useDeleteListModalStyles = makeStyles((theme: Theme) => ({
         height: 40,
         borderRadius: '25px',
         "&.MuiButton-contained": {
-            color: theme.palette.info.main,
+            color: theme.palette.common.white,
             backgroundColor: theme.palette.error.main,
         },
         "&.MuiButton-contained:hover": {

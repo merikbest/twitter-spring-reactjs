@@ -70,11 +70,11 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
         lineHeight: 1.3125,
         wordBreak: 'break-word',
         '& #hashtag': {
-            color: "rgb(27, 149, 224)",
+            color: theme.palette.primary.main,
         },
         "& #link": {
             textDecoration: 'none',
-            color: "rgb(27, 149, 224)",
+            color: theme.palette.primary.main,
         }
     },
     image: {
@@ -83,7 +83,7 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
             marginTop: 10,
             width: 564,
             borderRadius: 20,
-            borderColor: "#5b7083",
+            borderColor: theme.palette.info.light,
         },
     },
     content: {
@@ -175,7 +175,7 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
         "& svg": {
             marginTop: 3,
             height: "1.2em",
-            fill: theme.palette.info.main,
+            fill: theme.palette.common.white,
         },
     },
     replyTextInfoWrapper: {
@@ -194,7 +194,7 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
         fontSize: 15,
         "& a": {
             textDecoration: "none",
-            color: "rgb(27, 149, 224)",
+            color: theme.palette.primary.main,
         },
     },
     divider: {

@@ -11,7 +11,7 @@ export const useHoverActionStyles = makeStyles<Theme>((theme) => ({
         padding: "2px 4px",
         "& #action-text": {
             lineHeight: "12px",
-            color: theme.palette.info.main,
+            color: theme.palette.common.white,
         },
     }
 }));

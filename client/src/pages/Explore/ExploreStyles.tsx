@@ -36,7 +36,7 @@ export const useExploreStyles = makeStyles((theme: Theme) => ({
             "& svg": {
                 marginTop: 5,
                 verticalAlign: "bottom",
-                color: "rgb(29, 161, 242)",
+                color: theme.palette.primary.main,
                 height: "0.90em",
             },
         },
@@ -49,7 +49,7 @@ export const useExploreStyles = makeStyles((theme: Theme) => ({
             marginLeft: 35,
             maxWidth: 50,
             height: 4,
-            backgroundColor: "rgb(29, 161, 242)",
+            backgroundColor: theme.palette.primary.main,
         },
         "& .MuiTab-root": {
             fontSize: 15,

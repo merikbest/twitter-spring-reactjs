@@ -430,7 +430,6 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
                         <IconButton
                             onMouseEnter={() => handleHoverAction(AddTweetFormAction.EMOJI)}
                             onMouseLeave={handleLeaveAction}
-                            color="primary"
                         >
                             <>{EmojiIcon}</>
                             <HoverAction visible={visibleAddEmojiAction} actionText={"Emoji"}/>
@@ -511,18 +510,22 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
                     openSnackBar={openSnackBar!}
                     onCloseSnackBar={onCloseSnackBar!}
                 />
-                <ScheduleModal
-                    visible={visibleScheduleModal}
-                    selectedScheduleDate={selectedScheduleDate}
-                    onClose={onCloseScheduleModal}
-                    handleScheduleDate={handleScheduleDate}
-                    clearScheduleDate={clearScheduleDate}
-                    onOpenUnsentTweetsModal={onOpenUnsentTweetsModal}
-                />
-                <UnsentTweetsModal
-                    visible={visibleUnsentTweetsModal}
-                    onClose={onCloseUnsentTweetsModal}
-                />
+                {visibleScheduleModal && (
+                    <ScheduleModal
+                        visible={visibleScheduleModal}
+                        selectedScheduleDate={selectedScheduleDate}
+                        onClose={onCloseScheduleModal}
+                        handleScheduleDate={handleScheduleDate}
+                        clearScheduleDate={clearScheduleDate}
+                        onOpenUnsentTweetsModal={onOpenUnsentTweetsModal}
+                    />
+                )}
+                {visibleUnsentTweetsModal && (
+                    <UnsentTweetsModal
+                        visible={visibleUnsentTweetsModal}
+                        onClose={onCloseUnsentTweetsModal}
+                    />
+                )}
             </div>
         </div>
     );

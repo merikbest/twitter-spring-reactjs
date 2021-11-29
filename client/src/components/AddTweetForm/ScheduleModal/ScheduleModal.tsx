@@ -39,7 +39,7 @@ const ScheduleModal: FC<ScheduleModalProps> = (
     }
 
     const formatMonth = (getMonth(dateNow) < 10) ? ("0" + String(getMonth(dateNow) + 1)) : (String(getMonth(dateNow) + 1));
-    const formatDay = (getDate(dateNow) < 10) ? ("0" + String(scheduledDay)) : (String(scheduledDay));
+    const formatDay = (getDate(dateNow) < 10) ? ("0" + String(getDate(dateNow))) : (String(scheduledDay));
     const [month, setMonth] = useState<string>(formatMonth);
     const [day, setDay] = useState<string>(formatDay);
     const [year, setYear] = useState<string>(String(getYear(dateNow)));

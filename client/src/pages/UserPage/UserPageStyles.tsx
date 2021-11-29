@@ -121,7 +121,7 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
             marginLeft: 50,
             maxWidth: 50,
             height: 4,
-            backgroundColor: "rgb(29, 161, 242)",
+            backgroundColor: theme.palette.primary.main,
         },
         "& .MuiTab-root": {
             fontWeight: 700,
@@ -149,7 +149,7 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         borderRadius: '50%',
         padding: 8,
         "& svg": {
-            color: "rgb(27, 149, 224)",
+            color: theme.palette.primary.main,
             height: "1.6em",
         },
     },

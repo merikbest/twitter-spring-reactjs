@@ -2,7 +2,7 @@ import {makeStyles} from "@material-ui/core";
 
 export const useTagsStyles = makeStyles((theme) => ({
     container: {
-        backgroundColor: '#F7F9F9',
+        backgroundColor: theme.palette.secondary.main,
         borderRadius: 15,
         marginTop: 20,
         '& .MuiList-root': {
@@ -37,7 +37,7 @@ export const useTagsStyles = makeStyles((theme) => ({
             color: "rgb(83, 100, 113)",
             "& svg" : {
                 marginTop: 5,
-                color: "rgb(27, 149, 224)",
+                color: theme.palette.primary.main,
                 height: "0.95em",
             },
         },
@@ -58,7 +58,7 @@ export const useTagsStyles = makeStyles((theme) => ({
             // marginRight: 45,
         },
         '&:hover': {
-            backgroundColor: '#edf3f6',
+            backgroundColor: theme.palette.secondary.dark,
         },
         '& a': {
             color: 'inherit',
@@ -67,7 +67,7 @@ export const useTagsStyles = makeStyles((theme) => ({
     },
     footer: {
         fontSize: 16,
-        color: "rgb(27, 149, 224)",
+        color: theme.palette.primary.main,
         cursor: 'pointer',
         '& .MuiListItem-root .MuiListItem-gutters': {
             padding: "0px 0px 0px 0px",
@@ -82,7 +82,7 @@ export const useTagsStyles = makeStyles((theme) => ({
             // marginRight: 45,
         },
         '&:hover': {
-            backgroundColor: '#edf3f6',
+            backgroundColor: theme.palette.secondary.dark,
         },
         '& a': {
             color: 'inherit',

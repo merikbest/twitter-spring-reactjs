@@ -63,7 +63,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         lineHeight: 1.3125,
         wordBreak: 'break-word',
         '& #hashtag': {
-            color: "rgb(27, 149, 224)",
+            color: theme.palette.primary.main,
         },
     },
     content: {
@@ -126,13 +126,13 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         "& .MuiIconButton-root": {
             padding: 7,
             "& svg": {
-                color: "#ffffff",
+                color: theme.palette.common.white,
                 verticalAlign: "bottom",
                 height: "0.80em",
             }
         },
         "& span": {
-            color: "#ffffff",
+            color: theme.palette.common.white,
         },
     },
     replyWrapper: {
@@ -141,7 +141,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         fontSize: 15,
         "& a": {
             textDecoration: "none",
-            color: "rgb(27, 149, 224)",
+            color: theme.palette.primary.main,
         },
     },
     divider: {
@@ -155,7 +155,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         height: 48,
         bottom: 0,
         "& svg": {
-            color: theme.palette.info.main
+            color: theme.palette.common.white
         },
     },
     grey: {
@@ -174,7 +174,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         margin: 10,
         "& svg": {
             height: "0.9em",
-            color: theme.palette.info.main
+            color: theme.palette.common.white
         },
     },
 }));

@@ -9,7 +9,7 @@ export const SideSearchTextField = withStyles((theme: Theme) => ({
             padding: 0,
             paddingLeft: 15,
             '&.Mui-focused': {
-                backgroundColor: '#fff',
+                backgroundColor: theme.palette.common.white,
                 '& fieldset': { borderWidth: 1, borderColor: theme.palette.primary.main },
                 '& svg path': {
                     fill: theme.palette.primary.main,

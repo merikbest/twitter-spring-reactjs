@@ -35,7 +35,7 @@ export const useAuthenticationStyles= makeStyles((theme) => ({
             "& svg": {
                 marginRight: 15,
                 verticalAlign: "centered",
-                fill: '#fff',
+                fill: theme.palette.common.white,
                 height: "1.5em",
             },
         },

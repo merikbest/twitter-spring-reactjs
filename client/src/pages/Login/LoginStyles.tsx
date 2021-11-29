@@ -6,7 +6,7 @@ export const useLoginStyles = makeStyles((theme: Theme) => ({
         margin: "0 auto",
         "& svg": {
             marginTop: 20,
-            color: "rgb(29, 161, 242)",
+            color: theme.palette.primary.main,
             fontSize: 45,
         },
     },
@@ -34,7 +34,7 @@ export const useLoginStyles = makeStyles((theme: Theme) => ({
         fontWeight: 400,
         "& a": {
             textDecoration: "none",
-            color: "rgb(27, 149, 224)",
+            color: theme.palette.primary.main,
             "&:hover": {
                 textDecoration: "underline",
             },

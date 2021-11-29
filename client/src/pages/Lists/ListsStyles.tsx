@@ -43,7 +43,7 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
         "& .MuiIconButton-root": {
             padding: 7,
             "& svg": {
-                color: "rgb(27, 149, 224)",
+                color: theme.palette.primary.main,
                 verticalAlign: "bottom",
                 height: "0.90em",
             },

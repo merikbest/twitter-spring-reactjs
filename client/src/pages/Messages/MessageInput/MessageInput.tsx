@@ -7,10 +7,10 @@ export const MessageInput = withStyles((theme: Theme) => ({
             marginTop: 2,
             borderRadius: 20,
             padding: "3px 14px",
-            border: "1px solid rgb(207, 217, 222)",
+            border: `1px solid ${theme.palette.info.light}`,
             width: 490,
             '&.Mui-focused': {
-                backgroundColor: '#fff',
+                backgroundColor: theme.palette.common.white,
                 '& fieldset': { borderWidth: 1, borderColor: theme.palette.primary.main },
                 '& svg path': {
                     fill: theme.palette.primary.main,
