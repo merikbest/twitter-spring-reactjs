@@ -3,7 +3,7 @@ import {makeStyles, Theme} from "@material-ui/core";
 export const useUsersItemStyles = makeStyles((theme: Theme) => ({
     container: {
         cursor: 'pointer',
-        borderBottom: "1px solid rgb(239, 243, 244)",
+        borderBottom: `1px solid ${theme.palette.divider}`,
         '& .MuiListItem-root .MuiListItem-gutters': {
             padding: "0px 0px 0px 0px",
         },
@@ -105,7 +105,7 @@ export const useUsersItemStyles = makeStyles((theme: Theme) => ({
         width: 134,
         height: 40,
         color: theme.palette.text.primary,
-        backgroundColor: "rgb(239, 243, 244)",
+        backgroundColor: theme.palette.divider,
         borderRadius: '25px',
     },
     modalUnfollowButton: {

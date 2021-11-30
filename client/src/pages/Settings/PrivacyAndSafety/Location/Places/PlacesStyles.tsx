@@ -5,7 +5,7 @@ export const useLocationStyles = makeStyles((theme: Theme) => ({
         padding: "12px 16px"
     },
     text: {
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontWeight: 400,
         fontSize: 13,
         lineHeight: "16px"

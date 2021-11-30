@@ -31,14 +31,14 @@ export const useLayoutStyles = makeStyles((theme: Theme) => ({
             fontSize: 13,
             cursor: "pointer",
             fontWeight: 400,
-            color: "rgb(83, 100, 113)",
+            color: theme.palette.text.secondary,
             "&:hover": {
                 textDecoration: "underline",
             },
         },
         "& svg": {
             verticalAlign: "unset",
-            color: "rgb(83, 100, 113)",
+            color: theme.palette.text.secondary,
             height: "0.8em",
         },
         "& a": {

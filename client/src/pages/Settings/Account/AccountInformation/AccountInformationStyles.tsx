@@ -16,7 +16,7 @@ export const useAccountInformationStyles = makeStyles((theme: Theme) => ({
             },
         },
         "& svg": {
-            color: "rgb(83, 100, 113)",
+            color: theme.palette.text.secondary,
             height: "1.3em",
         },
     },
@@ -28,7 +28,7 @@ export const useAccountInformationStyles = makeStyles((theme: Theme) => ({
     },
     text: {
         fontSize: 13,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontWeight: 400,
         lineHeight: "16px",
     },

@@ -54,7 +54,7 @@ export const useListsItemStyles = makeStyles((theme: Theme) => ({
     },
     listOwnerUsername: {
         paddingBottom: 5,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
     listPinWrapper: {
         "& .MuiIconButton-root": {

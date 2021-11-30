@@ -10,7 +10,7 @@ export const useQuoteStyles = makeStyles<Theme, QuoteStylesProps>((theme) => ({
         textDecoration: "none",
         color: theme.palette.text.primary,
         "& #link": {
-            color: "rgb(27, 149, 224)"
+            color: theme.palette.primary.main
         }
     },
     quoteTweetContainer: {

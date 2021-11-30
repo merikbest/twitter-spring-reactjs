@@ -6,7 +6,7 @@ export const useShareTweetModalStyles = makeStyles((theme: Theme) => ({
         "& .MuiIconButton-root": {
             padding: (props: { isFullTweet: boolean }) => props.isFullTweet ? 12 : 7,
             "& svg": {
-                color: "rgb(83, 100, 113)",
+                color: theme.palette.text.secondary,
                 verticalAlign: "bottom",
                 height: (props: { isFullTweet: boolean }) => props.isFullTweet ? "0.90em" : "0.80em",
             },
@@ -33,7 +33,7 @@ export const useShareTweetModalStyles = makeStyles((theme: Theme) => ({
             "& svg": {
                 verticalAlign: "bottom",
                 marginRight: 15,
-                fill: "rgb(83, 100, 113)",
+                fill: theme.palette.text.secondary,
                 height: "1.30em",
             },
             '&:hover': {

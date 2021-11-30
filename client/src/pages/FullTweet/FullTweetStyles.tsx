@@ -121,7 +121,7 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
     infoIcon: {
         "& .MuiIconButton-root": {
             "& svg": {
-                color: "rgb(83, 100, 113)",
+                color: theme.palette.text.secondary,
                 verticalAlign: "bottom",
                 height: "0.9em",
             },
@@ -133,7 +133,13 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
                 color: props => props.isTweetRetweeted ? "rgb(23, 191, 99)" : theme.palette.text.secondary,
                 verticalAlign: "bottom",
                 height: "0.9em",
-            }
+            },
+            "&:hover": {
+                backgroundColor: "rgba(0, 186, 124, 0.1) !important",
+                "& svg": {
+                    color: "rgb(23, 191, 99) !important",
+                },
+            },
         },
     },
     likeIcon: {
@@ -142,7 +148,13 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
                 color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : theme.palette.text.secondary,
                 verticalAlign: "bottom",
                 height: "0.9em",
-            }
+            },
+            "&:hover": {
+                backgroundColor: "rgba(249, 24, 128, 0.1) !important",
+                "& svg": {
+                    color: "rgb(224, 36, 94) !important",
+                },
+            },
         },
     },
     replyInfoWrapper: {

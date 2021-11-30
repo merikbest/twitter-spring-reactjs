@@ -16,7 +16,7 @@ export const useUserSideProfileStyles = makeStyles((theme: Theme) => ({
     },
     icon: {
         "& svg": {
-            color: "rgb(83, 100, 113)",
+            color: theme.palette.text.secondary,
             marginTop: 5,
             height: "1.4em",
         },
@@ -79,7 +79,7 @@ export const useUserSideProfileStyles = makeStyles((theme: Theme) => ({
             },
         },
         "& .MuiDivider-root": {
-            backgroundColor: 'rgb(239, 243, 244)',
+            backgroundColor: theme.palette.divider,
         },
     },
 }));

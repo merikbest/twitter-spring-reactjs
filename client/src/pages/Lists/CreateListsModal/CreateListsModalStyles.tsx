@@ -5,7 +5,7 @@ export const useCreateListsModalStyles = makeStyles((theme: Theme) => ({
         "& .MuiDialogTitle-root": {
             padding: "5px 15px",
             margin: 0,
-            borderBottom: "1px solid rgb(239, 243, 244)",
+            borderBottom: `1px solid ${theme.palette.divider}`,
         },
     },
     content: {
@@ -50,6 +50,6 @@ export const useCreateListsModalStyles = makeStyles((theme: Theme) => ({
     },
     footerText: {
         fontSize: 13,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
 }));

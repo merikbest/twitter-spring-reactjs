@@ -14,7 +14,7 @@ export const useMutedWordsStyles = makeStyles((theme: Theme) => ({
         marginBottom: 8
     },
     subTitle: {
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontWeight: 400,
         fontSize: 15,
     },

@@ -7,12 +7,12 @@ export const useTweetComponentMoreStyles = makeStyles((theme: Theme) => createSt
             marginRight: (props: { isFullTweet: boolean }) => props.isFullTweet ? 0 : 8,
             width: 35,
             height: 35,
-            color: "rgb(83, 100, 113)",
+            color: theme.palette.text.secondary,
             "& .MuiIconButton-label": {
                 "& span": {
                     height: 25,
                     "& svg": {
-                        color: "rgb(83, 100, 113)",
+                        color: theme.palette.text.secondary,
                         height: "0.8em",
                     },
                 },
@@ -53,7 +53,7 @@ export const useTweetComponentMoreStyles = makeStyles((theme: Theme) => createSt
             "& svg": {
                 verticalAlign: "bottom",
                 marginRight: 15,
-                fill: "rgb(83, 100, 113)",
+                fill: theme.palette.text.secondary,
                 height: "1.30em",
             },
         },

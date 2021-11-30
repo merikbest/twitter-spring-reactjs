@@ -5,7 +5,7 @@ export const useReplyModalStyles = makeStyles((theme: Theme) => ({
         "& .MuiDialogTitle-root": {
             padding: "5px 15px",
             marginBottom: 0,
-            borderBottom: "1px solid rgb(239, 243, 244)"
+            borderBottom: `1px solid ${theme.palette.divider}`,
         },
     },
     container: {
@@ -13,7 +13,7 @@ export const useReplyModalStyles = makeStyles((theme: Theme) => ({
         height: "100%",
         padding: 0,
         "& #link": {
-            color: "rgb(27, 149, 224)"
+            color: theme.palette.primary.main
         },
     },
     modalWrapper: {

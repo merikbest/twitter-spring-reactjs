@@ -5,7 +5,7 @@ export const useTweetAnalyticsModalStyles = makeStyles<Theme>((theme) => ({
         "& .MuiDialogTitle-root": {
             padding: "5px 15px",
             margin: 0,
-            borderBottom: "1px solid rgb(239, 243, 244)",
+            borderBottom: `1px solid ${theme.palette.divider}`,
         },
         "& .MuiDialogContent-root": {
             width: 597,

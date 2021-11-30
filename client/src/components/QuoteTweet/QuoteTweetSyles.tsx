@@ -13,10 +13,16 @@ export const useQuoteTweetStyles = makeStyles<Theme, QuoteTweetStyles>((theme) =
                 color: props => props.isTweetRetweetedByMe ? "rgb(23, 191, 99)" : theme.palette.text.secondary,
                 verticalAlign: "bottom",
                 height: "0.80em",
-            }
+            },
+            "&:hover": {
+                backgroundColor: "rgba(0, 186, 124, 0.1) !important",
+                "& svg": {
+                    color: "rgb(23, 191, 99) !important",
+                },
+            },
         },
         "& #retweets": {
-            color: props => props.isTweetRetweetedByMe ? "rgb(23, 191, 99)" : theme.palette.text.secondary,
+            color: props => props.isTweetRetweetedByMe ? "rgb(23, 191, 99) !important" : theme.palette.text.secondary,
         },
     },
     dropdown: {
@@ -49,7 +55,7 @@ export const useQuoteTweetStyles = makeStyles<Theme, QuoteTweetStyles>((theme) =
         "& svg": {
             verticalAlign: "bottom",
             marginRight: 15,
-            fill: "rgb(83, 100, 113)",
+            fill: theme.palette.text.secondary,
             height: "1.30em",
         },
     },

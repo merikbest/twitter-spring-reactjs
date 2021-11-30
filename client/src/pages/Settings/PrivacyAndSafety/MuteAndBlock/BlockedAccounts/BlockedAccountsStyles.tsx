@@ -2,7 +2,7 @@ import {makeStyles, Theme} from "@material-ui/core";
 
 export const useBlockedAccountsStyles = makeStyles((theme: Theme) => ({
     tabs: {
-        borderBottom: "1px solid rgb(239, 243, 244)",
+        borderBottom: `1px solid ${theme.palette.divider}`,
         "& .MuiTabs-indicator": {
             marginLeft: 116,
             maxWidth: 70,

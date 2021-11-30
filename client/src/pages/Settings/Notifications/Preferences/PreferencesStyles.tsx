@@ -5,7 +5,7 @@ export const usePreferencesStyles = makeStyles((theme: Theme) => ({
         padding: "12px 16px"
     },
     text: {
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontWeight: 400,
         fontSize: 13,
         lineHeight: "16px"
@@ -33,7 +33,7 @@ export const usePreferencesStyles = makeStyles((theme: Theme) => ({
         },
         "& svg": {
             float: "right",
-            color: "rgb(83, 100, 113)",
+            color: theme.palette.text.secondary,
             height: "1.4em"
         },
     },

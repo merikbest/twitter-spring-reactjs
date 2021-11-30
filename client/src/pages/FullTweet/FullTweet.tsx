@@ -10,8 +10,13 @@ import SockJS from "sockjs-client";
 import {CompatClient, Stomp} from "@stomp/stompjs";
 import {compose} from "redux";
 
-import {selectIsTweetLoading, selectTweetData} from '../../store/ducks/tweet/selectors';
-import {fetchTweetData, setTweetData} from '../../store/ducks/tweet/actionCreators';
+import {
+    selectIsTweetError,
+    selectIsTweetLoadedSuccess,
+    selectIsTweetLoading,
+    selectTweetData
+} from '../../store/ducks/tweet/selectors';
+import {fetchTweetData, setTweetData, setTweetLoadingState} from '../../store/ducks/tweet/actionCreators';
 import {likeTweet, retweet} from "../../store/ducks/tweets/actionCreators";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import UsersListModal from "../../components/UsersListModal/UsersListModal";
@@ -44,7 +49,8 @@ import HoverAction from "../../components/HoverAction/HoverAction";
 import {HoverActionProps, HoverActions, withHoverAction} from "../../hoc/withHoverAction";
 import TweetAnalyticsModal from "../../components/TweetAnalyticsModal/TweetAnalyticsModal";
 import Spinner from "../../components/Spinner/Spinner";
-import {withHoverUser, HoverUserProps} from "../../hoc/withHoverUser";
+import {HoverUserProps, withHoverUser} from "../../hoc/withHoverUser";
+import {LoadingStatus} from "../../store/types";
 
 let stompClient: CompatClient | null = null;
 
@@ -69,6 +75,8 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
     const tweetData = useSelector(selectTweetData);
     const myProfile = useSelector(selectUserData);
     const isLoading = useSelector(selectIsTweetLoading);
+    const isLoadedSuccess = useSelector(selectIsTweetLoadedSuccess);
+    const isError = useSelector(selectIsTweetError);
     const params = useParams<{ id: string }>();
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
     const [visibleAnalyticsModalWindow, setVisibleAnalyticsModalWindow] = useState<boolean>(false);
@@ -98,6 +106,7 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
         return () => {
             stompClient?.disconnect();
             dispatch(setTweetData(undefined));
+            dispatch(setTweetLoadingState(LoadingStatus.NEVER));
         };
     }, [dispatch, params.id]);
 
@@ -138,9 +147,7 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
 
     if (isLoading) {
         return <Spinner paddingTop={200}/>;
-    }
-
-    if (tweetData) {
+    } else if (tweetData !== undefined && isLoadedSuccess) {
         return (
             <div style={{paddingTop: 48}}>
                 {isTweetRetweeted && (
@@ -285,7 +292,8 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                                 ) : (
                                     <>{RetweetOutlinedIcon}</>
                                 )}
-                                <HoverAction visible={visibleHoverAction?.visibleRetweetAction} actionText={isTweetRetweeted ? "Undo Retweet" : "Retweet"}/>
+                                <HoverAction visible={visibleHoverAction?.visibleRetweetAction}
+                                             actionText={isTweetRetweeted ? "Undo Retweet" : "Retweet"}/>
                             </IconButton>
                         </div>
                         <div className={classes.likeIcon}>
@@ -299,7 +307,8 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                                 ) : (
                                     <>{LikeOutlinedIcon}</>
                                 )}
-                                <HoverAction visible={visibleHoverAction?.visibleLikeAction} actionText={isTweetLiked ? "Unlike" : "Like"}/>
+                                <HoverAction visible={visibleHoverAction?.visibleLikeAction}
+                                             actionText={isTweetLiked ? "Unlike" : "Like"}/>
                             </IconButton>
                         </div>
                         <ShareTweet
@@ -371,13 +380,16 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                 {tweetData.replies.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}
             </div>
         );
+    } else if (tweetData === undefined && isError) {
+        return (
+            <Typography component={"div"} className={classes.error}>
+                Hmm...this page doesn’t exist. <br/>
+                Try searching for something else.
+            </Typography>
+        );
+    } else {
+        return null;
     }
-    return (
-        <Typography component={"div"} className={classes.error}>
-            Hmm...this page doesn’t exist. <br/>
-            Try searching for something else.
-        </Typography>
-    );
 };
 
 export default compose(withHoverUser, withHoverAction)(FullTweet) as ComponentType<HoverUserProps & FullTweetProps>;

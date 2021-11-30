@@ -39,7 +39,7 @@ export const useSendDirectTweetModalStyles = makeStyles((theme: Theme) => ({
         padding: "4px 8px",
         minHeight: 56,
         width: "100%",
-        borderTop: "3px solid rgb(239, 243, 244)",
+        borderTop: `3px solid ${theme.palette.divider}`,
         bottom: 0,
     },
     chatIcon: {

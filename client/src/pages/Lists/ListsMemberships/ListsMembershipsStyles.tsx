@@ -32,7 +32,7 @@ export const useListsMembershipsStyles = makeStyles((theme: Theme) => ({
     headerUsername: {
         fontSize: 13,
         lineHeight: "16px",
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
     infoWrapper: {
         paddingTop: 84,
@@ -48,7 +48,7 @@ export const useListsMembershipsStyles = makeStyles((theme: Theme) => ({
     },
     text: {
         fontSize: 15,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         lineHeight: "20px"
     },
 }));

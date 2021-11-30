@@ -24,7 +24,7 @@ export const useUsersStyles = makeStyles((theme: Theme) => ({
         borderRight: 0,
         backgroundColor: 'transparent',
         padding: '13px 18px',
-        borderBottom: "1px solid rgb(239, 243, 244)",
+        borderBottom: `1px solid ${theme.palette.divider}`,
         '& b': {
             fontSize: 20,
             fontWeight: 800,

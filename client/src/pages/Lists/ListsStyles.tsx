@@ -32,7 +32,7 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
     headerUsername: {
         fontSize: 13,
         lineHeight: "16px",
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
     iconGroup: {
         marginLeft: "auto",
@@ -77,7 +77,7 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
         "& svg": {
             verticalAlign: -3,
             marginRight: 15,
-            fill: "rgb(83, 100, 113)",
+            fill: theme.palette.text.secondary,
             height: "1.30em",
         },
     },
@@ -95,7 +95,7 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
     },
     pinnedListsText: {
         fontSize: 15,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         marginTop: 32,
         marginLeft: 32,
     },

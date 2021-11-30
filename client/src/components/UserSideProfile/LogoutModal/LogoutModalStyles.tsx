@@ -32,7 +32,7 @@ export const useLogoutModalStyles = makeStyles((theme: Theme) => ({
         width: 134,
         height: 40,
         color: theme.palette.text.primary,
-        backgroundColor: "rgb(239, 243, 244)",
+        backgroundColor: theme.palette.divider,
         borderRadius: '25px',
     },
     modalLogoutButton: {

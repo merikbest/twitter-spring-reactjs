@@ -19,7 +19,7 @@ export const MainSearchTextField = withStyles((theme: Theme) => ({
             },
             "& .MuiInputAdornment-root": {
                 "& svg" : {
-                    color: "rgb(83, 100, 113)",
+                    color: theme.palette.text.secondary,
                     height: "1.25em"
                 }
             },

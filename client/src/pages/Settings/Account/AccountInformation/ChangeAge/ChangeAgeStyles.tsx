@@ -6,7 +6,7 @@ export const useChangeAgeStyles = makeStyles((theme: Theme) => ({
     },
     text: {
         padding: "12px 16px",
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontWeight: 400,
         fontSize: 15,
         lineHeight: "20px"

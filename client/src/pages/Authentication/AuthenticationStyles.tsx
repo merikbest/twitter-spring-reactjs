@@ -29,7 +29,7 @@ export const useAuthenticationStyles= makeStyles((theme) => ({
         width: 400,
         "& .MuiListItem-root": {
             width: "auto",
-            color: "rgb(83, 100, 113)",
+            color: theme.palette.text.secondary,
             padding: 0,
             marginBottom: 40,
             "& svg": {

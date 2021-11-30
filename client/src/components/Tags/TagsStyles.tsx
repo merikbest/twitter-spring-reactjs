@@ -24,7 +24,7 @@ export const useTagsStyles = makeStyles((theme) => ({
         borderTop: 0,
         borderLeft: 0,
         borderRight: 0,
-        borderBottom: "1px solid rgb(239, 243, 244)",
+        borderBottom: `1px solid ${theme.palette.divider}`,
         backgroundColor: 'transparent',
         padding: '10px 18px',
         '& b': {
@@ -34,7 +34,7 @@ export const useTagsStyles = makeStyles((theme) => ({
         "& .MuiIconButton-root": {
             width: 35,
             height: 35,
-            color: "rgb(83, 100, 113)",
+            color: theme.palette.text.secondary,
             "& svg" : {
                 marginTop: 5,
                 color: theme.palette.primary.main,
@@ -44,7 +44,7 @@ export const useTagsStyles = makeStyles((theme) => ({
     },
     item: {
         cursor: 'pointer',
-        borderBottom: "1px solid rgb(239, 243, 244)",
+        borderBottom: `1px solid ${theme.palette.divider}`,
         '& .MuiListItem-root .MuiListItem-gutters': {
             padding: "0px 0px 0px 0px",
         },

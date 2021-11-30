@@ -21,7 +21,7 @@ export const useBlockUserModalStyles = makeStyles((theme: Theme) => ({
         fontWeight: 400,
         textAlign: "center",
         lineHeight: "20px",
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
     containedButton: {
         "&.MuiButtonBase-root": {

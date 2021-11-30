@@ -6,7 +6,7 @@ export const useAddTweetModalStyles = makeStyles((theme: Theme) => ({
         "& .MuiDialogTitle-root": {
             padding: "5px 15px",
             marginBottom: 0,
-            borderBottom: "1px solid rgb(239, 243, 244)"
+            borderBottom: `1px solid ${theme.palette.divider}`,
         },
     },
     header: {

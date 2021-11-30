@@ -21,7 +21,7 @@ export const useAddTweetFormStyles = makeStyles<Theme, AddTweetFormStyles>((them
         "& svg": {
             verticalAlign: "bottom",
             marginRight: 12,
-            fill: "rgb(83, 100, 113)",
+            fill: theme.palette.text.secondary,
             height: "1.30em",
         },
     },

@@ -48,12 +48,12 @@ export const useEditListModalStyles = makeStyles((theme: Theme) => ({
     },
     footerText: {
         fontSize: 13,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
     manageMembers: {
         display: "flex",
         justifyContent: "space-between",
-        borderTop: "1px solid rgb(239, 243, 244)",
+        borderTop: `1px solid ${theme.palette.divider}`,
         padding: "12px 16px",
         fontSize: 15,
         "&:hover": {
@@ -61,7 +61,7 @@ export const useEditListModalStyles = makeStyles((theme: Theme) => ({
             backgroundColor: theme.palette.secondary.main,
         },
         "& svg": {
-            fill: "rgb(83, 100, 113)",
+            fill: theme.palette.text.secondary,
             height: "1.20em",
         },
     },

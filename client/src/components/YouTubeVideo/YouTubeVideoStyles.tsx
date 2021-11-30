@@ -45,7 +45,7 @@ export const useYouTubeVideoStyles = makeStyles<Theme>((theme) => ({
             marginBottom: 3,
             marginRight: 3,
             verticalAlign: "bottom",
-            fill: "rgb(83, 100, 113)",
+            fill: theme.palette.text.secondary,
             height: "1.10em",
         },
     },

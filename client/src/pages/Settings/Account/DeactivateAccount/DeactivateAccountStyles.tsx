@@ -33,7 +33,7 @@ export const useDeactivateAccountStyles = makeStyles((theme: Theme) => ({
     username: {
         fontWeight: 400,
         fontSize: 15,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         lineHeight: "20px"
     },
     title: {
@@ -46,7 +46,7 @@ export const useDeactivateAccountStyles = makeStyles((theme: Theme) => ({
         fontWeight: 400,
         lineHeight: "16px",
         fontSize: 13,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
     link: {
         textDecoration: "none",

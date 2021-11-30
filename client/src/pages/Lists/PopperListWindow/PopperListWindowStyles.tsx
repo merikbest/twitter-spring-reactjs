@@ -57,12 +57,12 @@ export const usePopperListWindowStyles = makeStyles((theme: Theme) => ({
     },
     popperListOwnerUsername: {
         verticalAlign: "top",
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontSize: 15,
     },
     popperListMembers: {
         marginLeft: 20,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontSize: 15,
         "& b" : {
             color: theme.palette.text.primary,

@@ -3,7 +3,7 @@ import {makeStyles} from "@material-ui/core";
 export const useTrendsStyles = makeStyles((theme) => ({
     item: {
         cursor: 'pointer',
-        borderBottom: "1px solid rgb(239, 243, 244)",
+        borderBottom: `1px solid ${theme.palette.divider}`,
         '& .MuiListItem-root .MuiListItem-gutters': {
             padding: "0px 0px 0px 0px",
         },
@@ -21,7 +21,7 @@ export const useTrendsStyles = makeStyles((theme) => ({
             textDecoration: 'none',
         },
         "& svg": {
-            color: "rgb(83, 100, 113)",
+            color: theme.palette.text.secondary,
             marginBottom: 15,
             height: "1.2em",
         },

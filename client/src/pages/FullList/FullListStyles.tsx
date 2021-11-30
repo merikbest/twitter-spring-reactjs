@@ -29,7 +29,7 @@ export const useFullListStyles = makeStyles((theme: Theme) => ({
     headerUsername: {
         fontSize: 13,
         lineHeight: "16px",
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
     iconGroup: {
         marginLeft: "auto",
@@ -86,12 +86,12 @@ export const useFullListStyles = makeStyles((theme: Theme) => ({
     },
     listOwnerUsername: {
         verticalAlign: "top",
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontSize: 15,
     },
     listMembers: {
         marginLeft: 20,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontSize: 15,
         "& b" : {
             color: theme.palette.text.primary,
@@ -152,6 +152,6 @@ export const useFullListStyles = makeStyles((theme: Theme) => ({
     listInfoText: {
         lineHeight: "20px",
         fontSize: 15,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
 }));

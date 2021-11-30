@@ -42,7 +42,7 @@ export const useManageMembersItemStyles = makeStyles((theme: Theme) => ({
     },
     username: {
         lineHeight: "20px",
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontWeight: 400,
         fontSize: 15,
     },

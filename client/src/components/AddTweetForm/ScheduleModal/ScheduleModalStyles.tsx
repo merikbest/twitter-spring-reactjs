@@ -5,7 +5,7 @@ export const useScheduleModalStyles = makeStyles((theme: Theme) => ({
         "& .MuiDialogTitle-root": {
             padding: "5px 15px",
             marginBottom: 0,
-            borderBottom: "1px solid rgb(239, 243, 244)"
+            borderBottom: `1px solid ${theme.palette.divider}`,
         },
         "& .MuiDialog-container": {
             height: "80%"
@@ -42,7 +42,7 @@ export const useScheduleModalStyles = makeStyles((theme: Theme) => ({
         "& svg": {
             verticalAlign: "bottom",
             marginRight: 12,
-            fill: "rgb(83, 100, 113)",
+            fill: theme.palette.text.secondary,
             height: "1.30em",
         },
     },
@@ -88,7 +88,7 @@ export const useScheduleModalStyles = makeStyles((theme: Theme) => ({
             },
         },
         padding: "12px 16px",
-        borderTop: "1px solid rgb(239, 243, 244)"
+        borderTop: `1px solid ${theme.palette.divider}`,
     },
     outlinedButton: {
 

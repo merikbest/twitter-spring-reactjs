@@ -47,14 +47,14 @@ export const useTopTweetsActionsModalStyles = makeStyles((theme: Theme) => ({
     },
     text: {
         fontSize: 13,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
     textIcon: {
         paddingTop: 20,
         "& svg": {
             verticalAlign: "bottom",
             marginRight: 15,
-            fill: "rgb(83, 100, 113)",
+            fill: theme.palette.text.secondary,
             height: "1.30em",
         },
     },

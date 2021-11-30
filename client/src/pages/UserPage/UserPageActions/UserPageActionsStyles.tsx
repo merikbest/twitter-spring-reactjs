@@ -32,7 +32,7 @@ export const useUserPageActionsStyles = makeStyles((theme: Theme) => ({
         },
         "& svg": {
             verticalAlign: "bottom",
-            fill: "rgb(83, 100, 113)",
+            fill: theme.palette.text.secondary,
             height: "1.30em",
         },
     },

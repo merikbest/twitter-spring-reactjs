@@ -56,7 +56,7 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
     infoText: {
         textAlign: "center",
         marginBottom: 20,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontSize: 15,
         fontWeight: 400,
     },

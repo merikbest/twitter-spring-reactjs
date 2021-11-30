@@ -31,7 +31,7 @@ export const FilledSelect = styled((props: SelectProps) => (
             marginLeft: "-32px",
             zIndex: 1,
             "& svg" : {
-                color: "rgb(83, 100, 113)",
+                color: theme.palette.text.secondary,
                 height: "1.25em"
             }
         },

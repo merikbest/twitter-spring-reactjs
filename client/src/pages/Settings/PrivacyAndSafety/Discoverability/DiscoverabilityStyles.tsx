@@ -50,7 +50,7 @@ export const useDiscoverabilityStyles = makeStyles((theme: Theme) => ({
         },
         "& svg": {
             float: "right",
-            color: "rgb(83, 100, 113)",
+            color: theme.palette.text.secondary,
             height: "1.4em"
         },
     },

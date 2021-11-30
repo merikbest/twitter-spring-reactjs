@@ -74,20 +74,22 @@ export const theme = createMuiTheme({
         },
         MuiIconButton: {
             root: {
-                // color: "rgb(29, 155, 240)",
                 "&:hover": {
-                    backgroundColor: "rgb(29, 155, 240, 0.1)",
+                    backgroundColor: "rgb(29, 155, 240, 0.1) !important",
+                    "& svg": {
+                        color: "rgb(29, 155, 240) !important",
+                    },
                 },
             },
         },
         MuiPaper: {
             root: {
                 borderRadius: 0,
-                border: "1px solid rgb(239, 243, 244)",
+                border: `1px solid ${theme.palette.divider}`,
             },
             outlined: {
                 borderRadius: 0,
-                border: "1px solid rgb(239, 243, 244)",
+                border: `1px solid ${theme.palette.divider}`,
             },
         },
         MuiFilledInput: {

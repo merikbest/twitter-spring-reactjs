@@ -12,7 +12,7 @@ export const useCurrentSessionStyles = makeStyles((theme: Theme) => ({
     },
     text: {
         fontSize: 13,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontWeight: 400,
         lineHeight: "16px",
     },

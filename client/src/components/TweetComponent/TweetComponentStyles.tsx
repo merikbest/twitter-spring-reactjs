@@ -52,13 +52,13 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
         },
     },
     headerText: {
-        color: 'rgb(83, 100, 113)',
+        color: theme.palette.text.secondary,
     },
     headerIcon: {
         padding: 0,
         marginRight: 12,
         "& svg": {
-            color: "rgb(83, 100, 113)",
+            color: theme.palette.text.secondary,
             height: "0.8em",
         },
     },
@@ -122,7 +122,7 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
     },
     replyText: {
         display: "inline-block",
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontSize: 13,
     },
     footer: {
@@ -138,26 +138,32 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
         "& .MuiIconButton-root": {
             padding: 7,
             "& svg" : {
-                color: props => props.isUserCanReply ? "rgb(185, 192, 197)" : "rgb(83, 100, 113)",
+                color: props => props.isUserCanReply ? "rgb(185, 192, 197)" : theme.palette.text.secondary,
                 verticalAlign: "bottom",
                 height: "0.80em",
             },
         },
         "& span": {
-            color: props => props.isUserCanReply ? "rgb(224, 36, 94)" : "rgb(83, 100, 113)",
+            color: props => props.isUserCanReply ? "rgb(224, 36, 94)" : theme.palette.text.secondary,
         },
     },
     likeIcon: {
         "& .MuiIconButton-root": {
             padding: 7,
             "& svg" : {
-                color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : "rgb(83, 100, 113)",
+                color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : theme.palette.text.secondary,
                 verticalAlign: "bottom",
                 height: "0.80em",
             },
+            "&:hover": {
+                backgroundColor: "rgba(249, 24, 128, 0.1) !important",
+                "& svg": {
+                    color: "rgb(224, 36, 94) !important",
+                },
+            },
         },
         "& span": {
-            color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : "rgb(83, 100, 113)",
+            color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : theme.palette.text.secondary,
         },
     },
     bottomLine: {

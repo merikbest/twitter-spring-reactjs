@@ -78,7 +78,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
     },
     contentItem: {
         marginLeft: 5,
-        color: "rgb(83, 100, 113)"
+        color: theme.palette.text.secondary,
     },
     tweetFooter: {
         display: 'flex',
@@ -96,7 +96,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         "& .MuiIconButton-root": {
             padding: 7,
             "& svg": {
-                color: "rgb(83, 100, 113)",
+                color: theme.palette.text.secondary,
                 verticalAlign: "bottom",
                 height: "0.80em",
             }
@@ -106,7 +106,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         "& .MuiIconButton-root": {
             padding: 7,
             "& svg": {
-                color: props => props.isTweetRetweeted ? "rgb(23, 191, 99)" : "rgb(83, 100, 113)",
+                color: props => props.isTweetRetweeted ? "rgb(23, 191, 99)" : theme.palette.text.secondary,
                 verticalAlign: "bottom",
                 height: "0.80em",
             }
@@ -116,7 +116,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         "& .MuiIconButton-root": {
             padding: 7,
             "& svg": {
-                color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : "rgb(83, 100, 113)",
+                color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : theme.palette.text.secondary,
                 verticalAlign: "bottom",
                 height: "0.80em",
             },
@@ -137,7 +137,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
     },
     replyWrapper: {
         margin: "16px 68px",
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontSize: 15,
         "& a": {
             textDecoration: "none",
@@ -159,7 +159,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         },
     },
     grey: {
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
     imageFooterWrapper: {
         display: 'flex',

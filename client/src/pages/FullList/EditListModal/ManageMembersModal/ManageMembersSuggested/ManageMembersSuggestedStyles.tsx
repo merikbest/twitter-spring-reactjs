@@ -19,6 +19,6 @@ export const useManageMembersSuggestedStyles = makeStyles((theme: Theme) => ({
     suggestedText: {
         lineHeight: "20px",
         fontSize: 15,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
 }));

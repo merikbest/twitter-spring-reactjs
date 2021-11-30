@@ -45,7 +45,7 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
     headerTweetCount: {
         fontSize: 13,
         lineHeight: "16px",
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
     wallpaper: {
         height: 200,
@@ -78,7 +78,7 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
             flexWrap: "wrap",
             "& .MuiListItem-root": {
                 width: "auto",
-                color: "rgb(83, 100, 113)",
+                color: theme.palette.text.secondary,
                 marginRight: 20,
                 padding: 0,
                 "& svg": {
@@ -106,7 +106,7 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         lineHeight: "20px",
         textAlign: "center",
         fontWeight: 400,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
     link: {
         textDecoration: "none",
@@ -177,7 +177,7 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
     },
     username: {
         fontSize: 15,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         lineHeight: "20px",
     },
     description: {
@@ -201,7 +201,7 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         cursor: "pointer",
         textDecoration: 'none',
         lineHeight: "20px",
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         "& span": {
             lineHeight: "20px",
         },
@@ -225,6 +225,6 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         fontSize: 15,
         fontWeight: 400,
         marginBottom: 16,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
 }));

@@ -21,7 +21,7 @@ export const useManageMembersModalStyles = makeStyles((theme: Theme) => ({
         overflowX: "hidden",
     },
     tabs: {
-        borderBottom: "1px solid rgb(239, 243, 244)",
+        borderBottom: `1px solid ${theme.palette.divider}`,
         "& .MuiTabs-indicator": {
             marginLeft: 105,
             maxWidth: 90,
@@ -52,6 +52,6 @@ export const useManageMembersModalStyles = makeStyles((theme: Theme) => ({
     },
     suggestedText: {
         fontSize: 15,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
 }));

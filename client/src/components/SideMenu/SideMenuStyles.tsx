@@ -131,7 +131,7 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
             },
         },
         "& .MuiDivider-root": {
-            backgroundColor: 'rgb(239, 243, 244)',
+            backgroundColor: theme.palette.divider,
         },
     },
     button: {

@@ -37,7 +37,7 @@ export const useDataUsageStyles = makeStyles((theme: Theme) => ({
         "& svg": {
             marginTop: 8,
             float: "right",
-            color: "rgb(83, 100, 113)",
+            color: theme.palette.text.secondary,
             height: "1.4em"
         },
     },

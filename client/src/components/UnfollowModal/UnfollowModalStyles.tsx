@@ -13,7 +13,7 @@ export const useUnfollowModalStyles = makeStyles((theme) => ({
         fontSize: 20,
     },
     modalUsername: {
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontWeight: 400,
         fontSize: 15,
         marginTop: 8,
@@ -28,7 +28,7 @@ export const useUnfollowModalStyles = makeStyles((theme) => ({
         width: 134,
         height: 40,
         color: theme.palette.text.primary,
-        backgroundColor: "rgb(239, 243, 244)",
+        backgroundColor: theme.palette.divider,
         borderRadius: '25px',
     },
     modalUnfollowButton: {

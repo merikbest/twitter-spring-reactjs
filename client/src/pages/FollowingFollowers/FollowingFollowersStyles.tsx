@@ -30,7 +30,7 @@ export const useFollowingFollowersStyles = makeStyles((theme) => ({
         paddingTop: 57
     },
     tabs: {
-        borderBottom: "1px solid rgb(239, 243, 244)",
+        borderBottom: `1px solid ${theme.palette.divider}`,
         "& .MuiTabs-indicator": {
             marginLeft: 116,
             maxWidth: 70,

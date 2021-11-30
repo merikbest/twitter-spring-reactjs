@@ -5,7 +5,7 @@ export const useAudienceAndTaggingStyles = makeStyles((theme: Theme) => ({
         padding: "12px 16px"
     },
     text: {
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
         fontWeight: 400,
         fontSize: 13,
         lineHeight: "16px"
@@ -45,7 +45,7 @@ export const useAudienceAndTaggingStyles = makeStyles((theme: Theme) => ({
         "& svg": {
             marginTop: 8,
             float: "right",
-            color: "rgb(83, 100, 113)",
+            color: theme.palette.text.secondary,
             height: "1.4em"
         },
     },

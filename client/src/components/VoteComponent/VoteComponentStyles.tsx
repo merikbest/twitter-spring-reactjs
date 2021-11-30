@@ -30,7 +30,7 @@ export const useVoteComponentStyles = makeStyles((theme: Theme) => ({
     voteInfo: {
         fontSize: 14,
         marginTop: 11,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
     voteButton: {
         marginTop: 4,

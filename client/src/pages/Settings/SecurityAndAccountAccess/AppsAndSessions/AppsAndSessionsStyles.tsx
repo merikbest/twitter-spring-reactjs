@@ -31,13 +31,13 @@ export const useAppsAndSessionsStyles = makeStyles((theme: Theme) => ({
             color: theme.palette.text.primary,
         },
         "& .Mui-selected": {
-            borderRight: "2px solid rgb(27, 149, 224)",
+            borderRight: `2px solid ${theme.palette.primary.main}`,
             "& svg": {
                 marginRight: "-2px"
             },
         },
         "& svg": {
-            color: "rgb(83, 100, 113)",
+            color: theme.palette.text.secondary,
             height: "1.4em",
             marginLeft: "auto",
         },

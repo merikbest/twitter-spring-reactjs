@@ -26,7 +26,7 @@ export const useResetPasswordStyles = makeStyles((theme: Theme) => ({
     username: {
         fontSize: 14,
         fontWeight: 400,
-        color: "rgb(83, 100, 113)",
+        color: theme.palette.text.secondary,
     },
     resetPasswordText: {
         margin: "14px 0px",

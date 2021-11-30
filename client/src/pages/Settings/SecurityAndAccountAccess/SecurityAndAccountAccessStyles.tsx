@@ -25,7 +25,7 @@ export const useSecurityAndAccountAccessStyles = makeStyles((theme: Theme) => ({
             },
         },
         "& svg": {
-            color: "rgb(83, 100, 113)",
+            color: theme.palette.text.secondary,
             height: "1.3em",
         },
     },
