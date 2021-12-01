@@ -2,6 +2,63 @@
 
 import { createMuiTheme } from '@material-ui/core/styles';
 
+export const darkTheme = createMuiTheme({
+    typography: {
+        fontFamily: [
+            'system-ui',
+            '-apple-system',
+            'BlinkMacSystemFont',
+            'Segoe UI',
+            'Roboto',
+            'Ubuntu',
+            'Helvetica Neue',
+            'sans-serif',
+        ],
+    },
+    palette: {
+        background: {
+            default: "rgb(21, 32, 43)",
+            paper: "rgb(21, 32, 43)",
+        },
+        primary: {
+            light: "rgb(142, 205, 247)",
+            main: "rgb(29, 155, 240)", // theme.palette.primary.main
+            dark: "rgb(26, 140, 216)",
+            contrastText: "rgb(255, 255, 255)",
+        },
+        secondary: {
+            light: "rgb(29, 155, 240, 0.1)", // theme.palette.secondary.light (hover icons, buttons etc)
+            // main: "rgb(245, 248, 250)", // theme.palette.secondary.main (hover icons, buttons etc)
+            main: "rgba(255, 255, 255, 0.03)", // theme.palette.secondary.main (hover icons, buttons etc)
+            dark: "rgb(239, 241, 242)", // theme.palette.secondary.dark (hover tweet)
+        },
+        error: {
+            light: "rgb(255, 221, 237)",
+            main: "rgb(244, 33, 46)", // theme.palette.error.main
+            dark: "rgb(202, 32, 85)", // theme.palette.error.dark  (hover)
+        },
+        // info: {
+        //     light: "rgb(207, 217, 222)", // theme.palette.info.light
+        //     main: "rgb(207, 217, 222)", // theme.palette.info.main WHITE
+        //     dark: "",
+        // },
+        text: {
+            primary: "rgb(255, 255, 255)",  // theme.palette.text.primary
+            secondary: "rgb(136, 153, 166)", // theme.palette.text.secondary
+        },
+        // action: {
+        //     disabledBackground: "rgb(153 216 255)",
+        //     disabled: '#fff',
+        //
+        // },
+        divider: "rgb(56, 68, 77)", // theme.palette.divider
+        // common: {
+        //     black: "rgb(15, 20, 25)",  // theme.palette.common.black
+        //     white: "rgb(255, 255, 255)",  // theme.palette.common.white
+        // },
+    },
+})
+
 export const theme = createMuiTheme({
     typography: {
         fontFamily: [
@@ -16,6 +73,9 @@ export const theme = createMuiTheme({
         ],
     },
     palette: {
+        background: {
+            default: "#fff",
+        },
         primary: {
             light: "rgb(142, 205, 247)",
             main: "rgb(29, 155, 240)", // theme.palette.primary.main
@@ -45,7 +105,7 @@ export const theme = createMuiTheme({
             secondary: "rgb(83, 100, 113)", // theme.palette.text.secondary
         },
         action: {
-            disabledBackground: 'rgb(153 216 255)',
+            disabledBackground: "rgb(153 216 255)",
             disabled: '#fff',
 
         },
@@ -54,6 +114,7 @@ export const theme = createMuiTheme({
             black: "rgb(15, 20, 25)",  // theme.palette.common.black
             white: "rgb(255, 255, 255)",  // theme.palette.common.white
         },
+        grey: {}
         // custom: {
         //     hover: pale "rgb(29, 155, 240, 0.1)",  // theme.palette.custom.hover
         // },
@@ -69,7 +130,7 @@ export const theme = createMuiTheme({
                 fontWeight: 700,
             },
             outlinedPrimary: {
-                borderColor: 'rgb(29, 161, 243)',
+                borderColor: "rgb(29, 161, 243)",
             },
         },
         MuiIconButton: {
@@ -85,11 +146,11 @@ export const theme = createMuiTheme({
         MuiPaper: {
             root: {
                 borderRadius: 0,
-                border: `1px solid ${theme.palette.divider}`,
+                border: "1px solid rgb(239, 243, 244)",
             },
             outlined: {
                 borderRadius: 0,
-                border: `1px solid ${theme.palette.divider}`,
+                border: "1px solid rgb(239, 243, 244)",
             },
         },
         MuiFilledInput: {

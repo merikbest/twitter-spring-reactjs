@@ -60,7 +60,11 @@ import Display from "./AccessibilityDisplayLanguages/Display/Display";
 import Languages from "./AccessibilityDisplayLanguages/Languages/Languages";
 import Autoplay from "./AccessibilityDisplayLanguages/DataUsage/Autoplay/Autoplay";
 
-const Settings: FC = (): ReactElement => {
+interface SettingsProps {
+    changeBackgroundColor: (background: string) => void;
+}
+
+const Settings: FC<SettingsProps> = ({changeBackgroundColor}): ReactElement => {
     const classes = useSettingsStyles();
     const [selectedIndex, setSelectedIndex] = React.useState(1);
 
@@ -526,7 +530,7 @@ const Settings: FC = (): ReactElement => {
                             <Route exact path="/settings/notification/email_notifications" component={EmailNotifications}/>
                             <Route exact path="/settings/accessibility_display_and_languages" component={AccessibilityDisplayLanguages}/>
                             <Route exact path="/settings/accessibility_display_and_languages/accessibility" component={Accessibility}/>
-                            <Route exact path="/settings/accessibility_display_and_languages/display" component={Display}/>
+                            <Route exact path="/settings/accessibility_display_and_languages/display" component={() => <Display changeBackgroundColor={changeBackgroundColor}/>}/>
                             <Route exact path="/settings/accessibility_display_and_languages/languages" component={Languages}/>
                             <Route exact path="/settings/accessibility_display_and_languages/data" component={DataUsage}/>
                             <Route exact path="/settings/accessibility_display_and_languages/autoplay" component={Autoplay}/>

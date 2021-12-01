@@ -14,17 +14,23 @@ enum ColorScheme {
     GREEN = "green",
 }
 
-const Display: FC = (): ReactElement => {
+interface DisplayProps {
+    changeBackgroundColor: (background: string) => void;
+}
+
+const Display: FC<DisplayProps> = ({changeBackgroundColor}): ReactElement => {
     const classes = useDisplayStyles();
     const [selectedValue, setSelectedValue] = useState<string>("Default");
     const [selectedColor, setSelectedColor] = useState<ColorScheme>(ColorScheme.BLUE);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setSelectedValue(event.target.value);
+        changeBackgroundColor(event.target.value);
     };
 
     const handleClick = (value: string): void => {
         setSelectedValue(value);
+        changeBackgroundColor(value);
     };
 
     const ColorSelector: FC<{color: ColorScheme}> = ({color}): JSX.Element => {
