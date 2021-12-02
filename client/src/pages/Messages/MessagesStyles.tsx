@@ -184,7 +184,7 @@ export const useMessagesStyles = makeStyles((theme: Theme) => ({
         width: 384,
         "&:hover": {
             cursor: "pointer",
-            backgroundColor: "rgb(247, 249, 249)",
+            backgroundColor: theme.palette.secondary.main,
         },
     },
     tweetUserInfoWrapper: {

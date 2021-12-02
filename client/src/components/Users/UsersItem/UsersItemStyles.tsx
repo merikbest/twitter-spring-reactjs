@@ -70,48 +70,11 @@ export const useUsersItemStyles = makeStyles((theme: Theme) => ({
         fontWeight: 700,
         width: 105,
         height: 32,
-        border: '1px solid',
         borderRadius: '25px',
         padding: '0 15px',
         // TODO '& .MuiButton-containedPrimary':
         '&:hover': {
             backgroundColor: theme.palette.error.dark,
         },
-    },
-    modalWrapper: {
-        width: 280,
-        height: 176,
-        textAlign: "center",
-        margin: "32px 20px",
-    },
-    modalFullName: {
-        color: theme.palette.text.primary,
-        fontWeight: 700,
-        fontSize: 20,
-    },
-    modalUsername: {
-        color: theme.palette.text.secondary,
-        fontWeight: 400,
-        fontSize: 15,
-        marginTop: 8,
-        marginBottom: 24,
-    },
-    modalButtonContainer: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-    },
-    modalCancelButton: {
-        width: 134,
-        height: 40,
-        color: theme.palette.text.primary,
-        backgroundColor: theme.palette.divider,
-        borderRadius: '25px',
-    },
-    modalUnfollowButton: {
-        width: 134,
-        height: 40,
-        border: '1px solid',
-        borderRadius: '25px',
     },
 }));

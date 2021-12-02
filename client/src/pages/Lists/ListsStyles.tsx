@@ -66,7 +66,7 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
         boxShadow: "rgb(101 119 134 / 20%) 0px 0px 15px, rgb(101 119 134 / 15%) 0px 0px 3px 1px",
         '&:hover': {
             cursor: 'pointer',
-            backgroundColor: 'rgb(247, 249, 249)',
+            backgroundColor: theme.palette.secondary.main,
         },
     },
     text: {

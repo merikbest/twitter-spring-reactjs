@@ -31,6 +31,9 @@ export const useAddTweetFormStyles = makeStyles<Theme, AddTweetFormStyles>((them
         lineHeight: "16px",
         color: theme.palette.text.secondary,
     },
+    textareaWrapper: {
+        width: "100%",
+    },
     contentTextarea: {
         width: '100%',
         border: 0,
@@ -38,6 +41,9 @@ export const useAddTweetFormStyles = makeStyles<Theme, AddTweetFormStyles>((them
         outline: 'none',
         fontFamily: 'inherit',
         resize: 'none',
+        backgroundColor: "transparent",
+        caretColor: localStorage.getItem("background") === "Default" ? "#000" : "#fff",
+        color: localStorage.getItem("background") === "Default" ? "#000" : "#fff",
     },
     image: {
         position: 'relative',

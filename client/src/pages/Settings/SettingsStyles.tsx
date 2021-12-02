@@ -63,7 +63,7 @@ export const useSettingsStyles = makeStyles((theme: Theme) => ({
             padding: "14px 16px",
             "&:hover": {
                 cursor: "pointer",
-                backgroundColor: "rgb(247, 249, 249)",
+                backgroundColor: theme.palette.secondary.main,
             },
         },
         "& .MuiTypography-root": {

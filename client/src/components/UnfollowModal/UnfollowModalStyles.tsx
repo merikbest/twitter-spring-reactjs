@@ -34,7 +34,6 @@ export const useUnfollowModalStyles = makeStyles((theme) => ({
     modalUnfollowButton: {
         width: 134,
         height: 40,
-        border: '1px solid',
         borderRadius: '25px',
     },
 }));

@@ -21,11 +21,11 @@ export const useReplyStyles = makeStyles((theme: Theme) => ({
         "& .MuiDivider-root": {
             marginLeft: 50,
             marginTop: 8,
-            backgroundColor: "#EFF3F4",
         },
     },
     popover: {
         "& .MuiPaper-root": {
+            boxShadow: "rgb(101 119 134 / 20%) 0px 0px 15px, rgb(101 119 134 / 15%) 0px 0px 3px 1px",
             borderRadius: 16,
         }
     },
@@ -35,7 +35,6 @@ export const useReplyStyles = makeStyles((theme: Theme) => ({
         zIndex: 2,
         borderRadius: 16,
         backgroundColor: theme.palette.background.paper,
-        boxShadow: "rgb(101 119 134 / 20%) 0px 0px 15px, rgb(101 119 134 / 15%) 0px 0px 3px 1px",
     },
     infoWrapper: {
         fontSize: 15,
@@ -51,7 +50,12 @@ export const useReplyStyles = makeStyles((theme: Theme) => ({
         fontSize: 15,
         height: 60,
         padding: 0,
-        backgroundColor: theme.palette.common.white,
+        backgroundColor: theme.palette.background.paper,
+        "&.MuiListItem-button": {
+            "&:hover": {
+                backgroundColor: theme.palette.secondary.main,
+            },
+        },
     },
     iconCircle: {
         marginRight: 12,

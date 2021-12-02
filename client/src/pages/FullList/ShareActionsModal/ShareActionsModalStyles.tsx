@@ -32,7 +32,7 @@ export const useShareActionsModalStyles = makeStyles((theme: Theme) => ({
             height: 52,
             '&:hover': {
                 cursor: 'pointer',
-                backgroundColor: 'rgb(247, 249, 249)',
+                backgroundColor: theme.palette.secondary.main,
             },
         },
         "& svg": {

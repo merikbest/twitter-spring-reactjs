@@ -31,10 +31,10 @@ export const useChangeInfoTextFieldStyles = makeStyles((theme: Theme) =>
             },
         },
         disabled: {
-            backgroundColor: "rgb(247, 249, 249)",
+            backgroundColor: theme.palette.secondary.main,
             color: "#849099",
             '&:hover': {
-                backgroundColor: "rgb(247, 249, 249)",
+                backgroundColor: theme.palette.secondary.main,
             },
         },
         focused: {},

@@ -22,7 +22,7 @@ export const useSessionsStyles = makeStyles((theme: Theme) => ({
     sessionLink: {
         padding: "12px 16px",
         "&:hover": {
-            backgroundColor: "rgb(247, 249, 249)",
+            backgroundColor: theme.palette.secondary.main,
             cursor: "pointer"
         },
     },

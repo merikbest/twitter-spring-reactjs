@@ -8,7 +8,7 @@ export const useTagsStyles = makeStyles((theme) => ({
         '& .MuiList-root': {
             paddingTop: 0,
             '& .MuiListItemText-primary': {
-                color: 'black',
+                color: theme.palette.text.primary,
                 '&:hover': {
                     textDecoration: 'underline',
                 },

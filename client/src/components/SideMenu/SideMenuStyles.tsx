@@ -122,7 +122,7 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
             padding: "16px 0px 16px 16px",
             '&:hover': {
                 cursor: 'pointer',
-                backgroundColor: 'rgb(247, 249, 249)',
+                backgroundColor: theme.palette.secondary.main,
             },
             "& .MuiTypography-root": {
                 fontWeight: 400,

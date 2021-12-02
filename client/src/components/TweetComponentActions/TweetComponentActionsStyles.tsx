@@ -48,7 +48,7 @@ export const useTweetComponentMoreStyles = makeStyles((theme: Theme) => createSt
             fontWeight: 400,
             '&:hover': {
                 cursor: 'pointer',
-                backgroundColor: 'rgb(247, 249, 249)',
+                backgroundColor: theme.palette.secondary.main,
             },
             "& svg": {
                 verticalAlign: "bottom",

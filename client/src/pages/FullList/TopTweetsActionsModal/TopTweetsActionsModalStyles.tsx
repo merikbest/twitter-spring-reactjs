@@ -34,7 +34,7 @@ export const useTopTweetsActionsModalStyles = makeStyles((theme: Theme) => ({
             '&:hover': {
                 borderRadius: 4,
                 cursor: 'pointer',
-                backgroundColor: 'rgb(247, 249, 249)',
+                backgroundColor: theme.palette.secondary.main,
             },
         },
     },

@@ -38,7 +38,7 @@ export const useShareTweetModalStyles = makeStyles((theme: Theme) => ({
             },
             '&:hover': {
                 cursor: 'pointer',
-                backgroundColor: 'rgb(247, 249, 249)',
+                backgroundColor: theme.palette.secondary.main,
             },
         },
     },

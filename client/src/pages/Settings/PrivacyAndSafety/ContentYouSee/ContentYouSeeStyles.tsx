@@ -28,7 +28,7 @@ export const useContentYouSeeStyles = makeStyles((theme: Theme) => ({
         fontWeight: 400,
         lineHeight: "20px",
         "&:hover": {
-            backgroundColor: "rgb(247, 249, 249)",
+            backgroundColor: theme.palette.secondary.main,
             cursor: "pointer"
         },
         "& svg": {

@@ -343,7 +343,7 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
                     alt={`avatar ${userData?.id}`}
                     src={userData?.avatar?.src ? userData?.avatar?.src : DEFAULT_PROFILE_IMG}
                 />
-                <div>
+                <div className={classes.textareaWrapper}>
                     {selectedScheduleDate && (
                         <div className={classes.infoWrapper}>
                             {ScheduleIcon}

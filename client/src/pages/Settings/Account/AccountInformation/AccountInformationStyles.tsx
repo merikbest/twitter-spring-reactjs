@@ -12,7 +12,7 @@ export const useAccountInformationStyles = makeStyles((theme: Theme) => ({
             padding: "12px 16px",
             "&:hover": {
                 cursor: "pointer",
-                backgroundColor: "rgb(247, 249, 249)",
+                backgroundColor: theme.palette.secondary.main,
             },
         },
         "& svg": {

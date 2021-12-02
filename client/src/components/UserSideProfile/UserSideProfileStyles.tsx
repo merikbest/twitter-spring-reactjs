@@ -75,7 +75,7 @@ export const useUserSideProfileStyles = makeStyles((theme: Theme) => ({
             fontSize: 15,
             '&:hover': {
                 cursor: 'pointer',
-                backgroundColor: 'rgb(247, 249, 249)',
+                backgroundColor: theme.palette.secondary.main,
             },
         },
         "& .MuiDivider-root": {
