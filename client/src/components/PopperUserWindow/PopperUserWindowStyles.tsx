@@ -13,7 +13,7 @@ export const usePopperUserWindowStyles = makeStyles<Theme, PopperUserWindowStyle
         zIndex: 2,
         marginTop: props => props.isTweetComponent ? 0 : -20,
         borderRadius: 16,
-        backgroundColor: theme.palette.common.white,
+        backgroundColor: theme.palette.background.paper,
         cursor: "default",
         boxShadow: "rgb(101 119 134 / 20%) 0px 0px 15px, rgb(101 119 134 / 15%) 0px 0px 3px 1px",
     },
@@ -65,15 +65,21 @@ export const usePopperUserWindowStyles = makeStyles<Theme, PopperUserWindowStyle
         marginTop: 4,
         fontSize: 15,
         "& a": {
-            color: theme.palette.text.primary,
             textDecoration: "none",
             "&:hover": {
                 textDecoration: "underline !important",
             },
         },
     },
+    fullName: {
+        color: theme.palette.text.primary,
+    },
+    username: {
+        color: theme.palette.text.secondary,
+    },
     lockIcon: {
         "& svg": {
+            color: theme.palette.text.primary,
             marginLeft: 3,
             marginBottom: -3,
             height: "1.2em",
@@ -92,15 +98,19 @@ export const usePopperUserWindowStyles = makeStyles<Theme, PopperUserWindowStyle
     },
     userFollowersWrapper: {
         fontSize: 15,
-        "& span": {
-            marginRight: 10,
-        },
     },
     followLink: {
         textDecoration: 'none',
-        color: theme.palette.text.primary,
         "&:hover": {
             textDecoration: "underline !important",
         },
+    },
+    followerCount: {
+        marginRight: 2,
+        color: theme.palette.text.primary,
+    },
+    followerText: {
+        marginRight: 10,
+        color: theme.palette.text.secondary,
     },
 }));

@@ -5,13 +5,13 @@ export const MainSearchTextField = withStyles((theme: Theme) => ({
     root: {
         '& .MuiOutlinedInput-root': {
             borderRadius: 30,
-            backgroundColor: '#EFF3F4',
+            backgroundColor: theme.palette.grey[200],
             padding: 19,
             width: 450,
             height: 20,
             marginTop: 6,
             '&.Mui-focused': {
-                backgroundColor: theme.palette.common.white,
+                backgroundColor: theme.palette.background.paper,
                 '& fieldset': { borderWidth: 1, borderColor: theme.palette.primary.main },
                 '& svg path': {
                     fill: theme.palette.primary.main,

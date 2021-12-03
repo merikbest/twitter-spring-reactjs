@@ -18,7 +18,7 @@ const SideSearch: FC = (): ReactElement => {
         <form onSubmit={handleClickSearch}>
             <SideSearchTextField
                 variant="outlined"
-                placeholder="Explore Twitter"
+                placeholder="Search Twitter"
                 onChange={(event) => setText(event.target.value)}
                 value={text}
                 InputProps={{

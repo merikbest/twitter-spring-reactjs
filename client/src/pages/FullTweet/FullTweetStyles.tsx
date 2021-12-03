@@ -109,7 +109,7 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
         paddingTop: 5,
         paddingBottom: 5,
         margin: '0 auto',
-        borderTop: '1px solid #E6ECF0',
+        borderTop: `1px solid ${theme.palette.divider}`,
         left: 0,
         maxWidth: '100%',
         justifyContent: 'space-around',

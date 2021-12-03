@@ -135,7 +135,9 @@ export const darkTheme = createMuiTheme({
             white: "rgb(255, 255, 255)",  // theme.palette.common.white
         },
         grey: {
-            "100": "rgb(61, 84, 102)",
+            "100": "rgb(61, 84, 102)", // theme.palette.grey[100]
+            "200": "rgb(37, 51, 65)", // theme.palette.grey[200]
+            "300": "rgb(136, 153, 166)", // theme.palette.grey[300]
         },
     },
 })
@@ -196,6 +198,7 @@ export const theme = createMuiTheme({
         },
         grey: {
             "100": "#C4C4C4",
+            "200": "rgb(37, 51, 65)",
         },
         // custom: {
         //     hover: pale "rgb(29, 155, 240, 0.1)",  // theme.palette.custom.hover

@@ -418,7 +418,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }> & SnackbarProps> = (
                                 {userProfile?.website && (
                                     <ListItem>
                                         <>{LinkIcon}</>
-                                        <a className="link" href={userProfile?.website}>
+                                        <a className={classes.link} href={userProfile?.website}>
                                             {userProfile?.website}
                                         </a>
                                     </ListItem>

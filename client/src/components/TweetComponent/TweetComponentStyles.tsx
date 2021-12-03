@@ -175,7 +175,7 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
         alignItems: "center",
         marginLeft: 45,
         marginTop: 5,
-        color: theme.palette.info.light,
+        color: theme.palette.text.secondary,
         "& svg": {
             verticalAlign: "bottom",
             height: "1.20em",

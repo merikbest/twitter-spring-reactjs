@@ -66,7 +66,7 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         "& .MuiAvatar-root": {
             width: "140px !important",
             height: "140px !important",
-            border: "4px solid white",
+            border: `4px solid ${theme.palette.background.paper}`,
         },
     },
     infoList: {

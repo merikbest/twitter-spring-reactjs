@@ -90,7 +90,9 @@ const PopperUserWindow: FC<PopperUserWindowProps> = (
             <div className={classes.userInfoWrapper}>
                 <Link to={`/user/${user?.id}`}>
                     <div>
-                        <b>{user.fullName}</b>
+                        <span className={classes.fullName}>
+                            {user.fullName}
+                        </span>
                         {user?.privateProfile && (
                             <span className={classes.lockIcon}>
                                 {LockIcon}
@@ -98,20 +100,28 @@ const PopperUserWindow: FC<PopperUserWindowProps> = (
                         )}
                     </div>
                 </Link>
-                <div>@{user.username}</div>
+                <div className={classes.username}>
+                    @{user.username}
+                </div>
             </div>
             <div className={classes.userInfo}>
                 {user.about}
             </div>
             <div className={classes.userFollowersWrapper}>
                 <Link to={`/user/${user?.id}/following`} className={classes.followLink}>
-                    <span>
-                        <b>{user?.followers?.length ? user?.followers?.length : 0}</b> Following
+                    <span className={classes.followerCount}>
+                        {user?.followers?.length ? user?.followers?.length : 0}
+                    </span>
+                    <span className={classes.followerText}>
+                        {"Following"}
                     </span>
                 </Link>
                 <Link to={`/user/${user?.id}/followers`} className={classes.followLink}>
-                    <span>
-                        <b>{user?.following?.length ? user?.following?.length : 0}</b> Followers
+                    <span className={classes.followerCount}>
+                        {user?.following?.length ? user?.following?.length : 0}
+                    </span>
+                    <span className={classes.followerText}>
+                        {"Followers"}
                     </span>
                 </Link>
             </div>
