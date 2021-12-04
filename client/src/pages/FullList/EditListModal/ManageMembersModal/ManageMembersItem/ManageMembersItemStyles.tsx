@@ -57,7 +57,6 @@ export const useManageMembersItemStyles = makeStyles((theme: Theme) => ({
         marginRight: 15,
         width: 79,
         height: 32,
-        border: '1px solid',
         borderRadius: '25px',
         padding: '0 15px',
         '&:hover': {
@@ -69,7 +68,6 @@ export const useManageMembersItemStyles = makeStyles((theme: Theme) => ({
         marginRight: 15,
         width: 90,
         height: 32,
-        border: '1px solid',
         borderRadius: '25px',
         padding: '0 15px',
         '&:hover': {

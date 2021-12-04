@@ -6,6 +6,8 @@ import IconButton from "@material-ui/core/IconButton";
 import {usePollStyles} from "./PollStyles";
 import PollInput from "./PollInput/PollInput";
 import {FilledSelect} from "../../FilledSelect/FilledSelect";
+import {HoverActionProps, HoverActions, withHoverAction} from "../../../hoc/withHoverAction";
+import HoverAction from "../../HoverAction/HoverAction";
 
 interface PollProps {
     choice1: string;
@@ -26,7 +28,7 @@ interface PollProps {
     onClose: () => void;
 }
 
-const Poll: FC<PollProps> = (
+const Poll: FC<PollProps & HoverActionProps> = (
     {
         choice1,
         choice2,
@@ -43,7 +45,10 @@ const Poll: FC<PollProps> = (
         setHour,
         setMinute,
         visiblePoll,
-        onClose
+        onClose,
+        visibleHoverAction,
+        handleHoverAction,
+        handleLeaveAction
     }
 ): ReactElement | null => {
     const classes = usePollStyles();
@@ -109,8 +114,11 @@ const Poll: FC<PollProps> = (
                                     onClick={addPollInput}
                                     color="secondary"
                                     aria-label="close"
+                                    onMouseEnter={() => handleHoverAction?.(HoverActions.OTHER)}
+                                    onMouseLeave={handleLeaveAction}
                                 >
                                     <AddIcon color="primary"/>
+                                    <HoverAction visible={visibleHoverAction?.visibleOtherAction} actionText={"Add"}/>
                                 </IconButton>
                             </div>
                         </Grid>
@@ -180,4 +188,4 @@ const Poll: FC<PollProps> = (
     );
 };
 
-export default Poll;
+export default withHoverAction(Poll);

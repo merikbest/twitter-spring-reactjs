@@ -6,7 +6,7 @@ export const useListsMembershipsStyles = makeStyles((theme: Theme) => ({
         minHeight: '100vh',
         borderTop: '0',
         borderBottom: '0',
-        marginBottom: 500,
+        paddingBottom: 500,
     },
     header: {
         position: "fixed",

@@ -39,7 +39,6 @@ export const usePopperUserWindowStyles = makeStyles<Theme, PopperUserWindowStyle
         fontWeight: 700,
         width: 79,
         height: 32,
-        border: '1px solid',
         borderRadius: '25px',
         padding: '0 15px !important',
         '&:hover': {
@@ -53,7 +52,6 @@ export const usePopperUserWindowStyles = makeStyles<Theme, PopperUserWindowStyle
         fontWeight: 700,
         width: 105,
         height: 32,
-        border: '1px solid',
         borderRadius: '25px',
         padding: '0 15px !important',
         '&:hover': {

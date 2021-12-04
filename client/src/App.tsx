@@ -32,7 +32,6 @@ import FullList from "./pages/FullList/FullList";
 import SuggestedLists from "./pages/SuggestedLists/SuggestedLists";
 import ListsMemberships from "./pages/Lists/ListsMemberships/ListsMemberships";
 import Settings from "./pages/Settings/Settings";
-import {store} from "./store/store";
 import theme, {darkTheme} from "./theme";
 
 const App: FC = (): ReactElement => {
@@ -128,7 +127,7 @@ const App: FC = (): ReactElement => {
                         <Route path="/notifications" component={Notifications} exact/>
                         <Route path="/notification" component={NotificationInfo} exact/>
                         <Route path="/messages" component={Messages}/>
-                        <Route path="/settings" component={() => <Settings changeBackgroundColor={changeBackgroundColor}/>}/>
+                        <Route path="/settings" render={() => <Settings changeBackgroundColor={changeBackgroundColor}/>}/>
                         <Route path="/bookmarks" component={Bookmarks}/>
                         <Route path="/suggested" component={SuggestedLists}/>
                         <Route path="/lists" component={Lists} exact/>

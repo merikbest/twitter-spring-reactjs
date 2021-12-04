@@ -59,7 +59,7 @@ export function* fetchUserDataRequest() {
         localStorage.setItem("token", data.token);
         yield put(setUserData(data.user));
     } catch (error) {
-        console.log(error.response);
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
 }
 

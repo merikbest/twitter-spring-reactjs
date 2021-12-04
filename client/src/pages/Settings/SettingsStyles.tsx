@@ -1,6 +1,11 @@
 import {makeStyles, Theme} from "@material-ui/core";
+import {LocationState} from "./Settings";
 
-export const useSettingsStyles = makeStyles((theme: Theme) => ({
+interface SettingsStylesProps {
+    location: LocationState,
+}
+
+export const useSettingsStyles = makeStyles<Theme, SettingsStylesProps>((theme) => ({
     grid: {
         padding: "12px 0px 0px 0px !important",
     },
@@ -8,7 +13,7 @@ export const useSettingsStyles = makeStyles((theme: Theme) => ({
         "& .MuiPaper-outlined": {
             padding: 0,
             borderRadius: 0,
-            minHeight: '100vh',
+            minHeight: props => props.location.pathname.includes("privacy_and_safety") ? 1300 : "100vh",
             borderTop: 0,
             borderBottom: 0,
         },
@@ -63,6 +68,9 @@ export const useSettingsStyles = makeStyles((theme: Theme) => ({
             padding: "14px 16px",
             "&:hover": {
                 cursor: "pointer",
+                backgroundColor: theme.palette.secondary.main,
+            },
+            "&.Mui-selected": {
                 backgroundColor: theme.palette.secondary.main,
             },
         },

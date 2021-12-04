@@ -83,6 +83,28 @@ export const darkTheme = createMuiTheme({
                 },
             },
         },
+        MuiCheckbox: {
+            colorSecondary: {
+                "&.Mui-checked": {
+                    color: "rgb(29, 155, 240)",
+                },
+            },
+        },
+        MuiSwitch: {
+            track: {
+                backgroundColor: "rgb(147, 147, 147)",
+                opacity: 1,
+            },
+            colorSecondary: {
+                "&.Mui-checked + .MuiSwitch-track": {
+                    backgroundColor: "rgb(107, 201, 251)",
+                    opacity: 1,
+                },
+                "&.Mui-checked": {
+                    color: "rgb(29, 155, 240)",
+                }
+            },
+        },
     },
     typography: {
         fontFamily: [
@@ -138,6 +160,8 @@ export const darkTheme = createMuiTheme({
             "100": "rgb(61, 84, 102)", // theme.palette.grey[100]
             "200": "rgb(37, 51, 65)", // theme.palette.grey[200]
             "300": "rgb(136, 153, 166)", // theme.palette.grey[300]
+            "400": "rgb(29, 41, 54)", // theme.palette.grey[400]
+            "500": "rgb(78, 92, 104)", // theme.palette.grey[500]
         },
     },
 })
@@ -198,7 +222,10 @@ export const theme = createMuiTheme({
         },
         grey: {
             "100": "#C4C4C4",
-            "200": "rgb(37, 51, 65)",
+            "200": "rgb(239, 243, 244)",
+            "300": "rgb(136, 153, 166)", // theme.palette.grey[300]
+            "400": "rgb(239, 243, 244)", // theme.palette.grey[400]
+            "500": "rgb(83, 100, 113, 0.5)", // theme.palette.grey[500]
         },
         // custom: {
         //     hover: pale "rgb(29, 155, 240, 0.1)",  // theme.palette.custom.hover
@@ -286,6 +313,28 @@ export const theme = createMuiTheme({
                     padding: 8,
                     // marginRight: 20,
                 },
+            },
+        },
+        MuiCheckbox: {
+            colorSecondary: {
+                "&.Mui-checked": {
+                    color: "rgb(29, 155, 240)",
+                },
+            },
+        },
+        MuiSwitch: {
+            track: {
+                backgroundColor: "rgb(147, 147, 147)",
+                opacity: 1,
+            },
+            colorSecondary: {
+                "&.Mui-checked + .MuiSwitch-track": {
+                    backgroundColor: "rgb(107, 201, 251)",
+                    opacity: 1,
+                },
+                "&.Mui-checked": {
+                    color: "rgb(29, 155, 240)",
+                }
             },
         },
     },

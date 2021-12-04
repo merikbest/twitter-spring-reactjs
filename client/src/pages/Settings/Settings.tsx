@@ -1,5 +1,5 @@
-import React, {FC, ReactElement} from 'react';
-import {NavLink, Route} from 'react-router-dom';
+import React, {FC, ReactElement, useEffect} from 'react';
+import {NavLink, Route, useLocation} from 'react-router-dom';
 import {Grid, List, ListItem, Paper, Typography} from "@material-ui/core";
 
 import {useSettingsStyles} from "./SettingsStyles";
@@ -60,12 +60,17 @@ import Display from "./AccessibilityDisplayLanguages/Display/Display";
 import Languages from "./AccessibilityDisplayLanguages/Languages/Languages";
 import Autoplay from "./AccessibilityDisplayLanguages/DataUsage/Autoplay/Autoplay";
 
+export interface LocationState {
+    pathname: string;
+}
+
 interface SettingsProps {
     changeBackgroundColor: (background: string) => void;
 }
 
 const Settings: FC<SettingsProps> = ({changeBackgroundColor}): ReactElement => {
-    const classes = useSettingsStyles();
+    const location = useLocation<LocationState>();
+    const classes = useSettingsStyles({location});
     const [selectedIndex, setSelectedIndex] = React.useState(1);
 
     const handleListItemClick = (index: number) => {
@@ -530,7 +535,7 @@ const Settings: FC<SettingsProps> = ({changeBackgroundColor}): ReactElement => {
                             <Route exact path="/settings/notification/email_notifications" component={EmailNotifications}/>
                             <Route exact path="/settings/accessibility_display_and_languages" component={AccessibilityDisplayLanguages}/>
                             <Route exact path="/settings/accessibility_display_and_languages/accessibility" component={Accessibility}/>
-                            <Route exact path="/settings/accessibility_display_and_languages/display" component={() => <Display changeBackgroundColor={changeBackgroundColor}/>}/>
+                            <Route exact path="/settings/accessibility_display_and_languages/display" render={() => <Display changeBackgroundColor={changeBackgroundColor}/>}/>
                             <Route exact path="/settings/accessibility_display_and_languages/languages" component={Languages}/>
                             <Route exact path="/settings/accessibility_display_and_languages/data" component={DataUsage}/>
                             <Route exact path="/settings/accessibility_display_and_languages/autoplay" component={Autoplay}/>

@@ -7,7 +7,7 @@ export const usePopperListWindowStyles = makeStyles((theme: Theme) => ({
         minHeight: 213,
         zIndex: 2,
         borderRadius: 16,
-        backgroundColor: theme.palette.common.white,
+        backgroundColor: theme.palette.background.paper,
         cursor: "default",
         boxShadow: "rgb(101 119 134 / 20%) 0px 0px 15px, rgb(101 119 134 / 15%) 0px 0px 3px 1px",
     },
@@ -47,6 +47,7 @@ export const usePopperListWindowStyles = makeStyles((theme: Theme) => ({
         height: "20px !important",
     },
     popperListOwnerFullName: {
+        color: theme.palette.text.primary,
         verticalAlign: "top",
         fontSize: 15,
         fontWeight: 700,

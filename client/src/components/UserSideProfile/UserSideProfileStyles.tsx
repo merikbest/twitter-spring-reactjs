@@ -11,7 +11,7 @@ export const useUserSideProfileStyles = makeStyles((theme: Theme) => ({
         borderRadius: 50,
         cursor: 'pointer',
         '&:hover': {
-            backgroundColor: colors.lightBlue[50],
+            backgroundColor: theme.palette.secondary.dark,
         },
     },
     icon: {

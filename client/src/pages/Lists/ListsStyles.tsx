@@ -6,7 +6,7 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
         minHeight: '100vh',
         borderTop: '0',
         borderBottom: '0',
-        marginBottom: 500,
+        paddingBottom: 500,
     },
     header: {
         position: "fixed",
@@ -70,6 +70,7 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
         },
     },
     text: {
+        color: theme.palette.text.primary,
         fontSize: 15,
         fontWeight: 400,
     },
