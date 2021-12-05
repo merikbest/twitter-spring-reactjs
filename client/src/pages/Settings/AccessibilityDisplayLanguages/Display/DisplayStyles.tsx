@@ -124,7 +124,7 @@ export const useDisplayStyles = makeStyles((theme: Theme) => ({
         borderRadius: "50%",
         cursor: "pointer",
         "&#blue": {
-            backgroundColor: theme.palette.primary.main,
+            backgroundColor: "rgb(29, 155, 240)",
         },
         "&#yellow": {
             backgroundColor: "rgb(255, 212, 0)",
@@ -163,7 +163,7 @@ export const useDisplayStyles = makeStyles((theme: Theme) => ({
         height: 60,
         padding: "0px 20px",
         margin: 4,
-        border: "2px solid rgb(29, 155, 240)",
+        border: `2px solid ${theme.palette.primary.main}`,
         borderRadius: 4,
         cursor: "pointer",
         "&#default": {

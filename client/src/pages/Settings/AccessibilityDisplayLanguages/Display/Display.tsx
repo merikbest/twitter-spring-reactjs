@@ -5,40 +5,52 @@ import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
 import {useDisplayStyles} from "./DisplayStyles";
 import {CheckIcon, TweetIcon, VerifiedIcon} from "../../../../icons";
 
-enum ColorScheme {
-    BLUE = "blue",
-    YELLOW = "yellow",
-    CRIMSON = "crimson",
-    VIOLET = "violet",
-    ORANGE = "orange",
-    GREEN = "green",
+export enum ColorScheme {
+    BLUE = "BLUE",
+    YELLOW = "YELLOW",
+    CRIMSON = "CRIMSON",
+    VIOLET = "VIOLET",
+    ORANGE = "ORANGE",
+    GREEN = "GREEN",
+}
+
+export enum BackgroundTheme {
+    DEFAULT = "DEFAULT",
+    DIM = "DIM",
+    LIGHTS_OUT = "LIGHTS_OUT",
 }
 
 interface DisplayProps {
-    changeBackgroundColor: (background: string) => void;
+    changeBackgroundColor: (background: BackgroundTheme) => void;
+    changeColorScheme: (color: ColorScheme) => void;
 }
 
-const Display: FC<DisplayProps> = ({changeBackgroundColor}): ReactElement => {
+const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): ReactElement => {
     const classes = useDisplayStyles();
-    const [selectedValue, setSelectedValue] = useState<string>("Default");
+    const [selectedBackgroundColor, setSelectedBackgroundColor] = useState<BackgroundTheme>(BackgroundTheme.DEFAULT);
     const [selectedColor, setSelectedColor] = useState<ColorScheme>(ColorScheme.BLUE);
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        setSelectedValue(event.target.value);
-        changeBackgroundColor(event.target.value);
+    const handleChangeBackgroundColor = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        setSelectedBackgroundColor(event.target.value as BackgroundTheme);
+        changeBackgroundColor(event.target.value as BackgroundTheme);
     };
 
-    const handleClick = (value: string): void => {
-        setSelectedValue(value);
-        changeBackgroundColor(value);
+    const onClickBackgroundColor = (background: BackgroundTheme): void => {
+        setSelectedBackgroundColor(background);
+        changeBackgroundColor(background);
+    };
+
+    const onClickColor = (color: ColorScheme): void => {
+        setSelectedColor(color);
+        changeColorScheme(color);
     };
 
     const ColorSelector: FC<{color: ColorScheme}> = ({color}): JSX.Element => {
         return (
             <div
-                id={color}
+                id={color.toLowerCase()}
                 className={classes.colorItem}
-                onClick={() => setSelectedColor(color)}
+                onClick={() => onClickColor(color)}
             >
                 {(color === selectedColor) && (
                     <span className={classes.checkIcon}>
@@ -132,12 +144,14 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor}): ReactElement => {
             </div>
             <div className={classes.backgroundContainer}>
                 <div className={classes.backgroundWrapper}>
-                    <div id={"default"} className={classes.backgroundItem} onClick={() => handleClick("Default")}>
+                    <div id={"default"} className={classes.backgroundItem}
+                         onClick={() => onClickBackgroundColor(BackgroundTheme.DEFAULT)}
+                    >
                         <div className={classes.backgroundItemWrapper}>
                             <Radio
-                                checked={selectedValue === "Default"}
-                                onChange={handleChange}
-                                value="Default"
+                                checked={selectedBackgroundColor === BackgroundTheme.DEFAULT}
+                                onChange={handleChangeBackgroundColor}
+                                value={BackgroundTheme.DEFAULT}
                                 name="radio-buttons"
                                 inputProps={{"aria-label": "Default"}}
                                 icon={<RadioButtonUnchecked color={"primary"}/>}
@@ -151,12 +165,14 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor}): ReactElement => {
                     </div>
                 </div>
                 <div className={classes.backgroundWrapper}>
-                    <div id={"dim"} className={classes.backgroundItem} onClick={() => handleClick("Dim")}>
+                    <div id={"dim"} className={classes.backgroundItem}
+                         onClick={() => onClickBackgroundColor(BackgroundTheme.DIM)}
+                    >
                         <div className={classes.backgroundItemWrapper}>
                             <Radio
-                                checked={selectedValue === "Dim"}
-                                onChange={handleChange}
-                                value="Dim"
+                                checked={selectedBackgroundColor === BackgroundTheme.DIM}
+                                onChange={handleChangeBackgroundColor}
+                                value={BackgroundTheme.DIM}
                                 name="radio-buttons"
                                 inputProps={{"aria-label": "Dim"}}
                                 icon={<RadioButtonUnchecked color={"primary"}/>}
@@ -170,12 +186,14 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor}): ReactElement => {
                     </div>
                 </div>
                 <div className={classes.backgroundWrapper}>
-                    <div id={"lights-out"} className={classes.backgroundItem} onClick={() => handleClick("Lights-out")}>
+                    <div id={"lights-out"} className={classes.backgroundItem}
+                         onClick={() => onClickBackgroundColor(BackgroundTheme.LIGHTS_OUT)}
+                    >
                         <div className={classes.backgroundItemWrapper}>
                             <Radio
-                                checked={selectedValue === "Lights-out"}
-                                onChange={handleChange}
-                                value="Lights-out"
+                                checked={selectedBackgroundColor === BackgroundTheme.LIGHTS_OUT}
+                                onChange={handleChangeBackgroundColor}
+                                value={BackgroundTheme.LIGHTS_OUT}
                                 name="radio-buttons"
                                 inputProps={{"aria-label": "Lights-out"}}
                                 icon={<RadioButtonUnchecked color={"primary"}/>}
