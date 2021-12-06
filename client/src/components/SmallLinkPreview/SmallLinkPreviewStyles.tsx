@@ -11,7 +11,7 @@ export const useSmallLinkPreviewStyles = makeStyles<Theme, SmallLinkPreviewStyle
         height: 129,
         marginTop: 5,
         borderRadius: 16,
-        border: `1px solid ${theme.palette.info.light}`,
+        border: `1px solid ${theme.palette.divider}`,
         display: "flex",
         justifyContent: "flex-start",
         "&:hover": {
@@ -29,7 +29,7 @@ export const useSmallLinkPreviewStyles = makeStyles<Theme, SmallLinkPreviewStyle
         justifyContent: "center",
         width: 129,
         height: 129,
-        borderRight: `1px solid ${theme.palette.info.light}`,
+        borderRight: `1px solid ${theme.palette.divider}`,
         backgroundImage: props => props.linkCover ? `url(${props.linkCover})` : "",
         backgroundSize: "cover",
         backgroundPosition: "center center",

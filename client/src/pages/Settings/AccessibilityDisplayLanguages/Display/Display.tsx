@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useState} from 'react';
+import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {Divider, Radio, Typography} from "@material-ui/core";
 import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
 
@@ -20,7 +20,7 @@ export enum BackgroundTheme {
     LIGHTS_OUT = "LIGHTS_OUT",
 }
 
-interface DisplayProps {
+export interface DisplayProps {
     changeBackgroundColor: (background: BackgroundTheme) => void;
     changeColorScheme: (color: ColorScheme) => void;
 }
@@ -29,6 +29,13 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
     const classes = useDisplayStyles();
     const [selectedBackgroundColor, setSelectedBackgroundColor] = useState<BackgroundTheme>(BackgroundTheme.DEFAULT);
     const [selectedColor, setSelectedColor] = useState<ColorScheme>(ColorScheme.BLUE);
+
+    useEffect(() => {
+            const background = localStorage.getItem("background");
+            const color = localStorage.getItem("color");
+            setSelectedBackgroundColor((background !== null) ? background as BackgroundTheme : BackgroundTheme.DEFAULT);
+            setSelectedColor((color !== null) ? color  as ColorScheme : ColorScheme.BLUE);
+    }, []);
 
     const handleChangeBackgroundColor = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setSelectedBackgroundColor(event.target.value as BackgroundTheme);

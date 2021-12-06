@@ -21,9 +21,9 @@ export const useQuoteStyles = makeStyles<Theme, QuoteStylesProps>((theme) => ({
         marginLeft: props => props.isTweetQuoted ? 0 : 58,
         fontSize: 14,
         borderRadius: 16,
-        border: `1px solid ${theme.palette.info.light}`,
+        border: `1px solid ${theme.palette.divider}`,
         '&:hover': {
-            backgroundColor: 'rgb(242, 246, 248)',
+            backgroundColor: theme.palette.secondary.dark,
         },
     },
     quoteTweetWrapper: {

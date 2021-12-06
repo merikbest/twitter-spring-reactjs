@@ -45,7 +45,7 @@ import {
     orangeColor,
     violetColor,
     yellowColor
-} from "./defaultTheme";
+} from "./theme";
 import {BackgroundTheme, ColorScheme} from "./pages/Settings/AccessibilityDisplayLanguages/Display/Display";
 
 const App: FC = (): ReactElement => {
@@ -167,7 +167,7 @@ const App: FC = (): ReactElement => {
         <MuiThemeProvider theme={createMuiTheme(deepmerge(theme, colorScheme))}>
             <CssBaseline/>
             <div className="App">
-                <Layout>
+                <Layout changeBackgroundColor={changeBackgroundColor} changeColorScheme={changeColorScheme}>
                     <Switch location={background || location}>
                         <Route path="/account/signin" component={Authentication} exact/>
                         <Route path="/account/login" component={Login} exact/>

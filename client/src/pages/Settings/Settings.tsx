@@ -56,7 +56,7 @@ import PushNotifications from "./Notifications/Preferences/PushNotifications/Pus
 import EmailNotifications from "./Notifications/Preferences/EmailNotifications/EmailNotifications";
 import Accessibility from "./AccessibilityDisplayLanguages/Accessibility/Accessibility";
 import DataUsage from "./AccessibilityDisplayLanguages/DataUsage/DataUsage";
-import Display, {BackgroundTheme, ColorScheme} from "./AccessibilityDisplayLanguages/Display/Display";
+import Display, {DisplayProps} from "./AccessibilityDisplayLanguages/Display/Display";
 import Languages from "./AccessibilityDisplayLanguages/Languages/Languages";
 import Autoplay from "./AccessibilityDisplayLanguages/DataUsage/Autoplay/Autoplay";
 
@@ -64,12 +64,7 @@ export interface LocationState {
     pathname: string;
 }
 
-interface SettingsProps {
-    changeBackgroundColor: (background: BackgroundTheme) => void;
-    changeColorScheme: (color: ColorScheme) => void;
-}
-
-const Settings: FC<SettingsProps> = ({changeBackgroundColor, changeColorScheme}): ReactElement => {
+const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): ReactElement => {
     const location = useLocation<LocationState>();
     const classes = useSettingsStyles({location});
     const [selectedIndex, setSelectedIndex] = React.useState(1);

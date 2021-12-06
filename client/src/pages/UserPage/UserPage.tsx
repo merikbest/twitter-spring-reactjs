@@ -3,7 +3,7 @@ import {Link, RouteComponentProps, useHistory, useLocation} from 'react-router-d
 import {useDispatch, useSelector} from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Paper from '@material-ui/core/Paper';
-import {Avatar, Button, IconButton, List, ListItem, Typography} from '@material-ui/core';
+import {Avatar, Button, Divider, IconButton, List, ListItem, Typography} from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Skeleton from '@material-ui/lab/Skeleton';
@@ -501,6 +501,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }> & SnackbarProps> = (
                                         <Tab onClick={() => handleShowTweets(handleShowLikedTweets)} label="Likes"/>
                                     </Tabs>
                                 </div>
+                                <Divider/>
                                 <div className={classes.tweets}>
                                     <UserPageTweets
                                         tweets={tweets}

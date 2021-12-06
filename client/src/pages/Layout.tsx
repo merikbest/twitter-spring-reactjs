@@ -9,12 +9,19 @@ import Users from '../components/Users/Users';
 import {useLayoutStyles} from "./LayoutStyles";
 import SideSearch from "../components/SideSearch/SideSearch";
 import {EditIcon} from "../icons";
+import {DisplayProps} from "./Settings/AccessibilityDisplayLanguages/Display/Display";
 
 interface Layout {
     children: ReactNode;
 }
 
-export const Layout: FC<Layout> = ({children}): ReactElement => {
+export const Layout: FC<Layout & DisplayProps> = (
+    {
+        children,
+        changeBackgroundColor,
+        changeColorScheme
+    }
+): ReactElement => {
     const classes = useLayoutStyles();
     const location = useLocation();
 
@@ -27,7 +34,7 @@ export const Layout: FC<Layout> = ({children}): ReactElement => {
             <Grid container spacing={3}>
                 <div className={classes.leftSideGrid}>
                     <Grid sm={1} md={2} item>
-                        <SideMenu/>
+                        <SideMenu changeBackgroundColor={changeBackgroundColor} changeColorScheme={changeColorScheme}/>
                     </Grid>
                 </div>
                 {(location.pathname.includes("/message") || location.pathname.includes("/settings")) ? (

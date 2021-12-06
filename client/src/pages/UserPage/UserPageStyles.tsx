@@ -159,7 +159,6 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
             fontSize: 15,
             fontWeight: 700,
             width: 102,
-            border: '1px solid',
             borderRadius: '25px',
             padding: '8px 15px',
             '&:hover': {

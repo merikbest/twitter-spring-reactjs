@@ -1,24 +1,43 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
-export const useDisplayStyles = makeStyles((theme: Theme) => ({
-    infoItemWrapper: {
-        padding: "12px 16px"
+export const useDisplayModalStyles = makeStyles((theme: Theme) => ({
+    dialog: {
+        "& .MuiDialogTitle-root": {
+            padding: "5px 15px",
+            marginBottom: 0,
+        },
+    },
+    content: {
+        height: 603,
+        width: 598,
+        padding: "0px 32px 32px 32px",
+        overflowX: "hidden",
     },
     title: {
-        fontWeight: 800,
-        lineHeight: "24px",
-        fontSize: 20,
+        marginTop: 32,
+        marginBottom: 12,
         color: theme.palette.text.primary,
+        textAlign: "center",
+        lineHeight: "28px",
+        fontSize: 23,
+        fontWeight: 800,
     },
     text: {
+        marginBottom: 20,
         color: theme.palette.text.secondary,
+        textAlign: "center",
+        lineHeight: "20px",
+        fontSize: 15,
         fontWeight: 400,
-        fontSize: 13,
-        lineHeight: "16px"
     },
     tweetInfoWrapper: {
-        display: "inline-flex",
-        justifyContent: "flex-start"
+        display: "flex",
+        justifyContent: "flex-start",
+        margin: "0px auto 16px auto",
+        padding: "16px 12px",
+        width: 455,
+        border: `1px solid ${theme.palette.divider}`,
+        borderRadius: 16,
     },
     tweetIconWrapper: {
         display: "flex",
@@ -73,10 +92,20 @@ export const useDisplayStyles = makeStyles((theme: Theme) => ({
     tweetLink: {
         color: theme.palette.primary.main,
     },
+    subtitle: {
+        color: theme.palette.text.secondary,
+        fontSize: 13,
+        marginBottom: 4,
+        fontWeight: 700,
+        lineHeight: "20px",
+    },
     stepperWrapper: {
         display: "flex",
         alignItems: "center",
-        padding: "16px 0px"
+        padding: 16,
+        marginBottom: 12,
+        backgroundColor: theme.palette.secondary.main,
+        borderRadius: 16,
     },
     stepper: {
         position: "relative",
@@ -113,7 +142,10 @@ export const useDisplayStyles = makeStyles((theme: Theme) => ({
     colorWrapper: {
         display: "flex",
         justifyContent: "space-around",
-        padding: "8px 0px"
+        padding: "8px 0px",
+        marginBottom: 12,
+        backgroundColor: theme.palette.secondary.main,
+        borderRadius: 16,
     },
     colorItem: {
         display: "flex",
@@ -150,6 +182,8 @@ export const useDisplayStyles = makeStyles((theme: Theme) => ({
         },
     },
     backgroundContainer: {
+        backgroundColor: theme.palette.secondary.main,
+        borderRadius: 16,
         padding: "4px 12px"
     },
     backgroundWrapper: {
@@ -159,7 +193,7 @@ export const useDisplayStyles = makeStyles((theme: Theme) => ({
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-start",
-        width: 181,
+        width: 156,
         height: 60,
         padding: "0px 20px",
         margin: 4,
@@ -196,9 +230,15 @@ export const useDisplayStyles = makeStyles((theme: Theme) => ({
         },
     },
     backgroundItemText: {
+        width: "100%",
         fontWeight: 700,
         fontSize: 15,
         lineHeight: "20px",
-        marginLeft: 25,
+        textAlign: "center"
+    },
+    buttonWrapper: {
+        marginTop: 38,
+        width: 67,
+        margin: "0px auto",
     },
 }));

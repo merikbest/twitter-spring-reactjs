@@ -2,13 +2,13 @@ import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useSelector} from "react-redux";
 import {Link, NavLink, useLocation} from 'react-router-dom';
 import {Button, Divider, Hidden, IconButton, List, ListItem, Popover, Typography} from "@material-ui/core";
-import TwitterIcon from "@material-ui/icons/Twitter";
 import CreateIcon from '@material-ui/icons/Create';
 
 import {
     AnalyticsIcon,
     BookmarksIcon,
     BookmarksIconFilled,
+    DisplayIcon,
     ExploreIcon,
     ExploreIconFilled,
     HelpCenterIcon,
@@ -25,7 +25,8 @@ import {
     NotificationsIconFilled,
     ProfileIcon,
     ProfileIconFilled,
-    SettingsIcon, TweetIcon,
+    SettingsIcon,
+    TweetIcon,
     TwitterAdsIcon
 } from "../../icons";
 import UserSideProfile from "../UserSideProfile/UserSideProfile";
@@ -34,8 +35,10 @@ import {useSideMenuStyles} from "./SideMenuStyles";
 import AddTweetModal from "../AddTweetModal/AddTweetModal";
 import {selectLoadingState} from "../../store/ducks/tweets/selectors";
 import {LoadingStatus} from "../../store/types";
+import DisplayModal from "./DisplayModal/DisplayModal";
+import {DisplayProps} from "../../pages/Settings/AccessibilityDisplayLanguages/Display/Display";
 
-const SideMenu: FC = (): ReactElement => {
+const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): ReactElement => {
     const classes = useSideMenuStyles();
     const location = useLocation();
     const myProfile = useSelector(selectUserData);
@@ -44,6 +47,7 @@ const SideMenu: FC = (): ReactElement => {
 
     const [visibleAddTweet, setVisibleAddTweet] = useState<boolean>(false);
     const [visibleHomeNotification, setVisibleHomeNotification] = useState<boolean>(false);
+    const [visibleDisplayModal, setVisibleDisplayModal] = useState<boolean>(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const id = open ? "simple-popover" : undefined;
@@ -70,6 +74,15 @@ const SideMenu: FC = (): ReactElement => {
 
     const handleClosePopup = (): void => {
         setAnchorEl(null);
+    };
+
+    const onOpenDisplayModal = (): void => {
+        setVisibleDisplayModal(true);
+        handleClosePopup();
+    };
+
+    const onCloseDisplayModal = (): void => {
+        setVisibleDisplayModal(false);
     };
 
     return (
@@ -278,12 +291,12 @@ const SideMenu: FC = (): ReactElement => {
                                         </Typography>
                                     </ListItem>
                                 </a>
-                                {/*<ListItem>*/}
-                                {/*    {DisplayIcon}*/}
-                                {/*    <Typography component={"span"}>*/}
-                                {/*        Display*/}
-                                {/*    </Typography>*/}
-                                {/*</ListItem>*/}
+                                <ListItem onClick={onOpenDisplayModal}>
+                                    {DisplayIcon}
+                                    <Typography component={"span"}>
+                                        Display
+                                    </Typography>
+                                </ListItem>
                                 <ListItem>
                                     {KeyboardShortcutsIcon}
                                     <Typography component={"span"}>
@@ -309,7 +322,13 @@ const SideMenu: FC = (): ReactElement => {
                             <CreateIcon/>
                         </Hidden>
                     </Button>
-                    <AddTweetModal onClose={onCloseAddTweet} visible={visibleAddTweet}/>
+                    <AddTweetModal visible={visibleAddTweet} onClose={onCloseAddTweet}/>
+                    <DisplayModal
+                        visible={visibleDisplayModal}
+                        onClose={onCloseDisplayModal}
+                        changeBackgroundColor={changeBackgroundColor}
+                        changeColorScheme={changeColorScheme}
+                    />
                 </li>
             </ul>
             <UserSideProfile/>
