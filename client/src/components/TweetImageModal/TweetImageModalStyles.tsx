@@ -18,7 +18,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         cursor: "auto",
     },
     modalWrapper: {
-        backgroundColor: "white",
+        backgroundColor: theme.palette.background.paper,
         width: 359,
         height: "100%",
         float: 'right',
@@ -86,7 +86,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         paddingTop: 5,
         paddingBottom: 5,
         margin: '0 auto',
-        borderTop: '1px solid #E6ECF0',
+        borderTop: `1px solid ${theme.palette.divider}`,
         left: 0,
         maxWidth: '100%',
         justifyContent: 'space-around',

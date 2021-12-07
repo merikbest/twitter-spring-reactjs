@@ -12,7 +12,7 @@ import {CompatClient, Stomp} from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import classNames from "classnames";
 
-import {CalendarIcon, LinkIcon, LocationIcon, LockIcon, MessagesIcon} from "../../icons";
+import {CalendarIcon, LinkIcon, LocationIcon, LockIcon, MessagesIcon, NotificationsAddIcon} from "../../icons";
 import {useUserPageStyles} from "./UserPageStyles";
 import BackButton from "../../components/BackButton/BackButton";
 import EditProfileModal from "../../components/EditProfileModal/EditProfileModal";
@@ -351,16 +351,24 @@ const UserPage: FC<RouteComponentProps<{ id: string }> & SnackbarProps> = (
                                         </Button>
                                     ) : (
                                         isFollower ? (
-                                            <Button
-                                                onClick={handleFollow}
-                                                className={classes.primaryButton}
-                                                color="primary"
-                                                variant="contained"
-                                                onMouseOver={() => setBtnText("Unfollow")}
-                                                onMouseLeave={() => setBtnText("Following")}
-                                            >
-                                                {btnText}
-                                            </Button>
+                                            <>
+                                                <IconButton
+                                                    className={classes.messageButton}
+                                                    color="primary"
+                                                >
+                                                    {NotificationsAddIcon}
+                                                </IconButton>
+                                                <Button
+                                                    onClick={handleFollow}
+                                                    className={classes.primaryButton}
+                                                    color="primary"
+                                                    variant="contained"
+                                                    onMouseOver={() => setBtnText("Unfollow")}
+                                                    onMouseLeave={() => setBtnText("Following")}
+                                                >
+                                                    {btnText}
+                                                </Button>
+                                            </>
                                         ) : (
                                             <Button
                                                 onClick={handleFollow}
