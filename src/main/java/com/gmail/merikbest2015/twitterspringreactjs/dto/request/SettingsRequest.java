@@ -1,5 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.dto.request;
 
+import com.gmail.merikbest2015.twitterspringreactjs.model.BackgroundColorType;
+import com.gmail.merikbest2015.twitterspringreactjs.model.ColorSchemeType;
 import lombok.Data;
 
 @Data
@@ -13,4 +15,6 @@ public class SettingsRequest {
     private String language;
     private boolean mutedDirectMessages;
     private boolean privateProfile;
+    private BackgroundColorType backgroundColor;
+    private ColorSchemeType colorScheme;
 }

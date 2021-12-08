@@ -1,5 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service;
 
+import com.gmail.merikbest2015.twitterspringreactjs.model.BackgroundColorType;
+import com.gmail.merikbest2015.twitterspringreactjs.model.ColorSchemeType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 
 import java.util.Map;
@@ -21,4 +23,8 @@ public interface UserSettingsService {
     User updateDirectMessageRequests(boolean mutedDirectMessages);
 
     User updatePrivateProfile(boolean privateProfile);
+
+    User updateColorScheme(ColorSchemeType colorSchemeType);
+
+    User updateBackgroundColor(BackgroundColorType backgroundColorType);
 }

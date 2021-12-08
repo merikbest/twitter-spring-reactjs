@@ -177,6 +177,14 @@ public class UserMapper {
         return convertToUserResponse(userSettingsService.updatePrivateProfile(request.isPrivateProfile()));
     }
 
+    public UserResponse updateColorScheme(SettingsRequest request) {
+        return convertToUserResponse(userSettingsService.updateColorScheme(request.getColorScheme()));
+    }
+
+    public UserResponse updateBackgroundColor(SettingsRequest request) {
+        return convertToUserResponse(userSettingsService.updateBackgroundColor(request.getBackgroundColor()));
+    }
+
     public List<UserResponse> getBlockList() {
         return convertListToResponse(userService.getBlockList());
     }

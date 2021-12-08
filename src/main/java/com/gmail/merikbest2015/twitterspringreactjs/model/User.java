@@ -96,6 +96,14 @@ public class User {
     @Column(name = "private_profile", columnDefinition = "boolean default false")
     private boolean privateProfile;
 
+    @Column(name = "background_color")
+    @Enumerated(EnumType.STRING)
+    private BackgroundColorType backgroundColor;
+
+    @Column(name = "color_scheme")
+    @Enumerated(EnumType.STRING)
+    private ColorSchemeType colorScheme;
+
     @OneToOne
     @JoinTable(name = "user_pinned_tweet",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -166,5 +174,7 @@ public class User {
         this.bookmarks = new ArrayList<>();
         this.userLists = new ArrayList<>();
         this.unreadMessages = new ArrayList<>();
+        this.backgroundColor = BackgroundColorType.DEFAULT;
+        this.colorScheme = ColorSchemeType.BLUE;
     }
 }

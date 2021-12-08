@@ -1,6 +1,7 @@
 import {LoadingStatus} from "../../../types";
 import {Image, Tweet} from "../../tweets/contracts/state";
 import {ChatMessage} from "../../chatMessages/contracts/state";
+import {BackgroundTheme, ColorScheme} from "../../../../pages/Settings/AccessibilityDisplayLanguages/Display/Display";
 
 export interface User {
     id?: number;
@@ -59,6 +60,8 @@ export interface Settings {
     language?: string;
     mutedDirectMessages?: boolean;
     privateProfile?: boolean;
+    colorScheme?: ColorScheme;
+    backgroundColor?: BackgroundTheme;
 }
 
 export interface UserState {

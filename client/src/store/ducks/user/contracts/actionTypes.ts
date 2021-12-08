@@ -33,6 +33,8 @@ export enum UserActionsType {
     UPDATE_LANGUAGE = 'user/UPDATE_LANGUAGE',
     UPDATE_DIRECT = 'user/UPDATE_DIRECT',
     UPDATE_PRIVATE_PROFILE = 'user/UPDATE_PRIVATE_PROFILE',
+    UPDATE_COLOR_SCHEME = 'user/UPDATE_COLOR_SCHEME',
+    UPDATE_BACKGROUND_COLOR = 'user/UPDATE_BACKGROUND_COLOR',
 }
 
 export interface SignOutActionInterface extends Action<UserActionsType> {
@@ -159,6 +161,16 @@ export interface UpdateDirectActionInterface extends Action<UserActionsType> {
 
 export interface UpdatePrivateProfileActionInterface extends Action<UserActionsType> {
     type: UserActionsType.UPDATE_PRIVATE_PROFILE;
+    payload: Settings;
+}
+
+export interface UpdateColorSchemeActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.UPDATE_COLOR_SCHEME;
+    payload: Settings;
+}
+
+export interface UpdateBackgroundColorActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.UPDATE_BACKGROUND_COLOR;
     payload: Settings;
 }
 

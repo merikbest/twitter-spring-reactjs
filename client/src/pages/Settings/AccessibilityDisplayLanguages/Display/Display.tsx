@@ -4,6 +4,8 @@ import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
 
 import {useDisplayStyles} from "./DisplayStyles";
 import {CheckIcon, TweetIcon, VerifiedIcon} from "../../../../icons";
+import {useDispatch} from "react-redux";
+import {updateBackgroundColor} from "../../../../store/ducks/user/actionCreators";
 
 export enum ColorScheme {
     BLUE = "BLUE",
@@ -27,6 +29,7 @@ export interface DisplayProps {
 
 const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): ReactElement => {
     const classes = useDisplayStyles();
+    const dispatch = useDispatch();
     const [selectedBackgroundColor, setSelectedBackgroundColor] = useState<BackgroundTheme>(BackgroundTheme.DEFAULT);
     const [selectedColor, setSelectedColor] = useState<ColorScheme>(ColorScheme.BLUE);
 
@@ -38,11 +41,15 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
     }, []);
 
     const handleChangeBackgroundColor = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        setSelectedBackgroundColor(event.target.value as BackgroundTheme);
-        changeBackgroundColor(event.target.value as BackgroundTheme);
+        processBackgroundColor(event.target.value as BackgroundTheme);
     };
 
     const onClickBackgroundColor = (background: BackgroundTheme): void => {
+        processBackgroundColor(background);
+    };
+
+    const processBackgroundColor = (background: BackgroundTheme): void => {
+        dispatch(updateBackgroundColor({backgroundColor: background}));
         setSelectedBackgroundColor(background);
         changeBackgroundColor(background);
     };

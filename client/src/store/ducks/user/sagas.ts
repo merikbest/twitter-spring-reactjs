@@ -12,6 +12,8 @@ import {
     FollowUserActionInterface,
     StartUseTwitterActionInterface,
     UnfollowUserActionInterface,
+    UpdateBackgroundColorActionInterface,
+    UpdateColorSchemeActionInterface,
     UpdateCountryActionInterface,
     UpdateDirectActionInterface,
     UpdateEmailActionInterface,
@@ -227,6 +229,28 @@ export function* updatePrivateProfileRequest({payload}: UpdatePrivateProfileActi
     }
 }
 
+export function* updateColorSchemeRequest({payload}: UpdateColorSchemeActionInterface) {
+    try {
+        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+        const item: User = yield call(UserSettingsApi.updateColorScheme, payload);
+        yield put(setUserData(item));
+        yield put(setUserLoadingStatus(LoadingStatus.SUCCESS));
+    } catch (e) {
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
+export function* updateBackgroundColorRequest({payload}: UpdateBackgroundColorActionInterface) {
+    try {
+        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+        const item: User = yield call(UserSettingsApi.updateBackgroundColor, payload);
+        yield put(setUserData(item));
+        yield put(setUserLoadingStatus(LoadingStatus.SUCCESS));
+    } catch (e) {
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
 export function* userSaga() {
     yield takeLatest(UserActionsType.FETCH_SIGN_IN, fetchSignInRequest);
     yield takeLatest(UserActionsType.FETCH_SIGN_UP, fetchSignUpRequest);
@@ -247,4 +271,6 @@ export function* userSaga() {
     yield takeLatest(UserActionsType.UPDATE_LANGUAGE, updateLanguageRequest);
     yield takeLatest(UserActionsType.UPDATE_DIRECT, updateDirectRequest);
     yield takeLatest(UserActionsType.UPDATE_PRIVATE_PROFILE, updatePrivateProfileRequest);
+    yield takeLatest(UserActionsType.UPDATE_COLOR_SCHEME, updateColorSchemeRequest);
+    yield takeLatest(UserActionsType.UPDATE_BACKGROUND_COLOR, updateBackgroundColorRequest);
 }

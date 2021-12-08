@@ -1,6 +1,8 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 
 import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
+import com.gmail.merikbest2015.twitterspringreactjs.model.BackgroundColorType;
+import com.gmail.merikbest2015.twitterspringreactjs.model.ColorSchemeType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.security.JwtProvider;
@@ -85,6 +87,20 @@ public class UserSettingsServiceImpl implements UserSettingsService {
     public User updatePrivateProfile(boolean privateProfile) {
         User user = authenticationService.getAuthenticatedUser();
         user.setPrivateProfile(privateProfile);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User updateColorScheme(ColorSchemeType colorSchemeType) {
+        User user = authenticationService.getAuthenticatedUser();
+        user.setColorScheme(colorSchemeType);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User updateBackgroundColor(BackgroundColorType backgroundColorType) {
+        User user = authenticationService.getAuthenticatedUser();
+        user.setBackgroundColor(backgroundColorType);
         return userRepository.save(user);
     }
 }

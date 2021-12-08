@@ -18,6 +18,8 @@ import {
     StartUseTwitterActionInterface,
     UnfollowActionInterface,
     UnfollowUserActionInterface,
+    UpdateBackgroundColorActionInterface,
+    UpdateColorSchemeActionInterface,
     UpdateCountryActionInterface,
     UpdateDirectActionInterface,
     UpdateEmailActionInterface,
@@ -156,5 +158,15 @@ export const updateDirect = (payload: Settings): UpdateDirectActionInterface => 
 
 export const updatePrivateProfile = (payload: Settings): UpdatePrivateProfileActionInterface => ({
     type: UserActionsType.UPDATE_PRIVATE_PROFILE,
+    payload,
+});
+
+export const updateColorScheme = (payload: Settings): UpdateColorSchemeActionInterface => ({
+    type: UserActionsType.UPDATE_COLOR_SCHEME,
+    payload,
+});
+
+export const updateBackgroundColor = (payload: Settings): UpdateBackgroundColorActionInterface => ({
+    type: UserActionsType.UPDATE_BACKGROUND_COLOR,
     payload,
 });

@@ -1,6 +1,8 @@
 package com.gmail.merikbest2015.twitterspringreactjs.dto.response;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.chat.ChatMessageResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.model.BackgroundColorType;
+import com.gmail.merikbest2015.twitterspringreactjs.model.ColorSchemeType;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -34,6 +36,8 @@ public class UserResponse {
     private boolean privateProfile;
     private boolean profileCustomized;
     private boolean profileStarted;
+    private BackgroundColorType BackgroundColor;
+    private ColorSchemeType colorScheme;
     private List<ChatMessageResponse> unreadMessages;
     private List<BlockedUserResponse> userMutedList;
     private List<BlockedUserResponse> userBlockedList;

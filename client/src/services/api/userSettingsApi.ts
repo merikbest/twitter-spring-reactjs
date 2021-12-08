@@ -35,4 +35,12 @@ export const UserSettingsApi = {
         const {data} = await axios.put<User>(API_URL + "/settings/update/private", settings);
         return data;
     },
+    async updateColorScheme(settings: Settings): Promise<User> {
+        const {data} = await axios.put<User>(API_URL + "/settings/update/color_scheme", settings);
+        return data;
+    },
+    async updateBackgroundColor(settings: Settings): Promise<User> {
+        const {data} = await axios.put<User>(API_URL + "/settings/update/background_color", settings);
+        return data;
+    },
 }
