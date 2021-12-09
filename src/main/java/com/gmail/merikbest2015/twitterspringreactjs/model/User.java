@@ -169,6 +169,12 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> following;
 
+    @ManyToMany
+    @JoinTable(name = "subscribers",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "subscriber_id"))
+    private List<User> subscribers;
+
     public User() {
         this.registrationDate = LocalDateTime.now().withNano(0);
         this.bookmarks = new ArrayList<>();

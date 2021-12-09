@@ -43,4 +43,5 @@ public class UserResponse {
     private List<BlockedUserResponse> userBlockedList;
     private List<FollowerResponse> followers;
     private List<FollowerResponse> following;
+    private List<FollowerResponse> subscribers;
 }

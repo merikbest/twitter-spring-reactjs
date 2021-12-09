@@ -191,6 +191,11 @@ public class UserServiceImpl implements UserService {
 
         if (follower.isPresent()) {
             followers.remove(follower.get());
+            List<User> subscribers = currentUser.getSubscribers();
+            Optional<User> subscriber = subscribers.stream()
+                    .filter(s -> s.getId().equals(user.getId()))
+                    .findFirst();
+            subscriber.ifPresent(subscribers::remove);
         } else {
             followers.add(currentUser);
         }
@@ -216,6 +221,13 @@ public class UserServiceImpl implements UserService {
             }
         }
         return notification;
+    }
+
+    @Override
+    public User processSubscribeToNotifications(Long userId) {
+        User user = authenticationService.getAuthenticatedUser();
+        User currentUser = userRepository.getOne(userId);
+        return processUserList(currentUser, user, currentUser.getSubscribers());
     }
 
     @Override

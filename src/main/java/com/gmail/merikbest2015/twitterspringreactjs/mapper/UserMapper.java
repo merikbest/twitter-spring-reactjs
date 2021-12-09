@@ -125,6 +125,10 @@ public class UserMapper {
         return convertToNotificationResponse(userService.processFollow(userId));
     }
 
+    public UserResponse processSubscribeToNotifications(Long userId) {
+        return convertToUserResponse(userService.processSubscribeToNotifications(userId));
+    }
+
     public List<UserResponse> getRelevantUsers() {
         return convertListToResponse(userService.getRelevantUsers());
     }

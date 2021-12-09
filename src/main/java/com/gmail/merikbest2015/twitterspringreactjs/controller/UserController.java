@@ -111,6 +111,11 @@ public class UserController {
         return ResponseEntity.ok(notification.getUserToFollow());
     }
 
+    @GetMapping("/subscribe/{userId}")
+    public ResponseEntity<UserResponse> processSubscribeToNotifications(@PathVariable Long userId) {
+        return ResponseEntity.ok(userMapper.processSubscribeToNotifications(userId));
+    }
+
     @GetMapping("/pin/tweet/{tweetId}")
     public ResponseEntity<UserResponse> processPinTweet(@PathVariable Long tweetId) {
         return ResponseEntity.ok(userMapper.processPinTweet(tweetId));

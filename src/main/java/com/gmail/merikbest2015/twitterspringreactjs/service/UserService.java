@@ -39,6 +39,8 @@ public interface UserService {
 
     Notification processFollow(Long userId);
 
+    User processSubscribeToNotifications(Long userId);
+
     User processPinTweet(Long tweetId);
 
     List<User> getBlockList();
