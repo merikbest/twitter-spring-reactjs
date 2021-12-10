@@ -9,7 +9,6 @@ import {
     ChangeReplyTypeActionInterface,
     DeleteScheduledTweetsActionInterface,
     FetchDeleteTweetActionInterface,
-    FetchLikedTweetsActionInterface,
     LikeTweetActionInterface,
     FetchMediaTweetsActionInterface,
     RetweetActionInterface,
@@ -117,11 +116,6 @@ export const fetchTweetsByTag = (payload: string): FetchTweetsByTagActionInterfa
 
 export const fetchTweetsByText = (payload: string): FetchTweetsByTextActionInterface => ({
     type: TweetsActionType.FETCH_TWEETS_BY_TEXT,
-    payload
-});
-
-export const fetchLikedTweets = (payload: string): FetchLikedTweetsActionInterface => ({
-    type: TweetsActionType.FETCH_LIKED_TWEETS,
     payload
 });
 

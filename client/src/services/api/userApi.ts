@@ -32,7 +32,7 @@ export const UserApi = {
         return data;
     },
     async getUserInfo(userId: string): Promise<User | undefined> {
-        const {data} = await axios.get<User | undefined>(API_URL + '/user/' + userId);
+        const {data} = await axios.get<User | undefined>(API_URL + `/user/${userId}`);
         return data;
     },
     async updateUserProfile(userData: User): Promise<User> {
@@ -40,17 +40,17 @@ export const UserApi = {
         return data;
     },
     async follow(user: User): Promise<User | undefined> {
-        const {data} = await axios.get<User | undefined>(API_URL + '/user/follow/' + user.id);
+        const {data} = await axios.get<User | undefined>(API_URL + `/user/follow/${user.id}`);
+        return data;
+    },
+    async processSubscribeToNotifications(userId: number): Promise<User | undefined> {
+        const {data} = await axios.get<User | undefined>(API_URL + `/user/subscribe/${userId}`);
         return data;
     },
     async getUserTweets(payload: { userId: string, page: number }): Promise<AxiosResponse<Tweet[]>> {
         return await axios.get<Tweet[]>(API_URL + `/user/${payload.userId}/tweets`, {params: {page: payload.page}});
     },
-    async getUserLikedTweets(id: string): Promise<Response<Tweet[]>> {
-        const {data} = await axios.get<Response<Tweet[]>>(API_URL + `/user/${id}/liked`);
-        return data;
-    },
-    async getUserLikedTweets2(payload: { userId: string, page: number }): Promise<AxiosResponse<Tweet[]>> {
+    async getUserLikedTweets(payload: { userId: string, page: number }): Promise<AxiosResponse<Tweet[]>> {
         return await axios.get<Tweet[]>(API_URL + `/user/${payload.userId}/liked`, {params: {page: payload.page}});
     },
     async getUserMediaTweets(payload: { userId: string, page: number }): Promise<AxiosResponse<Tweet[]>> {
@@ -60,14 +60,14 @@ export const UserApi = {
         return await axios.get<Tweet[]>(API_URL + `/user/${payload.userId}/replies`, {params: {page: payload.page}});
     },
     async getUserNotifications(): Promise<Response<Notification[]>> {
-        const {data} =  await axios.get<Response<Notification[]>>(API_URL + "/user/notifications");
+        const {data} = await axios.get<Response<Notification[]>>(API_URL + "/user/notifications");
         return data;
     },
     async getUserBookmarks(payload: number): Promise<AxiosResponse<Tweet[]>> {
         return await axios.get<Tweet[]>(API_URL + "/user/bookmarks", {params: {page: payload}});
     },
     async addTweetToBookmarks(tweetId: string): Promise<Response<User>> {
-        const {data} = await axios.get<Response<User>>(API_URL + '/user/bookmarks/' + tweetId);
+        const {data} = await axios.get<Response<User>>(API_URL + `/user/bookmarks/${tweetId}`);
         return data;
     },
     async startUseTwitter(id: number): Promise<Response<User>> {
@@ -75,7 +75,7 @@ export const UserApi = {
         return data;
     },
     async pinTweet(tweetId: string): Promise<Response<User>> {
-        const {data} = await axios.get<Response<User>>(API_URL + '/user/pin/tweet/' + tweetId);
+        const {data} = await axios.get<Response<User>>(API_URL + `/user/pin/tweet/${tweetId}`);
         return data;
     },
     async getBlockList(): Promise<User[]> {

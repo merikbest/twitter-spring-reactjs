@@ -26,4 +26,5 @@ public class NotificationUserResponse {
     private ImageResponse wallpaper;
     private List<FollowerResponse> followers;
     private List<FollowerResponse> following;
+    private List<FollowerResponse> subscribers;
 }

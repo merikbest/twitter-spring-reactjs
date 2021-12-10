@@ -180,6 +180,7 @@ public class User {
         this.bookmarks = new ArrayList<>();
         this.userLists = new ArrayList<>();
         this.unreadMessages = new ArrayList<>();
+        this.subscribers = new ArrayList<>();
         this.backgroundColor = BackgroundColorType.DEFAULT;
         this.colorScheme = ColorSchemeType.BLUE;
     }

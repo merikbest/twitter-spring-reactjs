@@ -26,7 +26,7 @@ export function* fetchUserTweetsRequest({payload}: FetchUserTweetsActionInterfac
 export function* fetchUserLikedTweetsRequest({payload}: FetchUserLikedTweetsActionInterface) {
     try {
         yield put(setUserTweetsLoadingStatus(LoadingStatus.LOADING));
-        const response: AxiosResponse<Tweet[]> = yield call(UserApi.getUserLikedTweets2, payload);
+        const response: AxiosResponse<Tweet[]> = yield call(UserApi.getUserLikedTweets, payload);
         yield put(setUserTweets({items: response.data, pagesCount: parseInt(response.headers["page-total-count"])}));
     } catch (e) {
         yield put(setUserTweetsLoadingStatus(LoadingStatus.ERROR));

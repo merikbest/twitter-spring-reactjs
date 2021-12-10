@@ -37,6 +37,7 @@ export interface User {
     userBlockedList?: User[];
     followers?: User[];
     following?: User[];
+    subscribers?: User[];
 }
 
 export interface Bookmark {

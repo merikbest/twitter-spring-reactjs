@@ -12,7 +12,15 @@ import {CompatClient, Stomp} from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import classNames from "classnames";
 
-import {CalendarIcon, LinkIcon, LocationIcon, LockIcon, MessagesIcon, NotificationsAddIcon} from "../../icons";
+import {
+    CalendarIcon,
+    LinkIcon,
+    LocationIcon,
+    LockIcon,
+    MessagesIcon,
+    NotificationsAddFilledIcon,
+    NotificationsAddIcon
+} from "../../icons";
 import {useUserPageStyles} from "./UserPageStyles";
 import BackButton from "../../components/BackButton/BackButton";
 import EditProfileModal from "../../components/EditProfileModal/EditProfileModal";
@@ -46,6 +54,7 @@ import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
 import {
     fetchUserProfile,
     followUserProfile,
+    processSubscribe,
     resetUserProfile,
     unfollowUserProfile
 } from "../../store/ducks/userProfile/actionCreators";
@@ -94,6 +103,7 @@ const UserPage: FC<RouteComponentProps<{ id: string }> & SnackbarProps> = (
     const pagesCount = useSelector(selectPagesCount);
     const [page, setPage] = useState<number>(0);
 
+    const isSubscriber = userProfile?.subscribers?.findIndex(subscriber => subscriber.id === myProfile?.id) !== -1;
     const isFollower = myProfile?.followers?.findIndex(follower => follower.id === userProfile?.id) !== -1;
     const isUserMuted = myProfile?.userMutedList?.findIndex(mutedUser => mutedUser.id === userProfile?.id) !== -1;
     const isUserBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === userProfile?.id) !== -1;
@@ -264,6 +274,10 @@ const UserPage: FC<RouteComponentProps<{ id: string }> & SnackbarProps> = (
         setOpenSnackBar!(true);
     };
 
+    const handleSubscribeToNotifications = (): void  => {
+        dispatch(processSubscribe(userProfile?.id!));
+    };
+
     const onOpenBlockUserModal = (): void => {
         setVisibleBlockUserModal(true);
     };
@@ -353,10 +367,11 @@ const UserPage: FC<RouteComponentProps<{ id: string }> & SnackbarProps> = (
                                         isFollower ? (
                                             <>
                                                 <IconButton
+                                                    onClick={handleSubscribeToNotifications}
                                                     className={classes.messageButton}
                                                     color="primary"
                                                 >
-                                                    {NotificationsAddIcon}
+                                                    {isSubscriber ? NotificationsAddFilledIcon : NotificationsAddIcon}
                                                 </IconButton>
                                                 <Button
                                                     onClick={handleFollow}

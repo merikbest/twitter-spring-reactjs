@@ -4,6 +4,7 @@ import {LoadingStatus} from '../../types';
 import {
     FetchUserProfileActionInterface,
     FollowUserProfileActionInterface,
+    ProcessSubscribeActionInterface,
     UnfollowUserProfileActionInterface,
     UpdateUserDataActionInterface,
     UserProfileActionsType,
@@ -32,7 +33,7 @@ export function* fetchUserRequest({payload}: FetchUserProfileActionInterface) {
     }
 }
 
-export function* followUser({payload}: FollowUserProfileActionInterface) {
+export function* followUserRequest({payload}: FollowUserProfileActionInterface) {
     try {
         const item: User = yield call(UserApi.follow, payload);
         yield put(setUserProfile(item));
@@ -41,9 +42,18 @@ export function* followUser({payload}: FollowUserProfileActionInterface) {
     }
 }
 
-export function* unfollowUser({payload}: UnfollowUserProfileActionInterface) {
+export function* unfollowUseRequest({payload}: UnfollowUserProfileActionInterface) {
     try {
         const item: User = yield call(UserApi.follow, payload);
+        yield put(setUserProfile(item));
+    } catch (error) {
+        yield put(setUserProfileLoadingState(LoadingStatus.ERROR));
+    }
+}
+
+export function* processSubscribeRequest({payload}: ProcessSubscribeActionInterface) {
+    try {
+        const item: User = yield call(UserApi.processSubscribeToNotifications, payload);
         yield put(setUserProfile(item));
     } catch (error) {
         yield put(setUserProfileLoadingState(LoadingStatus.ERROR));
@@ -53,6 +63,7 @@ export function* unfollowUser({payload}: UnfollowUserProfileActionInterface) {
 export function* userProfileSaga() {
     yield takeLatest(UserProfileActionsType.UPDATE_USER_DATA, updateUserDataRequest);
     yield takeLatest(UserProfileActionsType.FETCH_USER, fetchUserRequest);
-    yield takeLatest(UserProfileActionsType.FOLLOW_USER, followUser);
-    yield takeLatest(UserProfileActionsType.UNFOLLOW_USER, unfollowUser);
+    yield takeLatest(UserProfileActionsType.FOLLOW_USER, followUserRequest);
+    yield takeLatest(UserProfileActionsType.UNFOLLOW_USER, unfollowUseRequest);
+    yield takeLatest(UserProfileActionsType.PROCESS_SUBSCRIBE, processSubscribeRequest);
 }

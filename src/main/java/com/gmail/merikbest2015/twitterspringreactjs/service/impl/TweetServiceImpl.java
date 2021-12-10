@@ -329,11 +329,11 @@ public class TweetServiceImpl implements TweetService {
                 tweet.getUser().setNotificationsCount(tweet.getUser().getNotificationsCount() + 1);
                 List<Notification> notifications = tweet.getUser().getNotifications();
                 notifications.add(newNotification);
+                userRepository.save(tweet.getUser());
                 return newNotification;
             }
             tweetRepository.save(tweet);
         }
-        userRepository.save(user);
         return notification;
     }
 

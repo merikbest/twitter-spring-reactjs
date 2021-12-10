@@ -27,7 +27,6 @@ export enum TweetsActionType {
     FETCH_TWEETS_WITH_VIDEO = "tweets/FETCH_TWEETS_WITH_VIDEO",
     FETCH_TWEETS_BY_TAG = "tweets/FETCH_TWEETS_BY_TAG",
     FETCH_TWEETS_BY_TEXT = "tweets/FETCH_TWEETS_BY_TEXT",
-    FETCH_LIKED_TWEETS = "tweets/FETCH_LIKED_TWEETS",
     FETCH_BOOKMARKS = "tweets/FETCH_BOOKMARKS",
     REMOVE_TWEET_FROM_BOOKMARKS = "tweets/REMOVE_TWEET_FROM_BOOKMARKS",
     SET_LOADING_STATE = "tweets/SET_LOADING_STATE",
@@ -149,11 +148,6 @@ export interface FetchTweetsByTagActionInterface extends Action<TweetsActionType
 
 export interface FetchTweetsByTextActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_TWEETS_BY_TEXT;
-    payload: string;
-}
-
-export interface FetchLikedTweetsActionInterface extends Action<TweetsActionType> {
-    type: TweetsActionType.FETCH_LIKED_TWEETS;
     payload: string;
 }
 

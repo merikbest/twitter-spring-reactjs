@@ -12,7 +12,6 @@ import {
     ChangeReplyTypeActionInterface,
     DeleteScheduledTweetsActionInterface,
     FetchDeleteTweetActionInterface,
-    FetchLikedTweetsActionInterface,
     LikeTweetActionInterface,
     FetchMediaTweetsActionInterface,
     RetweetActionInterface,
@@ -82,16 +81,6 @@ export function* fetchTweetsByTextRequest({payload}: FetchTweetsByTextActionInte
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
         const item: Tweet[] = yield call(TweetApi.searchTweets, payload);
-        yield put(setTweets(item));
-    } catch (e) {
-        yield put(setTweetsLoadingState(LoadingStatus.ERROR));
-    }
-}
-
-export function* fetchLikedTweetsRequest({payload}: FetchLikedTweetsActionInterface) {
-    try {
-        yield put(setTweetsLoadingState(LoadingStatus.LOADING));
-        const item: Tweet[] = yield call(UserApi.getUserLikedTweets, payload);
         yield put(setTweets(item));
     } catch (e) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
@@ -208,6 +197,5 @@ export function* tweetsSaga() {
     yield takeLatest(TweetsActionType.RETWEET, retweetRequest);
     yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_TAG, fetchTweetsByTagRequest);
     yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_TEXT, fetchTweetsByTextRequest);
-    yield takeLatest(TweetsActionType.FETCH_LIKED_TWEETS, fetchLikedTweetsRequest);
     yield takeLatest(TweetsActionType.FETCH_BOOKMARKS, fetchUserBookmarksRequest);
 }

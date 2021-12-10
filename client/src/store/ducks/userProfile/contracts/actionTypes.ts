@@ -11,6 +11,7 @@ export enum UserProfileActionsType {
     UNFOLLOW  = 'userProfile/UNFOLLOW',
     FOLLOW_USER  = 'userProfile/FOLLOW_USER',
     UNFOLLOW_USER  = 'userProfile/UNFOLLOW_USER',
+    PROCESS_SUBSCRIBE = 'userProfile/PROCESS_SUBSCRIBE',
     SET_USER_LOADING_STATE = 'userProfile/SET_USER_LOADING_STATE',
 }
 
@@ -51,6 +52,11 @@ export interface FollowUserProfileActionInterface extends Action<UserProfileActi
 export interface UnfollowUserProfileActionInterface extends Action<UserProfileActionsType> {
     type: UserProfileActionsType.UNFOLLOW_USER;
     payload: User;
+}
+
+export interface ProcessSubscribeActionInterface extends Action<UserProfileActionsType> {
+    type: UserProfileActionsType.PROCESS_SUBSCRIBE;
+    payload: number;
 }
 
 export interface SetUserProfileLoadingStatusActionInterface extends Action<UserProfileActionsType> {
