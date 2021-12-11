@@ -11,6 +11,11 @@ export interface Notification {
     tweet: Tweet;
 }
 
+export interface Notifications {
+    notifications: Notification[];
+    tweetAuthors: User[];
+}
+
 export enum NotificationType {
     LIKE = "LIKE",
     RETWEET = "RETWEET",
@@ -18,6 +23,7 @@ export enum NotificationType {
 }
 
 export interface NotificationsState {
-    items: Notification[];
+    notificationsList: Notification[];
+    tweetAuthors: User[];
     loadingState: LoadingStatus;
 }

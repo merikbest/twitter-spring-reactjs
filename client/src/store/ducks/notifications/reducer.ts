@@ -5,19 +5,20 @@ import {NotificationsState} from "./contracts/state";
 import {NotificationsActions, NotificationsActionsType} from "./contracts/actionTypes";
 
 const initialTagsState: NotificationsState = {
-    items: [],
+    notificationsList: [],
+    tweetAuthors: [],
     loadingState: LoadingStatus.NEVER,
 };
 
 export const notificationsReducer = produce((draft: Draft<NotificationsState>, action: NotificationsActions) => {
     switch (action.type) {
         case NotificationsActionsType.SET_NOTIFICATIONS:
-            draft.items = action.payload;
-            draft.loadingState = LoadingStatus.LOADED;
+            draft.notificationsList = action.payload.notifications ? action.payload.notifications : [];
+            draft.tweetAuthors = action.payload.tweetAuthors ? action.payload.tweetAuthors : [];
             break;
 
         case NotificationsActionsType.SET_NOTIFICATION:
-            draft.items = [action.payload, ...draft.items];
+            draft.notificationsList = [action.payload, ...draft.notificationsList];
             draft.loadingState = LoadingStatus.LOADED;
             break;
 

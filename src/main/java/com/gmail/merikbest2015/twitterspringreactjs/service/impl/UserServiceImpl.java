@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -94,13 +95,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Notification> getUserNotifications() {
+    public Map<String, Object> getUserNotifications() {
         User user = authenticationService.getAuthenticatedUser();
         user.setNotificationsCount(0L);
-        List<Notification> notifications = user.getNotifications();
-        notifications.sort(Comparator.comparing(Notification::getDate).reversed());
+        List<Notification> notifications = user.getNotifications().stream()
+                .filter(notification -> !notification.getNotificationType().equals(NotificationType.TWEET))
+                .sorted(Comparator.comparing(Notification::getDate).reversed())
+                .collect(Collectors.toList());
+        Set<User> tweetAuthors = user.getNotifications().stream()
+                .filter(notification -> notification.getNotificationType().equals(NotificationType.TWEET))
+                .map(notification -> notification.getTweet().getUser())
+                .collect(Collectors.toSet());
+        Map<String, Object> response = new HashMap<>();
+        response.put("notifications", notifications);
+        response.put("tweetAuthors", tweetAuthors);
         userRepository.save(user);
-        return notifications;
+        return response;
     }
 
     @Override

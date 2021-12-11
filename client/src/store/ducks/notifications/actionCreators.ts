@@ -1,4 +1,4 @@
-import {Notification} from "./contracts/state";
+import {Notification, Notifications} from "./contracts/state";
 import {
     FetchNotificationsActionInterface,
     NotificationsActionsType,
@@ -8,7 +8,7 @@ import {
 } from "./contracts/actionTypes";
 import {LoadingStatus} from "../../types";
 
-export const setNotifications = (payload: Notification[]): SetNotificationsActionInterface => ({
+export const setNotifications = (payload: Notifications): SetNotificationsActionInterface => ({
     type: NotificationsActionsType.SET_NOTIFICATIONS,
     payload,
 });

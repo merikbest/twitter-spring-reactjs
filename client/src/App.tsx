@@ -47,6 +47,7 @@ import {
     yellowColor
 } from "./theme";
 import {BackgroundTheme, ColorScheme} from "./pages/Settings/AccessibilityDisplayLanguages/Display/Display";
+import NotificationsTimeline from "./pages/Notifications/NotificationsTimeline/NotificationsTimeline";
 
 const App: FC = (): ReactElement => {
     const history = useHistory();
@@ -175,6 +176,7 @@ const App: FC = (): ReactElement => {
                         <Route path="/home" component={Home}/>
                         <Route path="/search" component={Explore}/>
                         <Route path="/notifications" component={Notifications} exact/>
+                        <Route path="/notifications/timeline" component={NotificationsTimeline} exact/>
                         <Route path="/notification" component={NotificationInfo} exact/>
                         <Route path="/messages" component={Messages}/>
                         <Route path="/settings"

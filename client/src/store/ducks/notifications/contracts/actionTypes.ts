@@ -1,7 +1,7 @@
 import {Action} from "redux";
 
 import {LoadingStatus} from "../../../types";
-import {Notification} from "./state";
+import {Notification, Notifications} from "./state";
 
 export enum NotificationsActionsType {
     SET_NOTIFICATIONS = 'notification/SET_NOTIFICATIONS',
@@ -12,7 +12,7 @@ export enum NotificationsActionsType {
 
 export interface SetNotificationsActionInterface extends Action<NotificationsActionsType> {
     type: NotificationsActionsType.SET_NOTIFICATIONS;
-    payload: Notification[];
+    payload: Notifications;
 }
 
 export interface FetchNotificationsActionInterface extends Action<NotificationsActionsType> {

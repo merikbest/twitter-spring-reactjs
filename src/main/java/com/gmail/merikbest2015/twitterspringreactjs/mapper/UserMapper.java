@@ -5,9 +5,11 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.AuthenticationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetHeaderResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationUserResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationsResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserSettingsService;
@@ -22,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -51,9 +54,15 @@ public class UserMapper {
         return modelMapper.map(user, UserResponse.class);
     }
 
-    private List<UserResponse> convertListToResponse(List<User> users) {
+    private List<UserResponse> convertUserListToResponse(List<User> users) {
         return users.stream()
                 .map(this::convertToUserResponse)
+                .collect(Collectors.toList());
+    }
+
+    private List<NotificationUserResponse> convertUserListToNotificationResponse(Set<User> users) {
+        return users.stream()
+                .map(user -> modelMapper.map(user, NotificationUserResponse.class))
                 .collect(Collectors.toList());
     }
 
@@ -73,7 +82,7 @@ public class UserMapper {
     }
 
     public List<UserResponse> getUsers() {
-        return convertListToResponse(userService.getUsers());
+        return convertUserListToResponse(userService.getUsers());
     }
 
     public ImageResponse uploadImage(MultipartFile multipartFile) {
@@ -130,19 +139,24 @@ public class UserMapper {
     }
 
     public List<UserResponse> getRelevantUsers() {
-        return convertListToResponse(userService.getRelevantUsers());
+        return convertUserListToResponse(userService.getRelevantUsers());
     }
 
     public List<UserResponse> searchUsersByUsername(String username) {
-        return convertListToResponse(userService.searchUsersByUsername(username));
+        return convertUserListToResponse(userService.searchUsersByUsername(username));
     }
 
     public UserResponse processPinTweet(Long tweetId) {
         return convertToUserResponse(userService.processPinTweet(tweetId));
     }
 
-    public List<NotificationResponse> getUserNotifications() {
-        return convertListToNotificationResponse(userService.getUserNotifications());
+    @SuppressWarnings("unchecked")
+    public NotificationsResponse getUserNotifications() {
+        Map<String, Object> userNotifications = userService.getUserNotifications();
+        NotificationsResponse notificationsResponse = new NotificationsResponse();
+        notificationsResponse.setNotifications(convertListToNotificationResponse((List<Notification>) userNotifications.get("notifications")));
+        notificationsResponse.setTweetAuthors(convertUserListToNotificationResponse((Set<User>) userNotifications.get("tweetAuthors")));
+        return notificationsResponse;
     }
 
     public UserResponse updateUsername(SettingsRequest request) {
@@ -190,14 +204,15 @@ public class UserMapper {
     }
 
     public List<UserResponse> getBlockList() {
-        return convertListToResponse(userService.getBlockList());
+        return convertUserListToResponse(userService.getBlockList());
     }
 
     public UserResponse processBlockList(Long userId) {
         return convertToUserResponse(userService.processBlockList(userId));
     }
+
     public List<UserResponse> getMutedList() {
-        return convertListToResponse(userService.getMutedList());
+        return convertUserListToResponse(userService.getMutedList());
     }
 
     public UserResponse processMutedList(Long userId) {
