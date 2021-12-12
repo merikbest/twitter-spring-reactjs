@@ -76,10 +76,7 @@ public class UserServiceImpl implements UserService {
         if (isTweetExist) {
             userTweets.add(0, user.getPinnedTweet());
         }
-        PagedListHolder<Tweet> page = new PagedListHolder<>(userTweets);
-        page.setPage(pageable.getPageNumber());
-        page.setPageSize(pageable.getPageSize());
-        return new PageImpl<>(page.getPageList(), pageable, tweets.size() + retweets.size());
+        return getPageableTweetList(pageable, userTweets, tweets.size() + retweets.size());
     }
 
     @Override
@@ -88,10 +85,7 @@ public class UserServiceImpl implements UserService {
         List<Tweet> replies = tweetRepository.findRepliesByUserId(user.getId());
         List<Retweet> retweets = retweetRepository.findRetweetsByUserId(user.getId());
         List<Tweet> userTweets = combineTweetsArrays(replies, retweets);
-        PagedListHolder<Tweet> page = new PagedListHolder<>(userTweets);
-        page.setPage(pageable.getPageNumber());
-        page.setPageSize(pageable.getPageSize());
-        return new PageImpl<>(page.getPageList(), pageable, replies.size() + retweets.size());
+        return getPageableTweetList(pageable, userTweets, replies.size() + retweets.size());
     }
 
     @Override
@@ -103,7 +97,8 @@ public class UserServiceImpl implements UserService {
                 .sorted(Comparator.comparing(Notification::getDate).reversed())
                 .collect(Collectors.toList());
         Set<User> tweetAuthors = user.getNotifications().stream()
-                .filter(notification -> notification.getNotificationType().equals(NotificationType.TWEET))
+                .filter(notification -> notification.getNotificationType().equals(NotificationType.TWEET)
+                        && notification.getTweet().getUser().getSubscribers().contains(user))
                 .map(notification -> notification.getTweet().getUser())
                 .collect(Collectors.toSet());
         Map<String, Object> response = new HashMap<>();
@@ -111,6 +106,17 @@ public class UserServiceImpl implements UserService {
         response.put("tweetAuthors", tweetAuthors);
         userRepository.save(user);
         return response;
+    }
+
+    @Override
+    public Page<Tweet> getNotificationsFromTweetAuthors(Pageable pageable) {
+        User user = authenticationService.getAuthenticatedUser();
+        List<Tweet> tweets = user.getNotifications().stream()
+                .filter(notification -> notification.getNotificationType().equals(NotificationType.TWEET))
+                .sorted(Comparator.comparing(Notification::getDate).reversed())
+                .map(Notification::getTweet)
+                .collect(Collectors.toList());
+        return getPageableTweetList(pageable, tweets, tweets.size());
     }
 
     @Override
@@ -292,6 +298,13 @@ public class UserServiceImpl implements UserService {
             userLists.add(currentUser);
         }
         return userRepository.save(authenticatedUser);
+    }
+
+    private Page<Tweet> getPageableTweetList(Pageable pageable, List<Tweet> tweets, int totalPages) {
+        PagedListHolder<Tweet> page = new PagedListHolder<>(tweets);
+        page.setPage(pageable.getPageNumber());
+        page.setPageSize(pageable.getPageSize());
+        return new PageImpl<>(page.getPageList(), pageable, totalPages);
     }
 
     private List<Tweet> combineTweetsArrays(List<Tweet> tweets, List<Retweet> retweets) {

@@ -1,6 +1,7 @@
 import {Notification, Notifications} from "./contracts/state";
 import {
     FetchNotificationsActionInterface,
+    FetchNotificationsFromTweetAuthorsActionInterface,
     NotificationsActionsType,
     SetNotificationActionInterface,
     SetNotificationsActionInterface,
@@ -15,6 +16,11 @@ export const setNotifications = (payload: Notifications): SetNotificationsAction
 
 export const fetchNotifications = (): FetchNotificationsActionInterface => ({
     type: NotificationsActionsType.FETCH_NOTIFICATIONS,
+});
+
+export const fetchNotificationsFromTweetAuthors = (payload: number): FetchNotificationsFromTweetAuthorsActionInterface => ({
+    type: NotificationsActionsType.FETCH_NOTIFICATIONS_FROM_TWEET_AUTHORS,
+    payload,
 });
 
 export const setNotification = (payload: Notification): SetNotificationActionInterface => ({

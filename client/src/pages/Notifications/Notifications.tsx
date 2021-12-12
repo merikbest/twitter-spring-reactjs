@@ -7,20 +7,35 @@ import Tab from "@material-ui/core/Tab";
 import Paper from "@material-ui/core/Paper";
 
 import {useNotificationsStyles} from "./NotificationsStyles";
-import {LikeIcon, ProfileIconFilled, RetweetIcon} from "../../icons";
+import {LikeIcon, NotificationsIconFilled, ProfileIconFilled, RetweetIcon} from "../../icons";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {textFormatter} from "../../util/textFormatter";
-import {selectIsNotificationsLoading, selectNotificationsItems} from "../../store/ducks/notifications/selectors";
+import {
+    selectIsNotificationsLoading,
+    selectNotificationsList,
+    selectNotificationsTweetAuthors
+} from "../../store/ducks/notifications/selectors";
 import {fetchNotifications} from "../../store/ducks/notifications/actionCreators";
 import {fetchUserData} from "../../store/ducks/user/actionCreators";
 import {Notification, NotificationType} from "../../store/ducks/notifications/contracts/state";
 import Spinner from "../../components/Spinner/Spinner";
+import {HoverUserProps, withHoverUser} from "../../hoc/withHoverUser";
+import PopperUserWindow from "../../components/PopperUserWindow/PopperUserWindow";
 
-const Notifications: FC = (): ReactElement => {
+const Notifications: FC<HoverUserProps> = (
+    {
+        visibleUser,
+        visiblePopperWindow,
+        handleHoverPopper,
+        handleHoverPopperWithUser,
+        handleLeavePopper
+    }
+): ReactElement => {
     const classes = useNotificationsStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const notifications = useSelector(selectNotificationsItems);
+    const notifications = useSelector(selectNotificationsList);
+    const tweetAuthors = useSelector(selectNotificationsTweetAuthors);
     const isNotificationLoading = useSelector(selectIsNotificationsLoading);
     const [activeTab, setActiveTab] = useState<number>(0);
 
@@ -71,6 +86,46 @@ const Notifications: FC = (): ReactElement => {
                             </div>
                         ) : (
                             <div>
+                                {(tweetAuthors.length !== 0) && (
+                                    <Link to={"/notifications/timeline"}>
+                                        <Paper className={classes.notificationWrapper} variant="outlined">
+                                            <div className={classes.notificationIcon}>
+                                                <span id={"notification"}>{NotificationsIconFilled}</span>
+                                            </div>
+                                            <div style={{flex: 1}}>
+                                                {tweetAuthors.slice(0, 6).map((tweetAuthor) => (
+                                                    <div
+                                                        className={classes.notificationAvatarWrapper}
+                                                        onMouseEnter={() => handleHoverPopperWithUser!(tweetAuthor)}
+                                                        onMouseLeave={handleLeavePopper}
+                                                    >
+                                                        <Avatar
+                                                            className={classes.notificationAvatar}
+                                                            alt={`avatar ${tweetAuthor?.id!}`}
+                                                            src={(tweetAuthor?.avatar?.src) ? (
+                                                                tweetAuthor?.avatar?.src
+                                                            ) : (
+                                                                DEFAULT_PROFILE_IMG
+                                                            )}
+                                                        />
+                                                        <PopperUserWindow
+                                                            visible={visiblePopperWindow && visibleUser?.id === tweetAuthor.id}
+                                                            user={tweetAuthor}
+                                                        />
+                                                    </div>
+                                                ))}
+                                                <div className={classes.notificationInfoText}>
+                                                    New Tweet notifications for <span>{tweetAuthors[0].fullName}</span>
+                                                    {(tweetAuthors.length > 2) ? (
+                                                        ` and ${tweetAuthors.length -1} others`
+                                                    ) : (
+                                                        " and " + <span>{tweetAuthors[1].fullName}</span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </Paper>
+                                    </Link>
+                                )}
                                 {notifications.map((notification) => (
                                     <NotificationWithLink notification={notification}>
                                         <Paper className={classes.notificationWrapper} variant="outlined">
@@ -88,6 +143,8 @@ const Notifications: FC = (): ReactElement => {
                                             <div style={{flex: 1}}>
                                                 <a href={`/user/${notification.user.id!}`}
                                                    onClick={event => handleClickUser(notification.user.id!, event)}
+                                                   onMouseEnter={handleHoverPopper}
+                                                   onMouseLeave={handleLeavePopper}
                                                 >
                                                     <Avatar
                                                         className={classes.notificationAvatar}
@@ -97,6 +154,10 @@ const Notifications: FC = (): ReactElement => {
                                                         ) : (
                                                             DEFAULT_PROFILE_IMG
                                                         )}
+                                                    />
+                                                    <PopperUserWindow
+                                                        visible={visiblePopperWindow && !visibleUser}
+                                                        user={notification.user}
                                                     />
                                                 </a>
                                                 <div className={classes.notificationInfo}>
@@ -127,7 +188,7 @@ const Notifications: FC = (): ReactElement => {
                             <Typography component={"div"} className={classes.title}>
                                 Nothing to see here — yet
                             </Typography>
-                            <Typography component={"div"}  className={classes.text}>
+                            <Typography component={"div"} className={classes.text}>
                                 When someone mentions you, you’ll find it here.
                             </Typography>
                         </div>
@@ -159,4 +220,4 @@ const NotificationWithLink: FC<NotificationWithLinkProps> = ({notification, chil
     );
 };
 
-export default Notifications;
+export default withHoverUser(Notifications);

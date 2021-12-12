@@ -30,6 +30,8 @@ public interface UserService {
 
     Map<String, Object> getUserNotifications();
 
+    Page<Tweet> getNotificationsFromTweetAuthors(Pageable pageable);
+
     Page<Bookmark> getUserBookmarks(Pageable pageable);
 
     User processUserBookmarks(Long tweetId);

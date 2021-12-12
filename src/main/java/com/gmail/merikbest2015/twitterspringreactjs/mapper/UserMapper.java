@@ -71,7 +71,7 @@ public class UserMapper {
     }
 
     private TweetHeaderResponse getTweetHeaderResponse(List<Tweet> tweets, Integer totalPages) {
-        List<TweetResponse> tweetResponses = tweetMapper.convertListToResponse((tweets));
+        List<TweetResponse> tweetResponses = tweetMapper.convertListToResponse(tweets);
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("page-total-count", String.valueOf(totalPages));
         return new TweetHeaderResponse(tweetResponses, responseHeaders);
@@ -157,6 +157,11 @@ public class UserMapper {
         notificationsResponse.setNotifications(convertListToNotificationResponse((List<Notification>) userNotifications.get("notifications")));
         notificationsResponse.setTweetAuthors(convertUserListToNotificationResponse((Set<User>) userNotifications.get("tweetAuthors")));
         return notificationsResponse;
+    }
+
+    public TweetHeaderResponse getNotificationsFromTweetAuthors(Pageable pageable) {
+        Page<Tweet> tweets = userService.getNotificationsFromTweetAuthors(pageable);
+        return getTweetHeaderResponse(tweets.getContent(), tweets.getTotalPages());
     }
 
     public UserResponse updateUsername(SettingsRequest request) {

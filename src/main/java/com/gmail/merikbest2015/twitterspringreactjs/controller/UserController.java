@@ -81,6 +81,12 @@ public class UserController {
         return ResponseEntity.ok(userMapper.getUserNotifications());
     }
 
+    @GetMapping("/notifications/timeline")
+    public ResponseEntity<List<TweetResponse>> getNotificationsFromTweetAuthors(@PageableDefault(size = 10) Pageable pageable) {
+        TweetHeaderResponse response = userMapper.getNotificationsFromTweetAuthors(pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getTweets());
+    }
+
     @GetMapping("/bookmarks")
     public ResponseEntity<List<TweetResponse>> getUserBookmarks(@PageableDefault(size = 10) Pageable pageable) {
         TweetHeaderResponse response = userMapper.getUserBookmarks(pageable);

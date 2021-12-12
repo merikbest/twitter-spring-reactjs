@@ -79,6 +79,9 @@ export const useNotificationsStyles = makeStyles((theme: Theme) => ({
         alignItems: "flex-end",
         marginLeft: 15,
         marginRight: 11,
+        '& #notification': {
+            color: "rgb(29, 155, 240)",
+        },
         '& #retweet': {
             color: "rgb(23, 191, 99)",
         },
@@ -86,26 +89,37 @@ export const useNotificationsStyles = makeStyles((theme: Theme) => ({
             color: "rgb(224, 36, 94)",
         },
         '& #follow': {
-            color: theme.palette.primary.main,
+            color: "rgb(29, 155, 240)",
         },
         "& svg": {
             verticalAlign: "bottom",
             height: "2.30em",
         },
     },
+    notificationAvatarWrapper: {
+        display: "inline-block",
+    },
     notificationAvatar: {
         display: "inline-block",
+        marginRight: 8,
         width: theme.spacing(4),
         height: theme.spacing(4),
         marginBottom: 11,
     },
     notificationInfo: {
-        fontSize: 14,
+        fontSize: 15,
         marginBottom: 11,
     },
     notificationText: {
+        fontSize: 15,
         '& #hashtag': {
             color: theme.palette.primary.main,
+        },
+    },
+    notificationInfoText: {
+        fontSize: 15,
+        "& span": {
+            fontWeight: 500
         },
     },
 }));

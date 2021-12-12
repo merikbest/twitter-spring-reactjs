@@ -28,7 +28,7 @@ import Messages from "./pages/Messages/Messages";
 import {setChatMessage} from "./store/ducks/chatMessages/actionCreators";
 import {WS_URL} from "./util/url";
 import {setNotification} from "./store/ducks/notifications/actionCreators";
-import {selectNotificationsItems} from "./store/ducks/notifications/selectors";
+import {selectNotificationsList} from "./store/ducks/notifications/selectors";
 import {deleteTweet, setScheduledTweets, setTweet, setUpdatedTweet} from "./store/ducks/tweets/actionCreators";
 import Lists from "./pages/Lists/Lists";
 import FullList from "./pages/FullList/FullList";
@@ -53,7 +53,7 @@ const App: FC = (): ReactElement => {
     const history = useHistory();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
-    const notifications = useSelector(selectNotificationsItems);
+    const notifications = useSelector(selectNotificationsList);
     const isAuth = useSelector(selectIsAuth);
     const loadingStatus = useSelector(selectUserStatus);
     const isReady = loadingStatus !== LoadingStatus.NEVER && loadingStatus !== LoadingStatus.LOADING;

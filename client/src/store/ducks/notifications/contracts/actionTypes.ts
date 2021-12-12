@@ -6,6 +6,7 @@ import {Notification, Notifications} from "./state";
 export enum NotificationsActionsType {
     SET_NOTIFICATIONS = 'notification/SET_NOTIFICATIONS',
     FETCH_NOTIFICATIONS = 'notification/FETCH_NOTIFICATIONS',
+    FETCH_NOTIFICATIONS_FROM_TWEET_AUTHORS = 'notification/FETCH_NOTIFICATIONS_FROM_TWEET_AUTHORS',
     SET_NOTIFICATION = 'notification/SET_NOTIFICATION',
     SET_LOADING_STATE = 'notification/SET_LOADING_STATE',
 }
@@ -17,6 +18,11 @@ export interface SetNotificationsActionInterface extends Action<NotificationsAct
 
 export interface FetchNotificationsActionInterface extends Action<NotificationsActionsType> {
     type: NotificationsActionsType.FETCH_NOTIFICATIONS;
+}
+
+export interface FetchNotificationsFromTweetAuthorsActionInterface extends Action<NotificationsActionsType> {
+    type: NotificationsActionsType.FETCH_NOTIFICATIONS_FROM_TWEET_AUTHORS;
+    payload: number;
 }
 
 export interface SetNotificationActionInterface extends Action<NotificationsActionsType> {
