@@ -70,6 +70,13 @@ export const listsReducer = produce((draft: Draft<ListsState>, action: ListsActi
             if (pinToUserListIndex !== -1) draft.userLists[pinToUserListIndex] = action.payload;
             break;
 
+        case ListsActionType.RESET_LISTS_STATE:
+            draft.lists = [];
+            draft.userLists = [];
+            draft.pinnedLists = [];
+            draft.loadingState = LoadingStatus.NEVER;
+            break;
+
         case ListsActionType.SET_LOADING_STATE:
             draft.loadingState = action.payload;
             break;

@@ -27,6 +27,16 @@ public class ListsController {
         return ResponseEntity.ok(listsMapper.getUserTweetLists());
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<ListsResponse>> getUserTweetListsById(@PathVariable Long userId) {
+        return ResponseEntity.ok(listsMapper.getUserTweetListsById(userId));
+    }
+
+    @GetMapping("/user/consist")
+    public ResponseEntity<List<ListsResponse>> getTweetListsWhichUserIn() {
+        return ResponseEntity.ok(listsMapper.getTweetListsWhichUserIn());
+    }
+
     @GetMapping("/pined")
     public ResponseEntity<List<ListsResponse>> getUserPinnedLists() {
         return ResponseEntity.ok(listsMapper.getUserPinnedLists());

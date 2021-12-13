@@ -5,6 +5,7 @@ import {Avatar, Typography} from "@material-ui/core";
 import {usePinnedListsItemStyles} from "./PinnedListsItemStyles";
 import {Lists} from "../../../store/ducks/lists/contracts/state";
 import PopperListWindow from "../PopperListWindow/PopperListWindow";
+import {LockIcon} from "../../../icons";
 
 interface PinnedListsItemProps {
     pinnedList: Lists;
@@ -32,9 +33,14 @@ const PinnedListsItem: FC<PinnedListsItemProps> = ({pinnedList}): ReactElement =
                     className={classes.listAvatar}
                     src={pinnedList?.wallpaper?.src ? pinnedList?.wallpaper?.src : pinnedList?.altWallpaper}
                 />
-                <Typography component={"div"} className={classes.pinnedListName}>
+                <Typography component={"span"} className={classes.pinnedListName}>
                     {pinnedList?.name}
                 </Typography>
+                {pinnedList?.private && (
+                    <span className={classes.lockIcon}>
+                        {LockIcon}
+                    </span>
+                )}
                 <PopperListWindow visible={visiblePopperListWindow} list={pinnedList!}/>
             </div>
         </Link>

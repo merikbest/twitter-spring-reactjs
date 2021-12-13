@@ -16,6 +16,7 @@ import {followList} from "../../store/ducks/lists/actionCreators";
 import ShareActionsModal from "./ShareActionsModal/ShareActionsModal";
 import TopTweetsActionsModal from "./TopTweetsActionsModal/TopTweetsActionsModal";
 import Spinner from "../../components/Spinner/Spinner";
+import {LockIcon} from "../../icons";
 
 const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactElement => {
     const classes = useFullListStyles();
@@ -69,9 +70,16 @@ const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactEl
             <Paper className={classes.header} variant="outlined">
                 <BackButton/>
                 <div>
-                    <Typography component={"div"} className={classes.headerFullName}>
-                        {list?.name}
-                    </Typography>
+                    <div>
+                        <Typography component={"span"} className={classes.headerFullName}>
+                            {list?.name}
+                        </Typography>
+                        {list?.private && (
+                            <span className={classes.lockIcon}>
+                                {LockIcon}
+                            </span>
+                        )}
+                    </div>
                     <Typography component={"div"} className={classes.headerUsername}>
                         @{list?.listOwner.username}
                     </Typography>
@@ -94,9 +102,16 @@ const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactEl
                             />
                         </div>
                         <Paper className={classes.listInfo} variant="outlined">
-                            <Typography component={"div"} className={classes.listTitle}>
-                                {list?.name}
-                            </Typography>
+                            <div>
+                                <Typography component={"span"} className={classes.listTitle}>
+                                    {list?.name}
+                                </Typography>
+                                {list?.private && (
+                                    <span className={classes.lockIcon}>
+                                        {LockIcon}
+                                    </span>
+                                )}
+                            </div>
                             <Typography component={"div"} className={classes.listDescription}>
                                 {list?.description}
                             </Typography>

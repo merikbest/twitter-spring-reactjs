@@ -1,6 +1,10 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
-export const useMessagesModalUserStyles = makeStyles((theme: Theme) => ({
+interface MessagesModalUserStylesProps {
+    mutedDirectMessages: boolean;
+}
+
+export const useMessagesModalUserStyles = makeStyles<Theme, MessagesModalUserStylesProps>((theme) => ({
     container: {
         width: "100%",
         display: "flex",
@@ -8,7 +12,8 @@ export const useMessagesModalUserStyles = makeStyles((theme: Theme) => ({
         paddingLeft: 15,
         paddingTop: 8,
         paddingBottom: 8,
-        cursor: 'pointer',
+        cursor: props => props.mutedDirectMessages ? "default" : "pointer",
+        opacity: props => props.mutedDirectMessages ? 0.5 : 1,
     },
     link: {
         textDecoration: 'none',
@@ -22,6 +27,16 @@ export const useMessagesModalUserStyles = makeStyles((theme: Theme) => ({
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between"
+    },
+    headerInfo: {
+        width: 350
+    },
+    lockIcon: {
+        "& svg": {
+            marginLeft: 3,
+            marginBottom: -3,
+            height: "1.2em",
+        },
     },
     fullName: {
         color: theme.palette.text.primary,

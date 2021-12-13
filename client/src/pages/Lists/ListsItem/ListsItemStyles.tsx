@@ -33,11 +33,20 @@ export const useListsItemStyles = makeStyles((theme: Theme) => ({
         display: "block",
     },
     listTitle: {
+        lineHeight: "20px",
         fontSize: 15,
         fontWeight: 700,
     },
+    lockIcon: {
+        "& svg": {
+            marginLeft: 3,
+            marginBottom: -3,
+            height: "1.2em",
+        },
+    },
     listOwnerWrapper: {
         display: "inline-block",
+        verticalAlign: "middle",
     },
     listOwnerAvatar: {
         marginRight: 4,
@@ -46,14 +55,16 @@ export const useListsItemStyles = makeStyles((theme: Theme) => ({
     },
     listOwnerInfoWrapper: {
         display: "inline-block",
-        fontSize: 13,
     },
     listOwnerFullName: {
+        fontSize: 13,
+        lineHeight: "16px",
         marginRight: 4,
         fontWeight: 700,
     },
     listOwnerUsername: {
-        paddingBottom: 5,
+        fontSize: 13,
+        lineHeight: "16px",
         color: theme.palette.text.secondary,
     },
     listPinWrapper: {

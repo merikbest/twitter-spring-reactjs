@@ -26,6 +26,13 @@ export const useFullListStyles = makeStyles((theme: Theme) => ({
         fontSize: 20,
         lineHeight: "24px",
     },
+    lockIcon: {
+        "& svg": {
+            marginLeft: 3,
+            marginBottom: -3,
+            height: "1.5em",
+        },
+    },
     headerUsername: {
         fontSize: 13,
         lineHeight: "16px",
@@ -76,6 +83,7 @@ export const useFullListStyles = makeStyles((theme: Theme) => ({
         height: "20px !important",
     },
     listOwnerFullName: {
+        color: theme.palette.text.primary,
         verticalAlign: "top",
         fontSize: 15,
         fontWeight: 700,

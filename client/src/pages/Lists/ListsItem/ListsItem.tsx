@@ -7,7 +7,7 @@ import {Lists} from "../../../store/ducks/lists/contracts/state";
 import {useListsItemStyles} from "./ListsItemStyles";
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
 import {selectUserData} from "../../../store/ducks/user/selectors";
-import {PinIcon, PinIconFilled} from "../../../icons";
+import {LockIcon, PinIcon, PinIconFilled} from "../../../icons";
 import {followList, pinList, unfollowList, unpinList} from "../../../store/ducks/lists/actionCreators";
 import PopperListWindow from "../PopperListWindow/PopperListWindow";
 import HoverAction from "../../../components/HoverAction/HoverAction";
@@ -78,8 +78,18 @@ const ListsItem: FC<ListsItemProps<Lists> & HoverActionProps> = (
                 />
                 <div className={classes.listInfoContainer}>
                     <div className={classes.listInfoWrapper} onMouseEnter={handleHoverList} onMouseLeave={handleLeaveList}>
-                        <Typography component={"div"} className={classes.listTitle}>
-                            {list?.name}
+                        <div>
+                            <Typography component={"span"} className={classes.listTitle}>
+                                {list?.name}
+                            </Typography>
+                            {list?.private && (
+                                <span className={classes.lockIcon}>
+                                    {LockIcon}
+                                </span>
+                            )}
+                        </div>
+                        <Typography component={"div"} className={classes.listOwnerUsername}>
+                            {list?.description}
                         </Typography>
                         <div className={classes.listOwnerWrapper}>
                             <Avatar
@@ -110,7 +120,10 @@ const ListsItem: FC<ListsItemProps<Lists> & HoverActionProps> = (
                                 ) : (
                                     <>{PinIcon}</>
                                 )}
-                                <HoverAction visible={visibleHoverAction?.visibleOtherAction} actionText={list?.pinnedDate ? "Unpin" : "Pin"}/>
+                                <HoverAction
+                                    visible={visibleHoverAction?.visibleOtherAction}
+                                    actionText={list?.pinnedDate ? "Unpin" : "Pin"}
+                                />
                             </IconButton>
                         </div>
                     )}

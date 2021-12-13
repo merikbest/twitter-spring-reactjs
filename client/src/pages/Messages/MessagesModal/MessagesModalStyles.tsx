@@ -13,5 +13,8 @@ export const useMessagesModalStyles = makeStyles((theme: Theme) => ({
         height: 550,
         width: 598,
         padding: 0,
+        "& .MuiListItem-root.Mui-selected": {
+            backgroundColor: theme.palette.secondary.main,
+        },
     },
 }));

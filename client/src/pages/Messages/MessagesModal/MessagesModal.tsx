@@ -1,8 +1,6 @@
 import React, {FC, FormEvent, ReactElement, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Button, Dialog, Divider, InputAdornment, List, ListItem} from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 
@@ -15,6 +13,7 @@ import {User} from "../../../store/ducks/user/contracts/state";
 import {createChat} from "../../../store/ducks/chats/actionCreators";
 import {SearchIcon} from "../../../icons";
 import CloseButton from "../../../components/CloseButton/CloseButton";
+import {selectUserData} from "../../../store/ducks/user/selectors";
 
 interface MessagesModalProps {
     visible?: boolean;
@@ -25,6 +24,7 @@ const MessagesModal: FC<MessagesModalProps> = ({visible, onClose}): ReactElement
     const classes = useMessagesModalStyles();
     const dispatch = useDispatch();
     const users = useSelector(selectUsersSearch);
+    const myProfile = useSelector(selectUserData);
     const [text, setText] = useState<string>("");
     const [selectedIndex, setSelectedIndex] = useState<number>();
     const [selectedUser, setSelectedUser] = useState<User>();
@@ -51,8 +51,15 @@ const MessagesModal: FC<MessagesModalProps> = ({visible, onClose}): ReactElement
     };
 
     const handleListItemClick = (user: User): void => {
-        setSelectedIndex(user.id);
-        setSelectedUser(user);
+        if (!user.mutedDirectMessages) {
+            if (user.id !== selectedIndex) {
+                setSelectedIndex(user.id);
+                setSelectedUser(user);
+            } else {
+                setSelectedIndex(undefined);
+                setSelectedUser(undefined);
+            }
+        }
     };
 
     if (!visible) {
@@ -98,6 +105,7 @@ const MessagesModal: FC<MessagesModalProps> = ({visible, onClose}): ReactElement
                         <ListItem
                             button
                             selected={selectedIndex === user.id!}
+                            disabled={user.mutedDirectMessages || user.id === myProfile?.id}
                             onClick={() => handleListItemClick(user)}
                         >
                             <MessagesModalUser user={user}/>

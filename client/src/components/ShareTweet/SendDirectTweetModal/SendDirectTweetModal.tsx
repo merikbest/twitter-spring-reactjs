@@ -19,6 +19,7 @@ import {SendDirectMessageInput} from "./SendDirectMessageInput";
 import {addChatMessageWithTweet} from "../../../store/ducks/chatMessages/actionCreators";
 import {Tweet} from "../../../store/ducks/tweets/contracts/state";
 import CloseButton from "../../CloseButton/CloseButton";
+import {selectUserData} from "../../../store/ducks/user/selectors";
 
 interface SendDirectTweetModalProps {
     tweet: Tweet;
@@ -39,6 +40,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
 ): ReactElement | null => {
     const classes = useSendDirectTweetModalStyles();
     const dispatch = useDispatch();
+    const myProfile = useSelector(selectUserData);
     const users = useSelector(selectUsersSearch);
     const chats = useSelector(selectChatsItems);
     const [searchText, setSearchText] = useState<string>("");
@@ -98,6 +100,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
         return (
             <ListItem
                 button
+                disabled={user.mutedDirectMessages || user.id === myProfile?.id}
                 selected={selectedIndexes.indexOf(user?.id!) !== -1}
                 onClick={() => handleListItemClick(user)}
             >

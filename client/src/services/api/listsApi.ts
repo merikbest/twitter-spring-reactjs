@@ -16,6 +16,14 @@ export const ListsApi = {
         const {data} = await axios.get<Response<Lists[]>>(`${API_URL}/lists/user`);
         return data;
     },
+    async getUserTweetListsById(userId: string): Promise<Response<Lists[]>> {
+        const {data} = await axios.get<Response<Lists[]>>(`${API_URL}/lists/user/${userId}`);
+        return data;
+    },
+    async getTweetListsWhichUserIn(): Promise<Response<Lists[]>> {
+        const {data} = await axios.get<Response<Lists[]>>(`${API_URL}/lists/user/consist`);
+        return data;
+    },
     async getUserPinnedLists(): Promise<Response<Lists[]>> {
         const {data} = await axios.get<Response<Lists[]>>(`${API_URL}/lists/pined`);
         return data;

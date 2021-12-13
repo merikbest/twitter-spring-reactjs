@@ -3,11 +3,14 @@ import {
     CreateListActionInterface,
     FetchListsActionInterface,
     FetchPinnedListsActionInterface,
+    FetchTweetListsWhichUserInActionInterface,
     FetchUserListsActionInterface,
+    FetchUserListsByIdActionInterface,
     FollowListActionInterface,
     ListsActionType,
     PinListActionInterface,
     ProcessListMemberActionInterface,
+    ResetListsStateActionInterface,
     SetFollowListActionInterface,
     SetListActionInterface,
     SetListsActionInterface,
@@ -93,6 +96,15 @@ export const fetchUserLists = (): FetchUserListsActionInterface => ({
     type: ListsActionType.FETCH_USER_LISTS
 });
 
+export const fetchUserListsById = (payload: string): FetchUserListsByIdActionInterface => ({
+    type: ListsActionType.FETCH_USER_LISTS_BY_ID,
+    payload
+});
+
+export const fetchTweetListsWhichUserIn = (): FetchTweetListsWhichUserInActionInterface => ({
+    type: ListsActionType.FETCH_TWEET_LISTS_WHICH_USER_IN
+});
+
 export const fetchPinnedLists = (): FetchPinnedListsActionInterface => ({
     type: ListsActionType.FETCH_PINNED_LISTS
 });
@@ -120,6 +132,10 @@ export const setUnpinList = (payload: Lists): SetUnpinListActionInterface => ({
 export const setPinedListToUserList = (payload: Lists): SetPinedListToUserListActionInterface => ({
     type: ListsActionType.SET_PINED_LIST_TO_USER_LIST,
     payload
+});
+
+export const resetListsState = (): ResetListsStateActionInterface => ({
+    type: ListsActionType.RESET_LISTS_STATE,
 });
 
 export const setListsLoadingState = (payload: LoadingStatus): SetListsLoadingStateInterface => ({

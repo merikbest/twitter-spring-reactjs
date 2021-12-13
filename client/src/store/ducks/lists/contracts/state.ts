@@ -6,7 +6,7 @@ export interface Lists {
     id: number;
     name: string;
     description: string;
-    isPrivate: boolean;
+    private: boolean;
     pinnedDate?: string;
     listOwner: User;
     altWallpaper: string;

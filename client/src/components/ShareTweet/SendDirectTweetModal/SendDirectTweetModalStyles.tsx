@@ -18,8 +18,9 @@ export const useSendDirectTweetModalStyles = makeStyles((theme: Theme) => ({
         padding: 0,
         "& .MuiChip-root": {
             marginLeft: 8,
-            backgroundColor: theme.palette.common.white,
-            border: `1px solid ${theme.palette.info.light}`,
+            color: theme.palette.text.primary,
+            backgroundColor: theme.palette.background.paper,
+            border: `1px solid ${theme.palette.divider}`,
             "& .MuiChip-label": {
                 fontSize: 15,
                 fontWeight: 700,

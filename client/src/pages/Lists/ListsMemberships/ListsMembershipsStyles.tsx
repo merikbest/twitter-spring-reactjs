@@ -34,8 +34,11 @@ export const useListsMembershipsStyles = makeStyles((theme: Theme) => ({
         lineHeight: "16px",
         color: theme.palette.text.secondary,
     },
+    contentWrapper: {
+        paddingTop: 52,
+    },
     infoWrapper: {
-        paddingTop: 84,
+        paddingTop: 32,
         margin: "0 auto",
         width: 336,
         textAlign: "center",

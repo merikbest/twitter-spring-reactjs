@@ -16,6 +16,8 @@ export enum ListsActionType {
     CREATE_LIST = "lists/CREATE_LIST",
     FETCH_LISTS = "lists/FETCH_LISTS",
     FETCH_USER_LISTS = "lists/FETCH_USER_LISTS",
+    FETCH_USER_LISTS_BY_ID = "lists/FETCH_USER_LISTS_BY_ID",
+    FETCH_TWEET_LISTS_WHICH_USER_IN = "lists/FETCH_TWEET_LISTS_WHICH_USER_IN",
     FETCH_PINNED_LISTS = "lists/FETCH_PINNED_LISTS",
     ADD_USER_TO_LISTS = "lists/ADD_USER_TO_LISTS",
     PROCESS_LIST_MEMBER = "lists/PROCESS_LIST_MEMBER",
@@ -24,6 +26,7 @@ export enum ListsActionType {
     SET_PINED_LIST = "lists/SET_PINED_LIST",
     SET_UNPIN_LIST = "lists/SET_UNPIN_LIST",
     SET_PINED_LIST_TO_USER_LIST = "lists/SET_PINED_LIST_TO_USER_LIST",
+    RESET_LISTS_STATE = "lists/RESET_LISTS_STATE",
     SET_LOADING_STATE = "lists/SET_LOADING_STATE",
 }
 
@@ -85,6 +88,15 @@ export interface FetchUserListsActionInterface extends Action<ListsActionType> {
     type: ListsActionType.FETCH_USER_LISTS;
 }
 
+export interface FetchUserListsByIdActionInterface extends Action<ListsActionType> {
+    type: ListsActionType.FETCH_USER_LISTS_BY_ID;
+    payload: string;
+}
+
+export interface FetchTweetListsWhichUserInActionInterface extends Action<ListsActionType> {
+    type: ListsActionType.FETCH_TWEET_LISTS_WHICH_USER_IN;
+}
+
 export interface FetchPinnedListsActionInterface extends Action<ListsActionType> {
     type: ListsActionType.FETCH_PINNED_LISTS;
 }
@@ -124,6 +136,10 @@ export interface SetPinedListToUserListActionInterface extends Action<ListsActio
     payload: Lists;
 }
 
+export interface ResetListsStateActionInterface extends Action<ListsActionType> {
+    type: ListsActionType.RESET_LISTS_STATE;
+}
+
 export interface SetListsLoadingStateInterface extends Action<ListsActionType> {
     type: ListsActionType.SET_LOADING_STATE;
     payload: LoadingStatus;
@@ -140,4 +156,5 @@ export type ListsActions =
     | SetPinedListActionInterface
     | SetUnpinListActionInterface
     | SetPinedListToUserListActionInterface
+    | ResetListsStateActionInterface
     | SetListsLoadingStateInterface;

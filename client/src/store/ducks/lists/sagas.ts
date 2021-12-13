@@ -3,6 +3,7 @@ import {call, put, takeEvery} from 'redux-saga/effects';
 import {
     AddUserToListsActionInterface,
     CreateListActionInterface,
+    FetchUserListsByIdActionInterface,
     FollowListActionInterface,
     ListsActionType,
     PinListActionInterface,
@@ -41,6 +42,26 @@ export function* fetchUserListsRequest() {
     try {
         yield put(setListsLoadingState(LoadingStatus.LOADING));
         const data: Lists[] = yield call(ListsApi.getUserTweetLists);
+        yield put(setUserLists(data));
+    } catch (error) {
+        yield put(setListsLoadingState(LoadingStatus.ERROR));
+    }
+}
+
+export function* fetchUserListsByIdRequest({payload}: FetchUserListsByIdActionInterface) {
+    try {
+        yield put(setListsLoadingState(LoadingStatus.LOADING));
+        const data: Lists[] = yield call(ListsApi.getUserTweetListsById, payload);
+        yield put(setUserLists(data));
+    } catch (error) {
+        yield put(setListsLoadingState(LoadingStatus.ERROR));
+    }
+}
+
+export function* fetchTweetListsWhichUserInRequest() {
+    try {
+        yield put(setListsLoadingState(LoadingStatus.LOADING));
+        const data: Lists[] = yield call(ListsApi.getTweetListsWhichUserIn);
         yield put(setUserLists(data));
     } catch (error) {
         yield put(setListsLoadingState(LoadingStatus.ERROR));
@@ -131,6 +152,8 @@ export function* unfollowListRequest({payload}: UnfollowListActionInterface) {
 export function* listsSaga() {
     yield takeEvery(ListsActionType.FETCH_LISTS, fetchListsRequest);
     yield takeEvery(ListsActionType.FETCH_USER_LISTS, fetchUserListsRequest);
+    yield takeEvery(ListsActionType.FETCH_USER_LISTS_BY_ID, fetchUserListsByIdRequest);
+    yield takeEvery(ListsActionType.FETCH_TWEET_LISTS_WHICH_USER_IN, fetchTweetListsWhichUserInRequest);
     yield takeEvery(ListsActionType.FETCH_PINNED_LISTS, fetchPinnedListsRequest);
     yield takeEvery(ListsActionType.CREATE_LIST, createListRequest);
     yield takeEvery(ListsActionType.ADD_USER_TO_LISTS, addUserToListsRequest);

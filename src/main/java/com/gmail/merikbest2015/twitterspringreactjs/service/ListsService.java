@@ -16,6 +16,10 @@ public interface ListsService {
 
     Lists createTweetList(Lists lists);
 
+    List<Lists> getUserTweetListsById(Long userId);
+
+    List<Lists> getTweetListsWhichUserIn();
+
     Lists editTweetList(Lists lists);
 
     String deleteList(Long listId);

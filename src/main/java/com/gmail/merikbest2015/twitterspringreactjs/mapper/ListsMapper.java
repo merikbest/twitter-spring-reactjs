@@ -47,6 +47,14 @@ public class ListsMapper {
         return convertListToResponse(listsService.getUserTweetLists());
     }
 
+    public List<ListsResponse> getUserTweetListsById(Long userId) {
+        return convertListToResponse(listsService.getUserTweetListsById(userId));
+    }
+
+    public List<ListsResponse> getTweetListsWhichUserIn() {
+        return convertListToResponse(listsService.getTweetListsWhichUserIn());
+    }
+
     public List<ListsResponse> getUserPinnedLists() {
         return convertListToResponse(listsService.getUserPinnedLists());
     }

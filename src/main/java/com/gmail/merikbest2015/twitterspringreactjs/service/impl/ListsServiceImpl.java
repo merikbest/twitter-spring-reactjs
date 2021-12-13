@@ -28,7 +28,7 @@ public class ListsServiceImpl implements ListsService {
 
     @Override
     public List<Lists> getAllTweetLists() {
-        return listsRepository.findAll();
+        return listsRepository.findByIsPrivateFalse();
     }
 
     @Override
@@ -62,6 +62,17 @@ public class ListsServiceImpl implements ListsService {
         userLists.add(userTweetList);
         userRepository.save(user);
         return userTweetList;
+    }
+
+    @Override
+    public List<Lists> getUserTweetListsById(Long userId) {
+        return listsRepository.findByListOwner_IdAndIsPrivateFalse(userId);
+    }
+
+    @Override
+    public List<Lists> getTweetListsWhichUserIn() {
+        User user = authenticationService.getAuthenticatedUser();
+        return listsRepository.findByMembers_Id(user.getId());
     }
 
     @Override
