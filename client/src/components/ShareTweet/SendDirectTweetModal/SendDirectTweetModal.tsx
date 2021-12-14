@@ -13,7 +13,7 @@ import {fetchChats} from "../../../store/ducks/chats/actionCreators";
 import {selectChatsItems} from "../../../store/ducks/chats/selectors";
 import {User} from "../../../store/ducks/user/contracts/state";
 import {fetchUsersSearchByUsername, setUsersSearch} from "../../../store/ducks/usersSearch/actionCreators";
-import {SandMessageIcon, SearchIcon} from "../../../icons";
+import {SendMessageIcon, SearchIcon} from "../../../icons";
 import DirectUserItem from "./DirectUserItem/DirectUserItem";
 import {SendDirectMessageInput} from "./SendDirectMessageInput";
 import {addChatMessageWithTweet} from "../../../store/ducks/chatMessages/actionCreators";
@@ -174,7 +174,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
                             disabled={selectedUsers.length === 0}
                             color="primary"
                         >
-                            <>{SandMessageIcon}</>
+                            <>{SendMessageIcon}</>
                         </IconButton>
                     </span>
                 </div>

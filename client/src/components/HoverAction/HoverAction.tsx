@@ -4,11 +4,12 @@ import {useHoverActionStyles} from "./HoverActionStyles";
 
 interface HoverActionProps {
     visible?: boolean;
+    positionTop?: boolean;
     actionText: string;
 }
 
-const HoverAction: FC<HoverActionProps> = ({visible, actionText}): ReactElement | null => {
-    const classes = useHoverActionStyles();
+const HoverAction: FC<HoverActionProps> = ({visible, positionTop, actionText}): ReactElement | null => {
+    const classes = useHoverActionStyles({positionTop});
 
     if (visible) {
         return (

@@ -11,7 +11,16 @@ import {selectUserData} from "../../store/ducks/user/selectors";
 import {selectChatsItems} from "../../store/ducks/chats/selectors";
 import {PeopleSearchInput} from "./PeopleSearchInput/PeopleSearchInput";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
-import {CheckIcon, EmojiIcon, GifIcon, MediaIcon, SandMessageIcon, SearchIcon} from "../../icons";
+import {
+    CheckIcon,
+    EmojiIcon,
+    GifIcon,
+    MediaIcon,
+    SendMessageIcon,
+    SearchIcon,
+    SettingsIcon,
+    NewMessageIcon, DetailsIcon
+} from "../../icons";
 import {MessageInput} from "./MessageInput/MessageInput";
 import {Chat, ChatParticipant} from "../../store/ducks/chats/contracts/state";
 import {addChatMessage, fetchChatMessages} from "../../store/ducks/chatMessages/actionCreators";
@@ -19,6 +28,37 @@ import {selectChatMessagesItems} from "../../store/ducks/chatMessages/selectors"
 import {fetchReadMessages} from "../../store/ducks/user/actionCreators";
 import {formatChatMessageDate, formatDate} from "../../util/formatDate";
 import {textFormatter} from "../../util/textFormatter";
+import HoverAction from "../../components/HoverAction/HoverAction";
+
+export enum MessagesAction {
+    SETTINGS = "SETTINGS",
+    MEDIA = "MEDIA",
+    GIF = "GIF",
+    EMOJI = "EMOJI",
+    SEND = "SEND",
+    NEW_MESSAGE = "NEW_MESSAGE",
+    DETAILS = "DETAILS",
+}
+
+interface VisibleActions {
+    visibleSettingsAction: boolean;
+    visibleMediaAction: boolean;
+    visibleGIFAction: boolean;
+    visibleEmojiAction: boolean;
+    visibleSendAction: boolean;
+    visibleNewMessageAction: boolean;
+    visibleDetailsAction: boolean;
+}
+
+const initialState = {
+    visibleSettingsAction: false,
+    visibleMediaAction: false,
+    visibleGIFAction: false,
+    visibleEmojiAction: false,
+    visibleSendAction: false,
+    visibleNewMessageAction: false,
+    visibleDetailsAction: false,
+}
 
 const Messages: FC = (): ReactElement => {
     const classes = useMessagesStyles();
@@ -33,6 +73,8 @@ const Messages: FC = (): ReactElement => {
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
     const [participant, setParticipant] = useState<ChatParticipant>();
     const [chat, setChat] = useState<Chat>();
+    const [delayHandler, setDelayHandler] = useState<any>(null);
+    const [visibleHoverAction, setVisibleHoverAction] = useState<VisibleActions>({...initialState});
 
     useEffect(() => {
         dispatch(fetchChats());
@@ -71,6 +113,33 @@ const Messages: FC = (): ReactElement => {
         }
     };
 
+    const handleHoverAction = (action: MessagesAction): void => {
+        if (action === MessagesAction.SETTINGS) {
+            setHoverAction({...initialState, visibleSettingsAction: true});
+        } else if (action === MessagesAction.MEDIA) {
+            setHoverAction({...initialState, visibleMediaAction: true});
+        } else if (action === MessagesAction.GIF) {
+            setHoverAction({...initialState, visibleGIFAction: true});
+        } else if (action === MessagesAction.EMOJI) {
+            setHoverAction({...initialState, visibleEmojiAction: true});
+        } else if (action === MessagesAction.SEND) {
+            setHoverAction({...initialState, visibleSendAction: true});
+        } else if (action === MessagesAction.NEW_MESSAGE) {
+            setHoverAction({...initialState, visibleNewMessageAction: true});
+        } else if (action === MessagesAction.DETAILS) {
+            setHoverAction({...initialState, visibleDetailsAction: true});
+        }
+    };
+
+    const setHoverAction = (name: VisibleActions): void => {
+        setDelayHandler(setTimeout(() => setVisibleHoverAction(name), 500));
+    };
+
+    const handleLeaveAction = (): void => {
+        clearTimeout(delayHandler);
+        setVisibleHoverAction({...initialState})
+    };
+
     return (
         <>
             <Grid className={classes.grid} md={4} item>
@@ -81,6 +150,34 @@ const Messages: FC = (): ReactElement => {
                                 <Typography variant="h6">
                                     Messages
                                 </Typography>
+                            </div>
+                            <div className={classes.iconGroup}>
+                                <div className={classes.icon}>
+                                    <IconButton
+                                        onMouseEnter={() => handleHoverAction(MessagesAction.SETTINGS)}
+                                        onMouseLeave={handleLeaveAction}
+                                        color="primary"
+                                    >
+                                        <>{SettingsIcon}</>
+                                        <HoverAction
+                                            visible={visibleHoverAction.visibleSettingsAction}
+                                            actionText={"Settings"}
+                                        />
+                                    </IconButton>
+                                </div>
+                                <div className={classes.icon}>
+                                    <IconButton
+                                        onMouseEnter={() => handleHoverAction(MessagesAction.NEW_MESSAGE)}
+                                        onMouseLeave={handleLeaveAction}
+                                        color="primary"
+                                    >
+                                        <>{NewMessageIcon}</>
+                                        <HoverAction
+                                            visible={visibleHoverAction.visibleNewMessageAction}
+                                            actionText={"New message"}
+                                        />
+                                    </IconButton>
+                                </div>
                             </div>
                         </Paper>
                         {(chats.length === 0) ? (
@@ -209,6 +306,21 @@ const Messages: FC = (): ReactElement => {
                                         @{participant?.username}
                                     </Typography>
                                 </div>
+                                <div className={classes.iconGroup}>
+                                    <div className={classes.icon}>
+                                        <IconButton
+                                            onMouseEnter={() => handleHoverAction(MessagesAction.DETAILS)}
+                                            onMouseLeave={handleLeaveAction}
+                                            color="primary"
+                                        >
+                                            <>{DetailsIcon}</>
+                                            <HoverAction
+                                                visible={visibleHoverAction.visibleDetailsAction}
+                                                actionText={"Details"}
+                                            />
+                                        </IconButton>
+                                    </div>
+                                </div>
                             </Paper>
                             <Paper className={classes.chat}>
                                 {messages.map(message => (
@@ -325,13 +437,31 @@ const Messages: FC = (): ReactElement => {
                             </Paper>
                             <Paper className={classes.chatFooter}>
                                 <div className={classes.chatIcon}>
-                                    <IconButton color="primary">
+                                    <IconButton
+                                        onMouseEnter={() => handleHoverAction(MessagesAction.MEDIA)}
+                                        onMouseLeave={handleLeaveAction}
+                                        color="primary"
+                                    >
                                         <span>{MediaIcon}</span>
+                                        <HoverAction
+                                            visible={visibleHoverAction.visibleMediaAction}
+                                            positionTop={true}
+                                            actionText={"Media"}
+                                        />
                                     </IconButton>
                                 </div>
                                 <div className={classes.chatIcon}>
-                                    <IconButton color="primary">
+                                    <IconButton
+                                        onMouseEnter={() => handleHoverAction(MessagesAction.GIF)}
+                                        onMouseLeave={handleLeaveAction}
+                                        color="primary"
+                                    >
                                         <span>{GifIcon}</span>
+                                        <HoverAction
+                                            visible={visibleHoverAction.visibleGIFAction}
+                                            positionTop={true}
+                                            actionText={"GIF"}
+                                        />
                                     </IconButton>
                                 </div>
                                 <MessageInput
@@ -342,13 +472,32 @@ const Messages: FC = (): ReactElement => {
                                     placeholder="Start a new message"
                                 />
                                 <div className={classes.emojiIcon}>
-                                    <IconButton color="primary">
+                                    <IconButton
+                                        onMouseEnter={() => handleHoverAction(MessagesAction.EMOJI)}
+                                        onMouseLeave={handleLeaveAction}
+                                        color="primary"
+                                    >
                                         <span>{EmojiIcon}</span>
+                                        <HoverAction
+                                            visible={visibleHoverAction.visibleEmojiAction}
+                                            positionTop={true}
+                                            actionText={"Emoji"}
+                                        />
                                     </IconButton>
                                 </div>
                                 <div style={{marginLeft: 8}} className={classes.chatIcon}>
-                                    <IconButton onClick={onSendMessage} color="primary">
-                                        <span>{SandMessageIcon}</span>
+                                    <IconButton
+                                        onClick={onSendMessage}
+                                        onMouseEnter={() => handleHoverAction(MessagesAction.SEND)}
+                                        onMouseLeave={handleLeaveAction}
+                                        color="primary"
+                                    >
+                                        <span>{SendMessageIcon}</span>
+                                        <HoverAction
+                                            visible={visibleHoverAction.visibleSendAction}
+                                            positionTop={true}
+                                            actionText={"Send"}
+                                        />
                                     </IconButton>
                                 </div>
                             </Paper>

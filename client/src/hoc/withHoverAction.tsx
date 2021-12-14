@@ -7,6 +7,7 @@ export enum HoverActions {
     SHARE = "SHARE",
     ANALYTICS = "ANALYTICS",
     MORE = "MORE",
+    MESSAGE = "MESSAGE",
     CREATE_LIST = "CREATE_LIST",
     OTHER = "OTHER",
 }
@@ -24,6 +25,7 @@ interface VisibleActions {
     visibleShareAction: boolean;
     visibleAnalyticsAction: boolean;
     visibleMoreAction: boolean;
+    visibleMessageAction: boolean;
     visibleOtherAction: boolean;
     visibleCreateListAction: boolean;
 }
@@ -38,6 +40,7 @@ export const withHoverAction = <T extends HoverActionProps>(Component: Component
         visibleShareAction: false,
         visibleAnalyticsAction: false,
         visibleMoreAction: false,
+        visibleMessageAction: false,
         visibleOtherAction: false,
         visibleCreateListAction: false,
     }
@@ -57,6 +60,8 @@ export const withHoverAction = <T extends HoverActionProps>(Component: Component
             setHoverAction({...initialState, visibleAnalyticsAction: true});
         } else if (action === HoverActions.MORE) {
             setHoverAction({...initialState, visibleMoreAction: true});
+        } else if (action === HoverActions.MESSAGE) {
+            setHoverAction({...initialState, visibleMessageAction: true});
         } else if (action === HoverActions.CREATE_LIST) {
             setHoverAction({...initialState, visibleCreateListAction: true});
         } else {

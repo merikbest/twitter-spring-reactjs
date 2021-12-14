@@ -23,6 +23,8 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 import {CLIENT_URL} from "../../../util/url";
 import ActionSnackbar from "../../../components/ActionSnackbar/ActionSnackbar";
 import {SnackbarProps, withSnackbar} from "../../../hoc/withSnackbar";
+import HoverAction from "../../../components/HoverAction/HoverAction";
+import {HoverActions} from "../../../hoc/withHoverAction";
 
 interface UserPageActionsProps {
     user: User;
@@ -30,6 +32,9 @@ interface UserPageActionsProps {
     isUserBlocked: boolean;
     onMuteUser: () => void;
     onOpenBlockUserModal: () => void;
+    visibleMoreAction?: boolean;
+    handleHoverAction?: (action: HoverActions) => void;
+    handleLeaveAction?: () => void;
 }
 
 const UserPageActions: FC<UserPageActionsProps & SnackbarProps> = (
@@ -39,6 +44,9 @@ const UserPageActions: FC<UserPageActionsProps & SnackbarProps> = (
         isUserBlocked,
         onMuteUser,
         onOpenBlockUserModal,
+        visibleMoreAction,
+        handleHoverAction,
+        handleLeaveAction,
         openSnackBar,
         setOpenSnackBar,
         onCloseSnackBar
@@ -81,10 +89,13 @@ const UserPageActions: FC<UserPageActionsProps & SnackbarProps> = (
             <div className={classes.container}>
                 <IconButton
                     onClick={handleClick}
+                    onMouseEnter={() => handleHoverAction?.(HoverActions.MORE)}
+                    onMouseLeave={handleLeaveAction}
                     className={classes.messageButton}
                     color="primary"
                 >
                     {EditIcon}
+                    <HoverAction visible={visibleMoreAction} actionText={"More"}/>
                 </IconButton>
                 {open ? (
                     <div className={classes.dropdown}>

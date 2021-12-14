@@ -31,8 +31,20 @@ export const useMessagesStyles = makeStyles((theme: Theme) => ({
             marginLeft: 15,
             fontWeight: 800,
         },
-        "& svg": {
-            marginRight: 20
+    },
+    iconGroup: {
+        marginLeft: "auto",
+        marginRight: 10,
+    },
+    icon: {
+        display: "inline-block",
+        "& .MuiIconButton-root": {
+            padding: 7,
+            "& svg": {
+                color: theme.palette.primary.main,
+                verticalAlign: "bottom",
+                height: "0.90em",
+            },
         },
     },
     messagesTitle: {
@@ -66,14 +78,14 @@ export const useMessagesStyles = makeStyles((theme: Theme) => ({
     },
     listItem: {
         padding: 0,
-        backgroundColor: theme.palette.common.white,
+        backgroundColor: theme.palette.background.paper,
         "& :hover": {
             backgroundColor: theme.palette.secondary.dark,
         },
     },
     userWrapper: {
         height: 76,
-        borderTop: "1px solid #EFF3F4",
+        borderTop: `1px solid ${theme.palette.divider}`,
         width: "100%",
         display: "flex",
         alignItems: 'flex-start',
@@ -150,12 +162,18 @@ export const useMessagesStyles = makeStyles((theme: Theme) => ({
         borderTop: 0,
         borderLeft: 0,
         borderRight: 0,
-        borderBottom: "1px solid #EFF3F4",
+        borderBottom: `1px solid ${theme.palette.divider}`,
         borderRadius: 0,
         alignItems: 'center',
         flex: 1,
         '& h6': {
             fontWeight: 800,
+            lineHeight: "20px",
+        },
+        "& span": {
+            marginBottom: 0,
+            lineHeight: "16px",
+            color: theme.palette.text.secondary,
         },
     },
     chatAvatar: {
