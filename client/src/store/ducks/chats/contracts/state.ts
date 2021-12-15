@@ -12,6 +12,7 @@ export interface ChatParticipant {
     fullName: string;
     username: string;
     avatar: Image;
+    privateProfile: boolean;
 }
 
 export interface ChatsState {

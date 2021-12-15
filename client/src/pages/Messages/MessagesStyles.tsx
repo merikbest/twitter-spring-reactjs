@@ -79,7 +79,7 @@ export const useMessagesStyles = makeStyles((theme: Theme) => ({
     listItem: {
         padding: 0,
         backgroundColor: theme.palette.background.paper,
-        "& :hover": {
+        "&:hover": {
             backgroundColor: theme.palette.secondary.dark,
         },
     },
@@ -98,11 +98,6 @@ export const useMessagesStyles = makeStyles((theme: Theme) => ({
         width: theme.spacing(5),
         height: theme.spacing(5),
         marginRight: 15,
-    },
-    userHeader: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between"
     },
     userFullName: {
         display: "inline-block",
@@ -155,7 +150,6 @@ export const useMessagesStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         margin: 0,
         padding: 0,
-        paddingLeft: 15,
         width: 598,
         height: 53,
         zIndex: 1,
@@ -170,11 +164,14 @@ export const useMessagesStyles = makeStyles((theme: Theme) => ({
             fontWeight: 800,
             lineHeight: "20px",
         },
-        "& span": {
+        "& .MuiTypography-caption": {
             marginBottom: 0,
             lineHeight: "16px",
             color: theme.palette.text.secondary,
         },
+    },
+    pageInfoWrapper: {
+        paddingTop: 53
     },
     chatAvatar: {
         width: theme.spacing(4),
