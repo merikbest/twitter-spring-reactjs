@@ -227,6 +227,7 @@ export const blueColor = {
         action: {
             disabledBackground: "rgb(29, 155, 240, 0.5)",
             disabled: "rgb(255, 255, 255, 0.5)",
+            hover: "rgb(29, 155, 240, 0.1)",
         },
     },
     overrides: {
@@ -287,6 +288,7 @@ export const yellowColor = {
         action: {
             disabledBackground: "rgb(255, 212, 0, 0.5)",
             disabled: "rgb(255, 255, 255, 0.5)",
+            hover: "rgb(255, 212, 0, 0.1)",
         },
     },
     overrides: {
@@ -347,6 +349,7 @@ export const crimsonColor = {
         action: {
             disabledBackground: "rgb(249, 24, 128, 0.5)",
             disabled: "rgb(255, 255, 255, 0.5)",
+            hover: "rgb(249, 24, 128, 0.1)",
         },
     },
     overrides: {
@@ -407,6 +410,7 @@ export const violetColor = {
         action: {
             disabledBackground: "rgb(120, 86, 255, 0.5)",
             disabled: "rgb(255, 255, 255, 0.5)",
+            hover: "rgb(120, 86, 255, 0.1)",
         },
     },
     overrides: {
@@ -467,6 +471,7 @@ export const orangeColor = {
         action: {
             disabledBackground: "rgb(255, 122, 0, 0.5)",
             disabled: "rgb(255, 255, 255, 0.5)",
+            hover: "rgb(255, 122, 0, 0.1)",
         },
     },
     overrides: {
@@ -527,6 +532,7 @@ export const greenColor = {
         action: {
             disabledBackground: "rgb(0, 186, 124, 0.5)",
             disabled: "rgb(255, 255, 255, 0.5)",
+            hover: "rgb(0, 186, 124, 0.1)",
         },
     },
     overrides: {
