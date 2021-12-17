@@ -230,21 +230,21 @@ const Messages: FC = (): ReactElement => {
                                             key={chat.id}
                                             button
                                             className={classes.listItem}
-                                            id={(participant?.id === chat.participants[0].id!) ? ("selected") : ("")}
-                                            selected={participant?.id === chat.participants[0].id!}
+                                            id={(participant?.user.id === chat.participants[0].user.id!) ? ("selected") : ("")}
+                                            selected={participant?.user.id === chat.participants[0].user.id!}
                                             onClick={() => handleListItemClick(chat)}
                                         >
                                             <div className={classes.userWrapper}>
                                                 <Avatar
                                                     className={classes.userAvatar}
-                                                    src={(myProfile?.id === chat.participants[1].id!) ? (
-                                                        (chat.participants[0].avatar?.src) ? (
-                                                            chat.participants[0].avatar.src
+                                                    src={(myProfile?.id === chat.participants[1].user.id!) ? (
+                                                        (chat.participants[0].user.avatar?.src) ? (
+                                                            chat.participants[0].user.avatar.src
                                                         ) : (
                                                             DEFAULT_PROFILE_IMG
                                                         )
-                                                    ) : ((chat.participants[1].avatar?.src) ? (
-                                                            chat.participants[1].avatar.src
+                                                    ) : ((chat.participants[1].user.avatar?.src) ? (
+                                                            chat.participants[1].user.avatar?.src
                                                         ) : (
                                                             DEFAULT_PROFILE_IMG
                                                         )
@@ -252,17 +252,17 @@ const Messages: FC = (): ReactElement => {
                                                 />
                                                 <div>
                                                     <Typography component={"div"} className={classes.userFullName}>
-                                                        {(myProfile?.id === chat.participants[1].id!) ? (
-                                                            chat.participants[0].fullName
+                                                        {(myProfile?.id === chat.participants[1].user.id!) ? (
+                                                            chat.participants[0].user.fullName
                                                         ) : (
-                                                            chat.participants[1].fullName
+                                                            chat.participants[1].user.fullName
                                                         )}
                                                     </Typography>
                                                     <Typography component={"div"} className={classes.username}>
-                                                        {(myProfile?.id === chat.participants[1].id!) ? (
-                                                            "@" + chat.participants[0].username
+                                                        {(myProfile?.id === chat.participants[1].user.id!) ? (
+                                                            "@" + chat.participants[0].user.username
                                                         ) : (
-                                                            "@" + chat.participants[1].username
+                                                            "@" + chat.participants[1].user.username
                                                         )}
                                                     </Typography>
                                                 </div>
@@ -292,10 +292,10 @@ const Messages: FC = (): ReactElement => {
                     </div>
                 </Route>
                 <Route exact path="/messages/:id/info">
-                    <ConversationInfo chatParticipant={participant}/>
+                    <ConversationInfo chatParticipant={participant?.user}/>
                 </Route>
                 <Route exact path="/messages">
-                    {(participant?.id === undefined) ? (
+                    {(participant?.user.id === undefined) ? (
                         <div className={classes.chatContainer}>
                             <Paper variant="outlined">
                                 <div className={classes.chatInfoWrapper}>
@@ -322,19 +322,19 @@ const Messages: FC = (): ReactElement => {
                                 <Paper className={classes.chatHeader} style={{paddingLeft: 15}}>
                                     <Avatar
                                         className={classes.chatAvatar}
-                                        src={participant?.avatar?.src ? participant?.avatar.src : DEFAULT_PROFILE_IMG}
+                                        src={participant.user.avatar?.src ? participant.user.avatar.src : DEFAULT_PROFILE_IMG}
                                     />
                                     <div style={{flex: 1}}>
                                         <Typography variant="h6">
-                                            {participant?.fullName}
+                                            {participant.user.fullName}
                                         </Typography>
                                         <Typography variant="caption" display="block" gutterBottom>
-                                            @{participant?.username}
+                                            @{participant.user.username}
                                         </Typography>
                                     </div>
                                     <div className={classes.iconGroup}>
                                         <div className={classes.icon}>
-                                            <Link to={`/messages/${participant.id}/info`}>
+                                            <Link to={`/messages/${participant.user.id}/info`}>
                                                 <IconButton
                                                     onMouseEnter={() => handleHoverAction(MessagesAction.DETAILS)}
                                                     onMouseLeave={handleLeaveAction}
@@ -403,14 +403,14 @@ const Messages: FC = (): ReactElement => {
                                                 <div className={classes.participantContainer}>
                                                     <Avatar
                                                         className={classes.participantAvatar}
-                                                        src={(myProfile?.id === chat?.participants[1].id!) ? (
-                                                            (chat?.participants[0].avatar?.src) ? (
-                                                                chat?.participants[0].avatar.src
+                                                        src={(myProfile?.id === chat?.participants[1].user.id!) ? (
+                                                            (chat?.participants[0].user.avatar?.src) ? (
+                                                                chat.participants[0].user.avatar.src
                                                             ) : (
                                                                 DEFAULT_PROFILE_IMG
                                                             )
-                                                        ) : ((chat?.participants[1].avatar?.src) ? (
-                                                                chat?.participants[1].avatar.src
+                                                        ) : ((chat?.participants[1].user.avatar?.src) ? (
+                                                                chat.participants[1].user.avatar.src
                                                             ) : (
                                                                 DEFAULT_PROFILE_IMG
                                                             )
@@ -425,25 +425,25 @@ const Messages: FC = (): ReactElement => {
                                                                             className={classes.participantTweetInfoWrapper}>
                                                                             <Avatar
                                                                                 className={classes.participantTweetAvatar}
-                                                                                src={(message.tweet?.user.avatar?.src) ? (
-                                                                                    message.tweet?.user.avatar?.src
+                                                                                src={(message.tweet.user.avatar?.src) ? (
+                                                                                    message.tweet.user.avatar.src
                                                                                 ) : (
                                                                                     DEFAULT_PROFILE_IMG
                                                                                 )}
                                                                             />
                                                                             <span className={classes.participantTweetFullName}>
-                                                                                {message.tweet?.user.fullName}
+                                                                                {message.tweet.user.fullName}
                                                                             </span>
                                                                             <span className={classes.participantTweetUsername}>
-                                                                                @{message.tweet?.user.username}
+                                                                                @{message.tweet.user.username}
                                                                             </span>
                                                                             <span className={classes.participantTweetUsername}>·</span>
                                                                             <span className={classes.participantTweetUsername}>
-                                                                                {formatDate(new Date(message.tweet?.dateTime!))}
+                                                                                {formatDate(new Date(message.tweet.dateTime!))}
                                                                             </span>
                                                                         </div>
                                                                         <span>
-                                                                            {textFormatter(message.tweet?.text)}
+                                                                            {textFormatter(message.tweet.text)}
                                                                         </span>
                                                                     </div>
                                                                 </Link>

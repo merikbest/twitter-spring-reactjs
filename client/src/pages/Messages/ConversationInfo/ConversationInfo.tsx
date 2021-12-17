@@ -6,14 +6,13 @@ import classNames from "classnames";
 import {useConversationInfoStyles} from "./ConversationInfoStyles";
 import BackButton from "../../../components/BackButton/BackButton";
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
-import {ChatParticipant} from "../../../store/ducks/chats/contracts/state";
 import {LockIcon} from "../../../icons";
 import {selectUserData} from "../../../store/ducks/user/selectors";
 import {User} from "../../../store/ducks/user/contracts/state";
 import {followUser} from "../../../store/ducks/user/actionCreators";
 
 interface ConversationInfoProps {
-    chatParticipant?: ChatParticipant
+    chatParticipant?: User
 }
 
 const ConversationInfo: FC<ConversationInfoProps> = ({chatParticipant}): ReactElement => {
@@ -25,8 +24,8 @@ const ConversationInfo: FC<ConversationInfoProps> = ({chatParticipant}): ReactEl
 
     const follower = myProfile?.followers?.findIndex(follower => follower.id === chatParticipant?.id);
 
-    const handleFollow = (user: ChatParticipant): void => {
-        dispatch(followUser(user as User));
+    const handleFollow = (user: User): void => {
+        dispatch(followUser(user));
     };
 
     const handleClickOpenUnfollowModal = (): void => {

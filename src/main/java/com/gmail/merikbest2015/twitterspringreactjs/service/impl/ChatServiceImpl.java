@@ -1,9 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 
-import com.gmail.merikbest2015.twitterspringreactjs.model.Chat;
-import com.gmail.merikbest2015.twitterspringreactjs.model.ChatMessage;
-import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
-import com.gmail.merikbest2015.twitterspringreactjs.model.User;
+import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.ChatMessageRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.ChatRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
@@ -29,7 +26,7 @@ public class ChatServiceImpl implements ChatService {
         User user = authenticationService.getAuthenticatedUser();
         List<Chat> chats = user.getChats();
         chats.forEach(chat -> {
-            if (chat.getParticipants().get(1).getId().equals(user.getId())) {
+            if (chat.getParticipants().get(1).getUser().getId().equals(user.getId())) {
                 Collections.swap(chat.getParticipants(), 1, 0);
             }
         });
@@ -39,16 +36,17 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public Chat createChat(Long userId) {
         User authUser = authenticationService.getAuthenticatedUser();
-        User participant = userRepository.getOne(userId);
+        User user = userRepository.getOne(userId);
         Optional<Chat> chatWithParticipant = authUser.getChats().stream()
                 .filter(chat -> chat.getParticipants().stream()
-                        .anyMatch(user -> user.getId().equals(participant.getId())))
+                        .anyMatch(participant -> participant.getUser().getId().equals(participant.getId())))
                 .findFirst();
 
         if (chatWithParticipant.isEmpty()) {
             Chat chat = new Chat();
-            chat.setParticipants(Arrays.asList(authUser, participant));
-            return chatRepository.save(chat);
+            chatRepository.save(chat);
+            chat.setParticipants(Arrays.asList(new ChatParticipant(authUser, chat), new ChatParticipant(user, chat)));
+            return chat;
         }
         return chatWithParticipant.get();
     }
@@ -92,13 +90,14 @@ public class ChatServiceImpl implements ChatService {
         users.forEach(user -> {
             Optional<Chat> chatWithParticipant = author.getChats().stream()
                     .filter(chat -> chat.getParticipants().stream()
-                            .anyMatch(participant -> participant.getId().equals(user.getId())))
+                            .anyMatch(participant -> participant.getChat().getId().equals(user.getId())))
                     .findFirst();
 
             if (chatWithParticipant.isEmpty()) {
                 Chat chat = new Chat();
-                chat.setParticipants(Arrays.asList(author, user));
                 Chat newChat = chatRepository.save(chat);
+//                chat.setParticipants(Arrays.asList(author, user));
+                chat.setParticipants(Arrays.asList(new ChatParticipant(author, chat), new ChatParticipant(user, chat)));
                 chatMessage.setChat(newChat);
                 chatMessageRepository.save(chatMessage);
             } else {
@@ -116,12 +115,12 @@ public class ChatServiceImpl implements ChatService {
 
     private void notifyChatParticipants(ChatMessage chatMessage, User author) {
         chatMessage.getChat().getParticipants()
-                .forEach(user -> {
-                    if (!user.getUsername().equals(author.getUsername())) {
-                        List<ChatMessage> unread = user.getUnreadMessages();
+                .forEach(participant -> {
+                    if (!participant.getUser().getUsername().equals(author.getUsername())) {
+                        List<ChatMessage> unread = participant.getUser().getUnreadMessages();
                         unread.add(chatMessage);
-                        user.setUnreadMessages(unread);
-                        userRepository.save(user);
+                        participant.getUser().setUnreadMessages(unread);
+                        userRepository.save(participant.getUser());
                     }
                 });
     }

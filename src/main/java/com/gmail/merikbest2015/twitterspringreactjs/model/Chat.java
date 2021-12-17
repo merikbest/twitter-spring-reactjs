@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -14,12 +15,16 @@ public class Chat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "chat_to_user",
-            joinColumns = @JoinColumn(name = "chat_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> participants;
+    @Column(name = "creation_date")
+    private LocalDateTime creationDate;
+
+    @OneToMany(mappedBy = "user")
+    private List<ChatParticipant> participants;
 
     @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL)
     private List<ChatMessage> messages;
+
+    public Chat() {
+        this.creationDate = LocalDateTime.now().withNano(0);
+    }
 }

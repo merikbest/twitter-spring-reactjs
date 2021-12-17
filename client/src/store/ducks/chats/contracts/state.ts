@@ -1,5 +1,5 @@
 import {LoadingStatus} from "../../../types";
-import {Image} from "../../tweets/contracts/state";
+import {User} from "../../user/contracts/state";
 
 export interface Chat {
     id: number;
@@ -8,11 +8,9 @@ export interface Chat {
 
 export interface ChatParticipant {
     id: number;
-    email: string;
-    fullName: string;
-    username: string;
-    avatar: Image;
-    privateProfile: boolean;
+    leftChat: boolean;
+    chat: Chat;
+    user: User;
 }
 
 export interface ChatsState {

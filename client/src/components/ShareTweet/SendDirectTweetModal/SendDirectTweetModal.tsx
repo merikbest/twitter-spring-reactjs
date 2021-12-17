@@ -157,7 +157,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
                     {searchText ? (
                         users.map((user) => <DirectUserItems {...user}/>)
                     ) : (
-                        chats.map((chat) => <DirectUserItems {...chat.participants[1] as User}/>)
+                        chats.map((chat) => <DirectUserItems {...chat.participants[1].user}/>)
                     )}
                 </List>
                 <div className={classes.footer}>
