@@ -18,7 +18,7 @@ public class Chat {
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "chat")
     private List<ChatParticipant> participants;
 
     @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL)

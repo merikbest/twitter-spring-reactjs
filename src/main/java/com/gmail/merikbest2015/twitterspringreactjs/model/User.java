@@ -136,8 +136,8 @@ public class User {
     @ManyToMany
     private List<Lists> userLists;
 
-    @ManyToMany(mappedBy = "participants")
-    private List<Chat> chats;
+    @OneToMany(mappedBy = "user")
+    private List<ChatParticipant> chats;
 
     @OneToMany
     @JoinTable(name = "user_muted",

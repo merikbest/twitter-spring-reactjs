@@ -108,7 +108,7 @@ const Messages: FC = (): ReactElement => {
         history.push("/messages");
         dispatch(fetchChatMessages(chat?.id!));
         dispatch(fetchReadMessages(chat?.id!));
-        setParticipant(chat.participants[1]);
+        setParticipant((chat.participants[0].user.id === myProfile?.id) ? chat.participants[1] : chat.participants[0]);
         setChat(chat);
     };
 

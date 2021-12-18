@@ -10,6 +10,6 @@ public class ChatMessageResponse {
     private String text;
     private LocalDateTime date;
     private ChatTweetResponse tweet;
-    private ChatParticipantResponse author;
+    private ChatUserResponse author;
     private ChatResponse chat;
 }

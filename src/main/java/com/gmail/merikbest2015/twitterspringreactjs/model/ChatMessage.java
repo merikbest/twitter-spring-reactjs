@@ -1,11 +1,13 @@
 package com.gmail.merikbest2015.twitterspringreactjs.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "chat_messages")
 public class ChatMessage {

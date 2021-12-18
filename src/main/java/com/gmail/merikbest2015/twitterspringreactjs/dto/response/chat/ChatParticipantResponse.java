@@ -6,6 +6,5 @@ import lombok.Data;
 public class ChatParticipantResponse {
     private Long id;
     private boolean leftChat;
-    private ChatResponse chat;
     private ChatUserResponse user;
 }

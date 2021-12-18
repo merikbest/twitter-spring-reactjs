@@ -73,7 +73,10 @@ export const useMessagesStyles = makeStyles((theme: Theme) => ({
     list: {
         "& .Mui-selected": {
             borderRight: `2px solid ${theme.palette.primary.main}`,
-            backgroundColor: theme.palette.common.white,
+            backgroundColor: theme.palette.secondary.dark,
+            "&:hover": {
+                backgroundColor: theme.palette.secondary.dark,
+            },
         },
     },
     listItem: {
