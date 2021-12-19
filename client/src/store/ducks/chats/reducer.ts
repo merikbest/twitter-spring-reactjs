@@ -21,6 +21,11 @@ export const chatsReducer = produce((draft: Draft<ChatsState>, action: ChatsActi
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
+        case ChatsActionsType.LEAVE_FROM_CONVERSATION:
+            draft.items = draft.items.filter((chat) => chat.id !== action.payload.chatId);
+            draft.loadingState = LoadingStatus.LOADED
+            break;
+
         case ChatsActionsType.SET_LOADING_STATE:
             draft.loadingState = action.payload;
             break;

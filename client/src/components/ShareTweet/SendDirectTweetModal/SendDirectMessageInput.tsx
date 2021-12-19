@@ -6,11 +6,11 @@ export const SendDirectMessageInput = withStyles((theme: Theme) => ({
         '& .MuiOutlinedInput-root': {
             marginTop: 2,
             borderRadius: 20,
-            border: `1px solid ${theme.palette.info.light}`,
+            border: `1px solid ${theme.palette.divider}`,
             width: 540,
             padding: 10,
             '&.Mui-focused': {
-                backgroundColor: theme.palette.common.white,
+                backgroundColor: theme.palette.background.paper,
                 '& fieldset': { borderWidth: 1, borderColor: theme.palette.primary.main },
                 '& svg path': {
                     fill: theme.palette.primary.main,

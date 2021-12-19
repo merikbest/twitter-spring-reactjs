@@ -20,4 +20,6 @@ public interface ChatService {
     ChatMessage addMessage(ChatMessage chatMessage, Long chatId);
 
     List<ChatMessage> addMessageWithTweet(String text, Tweet tweet, List<User> users);
+
+    String leaveFromConversation(Long participantId, Long chatId);
 }

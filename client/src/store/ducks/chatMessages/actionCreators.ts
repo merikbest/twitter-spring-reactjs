@@ -3,7 +3,7 @@ import {
     AddChatMessageActionInterface,
     AddChatMessageWithTweetActionInterface,
     ChatMessagesActionsType,
-    FetchChatMessagesActionInterface,
+    FetchChatMessagesActionInterface, ResetChatMessagesLoadingStateActionInterface,
     SetChatMessageActionInterface,
     SetChatMessagesActionInterface,
     SetChatMessagesLoadingStateActionInterface
@@ -33,6 +33,10 @@ export const addChatMessageWithTweet = (payload: ChatMessageWithTweetRequest): A
 export const fetchChatMessages = (payload: number): FetchChatMessagesActionInterface => ({
     type: ChatMessagesActionsType.FETCH_CHAT_MESSAGES,
     payload
+});
+
+export const resetChatMessages = (): ResetChatMessagesLoadingStateActionInterface => ({
+    type: ChatMessagesActionsType.RESET_CHAT_MESSAGES
 });
 
 export const setChatMessagesLoadingState = (payload: LoadingStatus): SetChatMessagesLoadingStateActionInterface => ({

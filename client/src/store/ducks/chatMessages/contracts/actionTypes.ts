@@ -9,6 +9,7 @@ export enum ChatMessagesActionsType {
     ADD_CHAT_MESSAGE = 'chatMessages/ADD_CHAT_MESSAGE',
     ADD_CHAT_MESSAGE_WITH_TWEET = 'chatMessages/ADD_CHAT_MESSAGE_WITH_TWEET',
     FETCH_CHAT_MESSAGES = 'chatMessages/FETCH_CHAT_MESSAGES',
+    RESET_CHAT_MESSAGES = 'chatMessages/RESET_CHAT_MESSAGES',
     SET_LOADING_STATE = 'chatMessages/SET_LOADING_STATE',
 }
 
@@ -42,7 +43,12 @@ export interface SetChatMessagesLoadingStateActionInterface extends Action<ChatM
     payload: LoadingStatus;
 }
 
+export interface ResetChatMessagesLoadingStateActionInterface extends Action<ChatMessagesActionsType> {
+    type: ChatMessagesActionsType.RESET_CHAT_MESSAGES;
+}
+
 export type ChatMessageActions =
     | SetChatMessagesActionInterface
     | SetChatMessageActionInterface
+    | ResetChatMessagesLoadingStateActionInterface
     | SetChatMessagesLoadingStateActionInterface;

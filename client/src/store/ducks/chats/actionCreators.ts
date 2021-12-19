@@ -4,6 +4,7 @@ import {
     ChatsActionsType,
     CreateChatActionInterface,
     FetchChatsActionInterface,
+    LeaveFromConversationActionInterface,
     SetChatActionInterface,
     SetChatsActionInterface,
     SetChatsLoadingStateActionInterface
@@ -25,6 +26,11 @@ export const fetchChats = (): FetchChatsActionInterface => ({
 
 export const createChat = (payload: number): CreateChatActionInterface => ({
     type: ChatsActionsType.CREATE_CHAT,
+    payload,
+});
+
+export const leaveFromConversation = (payload: { participantId: number, chatId: number }): LeaveFromConversationActionInterface => ({
+    type: ChatsActionsType.LEAVE_FROM_CONVERSATION,
     payload,
 });
 

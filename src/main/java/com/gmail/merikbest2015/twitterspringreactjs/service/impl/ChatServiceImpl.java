@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.ChatMessageRepository;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.ChatParticipantRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.ChatRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
@@ -9,7 +10,10 @@ import com.gmail.merikbest2015.twitterspringreactjs.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,38 +21,35 @@ import java.util.stream.Collectors;
 public class ChatServiceImpl implements ChatService {
 
     private final AuthenticationService authenticationService;
-    private final ChatRepository chatRepository;
     private final UserRepository userRepository;
+    private final ChatRepository chatRepository;
+    private final ChatParticipantRepository chatParticipantRepository;
     private final ChatMessageRepository chatMessageRepository;
 
     @Override
     public List<Chat> getUserChats() {
         User user = authenticationService.getAuthenticatedUser();
-        List<Chat> chats = user.getChats();
-        chats.forEach(chat -> {
-            if (chat.getParticipants().get(1).getUser().getId().equals(user.getId())) {
-                Collections.swap(chat.getParticipants(), 1, 0);
-            }
-        });
-        return chats;
+        return user.getChats().stream()
+                .filter(participant -> !participant.isLeftChat())
+                .map(ChatParticipant::getChat)
+                .collect(Collectors.toList());
     }
 
     @Override
     public Chat createChat(Long userId) {
         User authUser = authenticationService.getAuthenticatedUser();
         User user = userRepository.getOne(userId);
-        Optional<Chat> chatWithParticipant = authUser.getChats().stream()
-                .filter(chat -> chat.getParticipants().stream()
-                        .anyMatch(participant -> participant.getUser().getId().equals(participant.getId())))
-                .findFirst();
+        Optional<ChatParticipant> chatWithParticipant = getChatParticipant(user, userId);
 
         if (chatWithParticipant.isEmpty()) {
             Chat chat = new Chat();
             chatRepository.save(chat);
-            chat.setParticipants(Arrays.asList(new ChatParticipant(authUser, chat), new ChatParticipant(user, chat)));
+            ChatParticipant authUserParticipant = chatParticipantRepository.save(new ChatParticipant(authUser, chat));
+            ChatParticipant userParticipant = chatParticipantRepository.save(new ChatParticipant(user, chat));
+            chat.setParticipants(Arrays.asList(authUserParticipant, userParticipant));
             return chat;
         }
-        return chatWithParticipant.get();
+        return chatWithParticipant.get().getChat();
     }
 
     @Override
@@ -88,29 +89,40 @@ public class ChatServiceImpl implements ChatService {
         chatMessage.setText(text);
         chatMessage.setTweet(tweet);
         users.forEach(user -> {
-            Optional<Chat> chatWithParticipant = author.getChats().stream()
-                    .filter(chat -> chat.getParticipants().stream()
-                            .anyMatch(participant -> participant.getChat().getId().equals(user.getId())))
-                    .findFirst();
+            Optional<ChatParticipant> chatWithParticipant = getChatParticipant(author, user.getId());
 
             if (chatWithParticipant.isEmpty()) {
                 Chat chat = new Chat();
                 Chat newChat = chatRepository.save(chat);
-//                chat.setParticipants(Arrays.asList(author, user));
-                chat.setParticipants(Arrays.asList(new ChatParticipant(author, chat), new ChatParticipant(user, chat)));
+                ChatParticipant authorParticipant = chatParticipantRepository.save(new ChatParticipant(author, chat));
+                ChatParticipant userParticipant = chatParticipantRepository.save(new ChatParticipant(user, chat));
+                chat.setParticipants(Arrays.asList(authorParticipant, userParticipant));
                 chatMessage.setChat(newChat);
                 chatMessageRepository.save(chatMessage);
             } else {
-                chatMessage.setChat(chatWithParticipant.get());
+                chatMessage.setChat(chatWithParticipant.get().getChat());
                 ChatMessage newChatMessage = chatMessageRepository.save(chatMessage);
-                List<ChatMessage> messages = chatWithParticipant.get().getMessages();
+                List<ChatMessage> messages = chatWithParticipant.get().getChat().getMessages();
                 messages.add(newChatMessage);
-                chatRepository.save(chatWithParticipant.get());
+                chatRepository.save(chatWithParticipant.get().getChat());
             }
             chatMessages.add(chatMessage);
             notifyChatParticipants(chatMessage, author);
         });
         return chatMessages;
+    }
+
+    @Override
+    public String leaveFromConversation(Long participantId, Long chatId) {
+        chatParticipantRepository.leaveFromConversation(participantId, chatId);
+        return "Successfully left the chat";
+    }
+
+    private Optional<ChatParticipant> getChatParticipant(User user, Long userId) {
+        return user.getChats().stream()
+                .filter(chatParticipant -> chatParticipant.getChat().getParticipants().stream()
+                        .anyMatch(participant -> participant.getUser().getId().equals(userId)))
+                .findFirst();
     }
 
     private void notifyChatParticipants(ChatMessage chatMessage, User author) {

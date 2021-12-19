@@ -1,4 +1,5 @@
 import React, {FC, ReactElement, useState} from 'react';
+import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {Avatar, Button, Divider, Paper, Switch, Typography} from "@material-ui/core";
 import classNames from "classnames";
@@ -10,17 +11,29 @@ import {LockIcon} from "../../../icons";
 import {selectUserData} from "../../../store/ducks/user/selectors";
 import {User} from "../../../store/ducks/user/contracts/state";
 import {followUser} from "../../../store/ducks/user/actionCreators";
+import LeaveFromConversationModal from "./LeaveFromConversationModal/LeaveFromConversationModal";
+import {leaveFromConversation} from "../../../store/ducks/chats/actionCreators";
 
 interface ConversationInfoProps {
-    chatParticipant?: User
+    participantId?: number;
+    chatId?: number;
+    chatParticipant?: User;
 }
 
-const ConversationInfo: FC<ConversationInfoProps> = ({chatParticipant}): ReactElement => {
+const ConversationInfo: FC<ConversationInfoProps> = (
+    {
+        participantId,
+        chatId,
+        chatParticipant
+    }
+): ReactElement => {
     const classes = useConversationInfoStyles();
     const dispatch = useDispatch();
+    const history = useHistory();
     const myProfile = useSelector(selectUserData);
     const [btnText, setBtnText] = useState<string>("Following");
     const [visibleUnfollowModal, setVisibleUnfollowModal] = useState<boolean>(false);
+    const [visibleLeaveFromConversationModal, setVisibleLeaveFromConversationModal] = useState<boolean>(false);
 
     const follower = myProfile?.followers?.findIndex(follower => follower.id === chatParticipant?.id);
 
@@ -30,6 +43,24 @@ const ConversationInfo: FC<ConversationInfoProps> = ({chatParticipant}): ReactEl
 
     const handleClickOpenUnfollowModal = (): void => {
         setVisibleUnfollowModal(true);
+    };
+
+    const onCloseUnfollowModal = (): void => {
+        setVisibleUnfollowModal(false);
+    };
+
+    const handleLeaveFromConversation = (): void => {
+        dispatch(leaveFromConversation({participantId: participantId!, chatId: chatId!}));
+        history.push({pathname: "/messages", state: {removeParticipant: true}});
+        setVisibleLeaveFromConversationModal(false);
+    };
+
+    const handleClickOpenLeaveFromConversationModal = (): void => {
+        setVisibleLeaveFromConversationModal(true);
+    };
+
+    const onCloseLeaveFromConversationModal = (): void => {
+        setVisibleLeaveFromConversationModal(false);
     };
 
     return (
@@ -112,12 +143,20 @@ const ConversationInfo: FC<ConversationInfoProps> = ({chatParticipant}): ReactEl
                         Report @{chatParticipant?.username}
                     </Typography>
                 </div>
-                <div className={classNames(classes.conversationInfoButton, classes.leaveConversation)}>
+                <div
+                    className={classNames(classes.conversationInfoButton, classes.leaveConversation)}
+                    onClick={handleClickOpenLeaveFromConversationModal}
+                >
                     <Typography component={"span"}>
                         Leave conversation
                     </Typography>
                 </div>
             </Paper>
+            <LeaveFromConversationModal
+                handleLeaveFromConversation={handleLeaveFromConversation}
+                visible={visibleLeaveFromConversationModal}
+                onClose={onCloseLeaveFromConversationModal}
+            />
         </div>
     );
 };

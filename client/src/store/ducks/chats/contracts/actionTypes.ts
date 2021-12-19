@@ -8,6 +8,7 @@ export enum ChatsActionsType {
     SET_CHAT = 'chats/SET_CHAT',
     FETCH_CHATS = 'chats/FETCH_CHATS',
     CREATE_CHAT = 'chats/CREATE_CHAT',
+    LEAVE_FROM_CONVERSATION = 'chats/LEAVE_FROM_CONVERSATION',
     SET_LOADING_STATE = 'chats/SET_LOADING_STATE',
 }
 
@@ -30,6 +31,11 @@ export interface CreateChatActionInterface extends Action<ChatsActionsType> {
     payload: number;
 }
 
+export interface LeaveFromConversationActionInterface extends Action<ChatsActionsType> {
+    type: ChatsActionsType.LEAVE_FROM_CONVERSATION;
+    payload: { participantId: number, chatId: number };
+}
+
 export interface SetChatsLoadingStateActionInterface extends Action<ChatsActionsType> {
     type: ChatsActionsType.SET_LOADING_STATE;
     payload: LoadingStatus;
@@ -38,4 +44,5 @@ export interface SetChatsLoadingStateActionInterface extends Action<ChatsActions
 export type ChatsActions =
     | SetChatsActionInterface
     | SetChatActionInterface
+    | LeaveFromConversationActionInterface
     | SetChatsLoadingStateActionInterface;

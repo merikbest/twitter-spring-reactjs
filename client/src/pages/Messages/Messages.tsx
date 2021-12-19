@@ -1,5 +1,5 @@
 import React, {FC, ReactElement, useEffect, useRef, useState} from 'react';
-import {Link, Route, useHistory} from "react-router-dom";
+import {Link, Route, useHistory, useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {Avatar, Button, Grid, IconButton, InputAdornment, List, ListItem, Paper, Typography} from "@material-ui/core";
 import classNames from "classnames";
@@ -24,7 +24,7 @@ import {
 } from "../../icons";
 import {MessageInput} from "./MessageInput/MessageInput";
 import {Chat, ChatParticipant} from "../../store/ducks/chats/contracts/state";
-import {addChatMessage, fetchChatMessages} from "../../store/ducks/chatMessages/actionCreators";
+import {addChatMessage, fetchChatMessages, resetChatMessages} from "../../store/ducks/chatMessages/actionCreators";
 import {selectChatMessagesItems} from "../../store/ducks/chatMessages/selectors";
 import {fetchReadMessages} from "../../store/ducks/user/actionCreators";
 import {formatChatMessageDate, formatDate} from "../../util/formatDate";
@@ -68,6 +68,7 @@ const Messages: FC = (): ReactElement => {
     const classes = useMessagesStyles();
     const dispatch = useDispatch();
     const history = useHistory();
+    const location = useLocation<{ removeParticipant: boolean | undefined; }>();
     const myProfile = useSelector(selectUserData);
     const chats = useSelector(selectChatsItems);
     const messages = useSelector(selectChatMessagesItems);
@@ -89,6 +90,13 @@ const Messages: FC = (): ReactElement => {
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
+
+    useEffect(() => {
+        if (location.state?.removeParticipant === true) {
+            setParticipant(undefined);
+            dispatch(resetChatMessages());
+        }
+    }, [location.state?.removeParticipant]);
 
     const scrollToBottom = () => {
         if (chatEndRef.current) {
@@ -292,7 +300,11 @@ const Messages: FC = (): ReactElement => {
                     </div>
                 </Route>
                 <Route exact path="/messages/:id/info">
-                    <ConversationInfo chatParticipant={participant?.user}/>
+                    <ConversationInfo
+                        participantId={participant?.id}
+                        chatId={chat?.id}
+                        chatParticipant={participant?.user}
+                    />
                 </Route>
                 <Route exact path="/messages">
                     {(participant?.user.id === undefined) ? (

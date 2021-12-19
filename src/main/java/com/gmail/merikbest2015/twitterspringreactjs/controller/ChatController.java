@@ -56,4 +56,9 @@ public class ChatController {
                 .forEach(user -> messagingTemplate.convertAndSend("/topic/chat/" + user.getId(), chatMessage)));
         return ResponseEntity.ok(chatMessages);
     }
+
+    @GetMapping("/leave/{participantId}/{chatId}")
+    public ResponseEntity<String> leaveFromConversation(@PathVariable Long participantId, @PathVariable Long chatId) {
+        return ResponseEntity.ok(chatMapper.leaveFromConversation(participantId, chatId));
+    }
 }

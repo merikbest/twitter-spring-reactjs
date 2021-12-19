@@ -13,7 +13,7 @@ import {fetchChats} from "../../../store/ducks/chats/actionCreators";
 import {selectChatsItems} from "../../../store/ducks/chats/selectors";
 import {User} from "../../../store/ducks/user/contracts/state";
 import {fetchUsersSearchByUsername, setUsersSearch} from "../../../store/ducks/usersSearch/actionCreators";
-import {SendMessageIcon, SearchIcon} from "../../../icons";
+import {SearchIcon, SendMessageIcon} from "../../../icons";
 import DirectUserItem from "./DirectUserItem/DirectUserItem";
 import {SendDirectMessageInput} from "./SendDirectMessageInput";
 import {addChatMessageWithTweet} from "../../../store/ducks/chatMessages/actionCreators";
@@ -96,7 +96,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
         closeShareTweet();
     };
 
-    const DirectUserItems = (user: User): JSX.Element => {
+    const DirectUserItems: FC<{user: User}> = ({user}): JSX.Element => {
         return (
             <ListItem
                 button
@@ -155,9 +155,14 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
                 <div className={classes.divider}/>
                 <List component="nav" aria-label="main mailbox folders">
                     {searchText ? (
-                        users.map((user) => <DirectUserItems {...user}/>)
+                        users.map((user) => <DirectUserItems user={user}/>)
                     ) : (
-                        chats.map((chat) => <DirectUserItems {...chat.participants[1].user}/>)
+                        chats.map((chat) => <DirectUserItems user={
+                            (chat.participants[0].user.id === myProfile?.id) ? (
+                                chat.participants[1].user
+                            ) : (
+                                chat.participants[0].user
+                            )}/>)
                     )}
                 </List>
                 <div className={classes.footer}>

@@ -23,6 +23,11 @@ export const chatMessagesReducer = produce((draft: Draft<ChatMessageState>, acti
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
+        case ChatMessagesActionsType.RESET_CHAT_MESSAGES:
+            draft.items = [];
+            draft.loadingState = LoadingStatus.NEVER;
+            break;
+
         case ChatMessagesActionsType.SET_LOADING_STATE:
             draft.loadingState = action.payload;
             break;
