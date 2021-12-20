@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 
+import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.ChatMessageRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.ChatParticipantRepository;
@@ -8,6 +9,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.ChatService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -72,6 +74,7 @@ public class ChatServiceImpl implements ChatService {
         Chat chat = chatRepository.getOne(chatId);
         chatMessage.setAuthor(author);
         chatMessage.setChat(chat);
+        updateParticipantWhoLeftChat(chat);
         chatMessageRepository.save(chatMessage);
         List<ChatMessage> messages = chat.getMessages();
         messages.add(chatMessage);
@@ -100,11 +103,13 @@ public class ChatServiceImpl implements ChatService {
                 chatMessage.setChat(newChat);
                 chatMessageRepository.save(chatMessage);
             } else {
-                chatMessage.setChat(chatWithParticipant.get().getChat());
+                Chat participantsChat = chatWithParticipant.get().getChat();
+                updateParticipantWhoLeftChat(participantsChat);
+                chatMessage.setChat(participantsChat);
                 ChatMessage newChatMessage = chatMessageRepository.save(chatMessage);
-                List<ChatMessage> messages = chatWithParticipant.get().getChat().getMessages();
+                List<ChatMessage> messages = participantsChat.getMessages();
                 messages.add(newChatMessage);
-                chatRepository.save(chatWithParticipant.get().getChat());
+                chatRepository.save(participantsChat);
             }
             chatMessages.add(chatMessage);
             notifyChatParticipants(chatMessage, author);
@@ -115,7 +120,24 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public String leaveFromConversation(Long participantId, Long chatId) {
         chatParticipantRepository.leaveFromConversation(participantId, chatId);
+        Chat chat = chatRepository.findById(chatId)
+                .orElseThrow(() -> new ApiRequestException("Chat not found", HttpStatus.NOT_FOUND));
+        boolean isParticipantsLeftFromChat = chat.getParticipants().stream().allMatch(ChatParticipant::isLeftChat);
+
+        if (isParticipantsLeftFromChat) {
+            chatMessageRepository.deleteAll(chat.getMessages());
+            chatParticipantRepository.deleteAll(chat.getParticipants());
+            chatRepository.delete(chat);
+        }
         return "Successfully left the chat";
+    }
+
+    private void updateParticipantWhoLeftChat(Chat chat) {
+        chat.getParticipants().forEach(participant -> {
+            if (participant.isLeftChat()) {
+                participant.setLeftChat(false);
+            }
+        });
     }
 
     private Optional<ChatParticipant> getChatParticipant(User user, Long userId) {
