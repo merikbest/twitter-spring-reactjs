@@ -32,7 +32,7 @@ public class ChatServiceImpl implements ChatService {
     public List<Chat> getUserChats() {
         User user = authenticationService.getAuthenticatedUser();
         return user.getChats().stream()
-                .filter(participant -> !participant.isLeftChat())
+                .filter(participant -> !participant.isLeftChat() || !isParticipantBlocked(user, participant.getUser()))
                 .map(ChatParticipant::getChat)
                 .collect(Collectors.toList());
     }
@@ -41,6 +41,10 @@ public class ChatServiceImpl implements ChatService {
     public Chat createChat(Long userId) {
         User authUser = authenticationService.getAuthenticatedUser();
         User user = userRepository.getOne(userId);
+
+        if (isParticipantBlocked(authUser, user)) {
+            throw new ApiRequestException("Participant is blocked", HttpStatus.BAD_REQUEST);
+        }
         Optional<ChatParticipant> chatWithParticipant = getChatParticipant(user, userId);
 
         if (chatWithParticipant.isEmpty()) {
@@ -72,6 +76,14 @@ public class ChatServiceImpl implements ChatService {
     public ChatMessage addMessage(ChatMessage chatMessage, Long chatId) {
         User author = authenticationService.getAuthenticatedUser();
         Chat chat = chatRepository.getOne(chatId);
+        Optional<ChatParticipant> blockedChatParticipant = chat.getParticipants().stream()
+                .filter(participant -> !participant.getUser().getId().equals(author.getId())
+                        && isParticipantBlocked(author, participant.getUser()))
+                .findFirst();
+
+        if (blockedChatParticipant.isPresent()) {
+            throw new ApiRequestException("Participant is blocked", HttpStatus.BAD_REQUEST);
+        }
         chatMessage.setAuthor(author);
         chatMessage.setChat(chat);
         updateParticipantWhoLeftChat(chat);
@@ -92,9 +104,10 @@ public class ChatServiceImpl implements ChatService {
         chatMessage.setText(text);
         chatMessage.setTweet(tweet);
         users.forEach(user -> {
+            boolean participantBlocked = isParticipantBlocked(author, user);
             Optional<ChatParticipant> chatWithParticipant = getChatParticipant(author, user.getId());
 
-            if (chatWithParticipant.isEmpty()) {
+            if (chatWithParticipant.isEmpty() && !participantBlocked) {
                 Chat chat = new Chat();
                 Chat newChat = chatRepository.save(chat);
                 ChatParticipant authorParticipant = chatParticipantRepository.save(new ChatParticipant(author, chat));
@@ -102,7 +115,7 @@ public class ChatServiceImpl implements ChatService {
                 chat.setParticipants(Arrays.asList(authorParticipant, userParticipant));
                 chatMessage.setChat(newChat);
                 chatMessageRepository.save(chatMessage);
-            } else {
+            } else if (!participantBlocked) {
                 Chat participantsChat = chatWithParticipant.get().getChat();
                 updateParticipantWhoLeftChat(participantsChat);
                 chatMessage.setChat(participantsChat);
@@ -130,6 +143,10 @@ public class ChatServiceImpl implements ChatService {
             chatRepository.delete(chat);
         }
         return "Successfully left the chat";
+    }
+
+    private boolean isParticipantBlocked(User user, User participant) {
+        return user.getUserBlockedList().contains(participant);
     }
 
     private void updateParticipantWhoLeftChat(Chat chat) {

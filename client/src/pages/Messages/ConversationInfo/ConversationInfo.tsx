@@ -10,21 +10,33 @@ import {DEFAULT_PROFILE_IMG} from "../../../util/url";
 import {LockIcon} from "../../../icons";
 import {selectUserData} from "../../../store/ducks/user/selectors";
 import {User} from "../../../store/ducks/user/contracts/state";
-import {followUser} from "../../../store/ducks/user/actionCreators";
+import {addUserToBlocklist, followUser, unfollowUser} from "../../../store/ducks/user/actionCreators";
 import LeaveFromConversationModal from "./LeaveFromConversationModal/LeaveFromConversationModal";
 import {leaveFromConversation} from "../../../store/ducks/chats/actionCreators";
+import BlockUserModal from "../../../components/BlockUserModal/BlockUserModal";
+import {SnackbarProps, withSnackbar} from "../../../hoc/withSnackbar";
+import ActionSnackbar from "../../../components/ActionSnackbar/ActionSnackbar";
+import UnfollowModal from "../../../components/UnfollowModal/UnfollowModal";
+import {followProfile, unfollowProfile} from "../../../store/ducks/userProfile/actionCreators";
 
 interface ConversationInfoProps {
     participantId?: number;
     chatId?: number;
     chatParticipant?: User;
+    isUserBlocked: boolean;
 }
 
-const ConversationInfo: FC<ConversationInfoProps> = (
+const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
     {
         participantId,
         chatId,
-        chatParticipant
+        chatParticipant,
+        isUserBlocked,
+        snackBarMessage,
+        openSnackBar,
+        setSnackBarMessage,
+        setOpenSnackBar,
+        onCloseSnackBar
     }
 ): ReactElement => {
     const classes = useConversationInfoStyles();
@@ -33,12 +45,20 @@ const ConversationInfo: FC<ConversationInfoProps> = (
     const myProfile = useSelector(selectUserData);
     const [btnText, setBtnText] = useState<string>("Following");
     const [visibleUnfollowModal, setVisibleUnfollowModal] = useState<boolean>(false);
+    const [visibleBlockUserModal, setVisibleBlockUserModal] = useState<boolean>(false);
     const [visibleLeaveFromConversationModal, setVisibleLeaveFromConversationModal] = useState<boolean>(false);
 
-    const follower = myProfile?.followers?.findIndex(follower => follower.id === chatParticipant?.id);
+    const isFollower = myProfile?.followers?.findIndex(follower => follower.id === chatParticipant?.id) !== -1;
 
     const handleFollow = (user: User): void => {
         dispatch(followUser(user));
+        dispatch(followProfile(user));
+    };
+
+    const handleUnfollow = (user: User): void => {
+        dispatch(unfollowUser(user));
+        dispatch(unfollowProfile(user));
+        setVisibleUnfollowModal(false);
     };
 
     const handleClickOpenUnfollowModal = (): void => {
@@ -61,6 +81,22 @@ const ConversationInfo: FC<ConversationInfoProps> = (
 
     const onCloseLeaveFromConversationModal = (): void => {
         setVisibleLeaveFromConversationModal(false);
+    };
+
+    const onBlockUser = (): void => {
+        dispatch(addUserToBlocklist(chatParticipant?.id!));
+        dispatch(leaveFromConversation({participantId: participantId!, chatId: chatId!}));
+        setVisibleBlockUserModal(false);
+        setSnackBarMessage!(`@${chatParticipant?.username!} has been blocked.`);
+        setOpenSnackBar!(true);
+    };
+
+    const onOpenBlockUserModal = (): void => {
+        setVisibleBlockUserModal(true);
+    };
+
+    const onCloseBlockUserModal = (): void => {
+        setVisibleBlockUserModal(false);
     };
 
     return (
@@ -94,7 +130,7 @@ const ConversationInfo: FC<ConversationInfoProps> = (
                             </div>
                             <div>
                                 {(myProfile?.id !== chatParticipant?.id) && (
-                                    (follower === -1) ? (
+                                    (isFollower) ? (
                                         <Button
                                             className={classes.outlinedButton}
                                             onClick={() => handleFollow(chatParticipant!)}
@@ -133,9 +169,12 @@ const ConversationInfo: FC<ConversationInfoProps> = (
                     </div>
                 </div>
                 <Divider/>
-                <div className={classNames(classes.conversationInfoButton, classes.blockUser)}>
+                <div
+                    className={classNames(classes.conversationInfoButton, classes.blockUser)}
+                    onClick={onOpenBlockUserModal}
+                >
                     <Typography component={"span"}>
-                        Block @{chatParticipant?.username}
+                        {isUserBlocked ? "Unblock " : "Block "} @{chatParticipant?.username}
                     </Typography>
                 </div>
                 <div className={classNames(classes.conversationInfoButton, classes.blockUser)}>
@@ -157,8 +196,26 @@ const ConversationInfo: FC<ConversationInfoProps> = (
                 visible={visibleLeaveFromConversationModal}
                 onClose={onCloseLeaveFromConversationModal}
             />
+            <UnfollowModal
+                user={chatParticipant!}
+                visible={visibleUnfollowModal}
+                onClose={onCloseUnfollowModal}
+                handleUnfollow={handleUnfollow}
+            />
+            <BlockUserModal
+                username={chatParticipant?.username!}
+                isUserBlocked={false}
+                visible={visibleBlockUserModal}
+                onClose={onCloseBlockUserModal}
+                onBlockUser={onBlockUser}
+            />
+            <ActionSnackbar
+                snackBarMessage={snackBarMessage!}
+                openSnackBar={openSnackBar!}
+                onCloseSnackBar={onCloseSnackBar!}
+            />
         </div>
     );
 };
 
-export default ConversationInfo;
+export default withSnackbar(ConversationInfo);

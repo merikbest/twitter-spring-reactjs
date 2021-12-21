@@ -13,14 +13,14 @@ import {PeopleSearchInput} from "./PeopleSearchInput/PeopleSearchInput";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {
     CheckIcon,
+    DetailsIcon,
     EmojiIcon,
     GifIcon,
     MediaIcon,
-    SendMessageIcon,
-    SearchIcon,
-    SettingsIcon,
     NewMessageIcon,
-    DetailsIcon
+    SearchIcon,
+    SendMessageIcon,
+    SettingsIcon
 } from "../../icons";
 import {MessageInput} from "./MessageInput/MessageInput";
 import {Chat, ChatParticipant} from "../../store/ducks/chats/contracts/state";
@@ -65,7 +65,6 @@ const initialState = {
 }
 
 const Messages: FC = (): ReactElement => {
-    const classes = useMessagesStyles();
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation<{ removeParticipant: boolean | undefined; }>();
@@ -76,11 +75,13 @@ const Messages: FC = (): ReactElement => {
 
     const [text, setText] = useState<string>("");
     const [message, setMessage] = useState<string>("");
+    const [isUserBlocked, setIsUserBlocked] = useState<boolean>(false);
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
     const [participant, setParticipant] = useState<ChatParticipant>();
     const [chat, setChat] = useState<Chat>();
     const [delayHandler, setDelayHandler] = useState<any>(null);
     const [visibleHoverAction, setVisibleHoverAction] = useState<VisibleActions>({...initialState});
+    const classes = useMessagesStyles({isUserBlocked: false});
 
     useEffect(() => {
         dispatch(fetchChats());
@@ -90,6 +91,11 @@ const Messages: FC = (): ReactElement => {
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
+
+    useEffect(() => {
+        const isBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === participant?.user.id) !== -1;
+        setIsUserBlocked(isBlocked);
+    }, [participant]);
 
     useEffect(() => {
         if (location.state?.removeParticipant === true) {
@@ -304,6 +310,7 @@ const Messages: FC = (): ReactElement => {
                         participantId={participant?.id}
                         chatId={chat?.id}
                         chatParticipant={participant?.user}
+                        isUserBlocked={isUserBlocked}
                     />
                 </Route>
                 <Route exact path="/messages">
@@ -479,72 +486,84 @@ const Messages: FC = (): ReactElement => {
                                     ))}
                                     <div ref={chatEndRef}/>
                                 </Paper>
-                                <Paper className={classes.chatFooter}>
-                                    <div className={classes.chatIcon}>
-                                        <IconButton
-                                            onMouseEnter={() => handleHoverAction(MessagesAction.MEDIA)}
-                                            onMouseLeave={handleLeaveAction}
-                                            color="primary"
-                                        >
-                                            <span>{MediaIcon}</span>
-                                            <HoverAction
-                                                visible={visibleHoverAction.visibleMediaAction}
-                                                positionTop={true}
-                                                actionText={"Media"}
-                                            />
-                                        </IconButton>
-                                    </div>
-                                    <div className={classes.chatIcon}>
-                                        <IconButton
-                                            onMouseEnter={() => handleHoverAction(MessagesAction.GIF)}
-                                            onMouseLeave={handleLeaveAction}
-                                            color="primary"
-                                        >
-                                            <span>{GifIcon}</span>
-                                            <HoverAction
-                                                visible={visibleHoverAction.visibleGIFAction}
-                                                positionTop={true}
-                                                actionText={"GIF"}
-                                            />
-                                        </IconButton>
-                                    </div>
-                                    <MessageInput
-                                        multiline
-                                        value={message}
-                                        onChange={(event) => setMessage(event.target.value)}
-                                        variant="outlined"
-                                        placeholder="Start a new message"
-                                    />
-                                    <div className={classes.emojiIcon}>
-                                        <IconButton
-                                            onMouseEnter={() => handleHoverAction(MessagesAction.EMOJI)}
-                                            onMouseLeave={handleLeaveAction}
-                                            color="primary"
-                                        >
-                                            <span>{EmojiIcon}</span>
-                                            <HoverAction
-                                                visible={visibleHoverAction.visibleEmojiAction}
-                                                positionTop={true}
-                                                actionText={"Emoji"}
-                                            />
-                                        </IconButton>
-                                    </div>
-                                    <div style={{marginLeft: 8}} className={classes.chatIcon}>
-                                        <IconButton
-                                            onClick={onSendMessage}
-                                            onMouseEnter={() => handleHoverAction(MessagesAction.SEND)}
-                                            onMouseLeave={handleLeaveAction}
-                                            color="primary"
-                                        >
-                                            <span>{SendMessageIcon}</span>
-                                            <HoverAction
-                                                visible={visibleHoverAction.visibleSendAction}
-                                                positionTop={true}
-                                                actionText={"Send"}
-                                            />
-                                        </IconButton>
-                                    </div>
-                                </Paper>
+                                <>
+                                    {isUserBlocked ? (
+                                        <Typography component={"div"} className={classes.blockedInfoText}>
+                                            You can no longer send messages to this person. <a
+                                            href={"https://help.twitter.com/using-twitter/direct-messages#faq"}
+                                            target="_blank"
+                                            className={classes.link}>Learn more</a>
+                                        </Typography>
+                                        ) : (
+                                            <Paper className={classes.chatFooter}>
+                                                <div className={classes.chatIcon}>
+                                                    <IconButton
+                                                        onMouseEnter={() => handleHoverAction(MessagesAction.MEDIA)}
+                                                        onMouseLeave={handleLeaveAction}
+                                                        color="primary"
+                                                    >
+                                                        <span>{MediaIcon}</span>
+                                                        <HoverAction
+                                                            visible={visibleHoverAction.visibleMediaAction}
+                                                            positionTop={true}
+                                                            actionText={"Media"}
+                                                        />
+                                                    </IconButton>
+                                                </div>
+                                                <div className={classes.chatIcon}>
+                                                    <IconButton
+                                                        onMouseEnter={() => handleHoverAction(MessagesAction.GIF)}
+                                                        onMouseLeave={handleLeaveAction}
+                                                        color="primary"
+                                                    >
+                                                        <span>{GifIcon}</span>
+                                                        <HoverAction
+                                                            visible={visibleHoverAction.visibleGIFAction}
+                                                            positionTop={true}
+                                                            actionText={"GIF"}
+                                                        />
+                                                    </IconButton>
+                                                </div>
+                                                <MessageInput
+                                                    multiline
+                                                    value={message}
+                                                    onChange={(event) => setMessage(event.target.value)}
+                                                    variant="outlined"
+                                                    placeholder="Start a new message"
+                                                />
+                                                <div className={classes.emojiIcon}>
+                                                    <IconButton
+                                                        onMouseEnter={() => handleHoverAction(MessagesAction.EMOJI)}
+                                                        onMouseLeave={handleLeaveAction}
+                                                        color="primary"
+                                                    >
+                                                        <span>{EmojiIcon}</span>
+                                                        <HoverAction
+                                                            visible={visibleHoverAction.visibleEmojiAction}
+                                                            positionTop={true}
+                                                            actionText={"Emoji"}
+                                                        />
+                                                    </IconButton>
+                                                </div>
+                                                <div style={{marginLeft: 8}} className={classes.chatIcon}>
+                                                    <IconButton
+                                                        onClick={onSendMessage}
+                                                        onMouseEnter={() => handleHoverAction(MessagesAction.SEND)}
+                                                        onMouseLeave={handleLeaveAction}
+                                                        color="primary"
+                                                    >
+                                                        <span>{SendMessageIcon}</span>
+                                                        <HoverAction
+                                                            visible={visibleHoverAction.visibleSendAction}
+                                                            positionTop={true}
+                                                            actionText={"Send"}
+                                                        />
+                                                    </IconButton>
+                                                </div>
+                                            </Paper>
+                                        )
+                                    }
+                                </>
                             </Paper>
                         </div>
                     )}

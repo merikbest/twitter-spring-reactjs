@@ -139,13 +139,13 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<ChatParticipant> chats;
 
-    @OneToMany
+    @ManyToMany
     @JoinTable(name = "user_muted",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "muted_user_id"))
     private List<User> userMutedList;
 
-    @OneToMany
+    @ManyToMany
     @JoinTable(name = "user_blocked",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "blocked_user_id"))

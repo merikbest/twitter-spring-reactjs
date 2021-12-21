@@ -1,6 +1,10 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
-export const useMessagesStyles = makeStyles((theme: Theme) => ({
+interface MessagesStylesProps {
+    isUserBlocked: boolean;
+}
+
+export const useMessagesStyles = makeStyles<Theme, MessagesStylesProps>((theme) => ({
     grid: {
         padding: "12px 0px 0px 0px !important",
     },
@@ -185,6 +189,7 @@ export const useMessagesStyles = makeStyles((theme: Theme) => ({
         padding: "53px 15px",
         height: 900,
         overflowY: "auto",
+        borderBottom: 0
     },
     tweetContainer: {
         marginTop: 10,
@@ -362,5 +367,21 @@ export const useMessagesStyles = makeStyles((theme: Theme) => ({
                 }
             },
         },
+    },
+    blockedInfoText: {
+        textAlign: "center",
+        height: 30,
+        fontSize: 13,
+        fontWeight: 400,
+        lineHeight: "16px",
+        color: theme.palette.text.secondary,
+    },
+    link: {
+        textDecoration: "none",
+        color: theme.palette.primary.main,
+        cursor: "pointer",
+        "&:hover": {
+            textDecoration: "underline",
+        }
     },
 }));
