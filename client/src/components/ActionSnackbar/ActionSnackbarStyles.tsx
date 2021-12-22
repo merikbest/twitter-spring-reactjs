@@ -3,6 +3,7 @@ import {makeStyles, Theme} from "@material-ui/core";
 export const useActionSnackbarStyles = makeStyles<Theme>((theme) => ({
     snackBar: {
         "& .MuiSnackbarContent-root": {
+            color: theme.palette.text.primary,
             width: 179,
             height: 44,
             padding: 0,

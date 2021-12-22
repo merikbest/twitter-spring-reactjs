@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useState} from 'react';
+import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useSelector} from "react-redux";
 import {Link} from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
@@ -34,7 +34,8 @@ const Follower: FC<FollowerProps<User> & HoverUserProps> = (
     const [btnText, setBtnText] = useState<string>("Following");
     const [visibleUnfollowModal, setVisibleUnfollowModal] = useState<boolean>(false);
 
-    const follower = myProfile?.followers?.findIndex(follower => follower.id === user?.id);
+    const isFollower = myProfile?.followers?.findIndex(follower => follower.id === user?.id) !== -1;
+    const isMyProfileBlocked = user?.userBlockedList?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
 
     const handleClickOpenUnfollowModal = (): void => {
         setVisibleUnfollowModal(true);
@@ -85,33 +86,37 @@ const Follower: FC<FollowerProps<User> & HoverUserProps> = (
                     </div>
                     <div>
                         {(myProfile?.id !== user?.id) && (
-                            (follower === -1) ? (
-                                <Button
-                                    className={classes.outlinedButton}
-                                    onClick={() => handleFollow(user!)}
-                                    color="primary"
-                                    variant="outlined"
-                                >
-                                    Follow
-                                </Button>
-                            ) : (
-                                <Button
-                                    className={classes.containedButton}
-                                    onMouseOver={() => setBtnText("Unfollow")}
-                                    onMouseLeave={() => setBtnText("Following")}
-                                    onClick={handleClickOpenUnfollowModal}
-                                    color="primary"
-                                    variant="contained"
-                                >
-                                    {btnText}
-                                </Button>
+                            (isMyProfileBlocked) ? null : (
+                                (!isFollower) ? (
+                                    <Button
+                                        className={classes.outlinedButton}
+                                        onClick={() => handleFollow(user!)}
+                                        color="primary"
+                                        variant="outlined"
+                                    >
+                                        Follow
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        className={classes.containedButton}
+                                        onMouseOver={() => setBtnText("Unfollow")}
+                                        onMouseLeave={() => setBtnText("Following")}
+                                        onClick={handleClickOpenUnfollowModal}
+                                        color="primary"
+                                        variant="contained"
+                                    >
+                                        {btnText}
+                                    </Button>
+                                )
                             )
                         )}
                     </div>
                 </div>
-                <Typography display="block">
-                    {user?.about}
-                </Typography>
+                {(isMyProfileBlocked) ? null : (
+                    <Typography display="block">
+                        {user?.about}
+                    </Typography>
+                )}
                 <UnfollowModal
                     user={user!}
                     visible={visibleUnfollowModal}

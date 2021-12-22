@@ -37,7 +37,8 @@ const UsersItem: FC<UsersItemProps<User> & HoverUserProps> = (
     const [btnText, setBtnText] = useState<string>("Following");
     const [visibleUnfollowModal, setVisibleUnfollowModal] = useState<boolean>(false);
 
-    const follower = myProfile?.followers?.findIndex(follower => follower.id === user?.id);
+    const isFollower = myProfile?.followers?.findIndex(follower => follower.id === user?.id) !== -1;
+    const isMyProfileBlocked = user?.userBlockedList?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
 
     const handleClickOpenUnfollowModal = (): void => {
         setVisibleUnfollowModal(true);
@@ -86,26 +87,28 @@ const UsersItem: FC<UsersItemProps<User> & HoverUserProps> = (
             </div>
             <div style={{flex: 1}}>
                 {(myProfile?.id === user?.id) ? null : (
-                    (follower === -1) ? (
-                        <Button
-                            className={classes.outlinedButton}
-                            onClick={() => handleFollow(user!)}
-                            color="primary"
-                            variant="outlined"
-                        >
-                            Follow
-                        </Button>
-                    ) : (
-                        <Button
-                            className={classes.primaryButton}
-                            onMouseOver={() => setBtnText("Unfollow")}
-                            onMouseLeave={() => setBtnText("Following")}
-                            onClick={handleClickOpenUnfollowModal}
-                            color="primary"
-                            variant="contained"
-                        >
-                            {btnText}
-                        </Button>
+                    (isMyProfileBlocked) ? null : (
+                        (!isFollower) ? (
+                            <Button
+                                className={classes.outlinedButton}
+                                onClick={() => handleFollow(user!)}
+                                color="primary"
+                                variant="outlined"
+                            >
+                                Follow
+                            </Button>
+                        ) : (
+                            <Button
+                                className={classes.primaryButton}
+                                onMouseOver={() => setBtnText("Unfollow")}
+                                onMouseLeave={() => setBtnText("Following")}
+                                onClick={handleClickOpenUnfollowModal}
+                                color="primary"
+                                variant="contained"
+                            >
+                                {btnText}
+                            </Button>
+                        )
                     )
                 )}
             </div>

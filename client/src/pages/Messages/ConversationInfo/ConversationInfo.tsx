@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useState} from 'react';
+import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {Avatar, Button, Divider, Paper, Switch, Typography} from "@material-ui/core";
@@ -23,7 +23,6 @@ interface ConversationInfoProps {
     participantId?: number;
     chatId?: number;
     chatParticipant?: User;
-    isUserBlocked: boolean;
 }
 
 const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
@@ -31,7 +30,6 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
         participantId,
         chatId,
         chatParticipant,
-        isUserBlocked,
         snackBarMessage,
         openSnackBar,
         setSnackBarMessage,
@@ -49,6 +47,11 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
     const [visibleLeaveFromConversationModal, setVisibleLeaveFromConversationModal] = useState<boolean>(false);
 
     const isFollower = myProfile?.followers?.findIndex(follower => follower.id === chatParticipant?.id) !== -1;
+    const isUserBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === chatParticipant?.id) !== -1;
+
+    useEffect(() => {
+        setBtnText(isUserBlocked ? "Blocked" : "Following");
+    }, [chatParticipant, myProfile]);
 
     const handleFollow = (user: User): void => {
         dispatch(followUser(user));
@@ -85,9 +88,8 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
 
     const onBlockUser = (): void => {
         dispatch(addUserToBlocklist(chatParticipant?.id!));
-        dispatch(leaveFromConversation({participantId: participantId!, chatId: chatId!}));
         setVisibleBlockUserModal(false);
-        setSnackBarMessage!(`@${chatParticipant?.username!} has been blocked.`);
+        setSnackBarMessage!(`@${chatParticipant?.username!} has been ${isUserBlocked ? "unblocked" : "blocked"}.`);
         setOpenSnackBar!(true);
     };
 
@@ -129,29 +131,41 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                                 </Typography>
                             </div>
                             <div>
-                                {(myProfile?.id !== chatParticipant?.id) && (
-                                    (isFollower) ? (
+                                {isUserBlocked ? (
                                         <Button
-                                            className={classes.outlinedButton}
-                                            onClick={() => handleFollow(chatParticipant!)}
-                                            color="primary"
-                                            variant="outlined"
-                                        >
-                                            Follow
-                                        </Button>
-                                    ) : (
-                                        <Button
-                                            className={classes.containedButton}
-                                            onMouseOver={() => setBtnText("Unfollow")}
-                                            onMouseLeave={() => setBtnText("Following")}
-                                            onClick={handleClickOpenUnfollowModal}
+                                            onClick={onOpenBlockUserModal}
+                                            className={classNames(classes.containedButton, classes.blockButton)}
                                             color="primary"
                                             variant="contained"
+                                            onMouseOver={() => setBtnText("Unblock")}
+                                            onMouseLeave={() => setBtnText("Blocked")}
                                         >
                                             {btnText}
                                         </Button>
+                                    ) : (
+                                        (isFollower) ? (
+                                            <Button
+                                                className={classes.outlinedButton}
+                                                onClick={() => handleFollow(chatParticipant!)}
+                                                color="primary"
+                                                variant="outlined"
+                                            >
+                                                Follow
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                className={classes.containedButton}
+                                                onMouseOver={() => setBtnText("Unfollow")}
+                                                onMouseLeave={() => setBtnText("Following")}
+                                                onClick={handleClickOpenUnfollowModal}
+                                                color="primary"
+                                                variant="contained"
+                                            >
+                                                {btnText}
+                                            </Button>
+                                        )
                                     )
-                                )}
+                                }
                             </div>
                         </div>
                     </div>
@@ -204,7 +218,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
             />
             <BlockUserModal
                 username={chatParticipant?.username!}
-                isUserBlocked={false}
+                isUserBlocked={isUserBlocked}
                 visible={visibleBlockUserModal}
                 onClose={onCloseBlockUserModal}
                 onBlockUser={onBlockUser}

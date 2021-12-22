@@ -31,7 +31,8 @@ const PopperUserWindow: FC<PopperUserWindowProps> = (
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
     const [btnText, setBtnText] = useState<string>("Following");
-    const follower = myProfile?.followers?.findIndex(follower => follower.id === user.id);
+    const isFollower = myProfile?.followers?.findIndex(follower => follower.id === user.id) !== -1;
+    const isMyProfileBlocked = user?.userBlockedList?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
 
     const handleFollow = (user: User): void => {
         dispatch(followUser(user));
@@ -63,29 +64,31 @@ const PopperUserWindow: FC<PopperUserWindowProps> = (
                         src={user.avatar?.src ? user.avatar?.src : DEFAULT_PROFILE_IMG}
                     />
                 </Link>
-                {(myProfile?.id !== user.id) ? (
-                    (follower === -1) ? (
-                        <Button
-                            className={classes.outlinedButton}
-                            onClick={() => handleFollow(user)}
-                            color="primary"
-                            variant="outlined"
-                        >
-                            Follow
-                        </Button>
-                    ) : (
-                        <Button
-                            className={classes.primaryButton}
-                            onMouseOver={() => setBtnText("Unfollow")}
-                            onMouseLeave={() => setBtnText("Following")}
-                            onClick={() => handleUnfollow(user)}
-                            color="primary"
-                            variant="contained"
-                        >
-                            {btnText}
-                        </Button>
+                {(myProfile?.id === user.id) ? null : (
+                    (isMyProfileBlocked) ? null : (
+                        (!isFollower) ? (
+                            <Button
+                                className={classes.outlinedButton}
+                                onClick={() => handleFollow(user)}
+                                color="primary"
+                                variant="outlined"
+                            >
+                                Follow
+                            </Button>
+                        ) : (
+                            <Button
+                                className={classes.primaryButton}
+                                onMouseOver={() => setBtnText("Unfollow")}
+                                onMouseLeave={() => setBtnText("Following")}
+                                onClick={() => handleUnfollow(user)}
+                                color="primary"
+                                variant="contained"
+                            >
+                                {btnText}
+                            </Button>
+                        )
                     )
-                ) : null}
+                )}
             </div>
             <div className={classes.userInfoWrapper}>
                 <Link to={`/user/${user?.id}`}>
@@ -104,27 +107,31 @@ const PopperUserWindow: FC<PopperUserWindowProps> = (
                     @{user.username}
                 </div>
             </div>
-            <div className={classes.userInfo}>
-                {user.about}
-            </div>
-            <div className={classes.userFollowersWrapper}>
-                <Link to={`/user/${user?.id}/following`} className={classes.followLink}>
-                    <span className={classes.followerCount}>
-                        {user?.followers?.length ? user?.followers?.length : 0}
-                    </span>
-                    <span className={classes.followerText}>
-                        {"Following"}
-                    </span>
-                </Link>
-                <Link to={`/user/${user?.id}/followers`} className={classes.followLink}>
-                    <span className={classes.followerCount}>
-                        {user?.following?.length ? user?.following?.length : 0}
-                    </span>
-                    <span className={classes.followerText}>
-                        {"Followers"}
-                    </span>
-                </Link>
-            </div>
+            {(isMyProfileBlocked) ? null : (
+               <>
+                   <div className={classes.userInfo}>
+                       {user.about}
+                   </div>
+                   <div className={classes.userFollowersWrapper}>
+                       <Link to={`/user/${user?.id}/following`} className={classes.followLink}>
+                           <span className={classes.followerCount}>
+                               {user?.followers?.length ? user?.followers?.length : 0}
+                           </span>
+                           <span className={classes.followerText}>
+                               {"Following"}
+                           </span>
+                       </Link>
+                       <Link to={`/user/${user?.id}/followers`} className={classes.followLink}>
+                           <span className={classes.followerCount}>
+                               {user?.following?.length ? user?.following?.length : 0}
+                           </span>
+                           <span className={classes.followerText}>
+                               {"Followers"}
+                           </span>
+                       </Link>
+                   </div>
+               </>
+            )}
         </div>
     );
 };

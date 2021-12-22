@@ -113,6 +113,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: 
     const isFollower = myProfile?.followers?.findIndex(follower => follower.id === userProfile?.id) !== -1;
     const isUserMuted = myProfile?.userMutedList?.findIndex(mutedUser => mutedUser.id === userProfile?.id) !== -1;
     const isUserBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === userProfile?.id) !== -1;
+    const isMyProfileBlocked = userProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -330,92 +331,94 @@ const UserPage: FC<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: 
                             <Avatar src={userProfile?.avatar?.src ? userProfile?.avatar.src : DEFAULT_PROFILE_IMG}/>
                         </div>
                         {(userProfile !== undefined) && (
-                            (userProfile?.id === myProfile?.id) ? (
-                                <Button
-                                    onClick={myProfile?.profileCustomized ? onOpenEditProfile : onOpenSetupProfile}
-                                    color="primary"
-                                    className={classes.editButton}
-                                >
-                                    {myProfile?.profileCustomized ? "Edit profile" : "Setup profile"}
-                                </Button>
-                            ) : (
-                                <div className={classes.buttonWrapper}>
-                                    <UserPageActions
-                                        user={userProfile!}
-                                        isUserMuted={isUserMuted}
-                                        isUserBlocked={isUserBlocked}
-                                        onMuteUser={onMuteUser}
-                                        onOpenBlockUserModal={onOpenBlockUserModal}
-                                        visibleMoreAction={visibleHoverAction?.visibleMoreAction}
-                                        handleHoverAction={handleHoverAction}
-                                        handleLeaveAction={handleLeaveAction}
-                                    />
-                                    {!isUserBlocked && (
-                                        !userProfile?.mutedDirectMessages || isFollower ? (
-                                            <IconButton
-                                                className={classes.messageButton}
-                                                onClick={handleClickAddUserToChat}
-                                                onMouseEnter={() => handleHoverAction?.(HoverActions.MESSAGE)}
-                                                onMouseLeave={handleLeaveAction}
-                                                color="primary"
-                                            >
-                                                {MessagesIcon}
-                                                <HoverAction visible={visibleHoverAction?.visibleMessageAction} actionText={"Message"}/>
-                                            </IconButton>
-                                        ) : null
-                                    )}
-                                    {isUserBlocked ? (
-                                        <Button
-                                            onClick={onOpenBlockUserModal}
-                                            className={classNames(classes.primaryButton, classes.blockButton)}
-                                            color="primary"
-                                            variant="contained"
-                                            onMouseOver={() => setBtnText("Unblock")}
-                                            onMouseLeave={() => setBtnText("Blocked")}
-                                        >
-                                            {btnText}
-                                        </Button>
-                                    ) : (
-                                        isFollower ? (
-                                            <>
+                            isMyProfileBlocked ? null : (
+                                (userProfile?.id === myProfile?.id) ? (
+                                    <Button
+                                        onClick={myProfile?.profileCustomized ? onOpenEditProfile : onOpenSetupProfile}
+                                        color="primary"
+                                        className={classes.editButton}
+                                    >
+                                        {myProfile?.profileCustomized ? "Edit profile" : "Setup profile"}
+                                    </Button>
+                                ) : (
+                                    <div className={classes.buttonWrapper}>
+                                        <UserPageActions
+                                            user={userProfile!}
+                                            isUserMuted={isUserMuted}
+                                            isUserBlocked={isUserBlocked}
+                                            onMuteUser={onMuteUser}
+                                            onOpenBlockUserModal={onOpenBlockUserModal}
+                                            visibleMoreAction={visibleHoverAction?.visibleMoreAction}
+                                            handleHoverAction={handleHoverAction}
+                                            handleLeaveAction={handleLeaveAction}
+                                        />
+                                        {!isUserBlocked && (
+                                            !userProfile?.mutedDirectMessages || isFollower ? (
                                                 <IconButton
-                                                    onClick={handleSubscribeToNotifications}
-                                                    onMouseEnter={() => handleHoverAction?.(HoverActions.OTHER)}
-                                                    onMouseLeave={handleLeaveAction}
                                                     className={classes.messageButton}
+                                                    onClick={handleClickAddUserToChat}
+                                                    onMouseEnter={() => handleHoverAction?.(HoverActions.MESSAGE)}
+                                                    onMouseLeave={handleLeaveAction}
                                                     color="primary"
                                                 >
-                                                    {isSubscriber ? NotificationsAddFilledIcon : NotificationsAddIcon}
-                                                    <HoverAction
-                                                        visible={visibleHoverAction?.visibleOtherAction}
-                                                        actionText={isSubscriber ? "Turn off notifications" : "Notify"}
-                                                    />
+                                                    {MessagesIcon}
+                                                    <HoverAction visible={visibleHoverAction?.visibleMessageAction} actionText={"Message"}/>
                                                 </IconButton>
+                                            ) : null
+                                        )}
+                                        {isUserBlocked ? (
+                                            <Button
+                                                onClick={onOpenBlockUserModal}
+                                                className={classNames(classes.primaryButton, classes.blockButton)}
+                                                color="primary"
+                                                variant="contained"
+                                                onMouseOver={() => setBtnText("Unblock")}
+                                                onMouseLeave={() => setBtnText("Blocked")}
+                                            >
+                                                {btnText}
+                                            </Button>
+                                        ) : (
+                                            isFollower ? (
+                                                <>
+                                                    <IconButton
+                                                        onClick={handleSubscribeToNotifications}
+                                                        onMouseEnter={() => handleHoverAction?.(HoverActions.OTHER)}
+                                                        onMouseLeave={handleLeaveAction}
+                                                        className={classes.messageButton}
+                                                        color="primary"
+                                                    >
+                                                        {isSubscriber ? NotificationsAddFilledIcon : NotificationsAddIcon}
+                                                        <HoverAction
+                                                            visible={visibleHoverAction?.visibleOtherAction}
+                                                            actionText={isSubscriber ? "Turn off notifications" : "Notify"}
+                                                        />
+                                                    </IconButton>
+                                                    <Button
+                                                        onClick={handleFollow}
+                                                        className={classes.primaryButton}
+                                                        color="primary"
+                                                        variant="contained"
+                                                        onMouseOver={() => setBtnText("Unfollow")}
+                                                        onMouseLeave={() => setBtnText("Following")}
+                                                    >
+                                                        {btnText}
+                                                    </Button>
+                                                </>
+                                            ) : (
                                                 <Button
                                                     onClick={handleFollow}
-                                                    className={classes.primaryButton}
+                                                    className={classes.editButton}
                                                     color="primary"
-                                                    variant="contained"
-                                                    onMouseOver={() => setBtnText("Unfollow")}
-                                                    onMouseLeave={() => setBtnText("Following")}
                                                 >
-                                                    {btnText}
+                                                    Follow
                                                 </Button>
-                                            </>
-                                        ) : (
-                                            <Button
-                                                onClick={handleFollow}
-                                                className={classes.editButton}
-                                                color="primary"
-                                            >
-                                                Follow
-                                            </Button>
-                                        )
-                                    )}
-                                </div>
+                                            )
+                                        )}
+                                    </div>
+                                )
                             )
                         )}
-                        {!userProfile ? (
+                        {(userProfile === undefined) ? (
                             <Skeleton variant="text" width={250} height={30}/>
                         ) : (
                             <div>
@@ -429,61 +432,66 @@ const UserPage: FC<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: 
                                 )}
                             </div>
                         )}
-                        {!userProfile ? (
+                        {(userProfile === undefined) ? (
                             <Skeleton variant="text" width={60}/>
                         ) : (
                             <Typography className={classes.username}>
                                 @{userProfile.username}
                             </Typography>
                         )}
-                        <Typography className={classes.description}>
-                            {userProfile?.about}
-                        </Typography>
+                        {isMyProfileBlocked ? null : (
+                            <Typography className={classes.description}>
+                                {userProfile?.about}
+                            </Typography>
+                        )}
                         <div className={classes.infoList}>
-                            {!userProfile && (
+                            {(userProfile === undefined) && (
                                 <div className={classes.skeletonDetails}>
                                     <Skeleton component={"span"} variant="text" width={80}/>
                                     <Skeleton component={"span"} variant="text" width={150}/>
                                     <Skeleton component={"span"} variant="text" width={150}/>
                                 </div>
                             )}
-                            <List>
-                                {userProfile?.location && (
-                                    <ListItem>
-                                        <>{LocationIcon}</>
-                                        <Typography component={"span"}>
-                                            {userProfile?.location}
-                                        </Typography>
-                                    </ListItem>
-                                )}
-                                {userProfile?.website && (
-                                    <ListItem>
-                                        <>{LinkIcon}</>
-                                        <a className={classes.link} href={userProfile?.website}>
-                                            {userProfile?.website}
-                                        </a>
-                                    </ListItem>
-                                )}
-                                {userProfile?.dateOfBirth && (
-                                    <ListItem>
-                                        <Typography component={"span"}>
-                                            Date of Birth: {userProfile?.dateOfBirth}
-                                        </Typography>
-                                    </ListItem>
-                                )}
-                                {userProfile?.registrationDate && (
-                                    <ListItem>
-                                        <>{CalendarIcon}</>
-                                        Joined: {format(new Date(userProfile?.registrationDate), 'MMMM yyyy')}
-                                    </ListItem>
-                                )}
-                            </List>
-                            {!userProfile ? (
+                            {isMyProfileBlocked ? null : (
+                                <List>
+                                    {userProfile?.location && (
+                                        <ListItem>
+                                            <>{LocationIcon}</>
+                                            <Typography component={"span"}>
+                                                {userProfile?.location}
+                                            </Typography>
+                                        </ListItem>
+                                    )}
+                                    {userProfile?.website && (
+                                        <ListItem>
+                                            <>{LinkIcon}</>
+                                            <a className={classes.link} href={userProfile?.website}>
+                                                {userProfile?.website}
+                                            </a>
+                                        </ListItem>
+                                    )}
+                                    {userProfile?.dateOfBirth && (
+                                        <ListItem>
+                                            <Typography component={"span"}>
+                                                Date of Birth: {userProfile?.dateOfBirth}
+                                            </Typography>
+                                        </ListItem>
+                                    )}
+                                    {userProfile?.registrationDate && (
+                                        <ListItem>
+                                            <>{CalendarIcon}</>
+                                            Joined: {format(new Date(userProfile?.registrationDate), 'MMMM yyyy')}
+                                        </ListItem>
+                                    )}
+                                </List>
+                            )}
+                            {(userProfile === undefined) && (
                                 <div className={classes.skeletonDetails}>
                                     <Skeleton component={"span"} variant="text" width={80}/>
                                     <Skeleton component={"span"} variant="text" width={80}/>
                                 </div>
-                            ) : (
+                            )}
+                            {isMyProfileBlocked ? null : (
                                 <List className={classes.details}>
                                     <LinkToFollowers linkTo={"following"}>
                                         <ListItem>
@@ -520,40 +528,53 @@ const UserPage: FC<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: 
                     {(userProfile === undefined) ? (
                         <Spinner/>
                     ) : (
-                        userProfile?.privateProfile ? (
+                        isMyProfileBlocked ? (
                             <div className={classes.privateProfileInfo}>
                                 <Typography component={"div"} className={classes.privateProfileInfoTitle}>
-                                    These Tweets are protected
+                                    You’re blocked
                                 </Typography>
                                 <Typography component={"div"} className={classes.privateProfileInfoText}>
-                                    {`Only approved followers can see @${userProfile?.username}’s Tweets. To request access, 
-                                    click Follow. `} <a
-                                    href={"https://help.twitter.com/safety-and-security/public-and-protected-tweets"}
+                                    {`You can’t follow or see @${userProfile?.username}’s Tweets.`} <a
+                                    href={"https://help.twitter.com/using-twitter/someone-blocked-me-on-twitter"}
                                     target={"_blank"} className={classes.link}>Learn more</a>
                                 </Typography>
                             </div>
                         ) : (
-                            <>
-                                <div className={classes.tabs}>
-                                    <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChange}>
-                                        <Tab onClick={() => handleShowTweets(handleShowUserTweets)} label="Tweets"/>
-                                        <Tab onClick={() => handleShowTweets(handleShowUserRetweetsAndReplies)} label="Tweets & replies"/>
-                                        <Tab onClick={() => handleShowTweets(handleShowMediaTweets)} label="Media"/>
-                                        <Tab onClick={() => handleShowTweets(handleShowLikedTweets)} label="Likes"/>
-                                    </Tabs>
+                            userProfile?.privateProfile ? (
+                                <div className={classes.privateProfileInfo}>
+                                    <Typography component={"div"} className={classes.privateProfileInfoTitle}>
+                                        These Tweets are protected
+                                    </Typography>
+                                    <Typography component={"div"} className={classes.privateProfileInfoText}>
+                                        {`Only approved followers can see @${userProfile?.username}’s Tweets. To request 
+                                        access, click Follow. `} <a
+                                        href={"https://help.twitter.com/safety-and-security/public-and-protected-tweets"}
+                                        target={"_blank"} className={classes.link}>Learn more</a>
+                                    </Typography>
                                 </div>
-                                <Divider/>
-                                <div className={classes.tweets}>
-                                    <UserPageTweets
-                                        tweets={tweets}
-                                        isTweetsLoading={isTweetsLoading}
-                                        activeTab={activeTab}
-                                        userProfileId={userProfile?.id}
-                                        myProfileId={myProfile?.id}
-                                        username={userProfile?.username}
-                                    />
-                                </div>
-                            </>
+                            ) : (
+                                <>
+                                    <div className={classes.tabs}>
+                                        <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChange}>
+                                            <Tab onClick={() => handleShowTweets(handleShowUserTweets)} label="Tweets"/>
+                                            <Tab onClick={() => handleShowTweets(handleShowUserRetweetsAndReplies)} label="Tweets & replies"/>
+                                            <Tab onClick={() => handleShowTweets(handleShowMediaTweets)} label="Media"/>
+                                            <Tab onClick={() => handleShowTweets(handleShowLikedTweets)} label="Likes"/>
+                                        </Tabs>
+                                    </div>
+                                    <Divider/>
+                                    <div className={classes.tweets}>
+                                        <UserPageTweets
+                                            tweets={tweets}
+                                            isTweetsLoading={isTweetsLoading}
+                                            activeTab={activeTab}
+                                            userProfileId={userProfile?.id}
+                                            myProfileId={myProfile?.id}
+                                            username={userProfile?.username}
+                                        />
+                                    </div>
+                                </>
+                            )
                         )
                     )}
                 </div>

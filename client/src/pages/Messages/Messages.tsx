@@ -93,9 +93,11 @@ const Messages: FC = (): ReactElement => {
     }, [messages]);
 
     useEffect(() => {
-        const isBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === participant?.user.id) !== -1;
-        setIsUserBlocked(isBlocked);
-    }, [participant]);
+        if (participant !== undefined) {
+            const isBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === participant?.user.id) !== -1;
+            setIsUserBlocked(isBlocked);
+        }
+    }, [participant, myProfile]);
 
     useEffect(() => {
         if (location.state?.removeParticipant === true) {
@@ -310,7 +312,6 @@ const Messages: FC = (): ReactElement => {
                         participantId={participant?.id}
                         chatId={chat?.id}
                         chatParticipant={participant?.user}
-                        isUserBlocked={isUserBlocked}
                     />
                 </Route>
                 <Route exact path="/messages">

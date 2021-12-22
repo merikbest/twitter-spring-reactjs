@@ -87,6 +87,9 @@ export const useConversationInfoStyles = makeStyles((theme: Theme) => ({
             backgroundColor: theme.palette.secondary.light,
         },
     },
+    blockButton: {
+        backgroundColor: theme.palette.error.main,
+    },
     containedButton: {
         float: 'right',
         marginRight: 15,

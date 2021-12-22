@@ -8,7 +8,7 @@ export const usePopperUserWindowStyles = makeStyles<Theme, PopperUserWindowStyle
     popperUserWindow: {
         position: "absolute",
         width: 300,
-        minHeight: 204,
+        minHeight: "auto",
         padding: 16,
         zIndex: 2,
         marginTop: props => props.isTweetComponent ? 0 : -20,
