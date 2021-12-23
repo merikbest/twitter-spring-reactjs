@@ -23,7 +23,7 @@ export const useTweetComponentMoreStyles = makeStyles((theme: Theme) => createSt
         padding: 0,
         position: 'absolute',
         width: 352,
-        height: 312,
+        minHeight: 208,
         top: 10,
         right: 10,
         zIndex: 2,

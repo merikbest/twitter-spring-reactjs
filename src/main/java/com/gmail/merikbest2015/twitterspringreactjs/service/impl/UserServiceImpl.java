@@ -271,6 +271,8 @@ public class UserServiceImpl implements UserService {
         User currentUser = userRepository.getOne(userId);
         user.getFollowers().removeIf(follower -> follower.getId().equals(currentUser.getId()));
         user.getFollowing().removeIf(following -> following.getId().equals(currentUser.getId()));
+        user.getUserLists().removeIf(list -> list.getMembers().stream()
+                .anyMatch(member -> member.getId().equals(currentUser.getId())));
         return processUserList(user, currentUser, user.getUserBlockedList());
     }
 

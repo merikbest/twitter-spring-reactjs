@@ -82,6 +82,7 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
     const follower = myProfile?.followers?.find((follower) => follower.id === tweet.user.id);
     const isUserMuted = myProfile?.userMutedList?.findIndex(mutedUser => mutedUser.id === tweet.user.id) !== -1;
     const isUserBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === tweet.user.id) !== -1;
+    const isMyProfileBlocked = tweet.user.userBlockedList?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
     const isTweetPinned = myProfile?.pinnedTweet?.id === tweet.id;
 
     useEffect(() => {
@@ -259,20 +260,24 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
                                     </>
                                 ) : (
                                     <>
-                                        <ListItem onClick={handleFollow}>
+                                        {isMyProfileBlocked ? null : (
                                             <>
-                                                <>{follower ? UnfollowIcon : FollowIcon}</>
-                                                <Typography component={"span"}>
-                                                    {follower ? "Unfollow" : "Follow"} @{tweet.user.username}
-                                                </Typography>
+                                                <ListItem onClick={handleFollow}>
+                                                    <>
+                                                        <>{follower ? UnfollowIcon : FollowIcon}</>
+                                                        <Typography component={"span"}>
+                                                            {follower ? "Unfollow" : "Follow"} @{tweet.user.username}
+                                                        </Typography>
+                                                    </>
+                                                </ListItem>
+                                                <ListItem onClick={onOpenListsModal}>
+                                                    <>{AddListsIcon}</>
+                                                    <Typography component={"span"}>
+                                                        {`Add/remove @${tweet.user.username} from Lists`}
+                                                    </Typography>
+                                                </ListItem>
                                             </>
-                                        </ListItem>
-                                        <ListItem onClick={onOpenListsModal}>
-                                            <>{AddListsIcon}</>
-                                            <Typography component={"span"}>
-                                                {`Add/remove @${tweet.user.username} from Lists`}
-                                            </Typography>
-                                        </ListItem>
+                                        )}
                                         <ListItem onClick={onMuteUser}>
                                             <>{isUserMuted ? UnmuteIcon : MuteIcon}</>
                                             <Typography component={"span"}>

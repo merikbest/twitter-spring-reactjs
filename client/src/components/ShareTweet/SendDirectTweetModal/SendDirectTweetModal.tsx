@@ -97,10 +97,13 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
     };
 
     const DirectUserItems: FC<{user: User}> = ({user}): JSX.Element => {
+        const isUserBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === user?.id) !== -1;
+        const isMyProfileBlocked = user?.userBlockedList?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
+
         return (
             <ListItem
                 button
-                disabled={user.mutedDirectMessages || user.id === myProfile?.id}
+                disabled={isUserBlocked || isMyProfileBlocked || user.mutedDirectMessages || user.id === myProfile?.id}
                 selected={selectedIndexes.indexOf(user?.id!) !== -1}
                 onClick={() => handleListItemClick(user)}
             >
