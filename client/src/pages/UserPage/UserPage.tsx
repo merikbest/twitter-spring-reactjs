@@ -32,7 +32,7 @@ import {
     follow,
     unfollow
 } from "../../store/ducks/user/actionCreators";
-import {selectUserData} from "../../store/ducks/user/selectors";
+import {selectUserData, selectUserIsLoaded} from "../../store/ducks/user/selectors";
 import {fetchRelevantUsers} from "../../store/ducks/users/actionCreators";
 import {fetchTags} from "../../store/ducks/tags/actionCreators";
 import {
@@ -51,7 +51,10 @@ import {
     setAddedUserTweet,
     setUpdatedUserTweet
 } from "../../store/ducks/userTweets/actionCreators";
-import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
+import {
+    selectUserProfile,
+    selectUsersIsSuccessLoaded
+} from "../../store/ducks/userProfile/selectors";
 import {
     fetchUserProfile,
     followUserProfile,
@@ -70,6 +73,8 @@ import {SnackbarProps, withSnackbar} from "../../hoc/withSnackbar";
 import Spinner from "../../components/Spinner/Spinner";
 import {HoverActionProps, HoverActions, withHoverAction} from "../../hoc/withHoverAction";
 import HoverAction from "../../components/HoverAction/HoverAction";
+import {User} from "../../store/ducks/user/contracts/state";
+import FollowerGroup from "../../components/FollowerGroup/FollowerGroup";
 
 interface LinkToFollowersProps {
     children: ReactNode;
@@ -96,6 +101,8 @@ const UserPage: FC<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: 
     const tweets = useSelector(selectUserTweetsItems);
     const myProfile = useSelector(selectUserData);
     const userProfile = useSelector(selectUserProfile);
+    const isMyProfileLoaded = useSelector(selectUserIsLoaded);
+    const isUserProfileSuccessLoaded = useSelector(selectUsersIsSuccessLoaded);
     const isTweetsLoading = useSelector(selectIsUserTweetsLoading);
     const isTweetsLoaded = useSelector(selectIsUserTweetsLoaded);
     const location = useLocation<{ isRegistered: boolean; }>();
@@ -103,6 +110,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: 
 
     const [btnText, setBtnText] = useState<string>("");
     const [activeTab, setActiveTab] = useState<number>(0);
+    const [sameFollowers, setSameFollowers] = useState<User[]>([]);
     const [visibleBlockUserModal, setVisibleBlockUserModal] = useState<boolean>(false);
     const [visibleEditProfile, setVisibleEditProfile] = useState<boolean>(false);
     const [visibleSetupProfile, setVisibleSetupProfile] = useState<boolean>(false);
@@ -167,6 +175,13 @@ const UserPage: FC<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: 
     useEffect(() => {
         setBtnText(isUserBlocked ? "Blocked" : "Following");
     }, [myProfile]);
+
+    useEffect(() => {
+        if (isMyProfileLoaded && isUserProfileSuccessLoaded) {
+            const followers = myProfile?.followers?.filter(({id: id1}) => userProfile?.followers?.some(({id: id2}) => id2 === id1));
+            setSameFollowers(followers!);
+        }
+    }, [isMyProfileLoaded && isUserProfileSuccessLoaded]);
 
     const loadUserTweets = (): void => {
         if (activeTab === 1) {
@@ -281,7 +296,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: 
         setOpenSnackBar!(true);
     };
 
-    const handleSubscribeToNotifications = (): void  => {
+    const handleSubscribeToNotifications = (): void => {
         dispatch(processSubscribe(userProfile?.id!));
     };
 
@@ -362,7 +377,10 @@ const UserPage: FC<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: 
                                                     color="primary"
                                                 >
                                                     {MessagesIcon}
-                                                    <HoverAction visible={visibleHoverAction?.visibleMessageAction} actionText={"Message"}/>
+                                                    <HoverAction
+                                                        visible={visibleHoverAction?.visibleMessageAction}
+                                                        actionText={"Message"}
+                                                    />
                                                 </IconButton>
                                             ) : null
                                         )}
@@ -524,6 +542,11 @@ const UserPage: FC<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: 
                                 </List>
                             )}
                         </div>
+                        {isMyProfileBlocked ? null : (
+                            (userProfile !== undefined) && (
+                                <FollowerGroup user={userProfile} sameFollowers={sameFollowers}/>
+                            )
+                        )}
                     </div>
                     {(userProfile === undefined) ? (
                         <Spinner/>

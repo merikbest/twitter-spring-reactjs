@@ -71,9 +71,15 @@ export const usePopperUserWindowStyles = makeStyles<Theme, PopperUserWindowStyle
     },
     fullName: {
         color: theme.palette.text.primary,
+        fontWeight: 700,
+        fontSize: 15,
+        lineHeight: "20px",
     },
     username: {
         color: theme.palette.text.secondary,
+        fontWeight: 400,
+        fontSize: 15,
+        lineHeight: "20px",
     },
     lockIcon: {
         "& svg": {
@@ -86,7 +92,9 @@ export const usePopperUserWindowStyles = makeStyles<Theme, PopperUserWindowStyle
     userInfo: {
         marginTop: 12,
         marginBottom: 12,
+        fontWeight: 400,
         fontSize: 15,
+        lineHeight: "20px",
     },
     details: {
         display: "flex",
@@ -95,15 +103,20 @@ export const usePopperUserWindowStyles = makeStyles<Theme, PopperUserWindowStyle
         color: theme.palette.info.light,
     },
     userFollowersWrapper: {
-        fontSize: 15,
+        "& .MuiTypography-root": {
+            fontSize: 15,
+            lineHeight: "20px",
+        },
     },
     followLink: {
         textDecoration: 'none',
+        color: "inherit",
         "&:hover": {
             textDecoration: "underline !important",
         },
     },
     followerCount: {
+        fontWeight: 700,
         marginRight: 2,
         color: theme.palette.text.primary,
     },

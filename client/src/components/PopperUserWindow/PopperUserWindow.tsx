@@ -1,6 +1,6 @@
-import React, {FC, ReactElement, useState} from 'react';
+import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
-import {Avatar, Button} from "@material-ui/core";
+import {Avatar, Button, Typography} from "@material-ui/core";
 import classNames from "classnames";
 
 import {usePopperUserWindowStyles} from "./PopperUserWindowStyles";
@@ -11,6 +11,7 @@ import {selectUserData} from "../../store/ducks/user/selectors";
 import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 import {followProfile, unfollowProfile} from "../../store/ducks/userProfile/actionCreators";
 import {LockIcon} from "../../icons";
+import FollowerGroup from "../FollowerGroup/FollowerGroup";
 
 interface PopperUserWindowProps {
     visible?: boolean;
@@ -33,6 +34,14 @@ const PopperUserWindow: FC<PopperUserWindowProps> = (
     const [btnText, setBtnText] = useState<string>("Following");
     const isFollower = myProfile?.followers?.findIndex(follower => follower.id === user.id) !== -1;
     const isMyProfileBlocked = user?.userBlockedList?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
+    const [sameFollowers, setSameFollowers] = useState<User[]>([]);
+
+    useEffect(() => {
+        if (visible) {
+            const followers = myProfile?.followers?.filter(({id: id1}) => user?.followers?.some(({id: id2}) => id2 === id1));
+            setSameFollowers(followers!);
+        }
+    }, [visible]);
 
     const handleFollow = (user: User): void => {
         dispatch(followUser(user));
@@ -93,9 +102,9 @@ const PopperUserWindow: FC<PopperUserWindowProps> = (
             <div className={classes.userInfoWrapper}>
                 <Link to={`/user/${user?.id}`}>
                     <div>
-                        <span className={classes.fullName}>
+                        <Typography component={"span"} className={classes.fullName}>
                             {user.fullName}
-                        </span>
+                        </Typography>
                         {user?.privateProfile && (
                             <span className={classes.lockIcon}>
                                 {LockIcon}
@@ -103,33 +112,34 @@ const PopperUserWindow: FC<PopperUserWindowProps> = (
                         )}
                     </div>
                 </Link>
-                <div className={classes.username}>
+                <Typography component={"div"} className={classes.username}>
                     @{user.username}
-                </div>
+                </Typography>
             </div>
             {(isMyProfileBlocked) ? null : (
                <>
-                   <div className={classes.userInfo}>
+                   <Typography component={"div"} className={classes.userInfo}>
                        {user.about}
-                   </div>
+                   </Typography>
                    <div className={classes.userFollowersWrapper}>
                        <Link to={`/user/${user?.id}/following`} className={classes.followLink}>
-                           <span className={classes.followerCount}>
+                           <Typography component={"span"} className={classes.followerCount}>
                                {user?.followers?.length ? user?.followers?.length : 0}
-                           </span>
-                           <span className={classes.followerText}>
+                           </Typography>
+                           <Typography component={"span"} className={classes.followerText}>
                                {"Following"}
-                           </span>
+                           </Typography>
                        </Link>
                        <Link to={`/user/${user?.id}/followers`} className={classes.followLink}>
-                           <span className={classes.followerCount}>
+                           <Typography component={"span"} className={classes.followerCount}>
                                {user?.following?.length ? user?.following?.length : 0}
-                           </span>
-                           <span className={classes.followerText}>
+                           </Typography>
+                           <Typography component={"span"} className={classes.followerText}>
                                {"Followers"}
-                           </span>
+                           </Typography>
                        </Link>
                    </div>
+                   <FollowerGroup user={user} sameFollowers={sameFollowers}/>
                </>
             )}
         </div>
