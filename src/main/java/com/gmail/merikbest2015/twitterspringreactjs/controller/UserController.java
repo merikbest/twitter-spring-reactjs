@@ -118,6 +118,11 @@ public class UserController {
         return ResponseEntity.ok(notification.getUserToFollow());
     }
 
+    @GetMapping("/follow/overall/{userId}")
+    public ResponseEntity<List<UserResponse>> overallFollowers(@PathVariable Long userId) {
+        return ResponseEntity.ok(userMapper.overallFollowers(userId));
+    }
+
     @GetMapping("/subscribe/{userId}")
     public ResponseEntity<UserResponse> processSubscribeToNotifications(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.processSubscribeToNotifications(userId));

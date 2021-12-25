@@ -134,6 +134,10 @@ public class UserMapper {
         return convertToNotificationResponse(userService.processFollow(userId));
     }
 
+    public List<UserResponse> overallFollowers(Long userId) {
+        return convertUserListToResponse(userService.overallFollowers(userId));
+    }
+
     public UserResponse processSubscribeToNotifications(Long userId) {
         return convertToUserResponse(userService.processSubscribeToNotifications(userId));
     }

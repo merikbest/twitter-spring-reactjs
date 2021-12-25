@@ -12,6 +12,9 @@ export const useFollowerGroupStyles = makeStyles((theme: Theme) => ({
                 border: `1px solid ${theme.palette.background.paper}`,
             },
         },
+        "& a": {
+          textDecoration: "none"
+        },
     },
     followedTextInfo: {
         marginLeft: 12,
@@ -23,5 +26,12 @@ export const useFollowerGroupStyles = makeStyles((theme: Theme) => ({
             cursor: "pointer",
             textDecoration: "underline",
         },
+    },
+    noFollowedTextInfo: {
+        marginTop: 12,
+        color: theme.palette.text.secondary,
+        lineHeight: "16px",
+        fontSize: 13,
+        fontWeight: 400,
     },
 }));

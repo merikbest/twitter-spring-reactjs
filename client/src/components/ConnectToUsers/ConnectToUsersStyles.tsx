@@ -1,6 +1,6 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
-export const useConnectStyles = makeStyles((theme: Theme) => ({
+export const useConnectToUsersStyles = makeStyles((theme: Theme) => ({
     container: {
         paddingTop: 48,
     },

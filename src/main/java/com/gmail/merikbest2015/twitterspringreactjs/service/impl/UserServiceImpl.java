@@ -240,6 +240,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> overallFollowers(Long userId) {
+        User user = authenticationService.getAuthenticatedUser();
+
+        if (!user.getId().equals(userId)) {
+            User currentUser = userRepository.getOne(userId);
+            return user.getFollowers().stream()
+                    .filter(follower -> currentUser.getFollowers().contains(follower))
+                    .collect(Collectors.toList());
+        } else {
+            return user.getFollowers();
+        }
+    }
+
+    @Override
     public User processSubscribeToNotifications(Long userId) {
         User user = authenticationService.getAuthenticatedUser();
         User currentUser = userRepository.getOne(userId);

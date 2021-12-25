@@ -44,6 +44,10 @@ export const UserApi = {
         const {data} = await axios.get<User | undefined>(`${API_URL}/user/follow/${user.id}`);
         return data;
     },
+    async overallFollowers(userId: string): Promise<User[]> {
+        const {data} = await axios.get<User[]>(`${API_URL}/user/follow/overall/${userId}`);
+        return data;
+    },
     async processSubscribeToNotifications(userId: number): Promise<User | undefined> {
         const {data} = await axios.get<User | undefined>(`${API_URL}/user/subscribe/${userId}`);
         return data;

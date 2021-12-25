@@ -42,6 +42,8 @@ public interface UserService {
 
     Notification processFollow(Long userId);
 
+    List<User> overallFollowers(Long userId);
+
     User processSubscribeToNotifications(Long userId);
 
     User processPinTweet(Long tweetId);

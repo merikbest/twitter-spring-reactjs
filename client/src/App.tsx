@@ -48,6 +48,7 @@ import {
 } from "./theme";
 import {BackgroundTheme, ColorScheme} from "./pages/Settings/AccessibilityDisplayLanguages/Display/Display";
 import NotificationsTimeline from "./pages/Notifications/NotificationsTimeline/NotificationsTimeline";
+import FollowersYouKnow from "./pages/FollowersYouKnow/FollowersYouKnow";
 
 const App: FC = (): ReactElement => {
     const history = useHistory();
@@ -190,7 +191,8 @@ const App: FC = (): ReactElement => {
                         <Route path="/lists/memberships/:id" component={ListsMemberships} exact/>
                         <Route path="/lists/:listId" component={FullList} exact/>
                         <Route path="/user/:id" component={UserPage} exact/>
-                        <Route path="/user/:id/:follow" component={FollowingFollowers}/>
+                        <Route path="/user/followers_you_follow/:id" component={FollowersYouKnow} exact/>
+                        <Route path="/user/:id/:follow" component={FollowingFollowers} exact/>
                     </Switch>
                     {background && <Route path="/modal/:id" children={<TweetImageModal/>}/>}
                 </Layout>
