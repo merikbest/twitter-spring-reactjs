@@ -11,6 +11,7 @@ import {
     DisplayIcon,
     ExploreIcon,
     ExploreIconFilled,
+    FollowerRequestIcon,
     HelpCenterIcon,
     HomeIcon,
     HomeIconFilled,
@@ -37,6 +38,7 @@ import {selectLoadingState} from "../../store/ducks/tweets/selectors";
 import {LoadingStatus} from "../../store/types";
 import DisplayModal from "./DisplayModal/DisplayModal";
 import {DisplayProps} from "../../pages/Settings/AccessibilityDisplayLanguages/Display/Display";
+import FollowerRequestsModal from "./FollowerRequestsModal/FollowerRequestsModal";
 
 const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): ReactElement => {
     const classes = useSideMenuStyles();
@@ -48,6 +50,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
     const [visibleAddTweet, setVisibleAddTweet] = useState<boolean>(false);
     const [visibleHomeNotification, setVisibleHomeNotification] = useState<boolean>(false);
     const [visibleDisplayModal, setVisibleDisplayModal] = useState<boolean>(false);
+    const [visibleFollowerRequestsModal, setVisibleFollowerRequestsModal] = useState<boolean>(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const id = open ? "simple-popover" : undefined;
@@ -83,6 +86,15 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
 
     const onCloseDisplayModal = (): void => {
         setVisibleDisplayModal(false);
+    };
+
+    const onOpenFollowerRequestsModal = (): void => {
+        setVisibleFollowerRequestsModal(true);
+        handleClosePopup();
+    };
+
+    const onCloseFollowerRequestsModal= (): void => {
+        setVisibleFollowerRequestsModal(false);
     };
 
     return (
@@ -240,18 +252,17 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     >
                         <div className={classes.listItemWrapper}>
                             <List>
-                                {/*<ListItem>*/}
-                                {/*    {TopicIcon}*/}
-                                {/*    <Typography component={"span"}>*/}
-                                {/*        Topics*/}
-                                {/*    </Typography>*/}
-                                {/*</ListItem>*/}
-                                {/*<ListItem>*/}
-                                {/*    {MomentsIcon}*/}
-                                {/*    <Typography component={"span"}>*/}
-                                {/*        Moments*/}
-                                {/*    </Typography>*/}
-                                {/*</ListItem>*/}
+                                {(myProfile?.privateProfile) ? (
+                                    <ListItem onClick={onOpenFollowerRequestsModal}>
+                                        {FollowerRequestIcon}
+                                        <Typography component={"span"}>
+                                            Follower requests
+                                            <span className={classes.followerRequestsCount}>
+                                                {myProfile?.followerRequests?.length}
+                                            </span>
+                                        </Typography>
+                                    </ListItem>
+                                ) : null}
                                 <ListItem>
                                     {NewslettersIcon}
                                     <Typography component={"span"}>
@@ -323,6 +334,10 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                         </Hidden>
                     </Button>
                     <AddTweetModal visible={visibleAddTweet} onClose={onCloseAddTweet}/>
+                    <FollowerRequestsModal
+                        visible={visibleFollowerRequestsModal}
+                        onClose={onCloseFollowerRequestsModal}
+                    />
                     <DisplayModal
                         visible={visibleDisplayModal}
                         onClose={onCloseDisplayModal}

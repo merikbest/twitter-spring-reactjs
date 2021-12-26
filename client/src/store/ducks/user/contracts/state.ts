@@ -38,6 +38,7 @@ export interface User {
     followers?: User[];
     following?: User[];
     subscribers?: User[];
+    followerRequests?: User[];
 }
 
 export interface Bookmark {

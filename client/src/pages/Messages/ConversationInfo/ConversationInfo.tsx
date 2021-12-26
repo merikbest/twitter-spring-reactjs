@@ -17,7 +17,7 @@ import BlockUserModal from "../../../components/BlockUserModal/BlockUserModal";
 import {SnackbarProps, withSnackbar} from "../../../hoc/withSnackbar";
 import ActionSnackbar from "../../../components/ActionSnackbar/ActionSnackbar";
 import UnfollowModal from "../../../components/UnfollowModal/UnfollowModal";
-import {followProfile, unfollowProfile} from "../../../store/ducks/userProfile/actionCreators";
+import {followProfile, processFollowRequest, unfollowProfile} from "../../../store/ducks/userProfile/actionCreators";
 
 interface ConversationInfoProps {
     participantId?: number;
@@ -45,23 +45,41 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
     const [visibleUnfollowModal, setVisibleUnfollowModal] = useState<boolean>(false);
     const [visibleBlockUserModal, setVisibleBlockUserModal] = useState<boolean>(false);
     const [visibleLeaveFromConversationModal, setVisibleLeaveFromConversationModal] = useState<boolean>(false);
+    const [isUserBlocked, setIsUserBlocked] = useState<boolean>(false);
+    const [isWaitingForApprove, setIsWaitingForApprove] = useState<boolean>(false);
 
     const isFollower = myProfile?.followers?.findIndex(follower => follower.id === chatParticipant?.id) !== -1;
-    const isUserBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === chatParticipant?.id) !== -1;
 
     useEffect(() => {
-        setBtnText(isUserBlocked ? "Blocked" : "Following");
+        const userBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === chatParticipant?.id) !== -1;
+        const waitingForApprove = chatParticipant?.followerRequests?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
+        console.log(JSON.stringify(chatParticipant?.followerRequests))
+        setBtnText(waitingForApprove ? ("Pending") : (userBlocked ? "Blocked" : "Following"));
+        setIsUserBlocked(userBlocked);
+        setIsWaitingForApprove(waitingForApprove);
     }, [chatParticipant, myProfile]);
 
     const handleFollow = (user: User): void => {
-        dispatch(followUser(user));
-        dispatch(followProfile(user));
+        if (user?.privateProfile) {
+            handleProcessFollowRequest(user);
+        } else {
+            dispatch(followUser(user));
+            dispatch(followProfile(user));
+        }
     };
 
     const handleUnfollow = (user: User): void => {
-        dispatch(unfollowUser(user));
-        dispatch(unfollowProfile(user));
-        setVisibleUnfollowModal(false);
+        if (user?.privateProfile) {
+            handleProcessFollowRequest(user);
+        } else {
+            dispatch(unfollowUser(user));
+            dispatch(unfollowProfile(user));
+            setVisibleUnfollowModal(false);
+        }
+    };
+
+    const handleProcessFollowRequest = (user: User): void => {
+        dispatch(processFollowRequest(user.id!));
     };
 
     const handleClickOpenUnfollowModal = (): void => {
@@ -131,7 +149,8 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                                 </Typography>
                             </div>
                             <div>
-                                {isUserBlocked ? (
+                                {(!isFollower) ? (
+                                    (isUserBlocked) ? (
                                         <Button
                                             onClick={onOpenBlockUserModal}
                                             className={classNames(classes.containedButton, classes.blockButton)}
@@ -143,7 +162,18 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                                             {btnText}
                                         </Button>
                                     ) : (
-                                        (isFollower) ? (
+                                        (isWaitingForApprove) ? (
+                                            <Button
+                                                onClick={() => handleProcessFollowRequest(chatParticipant!)}
+                                                className={classes.outlinedButton}
+                                                color="primary"
+                                                variant="outlined"
+                                                onMouseOver={() => setBtnText("Cancel")}
+                                                onMouseLeave={() => setBtnText("Pending")}
+                                            >
+                                                {btnText}
+                                            </Button>
+                                        ) : (
                                             <Button
                                                 className={classes.outlinedButton}
                                                 onClick={() => handleFollow(chatParticipant!)}
@@ -152,20 +182,20 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                                             >
                                                 Follow
                                             </Button>
-                                        ) : (
-                                            <Button
-                                                className={classes.containedButton}
-                                                onMouseOver={() => setBtnText("Unfollow")}
-                                                onMouseLeave={() => setBtnText("Following")}
-                                                onClick={handleClickOpenUnfollowModal}
-                                                color="primary"
-                                                variant="contained"
-                                            >
-                                                {btnText}
-                                            </Button>
                                         )
                                     )
-                                }
+                                ) : (
+                                    <Button
+                                        className={classes.containedButton}
+                                        onMouseOver={() => setBtnText("Unfollow")}
+                                        onMouseLeave={() => setBtnText("Following")}
+                                        onClick={handleClickOpenUnfollowModal}
+                                        color="primary"
+                                        variant="contained"
+                                    >
+                                        {btnText}
+                                    </Button>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -177,7 +207,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                     </Typography>
                     <div className={classes.switchWrapper}>
                         <Typography component={"span"} className={classes.text}>
-                            Snooze notifications from John Doe
+                            {`Snooze notifications from ${chatParticipant?.fullName}`}
                         </Typography>
                         <Switch checked={false}/>
                     </div>

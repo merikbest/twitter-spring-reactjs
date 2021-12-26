@@ -50,6 +50,7 @@ export const useFollowersYouKnowStyles = makeStyles((theme: Theme) => ({
         fontWeight: 800,
         lineHeight: "36px",
         marginBottom: 8,
+        color: theme.palette.text.primary,
     },
     infoText: {
         fontSize: 15,

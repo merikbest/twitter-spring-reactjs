@@ -75,4 +75,7 @@ export const useFollowerStyles = makeStyles((theme) => ({
             backgroundColor: theme.palette.error.dark,
         },
     },
+    blockButton: {
+        backgroundColor: theme.palette.error.main,
+    },
 }));

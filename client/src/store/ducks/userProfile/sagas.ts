@@ -4,6 +4,7 @@ import {LoadingStatus} from '../../types';
 import {
     FetchUserProfileActionInterface,
     FollowUserProfileActionInterface,
+    ProcessFollowRequestActionInterface,
     ProcessSubscribeActionInterface,
     UnfollowUserProfileActionInterface,
     UpdateUserDataActionInterface,
@@ -12,6 +13,8 @@ import {
 import {User} from "../user/contracts/state";
 import {UserApi} from "../../../services/api/userApi";
 import {setUserProfile, setUserProfileLoadingState} from "./actionCreators";
+import {setUserLoadingStatus} from "../user/actionCreators";
+import {setUpdatedUsers} from "../users/actionCreators";
 
 export function* updateUserDataRequest({payload}: UpdateUserDataActionInterface) {
     try {
@@ -60,10 +63,22 @@ export function* processSubscribeRequest({payload}: ProcessSubscribeActionInterf
     }
 }
 
+export function* processFollowRequest({payload}: ProcessFollowRequestActionInterface) {
+    try {
+        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+        const item: User = yield call(UserApi.processFollowRequestToPrivateProfile, payload);
+        yield put(setUserProfile(item));
+        yield put(setUpdatedUsers(item));
+    } catch (error) {
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
 export function* userProfileSaga() {
     yield takeLatest(UserProfileActionsType.UPDATE_USER_DATA, updateUserDataRequest);
     yield takeLatest(UserProfileActionsType.FETCH_USER, fetchUserRequest);
     yield takeLatest(UserProfileActionsType.FOLLOW_USER, followUserRequest);
     yield takeLatest(UserProfileActionsType.UNFOLLOW_USER, unfollowUseRequest);
     yield takeLatest(UserProfileActionsType.PROCESS_SUBSCRIBE, processSubscribeRequest);
+    yield takeLatest(UserProfileActionsType.PROCESS_FOLLOW_REQUEST, processFollowRequest);
 }

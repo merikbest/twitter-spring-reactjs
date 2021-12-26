@@ -16,6 +16,12 @@ export const usersReducer = produce((draft: Draft<UsersState>, action: UsersActi
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
+        case UsersActionsType.SET_UPDATED_USER:
+            const updatedUserIndex = draft.users.findIndex((user) => user.id === action.payload.id);
+            if (updatedUserIndex !== -1) draft.users[updatedUserIndex] = action.payload;
+            draft.loadingState = LoadingStatus.SUCCESS;
+            break;
+
         case UsersActionsType.SET_USER_LOADING_STATE:
             draft.loadingState = action.payload;
             break;

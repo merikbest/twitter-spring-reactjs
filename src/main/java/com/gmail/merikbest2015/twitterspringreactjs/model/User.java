@@ -170,6 +170,12 @@ public class User {
     private List<User> following;
 
     @ManyToMany
+    @JoinTable(name = "user_follower_requests",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "follower_id"))
+    private List<User> followerRequests;
+
+    @ManyToMany
     @JoinTable(name = "subscribers",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "subscriber_id"))

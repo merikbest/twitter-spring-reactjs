@@ -1,8 +1,10 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
-import {useSelector} from "react-redux";
+import React, {ComponentType, FC, ReactElement, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import {Link} from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import {Avatar, Button, Typography} from "@material-ui/core";
+import classNames from "classnames";
+import {compose} from "recompose";
 
 import {User} from "../../store/ducks/user/contracts/state";
 import {selectUserData} from "../../store/ducks/user/selectors";
@@ -12,6 +14,11 @@ import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
 import {HoverUserProps, withHoverUser} from "../../hoc/withHoverUser";
 import UnfollowModal from "../UnfollowModal/UnfollowModal";
 import {LockIcon} from "../../icons";
+import {processFollowRequest} from "../../store/ducks/userProfile/actionCreators";
+import {addUserToBlocklist} from "../../store/ducks/user/actionCreators";
+import BlockUserModal from "../BlockUserModal/BlockUserModal";
+import ActionSnackbar from "../ActionSnackbar/ActionSnackbar";
+import {SnackbarProps, withSnackbar} from "../../hoc/withSnackbar";
 
 interface FollowerProps<T> {
     item?: T;
@@ -19,23 +26,40 @@ interface FollowerProps<T> {
     unfollow?: (user: User) => void;
 }
 
-const Follower: FC<FollowerProps<User> & HoverUserProps> = (
+const Follower: FC<FollowerProps<User> & HoverUserProps & SnackbarProps> = (
     {
         item: user,
         follow,
         unfollow,
         visiblePopperWindow,
         handleHoverPopper,
-        handleLeavePopper
+        handleLeavePopper,
+        snackBarMessage,
+        openSnackBar,
+        setSnackBarMessage,
+        setOpenSnackBar,
+        onCloseSnackBar
     }
 ): ReactElement => {
     const classes = useFollowerStyles();
+    const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
     const [btnText, setBtnText] = useState<string>("Following");
     const [visibleUnfollowModal, setVisibleUnfollowModal] = useState<boolean>(false);
+    const [visibleBlockUserModal, setVisibleBlockUserModal] = useState<boolean>(false);
+    const [isUserBlocked, setIsUserBlocked] = useState<boolean>(false);
+    const [isWaitingForApprove, setIsWaitingForApprove] = useState<boolean>(false);
 
     const isFollower = myProfile?.followers?.findIndex(follower => follower.id === user?.id) !== -1;
     const isMyProfileBlocked = user?.userBlockedList?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
+
+    useEffect(() => {
+        const userBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === user?.id) !== -1;
+        const waitingForApprove = user?.followerRequests?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
+        setBtnText(waitingForApprove ? ("Pending") : (userBlocked ? "Blocked" : "Following"));
+        setIsUserBlocked(userBlocked);
+        setIsWaitingForApprove(waitingForApprove);
+    }, [myProfile, user]);
 
     const handleClickOpenUnfollowModal = (): void => {
         setVisibleUnfollowModal(true);
@@ -45,13 +69,41 @@ const Follower: FC<FollowerProps<User> & HoverUserProps> = (
         setVisibleUnfollowModal(false);
     };
 
+    const handleProcessFollowRequest = (user: User): void => {
+        dispatch(processFollowRequest(user.id!));
+    };
+
     const handleFollow = (user: User): void => {
-        if (follow) follow(user);
+        if (user?.privateProfile) {
+            handleProcessFollowRequest(user);
+        } else {
+            follow!(user);
+        }
     };
 
     const handleUnfollow = (user: User): void => {
-        if (unfollow) unfollow(user);
-        setVisibleUnfollowModal(false);
+        if (user?.privateProfile) {
+            handleProcessFollowRequest(user);
+        } else {
+            unfollow!(user);
+            setVisibleUnfollowModal(false);
+        }
+    };
+
+    const onBlockUser = (): void => {
+        dispatch(addUserToBlocklist(user?.id!));
+        setVisibleBlockUserModal(false);
+        setBtnText(isUserBlocked ? "Following" : "Blocked");
+        setSnackBarMessage!(`@${user?.username} has been ${isUserBlocked ? "unblocked" : "blocked"}.`);
+        setOpenSnackBar!(true);
+    };
+
+    const onOpenBlockUserModal = (): void => {
+        setVisibleBlockUserModal(true);
+    };
+
+    const onCloseBlockUserModal = (): void => {
+        setVisibleBlockUserModal(false);
     };
 
     return (
@@ -85,17 +137,43 @@ const Follower: FC<FollowerProps<User> & HoverUserProps> = (
                         <PopperUserWindow visible={visiblePopperWindow} user={user!}/>
                     </div>
                     <div>
-                        {(myProfile?.id !== user?.id) && (
+                        {(myProfile?.id === user?.id) ? null : (
                             (isMyProfileBlocked) ? null : (
                                 (!isFollower) ? (
-                                    <Button
-                                        className={classes.outlinedButton}
-                                        onClick={() => handleFollow(user!)}
-                                        color="primary"
-                                        variant="outlined"
-                                    >
-                                        Follow
-                                    </Button>
+                                    (isUserBlocked) ? (
+                                        <Button
+                                            onClick={onOpenBlockUserModal}
+                                            className={classNames(classes.containedButton, classes.blockButton)}
+                                            color="primary"
+                                            variant="contained"
+                                            onMouseOver={() => setBtnText("Unblock")}
+                                            onMouseLeave={() => setBtnText("Blocked")}
+                                        >
+                                            {btnText}
+                                        </Button>
+                                    ) : (
+                                        (isWaitingForApprove) ? (
+                                            <Button
+                                                onClick={() => handleProcessFollowRequest(user!)}
+                                                className={classes.outlinedButton}
+                                                color="primary"
+                                                variant="outlined"
+                                                onMouseOver={() => setBtnText("Cancel")}
+                                                onMouseLeave={() => setBtnText("Pending")}
+                                            >
+                                                {btnText}
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                className={classes.outlinedButton}
+                                                onClick={() => handleFollow(user!)}
+                                                color="primary"
+                                                variant="outlined"
+                                            >
+                                                Follow
+                                            </Button>
+                                        )
+                                    )
                                 ) : (
                                     <Button
                                         className={classes.containedButton}
@@ -123,9 +201,21 @@ const Follower: FC<FollowerProps<User> & HoverUserProps> = (
                     onClose={onCloseUnfollowModal}
                     handleUnfollow={handleUnfollow}
                 />
+                <BlockUserModal
+                    username={user?.username!}
+                    isUserBlocked={isUserBlocked}
+                    visible={visibleBlockUserModal}
+                    onClose={onCloseBlockUserModal}
+                    onBlockUser={onBlockUser}
+                />
+                <ActionSnackbar
+                    snackBarMessage={snackBarMessage!}
+                    openSnackBar={openSnackBar!}
+                    onCloseSnackBar={onCloseSnackBar!}
+                />
             </div>
         </Paper>
     );
 };
 
-export default withHoverUser(Follower);
+export default compose(withSnackbar, withHoverUser)(Follower) as ComponentType<FollowerProps<User> & HoverUserProps & SnackbarProps>;

@@ -4,6 +4,7 @@ import {
     FetchMutedUsersActionInterface,
     FetchRelevantUsersActionInterface,
     FetchUsersActionInterface,
+    SetUpdatedUserActionInterface,
     SetUsersActionInterface,
     SetUsersLoadingStatusActionInterface,
     UsersActionsType
@@ -12,6 +13,11 @@ import {UsersState} from "./contracts/state";
 
 export const setUsers = (payload: User[]): SetUsersActionInterface => ({
     type: UsersActionsType.SET_USERS,
+    payload
+});
+
+export const setUpdatedUsers = (payload: User): SetUpdatedUserActionInterface => ({
+    type: UsersActionsType.SET_UPDATED_USER,
     payload
 });
 

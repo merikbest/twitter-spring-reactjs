@@ -3,6 +3,7 @@ import {
     FetchUserProfileActionInterface,
     FollowProfileActionInterface,
     FollowUserProfileActionInterface,
+    ProcessFollowRequestActionInterface,
     ProcessSubscribeActionInterface,
     ResetUserProfileActionInterface,
     SetUserProfileActionInterface,
@@ -56,6 +57,11 @@ export const unfollowUserProfile = (payload: User): UnfollowUserProfileActionInt
 export const processSubscribe = (payload: number): ProcessSubscribeActionInterface => ({
     type: UserProfileActionsType.PROCESS_SUBSCRIBE,
     payload
+});
+
+export const processFollowRequest = (payload: number): ProcessFollowRequestActionInterface => ({
+    type: UserProfileActionsType.PROCESS_FOLLOW_REQUEST,
+    payload,
 });
 
 export const setUserProfileLoadingState = (payload: UserProfileState["loadingState"]): SetUserProfileLoadingStatusActionInterface => ({

@@ -2,9 +2,11 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 import {setUserData, setUserLoadingStatus} from "./actionCreators";
 import {AuthUser, User} from "./contracts/state";
 import {
+    AcceptFollowRequestActionInterface,
     AddTweetToBookmarksActionInterface,
     AddUserToBlocklistActionInterface,
     AddUserToMuteListActionInterface,
+    DeclineFollowRequestActionInterface,
     FetchPinTweetActionInterface,
     FetchReadMessagesActionInterface,
     FetchSignInActionInterface,
@@ -65,7 +67,7 @@ export function* fetchUserDataRequest() {
     }
 }
 
-export function* fetchFollowUserRequest({payload}: FollowUserActionInterface) {
+export function* followUserRequest({payload}: FollowUserActionInterface) {
     try {
         yield call(UserApi.follow, payload);
     } catch (error) {
@@ -73,7 +75,7 @@ export function* fetchFollowUserRequest({payload}: FollowUserActionInterface) {
     }
 }
 
-export function* fetchUnfollowUserRequest({payload}: UnfollowUserActionInterface) {
+export function* unfollowUserRequest({payload}: UnfollowUserActionInterface) {
     try {
         yield call(UserApi.follow, payload);
     } catch (error) {
@@ -81,7 +83,27 @@ export function* fetchUnfollowUserRequest({payload}: UnfollowUserActionInterface
     }
 }
 
-export function* fetchStartUseTwitter({payload}: StartUseTwitterActionInterface) {
+export function* acceptFollowRequest({payload}: AcceptFollowRequestActionInterface) {
+    try {
+        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+        const item: User = yield call(UserApi.acceptFollowRequest, payload);
+        yield put(setUserData(item));
+    } catch (error) {
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
+export function* declineFollowRequest({payload}: DeclineFollowRequestActionInterface) {
+    try {
+        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+        const item: User = yield call(UserApi.declineFollowRequest, payload);
+        yield put(setUserData(item));
+    } catch (error) {
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
+export function* startUseTwitterRequest({payload}: StartUseTwitterActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const item: User = yield call(UserApi.startUseTwitter, payload);
@@ -91,7 +113,7 @@ export function* fetchStartUseTwitter({payload}: StartUseTwitterActionInterface)
     }
 }
 
-export function* fetchPinTweet({payload}: FetchPinTweetActionInterface) {
+export function* fetchPinTweetRequest({payload}: FetchPinTweetActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const item: User = yield call(UserApi.pinTweet, payload);
@@ -101,7 +123,7 @@ export function* fetchPinTweet({payload}: FetchPinTweetActionInterface) {
     }
 }
 
-export function* fetchAddTweetToBookmarksRequest({payload}: AddTweetToBookmarksActionInterface) {
+export function* addTweetToBookmarksRequest({payload}: AddTweetToBookmarksActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const item: User = yield call(UserApi.addTweetToBookmarks, payload);
@@ -255,11 +277,13 @@ export function* userSaga() {
     yield takeLatest(UserActionsType.FETCH_SIGN_IN, fetchSignInRequest);
     yield takeLatest(UserActionsType.FETCH_SIGN_UP, fetchSignUpRequest);
     yield takeLatest(UserActionsType.FETCH_USER_DATA, fetchUserDataRequest);
-    yield takeLatest(UserActionsType.FOLLOW_USER, fetchFollowUserRequest);
-    yield takeLatest(UserActionsType.UNFOLLOW_USER, fetchUnfollowUserRequest);
-    yield takeLatest(UserActionsType.START_USE_TWITTER, fetchStartUseTwitter);
-    yield takeLatest(UserActionsType.FETCH_PIN_TWEET, fetchPinTweet);
-    yield takeLatest(UserActionsType.ADD_TWEET_TO_BOOKMARKS, fetchAddTweetToBookmarksRequest);
+    yield takeLatest(UserActionsType.FOLLOW_USER, followUserRequest);
+    yield takeLatest(UserActionsType.UNFOLLOW_USER, unfollowUserRequest);
+    yield takeLatest(UserActionsType.ACCEPT_FOLLOW_REQUEST, acceptFollowRequest);
+    yield takeLatest(UserActionsType.DECLINE_FOLLOW_REQUEST, declineFollowRequest);
+    yield takeLatest(UserActionsType.START_USE_TWITTER, startUseTwitterRequest);
+    yield takeLatest(UserActionsType.FETCH_PIN_TWEET, fetchPinTweetRequest);
+    yield takeLatest(UserActionsType.ADD_TWEET_TO_BOOKMARKS, addTweetToBookmarksRequest);
     yield takeLatest(UserActionsType.FETCH_READ_MESSAGES, fetchReadMessagesRequest);
     yield takeLatest(UserActionsType.ADD_USER_TO_BLOCKLIST, addUserToBlocklistRequest);
     yield takeLatest(UserActionsType.ADD_USER_TO_MUTELIST, addUserToMuteListRequest);

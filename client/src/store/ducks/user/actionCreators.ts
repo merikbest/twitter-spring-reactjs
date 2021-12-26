@@ -1,8 +1,10 @@
 import {Settings, User, UserState} from "./contracts/state";
 import {
+    AcceptFollowRequestActionInterface,
     AddTweetToBookmarksActionInterface,
     AddUserToBlocklistActionInterface,
     AddUserToMuteListActionInterface,
+    DeclineFollowRequestActionInterface,
     FetchPinTweetActionInterface,
     FetchReadMessagesActionInterface,
     FetchSignInActionInterface,
@@ -79,6 +81,16 @@ export const follow = (payload: User): FollowActionInterface => ({
 
 export const unfollow = (payload: User): UnfollowActionInterface => ({
     type: UserActionsType.UNFOLLOW,
+    payload,
+});
+
+export const acceptFollowRequest = (payload: number): AcceptFollowRequestActionInterface => ({
+    type: UserActionsType.ACCEPT_FOLLOW_REQUEST,
+    payload,
+});
+
+export const declineFollowRequest = (payload: number): DeclineFollowRequestActionInterface => ({
+    type: UserActionsType.DECLINE_FOLLOW_REQUEST,
     payload,
 });
 

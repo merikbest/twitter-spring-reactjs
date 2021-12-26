@@ -51,13 +51,11 @@ import {
     setAddedUserTweet,
     setUpdatedUserTweet
 } from "../../store/ducks/userTweets/actionCreators";
-import {
-    selectUserProfile,
-    selectUsersIsSuccessLoaded
-} from "../../store/ducks/userProfile/selectors";
+import {selectUserProfile, selectUsersIsSuccessLoaded} from "../../store/ducks/userProfile/selectors";
 import {
     fetchUserProfile,
     followUserProfile,
+    processFollowRequest,
     processSubscribe,
     resetUserProfile,
     unfollowUserProfile
@@ -122,6 +120,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: 
     const isUserMuted = myProfile?.userMutedList?.findIndex(mutedUser => mutedUser.id === userProfile?.id) !== -1;
     const isUserBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === userProfile?.id) !== -1;
     const isMyProfileBlocked = userProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
+    const isWaitingForApprove = userProfile?.followerRequests?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -156,7 +155,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: 
     }, [match.params.id]);
 
     useEffect(() => {
-        setBtnText(isUserBlocked ? "Blocked" : "Following");
+        setBtnText(isWaitingForApprove ? ("Pending") : (isUserBlocked ? "Blocked" : "Following"));
 
         if (userProfile) {
             dispatch(fetchUserTweets({userId: match.params.id, page: 0}));
@@ -173,7 +172,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: 
     }, [userProfile]);
 
     useEffect(() => {
-        setBtnText(isUserBlocked ? "Blocked" : "Following");
+        setBtnText(isWaitingForApprove ? ("Pending") : (isUserBlocked ? "Blocked" : "Following"));
     }, [myProfile]);
 
     useEffect(() => {
@@ -248,12 +247,16 @@ const UserPage: FC<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: 
     };
 
     const handleFollow = (): void => {
-        if (isFollower) {
-            dispatch(unfollowUserProfile(userProfile!));
-            dispatch(unfollow(userProfile!));
+        if (userProfile?.privateProfile) {
+            dispatch(processFollowRequest(userProfile.id!));
         } else {
-            dispatch(followUserProfile(userProfile!));
-            dispatch(follow(userProfile!));
+            if (isFollower) {
+                dispatch(unfollowUserProfile(userProfile!));
+                dispatch(unfollow(userProfile!));
+            } else {
+                dispatch(followUserProfile(userProfile!));
+                dispatch(follow(userProfile!));
+            }
         }
     };
 
@@ -422,14 +425,28 @@ const UserPage: FC<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: 
                                                         {btnText}
                                                     </Button>
                                                 </>
-                                            ) : (
-                                                <Button
-                                                    onClick={handleFollow}
-                                                    className={classes.editButton}
-                                                    color="primary"
-                                                >
-                                                    Follow
-                                                </Button>
+                                            ) : ((userProfile !== undefined) ? (
+                                                isWaitingForApprove ? (
+                                                        <Button
+                                                            onClick={handleFollow}
+                                                            className={classes.editButton}
+                                                            color="primary"
+                                                            variant="outlined"
+                                                            onMouseOver={() => setBtnText("Cancel")}
+                                                            onMouseLeave={() => setBtnText("Pending")}
+                                                        >
+                                                            {btnText}
+                                                        </Button>
+                                                    ) : (
+                                                        <Button
+                                                            onClick={handleFollow}
+                                                            className={classes.editButton}
+                                                            color="primary"
+                                                        >
+                                                            Follow
+                                                        </Button>
+                                                    )
+                                                ) : null
                                             )
                                         )}
                                     </div>
@@ -542,7 +559,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: 
                                 </List>
                             )}
                         </div>
-                        {isMyProfileBlocked ? null : (
+                        {(isMyProfileBlocked || userProfile?.privateProfile) ? null : (
                             (userProfile !== undefined) && (
                                 <FollowerGroup user={userProfile} sameFollowers={sameFollowers}/>
                             )

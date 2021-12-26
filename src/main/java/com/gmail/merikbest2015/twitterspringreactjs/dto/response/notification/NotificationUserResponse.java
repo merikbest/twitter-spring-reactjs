@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification;
 
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.BlockedUserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.FollowerResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
 import lombok.Data;
@@ -24,6 +25,7 @@ public class NotificationUserResponse {
     private Long likeCount;
     private ImageResponse avatar;
     private ImageResponse wallpaper;
+    private List<BlockedUserResponse> userBlockedList;
     private List<FollowerResponse> followers;
     private List<FollowerResponse> following;
     private List<FollowerResponse> subscribers;

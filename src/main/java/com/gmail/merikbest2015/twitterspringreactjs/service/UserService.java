@@ -44,6 +44,12 @@ public interface UserService {
 
     List<User> overallFollowers(Long userId);
 
+    User processFollowRequestToPrivateProfile(Long userId);
+
+    User acceptFollowRequest(Long userId);
+
+    User declineFollowRequest(Long userId);
+
     User processSubscribeToNotifications(Long userId);
 
     User processPinTweet(Long tweetId);

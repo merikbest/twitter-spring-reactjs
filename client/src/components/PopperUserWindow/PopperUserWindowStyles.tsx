@@ -124,4 +124,7 @@ export const usePopperUserWindowStyles = makeStyles<Theme, PopperUserWindowStyle
         marginRight: 10,
         color: theme.palette.text.secondary,
     },
+    blockButton: {
+        backgroundColor: theme.palette.error.main,
+    },
 }));

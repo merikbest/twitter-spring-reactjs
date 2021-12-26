@@ -254,6 +254,40 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User processFollowRequestToPrivateProfile(Long userId) {
+        User user = authenticationService.getAuthenticatedUser();
+        User currentUser = userRepository.getOne(userId);
+        List<User> followerRequests = currentUser.getFollowerRequests();
+        Optional<User> followerRequest = currentUser.getFollowerRequests().stream()
+                .filter(follower -> follower.getId().equals(user.getId()))
+                .findFirst();
+
+        if (followerRequest.isPresent()) {
+            followerRequests.remove(followerRequest.get());
+        } else {
+            followerRequests.add(user);
+        }
+        return userRepository.save(currentUser);
+    }
+
+    @Override
+    public User acceptFollowRequest(Long userId) {
+        User user = authenticationService.getAuthenticatedUser();
+        User currentUser = userRepository.getOne(userId);
+        user.getFollowerRequests().remove(currentUser);
+        user.getFollowers().add(currentUser);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User declineFollowRequest(Long userId) {
+        User user = authenticationService.getAuthenticatedUser();
+        User currentUser = userRepository.getOne(userId);
+        user.getFollowerRequests().remove(currentUser);
+        return userRepository.save(user);
+    }
+
+    @Override
     public User processSubscribeToNotifications(Long userId) {
         User user = authenticationService.getAuthenticatedUser();
         User currentUser = userRepository.getOne(userId);

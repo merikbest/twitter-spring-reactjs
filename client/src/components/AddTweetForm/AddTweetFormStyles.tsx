@@ -42,8 +42,8 @@ export const useAddTweetFormStyles = makeStyles<Theme, AddTweetFormStyles>((them
         fontFamily: 'inherit',
         resize: 'none',
         backgroundColor: "transparent",
-        caretColor: localStorage.getItem("background") === "Default" ? "#000" : "#fff",
-        color: localStorage.getItem("background") === "Default" ? "#000" : "#fff",
+        caretColor: localStorage.getItem("background") === "DEFAULT" ? "#000" : "#fff",
+        color: localStorage.getItem("background") === "DEFAULT" ? "#000" : "#fff",
     },
     image: {
         position: 'relative',

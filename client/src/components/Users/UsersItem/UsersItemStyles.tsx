@@ -77,4 +77,7 @@ export const useUsersItemStyles = makeStyles((theme: Theme) => ({
             backgroundColor: theme.palette.error.dark,
         },
     },
+    blockButton: {
+        backgroundColor: theme.palette.error.main,
+    },
 }));

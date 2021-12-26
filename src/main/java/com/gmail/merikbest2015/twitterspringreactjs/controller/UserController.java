@@ -123,6 +123,21 @@ public class UserController {
         return ResponseEntity.ok(userMapper.overallFollowers(userId));
     }
 
+    @GetMapping("/follow/private/{userId}")
+    public ResponseEntity<UserResponse> processFollowRequestToPrivateProfile(@PathVariable Long userId) {
+        return ResponseEntity.ok(userMapper.processFollowRequestToPrivateProfile(userId));
+    }
+
+    @GetMapping("/follow/accept/{userId}")
+    public ResponseEntity<UserResponse> acceptFollowRequest(@PathVariable Long userId) {
+        return ResponseEntity.ok(userMapper.acceptFollowRequest(userId));
+    }
+
+    @GetMapping("/follow/decline/{userId}")
+    public ResponseEntity<UserResponse> declineFollowRequest(@PathVariable Long userId) {
+        return ResponseEntity.ok(userMapper.declineFollowRequest(userId));
+    }
+
     @GetMapping("/subscribe/{userId}")
     public ResponseEntity<UserResponse> processSubscribeToNotifications(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.processSubscribeToNotifications(userId));

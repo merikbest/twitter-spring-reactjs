@@ -48,6 +48,18 @@ export const UserApi = {
         const {data} = await axios.get<User[]>(`${API_URL}/user/follow/overall/${userId}`);
         return data;
     },
+    async processFollowRequestToPrivateProfile(userId: number): Promise<User> {
+        const {data} = await axios.get<User>(`${API_URL}/user/follow/private/${userId}`);
+        return data;
+    },
+    async acceptFollowRequest(userId: number): Promise<User> {
+        const {data} = await axios.get<User>(`${API_URL}/user/follow/accept/${userId}`);
+        return data;
+    },
+    async declineFollowRequest(userId: number): Promise<User> {
+        const {data} = await axios.get<User>(`${API_URL}/user/follow/decline/${userId}`);
+        return data;
+    },
     async processSubscribeToNotifications(userId: number): Promise<User | undefined> {
         const {data} = await axios.get<User | undefined>(`${API_URL}/user/subscribe/${userId}`);
         return data;

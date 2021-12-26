@@ -1,9 +1,11 @@
 import {Action} from "redux";
+
 import {User} from "../../user/contracts/state";
 import {LoadingStatus} from "../../../types";
 
 export enum UsersActionsType {
     SET_USERS = 'users/SET_USERS',
+    SET_UPDATED_USER = 'users/SET_UPDATED_USER',
     FETCH_USERS = 'users/FETCH_USERS',
     FETCH_RELEVANT_USERS = 'users/FETCH_RELEVANT_USERS',
     FETCH_BLOCKED_USERS = 'users/FETCH_BLOCKED_USERS',
@@ -14,6 +16,11 @@ export enum UsersActionsType {
 export interface SetUsersActionInterface extends Action<UsersActionsType> {
     type: UsersActionsType.SET_USERS;
     payload: User[];
+}
+
+export interface SetUpdatedUserActionInterface extends Action<UsersActionsType> {
+    type: UsersActionsType.SET_UPDATED_USER;
+    payload: User;
 }
 
 export interface FetchUsersActionInterface extends Action<UsersActionsType> {
@@ -38,4 +45,5 @@ export interface SetUsersLoadingStatusActionInterface extends Action<UsersAction
 }
 export type UsersActions =
     | SetUsersActionInterface
+    | SetUpdatedUserActionInterface
     | SetUsersLoadingStatusActionInterface;
