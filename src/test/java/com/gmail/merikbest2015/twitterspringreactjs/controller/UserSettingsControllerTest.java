@@ -2,6 +2,8 @@ package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.SettingsRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.model.BackgroundColorType;
+import com.gmail.merikbest2015.twitterspringreactjs.model.ColorSchemeType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -329,6 +331,88 @@ public class UserSettingsControllerTest {
                 .andExpect(jsonPath("$.language").value(LANGUAGE))
                 .andExpect(jsonPath("$.mutedDirectMessages").value(MUTED_DIRECT_MESSAGES))
                 .andExpect(jsonPath("$.privateProfile").value(true))
+                .andExpect(jsonPath("$.registrationDate").value(REGISTRATION_DATE))
+                .andExpect(jsonPath("$.tweetCount").value(TWEET_COUNT))
+                .andExpect(jsonPath("$.notificationsCount").value(3))
+                .andExpect(jsonPath("$.pinnedTweet").isNotEmpty())
+                .andExpect(jsonPath("$.bookmarks").isNotEmpty())
+                .andExpect(jsonPath("$.avatar.id").value(AVATAR_ID))
+                .andExpect(jsonPath("$.wallpaper.id").value(WALLPAPER_ID))
+                .andExpect(jsonPath("$.profileCustomized").value(true))
+                .andExpect(jsonPath("$.profileStarted").value(true))
+                .andExpect(jsonPath("$.unreadMessages").isNotEmpty())
+                .andExpect(jsonPath("$.followers").isNotEmpty())
+                .andExpect(jsonPath("$.following").isNotEmpty());
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    public void updateColorScheme() throws Exception {
+        SettingsRequest request = new SettingsRequest();
+        request.setColorScheme(ColorSchemeType.GREEN);
+
+        mockMvc.perform(put(URL_USER_SETTINGS_UPDATE + "/color_scheme")
+                        .content(mapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(USER_ID))
+                .andExpect(jsonPath("$.email").value(USER_EMAIL))
+                .andExpect(jsonPath("$.fullName").value(FULL_NAME))
+                .andExpect(jsonPath("$.username").value(USERNAME))
+                .andExpect(jsonPath("$.location").value(LOCATION))
+                .andExpect(jsonPath("$.about").value(ABOUT))
+                .andExpect(jsonPath("$.website").value(WEBSITE))
+                .andExpect(jsonPath("$.birthday").value(BIRTHDAY))
+                .andExpect(jsonPath("$.countryCode").value(COUNTRY_CODE))
+                .andExpect(jsonPath("$.phone").value(PHONE))
+                .andExpect(jsonPath("$.country").value(COUNTRY))
+                .andExpect(jsonPath("$.gender").value(GENDER))
+                .andExpect(jsonPath("$.language").value(LANGUAGE))
+                .andExpect(jsonPath("$.backgroundColor").value(BACKGROUND_COLOR))
+                .andExpect(jsonPath("$.colorScheme").value("GREEN"))
+                .andExpect(jsonPath("$.mutedDirectMessages").value(MUTED_DIRECT_MESSAGES))
+                .andExpect(jsonPath("$.privateProfile").value(PRIVATE_PROFILE))
+                .andExpect(jsonPath("$.registrationDate").value(REGISTRATION_DATE))
+                .andExpect(jsonPath("$.tweetCount").value(TWEET_COUNT))
+                .andExpect(jsonPath("$.notificationsCount").value(3))
+                .andExpect(jsonPath("$.pinnedTweet").isNotEmpty())
+                .andExpect(jsonPath("$.bookmarks").isNotEmpty())
+                .andExpect(jsonPath("$.avatar.id").value(AVATAR_ID))
+                .andExpect(jsonPath("$.wallpaper.id").value(WALLPAPER_ID))
+                .andExpect(jsonPath("$.profileCustomized").value(true))
+                .andExpect(jsonPath("$.profileStarted").value(true))
+                .andExpect(jsonPath("$.unreadMessages").isNotEmpty())
+                .andExpect(jsonPath("$.followers").isNotEmpty())
+                .andExpect(jsonPath("$.following").isNotEmpty());
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    public void updateBackgroundColor() throws Exception {
+        SettingsRequest request = new SettingsRequest();
+        request.setBackgroundColor(BackgroundColorType.DIM);
+
+        mockMvc.perform(put(URL_USER_SETTINGS_UPDATE + "/background_color")
+                        .content(mapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(USER_ID))
+                .andExpect(jsonPath("$.email").value(USER_EMAIL))
+                .andExpect(jsonPath("$.fullName").value(FULL_NAME))
+                .andExpect(jsonPath("$.username").value(USERNAME))
+                .andExpect(jsonPath("$.location").value(LOCATION))
+                .andExpect(jsonPath("$.about").value(ABOUT))
+                .andExpect(jsonPath("$.website").value(WEBSITE))
+                .andExpect(jsonPath("$.birthday").value(BIRTHDAY))
+                .andExpect(jsonPath("$.countryCode").value(COUNTRY_CODE))
+                .andExpect(jsonPath("$.phone").value(PHONE))
+                .andExpect(jsonPath("$.country").value(COUNTRY))
+                .andExpect(jsonPath("$.gender").value(GENDER))
+                .andExpect(jsonPath("$.language").value(LANGUAGE))
+                .andExpect(jsonPath("$.backgroundColor").value("DIM"))
+                .andExpect(jsonPath("$.colorScheme").value(COLOR_SCHEME))
+                .andExpect(jsonPath("$.mutedDirectMessages").value(MUTED_DIRECT_MESSAGES))
+                .andExpect(jsonPath("$.privateProfile").value(PRIVATE_PROFILE))
                 .andExpect(jsonPath("$.registrationDate").value(REGISTRATION_DATE))
                 .andExpect(jsonPath("$.tweetCount").value(TWEET_COUNT))
                 .andExpect(jsonPath("$.notificationsCount").value(3))

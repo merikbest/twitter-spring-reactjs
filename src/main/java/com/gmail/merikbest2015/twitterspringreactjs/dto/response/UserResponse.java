@@ -36,7 +36,7 @@ public class UserResponse {
     private boolean privateProfile;
     private boolean profileCustomized;
     private boolean profileStarted;
-    private BackgroundColorType BackgroundColor;
+    private BackgroundColorType backgroundColor;
     private ColorSchemeType colorScheme;
     private List<ChatMessageResponse> unreadMessages;
     private List<BlockedUserResponse> userMutedList;

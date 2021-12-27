@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,9 +9,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 @Getter
 @Setter
-@Entity
+@EqualsAndHashCode
 @Table(name = "tweets")
 public class Tweet {
 

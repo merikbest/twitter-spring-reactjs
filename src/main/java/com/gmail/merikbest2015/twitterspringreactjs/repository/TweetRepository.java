@@ -43,8 +43,10 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     List<Tweet> findAllScheduledTweetsByUserId(Long userId);
 
     @Query(value = "SELECT * FROM tweets " +
+            "LEFT JOIN tweet_quote ON tweets.id = tweet_quote.tweets_id " +
+            "LEFT JOIN tweet_pool ON tweets.id = tweet_pool.tweets_id " +
             "WHERE tweets.scheduled_date IS NULL " +
-            "AND UPPER(text) LIKE UPPER(?1)", nativeQuery = true)
+            "AND UPPER(text) LIKE UPPER(CONCAT('%', ?1,'%'))", nativeQuery = true)
     List<Tweet> findAllByText(String text);
 
     @Query(value = "SELECT * FROM tweets " +

@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -19,9 +20,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
             @Param("fullName") String fullName,
             @Param("username") String username);
 
-    User findByActivationCode(String code);
+    Optional<User> findByActivationCode(String code);
 
-    User findByPasswordResetCode(String code);
+    Optional<User> findByPasswordResetCode(String code);
 
     List<User> findTop5ByActiveTrue();
 

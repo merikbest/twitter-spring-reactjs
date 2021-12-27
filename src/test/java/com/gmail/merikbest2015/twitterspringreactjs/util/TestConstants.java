@@ -30,6 +30,8 @@ public class TestConstants {
     public static final String USERNAME = "MrCat";
     public static final String WEBSITE = "https://www.google.com";
     public static final Long TWEET_COUNT = 126L;
+    public static final Long MEDIA_TWEET_COUNT = 44L;
+    public static final Long LIKE_TWEET_COUNT = 40L;
     public static final Long AVATAR_ID = 33L;
     public static final Long WALLPAPER_ID = 44L;
     public static final String COUNTRY_CODE = "UA";
@@ -37,18 +39,13 @@ public class TestConstants {
     public static final String COUNTRY = "UA";
     public static final String GENDER = "Cat";
     public static final String LANGUAGE = "Ukrainian - українська";
+    public static final String BACKGROUND_COLOR = "DEFAULT";
+    public static final String COLOR_SCHEME = "BLUE";
     public static final boolean MUTED_DIRECT_MESSAGES = true;
     public static final boolean PRIVATE_PROFILE = false;
+    public static final boolean PROFILE_CUSTOMIZED = true;
+    public static final boolean PROFILE_STARTED = true;
 
-//    private String countryCode;
-//    private Long phone;
-//    private String country;
-//    private String gender;
-//    private String language;
-//    private boolean mutedDirectMessages;
-//    private boolean privateProfile;
-//userMutedList
-//        userBlockedList
     public static final String TWEET_TEXT = "#JetBrains https://www.jetbrains.com/ ";
     public static final String TWEET_DATETIME = "2021-10-03T20:34:15";
     public static final String TWEET_SCHEDULED_DATETIME = "3021-10-03T20:33:36";

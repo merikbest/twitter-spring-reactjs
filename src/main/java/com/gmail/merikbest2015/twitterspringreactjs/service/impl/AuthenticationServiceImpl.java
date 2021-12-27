@@ -97,11 +97,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public String activateUser(String code) {
-        User user = userRepository.findByActivationCode(code);
-
-        if (user == null) {
-            throw new ApiRequestException("Activation code not found.", HttpStatus.NOT_FOUND);
-        }
+        User user = userRepository.findByActivationCode(code)
+                .orElseThrow(() -> new ApiRequestException("Activation code not found.", HttpStatus.NOT_FOUND));
         user.setActivationCode(null);
         userRepository.save(user);
         return "User successfully activated.";
@@ -144,12 +141,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public User findByPasswordResetCode(String code) {
-        User user = userRepository.findByPasswordResetCode(code);
-
-        if (user == null) {
-            throw new ApiRequestException("Password reset code is invalid!", HttpStatus.BAD_REQUEST);
-        }
-        return user;
+        return userRepository.findByPasswordResetCode(code)
+                .orElseThrow(() -> new ApiRequestException("Password reset code is invalid!", HttpStatus.BAD_REQUEST));
     }
 
     @Override

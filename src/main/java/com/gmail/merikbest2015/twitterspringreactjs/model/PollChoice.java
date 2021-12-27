@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,9 +8,10 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 @Getter
 @Setter
-@Entity
+@EqualsAndHashCode
 @Table(name = "pool_choices")
 public class PollChoice {
 

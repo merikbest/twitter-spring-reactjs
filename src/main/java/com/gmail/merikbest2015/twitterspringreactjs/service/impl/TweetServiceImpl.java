@@ -47,6 +47,9 @@ public class TweetServiceImpl implements TweetService {
     private final ChatMessageRepository chatMessageRepository;
     private final RestTemplate restTemplate;
 
+    @Value("${google.api.url}")
+    private String googleApiUrl;
+
     @Value("${google.api.key}")
     private String googleApiKey;
 
@@ -101,8 +104,9 @@ public class TweetServiceImpl implements TweetService {
         user.getSubscribers().forEach(subscriber -> {
             subscriber.setNotificationsCount(subscriber.getNotificationsCount() + 1);
             List<Notification> notifications = subscriber.getNotifications();
-            notifications.add(notification);
             userRepository.save(subscriber);
+            notifications.add(notification);
+            notificationRepository.save(notification);
         });
         return createdTweet;
     }
@@ -415,9 +419,7 @@ public class TweetServiceImpl implements TweetService {
                 if (youTubeMatcher.find()) {
                     youTubeVideoId = youTubeMatcher.group();
                 }
-                String youtubeUrl = String.format(
-                        "https://www.googleapis.com/youtube/v3/videos?id=%s&key=%s&part=snippet,contentDetails,statistics,status",
-                        youTubeVideoId, googleApiKey);
+                String youtubeUrl = String.format(googleApiUrl, youTubeVideoId, googleApiKey);
                 String youTubeVideData = restTemplate.getForObject(youtubeUrl, String.class);
                 JSONObject jsonObject = new JSONObject(youTubeVideData);
                 JSONArray items = jsonObject.getJSONArray("items");

@@ -56,7 +56,7 @@ public class ChatControllerTest {
                 .andExpect(jsonPath("$.id").isNotEmpty())
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.participants").isNotEmpty())
-                .andExpect(jsonPath("$.participants[1].id").value(3));
+                .andExpect(jsonPath("$.participants[*]", hasSize(2)));
     }
 
     @Test

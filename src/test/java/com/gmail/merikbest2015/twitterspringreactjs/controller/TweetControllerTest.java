@@ -46,7 +46,7 @@ public class TweetControllerTest {
     public void getTweets() throws Exception {
         mockMvc.perform(get(URL_TWEETS_BASIC))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(5)))
+                .andExpect(jsonPath("$[*]", hasSize(8)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
                 .andExpect(jsonPath("$[*].text").isNotEmpty())
                 .andExpect(jsonPath("$[*].dateTime").isNotEmpty())
