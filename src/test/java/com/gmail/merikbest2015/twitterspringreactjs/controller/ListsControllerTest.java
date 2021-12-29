@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.request.ListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ListsResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -21,6 +22,7 @@ import java.util.List;
 
 import static com.gmail.merikbest2015.twitterspringreactjs.util.TestConstants.*;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,6 +42,7 @@ public class ListsControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("GET /api/v1/lists - Get all tweet lists")
     public void getAllTweetLists() throws Exception {
         mockMvc.perform(get(URL_LISTS_BASIC))
                 .andExpect(status().isOk())
@@ -57,6 +60,7 @@ public class ListsControllerTest {
     }
 
     @Test
+    @DisplayName("GET /api/v1/lists/user - Get user tweet lists")
     @WithUserDetails(USER_EMAIL)
     public void getUserTweetLists() throws Exception {
         mockMvc.perform(get(URL_LISTS_BASIC + "/user"))
@@ -76,6 +80,7 @@ public class ListsControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("GET /api/v1/lists/pined - Get user pinned tweet lists")
     public void getUserPinnedLists() throws Exception {
         mockMvc.perform(get(URL_LISTS_BASIC + "/pined"))
                 .andExpect(status().isOk())
@@ -94,6 +99,7 @@ public class ListsControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("GET /api/v1/lists/4 - Get list by id")
     public void getListById() throws Exception {
         mockMvc.perform(get(URL_LISTS_BASIC + "/4"))
                 .andExpect(status().isOk())
@@ -111,6 +117,61 @@ public class ListsControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("GET /api/v1/lists/6 - Get owner private list by id")
+    public void getOwnerPrivateListById() throws Exception {
+        mockMvc.perform(get(URL_LISTS_BASIC + "/6"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(6))
+                .andExpect(jsonPath("$.name").value(LIST_NAME))
+                .andExpect(jsonPath("$.description").value(LIST_DESCRIPTION))
+                .andExpect(jsonPath("$.private").value(true))
+                .andExpect(jsonPath("$.pinnedDate").value(LIST_PINNED_DATE))
+                .andExpect(jsonPath("$.altWallpaper").value(LIST_ALT_WALLPAPER))
+                .andExpect(jsonPath("$.listOwner.id").value(LIST_USER_ID))
+                .andExpect(jsonPath("$.tweets").isEmpty())
+                .andExpect(jsonPath("$.members").isEmpty())
+                .andExpect(jsonPath("$.followers").isEmpty());
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("GET /api/v1/lists/7 - Get followed private list by id")
+    public void getFollowedPrivateListById() throws Exception {
+        mockMvc.perform(get(URL_LISTS_BASIC + "/7"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(7))
+                .andExpect(jsonPath("$.name").value(LIST_NAME))
+                .andExpect(jsonPath("$.description").value(LIST_DESCRIPTION))
+                .andExpect(jsonPath("$.private").value(true))
+                .andExpect(jsonPath("$.pinnedDate").value(LIST_PINNED_DATE))
+                .andExpect(jsonPath("$.altWallpaper").value(LIST_ALT_WALLPAPER))
+                .andExpect(jsonPath("$.listOwner.id").value(1L))
+                .andExpect(jsonPath("$.tweets").isEmpty())
+                .andExpect(jsonPath("$.members").isEmpty())
+                .andExpect(jsonPath("$.followers").isNotEmpty());
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("GET /api/v1/lists/8 - Not found existing private list by id")
+    public void getPrivateListById_NotFound() throws Exception {
+        mockMvc.perform(get(URL_LISTS_BASIC + "/8"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("List not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("GET /api/v1/lists/9 - Not found list by id")
+    public void getListById_NotFound() throws Exception {
+        mockMvc.perform(get(URL_LISTS_BASIC + "/9"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("List not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("POST /api/v1/lists - Create Tweet List")
     public void createTweetList() throws Exception {
         ListsRequest listsRequest = new ListsRequest();
         listsRequest.setName(LIST_NAME);
@@ -134,6 +195,7 @@ public class ListsControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("PUT /api/v1/lists - Edit Tweet List")
     public void editTweetList() throws Exception {
         ListsRequest listsRequest = new ListsRequest();
         listsRequest.setId(4L);
@@ -158,6 +220,7 @@ public class ListsControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("GET /api/v1/lists/follow/5 - Follow list")
     public void followList() throws Exception {
         mockMvc.perform(get(URL_LISTS_BASIC + "/follow/5"))
                 .andExpect(status().isOk())
@@ -175,6 +238,7 @@ public class ListsControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("GET /api/v1/lists/follow/5 - Unfollow list")
     public void unfollowList() throws Exception {
         mockMvc.perform(get(URL_LISTS_BASIC + "/follow/4"))
                 .andExpect(status().isOk())
@@ -192,6 +256,7 @@ public class ListsControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("GET /api/v1/lists/pin/6 - Pin list")
     public void pinList() throws Exception {
         mockMvc.perform(get(URL_LISTS_BASIC + "/pin/6"))
                 .andExpect(status().isOk())
@@ -209,6 +274,7 @@ public class ListsControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("GET /api/v1/lists/pin/4 - Unpin list")
     public void unpinList() throws Exception {
         mockMvc.perform(get(URL_LISTS_BASIC + "/pin/4"))
                 .andExpect(status().isOk())
@@ -226,6 +292,7 @@ public class ListsControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("POST /api/v1/lists/add/user - Add users to lists")
     public void addUserToLists() throws Exception {
         UserToListsRequest request = new UserToListsRequest();
         request.setUserId(1L);
@@ -263,6 +330,7 @@ public class ListsControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("POST /api/v1/lists/add/user/1/6 - Add user to list")
     public void addUserToList() throws Exception {
         mockMvc.perform(get(URL_LISTS_BASIC + "/add/user/1/6"))
                 .andExpect(status().isOk())
@@ -280,6 +348,7 @@ public class ListsControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("GET /api/v1/lists/add/user/1/4 - Remove user from list")
     public void removeUserFromList() throws Exception {
         mockMvc.perform(get(URL_LISTS_BASIC + "/add/user/1/4"))
                 .andExpect(status().isOk())

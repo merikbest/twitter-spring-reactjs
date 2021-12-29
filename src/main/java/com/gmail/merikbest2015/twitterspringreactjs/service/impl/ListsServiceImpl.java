@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 
+import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Lists;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
@@ -9,6 +10,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.ListsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -48,7 +50,9 @@ public class ListsServiceImpl implements ListsService {
 
     @Override
     public Lists getListById(Long listId) {
-        Lists list = listsRepository.getOne(listId);
+        User user = authenticationService.getAuthenticatedUser();
+        Lists list = listsRepository.getListById(listId, user.getId())
+                .orElseThrow(() -> new ApiRequestException("List not found", HttpStatus.NOT_FOUND));
         list.setTweets(mergeTweets(list));
         return list;
     }
