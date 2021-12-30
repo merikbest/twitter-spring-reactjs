@@ -59,6 +59,9 @@ public class ListsServiceImpl implements ListsService {
 
     @Override
     public Lists createTweetList(Lists lists) {
+        if (lists.getName() == null) {
+            throw new ApiRequestException("List name cannot be empty", HttpStatus.BAD_REQUEST);
+        }
         User user = authenticationService.getAuthenticatedUser();
         lists.setListOwner(user);
         Lists userTweetList = listsRepository.save(lists);
@@ -81,6 +84,14 @@ public class ListsServiceImpl implements ListsService {
 
     @Override
     public Lists editTweetList(Lists listInfo) {
+        if (listInfo.getName() == null) {
+            throw new ApiRequestException("List name cannot be empty", HttpStatus.BAD_REQUEST);
+        }
+        User user = authenticationService.getAuthenticatedUser();
+
+        if (!listInfo.getListOwner().getId().equals(user.getId())) {
+            throw new ApiRequestException("List owner not found", HttpStatus.BAD_REQUEST);
+        }
         Lists listFromDb = listsRepository.getOne(listInfo.getId());
         listFromDb.setName(listInfo.getName());
         listFromDb.setDescription(listInfo.getDescription());
@@ -94,7 +105,12 @@ public class ListsServiceImpl implements ListsService {
     @Override
     public String deleteList(Long listId) {
         User user = authenticationService.getAuthenticatedUser();
-        Lists list = listsRepository.getOne(listId);
+        Lists list = listsRepository.findById(listId)
+                .orElseThrow(() -> new ApiRequestException("List not found", HttpStatus.NOT_FOUND));
+
+        if (!list.getListOwner().getId().equals(user.getId())) {
+            throw new ApiRequestException("List owner not found", HttpStatus.BAD_REQUEST);
+        }
         list.getTweets().removeAll(list.getTweets());
         list.getMembers().removeAll(list.getMembers());
         list.getFollowers().removeAll(list.getFollowers());
@@ -110,7 +126,9 @@ public class ListsServiceImpl implements ListsService {
     @Override
     public Lists followList(Long listId) {
         User user = authenticationService.getAuthenticatedUser();
-        Lists list = listsRepository.getOne(listId);
+        Lists list = listsRepository.findByIdAndIsPrivateFalse(listId)
+                .orElseThrow(() -> new ApiRequestException("List not found", HttpStatus.NOT_FOUND));
+        // TODO if user blocked, can the user follow list???
         Optional<User> follower = list.getFollowers().stream()
                 .filter(f -> f.equals(user))
                 .findFirst();
@@ -132,7 +150,11 @@ public class ListsServiceImpl implements ListsService {
 
     @Override
     public Lists pinList(Long listId) {
-        Lists list = listsRepository.getOne(listId);
+        User user = authenticationService.getAuthenticatedUser();
+        Lists list = user.getUserLists().stream()
+                .filter(userList -> userList.getId().equals(listId))
+                .findFirst()
+                .orElseThrow(() -> new ApiRequestException("List not found", HttpStatus.NOT_FOUND));
 
         if (list.getPinnedDate() == null) {
             list.setPinnedDate(LocalDateTime.now().withNano(0));
@@ -144,10 +166,11 @@ public class ListsServiceImpl implements ListsService {
 
     @Override
     public List<Lists> addUserToLists(Long userId, List<Lists> lists) {
-        User user = userRepository.getOne(userId);
+        User user = userRepository.getOne(userId); // TODO check: if private profile, if blocked
+
         List<Lists> userLists = getUserTweetLists();
 
-        lists.forEach((list) -> {
+        lists.forEach((list) -> { // TODO check: if lists is exist in db
             Optional<User> userInList = list.getMembers().stream()
                     .filter(m -> m.getId().equals(user.getId()))
                     .findFirst();
@@ -174,8 +197,9 @@ public class ListsServiceImpl implements ListsService {
 
     @Override
     public Lists addUserToList(Long userId, Long listId) {
-        User user = userRepository.getOne(userId);
-        Lists list = listsRepository.getOne(listId);
+        User user = userRepository.getOne(userId); // TODO check: if private profile, if blocked
+        Lists list = listsRepository.findById(listId)
+                .orElseThrow(() -> new ApiRequestException("List not found", HttpStatus.NOT_FOUND));
         Optional<User> member = list.getMembers().stream()
                 .filter(m -> m.equals(user))
                 .findFirst();

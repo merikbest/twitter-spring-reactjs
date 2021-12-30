@@ -13,6 +13,8 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
 
     List<Lists> findByIsPrivateFalse();
 
+    Optional<Lists> findByIdAndIsPrivateFalse(Long id);
+
     @Query("SELECT lists FROM Lists lists " +
             "LEFT JOIN lists.followers listsFollower " +
             "WHERE lists.id = :listId AND listsFollower.id = :userId " +
