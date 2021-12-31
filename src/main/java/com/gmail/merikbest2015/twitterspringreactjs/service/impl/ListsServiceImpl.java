@@ -166,8 +166,9 @@ public class ListsServiceImpl implements ListsService {
 
     @Override
     public List<Lists> addUserToLists(Long userId, List<Lists> lists) {
-        User user = userRepository.getOne(userId); // TODO check: if private profile, if blocked
-
+        User authUser = authenticationService.getAuthenticatedUser();
+        User user = userRepository.getValidUser(userId, authUser.getId()) // TODO check: if private profile, if blocked
+                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
         List<Lists> userLists = getUserTweetLists();
 
         lists.forEach((list) -> { // TODO check: if lists is exist in db

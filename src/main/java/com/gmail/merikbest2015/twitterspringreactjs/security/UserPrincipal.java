@@ -13,14 +13,12 @@ import java.util.List;
 @Data
 public class UserPrincipal implements UserDetails {
 
-    private final Long id;
-    private final String email;
-    private final String password;
+    private final User user;
     private final Collection<? extends GrantedAuthority> authorities;
 
     public static UserPrincipal create(User user) {
         List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("USER"));
-        return new UserPrincipal(user.getId(), user.getEmail(), user.getPassword(), authorities);
+        return new UserPrincipal(user, authorities);
     }
 
     @Override
@@ -30,12 +28,12 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password;
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return email;
+        return user.getEmail();
     }
 
     @Override
