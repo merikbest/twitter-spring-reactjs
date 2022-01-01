@@ -1,11 +1,16 @@
 package com.gmail.merikbest2015.twitterspringreactjs.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @Entity
+@EqualsAndHashCode(of = {"id"})
 @Table(name = "images")
 public class Image {
 

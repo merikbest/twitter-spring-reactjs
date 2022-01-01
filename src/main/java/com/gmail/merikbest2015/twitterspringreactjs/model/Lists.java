@@ -6,13 +6,13 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(of = {"id"})
 @Table(name = "lists")
 public class Lists {
 
@@ -44,17 +44,17 @@ public class Lists {
     private User listOwner;
 
     @ManyToMany
-    private List<Tweet> tweets;
+    private Set<Tweet> tweets;
 
     @ManyToMany
-    private List<User> members;
+    private Set<User> members;
 
     @ManyToMany
-    private List<User> followers;
+    private Set<User> followers;
 
     public Lists() {
-        this.tweets = new ArrayList<>();
-        this.members = new ArrayList<>();
-        this.followers = new ArrayList<>();
+        this.tweets = new HashSet<>();
+        this.members = new HashSet<>();
+        this.followers = new HashSet<>();
     }
 }

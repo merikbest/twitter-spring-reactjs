@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserService {
         User user = authenticationService.getAuthenticatedUser();
         Tweet tweet = tweetRepository.getOne(tweetId);
 
-        List<Bookmark> bookmarks = user.getBookmarks();
+        Set<Bookmark> bookmarks = user.getBookmarks();
         Optional<Bookmark> bookmark = bookmarks.stream()
                 .filter(b -> b.getTweet().equals(tweet))
                 .findFirst();
@@ -200,14 +200,14 @@ public class UserServiceImpl implements UserService {
         User user = authenticationService.getAuthenticatedUser();
         User currentUser = userRepository.getOne(userId);
 
-        List<User> followers = user.getFollowers();
+        Set<User> followers = user.getFollowers();
         Optional<User> follower = followers.stream()
                 .filter(f -> f.getId().equals(currentUser.getId()))
                 .findFirst();
 
         if (follower.isPresent()) {
             followers.remove(follower.get());
-            List<User> subscribers = currentUser.getSubscribers();
+            Set<User> subscribers = currentUser.getSubscribers();
             Optional<User> subscriber = subscribers.stream()
                     .filter(s -> s.getId().equals(user.getId()))
                     .findFirst();
@@ -230,7 +230,7 @@ public class UserServiceImpl implements UserService {
             if (userNotification.isEmpty()) {
                 Notification newNotification = notificationRepository.save(notification);
                 currentUser.setNotificationsCount(currentUser.getNotificationsCount() + 1);
-                List<Notification> notifications = currentUser.getNotifications();
+                Set<Notification> notifications = currentUser.getNotifications();
                 notifications.add(newNotification);
                 userRepository.save(currentUser);
                 return newNotification;
@@ -249,7 +249,7 @@ public class UserServiceImpl implements UserService {
                     .filter(follower -> currentUser.getFollowers().contains(follower))
                     .collect(Collectors.toList());
         } else {
-            return user.getFollowers();
+            return List.copyOf(user.getFollowers());
         }
     }
 
@@ -257,7 +257,7 @@ public class UserServiceImpl implements UserService {
     public User processFollowRequestToPrivateProfile(Long userId) {
         User user = authenticationService.getAuthenticatedUser();
         User currentUser = userRepository.getOne(userId);
-        List<User> followerRequests = currentUser.getFollowerRequests();
+        Set<User> followerRequests = currentUser.getFollowerRequests();
         Optional<User> followerRequest = currentUser.getFollowerRequests().stream()
                 .filter(follower -> follower.getId().equals(user.getId()))
                 .findFirst();
@@ -310,7 +310,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getBlockList() {
         User user = authenticationService.getAuthenticatedUser();
-        return user.getUserBlockedList();
+        return List.copyOf(user.getUserBlockedList());
     }
 
     @Override
@@ -327,7 +327,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getMutedList() {
         User user = authenticationService.getAuthenticatedUser();
-        return user.getUserMutedList();
+        return List.copyOf(user.getUserMutedList());
     }
 
     @Override
@@ -337,7 +337,7 @@ public class UserServiceImpl implements UserService {
         return processUserList(user, currentUser, user.getUserMutedList());
     }
 
-    private User processUserList(User authenticatedUser, User currentUser, List<User> userLists) {
+    private User processUserList(User authenticatedUser, User currentUser, Set<User> userLists) {
         Optional<User> userFromList = userLists.stream()
                 .filter(user -> user.getId().equals(currentUser.getId()))
                 .findFirst();

@@ -1,12 +1,17 @@
 package com.gmail.merikbest2015.twitterspringreactjs.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
-@Data
 @Entity
+@Getter
+@Setter
+@EqualsAndHashCode(of = {"id"})
 @Table(name = "tags")
 public class Tag {
 
@@ -24,5 +29,5 @@ public class Tag {
     @JoinTable(name = "tweets_tags",
             joinColumns = @JoinColumn(name = "tags_id"),
             inverseJoinColumns = @JoinColumn(name = "tweets_id"))
-    private List<Tweet> tweets;
+    private Set<Tweet> tweets;
 }

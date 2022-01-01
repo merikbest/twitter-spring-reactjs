@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.repository;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,6 +16,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findByActiveTrueAndIdNot(Long id);
 
+//    @Query("SELECT user FROM User user JOIN FETCH user.bookmarks bookmarks WHERE user.email = :email")
+//    @EntityGraph(attributePaths = {"bookmarks", "tweets", "likedTweets", "retweets", "notifications", "tweets",
+//            "userLists", "chats", "userMutedList", "userBlockedList", "unreadMessages", "followers", "following",
+//            "followerRequests", "subscribers", "tweets"}, type = EntityGraph.EntityGraphType.FETCH)
+    @EntityGraph(value = "user-entity-graph", type = EntityGraph.EntityGraphType.LOAD)
     User findByEmail(String email);
 
     List<User> findByFullNameOrUsernameContainingIgnoreCase(

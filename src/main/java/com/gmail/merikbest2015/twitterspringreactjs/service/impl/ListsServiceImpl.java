@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,7 +37,7 @@ public class ListsServiceImpl implements ListsService {
     @Override
     public List<Lists> getUserTweetLists() {
         User user = authenticationService.getAuthenticatedUser();
-        return user.getUserLists();
+        return List.copyOf(user.getUserLists());
     }
 
     @Override
@@ -65,7 +66,7 @@ public class ListsServiceImpl implements ListsService {
         User user = authenticationService.getAuthenticatedUser();
         lists.setListOwner(user);
         Lists userTweetList = listsRepository.save(lists);
-        List<Lists> userLists = user.getUserLists();
+        Set<Lists> userLists = user.getUserLists();
         userLists.add(userTweetList);
         userRepository.save(user);
         return userTweetList;
@@ -132,7 +133,7 @@ public class ListsServiceImpl implements ListsService {
         Optional<User> follower = list.getFollowers().stream()
                 .filter(f -> f.equals(user))
                 .findFirst();
-        List<User> listFollowers = list.getFollowers();
+        Set<User> listFollowers = list.getFollowers();
 
         if (follower.isPresent()) {
             listFollowers.remove(follower.get());
@@ -215,13 +216,13 @@ public class ListsServiceImpl implements ListsService {
         return list;
     }
 
-    private List<Tweet> mergeTweets(Lists list) {
-        List<Tweet> tweets = list.getTweets();
-        List<User> members = list.getMembers();
+    private Set<Tweet> mergeTweets(Lists list) {
+        Set<Tweet> tweets = list.getTweets();
+        Set<User> members = list.getMembers();
         members.forEach(member -> tweets.addAll(member.getTweets()));
-        return tweets.stream()
+        return Set.copyOf(tweets.stream()
                 .filter(tweet -> tweet.getAddressedUsername() == null)
                 .sorted(Comparator.comparing(Tweet::getDateTime).reversed())
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 }

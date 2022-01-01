@@ -1,19 +1,40 @@
 package com.gmail.merikbest2015.twitterspringreactjs.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(of = {"id"})
 @Table(name = "users")
+@NamedEntityGraph(name = "user-entity-graph",
+        attributeNodes = {
+                @NamedAttributeNode("tweets"),
+                @NamedAttributeNode("likedTweets"),
+                @NamedAttributeNode("retweets"),
+                @NamedAttributeNode("bookmarks"),
+                @NamedAttributeNode("notifications"),
+                @NamedAttributeNode("tweets"),
+                @NamedAttributeNode("userLists"),
+                @NamedAttributeNode("chats"),
+                @NamedAttributeNode("userMutedList"),
+                @NamedAttributeNode("userBlockedList"),
+                @NamedAttributeNode("unreadMessages"),
+                @NamedAttributeNode("followers"),
+                @NamedAttributeNode("following"),
+                @NamedAttributeNode("followerRequests"),
+                @NamedAttributeNode("subscribers"),
+                @NamedAttributeNode("tweets"),
+        }
+)
 public class User {
 
     @Id
@@ -121,74 +142,86 @@ public class User {
     private Image wallpaper;
 
     @ManyToMany
-    private List<Tweet> tweets;
+    @JsonBackReference
+    private Set<Tweet> tweets;
 
     @OneToMany(mappedBy = "user")
-    private List<LikeTweet> likedTweets;
+    private Set<LikeTweet> likedTweets;
 
     @OneToMany(mappedBy = "user")
-    private List<Retweet> retweets;
+    private Set<Retweet> retweets;
 
     @OneToMany(mappedBy = "user")
-    private List<Bookmark> bookmarks;
+    private Set<Bookmark> bookmarks;
 
+    //    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @OneToMany
-    private List<Notification> notifications;
+    private Set<Notification> notifications;
 
     @ManyToMany
-    private List<Lists> userLists;
+    private Set<Lists> userLists;
 
     @OneToMany(mappedBy = "user")
-    private List<ChatParticipant> chats;
+    private Set<ChatParticipant> chats;
 
     @ManyToMany
     @JoinTable(name = "user_muted",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "muted_user_id"))
-    private List<User> userMutedList;
+    private Set<User> userMutedList;
 
     @ManyToMany
     @JoinTable(name = "user_blocked",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "blocked_user_id"))
-    private List<User> userBlockedList;
+    private Set<User> userBlockedList;
 
     @ManyToMany
     @JoinTable(name = "unread_messages",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "chat_message_id"))
-    private List<ChatMessage> unreadMessages;
+    private Set<ChatMessage> unreadMessages;
 
     @ManyToMany
     @JoinTable(name = "user_subscriptions",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "subscriber_id"))
-    private List<User> followers;
+    private Set<User> followers;
 
     @ManyToMany
     @JoinTable(name = "user_subscriptions",
             joinColumns = @JoinColumn(name = "subscriber_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> following;
+    private Set<User> following;
 
     @ManyToMany
     @JoinTable(name = "user_follower_requests",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "follower_id"))
-    private List<User> followerRequests;
+    private Set<User> followerRequests;
 
     @ManyToMany
     @JoinTable(name = "subscribers",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "subscriber_id"))
-    private List<User> subscribers;
+    private Set<User> subscribers;
 
     public User() {
         this.registrationDate = LocalDateTime.now().withNano(0);
-        this.bookmarks = new ArrayList<>();
-        this.userLists = new ArrayList<>();
-        this.unreadMessages = new ArrayList<>();
-        this.subscribers = new ArrayList<>();
+        this.tweets = new HashSet<>();
+        this.likedTweets = new HashSet<>();
+        this.retweets = new HashSet<>();
+        this.bookmarks = new HashSet<>();
+        this.notifications = new HashSet<>();
+        this.userLists = new HashSet<>();
+        this.chats = new HashSet<>();
+        this.userMutedList = new HashSet<>();
+        this.userBlockedList = new HashSet<>();
+        this.unreadMessages = new HashSet<>();
+        this.followers = new HashSet<>();
+        this.following = new HashSet<>();
+        this.followerRequests = new HashSet<>();
+        this.subscribers = new HashSet<>();
         this.backgroundColor = BackgroundColorType.DEFAULT;
         this.colorScheme = ColorSchemeType.BLUE;
     }

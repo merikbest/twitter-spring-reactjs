@@ -6,13 +6,12 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(of = {"id"})
 @Table(name = "tweets")
 public class Tweet {
 
@@ -75,25 +74,21 @@ public class Tweet {
     private User user;
 
     @OneToMany
-    private List<Image> images;
+    private Set<Image> images;
 
     @OneToMany(mappedBy = "tweet")
-    private List<LikeTweet> likedTweets;
+    private Set<LikeTweet> likedTweets;
 
     @OneToMany(mappedBy = "tweet")
-    private List<Retweet> retweets;
+    private Set<Retweet> retweets;
 
     @ManyToMany
     @JoinTable(name = "replies",
             joinColumns = @JoinColumn(name = "tweets_id"),
             inverseJoinColumns = @JoinColumn(name = "reply_id"))
-    private List<Tweet> replies;
+    private Set<Tweet> replies;
 
     public Tweet() {
         this.dateTime = LocalDateTime.now().withNano(0);
-        this.images = new ArrayList<>();
-        this.likedTweets = new ArrayList<>();
-        this.retweets = new ArrayList<>();
-        this.replies = new ArrayList<>();
     }
 }

@@ -1,13 +1,19 @@
 package com.gmail.merikbest2015.twitterspringreactjs.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
+@EqualsAndHashCode(of = {"id"})
 @Table(name = "chats")
 public class Chat {
 
@@ -19,12 +25,14 @@ public class Chat {
     private LocalDateTime creationDate;
 
     @OneToMany(mappedBy = "chat")
-    private List<ChatParticipant> participants;
+    private Set<ChatParticipant> participants;
 
     @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL)
-    private List<ChatMessage> messages;
+    private Set<ChatMessage> messages;
 
     public Chat() {
+        this.participants = new HashSet<>();
+        this.messages = new HashSet<>();
         this.creationDate = LocalDateTime.now().withNano(0);
     }
 }

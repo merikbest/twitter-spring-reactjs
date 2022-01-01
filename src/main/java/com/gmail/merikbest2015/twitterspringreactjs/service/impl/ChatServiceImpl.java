@@ -12,11 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -52,7 +50,7 @@ public class ChatServiceImpl implements ChatService {
             chatRepository.save(chat);
             ChatParticipant authUserParticipant = chatParticipantRepository.save(new ChatParticipant(authUser, chat));
             ChatParticipant userParticipant = chatParticipantRepository.save(new ChatParticipant(user, chat));
-            chat.setParticipants(Arrays.asList(authUserParticipant, userParticipant));
+            chat.setParticipants(Stream.of(authUserParticipant, userParticipant).collect(Collectors.toSet()));
             return chat;
         }
         return chatWithParticipant.get().getChat();
@@ -73,7 +71,7 @@ public class ChatServiceImpl implements ChatService {
         User user = authenticationService.getAuthenticatedUser();
         user.setUnreadMessages(user.getUnreadMessages().stream()
                 .filter(message -> !message.getChat().getId().equals(chatId))
-                .collect(Collectors.toList()));
+                .collect(Collectors.toSet()));
         return userRepository.save(user);
     }
 
@@ -103,7 +101,7 @@ public class ChatServiceImpl implements ChatService {
         chatMessage.setChat(chat);
         updateParticipantWhoLeftChat(chat);
         chatMessageRepository.save(chatMessage);
-        List<ChatMessage> messages = chat.getMessages();
+        Set<ChatMessage> messages = chat.getMessages();
         messages.add(chatMessage);
         chatRepository.save(chat);
         notifyChatParticipants(chatMessage, author);
@@ -127,7 +125,7 @@ public class ChatServiceImpl implements ChatService {
                 Chat newChat = chatRepository.save(chat);
                 ChatParticipant authorParticipant = chatParticipantRepository.save(new ChatParticipant(author, chat));
                 ChatParticipant userParticipant = chatParticipantRepository.save(new ChatParticipant(user, chat));
-                chat.setParticipants(Arrays.asList(authorParticipant, userParticipant));
+                chat.setParticipants(Stream.of(authorParticipant, userParticipant).collect(Collectors.toSet()));
                 chatMessage.setChat(newChat);
                 chatMessageRepository.save(chatMessage);
             } else if (!participantBlocked) {
@@ -135,7 +133,7 @@ public class ChatServiceImpl implements ChatService {
                 updateParticipantWhoLeftChat(participantsChat);
                 chatMessage.setChat(participantsChat);
                 ChatMessage newChatMessage = chatMessageRepository.save(chatMessage);
-                List<ChatMessage> messages = participantsChat.getMessages();
+                Set<ChatMessage> messages = participantsChat.getMessages();
                 messages.add(newChatMessage);
                 chatRepository.save(participantsChat);
             }
@@ -189,7 +187,7 @@ public class ChatServiceImpl implements ChatService {
         chatMessage.getChat().getParticipants()
                 .forEach(participant -> {
                     if (!participant.getUser().getUsername().equals(author.getUsername())) {
-                        List<ChatMessage> unread = participant.getUser().getUnreadMessages();
+                        Set<ChatMessage> unread = participant.getUser().getUnreadMessages();
                         unread.add(chatMessage);
                         participant.getUser().setUnreadMessages(unread);
                         userRepository.save(participant.getUser());

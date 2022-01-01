@@ -6,12 +6,13 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(of = {"id"})
 @Table(name = "pools")
 public class Poll {
 
@@ -26,5 +27,9 @@ public class Poll {
     private Tweet tweet;
 
     @OneToMany
-    private List<PollChoice> pollChoices;
+    private Set<PollChoice> pollChoices;
+
+    public Poll() {
+        this.pollChoices = new HashSet<>();
+    }
 }

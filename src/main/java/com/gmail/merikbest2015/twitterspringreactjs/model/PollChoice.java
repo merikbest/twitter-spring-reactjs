@@ -5,13 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(of = {"id"})
 @Table(name = "pool_choices")
 public class PollChoice {
 
@@ -23,9 +23,9 @@ public class PollChoice {
     private String choice;
 
     @ManyToMany
-    private List<User> votedUser;
+    private Set<User> votedUser;
 
     public PollChoice() {
-        this.votedUser = new ArrayList<>();
+        this.votedUser = new HashSet<>();
     }
 }

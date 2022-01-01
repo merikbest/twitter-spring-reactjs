@@ -103,7 +103,7 @@ public class TweetServiceImpl implements TweetService {
 
         user.getSubscribers().forEach(subscriber -> {
             subscriber.setNotificationsCount(subscriber.getNotificationsCount() + 1);
-            List<Notification> notifications = subscriber.getNotifications();
+            Set<Notification> notifications = subscriber.getNotifications();
             userRepository.save(subscriber);
             notifications.add(notification);
             notificationRepository.save(notification);
@@ -118,7 +118,7 @@ public class TweetServiceImpl implements TweetService {
         Poll poll = new Poll();
         poll.setTweet(createdTweet);
         poll.setDateTime(dateTime);
-        List<PollChoice> pollChoices = new ArrayList<>();
+        Set<PollChoice> pollChoices = new HashSet<>();
         choices.forEach(choice -> {
             PollChoice pollChoice = new PollChoice();
             pollChoice.setChoice(choice);
@@ -167,7 +167,7 @@ public class TweetServiceImpl implements TweetService {
             user.getNotifications().remove(notification);
             notificationRepository.delete(notification);
         });
-        List<Bookmark> bookmarks = user.getBookmarks();
+        Set<Bookmark> bookmarks = user.getBookmarks();
         Optional<Bookmark> bookmark = bookmarks.stream()
                 .filter(b -> b.getTweet().equals(tweet))
                 .findFirst();
@@ -177,7 +177,7 @@ public class TweetServiceImpl implements TweetService {
         }
         if (tweet.getAddressedTweetId() != null) {
             Tweet addressedTweet = tweetRepository.getOne(tweet.getAddressedTweetId());
-            List<Tweet> addressedTweetReplies = addressedTweet.getReplies();
+            Set<Tweet> addressedTweetReplies = addressedTweet.getReplies();
             Tweet reply = addressedTweetReplies.stream()
                     .filter(r -> r.equals(tweet))
                     .findFirst().get();
@@ -240,7 +240,7 @@ public class TweetServiceImpl implements TweetService {
         User user = authenticationService.getAuthenticatedUser();
         Tweet tweet = tweetRepository.getOne(tweetId);
 
-        List<LikeTweet> likedTweets = user.getLikedTweets();
+        Set<LikeTweet> likedTweets = user.getLikedTweets();
         Optional<LikeTweet> likedTweet = likedTweets.stream()
                 .filter(t -> t.getTweet().equals(tweet))
                 .findFirst();
@@ -265,7 +265,7 @@ public class TweetServiceImpl implements TweetService {
         User user = authenticationService.getAuthenticatedUser();
         Tweet tweet = tweetRepository.getOne(tweetId);
 
-        List<Retweet> retweets = user.getRetweets();
+        Set<Retweet> retweets = user.getRetweets();
         Optional<Retweet> retweet = retweets.stream()
                 .filter(t -> t.getTweet().equals(tweet))
                 .findFirst();
@@ -316,13 +316,13 @@ public class TweetServiceImpl implements TweetService {
     public Tweet voteInPoll(Long tweetId, Long pollChoiceId) {
         User user = authenticationService.getAuthenticatedUser();
         Tweet tweet = tweetRepository.getOne(tweetId);
-        List<PollChoice> pollChoices = tweet.getPoll().getPollChoices().stream()
+        Set<PollChoice> pollChoices = tweet.getPoll().getPollChoices().stream()
                 .peek(choice -> {
                     if (choice.getId().equals(pollChoiceId)) {
                         choice.getVotedUser().add(user);
                     }
                 })
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
         tweet.getPoll().setPollChoices(pollChoices);
         return tweetRepository.save(tweet);
     }
@@ -343,7 +343,7 @@ public class TweetServiceImpl implements TweetService {
             if (userNotification.isEmpty()) {
                 Notification newNotification = notificationRepository.save(notification);
                 tweet.getUser().setNotificationsCount(tweet.getUser().getNotificationsCount() + 1);
-                List<Notification> notifications = tweet.getUser().getNotifications();
+                Set<Notification> notifications = tweet.getUser().getNotifications();
                 notifications.add(newNotification);
                 userRepository.save(tweet.getUser());
                 return newNotification;
@@ -370,14 +370,14 @@ public class TweetServiceImpl implements TweetService {
                     Long tweetsQuantity = tag.getTweetsQuantity();
                     tweetsQuantity = tweetsQuantity + 1;
                     tag.setTweetsQuantity(tweetsQuantity);
-                    List<Tweet> taggedTweets = tag.getTweets();
+                    Set<Tweet> taggedTweets = tag.getTweets();
                     taggedTweets.add(tweet);
                     tagRepository.save(tag);
                 } else {
                     Tag newTag = new Tag();
                     newTag.setTagName(hashtag);
                     newTag.setTweetsQuantity(1L);
-                    newTag.setTweets(Collections.singletonList(tweet));
+                    newTag.setTweets(Set.copyOf(Collections.singletonList(tweet)));
                     tagRepository.save(newTag);
                 }
             });

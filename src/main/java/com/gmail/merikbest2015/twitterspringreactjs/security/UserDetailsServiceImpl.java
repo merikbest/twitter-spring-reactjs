@@ -25,6 +25,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user.getActivationCode() != null) {
             throw new LockedException("email not activated");
         }
-        return UserPrincipal.create(user);
+        return new UserPrincipal(user);
     }
 }
