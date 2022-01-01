@@ -42,5 +42,5 @@ public interface TweetService {
 
     Tweet changeTweetReplyType(Long tweetId, ReplyType replyType);
 
-    Tweet voteInPoll(Long tweetId, Long pollChoiceId);
+    Tweet voteInPoll(Long tweetId, Long pollId, Long pollChoiceId);
 }

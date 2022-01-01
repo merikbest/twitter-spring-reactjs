@@ -40,7 +40,8 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public Chat createChat(Long userId) {
         User authUser = authenticationService.getAuthenticatedUser();
-        User user = userRepository.getOne(userId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ApiRequestException("Participant not found", HttpStatus.NOT_FOUND));
 
         if (isParticipantBlocked(authUser, user)) {
             throw new ApiRequestException("Participant is blocked", HttpStatus.BAD_REQUEST);

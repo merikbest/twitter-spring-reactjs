@@ -17,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,14 +34,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public User getAuthenticatedUser() {
-        return ((UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+        User user = ((UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+        return userRepository.findByEmail(user.getEmail())
+                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
     }
 
     @Override
     public Map<String, Object> login(String email, String password) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-            User user = userRepository.findByEmail(email);
+            User user = userRepository.findByEmail(email)
+                    .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
             String token = jwtProvider.createToken(email, "USER");
             Map<String, Object> response = new HashMap<>();
             response.put("user", user);
@@ -55,7 +57,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public String registration(String email, String username, String birthday) {
-        User existingUser = userRepository.findByEmail(email);
+        User existingUser = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
 
         if (existingUser == null) {
             User user = new User();
@@ -82,7 +85,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public String sendRegistrationCode(String email) {
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
         user.setActivationCode(UUID.randomUUID().toString().substring(0, 7));
         userRepository.save(user);
 
@@ -106,7 +110,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public Map<String, Object> endRegistration(String email, String password) {
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
         user.setPassword(passwordEncoder.encode(password));
         user.setActive(true);
         userRepository.save(user);
@@ -120,9 +125,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public Map<String, Object> getUserByToken() {
-        Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByEmail(principal.getName());
-        String token = jwtProvider.createToken(principal.getName(), "USER");
+        User user = getAuthenticatedUser();
+        String token = jwtProvider.createToken(user.getEmail(), "USER");
         Map<String, Object> response = new HashMap<>();
         response.put("user", user);
         response.put("token", token);
@@ -131,11 +135,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public String findEmail(String email) {
-        User user = userRepository.findByEmail(email);
-
-        if (user == null) {
-            throw new ApiRequestException("Email not found", HttpStatus.NOT_FOUND);
-        }
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ApiRequestException("Email not found", HttpStatus.NOT_FOUND));
         return "Reset password code is send to your E-mail";
     }
 
@@ -147,7 +148,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public String sendPasswordResetCode(String email) {
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ApiRequestException("Email not found", HttpStatus.NOT_FOUND));
         user.setPasswordResetCode(UUID.randomUUID().toString().substring(0, 7));
         userRepository.save(user);
 
@@ -168,7 +170,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (password != null && !password.equals(password2)) {
             throw new ApiRequestException("Passwords do not match.", HttpStatus.BAD_REQUEST);
         }
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ApiRequestException("Email not found", HttpStatus.NOT_FOUND));
         user.setPassword(passwordEncoder.encode(password));
         user.setPasswordResetCode(null);
         userRepository.save(user);

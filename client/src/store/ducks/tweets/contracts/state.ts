@@ -87,6 +87,7 @@ export enum LinkCoverSize {
 
 export interface Vote {
     tweetId: string;
+    pollId: number;
     pollChoiceId: number;
 }
 

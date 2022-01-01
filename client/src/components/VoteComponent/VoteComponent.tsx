@@ -25,7 +25,7 @@ const VoteComponent: FC<VoteComponentProps> = ({tweetId, poll}): ReactElement =>
     const isPollEnded = isAfter(Date.now(), new Date(poll?.dateTime!));
 
     const onClickVote = (pollChoiceId: number): void => {
-        dispatch(vote({tweetId, pollChoiceId}))
+        dispatch(vote({tweetId, pollId: poll?.id!, pollChoiceId}));
     };
 
     return (

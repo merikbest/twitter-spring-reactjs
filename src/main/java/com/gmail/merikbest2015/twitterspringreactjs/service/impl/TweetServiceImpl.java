@@ -82,6 +82,9 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public Tweet createTweet(Tweet tweet) {
+        if (tweet.getText().length() == 0 || tweet.getText().length() > 280) {
+            throw new ApiRequestException("Incorrect tweet text length", HttpStatus.BAD_REQUEST);
+        }
         User user = authenticationService.getAuthenticatedUser();
         tweet.setUser(user);
         boolean isMediaTweetCreated = parseMetadataFromURL(tweet); // find metadata from url
@@ -113,6 +116,9 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public Tweet createPoll(Long pollDateTime, List<String> choices, Tweet tweet) {
+        if (choices.size() < 2) {
+            throw new ApiRequestException("Incorrect poll choices", HttpStatus.BAD_REQUEST);
+        }
         Tweet createdTweet = createTweet(tweet);
         LocalDateTime dateTime = LocalDateTime.now().plusMinutes(pollDateTime);
         Poll poll = new Poll();
@@ -133,7 +139,11 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public Tweet updateScheduledTweet(Tweet tweetInfo) {
-        Tweet tweet = tweetRepository.getOne(tweetInfo.getId());
+        if (tweetInfo.getText().length() == 0 || tweetInfo.getText().length() > 280) {
+            throw new ApiRequestException("Incorrect tweet text length", HttpStatus.BAD_REQUEST);
+        }
+        Tweet tweet = tweetRepository.findById(tweetInfo.getId())
+                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
         tweet.setText(tweetInfo.getText());
         tweet.setImages(tweetInfo.getImages());
         return tweetRepository.save(tweet);
@@ -238,11 +248,11 @@ public class TweetServiceImpl implements TweetService {
     @Override
     public Notification likeTweet(Long tweetId) {
         User user = authenticationService.getAuthenticatedUser();
-        Tweet tweet = tweetRepository.getOne(tweetId);
-
+        Tweet tweet = tweetRepository.findById(tweetId)
+                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
         List<LikeTweet> likedTweets = user.getLikedTweets();
         Optional<LikeTweet> likedTweet = likedTweets.stream()
-                .filter(t -> t.getTweet().equals(tweet))
+                .filter(t -> t.getTweet().getId().equals(tweet.getId()))
                 .findFirst();
 
         if (likedTweet.isPresent()) {
@@ -263,11 +273,11 @@ public class TweetServiceImpl implements TweetService {
     @Override
     public Notification retweet(Long tweetId) {
         User user = authenticationService.getAuthenticatedUser();
-        Tweet tweet = tweetRepository.getOne(tweetId);
-
+        Tweet tweet = tweetRepository.findById(tweetId)
+                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
         List<Retweet> retweets = user.getRetweets();
         Optional<Retweet> retweet = retweets.stream()
-                .filter(t -> t.getTweet().equals(tweet))
+                .filter(t -> t.getTweet().getId().equals(tweet.getId()))
                 .findFirst();
 
         if (retweet.isPresent()) {
@@ -287,38 +297,51 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public Tweet replyTweet(Long tweetId, Tweet reply) {
+        Tweet tweet = tweetRepository.findById(tweetId)
+                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
         reply.setAddressedTweetId(tweetId);
         Tweet replyTweet = createTweet(reply);
-        Tweet tweet = tweetRepository.getOne(tweetId);
         tweet.getReplies().add(replyTweet);
         return tweetRepository.save(tweet);
     }
 
     @Override
     public Tweet quoteTweet(Long tweetId, Tweet quote) {
+        Tweet tweet = tweetRepository.findById(tweetId)
+                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+        Tweet quoteTweet = tweetRepository.findById(quote.getId())
+                .orElseThrow(() -> new ApiRequestException("Quote Tweet not found", HttpStatus.NOT_FOUND));
         User user = authenticationService.getAuthenticatedUser();
         user.setTweetCount(user.getTweetCount() + 1);
         userRepository.save(user);
-
-        Tweet tweet = tweetRepository.getOne(tweetId);
-        quote.setQuoteTweet(tweet);
+        quoteTweet.setQuoteTweet(tweet);
         return createTweet(quote);
     }
 
     @Override
     public Tweet changeTweetReplyType(Long tweetId, ReplyType replyType) {
-        Tweet tweet = tweetRepository.getOne(tweetId);
+        Tweet tweet = tweetRepository.findById(tweetId)
+                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
         tweet.setReplyType(replyType);
         return tweetRepository.save(tweet);
     }
 
     @Override
-    public Tweet voteInPoll(Long tweetId, Long pollChoiceId) {
+    public Tweet voteInPoll(Long tweetId, Long pollId, Long pollChoiceId) {
+        Poll poll = pollRepository.findById(pollId)
+                .orElseThrow(() -> new ApiRequestException("Poll not found", HttpStatus.NOT_FOUND));
+        PollChoice pollChoice = pollChoiceRepository.findById(pollChoiceId)
+                .orElseThrow(() -> new ApiRequestException("Poll choice not found", HttpStatus.NOT_FOUND));
+        Tweet tweet = tweetRepository.findById(tweetId)
+                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+
+        if (!tweet.getPoll().getId().equals(poll.getId())) {
+            throw new ApiRequestException("Poll in tweet not exist", HttpStatus.NOT_FOUND);
+        }
         User user = authenticationService.getAuthenticatedUser();
-        Tweet tweet = tweetRepository.getOne(tweetId);
         List<PollChoice> pollChoices = tweet.getPoll().getPollChoices().stream()
                 .peek(choice -> {
-                    if (choice.getId().equals(pollChoiceId)) {
+                    if (choice.getId().equals(pollChoice.getId())) {
                         choice.getVotedUser().add(user);
                     }
                 })

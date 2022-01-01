@@ -25,6 +25,9 @@ public class UserSettingsServiceImpl implements UserSettingsService {
 
     @Override
     public User updateUsername(String username) {
+        if (username.length() == 0 || username.length() > 50) {
+            throw new ApiRequestException("Incorrect username length", HttpStatus.BAD_REQUEST);
+        }
         User user = authenticationService.getAuthenticatedUser();
         user.setUsername(username);
         return userRepository.save(user);
@@ -33,7 +36,8 @@ public class UserSettingsServiceImpl implements UserSettingsService {
     @Override
     public Map<String, Object> updateEmail(String email) {
         User user = authenticationService.getAuthenticatedUser();
-        User userByEmail = userRepository.findByEmail(email);
+        User userByEmail = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
 
         if (userByEmail == null) {
             user.setEmail(email);

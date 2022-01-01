@@ -118,6 +118,6 @@ public class TweetMapper {
     }
 
     public TweetResponse voteInPoll(VoteRequest voteRequest) {
-        return convertToTweetResponse(tweetService.voteInPoll(voteRequest.getTweetId(), voteRequest.getPollChoiceId()));
+        return convertToTweetResponse(tweetService.voteInPoll(voteRequest.getTweetId(), voteRequest.getPollId(), voteRequest.getPollChoiceId()));
     }
 }
