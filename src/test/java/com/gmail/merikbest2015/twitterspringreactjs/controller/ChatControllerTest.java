@@ -41,7 +41,7 @@ public class ChatControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/chat/users - Get user chats")
+    @DisplayName("[200] GET /api/v1/chat/users - Get user chats")
     public void getUserChats() throws Exception {
         mockMvc.perform(get(URL_CHAT_BASIC + "/users"))
                 .andExpect(status().isOk())
@@ -54,7 +54,7 @@ public class ChatControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/chat/create/3 - Create chat with participant")
+    @DisplayName("[200] GET /api/v1/chat/create/3 - Create chat with participant")
     public void createChat() throws Exception {
         mockMvc.perform(get(URL_CHAT_BASIC + "/create/3"))
                 .andExpect(status().isOk())
@@ -68,7 +68,16 @@ public class ChatControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/chat/create/4 - Bad Request. Create chat with blocked user")
+    @DisplayName("[404] GET /api/v1/chat/create/111 - Should participant Not Found")
+    public void createChat_ShouldParticipantNotFound() throws Exception {
+        mockMvc.perform(get(URL_CHAT_BASIC + "/create/111"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("Participant not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] GET /api/v1/chat/create/4 - Bad Request. Create chat with blocked user")
     public void createChat_BadRequest() throws Exception {
         mockMvc.perform(get(URL_CHAT_BASIC + "/create/4"))
                 .andExpect(status().isBadRequest())
@@ -77,7 +86,7 @@ public class ChatControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/chat/8/messages - Get chat messages by chat id")
+    @DisplayName("[200] GET /api/v1/chat/8/messages - Get chat messages by chat id")
     public void getChatMessages() throws Exception {
         mockMvc.perform(get(URL_CHAT_BASIC + "/8/messages"))
                 .andExpect(status().isOk())
@@ -91,7 +100,7 @@ public class ChatControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/chat/9/messages - Not found chat messages by chat id")
+    @DisplayName("[404] GET /api/v1/chat/9/messages - Not found chat messages by chat id")
     public void getChatMessages_NotFound() throws Exception {
         mockMvc.perform(get(URL_CHAT_BASIC + "/9/messages"))
                 .andExpect(status().isNotFound())
@@ -100,7 +109,7 @@ public class ChatControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/chat/8/read/messages - Read chat messages by chat id")
+    @DisplayName("[200] GET /api/v1/chat/8/read/messages - Read chat messages by chat id")
     public void readChatMessages() throws Exception {
         mockMvc.perform(get(URL_CHAT_BASIC + "/8/read/messages"))
                 .andExpect(status().isOk())
@@ -143,7 +152,7 @@ public class ChatControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("POST /api/v1/chat/add/message - Add chat message")
+    @DisplayName("[200] POST /api/v1/chat/add/message - Add chat message")
     public void addMessage() throws Exception {
         ChatMessageRequest request = new ChatMessageRequest();
         request.setChatId(8L);
@@ -162,7 +171,7 @@ public class ChatControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("POST /api/v1/chat/add/message - Chat Not Found")
+    @DisplayName("[404] POST /api/v1/chat/add/message - Chat Not Found")
     public void addMessage_ChatNotFound() throws Exception {
         ChatMessageRequest request = new ChatMessageRequest();
         request.setChatId(9L);
@@ -177,7 +186,7 @@ public class ChatControllerTest {
 
     @Test
     @WithUserDetails("test2017@test.test")
-    @DisplayName("POST /api/v1/chat/add/message - Chat Participant Not Found")
+    @DisplayName("[404] POST /api/v1/chat/add/message - Chat Participant Not Found")
     public void addMessage_ChatParticipantNotFound() throws Exception {
         ChatMessageRequest request = new ChatMessageRequest();
         request.setChatId(8L);
@@ -192,7 +201,7 @@ public class ChatControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("POST /api/v1/chat/add/message - Chat Participant Is Blocked")
+    @DisplayName("[400] POST /api/v1/chat/add/message - Chat Participant Is Blocked")
     public void addMessage_ChatParticipantIsBlocked() throws Exception {
         ChatMessageRequest request = new ChatMessageRequest();
         request.setChatId(10L);
@@ -207,7 +216,7 @@ public class ChatControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("POST /api/v1/chat/add/message/tweet - Add message with Tweet")
+    @DisplayName("[200] POST /api/v1/chat/add/message/tweet - Add message with Tweet")
     public void addMessageWithTweet() throws Exception {
         Tweet tweet = new Tweet();
         tweet.setId(40L);
@@ -231,7 +240,7 @@ public class ChatControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/chat/leave/3/8 - Leave from conversation")
+    @DisplayName("[200] GET /api/v1/chat/leave/3/8 - Leave from conversation")
     public void leaveFromConversation() throws Exception {
         mockMvc.perform(get(URL_CHAT_BASIC + "/leave/3/8"))
                 .andExpect(status().isOk())
@@ -240,7 +249,7 @@ public class ChatControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/chat/leave/5/10 - Leave from conversation and delete chat")
+    @DisplayName("[200] GET /api/v1/chat/leave/5/10 - Leave from conversation and delete chat")
     public void leaveFromConversationAndDeleteChat() throws Exception {
         mockMvc.perform(get(URL_CHAT_BASIC + "/leave/5/10"))
                 .andExpect(status().isOk())
@@ -249,7 +258,7 @@ public class ChatControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/chat/leave/10/10 - Participant not found")
+    @DisplayName("[404] GET /api/v1/chat/leave/10/10 - Participant not found")
     public void leaveFromConversation_ParticipantNotFound() throws Exception {
         mockMvc.perform(get(URL_CHAT_BASIC + "/leave/10/10"))
                 .andExpect(status().isNotFound())
@@ -258,7 +267,7 @@ public class ChatControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/chat/leave/2/9 - Chat not found")
+    @DisplayName("[404] GET /api/v1/chat/leave/2/9 - Chat not found")
     public void leaveFromConversation_ChatNotFound() throws Exception {
         mockMvc.perform(get(URL_CHAT_BASIC + "/leave/2/9"))
                 .andExpect(status().isNotFound())

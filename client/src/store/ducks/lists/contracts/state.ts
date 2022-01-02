@@ -27,6 +27,7 @@ export interface AddLists {
 export interface EditLists {
     id?: number;
     name?: string;
+    listOwner: User;
     description?: string;
     isPrivate?: boolean;
     wallpaper?: Image;

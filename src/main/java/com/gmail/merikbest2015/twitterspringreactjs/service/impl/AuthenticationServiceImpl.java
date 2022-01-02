@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +21,7 @@ import org.springframework.util.StringUtils;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -42,9 +44,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public Map<String, Object> login(String email, String password) {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-            User user = userRepository.findByEmail(email)
-                    .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
+            Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+            User user = ((UserPrincipal) authenticate.getPrincipal()).getUser();
             String token = jwtProvider.createToken(email, "USER");
             Map<String, Object> response = new HashMap<>();
             response.put("user", user);
@@ -57,10 +58,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public String registration(String email, String username, String birthday) {
-        User existingUser = userRepository.findByEmail(email)
-                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
+        Optional<User> existingUser = userRepository.findByEmail(email);
 
-        if (existingUser == null) {
+        if (existingUser.isEmpty()) {
             User user = new User();
             user.setEmail(email);
             user.setUsername(username);
@@ -71,13 +71,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             return "User data checked.";
         }
 
-        if (!existingUser.isActive()) {
-            existingUser.setUsername(username);
-            existingUser.setFullName(username);
-            existingUser.setBirthday(birthday);
-            existingUser.setRegistrationDate(LocalDateTime.now().withNano(0));
-            existingUser.setRole("USER");
-            userRepository.save(existingUser);
+        if (!existingUser.get().isActive()) {
+            existingUser.get().setUsername(username);
+            existingUser.get().setFullName(username);
+            existingUser.get().setBirthday(birthday);
+            existingUser.get().setRegistrationDate(LocalDateTime.now().withNano(0));
+            existingUser.get().setRole("USER");
+            userRepository.save(existingUser.get());
             return "User data checked.";
         }
         throw new ApiRequestException("Email has already been taken.", HttpStatus.FORBIDDEN);
@@ -110,6 +110,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public Map<String, Object> endRegistration(String email, String password) {
+        if (password.length() < 8) {
+            throw  new ApiRequestException("Your password needs to be at least 8 characters", HttpStatus.BAD_REQUEST);
+        }
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
         user.setPassword(passwordEncoder.encode(password));

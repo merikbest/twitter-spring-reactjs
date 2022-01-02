@@ -18,6 +18,7 @@ import {Image} from "../../../store/ducks/tweets/contracts/state";
 import {uploadImage} from "../../../util/uploadImage";
 import CloseButton from "../../../components/CloseButton/CloseButton";
 import {selectListItem} from "../../../store/ducks/list/selectors";
+import {User} from "../../../store/ducks/user/contracts/state";
 
 interface EditListModalProps {
     visible?: boolean;
@@ -27,6 +28,7 @@ interface EditListModalProps {
 export interface EditListModalFormProps {
     id: number;
     name?: string;
+    listOwner: User;
     description?: string;
     isPrivate: boolean;
     wallpaper?: Image;
@@ -51,6 +53,7 @@ const EditListModal: FC<EditListModalProps> = ({visible, onClose}): ReactElement
         defaultValues: {
             id: list?.id,
             name: list?.name,
+            listOwner: list?.listOwner,
             description: list?.description,
             isPrivate: list?.private,
             wallpaper: list?.wallpaper,

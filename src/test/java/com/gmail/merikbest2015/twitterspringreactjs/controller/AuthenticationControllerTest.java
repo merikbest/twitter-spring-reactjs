@@ -53,7 +53,7 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/auth/login - Login")
+    @DisplayName("[200] POST /api/v1/auth/login - Login")
     public void login() throws Exception {
         authenticationRequest.setPassword(PASSWORD);
 
@@ -64,7 +64,7 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/auth/login - Should email or password be not valid")
+    @DisplayName("[403] POST /api/v1/auth/login - Should email or password be not valid")
     public void login_ShouldEmailOrPasswordBeNotValid() throws Exception {
         authenticationRequest.setPassword("test123");
 
@@ -76,7 +76,7 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/auth/registration/check - Check Email")
+    @DisplayName("[200] POST /api/v1/auth/registration/check - Check Email")
     public void checkEmail() throws Exception {
         mockMvc.perform(post(URL_AUTH_REGISTRATION + "/check")
                 .content(mapper.writeValueAsString(registrationRequest))
@@ -86,7 +86,7 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/auth/registration/check - Should user email is exist")
+    @DisplayName("[403] POST /api/v1/auth/registration/check - Should user email is exist")
     public void checkEmail_ShouldUserEmailIsExist() throws Exception {
         registrationRequest.setEmail(USER_EMAIL);
 
@@ -98,7 +98,7 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/auth/registration/code - Send registration code")
+    @DisplayName("[200] POST /api/v1/auth/registration/code - Send registration code")
     public void sendRegistrationCode() throws Exception {
         registrationRequest.setEmail(USER_EMAIL);
 
@@ -110,7 +110,19 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/v1/auth/registration/activate/1234567890 - Check registration code")
+    @DisplayName("[404] POST /api/v1/auth/registration/code - User not found")
+    public void sendRegistrationCode_ShouldUserNotFound() throws Exception {
+        registrationRequest.setEmail(NOT_VALID_EMAIL);
+
+        mockMvc.perform(post(URL_AUTH_REGISTRATION + "/code")
+                .content(mapper.writeValueAsString(registrationRequest))
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("User not found")));
+    }
+
+    @Test
+    @DisplayName("[200] GET /api/v1/auth/registration/activate/1234567890 - Check registration code")
     public void checkRegistrationCode() throws Exception {
         mockMvc.perform(get(URL_AUTH_REGISTRATION + "/activate/1234567890"))
                 .andExpect(status().isOk())
@@ -118,7 +130,7 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/v1/auth/registration/activate/test - Registration code not found")
+    @DisplayName("[404] GET /api/v1/auth/registration/activate/test - Registration code not found")
     public void checkRegistrationCode_NotFound() throws Exception {
         mockMvc.perform(get(URL_AUTH_REGISTRATION + "/activate/test"))
                 .andExpect(status().isNotFound())
@@ -126,7 +138,7 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/auth/registration/confirm - End registration")
+    @DisplayName("[200] POST /api/v1/auth/registration/confirm - End registration")
     public void endRegistration() throws Exception {
         authenticationRequest.setPassword(PASSWORD);
 
@@ -151,8 +163,33 @@ public class AuthenticationControllerTest {
     }
 
     @Test
+    @DisplayName("[400] POST /api/v1/auth/registration/confirm - Should short password")
+    public void endRegistration_ShouldShortPassword() throws Exception {
+        authenticationRequest.setPassword("123");
+
+        mockMvc.perform(post(URL_AUTH_REGISTRATION + "/confirm")
+                        .content(mapper.writeValueAsString(authenticationRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("Your password needs to be at least 8 characters")));
+    }
+
+    @Test
+    @DisplayName("[404] POST /api/v1/auth/registration/confirm - Should user Not Found by email")
+    public void endRegistration_ShouldUserNotFound() throws Exception {
+        authenticationRequest.setEmail(NOT_VALID_EMAIL);
+        authenticationRequest.setPassword(PASSWORD);
+
+        mockMvc.perform(post(URL_AUTH_REGISTRATION + "/confirm")
+                        .content(mapper.writeValueAsString(authenticationRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("User not found")));
+    }
+
+    @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/auth/user - Get user by token")
+    @DisplayName("[200] GET /api/v1/auth/user - Get user by token")
     public void getUserByToken() throws Exception {
         mockMvc.perform(get(URL_AUTH_BASIC + "/user"))
                 .andExpect(status().isOk())
@@ -173,7 +210,7 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/v1/auth/user - Jwt expired")
+    @DisplayName("[401] GET /api/v1/auth/user - Jwt expired")
     public void getUserByToken_JwtExpired() throws Exception {
         Assertions.assertThrows(JwtAuthenticationException.class, () -> {
             mockMvc.perform(get(URL_AUTH_BASIC + "/user")
@@ -183,7 +220,7 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/auth/forgot/email - Find existing email")
+    @DisplayName("[200] POST /api/v1/auth/forgot/email - Find existing email")
     public void findExistingEmail() throws Exception {
         PasswordResetRequest passwordResetRequest = new PasswordResetRequest();
         passwordResetRequest.setEmail(USER_EMAIL);
@@ -196,10 +233,10 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/auth/forgot/email - Email not found")
+    @DisplayName("[404] POST /api/v1/auth/forgot/email - Email not found")
     public void findExistingEmail_EmailNotFound() throws Exception {
         PasswordResetRequest passwordResetRequest = new PasswordResetRequest();
-        passwordResetRequest.setEmail("test");
+        passwordResetRequest.setEmail(NOT_VALID_EMAIL);
 
         mockMvc.perform(post(URL_AUTH_FORGOT + "/email")
                 .content(mapper.writeValueAsString(passwordResetRequest))
@@ -209,7 +246,7 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/auth/forgot/email - Send password reset code")
+    @DisplayName("[200] POST /api/v1/auth/forgot/email - Send password reset code")
     public void sendPasswordResetCode() throws Exception {
         PasswordResetRequest passwordResetRequest = new PasswordResetRequest();
         passwordResetRequest.setEmail(USER_EMAIL);
@@ -222,7 +259,20 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/v1/auth/reset/1234567890 - Get user by reset code")
+    @DisplayName("[404] POST /api/v1/auth/forgot/email - Should email Not Found")
+    public void sendPasswordResetCode_ShouldEmailNotFound() throws Exception {
+        PasswordResetRequest passwordResetRequest = new PasswordResetRequest();
+        passwordResetRequest.setEmail(NOT_VALID_EMAIL);
+
+        mockMvc.perform(post(URL_AUTH_FORGOT)
+                        .content(mapper.writeValueAsString(passwordResetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("Email not found")));
+    }
+
+    @Test
+    @DisplayName("[200] GET /api/v1/auth/reset/1234567890 - Get user by reset code")
     public void getUserByResetCode() throws Exception {
         mockMvc.perform(get(URL_AUTH_RESET + "/1234567890"))
                 .andExpect(status().isOk())
@@ -243,7 +293,7 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    @DisplayName("GET /api/v1/auth/reset/test123 - Get user by reset code bad request")
+    @DisplayName("[400] GET /api/v1/auth/reset/test123 - Get user by reset code bad request")
     public void getUserByResetCode_BadRequest() throws Exception {
         mockMvc.perform(get(URL_AUTH_RESET + "/test123"))
                 .andExpect(status().isBadRequest())
@@ -251,7 +301,7 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/auth/reset - Reset password")
+    @DisplayName("[200] POST /api/v1/auth/reset - Reset password")
     public void passwordReset() throws Exception {
         PasswordResetRequest passwordResetRequest = new PasswordResetRequest();
         passwordResetRequest.setEmail(USER_EMAIL);
@@ -266,7 +316,22 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/auth/reset - Should password2 be empty")
+    @DisplayName("[404] POST /api/v1/auth/reset - Should user Not Found by email")
+    public void passwordReset_ShouldUserNotFoundByEmail() throws Exception {
+        PasswordResetRequest passwordResetRequest = new PasswordResetRequest();
+        passwordResetRequest.setEmail(NOT_VALID_EMAIL);
+        passwordResetRequest.setPassword(PASSWORD);
+        passwordResetRequest.setPassword2(PASSWORD);
+
+        mockMvc.perform(post(URL_AUTH_RESET)
+                        .content(mapper.writeValueAsString(passwordResetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("Email not found")));
+    }
+
+    @Test
+    @DisplayName("[400] POST /api/v1/auth/reset - Should password2 be empty")
     public void passwordReset_ShouldPassword2BeEmpty() throws Exception {
         PasswordResetRequest passwordResetRequest = new PasswordResetRequest();
         passwordResetRequest.setEmail(USER_EMAIL);
@@ -280,7 +345,7 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/v1/auth/reset - Should passwords not match")
+    @DisplayName("[400] POST /api/v1/auth/reset - Should passwords not match")
     public void passwordReset_ShouldPasswordsNotMatch() throws Exception {
         PasswordResetRequest passwordResetRequest = new PasswordResetRequest();
         passwordResetRequest.setEmail(USER_EMAIL);
