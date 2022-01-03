@@ -28,7 +28,6 @@ interface EditListModalProps {
 export interface EditListModalFormProps {
     id: number;
     name?: string;
-    listOwner: User;
     description?: string;
     isPrivate: boolean;
     wallpaper?: Image;
@@ -53,7 +52,6 @@ const EditListModal: FC<EditListModalProps> = ({visible, onClose}): ReactElement
         defaultValues: {
             id: list?.id,
             name: list?.name,
-            listOwner: list?.listOwner,
             description: list?.description,
             isPrivate: list?.private,
             wallpaper: list?.wallpaper,
@@ -72,7 +70,7 @@ const EditListModal: FC<EditListModalProps> = ({visible, onClose}): ReactElement
         if (wallpaper) {
             wallpaperResponse = await uploadImage(wallpaper.file);
         }
-        dispatch(editList({...data, wallpaper: wallpaperResponse}));
+        dispatch(editList({...data, listOwner: list?.listOwner!, wallpaper: wallpaperResponse}));
         onClose();
     };
 

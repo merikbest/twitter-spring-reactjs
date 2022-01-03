@@ -156,12 +156,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<LikeTweet> getUserLikedTweets(Long userId, Pageable pageable) {
-        return likeTweetRepository.findByUserId(userId, pageable);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
+        return likeTweetRepository.findByUserId(user.getId(), pageable);
     }
 
     @Override
     public Page<Tweet> getUserMediaTweets(Long userId, Pageable pageable) {
-        return tweetRepository.findAllUserMediaTweets(userId, pageable);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
+        return tweetRepository.findAllUserMediaTweets(user.getId(), pageable);
     }
 
     @Override
@@ -250,10 +254,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> overallFollowers(Long userId) {
+        User currentUser = userRepository.findById(userId)
+                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
         User user = authenticationService.getAuthenticatedUser();
 
         if (!user.getId().equals(userId)) {
-            User currentUser = userRepository.getOne(userId);
             return user.getFollowers().stream()
                     .filter(follower -> currentUser.getFollowers().contains(follower))
                     .collect(Collectors.toList());

@@ -20,7 +20,9 @@ import java.io.FileInputStream;
 
 import static com.gmail.merikbest2015.twitterspringreactjs.util.TestConstants.*;
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -42,7 +44,7 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/2 - Get user by id")
+    @DisplayName("[200] GET /api/v1/user/2 - Get user by id")
     public void getUserById() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/" + USER_ID))
                 .andExpect(status().isOk())
@@ -85,11 +87,20 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/all - Get users")
+    @DisplayName("[404] GET /api/v1/user/99 - Should user Not Found by id")
+    public void getUserById_ShouldUserNotFound() throws Exception {
+        mockMvc.perform(get(URL_USER_BASIC + "/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("User not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/user/all - Get users")
     public void getUsers() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/all"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(4)))
+                .andExpect(jsonPath("$[*]", hasSize(6)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
                 .andExpect(jsonPath("$[*].email").isNotEmpty())
                 .andExpect(jsonPath("$[*].fullName").isNotEmpty())
@@ -129,7 +140,7 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/relevant - Get relevant users")
+    @DisplayName("[200] GET /api/v1/user/relevant - Get relevant users")
     public void getRelevantUsers() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/relevant"))
                 .andExpect(status().isOk())
@@ -173,11 +184,11 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/search/MrCat - Search users by username")
+    @DisplayName("[200] GET /api/v1/user/search/MrCat - Search users by username")
     public void searchUsersByUsername() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/search/" + USERNAME))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(4)))
+                .andExpect(jsonPath("$[*]", hasSize(6)))
                 .andExpect(jsonPath("$[0].id").value(USER_ID))
                 .andExpect(jsonPath("$[0].email").value(USER_EMAIL))
                 .andExpect(jsonPath("$[0].fullName").value(FULL_NAME))
@@ -202,7 +213,7 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/search/test - Search users by username Not Found")
+    @DisplayName("[200] GET /api/v1/user/search/test - Search users by username Not Found")
     public void searchUsersByUsername_NotFound() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/search/test"))
                 .andExpect(status().isOk())
@@ -211,7 +222,7 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/2/start - Start use twitter")
+    @DisplayName("[200] GET /api/v1/user/2/start - Start use twitter")
     public void startUseTwitter() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/" + USER_ID + "/start"))
                 .andExpect(status().isOk())
@@ -254,7 +265,7 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/2/tweets - Get user tweets by id")
+    @DisplayName("[200] GET /api/v1/user/2/tweets - Get user tweets by id")
     public void getUserTweets() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/" + USER_ID + "/tweets"))
                 .andExpect(status().isOk())
@@ -282,7 +293,16 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/2/liked - Get user liked tweets by id")
+    @DisplayName("[404] GET /api/v1/user/99/tweets - Should user Not Found by id")
+    public void getUserTweets_ShouldUserNotFound() throws Exception {
+        mockMvc.perform(get(URL_USER_BASIC + "/99/tweets"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("User not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/user/2/liked - Get user liked tweets by id")
     public void getUserLikedTweets() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/" + USER_ID + "/liked"))
                 .andExpect(status().isOk())
@@ -310,16 +330,53 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/2/media - Get user media tweets by id")
-    public void getUserMediaTweets() throws Exception {
-        mockMvc.perform(get(URL_USER_BASIC + "/" + USER_ID + "/media"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(1))); // TODO add params
+    @DisplayName("[404] GET /api/v1/user/99/liked - Should user Not Found by id")
+    public void getUserLikedTweets_ShouldUserNotFound() throws Exception {
+        mockMvc.perform(get(URL_USER_BASIC + "/99/liked"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("User not found")));
     }
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/2/replies - Get user retweets and replies by id")
+    @DisplayName("[200] GET /api/v1/user/2/media - Get user media tweets by id")
+    public void getUserMediaTweets() throws Exception {
+        mockMvc.perform(get(URL_USER_BASIC + "/" + USER_ID + "/media"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(1)))
+                .andExpect(jsonPath("$[*].id").isNotEmpty())
+                .andExpect(jsonPath("$[*].text").isNotEmpty())
+                .andExpect(jsonPath("$[*].dateTime").isNotEmpty())
+                .andExpect(jsonPath("$[*].addressedUsername").isNotEmpty())
+                .andExpect(jsonPath("$[*].addressedId").isNotEmpty())
+                .andExpect(jsonPath("$[*].addressedTweetId").isNotEmpty())
+                .andExpect(jsonPath("$[*].replyType").isNotEmpty())
+                .andExpect(jsonPath("$[*].link").isNotEmpty())
+                .andExpect(jsonPath("$[*].linkTitle").isNotEmpty())
+                .andExpect(jsonPath("$[*].linkDescription").isNotEmpty())
+                .andExpect(jsonPath("$[*].linkCover").isNotEmpty())
+                .andExpect(jsonPath("$[*].linkCoverSize").isNotEmpty())
+                .andExpect(jsonPath("$[*].quoteTweet").isNotEmpty())
+                .andExpect(jsonPath("$[*].user").isNotEmpty())
+                .andExpect(jsonPath("$[*].poll").isNotEmpty())
+                .andExpect(jsonPath("$[*].images").isNotEmpty())
+                .andExpect(jsonPath("$[*].likedTweets").isNotEmpty())
+                .andExpect(jsonPath("$[*].retweets").isNotEmpty())
+                .andExpect(jsonPath("$[*].replies").isNotEmpty());
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] GET /api/v1/user/99/media - Should user Not Found by id")
+    public void getUserMediaTweets_ShouldUserNotFound() throws Exception {
+        mockMvc.perform(get(URL_USER_BASIC + "/99/media"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("User not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/user/2/replies - Get user retweets and replies by id")
     public void getUserRetweetsAndReplies() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/" + USER_ID + "/replies"))
                 .andExpect(status().isOk())
@@ -347,7 +404,16 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/notifications - Get user notifications")
+    @DisplayName("[404] GET /api/v1/user/99/replies - Should user Not Found by id")
+    public void getUserRetweetsAndReplies_ShouldUserNotFound() throws Exception {
+        mockMvc.perform(get(URL_USER_BASIC + "/99/replies"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("User not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/user/notifications - Get user notifications")
     public void getUserNotifications() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/notifications"))
                 .andExpect(status().isOk())
@@ -357,7 +423,7 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/bookmarks - Get user bookmarks")
+    @DisplayName("[200] GET /api/v1/user/bookmarks - Get user bookmarks")
     public void getUserBookmarks() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/bookmarks"))
                 .andExpect(status().isOk())
@@ -385,7 +451,7 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/bookmarks/43 - Add tweet to bookmarks")
+    @DisplayName("[200] GET /api/v1/user/bookmarks/43 - Add tweet to bookmarks")
     public void processUserBookmarks_addBookmark() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/bookmarks/43"))
                 .andExpect(status().isOk())
@@ -428,7 +494,7 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/bookmarks/40 - Remove tweet from bookmarks")
+    @DisplayName("[200] GET /api/v1/user/bookmarks/40 - Remove tweet from bookmarks")
     public void processUserBookmarks_removeBookmark() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/bookmarks/40"))
                 .andExpect(status().isOk())
@@ -471,7 +537,16 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("PUT /api/v1/user - Update user profile")
+    @DisplayName("[404] GET /api/v1/user/bookmarks/99 - Should Tweet Not Found")
+    public void processUserBookmarks_ShouldTweetNotFound() throws Exception {
+        mockMvc.perform(get(URL_USER_BASIC + "/bookmarks/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("Tweet not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] PUT /api/v1/user - Update user profile")
     public void updateUserProfile() throws Exception {
         UserRequest userRequest = new UserRequest();
         userRequest.setUsername("test");
@@ -522,7 +597,35 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("POST /api/v1/user/upload - Upload user image to S3 bucket")
+    @DisplayName("[400] PUT /api/v1/user - Should username length is 0")
+    public void updateUserProfile_ShouldUsernameLengthIs0() throws Exception {
+        UserRequest userRequest = new UserRequest();
+        userRequest.setUsername("");
+
+        mockMvc.perform(put(URL_USER_BASIC)
+                        .content(mapper.writeValueAsString(userRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("Incorrect username length")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] PUT /api/v1/user - Should username length more than 50")
+    public void updateUserProfile_ShouldUsernameLengthMoreThan50() throws Exception {
+        UserRequest userRequest = new UserRequest();
+        userRequest.setUsername(LINK_DESCRIPTION);
+
+        mockMvc.perform(put(URL_USER_BASIC)
+                        .content(mapper.writeValueAsString(userRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("Incorrect username length")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] POST /api/v1/user/upload - Upload user image to S3 bucket")
     public void uploadImage() throws Exception {
         FileInputStream inputFile = new FileInputStream("src/test/resources/test.png");
         MockMultipartFile file = new MockMultipartFile("file", "test.png", MediaType.MULTIPART_FORM_DATA_VALUE, inputFile);
@@ -536,7 +639,7 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/follow/3 - Follow user by id")
+    @DisplayName("[200] GET /api/v1/user/follow/3 - Follow user by id")
     public void processFollow() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/follow/3"))
                 .andExpect(status().isOk())
@@ -563,7 +666,7 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/follow/1 - Unfollow user by id")
+    @DisplayName("[200] GET /api/v1/user/follow/1 - Unfollow user by id")
     public void processUnfollow() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/follow/1"))
                 .andExpect(status().isOk())
@@ -589,7 +692,16 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/follow/overall/1 - Get overall followers if exist")
+    @DisplayName("[404] GET /api/v1/user/follow/99 - Should user Not Found by id")
+    public void processFollow_ShouldUserNotFound() throws Exception {
+        mockMvc.perform(get(URL_USER_BASIC + "/follow/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("User not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/user/follow/overall/1 - Get overall followers if exist")
     public void overallFollowers_exist() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/follow/overall/1"))
                 .andExpect(status().isOk())
@@ -633,7 +745,25 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/follow/private/4 - Follow request from private profile")
+    @DisplayName("[200] GET /api/v1/user/follow/overall/7 - Get overall followers if not exist")
+    public void overallFollowers_NotExist() throws Exception {
+        mockMvc.perform(get(URL_USER_BASIC + "/follow/overall/7"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(0)));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] GET /api/v1/user/follow/overall/99 - Should user Not Found by id")
+    public void overallFollowers_ShouldUserNotFound() throws Exception {
+        mockMvc.perform(get(URL_USER_BASIC + "/follow/overall/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("User not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/user/follow/private/4 - Follow request from private profile")
     public void followRequestToPrivateProfile() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/follow/private/4"))
                 .andExpect(status().isOk())
@@ -676,7 +806,7 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/follow/private/5 - Unfollow request to private profile")
+    @DisplayName("[200] GET /api/v1/user/follow/private/5 - Unfollow request to private profile")
     public void unfollowRequestToPrivateProfile() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/follow/private/5"))
                 .andExpect(status().isOk())
@@ -710,7 +840,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.profileStarted").value(PROFILE_STARTED))
                 .andExpect(jsonPath("$.unreadMessages").isEmpty())
                 .andExpect(jsonPath("$.userMutedList").isEmpty())
-                .andExpect(jsonPath("$.userBlockedList").isEmpty())
+                .andExpect(jsonPath("$.userBlockedList").isNotEmpty())
                 .andExpect(jsonPath("$.subscribers").isEmpty())
                 .andExpect(jsonPath("$.followerRequests").isEmpty())
                 .andExpect(jsonPath("$.followers").isEmpty())
@@ -718,8 +848,17 @@ public class UserControllerTest {
     }
 
     @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] GET /api/v1/user/follow/private/99 - Should user Not Found by id")
+    public void processFollowRequestToPrivateProfile_ShouldUserNotFound() throws Exception {
+        mockMvc.perform(get(URL_USER_BASIC + "/follow/private/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("User not found")));
+    }
+
+    @Test
     @WithUserDetails("test2018@test.test")
-    @DisplayName("GET /api/v1/user/follow/accept/2 - Accept follow request")
+    @DisplayName("[200] GET /api/v1/user/follow/accept/2 - Accept follow request")
     public void acceptFollowRequest() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/follow/accept/2"))
                 .andExpect(status().isOk())
@@ -753,7 +892,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.profileStarted").value(PROFILE_STARTED))
                 .andExpect(jsonPath("$.unreadMessages").isEmpty())
                 .andExpect(jsonPath("$.userMutedList").isEmpty())
-                .andExpect(jsonPath("$.userBlockedList").isEmpty())
+                .andExpect(jsonPath("$.userBlockedList").isNotEmpty())
                 .andExpect(jsonPath("$.subscribers").isEmpty())
                 .andExpect(jsonPath("$.followerRequests").isEmpty())
                 .andExpect(jsonPath("$.followers").isNotEmpty())
@@ -763,7 +902,16 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails("test2018@test.test")
-    @DisplayName("GET /api/v1/user/follow/decline/2 - Decline follow request")
+    @DisplayName("[404] GET /api/v1/user/follow/accept/99 - Should user Not Found by id")
+    public void acceptFollowRequest_ShouldUserNotFound() throws Exception {
+        mockMvc.perform(get(URL_USER_BASIC + "/follow/accept/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("User not found")));
+    }
+
+    @Test
+    @WithUserDetails("test2018@test.test")
+    @DisplayName("[200] GET /api/v1/user/follow/decline/2 - Decline follow request")
     public void declineFollowRequest() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/follow/decline/2"))
                 .andExpect(status().isOk())
@@ -797,7 +945,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.profileStarted").value(PROFILE_STARTED))
                 .andExpect(jsonPath("$.unreadMessages").isEmpty())
                 .andExpect(jsonPath("$.userMutedList").isEmpty())
-                .andExpect(jsonPath("$.userBlockedList").isEmpty())
+                .andExpect(jsonPath("$.userBlockedList").isNotEmpty())
                 .andExpect(jsonPath("$.subscribers").isEmpty())
                 .andExpect(jsonPath("$.followerRequests").isEmpty())
                 .andExpect(jsonPath("$.followers").isEmpty())
@@ -805,8 +953,17 @@ public class UserControllerTest {
     }
 
     @Test
+    @WithUserDetails("test2018@test.test")
+    @DisplayName("[404] GET /api/v1/user/follow/decline/99 - Should user Not Found by id")
+    public void declineFollowRequest_ShouldUserNotFound() throws Exception {
+        mockMvc.perform(get(URL_USER_BASIC + "/follow/decline/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("User not found")));
+    }
+
+    @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/subscribe/1 - Subscribe to notifications")
+    @DisplayName("[200] GET /api/v1/user/subscribe/1 - Subscribe to notifications")
     public void subscribeToNotifications() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/subscribe/1"))
                 .andExpect(status().isOk())
@@ -849,7 +1006,7 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails("merikbest2015@gmail.com")
-    @DisplayName("GET /api/v1/user/subscribe/1 - Unsubscribe from notifications")
+    @DisplayName("[200] GET /api/v1/user/subscribe/1 - Unsubscribe from notifications")
     public void unsubscribeToNotifications() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/subscribe/2"))
                 .andExpect(status().isOk())
@@ -892,7 +1049,16 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/pin/tweet/43 - Pin tweet to profile by id")
+    @DisplayName("[404] GET /api/v1/user/subscribe/99 - Should user Not Found by id")
+    public void processSubscribeToNotifications_ShouldUserNotFound() throws Exception {
+        mockMvc.perform(get(URL_USER_BASIC + "/subscribe/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("User not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/user/pin/tweet/43 - Pin tweet to profile by id")
     public void processPinTweet() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/pin/tweet/43"))
                 .andExpect(status().isOk())
@@ -935,7 +1101,7 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/pin/tweet/40 - Unpin tweet from profile by id")
+    @DisplayName("[200] GET /api/v1/user/pin/tweet/40 - Unpin tweet from profile by id")
     public void processUnpinTweet() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/pin/tweet/40"))
                 .andExpect(status().isOk())
@@ -978,7 +1144,16 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/blocked - Get blocked users")
+    @DisplayName("[404] GET /api/v1/user/pin/tweet/99 - Should tweet Not Found by id")
+    public void processPinTweet_ShouldTweetNotFound() throws Exception {
+        mockMvc.perform(get(URL_USER_BASIC + "/pin/tweet/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("Tweet not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/user/blocked - Get blocked users")
     public void getBlockList() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/blocked"))
                 .andExpect(status().isOk())
@@ -1022,7 +1197,7 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/blocked/3 - Add user to block list by id")
+    @DisplayName("[200] GET /api/v1/user/blocked/3 - Add user to block list by id")
     public void addToBlockList() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/blocked/3"))
                 .andExpect(status().isOk())
@@ -1066,7 +1241,7 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/blocked/4 - Remove user from block list by id")
+    @DisplayName("[200] GET /api/v1/user/blocked/4 - Remove user from block list by id")
     public void removeFromBlockList() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/blocked/4"))
                 .andExpect(status().isOk())
@@ -1109,7 +1284,16 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/muted - Get muted list")
+    @DisplayName("[404] GET /api/v1/user/blocked/99 - Should user Not Found by id")
+    public void processBlockList_ShouldUserNotFound() throws Exception {
+        mockMvc.perform(get(URL_USER_BASIC + "/blocked/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("User not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/user/muted - Get muted list")
     public void getMutedList() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/muted"))
                 .andExpect(status().isOk())
@@ -1153,7 +1337,7 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/muted/3 - Mute user by id")
+    @DisplayName("[200] GET /api/v1/user/muted/3 - Mute user by id")
     public void addToMutedList() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/muted/3"))
                 .andExpect(status().isOk())
@@ -1196,7 +1380,7 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("GET /api/v1/user/muted/1 - Unmute user by id")
+    @DisplayName("[200] GET /api/v1/user/muted/1 - Unmute user by id")
     public void removeFromMutedList() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/muted/1"))
                 .andExpect(status().isOk())
@@ -1235,5 +1419,14 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.following").isNotEmpty())
                 .andExpect(jsonPath("$.userMutedList").isEmpty())
                 .andExpect(jsonPath("$.userBlockedList").isNotEmpty());
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] GET /api/v1/user/muted/99 - Should user Not Found by id")
+    public void addToMutedList_ShouldUserNotFound() throws Exception {
+        mockMvc.perform(get(URL_USER_BASIC + "/muted/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("User not found")));
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,10 +37,9 @@ public class UserSettingsServiceImpl implements UserSettingsService {
     @Override
     public Map<String, Object> updateEmail(String email) {
         User user = authenticationService.getAuthenticatedUser();
-        User userByEmail = userRepository.findByEmail(email)
-                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
+        Optional<User> userByEmail = userRepository.findByEmail(email);
 
-        if (userByEmail == null) {
+        if (userByEmail.isEmpty()) {
             user.setEmail(email);
             userRepository.save(user);
             String token = jwtProvider.createToken(email, "USER");
@@ -53,6 +53,11 @@ public class UserSettingsServiceImpl implements UserSettingsService {
 
     @Override
     public User updatePhone(String countryCode, Long phone) {
+        int phoneLength = String.valueOf(phone).length();
+
+        if (phoneLength < 6 || phoneLength > 10) {
+            throw new ApiRequestException("Not valid phone number", HttpStatus.BAD_REQUEST);
+        }
         User user = authenticationService.getAuthenticatedUser();
         user.setCountryCode(countryCode);
         user.setPhone(phone);
@@ -68,6 +73,9 @@ public class UserSettingsServiceImpl implements UserSettingsService {
 
     @Override
     public User updateGender(String gender) {
+        if (gender.length() == 0 || gender.length() > 30) {
+            throw new ApiRequestException("Incorrect gender length", HttpStatus.BAD_REQUEST);
+        }
         User user = authenticationService.getAuthenticatedUser();
         user.setGender(gender);
         return userRepository.save(user);

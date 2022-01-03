@@ -38,9 +38,11 @@ INSERT INTO users_tweets (user_id, tweets_id) VALUES (1, 45);
 
 -- pools
 INSERT INTO pools (id, date_time) VALUES (2, '2021-10-10 20:29:03.812910');
+INSERT INTO pools (id, date_time) VALUES (8, '2021-10-10 20:29:03.812910');
 
 -- tweet_pool
 INSERT INTO tweet_pool (tweets_id, pools_id) VALUES (40 ,2);
+INSERT INTO tweet_pool (tweets_id, pools_id) VALUES (48 ,8);
 
 -- tweet_quote
 INSERT INTO tweet_quote (tweets_id, quote_tweet_id) VALUES (44, 43);
@@ -64,15 +66,19 @@ INSERT INTO replies (tweets_id, reply_id) VALUES (40, 41);
 INSERT INTO user_pinned_tweet (user_id, tweet_id) VALUES (2, 40);
 
 -- pool_choices
-INSERT INTO pool_choices (id, choice) VALUES (3, 'test 1');
-INSERT INTO pool_choices (id, choice) VALUES (4, 'test 2');
+INSERT INTO pool_choices (id, choice) VALUES (9, 'test 1');
+INSERT INTO pool_choices (id, choice) VALUES (10, 'test 2');
+INSERT INTO pool_choices (id, choice) VALUES (11, 'test 3');
+INSERT INTO pool_choices (id, choice) VALUES (12, 'test 4');
 
 -- pools_poll_choices
-INSERT INTO pools_poll_choices (poll_id, poll_choices_id) VALUES (2, 3);
-INSERT INTO pools_poll_choices (poll_id, poll_choices_id) VALUES (2, 4);
+INSERT INTO pools_poll_choices (poll_id, poll_choices_id) VALUES (2, 9);
+INSERT INTO pools_poll_choices (poll_id, poll_choices_id) VALUES (2, 10);
+INSERT INTO pools_poll_choices (poll_id, poll_choices_id) VALUES (8, 11);
+INSERT INTO pools_poll_choices (poll_id, poll_choices_id) VALUES (8, 12);
 
 -- pool_choices_voted_user
-INSERT INTO pool_choices_voted_user (poll_choice_id, voted_user_id) VALUES (4, 1);
+INSERT INTO pool_choices_voted_user (poll_choice_id, voted_user_id) VALUES (10, 1);
 
 -- tags
 INSERT INTO tags (id, tag_name, tweets_quantity) VALUES (2, '#JetBrains', 1);

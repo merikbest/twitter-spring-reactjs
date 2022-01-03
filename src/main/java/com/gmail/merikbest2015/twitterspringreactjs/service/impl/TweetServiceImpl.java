@@ -116,7 +116,7 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public Tweet createPoll(Long pollDateTime, List<String> choices, Tweet tweet) {
-        if (choices.size() < 2) {
+        if (choices.size() < 2 || choices.size() > 4) {
             throw new ApiRequestException("Incorrect poll choices", HttpStatus.BAD_REQUEST);
         }
         Tweet createdTweet = createTweet(tweet);
@@ -126,6 +126,9 @@ public class TweetServiceImpl implements TweetService {
         poll.setDateTime(dateTime);
         List<PollChoice> pollChoices = new ArrayList<>();
         choices.forEach(choice -> {
+            if (choice.length() == 0 || choice.length() > 25) {
+                throw new ApiRequestException("Incorrect choice text length", HttpStatus.BAD_REQUEST);
+            }
             PollChoice pollChoice = new PollChoice();
             pollChoice.setChoice(choice);
             pollChoiceRepository.save(pollChoice);
@@ -309,18 +312,21 @@ public class TweetServiceImpl implements TweetService {
     public Tweet quoteTweet(Long tweetId, Tweet quote) {
         Tweet tweet = tweetRepository.findById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-        Tweet quoteTweet = tweetRepository.findById(quote.getId())
-                .orElseThrow(() -> new ApiRequestException("Quote Tweet not found", HttpStatus.NOT_FOUND));
         User user = authenticationService.getAuthenticatedUser();
         user.setTweetCount(user.getTweetCount() + 1);
         userRepository.save(user);
-        quoteTweet.setQuoteTweet(tweet);
+        quote.setQuoteTweet(tweet);
         return createTweet(quote);
     }
 
     @Override
     public Tweet changeTweetReplyType(Long tweetId, ReplyType replyType) {
         Tweet tweet = tweetRepository.findById(tweetId)
+                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+        User user = authenticationService.getAuthenticatedUser();
+        user.getTweets().stream()
+                .filter(userTweet -> userTweet.getId().equals(tweet.getId()))
+                .findFirst()
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
         tweet.setReplyType(replyType);
         return tweetRepository.save(tweet);

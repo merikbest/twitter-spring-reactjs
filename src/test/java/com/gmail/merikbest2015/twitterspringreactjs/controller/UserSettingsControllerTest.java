@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.SettingsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.model.BackgroundColorType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ColorSchemeType;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -35,6 +36,7 @@ public class UserSettingsControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] PUT /api/v1/settings/update/username - Update username")
     public void updateUsername() throws Exception {
         SettingsRequest request = new SettingsRequest();
         request.setUsername("test");
@@ -67,6 +69,35 @@ public class UserSettingsControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] PUT /api/v1/settings/update/username - Should username length is 0")
+    public void updateUsername_ShouldUsernameLengthIs0() throws Exception {
+        SettingsRequest request = new SettingsRequest();
+        request.setUsername("");
+
+        mockMvc.perform(put(URL_USER_SETTINGS_UPDATE + "/username")
+                        .content(mapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("Incorrect username length")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] PUT /api/v1/settings/update/username - Should username length more than 50")
+    public void updateUsername_ShouldUsernameLengthMoreThan50() throws Exception {
+        SettingsRequest request = new SettingsRequest();
+        request.setUsername(LINK_DESCRIPTION);
+
+        mockMvc.perform(put(URL_USER_SETTINGS_UPDATE + "/username")
+                        .content(mapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("Incorrect username length")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] PUT /api/v1/settings/update/email - Update email")
     public void updateEmail() throws Exception {
         SettingsRequest request = new SettingsRequest();
         request.setEmail("test2013@test.test");
@@ -99,6 +130,7 @@ public class UserSettingsControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[403] PUT /api/v1/settings/update/email -Should user email is exist")
     public void updateEmail_ShouldUserEmailIsExist() throws Exception {
         SettingsRequest request = new SettingsRequest();
         request.setEmail("test2015@test.test");
@@ -112,10 +144,11 @@ public class UserSettingsControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] PUT /api/v1/settings/update/phone - Update phone")
     public void updatePhone() throws Exception {
         SettingsRequest request = new SettingsRequest();
         request.setCountryCode("UK");
-        request.setPhone(1234567890L);
+        request.setPhone(123456789L);
 
         mockMvc.perform(put(URL_USER_SETTINGS_UPDATE + "/phone")
                         .content(mapper.writeValueAsString(request))
@@ -130,7 +163,7 @@ public class UserSettingsControllerTest {
                 .andExpect(jsonPath("$.website").value(WEBSITE))
                 .andExpect(jsonPath("$.birthday").value(BIRTHDAY))
                 .andExpect(jsonPath("$.countryCode").value("UK"))
-                .andExpect(jsonPath("$.phone").value(1234567890L))
+                .andExpect(jsonPath("$.phone").value(123456789L))
                 .andExpect(jsonPath("$.country").value(COUNTRY))
                 .andExpect(jsonPath("$.gender").value(GENDER))
                 .andExpect(jsonPath("$.language").value(LANGUAGE))
@@ -152,6 +185,37 @@ public class UserSettingsControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] PUT /api/v1/settings/update/phone - Should phone number length lower than 6 digits")
+    public void updatePhone_ShouldPhoneNumberLengthLowerThan6Digits() throws Exception {
+        SettingsRequest request = new SettingsRequest();
+        request.setCountryCode("UK");
+        request.setPhone(123L);
+
+        mockMvc.perform(put(URL_USER_SETTINGS_UPDATE + "/phone")
+                        .content(mapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("Not valid phone number")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] PUT /api/v1/settings/update/phone - Should phone number length more than 10 digits")
+    public void updatePhone_ShouldPhoneNumberLengthMoreThan10Digits() throws Exception {
+        SettingsRequest request = new SettingsRequest();
+        request.setCountryCode("UK");
+        request.setPhone(12345678900L);
+
+        mockMvc.perform(put(URL_USER_SETTINGS_UPDATE + "/phone")
+                        .content(mapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("Not valid phone number")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] PUT /api/v1/settings/update/country - Update country")
     public void updateCountry() throws Exception {
         SettingsRequest request = new SettingsRequest();
         request.setCountry("UK");
@@ -191,6 +255,7 @@ public class UserSettingsControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] PUT /api/v1/settings/update/gender - Update gender")
     public void updateGender() throws Exception {
         SettingsRequest request = new SettingsRequest();
         request.setGender("Male");
@@ -230,6 +295,35 @@ public class UserSettingsControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] PUT /api/v1/settings/update/gender - Should gender length is 0 characters")
+    public void updateGender_ShouldGenderLengthIs0() throws Exception {
+        SettingsRequest request = new SettingsRequest();
+        request.setGender("");
+
+        mockMvc.perform(put(URL_USER_SETTINGS_UPDATE + "/gender")
+                        .content(mapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("Incorrect gender length")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] PUT /api/v1/settings/update/gender - Should gender length more than 30 characters")
+    public void updateGender_ShouldGenderLengthMoreThan30() throws Exception {
+        SettingsRequest request = new SettingsRequest();
+        request.setGender(LINK_DESCRIPTION);
+
+        mockMvc.perform(put(URL_USER_SETTINGS_UPDATE + "/gender")
+                        .content(mapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("Incorrect gender length")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] PUT /api/v1/settings/update/language - Update language")
     public void updateLanguage() throws Exception {
         SettingsRequest request = new SettingsRequest();
         request.setLanguage("English");
@@ -269,6 +363,7 @@ public class UserSettingsControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] PUT /api/v1/settings/update/direct - Update direct message requests")
     public void updateDirectMessageRequests() throws Exception {
         SettingsRequest request = new SettingsRequest();
         request.setMutedDirectMessages(false);
@@ -308,6 +403,7 @@ public class UserSettingsControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] PUT /api/v1/settings/update/private - Update private profile")
     public void updatePrivateProfile() throws Exception {
         SettingsRequest request = new SettingsRequest();
         request.setPrivateProfile(true);
@@ -347,6 +443,7 @@ public class UserSettingsControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] PUT /api/v1/settings/update/color_scheme - Update color scheme")
     public void updateColorScheme() throws Exception {
         SettingsRequest request = new SettingsRequest();
         request.setColorScheme(ColorSchemeType.GREEN);
@@ -388,6 +485,7 @@ public class UserSettingsControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] PUT /api/v1/settings/update/background_color - Update background color")
     public void updateBackgroundColor() throws Exception {
         SettingsRequest request = new SettingsRequest();
         request.setBackgroundColor(BackgroundColorType.DIM);

@@ -6,6 +6,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.VoteRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.model.LinkCoverSize;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -18,7 +19,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.gmail.merikbest2015.twitterspringreactjs.util.TestConstants.*;
@@ -43,6 +43,7 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/tweets - Get tweets")
     public void getTweets() throws Exception {
         mockMvc.perform(get(URL_TWEETS_BASIC))
                 .andExpect(status().isOk())
@@ -70,6 +71,7 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/tweets/43 - Get tweet by id")
     public void getTweetById() throws Exception {
         mockMvc.perform(get(URL_TWEETS_BASIC + "/43"))
                 .andExpect(status().isOk())
@@ -96,6 +98,16 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] GET /api/v1/tweets/99 - Should Not Found tweet by id")
+    public void getTweetById_ShouldNotFound() throws Exception {
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("Tweet not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/tweets/media -Get media tweets")
     public void getMediaTweets() throws Exception {
         mockMvc.perform(get(URL_TWEETS_BASIC + "/media"))
                 .andExpect(status().isOk())
@@ -123,6 +135,7 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/tweets/video -Get tweets with video")
     public void getTweetsWithVideo() throws Exception {
         mockMvc.perform(get(URL_TWEETS_BASIC + "/video"))
                 .andExpect(status().isOk())
@@ -154,6 +167,7 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/tweets/video -Get tweets with video")
     public void getScheduledTweets() throws Exception {
         mockMvc.perform(get(URL_TWEETS_BASIC + "/schedule"))
                 .andExpect(status().isOk())
@@ -182,6 +196,37 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] POST /api/v1/tweets - Should tweet text length more than 280 symbols")
+    public void createTweet_ShouldTweetTextLengthMoreThan280Symbols() throws Exception {
+        TweetRequest tweetRequest = new TweetRequest();
+        tweetRequest.setText(LINK_DESCRIPTION + LINK_DESCRIPTION);
+        tweetRequest.setReplyType(ReplyType.EVERYONE);
+
+        mockMvc.perform(post(URL_TWEETS_BASIC)
+                        .content(mapper.writeValueAsString(tweetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("Incorrect tweet text length")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] POST /api/v1/tweets - Should tweet text length length is 0")
+    public void createTweet_ShouldTweetTextLengthLengthIs0() throws Exception {
+        TweetRequest tweetRequest = new TweetRequest();
+        tweetRequest.setText(LINK_DESCRIPTION + LINK_DESCRIPTION);
+        tweetRequest.setReplyType(ReplyType.EVERYONE);
+
+        mockMvc.perform(post(URL_TWEETS_BASIC)
+                        .content(mapper.writeValueAsString(tweetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("Incorrect tweet text length")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] POST /api/v1/tweets - Create tweet with hashtag")
     public void createTweetWithHashtag() throws Exception {
         TweetRequest tweetRequest = new TweetRequest();
         tweetRequest.setText("test tweet #test123");
@@ -214,6 +259,7 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] POST /api/v1/tweets - Create tweet with link")
     public void createTweetWithLink() throws Exception {
         TweetRequest tweetRequest = new TweetRequest();
         tweetRequest.setText(TWEET_TEXT);
@@ -246,6 +292,7 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] POST /api/v1/tweets - Create tweet with YouTube link")
     public void createTweetWithYouTubeLink() throws Exception {
         TweetRequest tweetRequest = new TweetRequest();
         tweetRequest.setText(TEXT_WITH_YOUTUBE_LINK);
@@ -278,6 +325,7 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] POST /api/v1/tweets/poll - Create tweet with poll")
     public void createTweetWithPoll() throws Exception {
         List<String> pollChoiceList = new ArrayList<>();
         pollChoiceList.add("Choice 1");
@@ -316,6 +364,89 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] POST /api/v1/tweets/poll - Should incorrect poll choices size is 1")
+    public void createTweetWithPoll_ShouldIncorrectPoolChoicesSizeIs1() throws Exception {
+        List<String> pollChoiceList = new ArrayList<>();
+        pollChoiceList.add("Choice 1");
+        TweetRequest tweetRequest = new TweetRequest();
+        tweetRequest.setText("test text");
+        tweetRequest.setReplyType(ReplyType.EVERYONE);
+        tweetRequest.setChoices(pollChoiceList);
+        tweetRequest.setPollDateTime(100L);
+
+        mockMvc.perform(post(URL_TWEETS_BASIC + "/poll")
+                        .content(mapper.writeValueAsString(tweetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("Incorrect poll choices")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] POST /api/v1/tweets/poll - Should incorrect poll choices size is 5")
+    public void createTweetWithPoll_ShouldIncorrectPoolChoicesSizeIs5() throws Exception {
+        List<String> pollChoiceList = new ArrayList<>();
+        pollChoiceList.add("Choice 1");
+        pollChoiceList.add("Choice 2");
+        pollChoiceList.add("Choice 3");
+        pollChoiceList.add("Choice 4");
+        pollChoiceList.add("Choice 5");
+        TweetRequest tweetRequest = new TweetRequest();
+        tweetRequest.setText("test text");
+        tweetRequest.setReplyType(ReplyType.EVERYONE);
+        tweetRequest.setChoices(pollChoiceList);
+        tweetRequest.setPollDateTime(100L);
+
+        mockMvc.perform(post(URL_TWEETS_BASIC + "/poll")
+                        .content(mapper.writeValueAsString(tweetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("Incorrect poll choices")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] POST /api/v1/tweets/poll - Should incorrect poll choices text length is 0")
+    public void createTweetWithPoll_ShouldIncorrectPoolChoicesTextLengthIs0() throws Exception {
+        List<String> pollChoiceList = new ArrayList<>();
+        pollChoiceList.add("Choice 1");
+        pollChoiceList.add("");
+        TweetRequest tweetRequest = new TweetRequest();
+        tweetRequest.setText("test text");
+        tweetRequest.setReplyType(ReplyType.EVERYONE);
+        tweetRequest.setChoices(pollChoiceList);
+        tweetRequest.setPollDateTime(100L);
+
+        mockMvc.perform(post(URL_TWEETS_BASIC + "/poll")
+                        .content(mapper.writeValueAsString(tweetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("Incorrect choice text length")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] POST /api/v1/tweets/poll - Should incorrect poll choices text length more than 25")
+    public void createTweetWithPoll_ShouldIncorrectPoolChoicesTextLengthMoreThan25() throws Exception {
+        List<String> pollChoiceList = new ArrayList<>();
+        pollChoiceList.add("Choice 1");
+        pollChoiceList.add(LINK_DESCRIPTION);
+        TweetRequest tweetRequest = new TweetRequest();
+        tweetRequest.setText("test text");
+        tweetRequest.setReplyType(ReplyType.EVERYONE);
+        tweetRequest.setChoices(pollChoiceList);
+        tweetRequest.setPollDateTime(100L);
+
+        mockMvc.perform(post(URL_TWEETS_BASIC + "/poll")
+                        .content(mapper.writeValueAsString(tweetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("Incorrect choice text length")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] POST /api/v1/tweets/schedule - Create Scheduled Tweet")
     public void createScheduledTweet() throws Exception {
         TweetRequest tweetRequest = new TweetRequest();
         tweetRequest.setText("test tweet");
@@ -350,6 +481,7 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] PUT /api/v1/tweets/schedule - Update Scheduled Tweet")
     public void updateScheduledTweet() throws Exception {
         TweetRequest tweetRequest = new TweetRequest();
         tweetRequest.setId(39L);
@@ -384,6 +516,55 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] PUT /api/v1/tweets/schedule - Should tweet text length length is 0")
+    public void updateScheduledTweet_ShouldTweetTextLengthLengthIs0() throws Exception {
+        TweetRequest tweetRequest = new TweetRequest();
+        tweetRequest.setId(39L);
+        tweetRequest.setText("");
+        tweetRequest.setReplyType(ReplyType.EVERYONE);
+
+        mockMvc.perform(put(URL_TWEETS_BASIC + "/schedule")
+                        .content(mapper.writeValueAsString(tweetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("Incorrect tweet text length")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] PUT /api/v1/tweets/schedule - Should tweet text length more than 280 symbols")
+    public void updateScheduledTweet_ShouldTweetTextLengthMoreThan280Symbols() throws Exception {
+        TweetRequest tweetRequest = new TweetRequest();
+        tweetRequest.setId(39L);
+        tweetRequest.setText(LINK_DESCRIPTION + LINK_DESCRIPTION);
+        tweetRequest.setReplyType(ReplyType.EVERYONE);
+
+        mockMvc.perform(put(URL_TWEETS_BASIC + "/schedule")
+                        .content(mapper.writeValueAsString(tweetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("Incorrect tweet text length")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] PUT /api/v1/tweets/schedule - Should Tweet Not Found")
+    public void updateScheduledTweet_ShouldTweetNotFound() throws Exception {
+        TweetRequest tweetRequest = new TweetRequest();
+        tweetRequest.setId(99L);
+        tweetRequest.setText("test tweet99");
+        tweetRequest.setReplyType(ReplyType.EVERYONE);
+
+        mockMvc.perform(put(URL_TWEETS_BASIC + "/schedule")
+                        .content(mapper.writeValueAsString(tweetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("Tweet not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] DELETE /api/v1/tweets/schedule - Delete scheduled Tweets")
     public void deleteScheduledTweets() throws Exception {
         TweetDeleteRequest tweetDeleteRequest = new TweetDeleteRequest();
         tweetDeleteRequest.setTweetsIds(List.of(42L));
@@ -397,6 +578,7 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] DELETE /api/v1/tweets/40 - Delete Tweet")
     public void deleteTweet() throws Exception {
         mockMvc.perform(delete(URL_TWEETS_BASIC + "/40"))
                 .andExpect(status().isOk())
@@ -424,6 +606,7 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/tweets/search/test - Search tweets by text")
     public void searchTweets() throws Exception {
         mockMvc.perform(get(URL_TWEETS_BASIC + "/search/test"))
                 .andExpect(status().isOk())
@@ -451,6 +634,7 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/tweets/like/43 - Like tweet by id")
     public void likeTweet() throws Exception {
         mockMvc.perform(get(URL_TWEETS_BASIC + "/like/43"))
                 .andExpect(status().isOk())
@@ -474,6 +658,16 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] GET /api/v1/tweets/like/99 - Should Tweet Not Found by id")
+    public void likeTweet_ShouldTweetNotFoundById() throws Exception {
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/like/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("Tweet not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/tweets/like/45 - Unlike tweet by id")
     public void unlikeTweet() throws Exception {
         mockMvc.perform(get(URL_TWEETS_BASIC + "/like/45"))
                 .andExpect(status().isOk())
@@ -497,6 +691,7 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/tweets/retweet/43 - Retweet tweet by id")
     public void retweet() throws Exception {
         mockMvc.perform(get(URL_TWEETS_BASIC + "/retweet/43"))
                 .andExpect(status().isOk())
@@ -520,6 +715,16 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] GET /api/v1/tweets/retweet/99 - Should Tweet Not Found by id")
+    public void retweet_ShouldTweetNotFound() throws Exception {
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/retweet/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("Tweet not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/tweets/retweet/45 - UnRetweet tweet by id")
     public void unretweet() throws Exception {
         mockMvc.perform(get(URL_TWEETS_BASIC + "/retweet/45"))
                 .andExpect(status().isOk())
@@ -543,6 +748,7 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] POST /api/v1/tweets/reply/43 - Reply tweet by id")
     public void replyTweet() throws Exception {
         TweetRequest tweetRequest = new TweetRequest();
         tweetRequest.setText("test reply");
@@ -573,6 +779,22 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] POST /api/v1/tweets/reply/99 - Should tweet Not Found by id")
+    public void replyTweet_ShouldTweetNotFound() throws Exception {
+        TweetRequest tweetRequest = new TweetRequest();
+        tweetRequest.setText("test reply");
+        tweetRequest.setReplyType(ReplyType.EVERYONE);
+
+        mockMvc.perform(post(URL_TWEETS_BASIC + "/reply/99")
+                        .content(mapper.writeValueAsString(tweetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("Tweet not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] POST /api/v1/tweets/quote/43 - Quote tweet by id")
     public void quoteTweet() throws Exception {
         TweetRequest tweetRequest = new TweetRequest();
         tweetRequest.setText("test quote");
@@ -608,6 +830,22 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] POST /api/v1/tweets/quote/99 - Should Tweet Not Found by id")
+    public void quoteTweet_ShouldTweetNotFound() throws Exception {
+        TweetRequest tweetRequest = new TweetRequest();
+        tweetRequest.setText("test quote");
+        tweetRequest.setReplyType(ReplyType.EVERYONE);
+
+        mockMvc.perform(post(URL_TWEETS_BASIC + "/quote/99")
+                        .content(mapper.writeValueAsString(tweetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("Tweet not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/tweets/reply/change/43 - Change Tweet reply type by id")
     public void changeTweetReplyType() throws Exception {
         mockMvc.perform(get(URL_TWEETS_BASIC + "/reply/change/43")
                         .param("replyType", String.valueOf(ReplyType.FOLLOW)))
@@ -635,10 +873,32 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] GET /api/v1/tweets/reply/change/99 - Should Tweet Not Found by id")
+    public void changeTweetReplyType_ShouldTweetNotFound() throws Exception {
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/reply/change/99")
+                        .param("replyType", String.valueOf(ReplyType.FOLLOW)))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("Tweet not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] GET /api/v1/tweets/reply/change/41 - Should Tweet Not Found by user")
+    public void changeTweetReplyType_ShouldTweetNotFoundByUser() throws Exception {
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/reply/change/41")
+                        .param("replyType", String.valueOf(ReplyType.FOLLOW)))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("Tweet not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] POST /api/v1/tweets/vote - Vote in poll")
     public void voteInPoll() throws Exception {
         VoteRequest voteRequest = new VoteRequest();
         voteRequest.setTweetId(40L);
-        voteRequest.setPollChoiceId(3L);
+        voteRequest.setPollId(2L);
+        voteRequest.setPollChoiceId(9L);
 
         mockMvc.perform(post(URL_TWEETS_BASIC + "/vote")
                         .content(mapper.writeValueAsString(voteRequest))
@@ -664,5 +924,69 @@ public class TweetControllerTest {
                 .andExpect(jsonPath("$.likedTweets").isNotEmpty())
                 .andExpect(jsonPath("$.retweets").isNotEmpty())
                 .andExpect(jsonPath("$.replies").isNotEmpty());
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] POST /api/v1/tweets/vote - Should poll Not Found")
+    public void voteInPoll_ShouldPollNotFound() throws Exception {
+        VoteRequest voteRequest = new VoteRequest();
+        voteRequest.setTweetId(40L);
+        voteRequest.setPollId(99L);
+        voteRequest.setPollChoiceId(3L);
+
+        mockMvc.perform(post(URL_TWEETS_BASIC + "/vote")
+                        .content(mapper.writeValueAsString(voteRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("Poll not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] POST /api/v1/tweets/vote - Should poll choice Not Found")
+    public void voteInPoll_ShouldPollChoiceNotFound() throws Exception {
+        VoteRequest voteRequest = new VoteRequest();
+        voteRequest.setTweetId(40L);
+        voteRequest.setPollId(2L);
+        voteRequest.setPollChoiceId(99L);
+
+        mockMvc.perform(post(URL_TWEETS_BASIC + "/vote")
+                        .content(mapper.writeValueAsString(voteRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("Poll choice not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] POST /api/v1/tweets/vote - Should tweet Not Found")
+    public void voteInPoll_ShouldTweetNotFound() throws Exception {
+        VoteRequest voteRequest = new VoteRequest();
+        voteRequest.setTweetId(99L);
+        voteRequest.setPollId(2L);
+        voteRequest.setPollChoiceId(9L);
+
+        mockMvc.perform(post(URL_TWEETS_BASIC + "/vote")
+                        .content(mapper.writeValueAsString(voteRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("Tweet not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] POST /api/v1/tweets/vote - Should poll in tweet Not Found")
+    public void voteInPoll_ShouldPollInTweetNotFound() throws Exception {
+        VoteRequest voteRequest = new VoteRequest();
+        voteRequest.setTweetId(40L);
+        voteRequest.setPollId(8L);
+        voteRequest.setPollChoiceId(11L);
+
+        mockMvc.perform(post(URL_TWEETS_BASIC + "/vote")
+                        .content(mapper.writeValueAsString(voteRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("Poll in tweet not exist")));
     }
 }
