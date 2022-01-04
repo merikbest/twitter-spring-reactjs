@@ -1,13 +1,14 @@
 package com.gmail.merikbest2015.twitterspringreactjs.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
-@NoArgsConstructor
 @Entity
+@Getter
+@Setter
+@EqualsAndHashCode
+@NoArgsConstructor
 @Table(name = "chats_participants")
 public class ChatParticipant {
 

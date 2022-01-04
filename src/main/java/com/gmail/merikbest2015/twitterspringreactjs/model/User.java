@@ -113,11 +113,15 @@ public class User {
     private Tweet pinnedTweet;
 
     @OneToOne
-    @JoinColumn(name = "avatar_id")
+    @JoinTable(name = "user_avatar",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "avatar_id"))
     private Image avatar;
 
     @OneToOne
-    @JoinColumn(name = "wallpaper_id")
+    @JoinTable(name = "user_wallpaper",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "wallpaper_id"))
     private Image wallpaper;
 
     @ManyToMany

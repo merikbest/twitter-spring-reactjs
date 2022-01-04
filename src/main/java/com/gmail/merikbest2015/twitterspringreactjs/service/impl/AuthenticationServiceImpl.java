@@ -4,20 +4,19 @@ import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestExceptio
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.security.JwtProvider;
-import com.gmail.merikbest2015.twitterspringreactjs.security.UserPrincipal;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.email.MailSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,16 +35,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public User getAuthenticatedUser() {
-        User user = ((UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
-        return userRepository.findByEmail(user.getEmail())
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        return userRepository.findByEmail(principal.getName())
                 .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
     }
 
     @Override
     public Map<String, Object> login(String email, String password) {
         try {
-            Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-            User user = ((UserPrincipal) authenticate.getPrincipal()).getUser();
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+            User user = userRepository.findByEmail(email)
+                    .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
             String token = jwtProvider.createToken(email, "USER");
             Map<String, Object> response = new HashMap<>();
             response.put("user", user);
