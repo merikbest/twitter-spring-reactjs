@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification;
+package com.gmail.merikbest2015.twitterspringreactjs.dto.response;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.NotificationType;
 import lombok.Data;
@@ -10,7 +10,7 @@ public class NotificationResponse {
     private Long id;
     private LocalDateTime date;
     private NotificationType notificationType;
-    private NotificationUserResponse user;
-    private NotificationUserResponse userToFollow;
-    private NotificationTweetResponse tweet;
+    private UserResponse user;
+    private UserResponse userToFollow;
+    private TweetResponse tweet;
 }

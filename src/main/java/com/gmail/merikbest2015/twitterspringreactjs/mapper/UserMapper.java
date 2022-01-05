@@ -6,10 +6,9 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.response.AuthenticationR
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetHeaderResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationUserResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationsResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.NotificationResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.NotificationsResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserSettingsService;
@@ -21,10 +20,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -54,15 +50,9 @@ public class UserMapper {
         return modelMapper.map(user, UserResponse.class);
     }
 
-    private List<UserResponse> convertUserListToResponse(List<User> users) {
+    private List<UserResponse> convertUserListToResponse(Collection<User> users) {
         return users.stream()
                 .map(this::convertToUserResponse)
-                .collect(Collectors.toList());
-    }
-
-    private List<NotificationUserResponse> convertUserListToNotificationResponse(Set<User> users) {
-        return users.stream()
-                .map(user -> modelMapper.map(user, NotificationUserResponse.class))
                 .collect(Collectors.toList());
     }
 
@@ -171,7 +161,7 @@ public class UserMapper {
         Map<String, Object> userNotifications = userService.getUserNotifications();
         NotificationsResponse notificationsResponse = new NotificationsResponse();
         notificationsResponse.setNotifications(convertListToNotificationResponse((List<Notification>) userNotifications.get("notifications")));
-        notificationsResponse.setTweetAuthors(convertUserListToNotificationResponse((Set<User>) userNotifications.get("tweetAuthors")));
+        notificationsResponse.setTweetAuthors(convertUserListToResponse((Set<User>) userNotifications.get("tweetAuthors")));
         return notificationsResponse;
     }
 

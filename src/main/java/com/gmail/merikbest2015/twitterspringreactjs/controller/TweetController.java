@@ -4,9 +4,8 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetDeleteReque
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.VoteRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetHeaderResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationTweetResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.NotificationResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.TweetMapper;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
 import lombok.RequiredArgsConstructor;
@@ -100,7 +99,7 @@ public class TweetController {
     }
 
     @GetMapping("/like/{tweetId}")
-    public ResponseEntity<NotificationTweetResponse> likeTweet(@PathVariable Long tweetId) {
+    public ResponseEntity<TweetResponse> likeTweet(@PathVariable Long tweetId) {
         NotificationResponse notification = tweetMapper.likeTweet(tweetId);
 
         if (notification.getId() != null) {
@@ -113,7 +112,7 @@ public class TweetController {
     }
 
     @GetMapping("/retweet/{tweetId}")
-    public ResponseEntity<NotificationTweetResponse> retweet(@PathVariable Long tweetId) {
+    public ResponseEntity<TweetResponse> retweet(@PathVariable Long tweetId) {
         NotificationResponse notification = tweetMapper.retweet(tweetId);
 
         if (notification.getId() != null) {

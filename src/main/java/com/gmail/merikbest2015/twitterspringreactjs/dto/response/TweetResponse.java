@@ -1,9 +1,5 @@
-package com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet;
+package com.gmail.merikbest2015.twitterspringreactjs.dto.response;
 
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.QuoteTweetResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.poll.PollResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.LinkCoverSize;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
 import lombok.Data;
@@ -26,12 +22,12 @@ public class TweetResponse {
     private String linkDescription;
     private String linkCover;
     private LinkCoverSize linkCoverSize;
-    private QuoteTweetResponse quoteTweet;
-    private UserResponse user;
-    private PollResponse poll;
+    private TweetResponseCommon quoteTweet;
     private List<ImageResponse> images;
+    private UserResponse user;
     private List<LikeTweetResponse> likedTweets;
     private List<RetweetResponse> retweets;
-    private List<TweetReplyResponse> replies;
+    private List<TweetResponseCommon> replies;
+    private PollResponse poll;
     private boolean isTweetDeleted;
 }

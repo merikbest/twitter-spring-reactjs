@@ -16,7 +16,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findByActiveTrueAndIdNot(Long id);
 
-    @Query("SELECT u.id, u.email, u.password, u.activationCode FROM User u WHERE u.email = :email")
+    @Query("SELECT u FROM User u WHERE u.email = :email")
     Optional<UserPrincipalProjection> findUserPrincipalByEmail(String email);
 
     Optional<User> findByEmail(String email);

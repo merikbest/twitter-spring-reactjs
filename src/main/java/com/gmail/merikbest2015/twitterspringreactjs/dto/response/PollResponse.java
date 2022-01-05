@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.twitterspringreactjs.dto.response.poll;
+package com.gmail.merikbest2015.twitterspringreactjs.dto.response;
 
 import lombok.Data;
 
@@ -9,5 +9,6 @@ import java.util.List;
 public class PollResponse {
     private Long id;
     private LocalDateTime dateTime;
+//    private TweetResponse tweet;
     private List<PollChoiceResponse> pollChoices;
 }

@@ -1,6 +1,5 @@
-package com.gmail.merikbest2015.twitterspringreactjs.dto.response.poll;
+package com.gmail.merikbest2015.twitterspringreactjs.dto.response;
 
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
 import lombok.Data;
 
 import java.util.List;

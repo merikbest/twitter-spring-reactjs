@@ -3,6 +3,8 @@ delete from tweets_images;
 delete from tweets_tags;
 delete from user_blocked;
 delete from subscribers;
+delete from user_avatar;
+delete from user_wallpaper;
 delete from user_muted;
 delete from user_follower_requests;
 delete from users_tweets;

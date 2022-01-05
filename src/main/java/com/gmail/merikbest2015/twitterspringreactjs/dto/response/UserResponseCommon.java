@@ -5,10 +5,9 @@ import com.gmail.merikbest2015.twitterspringreactjs.model.ColorSchemeType;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
-public class UserResponse {
+public class UserResponseCommon {
     private Long id;
     private String email;
     private String fullName;
@@ -37,21 +36,6 @@ public class UserResponse {
     private boolean privateProfile;
     private BackgroundColorType backgroundColor;
     private ColorSchemeType colorScheme;
-    private List<TweetResponseCommon> tweets;
-    private TweetResponseCommon pinnedTweet;
     private ImageResponse avatar;
     private ImageResponse wallpaper;
-//    private List<LikeTweetResponse> likedTweets;
-//    private List<RetweetResponse> retweets;
-    private List<BookmarkResponse> bookmarks;
-//    private List<NotificationResponse> notifications;
-//    private List<ListsResponse> userLists;
-//    private List<ChatParticipantResponse> chats;
-    private List<ChatMessageResponse> unreadMessages;
-    private List<UserResponseCommon> userMutedList;
-    private List<UserResponseCommon> userBlockedList;
-    private List<UserResponseCommon> followers;
-    private List<UserResponseCommon> following;
-    private List<UserResponseCommon> followerRequests;
-    private List<UserResponseCommon> subscribers;
 }

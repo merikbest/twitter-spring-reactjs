@@ -3,10 +3,9 @@ package com.gmail.merikbest2015.twitterspringreactjs.controller;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetHeaderResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationUserResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationsResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.NotificationResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.NotificationsResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
@@ -109,7 +108,7 @@ public class UserController {
     }
 
     @GetMapping("/follow/{userId}")
-    public ResponseEntity<NotificationUserResponse> processFollow(@PathVariable Long userId) {
+    public ResponseEntity<UserResponse> processFollow(@PathVariable Long userId) {
         NotificationResponse notification = userMapper.processFollow(userId);
 
         if (notification.getId() != null) {
