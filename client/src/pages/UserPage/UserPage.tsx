@@ -1,5 +1,5 @@
 import React, {ChangeEvent, ComponentType, FC, ReactElement, ReactNode, useEffect, useState} from 'react';
-import {Link, RouteComponentProps, useHistory, useLocation, withRouter} from 'react-router-dom';
+import {Link, useHistory, useLocation, useParams, withRouter} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Paper from '@material-ui/core/Paper';
@@ -81,9 +81,8 @@ interface LinkToFollowersProps {
 
 let stompClient: CompatClient | null = null;
 
-const UserPage: FC<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: string }>> = (
+const UserPage: FC<SnackbarProps & HoverActionProps> = (
     {
-        match,
         snackBarMessage,
         openSnackBar,
         setSnackBarMessage,
@@ -105,6 +104,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: 
     const isTweetsLoaded = useSelector(selectIsUserTweetsLoaded);
     const location = useLocation<{ isRegistered: boolean; }>();
     const history = useHistory();
+    const params = useParams<{ id: string }>();
 
     const [btnText, setBtnText] = useState<string>("");
     const [activeTab, setActiveTab] = useState<number>(0);
@@ -125,8 +125,8 @@ const UserPage: FC<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: 
     useEffect(() => {
         window.scrollTo(0, 0);
 
-        if (match.params.id) {
-            dispatch(fetchUserProfile(match.params.id));
+        if (params.id) {
+            dispatch(fetchUserProfile(params.id));
         }
         dispatch(fetchUserData());
         dispatch(fetchRelevantUsers());
@@ -135,10 +135,10 @@ const UserPage: FC<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: 
 
         stompClient = Stomp.over(new SockJS(WS_URL));
         stompClient.connect({}, () => {
-            stompClient?.subscribe("/topic/user/add/tweet/" + match.params.id, (response) => {
+            stompClient?.subscribe("/topic/user/add/tweet/" + params.id, (response) => {
                 dispatch(setAddedUserTweet(JSON.parse(response.body)));
             });
-            stompClient?.subscribe("/topic/user/update/tweet/" + match.params.id, (response) => {
+            stompClient?.subscribe("/topic/user/update/tweet/" + params.id, (response) => {
                 if (JSON.parse(response.body).tweetDeleted) {
                     dispatch(deleteUserTweet(JSON.parse(response.body)));
                 } else {
@@ -152,13 +152,13 @@ const UserPage: FC<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: 
             dispatch(resetUserTweets());
             stompClient?.disconnect();
         };
-    }, [match.params.id]);
+    }, [params.id]);
 
     useEffect(() => {
         setBtnText(isWaitingForApprove ? ("Pending") : (isUserBlocked ? "Blocked" : "Following"));
 
         if (userProfile) {
-            dispatch(fetchUserTweets({userId: match.params.id, page: 0}));
+            dispatch(fetchUserTweets({userId: params.id, page: 0}));
             setPage(prevState => prevState + 1);
         }
 
@@ -184,13 +184,13 @@ const UserPage: FC<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: 
 
     const loadUserTweets = (): void => {
         if (activeTab === 1) {
-            dispatch(fetchUserRetweetsAndReplies({userId: match.params.id, page: page}));
+            dispatch(fetchUserRetweetsAndReplies({userId: params.id, page: page}));
         } else if (activeTab === 2) {
-            dispatch(fetchUserMediaTweets({userId: match.params.id, page: page}));
+            dispatch(fetchUserMediaTweets({userId: params.id, page: page}));
         } else if (activeTab === 3) {
-            dispatch(fetchUserLikedTweets({userId: match.params.id, page: page}));
+            dispatch(fetchUserLikedTweets({userId: params.id, page: page}));
         } else {
-            dispatch(fetchUserTweets({userId: match.params.id, page: page}));
+            dispatch(fetchUserTweets({userId: params.id, page: page}));
         }
 
         if (isTweetsLoaded) {
@@ -261,22 +261,22 @@ const UserPage: FC<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: 
     };
 
     const handleShowUserTweets = (): void => {
-        dispatch(fetchUserTweets({userId: match.params.id, page: 0}));
+        dispatch(fetchUserTweets({userId: params.id, page: 0}));
         setPage(prevState => prevState + 1);
     };
 
     const handleShowUserRetweetsAndReplies = (): void => {
-        dispatch(fetchUserRetweetsAndReplies({userId: match.params.id, page: 0}));
+        dispatch(fetchUserRetweetsAndReplies({userId: params.id, page: 0}));
         setPage(prevState => prevState + 1);
     };
 
     const handleShowMediaTweets = (): void => {
-        dispatch(fetchUserMediaTweets({userId: match.params.id, page: 0}));
+        dispatch(fetchUserMediaTweets({userId: params.id, page: 0}));
         setPage(prevState => prevState + 1);
     };
 
     const handleShowLikedTweets = (): void => {
-        dispatch(fetchUserLikedTweets({userId: match.params.id, page: 0}));
+        dispatch(fetchUserLikedTweets({userId: params.id, page: 0}));
         setPage(prevState => prevState + 1);
     };
 
@@ -637,5 +637,4 @@ const UserPage: FC<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: 
     );
 };
 
-// @ts-ignore
-export default compose(withSnackbar, withHoverAction, withRouter)(UserPage) as ComponentType<SnackbarProps & HoverActionProps & RouteComponentProps<{ id: string }>>;
+export default compose(withSnackbar, withHoverAction, withRouter)(UserPage) as ComponentType<SnackbarProps & HoverActionProps>;

@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {RouteComponentProps} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {Paper, Typography} from "@material-ui/core";
 
 import {useListsMembershipsStyles} from "./ListsMembershipsStyles";
@@ -13,7 +13,7 @@ import {selectIsListsLoaded, selectIsListsLoading, selectUserListsItems} from ".
 import Spinner from "../../../components/Spinner/Spinner";
 import ListsItem from "../ListsItem/ListsItem";
 
-const ListsMemberships: FC<RouteComponentProps<{ id: string }>> = ({match}): ReactElement => {
+const ListsMemberships: FC = (): ReactElement => {
     const classes = useListsMembershipsStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
@@ -21,16 +21,17 @@ const ListsMemberships: FC<RouteComponentProps<{ id: string }>> = ({match}): Rea
     const lists = useSelector(selectUserListsItems);
     const isLoading = useSelector(selectIsListsLoading);
     const isLoaded = useSelector(selectIsListsLoaded);
+    const params = useParams<{ id: string }>();
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        dispatch(fetchUserProfile(match.params.id));
-        dispatch(fetchUserListsById(match.params.id));
+        dispatch(fetchUserProfile(params.id));
+        dispatch(fetchUserListsById(params.id));
 
         return () => {
             dispatch(resetListsState());
         };
-    }, [match.params.id]);
+    }, [params.id]);
 
     return (
         <Paper className={classes.container} variant="outlined">

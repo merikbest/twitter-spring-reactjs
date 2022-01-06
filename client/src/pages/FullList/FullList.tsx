@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Link, RouteComponentProps} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {Avatar, Button, Paper, Typography} from "@material-ui/core";
 
 import {useFullListStyles} from "./FullListStyles";
@@ -18,12 +18,13 @@ import TopTweetsActionsModal from "./TopTweetsActionsModal/TopTweetsActionsModal
 import Spinner from "../../components/Spinner/Spinner";
 import {LockIcon} from "../../icons";
 
-const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactElement => {
+const FullList: FC = (): ReactElement => {
     const classes = useFullListStyles();
     const dispatch = useDispatch();
     const list = useSelector(selectListItem);
     const myProfile = useSelector(selectUserData);
     const isLoading = useSelector(selectIsListLoading);
+    const params = useParams<{ listId: string }>();
 
     const [btnText, setBtnText] = useState<string>("Following");
     const [visibleEditListModal, setVisibleEditListModal] = useState<boolean>(false);
@@ -34,8 +35,8 @@ const FullList: FC<RouteComponentProps<{ listId: string }>> = ({match}): ReactEl
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        dispatch(fetchListById(match.params.listId));
-    }, [match.params.listId]);
+        dispatch(fetchListById(params.listId));
+    }, [params.listId]);
 
     // Follow | Unfollow
     const handleFollow = (): void => {

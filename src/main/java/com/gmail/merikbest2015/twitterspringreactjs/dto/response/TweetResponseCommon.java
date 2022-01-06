@@ -2,12 +2,14 @@ package com.gmail.merikbest2015.twitterspringreactjs.dto.response;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.LinkCoverSize;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 public class TweetResponseCommon {
     private Long id;
     private String text;
@@ -23,4 +25,5 @@ public class TweetResponseCommon {
     private String linkCover;
     private LinkCoverSize linkCoverSize;
     private List<ImageResponse> images;
+    private UserResponseCommon user;
 }

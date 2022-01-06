@@ -2,11 +2,13 @@ package com.gmail.merikbest2015.twitterspringreactjs.dto.response;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.BackgroundColorType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ColorSchemeType;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 public class UserResponseCommon {
     private Long id;
     private String email;
