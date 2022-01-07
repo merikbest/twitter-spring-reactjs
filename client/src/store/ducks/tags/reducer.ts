@@ -16,6 +16,11 @@ export const tagsReducer = produce((draft: Draft<TagsState>, action: TagsActions
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
+        case TagsActionsType.RESET_TAGS_STATE:
+            draft.items = [];
+            draft.loadingState = LoadingStatus.LOADING;
+            break;
+
         case TagsActionsType.SET_LOADING_STATE:
             draft.loadingState = action.payload;
             break;

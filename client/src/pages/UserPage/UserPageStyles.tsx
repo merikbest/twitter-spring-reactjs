@@ -49,7 +49,7 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
     },
     wallpaper: {
         height: 200,
-        backgroundColor: "#c4cfd6",
+        backgroundColor: theme.palette.grey[700],
         position: "relative",
         "& img": {
             objectFit: "cover",
@@ -64,6 +64,7 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         paddingTop: 0,
         fontSize: 15,
         "& .MuiAvatar-root": {
+            backgroundColor: theme.palette.grey[600],
             width: "140px !important",
             height: "140px !important",
             border: `4px solid ${theme.palette.background.paper}`,

@@ -2,7 +2,7 @@ import {
     DeleteListActionInterface,
     EditListActionInterface,
     FetchListByIdActionInterface,
-    ListActionType,
+    ListActionType, ResetListStateActionInterface,
     SetListActionInterface,
     SetListLoadingStateInterface,
 } from "./contracts/actionTypes";
@@ -27,6 +27,10 @@ export const editList = (payload: EditLists): EditListActionInterface => ({
 export const deleteList = (payload: number): DeleteListActionInterface => ({
     type: ListActionType.DELETE_LIST,
     payload
+});
+
+export const resetListState = (): ResetListStateActionInterface => ({
+    type: ListActionType.RESET_LIST_STATE,
 });
 
 export const setListLoadingState = (payload: LoadingStatus): SetListLoadingStateInterface => ({

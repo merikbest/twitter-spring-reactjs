@@ -27,7 +27,7 @@ import NotificationInfo from "./pages/Notifications/NotificationInfo/Notificatio
 import Messages from "./pages/Messages/Messages";
 import {setChatMessage} from "./store/ducks/chatMessages/actionCreators";
 import {WS_URL} from "./util/url";
-import {setNotification} from "./store/ducks/notifications/actionCreators";
+import {fetchNotifications, setNotification} from "./store/ducks/notifications/actionCreators";
 import {selectNotificationsList} from "./store/ducks/notifications/selectors";
 import {deleteTweet, setScheduledTweets, setTweet, setUpdatedTweet} from "./store/ducks/tweets/actionCreators";
 import Lists from "./pages/Lists/Lists";
@@ -49,6 +49,8 @@ import {
 import {BackgroundTheme, ColorScheme} from "./pages/Settings/AccessibilityDisplayLanguages/Display/Display";
 import NotificationsTimeline from "./pages/Notifications/NotificationsTimeline/NotificationsTimeline";
 import FollowersYouKnow from "./pages/FollowersYouKnow/FollowersYouKnow";
+import {fetchTags} from "./store/ducks/tags/actionCreators";
+import {fetchRelevantUsers} from "./store/ducks/users/actionCreators";
 
 const App: FC = (): ReactElement => {
     const history = useHistory();
@@ -106,6 +108,12 @@ const App: FC = (): ReactElement => {
         let stompClient = Stomp.over(new SockJS(WS_URL));
 
         if (myProfile) {
+            if (location.pathname !== "/home/connect") {
+                dispatch(fetchRelevantUsers());
+            }
+            dispatch(fetchTags());
+            dispatch(fetchNotifications());
+
             stompClient.connect({}, () => {
                 stompClient?.subscribe("/topic/chat/" + myProfile.id, (response) => {
                     dispatch(setChatMessage(JSON.parse(response.body)));

@@ -5,7 +5,7 @@ import {Avatar, Button, Paper, Typography} from "@material-ui/core";
 
 import {useFullListStyles} from "./FullListStyles";
 import {selectIsListLoading, selectListItem} from "../../store/ducks/list/selectors";
-import {fetchListById} from "../../store/ducks/list/actionCreators";
+import {fetchListById, resetListState} from "../../store/ducks/list/actionCreators";
 import BackButton from "../../components/BackButton/BackButton";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {selectUserData} from "../../store/ducks/user/selectors";
@@ -36,6 +36,10 @@ const FullList: FC = (): ReactElement => {
     useEffect(() => {
         window.scrollTo(0, 0);
         dispatch(fetchListById(params.listId));
+
+        return () => {
+            dispatch(resetListState());
+        };
     }, [params.listId]);
 
     // Follow | Unfollow

@@ -8,7 +8,7 @@ const initialTweetState: ListsState = {
     lists: [],
     userLists: [],
     pinnedLists: [],
-    loadingState: LoadingStatus.NEVER
+    loadingState: LoadingStatus.LOADING
 };
 
 export const listsReducer = produce((draft: Draft<ListsState>, action: ListsActions) => {
@@ -74,7 +74,7 @@ export const listsReducer = produce((draft: Draft<ListsState>, action: ListsActi
             draft.lists = [];
             draft.userLists = [];
             draft.pinnedLists = [];
-            draft.loadingState = LoadingStatus.NEVER;
+            draft.loadingState = LoadingStatus.LOADING;
             break;
 
         case ListsActionType.SET_LOADING_STATE:

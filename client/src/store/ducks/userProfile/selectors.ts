@@ -6,3 +6,4 @@ export const selectUserProfileState = (state: RootState): UserProfileState => st
 export const selectUserProfile = (state: RootState): UserProfileState['user'] => selectUserProfileState(state).user;
 export const selectUsersIsLoading = (state: RootState): boolean => selectUserProfileState(state).loadingState === LoadingStatus.LOADING;
 export const selectUsersIsSuccessLoaded = (state: RootState): boolean => selectUserProfileState(state).loadingState === LoadingStatus.SUCCESS;
+export const selectUsersIsErrorLoaded = (state: RootState): boolean => selectUserProfileState(state).loadingState === LoadingStatus.ERROR;

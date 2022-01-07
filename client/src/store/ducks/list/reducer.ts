@@ -6,7 +6,7 @@ import {LoadingStatus} from '../../types';
 
 const initialTweetState: ListState = {
     list: undefined,
-    loadingState: LoadingStatus.NEVER
+    loadingState: LoadingStatus.LOADING
 };
 
 export const listReducer = produce((draft: Draft<ListState>, action: ListActions) => {
@@ -15,6 +15,11 @@ export const listReducer = produce((draft: Draft<ListState>, action: ListActions
         case ListActionType.SET_LIST:
             draft.list = action.payload;
             draft.loadingState = LoadingStatus.LOADED;
+            break;
+
+        case ListActionType.RESET_LIST_STATE:
+            draft.list = undefined;
+            draft.loadingState = LoadingStatus.LOADING;
             break;
 
         case ListActionType.SET_LOADING_STATE:

@@ -3,6 +3,7 @@ import {
     FetchNotificationsActionInterface,
     FetchNotificationsFromTweetAuthorsActionInterface,
     NotificationsActionsType,
+    ResetNotificationStateActionInterface,
     SetNotificationActionInterface,
     SetNotificationsActionInterface,
     SetNotificationsLoadingStateActionInterface
@@ -26,6 +27,10 @@ export const fetchNotificationsFromTweetAuthors = (payload: number): FetchNotifi
 export const setNotification = (payload: Notification): SetNotificationActionInterface => ({
     type: NotificationsActionsType.SET_NOTIFICATION,
     payload,
+});
+
+export const resetNotificationState = (): ResetNotificationStateActionInterface => ({
+    type: NotificationsActionsType.RESET_NOTIFICATION_STATE
 });
 
 export const setNotificationsLoadingState = (payload: LoadingStatus): SetNotificationsLoadingStateActionInterface => ({

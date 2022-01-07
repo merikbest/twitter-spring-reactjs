@@ -107,6 +107,8 @@ export const dimTheme = createMuiTheme(deepmerge({
             "300": "rgb(136, 153, 166)",
             "400": "rgb(29, 41, 54)",
             "500": "rgb(78, 92, 104)",
+            "600": "rgb(25, 39, 52)",
+            "700": "rgb(61, 84, 102)",
         },
     },
     overrides: {
@@ -151,6 +153,8 @@ export const lightsOutTheme = createMuiTheme(deepmerge({
             "300": "rgb(110, 118, 125)",
             "400": "rgb(32, 35, 39, 0.5)",
             "500": "rgb(110, 118, 125, 0.5)",
+            "600": "rgb(21, 24, 28)",
+            "700": "rgb(47, 51, 54)",
         },
     },
     overrides: {
@@ -195,6 +199,8 @@ export const defaultTheme = createMuiTheme(deepmerge({
             "300": "rgb(136, 153, 166)",
             "400": "rgb(239, 243, 244)",
             "500": "rgb(83, 100, 113, 0.5)",
+            "600": "rgb(247, 249, 249)",
+            "700": "rgb(207, 217, 222)",
         },
     },
     overrides: {

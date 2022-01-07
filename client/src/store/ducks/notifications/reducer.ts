@@ -7,7 +7,7 @@ import {NotificationsActions, NotificationsActionsType} from "./contracts/action
 const initialTagsState: NotificationsState = {
     notificationsList: [],
     tweetAuthors: [],
-    loadingState: LoadingStatus.NEVER,
+    loadingState: LoadingStatus.LOADING,
 };
 
 export const notificationsReducer = produce((draft: Draft<NotificationsState>, action: NotificationsActions) => {
@@ -20,6 +20,12 @@ export const notificationsReducer = produce((draft: Draft<NotificationsState>, a
         case NotificationsActionsType.SET_NOTIFICATION:
             draft.notificationsList = [action.payload, ...draft.notificationsList];
             draft.loadingState = LoadingStatus.LOADED;
+            break;
+
+        case NotificationsActionsType.RESET_NOTIFICATION_STATE:
+            draft.notificationsList = [];
+            draft.tweetAuthors = [];
+            draft.loadingState = LoadingStatus.LOADING;
             break;
 
         case NotificationsActionsType.SET_LOADING_STATE:

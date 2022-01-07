@@ -53,20 +53,24 @@ const Bookmarks: FC = (): ReactElement => {
                     </div>
                 </Paper>
                 <div className={classes.contentWrapper}>
-                    {(tweets.length === 0 && !isLoading) ? (
-                        <div className={classes.infoWrapper}>
-                            <Typography component={"div"} className={classes.infoTitle}>
-                                You haven’t added any Tweets to your Bookmarks yet
-                            </Typography>
-                            <Typography component={"div"} className={classes.infoText}>
-                                When you do, they’ll show up here.
-                            </Typography>
-                        </div>
+                    {(isLoading && tweets.length === 0) ? (
+                        <Spinner/>
                     ) : (
-                        <>
-                            {tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}
-                            {isLoading && <Spinner/>}
-                        </>
+                        (!isLoading && tweets.length === 0) ? (
+                            <div className={classes.infoWrapper}>
+                                <Typography component={"div"} className={classes.infoTitle}>
+                                    You haven’t added any Tweets to your Bookmarks yet
+                                </Typography>
+                                <Typography component={"div"} className={classes.infoText}>
+                                    When you do, they’ll show up here.
+                                </Typography>
+                            </div>
+                        ) : (
+                            <>
+                                {tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}
+                                {isLoading && <Spinner/>}
+                            </>
+                        )
                     )}
                 </div>
             </Paper>

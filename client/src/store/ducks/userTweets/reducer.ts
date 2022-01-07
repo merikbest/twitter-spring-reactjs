@@ -22,6 +22,7 @@ export const userTweetsReducer = produce((draft: Draft<UserTweetsState>, action:
         case UserTweetsActionType.RESET_TWEETS:
             draft.items = [];
             draft.pagesCount = 1;
+            draft.loadingState = LoadingStatus.LOADING
             break;
 
         case UserTweetsActionType.SET_ADDED_TWEET:

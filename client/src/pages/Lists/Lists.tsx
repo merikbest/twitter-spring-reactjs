@@ -12,9 +12,7 @@ import {
     fetchLists,
     fetchPinnedLists,
     fetchUserLists,
-    setLists,
-    setPinnedLists,
-    setUserLists
+    resetListsState,
 } from "../../store/ducks/lists/actionCreators";
 import {
     selectIsListsLoading,
@@ -46,9 +44,7 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
         dispatch(fetchPinnedLists());
 
         return () => {
-            dispatch(setLists([]));
-            dispatch(setUserLists([]));
-            dispatch(setPinnedLists([]));
+            dispatch(resetListsState());
         };
     }, []);
 

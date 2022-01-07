@@ -17,7 +17,7 @@ export const userProfileReducer = produce((draft: Draft<UserProfileState>, actio
 
         case UserProfileActionsType.RESET_USER:
             draft.user = undefined;
-            draft.loadingState = LoadingStatus.SUCCESS;
+            draft.loadingState = LoadingStatus.LOADING;
             break;
 
         case UserProfileActionsType.FOLLOW:

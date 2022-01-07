@@ -15,7 +15,7 @@ import {
     selectNotificationsList,
     selectNotificationsTweetAuthors
 } from "../../store/ducks/notifications/selectors";
-import {fetchNotifications} from "../../store/ducks/notifications/actionCreators";
+import {fetchNotifications, resetNotificationState} from "../../store/ducks/notifications/actionCreators";
 import {fetchUserData} from "../../store/ducks/user/actionCreators";
 import {Notification, NotificationType} from "../../store/ducks/notifications/contracts/state";
 import Spinner from "../../components/Spinner/Spinner";
@@ -43,6 +43,10 @@ const Notifications: FC<HoverUserProps> = (
         window.scrollTo(0, 0);
         dispatch(fetchNotifications());
         dispatch(fetchUserData());
+
+        return () => {
+            dispatch(resetNotificationState());
+        };
     }, []);
 
     const handleChangeTab = (event: ChangeEvent<{}>, newValue: number): void => {

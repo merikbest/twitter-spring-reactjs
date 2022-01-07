@@ -5,7 +5,7 @@ import {List, ListItem, ListItemText, Typography} from "@material-ui/core";
 
 import {useTrendsStyles} from "./TrendsStyles";
 import {selectIsTagsLoading, selectTagsItems} from "../../store/ducks/tags/selectors";
-import {fetchTrends} from "../../store/ducks/tags/actionCreators";
+import {fetchTrends, resetTagsState} from "../../store/ducks/tags/actionCreators";
 import {EditIcon} from "../../icons";
 import Spinner from "../../components/Spinner/Spinner";
 
@@ -18,6 +18,10 @@ const Trends: FC = (): ReactElement => {
     useEffect(() => {
         dispatch(fetchTrends());
         window.scrollTo(0, 0);
+
+        return () => {
+            dispatch(resetTagsState());
+        };
     }, []);
 
     return (

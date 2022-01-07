@@ -1,6 +1,8 @@
 import {LoadingStatus} from '../../types';
 import {
-    FetchTagsActionInterface, FetchTrendsActionInterface,
+    FetchTagsActionInterface,
+    FetchTrendsActionInterface,
+    ResetTagsStateActionInterface,
     SetTagsActionInterface,
     SetTagsLoadingStateActionInterface,
     TagsActionsType
@@ -23,4 +25,8 @@ export const fetchTags = (): FetchTagsActionInterface => ({
 
 export const fetchTrends = (): FetchTrendsActionInterface => ({
     type: TagsActionsType.FETCH_TRENDS,
+});
+
+export const resetTagsState = (): ResetTagsStateActionInterface => ({
+    type: TagsActionsType.RESET_TAGS_STATE,
 });

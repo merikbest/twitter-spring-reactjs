@@ -33,8 +33,6 @@ import {
     unfollow
 } from "../../store/ducks/user/actionCreators";
 import {selectUserData, selectUserIsLoaded} from "../../store/ducks/user/selectors";
-import {fetchRelevantUsers} from "../../store/ducks/users/actionCreators";
-import {fetchTags} from "../../store/ducks/tags/actionCreators";
 import {
     selectIsUserTweetsLoaded,
     selectIsUserTweetsLoading,
@@ -51,7 +49,11 @@ import {
     setAddedUserTweet,
     setUpdatedUserTweet
 } from "../../store/ducks/userTweets/actionCreators";
-import {selectUserProfile, selectUsersIsSuccessLoaded} from "../../store/ducks/userProfile/selectors";
+import {
+    selectUserProfile,
+    selectUsersIsErrorLoaded, selectUsersIsLoading,
+    selectUsersIsSuccessLoaded
+} from "../../store/ducks/userProfile/selectors";
 import {
     fetchUserProfile,
     followUserProfile,
@@ -73,6 +75,7 @@ import {HoverActionProps, HoverActions, withHoverAction} from "../../hoc/withHov
 import HoverAction from "../../components/HoverAction/HoverAction";
 import {User} from "../../store/ducks/user/contracts/state";
 import FollowerGroup from "../../components/FollowerGroup/FollowerGroup";
+import UserNotFound from "./UserNotFound/UserNotFound";
 
 interface LinkToFollowersProps {
     children: ReactNode;
@@ -99,7 +102,9 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
     const myProfile = useSelector(selectUserData);
     const userProfile = useSelector(selectUserProfile);
     const isMyProfileLoaded = useSelector(selectUserIsLoaded);
+    const isUserProfileLoading = useSelector(selectUsersIsLoading);
     const isUserProfileSuccessLoaded = useSelector(selectUsersIsSuccessLoaded);
+    const isUserProfileNotLoaded = useSelector(selectUsersIsErrorLoaded);
     const isTweetsLoading = useSelector(selectIsUserTweetsLoading);
     const isTweetsLoaded = useSelector(selectIsUserTweetsLoaded);
     const location = useLocation<{ isRegistered: boolean; }>();
@@ -115,22 +120,28 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
     const pagesCount = useSelector(selectPagesCount);
     const [page, setPage] = useState<number>(0);
 
-    const isSubscriber = userProfile?.subscribers?.findIndex(subscriber => subscriber.id === myProfile?.id) !== -1;
-    const isFollower = myProfile?.followers?.findIndex(follower => follower.id === userProfile?.id) !== -1;
-    const isUserMuted = myProfile?.userMutedList?.findIndex(mutedUser => mutedUser.id === userProfile?.id) !== -1;
-    const isUserBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === userProfile?.id) !== -1;
-    const isMyProfileBlocked = userProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
-    const isWaitingForApprove = userProfile?.followerRequests?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
+    const [isSubscriber, setIsSubscriber] = useState<boolean>(false);
+    const [isFollower, setIsFollower] = useState<boolean>(false);
+    const [isUserMuted, setIsUserMuted] = useState<boolean>(false);
+    const [isUserBlocked, setIsUserBlocked] = useState<boolean>(false);
+    const [isMyProfileBlocked, setIsMyProfileBlocked] = useState<boolean>(false);
+    const [isWaitingForApprove, setIsWaitingForApprove] = useState<boolean>(false);
+
+    // const isSubscriber = userProfile?.subscribers?.findIndex(subscriber => subscriber.id === myProfile?.id) !== -1;
+    // const isFollower = myProfile?.followers?.findIndex(follower => follower.id === userProfile?.id) !== -1;
+    // const isUserMuted = myProfile?.userMutedList?.findIndex(mutedUser => mutedUser.id === userProfile?.id) !== -1;
+    // const isUserBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === userProfile?.id) !== -1;
+    // const isMyProfileBlocked = userProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
+    // const isWaitingForApprove = userProfile?.followerRequests?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        console.log("FROM 1 useEffect");
 
         if (params.id) {
             dispatch(fetchUserProfile(params.id));
         }
         dispatch(fetchUserData());
-        dispatch(fetchRelevantUsers());
-        dispatch(fetchTags());
         document.body.style.overflow = 'unset';
 
         stompClient = Stomp.over(new SockJS(WS_URL));
@@ -146,6 +157,19 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                 }
             });
         });
+        // setIsSubscriber(userProfile?.subscribers?.findIndex(subscriber => subscriber.id === myProfile?.id) !== -1);
+        // setIsFollower(myProfile?.followers?.findIndex(follower => follower.id === userProfile?.id) !== -1);
+        // setIsUserMuted(myProfile?.userMutedList?.findIndex(mutedUser => mutedUser.id === userProfile?.id) !== -1);
+        // setIsUserBlocked(myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === userProfile?.id) !== -1);
+        // setIsMyProfileBlocked(userProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1);
+        // setIsWaitingForApprove(userProfile?.followerRequests?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1);
+
+        setIsFollower(myProfile?.followers?.findIndex(follower => follower.id === userProfile?.id) !== -1);
+        setIsUserMuted(myProfile?.userMutedList?.findIndex(mutedUser => mutedUser.id === userProfile?.id) !== -1);
+        setIsUserBlocked(myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === userProfile?.id) !== -1);
+        setIsSubscriber(userProfile?.subscribers?.findIndex(subscriber => subscriber.id === myProfile?.id) !== -1);
+        setIsMyProfileBlocked(userProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1);
+        setIsWaitingForApprove(userProfile?.followerRequests?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1);
 
         return () => {
             dispatch(resetUserProfile());
@@ -155,6 +179,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
     }, [params.id]);
 
     useEffect(() => {
+        console.log("FROM 2 useEffect");
         setBtnText(isWaitingForApprove ? ("Pending") : (isUserBlocked ? "Blocked" : "Following"));
 
         if (userProfile) {
@@ -165,19 +190,28 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
         if (location.state?.isRegistered) {
             setVisibleSetupProfile(true);
         }
-
+        setIsSubscriber(userProfile?.subscribers?.findIndex(subscriber => subscriber.id === myProfile?.id) !== -1);
+        // setIsMyProfileBlocked(userProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1);
+        // setIsWaitingForApprove(userProfile?.followerRequests?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1);
+        setIsFollower(myProfile?.followers?.findIndex(follower => follower.id === userProfile?.id) !== -1);
         return () => {
             dispatch(resetUserTweets());
         };
     }, [userProfile]);
 
     useEffect(() => {
-        setBtnText(isWaitingForApprove ? ("Pending") : (isUserBlocked ? "Blocked" : "Following"));
+        console.log("FROM 3 useEffect");
+        const isBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === userProfile?.id) !== -1;
+        setBtnText(isWaitingForApprove ? ("Pending") : (isBlocked ? "Blocked" : "Following"));
+        setIsUserBlocked(isBlocked);
     }, [myProfile]);
 
     useEffect(() => {
+        console.log("FROM 4 useEffect");
         if (isMyProfileLoaded && isUserProfileSuccessLoaded) {
             const followers = myProfile?.followers?.filter(({id: id1}) => userProfile?.followers?.some(({id: id2}) => id2 === id1));
+            setIsUserBlocked(myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === userProfile?.id) !== -1);
+            setIsFollower(myProfile?.followers?.findIndex(follower => follower.id === userProfile?.id) !== -1);
             setSameFollowers(followers!);
         }
     }, [isMyProfileLoaded && isUserProfileSuccessLoaded]);
@@ -246,7 +280,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
         }
     };
 
-    const handleFollow = (): void => {
+    const handleFollow = (): void => { // FROM 3 useEffect | FROM 2 useEffect
         if (userProfile?.privateProfile) {
             dispatch(processFollowRequest(userProfile.id!));
         } else {
@@ -285,13 +319,13 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
         history.push("/messages");
     };
 
-    const onMuteUser = (): void => {
+    const onMuteUser = (): void => { // FROM 4 useEffect | FROM 3 useEffect | FROM 4 useEffect
         dispatch(addUserToMuteList(userProfile?.id!));
         setSnackBarMessage!(`@${userProfile?.username} has been ${isUserMuted ? "unmuted" : "muted"}.`);
         setOpenSnackBar!(true);
     };
 
-    const onBlockUser = (): void => {
+    const onBlockUser = (): void => { // FROM 4 useEffect | FROM 3 useEffect | FROM 4 useEffect
         dispatch(addUserToBlocklist(userProfile?.id!));
         setVisibleBlockUserModal(false);
         setBtnText(isUserBlocked ? "Following" : "Blocked");
@@ -319,320 +353,332 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
             hasMore={page < pagesCount}
             loader={null}
         >
-            <Paper className={classes.container} variant="outlined">
-                <Paper className={classes.header} variant="outlined">
-                    <BackButton/>
-                    <div>
-                        <Typography component={"span"} className={classes.headerFullName}>
-                            {userProfile?.fullName}
-                        </Typography>
-                        {userProfile?.privateProfile && (
-                            <span className={classes.lockIcon}>
+            {isUserProfileNotLoaded ? (
+                <UserNotFound/>
+            ) : (
+                <Paper className={classes.container} variant="outlined">
+                    <Paper className={classes.header} variant="outlined">
+                        <BackButton/>
+                        <div>
+                            <Typography component={"span"} className={classes.headerFullName}>
+                                {userProfile?.fullName}
+                            </Typography>
+                            {userProfile?.privateProfile && (
+                                <span className={classes.lockIcon}>
                                 {LockIcon}
                             </span>
-                        )}
-                        <Typography component={"div"} className={classes.headerTweetCount}>
-                            {showTweetCount()}
-                        </Typography>
-                    </div>
-                </Paper>
-                <div style={{paddingTop: 53}}>
-                    <div className={classes.wallpaper}>
-                        <img
-                            key={userProfile?.wallpaper?.src}
-                            src={userProfile?.wallpaper?.src}
-                            alt={userProfile?.wallpaper?.src}
-                        />
-                    </div>
-                    <div className={classes.info}>
-                        <div style={{display: "inline-block"}}>
-                            <Avatar src={userProfile?.avatar?.src ? userProfile?.avatar.src : DEFAULT_PROFILE_IMG}/>
+                            )}
+                            <Typography component={"div"} className={classes.headerTweetCount}>
+                                {showTweetCount()}
+                            </Typography>
                         </div>
-                        {(userProfile !== undefined) && (
-                            isMyProfileBlocked ? null : (
-                                (userProfile?.id === myProfile?.id) ? (
-                                    <Button
-                                        onClick={myProfile?.profileCustomized ? onOpenEditProfile : onOpenSetupProfile}
-                                        color="primary"
-                                        className={classes.editButton}
-                                    >
-                                        {myProfile?.profileCustomized ? "Edit profile" : "Setup profile"}
-                                    </Button>
-                                ) : (
-                                    <div className={classes.buttonWrapper}>
-                                        <UserPageActions
-                                            user={userProfile!}
-                                            isUserMuted={isUserMuted}
-                                            isUserBlocked={isUserBlocked}
-                                            onMuteUser={onMuteUser}
-                                            onOpenBlockUserModal={onOpenBlockUserModal}
-                                            visibleMoreAction={visibleHoverAction?.visibleMoreAction}
-                                            handleHoverAction={handleHoverAction}
-                                            handleLeaveAction={handleLeaveAction}
-                                        />
-                                        {!isUserBlocked && (
-                                            !userProfile?.mutedDirectMessages || isFollower ? (
-                                                <IconButton
-                                                    className={classes.messageButton}
-                                                    onClick={handleClickAddUserToChat}
-                                                    onMouseEnter={() => handleHoverAction?.(HoverActions.MESSAGE)}
-                                                    onMouseLeave={handleLeaveAction}
-                                                    color="primary"
-                                                >
-                                                    {MessagesIcon}
-                                                    <HoverAction
-                                                        visible={visibleHoverAction?.visibleMessageAction}
-                                                        actionText={"Message"}
-                                                    />
-                                                </IconButton>
-                                            ) : null
-                                        )}
-                                        {isUserBlocked ? (
-                                            <Button
-                                                onClick={onOpenBlockUserModal}
-                                                className={classNames(classes.primaryButton, classes.blockButton)}
-                                                color="primary"
-                                                variant="contained"
-                                                onMouseOver={() => setBtnText("Unblock")}
-                                                onMouseLeave={() => setBtnText("Blocked")}
-                                            >
-                                                {btnText}
-                                            </Button>
-                                        ) : (
-                                            isFollower ? (
-                                                <>
+                    </Paper>
+                    <div style={{paddingTop: 53}}>
+                        <div className={classes.wallpaper}>
+                            {userProfile?.wallpaper?.src && (
+                                <img
+                                    key={userProfile?.wallpaper?.src}
+                                    src={userProfile?.wallpaper?.src}
+                                    alt={userProfile?.wallpaper?.src}
+                                />
+                            )}
+                        </div>
+                        <div className={classes.info}>
+                            <div style={{display: "inline-block"}}>
+                                <Avatar src={userProfile !== undefined ? userProfile?.avatar?.src ? userProfile?.avatar.src : DEFAULT_PROFILE_IMG : undefined}>
+                                    <div></div>
+                                </Avatar>
+                            </div>
+                            {(isMyProfileLoaded && isUserProfileSuccessLoaded) && (
+                                isMyProfileBlocked ? null : (
+                                    (userProfile?.id === myProfile?.id) ? (
+                                        <Button
+                                            onClick={myProfile?.profileCustomized ? onOpenEditProfile : onOpenSetupProfile}
+                                            color="primary"
+                                            className={classes.editButton}
+                                        >
+                                            {myProfile?.profileCustomized ? "Edit profile" : "Setup profile"}
+                                        </Button>
+                                    ) : (
+                                        <div className={classes.buttonWrapper}>
+                                            <UserPageActions
+                                                user={userProfile!}
+                                                isUserMuted={isUserMuted}
+                                                isUserBlocked={isUserBlocked}
+                                                onMuteUser={onMuteUser}
+                                                onOpenBlockUserModal={onOpenBlockUserModal}
+                                                visibleMoreAction={visibleHoverAction?.visibleMoreAction}
+                                                handleHoverAction={handleHoverAction}
+                                                handleLeaveAction={handleLeaveAction}
+                                            />
+                                            {!isUserBlocked && (
+                                                !userProfile?.mutedDirectMessages || isFollower ? (
                                                     <IconButton
-                                                        onClick={handleSubscribeToNotifications}
-                                                        onMouseEnter={() => handleHoverAction?.(HoverActions.OTHER)}
-                                                        onMouseLeave={handleLeaveAction}
                                                         className={classes.messageButton}
+                                                        onClick={handleClickAddUserToChat}
+                                                        onMouseEnter={() => handleHoverAction?.(HoverActions.MESSAGE)}
+                                                        onMouseLeave={handleLeaveAction}
                                                         color="primary"
                                                     >
-                                                        {isSubscriber ? NotificationsAddFilledIcon : NotificationsAddIcon}
+                                                        {MessagesIcon}
                                                         <HoverAction
-                                                            visible={visibleHoverAction?.visibleOtherAction}
-                                                            actionText={isSubscriber ? "Turn off notifications" : "Notify"}
+                                                            visible={visibleHoverAction?.visibleMessageAction}
+                                                            actionText={"Message"}
                                                         />
                                                     </IconButton>
-                                                    <Button
-                                                        onClick={handleFollow}
-                                                        className={classes.primaryButton}
-                                                        color="primary"
-                                                        variant="contained"
-                                                        onMouseOver={() => setBtnText("Unfollow")}
-                                                        onMouseLeave={() => setBtnText("Following")}
-                                                    >
-                                                        {btnText}
-                                                    </Button>
-                                                </>
-                                            ) : ((userProfile !== undefined) ? (
-                                                isWaitingForApprove ? (
+                                                ) : null
+                                            )}
+                                            {isUserBlocked ? (
+                                                <Button
+                                                    onClick={onOpenBlockUserModal}
+                                                    className={classNames(classes.primaryButton, classes.blockButton)}
+                                                    color="primary"
+                                                    variant="contained"
+                                                    onMouseOver={() => setBtnText("Unblock")}
+                                                    onMouseLeave={() => setBtnText("Blocked")}
+                                                >
+                                                    {btnText}
+                                                </Button>
+                                            ) : (
+                                                isFollower ? (
+                                                    <>
+                                                        <IconButton
+                                                            onClick={handleSubscribeToNotifications}
+                                                            onMouseEnter={() => handleHoverAction?.(HoverActions.OTHER)}
+                                                            onMouseLeave={handleLeaveAction}
+                                                            className={classes.messageButton}
+                                                            color="primary"
+                                                        >
+                                                            {isSubscriber ? NotificationsAddFilledIcon : NotificationsAddIcon}
+                                                            <HoverAction
+                                                                visible={visibleHoverAction?.visibleOtherAction}
+                                                                actionText={isSubscriber ? "Turn off notifications" : "Notify"}
+                                                            />
+                                                        </IconButton>
                                                         <Button
                                                             onClick={handleFollow}
-                                                            className={classes.editButton}
+                                                            className={classes.primaryButton}
                                                             color="primary"
-                                                            variant="outlined"
-                                                            onMouseOver={() => setBtnText("Cancel")}
-                                                            onMouseLeave={() => setBtnText("Pending")}
+                                                            variant="contained"
+                                                            onMouseOver={() => setBtnText("Unfollow")}
+                                                            onMouseLeave={() => setBtnText("Following")}
                                                         >
                                                             {btnText}
                                                         </Button>
-                                                    ) : (
-                                                        <Button
-                                                            onClick={handleFollow}
-                                                            className={classes.editButton}
-                                                            color="primary"
-                                                        >
-                                                            Follow
-                                                        </Button>
-                                                    )
-                                                ) : null
-                                            )
-                                        )}
-                                    </div>
+                                                    </>
+                                                ) : ((userProfile !== undefined) ? (
+                                                        isWaitingForApprove ? (
+                                                            <Button
+                                                                onClick={handleFollow}
+                                                                className={classes.editButton}
+                                                                color="primary"
+                                                                variant="outlined"
+                                                                onMouseOver={() => setBtnText("Cancel")}
+                                                                onMouseLeave={() => setBtnText("Pending")}
+                                                            >
+                                                                {btnText}
+                                                            </Button>
+                                                        ) : (
+                                                            <Button
+                                                                onClick={handleFollow}
+                                                                className={classes.editButton}
+                                                                color="primary"
+                                                            >
+                                                                Follow
+                                                            </Button>
+                                                        )
+                                                    ) : null
+                                                )
+                                            )}
+                                        </div>
+                                    )
                                 )
-                            )
-                        )}
-                        {(userProfile === undefined) ? (
-                            <Skeleton variant="text" width={250} height={30}/>
-                        ) : (
-                            <div>
-                                <Typography component={"span"} className={classes.fullName}>
-                                    {userProfile.fullName}
-                                </Typography>
-                                {userProfile?.privateProfile && (
-                                    <span className={classes.lockIcon}>
+                            )}
+                            {(userProfile === undefined) ? (
+                                <Skeleton variant="text" width={250} height={30}/>
+                            ) : (
+                                <div>
+                                    <Typography component={"span"} className={classes.fullName}>
+                                        {userProfile.fullName}
+                                    </Typography>
+                                    {userProfile?.privateProfile && (
+                                        <span className={classes.lockIcon}>
                                         {LockIcon}
                                     </span>
+                                    )}
+                                </div>
+                            )}
+                            {(userProfile === undefined) ? (
+                                <Skeleton variant="text" width={60}/>
+                            ) : (
+                                <Typography className={classes.username}>
+                                    @{userProfile.username}
+                                </Typography>
+                            )}
+                            {isMyProfileBlocked ? null : (
+                                <Typography className={classes.description}>
+                                    {userProfile?.about}
+                                </Typography>
+                            )}
+                            <div className={classes.infoList}>
+                                {(userProfile === undefined) && (
+                                    <div className={classes.skeletonDetails}>
+                                        <Skeleton component={"span"} variant="text" width={80}/>
+                                        <Skeleton component={"span"} variant="text" width={150}/>
+                                        <Skeleton component={"span"} variant="text" width={150}/>
+                                    </div>
+                                )}
+                                {isMyProfileBlocked ? null : (
+                                    <List>
+                                        {userProfile?.location && (
+                                            <ListItem>
+                                                <>{LocationIcon}</>
+                                                <Typography component={"span"}>
+                                                    {userProfile?.location}
+                                                </Typography>
+                                            </ListItem>
+                                        )}
+                                        {userProfile?.website && (
+                                            <ListItem>
+                                                <>{LinkIcon}</>
+                                                <a className={classes.link} href={userProfile?.website}>
+                                                    {userProfile?.website}
+                                                </a>
+                                            </ListItem>
+                                        )}
+                                        {userProfile?.dateOfBirth && (
+                                            <ListItem>
+                                                <Typography component={"span"}>
+                                                    Date of Birth: {userProfile?.dateOfBirth}
+                                                </Typography>
+                                            </ListItem>
+                                        )}
+                                        {userProfile?.registrationDate && (
+                                            <ListItem>
+                                                <>{CalendarIcon}</>
+                                                Joined: {format(new Date(userProfile?.registrationDate), 'MMMM yyyy')}
+                                            </ListItem>
+                                        )}
+                                    </List>
+                                )}
+                                {(userProfile === undefined) && (
+                                    <div className={classes.skeletonDetails}>
+                                        <Skeleton component={"span"} variant="text" width={80}/>
+                                        <Skeleton component={"span"} variant="text" width={80}/>
+                                    </div>
+                                )}
+                                {isMyProfileBlocked ? null : (
+                                    <List className={classes.details}>
+                                        <LinkToFollowers linkTo={"following"}>
+                                            <ListItem>
+                                                <b>
+                                                    {(userProfile?.id === myProfile?.id) ? (
+                                                        myProfile?.followers?.length ? myProfile?.followers?.length : 0
+                                                    ) : (
+                                                        userProfile?.followers?.length ? userProfile?.followers?.length : 0
+                                                    )}
+                                                </b>
+                                                <Typography component={"span"}>
+                                                    {" Following"}
+                                                </Typography>
+                                            </ListItem>
+                                        </LinkToFollowers>
+                                        <LinkToFollowers linkTo={"followers"}>
+                                            <ListItem>
+                                                <b>
+                                                    {(userProfile?.id === myProfile?.id) ? (
+                                                        myProfile?.following?.length ? myProfile?.following?.length : 0
+                                                    ) : (
+                                                        userProfile?.following?.length ? userProfile?.following?.length : 0
+                                                    )}
+                                                </b>
+                                                <Typography component={"span"}>
+                                                    {" Followers"}
+                                                </Typography>
+                                            </ListItem>
+                                        </LinkToFollowers>
+                                    </List>
                                 )}
                             </div>
-                        )}
-                        {(userProfile === undefined) ? (
-                            <Skeleton variant="text" width={60}/>
-                        ) : (
-                            <Typography className={classes.username}>
-                                @{userProfile.username}
-                            </Typography>
-                        )}
-                        {isMyProfileBlocked ? null : (
-                            <Typography className={classes.description}>
-                                {userProfile?.about}
-                            </Typography>
-                        )}
-                        <div className={classes.infoList}>
-                            {(userProfile === undefined) && (
-                                <div className={classes.skeletonDetails}>
-                                    <Skeleton component={"span"} variant="text" width={80}/>
-                                    <Skeleton component={"span"} variant="text" width={150}/>
-                                    <Skeleton component={"span"} variant="text" width={150}/>
-                                </div>
-                            )}
-                            {isMyProfileBlocked ? null : (
-                                <List>
-                                    {userProfile?.location && (
-                                        <ListItem>
-                                            <>{LocationIcon}</>
-                                            <Typography component={"span"}>
-                                                {userProfile?.location}
-                                            </Typography>
-                                        </ListItem>
-                                    )}
-                                    {userProfile?.website && (
-                                        <ListItem>
-                                            <>{LinkIcon}</>
-                                            <a className={classes.link} href={userProfile?.website}>
-                                                {userProfile?.website}
-                                            </a>
-                                        </ListItem>
-                                    )}
-                                    {userProfile?.dateOfBirth && (
-                                        <ListItem>
-                                            <Typography component={"span"}>
-                                                Date of Birth: {userProfile?.dateOfBirth}
-                                            </Typography>
-                                        </ListItem>
-                                    )}
-                                    {userProfile?.registrationDate && (
-                                        <ListItem>
-                                            <>{CalendarIcon}</>
-                                            Joined: {format(new Date(userProfile?.registrationDate), 'MMMM yyyy')}
-                                        </ListItem>
-                                    )}
-                                </List>
-                            )}
-                            {(userProfile === undefined) && (
-                                <div className={classes.skeletonDetails}>
-                                    <Skeleton component={"span"} variant="text" width={80}/>
-                                    <Skeleton component={"span"} variant="text" width={80}/>
-                                </div>
-                            )}
-                            {isMyProfileBlocked ? null : (
-                                <List className={classes.details}>
-                                    <LinkToFollowers linkTo={"following"}>
-                                        <ListItem>
-                                            <b>
-                                                {(userProfile?.id === myProfile?.id) ? (
-                                                    myProfile?.followers?.length ? myProfile?.followers?.length : 0
-                                                ) : (
-                                                    userProfile?.followers?.length ? userProfile?.followers?.length : 0
-                                                )}
-                                            </b>
-                                            <Typography component={"span"}>
-                                                {" Following"}
-                                            </Typography>
-                                        </ListItem>
-                                    </LinkToFollowers>
-                                    <LinkToFollowers linkTo={"followers"}>
-                                        <ListItem>
-                                            <b>
-                                                {(userProfile?.id === myProfile?.id) ? (
-                                                    myProfile?.following?.length ? myProfile?.following?.length : 0
-                                                ) : (
-                                                    userProfile?.following?.length ? userProfile?.following?.length : 0
-                                                )}
-                                            </b>
-                                            <Typography component={"span"}>
-                                                {" Followers"}
-                                            </Typography>
-                                        </ListItem>
-                                    </LinkToFollowers>
-                                </List>
+                            {(isMyProfileBlocked || userProfile?.privateProfile) ? null : (
+                                (userProfile !== undefined) && (
+                                    <FollowerGroup user={userProfile} sameFollowers={sameFollowers}/>
+                                )
                             )}
                         </div>
-                        {(isMyProfileBlocked || userProfile?.privateProfile) ? null : (
-                            (userProfile !== undefined) && (
-                                <FollowerGroup user={userProfile} sameFollowers={sameFollowers}/>
+                        {isUserProfileLoading ? (
+                            <Spinner/>
+                        ) : (
+                            isMyProfileLoaded && isUserProfileSuccessLoaded ? (
+                                isMyProfileBlocked ? (
+                                    <div className={classes.privateProfileInfo}>
+                                        <Typography component={"div"} className={classes.privateProfileInfoTitle}>
+                                            You’re blocked
+                                        </Typography>
+                                        <Typography component={"div"} className={classes.privateProfileInfoText}>
+                                            {`You can’t follow or see @${userProfile?.username}’s Tweets.`} <a
+                                            href={"https://help.twitter.com/using-twitter/someone-blocked-me-on-twitter"}
+                                            target={"_blank"} className={classes.link}>Learn more</a>
+                                        </Typography>
+                                    </div>
+                                ) : (
+                                    userProfile?.privateProfile ? (
+                                        <div className={classes.privateProfileInfo}>
+                                            <Typography component={"div"} className={classes.privateProfileInfoTitle}>
+                                                These Tweets are protected
+                                            </Typography>
+                                            <Typography component={"div"} className={classes.privateProfileInfoText}>
+                                                {`Only approved followers can see @${userProfile?.username}’s Tweets. To request 
+                                        access, click Follow. `} <a
+                                                href={"https://help.twitter.com/safety-and-security/public-and-protected-tweets"}
+                                                target={"_blank"} className={classes.link}>Learn more</a>
+                                            </Typography>
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <div className={classes.tabs}>
+                                                <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChange}>
+                                                    <Tab onClick={() => handleShowTweets(handleShowUserTweets)} label="Tweets"/>
+                                                    <Tab onClick={() => handleShowTweets(handleShowUserRetweetsAndReplies)} label="Tweets & replies"/>
+                                                    <Tab onClick={() => handleShowTweets(handleShowMediaTweets)} label="Media"/>
+                                                    <Tab onClick={() => handleShowTweets(handleShowLikedTweets)} label="Likes"/>
+                                                </Tabs>
+                                            </div>
+                                            <Divider/>
+                                            <div className={classes.tweets}>
+                                                <UserPageTweets
+                                                    tweets={tweets}
+                                                    isTweetsLoading={isTweetsLoading}
+                                                    activeTab={activeTab}
+                                                    userProfileId={userProfile?.id}
+                                                    myProfileId={myProfile?.id}
+                                                    username={userProfile?.username}
+                                                />
+                                            </div>
+                                        </>
+                                    )
+                                )
+                            ) : (
+                               null
                             )
                         )}
                     </div>
-                    {(userProfile === undefined) ? (
-                        <Spinner/>
-                    ) : (
-                        isMyProfileBlocked ? (
-                            <div className={classes.privateProfileInfo}>
-                                <Typography component={"div"} className={classes.privateProfileInfoTitle}>
-                                    You’re blocked
-                                </Typography>
-                                <Typography component={"div"} className={classes.privateProfileInfoText}>
-                                    {`You can’t follow or see @${userProfile?.username}’s Tweets.`} <a
-                                    href={"https://help.twitter.com/using-twitter/someone-blocked-me-on-twitter"}
-                                    target={"_blank"} className={classes.link}>Learn more</a>
-                                </Typography>
-                            </div>
-                        ) : (
-                            userProfile?.privateProfile ? (
-                                <div className={classes.privateProfileInfo}>
-                                    <Typography component={"div"} className={classes.privateProfileInfoTitle}>
-                                        These Tweets are protected
-                                    </Typography>
-                                    <Typography component={"div"} className={classes.privateProfileInfoText}>
-                                        {`Only approved followers can see @${userProfile?.username}’s Tweets. To request 
-                                        access, click Follow. `} <a
-                                        href={"https://help.twitter.com/safety-and-security/public-and-protected-tweets"}
-                                        target={"_blank"} className={classes.link}>Learn more</a>
-                                    </Typography>
-                                </div>
-                            ) : (
-                                <>
-                                    <div className={classes.tabs}>
-                                        <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChange}>
-                                            <Tab onClick={() => handleShowTweets(handleShowUserTweets)} label="Tweets"/>
-                                            <Tab onClick={() => handleShowTweets(handleShowUserRetweetsAndReplies)} label="Tweets & replies"/>
-                                            <Tab onClick={() => handleShowTweets(handleShowMediaTweets)} label="Media"/>
-                                            <Tab onClick={() => handleShowTweets(handleShowLikedTweets)} label="Likes"/>
-                                        </Tabs>
-                                    </div>
-                                    <Divider/>
-                                    <div className={classes.tweets}>
-                                        <UserPageTweets
-                                            tweets={tweets}
-                                            isTweetsLoading={isTweetsLoading}
-                                            activeTab={activeTab}
-                                            userProfileId={userProfile?.id}
-                                            myProfileId={myProfile?.id}
-                                            username={userProfile?.username}
-                                        />
-                                    </div>
-                                </>
-                            )
-                        )
-                    )}
-                </div>
-                <EditProfileModal visible={visibleEditProfile} onClose={onCloseEditProfile}/>
-                <SetupProfileModal visible={visibleSetupProfile} onClose={onCloseSetupProfile}/>
-                <BlockUserModal
-                    username={userProfile?.username!}
-                    isUserBlocked={isUserBlocked}
-                    visible={visibleBlockUserModal}
-                    onClose={onCloseBlockUserModal}
-                    onBlockUser={onBlockUser}
-                />
-                <ActionSnackbar
-                    snackBarMessage={snackBarMessage!}
-                    openSnackBar={openSnackBar!}
-                    onCloseSnackBar={onCloseSnackBar!}
-                />
-            </Paper>
+                    <EditProfileModal visible={visibleEditProfile} onClose={onCloseEditProfile}/>
+                    <SetupProfileModal visible={visibleSetupProfile} onClose={onCloseSetupProfile}/>
+                    <BlockUserModal
+                        username={userProfile?.username!}
+                        isUserBlocked={isUserBlocked}
+                        visible={visibleBlockUserModal}
+                        onClose={onCloseBlockUserModal}
+                        onBlockUser={onBlockUser}
+                    />
+                    <ActionSnackbar
+                        snackBarMessage={snackBarMessage!}
+                        openSnackBar={openSnackBar!}
+                        onCloseSnackBar={onCloseSnackBar!}
+                    />
+                </Paper>
+            )}
         </InfiniteScroll>
     );
 };

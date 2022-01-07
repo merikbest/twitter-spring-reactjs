@@ -7,7 +7,7 @@ import {LoadingStatus} from '../../types';
 const initialTweetsState: TweetsState = {
     items: [],
     pagesCount: 1,
-    loadingState: LoadingStatus.NEVER
+    loadingState: LoadingStatus.LOADING
 };
 
 export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsActions) => {
@@ -20,7 +20,6 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
 
         case TweetsActionType.SET_SCHEDULED_TWEETS:
             draft.items = [...action.payload, ...draft.items];
-            draft.loadingState = LoadingStatus.LOADED;
             break;
 
         case TweetsActionType.SET_PAGEABLE_TWEETS:
@@ -36,6 +35,7 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
         case TweetsActionType.RESET_TWEETS:
             draft.items = [];
             draft.pagesCount = 1;
+            draft.loadingState = LoadingStatus.LOADING
             break;
 
         case TweetsActionType.SET_UPDATED_TWEET:

@@ -11,15 +11,12 @@ import {fetchTweets, resetTweets, setTweetsLoadingState,} from "../../store/duck
 import {selectIsTweetsLoading, selectPagesCount, selectTweetsItems} from "../../store/ducks/tweets/selectors";
 import BackButton from "../../components/BackButton/BackButton";
 import {fetchUserData} from "../../store/ducks/user/actionCreators";
-import {fetchRelevantUsers} from "../../store/ducks/users/actionCreators";
-import {fetchTags} from "../../store/ducks/tags/actionCreators";
 import Connect from "../Connect/Connect";
 import Trends from "../Trends/Trends";
 import {TopTweets} from "../../icons";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import Welcome from "../../components/Welcome/Welcome";
 import {LoadingStatus} from "../../store/types";
-import {fetchNotifications} from "../../store/ducks/notifications/actionCreators";
 import FullTweet from "../FullTweet/FullTweet";
 import Spinner from "../../components/Spinner/Spinner";
 
@@ -36,14 +33,9 @@ const Home: FC = (): ReactElement => {
     useEffect(() => {
         dispatch(setTweetsLoadingState(LoadingStatus.NEVER));
         dispatch(fetchUserData());
-        dispatch(fetchNotifications());
-        dispatch(fetchTags());
 
         if (location.pathname !== "/search") {
             loadTweets();
-        }
-        if (location.pathname !== "/home/connect") {
-            dispatch(fetchRelevantUsers());
         }
         document.body.style.overflow = 'unset';
         window.scrollTo(0, 0);

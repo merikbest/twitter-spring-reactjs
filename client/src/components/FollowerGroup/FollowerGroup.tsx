@@ -34,7 +34,9 @@ const FollowerGroup: FC<FollowerGroupProps> = ({user, sameFollowers}): ReactElem
                             </AvatarGroup>
                             <Typography component={"span"} className={classes.followedTextInfo}>
                                 {"Followed by "}
-                                {sameFollowers.slice(0, 2).map(follower => `${follower.username}, `)}
+                                {sameFollowers.slice(0, 2).map((follower, index, array) => (
+                                    `${follower.username}${(array.length !== index + 1) ? "," : ""} `
+                                ))}
                                 {(sameFollowers?.length > 2) && `and ${sameFollowers?.length - 2} others you follow`}
                             </Typography>
                         </Link>
