@@ -40,6 +40,14 @@ export const UserApi = {
         const {data} = await axios.put<User>(`${API_URL}/user`, userData);
         return data;
     },
+    async getFollowers(userId: string): Promise<User[] | undefined> {
+        const {data} = await axios.get<User[] | undefined>(`${API_URL}/user/followers/${userId}`);
+        return data;
+    },
+    async getFollowing(userId: string): Promise<User[] | undefined> {
+        const {data} = await axios.get<User[] | undefined>(`${API_URL}/user/following/${userId}`);
+        return data;
+    },
     async follow(user: User): Promise<User | undefined> {
         const {data} = await axios.get<User | undefined>(`${API_URL}/user/follow/${user.id}`);
         return data;

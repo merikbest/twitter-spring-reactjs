@@ -13,6 +13,7 @@ import java.util.Collections;
 @AllArgsConstructor
 public class UserPrincipal implements UserDetails {
 
+    private final Long id;
     private final String email;
     private final String password;
 

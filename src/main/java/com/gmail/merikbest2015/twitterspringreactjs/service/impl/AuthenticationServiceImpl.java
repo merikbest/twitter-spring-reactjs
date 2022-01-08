@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestExceptio
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.security.JwtProvider;
+import com.gmail.merikbest2015.twitterspringreactjs.security.UserPrincipal;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.email.MailSender;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
     private final MailSender mailSender;
+
+    @Override
+    public Long getAuthenticatedUserId() {
+        return ((UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+    }
 
     @Override
     public User getAuthenticatedUser() {

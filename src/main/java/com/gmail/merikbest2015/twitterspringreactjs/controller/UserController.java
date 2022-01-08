@@ -107,6 +107,16 @@ public class UserController {
         return ResponseEntity.ok(userMapper.uploadImage(file));
     }
 
+    @GetMapping("/followers/{userId}")
+    public ResponseEntity<List<UserResponse>> getFollowers(@PathVariable Long userId) {
+        return ResponseEntity.ok(userMapper.getFollowers(userId));
+    }
+
+    @GetMapping("/following/{userId}")
+    public ResponseEntity<List<UserResponse>> getFollowing(@PathVariable Long userId) {
+        return ResponseEntity.ok(userMapper.getFollowing(userId));
+    }
+
     @GetMapping("/follow/{userId}")
     public ResponseEntity<UserResponse> processFollow(@PathVariable Long userId) {
         NotificationResponse notification = userMapper.processFollow(userId);

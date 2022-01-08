@@ -21,7 +21,7 @@ public class CronService {
     private final TweetRepository tweetRepository;
     private final TweetMapper tweetMapper;
 
-    @Scheduled(initialDelay = 30000, fixedDelay = 30000)
+    @Scheduled(initialDelay = 300000, fixedDelay = 300000)
     public void sendTweetBySchedule() {
         List<Tweet> tweets = tweetRepository.findAllByScheduledDate(LocalDateTime.now());
         tweets.forEach(tweet -> tweet.setScheduledDate(null));

@@ -120,6 +120,14 @@ public class UserMapper {
         return convertToUserResponse(userService.processUserBookmarks(tweetId));
     }
 
+    public List<UserResponse> getFollowers(Long userId) {
+        return convertUserListToResponse(userService.getFollowers(userId));
+    }
+
+    public List<UserResponse> getFollowing(Long userId) {
+        return convertUserListToResponse(userService.getFollowing(userId));
+    }
+
     public NotificationResponse processFollow(Long userId) {
         return convertToNotificationResponse(userService.processFollow(userId));
     }

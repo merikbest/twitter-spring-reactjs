@@ -8,13 +8,15 @@ import Tab from "@material-ui/core/Tab";
 
 import {selectUserData, selectUserIsLoading} from "../../store/ducks/user/selectors";
 import {User} from "../../store/ducks/user/contracts/state";
-import {fetchUserData, followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
+import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
-import {fetchUserProfile} from "../../store/ducks/userProfile/actionCreators";
+import {fetchUserProfile, resetUserProfile} from "../../store/ducks/userProfile/actionCreators";
 import {useFollowingFollowersStyles} from "./FollowingFollowersStyles";
 import Follower from "../../components/Follower/Follower";
 import BackButton from "../../components/BackButton/BackButton";
 import Spinner from "../../components/Spinner/Spinner";
+import {selectUsersSearch, selectUsersSearchIsLoading} from "../../store/ducks/usersSearch/selectors";
+import {fetchFollowers, fetchFollowings, resetUsersState} from "../../store/ducks/usersSearch/actionCreators";
 
 const FollowingFollowers: FC = (): ReactElement => {
     const classes = useFollowingFollowersStyles();
@@ -23,23 +25,36 @@ const FollowingFollowers: FC = (): ReactElement => {
     const params = useParams<{ id: string, follow: string }>();
     const myProfile = useSelector(selectUserData);
     const userProfile = useSelector(selectUserProfile);
-    const isFollowersLoading = useSelector(selectUserIsLoading);
+    const isUsersLoading = useSelector(selectUsersSearchIsLoading);
+    const isUserProfileLoading = useSelector(selectUserIsLoading);
+    const users = useSelector(selectUsersSearch);
     const [activeTab, setActiveTab] = useState<number>(0);
 
     const isMyProfile = (userProfile?.id === myProfile?.id);
-    const profileData = (isMyProfile) ? (myProfile) : (userProfile);
 
     useEffect(() => {
+        dispatch(fetchUserProfile(params.id));
+
         if (params.follow === "following") {
             setActiveTab(0);
+            dispatch(fetchFollowers(params.id));
         } else {
             setActiveTab(1);
+            dispatch(fetchFollowings(params.id));
         }
-        dispatch(fetchUserProfile(params.id));
-        dispatch(fetchUserData());
+
+        return () => {
+            dispatch(resetUsersState());
+            dispatch(resetUserProfile());
+        };
     }, []);
 
     const handleChangeTab = (event: ChangeEvent<{}>, newValue: number): void => {
+        if (newValue === 0) {
+            dispatch(fetchFollowers(params.id));
+        } else {
+            dispatch(fetchFollowings(params.id));
+        }
         setActiveTab(newValue);
     };
 
@@ -66,15 +81,19 @@ const FollowingFollowers: FC = (): ReactElement => {
     return (
         <Paper className={classes.container} variant="outlined">
             <Paper className={classes.header}>
-                <BackButton/>
-                <div>
-                    <Typography component={"div"} className={classes.headerFullName}>
-                        {userProfile?.fullName}
-                    </Typography>
-                    <Typography component={"div"} className={classes.headerUsername}>
-                        @{userProfile?.username}
-                    </Typography>
-                </div>
+                {(userProfile !== undefined) && (
+                    <>
+                        <BackButton/>
+                        <div>
+                            <Typography component={"div"} className={classes.headerFullName}>
+                                {userProfile?.fullName}
+                            </Typography>
+                            <Typography component={"div"} className={classes.headerUsername}>
+                                @{userProfile?.username}
+                            </Typography>
+                        </div>
+                    </>
+                )}
             </Paper>
             <div className={classes.contentWrapper}>
                 <div className={classes.tabs}>
@@ -83,12 +102,12 @@ const FollowingFollowers: FC = (): ReactElement => {
                         <Tab onClick={handleShowFollowers} className={classes.tab} label="Followers"/>
                     </Tabs>
                 </div>
-                {(isFollowersLoading) ? (
+                {(isUserProfileLoading || isUsersLoading) ? (
                     <Spinner/>
                 ) : (
                     (activeTab === 0) ? (
                         (userProfile?.followers?.length !== 0) ? (
-                            profileData?.followers?.map((user) => (
+                            users.map((user) => (
                                 <Follower key={user.id} item={user} follow={handleFollow} unfollow={handleUnfollow}/>
                             ))
                         ) : (
@@ -117,7 +136,7 @@ const FollowingFollowers: FC = (): ReactElement => {
                             </div>)
                     ) : (
                         (userProfile?.following?.length !== 0) ? (
-                            profileData?.following?.map((user) => (
+                            users.map((user) => (
                                 <Follower key={user.id} item={user} follow={handleFollow} unfollow={handleUnfollow}/>
                             ))
                         ) : (

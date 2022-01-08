@@ -40,6 +40,10 @@ public interface UserService {
 
     User updateUserProfile(User userInfo);
 
+    List<User> getFollowers(Long userId);
+
+    List<User> getFollowing(Long userId);
+
     Notification processFollow(Long userId);
 
     List<User> overallFollowers(Long userId);

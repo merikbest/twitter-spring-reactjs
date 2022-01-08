@@ -6,7 +6,7 @@ import {UsersSearchActions, UsersSearchActionsType} from "./contracts/actionType
 
 const initialUsersState: UsersSearchState = {
     users: [],
-    loadingState: LoadingStatus.NEVER,
+    loadingState: LoadingStatus.LOADING,
 };
 
 export const usersSearchReducer = produce((draft: Draft<UsersSearchState>, action: UsersSearchActions) => {
@@ -16,7 +16,12 @@ export const usersSearchReducer = produce((draft: Draft<UsersSearchState>, actio
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
-        case UsersSearchActionsType.SET_USER_LOADING_STATE:
+        case UsersSearchActionsType.RESET_USERS_STATE:
+            draft.users = [];
+            draft.loadingState = LoadingStatus.LOADING;
+            break;
+
+        case UsersSearchActionsType.SET_USERS_LOADING_STATE:
             draft.loadingState = action.payload;
             break;
 

@@ -639,6 +639,130 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/user/followers/1 - Get followers by user id")
+    public void getFollowers() throws Exception {
+        mockMvc.perform(get(URL_USER_BASIC + "/followers/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(2)))
+                .andExpect(jsonPath("$[*].id").isNotEmpty())
+                .andExpect(jsonPath("$[*].email").isNotEmpty())
+                .andExpect(jsonPath("$[*].fullName").isNotEmpty())
+                .andExpect(jsonPath("$[*].username").isNotEmpty())
+                .andExpect(jsonPath("$[*].location").isNotEmpty())
+                .andExpect(jsonPath("$[*].about").isNotEmpty())
+                .andExpect(jsonPath("$[*].countryCode").isNotEmpty())
+                .andExpect(jsonPath("$[*].phone").isNotEmpty())
+                .andExpect(jsonPath("$[*].country").isNotEmpty())
+                .andExpect(jsonPath("$[*].gender").isNotEmpty())
+                .andExpect(jsonPath("$[*].language").isNotEmpty())
+                .andExpect(jsonPath("$[*].backgroundColor").isNotEmpty())
+                .andExpect(jsonPath("$[*].colorScheme").isNotEmpty())
+                .andExpect(jsonPath("$[*].mutedDirectMessages").isNotEmpty())
+                .andExpect(jsonPath("$[*].privateProfile").isNotEmpty())
+                .andExpect(jsonPath("$[*].website").isNotEmpty())
+                .andExpect(jsonPath("$[*].birthday").isNotEmpty())
+                .andExpect(jsonPath("$[*].registrationDate").isNotEmpty())
+                .andExpect(jsonPath("$[*].tweetCount").isNotEmpty())
+                .andExpect(jsonPath("$[*].mediaTweetCount").isNotEmpty())
+                .andExpect(jsonPath("$[*].likeCount").isNotEmpty())
+                .andExpect(jsonPath("$[*].notificationsCount").isNotEmpty())
+                .andExpect(jsonPath("$[*].pinnedTweet").isNotEmpty())
+                .andExpect(jsonPath("$[*].bookmarks").isNotEmpty())
+                .andExpect(jsonPath("$[*].avatar.id").isNotEmpty())
+                .andExpect(jsonPath("$[*].wallpaper.id").isNotEmpty())
+                .andExpect(jsonPath("$[*].profileCustomized").isNotEmpty())
+                .andExpect(jsonPath("$[*].profileStarted").isNotEmpty())
+                .andExpect(jsonPath("$[*].unreadMessages").isNotEmpty())
+                .andExpect(jsonPath("$[*].userMutedList").isNotEmpty())
+                .andExpect(jsonPath("$[*].userBlockedList").isNotEmpty())
+                .andExpect(jsonPath("$[*].subscribers").isNotEmpty())
+                .andExpect(jsonPath("$[*].followerRequests").isNotEmpty())
+                .andExpect(jsonPath("$[*].followers").isNotEmpty())
+                .andExpect(jsonPath("$[*].following").isNotEmpty());
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] GET /api/v1/user/followers/99 - Should user Not Found by id")
+    public void getFollowers_ShouldUserNotFound() throws Exception {
+        mockMvc.perform(get(URL_USER_BASIC + "/followers/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("User (id:99) not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] GET /api/v1/user/followers/5 - Should user blocked by other user")
+    public void getFollowers_ShouldUserBlockedByOtherUser() throws Exception {
+        mockMvc.perform(get(URL_USER_BASIC + "/followers/5"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("User (id:2) is blocked")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/user/following/4 - Get following by user id")
+    public void getFollowing() throws Exception {
+        mockMvc.perform(get(URL_USER_BASIC + "/following/4"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(2)))
+                .andExpect(jsonPath("$[*].id").isNotEmpty())
+                .andExpect(jsonPath("$[*].email").isNotEmpty())
+                .andExpect(jsonPath("$[*].fullName").isNotEmpty())
+                .andExpect(jsonPath("$[*].username").isNotEmpty())
+                .andExpect(jsonPath("$[*].location").isNotEmpty())
+                .andExpect(jsonPath("$[*].about").isNotEmpty())
+                .andExpect(jsonPath("$[*].countryCode").isNotEmpty())
+                .andExpect(jsonPath("$[*].phone").isNotEmpty())
+                .andExpect(jsonPath("$[*].country").isNotEmpty())
+                .andExpect(jsonPath("$[*].gender").isNotEmpty())
+                .andExpect(jsonPath("$[*].language").isNotEmpty())
+                .andExpect(jsonPath("$[*].backgroundColor").isNotEmpty())
+                .andExpect(jsonPath("$[*].colorScheme").isNotEmpty())
+                .andExpect(jsonPath("$[*].mutedDirectMessages").isNotEmpty())
+                .andExpect(jsonPath("$[*].privateProfile").isNotEmpty())
+                .andExpect(jsonPath("$[*].website").isNotEmpty())
+                .andExpect(jsonPath("$[*].birthday").isNotEmpty())
+                .andExpect(jsonPath("$[*].registrationDate").isNotEmpty())
+                .andExpect(jsonPath("$[*].tweetCount").isNotEmpty())
+                .andExpect(jsonPath("$[*].mediaTweetCount").isNotEmpty())
+                .andExpect(jsonPath("$[*].likeCount").isNotEmpty())
+                .andExpect(jsonPath("$[*].notificationsCount").isNotEmpty())
+                .andExpect(jsonPath("$[*].pinnedTweet").isNotEmpty())
+                .andExpect(jsonPath("$[*].bookmarks").isNotEmpty())
+                .andExpect(jsonPath("$[*].avatar.id").isNotEmpty())
+                .andExpect(jsonPath("$[*].wallpaper.id").isNotEmpty())
+                .andExpect(jsonPath("$[*].profileCustomized").isNotEmpty())
+                .andExpect(jsonPath("$[*].profileStarted").isNotEmpty())
+                .andExpect(jsonPath("$[*].unreadMessages").isNotEmpty())
+                .andExpect(jsonPath("$[*].userMutedList").isNotEmpty())
+                .andExpect(jsonPath("$[*].userBlockedList").isNotEmpty())
+                .andExpect(jsonPath("$[*].subscribers").isNotEmpty())
+                .andExpect(jsonPath("$[*].followerRequests").isNotEmpty())
+                .andExpect(jsonPath("$[*].followers").isNotEmpty())
+                .andExpect(jsonPath("$[*].following").isNotEmpty());
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] GET /api/v1/user/following/99 - Should user Not Found by id")
+    public void getFollowing_ShouldUserNotFound() throws Exception {
+        mockMvc.perform(get(URL_USER_BASIC + "/following/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("User (id:99) not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] GET /api/v1/user/following/6 - Should user blocked by other user")
+    public void getFollowing_ShouldUserBlockedByOtherUser() throws Exception {
+        mockMvc.perform(get(URL_USER_BASIC + "/following/6"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("User (id:2) is blocked")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
     @DisplayName("[200] GET /api/v1/user/follow/3 - Follow user by id")
     public void processFollow() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/follow/3"))

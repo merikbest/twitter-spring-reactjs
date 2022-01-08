@@ -111,6 +111,12 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
     const history = useHistory();
     const params = useParams<{ id: string }>();
 
+    const [isSubscriber, setIsSubscriber] = useState<boolean>(false);
+    const [isFollower, setIsFollower] = useState<boolean>(false);
+    const [isUserMuted, setIsUserMuted] = useState<boolean>(false);
+    const [isUserBlocked, setIsUserBlocked] = useState<boolean>(false);
+    const [isMyProfileBlocked, setIsMyProfileBlocked] = useState<boolean>(false);
+    const [isWaitingForApprove, setIsWaitingForApprove] = useState<boolean>(false);
     const [btnText, setBtnText] = useState<string>("");
     const [activeTab, setActiveTab] = useState<number>(0);
     const [sameFollowers, setSameFollowers] = useState<User[]>([]);
@@ -120,23 +126,18 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
     const pagesCount = useSelector(selectPagesCount);
     const [page, setPage] = useState<number>(0);
 
-    const [isSubscriber, setIsSubscriber] = useState<boolean>(false);
-    const [isFollower, setIsFollower] = useState<boolean>(false);
-    const [isUserMuted, setIsUserMuted] = useState<boolean>(false);
-    const [isUserBlocked, setIsUserBlocked] = useState<boolean>(false);
-    const [isMyProfileBlocked, setIsMyProfileBlocked] = useState<boolean>(false);
-    const [isWaitingForApprove, setIsWaitingForApprove] = useState<boolean>(false);
-
-    // const isSubscriber = userProfile?.subscribers?.findIndex(subscriber => subscriber.id === myProfile?.id) !== -1;
-    // const isFollower = myProfile?.followers?.findIndex(follower => follower.id === userProfile?.id) !== -1;
-    // const isUserMuted = myProfile?.userMutedList?.findIndex(mutedUser => mutedUser.id === userProfile?.id) !== -1;
-    // const isUserBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === userProfile?.id) !== -1;
-    // const isMyProfileBlocked = userProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
-    // const isWaitingForApprove = userProfile?.followerRequests?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
+    useEffect(() => {
+        console.log("FROM 0 useEffect");
+        setIsFollower(myProfile?.followers?.findIndex(follower => follower.id === userProfile?.id) !== -1);
+        setIsUserMuted(myProfile?.userMutedList?.findIndex(mutedUser => mutedUser.id === userProfile?.id) !== -1);
+        setIsUserBlocked(myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === userProfile?.id) !== -1);
+        setIsSubscriber(userProfile?.subscribers?.findIndex(subscriber => subscriber.id === myProfile?.id) !== -1);
+        setIsMyProfileBlocked(userProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1);
+        setIsWaitingForApprove(userProfile?.followerRequests?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1);
+    }, [myProfile, userProfile]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        console.log("FROM 1 useEffect");
 
         if (params.id) {
             dispatch(fetchUserProfile(params.id));
@@ -157,19 +158,6 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                 }
             });
         });
-        // setIsSubscriber(userProfile?.subscribers?.findIndex(subscriber => subscriber.id === myProfile?.id) !== -1);
-        // setIsFollower(myProfile?.followers?.findIndex(follower => follower.id === userProfile?.id) !== -1);
-        // setIsUserMuted(myProfile?.userMutedList?.findIndex(mutedUser => mutedUser.id === userProfile?.id) !== -1);
-        // setIsUserBlocked(myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === userProfile?.id) !== -1);
-        // setIsMyProfileBlocked(userProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1);
-        // setIsWaitingForApprove(userProfile?.followerRequests?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1);
-
-        setIsFollower(myProfile?.followers?.findIndex(follower => follower.id === userProfile?.id) !== -1);
-        setIsUserMuted(myProfile?.userMutedList?.findIndex(mutedUser => mutedUser.id === userProfile?.id) !== -1);
-        setIsUserBlocked(myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === userProfile?.id) !== -1);
-        setIsSubscriber(userProfile?.subscribers?.findIndex(subscriber => subscriber.id === myProfile?.id) !== -1);
-        setIsMyProfileBlocked(userProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1);
-        setIsWaitingForApprove(userProfile?.followerRequests?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1);
 
         return () => {
             dispatch(resetUserProfile());
@@ -179,7 +167,6 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
     }, [params.id]);
 
     useEffect(() => {
-        console.log("FROM 2 useEffect");
         setBtnText(isWaitingForApprove ? ("Pending") : (isUserBlocked ? "Blocked" : "Following"));
 
         if (userProfile) {
@@ -190,28 +177,20 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
         if (location.state?.isRegistered) {
             setVisibleSetupProfile(true);
         }
-        setIsSubscriber(userProfile?.subscribers?.findIndex(subscriber => subscriber.id === myProfile?.id) !== -1);
-        // setIsMyProfileBlocked(userProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1);
-        // setIsWaitingForApprove(userProfile?.followerRequests?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1);
-        setIsFollower(myProfile?.followers?.findIndex(follower => follower.id === userProfile?.id) !== -1);
         return () => {
             dispatch(resetUserTweets());
         };
     }, [userProfile]);
 
     useEffect(() => {
-        console.log("FROM 3 useEffect");
         const isBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === userProfile?.id) !== -1;
         setBtnText(isWaitingForApprove ? ("Pending") : (isBlocked ? "Blocked" : "Following"));
         setIsUserBlocked(isBlocked);
     }, [myProfile]);
 
     useEffect(() => {
-        console.log("FROM 4 useEffect");
         if (isMyProfileLoaded && isUserProfileSuccessLoaded) {
             const followers = myProfile?.followers?.filter(({id: id1}) => userProfile?.followers?.some(({id: id2}) => id2 === id1));
-            setIsUserBlocked(myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === userProfile?.id) !== -1);
-            setIsFollower(myProfile?.followers?.findIndex(follower => follower.id === userProfile?.id) !== -1);
             setSameFollowers(followers!);
         }
     }, [isMyProfileLoaded && isUserProfileSuccessLoaded]);
@@ -280,7 +259,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
         }
     };
 
-    const handleFollow = (): void => { // FROM 3 useEffect | FROM 2 useEffect
+    const handleFollow = (): void => {
         if (userProfile?.privateProfile) {
             dispatch(processFollowRequest(userProfile.id!));
         } else {
@@ -319,13 +298,13 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
         history.push("/messages");
     };
 
-    const onMuteUser = (): void => { // FROM 4 useEffect | FROM 3 useEffect | FROM 4 useEffect
+    const onMuteUser = (): void => {
         dispatch(addUserToMuteList(userProfile?.id!));
         setSnackBarMessage!(`@${userProfile?.username} has been ${isUserMuted ? "unmuted" : "muted"}.`);
         setOpenSnackBar!(true);
     };
 
-    const onBlockUser = (): void => { // FROM 4 useEffect | FROM 3 useEffect | FROM 4 useEffect
+    const onBlockUser = (): void => {
         dispatch(addUserToBlocklist(userProfile?.id!));
         setVisibleBlockUserModal(false);
         setBtnText(isUserBlocked ? "Following" : "Blocked");
@@ -609,7 +588,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                         {isUserProfileLoading ? (
                             <Spinner/>
                         ) : (
-                            isMyProfileLoaded && isUserProfileSuccessLoaded ? (
+                            (isMyProfileLoaded && isUserProfileSuccessLoaded) && (
                                 isMyProfileBlocked ? (
                                     <div className={classes.privateProfileInfo}>
                                         <Typography component={"div"} className={classes.privateProfileInfoTitle}>
@@ -628,8 +607,8 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                                 These Tweets are protected
                                             </Typography>
                                             <Typography component={"div"} className={classes.privateProfileInfoText}>
-                                                {`Only approved followers can see @${userProfile?.username}’s Tweets. To request 
-                                        access, click Follow. `} <a
+                                                {`Only approved followers can see @${userProfile?.username}’s Tweets. To 
+                                                request access, click Follow. `} <a
                                                 href={"https://help.twitter.com/safety-and-security/public-and-protected-tweets"}
                                                 target={"_blank"} className={classes.link}>Learn more</a>
                                             </Typography>
@@ -658,8 +637,6 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                         </>
                                     )
                                 )
-                            ) : (
-                               null
                             )
                         )}
                     </div>

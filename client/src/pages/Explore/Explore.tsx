@@ -182,11 +182,11 @@ const Explore: FC = (): ReactElement => {
                     </div>
                 </Paper>
                 <div className={classes.contentWrapper}>
-                    {(isUsersLoading) ? (
-                        <Spinner/>
+                    {(activeTab !== 2) ? (
+                        tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)
                     ) : (
-                        (activeTab !== 2) ? (
-                            tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)
+                        isUsersLoading ? (
+                            <Spinner/>
                         ) : (
                             users?.map((user) => (
                                 <Follower
