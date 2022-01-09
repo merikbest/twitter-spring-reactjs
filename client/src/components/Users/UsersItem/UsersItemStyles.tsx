@@ -24,24 +24,14 @@ export const useUsersItemStyles = makeStyles((theme: Theme) => ({
     },
     userInfo: {
         width: 120,
-    },
-    fullName: {
-        lineHeight: "20px",
-        color: theme.palette.text.primary,
-        fontWeight: 700,
-        fontSize: 15,
         textOverflow: "ellipsis",
         whiteSpace: "nowrap",
         overflow: "hidden",
-    },
-    username: {
-        lineHeight: "20px",
-        color: theme.palette.text.secondary,
-        fontWeight: 400,
-        fontSize: 15,
-        textOverflow: "ellipsis",
-        whiteSpace: "nowrap",
-        overflow: "hidden",
+        "& .MuiTypography-h6, .MuiTypography-subtitle1": {
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+        },
     },
     lockIcon: {
         "& svg": {

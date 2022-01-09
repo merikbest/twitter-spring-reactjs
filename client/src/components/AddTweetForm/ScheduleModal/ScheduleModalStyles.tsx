@@ -46,12 +46,6 @@ export const useScheduleModalStyles = makeStyles((theme: Theme) => ({
             height: "1.30em",
         },
     },
-    text: {
-        fontSize: 13,
-        fontWeight: 400,
-        lineHeight: "16px",
-        color: theme.palette.text.secondary,
-    },
     title: {
         fontSize: 20,
         fontWeight: 400,
@@ -60,15 +54,8 @@ export const useScheduleModalStyles = makeStyles((theme: Theme) => ({
     },
     subtitle: {
         marginBottom: 2,
-        fontSize: 15,
-        fontWeight: 400,
-        lineHeight: "20px",
-        color: theme.palette.text.secondary,
     },
     errorText: {
-        fontSize: 15,
-        fontWeight: 400,
-        lineHeight: "20px",
         color: theme.palette.error.main,
     },
     dateWrapper: {

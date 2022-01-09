@@ -4,18 +4,8 @@ export const usePhotoTaggingStyles = makeStyles((theme: Theme) => ({
     infoItemWrapper: {
         padding: "12px 16px"
     },
-    text: {
-        color: theme.palette.text.secondary,
-        fontWeight: 400,
-        fontSize: 13,
-        lineHeight: "16px"
-    },
     title: {
         paddingBottom: 4,
-        fontWeight: 700,
-        fontSize: 15,
-        color: theme.palette.text.primary,
-        lineHeight: "20px"
     },
     switch: {
         float: "right",
@@ -30,12 +20,6 @@ export const usePhotoTaggingStyles = makeStyles((theme: Theme) => ({
     },
     photoTaggingItemWrapper: {
         padding: "4px 0px",
-        "& .MuiTypography-root": {
-            fontSize: 15,
-            color: theme.palette.text.primary,
-            fontWeight: 400,
-            lineHeight: "20px",
-        },
         "& .MuiButtonBase-root": {
             padding: 4,
             float: "right",

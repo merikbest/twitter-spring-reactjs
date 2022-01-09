@@ -19,7 +19,7 @@ const Places: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     These are the places Twitter uses to show you more relevant content. You won’t see places listed
                     here if you turned off “Personalize based on places you’ve been”.
                 </Typography>
@@ -32,14 +32,14 @@ const Places: FC = (): ReactElement => {
                             {LocationIconFilled}
                         </span>
                     </div>
-                    <Typography component={"span"}>
+                    <Typography variant={"body1"} component={"span"}>
                         {countryName}
                     </Typography>
                 </div>
             </div>
             <Divider/>
             <div className={classes.deleteUser}>
-                <Typography component={"span"}>
+                <Typography variant={"body1"} component={"span"}>
                     Remove
                 </Typography>
             </div>

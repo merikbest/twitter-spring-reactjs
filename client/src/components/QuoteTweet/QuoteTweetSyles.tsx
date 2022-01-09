@@ -47,10 +47,6 @@ export const useQuoteTweetStyles = makeStyles<Theme, QuoteTweetStyles>((theme) =
             },
         },
     },
-    text: {
-        fontSize: 15,
-        fontWeight: 400,
-    },
     textIcon: {
         "& svg": {
             verticalAlign: "bottom",

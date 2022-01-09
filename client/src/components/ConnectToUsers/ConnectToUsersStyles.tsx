@@ -12,9 +12,8 @@ export const useConnectToUsersStyles = makeStyles((theme: Theme) => ({
         borderLeft: 0,
         borderRight: 0,
         borderRadius: 0,
-        '& h6': {
+        '& .MuiTypography-h5': {
             margin: "10px 20px",
-            fontWeight: 800,
         },
     },
     content: {

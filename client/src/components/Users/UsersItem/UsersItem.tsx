@@ -118,17 +118,15 @@ const UsersItem: FC<UsersItemProps<User> & SnackbarProps & HoverUserProps> = (
             </ListItemAvatar>
             <div className={classes.userInfo} onMouseEnter={handleHoverPopper} onMouseLeave={handleLeavePopper}>
                 <Link to={`/user/${user?.id}`}>
-                    <div>
-                        <Typography component={"span"} className={classes.fullName}>
-                            {user?.fullName}
-                        </Typography>
-                        {user?.privateProfile && (
-                            <span className={classes.lockIcon}>
-                                {LockIcon}
-                            </span>
-                        )}
-                    </div>
-                    <Typography component={"div"} className={classes.username}>
+                    <Typography variant={"h6"} display={"inline"}>
+                        {user?.fullName}
+                    </Typography>
+                    {user?.privateProfile && (
+                        <span className={classes.lockIcon}>
+                            {LockIcon}
+                        </span>
+                    )}
+                    <Typography variant={"subtitle1"} component={"div"}>
                         @{user?.username}
                     </Typography>
                     <PopperUserWindow visible={visiblePopperWindow} user={user!}/>

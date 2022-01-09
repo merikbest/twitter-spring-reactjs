@@ -62,17 +62,4 @@ export const useUserNotFoundStyles = makeStyles((theme: Theme) => ({
         margin: "40px 20px",
         textAlign: "center"
     },
-    infoTitle: {
-        marginBottom: 8,
-        fontWeight: 800,
-        lineHeight: "36px",
-        fontSize: 31,
-        color: theme.palette.text.primary,
-    },
-    infoText: {
-        fontWeight: 400,
-        lineHeight: "20px",
-        fontSize: 15,
-        color: theme.palette.text.secondary,
-    },
 }));

@@ -162,7 +162,7 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
             <div className={classes.userInfoWrapper}>
                 <Link to={`/user/${user?.id}`}>
                     <div>
-                        <Typography component={"span"} className={classes.fullName}>
+                        <Typography variant={"h6"} component={"span"}>
                             {user.fullName}
                         </Typography>
                         {user?.privateProfile && (
@@ -172,29 +172,29 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
                         )}
                     </div>
                 </Link>
-                <Typography component={"div"} className={classes.username}>
+                <Typography variant={"subtitle1"} component={"div"}>
                     @{user.username}
                 </Typography>
             </div>
             {(isMyProfileBlocked) ? null : (
                 <>
-                    <Typography component={"div"} className={classes.userInfo}>
+                    <Typography variant={"body1"} component={"div"} className={classes.userInfo}>
                         {user.about}
                     </Typography>
                     <div className={classes.userFollowersWrapper}>
                         <Link to={`/user/${user?.id}/following`} className={classes.followLink}>
-                            <Typography component={"span"} className={classes.followerCount}>
+                            <Typography variant={"h6"} component={"span"}>
                                 {user?.followers?.length ? user?.followers?.length : 0}
                             </Typography>
-                            <Typography component={"span"} className={classes.followerText}>
+                            <Typography variant={"subtitle1"} component={"span"}>
                                 {"Following"}
                             </Typography>
                         </Link>
                         <Link to={`/user/${user?.id}/followers`} className={classes.followLink}>
-                            <Typography component={"span"} className={classes.followerCount}>
+                            <Typography variant={"h6"} component={"span"}>
                                 {user?.following?.length ? user?.following?.length : 0}
                             </Typography>
-                            <Typography component={"span"} className={classes.followerText}>
+                            <Typography variant={"subtitle1"} component={"span"}>
                                 {"Followers"}
                             </Typography>
                         </Link>

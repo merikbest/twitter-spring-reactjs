@@ -9,10 +9,10 @@ const MutedWords: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.mutedWordsInfo}>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h4"} component={"div"}>
                     You aren’t muting any words
                 </Typography>
-                <Typography component={"div"} className={classes.subTitle}>
+                <Typography variant={"subtitle1"} component={"div"}>
                     When you mute words, you won’t get any new notifications for Tweets that include them or see Tweets
                     with those words in your timeline.
                     <a

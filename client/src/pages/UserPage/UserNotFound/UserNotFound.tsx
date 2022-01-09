@@ -22,10 +22,10 @@ const UserNotFound: FC = (): ReactElement => {
                 </Avatar>
             </div>
             <div className={classes.info}>
-                <Typography component={"div"} className={classes.infoTitle}>
+                <Typography variant={"h4"} component={"div"}>
                     This account doesn’t exist
                 </Typography>
-                <Typography component={"div"} className={classes.infoText}>
+                <Typography variant={"subtitle1"} component={"div"}>
                     Try searching for another.
                 </Typography>
             </div>

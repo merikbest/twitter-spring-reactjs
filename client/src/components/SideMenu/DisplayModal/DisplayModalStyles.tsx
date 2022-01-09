@@ -24,11 +24,7 @@ export const useDisplayModalStyles = makeStyles((theme: Theme) => ({
     },
     text: {
         marginBottom: 20,
-        color: theme.palette.text.secondary,
         textAlign: "center",
-        lineHeight: "20px",
-        fontSize: 15,
-        fontWeight: 400,
     },
     tweetInfoWrapper: {
         display: "flex",
@@ -58,10 +54,6 @@ export const useDisplayModalStyles = makeStyles((theme: Theme) => ({
     },
     tweetTitle: {
         marginRight: 3,
-        fontWeight: 700,
-        fontSize: 15,
-        color: theme.palette.text.primary,
-        lineHeight: "20px"
     },
     tweetVerifiedIcon: {
         marginRight: 3,
@@ -71,17 +63,7 @@ export const useDisplayModalStyles = makeStyles((theme: Theme) => ({
             height: "1.35em"
         },
     },
-    tweetInfoText: {
-        fontWeight: 400,
-        fontSize: 15,
-        color: theme.palette.text.secondary,
-        lineHeight: "20px"
-    },
     tweetText: {
-        fontWeight: 400,
-        fontSize: 15,
-        color: theme.palette.text.primary,
-        lineHeight: "20px",
         "&#xs": {
             fontSize: 13,
         },
@@ -93,11 +75,7 @@ export const useDisplayModalStyles = makeStyles((theme: Theme) => ({
         color: theme.palette.primary.main,
     },
     subtitle: {
-        color: theme.palette.text.secondary,
-        fontSize: 13,
-        marginBottom: 4,
         fontWeight: 700,
-        lineHeight: "20px",
     },
     stepperWrapper: {
         display: "flex",
@@ -200,27 +178,31 @@ export const useDisplayModalStyles = makeStyles((theme: Theme) => ({
         border: `2px solid ${theme.palette.primary.main}`,
         borderRadius: 4,
         cursor: "pointer",
+        "& .MuiTypography-h6": {
+            width: "100%",
+            textAlign: "center"
+        },
         "&#default": {
             backgroundColor: theme.palette.common.white,
-            color: theme.palette.common.black,
+            "& .MuiTypography-h6": {
+                color: "rgb(0, 0, 0)",
+            },
         },
         "&#dim": {
             backgroundColor: "rgb(21, 32, 43)",
-            color: theme.palette.common.white,
+            "& .MuiTypography-h6": {
+                color: theme.palette.common.white,
+            },
         },
         "&#lights-out": {
             backgroundColor: "rgb(0, 0, 0)",
-            color: "rgb(217, 217, 217)",
+            "& .MuiTypography-h6": {
+                color: "rgb(217, 217, 217)",
+            },
         },
     },
     backgroundItemWrapper: {
         padding: "4px 0px",
-        "& .MuiTypography-root": {
-            fontSize: 15,
-            color: theme.palette.text.primary,
-            fontWeight: 400,
-            lineHeight: "20px",
-        },
         "& .MuiButtonBase-root": {
             padding: 4,
             "& .MuiSvgIcon-root": {
@@ -228,13 +210,6 @@ export const useDisplayModalStyles = makeStyles((theme: Theme) => ({
                 height: 20
             },
         },
-    },
-    backgroundItemText: {
-        width: "100%",
-        fontWeight: 700,
-        fontSize: 15,
-        lineHeight: "20px",
-        textAlign: "center"
     },
     buttonWrapper: {
         marginTop: 38,

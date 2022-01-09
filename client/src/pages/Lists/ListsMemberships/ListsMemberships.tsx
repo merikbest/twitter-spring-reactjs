@@ -52,14 +52,14 @@ const ListsMemberships: FC = (): ReactElement => {
                 ) : (
                     (lists.length === 0 && isLoaded) ? (
                         <div className={classes.infoWrapper}>
-                            <Typography component={"div"} className={classes.title}>
+                            <Typography variant={"h4"} component={"div"}>
                                 {(myProfile?.id === userProfile?.id) ? (
                                     "You haven’t been added to any Lists yet"
                                 ) : (
                                     `@${userProfile?.username} hasn’t created any Lists`
                                 )}
                             </Typography>
-                            <Typography component={"div"} className={classes.text}>
+                            <Typography variant={"subtitle1"} component={"div"}>
                                 {(myProfile?.id === userProfile?.id) ? (
                                     "When someone adds you to a List, it’ll show up here."
                                 ) : (

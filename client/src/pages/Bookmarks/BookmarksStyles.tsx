@@ -44,14 +44,4 @@ export const useBookmarksStyles= makeStyles((theme) => ({
         width: 400,
         textAlign: "center",
     },
-    infoTitle: {
-        fontSize: 31,
-        fontWeight: 800,
-        lineHeight: "36px",
-        marginBottom: 8,
-    },
-    infoText: {
-        fontSize: 15,
-        color: theme.palette.text.secondary,
-    },
 }));

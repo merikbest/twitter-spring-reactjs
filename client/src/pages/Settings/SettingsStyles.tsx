@@ -32,9 +32,8 @@ export const useSettingsStyles = makeStyles<Theme, SettingsStylesProps>((theme) 
         borderRadius: 0,
         alignItems: 'center',
         flex: 1,
-        '& h6': {
+        '& .MuiTypography-h5': {
             marginLeft: 15,
-            fontWeight: 800,
         },
     },
     rightSideHeader: {
@@ -51,9 +50,8 @@ export const useSettingsStyles = makeStyles<Theme, SettingsStylesProps>((theme) 
         borderRadius: 0,
         alignItems: 'center',
         flex: 1,
-        '& h6': {
+        '& .MuiTypography-h5': {
             marginLeft: 15,
-            fontWeight: 800,
         },
     },
     listWrapper: {
@@ -73,12 +71,6 @@ export const useSettingsStyles = makeStyles<Theme, SettingsStylesProps>((theme) 
             "&.Mui-selected": {
                 backgroundColor: theme.palette.secondary.main,
             },
-        },
-        "& .MuiTypography-root": {
-            fontSize: 15,
-            fontWeight: 400,
-            lineHeight: "20px",
-            color: theme.palette.text.primary,
         },
         "& .Mui-selected": {
             borderRight: `2px solid ${theme.palette.primary.main}`,

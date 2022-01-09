@@ -30,13 +30,13 @@ const YouTubeVideo: FC<YouTubeVideoProps> = ({tweet}): ReactElement => {
             </iframe>
             <a className={classes.youtubeLink} target="_blank" href={tweet.link}>
                 <div className={classes.videoInfoWrapper}>
-                    <Typography component={"div"} className={classes.videoInfoTitle}>
+                    <Typography variant={"body1"}  component={"div"}>
                         {tweet.linkTitle}
                     </Typography>
-                    <Typography component={"div"} className={classes.videoInfoDescription}>
+                    <Typography variant={"subtitle1"} component={"div"}>
                         {tweet.linkDescription}
                     </Typography>
-                    <Typography component={"div"} className={classes.youtubeTitle}>
+                    <Typography variant={"subtitle1"} component={"div"}>
                         {LinkIcon}youtube.com
                     </Typography>
                 </div>

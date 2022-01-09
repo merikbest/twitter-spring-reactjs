@@ -46,14 +46,14 @@ const FollowerRequestsItem: FC<FollowerRequestsItemProps & HoverUserProps> = (
                 <div className={classes.header}>
                     <Link to={`/user/${user?.id}`} className={classes.link}>
                         <div onMouseLeave={handleLeavePopper} className={classes.headerUserInfo}>
-                            <Typography onMouseEnter={handleHoverPopper} className={classes.fullName}>
+                            <Typography variant={"h6"} onMouseEnter={handleHoverPopper}>
                                 {user?.fullName}
                             </Typography>
                             <PopperUserWindow visible={visiblePopperWindow} user={user!}/>
-                            <Typography className={classes.username}>
+                            <Typography variant={"subtitle1"}>
                                 @{user?.username}
                             </Typography>
-                            <Typography className={classes.about}>
+                            <Typography variant={"body1"}>
                                 {user?.about}
                             </Typography>
                         </div>

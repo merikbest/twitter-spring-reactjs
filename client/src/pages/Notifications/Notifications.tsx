@@ -63,7 +63,7 @@ const Notifications: FC<HoverUserProps> = (
         <Paper className={classes.container} variant="outlined">
             <Paper className={classes.header}>
                 <div>
-                    <Typography variant="h6">
+                    <Typography variant="h5">
                         Notifications
                     </Typography>
                 </div>

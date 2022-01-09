@@ -7,6 +7,9 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
         borderTop: '0',
         borderBottom: '0',
         paddingBottom: 500,
+        '& .MuiTypography-h5': {
+            margin: "12px 16px",
+        },
     },
     header: {
         position: "fixed",
@@ -20,19 +23,9 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
         borderLeft: '0',
         borderRight: '0',
         borderRadius: 0,
-        '& h6': {
-            fontWeight: 800,
+        '& .MuiTypography-h5': {
+            margin: 0,
         },
-    },
-    headerFullName: {
-        fontWeight: 800,
-        fontSize: 20,
-        lineHeight: "24px",
-    },
-    headerUsername: {
-        fontSize: 13,
-        lineHeight: "16px",
-        color: theme.palette.text.secondary,
     },
     iconGroup: {
         marginLeft: "auto",
@@ -89,10 +82,6 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
         borderLeft: 0,
         borderRight: 0,
         borderRadius: 0,
-        '& h6': {
-            margin: "12px 16px",
-            fontWeight: 800,
-        },
     },
     pinnedListsText: {
         fontSize: 15,
@@ -109,10 +98,6 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
         borderLeft: 0,
         borderRight: 0,
         borderRadius: 0,
-        '& h6': {
-            margin: "12px 16px",
-            fontWeight: 800,
-        },
     },
     link: {
         textDecoration: "none",
@@ -131,9 +116,5 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
         height: 316,
         border: 0,
         borderRadius: 0,
-        '& h6': {
-            margin: "12px 16px",
-            fontWeight: 800,
-        },
     },
 }));

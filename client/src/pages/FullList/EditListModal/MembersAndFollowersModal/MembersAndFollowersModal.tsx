@@ -58,14 +58,14 @@ const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
                     users.map((user) => <ManageMembersItem item={list} member={user}/>)
                 ) : (
                     <div className={classes.infoWrapper}>
-                        <Typography component={"div"} className={classes.title}>
+                        <Typography variant={"h4"} component={"div"}>
                             {(title === "List members") ? (
                                 "There isn’t anyone in this List"
                             ) : (
                                 "There aren’t any followers of this List"
                             )}
                         </Typography>
-                        <Typography component={"div"} className={classes.text}>
+                        <Typography variant={"subtitle1"} component={"div"}>
                             {(title === "List members") ? (
                                 "When people get added, they’ll show up here."
                             ) : (

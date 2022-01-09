@@ -15,19 +15,6 @@ export const useConnectedAppsStyles = makeStyles((theme: Theme) => ({
         width: 336,
         textAlign: "center"
     },
-    title: {
-        marginBottom: 8,
-        lineHeight: "36px",
-        fontSize: 31,
-        fontWeight: 800,
-        color: theme.palette.text.primary,
-    },
-    subtitle: {
-        lineHeight: "20px",
-        fontSize: 15,
-        fontWeight: 400,
-        color: theme.palette.text.secondary,
-    },
     link: {
         textDecoration: "none",
         color: theme.palette.primary.main,

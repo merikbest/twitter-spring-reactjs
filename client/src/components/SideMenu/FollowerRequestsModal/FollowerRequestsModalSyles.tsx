@@ -23,15 +23,4 @@ export const useFollowerRequestsModalStyles = makeStyles((theme: Theme) => ({
         width: 400,
         textAlign: "center",
     },
-    infoTitle: {
-        fontSize: 31,
-        fontWeight: 800,
-        lineHeight: "36px",
-        marginBottom: 8,
-        color: theme.palette.text.primary,
-    },
-    infoText: {
-        fontSize: 15,
-        color: theme.palette.text.secondary,
-    },
 }));

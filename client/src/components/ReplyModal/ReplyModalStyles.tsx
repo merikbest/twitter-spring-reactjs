@@ -17,7 +17,6 @@ export const useReplyModalStyles = makeStyles((theme: Theme) => ({
         },
     },
     modalWrapper: {
-        fontSize: 15,
         display: 'flex',
         alignItems: 'flex-start',
         position: "relative",
@@ -32,14 +31,14 @@ export const useReplyModalStyles = makeStyles((theme: Theme) => ({
     verticalLine: {
         marginLeft: 21,
         position: "absolute",
-        borderLeft: `2px solid ${theme.palette.info.light}`,
+        borderLeft: `2px solid ${theme.palette.divider}`,
         height: "100%",
     },
     avatar: {
         zIndex: 1,
         width: "46px !important",
         height: "46px !important",
-        border: "1px solid white",
+        border: `1px solid ${theme.palette.divider}`,
         marginRight: 15,
     },
     header: {
@@ -74,8 +73,6 @@ export const useReplyModalStyles = makeStyles((theme: Theme) => ({
     replyWrapper: {
         marginTop: 12,
         zIndex: 2,
-        fontSize: 15,
-        color: theme.palette.info.light,
     },
     replyLink: {
         textDecoration: "none",

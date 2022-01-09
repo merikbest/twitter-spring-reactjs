@@ -30,10 +30,10 @@ const BlockUserModal: FC<BlockUserModalProps> = (
     return (
         <Dialog className={classes.dialog} open={visible} onClose={onClose}>
             <DialogContent>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h5"} component={"div"}>
                     {isUserBlocked ? "Unblock" : "Block"} @{username}
                 </Typography>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle1"} component={"div"} className={classes.text}>
                     {isUserBlocked ? (
                         "They will be able to follow you and view your Tweets."
                     ) : (

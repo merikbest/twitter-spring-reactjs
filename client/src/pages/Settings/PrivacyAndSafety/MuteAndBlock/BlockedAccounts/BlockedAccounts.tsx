@@ -53,14 +53,14 @@ const BlockedAccounts: FC = (): ReactElement => {
             ) : (
                 (blockedUsers.length === 0 && isUsersLoadedSuccess) ? (
                     <div className={classes.blockedAccountsInfo}>
-                        <Typography component={"div"} className={classes.title}>
+                        <Typography variant={"h4"} component={"div"}>
                             {(activeTab === 0) ? (
                                 "You aren’t blocking anyone"
                             ) : (
                                 "You haven’t imported a list of accounts to block"
                             )}
                         </Typography>
-                        <Typography component={"div"} className={classes.subTitle}>
+                        <Typography variant={"subtitle1"} component={"div"}>
                             {(activeTab === 0) ? (
                                 <>
                                     When you block someone, that person won’t be able to follow or message you, and you

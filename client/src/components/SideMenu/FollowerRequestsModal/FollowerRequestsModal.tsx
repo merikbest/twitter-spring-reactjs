@@ -31,10 +31,10 @@ const FollowerRequestsModal: FC<FollowerRequestsModalProps> = ({visible, onClose
                 {(myProfile?.followerRequests?.length === 0) ? (
                     <div className={classes.contentWrapper}>
                         <div className={classes.infoWrapper}>
-                            <Typography component={"div"} className={classes.infoTitle}>
+                            <Typography variant={"h4"} component={"div"}>
                                 You don’t have any follower requests
                             </Typography>
-                            <Typography component={"div"} className={classes.infoText}>
+                            <Typography variant={"subtitle1"} component={"div"}>
                                 When someone requests to follow you, it’ll show up here.
                             </Typography>
                         </div>

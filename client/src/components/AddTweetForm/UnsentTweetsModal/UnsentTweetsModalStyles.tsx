@@ -53,21 +53,7 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
     infoWrapper: {
         margin: "32px auto",
         width: 336,
-    },
-    title: {
-        fontSize: 31,
-        fontWeight: 800,
         textAlign: "center",
-        lineHeight: "36px",
-        color: theme.palette.text.primary,
-        marginBottom: 8
-    },
-    text: {
-        fontSize: 15,
-        fontWeight: 400,
-        lineHeight: "20px",
-        textAlign: "center",
-        color: theme.palette.text.secondary,
     },
     tweetContainer: {
         padding: "12px 16px",
@@ -75,7 +61,7 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
         display: "flex",
         "&:hover": {
             cursor: "pointer",
-            backgroundColor: "rgb(247, 249, 249)"
+            backgroundColor: theme.palette.secondary.main,
         },
     },
     tweetWrapper: {
@@ -84,12 +70,6 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
     tweetInfo: {
         display: "flex",
         justifyContent: "flex-start"
-    },
-    tweetText: {
-        fontSize: 15,
-        fontWeight: 400,
-        lineHeight: "20px",
-        color: theme.palette.text.primary,
     },
     imageWrapper: {
         width: 75,
@@ -107,12 +87,6 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
             fill: theme.palette.text.secondary,
             height: "1.30em",
         },
-    },
-    scheduledDateText: {
-        fontSize: 13,
-        fontWeight: 400,
-        lineHeight: "16px",
-        color: theme.palette.text.secondary,
     },
     addTweetWrapper: {
       padding: "4px 16px 20px 16px",

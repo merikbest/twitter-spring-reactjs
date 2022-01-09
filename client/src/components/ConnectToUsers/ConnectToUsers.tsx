@@ -33,7 +33,7 @@ const ConnectToUsers: FC<ConnectToUsersProps> = (
             ) : (
                 <>
                     <Paper className={classes.header} variant="outlined">
-                        <Typography variant="h6">
+                        <Typography variant="h5">
                             {title}
                         </Typography>
                     </Paper>

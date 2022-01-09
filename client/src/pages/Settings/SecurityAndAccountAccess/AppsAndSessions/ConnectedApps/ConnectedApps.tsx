@@ -18,10 +18,10 @@ const ConnectedApps: FC = (): ReactElement => {
                 </Typography>
             </div>
             <div className={classes.connectedAppsWrapper}>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h4"} component={"div"}>
                     You don’t have any connected apps
                 </Typography>
-                <Typography component={"div"} className={classes.subtitle}>
+                <Typography variant={"subtitle1"} component={"div"}>
                     When you connect a third-party app to your Twitter account, you are granting that app access
                     to use your account.
                 </Typography>

@@ -58,10 +58,10 @@ const Bookmarks: FC = (): ReactElement => {
                     ) : (
                         (!isLoading && tweets.length === 0) ? (
                             <div className={classes.infoWrapper}>
-                                <Typography component={"div"} className={classes.infoTitle}>
+                                <Typography variant={"h4"} component={"div"}>
                                     You haven’t added any Tweets to your Bookmarks yet
                                 </Typography>
-                                <Typography component={"div"} className={classes.infoText}>
+                                <Typography variant={"subtitle1"} component={"div"}>
                                     When you do, they’ll show up here.
                                 </Typography>
                             </div>

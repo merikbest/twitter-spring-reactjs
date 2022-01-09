@@ -1,5 +1,5 @@
 import React, {FC, ReactElement, useState} from 'react';
-import {ClickAwayListener, IconButton, List, ListItem} from "@material-ui/core";
+import {ClickAwayListener, IconButton, List, ListItem, Typography} from "@material-ui/core";
 
 import {useQuoteTweetStyles} from "./QuoteTweetSyles";
 import {Retweet, Tweet} from "../../store/ducks/tweets/contracts/state";
@@ -83,17 +83,17 @@ const QuoteTweet: FC<QuoteTweetProps> = (
                                 <span className={classes.textIcon}>
                                     {RetweetOutlinedIcon}
                                 </span>
-                                <span className={classes.text}>
+                                <Typography variant={"body1"} component={"span"}>
                                     {isTweetRetweetedByMe ? ("Undo Retweet") : ("Retweet")}
-                                </span>
+                                </Typography>
                             </ListItem>
                             <ListItem onClick={handleClickOpenAddTweet}>
                                 <span className={classes.textIcon}>
                                     {QuoteTweetIcon}
                                 </span>
-                                <span className={classes.text}>
+                                <Typography variant={"body1"} component={"span"}>
                                     Quote Tweet
-                                </span>
+                                </Typography>
                             </ListItem>
                         </List>
                     </div>

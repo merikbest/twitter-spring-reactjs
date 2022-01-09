@@ -113,7 +113,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     <NavLink to="/home" activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
-                                <Typography className={classes.label} variant="h6">
+                                <Typography className={classes.label}>
                                     {visibleHomeNotification && <span className={classes.homeNotification}/>}
                                     {(location.pathname.includes("/home")) ? (
                                         <span>{HomeIconFilled}</span>
@@ -129,7 +129,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     <NavLink to="/search" activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
-                                <Typography className={classes.label} variant="h6">
+                                <Typography className={classes.label}>
                                     {(location.pathname.includes("/search")) ? (
                                         <span>{ExploreIconFilled}</span>
                                     ) : (
@@ -144,7 +144,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     <NavLink to="/notifications" activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
-                                <Typography className={classes.label} variant="h6">
+                                <Typography className={classes.label}>
                                     {(myProfile?.notificationsCount !== 0) ? (
                                         <span className={classes.count}>
                                             {myProfile?.notificationsCount}
@@ -164,7 +164,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     <NavLink to="/messages" activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
-                                <Typography className={classes.label} variant="h6">
+                                <Typography className={classes.label}>
                                     {(myProfile?.unreadMessages?.length !== 0) ? (
                                         <span className={classes.count}>
                                             {myProfile?.unreadMessages?.length}
@@ -184,7 +184,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     <NavLink to="/bookmarks" activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
-                                <Typography className={classes.label} variant="h6">
+                                <Typography className={classes.label}>
                                     {(location.pathname.includes("/bookmarks")) ? (
                                         <span>{BookmarksIconFilled}</span>
                                     ) : (
@@ -199,7 +199,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     <NavLink to={"/lists"} activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
-                                <Typography className={classes.label} variant="h6">
+                                <Typography className={classes.label}>
                                     {(location.pathname.includes("/lists")) ? (
                                         <span>{ListsIconFilled}</span>
                                     ) : (
@@ -214,7 +214,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     <NavLink to={`/user/${userData?.id}`} activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
-                                <Typography className={classes.label} variant="h6">
+                                <Typography className={classes.label}>
                                     {(location.pathname.includes(`/user/${myProfile?.id}`)) ? (
                                         <span>{ProfileIconFilled}</span>
                                     ) : (
@@ -228,7 +228,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                 <li className={classes.itemWrapper}>
                     <div aria-describedby={id} onClick={handleOpenPopup}>
                         <Hidden smDown>
-                            <Typography className={classes.label} variant="h6">
+                            <Typography className={classes.label}>
                                 <span>{MoreIcon}</span> More
                             </Typography>
                         </Hidden>

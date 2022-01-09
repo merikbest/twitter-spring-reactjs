@@ -32,9 +32,7 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
         '&:hover': {
             '& div': {
                 backgroundColor: theme.palette.secondary.light,
-                '& h6': {
-                    color: theme.palette.primary.main,
-                },
+                color: theme.palette.primary.main,
                 '& svg path': {
                     fill: theme.palette.primary.main,
                 },

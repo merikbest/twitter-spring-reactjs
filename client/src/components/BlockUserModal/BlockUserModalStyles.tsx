@@ -6,24 +6,13 @@ export const useBlockUserModalStyles = makeStyles((theme: Theme) => ({
             padding: 32,
             width: 320
         },
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: 700,
         textAlign: "center",
-        lineHeight: "24px",
-        color: theme.palette.text.primary,
     },
     text: {
         marginTop: 8,
-        marginBottom: 24,
-        fontSize: 15,
-        fontWeight: 400,
-        textAlign: "center",
-        lineHeight: "20px",
-        color: theme.palette.text.secondary,
     },
     containedButton: {
+        marginTop: 24,
         "&.MuiButtonBase-root": {
             padding: "11px 16px",
             marginBottom: 12,

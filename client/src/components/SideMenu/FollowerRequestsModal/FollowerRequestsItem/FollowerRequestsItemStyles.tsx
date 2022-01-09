@@ -34,23 +34,6 @@ export const useFollowerRequestsItemStyles = makeStyles((theme: Theme) => ({
         position: "relative",
         width: 350
     },
-    fullName: {
-        lineHeight: "20px",
-        color: theme.palette.text.primary,
-        fontWeight: 800,
-        fontSize: 15,
-    },
-    username: {
-        lineHeight: "20px",
-        color: theme.palette.text.secondary,
-        fontWeight: 400,
-        fontSize: 15,
-    },
-    about: {
-        lineHeight: "20px",
-        fontWeight: 400,
-        fontSize: 15,
-    },
     buttonWrapper: {
         display: "flex",
         marginTop: 8,

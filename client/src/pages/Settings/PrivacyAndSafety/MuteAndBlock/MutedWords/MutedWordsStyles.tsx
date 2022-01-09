@@ -6,18 +6,6 @@ export const useMutedWordsStyles = makeStyles((theme: Theme) => ({
         width: 336,
         textAlign: "center",
     },
-    title: {
-        lineHeight: "36px",
-        fontSize: 31,
-        fontWeight: 800,
-        color: theme.palette.text.primary,
-        marginBottom: 8
-    },
-    subTitle: {
-        color: theme.palette.text.secondary,
-        fontWeight: 400,
-        fontSize: 15,
-    },
     link: {
         display: "block",
         textDecoration: "none",

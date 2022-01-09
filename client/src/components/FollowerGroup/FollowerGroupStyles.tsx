@@ -4,7 +4,7 @@ export const useFollowerGroupStyles = makeStyles((theme: Theme) => ({
     followedTextInfoWrapper: {
         marginTop: 12,
         "& .MuiAvatarGroup-root": {
-            verticalAlign: "middle",
+            verticalAlign: "bottom",
             display: "inline-flex",
             "& .MuiAvatar-root": {
                 width: "20px !important",
@@ -18,10 +18,6 @@ export const useFollowerGroupStyles = makeStyles((theme: Theme) => ({
     },
     followedTextInfo: {
         marginLeft: 12,
-        color: theme.palette.text.secondary,
-        lineHeight: "16px",
-        fontSize: 13,
-        fontWeight: 400,
         "&:hover": {
             cursor: "pointer",
             textDecoration: "underline",
@@ -29,9 +25,5 @@ export const useFollowerGroupStyles = makeStyles((theme: Theme) => ({
     },
     noFollowedTextInfo: {
         marginTop: 12,
-        color: theme.palette.text.secondary,
-        lineHeight: "16px",
-        fontSize: 13,
-        fontWeight: 400,
     },
 }));

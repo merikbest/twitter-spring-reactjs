@@ -120,7 +120,7 @@ const Follower: FC<FollowerProps<User> & HoverUserProps & SnackbarProps> = (
                         <Link to={`/user/${user?.id}`} className={classes.link}>
                             <div className={classes.followerInfo}>
                                 <div>
-                                    <Typography component={"span"} className={classes.fullName}>
+                                    <Typography variant={"h6"} component={"span"}>
                                         {user?.fullName}
                                     </Typography>
                                     {user?.privateProfile && (
@@ -129,7 +129,7 @@ const Follower: FC<FollowerProps<User> & HoverUserProps & SnackbarProps> = (
                                         </span>
                                     )}
                                 </div>
-                                <Typography component={"div"} className={classes.username}>
+                                <Typography variant={"subtitle1"} component={"div"}>
                                     @{user?.username}
                                 </Typography>
                             </div>
@@ -191,7 +191,7 @@ const Follower: FC<FollowerProps<User> & HoverUserProps & SnackbarProps> = (
                     </div>
                 </div>
                 {(isMyProfileBlocked) ? null : (
-                    <Typography display="block">
+                    <Typography variant={"body1"} display="block">
                         {user?.about}
                     </Typography>
                 )}

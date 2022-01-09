@@ -151,15 +151,4 @@ export const useFullListStyles = makeStyles((theme: Theme) => ({
         marginTop: 32,
         textAlign: "center",
     },
-    listInfoTitle: {
-        lineHeight: "36px",
-        fontSize: 31,
-        fontWeight: 800,
-        marginBottom: 8,
-    },
-    listInfoText: {
-        lineHeight: "20px",
-        fontSize: 15,
-        color: theme.palette.text.secondary,
-    },
 }));

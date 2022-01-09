@@ -74,10 +74,10 @@ const FollowersYouKnow: FC = (): ReactElement => {
                 (!isLoading && (overallFollowers.length === 0)) ? (
                     <div className={classes.contentWrapper}>
                         <div className={classes.infoWrapper}>
-                            <Typography component={"div"} className={classes.infoTitle}>
+                            <Typography variant={"h4"} component={"div"}>
                                 {`@${userProfile?.username} doesn’t have any followers you know yet`}
                             </Typography>
-                            <Typography component={"div"} className={classes.infoText}>
+                            <Typography variant={"subtitle1"} component={"div"}>
                                 When someone you know follows them, they’ll be listed here.
                             </Typography>
                         </div>

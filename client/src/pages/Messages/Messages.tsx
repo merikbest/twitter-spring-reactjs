@@ -168,11 +168,9 @@ const Messages: FC = (): ReactElement => {
                 <div className={classes.messagesContainer}>
                     <Paper variant="outlined">
                         <Paper className={classes.header}>
-                            <div>
-                                <Typography variant="h6">
-                                    Messages
-                                </Typography>
-                            </div>
+                            <Typography variant="h5">
+                                Messages
+                            </Typography>
                             <div className={classes.iconGroup}>
                                 <div className={classes.icon}>
                                     <Link to={"/messages/settings"}>
@@ -207,13 +205,13 @@ const Messages: FC = (): ReactElement => {
                         </Paper>
                         {(chats.length === 0) ? (
                             <>
-                                <div className={classes.messagesTitle}>
+                                <Typography variant={"h4"} component={"div"} className={classes.messagesTitle}>
                                     Send a message, get a message
-                                </div>
-                                <div className={classes.messagesText}>
+                                </Typography>
+                                <Typography variant={"subtitle1"} component={"div"} className={classes.messagesText}>
                                     Direct Messages are private conversations between you and other people on Twitter.
                                     Share Tweets, media, and more!
-                                </div>
+                                </Typography>
                                 <Button
                                     onClick={onOpenModalWindow}
                                     className={classes.messagesButton}
@@ -267,14 +265,14 @@ const Messages: FC = (): ReactElement => {
                                                     )}
                                                 />
                                                 <div>
-                                                    <Typography component={"div"} className={classes.userFullName}>
+                                                    <Typography variant={"h6"} component={"span"}>
                                                         {(myProfile?.id === chat.participants[1].user.id!) ? (
                                                             chat.participants[0].user.fullName
                                                         ) : (
                                                             chat.participants[1].user.fullName
                                                         )}
                                                     </Typography>
-                                                    <Typography component={"div"} className={classes.username}>
+                                                    <Typography variant={"subtitle1"} component={"span"} className={classes.username}>
                                                         {(myProfile?.id === chat.participants[1].user.id!) ? (
                                                             "@" + chat.participants[0].user.username
                                                         ) : (
@@ -297,7 +295,7 @@ const Messages: FC = (): ReactElement => {
                         <Paper variant="outlined">
                             <Paper className={classes.chatHeader}>
                                 <BackButton/>
-                                <Typography variant="h6">
+                                <Typography variant="h5">
                                     Direct Messages
                                 </Typography>
                             </Paper>
@@ -319,12 +317,12 @@ const Messages: FC = (): ReactElement => {
                         <div className={classes.chatContainer}>
                             <Paper variant="outlined">
                                 <div className={classes.chatInfoWrapper}>
-                                    <div className={classes.chatInfoTitle}>
+                                    <Typography variant={"h4"} component={"div"}>
                                         You don’t have a message selected
-                                    </div>
-                                    <div className={classes.chatInfoText}>
+                                    </Typography>
+                                    <Typography variant={"subtitle1"} component={"div"}>
                                         Choose one from your existing messages, or start a new one.
-                                    </div>
+                                    </Typography>
                                     <Button
                                         onClick={onOpenModalWindow}
                                         className={classes.chatInfoButton}
@@ -345,10 +343,10 @@ const Messages: FC = (): ReactElement => {
                                         src={participant.user.avatar?.src ? participant.user.avatar.src : DEFAULT_PROFILE_IMG}
                                     />
                                     <div style={{flex: 1}}>
-                                        <Typography variant="h6">
+                                        <Typography variant="h5">
                                             {participant.user.fullName}
                                         </Typography>
-                                        <Typography variant="caption" display="block" gutterBottom>
+                                        <Typography variant="subtitle2" component={"div"}>
                                             @{participant.user.username}
                                         </Typography>
                                     </div>
@@ -387,20 +385,32 @@ const Messages: FC = (): ReactElement => {
                                                                             DEFAULT_PROFILE_IMG
                                                                         )}
                                                                     />
-                                                                    <span className={classes.tweetUserFullName}>
+                                                                    <Typography variant={"h6"} component={"span"}>
                                                                         {message.tweet?.user.fullName}
-                                                                    </span>
-                                                                    <span className={classes.tweetUsername}>
+                                                                    </Typography>
+                                                                    <Typography
+                                                                        variant={"subtitle1"}
+                                                                        component={"span"}
+                                                                        className={classes.tweetUsername}
+                                                                    >
                                                                         @{message.tweet?.user.username}
-                                                                    </span>
-                                                                    <span className={classes.tweetUsername}>·</span>
-                                                                    <span className={classes.tweetUsername}>
+                                                                    </Typography>
+                                                                    <Typography
+                                                                        variant={"subtitle1"}
+                                                                        component={"span"}
+                                                                        className={classes.tweetUsername}
+                                                                    >·</Typography>
+                                                                    <Typography
+                                                                        variant={"subtitle1"}
+                                                                        component={"span"}
+                                                                        className={classes.tweetUsername}
+                                                                    >
                                                                         {formatDate(new Date(message.tweet?.dateTime!))}
-                                                                    </span>
+                                                                    </Typography>
                                                                 </div>
-                                                                <span>
+                                                                <Typography variant={"body1"} component={"span"}>
                                                                     {textFormatter(message.tweet?.text)}
-                                                                </span>
+                                                                </Typography>
                                                             </div>
                                                         </Link>
                                                     </div>
@@ -410,12 +420,16 @@ const Messages: FC = (): ReactElement => {
                                                         classes.myMessage,
                                                         message.tweet ? classes.myMessageWithTweet : classes.myMessageCommon
                                                     )}>
-                                                        <span>{message.text}</span>
+                                                        <Typography component={"span"}>
+                                                            {message.text}
+                                                        </Typography>
                                                     </div>
                                                 )}
                                                 <div className={classes.myMessageDate}>
                                                     <span>{CheckIcon}</span>
-                                                    <span>{formatChatMessageDate(new Date(message.date))}</span>
+                                                    <Typography variant={"subtitle2"} component={"span"}>
+                                                        {formatChatMessageDate(new Date(message.date))}
+                                                    </Typography>
                                                 </div>
                                             </React.Fragment>
                                         ) : (
@@ -441,8 +455,7 @@ const Messages: FC = (): ReactElement => {
                                                             <div className={classes.participantTweetContainer}>
                                                                 <Link to={`/home/tweet/${message.tweet.id}`}>
                                                                     <div className={classes.participantTweetWrapper}>
-                                                                        <div
-                                                                            className={classes.participantTweetInfoWrapper}>
+                                                                        <div className={classes.participantTweetInfoWrapper}>
                                                                             <Avatar
                                                                                 className={classes.participantTweetAvatar}
                                                                                 src={(message.tweet.user.avatar?.src) ? (
@@ -451,20 +464,32 @@ const Messages: FC = (): ReactElement => {
                                                                                     DEFAULT_PROFILE_IMG
                                                                                 )}
                                                                             />
-                                                                            <span className={classes.participantTweetFullName}>
+                                                                            <Typography variant={"h6"} component={"span"}>
                                                                                 {message.tweet.user.fullName}
-                                                                            </span>
-                                                                            <span className={classes.participantTweetUsername}>
+                                                                            </Typography>
+                                                                            <Typography
+                                                                                variant={"subtitle1"}
+                                                                                component={"span"}
+                                                                                className={classes.participantTweetUsername}
+                                                                            >
                                                                                 @{message.tweet.user.username}
-                                                                            </span>
-                                                                            <span className={classes.participantTweetUsername}>·</span>
-                                                                            <span className={classes.participantTweetUsername}>
+                                                                            </Typography>
+                                                                            <Typography
+                                                                                variant={"subtitle1"}
+                                                                                component={"span"}
+                                                                                className={classes.participantTweetUsername}
+                                                                            >·</Typography>
+                                                                            <Typography
+                                                                                variant={"subtitle1"}
+                                                                                component={"span"}
+                                                                                className={classes.participantTweetUsername}
+                                                                            >
                                                                                 {formatDate(new Date(message.tweet.dateTime!))}
-                                                                            </span>
+                                                                            </Typography>
                                                                         </div>
-                                                                        <span>
+                                                                        <Typography variant={"body1"} component={"span"}>
                                                                             {textFormatter(message.tweet.text)}
-                                                                        </span>
+                                                                        </Typography>
                                                                     </div>
                                                                 </Link>
                                                             </div>
@@ -474,13 +499,17 @@ const Messages: FC = (): ReactElement => {
                                                                 classes.participantMessage,
                                                                 message.tweet ? classes.participantMessageWithTweet : classes.participantMessageCommon
                                                             )}>
-                                                                <span>{message.text}</span>
+                                                                <Typography component={"span"}>
+                                                                    {message.text}
+                                                                </Typography>
                                                             </div>
                                                         )}
                                                     </div>
                                                 </div>
                                                 <div className={classes.participantMessageDate}>
-                                                    {formatChatMessageDate(new Date(message.date))}
+                                                    <Typography variant={"subtitle2"} component={"span"}>
+                                                        {formatChatMessageDate(new Date(message.date))}
+                                                    </Typography>
                                                 </div>
                                             </React.Fragment>
                                         )
@@ -489,7 +518,7 @@ const Messages: FC = (): ReactElement => {
                                 </Paper>
                                 <>
                                     {isUserBlocked ? (
-                                        <Typography component={"div"} className={classes.blockedInfoText}>
+                                        <Typography variant={"subtitle2"} component={"div"} className={classes.blockedInfoText}>
                                             You can no longer send messages to this person. <a
                                             href={"https://help.twitter.com/using-twitter/direct-messages#faq"}
                                             target="_blank"

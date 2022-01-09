@@ -15,20 +15,20 @@ const PhotoTagging: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h6"} component={"div"} className={classes.title}>
                     Photo tagging
                     <span className={classes.switch}>
                         <Switch defaultChecked/>
                     </span>
                 </Typography>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Allow people to tag you in their photos and receive notifications when they do so.
                 </Typography>
             </div>
             <Divider/>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.photoTaggingItemWrapper}>
-                    <Typography component={"span"}>
+                    <Typography variant={"body1"} component={"span"}>
                         Anyone can tag you
                     </Typography>
                     <Radio
@@ -43,7 +43,7 @@ const PhotoTagging: FC = (): ReactElement => {
                     />
                 </div>
                 <div className={classes.photoTaggingItemWrapper}>
-                    <Typography component={"span"}>
+                    <Typography variant={"body1"} component={"span"}>
                         Only people you follow can tag you
                     </Typography>
                     <Radio

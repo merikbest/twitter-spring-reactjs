@@ -39,10 +39,10 @@ const MutedAccounts: FC = (): ReactElement => {
             ) : (
                 (mutedUsers.length === 0 && isUsersLoadedSuccess) ? (
                     <div className={classes.mutedAccountsInfo}>
-                        <Typography component={"div"} className={classes.title}>
+                        <Typography variant={"h4"} component={"div"}>
                             You aren’t muting anyone
                         </Typography>
-                        <Typography component={"div"} className={classes.subTitle}>
+                        <Typography variant={"subtitle1"} component={"div"}>
                             When you mute accounts, you won’t see their Tweets in your timeline. <a
                             href={"https://help.twitter.com/using-twitter/twitter-mute"}
                             target="_blank"

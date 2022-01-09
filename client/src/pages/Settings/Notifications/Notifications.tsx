@@ -11,9 +11,8 @@ const Notifications: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
-                    Select the kinds of notifications you get about your activities, interests, and
-                    recommendations.
+                <Typography variant={"subtitle2"} component={"div"}>
+                    Select the kinds of notifications you get about your activities, interests, and recommendations.
                 </Typography>
             </div>
             <div className={classes.listWrapper}>
@@ -24,10 +23,10 @@ const Notifications: FC = (): ReactElement => {
                                 {FiltersIcon}
                             </div>
                             <div>
-                                <Typography component={"div"} className={classes.subtitle}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Filters
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle2"} component={"div"}>
                                     Choose the notifications you’d like to see — and those you don’t.
                                 </Typography>
                             </div>
@@ -42,10 +41,10 @@ const Notifications: FC = (): ReactElement => {
                                 {PreferencesIcon}
                             </div>
                             <div>
-                                <Typography component={"div"} className={classes.subtitle}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Preferences
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle2"} component={"div"}>
                                     Select your preferences by notification type.
                                 </Typography>
                             </div>

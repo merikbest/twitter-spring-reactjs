@@ -20,13 +20,4 @@ export const useMembersAndFollowersModalStyles = makeStyles((theme: Theme) => ({
         marginTop: 32,
         textAlign: "center",
     },
-    title: {
-        fontSize: 31,
-        fontWeight: 800,
-        marginBottom: 8,
-    },
-    text: {
-        fontSize: 15,
-        color: theme.palette.text.secondary,
-    },
 }));

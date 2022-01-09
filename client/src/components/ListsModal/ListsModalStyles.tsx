@@ -21,7 +21,6 @@ export const useListsModalStyles = makeStyles<Theme>((theme) => ({
     createList: {
         width: "100%",
         padding: "12px 16px",
-        fontSize: 15,
         color: theme.palette.primary.main,
         borderBottom: `1px solid ${theme.palette.divider}`,
         "&:hover": {

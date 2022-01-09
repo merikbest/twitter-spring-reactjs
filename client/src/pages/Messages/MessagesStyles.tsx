@@ -31,9 +31,8 @@ export const useMessagesStyles = makeStyles<Theme, MessagesStylesProps>((theme) 
         borderRadius: 0,
         alignItems: 'center',
         flex: 1,
-        '& h6': {
+        '& .MuiTypography-h5': {
             marginLeft: 15,
-            fontWeight: 800,
         },
     },
     iconGroup: {
@@ -53,14 +52,9 @@ export const useMessagesStyles = makeStyles<Theme, MessagesStylesProps>((theme) 
     },
     messagesTitle: {
         paddingTop: 83,
-        lineHeight: 1.1,
-        fontSize: 29,
-        fontWeight: 800,
         margin: "0px 30px",
     },
     messagesText: {
-        fontSize: 14,
-        color: theme.palette.text.secondary,
         margin: "8px 30px 27px 30px",
     },
     messagesButton: {
@@ -106,18 +100,8 @@ export const useMessagesStyles = makeStyles<Theme, MessagesStylesProps>((theme) 
         height: theme.spacing(5),
         marginRight: 15,
     },
-    userFullName: {
-        display: "inline-block",
-        color: theme.palette.text.primary,
-        fontWeight: 800,
-        fontSize: 15,
-    },
     username: {
         marginLeft: 5,
-        display: "inline-block",
-        color: theme.palette.text.secondary,
-        fontWeight: 400,
-        fontSize: 15,
     },
     chatContainer: {
         minWidth: 600,
@@ -135,17 +119,8 @@ export const useMessagesStyles = makeStyles<Theme, MessagesStylesProps>((theme) 
         margin: "0px auto",
         paddingTop: 300,
     },
-    chatInfoTitle: {
-        lineHeight: 1.1,
-        fontSize: 29,
-        fontWeight: 800,
-    },
-    chatInfoText: {
-        fontSize: 14,
-        color: theme.palette.text.secondary,
-        margin: "8px 0px 27px 0px",
-    },
     chatInfoButton: {
+        marginTop: 27,
         height: 48,
         padding: theme.spacing(3.2),
         "& .MuiButton-label": {
@@ -167,15 +142,6 @@ export const useMessagesStyles = makeStyles<Theme, MessagesStylesProps>((theme) 
         borderRadius: 0,
         alignItems: 'center',
         flex: 1,
-        '& h6': {
-            fontWeight: 800,
-            lineHeight: "20px",
-        },
-        "& .MuiTypography-caption": {
-            marginBottom: 0,
-            lineHeight: "16px",
-            color: theme.palette.text.secondary,
-        },
     },
     pageInfoWrapper: {
         paddingTop: 53
@@ -216,21 +182,15 @@ export const useMessagesStyles = makeStyles<Theme, MessagesStylesProps>((theme) 
     tweetAvatar: {
         width: "18px !important",
         height: "18px !important",
-    },
-    tweetUserFullName: {
-        marginLeft: 3,
-        fontWeight: 700,
-        fontSize: 15,
+        marginRight: 3,
     },
     tweetUsername: {
         marginLeft: 3,
-        color: theme.palette.text.secondary,
-        fontSize: 15,
     },
     myMessage: {
         display: "flex",
         flexDirection: "row-reverse",
-        "& span": {
+        "& .MuiTypography-root": {
             backgroundColor: theme.palette.primary.main,
             color: theme.palette.common.white,
             padding: "11px 15px",
@@ -239,21 +199,19 @@ export const useMessagesStyles = makeStyles<Theme, MessagesStylesProps>((theme) 
     },
     myMessageCommon: {
         marginTop: 10,
-        "& span": {
+        "& .MuiTypography-root": {
             borderRadius: "16px 16px 0px 16px",
         },
     },
     myMessageWithTweet: {
-        "& span": {
+        "& .MuiTypography-root": {
             borderRadius: "0px 0px 0px 16px",
         },
     },
     myMessageDate: {
-        fontSize: 12,
         display: "flex",
         flexDirection: "row-reverse",
         marginTop: 5,
-        color: theme.palette.text.secondary,
         "& svg": {
             marginLeft: 5,
             height: "1.2em",
@@ -289,25 +247,19 @@ export const useMessagesStyles = makeStyles<Theme, MessagesStylesProps>((theme) 
     participantTweetAvatar: {
         width: "18px !important",
         height: "18px !important",
-    },
-    participantTweetFullName: {
-        marginLeft: 3,
-        fontWeight: 700,
-        fontSize: 15,
+        marginRight: 3,
     },
     participantTweetUsername: {
         marginLeft: 3,
-        color: theme.palette.text.secondary,
-        fontSize: 15,
     },
     participantMessageCommon: {
         marginTop: 10,
-        "& span": {
+        "& .MuiTypography-root": {
             borderRadius: "16px 16px 16px 0px",
         },
     },
     participantMessageWithTweet: {
-        "& span": {
+        "& .MuiTypography-root": {
             borderRadius: "0px 0px 16px 0px",
         },
     },
@@ -327,10 +279,8 @@ export const useMessagesStyles = makeStyles<Theme, MessagesStylesProps>((theme) 
         marginRight: 10,
     },
     participantMessageDate: {
-        fontSize: 12,
         marginLeft: 50,
         marginTop: 5,
-        color: theme.palette.text.secondary,
     },
     chatFooter: {
         display: 'flex',
@@ -371,10 +321,6 @@ export const useMessagesStyles = makeStyles<Theme, MessagesStylesProps>((theme) 
     blockedInfoText: {
         textAlign: "center",
         height: 30,
-        fontSize: 13,
-        fontWeight: 400,
-        lineHeight: "16px",
-        color: theme.palette.text.secondary,
     },
     link: {
         textDecoration: "none",

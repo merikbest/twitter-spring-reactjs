@@ -69,10 +69,10 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
             <Paper className={classes.header} variant="outlined">
                 <BackButton/>
                 <div>
-                    <Typography component={"div"} className={classes.headerFullName}>
+                    <Typography variant="h5" component={"div"}>
                         Lists
                     </Typography>
-                    <Typography component={"div"} className={classes.headerUsername}>
+                    <Typography variant="subtitle2" component={"div"}>
                         @{myProfile?.username}
                     </Typography>
                 </div>
@@ -120,7 +120,7 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
             ) : (
                 <>
                     <Paper className={classes.pinnedLists} variant="outlined">
-                        <Typography variant="h6">
+                        <Typography variant="h5">
                             Pinned Lists
                         </Typography>
                         {(pinnedLists.length === 0) ? (
@@ -134,7 +134,7 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
                         )}
                     </Paper>
                     <Paper className={classes.newLists} variant="outlined">
-                        <Typography variant="h6">
+                        <Typography variant="h5">
                             Discover new Lists
                         </Typography>
                         {lists.slice(0, 3).map((list, index) => (
@@ -147,7 +147,7 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
                         </Link>
                     </Paper>
                     <Paper className={classes.myLists} variant="outlined">
-                        <Typography variant="h6">
+                        <Typography variant="h5">
                             Your Lists
                         </Typography>
                         {userLists.map((list) => (<ListsItem isMyList={true} key={list.id} item={list}/>))}

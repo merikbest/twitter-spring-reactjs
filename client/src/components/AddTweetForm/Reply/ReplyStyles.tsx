@@ -37,17 +37,9 @@ export const useReplyStyles = makeStyles((theme: Theme) => ({
         backgroundColor: theme.palette.background.paper,
     },
     infoWrapper: {
-        fontSize: 15,
         padding: "16px 16px 0px 16px",
     },
-    title: {
-        fontWeight: 700,
-    },
-    text: {
-        color: theme.palette.text.secondary,
-    },
     listItem: {
-        fontSize: 15,
         height: 60,
         padding: 0,
         backgroundColor: theme.palette.background.paper,

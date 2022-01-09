@@ -34,7 +34,7 @@ const NotificationInfo: FC = (): ReactElement => {
             <Paper className={classes.header} variant="outlined">
                 <BackButton/>
                 <div>
-                    <Typography variant="h6">
+                    <Typography variant="h5">
                         {location.state.notification.notificationType === NotificationType.LIKE ? "Liked" : "Retweeted"}
                     </Typography>
                     <Typography variant="caption" display="block" gutterBottom>

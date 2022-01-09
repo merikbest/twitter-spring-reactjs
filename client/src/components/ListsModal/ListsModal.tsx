@@ -1,7 +1,7 @@
 import React, {FC, FormEvent, ReactElement, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {Button, Dialog, DialogContent, DialogTitle, List, ListItem} from "@material-ui/core";
+import {Button, Dialog, DialogContent, DialogTitle, List, ListItem, Typography} from "@material-ui/core";
 
 import {useListsModalStyles} from "./ListsModalStyles";
 import {selectUserListsItems} from "../../store/ducks/lists/selectors";
@@ -109,9 +109,9 @@ const ListsModal: FC<ListsModalProps> = ({tweet, user, visible, onClose}): React
                     </Button>
                 </DialogTitle>
                 <DialogContent className={classes.content}>
-                    <div className={classes.createList}>
+                    <Typography variant={"body1"} component={"div"} className={classes.createList}>
                         Create a new List
-                    </div>
+                    </Typography>
                     <div className={classes.list}>
                         <List>
                             {userLists.map((list, index) => (

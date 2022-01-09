@@ -21,9 +21,6 @@ export const useNotificationsStyles = makeStyles((theme: Theme) => ({
         border: 0,
         alignItems: 'center',
         flex: 1,
-        '& h6': {
-            fontWeight: 800,
-        },
         "& svg": {
             marginRight: 20
         },

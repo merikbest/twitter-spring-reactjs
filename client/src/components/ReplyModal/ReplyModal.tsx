@@ -63,22 +63,28 @@ const ReplyModal: FC<ReplyModalProps> = (
                     <div>
                         <div className={classes.header}>
                             <div>
-                                <b>{user.fullName}</b>&nbsp;
-                                <span>@{user.username}</span>&nbsp;
-                                <span>·</span>&nbsp;
-                                <span>{formatDate(new Date(dateTime))}</span>
+                                <Typography variant={"h6"} component={"span"}>
+                                    {user.fullName}
+                                </Typography>&nbsp;
+                                <Typography variant={"subtitle1"} component={"span"}>
+                                    @{user.username}
+                                </Typography>&nbsp;
+                                <Typography variant={"subtitle1"} component={"span"}>·</Typography>&nbsp;
+                                <Typography variant={"subtitle1"} component={"span"}>
+                                    {formatDate(new Date(dateTime))}
+                                </Typography>
                             </div>
                         </div>
-                        <div className={classes.text}>
+                        <Typography variant={"body1"} component={"div"} className={classes.text}>
                             {textFormatter(text)}
-                        </div>
+                        </Typography>
                         {image && (
                             <div className={classes.image}>
                                 <img src={image?.src} alt={image?.src}/>
                             </div>
                         )}
                         <object>
-                            <Typography className={classes.replyWrapper}>
+                            <Typography variant={"subtitle1"} component={"div"} className={classes.replyWrapper}>
                                 {"Replying to "}
                                 <Link to={`/user/${user.id}`} className={classes.replyLink}>
                                     @{user.username}

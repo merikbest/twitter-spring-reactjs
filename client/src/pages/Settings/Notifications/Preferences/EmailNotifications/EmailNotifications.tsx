@@ -15,7 +15,7 @@ const EmailNotifications: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.itemTitle}>
+                <Typography variant={"h6"} component={"div"} className={classes.itemTitle}>
                     Email notifications
                     <span className={classes.switch}>
                         <Switch defaultChecked/>
@@ -23,7 +23,7 @@ const EmailNotifications: FC = (): ReactElement => {
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Get emails to find out what’s going on when you’re not on Twitter. You can turn them off anytime.
                     <a
                         href={"https://help.twitter.com/managing-your-account/updating-email-preferences#tweet-activity"}
@@ -33,34 +33,40 @@ const EmailNotifications: FC = (): ReactElement => {
             </div>
             <Divider/>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h5"} component={"div"}>
                     Related to you and your Tweets
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>New notifications</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        New notifications
+                    </Typography>
                     <Checkbox checked={true}/>
                 </div>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Direct messages</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Direct messages
+                    </Typography>
                     <Checkbox checked={true}/>
                 </div>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Tweets emailed to you</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Tweets emailed to you
+                    </Typography>
                     <Checkbox checked={true}/>
                 </div>
             </div>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.subtitle}>
+                <Typography variant={"h6"} component={"div"}>
                     Top Tweets and Stories
                 </Typography>
                 <div className={classes.emailNotificationsItemWrapper}>
-                    <Typography component={"span"}>
+                    <Typography variant={"body1"} component={"span"}>
                         Daily
                     </Typography>
                     <Radio
@@ -75,7 +81,7 @@ const EmailNotifications: FC = (): ReactElement => {
                     />
                 </div>
                 <div className={classes.emailNotificationsItemWrapper}>
-                    <Typography component={"span"}>
+                    <Typography variant={"body1"} component={"span"}>
                         Weekly
                     </Typography>
                     <Radio
@@ -90,7 +96,7 @@ const EmailNotifications: FC = (): ReactElement => {
                     />
                 </div>
                 <div className={classes.emailNotificationsItemWrapper}>
-                    <Typography component={"span"}>
+                    <Typography variant={"body1"} component={"span"}>
                         Periodically
                     </Typography>
                     <Radio
@@ -105,7 +111,7 @@ const EmailNotifications: FC = (): ReactElement => {
                     />
                 </div>
                 <div className={classes.emailNotificationsItemWrapper}>
-                    <Typography component={"span"}>
+                    <Typography variant={"body1"} component={"span"}>
                         Off
                     </Typography>
                     <Radio
@@ -122,61 +128,79 @@ const EmailNotifications: FC = (): ReactElement => {
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Updates about the performance of your Tweets</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Updates about the performance of your Tweets
+                    </Typography>
                     <Checkbox/>
                 </div>
             </div>
             <Divider/>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h5"} component={"div"}>
                     From Twitter
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>News about Twitter product and feature updates</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        News about Twitter product and feature updates
+                    </Typography>
                     <Checkbox checked={true}/>
                 </div>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Tips on getting more out of Twitter</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Tips on getting more out of Twitter
+                    </Typography>
                     <Checkbox checked={true}/>
                 </div>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Things you missed since you last logged into Twitter</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Things you missed since you last logged into Twitter
+                    </Typography>
                     <Checkbox checked={true}/>
                 </div>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>News about Twitter on partner products and other third party services</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        News about Twitter on partner products and other third party services
+                    </Typography>
                     <Checkbox checked={true}/>
                 </div>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Participation in Twitter research surveys</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Participation in Twitter research surveys
+                    </Typography>
                     <Checkbox checked={true}/>
                 </div>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Suggestions for recommended accounts</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Suggestions for recommended accounts
+                    </Typography>
                     <Checkbox checked={true}/>
                 </div>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Suggestions based on your recent follows</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Suggestions based on your recent follows
+                    </Typography>
                     <Checkbox checked={true}/>
                 </div>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Tips on Twitter business products</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Tips on Twitter business products
+                    </Typography>
                     <Checkbox checked={true}/>
                 </div>
             </div>

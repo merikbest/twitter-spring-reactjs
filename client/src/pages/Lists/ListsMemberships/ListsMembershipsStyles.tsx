@@ -43,15 +43,4 @@ export const useListsMembershipsStyles = makeStyles((theme: Theme) => ({
         width: 336,
         textAlign: "center",
     },
-    title: {
-        fontWeight: 800,
-        fontSize: 31,
-        lineHeight: "36px",
-        marginBottom: 8
-    },
-    text: {
-        fontSize: 15,
-        color: theme.palette.text.secondary,
-        lineHeight: "20px"
-    },
 }));

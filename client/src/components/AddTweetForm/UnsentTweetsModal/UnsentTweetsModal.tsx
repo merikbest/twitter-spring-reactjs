@@ -152,10 +152,14 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
                     ) : (
                         (tweets.length === 0) ? (
                             <div className={classes.infoWrapper}>
-                                <Typography component={"div"} className={classes.title}>
-                                    {(activeTab === 0) ? ("You don’t have any scheduled Tweets") : ("You don’t have any unsent Tweets")}
+                                <Typography variant={"h4"} component={"div"}>
+                                    {(activeTab === 0) ? (
+                                        "You don’t have any scheduled Tweets"
+                                    ) : (
+                                        "You don’t have any unsent Tweets"
+                                    )}
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle1"} component={"div"}>
                                     When you do, you’ll find them here.
                                 </Typography>
                             </div>
@@ -177,18 +181,20 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
                                     <div className={classes.tweetWrapper}>
                                         <div className={classes.scheduledDateWrapper}>
                                             {ScheduleIcon}
-                                            <Typography component={"span"} className={classes.scheduledDateText}>
+                                            <Typography variant={"subtitle2"} component={"span"}>
                                                 {`Will send on ${formatScheduleDate(new Date(tweet.scheduledDate!))}`}
                                             </Typography>
                                         </div>
                                         <div className={classes.tweetInfo}>
-                                            <Typography component={"span"} className={classes.tweetText}>
+                                            <Typography variant={"body1"} component={"span"}>
                                                 {tweet.text}
                                             </Typography>
                                             {(tweet?.images?.length !== 0) && (
                                                 <div className={classes.imageWrapper}>
-                                                    <img src={tweet?.images?.[0].src}
-                                                         alt={String(tweet?.images?.[0].id)}/>
+                                                    <img
+                                                        src={tweet?.images?.[0].src}
+                                                        alt={String(tweet?.images?.[0].id)}
+                                                    />
                                                 </div>
                                             )}
                                         </div>

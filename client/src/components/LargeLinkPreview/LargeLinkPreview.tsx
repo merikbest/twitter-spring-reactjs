@@ -24,13 +24,13 @@ const LargeLinkPreview: FC<LargeLinkPreviewProps> = ({tweet, isFullTweet}): Reac
                     alt={tweet.linkCover}
                 />
                 <div className={classes.siteInfoWrapper}>
-                    <Typography component={"div"} className={classes.siteInfoTitle}>
+                    <Typography variant={"body1"} component={"div"}>
                         {tweet.linkTitle}
                     </Typography>
-                    <Typography component={"div"} className={classes.siteInfoDescription}>
+                    <Typography variant={"subtitle1"} component={"div"}>
                         {tweet.linkDescription}
                     </Typography>
-                    <Typography component={"div"} className={classes.siteTitle}>
+                    <Typography variant={"subtitle1"} component={"div"}>
                         {LinkIcon}{domain}
                     </Typography>
                 </div>

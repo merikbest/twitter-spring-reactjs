@@ -177,10 +177,10 @@ const FullList: FC = (): ReactElement => {
                         </Paper>
                         {(list?.tweets.length === 0) ? (
                             <div className={classes.listInfoWrapper}>
-                                <Typography component={"div"} className={classes.listInfoTitle}>
+                                <Typography variant={"h4"} component={"div"}>
                                     There aren’t any Tweets in this List
                                 </Typography>
-                                <Typography component={"div"} className={classes.listInfoText}>
+                                <Typography variant={"subtitle1"} component={"div"}>
                                     When anyone in this List Tweets, they’ll show up here.
                                 </Typography>
                             </div>

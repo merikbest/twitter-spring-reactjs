@@ -34,18 +34,6 @@ export const useFollowerStyles = makeStyles((theme) => ({
         alignItems: "center",
         justifyContent: "space-between"
     },
-    fullName: {
-        lineHeight: "20px",
-        color: theme.palette.text.primary,
-        fontWeight: 800,
-        fontSize: 15,
-    },
-    username: {
-        lineHeight: "20px",
-        color: theme.palette.text.secondary,
-        fontWeight: 400,
-        fontSize: 15,
-    },
     lockIcon: {
         "& svg": {
             marginLeft: 3,

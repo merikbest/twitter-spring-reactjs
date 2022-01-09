@@ -30,22 +30,12 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         borderRight: 0,
         borderRadius: 0,
     },
-    headerFullName: {
-        fontWeight: 800,
-        fontSize: 20,
-        lineHeight: "24px",
-    },
     lockIcon: {
         "& svg": {
             marginLeft: 3,
             marginBottom: -3,
             height: "1.4em",
         },
-    },
-    headerTweetCount: {
-        fontSize: 13,
-        lineHeight: "16px",
-        color: theme.palette.text.secondary,
     },
     wallpaper: {
         height: 200,
@@ -62,7 +52,6 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         marginTop: -70,
         padding: 20,
         paddingTop: 0,
-        fontSize: 15,
         "& .MuiAvatar-root": {
             backgroundColor: theme.palette.grey[600],
             width: "140px !important",
@@ -92,22 +81,8 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
     },
     privateProfileInfo: {
         margin: "72px auto",
-        width: 360
-    },
-    privateProfileInfoTitle: {
-        marginBottom: 8,
-        fontSize: 31,
-        lineHeight: "36px",
+        width: 360,
         textAlign: "center",
-        fontWeight: 800,
-        color: theme.palette.text.primary,
-    },
-    privateProfileInfoText: {
-        fontSize: 15,
-        lineHeight: "20px",
-        textAlign: "center",
-        fontWeight: 400,
-        color: theme.palette.text.secondary,
     },
     link: {
         textDecoration: "none",
@@ -170,20 +145,8 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
     blockButton: {
         backgroundColor: theme.palette.error.main,
     },
-    fullName: {
-        fontWeight: 800,
-        fontSize: 20,
-        lineHeight: "24px",
-    },
-    username: {
-        fontSize: 15,
-        color: theme.palette.text.secondary,
-        lineHeight: "20px",
-    },
     description: {
-        fontSize: 15,
         marginTop: 12,
-        lineHeight: "20px",
     },
     skeletonDetails: {
         "& .MuiSkeleton-root": {
@@ -193,7 +156,7 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
     },
     details: {
         lineHeight: "20px",
-        "& b": {
+        "& .MuiTypography-h6": {
             marginRight: 3,
         },
     },
@@ -212,19 +175,11 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
     tweets: {
         borderTop: "1px solid rgba(0, 0, 0, 0.1)",
     },
-    topic: {
-        fontSize: 20,
-        fontWeight: 700,
-        marginBottom: 12
-    },
     textWrapper: {
         margin: "40px 20px",
-        textAlign: "center"
-    },
-    text: {
-        fontSize: 15,
-        fontWeight: 400,
-        marginBottom: 16,
-        color: theme.palette.text.secondary,
+        textAlign: "center",
+        "& .MuiTypography-subtitle1": {
+            marginTop: 12,
+        },
     },
 }));

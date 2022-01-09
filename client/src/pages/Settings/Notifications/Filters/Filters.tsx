@@ -11,16 +11,18 @@ const Filters: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Choose the notifications you’d like to see — and those you don’t.
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Quality filter</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Quality filter
+                    </Typography>
                     <Checkbox/>
                 </div>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Choose to filter out content such as duplicate or automated Tweets. This doesn’t apply to
                     notifications from accounts you follow or have interacted with recently.
                     <a
@@ -31,7 +33,7 @@ const Filters: FC = (): ReactElement => {
             </div>
             <Link to={"/settings/privacy_and_safety/advanced_filters"} className={classes.filtersWrapper}>
                 <div className={classes.filtersLink}>
-                    <Typography component={"span"}>
+                    <Typography variant={"body1"} component={"span"}>
                         Muted notifications
                     </Typography>
                     {ArrowRightIcon}

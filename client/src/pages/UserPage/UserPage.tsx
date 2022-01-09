@@ -339,7 +339,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                     <Paper className={classes.header} variant="outlined">
                         <BackButton/>
                         <div>
-                            <Typography component={"span"} className={classes.headerFullName}>
+                            <Typography variant={"h5"} component={"span"}>
                                 {userProfile?.fullName}
                             </Typography>
                             {userProfile?.privateProfile && (
@@ -347,7 +347,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                 {LockIcon}
                             </span>
                             )}
-                            <Typography component={"div"} className={classes.headerTweetCount}>
+                            <Typography variant={"subtitle2"} component={"div"}>
                                 {showTweetCount()}
                             </Typography>
                         </div>
@@ -477,25 +477,25 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                 <Skeleton variant="text" width={250} height={30}/>
                             ) : (
                                 <div>
-                                    <Typography component={"span"} className={classes.fullName}>
+                                    <Typography variant={"h5"} component={"span"}>
                                         {userProfile.fullName}
                                     </Typography>
                                     {userProfile?.privateProfile && (
                                         <span className={classes.lockIcon}>
-                                        {LockIcon}
-                                    </span>
+                                            {LockIcon}
+                                        </span>
                                     )}
                                 </div>
                             )}
                             {(userProfile === undefined) ? (
                                 <Skeleton variant="text" width={60}/>
                             ) : (
-                                <Typography className={classes.username}>
+                                <Typography variant={"subtitle1"} component={"div"}>
                                     @{userProfile.username}
                                 </Typography>
                             )}
                             {isMyProfileBlocked ? null : (
-                                <Typography className={classes.description}>
+                                <Typography variant={"body1"} component={"div"} className={classes.description}>
                                     {userProfile?.about}
                                 </Typography>
                             )}
@@ -512,7 +512,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                         {userProfile?.location && (
                                             <ListItem>
                                                 <>{LocationIcon}</>
-                                                <Typography component={"span"}>
+                                                <Typography variant={"subtitle1"} component={"span"}>
                                                     {userProfile?.location}
                                                 </Typography>
                                             </ListItem>
@@ -527,7 +527,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                         )}
                                         {userProfile?.dateOfBirth && (
                                             <ListItem>
-                                                <Typography component={"span"}>
+                                                <Typography variant={"subtitle1"} component={"span"}>
                                                     Date of Birth: {userProfile?.dateOfBirth}
                                                 </Typography>
                                             </ListItem>
@@ -535,7 +535,9 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                         {userProfile?.registrationDate && (
                                             <ListItem>
                                                 <>{CalendarIcon}</>
-                                                Joined: {format(new Date(userProfile?.registrationDate), 'MMMM yyyy')}
+                                                <Typography variant={"subtitle1"} component={"span"}>
+                                                    Joined: {format(new Date(userProfile?.registrationDate), 'MMMM yyyy')}
+                                                </Typography>
                                             </ListItem>
                                         )}
                                     </List>
@@ -550,28 +552,28 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                     <List className={classes.details}>
                                         <LinkToFollowers linkTo={"following"}>
                                             <ListItem>
-                                                <b>
+                                                <Typography variant={"h6"} component={"span"}>
                                                     {(userProfile?.id === myProfile?.id) ? (
                                                         myProfile?.followers?.length ? myProfile?.followers?.length : 0
                                                     ) : (
                                                         userProfile?.followers?.length ? userProfile?.followers?.length : 0
                                                     )}
-                                                </b>
-                                                <Typography component={"span"}>
+                                                </Typography>
+                                                <Typography variant={"subtitle1"} component={"span"}>
                                                     {" Following"}
                                                 </Typography>
                                             </ListItem>
                                         </LinkToFollowers>
                                         <LinkToFollowers linkTo={"followers"}>
                                             <ListItem>
-                                                <b>
+                                                <Typography variant={"h6"} component={"span"}>
                                                     {(userProfile?.id === myProfile?.id) ? (
                                                         myProfile?.following?.length ? myProfile?.following?.length : 0
                                                     ) : (
                                                         userProfile?.following?.length ? userProfile?.following?.length : 0
                                                     )}
-                                                </b>
-                                                <Typography component={"span"}>
+                                                </Typography>
+                                                <Typography variant={"subtitle1"} component={"span"}>
                                                     {" Followers"}
                                                 </Typography>
                                             </ListItem>
@@ -591,10 +593,10 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                             (isMyProfileLoaded && isUserProfileSuccessLoaded) && (
                                 isMyProfileBlocked ? (
                                     <div className={classes.privateProfileInfo}>
-                                        <Typography component={"div"} className={classes.privateProfileInfoTitle}>
+                                        <Typography variant={"h4"} component={"div"}>
                                             You’re blocked
                                         </Typography>
-                                        <Typography component={"div"} className={classes.privateProfileInfoText}>
+                                        <Typography variant={"subtitle1"} component={"div"}>
                                             {`You can’t follow or see @${userProfile?.username}’s Tweets.`} <a
                                             href={"https://help.twitter.com/using-twitter/someone-blocked-me-on-twitter"}
                                             target={"_blank"} className={classes.link}>Learn more</a>
@@ -603,10 +605,10 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                 ) : (
                                     userProfile?.privateProfile ? (
                                         <div className={classes.privateProfileInfo}>
-                                            <Typography component={"div"} className={classes.privateProfileInfoTitle}>
+                                            <Typography variant={"h4"} component={"div"}>
                                                 These Tweets are protected
                                             </Typography>
-                                            <Typography component={"div"} className={classes.privateProfileInfoText}>
+                                            <Typography variant={"subtitle1"} component={"div"}>
                                                 {`Only approved followers can see @${userProfile?.username}’s Tweets. To 
                                                 request access, click Follow. `} <a
                                                 href={"https://help.twitter.com/safety-and-security/public-and-protected-tweets"}

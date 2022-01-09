@@ -43,13 +43,13 @@ const SmallLinkPreview: FC<SmallLinkPreviewProps> = ({tweet, onOpenYouTubeVideo,
     const LinkPreviewInfo = (): JSX.Element => {
         return (
             <div className={classes.linkPreviewTitle}>
-                <Typography component={"div"} className={classes.linkTitle}>
+                <Typography variant={"body1"} component={"div"}>
                     {tweet.linkTitle}
                 </Typography>
-                <Typography component={"div"} className={classes.linkDescription}>
+                <Typography variant={"subtitle1"} component={"div"}>
                     {tweet.linkDescription}
                 </Typography>
-                <Typography component={"div"} className={classes.link}>
+                <Typography variant={"subtitle1"} component={"div"}>
                     {LinkIcon}{domain}
                 </Typography>
             </div>

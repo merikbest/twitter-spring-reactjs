@@ -1,5 +1,5 @@
 import React, {FC, MouseEvent, ReactElement, useState} from 'react';
-import {Divider, List, ListItem, Popover} from "@material-ui/core";
+import {Divider, List, ListItem, Popover, Typography} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 
 import {useReplyStyles} from "./ReplyStyles";
@@ -65,13 +65,13 @@ const Reply: FC<ReplyProps> = ({replyType, setReplyType, isUnsentTweet}): ReactE
             >
                 <div className={classes.dropdown}>
                     <div className={classes.infoWrapper}>
-                        <div className={classes.title}>
+                        <Typography variant={"h6"} component={"div"}>
                             Who can reply?
-                        </div>
-                        <div className={classes.text}>
+                        </Typography>
+                        <Typography variant={"subtitle1"} component={"div"}>
                             Choose who can reply to this Tweet.
                             Anyone mentioned can always reply.
-                        </div>
+                        </Typography>
                     </div>
                     <List component="nav" aria-label="main mailbox folders">
                         <ListItem
@@ -84,7 +84,9 @@ const Reply: FC<ReplyProps> = ({replyType, setReplyType, isUnsentTweet}): ReactE
                                     {EveryoneReplyOutlinedIcon}
                                 </span>
                             </div>
-                            <span>Everyone</span>
+                            <Typography variant={"body1"} component={"span"}>
+                                Everyone
+                            </Typography>
                             {(replyType === ReplyType.EVERYONE) && (
                                 <span className={classes.checkIcon}>
                                     {CheckIcon}
@@ -101,7 +103,9 @@ const Reply: FC<ReplyProps> = ({replyType, setReplyType, isUnsentTweet}): ReactE
                                     {FollowReplyOutlinedIcon}
                                 </span>
                             </div>
-                            <span>People you follow</span>
+                            <Typography variant={"body1"} component={"span"}>
+                                People you follow
+                            </Typography>
                             {(replyType === ReplyType.FOLLOW) && (
                                 <span className={classes.checkIcon}>
                                     {CheckIcon}
@@ -118,7 +122,9 @@ const Reply: FC<ReplyProps> = ({replyType, setReplyType, isUnsentTweet}): ReactE
                                     {MentionReplyOutlinedIcon}
                                 </span>
                             </div>
-                            <span>Only people you mention</span>
+                            <Typography variant={"body1"} component={"span"}>
+                                Only people you mention
+                            </Typography>
                             {(replyType === ReplyType.MENTION) && (
                                 <span className={classes.checkIcon}>
                                     {CheckIcon}

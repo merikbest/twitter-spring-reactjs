@@ -36,22 +36,4 @@ export const useManageMembersModalStyles = makeStyles((theme: Theme) => ({
         minWidth: 299,
         textTransform: 'none',
     },
-    inputWrapper: {
-        padding: "0px 12px",
-    },
-    suggestedInfoWrapper: {
-        width: 320,
-        margin: "0 auto",
-        marginTop: 32,
-        textAlign: "center",
-    },
-    suggestedTitle: {
-        fontSize: 31,
-        marginBottom: 8,
-        fontWeight: 800,
-    },
-    suggestedText: {
-        fontSize: 15,
-        color: theme.palette.text.secondary,
-    },
 }));

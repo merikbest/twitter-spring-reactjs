@@ -20,8 +20,7 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         borderLeft: '0',
         borderRight: '0',
         borderRadius: 0,
-        '& h6': {
-            fontWeight: 800,
+        '& .MuiTypography-h5': {
             marginLeft: 16,
         },
     },

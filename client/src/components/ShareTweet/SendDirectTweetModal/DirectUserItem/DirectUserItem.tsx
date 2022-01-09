@@ -24,7 +24,7 @@ const DirectUserItem: FC<DirectUserItemProps> = ({user, selected}): ReactElement
                 <div className={classes.header}>
                     <div className={classes.headerInfo}>
                         <div>
-                            <Typography component={"span"} className={classes.fullName}>
+                            <Typography variant={"h6"} component={"span"}>
                                 {user?.fullName}
                             </Typography>
                             {user?.privateProfile && (
@@ -33,7 +33,7 @@ const DirectUserItem: FC<DirectUserItemProps> = ({user, selected}): ReactElement
                                 </span>
                             )}
                         </div>
-                        <Typography className={classes.username} variant="caption" display="block" gutterBottom>
+                        <Typography variant={"subtitle1"} component={"div"}>
                             @{user?.username}
                         </Typography>
                     </div>

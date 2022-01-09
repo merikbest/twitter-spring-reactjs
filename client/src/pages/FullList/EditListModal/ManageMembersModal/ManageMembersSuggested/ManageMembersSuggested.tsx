@@ -49,10 +49,10 @@ const ManageMembersSuggested: FC = (): ReactElement => {
                 </>
             ) : (
                 <div className={classes.suggestedInfoWrapper}>
-                    <Typography className={classes.suggestedTitle}>
+                    <Typography variant={"h4"} component={"div"}>
                         There aren’t any suggested members
                     </Typography>
-                    <Typography className={classes.suggestedText}>
+                    <Typography variant={"subtitle1"} component={"div"}>
                         To see suggestions to add to this List, try searching for accounts.
                     </Typography>
                 </div>

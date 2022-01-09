@@ -82,6 +82,42 @@ const commonTheme = {
                 },
             },
         },
+        MuiTypography: {
+            h4: {
+                marginBottom: 8,
+                fontSize: 31,
+                fontWeight: 800,
+                lineHeight: "36px",
+            },
+            h5: {
+                fontSize: 20,
+                fontWeight: 800,
+                lineHeight: "24px",
+            },
+            h6: {
+                fontSize: 15,
+                fontWeight: 800,
+                lineHeight: "20px",
+            },
+            subtitle1: {
+                fontSize: 15,
+                fontWeight: 400,
+                lineHeight: "20px",
+            },
+            subtitle2: {
+                fontSize: 13,
+                fontWeight: 400,
+                lineHeight: "16px",
+            },
+            body1: {
+                fontSize: 15,
+                fontWeight: 400,
+                lineHeight: "20px",
+            },
+            body2: {
+
+            },
+        },
     },
 }
 
@@ -126,6 +162,26 @@ export const dimTheme = createMuiTheme(deepmerge({
             },
             elevation8: {
                 boxShadow: "none"
+            },
+        },
+        MuiTypography: {
+            h4: {
+                color: "rgb(255, 255, 255)",
+            },
+            h5: {
+                color: "rgb(255, 255, 255)",
+            },
+            h6: {
+                color: "rgb(255, 255, 255)",
+            },
+            subtitle1: {
+                color: "rgb(136, 153, 166)",
+            },
+            subtitle2: {
+                color: "rgb(136, 153, 166)",
+            },
+            body1: {
+                color: "rgb(255, 255, 255)",
             },
         },
     },
@@ -174,6 +230,26 @@ export const lightsOutTheme = createMuiTheme(deepmerge({
                 boxShadow: "none"
             },
         },
+        MuiTypography: {
+            h4: {
+                color: "rgb(217, 217, 217)",
+            },
+            h5: {
+                color: "rgb(217, 217, 217)",
+            },
+            h6: {
+                color: "rgb(217, 217, 217)",
+            },
+            subtitle1: {
+                color: "rgb(110, 118, 125)",
+            },
+            subtitle2: {
+                color: "rgb(110, 118, 125)",
+            },
+            body1: {
+                color: "rgb(217, 217, 217)",
+            },
+        },
     },
 }, commonTheme));
 
@@ -218,6 +294,26 @@ export const defaultTheme = createMuiTheme(deepmerge({
             },
             elevation8: {
                 boxShadow: "none"
+            },
+        },
+        MuiTypography: {
+            h4: {
+                color: "rgb(15, 20, 25)",
+            },
+            h5: {
+                color: "rgb(15, 20, 25)",
+            },
+            h6: {
+                color: "rgb(15, 20, 25)",
+            },
+            subtitle1: {
+                color: "rgb(83, 100, 113)",
+            },
+            subtitle2: {
+                color: "rgb(83, 100, 113)",
+            },
+            body1: {
+                color: "rgb(15, 20, 25)",
             },
         },
     },
