@@ -347,7 +347,7 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
                     {selectedScheduleDate && (
                         <div className={classes.infoWrapper}>
                             {ScheduleIcon}
-                            <Typography component={"span"} className={classes.text}>
+                            <Typography variant={"subtitle2"} component={"span"}>
                                 {`Will send on ${formatScheduleDate(selectedScheduleDate)}`}
                             </Typography>
                         </div>

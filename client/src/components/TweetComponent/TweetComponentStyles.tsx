@@ -12,7 +12,7 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
         display: 'flex',
         cursor: 'pointer',
         alignItems: 'flex-start',
-        paddingTop: 15,
+        marginTop: 12,
         paddingLeft: 20,
         flex: 1,
         borderTop: '0',
@@ -62,10 +62,8 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
             height: "0.8em",
         },
     },
-    replyWrapper: {
-        zIndex: 2,
-        fontSize: 15,
-        color: theme.palette.info.light,
+    tweetContent: {
+        width: 500,
     },
     replyLink: {
         textDecoration: "none",
@@ -120,11 +118,6 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
             fill: theme.palette.common.white,
         },
     },
-    replyText: {
-        display: "inline-block",
-        color: theme.palette.text.secondary,
-        fontSize: 13,
-    },
     footer: {
         display: 'flex',
         position: 'relative',
@@ -166,24 +159,20 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
             color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : theme.palette.text.secondary,
         },
     },
-    bottomLine: {
-        height: 12,
-        backgroundColor: '#E6ECF0',
-    },
     retweetWrapper: {
         display: "flex",
         alignItems: "center",
-        marginLeft: 45,
-        marginTop: 5,
+        marginLeft: 48,
+        marginTop: 12,
+        marginBottom: -8,
         color: theme.palette.text.secondary,
         "& svg": {
             verticalAlign: "bottom",
             height: "1.20em",
         },
-        "& p": {
+        "& .MuiTypography-subtitle2": {
             marginLeft: 15,
-            fontSize: 14,
-            fontWeight: 700
+            fontWeight: 700,
         },
     },
     popperUserWindow: {

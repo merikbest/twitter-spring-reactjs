@@ -36,7 +36,7 @@ const TweetComponentActionsModal: FC<TweetComponentActionsModalProps> = (
         >
             <DialogContent style={{padding: 0}}>
                 <div className={classes.modalWrapper}>
-                    <Typography className={classes.modalFullName}>
+                    <Typography variant={"h5"}>
                         {(modalTitle === "Delete") ? (
                             "Delete Tweet?"
                         ) : (
@@ -47,7 +47,7 @@ const TweetComponentActionsModal: FC<TweetComponentActionsModalProps> = (
                             )
                         )}
                     </Typography>
-                    <div className={classes.modalUsername}>
+                    <Typography variant={"subtitle1"}>
                         {(modalTitle === "Delete") ? (
                             "This can’t be undone and it will be removed from your profile, " +
                             "the timeline of any accounts that follow you, and from Twitter search results."
@@ -58,7 +58,7 @@ const TweetComponentActionsModal: FC<TweetComponentActionsModalProps> = (
                                 "This will appear at the top of your profile and replace any previously pinned Tweet."
                             )
                         )}
-                    </div>
+                    </Typography>
                     <div className={classes.modalButtonWrapper}>
                         <Button
                             className={classes.modalCancelButton}

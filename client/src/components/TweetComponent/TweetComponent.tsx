@@ -120,7 +120,7 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<Tweet> & HoverActi
             {isTweetRetweetedByUser && (
                 <div className={classes.retweetWrapper}>
                     <span>{RetweetOutlinedIconSm}</span>
-                    <Typography>
+                    <Typography variant={"subtitle2"}>
                         {(myProfile?.id === userProfile?.id) ? ("You") : (userProfile?.fullName)} Retweeted
                     </Typography>
                 </div>
@@ -128,7 +128,7 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<Tweet> & HoverActi
             {((myProfile?.id === userProfile?.id && activeTab === 0) && myProfile?.pinnedTweet?.id === tweet?.id) && (
                 <div className={classes.retweetWrapper}>
                     <span>{PinOutlinedIcon}</span>
-                    <Typography>
+                    <Typography variant={"subtitle2"}>
                         Pinned Tweet
                     </Typography>
                 </div>
@@ -169,13 +169,10 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<Tweet> & HoverActi
                             onOpenTweetAnalytics={onOpenTweetAnalyticsModalWindow}
                         />
                     </div>
-                    <Typography
-                        style={tweet?.addressedUsername ? {width: 250, marginBottom: 0} : {width: 500, marginBottom: 0}}
-                        variant="body1" gutterBottom
-                    >
+                    <div className={classes.tweetContent}>
                         {tweet?.addressedUsername && (
                             <object>
-                                <Typography className={classes.replyWrapper}>
+                                <Typography variant={"subtitle1"} component={"div"}>
                                     {"Replying to "}
                                     <Link to={`/user/${tweet?.addressedId}`} className={classes.replyLink}>
                                         @{tweet?.addressedUsername}
@@ -183,11 +180,11 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<Tweet> & HoverActi
                                 </Typography>
                             </object>
                         )}
-                        <div className={classes.text}>
+                        <Typography variant={"body1"} className={classes.text}>
                             <a onClick={handleClickTweet} href={`/home/tweet/${tweet?.id}`}>
                                 {textFormatter(tweet!.text)}
                             </a>
-                        </div>
+                        </Typography>
                         {(tweet?.images?.length !== 0) && (
                             <Link to={{pathname: `/modal/${tweet?.id}`, state: {background: location}}}>
                                 <div className={classes.image}>
@@ -205,9 +202,9 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<Tweet> & HoverActi
                                         </span>
                                     </div>
                                 </div>
-                                <div className={classes.replyText}>
+                                <Typography variant={"subtitle2"} component={"span"}>
                                     You can reply to this conversation
-                                </div>
+                                </Typography>
                             </>
                         )}
                         {tweet?.quoteTweet && (<Quote quoteTweet={tweet?.quoteTweet} isTweetQuoted={true}/>)}
@@ -226,7 +223,7 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<Tweet> & HoverActi
                                 )
                             )
                         ) : null}
-                    </Typography>
+                    </div>
                     <div className={classes.footer}>
                         <div className={classes.replyIcon}>
                             <IconButton
@@ -260,7 +257,10 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<Tweet> & HoverActi
                                 ) : (
                                     <>{LikeOutlinedIcon}</>
                                 )}
-                                <HoverAction visible={visibleHoverAction?.visibleLikeAction} actionText={isTweetLiked ? "Unlike" : "Like"}/>
+                                <HoverAction
+                                    visible={visibleHoverAction?.visibleLikeAction}
+                                    actionText={isTweetLiked ? "Unlike" : "Like"}
+                                />
                             </IconButton>
                             {(tweet?.likedTweets.length !== 0) && (<span>{tweet?.likedTweets.length}</span>)}
                         </div>
@@ -285,7 +285,6 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<Tweet> & HoverActi
                         )}
                     </div>
                 </div>
-                <div className={classes.bottomLine}/>
                 <ReplyModal
                     user={tweet!.user}
                     tweetId={tweet!.id}

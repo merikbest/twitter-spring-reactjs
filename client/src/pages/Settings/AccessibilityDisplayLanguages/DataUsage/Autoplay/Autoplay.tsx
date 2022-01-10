@@ -15,17 +15,17 @@ const Autoplay: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.subtitle}>
+                <Typography variant={"h6"} component={"div"}>
                     Autoplay
                 </Typography>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Select whether videos and GIFs should play automatically on this device. <a
                     href={"https://help.twitter.com/safety-and-security/public-and-protected-tweets"}
                     target="_blank"
                     className={classes.link}> Learn more</a>
                 </Typography>
                 <div className={classes.autoplayItemWrapper}>
-                    <Typography component={"span"}>
+                    <Typography variant={"body1"} component={"span"}>
                         On cellular or Wi-Fi
                     </Typography>
                     <Radio
@@ -40,7 +40,7 @@ const Autoplay: FC = (): ReactElement => {
                     />
                 </div>
                 <div className={classes.autoplayItemWrapper}>
-                    <Typography component={"span"}>
+                    <Typography variant={"body1"} component={"span"}>
                         Never
                     </Typography>
                     <Radio

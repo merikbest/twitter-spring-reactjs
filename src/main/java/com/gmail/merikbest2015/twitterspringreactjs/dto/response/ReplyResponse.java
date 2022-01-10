@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class TweetResponse {
+public class ReplyResponse {
     private Long id;
     private String text;
     private LocalDateTime dateTime;
@@ -29,7 +29,7 @@ public class TweetResponse {
     private UserResponse user;
     private List<LikeTweetResponse> likedTweets;
     private List<RetweetResponse> retweets;
-    private List<ReplyResponse> replies;
+    private List<TweetResponseCommon> replies;
     private PollResponse poll;
     private boolean isTweetDeleted;
 }

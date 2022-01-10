@@ -1,4 +1,4 @@
-import {colors, makeStyles, Theme} from "@material-ui/core";
+import {makeStyles, Theme} from "@material-ui/core";
 
 export const useUserSideProfileStyles = makeStyles((theme: Theme) => ({
     container: {
@@ -24,9 +24,6 @@ export const useUserSideProfileStyles = makeStyles((theme: Theme) => ({
     info: {
         flex: 1,
         marginLeft: 10,
-        '& b': {
-            fontSize: 16,
-        },
     },
     menu: {
         top: 'auto !important',
@@ -53,13 +50,6 @@ export const useUserSideProfileStyles = makeStyles((theme: Theme) => ({
         '& .MuiListItemText-root': {
             marginLeft: 8,
         },
-        '& .MuiListItemText-primary': {
-            fontSize: 15,
-            fontWeight: 700,
-        },
-        '& .MuiTypography-body2': {
-            fontSize: 15,
-        },
         "& span": {
             "& svg" : {
                 color: theme.palette.primary.main,
@@ -71,8 +61,6 @@ export const useUserSideProfileStyles = makeStyles((theme: Theme) => ({
     listItemWrapper: {
         '& .MuiListItem-root': {
             padding: 16,
-            fontWeight: 400,
-            fontSize: 15,
             '&:hover': {
                 cursor: 'pointer',
                 backgroundColor: theme.palette.secondary.main,

@@ -9,7 +9,9 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
         margin: 0,
         maxWidth: 230,
         "& li .selected": {
-            color: theme.palette.primary.main,
+            "& .MuiTypography-h5": {
+                color: theme.palette.primary.main,
+            },
             "& svg": {
                 fill: theme.palette.primary.main,
             },
@@ -18,27 +20,30 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
     itemWrapper: {
         marginBottom: 2,
         height: 58,
+        "& .MuiTypography-h5": {
+            fontWeight: 700,
+        },
         '& a': {
             color: 'inherit',
             textDecoration: 'none',
         },
         '& svg': {
             verticalAlign: "bottom",
-            height: "1.3em",
+            height: "1.9em",
             marginRight: 15,
-            marginBottom: 3,
         },
         cursor: 'pointer',
         '&:hover': {
             '& div': {
                 backgroundColor: theme.palette.secondary.light,
-                color: theme.palette.primary.main,
+                "& .MuiTypography-h5": {
+                    color: theme.palette.primary.main,
+                },
                 '& svg path': {
                     fill: theme.palette.primary.main,
                 },
             },
         },
-
         '& div': {
             display: 'inline-flex',
             alignItems: 'center',
@@ -56,11 +61,6 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
             color: theme.palette.primary.main,
             height: "1.25em"
         },
-    },
-    label: {
-        position: "relative",
-        fontWeight: 700,
-        fontSize: 20,
     },
     homeNotification: {
         position: "absolute",
@@ -95,13 +95,6 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
         '& .MuiListItemText-root': {
             marginLeft: 8,
         },
-        '& .MuiListItemText-primary': {
-            fontSize: 15,
-            fontWeight: 700,
-        },
-        '& .MuiTypography-body2': {
-            fontSize: 15,
-        },
         "& svg": {
             marginRight: 12,
             color: theme.palette.text.primary,
@@ -121,11 +114,6 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
             '&:hover': {
                 cursor: 'pointer',
                 backgroundColor: theme.palette.secondary.main,
-            },
-            "& .MuiTypography-root": {
-                fontWeight: 400,
-                fontSize: 15,
-                lineHeight: "20px",
             },
         },
         "& .MuiDivider-root": {

@@ -25,12 +25,6 @@ export const useAddTweetFormStyles = makeStyles<Theme, AddTweetFormStyles>((them
             height: "1.30em",
         },
     },
-    text: {
-        fontSize: 13,
-        fontWeight: 400,
-        lineHeight: "16px",
-        color: theme.palette.text.secondary,
-    },
     textareaWrapper: {
         width: "100%",
     },

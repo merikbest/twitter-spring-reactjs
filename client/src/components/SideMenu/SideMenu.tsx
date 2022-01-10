@@ -113,14 +113,17 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     <NavLink to="/home" activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
-                                <Typography className={classes.label}>
+                                <>
                                     {visibleHomeNotification && <span className={classes.homeNotification}/>}
                                     {(location.pathname.includes("/home")) ? (
                                         <span>{HomeIconFilled}</span>
                                     ) : (
                                         <span>{HomeIcon}</span>
-                                    )} Home
-                                </Typography>
+                                    )}
+                                    <Typography variant={"h5"}>
+                                        Home
+                                    </Typography>
+                                </>
                             </Hidden>
                         </div>
                     </NavLink>
@@ -129,13 +132,16 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     <NavLink to="/search" activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
-                                <Typography className={classes.label}>
+                                <>
                                     {(location.pathname.includes("/search")) ? (
                                         <span>{ExploreIconFilled}</span>
                                     ) : (
                                         <span>{ExploreIcon}</span>
-                                    )} Explore
-                                </Typography>
+                                    )}
+                                    <Typography variant={"h5"}>
+                                        Explore
+                                    </Typography>
+                                </>
                             </Hidden>
                         </div>
                     </NavLink>
@@ -144,7 +150,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     <NavLink to="/notifications" activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
-                                <Typography className={classes.label}>
+                                <>
                                     {(myProfile?.notificationsCount !== 0) ? (
                                         <span className={classes.count}>
                                             {myProfile?.notificationsCount}
@@ -154,8 +160,11 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                         <span>{NotificationsIconFilled}</span>
                                     ) : (
                                         <span>{NotificationsIcon}</span>
-                                    )} Notifications
-                                </Typography>
+                                    )}
+                                    <Typography variant={"h5"}>
+                                        Notifications
+                                    </Typography>
+                                </>
                             </Hidden>
                         </div>
                     </NavLink>
@@ -164,7 +173,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     <NavLink to="/messages" activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
-                                <Typography className={classes.label}>
+                                <>
                                     {(myProfile?.unreadMessages?.length !== 0) ? (
                                         <span className={classes.count}>
                                             {myProfile?.unreadMessages?.length}
@@ -174,8 +183,11 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                         <span>{MessagesIconFilled}</span>
                                     ) : (
                                         <span>{MessagesIcon}</span>
-                                    )} Messages
-                                </Typography>
+                                    )}
+                                    <Typography variant={"h5"}>
+                                        Messages
+                                    </Typography>
+                                </>
                             </Hidden>
                         </div>
                     </NavLink>
@@ -184,13 +196,16 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     <NavLink to="/bookmarks" activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
-                                <Typography className={classes.label}>
+                                <>
                                     {(location.pathname.includes("/bookmarks")) ? (
                                         <span>{BookmarksIconFilled}</span>
                                     ) : (
                                         <span>{BookmarksIcon}</span>
-                                    )} Bookmarks
-                                </Typography>
+                                    )}
+                                    <Typography variant={"h5"}>
+                                        Bookmarks
+                                    </Typography>
+                                </>
                             </Hidden>
                         </div>
                     </NavLink>
@@ -199,13 +214,16 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     <NavLink to={"/lists"} activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
-                                <Typography className={classes.label}>
+                                <>
                                     {(location.pathname.includes("/lists")) ? (
                                         <span>{ListsIconFilled}</span>
                                     ) : (
                                         <span>{ListsIcon}</span>
-                                    )} Lists
-                                </Typography>
+                                    )}
+                                    <Typography variant={"h5"}>
+                                        Lists
+                                    </Typography>
+                                </>
                             </Hidden>
                         </div>
                     </NavLink>
@@ -214,13 +232,16 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     <NavLink to={`/user/${userData?.id}`} activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
-                                <Typography className={classes.label}>
+                                <>
                                     {(location.pathname.includes(`/user/${myProfile?.id}`)) ? (
                                         <span>{ProfileIconFilled}</span>
                                     ) : (
                                         <span>{ProfileIcon}</span>
-                                    )} Profile
-                                </Typography>
+                                    )}
+                                    <Typography variant={"h5"}>
+                                        Profile
+                                    </Typography>
+                                </>
                             </Hidden>
                         </div>
                     </NavLink>
@@ -228,9 +249,12 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                 <li className={classes.itemWrapper}>
                     <div aria-describedby={id} onClick={handleOpenPopup}>
                         <Hidden smDown>
-                            <Typography className={classes.label}>
-                                <span>{MoreIcon}</span> More
-                            </Typography>
+                            <>
+                                <span>{MoreIcon}</span>
+                                <Typography variant={"h5"}>
+                                    More
+                                </Typography>
+                            </>
                         </Hidden>
                     </div>
                     <Popover
@@ -255,7 +279,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                 {(myProfile?.privateProfile) ? (
                                     <ListItem onClick={onOpenFollowerRequestsModal}>
                                         {FollowerRequestIcon}
-                                        <Typography component={"span"}>
+                                        <Typography variant={"body1"} component={"span"}>
                                             Follower requests
                                             <span className={classes.followerRequestsCount}>
                                                 {myProfile?.followerRequests?.length}
@@ -265,14 +289,14 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                 ) : null}
                                 <ListItem>
                                     {NewslettersIcon}
-                                    <Typography component={"span"}>
+                                    <Typography variant={"body1"} component={"span"}>
                                         Newsletters
                                     </Typography>
                                 </ListItem>
                                 <a href="https://ads.twitter.com/login" target="_blank">
                                     <ListItem>
                                         {TwitterAdsIcon}
-                                        <Typography component={"span"}>
+                                        <Typography variant={"body1"} component={"span"}>
                                             Twitter Ads
                                         </Typography>
                                     </ListItem>
@@ -280,7 +304,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                 <a href="https://analytics.twitter.com/about" target="_blank">
                                     <ListItem>
                                         {AnalyticsIcon}
-                                        <Typography component={"span"}>
+                                        <Typography variant={"body1"} component={"span"}>
                                             Analytics
                                         </Typography>
                                     </ListItem>
@@ -289,7 +313,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                 <Link to={"/settings"}>
                                     <ListItem onClick={handleClosePopup}>
                                         {SettingsIcon}
-                                        <Typography component={"span"}>
+                                        <Typography variant={"body1"} component={"span"}>
                                             Settings and privacy
                                         </Typography>
                                     </ListItem>
@@ -297,20 +321,20 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                 <a href="https://help.twitter.com" target="_blank">
                                     <ListItem>
                                         {HelpCenterIcon}
-                                        <Typography component={"span"}>
+                                        <Typography variant={"body1"} component={"span"}>
                                             Help Center
                                         </Typography>
                                     </ListItem>
                                 </a>
                                 <ListItem onClick={onOpenDisplayModal}>
                                     {DisplayIcon}
-                                    <Typography component={"span"}>
+                                    <Typography variant={"body1"} component={"span"}>
                                         Display
                                     </Typography>
                                 </ListItem>
                                 <ListItem>
                                     {KeyboardShortcutsIcon}
-                                    <Typography component={"span"}>
+                                    <Typography variant={"body1"} component={"span"}>
                                         Keyboard shortcuts
                                     </Typography>
                                 </ListItem>
