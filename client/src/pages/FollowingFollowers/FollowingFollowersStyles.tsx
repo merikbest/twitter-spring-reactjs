@@ -16,16 +16,6 @@ export const useFollowingFollowersStyles = makeStyles((theme) => ({
         alignItems: 'center',
         flex: 1,
     },
-    headerFullName: {
-        fontWeight: 800,
-        fontSize: 20,
-        lineHeight: "24px",
-    },
-    headerUsername: {
-        fontSize: 13,
-        lineHeight: "16px",
-        color: theme.palette.text.secondary,
-    },
     contentWrapper: {
         paddingTop: 57
     },
@@ -47,18 +37,11 @@ export const useFollowingFollowersStyles = makeStyles((theme) => ({
     },
     content: {
         margin: "40px 20px",
-        textAlign: "center"
-    },
-    topic: {
-        fontSize: 20,
-        fontWeight: 700,
-        marginBottom: 12
-    },
-    text: {
-        fontSize: 15,
-        fontWeight: 400,
-        marginBottom: 16,
-        color: theme.palette.text.secondary
+        textAlign: "center",
+        "& .MuiTypography-subtitle1": {
+            marginTop: 12,
+            marginBottom: 16,
+        },
     },
     link: {
         textDecoration: 'none',

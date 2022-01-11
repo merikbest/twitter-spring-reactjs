@@ -44,8 +44,6 @@ export const useTweetComponentMoreStyles = makeStyles((theme: Theme) => createSt
         },
         '& .MuiListItem-root': {
             height: 52,
-            fontSize: 15,
-            fontWeight: 400,
             '&:hover': {
                 cursor: 'pointer',
                 backgroundColor: theme.palette.secondary.main,
@@ -54,7 +52,7 @@ export const useTweetComponentMoreStyles = makeStyles((theme: Theme) => createSt
                 verticalAlign: "bottom",
                 marginRight: 15,
                 fill: theme.palette.text.secondary,
-                height: "1.30em",
+                height: "1.4em",
             },
         },
     },

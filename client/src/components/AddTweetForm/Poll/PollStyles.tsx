@@ -27,7 +27,7 @@ export const usePollStyles = makeStyles((theme: Theme) => ({
         border: `1px solid ${theme.palette.divider}`,
     },
     pollLengthTitle: {
-        marginBottom: 3,
+        marginBottom: 4,
     },
     pollSelect: {
         marginRight: 19,
@@ -37,9 +37,8 @@ export const usePollStyles = makeStyles((theme: Theme) => ({
         border: 0,
         borderRadius: "0px 0px 16px 16px",
         height: 47,
-        "& div": {
+        "& .MuiTypography-body1": {
             paddingTop: 13,
-            fontSize: 14,
             color: theme.palette.error.main,
         },
         "&:hover": {

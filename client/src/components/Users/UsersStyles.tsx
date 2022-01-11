@@ -25,26 +25,17 @@ export const useUsersStyles = makeStyles((theme: Theme) => ({
         backgroundColor: 'transparent',
         padding: '13px 18px',
         borderBottom: `1px solid ${theme.palette.divider}`,
-        '& b': {
-            fontSize: 20,
-            fontWeight: 800,
-        },
     },
     footer: {
-        fontSize: 16,
-        color: theme.palette.primary.main,
         cursor: 'pointer',
         '& .MuiListItem-root .MuiListItem-gutters': {
             padding: "0px 0px 0px 0px",
         },
-        '& .MuiTypography-body1': {
-            fontWeight: 700,
+        '& .MuiTypography-subtitle1': {
+            color: theme.palette.primary.main,
         },
         '& .MuiListItemAvatar-root': {
             minWidth: 50,
-        },
-        '& .MuiListItemText-root': {
-            // marginRight: 45,
         },
         '&:hover': {
             backgroundColor: theme.palette.secondary.dark,

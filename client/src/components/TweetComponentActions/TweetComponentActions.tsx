@@ -219,13 +219,13 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
                                             onClick={() => onOpenTweetComponentActionsModal("Delete")}
                                         >
                                             <>{DeleteIcon}</>
-                                            <Typography component={"span"}>
+                                            <Typography variant={"body1"} component={"span"}>
                                                 Delete
                                             </Typography>
                                         </ListItem>
                                         <ListItem onClick={() => onOpenTweetComponentActionsModal("Pin")}>
                                             <>{PinIcon}</>
-                                            <Typography component={"span"}>
+                                            <Typography variant={"body1"} component={"span"}>
                                                 {(isTweetPinned) ? (
                                                     "Unpin from profile"
                                                 ) : (
@@ -235,25 +235,25 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
                                         </ListItem>
                                         <ListItem onClick={onOpenListsModal}>
                                             <>{AddListsIcon}</>
-                                            <Typography component={"span"}>
+                                            <Typography variant={"body1"} component={"span"}>
                                                 {`Add/remove @${tweet.user.username} from Lists`}
                                             </Typography>
                                         </ListItem>
                                         <ListItem onClick={handleClickReplyDropdown}>
                                             <>{ReplyIcon}</>
-                                            <Typography component={"span"}>
+                                            <Typography variant={"body1"} component={"span"}>
                                                 Change who can reply
                                             </Typography>
                                         </ListItem>
                                         <ListItem>
                                             <>{EmbedTweetIcon}</>
-                                            <Typography component={"span"}>
+                                            <Typography variant={"body1"} component={"span"}>
                                                 Embed Tweet
                                             </Typography>
                                         </ListItem>
                                         <ListItem onClick={onOpenTweetAnalytics}>
                                             <>{TweetActivityIcon}</>
-                                            <Typography component={"span"}>
+                                            <Typography variant={"body1"} component={"span"}>
                                                 View Tweet activity
                                             </Typography>
                                         </ListItem>
@@ -265,14 +265,14 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
                                                 <ListItem onClick={handleFollow}>
                                                     <>
                                                         <>{follower ? UnfollowIcon : FollowIcon}</>
-                                                        <Typography component={"span"}>
+                                                        <Typography variant={"body1"} component={"span"}>
                                                             {follower ? "Unfollow" : "Follow"} @{tweet.user.username}
                                                         </Typography>
                                                     </>
                                                 </ListItem>
                                                 <ListItem onClick={onOpenListsModal}>
                                                     <>{AddListsIcon}</>
-                                                    <Typography component={"span"}>
+                                                    <Typography variant={"body1"} component={"span"}>
                                                         {`Add/remove @${tweet.user.username} from Lists`}
                                                     </Typography>
                                                 </ListItem>
@@ -280,25 +280,25 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
                                         )}
                                         <ListItem onClick={onMuteUser}>
                                             <>{isUserMuted ? UnmuteIcon : MuteIcon}</>
-                                            <Typography component={"span"}>
+                                            <Typography variant={"body1"} component={"span"}>
                                                 {isUserMuted ? "Unmute" : "Mute"} @{tweet.user.username}
                                             </Typography>
                                         </ListItem>
                                         <ListItem onClick={onOpenBlockUserModal}>
                                             <>{isUserBlocked ? UnblockIcon : BlockIcon}</>
-                                            <Typography component={"span"}>
+                                            <Typography variant={"body1"} component={"span"}>
                                                 {isUserBlocked ? "Unblock" : "Block"} @{tweet.user.username}
                                             </Typography>
                                         </ListItem>
                                         <ListItem>
                                             <>{EmbedTweetIcon}</>
-                                            <Typography component={"span"}>
+                                            <Typography variant={"body1"} component={"span"}>
                                                 Embed Tweet
                                             </Typography>
                                         </ListItem>
                                         <ListItem>
                                             <>{ReportIcon}</>
-                                            <Typography component={"span"}>
+                                            <Typography variant={"body1"} component={"span"}>
                                                 Report Tweet
                                             </Typography>
                                         </ListItem>

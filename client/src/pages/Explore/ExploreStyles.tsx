@@ -11,7 +11,7 @@ export const useExploreStyles = makeStyles((theme: Theme) => ({
     header: {
         position: "fixed",
         width: 602,
-        zIndex: 10,
+        zIndex: 2,
         display: 'flex',
         alignItems: 'center',
         flex: 1,

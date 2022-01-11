@@ -57,10 +57,11 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         margin: "12px 12px 16px 5px",
     },
     text: {
-        fontSize: 24,
+        fontSize: 23,
+        lineHeight: "28px",
+        fontWeight: 400,
         marginTop: 16,
         marginBottom: 16,
-        lineHeight: 1.3125,
         wordBreak: 'break-word',
         '& #hashtag': {
             color: theme.palette.primary.main,
@@ -70,15 +71,13 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         display: 'flex',
         alignItems: 'center',
         margin: "16px 0",
-        fontSize: 15,
         '& a': {
             color: theme.palette.text.primary,
             textDecoration: 'none'
         },
-    },
-    contentItem: {
-        marginLeft: 5,
-        color: theme.palette.text.secondary,
+        "& .MuiTypography-subtitle1": {
+            marginLeft: 5,
+        },
     },
     tweetFooter: {
         display: 'flex',
@@ -123,6 +122,9 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         },
     },
     imageFooterIcon: {
+        "& .MuiTypography-body1": {
+            verticalAlign: "text-top",
+        },
         "& .MuiIconButton-root": {
             padding: 7,
             "& svg": {
@@ -137,8 +139,6 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
     },
     replyWrapper: {
         margin: "16px 68px",
-        color: theme.palette.text.secondary,
-        fontSize: 15,
         "& a": {
             textDecoration: "none",
             color: theme.palette.primary.main,
@@ -157,9 +157,6 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         "& svg": {
             color: theme.palette.common.white
         },
-    },
-    grey: {
-        color: theme.palette.text.secondary,
     },
     imageFooterWrapper: {
         display: 'flex',

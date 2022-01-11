@@ -1,5 +1,5 @@
 import React, {FC, ReactElement} from 'react';
-import {List, ListItem} from "@material-ui/core";
+import {List, ListItem, Typography} from "@material-ui/core";
 
 import {useTweetComponentChangeReplyStyles} from "./TweetComponentChangeReplyStyles";
 import {
@@ -30,13 +30,13 @@ const TweetComponentChangeReply: FC<TweetComponentChangeReplyProps> = (
             {openChangeReplyDropdown ? (
                 <div className={classes.dropdown}>
                     <div className={classes.infoWrapper}>
-                        <div className={classes.title}>
+                        <Typography variant={"h6"} component={"div"}>
                             Who can reply?
-                        </div>
-                        <div className={classes.text}>
+                        </Typography>
+                        <Typography variant={"subtitle1"} component={"div"}>
                             Choose who can reply to this Tweet.
                             Anyone mentioned can always reply.
-                        </div>
+                        </Typography>
                     </div>
                     <List component="nav" aria-label="main mailbox folders">
                         <ListItem
@@ -49,7 +49,9 @@ const TweetComponentChangeReply: FC<TweetComponentChangeReplyProps> = (
                                     {EveryoneReplyOutlinedIcon}
                                 </span>
                             </div>
-                            <span>Everyone</span>
+                            <Typography variant={"body1"} component={"span"}>
+                                Everyone
+                            </Typography>
                             {(replyType === ReplyType.EVERYONE) && (
                                 <span className={classes.checkIcon}>
                                     {CheckIcon}
@@ -66,7 +68,9 @@ const TweetComponentChangeReply: FC<TweetComponentChangeReplyProps> = (
                                     {FollowReplyOutlinedIcon}
                                 </span>
                             </div>
-                            <span>People you follow</span>
+                            <Typography variant={"body1"} component={"span"}>
+                                People you follow
+                            </Typography>
                             {(replyType === ReplyType.FOLLOW) && (
                                 <span className={classes.checkIcon}>
                                     {CheckIcon}
@@ -83,7 +87,9 @@ const TweetComponentChangeReply: FC<TweetComponentChangeReplyProps> = (
                                     {MentionReplyOutlinedIcon}
                                 </span>
                             </div>
-                            <span>Only people you mention</span>
+                            <Typography variant={"body1"} component={"span"}>
+                                Only people you mention
+                            </Typography>
                             {(replyType === ReplyType.MENTION) && (
                                 <span className={classes.checkIcon}>
                                     {CheckIcon}

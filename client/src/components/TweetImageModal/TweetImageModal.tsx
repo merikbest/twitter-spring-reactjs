@@ -138,33 +138,31 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                                 />
                             </Link>
                             <Link to={`/user/${tweetData?.user.id}`} className={classes.link}>
-                                <Typography
-                                    className={classes.userInfo}
-                                    onMouseEnter={handleHoverPopper}
-                                    onMouseLeave={handleLeavePopper}
-                                >
-                                    <b id={"link"}>{tweetData.user.fullName}</b>&nbsp;
-                                    <div>
-                                        <span className={classes.grey}>@{tweetData.user.username}</span>&nbsp;
-                                    </div>
+                                <div onMouseEnter={handleHoverPopper} onMouseLeave={handleLeavePopper}>
+                                    <Typography variant={"h6"} component={"div"} id={"link"}>
+                                        {tweetData.user.fullName}
+                                    </Typography>
+                                    <Typography variant={"subtitle1"} component={"div"}>
+                                        @{tweetData.user.username}
+                                    </Typography>
                                     <PopperUserWindow
                                         visible={visiblePopperWindow}
                                         user={tweetData!.user}
                                         isTweetImageModal={true}
                                     />
-                                </Typography>
+                                </div>
                             </Link>
                         </div>
-                        <Typography className={classes.text} gutterBottom>
+                        <Typography className={classes.text}>
                             {textFormatter(tweetData.text)}
                         </Typography>
                         <Typography style={{marginBottom: 16}}>
-                            <span className={classes.grey}>
+                            <Typography variant={"subtitle1"} component={"span"}>
                                 {format(new Date(tweetData.dateTime), 'hh:mm a', {locale: usLang})} ·
-                            </span>
-                            <span className={classes.grey}>
+                            </Typography>
+                            <Typography variant={"subtitle1"} component={"span"}>
                                 {format(new Date(tweetData.dateTime), ' MMM dd, yyyy')} · Twitter Web App
-                            </span>
+                            </Typography>
                         </Typography>
                         <Divider/>
                         {(tweetData.retweets.length !== 0 || tweetData.likedTweets.length !== 0) && (
@@ -172,20 +170,24 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                                 {(tweetData.retweets.length !== 0) && (
                                     <a href={"javascript:void(0);"} onClick={onOpenRetweetsModalWindow}>
                                         <span style={{marginRight: 20}}>
-                                            <b>{tweetData.retweets.length}</b>
-                                            <span className={classes.contentItem}>
+                                            <Typography variant={"h6"} component={"span"}>
+                                                {tweetData.retweets.length}
+                                            </Typography>
+                                            <Typography variant={"subtitle1"} component={"span"}>
                                                 Retweets
-                                            </span>
+                                            </Typography>
                                         </span>
                                     </a>
                                 )}
                                 {(tweetData.likedTweets.length !== 0) && (
                                     <a href={"javascript:void(0);"} onClick={onOpenLikesModalWindow}>
                                         <span style={{marginRight: 20}}>
-                                            <b>{tweetData.likedTweets.length}</b>
-                                            <span className={classes.contentItem}>
+                                            <Typography variant={"h6"} component={"span"}>
+                                                {tweetData.likedTweets.length}
+                                            </Typography>
+                                            <Typography variant={"subtitle1"} component={"span"}>
                                                 Likes
-                                            </span>
+                                            </Typography>
                                         </span>
                                     </a>
                                 )}
@@ -213,7 +215,9 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                                     ) : (
                                         <>{RetweetOutlinedIcon}</>
                                     )}
-                                    <HoverAction visible={visibleHoverAction?.visibleRetweetAction} actionText={isTweetRetweeted ? "Undo Retweet" : "Retweet"}
+                                    <HoverAction
+                                        visible={visibleHoverAction?.visibleRetweetAction}
+                                        actionText={isTweetRetweeted ? "Undo Retweet" : "Retweet"}
                                     />
                                 </IconButton>
                             </div>
@@ -228,7 +232,10 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                                     ) : (
                                         <>{LikeOutlinedIcon}</>
                                     )}
-                                    <HoverAction visible={visibleHoverAction?.visibleLikeAction} actionText={isTweetLiked ? "Unlike" : "Like"}/>
+                                    <HoverAction
+                                        visible={visibleHoverAction?.visibleLikeAction}
+                                        actionText={isTweetLiked ? "Unlike" : "Like"}
+                                    />
                                 </IconButton>
                             </div>
                             <ShareTweet
@@ -240,7 +247,7 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                             />
                         </div>
                         <Divider/>
-                        <Typography className={classes.replyWrapper}>
+                        <Typography variant={"subtitle1"} component={"div"} className={classes.replyWrapper}>
                             {"Replying to "}
                             <Link to={`/user/${tweetData.user.id}`}>
                                 @{tweetData.user.username}
@@ -279,7 +286,9 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                                 <>{ReplyIcon}</>
                             </IconButton>
                             {(tweetData.replies?.length === 0 || tweetData.replies === null) ? null : (
-                                <span>{tweetData.replies?.length}</span>
+                                <Typography variant={"body1"} component={"span"}>
+                                    {tweetData.replies?.length}
+                                </Typography>
                             )}
                         </div>
                         <div className={classes.imageFooterIcon}>
@@ -291,7 +300,11 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                                 )}
                             </IconButton>
                             {(tweetData.retweets.length === 0 || tweetData.retweets === null) ? null : (
-                                isTweetRetweeted && (<span>{tweetData.retweets.length}</span>)
+                                isTweetRetweeted && (
+                                    <Typography variant={"body1"} component={"span"}>
+                                        {tweetData.retweets.length}
+                                    </Typography>
+                                )
                             )}
                         </div>
                         <div className={classes.imageFooterIcon}>
@@ -303,7 +316,11 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                                 )}
                             </IconButton>
                             {(tweetData.likedTweets.length === 0 || tweetData.likedTweets === null) ? null : (
-                                isTweetLiked && (<span>{tweetData.likedTweets.length}</span>)
+                                isTweetLiked && (
+                                    <Typography variant={"body1"} component={"span"}>
+                                        {tweetData.likedTweets.length}
+                                    </Typography>
+                                )
                             )}
                         </div>
                         <div className={classes.imageFooterIcon}>

@@ -1,6 +1,7 @@
 import React, {FC, ReactElement} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import Button from "@material-ui/core/Button";
+import {Typography} from "@material-ui/core";
 
 import {useWelcomeStyles} from "./WelcomeStyles";
 import {selectUserData} from "../../store/ducks/user/selectors";
@@ -17,11 +18,13 @@ const Welcome: FC = (): ReactElement => {
 
     return (
         <div className={classes.info}>
-            <div className={classes.infoTitle}>Welcome to Twitter!</div>
-            <div className={classes.infoText}>
+            <Typography variant={"h5"} component={"div"}>
+                Welcome to Twitter!
+            </Typography>
+            <Typography variant={"subtitle1"} component={"div"}>
                 This is the best place to see what’s happening in your world.
                 Find some people and topics to follow now.
-            </div>
+            </Typography>
             <div className={classes.infoButtonContainer}>
                 <Button
                     className={classes.infoButton}

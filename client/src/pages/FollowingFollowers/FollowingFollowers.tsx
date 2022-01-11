@@ -85,10 +85,10 @@ const FollowingFollowers: FC = (): ReactElement => {
                     <>
                         <BackButton/>
                         <div>
-                            <Typography component={"div"} className={classes.headerFullName}>
+                            <Typography variant={"h5"} component={"div"}>
                                 {userProfile?.fullName}
                             </Typography>
-                            <Typography component={"div"} className={classes.headerUsername}>
+                            <Typography variant={"subtitle2"} component={"div"}>
                                 @{userProfile?.username}
                             </Typography>
                         </div>
@@ -112,14 +112,14 @@ const FollowingFollowers: FC = (): ReactElement => {
                             ))
                         ) : (
                             <div className={classes.content}>
-                                <Typography className={classes.topic}>
+                                <Typography variant={"h5"} component={"div"}>
                                     {(isMyProfile) ? (
                                         "You aren’t following anyone yet"
                                     ) : (
                                         `@${userProfile.username} isn’t following anyone`
                                     )}
                                 </Typography>
-                                <Typography className={classes.text}>
+                                <Typography variant={"subtitle1"} component={"div"}>
                                     {(isMyProfile) ? (
                                         "When you do, they’ll be listed here and you’ll see their Tweets in your timeline."
                                     ) : (
@@ -141,14 +141,14 @@ const FollowingFollowers: FC = (): ReactElement => {
                             ))
                         ) : (
                             <div className={classes.content}>
-                                <Typography className={classes.topic}>
+                                <Typography variant={"h5"} component={"div"}>
                                     {(isMyProfile) ? (
                                         "You don’t have any followers yet"
                                     ) : (
                                         `@${userProfile.username} doesn’t have any followers`
                                     )}
                                 </Typography>
-                                <Typography className={classes.text}>
+                                <Typography variant={"subtitle1"} component={"div"}>
                                     {(isMyProfile) ? (
                                         "When someone follows you, you’ll see them here."
                                     ) : (

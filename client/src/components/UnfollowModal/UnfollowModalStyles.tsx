@@ -6,18 +6,10 @@ export const useUnfollowModalStyles = makeStyles((theme) => ({
         height: 176,
         textAlign: "center",
         margin: "32px 20px",
-    },
-    modalFullName: {
-        color: theme.palette.text.primary,
-        fontWeight: 700,
-        fontSize: 20,
-    },
-    modalUsername: {
-        color: theme.palette.text.secondary,
-        fontWeight: 400,
-        fontSize: 15,
-        marginTop: 8,
-        marginBottom: 24,
+        "& .MuiTypography-subtitle1": {
+            marginTop: 8,
+            marginBottom: 24,
+        },
     },
     modalButtonWrapper: {
         display: "flex",
