@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, FormEvent, ReactElement, useState} from 'react';
+import React, {ChangeEvent, FC, FormEvent, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {History, LocationState} from "history";
 import {Link, useHistory} from "react-router-dom";
@@ -8,7 +8,7 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import {LoginTextField} from "./LoginInputField";
 import {useLoginStyles} from "./LoginStyles";
 import {selectUserStatus} from "../../store/ducks/user/selectors";
-import {fetchSignIn} from "../../store/ducks/user/actionCreators";
+import {fetchSignIn, setUserLoadingStatus} from "../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../store/types";
 
 export interface LoginProps {
@@ -24,6 +24,12 @@ const Login: FC = (): ReactElement => {
     const errorStatus = useSelector(selectUserStatus);
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+
+    useEffect(() => {
+        return () => {
+            dispatch(setUserLoadingStatus(LoadingStatus.LOADING));
+        };
+    }, []);
 
     const onSubmit = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
@@ -47,9 +53,11 @@ const Login: FC = (): ReactElement => {
             <div>
                 <TwitterIcon/>
             </div>
-            <h1>Log in to Twitter</h1>
+            <Typography variant={"h4"} component={"div"}>
+                Log in to Twitter
+            </Typography>
             {(errorStatus === LoadingStatus.ERROR) && (
-                <Typography component={"div"} className={classes.error}>
+                <Typography variant={"body1"} component={"div"} className={classes.error}>
                     The username and password you entered did not match our records.
                     Please double-check and try again.
                 </Typography>
@@ -85,8 +93,17 @@ const Login: FC = (): ReactElement => {
                 </Button>
             </form>
             <div className={classes.footer}>
-                <Typography component={"span"}><Link to={"/account/forgot"}>Forgot password?</Link></Typography> ·
-                <Typography component={"span"}><Link to={"/account/signin"}> Sign up for Twitter</Link></Typography>
+                <Typography variant={"body1"} component={"span"}>
+                    <Link to={"/account/forgot"}>
+                        Forgot password?
+                    </Link>
+                </Typography>
+                {" · "}
+                <Typography variant={"body1"} component={"span"}>
+                    <Link to={"/account/signin"}>
+                        Sign up for Twitter
+                    </Link>
+                </Typography>
             </div>
         </div>
     );

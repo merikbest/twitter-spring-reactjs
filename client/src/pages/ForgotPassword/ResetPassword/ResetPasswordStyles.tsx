@@ -1,12 +1,18 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 export const useResetPasswordStyles = makeStyles((theme: Theme) => ({
+    title: {
+        fontSize: 23,
+        fontWeight: 700,
+        color: theme.palette.common.black,
+        lineHeight: "36px",
+    },
     userInfoWrapper: {
+        marginTop: 30,
         display: "flex"
     },
     text: {
         margin: "14px 0px",
-        fontSize: 15
     },
     avatar: {
         marginRight: 5,
@@ -17,34 +23,21 @@ export const useResetPasswordStyles = makeStyles((theme: Theme) => ({
         display: "inline",
         flex: 1,
         marginLeft: 10,
-        fontSize: 14,
-    },
-    fullName: {
-        fontSize: 14,
-        fontWeight: 700,
-    },
-    username: {
-        fontSize: 14,
-        fontWeight: 400,
-        color: theme.palette.text.secondary,
     },
     resetPasswordText: {
         margin: "14px 0px",
-        fontSize: 15
+        "& a": {
+            marginLeft: 5,
+            color: theme.palette.primary.main,
+            "&:hover": {
+                textDecoration: "underline",
+                cursor: 'pointer',
+            },
+        },
     },
     enterPasswordText: {
         marginTop: 10,
-        fontSize: 15,
         fontWeight: 700,
-    },
-    more: {
-        marginLeft: 5,
-        fontSize: 15,
-        color: theme.palette.primary.main,
-        "&:hover": {
-            textDecoration: "underline",
-            cursor: 'pointer',
-        },
     },
     errorMessage: {
         display: "inline-block",
@@ -56,7 +49,7 @@ export const useResetPasswordStyles = makeStyles((theme: Theme) => ({
     checkbox: {
         marginTop: 10,
         "& .MuiButtonBase-root": {
-            padding: "0 5px 0 0",
+            padding: "0 5px 2px 0",
             "& svg": {
                 width: 18,
                 height: 18,

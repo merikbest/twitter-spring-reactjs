@@ -41,7 +41,7 @@ const ResetPassword: FC = (): ReactElement => {
 
     return (
         <>
-            <Typography component={"h1"}>
+            <Typography component={"div"} className={classes.title}>
                 Reset your password
             </Typography>
             <div className={classes.userInfoWrapper}>
@@ -51,20 +51,22 @@ const ResetPassword: FC = (): ReactElement => {
                     src={location.state.user?.avatar?.src ? location.state.user?.avatar?.src : DEFAULT_PROFILE_IMG}
                 />
                 <div className={classes.info}>
-                    <Typography className={classes.fullName}>
+                    <Typography variant={"h6"} component={"div"}>
                         {location.state.user?.fullName}
                     </Typography>
-                    <Typography className={classes.username}>
+                    <Typography variant={"subtitle1"} component={"div"}>
                         @{location.state.user?.username}
                     </Typography>
                 </div>
             </div>
-            <Typography className={classes.resetPasswordText}>
+            <Typography variant={"body1"} component={"div"} className={classes.resetPasswordText}>
                 Strong passwords include numbers, letters, and punctuation marks.
-                <span className={classes.more}>Learn more</span>
+                <a href={"https://help.twitter.com/safety-and-security/account-security-tips"} target={"_blank"}>
+                    Learn more
+                </a>
             </Typography>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <Typography component={"div"} className={classes.enterPasswordText}>
+                <Typography variant={"h6"} component={"div"} className={classes.enterPasswordText}>
                     Enter your new password
                 </Typography>
                 <Controller
@@ -90,7 +92,7 @@ const ResetPassword: FC = (): ReactElement => {
                 <Typography component={"span"} className={classes.errorMessage}>
                     {errors.password?.message}
                 </Typography>
-                <Typography component={"div"} className={classes.enterPasswordText}>
+                <Typography variant={"h6"} component={"div"} className={classes.enterPasswordText}>
                     Enter your password one more time
                 </Typography>
                 <Controller
@@ -122,9 +124,11 @@ const ResetPassword: FC = (): ReactElement => {
                         name="checkedB"
                         color="primary"
                     />
-                    Remember me
+                    <Typography variant={"body1"} component={"span"}>
+                        Remember me
+                    </Typography>
                 </div>
-                <Typography className={classes.text}>
+                <Typography variant={"body1"} component={"div"} className={classes.text}>
                     Resetting your password will log you out of all your active Twitter sessions.
                 </Typography>
                 <Button

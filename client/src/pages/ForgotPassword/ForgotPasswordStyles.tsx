@@ -22,20 +22,10 @@ export const useForgotPasswordStyles = makeStyles((theme: Theme) => ({
             fill: theme.palette.primary.main,
             fontSize: 25,
         },
-        "& p": {
-            display: "inline",
-            color: "#66757f",
-            fontSize: 16,
-        },
     },
     content: {
         margin: "0px auto",
         width: 590,
         paddingTop: 19,
-        "& h1": {
-            fontSize: 28,
-            fontWeight: "bold",
-            marginBottom: 36,
-        },
     },
 }));

@@ -1,9 +1,14 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 export const useCheckEmailCodeStyles = makeStyles((theme: Theme) => ({
+    title: {
+        fontSize: 23,
+        fontWeight: 700,
+        color: theme.palette.common.black,
+        lineHeight: "36px",
+    },
     text: {
         margin: "14px 0px",
-        fontSize: 16
     },
     errorMessage: {
         display: "inline-block",
@@ -24,16 +29,17 @@ export const useCheckEmailCodeStyles = makeStyles((theme: Theme) => ({
         },
     },
     footerText: {
-        fontSize: 16,
         marginTop: 14,
         marginBottom: 68,
     },
     link: {
-        fontSize: 13,
-        color: theme.palette.primary.main,
-        "&:hover": {
-            textDecoration: "underline",
-            cursor: 'pointer',
+        "& a": {
+            fontSize: 13,
+            color: theme.palette.primary.main,
+            "&:hover": {
+                textDecoration: "underline",
+                cursor: 'pointer',
+            },
         },
     },
 }));

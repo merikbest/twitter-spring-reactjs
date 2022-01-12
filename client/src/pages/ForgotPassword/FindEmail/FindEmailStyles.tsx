@@ -3,11 +3,18 @@ import {makeStyles, Theme} from "@material-ui/core";
 export const useFindEmailStyles = makeStyles((theme: Theme) => ({
     warning: {
         fontSize: 28,
-        color: "#c33",
+        fontWeight: 700,
+        color: "rgb(204, 51, 51)",
+        lineHeight: "36px",
+    },
+    title: {
+        fontSize: 23,
+        fontWeight: 700,
+        color: theme.palette.common.black,
+        lineHeight: "36px",
     },
     text: {
         margin: "14px 0px",
-        fontSize: 15
     },
     button: {
         padding: "5px 18px",

@@ -2,16 +2,20 @@ import {makeStyles, Theme} from "@material-ui/core";
 
 export const useResetPasswordSuccessStyles = makeStyles((theme: Theme) => ({
     title: {
+        fontSize: 23,
+        fontWeight: 700,
+        color: theme.palette.common.black,
         lineHeight: "36px",
     },
     infoWrapper: {
-        marginBottom: 14,
+        margin: "7px 0px",
     },
     successHeader: {
-        color: theme.palette.primary.main,
-        fontSize: 18,
-        "&:hover": {
-            cursor: 'pointer',
+        "& a": {
+            color: theme.palette.primary.main,
+            "&:hover": {
+                cursor: 'pointer',
+            },
         },
     },
     link: {

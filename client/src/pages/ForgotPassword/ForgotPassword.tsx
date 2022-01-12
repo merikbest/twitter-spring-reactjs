@@ -20,7 +20,7 @@ const ForgotPassword: FC = (): ReactElement => {
                     <span style={{marginTop: 10}}>
                         <TwitterIcon/>
                     </span>
-                    <Typography component={"span"}>
+                    <Typography variant={"body1"} component={"span"}>
                         Password Reset
                     </Typography>
                 </div>

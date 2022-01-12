@@ -28,6 +28,7 @@
     "@types/yup": "^0.29.11",
     "axios": "^0.21.1",
     "bowser": "^2.11.0",
+    "caniuse-lite": "^1.0.30001299",
     "classnames": "^2.3.1",
     "clsx": "^1.1.1",
     "date-fns": "^2.22.1",

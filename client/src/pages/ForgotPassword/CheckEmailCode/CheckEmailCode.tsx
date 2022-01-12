@@ -34,10 +34,10 @@ const CheckEmailCode: FC = (): ReactElement => {
 
     return (
         <>
-            <Typography component={"h1"}>
+            <Typography component={"div"} className={classes.title}>
                 Check your email
             </Typography>
-            <Typography component={"div"} className={classes.text}>
+            <Typography variant={"body1"} component={"div"} className={classes.text}>
                 You'll receive a code to verify here so you can reset your account password.
             </Typography>
             <form onSubmit={verifyResetCode}>
@@ -63,12 +63,14 @@ const CheckEmailCode: FC = (): ReactElement => {
                 </Button>
             </form>
             <div>
-                <Typography className={classes.footerText}>
+                <Typography variant={"body1"} component={"div"} className={classes.footerText}>
                     If you don't see the email, check other places it might be, like your junk, spam, social,
                     or other folders.
                 </Typography>
-                <Typography className={classes.link}>
-                    Didn’t receive your code?
+                <Typography component={"div"} className={classes.link}>
+                    <a href={"https://help.twitter.com/forms/account-access/regain-access"} target={"_blank"}>
+                        Didn’t receive your code?
+                    </a>
                 </Typography>
             </div>
         </>

@@ -27,17 +27,20 @@ const ResetPasswordOption: FC = (): ReactElement => {
 
     return (
         <>
-            <Typography component={"h1"}>
+            <Typography component={"div"} className={classes.title}>
                 How do you want to reset your password?
             </Typography>
-            <Typography component={"div"} className={classes.text}>
+            <Typography variant={"body1"} component={"div"} className={classes.text}>
                 You can use the information associated with your account.
             </Typography>
             <form className={classes.formWrapper} onSubmit={sendResetCode}>
                 <div className={classes.emailWrapper}>
                     <Radio className={classes.radio} checked={true} color="primary"/>
-                    <Typography component={"span"} className={classes.email}>
-                        Send an email to <b>{location.state.email}</b>
+                    <Typography variant={"body1"} component={"span"}>
+                        {"Send an email to "}
+                    </Typography>
+                    <Typography variant={"h6"} component={"span"}>
+                        {location.state.email}
                     </Typography>
                 </div>
                 <Button
@@ -50,8 +53,10 @@ const ResetPasswordOption: FC = (): ReactElement => {
                     Next
                 </Button>
             </form>
-            <Typography className={classes.link}>
-                Don’t have access to these?
+            <Typography component={"div"} className={classes.link}>
+                <a href={"https://help.twitter.com/forms/account-access/regain-access"} target={"_blank"}>
+                    Don’t have access to these?
+                </a>
             </Typography>
         </>
     );

@@ -9,23 +9,28 @@ const ResetPasswordSuccess: FC = (): ReactElement => {
 
     return (
         <>
-            <Typography component={"h1"} className={classes.title}>
+            <Typography component={"div"} className={classes.title}>
                 You’re all set. You've successfully changed your password.
             </Typography>
             <div className={classes.infoWrapper}>
-                <Typography component={"div"} className={classes.successHeader}>
-                    Review your applications
+                <Typography variant={"body1"} component={"div"} className={classes.successHeader}>
+                    <a href="https://developer.twitter.com/support/twitter-api/developer-account" target={"_blank"}>
+                        Review your applications
+                    </a>
                 </Typography>
-                <Typography component={"div"}>
+                <Typography variant={"body1"} component={"div"}>
                     Take a moment to review the applications that have access to your account. Revoke those you don't
                     recognize or no longer use.
                 </Typography>
             </div>
             <div className={classes.infoWrapper}>
-                <Typography component={"div"} className={classes.successHeader}>
-                    Add a phone number to your account
+                <Typography variant={"body1"} component={"div"} className={classes.successHeader}>
+                    <a href="https://help.twitter.com/bg/managing-your-account/how-to-update-your-account-phone-number"
+                       target={"_blank"}>
+                        Add a phone number to your account
+                    </a>
                 </Typography>
-                <Typography component={"div"} >
+                <Typography variant={"body1"}  component={"div"}>
                     This makes it easy to get back into your account if you're ever locked out.
                 </Typography>
             </div>

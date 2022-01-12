@@ -63,7 +63,9 @@ export function* fetchUserDataRequest() {
         localStorage.setItem("token", data.token);
         yield put(setUserData(data.user));
     } catch (error) {
-        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+        if (localStorage.getItem('token') !== null) {
+            yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+        }
     }
 }
 

@@ -1,16 +1,20 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 export const useResetPasswordOptionStyles = makeStyles((theme: Theme) => ({
+    title: {
+        fontSize: 23,
+        fontWeight: 700,
+        color: theme.palette.common.black,
+        lineHeight: "36px",
+    },
     text: {
         margin: "14px 0px",
-        fontSize: 16
     },
     emailWrapper: {
         margin: "16px 0",
-    },
-    email: {
-        fontWeight: 400,
-        fontSize: 16,
+        "& .MuiTypography-h6": {
+            fontWeight: 700,
+        },
     },
     radio: {
         padding: 0,
@@ -36,11 +40,13 @@ export const useResetPasswordOptionStyles = makeStyles((theme: Theme) => ({
         },
     },
     link: {
-        fontSize: 13,
-        color: theme.palette.primary.main,
-        "&:hover": {
-            textDecoration: "underline",
-            cursor: 'pointer',
+        "& a": {
+            fontSize: 13,
+            color: theme.palette.primary.main,
+            "&:hover": {
+                textDecoration: "underline",
+                cursor: 'pointer',
+            },
         },
     },
 }));
