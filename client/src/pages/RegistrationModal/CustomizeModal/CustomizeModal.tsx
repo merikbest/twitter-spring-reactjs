@@ -25,18 +25,18 @@ const CustomizeModal: FC<CustomizeModalProps> = ({open, onClose, onOpenCreateAcc
                 <div className={classes.logoIcon}>
                     <TwitterIcon/>
                 </div>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h3"} component={"div"} className={classes.title}>
                     Customize your experience
                 </Typography>
                 <Typography component={"div"} className={classes.subtitle}>
                     Track where you see Twitter content across the web
                 </Typography>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle1"} component={"div"} className={classes.text}>
                     Twitter uses this data to personalize your experience. This web browsing history will never be
                     stored with your name, email, or phone number.
                 </Typography>
                 <Radio className={classes.radio} checked={true} color="primary"/>
-                <Typography component={"div"}>
+                <Typography variant={"body1"} component={"div"}>
                     For more details about these settings, visit the <a
                     href={"https://help.twitter.com/managing-your-account/new-account-settings"} target={"_blank"}
                     className={classes.link}>Help Center</a>.

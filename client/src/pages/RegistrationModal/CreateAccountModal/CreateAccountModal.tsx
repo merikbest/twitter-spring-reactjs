@@ -55,7 +55,7 @@ const CreateAccountModal: FC<CustomizeModalProps> = (
                     <Spinner/>
                 ) : (
                     <>
-                        <Typography component={"div"} className={classes.subtitle}>
+                        <Typography variant={"h5"} component={"div"} className={classes.subtitle}>
                             Create your account
                         </Typography>
                         <div className={classes.form}>
@@ -81,7 +81,7 @@ const CreateAccountModal: FC<CustomizeModalProps> = (
                                 fullWidth
                             />
                         </div>
-                        <Typography component={"div"} className={classes.text}>
+                        <Typography variant={"body1"} component={"div"} className={classes.text}>
                             By signing up, you agree to
                             the <a href={"https://twitter.com/tos#new"} target={"_blank"} className={classes.link}>Terms
                             of Service</a> and <a href={"https://twitter.com/privacy"} target={"_blank"} className={classes.link}>

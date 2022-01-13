@@ -14,7 +14,6 @@ export const useCreateAccountModalStyles = makeStyles((theme: Theme) => ({
         linHeight: "24px"
     },
     subtitle: {
-        fontSize: 21,
         fontWeight: 700,
     },
     form: {
@@ -24,16 +23,6 @@ export const useCreateAccountModalStyles = makeStyles((theme: Theme) => ({
     },
     text: {
         marginTop: 76,
-        fontWeight: 400,
-        fontSize: 15,
-        linHeight: "20px",
-        // "& span": {
-        //     fontSize: 14,
-        //     color: theme.palette.primary.main,
-        //     "&:hover": {
-        //         cursor: "pointer",
-        //     },
-        // },
     },
     link: {
         textDecoration: "none",

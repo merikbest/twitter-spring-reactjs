@@ -42,8 +42,4 @@ export const useShareActionsModalStyles = makeStyles((theme: Theme) => ({
             height: "1.30em",
         },
     },
-    text: {
-        fontSize: 15,
-        fontWeight: 400,
-    },
 }));

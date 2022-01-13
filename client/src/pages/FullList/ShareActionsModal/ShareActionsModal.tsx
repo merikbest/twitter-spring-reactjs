@@ -28,25 +28,25 @@ const ShareActionsModal: FC = (): ReactElement => {
                             <List>
                                 <ListItem>
                                     <>{TweetThisIcon}</>
-                                    <Typography component={"span"} className={classes.text}>
+                                    <Typography variant={"body1"} component={"span"}>
                                         Tweet this
                                     </Typography>
                                 </ListItem>
                                 <ListItem>
                                     <>{MessagesIcon}</>
-                                    <Typography component={"span"} className={classes.text}>
+                                    <Typography variant={"body1"} component={"span"}>
                                         Send via Direct Message
                                     </Typography>
                                 </ListItem>
                                 <ListItem>
                                     <>{LinkIcon}</>
-                                    <Typography component={"span"} className={classes.text}>
+                                    <Typography variant={"body1"} component={"span"}>
                                         Copy link to List
                                     </Typography>
                                 </ListItem>
                                 <ListItem>
                                     <>{ShareIcon}</>
-                                    <Typography component={"span"} className={classes.text}>
+                                    <Typography variant={"body1"} component={"span"}>
                                         Share List
                                     </Typography>
                                 </ListItem>

@@ -46,14 +46,14 @@ const ManageMembersItem: FC<ManageMembersItemProps<Lists> & HoverUserProps> = (
                 <div className={classes.header}>
                     <Link to={`/user/${member?.id}`} className={classes.link}>
                         <div onMouseLeave={handleLeavePopper} className={classes.headerUserInfo}>
-                            <Typography onMouseEnter={handleHoverPopper} className={classes.fullName}>
+                            <Typography variant={"h6"} component={"div"} onMouseEnter={handleHoverPopper}>
                                 {member?.fullName}
                             </Typography>
                             <PopperUserWindow visible={visiblePopperWindow} user={member!}/>
-                            <Typography className={classes.username}>
+                            <Typography variant={"subtitle1"} component={"div"}>
                                 @{member?.username}
                             </Typography>
-                            <Typography className={classes.about}>
+                            <Typography variant={"body1"} component={"div"}>
                                 {member?.about}
                             </Typography>
                         </div>

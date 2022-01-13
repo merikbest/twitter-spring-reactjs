@@ -7,26 +7,21 @@ export const useSetPasswordModalStyles = makeStyles((theme: Theme) => ({
         marginTop: 5,
         padding: "0 30px",
         position: "relative",
+        "& .MuiTypography-h3": {
+            marginTop: 20,
+        },
+        "& .MuiTypography-subtitle1": {
+            marginTop: 15,
+        },
     },
     logoIcon: {
         margin: "0 auto",
         width: 30,
         "& svg": {
-            fontSize: 30,
+            height: "1.75rem",
+            width: "1.75rem",
             color: theme.palette.primary.main,
         },
-    },
-    title: {
-        marginTop: 20,
-        fontSize: 21,
-        fontWeight: 700,
-        linHeight: "24px"
-    },
-    text: {
-        fontSize: 15,
-        marginTop: 15,
-        color: theme.palette.text.secondary,
-        linHeight: "20px",
     },
     button: {
         position: "absolute",

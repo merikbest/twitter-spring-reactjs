@@ -58,10 +58,10 @@ const SetPasswordModal: FC<SetPasswordProps> = ({email, open, onClose}): ReactEl
                 <div className={classes.logoIcon}>
                     <TwitterIcon/>
                 </div>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h3"} component={"div"}>
                     You'll need a password
                 </Typography>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle1"} component={"div"}>
                     Make sure it’s 8 characters or more.
                 </Typography>
                 <form onSubmit={handleSubmit(onSubmit)}>

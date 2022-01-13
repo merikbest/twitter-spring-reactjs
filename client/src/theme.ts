@@ -83,6 +83,11 @@ const commonTheme = {
             },
         },
         MuiTypography: {
+            h3: {
+                fontSize: 23,
+                fontWeight: 700,
+                lineHeight: "28px",
+            },
             h4: {
                 marginBottom: 8,
                 fontSize: 31,
@@ -165,6 +170,9 @@ export const dimTheme = createMuiTheme(deepmerge({
             },
         },
         MuiTypography: {
+            h3: {
+                color: "rgb(255, 255, 255)",
+            },
             h4: {
                 color: "rgb(255, 255, 255)",
             },
@@ -231,6 +239,9 @@ export const lightsOutTheme = createMuiTheme(deepmerge({
             },
         },
         MuiTypography: {
+            h3: {
+                color: "rgb(217, 217, 217)",
+            },
             h4: {
                 color: "rgb(217, 217, 217)",
             },
@@ -297,6 +308,9 @@ export const defaultTheme = createMuiTheme(deepmerge({
             },
         },
         MuiTypography: {
+            h3: {
+                color: "rgb(15, 20, 25)",
+            },
             h4: {
                 color: "rgb(15, 20, 25)",
             },

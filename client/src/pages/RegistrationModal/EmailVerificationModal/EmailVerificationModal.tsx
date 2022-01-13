@@ -36,11 +36,11 @@ const EmailVerificationModal: FC<CustomizeModalProps> = ({email, open, onClose, 
                 <div className={classes.logoIcon}>
                     <TwitterIcon/>
                 </div>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h3"} component={"div"}>
                     We sent you a code
                 </Typography>
-                <Typography component={"div"} className={classes.text}>
-                    Enter it below to verify {email}.
+                <Typography variant={"subtitle1"} component={"div"}>
+                    {`Enter it below to verify ${email}.`}
                 </Typography>
                 <div style={{marginTop: 10}}>
                     <RegistrationInputField

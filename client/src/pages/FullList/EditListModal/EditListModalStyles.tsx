@@ -43,19 +43,11 @@ export const useEditListModalStyles = makeStyles((theme: Theme) => ({
         display: "flex",
         justifyContent: "space-between",
     },
-    footerTitle: {
-        fontSize: 15,
-    },
-    footerText: {
-        fontSize: 13,
-        color: theme.palette.text.secondary,
-    },
     manageMembers: {
         display: "flex",
         justifyContent: "space-between",
         borderTop: `1px solid ${theme.palette.divider}`,
         padding: "12px 16px",
-        fontSize: 15,
         "&:hover": {
             cursor: "pointer",
             backgroundColor: theme.palette.secondary.main,
@@ -67,8 +59,6 @@ export const useEditListModalStyles = makeStyles((theme: Theme) => ({
     },
     deleteList: {
         padding: "12px 16px",
-        fontSize: 15,
-        fontWeight: 500,
         color: theme.palette.error.main,
         border: 0,
         borderRadius: "0px 0px 16px 16px",

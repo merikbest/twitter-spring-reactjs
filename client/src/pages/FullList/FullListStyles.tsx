@@ -21,22 +21,12 @@ export const useFullListStyles = makeStyles((theme: Theme) => ({
         borderRight: 0,
         borderRadius: 0,
     },
-    headerFullName: {
-        fontWeight: 800,
-        fontSize: 20,
-        lineHeight: "24px",
-    },
     lockIcon: {
         "& svg": {
             marginLeft: 3,
             marginBottom: -3,
             height: "1.5em",
         },
-    },
-    headerUsername: {
-        fontSize: 13,
-        lineHeight: "16px",
-        color: theme.palette.text.secondary,
     },
     iconGroup: {
         marginLeft: "auto",
@@ -60,20 +50,28 @@ export const useFullListStyles = makeStyles((theme: Theme) => ({
         borderRight: 0,
         padding: 12,
         textAlign: "center",
-    },
-    listTitle: {
-        marginBottom: 12,
-        fontSize: 20,
-        fontWeight: 700,
-    },
-    listDescription: {
-        marginBottom: 12,
-        fontSize: 15,
+        "& .MuiTypography-h5": {
+            marginBottom: 12,
+        },
+        "& .MuiTypography-body1": {
+            marginBottom: 12,
+        },
     },
     listOwnerLink: {
         color: "black",
         textDecoration: "none",
+        "& .MuiTypography-h6": {
+            verticalAlign: "top",
+            marginRight: 4,
+            "&:hover": {
+                textDecoration: "underline",
+            },
+        },
+        "& .MuiTypography-subtitle1": {
+            verticalAlign: "top",
+        },
     },
+
     listOwnerWrapper: {
         display: "inline-block",
     },
@@ -82,28 +80,8 @@ export const useFullListStyles = makeStyles((theme: Theme) => ({
         width: "20px !important",
         height: "20px !important",
     },
-    listOwnerFullName: {
-        color: theme.palette.text.primary,
-        verticalAlign: "top",
-        fontSize: 15,
-        fontWeight: 700,
-        marginRight: 4,
-        "&:hover": {
-            textDecoration: "underline",
-        },
-    },
-    listOwnerUsername: {
-        verticalAlign: "top",
-        color: theme.palette.text.secondary,
-        fontSize: 15,
-    },
     listMembers: {
         marginLeft: 20,
-        color: theme.palette.text.secondary,
-        fontSize: 15,
-        "& b" : {
-            color: theme.palette.text.primary,
-        },
         "&:hover": {
            cursor: "pointer",
             textDecoration: "underline",

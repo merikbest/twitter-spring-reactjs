@@ -18,7 +18,6 @@ import {Image} from "../../../store/ducks/tweets/contracts/state";
 import {uploadImage} from "../../../util/uploadImage";
 import CloseButton from "../../../components/CloseButton/CloseButton";
 import {selectListItem} from "../../../store/ducks/list/selectors";
-import {User} from "../../../store/ducks/user/contracts/state";
 
 interface EditListModalProps {
     visible?: boolean;
@@ -162,7 +161,7 @@ const EditListModal: FC<EditListModalProps> = ({visible, onClose}): ReactElement
                         />
                         <div className={classes.footer}>
                             <div className={classes.footerWrapper}>
-                                <Typography component={"div"} className={classes.footerTitle}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Make private
                                 </Typography>
                                 <Checkbox
@@ -172,15 +171,15 @@ const EditListModal: FC<EditListModalProps> = ({visible, onClose}): ReactElement
                                     color="primary"
                                 />
                             </div>
-                            <Typography component={"div"} className={classes.footerText}>
+                            <Typography variant={"subtitle2"} component={"div"}>
                                 When you make a List private, only you can see it.
                             </Typography>
                         </div>
-                        <Typography component={"div"} className={classes.manageMembers} onClick={onOpenManageMembersModal}>
+                        <Typography variant={"body1"} component={"div"} className={classes.manageMembers} onClick={onOpenManageMembersModal}>
                             Manage members
                             <>{ForwardArrowIcon}</>
                         </Typography>
-                        <Typography component={"div"} className={classes.deleteList} onClick={onOpenDeleteListModal}>
+                        <Typography variant={"body1"} component={"div"} className={classes.deleteList} onClick={onOpenDeleteListModal}>
                             Delete List
                         </Typography>
                     </div>

@@ -104,7 +104,7 @@ const RegistrationModal: FC<RegistrationModalProps> = (
                         <TwitterIcon/>
                     </div>
                     <div>
-                        <Typography component={"div"} className={classes.title}>
+                        <Typography variant={"h3"} component={"div"} className={classes.title}>
                             Create your account
                         </Typography>
                         <form onSubmit={handleSubmit(onSubmit)}>
@@ -142,12 +142,14 @@ const RegistrationModal: FC<RegistrationModalProps> = (
                                     )}
                                 />
                             </FormControl>
-                            <Typography component={"div"} className={classes.link}>
+                            <Typography variant={"body1"} component={"div"} className={classes.link}>
                                 Use phone instead
                             </Typography>
                             <div className={classes.footer}>
-                                <b>Date of birth</b>
-                                <Typography component={"div"} className={classes.footerText}>
+                                <Typography variant={"h6"} component={"div"}>
+                                    Date of birth
+                                </Typography>
+                                <Typography variant={"subtitle1"} component={"div"}>
                                     This will not be shown publicly. Confirm your own age, even if this account is for a
                                     business, a pet, or something else.
                                 </Typography>

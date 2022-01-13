@@ -11,15 +11,13 @@ export const useCustomizeModalStyles = makeStyles((theme: Theme) => ({
         margin: "0 auto",
         width: 30,
         "& svg": {
-            fontSize: 30,
+            height: "1.75rem",
+            width: "1.75rem",
             color: theme.palette.primary.main,
         },
     },
     title: {
-        fontWeight: 700,
-        fontSize: 21,
         marginBottom: 44,
-        lineHeight: "28px",
     },
     subtitle: {
         fontWeight: 700,
@@ -31,8 +29,6 @@ export const useCustomizeModalStyles = makeStyles((theme: Theme) => ({
         width: 450,
         display: "inline-block",
         marginBottom: 40,
-        lineHeight: "20px",
-        fontSize: 15,
     },
     radio: {
         display: "inline-block",
@@ -47,7 +43,6 @@ export const useCustomizeModalStyles = makeStyles((theme: Theme) => ({
     link: {
         textDecoration: "none",
         margin: "16px 0 32px 0",
-        fontSize: 14,
         color: theme.palette.primary.main,
         "&:hover": {
             cursor: "pointer",

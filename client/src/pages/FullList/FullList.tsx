@@ -76,7 +76,7 @@ const FullList: FC = (): ReactElement => {
                 <BackButton/>
                 <div>
                     <div>
-                        <Typography component={"span"} className={classes.headerFullName}>
+                        <Typography variant={"h5"} component={"span"}>
                             {list?.name}
                         </Typography>
                         {list?.private && (
@@ -85,7 +85,7 @@ const FullList: FC = (): ReactElement => {
                             </span>
                         )}
                     </div>
-                    <Typography component={"div"} className={classes.headerUsername}>
+                    <Typography variant={"subtitle2"} component={"div"}>
                         @{list?.listOwner.username}
                     </Typography>
                 </div>
@@ -108,7 +108,7 @@ const FullList: FC = (): ReactElement => {
                         </div>
                         <Paper className={classes.listInfo} variant="outlined">
                             <div>
-                                <Typography component={"span"} className={classes.listTitle}>
+                                <Typography variant={"h5"} component={"span"}>
                                     {list?.name}
                                 </Typography>
                                 {list?.private && (
@@ -117,7 +117,7 @@ const FullList: FC = (): ReactElement => {
                                     </span>
                                 )}
                             </div>
-                            <Typography component={"div"} className={classes.listDescription}>
+                            <Typography variant={"body1"} component={"div"}>
                                 {list?.description}
                             </Typography>
                             <Link to={`/user/${list?.listOwner.id}`} className={classes.listOwnerLink}>
@@ -127,20 +127,30 @@ const FullList: FC = (): ReactElement => {
                                         src={list?.listOwner.avatar?.src ? list?.listOwner.avatar?.src : DEFAULT_PROFILE_IMG}
                                     />
                                 </div>
-                                <Typography component={"span"} className={classes.listOwnerFullName}>
+                                <Typography variant={"h6"} component={"span"}>
                                     {list?.listOwner.fullName}
                                 </Typography>
-                                <Typography component={"span"} className={classes.listOwnerUsername}>
+                                <Typography variant={"subtitle1"} component={"span"}>
                                     @{list?.listOwner.username}
                                 </Typography>
                             </Link>
                             <div>
-                                <Typography component={"span"} onClick={onOpenMembersModalWindow} className={classes.listMembers}>
-                                    <b>{list?.members.length}</b> Members
-                                </Typography>
-                                <Typography component={"span"} onClick={onOpenFollowersModalWindow} className={classes.listMembers}>
-                                    <b>{list?.followers.length}</b> Followers
-                                </Typography>
+                                <span onClick={onOpenMembersModalWindow} className={classes.listMembers}>
+                                    <Typography variant={"h6"} component={"span"}>
+                                        {list?.members.length}
+                                    </Typography>
+                                    <Typography variant={"subtitle1"} component={"span"}>
+                                        {" Members"}
+                                    </Typography>
+                                </span>
+                                <span onClick={onOpenFollowersModalWindow} className={classes.listMembers}>
+                                    <Typography variant={"h6"} component={"span"}>
+                                        {list?.followers.length}
+                                    </Typography>
+                                    <Typography variant={"subtitle1"} component={"span"}>
+                                        {" Followers"}
+                                    </Typography>
+                                </span>
                             </div>
                             <div className={classes.buttonWrapper}>
                                 {(myProfile?.id === list?.listOwner.id) ? (

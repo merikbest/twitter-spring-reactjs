@@ -13,9 +13,8 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
         marginLeft: 20,
         marginTop: 5,
         color: theme.palette.text.secondary,
-        '& p': {
+        '& .MuiTypography-subtitle2': {
             marginLeft: 15,
-            fontSize: 14,
             fontWeight: 700
         },
         "& svg": {
@@ -48,17 +47,6 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
     },
     headerUserInfo: {
         position: "relative",
-        fontSize: 15,
-        "& b": {
-            lineHeight: "20px"
-        },
-    },
-    username: {
-        color: theme.palette.text.secondary,
-        lineHeight: "20px"
-    },
-    date: {
-        color: theme.palette.text.secondary,
     },
     dateWrapper: {
         marginBottom: 16
@@ -90,7 +78,6 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
         display: 'flex',
         alignItems: 'center',
         margin: "16px 0",
-        fontSize: 15,
         '& a': {
             color: theme.palette.text.primary,
             textDecoration: 'none'
@@ -100,7 +87,6 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
         marginRight: 20,
         "& span": {
             marginLeft: 5,
-            color: theme.palette.text.secondary,
         },
     },
     info: {
@@ -192,18 +178,12 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
     },
     replyTextInfoWrapper: {
         marginTop: 15,
-        fontSize: 15,
-    },
-    replyInfoTitle: {
-        fontWeight: 700,
-    },
-    replyInfoText: {
-        fontWeight: 400,
+        "& .MuiTypography-h6": {
+            fontWeight: 700,
+        },
     },
     replyWrapper: {
         margin: "16px 60px",
-        color: theme.palette.text.secondary,
-        fontSize: 15,
         "& a": {
             textDecoration: "none",
             color: theme.palette.primary.main,
@@ -217,7 +197,6 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
         width: 350,
         margin: "0 auto",
         paddingTop: 200,
-        fontSize: 20,
         fontWeight: 700,
         textAlign: "center",
     },

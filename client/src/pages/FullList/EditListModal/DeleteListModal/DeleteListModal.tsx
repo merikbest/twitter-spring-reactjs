@@ -27,10 +27,10 @@ const DeleteListModal: FC<DeleteListModalProps> = ({visible, onClose, onDeleteLi
         >
             <DialogContent style={{padding: 0}}>
                 <div className={classes.modalWrapper}>
-                    <Typography className={classes.modalFullName}>
+                    <Typography variant={"h5"} component={"div"}>
                         Delete List?
                     </Typography>
-                    <Typography className={classes.modalUsername}>
+                    <Typography variant={"subtitle1"} component={"div"}>
                         This can’t be undone and you’ll lose your List.
                     </Typography>
                     <div className={classes.modalButtonWrapper}>
