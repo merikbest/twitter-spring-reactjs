@@ -1,8 +1,8 @@
 import React, {FC, ReactElement, useState} from 'react';
-
-import {useAutoplayStyles} from "./AutoplayStyles";
 import {Radio, Typography} from "@material-ui/core";
 import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
+
+import {useAutoplayStyles} from "./AutoplayStyles";
 
 const Autoplay: FC = (): ReactElement => {
     const classes = useAutoplayStyles();

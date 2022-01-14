@@ -11,7 +11,7 @@ const AccessibilityDisplayLanguages: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Manage how Twitter content is displayed to you.
                 </Typography>
             </div>
@@ -23,10 +23,10 @@ const AccessibilityDisplayLanguages: FC = (): ReactElement => {
                                 {AccessibilityIcon}
                             </div>
                             <div>
-                                <Typography component={"div"} className={classes.subtitle}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Accessibility
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle2"} component={"div"}>
                                     Manage aspects of your Twitter experience such as limiting color contrast and
                                     motion.
                                 </Typography>
@@ -42,10 +42,10 @@ const AccessibilityDisplayLanguages: FC = (): ReactElement => {
                                 {DisplayIcon}
                             </div>
                             <div>
-                                <Typography component={"div"} className={classes.subtitle}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Display
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle2"} component={"div"}>
                                     Manage your font size, color, and background. These settings affect all the
                                     Twitter accounts on this browser.
                                 </Typography>
@@ -61,10 +61,10 @@ const AccessibilityDisplayLanguages: FC = (): ReactElement => {
                                 {LanguagesIcon}
                             </div>
                             <div>
-                                <Typography component={"div"} className={classes.subtitle}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Languages
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle2"} component={"div"}>
                                     Manage which languages are used to personalize your Twitter experience.
                                 </Typography>
                             </div>
@@ -79,10 +79,10 @@ const AccessibilityDisplayLanguages: FC = (): ReactElement => {
                                 {TweetActivityIcon}
                             </div>
                             <div>
-                                <Typography component={"div"} className={classes.subtitle}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Data usage
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle2"} component={"div"}>
                                     Limit how Twitter uses some of your network data. These settings affect all the
                                     Twitter accounts on this browser.
                                 </Typography>

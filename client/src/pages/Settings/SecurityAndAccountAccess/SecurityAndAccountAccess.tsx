@@ -11,7 +11,7 @@ const SecurityAndAccountAccess: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.info}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Manage your account’s security and keep track of your account’s usage including apps that
                     you have connected to your account.
                 </Typography>
@@ -24,10 +24,10 @@ const SecurityAndAccountAccess: FC = (): ReactElement => {
                                 {SecurityIcon}
                             </div>
                             <div>
-                                <Typography component={"div"} className={classes.title}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Security
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle2"} component={"div"}>
                                     Manage your account’s security.
                                 </Typography>
                             </div>
@@ -42,10 +42,10 @@ const SecurityAndAccountAccess: FC = (): ReactElement => {
                                 {AppsIcon}
                             </div>
                             <div>
-                                <Typography component={"div"} className={classes.title}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Apps and sessions
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle2"} component={"div"}>
                                     See information about when you logged into your account and the apps you
                                     connected to your account.
                                 </Typography>
@@ -60,10 +60,10 @@ const SecurityAndAccountAccess: FC = (): ReactElement => {
                             {ConnectedIcon}
                         </div>
                         <div>
-                            <Typography component={"div"} className={classes.title}>
+                            <Typography variant={"body1"} component={"div"}>
                                 Connected accounts
                             </Typography>
-                            <Typography component={"div"} className={classes.text}>
+                            <Typography variant={"subtitle2"} component={"div"}>
                                 Manage Google or Apple accounts connected to Twitter to log in.
                             </Typography>
                         </div>

@@ -25,13 +25,13 @@ const PrivacyAndSafety: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Manage what information you see and share on Twitter.
                 </Typography>
             </div>
             <Divider/>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h5"} component={"div"}>
                     Your Twitter activity
                 </Typography>
             </div>
@@ -43,10 +43,10 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                 {AudienceIcon}
                             </div>
                             <div>
-                                <Typography component={"div"} className={classes.subtitle}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Audience and tagging
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle2"} component={"div"}>
                                     Manage what information you allow other people on Twitter to see.
                                 </Typography>
                             </div>
@@ -61,10 +61,10 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                 {QuoteTweetIcon}
                             </div>
                             <div>
-                                <Typography component={"div"} className={classes.subtitle}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Your Tweets
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle2"} component={"div"}>
                                     Manage the information associated with your Tweets.
                                 </Typography>
                             </div>
@@ -79,10 +79,10 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                 {ContentIcon}
                             </div>
                             <div>
-                                <Typography component={"div"} className={classes.subtitle}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Content you see
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle2"} component={"div"}>
                                     Decide what you see on Twitter based on your preferences like Topics and
                                     interests
                                 </Typography>
@@ -98,10 +98,10 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                 {MuteIcon}
                             </div>
                             <div>
-                                <Typography component={"div"} className={classes.subtitle}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Mute and block
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle2"} component={"div"}>
                                     Manage the accounts, words, and notifications that you’ve muted or blocked.
                                 </Typography>
                             </div>
@@ -116,10 +116,10 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                 {MessagesIcon}
                             </div>
                             <div>
-                                <Typography component={"div"} className={classes.subtitle}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Direct Messages
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle2"} component={"div"}>
                                     Manage who can message you directly.
                                 </Typography>
                             </div>
@@ -134,10 +134,10 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                 {SpacesIcon}
                             </div>
                             <div>
-                                <Typography component={"div"} className={classes.subtitle}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Spaces
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle2"} component={"div"}>
                                     Manage who can see your Spaces listening activity
                                 </Typography>
                             </div>
@@ -152,10 +152,10 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                 {DiscoverIcon}
                             </div>
                             <div>
-                                <Typography component={"div"} className={classes.subtitle}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Discoverability and contacts
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle2"} component={"div"}>
                                     Control your discoverability settings and manage contacts you’ve imported.
                                 </Typography>
                             </div>
@@ -166,7 +166,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                     </Link>
                     <Divider/>
                     <div className={classes.infoItemWrapper}>
-                        <Typography component={"div"} className={classes.title}>
+                        <Typography variant={"h5"} component={"div"}>
                             Data sharing and off-Twitter activity
                         </Typography>
                     </div>
@@ -176,10 +176,10 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                 {AdsIcon}
                             </div>
                             <div>
-                                <Typography component={"div"} className={classes.subtitle}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Ads preferences
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle2"} component={"div"}>
                                     Manage your ads experience on Twitter.
                                 </Typography>
                             </div>
@@ -194,10 +194,10 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                 {OffTwitterIcon}
                             </div>
                             <div>
-                                <Typography component={"div"} className={classes.subtitle}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Off-Twitter activity
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle2"} component={"div"}>
                                     Manage how Twitter uses your online activity outside of Twitter, such as the
                                     websites you visit, to personalize your experience.
                                 </Typography>
@@ -213,10 +213,10 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                 {DataSharingIcon}
                             </div>
                             <div>
-                                <Typography component={"div"} className={classes.subtitle}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Data sharing with business partners
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle2"} component={"div"}>
                                     Allow sharing of additional information with Twitter’s business partners.
                                 </Typography>
                             </div>
@@ -231,10 +231,10 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                 {LocationIcon}
                             </div>
                             <div>
-                                <Typography component={"div"} className={classes.subtitle}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Location information
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle2"} component={"div"}>
                                     Manage the location information Twitter uses to personalize your experience.
                                 </Typography>
                             </div>
@@ -245,14 +245,14 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                     </Link>
                     <Divider/>
                     <div className={classes.infoItemWrapper}>
-                        <Typography component={"div"} className={classes.title}>
+                        <Typography variant={"h5"} component={"div"}>
                             Learn more about privacy on Twitter
                         </Typography>
                     </div>
                     <a href="https://privacy.twitter.com/" target={"_blank"}>
                         <ListItem>
                             <div>
-                                <Typography component={"div"} className={classes.subtitle}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Privacy center
                                 </Typography>
                             </div>
@@ -264,7 +264,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                     <a href="https://twitter.com/privacy" target={"_blank"}>
                         <ListItem>
                             <div>
-                                <Typography component={"div"} className={classes.subtitle}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Privacy policy
                                 </Typography>
                             </div>
@@ -276,7 +276,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                     <a href="https://help.twitter.com/forms/privacy" target={"_blank"}>
                         <ListItem>
                             <div>
-                                <Typography component={"div"} className={classes.subtitle}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Contact us
                                 </Typography>
                             </div>

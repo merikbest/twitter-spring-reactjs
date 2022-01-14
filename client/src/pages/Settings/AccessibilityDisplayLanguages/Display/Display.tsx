@@ -1,10 +1,10 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
+import {useDispatch} from "react-redux";
 import {Divider, Radio, Typography} from "@material-ui/core";
 import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
 
 import {useDisplayStyles} from "./DisplayStyles";
 import {CheckIcon, TweetIcon, VerifiedIcon} from "../../../../icons";
-import {useDispatch} from "react-redux";
 import {updateBackgroundColor} from "../../../../store/ducks/user/actionCreators";
 
 export enum ColorScheme {
@@ -78,7 +78,7 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Manage your font size, color, and background. These settings affect all the Twitter accounts on this
                     browser.
                 </Typography>
@@ -94,20 +94,17 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
                     </div>
                     <div>
                         <div>
-                            <Typography component={"span"} className={classes.tweetTitle}>
+                            <Typography variant={"h6"} component={"span"} className={classes.tweetTitle}>
                                 Twitter
                             </Typography>
                             <span className={classes.tweetVerifiedIcon}>
                                 {VerifiedIcon}
                             </span>
-                            <Typography component={"span"} className={classes.tweetInfoText}>
-                                @Twitter
-                            </Typography>
-                            <Typography component={"span"} className={classes.tweetInfoText}>
-                                {" · 31m"}
+                            <Typography variant={"subtitle1"} component={"span"}>
+                               @Twitter · 31m
                             </Typography>
                         </div>
-                        <Typography component={"div"} className={classes.tweetText}>
+                        <Typography variant={"body1"} component={"div"} className={classes.tweetText}>
                             At the heart of Twitter are short messages called Tweets — just like this one — which can
                             include photos, videos, links, text, hashtags, and mentions like <span
                             className={classes.tweetLink}>@Twitter</span>
@@ -117,11 +114,11 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
             </div>
             <Divider/>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h5"} component={"div"}>
                     Font size
                 </Typography>
                 <div className={classes.stepperWrapper}>
-                    <Typography id={"xs"} component={"span"} className={classes.tweetText}>
+                    <Typography variant={"body1"} id={"xs"} component={"span"} className={classes.tweetText}>
                         Aa
                     </Typography>
                     <span className={classes.stepper}>
@@ -131,14 +128,14 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
                         <div id={"lg"} className={classes.stepperPoint}/>
                         <div id={"xl"} className={classes.stepperPoint}/>
                     </span>
-                    <Typography id={"xl"} component={"span"} className={classes.tweetText}>
+                    <Typography variant={"body1"} id={"xl"} component={"span"} className={classes.tweetText}>
                         Aa
                     </Typography>
                 </div>
             </div>
             <Divider/>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h5"} component={"div"}>
                     Color
                 </Typography>
             </div>
@@ -152,7 +149,7 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
             </div>
             <Divider/>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h5"} component={"div"}>
                     Background
                 </Typography>
             </div>
@@ -173,7 +170,7 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
                                 size="small"
                             />
                         </div>
-                        <Typography component={"span"} className={classes.backgroundItemText}>
+                        <Typography variant={"h6"} component={"span"}>
                             Default
                         </Typography>
                     </div>
@@ -194,7 +191,7 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
                                 size="small"
                             />
                         </div>
-                        <Typography component={"span"} className={classes.backgroundItemText}>
+                        <Typography variant={"h6"} component={"span"}>
                             Dim
                         </Typography>
                     </div>
@@ -215,7 +212,7 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
                                 size="small"
                             />
                         </div>
-                        <Typography component={"span"} className={classes.backgroundItemText}>
+                        <Typography variant={"h6"} component={"span"}>
                             Lights out
                         </Typography>
                     </div>

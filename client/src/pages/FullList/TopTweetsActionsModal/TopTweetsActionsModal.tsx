@@ -32,10 +32,10 @@ const TopTweetsActionsModal: FC = (): ReactElement => {
                                             {SeeLatestIcon}
                                         </span>
                                         <div>
-                                            <Typography component={"div"} className={classes.title}>
+                                            <Typography variant={"body1"} component={"div"}>
                                                 See top Tweets
                                             </Typography>
-                                            <Typography component={"div"} className={classes.text}>
+                                            <Typography variant={"subtitle2"} component={"div"}>
                                                 You’re seeing top Tweets first. Latest Tweets will show up as they happen.
                                             </Typography>
                                         </div>
@@ -47,10 +47,10 @@ const TopTweetsActionsModal: FC = (): ReactElement => {
                                             {NotShowIcon}
                                         </span>
                                         <div>
-                                            <Typography component={"div"} className={classes.title}>
+                                            <Typography variant={"body1"} component={"div"}>
                                                 Don’t show these Tweets in Home
                                             </Typography>
-                                            <Typography component={"div"} className={classes.text}>
+                                            <Typography variant={"subtitle2"} component={"div"}>
                                                 Top Tweets from this List will no longer show up in your Home timeline.
                                             </Typography>
                                         </div>

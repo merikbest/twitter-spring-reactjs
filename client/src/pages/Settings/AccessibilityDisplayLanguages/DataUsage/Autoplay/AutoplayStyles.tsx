@@ -1,5 +1,4 @@
 import {makeStyles, Theme} from "@material-ui/core";
-import Autoplay from "./Autoplay";
 
 export const useAutoplayStyles = makeStyles((theme: Theme) => ({
     infoItemWrapper: {

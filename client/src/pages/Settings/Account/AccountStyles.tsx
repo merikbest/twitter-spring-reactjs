@@ -28,21 +28,5 @@ export const useAccountStyles = makeStyles((theme: Theme) => ({
     },
     accountInfo: {
         padding: "12px 16px",
-        lineHeight: "16px",
-        fontSize: 13,
-        color: theme.palette.text.secondary,
-        fontWeight: 400
-    },
-    title: {
-        fontSize: 15,
-        color: theme.palette.text.primary,
-        fontWeight: 400,
-        lineHeight: "20px",
-    },
-    text: {
-        lineHeight: "16px",
-        fontSize: 13,
-        color: theme.palette.text.secondary,
-        fontWeight: 400
     },
 }));

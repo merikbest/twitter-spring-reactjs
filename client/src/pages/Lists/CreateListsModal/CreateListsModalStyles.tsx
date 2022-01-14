@@ -45,11 +45,4 @@ export const useCreateListsModalStyles = makeStyles((theme: Theme) => ({
         display: "flex",
         justifyContent: "space-between",
     },
-    footerTitle: {
-        fontSize: 15,
-    },
-    footerText: {
-        fontSize: 13,
-        color: theme.palette.text.secondary,
-    },
 }));

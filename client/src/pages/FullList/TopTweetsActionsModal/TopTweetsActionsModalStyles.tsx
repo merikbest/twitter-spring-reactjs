@@ -42,13 +42,6 @@ export const useTopTweetsActionsModalStyles = makeStyles((theme: Theme) => ({
         display: "flex",
         justifyContent: "flex-start",
     },
-    title: {
-        fontSize: 15,
-    },
-    text: {
-        fontSize: 13,
-        color: theme.palette.text.secondary,
-    },
     textIcon: {
         paddingTop: 20,
         "& svg": {

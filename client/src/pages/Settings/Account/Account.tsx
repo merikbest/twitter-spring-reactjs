@@ -1,6 +1,6 @@
 import React, {FC, ReactElement} from 'react';
 import {NavLink} from 'react-router-dom';
-import {List, ListItem, Paper, Typography} from "@material-ui/core";
+import {List, ListItem, Typography} from "@material-ui/core";
 
 import {useAccountStyles} from "./AccountStyles";
 import {ArrowRightIcon, CommunityIcon, DeleteAccountIcon, DownloadIcon, KeyIcon, ProfileIcon} from "../../../icons";
@@ -10,7 +10,7 @@ const Account: FC = (): ReactElement => {
 
     return (
         <>
-            <Typography component={"div"} className={classes.accountInfo}>
+            <Typography variant={"subtitle2"} component={"div"} className={classes.accountInfo}>
                 See information about your account, download an archive of your data, or learn about your
                 account deactivation options
             </Typography>
@@ -22,10 +22,10 @@ const Account: FC = (): ReactElement => {
                                 {ProfileIcon}
                             </div>
                             <div>
-                                <Typography component={"div"} className={classes.title}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Account information
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle2"} component={"div"}>
                                     See your account information like your phone number and email address.
                                 </Typography>
                             </div>
@@ -40,10 +40,10 @@ const Account: FC = (): ReactElement => {
                                 {KeyIcon}
                             </div>
                             <div>
-                                <Typography component={"div"} className={classes.title}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Change your password
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle2"} component={"div"}>
                                     Change your password at any time.
                                 </Typography>
                             </div>
@@ -57,10 +57,10 @@ const Account: FC = (): ReactElement => {
                             {DownloadIcon}
                         </div>
                         <div>
-                            <Typography component={"div"} className={classes.title}>
+                            <Typography variant={"body1"} component={"div"}>
                                 Download an archive of your data
                             </Typography>
-                            <Typography component={"div"} className={classes.text}>
+                            <Typography variant={"subtitle2"} component={"div"}>
                                 Get insights into the type of information stored for your account.
                             </Typography>
                         </div>
@@ -74,10 +74,10 @@ const Account: FC = (): ReactElement => {
                                 {CommunityIcon}
                             </div>
                             <div>
-                                <Typography component={"div"} className={classes.title}>
+                                <Typography variant={"body1"} component={"div"}>
                                     TweetDeck Teams
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle2"} component={"div"}>
                                     Invite anyone to Tweet from this account using the Teams feature in
                                     TweetDeck.
                                 </Typography>
@@ -93,10 +93,10 @@ const Account: FC = (): ReactElement => {
                                 {DeleteAccountIcon}
                             </div>
                             <div>
-                                <Typography component={"div"} className={classes.title}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Deactivate your account
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle2"} component={"div"}>
                                     Find out how you can deactivate your account.
                                 </Typography>
                             </div>
