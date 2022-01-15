@@ -50,7 +50,7 @@ const ChangeCountry: FC = (): ReactElement => {
                         {countries()}
                     </FilledSelect>
                 </FormControl>
-                <Typography component={"div"} className={classes.countryInfo}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     This is the primary country associated with your account. Your country helps us to customize
                     your Twitter experience. <a
                     href={"https://help.twitter.com/managing-your-account/how-to-change-country-settings"}

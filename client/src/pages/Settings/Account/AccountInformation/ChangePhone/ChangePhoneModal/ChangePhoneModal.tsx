@@ -70,10 +70,10 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = ({visible, onClose}): ReactE
                     {TweetIcon}
                 </div>
                 <div>
-                    <Typography component={"div"} className={classes.title}>
+                    <Typography variant={"h3"} component={"div"}>
                         Change phone
                     </Typography>
-                    <Typography component={"div"} className={classNames(classes.text, classes.textSecondary)}>
+                    <Typography variant={"subtitle1"} component={"div"}>
                         {`Your current phone number is ${phoneCode !== "" ? phoneCode : "none"}${myProfile?.phone}. What would you like to update it to?`}
                     </Typography>
                 </div>
@@ -119,7 +119,7 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = ({visible, onClose}): ReactE
                         )}
                     />
                     <div className={classes.infoWrapper}>
-                        <Typography component={"span"} className={classNames(classes.text, classes.textPrimary)}>
+                        <Typography variant={"body1"} component={"span"}>
                             Let people who have your phone number find and connect with you on Twitter. <a
                             href="https://help.twitter.com/safety-and-security/email-and-phone-discoverability-settings"
                             target={"_blank"} className={classes.link}>Learn more</a>

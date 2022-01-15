@@ -24,7 +24,7 @@ const ProfileUpdatedModal: FC<ProfileUpdatedModalProps> = ({open, onClose, onSub
                 <div className={classes.logoIcon}>
                     <TwitterIcon/>
                 </div>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h3"} component={"div"} className={classes.title}>
                     Your profile is updated
                 </Typography>
                 <div className={classes.buttonWrapper}>

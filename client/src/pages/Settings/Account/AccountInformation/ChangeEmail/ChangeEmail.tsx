@@ -43,7 +43,7 @@ const ChangeEmail: FC = (): ReactElement => {
             </div>
             <Divider/>
             <div className={classes.updateEmailAddress} onClick={onOpenChangeEmailModal}>
-                <Typography component={"span"}>
+                <Typography variant={"body1"} component={"span"}>
                     Update email address
                 </Typography>
             </div>

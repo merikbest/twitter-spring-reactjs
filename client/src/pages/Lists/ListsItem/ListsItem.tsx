@@ -79,7 +79,7 @@ const ListsItem: FC<ListsItemProps<Lists> & HoverActionProps> = (
                 <div className={classes.listInfoContainer}>
                     <div className={classes.listInfoWrapper} onMouseEnter={handleHoverList} onMouseLeave={handleLeaveList}>
                         <div>
-                            <Typography component={"span"} className={classes.listTitle}>
+                            <Typography variant={"h6"} component={"span"} className={classes.listTitle}>
                                 {list?.name}
                             </Typography>
                             {list?.private && (
@@ -88,7 +88,7 @@ const ListsItem: FC<ListsItemProps<Lists> & HoverActionProps> = (
                                 </span>
                             )}
                         </div>
-                        <Typography component={"div"} className={classes.listOwnerUsername}>
+                        <Typography variant={"subtitle2"} component={"div"}>
                             {list?.description}
                         </Typography>
                         <div className={classes.listOwnerWrapper}>
@@ -98,10 +98,10 @@ const ListsItem: FC<ListsItemProps<Lists> & HoverActionProps> = (
                             />
                         </div>
                         <div className={classes.listOwnerInfoWrapper}>
-                            <Typography component={"span"} className={classes.listOwnerFullName}>
+                            <Typography variant={"subtitle2"} component={"span"} className={classes.listOwnerFullName}>
                                 {list?.listOwner.fullName}
                             </Typography>
-                            <Typography component={"span"} className={classes.listOwnerUsername}>
+                            <Typography variant={"subtitle2"} component={"span"}>
                                 @{list?.listOwner.username}
                             </Typography>
                         </div>

@@ -10,10 +10,9 @@ export const useChangePhoneStyles = makeStyles((theme: Theme) => ({
     updatePhoneNumber: {
         textAlign: "center",
         padding: 16,
-        color: theme.palette.primary.main,
-        fontWeight: 400,
-        fontSize: 15,
-        lineHeight: "20px",
+        "& .MuiTypography-body1": {
+            color: theme.palette.primary.main,
+        },
         cursor: "pointer",
         "&:hover": {
             backgroundColor: "rgba(29, 155, 240, 0.1)"
@@ -22,10 +21,9 @@ export const useChangePhoneStyles = makeStyles((theme: Theme) => ({
     deletePhoneNumber: {
         textAlign: "center",
         padding: 16,
-        color: theme.palette.error.main,
-        fontWeight: 400,
-        fontSize: 15,
-        lineHeight: "20px",
+        "& .MuiTypography-body1": {
+            color: theme.palette.error.main,
+        },
         cursor: "pointer",
         "&:hover": {
             backgroundColor: "rgba(244, 33, 46, 0.1)"

@@ -28,12 +28,6 @@ export const useBlockedAccountsStyles = makeStyles((theme: Theme) => ({
         width: 336,
         textAlign: "center",
     },
-    text: {
-        color: theme.palette.text.secondary,
-        fontWeight: 400,
-        fontSize: 13,
-        lineHeight: "16px"
-    },
     link: {
         textDecoration: "none",
         color: theme.palette.primary.main,

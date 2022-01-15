@@ -14,15 +14,17 @@ interface ProfileDescriptionInputProps {
     maxTextLength: number
 }
 
-const ProfileDescriptionInput: FC<ProfileDescriptionInputProps> = ({
-                                                                       onChange,
-                                                                       value,
-                                                                       helperText,
-                                                                       error,
-                                                                       name,
-                                                                       label,
-                                                                       maxTextLength
-                                                                   }): ReactElement => {
+const ProfileDescriptionInput: FC<ProfileDescriptionInputProps> = (
+    {
+        onChange,
+        value,
+        helperText,
+        error,
+        name,
+        label,
+        maxTextLength
+    }
+): ReactElement => {
     const classes = useProfileDescriptionInputStyles();
     const [focused, setFocused] = useState<boolean>(true);
 
@@ -30,7 +32,7 @@ const ProfileDescriptionInput: FC<ProfileDescriptionInputProps> = ({
     const onBlur = () => setFocused(false);
 
     return (
-        <div className={classes.container}>
+        <div>
             <div className={classes.content}>
                 {focused && (
                     <div className={classes.inputCount}>

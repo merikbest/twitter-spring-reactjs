@@ -17,12 +17,6 @@ export const useProfileHeaderModalStyles = makeStyles((theme) => ({
     },
     title: {
         margin: "16px 0",
-        fontWeight: 700,
-        fontSize: 23,
-    },
-    text: {
-        color: theme.palette.text.secondary,
-        fontSize: 15,
     },
     wallpaperWrapper: {
         height: 136,
@@ -57,14 +51,6 @@ export const useProfileHeaderModalStyles = makeStyles((theme) => ({
             height: "125px !important",
             border: "4px solid white",
         },
-    },
-    fullName :{
-        fontSize: 23,
-        fontWeight: 700,
-    },
-    username :{
-        fontSize: 15,
-        color: theme.palette.text.secondary,
     },
     button: {
         position: "absolute",

@@ -57,18 +57,6 @@ export const useConversationInfoStyles = makeStyles((theme: Theme) => ({
         color: theme.palette.text.primary,
         textDecoration: 'none',
     },
-    fullName: {
-        lineHeight: "20px",
-        color: theme.palette.text.primary,
-        fontWeight: 800,
-        fontSize: 15,
-    },
-    username: {
-        lineHeight: "20px",
-        color: theme.palette.text.secondary,
-        fontWeight: 400,
-        fontSize: 15,
-    },
     lockIcon: {
         "& svg": {
             marginLeft: 3,
@@ -104,18 +92,8 @@ export const useConversationInfoStyles = makeStyles((theme: Theme) => ({
     notificationsInfoWrapper: {
         padding: "12px 16px",
     },
-    title: {
-        fontWeight: 800,
-        fontSize: 20,
-        lineHeight: "24px",
-        color: theme.palette.text.primary,
-    },
     text: {
         paddingTop: 12,
-        fontWeight: 400,
-        fontSize: 15,
-        lineHeight: "20px",
-        color: theme.palette.text.primary,
     },
     switchWrapper: {
         display: "flex",
@@ -124,19 +102,20 @@ export const useConversationInfoStyles = makeStyles((theme: Theme) => ({
     conversationInfoButton: {
         textAlign: "center",
         padding: 16,
-        fontWeight: 400,
-        fontSize: 15,
-        lineHeight: "20px",
         cursor: "pointer",
     },
     blockUser: {
-        color: theme.palette.primary.main,
+        "& .MuiTypography-body1": {
+            color: theme.palette.primary.main,
+        },
         "&:hover": {
             backgroundColor: theme.palette.action.hover,
         },
     },
     leaveConversation: {
-        color: theme.palette.error.main,
+        "& .MuiTypography-body1": {
+            color: theme.palette.error.main,
+        },
         "&:hover": {
             backgroundColor: "rgba(244, 33, 46, 0.1)"
         }

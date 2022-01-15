@@ -5,13 +5,10 @@ export const useChangeCountryStyles = makeStyles((theme: Theme) => ({
         padding: "12px 16px",
         "& .MuiFormControl-root": {
             width: "100%"
-        }
-    },
-    countryInfo: {
-        paddingTop: 2,
-        fontSize: 13,
-        color: theme.palette.text.secondary,
-        fontWeight: 400
+        },
+        "& .MuiTypography-subtitle2": {
+            paddingTop: 2,
+        },
     },
     link: {
         textDecoration: "none",

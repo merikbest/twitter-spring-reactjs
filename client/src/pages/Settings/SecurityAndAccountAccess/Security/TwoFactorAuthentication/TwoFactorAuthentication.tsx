@@ -9,36 +9,42 @@ const TwoFactorAuthentication: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h5"} component={"div"}>
                     Two-factor authentication
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Text message</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Text message
+                    </Typography>
                     <Checkbox/>
                 </div>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Use your mobile phone to receive a text message with an authentication code to enter when
                     you log in to Twitter.
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Authentication app</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Authentication app
+                    </Typography>
                     <Checkbox/>
                 </div>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Use a mobile authentication app to get a verification code to enter every time you log in to
                     Twitter.
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Security key</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Security key
+                    </Typography>
                     <Checkbox/>
                 </div>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Use a security key that inserts into your computer or syncs to your mobile device when you
                     log in to Twitter. You’ll need to use a supported mobile device or web browser. <a
                     href={"https://help.twitter.com/managing-your-account/two-factor-authentication"}

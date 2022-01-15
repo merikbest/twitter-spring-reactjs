@@ -18,8 +18,6 @@ export const useProfileUpdatedModalStyles = makeStyles((theme) => ({
     title: {
         width: 250,
         margin: "0px auto",
-        fontWeight: 700,
-        fontSize: 23,
     },
     buttonWrapper: {
         width: 250,

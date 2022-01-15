@@ -11,27 +11,29 @@ const Discoverability: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Control your discoverability settings and manage contacts you’ve imported.
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h5"} component={"div"}>
                     Discoverability
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Decide whether people who have your email address or phone number can find and connect with you on
                     Twitter.
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Let people who have your email address find you on Twitter</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Let people who have your email address find you on Twitter
+                    </Typography>
                     <Checkbox/>
                 </div>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Let people who have your email address find and connect with you on Twitter.
                     <a
                         href={"https://help.twitter.com/safety-and-security/email-and-phone-discoverability-settings"}
@@ -41,10 +43,12 @@ const Discoverability: FC = (): ReactElement => {
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Let people who have your phone number find you on Twitter</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Let people who have your phone number find you on Twitter
+                    </Typography>
                     <Checkbox/>
                 </div>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Let people who have your phone number find and connect with you on Twitter.
                     <a
                         href={"https://help.twitter.com/safety-and-security/email-and-phone-discoverability-settings"}
@@ -54,12 +58,12 @@ const Discoverability: FC = (): ReactElement => {
             </div>
             <Divider/>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h5"} component={"div"}>
                     Contacts
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Manage contacts that you have imported from your mobile devices.
                     <a
                         href={"https://help.twitter.com/using-twitter/upload-your-contacts-to-search-for-friends"}
@@ -69,7 +73,7 @@ const Discoverability: FC = (): ReactElement => {
             </div>
             <Link to={"/settings/privacy_and_safety/contacts_dashboard"} className={classes.discoverabilityWrapper}>
                 <div className={classes.discoverabilityLink}>
-                    <Typography component={"span"}>
+                    <Typography variant={"body1"} component={"span"}>
                         Manage contacts
                     </Typography>
                     {ArrowRightIcon}

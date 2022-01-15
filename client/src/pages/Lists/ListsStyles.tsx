@@ -62,11 +62,6 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
             backgroundColor: theme.palette.secondary.main,
         },
     },
-    text: {
-        color: theme.palette.text.primary,
-        fontSize: 15,
-        fontWeight: 400,
-    },
     textIcon: {
         "& svg": {
             verticalAlign: -3,
@@ -84,8 +79,6 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
         borderRadius: 0,
     },
     pinnedListsText: {
-        fontSize: 15,
-        color: theme.palette.text.secondary,
         marginTop: 32,
         marginLeft: 32,
     },
@@ -103,9 +96,7 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
         textDecoration: "none",
     },
     showMore: {
-
         padding: 16,
-        fontSize: 15,
         color: theme.palette.primary.main,
         "&:hover": {
             cursor: "pointer",

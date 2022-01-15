@@ -1,7 +1,7 @@
 import React, {FC, ReactElement, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
-import {Avatar, Button} from "@material-ui/core";
+import {Avatar, Button, Typography} from "@material-ui/core";
 
 import {Lists} from "../../../store/ducks/lists/contracts/state";
 import {usePopperListWindowStyles} from "./PopperListWindowStyles";
@@ -70,12 +70,12 @@ const PopperListWindow: FC<PopperListWindowProps> = ({list, visible}): ReactElem
                 alt={list?.wallpaper?.src ? list?.wallpaper?.src : list?.altWallpaper}
             />
             <div className={classes.popperListInfo}>
-                <div className={classes.popperListTitle}>
+                <Typography variant={"h5"} component={"div"} className={classes.popperListTitle}>
                     {list?.name}
-                </div>
-                <div className={classes.popperListDescription}>
+                </Typography>
+                <Typography variant={"body1"} component={"div"} className={classes.popperListDescription}>
                     {list?.description}
-                </div>
+                </Typography>
                 <Link to={`/user/${list?.listOwner.id}`} className={classes.popperListOwnerLink}>
                     <div className={classes.popperListOwnerWrapper}>
                         <Avatar
@@ -83,19 +83,29 @@ const PopperListWindow: FC<PopperListWindowProps> = ({list, visible}): ReactElem
                             src={list?.listOwner.avatar?.src ? list?.listOwner.avatar?.src : DEFAULT_PROFILE_IMG}
                         />
                     </div>
-                    <span className={classes.popperListOwnerFullName}>
+                    <Typography variant={"h6"} component={"span"} className={classes.popperListOwnerFullName}>
                         {list?.listOwner.fullName}
-                    </span>
-                    <span className={classes.popperListOwnerUsername}>
+                    </Typography>
+                    <Typography variant={"subtitle1"} component={"span"} className={classes.popperListOwnerUsername}>
                         @{list?.listOwner.username}
-                    </span>
+                    </Typography>
                 </Link>
                 <div>
                     <span onClick={event => onOpenMembersModalWindow(event)} className={classes.popperListMembers}>
-                        <b>{list?.members.length}</b> Members
+                        <Typography variant={"h6"} component={"span"}>
+                            {list?.members.length}
+                        </Typography>
+                        <Typography variant={"subtitle1"} component={"span"}>
+                            {" Members"}
+                        </Typography>
                     </span>
                     <span onClick={event => onOpenFollowersModalWindow(event)} className={classes.popperListMembers}>
-                        <b>{list?.followers.length}</b> Followers
+                        <Typography variant={"h6"} component={"span"}>
+                            {list?.followers.length}
+                        </Typography>
+                        <Typography variant={"subtitle1"} component={"span"}>
+                            {" Followers"}
+                        </Typography>
                     </span>
                 </div>
                 <div className={classes.buttonWrapper}>

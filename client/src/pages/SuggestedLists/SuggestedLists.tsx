@@ -37,16 +37,16 @@ const SuggestedLists: FC = (): ReactElement => {
                     alt="contentImage"
                 />
                 <div className={classes.infoWrapper}>
-                    <Typography component={"div"} className={classes.infoTitle}>
+                    <Typography variant={"h3"} component={"div"} className={classes.infoTitle}>
                         Choose your Lists
                     </Typography>
-                    <Typography component={"div"} className={classes.infoText}>
+                    <Typography variant={"subtitle1"} component={"div"}>
                         When you follow a List, you'll be able to quickly keep up with the experts on what you care
                         about most.
                     </Typography>
                 </div>
             </Paper>
-            <Typography component={"div"} className={classes.listsTitle}>
+            <Typography variant={"h3"} component={"div"} className={classes.listsTitle}>
                 Discover new Lists
             </Typography>
             {isLoading ? (

@@ -9,7 +9,7 @@ const LocationInformation: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     If enabled, you will be able to attach location information to your Tweets. <a
                     href={"https://help.twitter.com/safety-and-security/tweet-location-settings"}
                     target="_blank"
@@ -18,12 +18,14 @@ const LocationInformation: FC = (): ReactElement => {
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Add location information to your Tweets</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Add location information to your Tweets
+                    </Typography>
                     <Checkbox/>
                 </div>
             </div>
             <div className={classes.deleteLocationInformation}>
-                <Typography component={"span"}>
+                <Typography variant={"body1"} component={"span"}>
                     Remove all location information attached to your Tweets
                 </Typography>
             </div>

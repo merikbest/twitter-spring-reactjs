@@ -1,7 +1,7 @@
 import React, {FC, ReactElement} from 'react';
+import {Checkbox, Typography} from "@material-ui/core";
 
 import {useDataSharingStyles} from "./DataSharingStyles";
-import {Checkbox, Typography} from "@material-ui/core";
 
 const DataSharing: FC = (): ReactElement => {
     const classes = useDataSharingStyles();
@@ -9,16 +9,18 @@ const DataSharing: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Allow sharing of additional information with Twitter’s business partners.
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Allow additional information sharing with business partners</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Allow additional information sharing with business partners
+                    </Typography>
                     <Checkbox/>
                 </div>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Twitter always shares information with business partners as a way to run and improve its products.
                     When enabled, this allows Twitter to share additional information with those partners to help
                     support running Twitter’s business, including making Twitter’s marketing activities on other sites

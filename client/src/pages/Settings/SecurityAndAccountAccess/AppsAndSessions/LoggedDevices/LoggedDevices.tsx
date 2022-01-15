@@ -1,4 +1,5 @@
 import React, {FC, ReactElement} from 'react';
+import {Link} from "react-router-dom";
 import {Divider, Typography} from "@material-ui/core";
 
 import {useLoggedDevicesStyles} from "./LoggedDevicesStyles";
@@ -10,7 +11,7 @@ const LoggedDevices: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     These are browsers, devices, and information Twitter uses to personalize your experience.
                     This includes devices and browsers you haven’t used to log in to Twitter, as well as email
                     addresses and phone numbers like those linked to your Twitter account. <a
@@ -21,34 +22,37 @@ const LoggedDevices: FC = (): ReactElement => {
             </div>
             <Divider/>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h6"} component={"div"}>
                     Browsers
                 </Typography>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     You can remove this information by disabling “Personalize based on your inferred identity”
-                    in your <span className={classes.link}>Off-Twitter activity</span> settings.
+                    in your <Link to={"/settings/privacy_and_safety/off_twitter_activity"} className={classes.link}>
+                    Off-Twitter activity</Link> settings.
                 </Typography>
             </div>
             <Divider/>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h6"} component={"div"}>
                     Mobile Devices
                 </Typography>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     You can remove this information by disabling “Personalize based on your inferred identity”
-                    in your <span className={classes.link}>Off-Twitter activity</span> settings.
+                    in your <Link to={"/settings/privacy_and_safety/off_twitter_activity"} className={classes.link}>
+                    Off-Twitter activity</Link> settings.
                 </Typography>
             </div>
             <Divider/>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h6"} component={"div"}>
                     Email addresses
                 </Typography>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     There are inferred hashes of email addresses that share common components with the email
                     address you have provided to Twitter. You can remove this information by disabling
-                    “Personalize based on your inferred identity” in your <span className={classes.link}>
-                            Off-Twitter activity</span> settings.
+                    “Personalize based on your inferred identity” in your
+                    <Link to={"/settings/privacy_and_safety/off_twitter_activity"} className={classes.link}>
+                        {" Off - Twitter activity"}</Link> settings.
                 </Typography>
             </div>
         </>

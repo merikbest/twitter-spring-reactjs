@@ -38,14 +38,4 @@ export const useMessagesModalUserStyles = makeStyles<Theme, MessagesModalUserSty
             height: "1.2em",
         },
     },
-    fullName: {
-        color: theme.palette.text.primary,
-        fontWeight: 800,
-        fontSize: 15,
-    },
-    username: {
-        color: theme.palette.text.secondary,
-        fontWeight: 400,
-        fontSize: 15,
-    },
 }));

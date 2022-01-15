@@ -80,11 +80,11 @@ const Notifications: FC<HoverUserProps> = (
                 ) : (
                     (activeTab === 0) ? (
                         (notifications.length === 0) ? (
-                            <div>
-                                <Typography component={"div"} className={classes.title}>
+                            <div className={classes.infoWindow}>
+                                <Typography variant={"h4"} component={"div"}>
                                     Nothing to see here — yet
                                 </Typography>
-                                <Typography component={"div"} className={classes.text}>
+                                <Typography variant={"subtitle1"} component={"div"}>
                                     From like to Retweets and whole lot more, this is where all the actions happens.
                                 </Typography>
                             </div>
@@ -94,7 +94,9 @@ const Notifications: FC<HoverUserProps> = (
                                     <Link to={"/notifications/timeline"}>
                                         <Paper className={classes.notificationWrapper} variant="outlined">
                                             <div className={classes.notificationIcon}>
-                                                <span id={"notification"}>{NotificationsIconFilled}</span>
+                                                <span id={"notification"}>
+                                                    {NotificationsIconFilled}
+                                                </span>
                                             </div>
                                             <div style={{flex: 1}}>
                                                 {tweetAuthors.slice(0, 6).map((tweetAuthor) => (
@@ -118,14 +120,22 @@ const Notifications: FC<HoverUserProps> = (
                                                         />
                                                     </div>
                                                 ))}
-                                                <div className={classes.notificationInfoText}>
-                                                    New Tweet notifications for <span>{tweetAuthors[0].fullName}</span>
+                                                <Typography variant={"body1"} component={"div"} className={classes.notificationInfoText}>
+                                                    {"New Tweet notifications for "}
+                                                    <Typography variant={"h6"} component={"span"}>
+                                                        {tweetAuthors[0].fullName}
+                                                    </Typography>
                                                     {(tweetAuthors.length > 2) ? (
                                                         ` and ${tweetAuthors.length -1} others`
                                                     ) : (
-                                                        (tweetAuthors.length === 2) && (" and " + <span>{tweetAuthors[1].fullName}</span>)
+                                                        (tweetAuthors.length === 2) && (
+                                                            " and " +
+                                                            <Typography variant={"h6"} component={"span"}>
+                                                                {tweetAuthors[1].fullName}
+                                                            </Typography>
+                                                        )
                                                     )}
-                                                </div>
+                                                </Typography>
                                             </div>
                                         </Paper>
                                     </Link>
@@ -165,22 +175,26 @@ const Notifications: FC<HoverUserProps> = (
                                                     />
                                                 </a>
                                                 <div className={classes.notificationInfo}>
-                                                    <b>{notification.user.username} </b>
-                                                    {notification.notificationType === NotificationType.FOLLOW ? (
-                                                        <>followed you</>
-                                                    ) : (
-                                                        <>
-                                                            {(notification.notificationType === NotificationType.LIKE) ? (
-                                                                "liked"
-                                                            ) : (
-                                                                "Retweeted"
-                                                            )} your Tweet
-                                                        </>
-                                                    )}
+                                                    <Typography variant={"h6"} component={"span"}>
+                                                        {`${notification.user.username} `}
+                                                    </Typography>
+                                                    <Typography variant={"body1"} component={"span"}>
+                                                        {notification.notificationType === NotificationType.FOLLOW ? (
+                                                            <>followed you</>
+                                                        ) : (
+                                                            <>
+                                                                {(notification.notificationType === NotificationType.LIKE) ? (
+                                                                    "liked"
+                                                                ) : (
+                                                                    "Retweeted"
+                                                                )} your Tweet
+                                                            </>
+                                                        )}
+                                                    </Typography>
                                                 </div>
-                                                <div className={classes.notificationText}>
+                                                <Typography variant={"body1"} component={"div"} className={classes.notificationText}>
                                                     {notification.tweet && textFormatter(notification.tweet.text)}
-                                                </div>
+                                                </Typography>
                                             </div>
                                         </Paper>
                                     </NotificationWithLink>
@@ -188,11 +202,11 @@ const Notifications: FC<HoverUserProps> = (
                             </div>
                         )
                     ) : (
-                        <div>
-                            <Typography component={"div"} className={classes.title}>
+                        <div className={classes.infoWindow}>
+                            <Typography variant={"h4"} component={"div"}>
                                 Nothing to see here — yet
                             </Typography>
-                            <Typography component={"div"} className={classes.text}>
+                            <Typography variant={"subtitle1"} component={"div"}>
                                 When someone mentions you, you’ll find it here.
                             </Typography>
                         </div>

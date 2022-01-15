@@ -33,8 +33,6 @@ export const useListsItemStyles = makeStyles((theme: Theme) => ({
         display: "block",
     },
     listTitle: {
-        lineHeight: "20px",
-        fontSize: 15,
         fontWeight: 700,
     },
     lockIcon: {
@@ -57,15 +55,9 @@ export const useListsItemStyles = makeStyles((theme: Theme) => ({
         display: "inline-block",
     },
     listOwnerFullName: {
-        fontSize: 13,
-        lineHeight: "16px",
         marginRight: 4,
         fontWeight: 700,
-    },
-    listOwnerUsername: {
-        fontSize: 13,
-        lineHeight: "16px",
-        color: theme.palette.text.secondary,
+        color: theme.palette.text.primary,
     },
     listPinWrapper: {
         "& .MuiIconButton-root": {

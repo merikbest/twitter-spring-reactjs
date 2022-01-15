@@ -16,6 +16,9 @@ export const useDeactivateAccountStyles = makeStyles((theme: Theme) => ({
             cursor: "pointer",
             backgroundColor: theme.palette.secondary.main
         },
+        "& .MuiTypography-body1": {
+            fontWeight: 700,
+        },
     },
     avatar: {
         width: "46px !important",
@@ -23,30 +26,6 @@ export const useDeactivateAccountStyles = makeStyles((theme: Theme) => ({
     },
     usernameWrapper: {
         marginLeft: 15
-    },
-    fullName: {
-        fontWeight: 700,
-        fontSize: 15,
-        color: theme.palette.text.primary,
-        lineHeight: "20px"
-    },
-    username: {
-        fontWeight: 400,
-        fontSize: 15,
-        color: theme.palette.text.secondary,
-        lineHeight: "20px"
-    },
-    title: {
-        fontWeight: 800,
-        lineHeight: "24px",
-        fontSize: 20,
-        color: theme.palette.text.primary,
-    },
-    text: {
-        fontWeight: 400,
-        lineHeight: "16px",
-        fontSize: 13,
-        color: theme.palette.text.secondary,
     },
     link: {
         textDecoration: "none",
@@ -59,11 +38,10 @@ export const useDeactivateAccountStyles = makeStyles((theme: Theme) => ({
     deleteUser: {
         textAlign: "center",
         padding: 16,
-        color: theme.palette.error.main,
-        fontWeight: 400,
-        fontSize: 15,
-        lineHeight: "20px",
         cursor: "pointer",
+        "& .MuiTypography-body1": {
+            color: theme.palette.error.main,
+        },
         "&:hover": {
             backgroundColor: "rgba(244, 33, 46, 0.1)"
         }

@@ -11,16 +11,18 @@ const YourTweets: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Manage the information associated with your Tweets.
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Mark media you Tweet as having material that may be sensitive</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Mark media you Tweet as having material that may be sensitive
+                    </Typography>
                     <Checkbox/>
                 </div>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     When enabled, pictures and videos you Tweet will be marked as sensitive for people who don’t want to
                     see sensitive content.<a
                         href={"https://help.twitter.com/rules-and-policies/media-policy"}
@@ -30,7 +32,7 @@ const YourTweets: FC = (): ReactElement => {
             </div>
             <Link to={"/settings/privacy_and_safety/location"} className={classes.yourTweetsWrapper}>
                 <div className={classes.yourTweetsLink}>
-                    <Typography component={"span"}>
+                    <Typography variant={"body1"} component={"span"}>
                         Add location information to your Tweets
                     </Typography>
                     {ArrowRightIcon}

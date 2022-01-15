@@ -31,16 +31,18 @@ const DirectMessages: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Manage who can message you directly.
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Allow message requests from everyone</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Allow message requests from everyone
+                    </Typography>
                     <Checkbox checked={checked} onChange={handleChange}/>
                 </div>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Let people who you don’t follow send you message requests and add you to group conversations. To
                     reply to their messages, you need to accept the request. <a
                     href={"https://help.twitter.com/using-twitter/direct-messages#receive"}
@@ -50,10 +52,12 @@ const DirectMessages: FC = (): ReactElement => {
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Filter low-quality messages</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Filter low-quality messages
+                    </Typography>
                     <Checkbox/>
                 </div>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Hide message requests that have been detected as being potentially spam or low-quality. These will
                     be sent to a separate inbox at the bottom of your message requests. You can still access them if you
                     want. <a
@@ -64,10 +68,12 @@ const DirectMessages: FC = (): ReactElement => {
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Show read receipts</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Show read receipts
+                    </Typography>
                     <Checkbox/>
                 </div>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Let people you’re messaging with know when you’ve seen their messages. Read receipts are not shown
                     on message requests. <a
                     href={"https://help.twitter.com/using-twitter/direct-messages#receipts"}

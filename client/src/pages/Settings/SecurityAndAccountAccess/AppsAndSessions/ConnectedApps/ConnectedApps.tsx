@@ -9,7 +9,7 @@ const ConnectedApps: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     These are the apps which you connected to your account. You can see the information these
                     apps have access to and revoke access. <a
                     href={"https://help.twitter.com/managing-your-account/connect-or-revoke-access-to-third-party-apps"}

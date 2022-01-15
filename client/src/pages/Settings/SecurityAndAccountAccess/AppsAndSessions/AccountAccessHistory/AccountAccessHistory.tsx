@@ -10,7 +10,7 @@ const AccountAccessHistory: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     If you see any suspicious activity from an app, go to <Link
                     to={"/settings/security/connected_apps"} className={classes.link}>Connected apps</Link> to
                     revoke its access.

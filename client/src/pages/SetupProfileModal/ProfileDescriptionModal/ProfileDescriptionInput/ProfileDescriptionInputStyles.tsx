@@ -1,9 +1,6 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 export const useProfileDescriptionInputStyles = makeStyles((theme: Theme) => ({
-    container: {
-
-    },
     content: {
         position: "absolute",
         zIndex: 2,
@@ -14,7 +11,6 @@ export const useProfileDescriptionInputStyles = makeStyles((theme: Theme) => ({
     },
     inputCount: {
         marginTop: -9,
-
         display: "inline",
         "& .MuiInputLabel-formControl": {
             position: "relative",

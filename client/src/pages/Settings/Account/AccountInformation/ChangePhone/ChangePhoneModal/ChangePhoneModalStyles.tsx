@@ -17,6 +17,12 @@ export const useChangePhoneModalStyles = makeStyles((theme: Theme) => ({
         position: "relative",
         overflowX: "hidden",
         padding: "0px 32px",
+        "& .MuiTypography-h3": {
+            padding: "16px 0px",
+        },
+        "& .MuiTypography-subtitle1, .MuiTypography-body1": {
+            marginBottom: 20,
+        },
     },
     logoIcon: {
         margin: "0 auto",
@@ -25,26 +31,6 @@ export const useChangePhoneModalStyles = makeStyles((theme: Theme) => ({
             height: "2.30em",
             color: theme.palette.primary.main,
         },
-    },
-    title: {
-        padding: "16px 0px",
-        fontSize: 23,
-        fontWeight: 700,
-        lineHeight: "28px",
-        color: theme.palette.text.primary,
-    },
-    text: {
-        marginBottom: 20,
-        fontSize: 15,
-        fontWeight: 400,
-        lineHeight: "20px",
-    },
-    textSecondary: {
-        color: theme.palette.text.secondary,
-    },
-    textPrimary: {
-        width: 504,
-        color: theme.palette.text.primary,
     },
     infoWrapper: {
         marginTop: 38,

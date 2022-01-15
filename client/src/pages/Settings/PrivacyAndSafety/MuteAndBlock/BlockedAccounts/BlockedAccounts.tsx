@@ -39,7 +39,7 @@ const BlockedAccounts: FC = (): ReactElement => {
                 </Tabs>
             </div>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     When you block someone, that person won’t be able to follow or message you, and you won’t see
                     notifications from them. <a
                     href={"https://help.twitter.com/using-twitter/blocking-and-unblocking-accounts"}

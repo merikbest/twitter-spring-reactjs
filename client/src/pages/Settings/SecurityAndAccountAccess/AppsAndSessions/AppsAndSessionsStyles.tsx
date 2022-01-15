@@ -4,12 +4,6 @@ export const useAppsAndSessionsStyles = makeStyles((theme: Theme) => ({
     infoItemWrapper: {
         padding: "12px 16px"
     },
-    text: {
-        fontSize: 13,
-        color: theme.palette.text.secondary,
-        fontWeight: 400,
-        lineHeight: "16px",
-    },
     listWrapper: {
         "& a": {
             textDecoration: "none"
@@ -23,12 +17,6 @@ export const useAppsAndSessionsStyles = makeStyles((theme: Theme) => ({
                 cursor: "pointer",
                 backgroundColor: theme.palette.secondary.main,
             },
-        },
-        "& .MuiTypography-root": {
-            fontSize: 15,
-            fontWeight: 400,
-            lineHeight: "20px",
-            color: theme.palette.text.primary,
         },
         "& .Mui-selected": {
             borderRight: `2px solid ${theme.palette.primary.main}`,

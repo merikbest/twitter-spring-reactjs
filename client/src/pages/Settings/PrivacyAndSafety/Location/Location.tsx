@@ -11,16 +11,18 @@ const Location: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Manage the location information Twitter uses to personalize your experience.
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Personalize based on places you’ve been</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Personalize based on places you’ve been
+                    </Typography>
                     <Checkbox/>
                 </div>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     You will always see ads on Twitter based on your Twitter activity. When this setting is enabled,
                     Twitter may further personalize ads from Twitter advertisers, on and off Twitter, by combining your
                     Twitter activity with other online activity and information from our partners.
@@ -32,7 +34,7 @@ const Location: FC = (): ReactElement => {
             </div>
             <Link to={"/settings/privacy_and_safety/locations"} className={classes.adsPreferencesWrapper}>
                 <div className={classes.adsPreferencesLink}>
-                    <Typography component={"span"}>
+                    <Typography variant={"body1"} component={"span"}>
                         See places you’ve been
                     </Typography>
                     {ArrowRightIcon}
@@ -40,14 +42,14 @@ const Location: FC = (): ReactElement => {
             </Link>
             <Link to={"/settings/privacy_and_safety/location"} className={classes.adsPreferencesWrapper}>
                 <div className={classes.adsPreferencesLink}>
-                    <Typography component={"span"}>
+                    <Typography variant={"body1"} component={"span"}>
                         Add location information to your Tweets
                     </Typography>
                     {ArrowRightIcon}
                 </div>
             </Link>
             <div className={classes.adsPreferencesLink}>
-                <Typography component={"span"}>
+                <Typography variant={"body1"} component={"span"}>
                     Explore settings
                 </Typography>
                 {ArrowRightIcon}

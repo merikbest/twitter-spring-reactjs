@@ -26,7 +26,7 @@ const MutedAccounts: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Here’s everyone you muted. You can add or remove them from this list. <a
                     href={"https://help.twitter.com/using-twitter/twitter-mute"}
                     target="_blank"

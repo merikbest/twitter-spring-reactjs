@@ -11,7 +11,7 @@ const Preferences: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Select your preferences by notification type.
                     <a
                         href={"https://help.twitter.com/managing-your-account/notifications-on-mobile-devices"}
@@ -21,7 +21,7 @@ const Preferences: FC = (): ReactElement => {
             </div>
             <Link to={"/settings/notification/push_notifications"} className={classes.preferencesWrapper}>
                 <div className={classes.preferencesLink}>
-                    <Typography component={"span"}>
+                    <Typography variant={"body1"} component={"span"}>
                         Push notifications
                     </Typography>
                     {ArrowRightIcon}
@@ -29,7 +29,7 @@ const Preferences: FC = (): ReactElement => {
             </Link>
             <Link to={"/settings/notification/email_notifications"} className={classes.preferencesWrapper}>
                 <div className={classes.preferencesLink}>
-                    <Typography component={"span"}>
+                    <Typography variant={"body1"} component={"span"}>
                         Email notifications
                     </Typography>
                     {ArrowRightIcon}

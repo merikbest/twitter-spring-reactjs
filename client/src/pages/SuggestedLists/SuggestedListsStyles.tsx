@@ -41,17 +41,9 @@ export const useSuggestedListsStyles = makeStyles((theme: Theme) => ({
         padding: 32,
     },
     infoTitle: {
-        fontSize: 23,
-        fontWeight: 700,
         marginBottom: 8,
-    },
-    infoText: {
-        fontSize: 15,
-        color: theme.palette.text.secondary
     },
     listsTitle: {
         padding: "12px 16px",
-        fontSize: 20,
-        fontWeight: 800,
     },
 }));

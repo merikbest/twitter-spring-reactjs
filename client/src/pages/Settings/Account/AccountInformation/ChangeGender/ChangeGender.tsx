@@ -51,14 +51,14 @@ const ChangeGender: FC = (): ReactElement => {
 
     return (
         <>
-            <Typography component={"div"} className={classes.text}>
+            <Typography variant={"subtitle1"} component={"div"} className={classes.infoWrapper}>
                 If you haven’t already specified a gender, this is the one associated with your account based on
                 your profile and activity. This information won’t be displayed publicly.
             </Typography>
             <Divider/>
-            <div className={classes.genderInfoWrapper}>
+            <div className={classes.infoWrapper}>
                 <div className={classes.genderItemWrapper}>
-                    <Typography component={"span"}>
+                    <Typography variant={"body1"} component={"span"}>
                         Female
                     </Typography>
                     <Radio
@@ -73,7 +73,7 @@ const ChangeGender: FC = (): ReactElement => {
                     />
                 </div>
                 <div className={classes.genderItemWrapper}>
-                    <Typography component={"span"}>
+                    <Typography variant={"body1"} component={"span"}>
                         Male
                     </Typography>
                     <Radio
@@ -88,7 +88,7 @@ const ChangeGender: FC = (): ReactElement => {
                     />
                 </div>
                 <div className={classes.genderItemWrapper}>
-                    <Typography component={"span"}>
+                    <Typography variant={"body1"} component={"span"}>
                         Other
                     </Typography>
                     <Radio

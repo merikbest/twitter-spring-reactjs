@@ -11,17 +11,17 @@ const Security: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Manage your account’s security.
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h5"} component={"div"}>
                     Two-factor authentication
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Help protect your account from unauthorized access by requiring a second authentication
                     method in addition to your Twitter password. You can choose a text message, authentication
                     app, or security key. <a
@@ -32,18 +32,20 @@ const Security: FC = (): ReactElement => {
             </div>
             <Link to={"/settings/security/login_verification"} className={classes.authLinkWrapper}>
                 <div className={classes.authLink}>
-                    <span>Two-factor authentication</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Two-factor authentication
+                    </Typography>
                     {ArrowRightIcon}
                 </div>
             </Link>
             <Divider/>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h5"} component={"div"}>
                     Additional password protection
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Enabling this setting adds extra security to your account by requiring additional
                     information to reset your password. If enabled, you must provide either the phone number or
                     email address associated with your account in order to reset your password.
@@ -51,7 +53,9 @@ const Security: FC = (): ReactElement => {
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.passwordProtect}>
-                    <span>Password reset protect</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Password reset protect
+                    </Typography>
                     <Checkbox/>
                 </div>
                 <a href="https://help.twitter.com/safety-and-security/account-security-tips" target="_blank"

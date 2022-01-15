@@ -17,12 +17,6 @@ export const useProfilePictureModalStyles = makeStyles((theme) => ({
     },
     title: {
         margin: "16px 0",
-        fontWeight: 700,
-        fontSize: 23,
-    },
-    text: {
-        color: theme.palette.text.secondary,
-        fontSize: 15,
     },
     avatarWrapper: {
         position: "relative",

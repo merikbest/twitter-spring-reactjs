@@ -3,7 +3,7 @@ import {Divider, Typography} from "@material-ui/core";
 import axios from "axios";
 
 import {useLocationStyles} from "./PlacesStyles";
-import {DeviceIcon, LocationIconFilled} from "../../../../../icons";
+import {LocationIconFilled} from "../../../../../icons";
 
 const Places: FC = (): ReactElement => {
     const classes = useLocationStyles();

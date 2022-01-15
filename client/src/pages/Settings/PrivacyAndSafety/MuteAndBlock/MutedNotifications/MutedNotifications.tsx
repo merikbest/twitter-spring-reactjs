@@ -9,48 +9,60 @@ const MutedNotifications: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h5"} component={"div"}>
                     Mute notifications from people:
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>You don’t follow</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        You don’t follow
+                    </Typography>
                     <Checkbox/>
                 </div>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Who don’t follow you</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Who don’t follow you
+                    </Typography>
                     <Checkbox/>
                 </div>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>With a new account</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        With a new account
+                    </Typography>
                     <Checkbox/>
                 </div>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Who have a default profile photo</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Who have a default profile photo
+                    </Typography>
                     <Checkbox/>
                 </div>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Who haven’t confirmed their email</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Who haven’t confirmed their email
+                    </Typography>
                     <Checkbox/>
                 </div>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Who haven’t confirmed their phone number</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Who haven’t confirmed their phone number
+                    </Typography>
                     <Checkbox/>
                 </div>
             </div>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     These filters won’t affect notifications from people you follow. <a
                     href={"https://help.twitter.com/managing-your-account/understanding-the-notifications-timeline"}
                     target="_blank"

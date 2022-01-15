@@ -41,18 +41,6 @@ export const useBlockedAccountItemStyles = makeStyles<Theme, BlockedAccountItemS
         alignItems: "center",
         justifyContent: "space-between"
     },
-    fullName: {
-        lineHeight: "20px",
-        color: theme.palette.text.primary,
-        fontWeight: 800,
-        fontSize: 15,
-    },
-    username: {
-        lineHeight: "20px",
-        color: theme.palette.text.secondary,
-        fontWeight: 400,
-        fontSize: 15,
-    },
     blockButton: {
         marginRight: 16,
         "& .MuiButtonBase-root": {

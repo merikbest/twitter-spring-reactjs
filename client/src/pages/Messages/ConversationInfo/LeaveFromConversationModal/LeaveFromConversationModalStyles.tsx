@@ -6,20 +6,9 @@ export const useLeaveFromConversationModalStyles = makeStyles((theme: Theme) => 
         minHeight: 176,
         textAlign: "center",
         margin: "32px 20px",
-    },
-    title: {
-        marginBottom: 8,
-        fontSize: 20,
-        lineHeight: "24px",
-        color: theme.palette.text.primary,
-        fontWeight: 700,
-    },
-    text: {
-        fontSize: 15,
-        lineHeight: "20px",
-        color: theme.palette.text.secondary,
-        fontWeight: 400,
-        marginBottom: 24,
+        "& .MuiTypography-subtitle1": {
+            margin: "8px 0px 24px",
+        },
     },
     blockButton: {
         "&.MuiButtonBase-root": {

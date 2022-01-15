@@ -10,36 +10,38 @@ const ContentYouSee: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Decide what you see on Twitter based on your preferences like Topics and interests
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
                 <div className={classes.infoItem}>
-                    <span>Display media that may contain sensitive content</span>
+                    <Typography variant={"body1"} component={"span"}>
+                        Display media that may contain sensitive content
+                    </Typography>
                     <Checkbox/>
                 </div>
             </div>
             <div className={classes.contentLink}>
-                <Typography component={"span"}>
+                <Typography variant={"body1"} component={"span"}>
                     Topics
                 </Typography>
                 {ArrowRightIcon}
             </div>
             <div className={classes.contentLink}>
-                <Typography component={"span"}>
+                <Typography variant={"body1"} component={"span"}>
                     Interests
                 </Typography>
                 {ArrowRightIcon}
             </div>
             <div className={classes.contentLink}>
-                <Typography component={"span"}>
+                <Typography variant={"body1"} component={"span"}>
                     Explore settings
                 </Typography>
                 {ArrowRightIcon}
             </div>
             <div className={classes.contentLink}>
-                <Typography component={"span"}>
+                <Typography variant={"body1"} component={"span"}>
                     Search settings
                 </Typography>
                 {ArrowRightIcon}

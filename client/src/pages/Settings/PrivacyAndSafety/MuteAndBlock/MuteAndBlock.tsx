@@ -18,14 +18,14 @@ const MuteAndBlock: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Manage the accounts, words, and notifications that you’ve muted or blocked.
                 </Typography>
             </div>
             <div className={classes.linkWrapper}>
                 <Link to={"/settings/privacy_and_safety/blocked"}>
                     <div className={classes.contentLink}>
-                        <Typography component={"span"}>
+                        <Typography variant={"body1"} component={"span"}>
                             Blocked accounts
                         </Typography>
                         {ArrowRightIcon}
@@ -33,7 +33,7 @@ const MuteAndBlock: FC = (): ReactElement => {
                 </Link>
                 <Link to={"/settings/privacy_and_safety/muted"}>
                     <div className={classes.contentLink}>
-                        <Typography component={"span"}>
+                        <Typography variant={"body1"} component={"span"}>
                             Muted accounts
                         </Typography>
                         {ArrowRightIcon}
@@ -41,7 +41,7 @@ const MuteAndBlock: FC = (): ReactElement => {
                 </Link>
                 <Link to={"/settings/privacy_and_safety/muted_keywords"}>
                     <div className={classes.contentLink}>
-                        <Typography component={"span"}>
+                        <Typography variant={"body1"} component={"span"}>
                             Muted words
                         </Typography>
                         {ArrowRightIcon}
@@ -49,7 +49,7 @@ const MuteAndBlock: FC = (): ReactElement => {
                 </Link>
                 <Link to={"/settings/privacy_and_safety/advanced_filters"}>
                     <div className={classes.contentLink}>
-                        <Typography component={"span"}>
+                        <Typography variant={"body1"} component={"span"}>
                             Muted notifications
                         </Typography>
                         {ArrowRightIcon}

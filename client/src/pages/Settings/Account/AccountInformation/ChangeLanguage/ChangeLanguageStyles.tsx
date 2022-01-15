@@ -9,9 +9,6 @@ export const useChangeLanguageStyles = makeStyles((theme: Theme) => ({
     },
     languageInfo: {
         paddingTop: 2,
-        fontSize: 13,
-        color: theme.palette.text.secondary,
-        fontWeight: 400
     },
     link: {
         textDecoration: "none",

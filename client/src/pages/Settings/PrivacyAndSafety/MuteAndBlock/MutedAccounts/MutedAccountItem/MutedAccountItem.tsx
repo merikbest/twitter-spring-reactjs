@@ -56,11 +56,11 @@ const MutedAccountItem: FC<MutedAccountItemProps & SnackbarProps & HoverActionPr
                     <Link to={`/user/${mutedUser?.id}`} className={classes.link}>
                         <div className={classes.userInfo}>
                             <div>
-                                <Typography component={"span"} className={classes.fullName}>
+                                <Typography variant={"h6"} component={"span"}>
                                     {mutedUser?.fullName}
                                 </Typography>
                             </div>
-                            <Typography component={"div"} className={classes.username}>
+                            <Typography variant={"subtitle1"} component={"div"}>
                                 @{mutedUser?.username}
                             </Typography>
                         </div>
@@ -77,7 +77,7 @@ const MutedAccountItem: FC<MutedAccountItemProps & SnackbarProps & HoverActionPr
                         </IconButton>
                     </div>
                 </div>
-                <Typography display="block">
+                <Typography variant={"body1"} component={"div"}>
                     {mutedUser?.about}
                 </Typography>
             </div>

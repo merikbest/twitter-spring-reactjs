@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useState} from 'react';
+import React, {FC, ReactElement} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Avatar, Button, Paper, Typography} from "@material-ui/core";
 import {Link} from "react-router-dom";
@@ -49,11 +49,11 @@ const BlockedAccountItem: FC<BlockedAccountItemProps & SnackbarProps> = (
                     <Link to={`/user/${blockedUser?.id}`} className={classes.link}>
                         <div className={classes.userInfo}>
                             <div>
-                                <Typography component={"span"} className={classes.fullName}>
+                                <Typography variant={"h6"} component={"span"}>
                                     {blockedUser?.fullName}
                                 </Typography>
                             </div>
-                            <Typography component={"div"} className={classes.username}>
+                            <Typography variant={"subtitle1"} component={"div"}>
                                 @{blockedUser?.username}
                             </Typography>
                         </div>
@@ -68,7 +68,7 @@ const BlockedAccountItem: FC<BlockedAccountItemProps & SnackbarProps> = (
                         </Button>
                     </div>
                 </div>
-                <Typography display="block">
+                <Typography variant={"body1"} component={"div"}>
                     {blockedUser?.about}
                 </Typography>
             </div>

@@ -11,7 +11,7 @@ const AppsAndSessions: FC = (): ReactElement => {
     return (
         <>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     See information about when you logged into your account and the apps you connected to your
                     account.
                 </Typography>
@@ -20,7 +20,7 @@ const AppsAndSessions: FC = (): ReactElement => {
                 <List component="nav" aria-label="main mailbox folders">
                     <Link to={"/settings/security/connected_apps"}>
                         <ListItem>
-                            <Typography component={"span"}>
+                            <Typography variant={"body1"} component={"span"}>
                                 Connected apps
                             </Typography>
                             {ArrowRightIcon}
@@ -28,7 +28,7 @@ const AppsAndSessions: FC = (): ReactElement => {
                     </Link>
                     <Link to={"/settings/security/sessions"}>
                         <ListItem>
-                            <Typography component={"span"}>
+                            <Typography variant={"body1"} component={"span"}>
                                 Sessions
                             </Typography>
                             {ArrowRightIcon}
@@ -36,7 +36,7 @@ const AppsAndSessions: FC = (): ReactElement => {
                     </Link>
                     <Link to={"/settings/security/login_history"}>
                         <ListItem>
-                            <Typography component={"span"}>
+                            <Typography variant={"body1"} component={"span"}>
                                 Account access history
                             </Typography>
                             {ArrowRightIcon}
@@ -44,7 +44,7 @@ const AppsAndSessions: FC = (): ReactElement => {
                     </Link>
                     <Link to={"/settings/security/devices"}>
                         <ListItem>
-                            <Typography component={"span"}>
+                            <Typography variant={"body1"} component={"span"}>
                                 Logged-in devices and apps
                             </Typography>
                             {ArrowRightIcon}

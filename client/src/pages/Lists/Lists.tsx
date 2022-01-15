@@ -104,7 +104,7 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
                                             <span className={classes.textIcon}>
                                                 {ListsIcon}
                                             </span>
-                                            <Typography component={"span"} className={classes.text}>
+                                            <Typography variant={"body1"} component={"span"}>
                                                 Lists you’re on
                                             </Typography>
                                         </div>
@@ -124,7 +124,7 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
                             Pinned Lists
                         </Typography>
                         {(pinnedLists.length === 0) ? (
-                            <Typography component={"div"} className={classes.pinnedListsText}>
+                            <Typography variant={"subtitle1"} component={"div"} className={classes.pinnedListsText}>
                                 Nothing to see here yet — pin your favorite Lists to access them quickly.
                             </Typography>
                         ) : (
@@ -141,7 +141,7 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
                             <ListsItem key={list.id} item={list} listIndex={index}/>
                         ))}
                         <Link to={"/suggested"} className={classes.link}>
-                            <Typography component={"div"} className={classes.showMore}>
+                            <Typography variant={"body1"} component={"div"} className={classes.showMore}>
                                 Show more
                             </Typography>
                         </Link>

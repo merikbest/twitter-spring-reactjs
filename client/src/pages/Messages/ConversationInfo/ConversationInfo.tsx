@@ -136,7 +136,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                     <div style={{flex: 1}}>
                         <div className={classes.participantInfoWrapper}>
                             <div>
-                                <Typography component={"span"} className={classes.fullName}>
+                                <Typography variant={"h6"} component={"span"}>
                                     {chatParticipant?.fullName}
                                 </Typography>
                                 {chatParticipant?.privateProfile && (
@@ -144,7 +144,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                                         {LockIcon}
                                     </span>
                                 )}
-                                <Typography component={"div"} className={classes.username}>
+                                <Typography variant={"subtitle1"} component={"div"}>
                                     @{chatParticipant?.username}
                                 </Typography>
                             </div>
@@ -202,11 +202,11 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                 </div>
                 <Divider/>
                 <div className={classes.notificationsInfoWrapper}>
-                    <Typography component={"div"} className={classes.title}>
+                    <Typography variant={"h5"} component={"div"}>
                         Notifications
                     </Typography>
                     <div className={classes.switchWrapper}>
-                        <Typography component={"span"} className={classes.text}>
+                        <Typography variant={"body1"} component={"span"}>
                             {`Snooze notifications from ${chatParticipant?.fullName}`}
                         </Typography>
                         <Switch checked={false}/>
@@ -217,12 +217,12 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                     className={classNames(classes.conversationInfoButton, classes.blockUser)}
                     onClick={onOpenBlockUserModal}
                 >
-                    <Typography component={"span"}>
+                    <Typography variant={"body1"} component={"span"}>
                         {isUserBlocked ? "Unblock " : "Block "} @{chatParticipant?.username}
                     </Typography>
                 </div>
                 <div className={classNames(classes.conversationInfoButton, classes.blockUser)}>
-                    <Typography component={"span"}>
+                    <Typography variant={"body1"} component={"span"}>
                         Report @{chatParticipant?.username}
                     </Typography>
                 </div>
@@ -230,7 +230,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                     className={classNames(classes.conversationInfoButton, classes.leaveConversation)}
                     onClick={handleClickOpenLeaveFromConversationModal}
                 >
-                    <Typography component={"span"}>
+                    <Typography variant={"body1"} component={"span"}>
                         Leave conversation
                     </Typography>
                 </div>

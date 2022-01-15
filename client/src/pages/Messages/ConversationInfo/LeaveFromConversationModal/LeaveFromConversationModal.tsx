@@ -26,10 +26,10 @@ const LeaveFromConversationModal: FC<LeaveFromConversationModalProps> = (
         <Dialog open={visible} onClose={onClose}>
             <DialogContent style={{padding: 0}}>
                 <div className={classes.modalWrapper}>
-                    <Typography component={"div"} className={classes.title}>
+                    <Typography variant={"h5"} component={"div"}>
                         Leave conversation?
                     </Typography>
-                    <Typography component={"div"} className={classes.text}>
+                    <Typography variant={"subtitle1"} component={"div"}>
                         This conversation will be deleted from your inbox. Other people in the conversation will still
                         be able to see it.
                     </Typography>

@@ -43,10 +43,10 @@ const ProfileHeaderModal: FC<ProfileHeaderModalProps> = (
                 <div className={classes.logoIcon}>
                     <TwitterIcon/>
                 </div>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h3"} component={"div"} className={classes.title}>
                     Pick a header
                 </Typography>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle1"} component={"div"}>
                     People who visit your profile will see it. Show your style.
                 </Typography>
                 <div className={classes.wallpaperWrapper}>
@@ -67,10 +67,10 @@ const ProfileHeaderModal: FC<ProfileHeaderModalProps> = (
                         <img alt="default-img" src={DEFAULT_PROFILE_IMG}/>
                     </Avatar>
                 </div>
-                <Typography component={"div"} className={classes.fullName}>
+                <Typography variant={"h3"} component={"div"}>
                     {myProfile?.fullName}
                 </Typography>
-                <Typography component={"div"} className={classes.username}>
+                <Typography variant={"subtitle1"} component={"div"}>
                     @{myProfile?.username}
                 </Typography>
                 <Button

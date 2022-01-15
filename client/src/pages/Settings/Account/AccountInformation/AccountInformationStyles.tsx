@@ -20,18 +20,6 @@ export const useAccountInformationStyles = makeStyles((theme: Theme) => ({
             height: "1.3em",
         },
     },
-    title: {
-        fontSize: 15,
-        color: theme.palette.text.primary,
-        fontWeight: 400,
-        lineHeight: "20px",
-    },
-    text: {
-        fontSize: 13,
-        color: theme.palette.text.secondary,
-        fontWeight: 400,
-        lineHeight: "16px",
-    },
     arrowIcon: {
         marginLeft: "auto"
     },

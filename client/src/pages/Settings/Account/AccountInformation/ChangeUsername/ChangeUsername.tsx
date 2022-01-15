@@ -51,10 +51,10 @@ const ChangeUsername: FC = (): ReactElement => {
                 </div>
                 <Divider/>
                 <div className={classes.suggestionsWrapper}>
-                    <Typography component={"div"} className={classes.title}>
+                    <Typography variant={"h5"} component={"div"}>
                         Suggestions
                     </Typography>
-                    <Typography component={"span"} className={classes.suggestionText} onClick={setSuggestedUsername}>
+                    <Typography variant={"body1"} component={"span"} onClick={setSuggestedUsername}>
                         {`${myProfile?.username}123`}
                     </Typography>
                 </div>

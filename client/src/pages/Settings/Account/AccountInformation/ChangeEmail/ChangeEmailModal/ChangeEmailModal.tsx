@@ -1,9 +1,8 @@
-import React, {FC, ReactElement, useEffect} from 'react';
+import React, {FC, ReactElement} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Controller, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {Button, Checkbox, Dialog, DialogContent, Typography} from "@material-ui/core";
-import classNames from "classnames";
 import * as yup from "yup";
 
 import {useChangeEmailModalStyles} from "./ChangeEmailModalStyles";
@@ -58,10 +57,10 @@ const ChangeEmailModal: FC<ChangeEmailModalProps> = ({visible, onClose}): ReactE
                     {TweetIcon}
                 </div>
                 <div>
-                    <Typography component={"div"} className={classes.title}>
+                    <Typography variant={"h3"} component={"div"}>
                         Change email
                     </Typography>
-                    <Typography component={"div"} className={classNames(classes.text, classes.textSecondary)}>
+                    <Typography variant={"subtitle1"} component={"div"}>
                         {`Your current email is ${myProfile?.email}. What would you like to update it to? Your email
                         is not displayed in your public profile on Twitter.`}
                     </Typography>
@@ -88,7 +87,7 @@ const ChangeEmailModal: FC<ChangeEmailModalProps> = ({visible, onClose}): ReactE
                         )}
                     />
                     <div className={classes.infoWrapper}>
-                        <Typography component={"span"} className={classNames(classes.text, classes.textPrimary)}>
+                        <Typography variant={"body1"} component={"span"}>
                             Let people who have your email address find and connect with you on Twitter. <a
                             href="https://help.twitter.com/safety-and-security/email-and-phone-discoverability-settings"
                             target={"_blank"} className={classes.link}>Learn more</a>

@@ -25,10 +25,10 @@ const AccountInformation: FC = (): ReactElement => {
                 <NavLink to={"/settings/info/username"}>
                     <ListItem>
                         <div>
-                            <Typography component={"div"} className={classes.title}>
+                            <Typography variant={"body1"} component={"div"}>
                                 Username
                             </Typography>
-                            <Typography component={"div"} className={classes.text}>
+                            <Typography variant={"subtitle2"} component={"div"}>
                                 @{myProfile?.username}
                             </Typography>
                         </div>
@@ -40,10 +40,10 @@ const AccountInformation: FC = (): ReactElement => {
                 <NavLink to={"/settings/info/phone"}>
                     <ListItem>
                         <div>
-                            <Typography component={"div"} className={classes.title}>
+                            <Typography variant={"body1"} component={"div"}>
                                 Phone
                             </Typography>
-                            <Typography component={"div"} className={classes.text}>
+                            <Typography variant={"subtitle2"} component={"div"}>
                                 {`${getPhoneCode(myProfile)}${myProfile?.phone}`}
                             </Typography>
                         </div>
@@ -55,10 +55,10 @@ const AccountInformation: FC = (): ReactElement => {
                 <NavLink to={"/settings/info/email"}>
                     <ListItem>
                         <div>
-                            <Typography component={"div"} className={classes.title}>
+                            <Typography variant={"body1"} component={"div"}>
                                 Email
                             </Typography>
-                            <Typography component={"div"} className={classes.text}>
+                            <Typography variant={"subtitle2"} component={"div"}>
                                 {myProfile?.email}
                             </Typography>
                         </div>
@@ -68,10 +68,10 @@ const AccountInformation: FC = (): ReactElement => {
                     </ListItem>
                 </NavLink>
                 <div className={classes.informationItem}>
-                    <Typography component={"div"} className={classes.title}>
+                    <Typography variant={"body1"} component={"div"}>
                         Verified
                     </Typography>
-                    <Typography component={"div"} className={classes.text}>
+                    <Typography variant={"subtitle2"} component={"div"}>
                         No. <span className={classes.link}>Request Verification</span>
                     </Typography>
                 </div>
@@ -79,10 +79,10 @@ const AccountInformation: FC = (): ReactElement => {
                 <NavLink to={"/settings/privacy_and_safety/audience"}>
                     <ListItem>
                         <div>
-                            <Typography component={"div"} className={classes.title}>
+                            <Typography variant={"body1"} component={"div"}>
                                 Protected Tweets
                             </Typography>
-                            <Typography component={"div"} className={classes.text}>
+                            <Typography variant={"subtitle2"} component={"div"}>
                                 {myProfile?.mutedDirectMessages ? "Yes" : "No"}
                             </Typography>
                         </div>
@@ -92,10 +92,10 @@ const AccountInformation: FC = (): ReactElement => {
                     </ListItem>
                 </NavLink>
                 <div className={classes.informationItem}>
-                    <Typography component={"div"} className={classes.title}>
+                    <Typography variant={"body1"} component={"div"}>
                         Account creation
                     </Typography>
-                    <Typography component={"div"} className={classes.text}>
+                    <Typography variant={"subtitle2"} component={"div"}>
                         {formatScheduleDate(new Date(myProfile?.registrationDate!))}
                     </Typography>
                 </div>
@@ -103,10 +103,10 @@ const AccountInformation: FC = (): ReactElement => {
                 <NavLink to={"/settings/info/country"}>
                     <ListItem>
                         <div>
-                            <Typography component={"div"} className={classes.title}>
+                            <Typography variant={"body1"} component={"div"}>
                                 Country
                             </Typography>
-                            <Typography component={"div"} className={classes.text}>
+                            <Typography variant={"subtitle2"} component={"div"}>
                                 {getCountry(myProfile)}
                             </Typography>
                         </div>
@@ -118,10 +118,10 @@ const AccountInformation: FC = (): ReactElement => {
                 <NavLink to={"/settings/accessibility_display_and_languages/languages"}>
                     <ListItem>
                         <div>
-                            <Typography component={"div"} className={classes.title}>
+                            <Typography variant={"body1"} component={"div"}>
                                 Languages
                             </Typography>
-                            <Typography component={"div"} className={classes.text}>
+                            <Typography variant={"subtitle2"} component={"div"}>
                                 {myProfile?.language}
                             </Typography>
                         </div>
@@ -133,10 +133,10 @@ const AccountInformation: FC = (): ReactElement => {
                 <NavLink to={"/settings/info/gender"}>
                     <ListItem>
                         <div>
-                            <Typography component={"div"} className={classes.title}>
+                            <Typography variant={"body1"} component={"div"}>
                                 Gender
                             </Typography>
-                            <Typography component={"div"} className={classes.text}>
+                            <Typography variant={"subtitle2"} component={"div"}>
                                 {myProfile?.gender}
                             </Typography>
                         </div>
@@ -146,10 +146,10 @@ const AccountInformation: FC = (): ReactElement => {
                     </ListItem>
                 </NavLink>
                 <div className={classes.informationItem}>
-                    <Typography component={"div"} className={classes.title}>
+                    <Typography variant={"body1"} component={"div"}>
                         Birth date
                     </Typography>
-                    <Typography component={"div"} className={classes.text}>
+                    <Typography variant={"subtitle2"} component={"div"}>
                         Add your date of birth to your <span className={classes.link}>profile</span>.
                     </Typography>
                 </div>
@@ -157,10 +157,10 @@ const AccountInformation: FC = (): ReactElement => {
                 <NavLink to={"/settings/info/age"}>
                     <ListItem>
                         <div>
-                            <Typography component={"div"} className={classes.title}>
+                            <Typography variant={"body1"} component={"div"}>
                                 Age
                             </Typography>
-                            <Typography component={"div"} className={classes.text}>
+                            <Typography variant={"subtitle2"} component={"div"}>
                                 13-64
                             </Typography>
                         </div>

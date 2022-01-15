@@ -20,10 +20,10 @@ const CurrentSession: FC = (): ReactElement => {
                             </span>
                         </div>
                         <div>
-                            <Typography component={"div"} className={classes.OSTypeText}>
+                            <Typography variant={"body1"} component={"div"}>
                                 {location.state.OSName}
                             </Typography>
-                            <Typography component={"div"} className={classes.text}>
+                            <Typography variant={"subtitle2"} component={"div"}>
                                 {location.state.browserName}
                             </Typography>
                         </div>
@@ -32,23 +32,23 @@ const CurrentSession: FC = (): ReactElement => {
             </div>
             <Divider/>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h6"} component={"div"}>
                     Date and time
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     Active now
                 </Typography>
             </div>
             <Divider/>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.title}>
+                <Typography variant={"h6"} component={"div"}>
                     Location
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
-                <Typography component={"div"} className={classes.text}>
+                <Typography variant={"subtitle2"} component={"div"}>
                     {location.state?.countryName}
                 </Typography>
             </div>
