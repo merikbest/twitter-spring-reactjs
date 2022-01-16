@@ -65,6 +65,7 @@ const FollowerRequestsItem: FC<FollowerRequestsItemProps & HoverUserProps> = (
                             onClick={handleDeclineFollowerRequest}
                             color="primary"
                             variant="outlined"
+                            size="small"
                             fullWidth
                         >
                             Decline
@@ -75,6 +76,7 @@ const FollowerRequestsItem: FC<FollowerRequestsItemProps & HoverUserProps> = (
                             onClick={handleAcceptFollowerRequest}
                             color="primary"
                             variant="outlined"
+                            size="small"
                             fullWidth
                         >
                             Accept

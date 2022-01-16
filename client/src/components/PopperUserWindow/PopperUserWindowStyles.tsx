@@ -31,29 +31,17 @@ export const usePopperUserWindowStyles = makeStyles<Theme, PopperUserWindowStyle
     avatar: {
         width: "60px !important",
         height: "60px !important",
-        marginRight: 15,
     },
     outlinedButton: {
         float: 'right',
-        fontSize: 15,
-        fontWeight: 700,
         width: 79,
-        height: 32,
-        borderRadius: '25px',
-        padding: '0 15px !important',
         '&:hover': {
             backgroundColor: theme.palette.secondary.light,
         },
     },
     primaryButton: {
-        display: "inline-block",
         float: 'right',
-        fontSize: 15,
-        fontWeight: 700,
         width: 105,
-        height: 32,
-        borderRadius: '25px',
-        padding: '0 15px !important',
         '&:hover': {
             backgroundColor: 'rgb(202, 32, 85) !important',
         },

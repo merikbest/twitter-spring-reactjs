@@ -217,7 +217,12 @@ const DisplayModal: FC<DisplayModalProps & DisplayProps> = (
                     </div>
                 </div>
                 <div className={classes.buttonWrapper}>
-                    <Button onClick={onClose} variant="contained" color="primary">
+                    <Button
+                        onClick={onClose}
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                    >
                         Done
                     </Button>
                 </div>

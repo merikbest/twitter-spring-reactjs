@@ -100,10 +100,10 @@ const ListsModal: FC<ListsModalProps> = ({tweet, user, visible, onClose}): React
                     <CloseButton onClose={onClose}/>
                     Pick a List
                     <Button
-                        className={classes.button}
                         type="submit"
                         variant="contained"
                         color="primary"
+                        size="small"
                     >
                         Save
                     </Button>

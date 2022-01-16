@@ -40,29 +40,20 @@ export const useUsersItemStyles = makeStyles((theme: Theme) => ({
             height: "1.2em",
         },
     },
+    buttonWrapper: {
+        flex: 1,
+        "& .MuiButton-root": {
+            float: 'right',
+        },
+    },
     outlinedButton: {
-        float: 'right',
-        fontSize: 15,
-        fontWeight: 700,
         width: 79,
-        height: 32,
-        border: '1px solid',
-        borderRadius: '25px',
-        padding: '0 15px',
         '&:hover': {
             backgroundColor: theme.palette.secondary.light,
         },
     },
     primaryButton: {
-        marginLeft: 29,
-        float: 'right',
-        fontSize: 15,
-        fontWeight: 700,
         width: 105,
-        height: 32,
-        borderRadius: '25px',
-        padding: '0 15px',
-        // TODO '& .MuiButton-containedPrimary':
         '&:hover': {
             backgroundColor: theme.palette.error.dark,
         },

@@ -122,18 +122,18 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
                         className={classes.outlinedButton}
                         onClick={onCloseEditTweetModal}
                         type="submit"
-                        variant="outlined"
+                        variant="text"
                         color="primary"
                     >
                         Unsent Tweets
                     </Button>
                 ) : (
                     <Button
-                        className={classes.containedButton}
                         onClick={visibleEditListFooter ? onCloseEditTweetList : onOpenEditTweetList}
                         type="submit"
                         variant="contained"
                         color="primary"
+                        size="small"
                     >
                         {visibleEditListFooter ? "Done" : "Edit"}
                     </Button>
@@ -206,11 +206,11 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
                     {visibleEditListFooter && (
                         <div className={classes.footer}>
                             <Button
-                                className={classes.footerOutlinedButton}
                                 onClick={(checkboxIndexes.length === 0) ? onSelectAllTweets : onDeselectAllTweets}
                                 type="submit"
-                                variant="outlined"
+                                variant="text"
                                 color="primary"
+                                size="small"
                             >
                                 {(checkboxIndexes.length === 0) ? "Select All" : "Deselect All"}
                             </Button>
@@ -219,8 +219,9 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
                                 onClick={handleDeleteScheduledTweets}
                                 disabled={checkboxIndexes.length === 0}
                                 type="submit"
-                                variant="outlined"
+                                variant="text"
                                 color="primary"
+                                size="small"
                             >
                                 Delete
                             </Button>

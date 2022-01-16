@@ -37,10 +37,10 @@ const VoteComponent: FC<VoteComponentProps> = ({tweetId, poll}): ReactElement =>
                             return (
                                 <div key={pollChoice.id} className={classes.container}>
                                     <div className={classes.voteOption}>
-                                        <Typography component={"div"} className={classes.voteChoice}>
+                                        <Typography variant={"body1"} component={"div"} className={classes.voteChoice}>
                                             {pollChoice.choice}
                                         </Typography>
-                                        <Typography component={"div"} className={classes.voteChoice}>
+                                        <Typography variant={"body1"} component={"div"} className={classes.voteChoice}>
                                             {`${(voteNumber === 0) ? 0 : Math.round(voteNumber)}%`}
                                         </Typography>
                                     </div>
@@ -52,7 +52,7 @@ const VoteComponent: FC<VoteComponentProps> = ({tweetId, poll}): ReactElement =>
                             );
                         }
                     )}
-                    <Typography component={"div"} className={classes.voteInfo}>
+                    <Typography variant={"subtitle2"} component={"div"} className={classes.voteInfo}>
                         {userVoteSum} votes · {isPollEnded ? ("Final results") : (`${voteFormatDate(poll!)} left`)}
                     </Typography>
                 </>
@@ -63,14 +63,16 @@ const VoteComponent: FC<VoteComponentProps> = ({tweetId, poll}): ReactElement =>
                             <Button
                                 onClick={() => onClickVote(pollChoice.id)}
                                 className={classes.voteButton}
+                                variant="outlined"
                                 color="primary"
+                                size="small"
                                 fullWidth
                             >
                                 {pollChoice.choice}
                             </Button>
                         </div>)
                     )}
-                    <Typography component={"div"} className={classes.voteInfo}>
+                    <Typography variant={"subtitle2"} component={"div"} className={classes.voteInfo}>
                         {userVoteSum} votes · {voteFormatDate(poll!)} left
                     </Typography>
                 </>

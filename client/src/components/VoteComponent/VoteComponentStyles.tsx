@@ -15,8 +15,6 @@ export const useVoteComponentStyles = makeStyles((theme: Theme) => ({
     },
     voteChoice: {
         zIndex: 1,
-        fontSize: 14,
-        fontWeight: 700,
         padding: "0px 11px",
     },
     voteScale: {
@@ -25,16 +23,12 @@ export const useVoteComponentStyles = makeStyles((theme: Theme) => ({
         borderRadius: 4,
         position: "absolute",
         height: 30,
-        backgroundColor: theme.palette.info.light,
+        backgroundColor: theme.palette.grey[100],
     },
     voteInfo: {
-        fontSize: 14,
         marginTop: 11,
-        color: theme.palette.text.secondary,
     },
     voteButton: {
         marginTop: 4,
-        padding: "3px 8px",
-        border: '1px solid',
     },
 }));

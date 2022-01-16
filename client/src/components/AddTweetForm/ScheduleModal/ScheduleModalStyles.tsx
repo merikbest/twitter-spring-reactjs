@@ -21,20 +21,8 @@ export const useScheduleModalStyles = makeStyles((theme: Theme) => ({
     },
     buttonWrapper: {
         marginLeft: "auto",
-    },
-    clearButton: {
-        marginRight: 12,
-        "&.MuiButton-root": {
-            padding: "4px 16px",
-            border: 0,
-            '&:hover': {
-                border: 0,
-            },
-        },
-    },
-    submitButton: {
-        "&.MuiButton-root": {
-            padding: "4px 16px",
+        "& .MuiButton-text ": {
+            marginRight: 12,
         },
     },
     infoWrapper: {
@@ -62,22 +50,11 @@ export const useScheduleModalStyles = makeStyles((theme: Theme) => ({
         marginBottom: 20,
     },
     footer: {
-        "& .MuiButton-root": {
-            marginRight: 15,
-            fontSize: 14,
-            fontWeight: 700,
-            lineHeight: "16px",
-            border: 0,
-            padding: '2px 15px',
-            '&:hover': {
-                border: 0,
-                backgroundColor: theme.palette.secondary.light,
-            },
-        },
         padding: "12px 16px",
         borderTop: `1px solid ${theme.palette.divider}`,
-    },
-    outlinedButton: {
-
+        "& .MuiButton-root": {
+            height: 24,
+            padding: '0px 12px',
+        },
     },
 }));

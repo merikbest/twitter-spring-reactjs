@@ -37,13 +37,30 @@ const commonTheme = {
             root: {
                 borderRadius: 30,
                 textTransform: 'none',
-                fontWeight: 700,
+                height: 32,
             },
             contained: {
                 boxShadow: "none",
                 "&:hover": {
                     boxShadow: "none",
                 },
+            },
+            sizeSmall: {
+                height: 32,
+                padding: "0px 16px",
+            },
+            sizeLarge: {
+                height: 44,
+                "& .MuiButton-label":{
+                    fontSize: 15,
+                    fontWeight: 700,
+                    lineHeight: "20px",
+                },
+            },
+            label: {
+                fontSize: 14,
+                fontWeight: 700,
+                lineHeight: "16px",
             },
         },
         MuiFilledInput: {
@@ -77,9 +94,11 @@ const commonTheme = {
                     alignItems: 'center',
                     fontWeight: 800,
                 },
-                '& button': {
-                    padding: 8,
-                },
+            },
+        },
+        MuiIconButton: {
+            root: {
+                padding: 8,
             },
         },
         MuiTypography: {
@@ -192,6 +211,11 @@ export const dimTheme = createMuiTheme(deepmerge({
                 color: "rgb(255, 255, 255)",
             },
         },
+        MuiButton: {
+            contained: {
+                color: "rgb(255, 255, 255)",
+            },
+        },
     },
 }, commonTheme));
 
@@ -259,6 +283,11 @@ export const lightsOutTheme = createMuiTheme(deepmerge({
             },
             body1: {
                 color: "rgb(217, 217, 217)",
+            },
+        },
+        MuiButton: {
+            contained: {
+                color: "rgb(255, 255, 255)",
             },
         },
     },
@@ -330,6 +359,11 @@ export const defaultTheme = createMuiTheme(deepmerge({
                 color: "rgb(15, 20, 25)",
             },
         },
+        MuiButton: {
+            contained: {
+                color: "rgb(15, 20, 25)",
+            },
+        },
     },
 }, commonTheme));
 
@@ -350,6 +384,11 @@ export const blueColor = {
         MuiButton: {
             outlinedPrimary: {
                 borderColor: "rgb(29, 155, 240)",
+            },
+            textPrimary: {
+                "&:hover": {
+                    backgroundColor: "rgb(29, 155, 240, 0.1)",
+                },
             },
         },
         MuiIconButton: {
@@ -412,6 +451,11 @@ export const yellowColor = {
             outlinedPrimary: {
                 borderColor: "rgb(255, 212, 0)",
             },
+            textPrimary: {
+                "&:hover": {
+                    backgroundColor: "rgb(255, 212, 0, 0.1)",
+                },
+            },
         },
         MuiIconButton: {
             root: {
@@ -472,6 +516,11 @@ export const crimsonColor = {
         MuiButton: {
             outlinedPrimary: {
                 borderColor: "rgb(249, 24, 128)",
+            },
+            textPrimary: {
+                "&:hover": {
+                    backgroundColor: "rgb(249, 24, 128, 0.1)",
+                },
             },
         },
         MuiIconButton: {
@@ -534,6 +583,11 @@ export const violetColor = {
             outlinedPrimary: {
                 borderColor: "rgb(120, 86, 255)",
             },
+            textPrimary: {
+                "&:hover": {
+                    backgroundColor: "rgb(120, 86, 255, 0.1)",
+                },
+            },
         },
         MuiIconButton: {
             root: {
@@ -595,6 +649,11 @@ export const orangeColor = {
             outlinedPrimary: {
                 borderColor: "rgb(255, 122, 0)",
             },
+            textPrimary: {
+                "&:hover": {
+                    backgroundColor: "rgb(255, 122, 0, 0.1)",
+                },
+            },
         },
         MuiIconButton: {
             root: {
@@ -655,6 +714,11 @@ export const greenColor = {
         MuiButton: {
             outlinedPrimary: {
                 borderColor: "rgb(0, 186, 124)",
+            },
+            textPrimary: {
+                "&:hover": {
+                    backgroundColor: "rgb(0, 186, 124, 0.1)",
+                },
             },
         },
         MuiIconButton: {

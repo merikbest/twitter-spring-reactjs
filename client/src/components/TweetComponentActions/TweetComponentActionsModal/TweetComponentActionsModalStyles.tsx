@@ -14,6 +14,13 @@ export const useTweetComponentActionsModalStyles = makeStyles((theme: Theme) => 
             marginTop: 8,
             marginBottom: 24,
         },
+        "& .MuiButton-root": {
+            width: 134,
+            "& .MuiButton-label": {
+                fontSize: 15,
+                lineHeight: "20px",
+            },
+        },
     },
     modalButtonWrapper: {
         display: "flex",
@@ -21,16 +28,8 @@ export const useTweetComponentActionsModalStyles = makeStyles((theme: Theme) => 
         justifyContent: "space-between",
     },
     modalCancelButton: {
-        width: 134,
-        height: 40,
         color: theme.palette.text.primary,
         backgroundColor: theme.palette.divider,
-        borderRadius: '25px',
-    },
-    modalButton: {
-        width: 134,
-        height: 40,
-        borderRadius: '25px',
     },
     modalDeleteButton: {
         "&.MuiButton-contained": {

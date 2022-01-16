@@ -136,7 +136,7 @@ const Follower: FC<FollowerProps<User> & HoverUserProps & SnackbarProps> = (
                         </Link>
                         <PopperUserWindow visible={visiblePopperWindow} user={user!}/>
                     </div>
-                    <div>
+                    <div className={classes.buttonWrapper}>
                         {(myProfile?.id === user?.id) ? null : (
                             (isMyProfileBlocked) ? null : (
                                 (!isFollower) ? (

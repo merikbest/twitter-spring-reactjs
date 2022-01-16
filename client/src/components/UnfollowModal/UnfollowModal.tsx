@@ -36,14 +36,15 @@ const UnfollowModal: FC<UnfollowModalProps> = ({user, visible, onClose, handleUn
                             className={classes.modalCancelButton}
                             onClick={onClose}
                             variant="contained"
+                            size="large"
                         >
                             Cancel
                         </Button>
                         <Button
-                            className={classes.modalUnfollowButton}
                             onClick={() => handleUnfollow(user!)}
                             variant="contained"
                             color="primary"
+                            size="large"
                         >
                             Unfollow
                         </Button>

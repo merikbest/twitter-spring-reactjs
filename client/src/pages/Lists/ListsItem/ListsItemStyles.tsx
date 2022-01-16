@@ -72,7 +72,6 @@ export const useListsItemStyles = makeStyles((theme: Theme) => ({
     listPrimaryButton: {
         width: 105,
         height: 32,
-        border: '1px solid',
         borderRadius: '25px',
         padding: '0 15px',
         '&:hover': {
@@ -82,7 +81,6 @@ export const useListsItemStyles = makeStyles((theme: Theme) => ({
     listOutlinedButton: {
         width: 79,
         height: 32,
-        border: '1px solid',
         borderRadius: '25px',
         padding: '0 15px',
         '&:hover': {

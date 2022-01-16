@@ -9,24 +9,14 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
         "& .MuiDialogTitle-root": {
             marginBottom: 0,
             borderBottom: props => props.visibleEditTweetModal ? `1px solid ${theme.palette.divider}` : "1px solid transparent",
-        },
-    },
-    outlinedButton: {
-        marginLeft: "auto",
-        marginRight: 12,
-        "&.MuiButton-root": {
-            padding: "4px 16px",
-            border: 0,
-            '&:hover': {
-                border: 0,
+            "& .MuiButtonBase-root": {
+                marginLeft: "auto",
             },
         },
     },
-    containedButton: {
-        marginLeft: "auto",
-        "&.MuiButton-root": {
-            padding: "4px 16px",
-        },
+    outlinedButton: {
+        height: 24,
+        padding: '0px 12px',
     },
     content: {
         width: 598,
@@ -100,27 +90,14 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
         justifyContent: "space-between",
         borderTop: `1px solid ${theme.palette.divider}`,
     },
-    footerOutlinedButton: {
-        "&.MuiButton-root": {
-            padding: "4px 16px",
-            border: 0,
-            '&:hover': {
-                border: 0,
-            },
-        },
-    },
     footerDeleteButton: {
         "&.MuiButton-root": {
             color: theme.palette.error.main,
-            padding: "4px 16px",
-            border: 0,
             '&:hover': {
                 backgroundColor: "rgba(244, 33, 46, 0.1)",
-                border: 0,
             },
             "&.Mui-disabled": {
                 color: "rgb(249, 144, 150)",
-                border: "none",
             },
         },
     },

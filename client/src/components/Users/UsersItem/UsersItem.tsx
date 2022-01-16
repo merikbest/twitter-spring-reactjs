@@ -132,7 +132,7 @@ const UsersItem: FC<UsersItemProps<User> & SnackbarProps & HoverUserProps> = (
                     <PopperUserWindow visible={visiblePopperWindow} user={user!}/>
                 </Link>
             </div>
-            <div style={{flex: 1}}>
+            <div className={classes.buttonWrapper}>
                 {(myProfile?.id === user?.id) ? null : (
                     (isMyProfileBlocked) ? null : (
                         (!isFollower) ? (

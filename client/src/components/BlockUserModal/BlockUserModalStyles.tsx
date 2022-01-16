@@ -10,19 +10,10 @@ export const useBlockUserModalStyles = makeStyles((theme: Theme) => ({
     },
     text: {
         marginTop: 8,
+        marginBottom: 24,
     },
     containedButton: {
-        marginTop: 24,
-        "&.MuiButtonBase-root": {
-            padding: "11px 16px",
-            marginBottom: 12,
-            "& .MuiButton-label": {
-                fontSize: 15,
-                fontWeight: 700,
-                lineHeight: "20px",
-                color: theme.palette.common.white,
-            },
-        },
+        marginBottom: 12,
     },
     blockButton: {
         "&.MuiButtonBase-root": {
@@ -34,16 +25,5 @@ export const useBlockUserModalStyles = makeStyles((theme: Theme) => ({
     },
     unblockButton: {
         backgroundColor: theme.palette.primary.main,
-    },
-    cancelButton: {
-        "&.MuiButtonBase-root": {
-            padding: "11px 16px",
-            "& .MuiButton-label": {
-                fontSize: 15,
-                fontWeight: 700,
-                lineHeight: "20px",
-                color: theme.palette.primary.main,
-            },
-        },
     },
 }));

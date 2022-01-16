@@ -10,6 +10,9 @@ export const useUnfollowModalStyles = makeStyles((theme) => ({
             marginTop: 8,
             marginBottom: 24,
         },
+        "& .MuiButton-root": {
+            width: 134,
+        },
     },
     modalButtonWrapper: {
         display: "flex",
@@ -17,15 +20,7 @@ export const useUnfollowModalStyles = makeStyles((theme) => ({
         justifyContent: "space-between",
     },
     modalCancelButton: {
-        width: 134,
-        height: 40,
         color: theme.palette.text.primary,
         backgroundColor: theme.palette.divider,
-        borderRadius: '25px',
-    },
-    modalUnfollowButton: {
-        width: 134,
-        height: 40,
-        borderRadius: '25px',
     },
 }));

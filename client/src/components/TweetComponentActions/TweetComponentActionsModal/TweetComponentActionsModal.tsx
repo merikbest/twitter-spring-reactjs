@@ -64,15 +64,19 @@ const TweetComponentActionsModal: FC<TweetComponentActionsModalProps> = (
                             className={classes.modalCancelButton}
                             onClick={onCloseTweetComponentActionsModal}
                             variant="contained"
+                            size="large"
                         >
                             Cancel
                         </Button>
                         <Button
-                            className={classNames(classes.modalButton,
-                                (modalTitle === "Delete") ? (classes.modalDeleteButton) : (classes.modalPrimaryButton)
+                            className={(modalTitle === "Delete") ? (
+                                classes.modalDeleteButton
+                            ) : (
+                                classes.modalPrimaryButton
                             )}
                             onClick={(modalTitle === "Delete") ? onDeleteUserTweet : onPinUserTweet}
                             variant="contained"
+                            size="large"
                         >
                             {(modalTitle === "Delete") ? (
                                 "Delete"

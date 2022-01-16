@@ -30,10 +30,10 @@ const TweetAnalyticsModal: FC<TweetAnalyticsModalStyles> = ({tweet, visible, onC
             <DialogContent>
                 <div className={classes.tweetInfoContainer}>
                     <div className={classes.tweetInfoWrapper}>
-                        <Typography className={classes.tweetInfoFullName} component={"span"}>
+                        <Typography variant={"h6"} className={classes.tweetInfoFullName} component={"span"}>
                             {tweet.user.fullName}
                         </Typography>
-                        <Typography className={classes.tweetInfoUsername} component={"span"}>
+                        <Typography variant={"subtitle1"} component={"span"}>
                             @{tweet.user.username}
                         </Typography>
                         <Typography className={classes.tweetInfoText} component={"div"}>
@@ -62,6 +62,7 @@ const TweetAnalyticsModal: FC<TweetAnalyticsModalStyles> = ({tweet, visible, onC
                         <Button
                             variant="outlined"
                             color="primary"
+                            size="small"
                             fullWidth
                         >
                             View all engagements
@@ -82,6 +83,7 @@ const TweetAnalyticsModal: FC<TweetAnalyticsModalStyles> = ({tweet, visible, onC
                         <Button
                             variant="contained"
                             color="primary"
+                            size="small"
                             fullWidth
                         >
                             Promote your Tweet

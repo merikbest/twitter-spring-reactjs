@@ -48,17 +48,18 @@ const BlockUserModal: FC<BlockUserModalProps> = (
                         )
                     }
                     onClick={onBlockUser}
-                    color="primary"
                     variant="contained"
+                    color="primary"
+                    size="large"
                     fullWidth
                 >
                     {isUserBlocked ? "Unblock" : "Block"}
                 </Button>
                 <Button
-                    className={classes.cancelButton}
                     onClick={onClose}
                     color="primary"
                     variant="outlined"
+                    size="large"
                     fullWidth
                 >
                     Cancel

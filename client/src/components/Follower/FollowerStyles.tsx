@@ -27,12 +27,13 @@ export const useFollowerStyles = makeStyles((theme) => ({
     },
     followerInfo: {
         position: "relative",
-        maxWidth: 350
+        maxWidth: 350,
+
     },
     header: {
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
     },
     lockIcon: {
         "& svg": {
@@ -41,24 +42,20 @@ export const useFollowerStyles = makeStyles((theme) => ({
             height: "1.2em",
         },
     },
+    buttonWrapper: {
+        "& .MuiButton-root": {
+            float: 'right',
+            marginRight: 15,
+        },
+    },
     outlinedButton: {
-        float: 'right',
-        marginRight: 15,
         width: 79,
-        height: 32,
-        borderRadius: '25px',
-        padding: '0 15px',
         '&:hover': {
             backgroundColor: theme.palette.secondary.light,
         },
     },
     containedButton: {
-        float: 'right',
-        marginRight: 15,
         width: 105,
-        height: 32,
-        borderRadius: '25px',
-        padding: '0 15px',
         '&:hover': {
             backgroundColor: theme.palette.error.dark,
         },

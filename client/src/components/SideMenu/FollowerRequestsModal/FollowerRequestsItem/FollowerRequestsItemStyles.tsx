@@ -45,7 +45,6 @@ export const useFollowerRequestsItemStyles = makeStyles((theme: Theme) => ({
     },
     declineButton: {
         "& .MuiButton-root": {
-            padding: "3px 15px",
             borderColor: theme.palette.error.light,
             color: theme.palette.error.main,
             "&:hover": {
@@ -56,7 +55,6 @@ export const useFollowerRequestsItemStyles = makeStyles((theme: Theme) => ({
     },
     acceptButton: {
         "& .MuiButton-root": {
-            padding: "3px 15px",
             borderColor: theme.palette.info.light,
             color: theme.palette.primary.main,
             "&:hover": {

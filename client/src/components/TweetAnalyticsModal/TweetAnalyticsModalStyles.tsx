@@ -15,25 +15,28 @@ export const useTweetAnalyticsModalStyles = makeStyles<Theme>((theme) => ({
     },
     tweetInfoContainer: {
         margin: "22px 12px",
-        // borderRadius: 4,
     },
     tweetInfoWrapper: {
         padding: 12,
-        border: "solid 1px #e1e8ed",
+        border: `solid 1px ${theme.palette.divider}`,
         borderRadius: 4,
     },
     tweetInfoFullName: {
-        fontSize: 14,
-        fontWeight: 700,
         marginRight: 5,
     },
-    tweetInfoUsername: {
-        color: "#8899a6",
-        fontSize: 13,
-    },
     tweetInfoText: {
-        fontSize: 14,
-        lineHeight: "18px"
+        "& a": {
+            display: "block",
+            width: 490,
+            color: 'inherit',
+            textDecoration: 'none',
+        },
+        '& #hashtag': {
+            color: theme.palette.primary.main,
+        },
+        "& #link": {
+            color: theme.palette.primary.main,
+        }
     },
     analyticsInfoWrapper: {
         margin: "44px 0px 22px 0px",

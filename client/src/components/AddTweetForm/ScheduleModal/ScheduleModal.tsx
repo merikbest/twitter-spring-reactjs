@@ -140,24 +140,24 @@ const ScheduleModal: FC<ScheduleModalProps> = (
                 <CloseButton onClose={onClose}/>
                 Schedule
                 <div className={classes.buttonWrapper}>
-                    {selectedScheduleDate && (
+                    {!selectedScheduleDate && (
                         <Button
-                            className={classes.clearButton}
                             onClick={onSubmitClearScheduleDate}
                             type="submit"
-                            variant="outlined"
+                            variant="text"
                             color="primary"
+                            size="small"
                             disabled={isValidSelectedDate}
                         >
                             Clear
                         </Button>
                     )}
                     <Button
-                        className={classes.submitButton}
                         onClick={onSubmitScheduleDate}
                         type="submit"
                         variant="contained"
                         color="primary"
+                        size="small"
                         disabled={isValidSelectedDate}
                     >
                         {selectedScheduleDate ? "Update" : "Confirm"}
@@ -311,10 +311,9 @@ const ScheduleModal: FC<ScheduleModalProps> = (
                 </div>
                 <div className={classes.footer}>
                     <Button
-                        className={classes.outlinedButton}
-                        color="primary"
-                        variant="outlined"
                         onClick={onOpenUnsentTweetsModal}
+                        variant="text"
+                        color="primary"
                     >
                         Scheduled Tweets
                     </Button>

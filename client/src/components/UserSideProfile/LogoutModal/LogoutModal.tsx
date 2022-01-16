@@ -37,14 +37,15 @@ const LogoutModal: FC<LogoutModalProps> = ({visible, onClose, handleSignOut}): R
                             className={classes.modalCancelButton}
                             onClick={onClose}
                             variant="contained"
+                            size="large"
                         >
                             Cancel
                         </Button>
                         <Button
-                            className={classes.modalLogoutButton}
                             onClick={handleSignOut}
                             variant="contained"
                             color="primary"
+                            size="large"
                         >
                             Log out
                         </Button>
