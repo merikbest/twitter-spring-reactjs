@@ -14,8 +14,4 @@ export const useWelcomeStyles = makeStyles((theme: Theme) => ({
         justifyContent: "center",
         alignItems: "center",
     },
-    infoButton: {
-        fontSize: 15,
-        padding: "7px 15px",
-    },
 }));

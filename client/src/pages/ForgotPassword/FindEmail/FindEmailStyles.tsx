@@ -7,17 +7,10 @@ export const useFindEmailStyles = makeStyles((theme: Theme) => ({
         color: "rgb(204, 51, 51)",
         lineHeight: "36px",
     },
-    title: {
-        fontSize: 23,
-        fontWeight: 700,
-        color: theme.palette.common.black,
-        lineHeight: "36px",
-    },
     text: {
         margin: "14px 0px",
     },
     button: {
-        padding: "5px 18px",
         marginTop: 25,
         display: "block",
         "&:active": {

@@ -59,11 +59,7 @@ export const useMessagesStyles = makeStyles<Theme, MessagesStylesProps>((theme) 
     },
     messagesButton: {
         marginLeft: 30,
-        height: 48,
-        padding: theme.spacing(3.2),
-        "& .MuiButton-label": {
-            fontSize: 15,
-        },
+        height: 52,
     },
     searchWrapper: {
         paddingTop: 60,
@@ -121,11 +117,7 @@ export const useMessagesStyles = makeStyles<Theme, MessagesStylesProps>((theme) 
     },
     chatInfoButton: {
         marginTop: 27,
-        height: 48,
-        padding: theme.spacing(3.2),
-        "& .MuiButton-label": {
-            fontSize: 15,
-        },
+        height: 52,
     },
     chatHeader: {
         position: "fixed",

@@ -92,6 +92,7 @@ const SetPasswordModal: FC<SetPasswordProps> = ({email, open, onClose}): ReactEl
                         type="submit"
                         variant="contained"
                         color="primary"
+                        size="small"
                         fullWidth
                     >
                         Next

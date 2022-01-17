@@ -27,10 +27,10 @@ const Welcome: FC = (): ReactElement => {
             </Typography>
             <div className={classes.infoButtonContainer}>
                 <Button
-                    className={classes.infoButton}
                     onClick={onHandleClick}
                     color="primary"
                     variant="contained"
+                    size="small"
                 >
                     Let's go
                 </Button>

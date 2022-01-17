@@ -41,7 +41,7 @@ const FindEmail: FC = (): ReactElement => {
                 </>
             ) : (
                 <>
-                    <Typography component={"div"} className={classes.title}>
+                    <Typography variant={"h3"} component={"div"}>
                         Find your Twitter account
                     </Typography>
                     <Typography variant={"body1"} component={"div"} className={classes.text}>
@@ -60,6 +60,7 @@ const FindEmail: FC = (): ReactElement => {
                     type="submit"
                     variant="contained"
                     color="primary"
+                    size="small"
                 >
                     Search
                 </Button>

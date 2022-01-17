@@ -123,6 +123,7 @@ const ChangeGender: FC = (): ReactElement => {
                     type="submit"
                     variant="contained"
                     color="primary"
+                    size="small"
                 >
                     Save
                 </Button>

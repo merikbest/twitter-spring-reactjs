@@ -57,6 +57,5 @@ export const useProfileHeaderModalStyles = makeStyles((theme) => ({
         bottom: 0,
         width: 530,
         marginBottom: 30,
-        fontSize: 15,
     },
 }));

@@ -5,7 +5,6 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
 import {useManageMembersModalStyles} from "./ManageMembersModalStyles";
-import {Lists} from "../../../../store/ducks/lists/contracts/state";
 import ManageMembersItem from "./ManageMembersItem/ManageMembersItem";
 import ManageMembersSuggested from "./ManageMembersSuggested/ManageMembersSuggested";
 import {ArrowIcon} from "../../../../icons";

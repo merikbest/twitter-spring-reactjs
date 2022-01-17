@@ -138,24 +138,26 @@ const UsersItem: FC<UsersItemProps<User> & SnackbarProps & HoverUserProps> = (
                         (!isFollower) ? (
                             (isUserBlocked) ? (
                                 <Button
-                                    onClick={onOpenBlockUserModal}
                                     className={classNames(classes.primaryButton, classes.blockButton)}
-                                    color="primary"
-                                    variant="contained"
+                                    onClick={onOpenBlockUserModal}
                                     onMouseOver={() => setBtnText("Unblock")}
                                     onMouseLeave={() => setBtnText("Blocked")}
+                                    color="primary"
+                                    variant="contained"
+                                    size="small"
                                 >
                                     {btnText}
                                 </Button>
                             ) : (
                                 (isWaitingForApprove) ? (
                                     <Button
-                                        onClick={() => handleProcessFollowRequest(user!)}
                                         className={classes.outlinedButton}
-                                        color="primary"
-                                        variant="outlined"
+                                        onClick={() => handleProcessFollowRequest(user!)}
                                         onMouseOver={() => setBtnText("Cancel")}
                                         onMouseLeave={() => setBtnText("Pending")}
+                                        color="primary"
+                                        variant="outlined"
+                                        size="small"
                                     >
                                         {btnText}
                                     </Button>
@@ -165,6 +167,7 @@ const UsersItem: FC<UsersItemProps<User> & SnackbarProps & HoverUserProps> = (
                                         onClick={() => handleFollow(user!)}
                                         color="primary"
                                         variant="outlined"
+                                        size="small"
                                     >
                                         Follow
                                     </Button>
@@ -178,6 +181,7 @@ const UsersItem: FC<UsersItemProps<User> & SnackbarProps & HoverUserProps> = (
                                 onClick={handleClickOpenUnfollowModal}
                                 color="primary"
                                 variant="contained"
+                                size="small"
                             >
                                 {btnText}
                             </Button>

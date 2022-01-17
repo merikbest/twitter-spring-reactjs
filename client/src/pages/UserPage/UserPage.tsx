@@ -372,9 +372,11 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                 isMyProfileBlocked ? null : (
                                     (userProfile?.id === myProfile?.id) ? (
                                         <Button
+                                            className={classes.outlinedButton}
                                             onClick={myProfile?.profileCustomized ? onOpenEditProfile : onOpenSetupProfile}
                                             color="primary"
-                                            className={classes.editButton}
+                                            variant="outlined"
+                                            size="large"
                                         >
                                             {myProfile?.profileCustomized ? "Edit profile" : "Setup profile"}
                                         </Button>
@@ -409,12 +411,13 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                             )}
                                             {isUserBlocked ? (
                                                 <Button
-                                                    onClick={onOpenBlockUserModal}
                                                     className={classNames(classes.primaryButton, classes.blockButton)}
-                                                    color="primary"
-                                                    variant="contained"
+                                                    onClick={onOpenBlockUserModal}
                                                     onMouseOver={() => setBtnText("Unblock")}
                                                     onMouseLeave={() => setBtnText("Blocked")}
+                                                    color="primary"
+                                                    variant="contained"
+                                                    size="large"
                                                 >
                                                     {btnText}
                                                 </Button>
@@ -435,12 +438,13 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                                             />
                                                         </IconButton>
                                                         <Button
-                                                            onClick={handleFollow}
                                                             className={classes.primaryButton}
-                                                            color="primary"
-                                                            variant="contained"
+                                                            onClick={handleFollow}
                                                             onMouseOver={() => setBtnText("Unfollow")}
                                                             onMouseLeave={() => setBtnText("Following")}
+                                                            color="primary"
+                                                            variant="contained"
+                                                            size="large"
                                                         >
                                                             {btnText}
                                                         </Button>
@@ -448,20 +452,23 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                                 ) : ((userProfile !== undefined) ? (
                                                         isWaitingForApprove ? (
                                                             <Button
+                                                                className={classes.outlinedButton}
                                                                 onClick={handleFollow}
-                                                                className={classes.editButton}
-                                                                color="primary"
-                                                                variant="outlined"
                                                                 onMouseOver={() => setBtnText("Cancel")}
                                                                 onMouseLeave={() => setBtnText("Pending")}
+                                                                color="primary"
+                                                                variant="outlined"
+                                                                size="large"
                                                             >
                                                                 {btnText}
                                                             </Button>
                                                         ) : (
                                                             <Button
                                                                 onClick={handleFollow}
-                                                                className={classes.editButton}
+                                                                className={classes.outlinedButton}
                                                                 color="primary"
+                                                                variant="outlined"
+                                                                size="large"
                                                             >
                                                                 Follow
                                                             </Button>
@@ -603,7 +610,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                         </Typography>
                                     </div>
                                 ) : (
-                                    userProfile?.privateProfile ? (
+                                    userProfile?.privateProfile && userProfile?.id !== myProfile?.id ? (
                                         <div className={classes.privateProfileInfo}>
                                             <Typography variant={"h4"} component={"div"}>
                                                 These Tweets are protected

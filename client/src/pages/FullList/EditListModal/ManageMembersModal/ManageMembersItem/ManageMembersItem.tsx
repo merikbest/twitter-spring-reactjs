@@ -58,13 +58,14 @@ const ManageMembersItem: FC<ManageMembersItemProps<Lists> & HoverUserProps> = (
                             </Typography>
                         </div>
                     </Link>
-                    <div>
+                    <div className={classes.buttonWrapper}>
                         {(isMember === -1) ? (
                             <Button
                                 className={classes.outlinedButton}
                                 onClick={onClickAddUserToList}
-                                color="primary"
                                 variant="outlined"
+                                color="primary"
+                                size="small"
                             >
                                 Add
                             </Button>
@@ -72,8 +73,9 @@ const ManageMembersItem: FC<ManageMembersItemProps<Lists> & HoverUserProps> = (
                             <Button
                                 className={classes.containedButton}
                                 onClick={onClickAddUserToList}
-                                color="primary"
                                 variant="contained"
+                                color="primary"
+                                size="small"
                             >
                                 Remove
                             </Button>

@@ -131,6 +131,7 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = ({visible, onClose}): ReactE
                             color="primary"
                             variant={(!getValues("phone") || !!errors.phone) ? "outlined" : "contained"}
                             type="submit"
+                            size="small"
                             fullWidth
                         >
                             {(!getValues("phone") || !!errors.phone) ? "Cancel" : "Next"}

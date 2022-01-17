@@ -148,16 +148,17 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                                     @{chatParticipant?.username}
                                 </Typography>
                             </div>
-                            <div>
+                            <div className={classes.buttonWrapper}>
                                 {(!isFollower) ? (
                                     (isUserBlocked) ? (
                                         <Button
                                             onClick={onOpenBlockUserModal}
                                             className={classNames(classes.containedButton, classes.blockButton)}
-                                            color="primary"
-                                            variant="contained"
                                             onMouseOver={() => setBtnText("Unblock")}
                                             onMouseLeave={() => setBtnText("Blocked")}
+                                            variant="contained"
+                                            color="primary"
+                                            size="small"
                                         >
                                             {btnText}
                                         </Button>
@@ -166,10 +167,11 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                                             <Button
                                                 onClick={() => handleProcessFollowRequest(chatParticipant!)}
                                                 className={classes.outlinedButton}
-                                                color="primary"
-                                                variant="outlined"
                                                 onMouseOver={() => setBtnText("Cancel")}
                                                 onMouseLeave={() => setBtnText("Pending")}
+                                                variant="outlined"
+                                                color="primary"
+                                                size="small"
                                             >
                                                 {btnText}
                                             </Button>

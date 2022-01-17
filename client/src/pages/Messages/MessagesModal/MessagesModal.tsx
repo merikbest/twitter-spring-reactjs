@@ -77,6 +77,7 @@ const MessagesModal: FC<MessagesModalProps> = ({visible, onClose}): ReactElement
                     type="submit"
                     variant="contained"
                     color="primary"
+                    size="small"
                     disabled={selectedIndex === undefined}
                 >
                     Next

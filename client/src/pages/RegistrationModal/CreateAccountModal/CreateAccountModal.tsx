@@ -96,6 +96,7 @@ const CreateAccountModal: FC<CustomizeModalProps> = (
                             onClick={onSubmit}
                             variant="contained"
                             color="primary"
+                            size="small"
                             fullWidth
                         >
                             Sign up

@@ -18,8 +18,6 @@ const ChangeUsername: FC = (): ReactElement => {
         if (myProfile) {
             setUsername(myProfile.username);
         }
-
-
     }, []);
 
     const changeUsername = (): void => {
@@ -66,6 +64,7 @@ const ChangeUsername: FC = (): ReactElement => {
                     type="submit"
                     variant="contained"
                     color="primary"
+                    size="small"
                     disabled={username === "" || isLoading}
                 >
                     Save

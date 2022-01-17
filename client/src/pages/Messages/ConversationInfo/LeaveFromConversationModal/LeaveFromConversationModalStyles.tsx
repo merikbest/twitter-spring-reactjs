@@ -12,28 +12,10 @@ export const useLeaveFromConversationModalStyles = makeStyles((theme: Theme) => 
     },
     blockButton: {
         "&.MuiButtonBase-root": {
-            padding: "11px 16px",
             marginBottom: 12,
             backgroundColor: theme.palette.error.main,
-            "& .MuiButton-label": {
-                fontSize: 15,
-                fontWeight: 700,
-                lineHeight: "20px",
-                color: theme.palette.common.white,
-            },
             "&:hover" : {
                 backgroundColor: "rgb(220, 30, 41)",
-            },
-        },
-    },
-    cancelButton: {
-        "&.MuiButtonBase-root": {
-            padding: "11px 16px",
-            "& .MuiButton-label": {
-                fontSize: 15,
-                fontWeight: 700,
-                lineHeight: "20px",
-                color: theme.palette.primary.main,
             },
         },
     },

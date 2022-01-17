@@ -224,6 +224,7 @@ const RegistrationModal: FC<RegistrationModalProps> = (
                                     type="submit"
                                     variant="contained"
                                     color="primary"
+                                    size="small"
                                     fullWidth
                                 >
                                     Next

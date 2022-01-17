@@ -33,6 +33,7 @@ const ProfileUpdatedModal: FC<ProfileUpdatedModalProps> = ({open, onClose, onSub
                         onClick={onSubmit}
                         variant="contained"
                         color="primary"
+                        size="medium"
                     >
                         See profile
                     </Button>

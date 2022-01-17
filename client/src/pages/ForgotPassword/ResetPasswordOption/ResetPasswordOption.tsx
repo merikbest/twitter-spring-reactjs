@@ -27,7 +27,7 @@ const ResetPasswordOption: FC = (): ReactElement => {
 
     return (
         <>
-            <Typography component={"div"} className={classes.title}>
+            <Typography variant={"h3"} component={"div"}>
                 How do you want to reset your password?
             </Typography>
             <Typography variant={"body1"} component={"div"} className={classes.text}>
@@ -49,6 +49,7 @@ const ResetPasswordOption: FC = (): ReactElement => {
                     type="submit"
                     variant="contained"
                     color="primary"
+                    size="small"
                 >
                     Next
                 </Button>

@@ -68,35 +68,14 @@ export const usePopperListWindowStyles = makeStyles((theme: Theme) => ({
     buttonWrapper: {
         marginTop: 20,
         marginBottom: 12,
-        fontSize: 15,
-        fontWeight: 700,
-    },
-    listOutlinedButton: {
-        width: 105,
-        height: 32,
-        border: '1px solid',
-        borderRadius: '25px',
-        padding: '0 15px',
-        '&:hover': {
-            backgroundColor: theme.palette.secondary.light,
-        },
     },
     outlinedButton: {
-        width: 79,
-        height: 32,
-        border: '1px solid',
-        borderRadius: '25px',
-        padding: '0 15px',
         '&:hover': {
             backgroundColor: theme.palette.secondary.light,
         },
     },
     primaryButton: {
         width: 105,
-        height: 32,
-        border: '1px solid',
-        borderRadius: '25px',
-        padding: '0 15px',
         '&:hover': {
             backgroundColor: theme.palette.error.dark,
         },

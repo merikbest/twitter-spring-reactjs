@@ -63,6 +63,7 @@ const BlockedAccountItem: FC<BlockedAccountItemProps & SnackbarProps> = (
                             onClick={unblockUser}
                             color="primary"
                             variant="contained"
+                            size="medium"
                         >
                             {isUserBlocked ? "Blocked" : "Block"}
                         </Button>

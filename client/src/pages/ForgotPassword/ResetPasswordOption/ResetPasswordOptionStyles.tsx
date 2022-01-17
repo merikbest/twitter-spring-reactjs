@@ -1,12 +1,6 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 export const useResetPasswordOptionStyles = makeStyles((theme: Theme) => ({
-    title: {
-        fontSize: 23,
-        fontWeight: 700,
-        color: theme.palette.common.black,
-        lineHeight: "36px",
-    },
     text: {
         margin: "14px 0px",
     },
@@ -29,7 +23,6 @@ export const useResetPasswordOptionStyles = makeStyles((theme: Theme) => ({
         margin: "32px 0 16px 0",
     },
     button: {
-        padding: "5px 18px",
         marginTop: 25,
         display: "block",
         "&:active": {

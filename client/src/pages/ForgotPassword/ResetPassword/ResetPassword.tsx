@@ -136,6 +136,7 @@ const ResetPassword: FC = (): ReactElement => {
                     type="submit"
                     variant="contained"
                     color="primary"
+                    size="small"
                 >
                     Reset password
                 </Button>

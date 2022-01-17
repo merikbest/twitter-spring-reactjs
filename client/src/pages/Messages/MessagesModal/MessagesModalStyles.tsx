@@ -7,7 +7,6 @@ export const useMessagesModalStyles = makeStyles((theme: Theme) => ({
     },
     button: {
         marginLeft: "auto",
-        height: 30,
     },
     content: {
         height: 550,

@@ -34,7 +34,7 @@ const CheckEmailCode: FC = (): ReactElement => {
 
     return (
         <>
-            <Typography component={"div"} className={classes.title}>
+            <Typography variant={"h3"} component={"div"}>
                 Check your email
             </Typography>
             <Typography variant={"body1"} component={"div"} className={classes.text}>
@@ -58,6 +58,7 @@ const CheckEmailCode: FC = (): ReactElement => {
                     type="submit"
                     variant="contained"
                     color="primary"
+                    size="small"
                 >
                     Verify
                 </Button>

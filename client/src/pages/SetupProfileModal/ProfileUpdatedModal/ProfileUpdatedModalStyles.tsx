@@ -25,7 +25,6 @@ export const useProfileUpdatedModalStyles = makeStyles((theme) => ({
     },
     button: {
         width: 250,
-        height: 50,
-        fontSize: 15,
+        height: 52,
     },
 }));

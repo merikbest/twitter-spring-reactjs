@@ -44,6 +44,5 @@ export const useProfilePictureModalStyles = makeStyles((theme) => ({
         bottom: 0,
         width: 530,
         marginBottom: 30,
-        fontSize: 15,
     },
 }));

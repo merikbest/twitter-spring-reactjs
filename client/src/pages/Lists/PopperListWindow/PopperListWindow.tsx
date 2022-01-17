@@ -116,8 +116,9 @@ const PopperListWindow: FC<PopperListWindowProps> = ({list, visible}): ReactElem
                                 onMouseOver={() => setBtnText("Unfollow")}
                                 onMouseLeave={() => setBtnText("Following")}
                                 onClick={event => handleFollow(event)}
-                                color="primary"
                                 variant="contained"
+                                color="primary"
+                                size="small"
                             >
                                 {btnText}
                             </Button>
@@ -125,8 +126,9 @@ const PopperListWindow: FC<PopperListWindowProps> = ({list, visible}): ReactElem
                             <Button
                                 className={classes.outlinedButton}
                                 onClick={event => handleFollow(event)}
-                                color="primary"
                                 variant="outlined"
+                                color="primary"
+                                size="small"
                             >
                                 Follow
                             </Button>

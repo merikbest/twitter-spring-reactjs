@@ -82,10 +82,10 @@ const Login: FC = (): ReactElement => {
                     />
                 </div>
                 <Button
-                    className={classes.button}
                     type="submit"
                     variant="contained"
                     color="primary"
+                    size="large"
                     disabled={!(email && password)}
                     fullWidth
                 >

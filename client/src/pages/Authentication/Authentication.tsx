@@ -86,6 +86,7 @@ const Authentication: FC = (): ReactElement => {
                         onClick={handleClickOpenSignUp}
                         variant="contained"
                         color="primary"
+                        size="large"
                         fullWidth
                     >
                         Sign up
@@ -95,6 +96,7 @@ const Authentication: FC = (): ReactElement => {
                         onClick={handleClickOpenSignIn}
                         variant="outlined"
                         color="primary"
+                        size="large"
                         fullWidth
                     >
                         Log in

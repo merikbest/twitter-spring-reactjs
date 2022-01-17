@@ -23,12 +23,6 @@ export const useLoginStyles = makeStyles((theme: Theme) => ({
     input: {
         marginBottom: 24,
     },
-    button: {
-        height: 46,
-        "& .MuiButton-label": {
-            fontSize: 15,
-        },
-    },
     footer: {
         marginTop: 32,
         textAlign: "center",

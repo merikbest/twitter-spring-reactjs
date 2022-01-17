@@ -46,6 +46,7 @@ const CustomizeModal: FC<CustomizeModalProps> = ({open, onClose, onOpenCreateAcc
                         onClick={() => onOpenCreateAccount(true)}
                         variant="contained"
                         color="primary"
+                        size="small"
                         fullWidth
                     >
                         Next

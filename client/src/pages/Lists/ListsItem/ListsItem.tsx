@@ -134,8 +134,9 @@ const ListsItem: FC<ListsItemProps<Lists> & HoverActionProps> = (
                                 onMouseOver={() => setBtnText("Unfollow")}
                                 onMouseLeave={() => setBtnText("Following")}
                                 onClick={event => onClickFollow(event)}
-                                color="primary"
                                 variant="contained"
+                                color="primary"
+                                size="small"
                             >
                                 {btnText}
                             </Button>
@@ -143,8 +144,9 @@ const ListsItem: FC<ListsItemProps<Lists> & HoverActionProps> = (
                             <Button
                                 className={classes.listOutlinedButton}
                                 onClick={event => onClickFollow(event)}
-                                color="primary"
                                 variant="outlined"
+                                color="primary"
+                                size="small"
                             >
                                 Follow
                             </Button>

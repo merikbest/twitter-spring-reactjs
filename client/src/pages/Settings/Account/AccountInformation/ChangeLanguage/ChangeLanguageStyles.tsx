@@ -21,6 +21,5 @@ export const useChangeLanguageStyles = makeStyles((theme: Theme) => ({
     buttonWrapper: {
         padding: "12px 16px",
         float: "right",
-        height: 30,
     },
 }));

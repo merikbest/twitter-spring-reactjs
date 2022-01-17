@@ -64,13 +64,12 @@ export const useConversationInfoStyles = makeStyles((theme: Theme) => ({
             height: "1.2em",
         },
     },
-    outlinedButton: {
+    buttonWrapper: {
         float: 'right',
         marginRight: 15,
+    },
+    outlinedButton: {
         width: 79,
-        height: 32,
-        borderRadius: '25px',
-        padding: '0 15px',
         '&:hover': {
             backgroundColor: theme.palette.secondary.light,
         },
@@ -79,12 +78,7 @@ export const useConversationInfoStyles = makeStyles((theme: Theme) => ({
         backgroundColor: theme.palette.error.main,
     },
     containedButton: {
-        float: 'right',
-        marginRight: 15,
         width: 105,
-        height: 32,
-        borderRadius: '25px',
-        padding: '0 15px',
         '&:hover': {
             backgroundColor: theme.palette.error.dark,
         },

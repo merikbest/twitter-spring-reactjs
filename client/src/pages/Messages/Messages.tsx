@@ -217,6 +217,7 @@ const Messages: FC = (): ReactElement => {
                                     className={classes.messagesButton}
                                     variant="contained"
                                     color="primary"
+                                    size="large"
                                 >
                                     Start a conversation
                                 </Button>
@@ -328,6 +329,7 @@ const Messages: FC = (): ReactElement => {
                                         className={classes.chatInfoButton}
                                         variant="contained"
                                         color="primary"
+                                        size="large"
                                     >
                                         New message
                                     </Button>

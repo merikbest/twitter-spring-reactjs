@@ -62,6 +62,7 @@ const EmailVerificationModal: FC<CustomizeModalProps> = ({email, open, onClose, 
                         onClick={checkEmailVerificationCode}
                         variant="contained"
                         color="primary"
+                        size="small"
                         fullWidth
                     >
                         Next

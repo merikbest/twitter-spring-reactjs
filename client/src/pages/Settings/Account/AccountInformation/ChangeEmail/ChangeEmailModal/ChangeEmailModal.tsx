@@ -96,9 +96,10 @@ const ChangeEmailModal: FC<ChangeEmailModalProps> = ({visible, onClose}): ReactE
                     </div>
                     <div className={classes.footer}>
                         <Button
-                            color="primary"
                             variant={(!getValues("email") || !!errors.email) ? "outlined" : "contained"}
                             type="submit"
+                            color="primary"
+                            size="small"
                             fullWidth
                         >
                             {(!getValues("email") || !!errors.email) ? "Cancel" : "Next"}

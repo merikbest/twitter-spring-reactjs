@@ -54,6 +54,7 @@ const ProfileDescriptionModal: FC<ProfileDescriptionModalProps> = (
                     onClick={() => onOpenProfileUpdatedModal(true)}
                     variant={(text !== "") ? "contained" : "text"}
                     color="primary"
+                    size="medium"
                     fullWidth
                 >
                     {text !== "" ? "Next" : "Skip for now"}

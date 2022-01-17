@@ -157,8 +157,9 @@ const FullList: FC = (): ReactElement => {
                                     <Button
                                         className={classes.listOutlinedButton}
                                         onClick={onOpenEditListModal}
-                                        color="primary"
                                         variant="outlined"
+                                        color="primary"
+                                        size="small"
                                     >
                                         Edit List
                                     </Button>
@@ -168,8 +169,9 @@ const FullList: FC = (): ReactElement => {
                                         onMouseOver={() => setBtnText("Unfollow")}
                                         onMouseLeave={() => setBtnText("Following")}
                                         onClick={handleFollow}
-                                        color="primary"
                                         variant="contained"
+                                        color="primary"
+                                        size="small"
                                     >
                                         {btnText}
                                     </Button>
@@ -177,8 +179,9 @@ const FullList: FC = (): ReactElement => {
                                     <Button
                                         className={classes.outlinedButton}
                                         onClick={handleFollow}
-                                        color="primary"
                                         variant="outlined"
+                                        color="primary"
+                                        size="small"
                                     >
                                         Follow
                                     </Button>

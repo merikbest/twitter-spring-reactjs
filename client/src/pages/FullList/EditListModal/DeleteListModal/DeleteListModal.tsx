@@ -38,6 +38,7 @@ const DeleteListModal: FC<DeleteListModalProps> = ({visible, onClose, onDeleteLi
                             className={classes.modalCancelButton}
                             onClick={onClose}
                             variant="contained"
+                            size="large"
                         >
                             Cancel
                         </Button>
@@ -45,6 +46,7 @@ const DeleteListModal: FC<DeleteListModalProps> = ({visible, onClose, onDeleteLi
                             className={classes.modalDeleteButton}
                             onClick={onDeleteList}
                             variant="contained"
+                            size="large"
                         >
                             Delete
                         </Button>

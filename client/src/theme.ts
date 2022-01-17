@@ -37,7 +37,7 @@ const commonTheme = {
             root: {
                 borderRadius: 30,
                 textTransform: 'none',
-                height: 32,
+                height: 36,
             },
             contained: {
                 boxShadow: "none",
@@ -51,7 +51,7 @@ const commonTheme = {
             },
             sizeLarge: {
                 height: 44,
-                "& .MuiButton-label":{
+                "& .MuiButton-label": {
                     fontSize: 15,
                     fontWeight: 700,
                     lineHeight: "20px",

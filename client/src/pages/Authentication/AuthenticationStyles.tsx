@@ -87,7 +87,6 @@ export const useAuthenticationStyles= makeStyles((theme) => ({
         marginBottom: theme.spacing(2),
     },
     signinButton: {
-        height: 45,
         marginBottom: 20
     },
 }));

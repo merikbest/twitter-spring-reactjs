@@ -34,6 +34,5 @@ export const useCreateAccountModalStyles = makeStyles((theme: Theme) => ({
     },
     button: {
         marginTop: 15,
-        height: 46,
     },
 }));

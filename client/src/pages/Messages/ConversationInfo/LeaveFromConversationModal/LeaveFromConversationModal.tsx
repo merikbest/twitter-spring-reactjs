@@ -36,17 +36,18 @@ const LeaveFromConversationModal: FC<LeaveFromConversationModalProps> = (
                     <Button
                         className={classes.blockButton}
                         onClick={handleLeaveFromConversation}
-                        color="primary"
                         variant="contained"
+                        color="primary"
+                        size="large"
                         fullWidth
                     >
                         Leave
                     </Button>
                     <Button
-                        className={classes.cancelButton}
                         onClick={onClose}
-                        color="primary"
                         variant="outlined"
+                        color="primary"
+                        size="large"
                         fullWidth
                     >
                         Cancel

@@ -60,6 +60,7 @@ const ProfilePictureModal: FC<ProfilePictureModalProps> = (
                     onClick={() => onOpenProfileHeaderModal(true)}
                     variant={(avatar?.src !== undefined) ? "contained" : "text"}
                     color="primary"
+                    size="medium"
                     fullWidth
                 >
                     {(avatar?.src !== undefined) ? "Next" : "Skip for now"}

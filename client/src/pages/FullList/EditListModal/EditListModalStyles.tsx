@@ -14,7 +14,6 @@ export const useEditListModalStyles = makeStyles((theme: Theme) => ({
     },
     button: {
         marginLeft: "auto",
-        height: 30,
     },
     wallpaperWrapper: {
         width: 598,

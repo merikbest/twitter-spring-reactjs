@@ -12,10 +12,10 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
             minWidth: "150px !important",
             padding: "14px 12px !important",
         },
-        "& .MuiTab-wrapper": {
-            fontWeight: "700px !important",
-            fontSize: 16,
-        },
+        // "& .MuiTab-wrapper": {
+        //     fontWeight: "700px !important",
+        //     fontSize: 15,
+        // },
     },
     header: {
         position: "fixed",
@@ -100,6 +100,7 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
             backgroundColor: theme.palette.primary.main,
         },
         "& .MuiTab-root": {
+            fontSize: 15,
             fontWeight: 700,
         },
     },
@@ -107,14 +108,10 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         float: 'right',
         display: "inline-block"
     },
-    editButton: {
+    outlinedButton: {
         float: 'right',
         marginTop: '84px',
-        border: '1px solid',
-        borderRadius: '25px',
-        padding: '8px 15px',
-        fontSize: 15,
-        fontWeight: 700,
+        height: 42,
     },
     messageButton: {
         marginTop: 84,
@@ -132,11 +129,7 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
     primaryButton: {
         "&.MuiButtonBase-root": {
             marginTop: '84px',
-            fontSize: 15,
-            fontWeight: 700,
             width: 102,
-            borderRadius: '25px',
-            padding: '8px 15px',
             '&:hover': {
                 backgroundColor: theme.palette.error.dark,
             },
@@ -181,5 +174,8 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         "& .MuiTypography-subtitle1": {
             marginTop: 12,
         },
+    },
+    button: {
+        marginTop: 15,
     },
 }));

@@ -38,7 +38,7 @@ const UserPageTweets: FC<UserPageTweetsProps> = (
     };
 
     const renderTweets = () => {
-        if (tweets?.length === 0 && activeTab === 0 && !isTweetsLoading) {
+        if (tweets?.length !== 0 && activeTab === 0 && !isTweetsLoading) {
             return (
                 <div className={classes.textWrapper}>
                     <Typography variant={"h5"}>
@@ -56,10 +56,14 @@ const UserPageTweets: FC<UserPageTweetsProps> = (
                         )}
                     </Typography>
                     {userProfileId === myProfileId ? (
-                        <Button onClick={handleClickOpenAddTweet} variant="contained" color="primary">
-                            <Hidden smDown>
-                                Send Tweet
-                            </Hidden>
+                        <Button
+                            className={classes.button}
+                            onClick={handleClickOpenAddTweet}
+                            variant="contained"
+                            color="primary"
+                            size="medium"
+                        >
+                            Send Tweet
                         </Button>
                     ) : null}
                 </div>
@@ -101,10 +105,14 @@ const UserPageTweets: FC<UserPageTweetsProps> = (
                         )}
                     </Typography>
                     {userProfileId === myProfileId ? (
-                        <Button onClick={handleClickOpenAddTweet} variant="contained" color="primary">
-                            <Hidden smDown>
-                                Tweet a photo or video
-                            </Hidden>
+                        <Button
+                            className={classes.button}
+                            onClick={handleClickOpenAddTweet}
+                            variant="contained"
+                            color="primary"
+                            size="medium"
+                        >
+                            Tweet a photo or video
                         </Button>
                     ) : null}
                 </div>

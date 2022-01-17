@@ -78,6 +78,7 @@ const ProfileHeaderModal: FC<ProfileHeaderModalProps> = (
                     onClick={() => onOpenProfileDescriptionModal(true)}
                     variant={(wallpaper?.src !== undefined) ? "contained" : "text"}
                     color="primary"
+                    size="medium"
                     fullWidth
                 >
                     {wallpaper?.src !== undefined ? "Next" : "Skip for now"}

@@ -128,7 +128,7 @@ const FollowingFollowers: FC = (): ReactElement => {
                                 </Typography>
                                 <Link to={"/home/connect"} className={classes.link}>
                                     {(isMyProfile) && (
-                                        <Button variant="contained" color="primary">
+                                        <Button variant="contained" color="primary" size="small">
                                             Find people to follow
                                         </Button>
                                     )}

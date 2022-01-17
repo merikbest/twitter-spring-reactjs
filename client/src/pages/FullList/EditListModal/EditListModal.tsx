@@ -114,6 +114,7 @@ const EditListModal: FC<EditListModalProps> = ({visible, onClose}): ReactElement
                         type="submit"
                         variant="contained"
                         color="primary"
+                        size="small"
                     >
                         Done
                     </Button>

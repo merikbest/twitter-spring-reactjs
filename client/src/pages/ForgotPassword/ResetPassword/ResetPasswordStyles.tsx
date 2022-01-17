@@ -57,7 +57,6 @@ export const useResetPasswordStyles = makeStyles((theme: Theme) => ({
         },
     },
     button: {
-        padding: "5px 18px",
         marginTop: 25,
         display: "block",
         "&:active": {

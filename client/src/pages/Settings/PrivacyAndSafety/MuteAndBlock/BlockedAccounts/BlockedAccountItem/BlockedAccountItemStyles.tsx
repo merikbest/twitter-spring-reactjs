@@ -44,16 +44,10 @@ export const useBlockedAccountItemStyles = makeStyles<Theme, BlockedAccountItemS
     blockButton: {
         marginRight: 16,
         "& .MuiButtonBase-root": {
-            padding: "8px 16px",
             color: props => props.isUserBlocked ? theme.palette.common.white : theme.palette.error.main,
             backgroundColor: props => props.isUserBlocked ? theme.palette.error.main : theme.palette.common.white,
             border: "1px solid",
             borderColor: props => props.isUserBlocked ? theme.palette.error.main : theme.palette.error.light,
-            "& .MuiButton-label": {
-                fontSize: 15,
-                fontWeight: 700,
-                lineHeight: "20px",
-            },
             "&:hover": {
                 backgroundColor: props => props.isUserBlocked ? "rgb(220, 30, 41)" : theme.palette.error.light,
             },

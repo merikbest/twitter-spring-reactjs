@@ -34,24 +34,18 @@ export const useManageMembersItemStyles = makeStyles((theme: Theme) => ({
         position: "relative",
         width: 350
     },
+    buttonWrapper: {
+        "& .MuiButton-root": {
+            float: 'right',
+            marginRight: 15,
+        },
+    },
     outlinedButton: {
-        float: 'right',
-        marginRight: 15,
-        width: 79,
-        height: 32,
-        borderRadius: '25px',
-        padding: '0 15px',
         '&:hover': {
             backgroundColor: theme.palette.secondary.light,
         },
     },
     containedButton: {
-        float: 'right',
-        marginRight: 15,
-        width: 90,
-        height: 32,
-        borderRadius: '25px',
-        padding: '0 15px',
         '&:hover': {
             backgroundColor: theme.palette.error.dark,
         },

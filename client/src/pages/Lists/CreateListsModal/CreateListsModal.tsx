@@ -65,6 +65,7 @@ const CreateListsModal: FC<CreateListsModalProps> = ({visible, onClose}): ReactE
                         type="submit"
                         variant="contained"
                         color="primary"
+                        size="small"
                     >
                         Next
                     </Button>

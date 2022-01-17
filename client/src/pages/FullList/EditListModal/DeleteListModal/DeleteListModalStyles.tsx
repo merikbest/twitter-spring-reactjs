@@ -19,18 +19,15 @@ export const useDeleteListModalStyles = makeStyles((theme: Theme) => ({
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
+        "& .MuiButton-root": {
+            width: 134,
+        },
     },
     modalCancelButton: {
-        width: 134,
-        height: 40,
         color: theme.palette.text.primary,
         backgroundColor: theme.palette.divider,
-        borderRadius: '25px',
     },
     modalDeleteButton: {
-        width: 134,
-        height: 40,
-        borderRadius: '25px',
         "&.MuiButton-contained": {
             color: theme.palette.common.white,
             backgroundColor: theme.palette.error.main,
