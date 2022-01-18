@@ -121,7 +121,7 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
         },
     },
     button: {
-        height: 48,
+        height: "52px !important",
         padding: theme.spacing(3.2),
         marginTop: theme.spacing(2),
         "& .MuiButton-label": {

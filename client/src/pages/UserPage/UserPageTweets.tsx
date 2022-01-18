@@ -38,7 +38,7 @@ const UserPageTweets: FC<UserPageTweetsProps> = (
     };
 
     const renderTweets = () => {
-        if (tweets?.length !== 0 && activeTab === 0 && !isTweetsLoading) {
+        if (tweets?.length === 0 && activeTab === 0 && !isTweetsLoading) {
             return (
                 <div className={classes.textWrapper}>
                     <Typography variant={"h5"}>

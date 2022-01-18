@@ -2,7 +2,7 @@ import React, {FC, ReactElement} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Controller, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {Button, Checkbox, Dialog, DialogContent, Typography} from "@material-ui/core";
+import {Button, Checkbox, Dialog, DialogContent, Link as MuiLink, Typography} from "@material-ui/core";
 import * as yup from "yup";
 
 import {useChangeEmailModalStyles} from "./ChangeEmailModalStyles";
@@ -88,9 +88,15 @@ const ChangeEmailModal: FC<ChangeEmailModalProps> = ({visible, onClose}): ReactE
                     />
                     <div className={classes.infoWrapper}>
                         <Typography variant={"body1"} component={"span"}>
-                            Let people who have your email address find and connect with you on Twitter. <a
-                            href="https://help.twitter.com/safety-and-security/email-and-phone-discoverability-settings"
-                            target={"_blank"} className={classes.link}>Learn more</a>
+                            {"Let people who have your email address find and connect with you on Twitter. "}
+                            <MuiLink
+                                href="https://help.twitter.com/safety-and-security/email-and-phone-discoverability-settings"
+                                variant="body1"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                Learn more
+                            </MuiLink>
                         </Typography>
                         <span><Checkbox/></span>
                     </div>

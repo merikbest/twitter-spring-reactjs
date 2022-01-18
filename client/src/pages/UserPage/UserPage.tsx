@@ -3,7 +3,7 @@ import {Link, useHistory, useLocation, useParams, withRouter} from 'react-router
 import {useDispatch, useSelector} from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Paper from '@material-ui/core/Paper';
-import {Avatar, Button, Divider, IconButton, List, ListItem, Typography} from '@material-ui/core';
+import {Avatar, Button, Divider, IconButton, Link as MuiLink, List, ListItem, Typography} from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Skeleton from '@material-ui/lab/Skeleton';
@@ -252,7 +252,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
     };
 
     const LinkToFollowers = ({children, linkTo}: LinkToFollowersProps): JSX.Element => {
-        if (userProfile?.privateProfile && linkTo) {
+        if (userProfile?.privateProfile && linkTo && userProfile?.id !== myProfile?.id) {
             return <div className={classes.followLink}>{children}</div>;
         } else {
             return <Link to={`/user/${userProfile?.id}/${linkTo}`} className={classes.followLink}>{children}</Link>
@@ -527,9 +527,14 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                         {userProfile?.website && (
                                             <ListItem>
                                                 <>{LinkIcon}</>
-                                                <a className={classes.link} href={userProfile?.website}>
+                                                <MuiLink
+                                                    href={userProfile?.website}
+                                                    variant="subtitle1"
+                                                    target="_blank"
+                                                    rel="noopener"
+                                                >
                                                     {userProfile?.website}
-                                                </a>
+                                                </MuiLink>
                                             </ListItem>
                                         )}
                                         {userProfile?.dateOfBirth && (
@@ -604,9 +609,15 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                             You’re blocked
                                         </Typography>
                                         <Typography variant={"subtitle1"} component={"div"}>
-                                            {`You can’t follow or see @${userProfile?.username}’s Tweets.`} <a
-                                            href={"https://help.twitter.com/using-twitter/someone-blocked-me-on-twitter"}
-                                            target={"_blank"} className={classes.link}>Learn more</a>
+                                            {`You can’t follow or see @${userProfile?.username}’s Tweets.`}
+                                            <MuiLink
+                                                href="https://help.twitter.com/using-twitter/someone-blocked-me-on-twitter"
+                                                variant="subtitle1"
+                                                target="_blank"
+                                                rel="noopener"
+                                            >
+                                                Learn more
+                                            </MuiLink>
                                         </Typography>
                                     </div>
                                 ) : (
@@ -617,9 +628,15 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                             </Typography>
                                             <Typography variant={"subtitle1"} component={"div"}>
                                                 {`Only approved followers can see @${userProfile?.username}’s Tweets. To 
-                                                request access, click Follow. `} <a
-                                                href={"https://help.twitter.com/safety-and-security/public-and-protected-tweets"}
-                                                target={"_blank"} className={classes.link}>Learn more</a>
+                                                request access, click Follow. `}
+                                                <MuiLink
+                                                    href="https://help.twitter.com/safety-and-security/public-and-protected-tweets"
+                                                    variant="subtitle1"
+                                                    target="_blank"
+                                                    rel="noopener"
+                                                >
+                                                    Learn more
+                                                </MuiLink>
                                             </Typography>
                                         </div>
                                     ) : (

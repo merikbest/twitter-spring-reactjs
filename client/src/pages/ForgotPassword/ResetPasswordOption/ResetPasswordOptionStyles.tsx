@@ -32,14 +32,4 @@ export const useResetPasswordOptionStyles = makeStyles((theme: Theme) => ({
             color: theme.palette.common.white,
         },
     },
-    link: {
-        "& a": {
-            fontSize: 13,
-            color: theme.palette.primary.main,
-            "&:hover": {
-                textDecoration: "underline",
-                cursor: 'pointer',
-            },
-        },
-    },
 }));

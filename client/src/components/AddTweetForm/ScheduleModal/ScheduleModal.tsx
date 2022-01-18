@@ -140,7 +140,7 @@ const ScheduleModal: FC<ScheduleModalProps> = (
                 <CloseButton onClose={onClose}/>
                 Schedule
                 <div className={classes.buttonWrapper}>
-                    {!selectedScheduleDate && (
+                    {selectedScheduleDate && (
                         <Button
                             onClick={onSubmitClearScheduleDate}
                             type="submit"

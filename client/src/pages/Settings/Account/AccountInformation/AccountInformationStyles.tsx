@@ -3,7 +3,8 @@ import {makeStyles, Theme} from "@material-ui/core";
 export const useAccountInformationStyles = makeStyles((theme: Theme) => ({
     listWrapper: {
         "& a": {
-            textDecoration: "none"
+            textDecoration: "none",
+            cursor: "pointer",
         },
         "& .MuiList-root": {
             padding: 0,
@@ -25,10 +26,5 @@ export const useAccountInformationStyles = makeStyles((theme: Theme) => ({
     },
     informationItem: {
         padding: "12px 16px",
-    },
-    link: {
-        fontSize: 13,
-        cursor: "pointer",
-        color: theme.palette.primary.main,
     },
 }));

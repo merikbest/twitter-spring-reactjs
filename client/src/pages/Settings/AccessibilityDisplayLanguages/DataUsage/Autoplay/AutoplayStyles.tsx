@@ -7,14 +7,6 @@ export const useAutoplayStyles = makeStyles((theme: Theme) => ({
             marginBottom: 4,
         },
     },
-    link: {
-        textDecoration: "none",
-        color: theme.palette.primary.main,
-        cursor: "pointer",
-        "&:hover": {
-            textDecoration: "underline",
-        }
-    },
     autoplayItemWrapper: {
         padding: "4px 0px",
         "& .MuiButtonBase-root": {

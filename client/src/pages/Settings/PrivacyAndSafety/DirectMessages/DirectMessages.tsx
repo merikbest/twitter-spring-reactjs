@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Checkbox, Typography} from "@material-ui/core";
+import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useDirectMessagesStyles} from "./DirectMessagesStyles";
 import {selectUserData} from "../../../../store/ducks/user/selectors";
@@ -43,11 +43,16 @@ const DirectMessages: FC = (): ReactElement => {
                     <Checkbox checked={checked} onChange={handleChange}/>
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    Let people who you don’t follow send you message requests and add you to group conversations. To
-                    reply to their messages, you need to accept the request. <a
-                    href={"https://help.twitter.com/using-twitter/direct-messages#receive"}
-                    target="_blank"
-                    className={classes.link}> Learn more</a>
+                    {`Let people who you don’t follow send you message requests and add you to group conversations. To
+                        reply to their messages, you need to accept the request. `}
+                    <MuiLink
+                        href="https://help.twitter.com/using-twitter/direct-messages#receive"
+                        variant="subtitle2"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
@@ -58,12 +63,17 @@ const DirectMessages: FC = (): ReactElement => {
                     <Checkbox/>
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    Hide message requests that have been detected as being potentially spam or low-quality. These will
+                    {`Hide message requests that have been detected as being potentially spam or low-quality. These will
                     be sent to a separate inbox at the bottom of your message requests. You can still access them if you
-                    want. <a
-                    href={"https://help.twitter.com/using-twitter/direct-messages"}
-                    target="_blank"
-                    className={classes.link}> Learn more</a>
+                    want. `}
+                    <MuiLink
+                        href="https://help.twitter.com/using-twitter/direct-messages"
+                        variant="subtitle2"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
@@ -74,11 +84,16 @@ const DirectMessages: FC = (): ReactElement => {
                     <Checkbox/>
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    Let people you’re messaging with know when you’ve seen their messages. Read receipts are not shown
-                    on message requests. <a
-                    href={"https://help.twitter.com/using-twitter/direct-messages#receipts"}
-                    target="_blank"
-                    className={classes.link}> Learn more</a>
+                    {`Let people you’re messaging with know when you’ve seen their messages. Read receipts are not shown
+                        on message requests. `}
+                    <MuiLink
+                        href="https://help.twitter.com/using-twitter/direct-messages#receipts"
+                        variant="subtitle2"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
         </>

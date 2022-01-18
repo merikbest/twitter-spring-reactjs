@@ -27,7 +27,7 @@ export const useDeactivateAccountStyles = makeStyles((theme: Theme) => ({
     usernameWrapper: {
         marginLeft: 15
     },
-    link: {
+    routerLink: {
         textDecoration: "none",
         color: theme.palette.primary.main,
         cursor: "pointer",

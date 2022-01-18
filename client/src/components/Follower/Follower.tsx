@@ -108,7 +108,7 @@ const Follower: FC<FollowerProps<User> & HoverUserProps & SnackbarProps> = (
 
     return (
         <Paper className={classes.container} variant="outlined">
-            <Link to={`/user/${user?.id}`} className={classes.link}>
+            <Link to={`/user/${user?.id}`}>
                 <Avatar
                     className={classes.listAvatar}
                     src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}
@@ -117,7 +117,7 @@ const Follower: FC<FollowerProps<User> & HoverUserProps & SnackbarProps> = (
             <div style={{flex: 1}}>
                 <div className={classes.header}>
                     <div onMouseEnter={handleHoverPopper} onMouseLeave={handleLeavePopper}>
-                        <Link to={`/user/${user?.id}`} className={classes.link}>
+                        <Link to={`/user/${user?.id}`}>
                             <div className={classes.followerInfo}>
                                 <div>
                                     <Typography variant={"h6"} component={"span"}>

@@ -1,7 +1,7 @@
 import React, {FC, ReactElement} from 'react';
 import {Link} from 'react-router-dom';
 import {useSelector} from "react-redux";
-import {Avatar, Divider, Typography} from "@material-ui/core";
+import {Avatar, Divider, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useDeactivateAccountStyles} from "./DeactivateAccountStyles";
 import {selectUserData} from "../../../../store/ducks/user/selectors";
@@ -56,24 +56,29 @@ const DeactivateAccount: FC = (): ReactElement => {
             <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    Some account information may still be available in search engines, such as Google or Bing.
-                    <a href={"https://help.twitter.com/safety-and-security/remove-twitter-profile-from-google-search"}
-                       target="_blank"
-                       className={classes.link}> Learn more</a>
+                    {"Some account information may still be available in search engines, such as Google or Bing. "}
+                    <MuiLink
+                        href="https://help.twitter.com/safety-and-security/remove-twitter-profile-from-google-search"
+                        variant="subtitle2"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
             <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     If you just want to change your @username, you don’t need to deactivate your account — edit
-                    it in your <Link to={"/settings/info"} className={classes.link}>settings.</Link>
+                    it in your <Link to={"/settings/info"} className={classes.routerLink}>settings.</Link>
                 </Typography>
             </div>
             <Divider/>
             <div className={classes.infoItemWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     To use your current @username or email address with a different Twitter account,
-                    <Link to={"/settings/info"} className={classes.link}> change them </Link>
+                    <Link to={"/settings/info"} className={classes.routerLink}> change them </Link>
                     before you deactivate this account.
                 </Typography>
             </div>

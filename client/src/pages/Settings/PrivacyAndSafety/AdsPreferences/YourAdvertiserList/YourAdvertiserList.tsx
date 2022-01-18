@@ -1,5 +1,5 @@
 import React, {FC, ReactElement} from 'react';
-import {Divider, Typography} from "@material-ui/core";
+import {Divider, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useYourAdvertiserListStyles} from "./YourAdvertiserListStyles";
 
@@ -11,10 +11,16 @@ const YourAdvertiserList: FC = (): ReactElement => {
             <div className={classes.infoItemWrapper}>
                 <Typography variant={"subtitle1"} component={"div"}>
                     Tailored audiences are often built from email lists or browsing behaviors. They help advertisers
-                    reach prospective customers or people who have already expressed interest in their business. <a
-                    href={"https://help.twitter.com/safety-and-security/privacy-controls-for-tailored-ads"}
-                    target="_blank"
-                    className={classes.link}> Learn more</a>
+                    reach prospective customers or people who have already expressed interest in their business.
+                    {" "}
+                    <MuiLink
+                        href={"https://help.twitter.com/safety-and-security/privacy-controls-for-tailored-ads"}
+                        variant="subtitle2"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
             <Divider/>

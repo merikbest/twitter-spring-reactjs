@@ -1,6 +1,6 @@
 import React, {FC, ReactElement} from 'react';
 import {Link} from "react-router-dom";
-import {Typography} from "@material-ui/core";
+import {Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useAccountAccessHistoryStyles} from "./AccountAccessHistoryStyles";
 
@@ -12,12 +12,17 @@ const AccountAccessHistory: FC = (): ReactElement => {
             <div className={classes.infoItemWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     If you see any suspicious activity from an app, go to <Link
-                    to={"/settings/security/connected_apps"} className={classes.link}>Connected apps</Link> to
+                    to={"/settings/security/connected_apps"} className={classes.routerLink}>Connected apps</Link> to
                     revoke its access.
-                    In some cases the IP location may differ from your physical location. <a
-                    href={"https://help.twitter.com/managing-your-account/accessing-your-twitter-data"}
-                    target="_blank"
-                    className={classes.link}>Learn more</a>
+                    {"In some cases the IP location may differ from your physical location. "}
+                    <MuiLink
+                        href="https://help.twitter.com/managing-your-account/accessing-your-twitter-data"
+                        variant="subtitle2"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
         </>

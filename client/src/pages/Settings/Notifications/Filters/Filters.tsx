@@ -1,6 +1,6 @@
 import React, {FC, ReactElement} from 'react';
 import {Link} from 'react-router-dom';
-import {Checkbox, Typography} from "@material-ui/core";
+import {Checkbox, Typography, Link as MuiLink} from "@material-ui/core";
 
 import {useFiltersStyles} from "./FiltersStyles";
 import {ArrowRightIcon} from "../../../../icons";
@@ -23,12 +23,16 @@ const Filters: FC = (): ReactElement => {
                     <Checkbox/>
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    Choose to filter out content such as duplicate or automated Tweets. This doesn’t apply to
-                    notifications from accounts you follow or have interacted with recently.
-                    <a
-                        href={"https://help.twitter.com/managing-your-account/understanding-the-notifications-timeline"}
+                    {"Choose to filter out content such as duplicate or automated Tweets. This doesn’t apply to " +
+                    "notifications from accounts you follow or have interacted with recently. "}
+                    <MuiLink
+                        href="https://help.twitter.com/managing-your-account/understanding-the-notifications-timeline"
+                        variant="subtitle2"
                         target="_blank"
-                        className={classes.link}> Learn more</a>
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
             <Link to={"/settings/privacy_and_safety/advanced_filters"} className={classes.filtersWrapper}>

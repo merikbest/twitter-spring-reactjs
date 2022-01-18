@@ -1,6 +1,15 @@
 import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Button, Checkbox, Dialog, DialogContent, FormControl, InputLabel, Typography} from "@material-ui/core";
+import {
+    Button,
+    Checkbox,
+    Dialog,
+    DialogContent,
+    FormControl,
+    InputLabel,
+    Link as MuiLink,
+    Typography
+} from "@material-ui/core";
 import {Controller, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import classNames from "classnames";
@@ -120,9 +129,15 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = ({visible, onClose}): ReactE
                     />
                     <div className={classes.infoWrapper}>
                         <Typography variant={"body1"} component={"span"}>
-                            Let people who have your phone number find and connect with you on Twitter. <a
-                            href="https://help.twitter.com/safety-and-security/email-and-phone-discoverability-settings"
-                            target={"_blank"} className={classes.link}>Learn more</a>
+                            {"Let people who have your phone number find and connect with you on Twitter. "}
+                            <MuiLink
+                                href="https://help.twitter.com/safety-and-security/email-and-phone-discoverability-settings"
+                                variant="body1"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                Learn more
+                            </MuiLink>
                         </Typography>
                         <span><Checkbox/></span>
                     </div>

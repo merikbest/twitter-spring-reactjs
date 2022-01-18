@@ -130,14 +130,14 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                     />
                     <div className={classes.tweetInfo}>
                         <div className={classes.header}>
-                            <Link to={`/user/${tweetData?.user.id}`} className={classes.link}>
+                            <Link to={`/user/${tweetData?.user.id}`}>
                                 <Avatar
                                     className={classes.avatar}
                                     alt={`avatar ${tweetData.user.id}`}
                                     src={tweetData.user.avatar?.src ? tweetData.user.avatar?.src : DEFAULT_PROFILE_IMG}
                                 />
                             </Link>
-                            <Link to={`/user/${tweetData?.user.id}`} className={classes.link}>
+                            <Link to={`/user/${tweetData?.user.id}`}>
                                 <div onMouseEnter={handleHoverPopper} onMouseLeave={handleLeavePopper}>
                                     <Typography variant={"h6"} component={"div"} id={"link"}>
                                         {tweetData.user.fullName}

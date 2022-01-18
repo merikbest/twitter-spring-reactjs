@@ -10,12 +10,4 @@ export const useChangeCountryStyles = makeStyles((theme: Theme) => ({
             paddingTop: 2,
         },
     },
-    link: {
-        textDecoration: "none",
-        color: theme.palette.primary.main,
-        cursor: "pointer",
-        "&:hover": {
-            textDecoration: "underline",
-        }
-    },
 }));

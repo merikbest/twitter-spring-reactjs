@@ -16,10 +16,6 @@ export const useFollowerStyles = makeStyles((theme) => ({
             backgroundColor: theme.palette.secondary.main,
         },
     },
-    link: {
-        color: theme.palette.text.primary,
-        textDecoration: 'none',
-    },
     listAvatar: {
         width: "46px !important",
         height: "46px !important",
@@ -34,6 +30,15 @@ export const useFollowerStyles = makeStyles((theme) => ({
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
+        "& a": {
+            textDecoration: "none",
+            "& .MuiTypography-h6": {
+                '&:hover': {
+                    textDecoration: "underline",
+                    textDecorationColor: "inherit",
+                },
+            },
+        },
     },
     lockIcon: {
         "& svg": {

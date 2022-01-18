@@ -1,5 +1,5 @@
 import React, {FC, ReactElement, useState} from 'react';
-import {Radio, Typography} from "@material-ui/core";
+import {Link as MuiLink, Radio, Typography} from "@material-ui/core";
 import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
 
 import {useAutoplayStyles} from "./AutoplayStyles";
@@ -19,10 +19,15 @@ const Autoplay: FC = (): ReactElement => {
                     Autoplay
                 </Typography>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    Select whether videos and GIFs should play automatically on this device. <a
-                    href={"https://help.twitter.com/safety-and-security/public-and-protected-tweets"}
-                    target="_blank"
-                    className={classes.link}> Learn more</a>
+                    {"Select whether videos and GIFs should play automatically on this device. "}
+                    <MuiLink
+                        href="https://help.twitter.com/safety-and-security/public-and-protected-tweets"
+                        variant="subtitle2"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
                 <div className={classes.autoplayItemWrapper}>
                     <Typography variant={"body1"} component={"span"}>

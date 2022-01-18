@@ -8,9 +8,6 @@ export const useDirectUserItemStyles = makeStyles((theme: Theme) => ({
         paddingLeft: 15,
         cursor: 'pointer',
     },
-    link: {
-        textDecoration: 'none',
-    },
     listAvatar: {
         width: theme.spacing(5),
         height: theme.spacing(5),

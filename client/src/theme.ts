@@ -92,7 +92,9 @@ const commonTheme = {
                 '& h2': {
                     display: 'flex',
                     alignItems: 'center',
+                    fontSize: 20,
                     fontWeight: 800,
+                    lineHeight: "24px",
                 },
             },
         },

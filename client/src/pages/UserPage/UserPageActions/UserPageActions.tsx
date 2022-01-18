@@ -114,7 +114,7 @@ const UserPageActions: FC<UserPageActionsProps & SnackbarProps> = (
                                             Add/remove @{user.username} from Lists
                                         </Typography>
                                     </ListItem>
-                                    <Link to={`/lists/memberships/${user?.id}`} className={classes.link}>
+                                    <Link to={`/lists/memberships/${user?.id}`} className={classes.routeLink}>
                                         <ListItem>
                                             <>{ListsIcon}</>
                                             <Typography component={"span"}>

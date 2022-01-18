@@ -1,5 +1,5 @@
 import React, {FC, ReactElement, useState} from 'react';
-import {Divider, Radio, Switch, Typography} from "@material-ui/core";
+import {Divider, Link as MuiLink, Radio, Switch, Typography} from "@material-ui/core";
 import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
 
 import {useTweetDeckTeamsStyles} from "./TweetDeckTeamsStyles";
@@ -27,9 +27,15 @@ const TweetDeckTeams: FC = (): ReactElement => {
                     </span>
                 </Typography>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    When this setting is on, you can invite anyone to Tweet from this account using TweetDeck
-                    Teams. <a href={"https://help.twitter.com/using-twitter/tweetdeck-teams"} target="_blank"
-                              className={classes.link}>Learn more</a>
+                    {"When this setting is on, you can invite anyone to Tweet from this account using TweetDeck Teams. "}
+                    <MuiLink
+                        href="https://help.twitter.com/using-twitter/tweetdeck-teams"
+                        variant="subtitle2"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
             <Divider/>

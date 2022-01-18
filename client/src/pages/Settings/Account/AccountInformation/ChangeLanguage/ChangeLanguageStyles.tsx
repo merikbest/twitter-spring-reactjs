@@ -10,14 +10,6 @@ export const useChangeLanguageStyles = makeStyles((theme: Theme) => ({
     languageInfo: {
         paddingTop: 2,
     },
-    link: {
-        textDecoration: "none",
-        color: theme.palette.primary.main,
-        cursor: "pointer",
-        "&:hover": {
-            textDecoration: "underline",
-        }
-    },
     buttonWrapper: {
         padding: "12px 16px",
         float: "right",

@@ -1,6 +1,6 @@
 import React, {FC, FormEvent, ReactElement, useState} from 'react';
 import {useHistory, useLocation} from "react-router-dom";
-import {Button, Radio, Typography} from "@material-ui/core";
+import {Button, Link as MuiLink, Radio, Typography} from "@material-ui/core";
 
 import {AuthApi} from "../../../services/api/authApi";
 import {useResetPasswordOptionStyles} from "./ResetPasswordOptionStyles";
@@ -54,11 +54,14 @@ const ResetPasswordOption: FC = (): ReactElement => {
                     Next
                 </Button>
             </form>
-            <Typography component={"div"} className={classes.link}>
-                <a href={"https://help.twitter.com/forms/account-access/regain-access"} target={"_blank"}>
-                    Don’t have access to these?
-                </a>
-            </Typography>
+            <MuiLink
+                href="https://help.twitter.com/forms/account-access/regain-access"
+                variant="subtitle2"
+                target="_blank"
+                rel="noopener"
+            >
+                Don’t have access to these?
+            </MuiLink>
         </>
     );
 };

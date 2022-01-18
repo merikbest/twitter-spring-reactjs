@@ -4,7 +4,7 @@ export const useAccountAccessHistoryStyles = makeStyles((theme: Theme) => ({
     infoItemWrapper: {
         padding: "12px 16px"
     },
-    link: {
+    routerLink: {
         textDecoration: "none",
         color: theme.palette.primary.main,
         cursor: "pointer",

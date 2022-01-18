@@ -11,14 +11,6 @@ export const useDiscoverabilityStyles = makeStyles((theme: Theme) => ({
             marginTop: -10,
         },
     },
-    link: {
-        textDecoration: "none",
-        color: theme.palette.primary.main,
-        cursor: "pointer",
-        "&:hover": {
-            textDecoration: "underline",
-        }
-    },
     discoverabilityWrapper: {
         textDecoration: "none",
     },

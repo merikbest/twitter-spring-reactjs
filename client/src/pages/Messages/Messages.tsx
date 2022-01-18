@@ -1,7 +1,18 @@
 import React, {FC, ReactElement, useEffect, useRef, useState} from 'react';
 import {Link, Route, useHistory, useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {Avatar, Button, Grid, IconButton, InputAdornment, List, ListItem, Paper, Typography} from "@material-ui/core";
+import {
+    Avatar,
+    Button,
+    Grid,
+    IconButton,
+    InputAdornment,
+    Link as MuiLink,
+    List,
+    ListItem,
+    Paper,
+    Typography
+} from "@material-ui/core";
 import classNames from "classnames";
 
 import {useMessagesStyles} from "./MessagesStyles";
@@ -521,10 +532,16 @@ const Messages: FC = (): ReactElement => {
                                 <>
                                     {isUserBlocked ? (
                                         <Typography variant={"subtitle2"} component={"div"} className={classes.blockedInfoText}>
-                                            You can no longer send messages to this person. <a
-                                            href={"https://help.twitter.com/using-twitter/direct-messages#faq"}
-                                            target="_blank"
-                                            className={classes.link}>Learn more</a>
+                                            You can no longer send messages to this person.
+                                            {" "}
+                                            <MuiLink
+                                                href="https://help.twitter.com/using-twitter/direct-messages#faq"
+                                                variant="subtitle2"
+                                                target="_blank"
+                                                rel="noopener"
+                                            >
+                                                Learn more
+                                            </MuiLink>
                                         </Typography>
                                         ) : (
                                             <Paper className={classes.chatFooter}>

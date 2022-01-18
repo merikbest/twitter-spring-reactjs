@@ -10,14 +10,6 @@ export const useTweetDeckTeamsStyles = makeStyles((theme: Theme) => ({
     switch: {
         float: "right",
     },
-    link: {
-        textDecoration: "none",
-        color: theme.palette.primary.main,
-        cursor: "pointer",
-        "&:hover": {
-            textDecoration: "underline",
-        }
-    },
     tweetDeckItemWrapper: {
         padding: "4px 0px",
         "& .MuiButtonBase-root": {

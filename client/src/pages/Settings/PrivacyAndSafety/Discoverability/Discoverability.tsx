@@ -1,6 +1,6 @@
 import React, {FC, ReactElement} from 'react';
 import {Link} from "react-router-dom";
-import {Checkbox, Divider, Typography} from "@material-ui/core";
+import {Checkbox, Divider, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useDiscoverabilityStyles} from "./DiscoverabilityStyles";
 import {ArrowRightIcon} from "../../../../icons";
@@ -34,11 +34,15 @@ const Discoverability: FC = (): ReactElement => {
                     <Checkbox/>
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    Let people who have your email address find and connect with you on Twitter.
-                    <a
-                        href={"https://help.twitter.com/safety-and-security/email-and-phone-discoverability-settings"}
+                    {"Let people who have your email address find and connect with you on Twitter. "}
+                    <MuiLink
+                        href="https://help.twitter.com/safety-and-security/email-and-phone-discoverability-settings"
+                        variant="subtitle2"
                         target="_blank"
-                        className={classes.link}> Learn more</a>
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
@@ -49,11 +53,15 @@ const Discoverability: FC = (): ReactElement => {
                     <Checkbox/>
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    Let people who have your phone number find and connect with you on Twitter.
-                    <a
-                        href={"https://help.twitter.com/safety-and-security/email-and-phone-discoverability-settings"}
+                    {"Let people who have your phone number find and connect with you on Twitter. "}
+                    <MuiLink
+                        href="https://help.twitter.com/safety-and-security/email-and-phone-discoverability-settings"
+                        variant="subtitle2"
                         target="_blank"
-                        className={classes.link}> Learn more</a>
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
             <Divider/>
@@ -64,11 +72,15 @@ const Discoverability: FC = (): ReactElement => {
             </div>
             <div className={classes.infoItemWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    Manage contacts that you have imported from your mobile devices.
-                    <a
-                        href={"https://help.twitter.com/using-twitter/upload-your-contacts-to-search-for-friends"}
+                    {"Manage contacts that you have imported from your mobile devices. "}
+                    <MuiLink
+                        href="https://help.twitter.com/using-twitter/upload-your-contacts-to-search-for-friends"
+                        variant="subtitle2"
                         target="_blank"
-                        className={classes.link}> Learn more</a>
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
             <Link to={"/settings/privacy_and_safety/contacts_dashboard"} className={classes.discoverabilityWrapper}>

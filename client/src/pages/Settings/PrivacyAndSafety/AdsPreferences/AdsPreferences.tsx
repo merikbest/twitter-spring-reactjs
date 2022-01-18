@@ -1,9 +1,9 @@
 import React, {FC, ReactElement} from 'react';
-
-import {useAdsPreferencesStyles} from "./AdsPreferencesStyles";
-import {Checkbox, Typography} from "@material-ui/core";
-import {ArrowRightIcon} from "../../../../icons";
+import {Checkbox, Typography, Link as MuiLink} from "@material-ui/core";
 import {Link} from "react-router-dom";
+
+import {ArrowRightIcon} from "../../../../icons";
+import {useAdsPreferencesStyles} from "./AdsPreferencesStyles";
 
 const AdsPreferences: FC = (): ReactElement => {
     const classes = useAdsPreferencesStyles();
@@ -26,10 +26,15 @@ const AdsPreferences: FC = (): ReactElement => {
                     You will always see ads on Twitter based on your Twitter activity. When this setting is enabled,
                     Twitter may further personalize ads from Twitter advertisers, on and off Twitter, by combining your
                     Twitter activity with other online activity and information from our partners.
-                    <a
+                    {" "}
+                    <MuiLink
                         href={"https://help.twitter.com/safety-and-security/email-and-phone-discoverability-settings"}
+                        variant="subtitle2"
                         target="_blank"
-                        className={classes.link}> Learn more</a>
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
             {/*<Link to={""} className={classes.adsPreferencesWrapper}>*/}

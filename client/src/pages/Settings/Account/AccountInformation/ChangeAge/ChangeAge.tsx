@@ -1,5 +1,5 @@
 import React, {FC, ReactElement} from 'react';
-import {Divider, Typography} from "@material-ui/core";
+import {Divider, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useChangeAgeStyles} from "./ChangeAgeStyles";
 
@@ -9,11 +9,15 @@ const ChangeAge: FC = (): ReactElement => {
     return (
         <div className={classes.textFieldWrapper}>
             <Typography variant={"body1"} component={"div"}>
-                If you haven’t provided a date of birth, we’ve provided an age range based on your Twitter
-                profile and activity. Age information is used to personalize your experience. <a
-                href={"https://help.twitter.com/safety-and-security/birthday-visibility-settings"}
-                target="_blank"
-                className={classes.link}>Learn more</a>
+                {`If you haven’t provided a date of birth, we’ve provided an age range based on your Twitter
+                    profile and activity. Age information is used to personalize your experience. `}
+                <MuiLink
+                    href="https://help.twitter.com/safety-and-security/birthday-visibility-settings"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    Learn more
+                </MuiLink>
             </Typography>
             <Divider/>
             <Typography variant={"body1"} component={"div"}>

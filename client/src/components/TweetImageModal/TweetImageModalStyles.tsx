@@ -39,14 +39,14 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
     header: {
         display: 'flex',
         alignItems: 'center',
-    },
-    link: {
-        cursor: "pointer",
-        textDecoration: "none",
-        color: theme.palette.text.primary,
-        "&:hover": {
-            "& #link": {
-                textDecoration: "underline",
+        "& a": {
+            cursor: "pointer",
+            textDecoration: "none",
+            color: theme.palette.text.primary,
+            "&:hover": {
+                "& #link": {
+                    textDecoration: "underline",
+                },
             },
         },
     },

@@ -84,14 +84,6 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         width: 360,
         textAlign: "center",
     },
-    link: {
-        textDecoration: "none",
-        color: theme.palette.primary.main,
-        cursor: "pointer",
-        "&:hover": {
-            textDecoration: "underline",
-        }
-    },
     tabs: {
         "& .MuiTabs-indicator": {
             marginLeft: 50,

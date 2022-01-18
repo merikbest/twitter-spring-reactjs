@@ -43,14 +43,6 @@ export const useChangeEmailModalStyles = makeStyles((theme: Theme) => ({
             width: "100%"
         },
     },
-    link: {
-        textDecoration: "none",
-        color: theme.palette.primary.main,
-        cursor: "pointer",
-        "&:hover": {
-            textDecoration: "underline",
-        }
-    },
     footer: {
         width: "100%",
         bottom: 0,

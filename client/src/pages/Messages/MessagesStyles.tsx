@@ -314,12 +314,4 @@ export const useMessagesStyles = makeStyles<Theme, MessagesStylesProps>((theme) 
         textAlign: "center",
         height: 30,
     },
-    link: {
-        textDecoration: "none",
-        color: theme.palette.primary.main,
-        cursor: "pointer",
-        "&:hover": {
-            textDecoration: "underline",
-        }
-    },
 }));
