@@ -1,5 +1,5 @@
 import React, {FC, ReactElement} from 'react';
-import {Typography} from "@material-ui/core";
+import {Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useMutedWordsStyles} from "./MutedWordsStyles";
 
@@ -13,15 +13,17 @@ const MutedWords: FC = (): ReactElement => {
                     You aren’t muting any words
                 </Typography>
                 <Typography variant={"subtitle1"} component={"div"}>
-                    When you mute words, you won’t get any new notifications for Tweets that include them or see Tweets
-                    with those words in your timeline.
-                    <a
-                        href={"https://help.twitter.com/using-twitter/advanced-twitter-mute-options"}
+                    {`When you mute words, you won’t get any new notifications for Tweets that include them or see Tweets
+                        with those words in your timeline. `}
+                    <MuiLink
+                        href="https://help.twitter.com/using-twitter/advanced-twitter-mute-options"
+                        component="div"
+                        variant="subtitle1"
                         target="_blank"
-                        className={classes.link}
+                        rel="noopener"
                     >
                         Learn more
-                    </a>
+                    </MuiLink>
                 </Typography>
             </div>
         </>

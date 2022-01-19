@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Divider, Typography} from "@material-ui/core";
+import {Divider, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useMutedAccountsStyles} from "./MutedAccountsStyles";
 import {fetchMutedUsers, setUsers} from "../../../../../store/ducks/users/actionCreators";
@@ -27,10 +27,15 @@ const MutedAccounts: FC = (): ReactElement => {
         <>
             <div className={classes.infoItemWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    Here’s everyone you muted. You can add or remove them from this list. <a
-                    href={"https://help.twitter.com/using-twitter/twitter-mute"}
-                    target="_blank"
-                    className={classes.link}>Learn more</a>
+                    {`Here’s everyone you muted. You can add or remove them from this list. `}
+                    <MuiLink
+                        href="https://help.twitter.com/using-twitter/twitter-mute"
+                        variant="subtitle2"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
             <Divider/>
@@ -43,10 +48,15 @@ const MutedAccounts: FC = (): ReactElement => {
                             You aren’t muting anyone
                         </Typography>
                         <Typography variant={"subtitle1"} component={"div"}>
-                            When you mute accounts, you won’t see their Tweets in your timeline. <a
-                            href={"https://help.twitter.com/using-twitter/twitter-mute"}
-                            target="_blank"
-                            className={classes.link}>Learn more</a>
+                            {`When you mute accounts, you won’t see their Tweets in your timeline. `}
+                            <MuiLink
+                                href="https://help.twitter.com/using-twitter/twitter-mute"
+                                variant="subtitle2"
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                Learn more
+                            </MuiLink>
                         </Typography>
                     </div>
                 ) : (

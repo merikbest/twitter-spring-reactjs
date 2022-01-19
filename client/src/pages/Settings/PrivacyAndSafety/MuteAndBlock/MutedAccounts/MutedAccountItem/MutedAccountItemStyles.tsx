@@ -23,7 +23,7 @@ export const useMutedAccountItemStyles = makeStyles<Theme, MutedAccountItemStyle
             backgroundColor: theme.palette.secondary.main,
         },
     },
-    link: {
+    renderLink: {
         color: theme.palette.text.primary,
         textDecoration: 'none',
     },

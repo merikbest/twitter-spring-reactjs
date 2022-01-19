@@ -1,5 +1,5 @@
 import React, {FC, ReactElement} from 'react';
-import {Checkbox, Typography} from "@material-ui/core";
+import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useTwoFactorAuthenticationStyles} from "./TwoFactorAuthenticationStyles";
 
@@ -45,11 +45,16 @@ const TwoFactorAuthentication: FC = (): ReactElement => {
                     <Checkbox/>
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    Use a security key that inserts into your computer or syncs to your mobile device when you
-                    log in to Twitter. You’ll need to use a supported mobile device or web browser. <a
-                    href={"https://help.twitter.com/managing-your-account/two-factor-authentication"}
-                    target="_blank"
-                    className={classes.link}>Learn more</a>
+                    {`Use a security key that inserts into your computer or syncs to your mobile device when you 
+                    log in to Twitter. You’ll need to use a supported mobile device or web browser. `}
+                    <MuiLink
+                        href="https://help.twitter.com/managing-your-account/two-factor-authentication"
+                        variant="subtitle2"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
         </>

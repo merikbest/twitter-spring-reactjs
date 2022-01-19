@@ -1,7 +1,7 @@
 import React, {FC, ReactElement} from 'react';
+import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useLocationInformationStyles} from "./LocationInformationStyles";
-import {Checkbox, Typography} from "@material-ui/core";
 
 const LocationInformation: FC = (): ReactElement => {
     const classes = useLocationInformationStyles();
@@ -10,10 +10,15 @@ const LocationInformation: FC = (): ReactElement => {
         <>
             <div className={classes.infoItemWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    If enabled, you will be able to attach location information to your Tweets. <a
-                    href={"https://help.twitter.com/safety-and-security/tweet-location-settings"}
-                    target="_blank"
-                    className={classes.link}> Learn more</a>
+                    {`If enabled, you will be able to attach location information to your Tweets. `}
+                    <MuiLink
+                        href="https://help.twitter.com/safety-and-security/tweet-location-settings"
+                        variant="subtitle2"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>

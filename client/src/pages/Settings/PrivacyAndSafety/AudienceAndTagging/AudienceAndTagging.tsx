@@ -1,7 +1,7 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
-import {Checkbox, Typography} from "@material-ui/core";
+import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useAudienceAndTaggingStyles} from "./AudienceAndTaggingStyles";
 import {ArrowRightIcon} from "../../../../icons";
@@ -45,11 +45,15 @@ const AudienceAndTagging: FC = (): ReactElement => {
                     <Checkbox checked={checked} onChange={handleChange}/>
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    When selected, your Tweets and other account information are only visible to people who follow you.
-                    <a
-                        href={"https://help.twitter.com/safety-and-security/public-and-protected-tweets"}
+                    {`When selected, your Tweets and other account information are only visible to people who follow you. `}
+                    <MuiLink
+                        href="https://help.twitter.com/safety-and-security/public-and-protected-tweets"
+                        variant="subtitle2"
                         target="_blank"
-                        className={classes.link}> Learn more</a>
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
             <Link to={"/settings/privacy_and_safety/tagging"} className={classes.photoTaggingWrapper}>

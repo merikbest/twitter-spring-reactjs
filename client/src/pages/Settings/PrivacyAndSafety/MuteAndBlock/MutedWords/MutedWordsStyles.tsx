@@ -6,13 +6,4 @@ export const useMutedWordsStyles = makeStyles((theme: Theme) => ({
         width: 336,
         textAlign: "center",
     },
-    link: {
-        display: "block",
-        textDecoration: "none",
-        color: theme.palette.primary.main,
-        cursor: "pointer",
-        "&:hover": {
-            textDecoration: "underline",
-        }
-    },
 }));

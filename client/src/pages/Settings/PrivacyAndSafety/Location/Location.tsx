@@ -1,6 +1,6 @@
 import React, {FC, ReactElement} from 'react';
 import {Link} from "react-router-dom";
-import {Checkbox, Typography} from "@material-ui/core";
+import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useLocationStyles} from "./LocationStyles";
 import {ArrowRightIcon} from "../../../../icons";
@@ -23,13 +23,17 @@ const Location: FC = (): ReactElement => {
                     <Checkbox/>
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    You will always see ads on Twitter based on your Twitter activity. When this setting is enabled,
-                    Twitter may further personalize ads from Twitter advertisers, on and off Twitter, by combining your
-                    Twitter activity with other online activity and information from our partners.
-                    <a
-                        href={"https://help.twitter.com/safety-and-security/email-and-phone-discoverability-settings"}
+                    {`You will always see ads on Twitter based on your Twitter activity. When this setting is enabled,
+                        Twitter may further personalize ads from Twitter advertisers, on and off Twitter, by combining your
+                        Twitter activity with other online activity and information from our partners. `}
+                    <MuiLink
+                        href="https://help.twitter.com/safety-and-security/email-and-phone-discoverability-settings"
+                        variant="subtitle2"
                         target="_blank"
-                        className={classes.link}> Learn more</a>
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
             <Link to={"/settings/privacy_and_safety/locations"} className={classes.adsPreferencesWrapper}>

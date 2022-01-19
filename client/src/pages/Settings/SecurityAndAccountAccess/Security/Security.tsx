@@ -1,6 +1,6 @@
 import React, {FC, ReactElement} from 'react';
 import {Link} from 'react-router-dom';
-import {Checkbox, Divider, Typography} from "@material-ui/core";
+import {Checkbox, Divider, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useSecurityStyles} from "./SecurityStyles";
 import {ArrowRightIcon} from "../../../../icons";
@@ -22,12 +22,17 @@ const Security: FC = (): ReactElement => {
             </div>
             <div className={classes.infoItemWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    Help protect your account from unauthorized access by requiring a second authentication
-                    method in addition to your Twitter password. You can choose a text message, authentication
-                    app, or security key. <a
-                    href={"https://help.twitter.com/managing-your-account/two-factor-authentication"}
-                    target="_blank"
-                    className={classes.link}>Learn more</a>
+                    {`Help protect your account from unauthorized access by requiring a second authentication
+                        method in addition to your Twitter password. You can choose a text message, authentication
+                        app, or security key. `}
+                    <MuiLink
+                        href="https://help.twitter.com/managing-your-account/two-factor-authentication"
+                        variant="subtitle2"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
             <Link to={"/settings/security/login_verification"} className={classes.authLinkWrapper}>
@@ -58,8 +63,14 @@ const Security: FC = (): ReactElement => {
                     </Typography>
                     <Checkbox/>
                 </div>
-                <a href="https://help.twitter.com/safety-and-security/account-security-tips" target="_blank"
-                   className={classes.link}>Learn more</a>
+                <MuiLink
+                    href="https://help.twitter.com/safety-and-security/account-security-tips"
+                    variant="body1"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    Learn more
+                </MuiLink>
             </div>
         </>
     );

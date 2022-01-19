@@ -51,14 +51,6 @@ export const useSessionsStyles = makeStyles((theme: Theme) => ({
             height: "1.4em"
         },
     },
-    link: {
-        textDecoration: "none",
-        color: theme.palette.primary.main,
-        cursor: "pointer",
-        "&:hover": {
-            textDecoration: "underline",
-        }
-    },
     logOut: {
         padding: 16,
         cursor: "pointer",

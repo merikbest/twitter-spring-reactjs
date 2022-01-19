@@ -1,5 +1,5 @@
 import React, {FC, ReactElement} from 'react';
-import {Typography} from "@material-ui/core";
+import {Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useConnectedAppsStyles} from "./ConnectedAppsStyles";
 
@@ -10,11 +10,16 @@ const ConnectedApps: FC = (): ReactElement => {
         <>
             <div className={classes.infoItemWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    These are the apps which you connected to your account. You can see the information these
-                    apps have access to and revoke access. <a
-                    href={"https://help.twitter.com/managing-your-account/connect-or-revoke-access-to-third-party-apps"}
-                    target="_blank"
-                    className={classes.link}>Learn more</a>
+                    {`These are the apps which you connected to your account. You can see the information these apps 
+                    have access to and revoke access. `}
+                    <MuiLink
+                        href="https://help.twitter.com/managing-your-account/connect-or-revoke-access-to-third-party-apps"
+                        variant="subtitle2"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
             <div className={classes.connectedAppsWrapper}>

@@ -2,7 +2,7 @@ import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import {Divider, Typography} from "@material-ui/core";
+import {Divider, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useBlockedAccountsStyles} from "./BlockedAccountsStyles";
 import BlockedAccountItem from "./BlockedAccountItem/BlockedAccountItem";
@@ -40,11 +40,16 @@ const BlockedAccounts: FC = (): ReactElement => {
             </div>
             <div className={classes.infoItemWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    When you block someone, that person won’t be able to follow or message you, and you won’t see
-                    notifications from them. <a
-                    href={"https://help.twitter.com/using-twitter/blocking-and-unblocking-accounts"}
-                    target="_blank"
-                    className={classes.link}>Learn more</a>
+                    {`When you block someone, that person won’t be able to follow or message you, and you won’t see
+                        notifications from them. `}
+                    <MuiLink
+                        href="https://help.twitter.com/using-twitter/blocking-and-unblocking-accounts"
+                        variant="subtitle2"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
             <Divider/>
@@ -63,18 +68,28 @@ const BlockedAccounts: FC = (): ReactElement => {
                         <Typography variant={"subtitle1"} component={"div"}>
                             {(activeTab === 0) ? (
                                 <>
-                                    When you block someone, that person won’t be able to follow or message you, and you
-                                    won’t see notifications from them. <a
-                                    href={"https://help.twitter.com/using-twitter/blocking-and-unblocking-accounts"}
-                                    target="_blank"
-                                    className={classes.link}>Learn more</a>
+                                    {`When you block someone, that person won’t be able to follow or message you, and you
+                                        won’t see notifications from them. `}
+                                    <MuiLink
+                                        href="https://help.twitter.com/using-twitter/blocking-and-unblocking-accounts"
+                                        variant="subtitle1"
+                                        target="_blank"
+                                        rel="noopener"
+                                    >
+                                        Learn more
+                                    </MuiLink>
                                 </>
                             ) : (
                                 <>
-                                    Find out how you can import a block list. <a
-                                    href={"https://help.twitter.com/using-twitter/advanced-twitter-block-options"}
-                                    target="_blank"
-                                    className={classes.link}>Learn more</a>
+                                    {`Find out how you can import a block list. `}
+                                    <MuiLink
+                                        href="https://help.twitter.com/using-twitter/advanced-twitter-block-options"
+                                        variant="subtitle1"
+                                        target="_blank"
+                                        rel="noopener"
+                                    >
+                                        Learn more
+                                    </MuiLink>
                                 </>
                             )}
                         </Typography>

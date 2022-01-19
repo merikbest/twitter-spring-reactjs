@@ -11,14 +11,6 @@ export const useAudienceAndTaggingStyles = makeStyles((theme: Theme) => ({
             marginTop: -10,
         },
     },
-    link: {
-        textDecoration: "none",
-        color: theme.palette.primary.main,
-        cursor: "pointer",
-        "&:hover": {
-            textDecoration: "underline",
-        }
-    },
     photoTaggingWrapper: {
         textDecoration: "none",
     },

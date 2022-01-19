@@ -12,12 +12,4 @@ export const useSpacesStyles = makeStyles((theme: Theme) => ({
         marginTop: -9,
         float: "right",
     },
-    link: {
-        textDecoration: "none",
-        color: theme.palette.primary.main,
-        cursor: "pointer",
-        "&:hover": {
-            textDecoration: "underline",
-        }
-    },
 }));

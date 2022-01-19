@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
-import {Divider, Typography} from "@material-ui/core";
+import {Divider, Link as MuiLink, Typography} from "@material-ui/core";
 import axios from 'axios'
 import bowser from "bowser";
 
@@ -83,11 +83,15 @@ const Sessions: FC = (): ReactElement => {
             </div>
             <div className={classes.infoItemWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    Logging out will end 1 of your other active Twitter sessions. It won’t affect your current
-                    active session. <a
-                    href={"https://help.twitter.com/managing-your-account/connect-or-revoke-access-to-third-party-apps"}
-                    target="_blank"
-                    className={classes.link}>Learn more</a>
+                    {`Logging out will end 1 of your other active Twitter sessions. It won’t affect your current active session. `}
+                    <MuiLink
+                        href="https://help.twitter.com/managing-your-account/connect-or-revoke-access-to-third-party-apps"
+                        variant="subtitle2"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
             <div className={classes.logOut}>

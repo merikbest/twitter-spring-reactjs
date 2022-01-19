@@ -1,5 +1,5 @@
 import React, {FC, ReactElement, useState} from 'react';
-import {Checkbox, Divider, Radio, Switch, Typography} from "@material-ui/core";
+import {Checkbox, Divider, Link as MuiLink, Radio, Switch, Typography} from "@material-ui/core";
 
 import {useEmailNotificationsStyles} from "./EmailNotificationsStyles";
 import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
@@ -24,11 +24,15 @@ const EmailNotifications: FC = (): ReactElement => {
             </div>
             <div className={classes.infoItemWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    Get emails to find out what’s going on when you’re not on Twitter. You can turn them off anytime.
-                    <a
-                        href={"https://help.twitter.com/managing-your-account/updating-email-preferences#tweet-activity"}
+                    {"Get emails to find out what’s going on when you’re not on Twitter. You can turn them off anytime. "}
+                    <MuiLink
+                        href="https://help.twitter.com/managing-your-account/updating-email-preferences#tweet-activity"
+                        variant="subtitle2"
                         target="_blank"
-                        className={classes.link}> Learn more</a>
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
             <Divider/>

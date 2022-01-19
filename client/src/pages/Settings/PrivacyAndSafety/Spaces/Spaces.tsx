@@ -1,5 +1,5 @@
 import React, {FC, ReactElement} from 'react';
-import {Switch, Typography} from "@material-ui/core";
+import {Link as MuiLink, Switch, Typography} from "@material-ui/core";
 
 import {useSpacesStyles} from "./SpacesStyles";
 
@@ -23,11 +23,16 @@ const Spaces: FC = (): ReactElement => {
             </div>
             <div className={classes.infoItemWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    Keep in mind that even with this setting turned off you will be visible to everyone when you’re in a
-                    Space. Your followers can always see what Spaces you’re hosting, co-hosting or speaking in. <a
-                    href={"https://help.twitter.com/using-twitter/spaces"}
-                    target="_blank"
-                    className={classes.link}> Learn more</a>
+                    {`Keep in mind that even with this setting turned off you will be visible to everyone when you’re in a
+                        Space. Your followers can always see what Spaces you’re hosting, co-hosting or speaking in. `}
+                    <MuiLink
+                        href="https://help.twitter.com/using-twitter/spaces"
+                        variant="subtitle2"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
         </>

@@ -1,7 +1,7 @@
 import React, {FC, ReactElement} from 'react';
+import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useOffTwitterActivityStyles} from "./OffTwitterActivityStyles";
-import {Checkbox, Typography} from "@material-ui/core";
 
 const OffTwitterActivity: FC = (): ReactElement => {
     const classes = useOffTwitterActivityStyles();
@@ -22,14 +22,18 @@ const OffTwitterActivity: FC = (): ReactElement => {
                     <Checkbox/>
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    This setting lets Twitter keep track of your visits to other websites that integrate Twitter
-                    content, such as embedded timelines. That information makes Twitter better for you, such as by
-                    personalizing your experience. This web browsing history will never be stored with your name, email,
-                    or phone number.
-                    <a
-                        href={"https://help.twitter.com/using-twitter/tailored-suggestions"}
+                    {`This setting lets Twitter keep track of your visits to other websites that integrate Twitter
+                        content, such as embedded timelines. That information makes Twitter better for you, such as by
+                        personalizing your experience. This web browsing history will never be stored with your name, email,
+                        or phone number. `}
+                    <MuiLink
+                        href="https://help.twitter.com/using-twitter/tailored-suggestions"
+                        variant="subtitle2"
                         target="_blank"
-                        className={classes.link}> Learn more</a>
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
             <div className={classes.infoItemWrapper}>
@@ -40,14 +44,18 @@ const OffTwitterActivity: FC = (): ReactElement => {
                     <Checkbox/>
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    Twitter will always personalize your experience based on information you’ve provided, as well as the
-                    devices you’ve used to log in. When this setting is enabled, Twitter may also personalize based on
-                    other inferences about your identity, like devices and browsers you haven’t used to log in to
-                    Twitter or email addresses and phone numbers similar to those linked to your Twitter account.
-                    <a
-                        href={"https://help.twitter.com/about-personalization-across-your-devices"}
+                    {`Twitter will always personalize your experience based on information you’ve provided, as well as the
+                        devices you’ve used to log in. When this setting is enabled, Twitter may also personalize based on
+                        other inferences about your identity, like devices and browsers you haven’t used to log in to
+                        Twitter or email addresses and phone numbers similar to those linked to your Twitter account. `}
+                    <MuiLink
+                        href="https://help.twitter.com/about-personalization-across-your-devices"
+                        variant="subtitle2"
                         target="_blank"
-                        className={classes.link}> Learn more</a>
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
         </>

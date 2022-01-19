@@ -9,12 +9,4 @@ export const useConnectedAppsStyles = makeStyles((theme: Theme) => ({
         width: 336,
         textAlign: "center"
     },
-    link: {
-        textDecoration: "none",
-        color: theme.palette.primary.main,
-        cursor: "pointer",
-        "&:hover": {
-            textDecoration: "underline",
-        }
-    },
 }));

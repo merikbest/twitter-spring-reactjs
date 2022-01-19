@@ -20,7 +20,7 @@ const ChangeYourPassword: FC = (): ReactElement => {
                     value={currentPassword}
                     fullWidth
                 />
-                <Typography variant={"body1"} component={"span"} className={classes.link}>
+                <Typography variant={"body1"} component={"span"} className={classes.forgotPassword}>
                     Forgot password?
                 </Typography>
             </div>

@@ -4,7 +4,7 @@ export const useChangeYourPasswordStyles = makeStyles((theme: Theme) => ({
     textFieldWrapper: {
         padding: "12px 16px"
     },
-    link: {
+    forgotPassword: {
         textDecoration: "none",
         color: theme.palette.primary.main,
         cursor: "pointer",

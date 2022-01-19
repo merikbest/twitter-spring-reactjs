@@ -1,5 +1,5 @@
 import React, {FC, ReactElement} from 'react';
-import {Checkbox, Typography} from "@material-ui/core";
+import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 import {Link} from "react-router-dom";
 
 import {useYourTweetsStyles} from "./YourTweetsStyles";
@@ -23,11 +23,16 @@ const YourTweets: FC = (): ReactElement => {
                     <Checkbox/>
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    When enabled, pictures and videos you Tweet will be marked as sensitive for people who don’t want to
-                    see sensitive content.<a
-                        href={"https://help.twitter.com/rules-and-policies/media-policy"}
+                    {`When enabled, pictures and videos you Tweet will be marked as sensitive for people who don’t want to
+                        see sensitive content. `}
+                    <MuiLink
+                        href="https://help.twitter.com/rules-and-policies/media-policy"
+                        variant="subtitle2"
                         target="_blank"
-                        className={classes.link}> Learn more</a>
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
             <Link to={"/settings/privacy_and_safety/location"} className={classes.yourTweetsWrapper}>

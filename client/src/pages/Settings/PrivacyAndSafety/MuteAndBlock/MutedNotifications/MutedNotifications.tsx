@@ -1,7 +1,7 @@
 import React, {FC, ReactElement} from 'react';
+import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useMutedNotificationsStyles} from "./MutedNotificationsStyles";
-import {Checkbox, Typography} from "@material-ui/core";
 
 const MutedNotifications: FC = (): ReactElement => {
     const classes = useMutedNotificationsStyles();
@@ -63,10 +63,15 @@ const MutedNotifications: FC = (): ReactElement => {
             </div>
             <div className={classes.infoItemWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    These filters won’t affect notifications from people you follow. <a
-                    href={"https://help.twitter.com/managing-your-account/understanding-the-notifications-timeline"}
-                    target="_blank"
-                    className={classes.link}>Learn more</a>
+                    {`These filters won’t affect notifications from people you follow. `}
+                    <MuiLink
+                        href="https://help.twitter.com/managing-your-account/understanding-the-notifications-timeline"
+                        variant="subtitle2"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Learn more
+                    </MuiLink>
                 </Typography>
             </div>
         </>

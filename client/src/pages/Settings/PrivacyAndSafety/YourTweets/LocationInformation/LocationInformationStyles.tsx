@@ -4,14 +4,6 @@ export const useLocationInformationStyles = makeStyles((theme: Theme) => ({
     infoItemWrapper: {
         padding: "12px 16px"
     },
-    link: {
-        textDecoration: "none",
-        color: theme.palette.primary.main,
-        cursor: "pointer",
-        "&:hover": {
-            textDecoration: "underline",
-        }
-    },
     infoItem: {
         paddingBottom: 12,
         "& .MuiCheckbox-root": {

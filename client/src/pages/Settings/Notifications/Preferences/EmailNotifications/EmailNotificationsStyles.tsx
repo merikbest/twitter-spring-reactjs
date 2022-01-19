@@ -11,14 +11,6 @@ export const useEmailNotificationsStyles = makeStyles((theme: Theme) => ({
         marginTop: -9,
         float: "right",
     },
-    link: {
-        textDecoration: "none",
-        color: theme.palette.primary.main,
-        cursor: "pointer",
-        "&:hover": {
-            textDecoration: "underline",
-        }
-    },
     infoItem: {
         paddingBottom: 12,
         "& .MuiCheckbox-root": {

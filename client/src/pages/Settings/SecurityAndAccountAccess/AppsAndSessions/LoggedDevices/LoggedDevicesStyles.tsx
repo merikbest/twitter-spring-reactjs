@@ -7,12 +7,4 @@ export const useLoggedDevicesStyles = makeStyles((theme: Theme) => ({
             fontWeight: 700,
         },
     },
-    link: {
-        textDecoration: "none",
-        color: theme.palette.primary.main,
-        cursor: "pointer",
-        "&:hover": {
-            textDecoration: "underline",
-        }
-    },
 }));
