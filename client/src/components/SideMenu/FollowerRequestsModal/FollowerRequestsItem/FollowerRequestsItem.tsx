@@ -1,6 +1,6 @@
-import React, {FC, ReactElement} from 'react';
+import React, {FC, MouseEvent, ReactElement} from 'react';
 import {useDispatch} from "react-redux";
-import {Link} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import {Avatar, Button, Paper, Typography} from "@material-ui/core";
 import classNames from "classnames";
 
@@ -12,12 +12,14 @@ import PopperUserWindow from "../../../PopperUserWindow/PopperUserWindow";
 import {acceptFollowRequest, declineFollowRequest} from "../../../../store/ducks/user/actionCreators";
 
 interface FollowerRequestsItemProps {
-    user: User
+    user: User,
+    onClose: () => void;
 }
 
 const FollowerRequestsItem: FC<FollowerRequestsItemProps & HoverUserProps> = (
     {
         user,
+        onClose,
         visiblePopperWindow,
         handleHoverPopper,
         handleLeavePopper
@@ -25,44 +27,50 @@ const FollowerRequestsItem: FC<FollowerRequestsItemProps & HoverUserProps> = (
 ): ReactElement => {
     const classes = useFollowerRequestsItemStyles();
     const dispatch = useDispatch();
+    const history = useHistory();
 
-    const handleDeclineFollowerRequest = (): void => {
+    const onClickUser = () => {
+        onClose();
+        history.push(`/user/${user?.id}`);
+    };
+
+    const handleDeclineFollowerRequest = (event: MouseEvent<HTMLButtonElement>): void => {
+        event.preventDefault();
+        event.stopPropagation();
         dispatch(declineFollowRequest(user.id!));
     };
 
-    const handleAcceptFollowerRequest = (): void => {
+    const handleAcceptFollowerRequest = (event: MouseEvent<HTMLButtonElement>): void => {
+        event.preventDefault();
+        event.stopPropagation();
         dispatch(acceptFollowRequest(user.id!));
     };
 
     return (
-        <Paper className={classes.container} variant="outlined">
-            <Link to={`/user/${user?.id}`} className={classes.link}>
-                <Avatar
-                    className={classes.listAvatar}
-                    src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}
-                />
-            </Link>
+        <Paper onClick={onClickUser} className={classes.container} variant="outlined">
+            <Avatar
+                className={classes.listAvatar}
+                src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}
+            />
             <div style={{flex: 1}}>
                 <div className={classes.header}>
-                    <Link to={`/user/${user?.id}`} className={classes.link}>
-                        <div onMouseLeave={handleLeavePopper} className={classes.headerUserInfo}>
-                            <Typography variant={"h6"} onMouseEnter={handleHoverPopper}>
-                                {user?.fullName}
-                            </Typography>
-                            <PopperUserWindow visible={visiblePopperWindow} user={user!}/>
-                            <Typography variant={"subtitle1"}>
-                                @{user?.username}
-                            </Typography>
-                            <Typography variant={"body1"}>
-                                {user?.about}
-                            </Typography>
-                        </div>
-                    </Link>
+                    <div onMouseLeave={handleLeavePopper} className={classes.headerUserInfo}>
+                        <Typography variant={"h6"} onMouseEnter={handleHoverPopper}>
+                            {user?.fullName}
+                        </Typography>
+                        <PopperUserWindow visible={visiblePopperWindow} user={user!}/>
+                        <Typography variant={"subtitle1"}>
+                            @{user?.username}
+                        </Typography>
+                        <Typography variant={"body1"}>
+                            {user?.about}
+                        </Typography>
+                    </div>
                 </div>
                 <div className={classes.buttonWrapper}>
                     <div className={classNames(classes.buttonItemWrapper, classes.declineButton)}>
                         <Button
-                            onClick={handleDeclineFollowerRequest}
+                            onClick={(event) => handleDeclineFollowerRequest(event)}
                             color="primary"
                             variant="outlined"
                             size="small"
@@ -73,7 +81,7 @@ const FollowerRequestsItem: FC<FollowerRequestsItemProps & HoverUserProps> = (
                     </div>
                     <div className={classNames(classes.buttonItemWrapper, classes.acceptButton)}>
                         <Button
-                            onClick={handleAcceptFollowerRequest}
+                            onClick={(event) => handleAcceptFollowerRequest(event)}
                             color="primary"
                             variant="outlined"
                             size="small"

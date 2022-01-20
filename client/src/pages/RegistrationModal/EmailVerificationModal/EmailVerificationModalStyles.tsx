@@ -22,16 +22,9 @@ export const useEmailVerificationModalStyles = makeStyles((theme: Theme) => ({
             color: theme.palette.primary.main,
         },
     },
-    link: {
-        linHeight: "20px",
+    emailLinkWrapper: {
         marginLeft: 10,
         marginTop: 2,
-        fontSize: 12,
-        color: theme.palette.primary.main,
-        "&:hover": {
-            textDecoration: "underline",
-            cursor: "pointer",
-        },
     },
     buttonWrapper: {
         marginTop: 320

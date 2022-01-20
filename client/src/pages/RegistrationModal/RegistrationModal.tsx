@@ -1,6 +1,6 @@
 import React, {ChangeEvent, FC, ReactElement, ReactNode, useState} from 'react';
 import {Controller, useForm} from "react-hook-form";
-import {Button, Dialog, FormControl, InputLabel, Typography} from "@material-ui/core";
+import {Button, Dialog, FormControl, InputLabel, Link as MuiLink, Typography} from "@material-ui/core";
 import DialogContent from "@material-ui/core/DialogContent";
 import TwitterIcon from "@material-ui/icons/Twitter"
 import {yupResolver} from "@hookform/resolvers/yup";
@@ -142,9 +142,9 @@ const RegistrationModal: FC<RegistrationModalProps> = (
                                     )}
                                 />
                             </FormControl>
-                            <Typography variant={"body1"} component={"div"} className={classes.link}>
+                            <MuiLink className={classes.phoneLink} href="#" variant="body1">
                                 Use phone instead
-                            </Typography>
+                            </MuiLink>
                             <div className={classes.footer}>
                                 <Typography variant={"h6"} component={"div"}>
                                     Date of birth

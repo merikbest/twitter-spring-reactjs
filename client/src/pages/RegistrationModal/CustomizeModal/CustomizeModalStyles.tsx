@@ -40,15 +40,6 @@ export const useCustomizeModalStyles = makeStyles((theme: Theme) => ({
             height: 16
         },
     },
-    link: {
-        textDecoration: "none",
-        margin: "16px 0 32px 0",
-        color: theme.palette.primary.main,
-        "&:hover": {
-            cursor: "pointer",
-            textDecoration: "underline",
-        },
-    },
     buttonWrapper: {
         marginTop: 285
     },

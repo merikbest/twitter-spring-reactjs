@@ -1,5 +1,5 @@
 import React, {FC, ReactElement} from 'react';
-import {Button, Dialog, DialogContent, Radio, Typography} from "@material-ui/core";
+import {Button, Dialog, DialogContent, Link as MuiLink, Radio, Typography} from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 
 import {useCustomizeModalStyles} from "./CustomizeModalStyles";
@@ -37,9 +37,15 @@ const CustomizeModal: FC<CustomizeModalProps> = ({open, onClose, onOpenCreateAcc
                 </Typography>
                 <Radio className={classes.radio} checked={true} color="primary"/>
                 <Typography variant={"body1"} component={"div"}>
-                    For more details about these settings, visit the <a
-                    href={"https://help.twitter.com/managing-your-account/new-account-settings"} target={"_blank"}
-                    className={classes.link}>Help Center</a>.
+                    {"For more details about these settings, visit the "}
+                    <MuiLink
+                        href="https://help.twitter.com/managing-your-account/new-account-settings"
+                        variant="body1"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        Help Center
+                    </MuiLink>.
                 </Typography>
                 <div className={classes.buttonWrapper}>
                     <Button

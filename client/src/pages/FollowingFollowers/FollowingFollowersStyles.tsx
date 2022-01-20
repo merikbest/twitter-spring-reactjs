@@ -43,7 +43,4 @@ export const useFollowingFollowersStyles = makeStyles((theme) => ({
             marginBottom: 16,
         },
     },
-    link: {
-        textDecoration: 'none',
-    },
 }));

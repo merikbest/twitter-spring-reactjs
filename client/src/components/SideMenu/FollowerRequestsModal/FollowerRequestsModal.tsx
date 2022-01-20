@@ -41,7 +41,7 @@ const FollowerRequestsModal: FC<FollowerRequestsModalProps> = ({visible, onClose
                     </div>
                 ) : (
                     myProfile?.followerRequests?.map((followers) => (
-                        <FollowerRequestsItem key={followers.id} user={followers}/>
+                        <FollowerRequestsItem key={followers.id} user={followers} onClose={onClose}/>
                     ))
                 )}
             </DialogContent>

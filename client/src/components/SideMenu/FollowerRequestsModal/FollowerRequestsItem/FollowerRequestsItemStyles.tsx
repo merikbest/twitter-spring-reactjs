@@ -16,10 +16,6 @@ export const useFollowerRequestsItemStyles = makeStyles((theme: Theme) => ({
             backgroundColor: theme.palette.secondary.main,
         },
     },
-    link: {
-        color: theme.palette.text.primary,
-        textDecoration: 'none',
-    },
     listAvatar: {
         width: "48px !important",
         height: "48px !important",

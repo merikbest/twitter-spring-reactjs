@@ -69,7 +69,7 @@ const ListsItem: FC<ListsItemProps<Lists> & HoverActionProps> = (
     };
 
     return (
-        <Link to={`/lists/${list?.id}`} className={classes.link}>
+        <Link to={`/lists/${list?.id}`} className={classes.routerLink}>
             <Paper className={classes.container} style={{border: (listIndex === 2) ? 0 : 1}} variant="outlined">
                 <Avatar
                     variant="square"

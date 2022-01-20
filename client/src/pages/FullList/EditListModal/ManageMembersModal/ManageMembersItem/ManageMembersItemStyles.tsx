@@ -16,7 +16,7 @@ export const useManageMembersItemStyles = makeStyles((theme: Theme) => ({
             backgroundColor: theme.palette.secondary.main,
         },
     },
-    link: {
+    routerLink: {
         color: theme.palette.text.primary,
         textDecoration: 'none',
     },

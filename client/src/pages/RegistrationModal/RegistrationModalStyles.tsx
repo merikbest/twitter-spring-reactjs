@@ -24,13 +24,9 @@ export const useRegistrationModalStyles = makeStyles((theme: Theme) => ({
         display: "flex",
         justifyContent: "space-between",
     },
-    link: {
+    phoneLink: {
         display: "inline-block",
         margin: "16px 0 32px 0",
-        color: theme.palette.primary.main,
-        "&:hover": {
-            cursor: "pointer",
-        },
     },
     footer: {
         marginBottom: 47,

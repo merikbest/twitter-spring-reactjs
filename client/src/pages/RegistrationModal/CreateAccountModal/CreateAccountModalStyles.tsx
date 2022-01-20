@@ -24,14 +24,6 @@ export const useCreateAccountModalStyles = makeStyles((theme: Theme) => ({
     text: {
         marginTop: 76,
     },
-    link: {
-        textDecoration: "none",
-        color: theme.palette.primary.main,
-        cursor: "pointer",
-        "&:hover": {
-            textDecoration: "underline",
-        }
-    },
     button: {
         marginTop: 15,
     },

@@ -10,7 +10,7 @@ export const usePinnedListsItemStyles = makeStyles((theme: Theme) => ({
             backgroundColor: "rgba(0, 0, 0, 0.03)",
         },
     },
-    link: {
+    routerLink: {
         color: theme.palette.text.primary,
         textDecoration: "none",
     },
@@ -24,6 +24,7 @@ export const usePinnedListsItemStyles = makeStyles((theme: Theme) => ({
         textOverflow: "ellipsis",
         whiteSpace: "nowrap",
         overflow: "hidden",
+        textAlign: "center"
     },
     lockIcon: {
         "& svg": {

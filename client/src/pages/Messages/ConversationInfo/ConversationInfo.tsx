@@ -1,6 +1,7 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
+import {Link} from 'react-router-dom';
 import {Avatar, Button, Divider, Paper, Switch, Typography} from "@material-ui/core";
 import classNames from "classnames";
 
@@ -53,33 +54,37 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
     useEffect(() => {
         const userBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === chatParticipant?.id) !== -1;
         const waitingForApprove = chatParticipant?.followerRequests?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
-        console.log(JSON.stringify(chatParticipant?.followerRequests))
         setBtnText(waitingForApprove ? ("Pending") : (userBlocked ? "Blocked" : "Following"));
         setIsUserBlocked(userBlocked);
         setIsWaitingForApprove(waitingForApprove);
     }, [chatParticipant, myProfile]);
 
-    const handleFollow = (user: User): void => {
-        if (user?.privateProfile) {
-            handleProcessFollowRequest(user);
+    const handleClickButton = (event: React.MouseEvent<HTMLButtonElement>, callback: () => void): void => {
+        event.preventDefault();
+        callback();
+    };
+
+    const handleFollow = (): void => {
+        if (chatParticipant?.privateProfile) {
+            handleProcessFollowRequest();
         } else {
-            dispatch(followUser(user));
-            dispatch(followProfile(user));
+            dispatch(followUser(chatParticipant!));
+            dispatch(followProfile(chatParticipant!));
         }
     };
 
-    const handleUnfollow = (user: User): void => {
-        if (user?.privateProfile) {
-            handleProcessFollowRequest(user);
+    const handleUnfollow = (): void => {
+        if (chatParticipant?.privateProfile) {
+            handleProcessFollowRequest();
         } else {
-            dispatch(unfollowUser(user));
-            dispatch(unfollowProfile(user));
+            dispatch(unfollowUser(chatParticipant!));
+            dispatch(unfollowProfile(chatParticipant!));
             setVisibleUnfollowModal(false);
         }
     };
 
-    const handleProcessFollowRequest = (user: User): void => {
-        dispatch(processFollowRequest(user.id!));
+    const handleProcessFollowRequest = (): void => {
+        dispatch(processFollowRequest(chatParticipant?.id!));
     };
 
     const handleClickOpenUnfollowModal = (): void => {
@@ -128,80 +133,82 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                         Conversation info
                     </Typography>
                 </Paper>
-                <div className={classes.pageInfoWrapper}>
-                    <Avatar
-                        className={classes.participantAvatar}
-                        src={chatParticipant?.avatar?.src ? chatParticipant?.avatar.src : DEFAULT_PROFILE_IMG}
-                    />
-                    <div style={{flex: 1}}>
-                        <div className={classes.participantInfoWrapper}>
-                            <div>
-                                <Typography variant={"h6"} component={"span"}>
-                                    {chatParticipant?.fullName}
-                                </Typography>
-                                {chatParticipant?.privateProfile && (
-                                    <span className={classes.lockIcon}>
-                                        {LockIcon}
-                                    </span>
-                                )}
-                                <Typography variant={"subtitle1"} component={"div"}>
-                                    @{chatParticipant?.username}
-                                </Typography>
-                            </div>
-                            <div className={classes.buttonWrapper}>
-                                {(!isFollower) ? (
-                                    (isUserBlocked) ? (
-                                        <Button
-                                            onClick={onOpenBlockUserModal}
-                                            className={classNames(classes.containedButton, classes.blockButton)}
-                                            onMouseOver={() => setBtnText("Unblock")}
-                                            onMouseLeave={() => setBtnText("Blocked")}
-                                            variant="contained"
-                                            color="primary"
-                                            size="small"
-                                        >
-                                            {btnText}
-                                        </Button>
-                                    ) : (
-                                        (isWaitingForApprove) ? (
+                <Link to={`/user/${chatParticipant?.id}`} className={classes.routeLink}>
+                    <div className={classes.pageInfoWrapper}>
+                        <Avatar
+                            className={classes.participantAvatar}
+                            src={chatParticipant?.avatar?.src ? chatParticipant?.avatar.src : DEFAULT_PROFILE_IMG}
+                        />
+                        <div style={{flex: 1}}>
+                            <div className={classes.participantInfoWrapper}>
+                                    <div>
+                                        <Typography variant={"h6"} component={"span"}>
+                                            {chatParticipant?.fullName}
+                                        </Typography>
+                                        {chatParticipant?.privateProfile && (
+                                            <span className={classes.lockIcon}>
+                                                {LockIcon}
+                                            </span>
+                                        )}
+                                        <Typography variant={"subtitle1"} component={"div"}>
+                                            @{chatParticipant?.username}
+                                        </Typography>
+                                    </div>
+                                <div className={classes.buttonWrapper}>
+                                    {(!isFollower) ? (
+                                        (isUserBlocked) ? (
                                             <Button
-                                                onClick={() => handleProcessFollowRequest(chatParticipant!)}
-                                                className={classes.outlinedButton}
-                                                onMouseOver={() => setBtnText("Cancel")}
-                                                onMouseLeave={() => setBtnText("Pending")}
-                                                variant="outlined"
+                                                onClick={(event) => handleClickButton(event, onOpenBlockUserModal)}
+                                                className={classNames(classes.containedButton, classes.blockButton)}
+                                                onMouseOver={() => setBtnText("Unblock")}
+                                                onMouseLeave={() => setBtnText("Blocked")}
+                                                variant="contained"
                                                 color="primary"
                                                 size="small"
                                             >
                                                 {btnText}
                                             </Button>
                                         ) : (
-                                            <Button
-                                                className={classes.outlinedButton}
-                                                onClick={() => handleFollow(chatParticipant!)}
-                                                color="primary"
-                                                variant="outlined"
-                                            >
-                                                Follow
-                                            </Button>
+                                            (isWaitingForApprove) ? (
+                                                <Button
+                                                    onClick={(event) => handleClickButton(event, handleProcessFollowRequest)}
+                                                    className={classes.outlinedButton}
+                                                    onMouseOver={() => setBtnText("Cancel")}
+                                                    onMouseLeave={() => setBtnText("Pending")}
+                                                    variant="outlined"
+                                                    color="primary"
+                                                    size="small"
+                                                >
+                                                    {btnText}
+                                                </Button>
+                                            ) : (
+                                                <Button
+                                                    className={classes.outlinedButton}
+                                                    onClick={(event) => handleClickButton(event, handleFollow)}
+                                                    color="primary"
+                                                    variant="outlined"
+                                                >
+                                                    Follow
+                                                </Button>
+                                            )
                                         )
-                                    )
-                                ) : (
-                                    <Button
-                                        className={classes.containedButton}
-                                        onMouseOver={() => setBtnText("Unfollow")}
-                                        onMouseLeave={() => setBtnText("Following")}
-                                        onClick={handleClickOpenUnfollowModal}
-                                        color="primary"
-                                        variant="contained"
-                                    >
-                                        {btnText}
-                                    </Button>
-                                )}
+                                    ) : (
+                                        <Button
+                                            className={classes.containedButton}
+                                            onMouseOver={() => setBtnText("Unfollow")}
+                                            onMouseLeave={() => setBtnText("Following")}
+                                            onClick={(event) => handleClickButton(event, handleClickOpenUnfollowModal)}
+                                            color="primary"
+                                            variant="contained"
+                                        >
+                                            {btnText}
+                                        </Button>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </Link>
                 <Divider/>
                 <div className={classes.notificationsInfoWrapper}>
                     <Typography variant={"h5"} component={"div"}>

@@ -126,13 +126,17 @@ const FollowingFollowers: FC = (): ReactElement => {
                                         "When they do, they’ll be listed here."
                                     )}
                                 </Typography>
-                                <Link to={"/home/connect"} className={classes.link}>
-                                    {(isMyProfile) && (
-                                        <Button variant="contained" color="primary" size="small">
-                                            Find people to follow
-                                        </Button>
-                                    )}
-                                </Link>
+                                {(isMyProfile) && (
+                                    <Button
+                                        to={"/home/connect"}
+                                        component={Link}
+                                        variant="contained"
+                                        color="primary"
+                                        size="small"
+                                    >
+                                        Find people to follow
+                                    </Button>
+                                )}
                             </div>)
                     ) : (
                         (userProfile?.following?.length !== 0) ? (

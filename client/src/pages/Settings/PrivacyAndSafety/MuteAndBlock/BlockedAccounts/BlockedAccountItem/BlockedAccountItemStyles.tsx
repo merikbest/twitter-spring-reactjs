@@ -23,7 +23,7 @@ export const useBlockedAccountItemStyles = makeStyles<Theme, BlockedAccountItemS
             backgroundColor: theme.palette.secondary.main,
         },
     },
-    link: {
+    routerLink: {
         color: theme.palette.text.primary,
         textDecoration: 'none',
     },

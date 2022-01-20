@@ -26,14 +26,14 @@ const PinnedListsItem: FC<PinnedListsItemProps> = ({pinnedList}): ReactElement =
     };
 
     return (
-        <Link to={`/lists/${pinnedList?.id}`} className={classes.link}>
+        <Link to={`/lists/${pinnedList?.id}`} className={classes.routerLink}>
             <div className={classes.pinnedListWrapper} onMouseEnter={handleHoverList} onMouseLeave={handleLeaveList}>
                 <Avatar
                     variant="square"
                     className={classes.listAvatar}
                     src={pinnedList?.wallpaper?.src ? pinnedList?.wallpaper?.src : pinnedList?.altWallpaper}
                 />
-                <Typography component={"span"} className={classes.pinnedListName}>
+                <Typography component={"div"} className={classes.pinnedListName}>
                     {pinnedList?.name}
                 </Typography>
                 {pinnedList?.private && (

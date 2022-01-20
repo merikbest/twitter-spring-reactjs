@@ -140,7 +140,7 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
                         {lists.slice(0, 3).map((list, index) => (
                             <ListsItem key={list.id} item={list} listIndex={index}/>
                         ))}
-                        <Link to={"/suggested"} className={classes.link}>
+                        <Link to={"/suggested"} className={classes.routerLink}>
                             <Typography variant={"body1"} component={"div"} className={classes.showMore}>
                                 Show more
                             </Typography>

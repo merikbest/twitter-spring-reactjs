@@ -15,9 +15,6 @@ export const useMessagesModalUserStyles = makeStyles<Theme, MessagesModalUserSty
         cursor: props => props.mutedDirectMessages ? "default" : "pointer",
         opacity: props => props.mutedDirectMessages ? 0.5 : 1,
     },
-    link: {
-        textDecoration: 'none',
-    },
     listAvatar: {
         width: theme.spacing(5),
         height: theme.spacing(5),

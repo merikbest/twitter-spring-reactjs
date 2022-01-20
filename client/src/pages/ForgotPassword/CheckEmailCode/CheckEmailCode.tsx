@@ -1,6 +1,6 @@
 import React, {ChangeEvent, FC, FormEvent, ReactElement, useState} from 'react';
 import {useHistory} from "react-router-dom";
-import {Button, Typography} from "@material-ui/core";
+import {Button, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {ForgotPasswordTextField} from "../ForgotPasswordTextField/ForgotPasswordTextField";
 import {AuthApi} from "../../../services/api/authApi";
@@ -68,11 +68,14 @@ const CheckEmailCode: FC = (): ReactElement => {
                     If you don't see the email, check other places it might be, like your junk, spam, social,
                     or other folders.
                 </Typography>
-                <Typography component={"div"} className={classes.link}>
-                    <a href={"https://help.twitter.com/forms/account-access/regain-access"} target={"_blank"}>
-                        Didn’t receive your code?
-                    </a>
-                </Typography>
+                <MuiLink
+                    href="https://help.twitter.com/forms/account-access/regain-access"
+                    variant="subtitle2"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    Didn’t receive your code?
+                </MuiLink>
             </div>
         </>
     );

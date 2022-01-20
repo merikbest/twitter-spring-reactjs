@@ -30,23 +30,22 @@ const BlockedAccountItem: FC<BlockedAccountItemProps & SnackbarProps> = (
     const isUserBlocked = myProfile?.userBlockedList?.findIndex(user => user.id === blockedUser?.id) !== -1;
     const classes = useBlockedAccountItemStyles({isUserBlocked});
 
-    const unblockUser = (): void => {
+    const unblockUser = (event: React.MouseEvent<HTMLButtonElement>): void => {
+        event.preventDefault();
         dispatch(addUserToBlocklist(blockedUser?.id!));
         setSnackBarMessage!(`@${blockedUser.username} has been ${isUserBlocked ? "unblocked" : "blocked"}.`);
         setOpenSnackBar!(true);
     };
 
     return (
-        <Paper className={classes.container}>
-            <Link to={`/user/${blockedUser?.id}`} className={classes.link}>
+        <Link to={`/user/${blockedUser?.id}`} className={classes.routerLink}>
+            <Paper className={classes.container}>
                 <Avatar
                     className={classes.listAvatar}
                     src={blockedUser?.avatar?.src ? blockedUser?.avatar.src : DEFAULT_PROFILE_IMG}
                 />
-            </Link>
-            <div style={{flex: 1}}>
-                <div className={classes.userInfoWrapper}>
-                    <Link to={`/user/${blockedUser?.id}`} className={classes.link}>
+                <div style={{flex: 1}}>
+                    <div className={classes.userInfoWrapper}>
                         <div className={classes.userInfo}>
                             <div>
                                 <Typography variant={"h6"} component={"span"}>
@@ -57,28 +56,28 @@ const BlockedAccountItem: FC<BlockedAccountItemProps & SnackbarProps> = (
                                 @{blockedUser?.username}
                             </Typography>
                         </div>
-                    </Link>
-                    <div className={classes.blockButton}>
-                        <Button
-                            onClick={unblockUser}
-                            color="primary"
-                            variant="contained"
-                            size="medium"
-                        >
-                            {isUserBlocked ? "Blocked" : "Block"}
-                        </Button>
+                        <div className={classes.blockButton}>
+                            <Button
+                                onClick={(event) => unblockUser(event)}
+                                color="primary"
+                                variant="contained"
+                                size="medium"
+                            >
+                                {isUserBlocked ? "Blocked" : "Block"}
+                            </Button>
+                        </div>
                     </div>
+                    <Typography variant={"body1"} component={"div"}>
+                        {blockedUser?.about}
+                    </Typography>
                 </div>
-                <Typography variant={"body1"} component={"div"}>
-                    {blockedUser?.about}
-                </Typography>
-            </div>
-            <ActionSnackbar
-                onCloseSnackBar={onCloseSnackBar!}
-                openSnackBar={openSnackBar!}
-                snackBarMessage={snackBarMessage!}
-            />
-        </Paper>
+                <ActionSnackbar
+                    onCloseSnackBar={onCloseSnackBar!}
+                    openSnackBar={openSnackBar!}
+                    snackBarMessage={snackBarMessage!}
+                />
+            </Paper>
+        </Link>
     );
 };
 

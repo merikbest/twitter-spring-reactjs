@@ -92,8 +92,9 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
         borderRight: 0,
         borderRadius: 0,
     },
-    link: {
-        textDecoration: "none",
+    routerLink: {
+        color: theme.palette.text.primary,
+        textDecoration: 'none',
     },
     showMore: {
         padding: 16,

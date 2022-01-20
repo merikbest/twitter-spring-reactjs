@@ -53,7 +53,7 @@ export const useConversationInfoStyles = makeStyles((theme: Theme) => ({
         height: "48px !important",
         marginRight: 15,
     },
-    link: {
+    routeLink: {
         color: theme.palette.text.primary,
         textDecoration: 'none',
     },

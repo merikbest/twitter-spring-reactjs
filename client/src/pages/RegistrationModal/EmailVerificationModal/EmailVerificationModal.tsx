@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useState} from 'react';
 import TwitterIcon from "@material-ui/icons/Twitter";
-import {Button, Dialog, DialogContent, Typography} from "@material-ui/core";
+import {Button, Dialog, DialogContent, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useEmailVerificationModalStyles} from "./EmailVerificationModalStyles";
 import {RegistrationInputField} from "../RegistrationInput/RegistrationInputField";
@@ -53,9 +53,9 @@ const EmailVerificationModal: FC<CustomizeModalProps> = ({email, open, onClose, 
                         fullWidth
                     />
                 </div>
-                <Typography component={"div"} className={classes.link}>
+                <MuiLink variant="subtitle2" href="#" className={classes.emailLinkWrapper}>
                     Didn't receive email?
-                </Typography>
+                </MuiLink>
                 <div className={classes.buttonWrapper}>
                     <Button
                         disabled={verificationCode === ""}

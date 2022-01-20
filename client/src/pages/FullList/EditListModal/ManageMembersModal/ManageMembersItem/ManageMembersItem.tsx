@@ -1,5 +1,5 @@
 import React, {FC, ReactElement} from 'react';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {Link} from 'react-router-dom';
 import {Avatar, Button, Paper, Typography} from "@material-ui/core";
 
@@ -10,6 +10,7 @@ import PopperUserWindow from "../../../../../components/PopperUserWindow/PopperU
 import {Lists} from "../../../../../store/ducks/lists/contracts/state";
 import {processListMember} from "../../../../../store/ducks/lists/actionCreators";
 import {HoverUserProps, withHoverUser} from "../../../../../hoc/withHoverUser";
+import {selectUserData} from "../../../../../store/ducks/user/selectors";
 
 interface ManageMembersItemProps<T> {
     item?: T;
@@ -27,24 +28,24 @@ const ManageMembersItem: FC<ManageMembersItemProps<Lists> & HoverUserProps> = (
 ): ReactElement => {
     const classes = useManageMembersItemStyles();
     const dispatch = useDispatch();
+    const myProfile = useSelector(selectUserData);
 
-    const isMember = list?.members?.findIndex((listMember) => listMember.id === member?.id);
+    const isMember = list?.members?.findIndex((listMember) => listMember.id === member?.id) !== -1;
 
-    const onClickAddUserToList = (): void => {
+    const onClickAddUserToList = (event: React.MouseEvent<HTMLButtonElement>): void => {
+        event.preventDefault();
         dispatch(processListMember({userId: member?.id!, listId: list!.id}));
     }
 
     return (
-        <Paper className={classes.container} variant="outlined">
-            <Link to={`/user/${member?.id}`} className={classes.link}>
+        <Link to={`/user/${member?.id}`} className={classes.routerLink}>
+            <Paper className={classes.container} variant="outlined">
                 <Avatar
                     className={classes.listAvatar}
                     src={member?.avatar?.src ? member?.avatar.src : DEFAULT_PROFILE_IMG}
                 />
-            </Link>
-            <div style={{flex: 1}}>
-                <div className={classes.header}>
-                    <Link to={`/user/${member?.id}`} className={classes.link}>
+                <div style={{flex: 1}}>
+                    <div className={classes.header}>
                         <div onMouseLeave={handleLeavePopper} className={classes.headerUserInfo}>
                             <Typography variant={"h6"} component={"div"} onMouseEnter={handleHoverPopper}>
                                 {member?.fullName}
@@ -57,33 +58,35 @@ const ManageMembersItem: FC<ManageMembersItemProps<Lists> & HoverUserProps> = (
                                 {member?.about}
                             </Typography>
                         </div>
-                    </Link>
-                    <div className={classes.buttonWrapper}>
-                        {(isMember === -1) ? (
-                            <Button
-                                className={classes.outlinedButton}
-                                onClick={onClickAddUserToList}
-                                variant="outlined"
-                                color="primary"
-                                size="small"
-                            >
-                                Add
-                            </Button>
-                        ) : (
-                            <Button
-                                className={classes.containedButton}
-                                onClick={onClickAddUserToList}
-                                variant="contained"
-                                color="primary"
-                                size="small"
-                            >
-                                Remove
-                            </Button>
-                        )}
+                        <div className={classes.buttonWrapper}>
+                            {(member?.id === myProfile?.id) ? null : (
+                                (!isMember) ? (
+                                    <Button
+                                        className={classes.outlinedButton}
+                                        onClick={(event) => onClickAddUserToList(event)}
+                                        variant="outlined"
+                                        color="primary"
+                                        size="small"
+                                    >
+                                        Add
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        className={classes.containedButton}
+                                        onClick={(event) => onClickAddUserToList(event)}
+                                        variant="contained"
+                                        color="primary"
+                                        size="small"
+                                    >
+                                        Remove
+                                    </Button>
+                                )
+                            )}
+                        </div>
                     </div>
                 </div>
-            </div>
-        </Paper>
+            </Paper>
+        </Link>
     );
 };
 

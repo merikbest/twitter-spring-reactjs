@@ -25,14 +25,4 @@ export const useCheckEmailCodeStyles = makeStyles((theme: Theme) => ({
         marginTop: 14,
         marginBottom: 68,
     },
-    link: {
-        "& a": {
-            fontSize: 13,
-            color: theme.palette.primary.main,
-            "&:hover": {
-                textDecoration: "underline",
-                cursor: 'pointer',
-            },
-        },
-    },
 }));
