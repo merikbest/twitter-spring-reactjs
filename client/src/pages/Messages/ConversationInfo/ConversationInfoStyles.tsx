@@ -27,10 +27,6 @@ export const useConversationInfoStyles = makeStyles((theme: Theme) => ({
         borderRadius: 0,
         alignItems: 'center',
         flex: 1,
-        '& h6': {
-            fontWeight: 800,
-            lineHeight: "20px",
-        },
     },
     pageInfoWrapper: {
         paddingTop: 65,

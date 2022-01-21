@@ -20,10 +20,6 @@ export const useFollowersYouKnowStyles = makeStyles((theme: Theme) => ({
         borderLeft: '0',
         borderRight: '0',
         borderRadius: 0,
-        '& h6': {
-            fontWeight: 800,
-            marginLeft: 16,
-        },
     },
     headerFullName: {
         fontWeight: 800,

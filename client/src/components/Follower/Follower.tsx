@@ -142,24 +142,26 @@ const Follower: FC<FollowerProps<User> & HoverUserProps & SnackbarProps> = (
                                 (!isFollower) ? (
                                     (isUserBlocked) ? (
                                         <Button
-                                            onClick={onOpenBlockUserModal}
                                             className={classNames(classes.containedButton, classes.blockButton)}
-                                            color="primary"
-                                            variant="contained"
+                                            onClick={onOpenBlockUserModal}
                                             onMouseOver={() => setBtnText("Unblock")}
                                             onMouseLeave={() => setBtnText("Blocked")}
+                                            color="primary"
+                                            variant="contained"
+                                            size="small"
                                         >
                                             {btnText}
                                         </Button>
                                     ) : (
                                         (isWaitingForApprove) ? (
                                             <Button
-                                                onClick={() => handleProcessFollowRequest(user!)}
                                                 className={classes.outlinedButton}
-                                                color="primary"
-                                                variant="outlined"
+                                                onClick={() => handleProcessFollowRequest(user!)}
                                                 onMouseOver={() => setBtnText("Cancel")}
                                                 onMouseLeave={() => setBtnText("Pending")}
+                                                color="primary"
+                                                variant="outlined"
+                                                size="small"
                                             >
                                                 {btnText}
                                             </Button>
@@ -169,6 +171,7 @@ const Follower: FC<FollowerProps<User> & HoverUserProps & SnackbarProps> = (
                                                 onClick={() => handleFollow(user!)}
                                                 color="primary"
                                                 variant="outlined"
+                                                size="small"
                                             >
                                                 Follow
                                             </Button>
@@ -177,11 +180,12 @@ const Follower: FC<FollowerProps<User> & HoverUserProps & SnackbarProps> = (
                                 ) : (
                                     <Button
                                         className={classes.containedButton}
+                                        onClick={handleClickOpenUnfollowModal}
                                         onMouseOver={() => setBtnText("Unfollow")}
                                         onMouseLeave={() => setBtnText("Following")}
-                                        onClick={handleClickOpenUnfollowModal}
                                         color="primary"
                                         variant="contained"
+                                        size="small"
                                     >
                                         {btnText}
                                     </Button>

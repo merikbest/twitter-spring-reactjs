@@ -25,7 +25,7 @@ const SuggestedLists: FC = (): ReactElement => {
             <Paper className={classes.header} variant="outlined">
                 <BackButton/>
                 <div>
-                    <Typography variant="h6">
+                    <Typography variant="h5">
                         Suggested Lists
                     </Typography>
                 </div>
@@ -46,7 +46,7 @@ const SuggestedLists: FC = (): ReactElement => {
                     </Typography>
                 </div>
             </Paper>
-            <Typography variant={"h3"} component={"div"} className={classes.listsTitle}>
+            <Typography variant={"h5"} component={"div"} className={classes.listsTitle}>
                 Discover new Lists
             </Typography>
             {isLoading ? (

@@ -22,9 +22,6 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
         '&:hover': {
             backgroundColor: theme.palette.secondary.main,
         },
-        '& h6': {
-            fontWeight: 800,
-        },
     },
     avatar: {
         width: "46px !important",

@@ -21,9 +21,6 @@ export const useBookmarksStyles= makeStyles((theme) => ({
         borderLeft: 0,
         borderRight: 0,
         borderRadius: 0,
-        '& h6': {
-            fontWeight: 800,
-        },
     },
     headerFullName: {
         fontWeight: 800,

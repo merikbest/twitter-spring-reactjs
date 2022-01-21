@@ -19,9 +19,6 @@ export const useExploreStyles = makeStyles((theme: Theme) => ({
         borderLeft: 0,
         borderRight: 0,
         borderRadius: 0,
-        '& h6': {
-            fontWeight: 800,
-        },
     },
     backButtonWrapper: {
         display: "inline-block",

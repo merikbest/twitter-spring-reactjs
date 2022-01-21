@@ -129,7 +129,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
             <Paper variant="outlined">
                 <Paper className={classes.header}>
                     <BackButton/>
-                    <Typography variant="h6">
+                    <Typography variant="h5">
                         Conversation info
                     </Typography>
                 </Paper>
