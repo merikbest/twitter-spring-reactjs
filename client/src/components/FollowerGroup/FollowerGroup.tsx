@@ -27,6 +27,7 @@ const FollowerGroup: FC<FollowerGroupProps> = ({user, sameFollowers}): ReactElem
                             <AvatarGroup>
                                 {sameFollowers.slice(0, 3).map(follower => (
                                     <Avatar
+                                        key={follower.id}
                                         alt={follower.username}
                                         src={follower.avatar?.src ? follower.avatar.src : DEFAULT_PROFILE_IMG}
                                     />

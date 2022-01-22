@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {Avatar, Button, Typography} from "@material-ui/core";
 import classNames from "classnames";
 
@@ -38,6 +38,7 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
     const classes = usePopperUserWindowStyles({isTweetComponent});
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
+    const history = useHistory();
     const [btnText, setBtnText] = useState<string>("Following");
     const [sameFollowers, setSameFollowers] = useState<User[]>([]);
     const [isUserBlocked, setIsUserBlocked] = useState<boolean>(false);
@@ -58,11 +59,10 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
         }
     }, [visible, user, myProfile]);
 
-    const handleProcessFollowRequest = (user: User): void => {
-        dispatch(processFollowRequest(user.id!));
-    };
+    const handleFollow = (event: React.MouseEvent<HTMLButtonElement>, user: User): void => {
+        event.preventDefault();
+        event.stopPropagation();
 
-    const handleFollow = (user: User): void => {
         if (user?.privateProfile) {
             handleProcessFollowRequest(user);
         } else {
@@ -71,13 +71,25 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
         }
     };
 
-    const handleUnfollow = (user: User): void => {
+    const handleUnfollow = (event: React.MouseEvent<HTMLButtonElement>, user: User): void => {
+        event.preventDefault();
+        event.stopPropagation();
+
         if (user?.privateProfile) {
             handleProcessFollowRequest(user);
         } else {
             dispatch(unfollowUser(user));
             dispatch(unfollowProfile(user));
         }
+    };
+
+    const cancelFollow = (event: React.MouseEvent<HTMLButtonElement>): void => {
+        event.preventDefault();
+        handleProcessFollowRequest(user!);
+    };
+
+    const handleProcessFollowRequest = (user: User): void => {
+        dispatch(processFollowRequest(user.id!));
     };
 
     const onBlockUser = (): void => {
@@ -90,6 +102,10 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
     if (!visible) {
         return null;
     }
+
+    const nextPage = () => {
+        history.push(`/user/${user?.id}`);
+    };
 
     return (
         <div
@@ -112,31 +128,31 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
                         (!isFollower) ? (
                             (isUserBlocked) ? (
                                 <Button
+                                    className={classNames(classes.containedButton, classes.blockButton)}
                                     onClick={onBlockUser}
-                                    className={classNames(classes.primaryButton, classes.blockButton)}
-                                    color="primary"
-                                    variant="contained"
                                     onMouseOver={() => setBtnText("Unblock")}
                                     onMouseLeave={() => setBtnText("Blocked")}
+                                    color="primary"
+                                    variant="contained"
                                 >
                                     {btnText}
                                 </Button>
                             ) : (
                                 (isWaitingForApprove) ? (
                                     <Button
-                                        onClick={() => handleProcessFollowRequest(user!)}
                                         className={classes.outlinedButton}
-                                        color="primary"
-                                        variant="outlined"
+                                        onClick={(event) => cancelFollow(event)}
                                         onMouseOver={() => setBtnText("Cancel")}
                                         onMouseLeave={() => setBtnText("Pending")}
+                                        color="primary"
+                                        variant="outlined"
                                     >
                                         {btnText}
                                     </Button>
                                 ) : (
                                     <Button
                                         className={classes.outlinedButton}
-                                        onClick={() => handleFollow(user!)}
+                                        onClick={(event) => handleFollow(event, user!)}
                                         color="primary"
                                         variant="outlined"
                                     >
@@ -146,10 +162,10 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
                             )
                         ) : (
                             <Button
-                                className={classes.primaryButton}
+                                className={classes.containedButton}
+                                onClick={(event) => handleUnfollow(event, user!)}
                                 onMouseOver={() => setBtnText("Unfollow")}
                                 onMouseLeave={() => setBtnText("Following")}
-                                onClick={() => handleUnfollow(user!)}
                                 color="primary"
                                 variant="contained"
                             >

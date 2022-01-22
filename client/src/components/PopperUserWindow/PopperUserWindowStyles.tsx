@@ -39,7 +39,7 @@ export const usePopperUserWindowStyles = makeStyles<Theme, PopperUserWindowStyle
             backgroundColor: theme.palette.secondary.light,
         },
     },
-    primaryButton: {
+    containedButton: {
         float: 'right',
         width: 105,
         '&:hover': {
@@ -67,6 +67,7 @@ export const usePopperUserWindowStyles = makeStyles<Theme, PopperUserWindowStyle
     userInfo: {
         marginTop: 12,
         marginBottom: 12,
+        whiteSpace: "initial",
     },
     details: {
         display: "flex",

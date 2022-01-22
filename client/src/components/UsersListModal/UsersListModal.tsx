@@ -1,15 +1,13 @@
 import React, {FC, ReactElement} from 'react';
-import {useDispatch} from "react-redux";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
+import {List} from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 
-import {User} from "../../store/ducks/user/contracts/state";
-import Follower from "../Follower/Follower";
-import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 import {LikeTweet, Retweet} from "../../store/ducks/tweets/contracts/state";
 import CloseButton from "../CloseButton/CloseButton";
 import {useUsersListModalStyles} from "./UsersListModalStyles";
+import UsersItem, {UserItemSize} from "../UsersItem/UsersItem";
 
 interface UsersListModalProps {
     users?: LikeTweet[] | Retweet[];
@@ -20,15 +18,6 @@ interface UsersListModalProps {
 
 const UsersListModal: FC<UsersListModalProps> = ({users, visible, title, onClose}): ReactElement | null => {
     const classes = useUsersListModalStyles();
-    const dispatch = useDispatch();
-
-    const handleFollow = (user: User): void => {
-        dispatch(followUser(user));
-    };
-
-    const handleUnfollow = (user: User): void => {
-        dispatch(unfollowUser(user));
-    };
 
     if (!visible) {
         return null;
@@ -40,8 +29,10 @@ const UsersListModal: FC<UsersListModalProps> = ({users, visible, title, onClose
                 <CloseButton onClose={onClose}/>
                 {title}
             </DialogTitle>
-            <DialogContent style={{height: 550, width: 598, padding: 0,}}>
-                {users?.map((user) => <Follower item={user.user} follow={handleFollow} unfollow={handleUnfollow}/>)}
+            <DialogContent className={classes.content}>
+                <List>
+                    {users?.map((user) => <UsersItem key={user.user.id} item={user.user} size={UserItemSize.MEDIUM}/>)}
+                </List>
             </DialogContent>
         </Dialog>
     );

@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import {IconButton, InputAdornment, Paper} from "@material-ui/core";
+import {IconButton, InputAdornment, List, Paper} from "@material-ui/core";
 
 import {MainSearchTextField} from "../../components/SearchTextField/MainSearchTextField";
 import {
@@ -23,14 +23,13 @@ import {
     selectPagesCount,
     selectTweetsItems
 } from "../../store/ducks/tweets/selectors";
-import {User} from "../../store/ducks/user/contracts/state";
 import Follower from "../../components/Follower/Follower";
-import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 import {useExploreStyles} from "./ExploreStyles";
 import {EditIcon, SearchIcon} from "../../icons";
 import {fetchUsersSearch, fetchUsersSearchByUsername} from "../../store/ducks/usersSearch/actionCreators";
 import {selectUsersSearch, selectUsersSearchIsLoading} from "../../store/ducks/usersSearch/selectors";
 import Spinner from "../../components/Spinner/Spinner";
+import UsersItem, {UserItemSize} from "../../components/UsersItem/UsersItem";
 
 const Explore: FC = (): ReactElement => {
     const classes = useExploreStyles();
@@ -128,14 +127,6 @@ const Explore: FC = (): ReactElement => {
         setPage(prevState => prevState + 1);
     };
 
-    const handleFollow = (user: User): void => {
-        dispatch(followUser(user));
-    };
-
-    const handleUnfollow = (user: User): void => {
-        dispatch(unfollowUser(user));
-    };
-
     return (
         <InfiniteScroll
             style={{overflow: "unset"}}
@@ -188,14 +179,11 @@ const Explore: FC = (): ReactElement => {
                         isUsersLoading ? (
                             <Spinner/>
                         ) : (
-                            users?.map((user) => (
-                                <Follower
-                                    key={user.id}
-                                    item={user}
-                                    follow={handleFollow}
-                                    unfollow={handleUnfollow}
-                                />
-                            ))
+                            <List>
+                                {users?.map((user) => (
+                                    <UsersItem key={user.id} item={user} size={UserItemSize.MEDIUM}/>
+                                ))}
+                            </List>
                         )
                     )}
                     {isTweetsLoading && <Spinner/>}

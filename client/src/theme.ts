@@ -103,6 +103,12 @@ const commonTheme = {
                 padding: 8,
             },
         },
+        MuiList: {
+            padding: {
+                paddingTop: 0,
+                paddingBottom: 0,
+            },
+        },
         MuiTypography: {
             h3: {
                 fontSize: 23,

@@ -27,19 +27,17 @@ const Tags: FC = (): ReactElement => {
             ) : (
                 <List>
                     {tags.slice(0, 3).map((tag: Tag) => (
-                        <Link to={{pathname: "/search", state: {tag: encodeURIComponent(tag.tagName)}}}>
-                            <React.Fragment key={tag.id}>
-                                <ListItem className={classes.item}>
-                                    <ListItemText
-                                        primary={tag.tagName}
-                                        secondary={
-                                            <Typography component="span" variant="body2" color="textSecondary">
-                                                {tag.tweetsQuantity} Tweets
-                                            </Typography>
-                                        }
-                                    />
-                                </ListItem>
-                            </React.Fragment>
+                        <Link key={tag.id} to={{pathname: "/search", state: {tag: encodeURIComponent(tag.tagName)}}}>
+                            <ListItem className={classes.item}>
+                                <ListItemText
+                                    primary={tag.tagName}
+                                    secondary={
+                                        <Typography component="span" variant="body2" color="textSecondary">
+                                            {tag.tweetsQuantity} Tweets
+                                        </Typography>
+                                    }
+                                />
+                            </ListItem>
                         </Link>
                     ))}
                     <Link to={"/home/trends"}>

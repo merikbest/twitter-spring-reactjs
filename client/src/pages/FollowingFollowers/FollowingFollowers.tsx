@@ -2,21 +2,19 @@ import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
 import {Link, useHistory, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import Paper from '@material-ui/core/Paper';
-import {Button, Typography} from "@material-ui/core";
+import {Button, List, Typography} from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
 import {selectUserData, selectUserIsLoading} from "../../store/ducks/user/selectors";
-import {User} from "../../store/ducks/user/contracts/state";
-import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
 import {fetchUserProfile, resetUserProfile} from "../../store/ducks/userProfile/actionCreators";
 import {useFollowingFollowersStyles} from "./FollowingFollowersStyles";
-import Follower from "../../components/Follower/Follower";
 import BackButton from "../../components/BackButton/BackButton";
 import Spinner from "../../components/Spinner/Spinner";
 import {selectUsersSearch, selectUsersSearchIsLoading} from "../../store/ducks/usersSearch/selectors";
 import {fetchFollowers, fetchFollowings, resetUsersState} from "../../store/ducks/usersSearch/actionCreators";
+import UsersItem, {UserItemSize} from "../../components/UsersItem/UsersItem";
 
 const FollowingFollowers: FC = (): ReactElement => {
     const classes = useFollowingFollowersStyles();
@@ -47,7 +45,7 @@ const FollowingFollowers: FC = (): ReactElement => {
             dispatch(resetUsersState());
             dispatch(resetUserProfile());
         };
-    }, []);
+    }, [params.id, params.follow]);
 
     const handleChangeTab = (event: ChangeEvent<{}>, newValue: number): void => {
         if (newValue === 0) {
@@ -64,18 +62,6 @@ const FollowingFollowers: FC = (): ReactElement => {
 
     const handleShowFollowers = (): void => {
         history.push(`/user/${userProfile?.id}/followers`)
-    };
-
-    const handleClickBack = (): void => {
-        history.push(`/user/${userProfile?.id}`);
-    };
-
-    const handleFollow = (user: User): void => {
-        dispatch(followUser(user));
-    };
-
-    const handleUnfollow = (user: User): void => {
-        dispatch(unfollowUser(user));
     };
 
     return (
@@ -107,9 +93,11 @@ const FollowingFollowers: FC = (): ReactElement => {
                 ) : (
                     (activeTab === 0) ? (
                         (userProfile?.followers?.length !== 0) ? (
-                            users.map((user) => (
-                                <Follower key={user.id} item={user} follow={handleFollow} unfollow={handleUnfollow}/>
-                            ))
+                            <List>
+                                {users.map((user) => (
+                                    <UsersItem key={user.id} item={user} size={UserItemSize.MEDIUM}/>
+                                ))}
+                            </List>
                         ) : (
                             <div className={classes.content}>
                                 <Typography variant={"h5"} component={"div"}>
@@ -140,9 +128,11 @@ const FollowingFollowers: FC = (): ReactElement => {
                             </div>)
                     ) : (
                         (userProfile?.following?.length !== 0) ? (
-                            users.map((user) => (
-                                <Follower key={user.id} item={user} follow={handleFollow} unfollow={handleUnfollow}/>
-                            ))
+                            <List>
+                                {users.map((user) => (
+                                    <UsersItem key={user.id} item={user} size={UserItemSize.MEDIUM}/>
+                                ))}
+                            </List>
                         ) : (
                             <div className={classes.content}>
                                 <Typography variant={"h5"} component={"div"}>

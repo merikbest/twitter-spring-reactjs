@@ -166,6 +166,7 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
                         ) : (
                             tweets.map((tweet) => (
                                 <div
+                                    key={tweet.id}
                                     className={classes.tweetContainer}
                                     onClick={() => onOpenEditTweetModal(tweet)}
                                 >

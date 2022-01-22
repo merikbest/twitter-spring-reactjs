@@ -16,6 +16,10 @@ export const useFollowerStyles = makeStyles((theme) => ({
             backgroundColor: theme.palette.secondary.main,
         },
     },
+    routerLink: {
+        color: theme.palette.text.primary,
+        textDecoration: 'none',
+    },
     listAvatar: {
         width: "46px !important",
         height: "46px !important",

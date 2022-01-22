@@ -23,12 +23,21 @@ const BlockUserModal: FC<BlockUserModalProps> = (
 ): ReactElement | null => {
     const classes = useBlockUserModalStyles();
 
+    const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+        event.stopPropagation();
+    };
+
     if (!visible) {
         return null;
     }
 
     return (
-        <Dialog className={classes.dialog} open={visible} onClose={onClose}>
+        <Dialog
+            className={classes.dialog}
+            open={visible}
+            onClick={(event) => handleClick(event)}
+            onClose={onClose}
+        >
             <DialogContent>
                 <Typography variant={"h5"} component={"div"}>
                     {isUserBlocked ? "Unblock" : "Block"} @{username}

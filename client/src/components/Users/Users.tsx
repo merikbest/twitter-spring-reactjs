@@ -6,7 +6,7 @@ import List from "@material-ui/core/List/List";
 import ListItem from "@material-ui/core/ListItem/ListItem";
 
 import {selectUsers, selectUsersIsLoading} from "../../store/ducks/users/selectors";
-import UsersItem from "./UsersItem/UsersItem";
+import UsersItem, {UserItemSize} from "../UsersItem/UsersItem";
 import {useUsersStyles} from "./UsersStyles";
 import Spinner from "../Spinner/Spinner";
 
@@ -29,7 +29,9 @@ const Users: FC = (): ReactElement => {
                         <Spinner/>
                     ) : (
                         <List>
-                            {users.slice(0, 5).map((user) => <UsersItem key={user.id} item={user}/>)}
+                            {users.slice(0, 5).map((user) => (
+                                <UsersItem key={user.id} item={user} size={UserItemSize.SMALL}/>
+                            ))}
                             <Link to={"/home/connect"}>
                                 <ListItem className={classes.footer}>
                                     <Typography variant={"subtitle1"} component={"div"}>

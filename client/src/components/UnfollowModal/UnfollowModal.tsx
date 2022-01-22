@@ -16,12 +16,21 @@ interface UnfollowModalProps {
 const UnfollowModal: FC<UnfollowModalProps> = ({user, visible, onClose, handleUnfollow}): ReactElement | null => {
     const classes = useUnfollowModalStyles();
 
+    const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+        event.stopPropagation();
+    };
+
     if (!visible) {
         return null;
     }
 
     return (
-        <Dialog open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
+        <Dialog
+            open={visible}
+            onClose={onClose}
+            onClick={(event) => handleClick(event)}
+            aria-labelledby="form-dialog-title"
+        >
             <DialogContent style={{padding: 0}}>
                 <div className={classes.modalWrapper}>
                     <Typography variant={"h5"} component={"div"}>

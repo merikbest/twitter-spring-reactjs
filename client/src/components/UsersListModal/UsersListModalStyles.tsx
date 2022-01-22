@@ -8,4 +8,9 @@ export const useUsersListModalStyles = makeStyles((theme: Theme) => ({
             borderBottom: `1px solid ${theme.palette.divider}`,
         },
     },
+    content: {
+        height: 550,
+        width: 598,
+        padding: 0,
+    },
 }));

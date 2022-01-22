@@ -1,6 +1,11 @@
 import {makeStyles, Theme} from "@material-ui/core";
+import {UserItemSize} from "./UsersItem";
 
-export const useUsersItemStyles = makeStyles((theme: Theme) => ({
+interface UsersItemStylesProps {
+    size?: UserItemSize
+}
+
+export const useUsersItemStyles = makeStyles<Theme , UsersItemStylesProps>((theme) => ({
     container: {
         cursor: 'pointer',
         borderBottom: `1px solid ${theme.palette.divider}`,
@@ -12,6 +17,7 @@ export const useUsersItemStyles = makeStyles((theme: Theme) => ({
             "& .MuiAvatar-root": {
                 width: "46px !important",
                 height: "46px !important",
+                marginRight: 12,
             },
         },
         '&:hover': {
@@ -22,8 +28,12 @@ export const useUsersItemStyles = makeStyles((theme: Theme) => ({
             textDecoration: 'none',
         },
     },
+    routerLink: {
+        color: theme.palette.text.primary,
+        textDecoration: 'none',
+    },
     userInfo: {
-        width: 120,
+        width: props => (props.size === UserItemSize.SMALL) ? 120 : 360,
         textOverflow: "ellipsis",
         whiteSpace: "nowrap",
         overflow: "hidden",
@@ -52,7 +62,7 @@ export const useUsersItemStyles = makeStyles((theme: Theme) => ({
             backgroundColor: theme.palette.secondary.light,
         },
     },
-    primaryButton: {
+    containedButton: {
         width: 105,
         '&:hover': {
             backgroundColor: theme.palette.error.dark,

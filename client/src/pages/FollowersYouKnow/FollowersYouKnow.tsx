@@ -6,7 +6,6 @@ import {Paper, Typography} from "@material-ui/core";
 import {useFollowersYouKnowStyles} from "./FollowersYouKnowStyles";
 import {UserApi} from "../../services/api/userApi";
 import {User} from "../../store/ducks/user/contracts/state";
-import {followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 import BackButton from "../../components/BackButton/BackButton";
 import ConnectToUsers from "../../components/ConnectToUsers/ConnectToUsers";
 import {fetchUserProfile} from "../../store/ducks/userProfile/actionCreators";
@@ -47,14 +46,6 @@ const FollowersYouKnow: FC = (): ReactElement => {
         }
     }, [myProfile]);
 
-    const handleFollow = (user: User): void => {
-        dispatch(followUser(user));
-    };
-
-    const handleUnfollow = (user: User): void => {
-        dispatch(unfollowUser(user));
-    };
-
     return (
         <Paper className={classes.container} variant="outlined">
             <Paper className={classes.header} variant="outlined">
@@ -87,8 +78,6 @@ const FollowersYouKnow: FC = (): ReactElement => {
                         title={"Followers you know"}
                         isUsersLoading={isLoading}
                         users={overallFollowers}
-                        handleFollow={handleFollow}
-                        handleUnfollow={handleUnfollow}
                     />
                 )
             )}

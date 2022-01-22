@@ -19,9 +19,6 @@ const Trends: FC = (): ReactElement => {
         dispatch(fetchTrends());
         window.scrollTo(0, 0);
 
-        return () => {
-            dispatch(resetTagsState());
-        };
     }, []);
 
     return (
