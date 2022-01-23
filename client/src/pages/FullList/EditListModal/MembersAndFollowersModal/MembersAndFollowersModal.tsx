@@ -55,7 +55,7 @@ const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
             </DialogTitle>
             <DialogContent className={classes.content}>
                 {(users.length !== 0) ? (
-                    users.map((user) => <ManageMembersItem item={list} member={user}/>)
+                    users.map((user) => <ManageMembersItem key={user.id} item={list} member={user}/>)
                 ) : (
                     <div className={classes.infoWrapper}>
                         <Typography variant={"h4"} component={"div"}>

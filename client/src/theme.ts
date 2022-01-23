@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import {createMuiTheme} from '@material-ui/core/styles';
+import {createTheme} from '@material-ui/core/styles';
 import {deepmerge} from '@mui/utils';
 
 const commonTheme = {
@@ -99,8 +99,13 @@ const commonTheme = {
             },
         },
         MuiIconButton: {
-            root: {
-                padding: 8,
+            sizeSmall: {
+                minWidth: 36,
+                minHeight: 36,
+                "& svg": {
+                    height: 20,
+                    width: 20,
+                },
             },
         },
         MuiList: {
@@ -153,7 +158,7 @@ const commonTheme = {
     },
 }
 
-export const dimTheme = createMuiTheme(deepmerge({
+export const dimTheme = createTheme(deepmerge({
     palette: {
         background: {
             default: "rgb(21, 32, 43)",
@@ -227,7 +232,7 @@ export const dimTheme = createMuiTheme(deepmerge({
     },
 }, commonTheme));
 
-export const lightsOutTheme = createMuiTheme(deepmerge({
+export const lightsOutTheme = createTheme(deepmerge({
     palette: {
         background: {
             default: "rgb(0, 0, 0)",
@@ -301,7 +306,7 @@ export const lightsOutTheme = createMuiTheme(deepmerge({
     },
 }, commonTheme));
 
-export const defaultTheme = createMuiTheme(deepmerge({
+export const defaultTheme = createTheme(deepmerge({
     palette: {
         background: {
             default: "rgb(255, 255, 255)",

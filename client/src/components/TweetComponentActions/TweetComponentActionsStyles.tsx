@@ -5,18 +5,7 @@ export const useTweetComponentMoreStyles = makeStyles((theme: Theme) => createSt
         position: 'relative',
         "& .MuiIconButton-root": {
             marginRight: (props: { isFullTweet: boolean }) => props.isFullTweet ? 0 : 8,
-            width: 35,
-            height: 35,
             color: theme.palette.text.secondary,
-            "& .MuiIconButton-label": {
-                "& span": {
-                    height: 25,
-                    "& svg": {
-                        color: theme.palette.text.secondary,
-                        height: "0.8em",
-                    },
-                },
-            },
         },
     },
     dropdown: {
@@ -36,9 +25,6 @@ export const useTweetComponentMoreStyles = makeStyles((theme: Theme) => createSt
         "& #delete": {
             color: theme.palette.error.main,
             "& svg": {
-                verticalAlign: "bottom",
-                marginRight: 15,
-                height: "1.30em",
                 fill: theme.palette.error.main,
             },
         },
@@ -51,8 +37,9 @@ export const useTweetComponentMoreStyles = makeStyles((theme: Theme) => createSt
             "& svg": {
                 verticalAlign: "bottom",
                 marginRight: 15,
+                width: 20,
+                height: 20,
                 fill: theme.palette.text.secondary,
-                height: "1.4em",
             },
         },
     },

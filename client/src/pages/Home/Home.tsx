@@ -65,7 +65,7 @@ const Home: FC = (): ReactElement => {
                             Home
                         </Typography>
                         <div className={classes.headerIcon}>
-                            <IconButton color="primary">
+                            <IconButton color="primary" size="small">
                                 <>{TopTweets}</>
                             </IconButton>
                         </div>

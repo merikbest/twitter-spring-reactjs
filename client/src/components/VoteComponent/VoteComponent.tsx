@@ -59,7 +59,7 @@ const VoteComponent: FC<VoteComponentProps> = ({tweetId, poll}): ReactElement =>
             ) : (
                 <>
                     {poll?.pollChoices.map((pollChoice) => (
-                        <div className={classes.container}>
+                        <div key={pollChoice.id} className={classes.container}>
                             <Button
                                 onClick={() => onClickVote(pollChoice.id)}
                                 className={classes.voteButton}

@@ -16,6 +16,7 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         alignItems: 'center',
         flex: 1,
+        justifyContent: "space-between",
         borderTop: '0',
         borderLeft: '0',
         borderRight: '0',
@@ -25,15 +26,7 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         },
     },
     headerIcon: {
-        display: "inline",
-        "& .MuiIconButton-root": {
-            padding: 7,
-            marginLeft: 475,
-            color: theme.palette.primary.main,
-            "& svg": {
-                height: "0.90em",
-            },
-        },
+        paddingRight: 10,
     },
     addForm: {
         padding: "72px 20px 0px 20px",

@@ -143,6 +143,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
                 {selectedUsers && (
                     selectedUsers.map(selectedUser => (
                         <Chip
+                            key={selectedUser.id}
                             avatar={
                                 <Avatar
                                     alt={selectedUser?.fullName}
@@ -158,9 +159,9 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
                 <div className={classes.divider}/>
                 <List component="nav" aria-label="main mailbox folders">
                     {searchText ? (
-                        users.map((user) => <DirectUserItems user={user}/>)
+                        users.map((user) => <DirectUserItems key={user.id} user={user}/>)
                     ) : (
-                        chats.map((chat) => <DirectUserItems user={
+                        chats.map((chat) => <DirectUserItems key={chat.id} user={
                             (chat.participants[0].user.id === myProfile?.id) ? (
                                 chat.participants[1].user
                             ) : (

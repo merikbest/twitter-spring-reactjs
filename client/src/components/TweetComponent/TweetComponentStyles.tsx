@@ -9,12 +9,9 @@ interface TweetComponentStylesProps {
 export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesProps>((theme) => ({
     container: {
         position: "relative",
-        display: 'flex',
         cursor: 'pointer',
-        alignItems: 'flex-start',
-        marginTop: 12,
+        paddingTop: 12,
         paddingLeft: 20,
-        flex: 1,
         borderTop: '0',
         borderLeft: '0',
         borderRight: '0',
@@ -22,6 +19,11 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
         '&:hover': {
             backgroundColor: theme.palette.secondary.main,
         },
+    },
+    tweetWrapper: {
+        display: 'flex',
+        alignItems: 'flex-start',
+        flex: 1,
     },
     avatar: {
         width: "46px !important",
@@ -40,16 +42,17 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
         display: 'flex',
         height: 20,
         justifyContent: 'space-between',
+        "& .MuiTypography-h6": {
+            fontWeight: 700,
+        },
     },
     lockIcon: {
         "& svg": {
             marginLeft: 3,
             marginBottom: -3,
-            height: "1.2em",
+            width: 16,
+            height: 16,
         },
-    },
-    headerText: {
-        color: theme.palette.text.secondary,
     },
     headerIcon: {
         padding: 0,
@@ -159,16 +162,15 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
     retweetWrapper: {
         display: "flex",
         alignItems: "center",
-        marginLeft: 48,
-        marginTop: 12,
-        marginBottom: -8,
+        marginLeft: 32,
+        marginBottom: 4,
         color: theme.palette.text.secondary,
         "& svg": {
             verticalAlign: "bottom",
             height: "1.20em",
         },
         "& .MuiTypography-subtitle2": {
-            marginLeft: 15,
+            marginLeft: 12,
             fontWeight: 700,
         },
     },

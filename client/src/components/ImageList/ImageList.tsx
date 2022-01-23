@@ -18,8 +18,8 @@ const ImageList: FC<ImageListProps> = ({images, removeImage}): ReactElement => {
         <>
             {(images.length !== 0) &&
                 <div className={classes.container}>
-                    {images.map((image) => (
-                        <div className={classes.item}>
+                    {images.map((image, index) => (
+                        <div key={index} className={classes.item}>
                             {removeImage && (
                                 <IconButton
                                     className={classes.itemRemove}

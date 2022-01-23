@@ -129,7 +129,9 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
                             </Typography>
                         ) : (
                             <Typography component={"div"} className={classes.pinnedListsWrapper}>
-                                {pinnedLists.map((pinnedList) => (<PinnedListsItem pinnedList={pinnedList}/>))}
+                                {pinnedLists.map((pinnedList) => (
+                                    <PinnedListsItem key={pinnedList.id} pinnedList={pinnedList}/>
+                                ))}
                             </Typography>
                         )}
                     </Paper>
@@ -150,7 +152,7 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
                         <Typography variant="h5">
                             Your Lists
                         </Typography>
-                        {userLists.map((list) => (<ListsItem isMyList={true} key={list.id} item={list}/>))}
+                        {userLists.map((list) => (<ListsItem key={list.id} isMyList={true} item={list}/>))}
                     </Paper>
                     <CreateListsModal visible={visibleCreateListModal} onClose={onCloseCreateListModal}/>
                 </>

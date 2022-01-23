@@ -3,7 +3,6 @@ import {IconButton} from '@material-ui/core';
 
 import {AddTweetFormAction, ImageObj} from "../AddTweetForm/AddTweetForm";
 import {MediaIcon} from "../../icons";
-import {useUploadImagesStyles} from "./UploadImagesStyles";
 import HoverAction from "../HoverAction/HoverAction";
 
 interface UploadImageProps {
@@ -21,7 +20,6 @@ const UploadImages: FC<UploadImageProps> = (
         handleLeaveAction
     }
 ): ReactElement => {
-    const classes = useUploadImagesStyles();
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleClickImage = () => {
@@ -59,17 +57,16 @@ const UploadImages: FC<UploadImageProps> = (
 
     return (
         <div>
-            <div className={classes.icon}>
-                <IconButton
-                    onClick={handleClickImage}
-                    onMouseEnter={() => handleHoverAction(AddTweetFormAction.MEDIA)}
-                    onMouseLeave={handleLeaveAction}
-                    color="primary"
-                >
-                    <>{MediaIcon}</>
-                    <HoverAction visible={visibleAddMediaAction} actionText={"Media"}/>
-                </IconButton>
-            </div>
+            <IconButton
+                onClick={handleClickImage}
+                onMouseEnter={() => handleHoverAction(AddTweetFormAction.MEDIA)}
+                onMouseLeave={handleLeaveAction}
+                color="primary"
+                size="small"
+            >
+                <>{MediaIcon}</>
+                <HoverAction visible={visibleAddMediaAction} actionText={"Media"}/>
+            </IconButton>
             <input ref={inputRef} type="file" id="upload-input" hidden/>
         </div>
     );

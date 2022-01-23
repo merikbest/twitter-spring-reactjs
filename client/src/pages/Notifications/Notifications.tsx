@@ -101,6 +101,7 @@ const Notifications: FC<HoverUserProps> = (
                                             <div style={{flex: 1}}>
                                                 {tweetAuthors.slice(0, 6).map((tweetAuthor) => (
                                                     <div
+                                                        key={tweetAuthor.id}
                                                         className={classes.notificationAvatarWrapper}
                                                         onMouseEnter={() => handleHoverPopperWithUser!(tweetAuthor)}
                                                         onMouseLeave={handleLeavePopper}
@@ -141,7 +142,7 @@ const Notifications: FC<HoverUserProps> = (
                                     </Link>
                                 )}
                                 {notifications.map((notification) => (
-                                    <NotificationWithLink notification={notification}>
+                                    <NotificationWithLink key={notification.id} notification={notification}>
                                         <Paper className={classes.notificationWrapper} variant="outlined">
                                             <div className={classes.notificationIcon}>
                                                 {(notification.notificationType === NotificationType.LIKE) && (

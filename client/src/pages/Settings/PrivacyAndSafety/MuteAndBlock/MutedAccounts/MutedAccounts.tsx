@@ -60,7 +60,7 @@ const MutedAccounts: FC = (): ReactElement => {
                         </Typography>
                     </div>
                 ) : (
-                    mutedUsers.map((mutedUser) => <MutedAccountItem mutedUser={mutedUser}/>)
+                    mutedUsers.map((mutedUser) => <MutedAccountItem key={mutedUser.id} mutedUser={mutedUser}/>)
                 )
             )}
         </>

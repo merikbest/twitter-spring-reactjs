@@ -5,8 +5,8 @@ import {Stomp} from '@stomp/stompjs';
 import SockJS from "sockjs-client";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import {MuiThemeProvider, Theme} from "@material-ui/core";
-import {createMuiTheme} from "@material-ui/core/styles";
-import {ThemeOptions} from "@material-ui/core/styles/createMuiTheme";
+import {createTheme} from "@material-ui/core/styles";
+import {ThemeOptions} from "@material-ui/core/styles/createTheme";
 import {deepmerge} from "@mui/utils";
 
 import Authentication from './pages/Authentication/Authentication';
@@ -174,7 +174,7 @@ const App: FC = (): ReactElement => {
     };
 
     return (
-        <MuiThemeProvider theme={createMuiTheme(deepmerge(theme, colorScheme))}>
+        <MuiThemeProvider theme={createTheme(deepmerge(theme, colorScheme))}>
             <CssBaseline/>
             <div className="App">
                 <Layout changeBackgroundColor={changeBackgroundColor} changeColorScheme={changeColorScheme}>

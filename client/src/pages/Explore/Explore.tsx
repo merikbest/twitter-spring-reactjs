@@ -23,7 +23,6 @@ import {
     selectPagesCount,
     selectTweetsItems
 } from "../../store/ducks/tweets/selectors";
-import Follower from "../../components/Follower/Follower";
 import {useExploreStyles} from "./ExploreStyles";
 import {EditIcon, SearchIcon} from "../../icons";
 import {fetchUsersSearch, fetchUsersSearchByUsername} from "../../store/ducks/usersSearch/actionCreators";

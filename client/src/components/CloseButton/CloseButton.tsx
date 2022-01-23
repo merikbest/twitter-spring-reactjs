@@ -1,10 +1,10 @@
 import React, {FC, ReactElement} from 'react';
-import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 
 import {useCloseButtonStyles} from "./CloseButtonStyles";
 import HoverAction from "../HoverAction/HoverAction";
 import {HoverActionProps, HoverActions, withHoverAction} from "../../hoc/withHoverAction";
+import {CloseIcon} from "../../icons";
 
 interface CloseButtonProps {
     onClose: () => void;
@@ -26,10 +26,11 @@ const CloseButton: FC<CloseButtonProps & HoverActionProps> = (
                 onClick={onClose}
                 onMouseEnter={() => handleHoverAction?.(HoverActions.OTHER)}
                 onMouseLeave={handleLeaveAction}
-                color="secondary"
+                color="primary"
+                size="small"
                 aria-label="close"
             >
-                <CloseIcon style={{fontSize: 26}} color="primary"/>
+                <>{CloseIcon}</>
                 <HoverAction visible={visibleHoverAction?.visibleOtherAction} actionText={"Close"}/>
             </IconButton>
         </div>

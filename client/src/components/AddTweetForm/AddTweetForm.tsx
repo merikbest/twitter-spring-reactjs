@@ -357,8 +357,8 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
                         className={classes.contentTextarea}
                         placeholder={visiblePoll ? "Ask a question..." : title}
                         value={text}
-                        rowsMax={maxRows}
-                        rowsMin={images.length !== 0 ? 1 : minRows}
+                        maxRows={maxRows}
+                        minRows={images.length !== 0 ? 1 : minRows}
                     />
                 </div>
             </div>
@@ -402,11 +402,12 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
                         handleHoverAction={handleHoverAction}
                         handleLeaveAction={handleLeaveAction}
                     />
-                    <div className={classes.footerImage}>
+                    <div>
                         <IconButton
-                            color="primary"
                             onMouseEnter={() => handleHoverAction(AddTweetFormAction.GIF)}
                             onMouseLeave={handleLeaveAction}
+                            color="primary"
+                            size="small"
                         >
                             <>{GifIcon}</>
                             <HoverAction visible={visibleAddGifAction} actionText={"GIF"}/>
@@ -420,29 +421,33 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
                                 onMouseEnter={() => handleHoverAction(AddTweetFormAction.POLL)}
                                 onMouseLeave={handleLeaveAction}
                                 color="primary"
+                                size="small"
                             >
                                 <>{PullIcon}</>
                                 <HoverAction visible={visibleAddPollAction} actionText={"Poll"}/>
                             </IconButton>
                         </div>
                     )}
-                    <div onClick={handleOpenPopup} className={classes.footerImage}>
+                    <div onClick={handleOpenPopup}>
                         <IconButton
                             onMouseEnter={() => handleHoverAction(AddTweetFormAction.EMOJI)}
                             onMouseLeave={handleLeaveAction}
+                            color="primary"
+                            size="small"
                         >
                             <>{EmojiIcon}</>
                             <HoverAction visible={visibleAddEmojiAction} actionText={"Emoji"}/>
                         </IconButton>
                     </div>
                     {(buttonName !== "Reply") && (
-                        <div className={classes.footerImage}>
+                        <div>
                             <IconButton
                                 disabled={!!quoteTweet}
                                 onClick={onOpenScheduleModal}
                                 onMouseEnter={() => handleHoverAction(AddTweetFormAction.SCHEDULE)}
                                 onMouseLeave={handleLeaveAction}
                                 color="primary"
+                                size="small"
                             >
                                 <>{ScheduleIcon}</>
                                 <HoverAction visible={visibleAddScheduleAction} actionText={"Schedule"}/>

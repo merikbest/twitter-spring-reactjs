@@ -95,7 +95,7 @@ const BlockedAccounts: FC = (): ReactElement => {
                         </Typography>
                     </div>
                 ) : (
-                    blockedUsers.map((blockedUser) => <BlockedAccountItem blockedUser={blockedUser}/>)
+                    blockedUsers.map((blockedUser) => <BlockedAccountItem key={blockedUser.id} blockedUser={blockedUser}/>)
                 )
             )}
         </>

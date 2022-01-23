@@ -116,7 +116,7 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<Tweet> & HoverActi
     };
 
     return (
-        <>
+        <Paper className={classes.container} variant="outlined">
             {isTweetRetweetedByUser && (
                 <div className={classes.retweetWrapper}>
                     <span>{RetweetOutlinedIconSm}</span>
@@ -133,7 +133,7 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<Tweet> & HoverActi
                     </Typography>
                 </div>
             )}
-            <Paper className={classes.container} variant="outlined">
+            <div className={classes.tweetWrapper}>
                 <a onClick={handleClickUser}>
                     <Avatar
                         className={classes.avatar}
@@ -148,15 +148,20 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<Tweet> & HoverActi
                             onMouseEnter={handleHoverPopper}
                             onMouseLeave={handleLeavePopper}
                         >
-                            <b>{tweet?.user.fullName}</b>
+                            <Typography variant={"h6"} component={"span"}>
+                                {tweet?.user.fullName}
+                            </Typography>
                             {tweet?.user.privateProfile && (
                                 <span className={classes.lockIcon}>
                                     {LockIcon}
                                 </span>
                             )}&nbsp;
-                            <span className={classes.headerText}>@{tweet?.user.username}</span>&nbsp;
-                            <span className={classes.headerText}>·</span>&nbsp;
-                            <span className={classes.headerText}>{formatDate(new Date(tweet!.dateTime))}</span>
+                            <Typography variant={"subtitle1"} component={"span"}>
+                                @{tweet?.user.username}{" · "}
+                            </Typography>
+                            <Typography variant={"subtitle1"} component={"span"}>
+                                {formatDate(new Date(tweet!.dateTime))}
+                            </Typography>
                             <PopperUserWindow visible={visiblePopperWindow} user={tweet!.user} isTweetComponent={true}/>
                         </a>
                         <TweetComponentActions
@@ -299,8 +304,8 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<Tweet> & HoverActi
                     visible={visibleAnalyticsModalWindow}
                     onClose={onCloseTweetAnalyticsModalWindow}
                 />
-            </Paper>
-        </>
+            </div>
+        </Paper>
     );
 };
 

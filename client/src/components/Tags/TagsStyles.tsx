@@ -26,21 +26,7 @@ export const useTagsStyles = makeStyles((theme) => ({
         borderRight: 0,
         borderBottom: `1px solid ${theme.palette.divider}`,
         backgroundColor: 'transparent',
-        padding: '10px 18px',
-        '& b': {
-            fontSize: 20,
-            fontWeight: 800,
-        },
-        "& .MuiIconButton-root": {
-            width: 35,
-            height: 35,
-            color: theme.palette.text.secondary,
-            "& svg" : {
-                marginTop: 5,
-                color: theme.palette.primary.main,
-                height: "0.95em",
-            },
-        },
+        padding: '10px 10px 10px 18px',
     },
     item: {
         cursor: 'pointer',

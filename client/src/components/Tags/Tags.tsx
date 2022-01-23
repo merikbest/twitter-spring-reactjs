@@ -1,7 +1,7 @@
 import React, {FC, ReactElement} from 'react';
 import {Link} from 'react-router-dom';
 import {useSelector} from "react-redux";
-import {CircularProgress, List, ListItem, ListItemText, Paper, Typography, IconButton} from "@material-ui/core";
+import {List, ListItem, ListItemText, Paper, Typography, IconButton} from "@material-ui/core";
 
 import {SettingsIcon} from "../../icons";
 import {selectIsTagsLoading, selectTagsItems} from "../../store/ducks/tags/selectors";
@@ -17,9 +17,11 @@ const Tags: FC = (): ReactElement => {
     return (
         <Paper className={classes.container}>
             <Paper className={classes.header} variant="outlined">
-                <b>Trends for you</b>
-                <IconButton color="primary">
-                    <span>{SettingsIcon}</span>
+                <Typography variant={"h5"} component={"div"}>
+                    Trends for you
+                </Typography>
+                <IconButton color="primary" size="small">
+                    <>{SettingsIcon}</>
                 </IconButton>
             </Paper>
             {isTagsLoaded ? (

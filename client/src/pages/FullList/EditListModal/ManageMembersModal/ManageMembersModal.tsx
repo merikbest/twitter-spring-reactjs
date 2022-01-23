@@ -50,7 +50,9 @@ const ManageMembersModal: FC<ManageMembersModalProps> = ({visible, onClose}): Re
                         <Tab className={classes.tab} label="Suggested"/>
                     </Tabs>
                 </div>
-                {(activeTab === 0) && (list?.members.map((member) => <ManageMembersItem item={list} member={member}/>))}
+                {(activeTab === 0) && (list?.members.map((member) => (
+                    <ManageMembersItem key={member.id} item={list} member={member}/>
+                )))}
                 {(activeTab === 1) && (<ManageMembersSuggested/>)}
             </DialogContent>
         </Dialog>

@@ -96,26 +96,10 @@ export const useAddTweetFormStyles = makeStyles<Theme, AddTweetFormStyles>((them
         marginTop: 10,
         paddingLeft: 70,
     },
-    footerImage: {
-        "& .MuiIconButton-root": {
-            color: theme.palette.primary.main,
-            padding: 7,
-            "& svg": {
-                verticalAlign: "bottom",
-                height: "0.9em",
-            },
-            "&:hover": {
-                backgroundColor: theme.palette.secondary.light,
-            },
-        },
-    },
     quoteImage: {
         "& .MuiIconButton-root": {
-            padding: 7,
             "& svg": {
                 color: props => props.quoteTweet || props.isScheduled ? theme.palette.primary.light : theme.palette.primary.main,
-                verticalAlign: "bottom",
-                height: "0.9em",
             },
         },
     },

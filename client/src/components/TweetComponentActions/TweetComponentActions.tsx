@@ -205,8 +205,9 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
                         onClick={handleClickActionsDropdown}
                         onMouseEnter={() => handleHoverAction?.(HoverActions.MORE)}
                         onMouseLeave={handleLeaveAction}
+                        size={"small"}
                     >
-                        <span>{EditIcon}</span>
+                        <>{EditIcon}</>
                         <HoverAction visible={visibleMoreAction} actionText={"More"}/>
                     </IconButton>
                     {openActionsDropdown ? (
