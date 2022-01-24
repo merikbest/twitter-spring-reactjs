@@ -2,13 +2,15 @@ import React, {FC, ReactElement} from 'react';
 import {Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useConnectedAppsStyles} from "./ConnectedAppsStyles";
+import {useGlobalStyles} from "../../../../../util/globalClasses";
 
 const ConnectedApps: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useConnectedAppsStyles();
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`These are the apps which you connected to your account. You can see the information these apps 
                     have access to and revoke access. `}

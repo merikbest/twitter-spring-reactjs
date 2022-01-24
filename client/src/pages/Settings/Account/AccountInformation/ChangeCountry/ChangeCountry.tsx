@@ -1,14 +1,17 @@
 import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {FormControl, InputLabel, Link as MuiLink, Typography} from "@material-ui/core";
+import classnames from "classnames";
 
 import {useChangeCountryStyles} from "./ChangeCountryStyles";
 import {FilledSelect} from "../../../../../components/FilledSelect/FilledSelect";
 import {selectUserData} from "../../../../../store/ducks/user/selectors";
 import {setUserLoadingStatus, updateCountry} from "../../../../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../../../../store/types";
+import {useGlobalStyles} from "../../../../../util/globalClasses";
 
 const ChangeCountry: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useChangeCountryStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
@@ -31,7 +34,7 @@ const ChangeCountry: FC = (): ReactElement => {
 
     return (
         <>
-            <div className={classes.selectWrapper}>
+            <div className={classnames(classes.selectWrapper, globalClasses.itemInfoWrapper)}>
                 <FormControl variant="filled">
                     <InputLabel htmlFor="select-country">
                         Country

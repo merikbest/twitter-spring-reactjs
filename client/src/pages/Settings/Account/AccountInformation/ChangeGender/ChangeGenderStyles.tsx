@@ -1,9 +1,6 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 export const useChangeGenderStyles = makeStyles((theme: Theme) => ({
-    infoWrapper: {
-        padding: "12px 16px",
-    },
     genderItemWrapper: {
         padding: "4px 0px",
         "& .MuiButtonBase-root": {

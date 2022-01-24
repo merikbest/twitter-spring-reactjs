@@ -1,9 +1,6 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 export const usePhotoTaggingStyles = makeStyles((theme: Theme) => ({
-    infoItemWrapper: {
-        padding: "12px 16px"
-    },
     title: {
         paddingBottom: 4,
     },

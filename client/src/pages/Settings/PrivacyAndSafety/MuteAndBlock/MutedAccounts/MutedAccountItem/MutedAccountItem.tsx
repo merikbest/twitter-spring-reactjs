@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {compose} from "recompose";
 import {Link} from "react-router-dom";
 import {Avatar, IconButton, Paper, Typography} from "@material-ui/core";
+import classnames from "classnames";
 
 import {useMutedAccountItemStyles} from "./MutedAccountItemStyles";
 import {DEFAULT_PROFILE_IMG} from "../../../../../../util/url";
@@ -14,6 +15,7 @@ import HoverAction from "../../../../../../components/HoverAction/HoverAction";
 import ActionSnackbar from "../../../../../../components/ActionSnackbar/ActionSnackbar";
 import {SnackbarProps, withSnackbar} from "../../../../../../hoc/withSnackbar";
 import {HoverActionProps, HoverActions, withHoverAction} from "../../../../../../hoc/withHoverAction";
+import {useGlobalStyles} from "../../../../../../util/globalClasses";
 
 interface MutedAccountItemProps {
     mutedUser?: User;
@@ -32,6 +34,7 @@ const MutedAccountItem: FC<MutedAccountItemProps & SnackbarProps & HoverActionPr
         handleLeaveAction
     }
 ): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
     const isUserMuted = myProfile?.userMutedList?.findIndex(user => user.id === mutedUser?.id) !== -1;
@@ -47,13 +50,13 @@ const MutedAccountItem: FC<MutedAccountItemProps & SnackbarProps & HoverActionPr
         <Paper className={classes.container}>
             <Link to={`/user/${mutedUser?.id}`}>
                 <Avatar
-                    className={classes.listAvatar}
+                    className={classnames(classes.listAvatar, globalClasses.avatar)}
                     src={mutedUser?.avatar?.src ? mutedUser?.avatar.src : DEFAULT_PROFILE_IMG}
                 />
             </Link>
             <div style={{flex: 1}}>
                 <div className={classes.userInfoWrapper}>
-                    <Link to={`/user/${mutedUser?.id}`} className={classes.renderLink}>
+                    <Link to={`/user/${mutedUser?.id}`} className={globalClasses.link}>
                         <div className={classes.userInfo}>
                             <div>
                                 <Typography variant={"h6"} component={"span"}>

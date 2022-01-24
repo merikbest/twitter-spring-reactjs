@@ -10,6 +10,8 @@ import {selectUserData} from "../../../../../../store/ducks/user/selectors";
 import {addUserToBlocklist} from "../../../../../../store/ducks/user/actionCreators";
 import ActionSnackbar from "../../../../../../components/ActionSnackbar/ActionSnackbar";
 import {SnackbarProps, withSnackbar} from "../../../../../../hoc/withSnackbar";
+import {useGlobalStyles} from "../../../../../../util/globalClasses";
+import classnames from "classnames";
 
 interface BlockedAccountItemProps {
     blockedUser: User;
@@ -25,6 +27,7 @@ const BlockedAccountItem: FC<BlockedAccountItemProps & SnackbarProps> = (
         onCloseSnackBar
     }
 ): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
     const isUserBlocked = myProfile?.userBlockedList?.findIndex(user => user.id === blockedUser?.id) !== -1;
@@ -38,10 +41,10 @@ const BlockedAccountItem: FC<BlockedAccountItemProps & SnackbarProps> = (
     };
 
     return (
-        <Link to={`/user/${blockedUser?.id}`} className={classes.routerLink}>
+        <Link to={`/user/${blockedUser?.id}`} className={globalClasses.link}>
             <Paper className={classes.container}>
                 <Avatar
-                    className={classes.listAvatar}
+                    className={classnames(classes.listAvatar, globalClasses.avatar)}
                     src={blockedUser?.avatar?.src ? blockedUser?.avatar.src : DEFAULT_PROFILE_IMG}
                 />
                 <div style={{flex: 1}}>

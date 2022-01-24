@@ -1,11 +1,7 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 export const useChangeUsernameStyles = makeStyles((theme: Theme) => ({
-    textFieldWrapper: {
-        padding: "12px 16px",
-    },
     suggestionsWrapper: {
-        padding: "12px 16px",
         "& .MuiTypography-h5": {
             marginBottom: 10,
         },
@@ -19,7 +15,6 @@ export const useChangeUsernameStyles = makeStyles((theme: Theme) => ({
         },
     },
     buttonWrapper: {
-        padding: "12px 16px",
         float: "right",
         height: 30,
     },

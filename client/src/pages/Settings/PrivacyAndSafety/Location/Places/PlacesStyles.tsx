@@ -1,9 +1,6 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 export const useLocationStyles = makeStyles((theme: Theme) => ({
-    infoItemWrapper: {
-        padding: "12px 16px"
-    },
     deleteUser: {
         textAlign: "center",
         padding: 16,

@@ -71,22 +71,28 @@ const Home: FC = (): ReactElement => {
                         </div>
                     </Route>
                     <Route path="/home/tweet">
-                        <BackButton/>
-                        <Typography variant="h5">
-                            Tweet
-                        </Typography>
+                        <div>
+                            <BackButton/>
+                            <Typography variant="h5">
+                                Tweet
+                            </Typography>
+                        </div>
                     </Route>
                     <Route path="/home/connect">
-                        <BackButton/>
-                        <Typography variant="h5">
-                            Connect
-                        </Typography>
+                        <div>
+                            <BackButton/>
+                            <Typography variant="h5">
+                                Connect
+                            </Typography>
+                        </div>
                     </Route>
                     <Route path="/home/trends">
-                        <BackButton/>
-                        <Typography variant="h5">
-                            Trends
-                        </Typography>
+                        <div>
+                            <BackButton/>
+                            <Typography variant="h5">
+                                Trends
+                            </Typography>
+                        </div>
                     </Route>
                 </Paper>
 

@@ -1,16 +1,6 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 export const useLocationInformationStyles = makeStyles((theme: Theme) => ({
-    infoItemWrapper: {
-        padding: "12px 16px"
-    },
-    infoItem: {
-        paddingBottom: 12,
-        "& .MuiCheckbox-root": {
-            float: "right",
-            marginTop: -10,
-        },
-    },
     deleteLocationInformation: {
         textAlign: "center",
         padding: 16,

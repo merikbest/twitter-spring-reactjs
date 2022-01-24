@@ -1,22 +1,25 @@
 import React, {FC, ReactElement} from 'react';
 import {Link} from 'react-router-dom';
 import {List, ListItem, Typography} from "@material-ui/core";
+import classnames from "classnames";
 
 import {useAppsAndSessionsStyles} from "./AppsAndSessionsStyles";
 import {ArrowRightIcon} from "../../../../icons";
+import {useGlobalStyles} from "../../../../util/globalClasses";
 
 const AppsAndSessions: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useAppsAndSessionsStyles();
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     See information about when you logged into your account and the apps you connected to your
                     account.
                 </Typography>
             </div>
-            <div className={classes.listWrapper}>
+            <div className={classnames(classes.listWrapper, globalClasses.svg)}>
                 <List component="nav" aria-label="main mailbox folders">
                     <Link to={"/settings/security/connected_apps"}>
                         <ListItem>

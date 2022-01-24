@@ -1,7 +1,7 @@
 import React, {ComponentType, FC, ReactElement, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory, useLocation} from 'react-router-dom';
-import {Avatar, IconButton, Paper, Typography} from '@material-ui/core';
+import {Avatar, IconButton, Paper, Typography, Link as MuiLink} from '@material-ui/core';
 import {compose} from "recompose";
 
 import {
@@ -179,9 +179,9 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<Tweet> & HoverActi
                             <object>
                                 <Typography variant={"subtitle1"} component={"div"}>
                                     {"Replying to "}
-                                    <Link to={`/user/${tweet?.addressedId}`} className={classes.replyLink}>
+                                    <MuiLink variant="subtitle1" to={`/user/${tweet?.addressedId}`} component={Link}>
                                         @{tweet?.addressedUsername}
-                                    </Link>
+                                    </MuiLink>
                                 </Typography>
                             </object>
                         )}

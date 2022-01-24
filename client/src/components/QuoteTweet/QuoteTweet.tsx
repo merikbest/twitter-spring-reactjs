@@ -1,5 +1,6 @@
 import React, {FC, ReactElement, useState} from 'react';
 import {ClickAwayListener, IconButton, List, ListItem, Typography} from "@material-ui/core";
+import classnames from "classnames";
 
 import {useQuoteTweetStyles} from "./QuoteTweetSyles";
 import {Retweet, Tweet} from "../../store/ducks/tweets/contracts/state";
@@ -7,6 +8,7 @@ import {QuoteTweetIcon, RetweetIcon, RetweetOutlinedIcon} from "../../icons";
 import QuoteTweetModal from "./QuoteTweetModal/QuoteTweetModal";
 import HoverAction from "../HoverAction/HoverAction";
 import {HoverActions} from "../../hoc/withHoverAction";
+import {useGlobalStyles} from "../../util/globalClasses";
 
 export interface QuoteTweetProps {
     quoteTweet: Tweet;
@@ -30,6 +32,7 @@ const QuoteTweet: FC<QuoteTweetProps> = (
         handleLeaveAction
     }
 ): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useQuoteTweetStyles({isTweetRetweetedByMe});
 
     const [open, setOpen] = useState<boolean>(false);
@@ -77,20 +80,16 @@ const QuoteTweet: FC<QuoteTweetProps> = (
                 </IconButton>
                 {(retweets.length !== 0) && (<span id={"retweets"}>{retweets.length}</span>)}
                 {open && (
-                    <div className={classes.dropdown}>
+                    <div className={classnames(classes.dropdown, globalClasses.svg)}>
                         <List>
                             <ListItem onClick={onClickRetweet}>
-                                <span className={classes.textIcon}>
-                                    {RetweetOutlinedIcon}
-                                </span>
+                                <>{RetweetOutlinedIcon}</>
                                 <Typography variant={"body1"} component={"span"}>
                                     {isTweetRetweetedByMe ? ("Undo Retweet") : ("Retweet")}
                                 </Typography>
                             </ListItem>
                             <ListItem onClick={handleClickOpenAddTweet}>
-                                <span className={classes.textIcon}>
-                                    {QuoteTweetIcon}
-                                </span>
+                                <>{QuoteTweetIcon}</>
                                 <Typography variant={"body1"} component={"span"}>
                                     Quote Tweet
                                 </Typography>

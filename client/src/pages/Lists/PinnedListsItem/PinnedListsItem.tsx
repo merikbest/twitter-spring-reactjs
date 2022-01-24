@@ -6,12 +6,14 @@ import {usePinnedListsItemStyles} from "./PinnedListsItemStyles";
 import {Lists} from "../../../store/ducks/lists/contracts/state";
 import PopperListWindow from "../PopperListWindow/PopperListWindow";
 import {LockIcon} from "../../../icons";
+import {useGlobalStyles} from "../../../util/globalClasses";
 
 interface PinnedListsItemProps {
     pinnedList: Lists;
 }
 
 const PinnedListsItem: FC<PinnedListsItemProps> = ({pinnedList}): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = usePinnedListsItemStyles();
     const [visiblePopperListWindow, setVisiblePopperListWindow] = useState<boolean>(false);
     const [delayHandler, setDelayHandler] = useState<any>(null);
@@ -26,7 +28,7 @@ const PinnedListsItem: FC<PinnedListsItemProps> = ({pinnedList}): ReactElement =
     };
 
     return (
-        <Link to={`/lists/${pinnedList?.id}`} className={classes.routerLink}>
+        <Link to={`/lists/${pinnedList?.id}`} className={globalClasses.link}>
             <div className={classes.pinnedListWrapper} onMouseEnter={handleHoverList} onMouseLeave={handleLeaveList}>
                 <Avatar
                     variant="square"

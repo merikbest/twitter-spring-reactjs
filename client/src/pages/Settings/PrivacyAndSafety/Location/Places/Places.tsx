@@ -4,8 +4,10 @@ import axios from "axios";
 
 import {useLocationStyles} from "./PlacesStyles";
 import {LocationIconFilled} from "../../../../../icons";
+import {useGlobalStyles} from "../../../../../util/globalClasses";
 
 const Places: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useLocationStyles();
     const [countryName, setCountryName] = useState<string>("Unknown");
 
@@ -18,14 +20,14 @@ const Places: FC = (): ReactElement => {
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     These are the places Twitter uses to show you more relevant content. You won’t see places listed
                     here if you turned off “Personalize based on places you’ve been”.
                 </Typography>
             </div>
             <Divider/>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <div className={classes.locationInfoWrapper}>
                     <div className={classes.locationIconWrapper}>
                         <span className={classes.locationIconIcon}>

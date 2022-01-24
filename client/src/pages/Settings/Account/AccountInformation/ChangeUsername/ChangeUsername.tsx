@@ -1,13 +1,16 @@
 import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
 import {Button, Divider, Typography} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
+import classnames from "classnames";
 
 import {useChangeUsernameStyles} from "./ChangeUsernameStyles";
 import {ChangeInfoTextField} from "../../../ChangeInfoTextField/ChangeInfoTextField";
 import {selectUserData, selectUserIsLoading} from "../../../../../store/ducks/user/selectors";
 import {updateUsername} from "../../../../../store/ducks/user/actionCreators";
+import {useGlobalStyles} from "../../../../../util/globalClasses";
 
 const ChangeUsername: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useChangeUsernameStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
@@ -37,7 +40,7 @@ const ChangeUsername: FC = (): ReactElement => {
     return (
         <>
             <div>
-                <div className={classes.textFieldWrapper}>
+                <div className={globalClasses.itemInfoWrapper}>
                     <ChangeInfoTextField
                         label="Username"
                         variant="filled"
@@ -48,7 +51,7 @@ const ChangeUsername: FC = (): ReactElement => {
                     />
                 </div>
                 <Divider/>
-                <div className={classes.suggestionsWrapper}>
+                <div className={classnames(classes.suggestionsWrapper, globalClasses.itemInfoWrapper)}>
                     <Typography variant={"h5"} component={"div"}>
                         Suggestions
                     </Typography>
@@ -58,7 +61,7 @@ const ChangeUsername: FC = (): ReactElement => {
                 </div>
                 <Divider/>
             </div>
-            <div className={classes.buttonWrapper}>
+            <div className={classnames(classes.buttonWrapper, globalClasses.itemInfoWrapper)}>
                 <Button
                     onClick={changeUsername}
                     type="submit"

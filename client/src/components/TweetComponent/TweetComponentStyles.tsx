@@ -65,10 +65,6 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
     tweetContent: {
         width: 500,
     },
-    replyLink: {
-        textDecoration: "none",
-        color: theme.palette.primary.main,
-    },
     text: {
         "& a": {
             display: "block",

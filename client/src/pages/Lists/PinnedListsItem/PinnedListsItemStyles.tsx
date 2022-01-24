@@ -10,10 +10,6 @@ export const usePinnedListsItemStyles = makeStyles((theme: Theme) => ({
             backgroundColor: "rgba(0, 0, 0, 0.03)",
         },
     },
-    routerLink: {
-        color: theme.palette.text.primary,
-        textDecoration: "none",
-    },
     listAvatar: {
         width: "68px !important",
         height: "68px !important",

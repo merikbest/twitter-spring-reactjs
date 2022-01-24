@@ -6,9 +6,6 @@ export const useDeactivateAccountStyles = makeStyles((theme: Theme) => ({
             textDecoration: "none",
         },
     },
-    infoItemWrapper: {
-        padding: "12px 16px"
-    },
     userInfoWrapper: {
         display: "flex",
         padding: "12px 16px",
@@ -20,20 +17,8 @@ export const useDeactivateAccountStyles = makeStyles((theme: Theme) => ({
             fontWeight: 700,
         },
     },
-    avatar: {
-        width: "46px !important",
-        height: "46px !important",
-    },
     usernameWrapper: {
         marginLeft: 15
-    },
-    routerLink: {
-        textDecoration: "none",
-        color: theme.palette.primary.main,
-        cursor: "pointer",
-        "&:hover": {
-            textDecoration: "underline",
-        }
     },
     deleteUser: {
         textAlign: "center",

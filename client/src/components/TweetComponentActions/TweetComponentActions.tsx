@@ -1,6 +1,7 @@
 import React, {FC, ReactElement, useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {ClickAwayListener, IconButton, List, ListItem, Typography} from "@material-ui/core";
+import classnames from "classnames";
 
 import {useTweetComponentMoreStyles} from "./TweetComponentActionsStyles";
 import {
@@ -39,6 +40,7 @@ import BlockUserModal from "../BlockUserModal/BlockUserModal";
 import ActionSnackbar from "../ActionSnackbar/ActionSnackbar";
 import {SnackbarProps, withSnackbar} from "../../hoc/withSnackbar";
 import {HoverActions} from "../../hoc/withHoverAction";
+import {useGlobalStyles} from "../../util/globalClasses";
 
 interface TweetComponentActionsProps {
     tweet: Tweet;
@@ -66,6 +68,7 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
         onCloseSnackBar
     }
 ): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useTweetComponentMoreStyles({isFullTweet});
     const dispatch = useDispatch();
     const tweetData = useSelector(selectTweetData);
@@ -211,7 +214,7 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
                         <HoverAction visible={visibleMoreAction} actionText={"More"}/>
                     </IconButton>
                     {openActionsDropdown ? (
-                        <div className={classes.dropdown}>
+                        <div className={classnames(classes.dropdown, globalClasses.svg)}>
                             <List>
                                 {(myProfile?.id === tweet.user.id) ? (
                                     <>

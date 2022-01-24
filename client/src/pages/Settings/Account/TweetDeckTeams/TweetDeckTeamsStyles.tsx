@@ -1,9 +1,6 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 export const useTweetDeckTeamsStyles = makeStyles((theme: Theme) => ({
-    infoItemWrapper: {
-        padding: "12px 16px"
-    },
     title: {
         paddingBottom: 4,
     },

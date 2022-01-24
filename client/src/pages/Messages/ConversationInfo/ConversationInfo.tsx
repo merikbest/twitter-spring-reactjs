@@ -19,6 +19,7 @@ import {SnackbarProps, withSnackbar} from "../../../hoc/withSnackbar";
 import ActionSnackbar from "../../../components/ActionSnackbar/ActionSnackbar";
 import UnfollowModal from "../../../components/UnfollowModal/UnfollowModal";
 import {followProfile, processFollowRequest, unfollowProfile} from "../../../store/ducks/userProfile/actionCreators";
+import {useGlobalStyles} from "../../../util/globalClasses";
 
 interface ConversationInfoProps {
     participantId?: number;
@@ -38,6 +39,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
         onCloseSnackBar
     }
 ): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useConversationInfoStyles();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -133,7 +135,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                         Conversation info
                     </Typography>
                 </Paper>
-                <Link to={`/user/${chatParticipant?.id}`} className={classes.routeLink}>
+                <Link to={`/user/${chatParticipant?.id}`} className={globalClasses.link}>
                     <div className={classes.pageInfoWrapper}>
                         <Avatar
                             className={classes.participantAvatar}
@@ -141,19 +143,19 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                         />
                         <div style={{flex: 1}}>
                             <div className={classes.participantInfoWrapper}>
-                                    <div>
-                                        <Typography variant={"h6"} component={"span"}>
-                                            {chatParticipant?.fullName}
-                                        </Typography>
-                                        {chatParticipant?.privateProfile && (
-                                            <span className={classes.lockIcon}>
-                                                {LockIcon}
-                                            </span>
-                                        )}
-                                        <Typography variant={"subtitle1"} component={"div"}>
-                                            @{chatParticipant?.username}
-                                        </Typography>
-                                    </div>
+                                <div>
+                                    <Typography variant={"h6"} component={"span"}>
+                                        {chatParticipant?.fullName}
+                                    </Typography>
+                                    {chatParticipant?.privateProfile && (
+                                        <span className={classes.lockIcon}>
+                                            {LockIcon}
+                                        </span>
+                                    )}
+                                    <Typography variant={"subtitle1"} component={"div"}>
+                                        @{chatParticipant?.username}
+                                    </Typography>
+                                </div>
                                 <div className={classes.buttonWrapper}>
                                     {(!isFollower) ? (
                                         (isUserBlocked) ? (

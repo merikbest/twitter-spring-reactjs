@@ -2,21 +2,21 @@ import React, {FC, ReactElement} from 'react';
 import {Link} from "react-router-dom";
 import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 
-import {useLocationStyles} from "./LocationStyles";
 import {ArrowRightIcon} from "../../../../icons";
+import {useGlobalStyles} from "../../../../util/globalClasses";
 
 const Location: FC = (): ReactElement => {
-    const classes = useLocationStyles();
+    const globalClasses = useGlobalStyles();
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Manage the location information Twitter uses to personalize your experience.
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Personalize based on places you’ve been
                     </Typography>
@@ -36,23 +36,23 @@ const Location: FC = (): ReactElement => {
                     </MuiLink>
                 </Typography>
             </div>
-            <Link to={"/settings/privacy_and_safety/locations"} className={classes.adsPreferencesWrapper}>
-                <div className={classes.adsPreferencesLink}>
+            <Link to={"/settings/privacy_and_safety/locations"} className={globalClasses.linkWrapper}>
+                <div className={globalClasses.contentLink}>
                     <Typography variant={"body1"} component={"span"}>
                         See places you’ve been
                     </Typography>
                     {ArrowRightIcon}
                 </div>
             </Link>
-            <Link to={"/settings/privacy_and_safety/location"} className={classes.adsPreferencesWrapper}>
-                <div className={classes.adsPreferencesLink}>
+            <Link to={"/settings/privacy_and_safety/location"} className={globalClasses.linkWrapper}>
+                <div className={globalClasses.contentLink}>
                     <Typography variant={"body1"} component={"span"}>
                         Add location information to your Tweets
                     </Typography>
                     {ArrowRightIcon}
                 </div>
             </Link>
-            <div className={classes.adsPreferencesLink}>
+            <div className={globalClasses.contentLink}>
                 <Typography variant={"body1"} component={"span"}>
                     Explore settings
                 </Typography>

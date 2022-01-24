@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import Dialog from "@material-ui/core/Dialog";
-import {Avatar, Typography} from "@material-ui/core";
+import {Avatar, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useReplyModalStyles} from "./ReplyModalStyles";
 import {formatDate} from "../../util/formatDate";
@@ -86,9 +86,9 @@ const ReplyModal: FC<ReplyModalProps> = (
                         <object>
                             <Typography variant={"subtitle1"} component={"div"} className={classes.replyWrapper}>
                                 {"Replying to "}
-                                <Link to={`/user/${user.id}`} className={classes.replyLink}>
+                                <MuiLink variant="subtitle1" to={`/user/${user.id}`} component={Link}>
                                     @{user.username}
-                                </Link>
+                                </MuiLink>
                             </Typography>
                         </object>
                     </div>

@@ -2,13 +2,15 @@ import React, {FC, ReactElement} from 'react';
 import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useLocationInformationStyles} from "./LocationInformationStyles";
+import {useGlobalStyles} from "../../../../../util/globalClasses";
 
 const LocationInformation: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useLocationInformationStyles();
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`If enabled, you will be able to attach location information to your Tweets. `}
                     <MuiLink
@@ -21,8 +23,8 @@ const LocationInformation: FC = (): ReactElement => {
                     </MuiLink>
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Add location information to your Tweets
                     </Typography>

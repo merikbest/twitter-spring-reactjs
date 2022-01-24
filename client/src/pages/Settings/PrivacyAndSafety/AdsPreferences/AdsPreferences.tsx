@@ -3,20 +3,20 @@ import {Checkbox, Typography, Link as MuiLink} from "@material-ui/core";
 import {Link} from "react-router-dom";
 
 import {ArrowRightIcon} from "../../../../icons";
-import {useAdsPreferencesStyles} from "./AdsPreferencesStyles";
+import {useGlobalStyles} from "../../../../util/globalClasses";
 
 const AdsPreferences: FC = (): ReactElement => {
-    const classes = useAdsPreferencesStyles();
+    const globalClasses = useGlobalStyles();
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Control your discoverability settings and manage contacts you’ve imported.
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Personalized ads
                     </Typography>
@@ -38,15 +38,15 @@ const AdsPreferences: FC = (): ReactElement => {
                 </Typography>
             </div>
             {/*<Link to={""} className={classes.adsPreferencesWrapper}>*/}
-                <div className={classes.adsPreferencesLink}>
+                <div className={globalClasses.contentLink}>
                     <Typography variant={"body1"} component={"span"}>
                         Interests
                     </Typography>
                     {ArrowRightIcon}
                 </div>
             {/*</Link>*/}
-            <Link to={"/settings/privacy_and_safety/audiences"} className={classes.adsPreferencesWrapper}>
-                <div className={classes.adsPreferencesLink}>
+            <Link to={"/settings/privacy_and_safety/audiences"} className={globalClasses.linkWrapper}>
+                <div className={globalClasses.contentLink}>
                     <Typography variant={"body1"} component={"span"}>
                         Your advertiser list
                     </Typography>

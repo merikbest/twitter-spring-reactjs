@@ -49,10 +49,6 @@ export const useConversationInfoStyles = makeStyles((theme: Theme) => ({
         height: "48px !important",
         marginRight: 15,
     },
-    routeLink: {
-        color: theme.palette.text.primary,
-        textDecoration: 'none',
-    },
     lockIcon: {
         "& svg": {
             marginLeft: 3,

@@ -23,6 +23,7 @@ import BlockUserModal from "../BlockUserModal/BlockUserModal";
 import {SnackbarProps, withSnackbar} from "../../hoc/withSnackbar";
 import {HoverActionProps} from "../../hoc/withHoverAction";
 import ActionSnackbar from "../ActionSnackbar/ActionSnackbar";
+import {useGlobalStyles} from "../../util/globalClasses";
 
 export interface UsersItemProps<T> {
     item?: T,
@@ -50,6 +51,7 @@ const UsersItem: FC<UsersItemProps<User> & SnackbarProps & HoverUserProps> = (
     }
 ): ReactElement => {
     const classes = useUsersItemStyles({size});
+    const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
     const [btnText, setBtnText] = useState<string>("Following");
@@ -127,7 +129,7 @@ const UsersItem: FC<UsersItemProps<User> & SnackbarProps & HoverUserProps> = (
 
     return (
         <>
-            <Link to={`/user/${user?.id}`} className={classes.routerLink}>
+            <Link to={`/user/${user?.id}`} className={globalClasses.link}>
                 <ListItem className={classes.container}>
                     <ListItemAvatar>
                         <Avatar

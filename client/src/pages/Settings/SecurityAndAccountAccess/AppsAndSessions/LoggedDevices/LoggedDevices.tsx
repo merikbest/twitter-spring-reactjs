@@ -1,16 +1,18 @@
 import React, {FC, ReactElement} from 'react';
 import {Link} from 'react-router-dom';
 import {Divider, Link as MuiLink, Typography} from "@material-ui/core";
+import classnames from "classnames";
 
 import {useLoggedDevicesStyles} from "./LoggedDevicesStyles";
+import {useGlobalStyles} from "../../../../../util/globalClasses";
 
 const LoggedDevices: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useLoggedDevicesStyles();
 
-    // TODO "Off-Twitter activity" Link
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={classnames(classes.infoItemWrapper, globalClasses.itemInfoWrapper)}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     These are browsers, devices, and information Twitter uses to personalize your experience.
                     This includes devices and browsers you haven’t used to log in to Twitter, as well as email
@@ -25,7 +27,7 @@ const LoggedDevices: FC = (): ReactElement => {
                 </Typography>
             </div>
             <Divider/>
-            <div className={classes.infoItemWrapper}>
+            <div className={classnames(classes.infoItemWrapper, globalClasses.itemInfoWrapper)}>
                 <Typography variant={"h6"} component={"div"}>
                     Browsers
                 </Typography>
@@ -37,7 +39,7 @@ const LoggedDevices: FC = (): ReactElement => {
                 </Typography>
             </div>
             <Divider/>
-            <div className={classes.infoItemWrapper}>
+            <div className={classnames(classes.infoItemWrapper, globalClasses.itemInfoWrapper)}>
                 <Typography variant={"h6"} component={"div"}>
                     Mobile Devices
                 </Typography>
@@ -49,7 +51,7 @@ const LoggedDevices: FC = (): ReactElement => {
                 </Typography>
             </div>
             <Divider/>
-            <div className={classes.infoItemWrapper}>
+            <div className={classnames(classes.infoItemWrapper, globalClasses.itemInfoWrapper)}>
                 <Typography variant={"h6"} component={"div"}>
                     Email addresses
                 </Typography>

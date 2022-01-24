@@ -15,18 +15,8 @@ export const useAccountStyles = makeStyles((theme: Theme) => ({
                 backgroundColor: theme.palette.secondary.main,
             },
         },
-        "& svg": {
-            color: theme.palette.text.secondary,
-            height: "1.3em",
-        },
     },
     icon: {
         margin: "15px 30px 15px 15px",
-    },
-    arrowIcon: {
-        marginLeft: "auto"
-    },
-    accountInfo: {
-        padding: "12px 16px",
     },
 }));

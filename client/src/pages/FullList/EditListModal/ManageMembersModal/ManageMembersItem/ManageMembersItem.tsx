@@ -11,6 +11,7 @@ import {Lists} from "../../../../../store/ducks/lists/contracts/state";
 import {processListMember} from "../../../../../store/ducks/lists/actionCreators";
 import {HoverUserProps, withHoverUser} from "../../../../../hoc/withHoverUser";
 import {selectUserData} from "../../../../../store/ducks/user/selectors";
+import {useGlobalStyles} from "../../../../../util/globalClasses";
 
 interface ManageMembersItemProps<T> {
     item?: T;
@@ -26,6 +27,7 @@ const ManageMembersItem: FC<ManageMembersItemProps<Lists> & HoverUserProps> = (
         handleLeavePopper
     }
 ): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useManageMembersItemStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
@@ -38,7 +40,7 @@ const ManageMembersItem: FC<ManageMembersItemProps<Lists> & HoverUserProps> = (
     }
 
     return (
-        <Link to={`/user/${member?.id}`} className={classes.routerLink}>
+        <Link to={`/user/${member?.id}`} className={globalClasses.link}>
             <Paper className={classes.container} variant="outlined">
                 <Avatar
                     className={classes.listAvatar}

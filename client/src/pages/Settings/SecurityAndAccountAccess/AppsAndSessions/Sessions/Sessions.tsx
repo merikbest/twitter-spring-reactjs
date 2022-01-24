@@ -6,8 +6,10 @@ import bowser from "bowser";
 
 import {useSessionsStyles} from "./SessionsStyles";
 import {ArrowRightIcon, DeviceIcon} from "../../../../../icons";
+import {useGlobalStyles} from "../../../../../util/globalClasses";
 
 const Sessions: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useSessionsStyles();
     const [OSName, setOSName] = useState<string | undefined>("Unknown");
     const [browserName, setBrowserName] = useState<string>("Unknown");
@@ -26,18 +28,18 @@ const Sessions: FC = (): ReactElement => {
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Sessions are the devices you are using or that have used your Twitter account. These are the
                     sessions where your account is currently logged in. You can log out of each session.
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h6"} component={"div"}>
                     Current active session
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     You’re logged into this Twitter account on this device and are currently using it.
                 </Typography>
@@ -71,17 +73,17 @@ const Sessions: FC = (): ReactElement => {
                 </div>
             </Link>
             <Divider/>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h6"} component={"div"}>
                     Log out of other sessions
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     You’re logged into these accounts on these devices and aren’t currently using them.
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`Logging out will end 1 of your other active Twitter sessions. It won’t affect your current active session. `}
                     <MuiLink

@@ -12,6 +12,7 @@ import {followList, pinList, unfollowList, unpinList} from "../../../store/ducks
 import PopperListWindow from "../PopperListWindow/PopperListWindow";
 import HoverAction from "../../../components/HoverAction/HoverAction";
 import {HoverActionProps, HoverActions, withHoverAction} from "../../../hoc/withHoverAction";
+import {useGlobalStyles} from "../../../util/globalClasses";
 
 interface ListsItemProps<T> {
     item?: T;
@@ -29,6 +30,7 @@ const ListsItem: FC<ListsItemProps<Lists> & HoverActionProps> = (
         handleLeaveAction
     }
 ): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useListsItemStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
@@ -69,7 +71,7 @@ const ListsItem: FC<ListsItemProps<Lists> & HoverActionProps> = (
     };
 
     return (
-        <Link to={`/lists/${list?.id}`} className={classes.routerLink}>
+        <Link to={`/lists/${list?.id}`} className={globalClasses.link}>
             <Paper className={classes.container} style={{border: (listIndex === 2) ? 0 : 1}} variant="outlined">
                 <Avatar
                     variant="square"

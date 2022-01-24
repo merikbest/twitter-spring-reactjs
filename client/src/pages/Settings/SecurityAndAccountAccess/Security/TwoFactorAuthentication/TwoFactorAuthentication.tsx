@@ -2,18 +2,20 @@ import React, {FC, ReactElement} from 'react';
 import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useTwoFactorAuthenticationStyles} from "./TwoFactorAuthenticationStyles";
+import {useGlobalStyles} from "../../../../../util/globalClasses";
 
 const TwoFactorAuthentication: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useTwoFactorAuthenticationStyles();
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
                     Two-factor authentication
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <div className={classes.infoItem}>
                     <Typography variant={"body1"} component={"span"}>
                         Text message
@@ -25,7 +27,7 @@ const TwoFactorAuthentication: FC = (): ReactElement => {
                     you log in to Twitter.
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <div className={classes.infoItem}>
                     <Typography variant={"body1"} component={"span"}>
                         Authentication app
@@ -37,7 +39,7 @@ const TwoFactorAuthentication: FC = (): ReactElement => {
                     Twitter.
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <div className={classes.infoItem}>
                     <Typography variant={"body1"} component={"span"}>
                         Security key

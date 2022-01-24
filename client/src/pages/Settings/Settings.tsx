@@ -1,6 +1,7 @@
 import React, {FC, ReactElement} from 'react';
 import {NavLink, Route, useLocation} from 'react-router-dom';
 import {Grid, List, ListItem, Paper, Typography} from "@material-ui/core";
+import classnames from "classnames";
 
 import {useSettingsStyles} from "./SettingsStyles";
 import {ArrowRightIcon} from "../../icons";
@@ -59,12 +60,14 @@ import DataUsage from "./AccessibilityDisplayLanguages/DataUsage/DataUsage";
 import Display, {DisplayProps} from "./AccessibilityDisplayLanguages/Display/Display";
 import Languages from "./AccessibilityDisplayLanguages/Languages/Languages";
 import Autoplay from "./AccessibilityDisplayLanguages/DataUsage/Autoplay/Autoplay";
+import {useGlobalStyles} from "../../util/globalClasses";
 
 export interface LocationState {
     pathname: string;
 }
 
 const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const location = useLocation<LocationState>();
     const classes = useSettingsStyles({location});
     const [selectedIndex, setSelectedIndex] = React.useState(1);
@@ -83,7 +86,7 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                 Settings
                             </Typography>
                         </Paper>
-                        <div className={classes.listWrapper}>
+                        <div className={classnames(classes.listWrapper, globalClasses.svg)}>
                             <List component="nav" aria-label="main mailbox folders">
                                 <NavLink to={"/settings"}>
                                     <ListItem

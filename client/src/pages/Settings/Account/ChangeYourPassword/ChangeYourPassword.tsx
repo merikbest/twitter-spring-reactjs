@@ -1,10 +1,13 @@
 import React, {FC, ReactElement, useState} from 'react';
-import {Button, Divider, Typography} from "@material-ui/core";
+import {Button, Divider, Link as MuiLink} from "@material-ui/core";
+import classnames from "classnames";
 
 import {useChangeYourPasswordStyles} from "./ChangeYourPasswordStyles";
 import {ChangeInfoTextField} from "../../ChangeInfoTextField/ChangeInfoTextField";
+import {useGlobalStyles} from "../../../../util/globalClasses";
 
 const ChangeYourPassword: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useChangeYourPasswordStyles();
     const [currentPassword, setCurrentPassword] = useState<string>("");
     const [newPassword, setNewPassword] = useState<string>("");
@@ -12,7 +15,7 @@ const ChangeYourPassword: FC = (): ReactElement => {
 
     return (
         <>
-            <div className={classes.textFieldWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <ChangeInfoTextField
                     label="Current password"
                     type="text"
@@ -20,12 +23,12 @@ const ChangeYourPassword: FC = (): ReactElement => {
                     value={currentPassword}
                     fullWidth
                 />
-                <Typography variant={"body1"} component={"span"} className={classes.forgotPassword}>
+                <MuiLink href="#" variant="body1">
                     Forgot password?
-                </Typography>
+                </MuiLink>
             </div>
             <Divider/>
-            <div className={classes.textFieldWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <ChangeInfoTextField
                     label="New password"
                     type="text"
@@ -34,7 +37,7 @@ const ChangeYourPassword: FC = (): ReactElement => {
                     fullWidth
                 />
             </div>
-            <div className={classes.textFieldWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <ChangeInfoTextField
                     label="Confirm password"
                     type="text"
@@ -44,7 +47,7 @@ const ChangeYourPassword: FC = (): ReactElement => {
                 />
             </div>
             <Divider/>
-            <div className={classes.buttonWrapper}>
+            <div className={classnames(classes.buttonWrapper, globalClasses.itemInfoWrapper)}>
                 <Button
                     type="submit"
                     variant="contained"

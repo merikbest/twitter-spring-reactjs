@@ -1,19 +1,6 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 export const useAudienceAndTaggingStyles = makeStyles((theme: Theme) => ({
-    infoItemWrapper: {
-        padding: "12px 16px"
-    },
-    infoItem: {
-        paddingBottom: 12,
-        "& .MuiCheckbox-root": {
-            float: "right",
-            marginTop: -10,
-        },
-    },
-    photoTaggingWrapper: {
-        textDecoration: "none",
-    },
     photoTaggingLink: {
         padding: "12px 16px",
         "&:hover": {

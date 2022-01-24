@@ -14,10 +14,6 @@ export const useListsItemStyles = makeStyles((theme: Theme) => ({
             backgroundColor: theme.palette.secondary.main,
         },
     },
-    routerLink: {
-        color: theme.palette.text.primary,
-        textDecoration: "none",
-    },
     listAvatar: {
         width: "50px !important",
         height: "50px !important",

@@ -1,14 +1,14 @@
 import React, {FC, ReactElement} from 'react';
 import {Divider, Link as MuiLink, Typography} from "@material-ui/core";
 
-import {useYourAdvertiserListStyles} from "./YourAdvertiserListStyles";
+import {useGlobalStyles} from "../../../../../util/globalClasses";
 
 const YourAdvertiserList: FC = (): ReactElement => {
-    const classes = useYourAdvertiserListStyles();
+    const globalClasses = useGlobalStyles();
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle1"} component={"div"}>
                     Tailored audiences are often built from email lists or browsing behaviors. They help advertisers
                     reach prospective customers or people who have already expressed interest in their business.
@@ -24,7 +24,7 @@ const YourAdvertiserList: FC = (): ReactElement => {
                 </Typography>
             </div>
             <Divider/>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"body1"} component={"div"}>
                     You are currently a part of
                     <Typography variant={"h6"} component={"span"}>
@@ -37,7 +37,7 @@ const YourAdvertiserList: FC = (): ReactElement => {
                 </Typography>
             </div>
             <Divider/>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle1"} component={"div"}>
                     You can opt out of interest-based advertising in your personalization and data settings. This will
                     change the ads you see on Twitter, however it won’t remove you from advertisers’ audiences.

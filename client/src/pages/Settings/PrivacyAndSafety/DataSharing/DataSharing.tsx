@@ -1,20 +1,20 @@
 import React, {FC, ReactElement} from 'react';
 import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 
-import {useDataSharingStyles} from "./DataSharingStyles";
+import {useGlobalStyles} from "../../../../util/globalClasses";
 
 const DataSharing: FC = (): ReactElement => {
-    const classes = useDataSharingStyles();
+    const globalClasses = useGlobalStyles();
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Allow sharing of additional information with Twitter’s business partners.
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Allow additional information sharing with business partners
                     </Typography>

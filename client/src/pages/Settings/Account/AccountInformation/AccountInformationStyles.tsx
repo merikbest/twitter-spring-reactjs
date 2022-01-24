@@ -16,15 +16,5 @@ export const useAccountInformationStyles = makeStyles((theme: Theme) => ({
                 backgroundColor: theme.palette.secondary.main,
             },
         },
-        "& svg": {
-            color: theme.palette.text.secondary,
-            height: "1.3em",
-        },
-    },
-    arrowIcon: {
-        marginLeft: "auto"
-    },
-    informationItem: {
-        padding: "12px 16px",
     },
 }));

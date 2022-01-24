@@ -12,10 +12,6 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
             minWidth: "150px !important",
             padding: "14px 12px !important",
         },
-        // "& .MuiTab-wrapper": {
-        //     fontWeight: "700px !important",
-        //     fontSize: 15,
-        // },
     },
     header: {
         position: "fixed",

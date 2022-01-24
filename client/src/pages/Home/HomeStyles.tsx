@@ -23,6 +23,8 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         borderRadius: 0,
         '& .MuiTypography-h5': {
             marginLeft: 16,
+            display: "inline-block",
+            verticalAlign: "middle",
         },
     },
     headerIcon: {

@@ -2,6 +2,7 @@ import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Divider, Link as MuiLink, List, ListItem, Typography} from "@material-ui/core";
 import {NavLink} from 'react-router-dom';
+import classnames from "classnames";
 
 import {useAccountInformationStyles} from "./AccountInformationStyles";
 import {ArrowRightIcon} from "../../../../icons";
@@ -9,8 +10,10 @@ import {selectUserData} from "../../../../store/ducks/user/selectors";
 import {formatScheduleDate} from "../../../../util/formatDate";
 import {getCountry, getPhoneCode} from "../../../../util/countryCodes";
 import {fetchUserData} from "../../../../store/ducks/user/actionCreators";
+import {useGlobalStyles} from "../../../../util/globalClasses";
 
 const AccountInformation: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useAccountInformationStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
@@ -20,7 +23,7 @@ const AccountInformation: FC = (): ReactElement => {
     }, []);
 
     return (
-        <div className={classes.listWrapper}>
+        <div className={classnames(classes.listWrapper, globalClasses.svgSmall)}>
             <List>
                 <NavLink to={"/settings/info/username"}>
                     <ListItem>
@@ -32,7 +35,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 @{myProfile?.username}
                             </Typography>
                         </div>
-                        <div className={classes.arrowIcon}>
+                        <div className={globalClasses.arrowIcon}>
                             {ArrowRightIcon}
                         </div>
                     </ListItem>
@@ -47,7 +50,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 {`${getPhoneCode(myProfile)}${myProfile?.phone}`}
                             </Typography>
                         </div>
-                        <div className={classes.arrowIcon}>
+                        <div className={globalClasses.arrowIcon}>
                             {ArrowRightIcon}
                         </div>
                     </ListItem>
@@ -62,12 +65,12 @@ const AccountInformation: FC = (): ReactElement => {
                                 {myProfile?.email}
                             </Typography>
                         </div>
-                        <div className={classes.arrowIcon}>
+                        <div className={globalClasses.arrowIcon}>
                             {ArrowRightIcon}
                         </div>
                     </ListItem>
                 </NavLink>
-                <div className={classes.informationItem}>
+                <div className={globalClasses.itemInfoWrapper}>
                     <Typography variant={"body1"} component={"div"}>
                         Verified
                     </Typography>
@@ -89,12 +92,12 @@ const AccountInformation: FC = (): ReactElement => {
                                 {myProfile?.mutedDirectMessages ? "Yes" : "No"}
                             </Typography>
                         </div>
-                        <div className={classes.arrowIcon}>
+                        <div className={globalClasses.arrowIcon}>
                             {ArrowRightIcon}
                         </div>
                     </ListItem>
                 </NavLink>
-                <div className={classes.informationItem}>
+                <div className={globalClasses.itemInfoWrapper}>
                     <Typography variant={"body1"} component={"div"}>
                         Account creation
                     </Typography>
@@ -113,7 +116,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 {getCountry(myProfile)}
                             </Typography>
                         </div>
-                        <div className={classes.arrowIcon}>
+                        <div className={globalClasses.arrowIcon}>
                             {ArrowRightIcon}
                         </div>
                     </ListItem>
@@ -128,7 +131,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 {myProfile?.language}
                             </Typography>
                         </div>
-                        <div className={classes.arrowIcon}>
+                        <div className={globalClasses.arrowIcon}>
                             {ArrowRightIcon}
                         </div>
                     </ListItem>
@@ -143,12 +146,12 @@ const AccountInformation: FC = (): ReactElement => {
                                 {myProfile?.gender}
                             </Typography>
                         </div>
-                        <div className={classes.arrowIcon}>
+                        <div className={globalClasses.arrowIcon}>
                             {ArrowRightIcon}
                         </div>
                     </ListItem>
                 </NavLink>
-                <div className={classes.informationItem}>
+                <div className={globalClasses.itemInfoWrapper}>
                     <Typography variant={"body1"} component={"div"}>
                         Birth date
                     </Typography>
@@ -170,7 +173,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 13-64
                             </Typography>
                         </div>
-                        <div className={classes.arrowIcon}>
+                        <div className={globalClasses.arrowIcon}>
                             {ArrowRightIcon}
                         </div>
                     </ListItem>

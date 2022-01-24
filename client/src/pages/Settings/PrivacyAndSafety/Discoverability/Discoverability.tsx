@@ -2,32 +2,32 @@ import React, {FC, ReactElement} from 'react';
 import {Link} from "react-router-dom";
 import {Checkbox, Divider, Link as MuiLink, Typography} from "@material-ui/core";
 
-import {useDiscoverabilityStyles} from "./DiscoverabilityStyles";
 import {ArrowRightIcon} from "../../../../icons";
+import {useGlobalStyles} from "../../../../util/globalClasses";
 
 const Discoverability: FC = (): ReactElement => {
-    const classes = useDiscoverabilityStyles();
+    const globalClasses = useGlobalStyles();
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Control your discoverability settings and manage contacts you’ve imported.
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
                     Discoverability
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Decide whether people who have your email address or phone number can find and connect with you on
                     Twitter.
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Let people who have your email address find you on Twitter
                     </Typography>
@@ -45,8 +45,8 @@ const Discoverability: FC = (): ReactElement => {
                     </MuiLink>
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Let people who have your phone number find you on Twitter
                     </Typography>
@@ -65,12 +65,12 @@ const Discoverability: FC = (): ReactElement => {
                 </Typography>
             </div>
             <Divider/>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
                     Contacts
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {"Manage contacts that you have imported from your mobile devices. "}
                     <MuiLink
@@ -83,8 +83,8 @@ const Discoverability: FC = (): ReactElement => {
                     </MuiLink>
                 </Typography>
             </div>
-            <Link to={"/settings/privacy_and_safety/contacts_dashboard"} className={classes.discoverabilityWrapper}>
-                <div className={classes.discoverabilityLink}>
+            <Link to={"/settings/privacy_and_safety/contacts_dashboard"} className={globalClasses.linkWrapper}>
+                <div className={globalClasses.contentLink}>
                     <Typography variant={"body1"} component={"span"}>
                         Manage contacts
                     </Typography>

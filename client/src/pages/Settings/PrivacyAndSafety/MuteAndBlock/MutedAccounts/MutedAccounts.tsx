@@ -2,14 +2,14 @@ import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Divider, Link as MuiLink, Typography} from "@material-ui/core";
 
-import {useMutedAccountsStyles} from "./MutedAccountsStyles";
 import {fetchMutedUsers, setUsers} from "../../../../../store/ducks/users/actionCreators";
 import {selectUsers, selectUsersIsLoading, selectUsersLoadedSuccess} from "../../../../../store/ducks/users/selectors";
 import MutedAccountItem from "./MutedAccountItem/MutedAccountItem";
 import Spinner from "../../../../../components/Spinner/Spinner";
+import {useGlobalStyles} from "../../../../../util/globalClasses";
 
 const MutedAccounts: FC = (): ReactElement => {
-    const classes = useMutedAccountsStyles();
+    const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
     const mutedUsers = useSelector(selectUsers);
     const isUsersLoading = useSelector(selectUsersIsLoading);
@@ -25,7 +25,7 @@ const MutedAccounts: FC = (): ReactElement => {
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`Here’s everyone you muted. You can add or remove them from this list. `}
                     <MuiLink
@@ -43,7 +43,7 @@ const MutedAccounts: FC = (): ReactElement => {
                 <Spinner/>
             ) : (
                 (mutedUsers.length === 0 && isUsersLoadedSuccess) ? (
-                    <div className={classes.mutedAccountsInfo}>
+                    <div className={globalClasses.infoText}>
                         <Typography variant={"h4"} component={"div"}>
                             You aren’t muting anyone
                         </Typography>

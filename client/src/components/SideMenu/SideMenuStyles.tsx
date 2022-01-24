@@ -87,25 +87,14 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
         boxShadow: "rgb(101 119 134 / 20%) 0px 0px 15px, rgb(101 119 134 / 15%) 0px 0px 3px 1px",
         marginLeft: 40,
         marginTop: 50,
-        "& .MuiAvatar-root": {
-            width: "48px !important",
-            height: "48px !important",
-        },
-        '& .MuiListItemText-root': {
-            marginLeft: 8,
-        },
         "& svg": {
             marginRight: 12,
-            color: theme.palette.text.primary,
-            height: "1.30em",
+            fill: theme.palette.text.primary,
         },
     },
     listItemWrapper: {
         "& a": {
             textDecoration: "none"
-        },
-        "& .MuiList-root": {
-            padding: 0,
         },
         '& .MuiListItem-root': {
             color: theme.palette.text.primary,

@@ -1,11 +1,11 @@
 import React, {FC, ReactElement} from 'react';
 import {useHistory} from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import {useBackButtonStyles} from "./BackButtonStyles";
 import HoverAction from "../HoverAction/HoverAction";
 import {HoverActionProps, HoverActions, withHoverAction} from "../../hoc/withHoverAction";
+import {ArrowIcon} from "../../icons";
 
 const BackButton: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, handleLeaveAction}): ReactElement => {
     const classes = useBackButtonStyles();
@@ -22,8 +22,9 @@ const BackButton: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction
                 onMouseEnter={() => handleHoverAction?.(HoverActions.OTHER)}
                 onMouseLeave={handleLeaveAction!}
                 color="primary"
+                size="small"
             >
-                <ArrowBackIcon/>
+                <>{ArrowIcon}</>
                 <HoverAction visible={visibleHoverAction?.visibleOtherAction} actionText={"Back"}/>
             </IconButton>
         </div>

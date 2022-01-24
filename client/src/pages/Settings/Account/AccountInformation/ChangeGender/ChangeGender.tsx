@@ -8,8 +8,10 @@ import {ChangeInfoTextField} from "../../../ChangeInfoTextField/ChangeInfoTextFi
 import {setUserLoadingStatus, updateGender} from "../../../../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../../../../store/types";
 import {selectUserData, selectUserIsLoading} from "../../../../../store/ducks/user/selectors";
+import {useGlobalStyles} from "../../../../../util/globalClasses";
 
 const ChangeGender: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useChangeGenderStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
@@ -51,12 +53,12 @@ const ChangeGender: FC = (): ReactElement => {
 
     return (
         <>
-            <Typography variant={"subtitle1"} component={"div"} className={classes.infoWrapper}>
+            <Typography variant={"subtitle1"} component={"div"} className={globalClasses.itemInfoWrapper}>
                 If you haven’t already specified a gender, this is the one associated with your account based on
                 your profile and activity. This information won’t be displayed publicly.
             </Typography>
             <Divider/>
-            <div className={classes.infoWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <div className={classes.genderItemWrapper}>
                     <Typography variant={"body1"} component={"span"}>
                         Female

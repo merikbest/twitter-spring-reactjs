@@ -25,8 +25,10 @@ import PinnedListsItem from "./PinnedListsItem/PinnedListsItem";
 import HoverAction from "../../components/HoverAction/HoverAction";
 import Spinner from "../../components/Spinner/Spinner";
 import {HoverActionProps, HoverActions, withHoverAction} from "../../hoc/withHoverAction";
+import {useGlobalStyles} from "../../util/globalClasses";
 
 const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, handleLeaveAction}): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useListsStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
@@ -142,7 +144,7 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
                         {lists.slice(0, 3).map((list, index) => (
                             <ListsItem key={list.id} item={list} listIndex={index}/>
                         ))}
-                        <Link to={"/suggested"} className={classes.routerLink}>
+                        <Link to={"/suggested"} className={globalClasses.link}>
                             <Typography variant={"body1"} component={"div"} className={classes.showMore}>
                                 Show more
                             </Typography>

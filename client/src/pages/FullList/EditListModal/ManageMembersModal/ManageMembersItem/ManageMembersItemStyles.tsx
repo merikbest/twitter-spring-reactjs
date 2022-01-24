@@ -16,10 +16,6 @@ export const useManageMembersItemStyles = makeStyles((theme: Theme) => ({
             backgroundColor: theme.palette.secondary.main,
         },
     },
-    routerLink: {
-        color: theme.palette.text.primary,
-        textDecoration: 'none',
-    },
     listAvatar: {
         width: theme.spacing(6.7),
         height: theme.spacing(6.7),

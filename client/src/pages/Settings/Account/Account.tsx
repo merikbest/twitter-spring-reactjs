@@ -1,20 +1,23 @@
 import React, {FC, ReactElement} from 'react';
 import {NavLink} from 'react-router-dom';
 import {List, ListItem, Typography} from "@material-ui/core";
+import classnames from "classnames";
 
 import {useAccountStyles} from "./AccountStyles";
 import {ArrowRightIcon, CommunityIcon, DeleteAccountIcon, DownloadIcon, KeyIcon, ProfileIcon} from "../../../icons";
+import {useGlobalStyles} from "../../../util/globalClasses";
 
 const Account: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useAccountStyles();
 
     return (
         <>
-            <Typography variant={"subtitle2"} component={"div"} className={classes.accountInfo}>
+            <Typography variant={"subtitle2"} component={"div"} className={globalClasses.itemInfoWrapper}>
                 See information about your account, download an archive of your data, or learn about your
                 account deactivation options
             </Typography>
-            <div className={classes.listWrapper}>
+            <div className={classnames(classes.listWrapper, globalClasses.svgSmall)}>
                 <List component="nav" aria-label="main mailbox folders">
                     <NavLink to={"/settings/info"}>
                         <ListItem>
@@ -29,7 +32,7 @@ const Account: FC = (): ReactElement => {
                                     See your account information like your phone number and email address.
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowRightIcon}
                             </div>
                         </ListItem>
@@ -47,7 +50,7 @@ const Account: FC = (): ReactElement => {
                                     Change your password at any time.
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowRightIcon}
                             </div>
                         </ListItem>
@@ -64,7 +67,7 @@ const Account: FC = (): ReactElement => {
                                 Get insights into the type of information stored for your account.
                             </Typography>
                         </div>
-                        <div className={classes.arrowIcon}>
+                        <div className={globalClasses.arrowIcon}>
                             {ArrowRightIcon}
                         </div>
                     </ListItem>
@@ -82,7 +85,7 @@ const Account: FC = (): ReactElement => {
                                     TweetDeck.
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowRightIcon}
                             </div>
                         </ListItem>
@@ -100,7 +103,7 @@ const Account: FC = (): ReactElement => {
                                     Find out how you can deactivate your account.
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowRightIcon}
                             </div>
                         </ListItem>

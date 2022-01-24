@@ -1,14 +1,14 @@
 import React, {FC, ReactElement} from 'react';
 import {Divider, Link as MuiLink, Typography} from "@material-ui/core";
 
-import {useChangeAgeStyles} from "./ChangeAgeStyles";
+import {useGlobalStyles} from "../../../../../util/globalClasses";
 
 const ChangeAge: FC = (): ReactElement => {
-    const classes = useChangeAgeStyles();
+    const globalClasses = useGlobalStyles();
 
     return (
-        <div className={classes.textFieldWrapper}>
-            <Typography variant={"body1"} component={"div"}>
+        <div>
+            <Typography variant={"body1"} component={"div"} className={globalClasses.itemInfoWrapper}>
                 {`If you haven’t provided a date of birth, we’ve provided an age range based on your Twitter
                     profile and activity. Age information is used to personalize your experience. `}
                 <MuiLink
@@ -20,11 +20,11 @@ const ChangeAge: FC = (): ReactElement => {
                 </MuiLink>
             </Typography>
             <Divider/>
-            <Typography variant={"body1"} component={"div"}>
+            <Typography variant={"body1"} component={"div"} className={globalClasses.itemInfoWrapper}>
                 13-64
             </Typography>
             <Divider/>
-            <Typography variant={"body1"} component={"div"}>
+            <Typography variant={"body1"} component={"div"} className={globalClasses.itemInfoWrapper}>
                 Not right? You can add your date of birth to your profile without sharing it publicly.
             </Typography>
         </div>

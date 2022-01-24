@@ -3,12 +3,12 @@ import {useDispatch} from "react-redux";
 import {Link} from 'react-router-dom';
 import {Typography} from "@material-ui/core";
 
-import {useMuteAndBlockStyles} from "./MuteAndBlockStyles";
 import {ArrowRightIcon} from "../../../../icons";
 import {setUsers} from "../../../../store/ducks/users/actionCreators";
+import {useGlobalStyles} from "../../../../util/globalClasses";
 
 const MuteAndBlock: FC = (): ReactElement => {
-    const classes = useMuteAndBlockStyles();
+    const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -17,38 +17,38 @@ const MuteAndBlock: FC = (): ReactElement => {
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Manage the accounts, words, and notifications that you’ve muted or blocked.
                 </Typography>
             </div>
-            <div className={classes.linkWrapper}>
-                <Link to={"/settings/privacy_and_safety/blocked"}>
-                    <div className={classes.contentLink}>
+            <div>
+                <Link to={"/settings/privacy_and_safety/blocked"} className={globalClasses.linkWrapper}>
+                    <div className={globalClasses.contentLink}>
                         <Typography variant={"body1"} component={"span"}>
                             Blocked accounts
                         </Typography>
                         {ArrowRightIcon}
                     </div>
                 </Link>
-                <Link to={"/settings/privacy_and_safety/muted"}>
-                    <div className={classes.contentLink}>
+                <Link to={"/settings/privacy_and_safety/muted"} className={globalClasses.linkWrapper}>
+                    <div className={globalClasses.contentLink}>
                         <Typography variant={"body1"} component={"span"}>
                             Muted accounts
                         </Typography>
                         {ArrowRightIcon}
                     </div>
                 </Link>
-                <Link to={"/settings/privacy_and_safety/muted_keywords"}>
-                    <div className={classes.contentLink}>
+                <Link to={"/settings/privacy_and_safety/muted_keywords"} className={globalClasses.linkWrapper}>
+                    <div className={globalClasses.contentLink}>
                         <Typography variant={"body1"} component={"span"}>
                             Muted words
                         </Typography>
                         {ArrowRightIcon}
                     </div>
                 </Link>
-                <Link to={"/settings/privacy_and_safety/advanced_filters"}>
-                    <div className={classes.contentLink}>
+                <Link to={"/settings/privacy_and_safety/advanced_filters"} className={globalClasses.linkWrapper}>
+                    <div className={globalClasses.contentLink}>
                         <Typography variant={"body1"} component={"span"}>
                             Muted notifications
                         </Typography>

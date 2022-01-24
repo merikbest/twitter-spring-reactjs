@@ -1,21 +1,21 @@
 import React, {FC, ReactElement} from 'react';
 import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 
-import {useOffTwitterActivityStyles} from "./OffTwitterActivityStyles";
+import {useGlobalStyles} from "../../../../util/globalClasses";
 
 const OffTwitterActivity: FC = (): ReactElement => {
-    const classes = useOffTwitterActivityStyles();
+    const globalClasses = useGlobalStyles();
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Manage how Twitter uses your online activity outside of Twitter, such as the websites you visit, to
                     personalize your experience.
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Allow use of where you see Twitter content across the Web
                     </Typography>
@@ -36,8 +36,8 @@ const OffTwitterActivity: FC = (): ReactElement => {
                     </MuiLink>
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Personalize based on your inferred identity
                     </Typography>

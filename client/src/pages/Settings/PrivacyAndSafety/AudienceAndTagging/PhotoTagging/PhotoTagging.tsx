@@ -1,10 +1,12 @@
 import React, {FC, ReactElement, useState} from 'react';
-
-import {usePhotoTaggingStyles} from "./PhotoTaggingStyles";
 import {Divider, Radio, Switch, Typography} from "@material-ui/core";
 import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
 
+import {usePhotoTaggingStyles} from "./PhotoTaggingStyles";
+import {useGlobalStyles} from "../../../../../util/globalClasses";
+
 const PhotoTagging: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = usePhotoTaggingStyles();
     const [selectedValue, setSelectedValue] = useState<string>("Anyone");
 
@@ -14,7 +16,7 @@ const PhotoTagging: FC = (): ReactElement => {
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h6"} component={"div"} className={classes.title}>
                     Photo tagging
                     <span className={classes.switch}>
@@ -26,7 +28,7 @@ const PhotoTagging: FC = (): ReactElement => {
                 </Typography>
             </div>
             <Divider/>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <div className={classes.photoTaggingItemWrapper}>
                     <Typography variant={"body1"} component={"span"}>
                         Anyone can tag you

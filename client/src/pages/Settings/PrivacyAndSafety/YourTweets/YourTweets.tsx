@@ -4,19 +4,21 @@ import {Link} from "react-router-dom";
 
 import {useYourTweetsStyles} from "./YourTweetsStyles";
 import {ArrowRightIcon} from "../../../../icons";
+import {useGlobalStyles} from "../../../../util/globalClasses";
 
 const YourTweets: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useYourTweetsStyles();
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Manage the information associated with your Tweets.
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Mark media you Tweet as having material that may be sensitive
                     </Typography>
@@ -35,7 +37,7 @@ const YourTweets: FC = (): ReactElement => {
                     </MuiLink>
                 </Typography>
             </div>
-            <Link to={"/settings/privacy_and_safety/location"} className={classes.yourTweetsWrapper}>
+            <Link to={"/settings/privacy_and_safety/location"} className={globalClasses.linkWrapper}>
                 <div className={classes.yourTweetsLink}>
                     <Typography variant={"body1"} component={"span"}>
                         Add location information to your Tweets

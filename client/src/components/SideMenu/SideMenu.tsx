@@ -3,6 +3,7 @@ import {useSelector} from "react-redux";
 import {Link, NavLink, useLocation} from 'react-router-dom';
 import {Button, Divider, Hidden, IconButton, List, ListItem, Popover, Typography} from "@material-ui/core";
 import CreateIcon from '@material-ui/icons/Create';
+import classnames from "classnames";
 
 import {
     AnalyticsIcon,
@@ -39,8 +40,10 @@ import {LoadingStatus} from "../../store/types";
 import DisplayModal from "./DisplayModal/DisplayModal";
 import {DisplayProps} from "../../pages/Settings/AccessibilityDisplayLanguages/Display/Display";
 import FollowerRequestsModal from "./FollowerRequestsModal/FollowerRequestsModal";
+import {useGlobalStyles} from "../../util/globalClasses";
 
 const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useSideMenuStyles();
     const location = useLocation();
     const myProfile = useSelector(selectUserData);
@@ -274,7 +277,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                             horizontal: 'center',
                         }}
                     >
-                        <div className={classes.listItemWrapper}>
+                        <div className={classnames(classes.listItemWrapper, globalClasses.svg)}>
                             <List>
                                 {(myProfile?.privateProfile) ? (
                                     <ListItem onClick={onOpenFollowerRequestsModal}>

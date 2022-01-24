@@ -23,13 +23,7 @@ export const useMutedAccountItemStyles = makeStyles<Theme, MutedAccountItemStyle
             backgroundColor: theme.palette.secondary.main,
         },
     },
-    renderLink: {
-        color: theme.palette.text.primary,
-        textDecoration: 'none',
-    },
     listAvatar: {
-        width: "46px !important",
-        height: "46px !important",
         marginRight: 15,
     },
     userInfo: {

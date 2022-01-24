@@ -4,15 +4,17 @@ import {Divider, Typography} from "@material-ui/core";
 
 import {useCurrentSessionStyles} from "./CurrentSessionStyles";
 import {DeviceIcon} from "../../../../../../icons";
+import {useGlobalStyles} from "../../../../../../util/globalClasses";
 
 const CurrentSession: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useCurrentSessionStyles();
     const location = useLocation<{ OSName: string; browserName: string; countryName: string; }>();
 
     return (
         <>
             <div>
-                <div className={classes.infoItemWrapper}>
+                <div className={globalClasses.itemInfoWrapper}>
                     <div className={classes.sessionInfo}>
                         <div className={classes.deviceIconWrapper}>
                             <span className={classes.deviceIcon}>
@@ -31,23 +33,23 @@ const CurrentSession: FC = (): ReactElement => {
                 </div>
             </div>
             <Divider/>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h6"} component={"div"}>
                     Date and time
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Active now
                 </Typography>
             </div>
             <Divider/>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h6"} component={"div"}>
                     Location
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {location.state?.countryName}
                 </Typography>

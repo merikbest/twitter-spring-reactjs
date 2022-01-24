@@ -6,9 +6,6 @@ export const useBackButtonStyles = makeStyles((theme: Theme) => ({
         "& .MuiIconButton-root": {
             marginRight: 20,
             marginLeft: 10,
-            width: 40,
-            height: 40,
-            color: theme.palette.primary.main,
         },
     },
 }));

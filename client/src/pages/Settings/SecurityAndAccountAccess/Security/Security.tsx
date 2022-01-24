@@ -4,23 +4,25 @@ import {Checkbox, Divider, Link as MuiLink, Typography} from "@material-ui/core"
 
 import {useSecurityStyles} from "./SecurityStyles";
 import {ArrowRightIcon} from "../../../../icons";
+import {useGlobalStyles} from "../../../../util/globalClasses";
 
 const Security: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useSecurityStyles();
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Manage your account’s security.
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
                     Two-factor authentication
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`Help protect your account from unauthorized access by requiring a second authentication
                         method in addition to your Twitter password. You can choose a text message, authentication
@@ -44,19 +46,19 @@ const Security: FC = (): ReactElement => {
                 </div>
             </Link>
             <Divider/>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
                     Additional password protection
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Enabling this setting adds extra security to your account by requiring additional
                     information to reset your password. If enabled, you must provide either the phone number or
                     email address associated with your account in order to reset your password.
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <div className={classes.passwordProtect}>
                     <Typography variant={"body1"} component={"span"}>
                         Password reset protect

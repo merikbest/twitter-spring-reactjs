@@ -2,8 +2,10 @@ import React, {FC, ReactElement} from 'react';
 import {Divider, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useManageContactsStyles} from "./ManageContactsStyles";
+import {useGlobalStyles} from "../../../../../util/globalClasses";
 
 const ManageContacts: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useManageContactsStyles();
 
     return (
@@ -13,7 +15,7 @@ const ManageContacts: FC = (): ReactElement => {
                     Remove all contacts
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`These are the contacts that you have imported from your mobile devices. This information is used to
                         personalize your experience on Twitter, such as suggesting accounts to follow. You can remove any

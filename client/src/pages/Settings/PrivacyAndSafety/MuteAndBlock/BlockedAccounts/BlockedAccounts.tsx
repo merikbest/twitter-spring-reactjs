@@ -4,14 +4,14 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import {Divider, Link as MuiLink, Typography} from "@material-ui/core";
 
-import {useBlockedAccountsStyles} from "./BlockedAccountsStyles";
 import BlockedAccountItem from "./BlockedAccountItem/BlockedAccountItem";
 import {fetchBlockedUsers, setUsers} from "../../../../../store/ducks/users/actionCreators";
 import {selectUsers, selectUsersIsLoading, selectUsersLoadedSuccess} from "../../../../../store/ducks/users/selectors";
 import Spinner from "../../../../../components/Spinner/Spinner";
+import {useGlobalStyles} from "../../../../../util/globalClasses";
 
 const BlockedAccounts: FC = (): ReactElement => {
-    const classes = useBlockedAccountsStyles();
+    const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
     const blockedUsers = useSelector(selectUsers);
     const isUsersLoading = useSelector(selectUsersIsLoading);
@@ -32,13 +32,13 @@ const BlockedAccounts: FC = (): ReactElement => {
 
     return (
         <>
-            <div className={classes.tabs}>
+            <div className={globalClasses.tabs}>
                 <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
-                    <Tab className={classes.tab} label="All"/>
-                    <Tab className={classes.tab} label="Imported"/>
+                    <Tab className={globalClasses.tab} label="All"/>
+                    <Tab className={globalClasses.tab} label="Imported"/>
                 </Tabs>
             </div>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`When you block someone, that person won’t be able to follow or message you, and you won’t see
                         notifications from them. `}
@@ -57,7 +57,7 @@ const BlockedAccounts: FC = (): ReactElement => {
                 <Spinner/>
             ) : (
                 (blockedUsers.length === 0 && isUsersLoadedSuccess) ? (
-                    <div className={classes.blockedAccountsInfo}>
+                    <div className={globalClasses.infoText}>
                         <Typography variant={"h4"} component={"div"}>
                             {(activeTab === 0) ? (
                                 "You aren’t blocking anyone"

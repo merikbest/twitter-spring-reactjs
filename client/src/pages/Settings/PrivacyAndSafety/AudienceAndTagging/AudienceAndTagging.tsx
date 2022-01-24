@@ -8,8 +8,10 @@ import {ArrowRightIcon} from "../../../../icons";
 import {selectUserData} from "../../../../store/ducks/user/selectors";
 import {setUserLoadingStatus, updatePrivateProfile} from "../../../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../../../store/types";
+import {useGlobalStyles} from "../../../../util/globalClasses";
 
 const AudienceAndTagging: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useAudienceAndTaggingStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
@@ -32,13 +34,13 @@ const AudienceAndTagging: FC = (): ReactElement => {
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Manage what information you allow other people on Twitter to see.
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Protect your Tweets
                     </Typography>
@@ -56,7 +58,7 @@ const AudienceAndTagging: FC = (): ReactElement => {
                     </MuiLink>
                 </Typography>
             </div>
-            <Link to={"/settings/privacy_and_safety/tagging"} className={classes.photoTaggingWrapper}>
+            <Link to={"/settings/privacy_and_safety/tagging"} className={globalClasses.linkWrapper}>
                 <div className={classes.photoTaggingLink}>
                     <div className={classes.photoTagInfo}>
                         <Typography variant={"body1"} component={"div"}>

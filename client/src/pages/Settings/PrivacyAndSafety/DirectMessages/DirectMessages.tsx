@@ -2,13 +2,13 @@ import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 
-import {useDirectMessagesStyles} from "./DirectMessagesStyles";
 import {selectUserData} from "../../../../store/ducks/user/selectors";
 import {setUserLoadingStatus, updateDirect} from "../../../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../../../store/types";
+import {useGlobalStyles} from "../../../../util/globalClasses";
 
 const DirectMessages: FC = (): ReactElement => {
-    const classes = useDirectMessagesStyles();
+    const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
     const [checked, setChecked] = useState<boolean>(false);
@@ -30,13 +30,13 @@ const DirectMessages: FC = (): ReactElement => {
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Manage who can message you directly.
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Allow message requests from everyone
                     </Typography>
@@ -55,8 +55,8 @@ const DirectMessages: FC = (): ReactElement => {
                     </MuiLink>
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Filter low-quality messages
                     </Typography>
@@ -76,8 +76,8 @@ const DirectMessages: FC = (): ReactElement => {
                     </MuiLink>
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Show read receipts
                     </Typography>

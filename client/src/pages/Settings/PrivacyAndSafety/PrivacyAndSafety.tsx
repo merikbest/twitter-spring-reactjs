@@ -1,6 +1,7 @@
 import React, {FC, ReactElement} from 'react';
 import {Link} from 'react-router-dom';
 import {Divider, List, ListItem, Typography} from "@material-ui/core";
+import classnames from "classnames";
 
 import {usePrivacyAndSafetyStyles} from "./PrivacyAndSafetyStyles";
 import {
@@ -18,24 +19,26 @@ import {
     QuoteTweetIcon,
     SpacesIcon
 } from "../../../icons";
+import {useGlobalStyles} from "../../../util/globalClasses";
 
 const PrivacyAndSafety: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = usePrivacyAndSafetyStyles();
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Manage what information you see and share on Twitter.
                 </Typography>
             </div>
             <Divider/>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
                     Your Twitter activity
                 </Typography>
             </div>
-            <div className={classes.listWrapper}>
+            <div className={classnames(classes.listWrapper, globalClasses.svgSmall)}>
                 <List component="nav" aria-label="main mailbox folders">
                     <Link to={"/settings/privacy_and_safety/audience"}>
                         <ListItem>
@@ -50,7 +53,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                     Manage what information you allow other people on Twitter to see.
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowRightIcon}
                             </div>
                         </ListItem>
@@ -68,7 +71,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                     Manage the information associated with your Tweets.
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowRightIcon}
                             </div>
                         </ListItem>
@@ -87,7 +90,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                     interests
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowRightIcon}
                             </div>
                         </ListItem>
@@ -105,7 +108,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                     Manage the accounts, words, and notifications that you’ve muted or blocked.
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowRightIcon}
                             </div>
                         </ListItem>
@@ -123,7 +126,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                     Manage who can message you directly.
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowRightIcon}
                             </div>
                         </ListItem>
@@ -141,7 +144,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                     Manage who can see your Spaces listening activity
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowRightIcon}
                             </div>
                         </ListItem>
@@ -159,13 +162,13 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                     Control your discoverability settings and manage contacts you’ve imported.
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowRightIcon}
                             </div>
                         </ListItem>
                     </Link>
                     <Divider/>
-                    <div className={classes.infoItemWrapper}>
+                    <div className={globalClasses.itemInfoWrapper}>
                         <Typography variant={"h5"} component={"div"}>
                             Data sharing and off-Twitter activity
                         </Typography>
@@ -183,7 +186,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                     Manage your ads experience on Twitter.
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowRightIcon}
                             </div>
                         </ListItem>
@@ -202,7 +205,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                     websites you visit, to personalize your experience.
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowRightIcon}
                             </div>
                         </ListItem>
@@ -220,7 +223,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                     Allow sharing of additional information with Twitter’s business partners.
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowRightIcon}
                             </div>
                         </ListItem>
@@ -238,13 +241,13 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                     Manage the location information Twitter uses to personalize your experience.
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowRightIcon}
                             </div>
                         </ListItem>
                     </Link>
                     <Divider/>
-                    <div className={classes.infoItemWrapper}>
+                    <div className={globalClasses.itemInfoWrapper}>
                         <Typography variant={"h5"} component={"div"}>
                             Learn more about privacy on Twitter
                         </Typography>
@@ -256,7 +259,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                     Privacy center
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowTopIcon}
                             </div>
                         </ListItem>
@@ -268,7 +271,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                     Privacy policy
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowTopIcon}
                             </div>
                         </ListItem>
@@ -280,7 +283,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                     Contact us
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowTopIcon}
                             </div>
                         </ListItem>

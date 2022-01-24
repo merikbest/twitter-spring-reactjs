@@ -28,10 +28,6 @@ export const useUsersItemStyles = makeStyles<Theme , UsersItemStylesProps>((them
             textDecoration: 'none',
         },
     },
-    routerLink: {
-        color: theme.palette.text.primary,
-        textDecoration: 'none',
-    },
     userInfo: {
         width: props => (props.size === UserItemSize.SMALL) ? 120 : 360,
         textOverflow: "ellipsis",

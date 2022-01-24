@@ -79,8 +79,6 @@ export const useSettingsStyles = makeStyles<Theme, SettingsStylesProps>((theme) 
             },
         },
         "& svg": {
-            color: theme.palette.text.secondary,
-            height: "1.4em",
             marginLeft: "auto",
         },
     },
@@ -97,8 +95,5 @@ export const useSettingsStyles = makeStyles<Theme, SettingsStylesProps>((theme) 
     },
     pageInfoWrapper: {
         paddingTop: 53
-    },
-    pageInfoItemWrapper: {
-        padding: "12px 16px"
     },
 }));

@@ -1,14 +1,14 @@
 import React, {FC, ReactElement} from 'react';
 import {Link as MuiLink, Typography} from "@material-ui/core";
 
-import {useMutedWordsStyles} from "./MutedWordsStyles";
+import {useGlobalStyles} from "../../../../../util/globalClasses";
 
 const MutedWords: FC = (): ReactElement => {
-    const classes = useMutedWordsStyles();
+    const globalClasses = useGlobalStyles();
 
     return (
         <>
-            <div className={classes.mutedWordsInfo}>
+            <div className={globalClasses.infoText}>
                 <Typography variant={"h4"} component={"div"}>
                     You aren’t muting any words
                 </Typography>

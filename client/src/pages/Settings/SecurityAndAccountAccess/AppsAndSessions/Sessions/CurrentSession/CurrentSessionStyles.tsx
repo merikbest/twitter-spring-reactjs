@@ -1,9 +1,6 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 export const useCurrentSessionStyles = makeStyles((theme: Theme) => ({
-    infoItemWrapper: {
-        padding: "12px 16px"
-    },
     sessionInfo: {
         display: "inline-flex",
         justifyContent: "flex-start"

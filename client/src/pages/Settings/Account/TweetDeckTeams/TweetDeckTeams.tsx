@@ -3,8 +3,10 @@ import {Divider, Link as MuiLink, Radio, Switch, Typography} from "@material-ui/
 import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
 
 import {useTweetDeckTeamsStyles} from "./TweetDeckTeamsStyles";
+import {useGlobalStyles} from "../../../../util/globalClasses";
 
 const TweetDeckTeams: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useTweetDeckTeamsStyles();
     const [selectedValue, setSelectedValue] = useState<string>("Anyone");
 
@@ -14,12 +16,12 @@ const TweetDeckTeams: FC = (): ReactElement => {
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Invite anyone to Tweet from this account using the Teams feature in TweetDeck.
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h6"} component={"div"} className={classes.title}>
                     Turn on TweetDeck Teams
                     <span className={classes.switch}>
@@ -39,7 +41,7 @@ const TweetDeckTeams: FC = (): ReactElement => {
                 </Typography>
             </div>
             <Divider/>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <div className={classes.tweetDeckItemWrapper}>
                     <Typography variant={"body1"} component={"span"}>
                         Allow anyone to add you to their team
