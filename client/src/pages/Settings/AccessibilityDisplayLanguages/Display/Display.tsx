@@ -6,6 +6,7 @@ import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
 import {useDisplayStyles} from "./DisplayStyles";
 import {CheckIcon, TweetIcon, VerifiedIcon} from "../../../../icons";
 import {updateBackgroundColor} from "../../../../store/ducks/user/actionCreators";
+import {useGlobalStyles} from "../../../../util/globalClasses";
 
 export enum ColorScheme {
     BLUE = "BLUE",
@@ -28,6 +29,7 @@ export interface DisplayProps {
 }
 
 const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useDisplayStyles();
     const dispatch = useDispatch();
     const [selectedBackgroundColor, setSelectedBackgroundColor] = useState<BackgroundTheme>(BackgroundTheme.DEFAULT);
@@ -77,13 +79,13 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Manage your font size, color, and background. These settings affect all the Twitter accounts on this
                     browser.
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <div className={classes.tweetInfoWrapper}>
                     <div>
                         <div className={classes.tweetIconWrapper}>
@@ -113,7 +115,7 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
                 </div>
             </div>
             <Divider/>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
                     Font size
                 </Typography>
@@ -134,7 +136,7 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
                 </div>
             </div>
             <Divider/>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
                     Color
                 </Typography>
@@ -148,7 +150,7 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
                 <ColorSelector color={ColorScheme.GREEN}/>
             </div>
             <Divider/>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
                     Background
                 </Typography>

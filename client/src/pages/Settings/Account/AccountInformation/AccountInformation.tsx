@@ -2,9 +2,7 @@ import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Divider, Link as MuiLink, List, ListItem, Typography} from "@material-ui/core";
 import {NavLink} from 'react-router-dom';
-import classnames from "classnames";
 
-import {useAccountInformationStyles} from "./AccountInformationStyles";
 import {ArrowRightIcon} from "../../../../icons";
 import {selectUserData} from "../../../../store/ducks/user/selectors";
 import {formatScheduleDate} from "../../../../util/formatDate";
@@ -14,7 +12,6 @@ import {useGlobalStyles} from "../../../../util/globalClasses";
 
 const AccountInformation: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
-    const classes = useAccountInformationStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
 
@@ -23,7 +20,7 @@ const AccountInformation: FC = (): ReactElement => {
     }, []);
 
     return (
-        <div className={classnames(classes.listWrapper, globalClasses.svgSmall)}>
+        <div className={globalClasses.listItemWrapper}>
             <List>
                 <NavLink to={"/settings/info/username"}>
                     <ListItem>

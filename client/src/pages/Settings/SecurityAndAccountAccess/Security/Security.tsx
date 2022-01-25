@@ -2,13 +2,11 @@ import React, {FC, ReactElement} from 'react';
 import {Link} from 'react-router-dom';
 import {Checkbox, Divider, Link as MuiLink, Typography} from "@material-ui/core";
 
-import {useSecurityStyles} from "./SecurityStyles";
 import {ArrowRightIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 
 const Security: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
-    const classes = useSecurityStyles();
 
     return (
         <>
@@ -37,8 +35,8 @@ const Security: FC = (): ReactElement => {
                     </MuiLink>
                 </Typography>
             </div>
-            <Link to={"/settings/security/login_verification"} className={classes.authLinkWrapper}>
-                <div className={classes.authLink}>
+            <Link to={"/settings/security/login_verification"} className={globalClasses.linkWrapper}>
+                <div className={globalClasses.contentLink}>
                     <Typography variant={"body1"} component={"span"}>
                         Two-factor authentication
                     </Typography>
@@ -59,7 +57,7 @@ const Security: FC = (): ReactElement => {
                 </Typography>
             </div>
             <div className={globalClasses.itemInfoWrapper}>
-                <div className={classes.passwordProtect}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Password reset protect
                     </Typography>

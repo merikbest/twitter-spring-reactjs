@@ -38,11 +38,11 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                     Your Twitter activity
                 </Typography>
             </div>
-            <div className={classnames(classes.listWrapper, globalClasses.svgSmall)}>
+            <div className={classnames(classes.listWrapper, globalClasses.listItemWrapper)}>
                 <List component="nav" aria-label="main mailbox folders">
                     <Link to={"/settings/privacy_and_safety/audience"}>
                         <ListItem>
-                            <div className={classes.icon}>
+                            <div className={globalClasses.listIconWrapper}>
                                 {AudienceIcon}
                             </div>
                             <div>
@@ -60,7 +60,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                     </Link>
                     <Link to={"/settings/privacy_and_safety/your_tweets"}>
                         <ListItem>
-                            <div className={classes.icon}>
+                            <div className={globalClasses.listIconWrapper}>
                                 {QuoteTweetIcon}
                             </div>
                             <div>
@@ -78,7 +78,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                     </Link>
                     <Link to={"/settings/privacy_and_safety/content_you_see"}>
                         <ListItem>
-                            <div className={classes.icon}>
+                            <div className={globalClasses.listIconWrapper}>
                                 {ContentIcon}
                             </div>
                             <div>
@@ -97,7 +97,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                     </Link>
                     <Link to={"/settings/privacy_and_safety/mute_and_block"}>
                         <ListItem>
-                            <div className={classes.icon}>
+                            <div className={globalClasses.listIconWrapper}>
                                 {MuteIcon}
                             </div>
                             <div>
@@ -115,7 +115,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                     </Link>
                     <Link to={"/settings/privacy_and_safety/direct_messages"}>
                         <ListItem>
-                            <div className={classes.icon}>
+                            <div className={globalClasses.listIconWrapper}>
                                 {MessagesIcon}
                             </div>
                             <div>
@@ -133,7 +133,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                     </Link>
                     <Link to={"/settings/privacy_and_safety/spaces"}>
                         <ListItem>
-                            <div className={classes.icon}>
+                            <div className={globalClasses.listIconWrapper}>
                                 {SpacesIcon}
                             </div>
                             <div>
@@ -151,7 +151,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                     </Link>
                     <Link to={"/settings/privacy_and_safety/contacts"}>
                         <ListItem>
-                            <div className={classes.icon}>
+                            <div className={globalClasses.listIconWrapper}>
                                 {DiscoverIcon}
                             </div>
                             <div>
@@ -175,7 +175,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                     </div>
                     <Link to={"/settings/privacy_and_safety/ads_preferences"}>
                         <ListItem>
-                            <div className={classes.icon}>
+                            <div className={globalClasses.listIconWrapper}>
                                 {AdsIcon}
                             </div>
                             <div>
@@ -193,7 +193,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                     </Link>
                     <Link to={"/settings/privacy_and_safety/off_twitter_activity"}>
                         <ListItem>
-                            <div className={classes.icon}>
+                            <div className={globalClasses.listIconWrapper}>
                                 {OffTwitterIcon}
                             </div>
                             <div>
@@ -212,7 +212,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                     </Link>
                     <Link to={"/settings/privacy_and_safety/data_sharing_with_business_partners"}>
                         <ListItem>
-                            <div className={classes.icon}>
+                            <div className={globalClasses.listIconWrapper}>
                                 {DataSharingIcon}
                             </div>
                             <div>
@@ -230,7 +230,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                     </Link>
                     <Link to={"/settings/privacy_and_safety/location_information"}>
                         <ListItem>
-                            <div className={classes.icon}>
+                            <div className={globalClasses.listIconWrapper}>
                                 {LocationIcon}
                             </div>
                             <div>

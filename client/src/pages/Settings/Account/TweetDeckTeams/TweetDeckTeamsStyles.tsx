@@ -7,15 +7,4 @@ export const useTweetDeckTeamsStyles = makeStyles((theme: Theme) => ({
     switch: {
         float: "right",
     },
-    tweetDeckItemWrapper: {
-        padding: "4px 0px",
-        "& .MuiButtonBase-root": {
-            padding: 4,
-            float: "right",
-            "& .MuiSvgIcon-root": {
-                width: 20,
-                height: 20
-            },
-        },
-    },
 }));

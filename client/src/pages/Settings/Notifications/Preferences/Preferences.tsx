@@ -2,15 +2,15 @@ import React, {FC, ReactElement} from 'react';
 import {Link} from "react-router-dom";
 import {Link as MuiLink, Typography} from "@material-ui/core";
 
-import {usePreferencesStyles} from "./PreferencesStyles";
 import {ArrowRightIcon} from "../../../../icons";
+import {useGlobalStyles} from "../../../../util/globalClasses";
 
 const Preferences: FC = (): ReactElement => {
-    const classes = usePreferencesStyles();
+    const globalClasses = useGlobalStyles();
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`Select your preferences by notification type. `}
                     <MuiLink
@@ -23,16 +23,16 @@ const Preferences: FC = (): ReactElement => {
                     </MuiLink>
                 </Typography>
             </div>
-            <Link to={"/settings/notification/push_notifications"} className={classes.preferencesWrapper}>
-                <div className={classes.preferencesLink}>
+            <Link to={"/settings/notification/push_notifications"} className={globalClasses.linkWrapper}>
+                <div className={globalClasses.contentLink}>
                     <Typography variant={"body1"} component={"span"}>
                         Push notifications
                     </Typography>
                     {ArrowRightIcon}
                 </div>
             </Link>
-            <Link to={"/settings/notification/email_notifications"} className={classes.preferencesWrapper}>
-                <div className={classes.preferencesLink}>
+            <Link to={"/settings/notification/email_notifications"} className={globalClasses.linkWrapper}>
+                <div className={globalClasses.contentLink}>
                     <Typography variant={"body1"} component={"span"}>
                         Email notifications
                     </Typography>

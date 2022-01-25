@@ -1,12 +1,10 @@
 import React, {FC, ReactElement} from 'react';
 import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 
-import {useTwoFactorAuthenticationStyles} from "./TwoFactorAuthenticationStyles";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
 
 const TwoFactorAuthentication: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
-    const classes = useTwoFactorAuthenticationStyles();
 
     return (
         <>
@@ -16,7 +14,7 @@ const TwoFactorAuthentication: FC = (): ReactElement => {
                 </Typography>
             </div>
             <div className={globalClasses.itemInfoWrapper}>
-                <div className={classes.infoItem}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Text message
                     </Typography>
@@ -28,7 +26,7 @@ const TwoFactorAuthentication: FC = (): ReactElement => {
                 </Typography>
             </div>
             <div className={globalClasses.itemInfoWrapper}>
-                <div className={classes.infoItem}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Authentication app
                     </Typography>
@@ -40,7 +38,7 @@ const TwoFactorAuthentication: FC = (): ReactElement => {
                 </Typography>
             </div>
             <div className={globalClasses.itemInfoWrapper}>
-                <div className={classes.infoItem}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Security key
                     </Typography>

@@ -1,15 +1,12 @@
 import React, {FC, ReactElement} from 'react';
 import {Link} from "react-router-dom";
 import {List, ListItem, Typography} from "@material-ui/core";
-import classnames from "classnames";
 
-import {useSecurityAndAccountAccessStyles} from "./SecurityAndAccountAccessStyles";
 import {AppsIcon, ArrowRightIcon, ConnectedIcon, SecurityIcon} from "../../../icons";
 import {useGlobalStyles} from "../../../util/globalClasses";
 
 const SecurityAndAccountAccess: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
-    const classes = useSecurityAndAccountAccessStyles();
 
     return (
         <>
@@ -19,11 +16,11 @@ const SecurityAndAccountAccess: FC = (): ReactElement => {
                     you have connected to your account.
                 </Typography>
             </div>
-            <div className={classnames(classes.listWrapper, globalClasses.svgSmall)}>
+            <div className={globalClasses.listItemWrapper}>
                 <List component="nav" aria-label="main mailbox folders">
                     <Link to={"/settings/security"}>
                         <ListItem>
-                            <div className={classes.icon}>
+                            <div className={globalClasses.listIconWrapper}>
                                 {SecurityIcon}
                             </div>
                             <div>
@@ -41,7 +38,7 @@ const SecurityAndAccountAccess: FC = (): ReactElement => {
                     </Link>
                     <Link to={"/settings/security/apps_and_sessions"}>
                         <ListItem>
-                            <div className={classes.icon}>
+                            <div className={globalClasses.listIconWrapper}>
                                 {AppsIcon}
                             </div>
                             <div>
@@ -59,7 +56,7 @@ const SecurityAndAccountAccess: FC = (): ReactElement => {
                         </ListItem>
                     </Link>
                     <ListItem>
-                        <div className={classes.icon}>
+                        <div className={globalClasses.listIconWrapper}>
                             {ConnectedIcon}
                         </div>
                         <div>

@@ -2,24 +2,24 @@ import React, {FC, ReactElement} from 'react';
 import {Link} from 'react-router-dom';
 import {List, ListItem, Typography} from "@material-ui/core";
 
-import {useAccessibilityDisplayLanguagesStyles} from "./AccessibilityDisplayLanguagesStyles";
 import {AccessibilityIcon, ArrowRightIcon, DisplayIcon, LanguagesIcon, TweetActivityIcon} from "../../../icons";
+import {useGlobalStyles} from "../../../util/globalClasses";
 
 const AccessibilityDisplayLanguages: FC = (): ReactElement => {
-    const classes = useAccessibilityDisplayLanguagesStyles();
+    const globalClasses = useGlobalStyles();
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Manage how Twitter content is displayed to you.
                 </Typography>
             </div>
-            <div className={classes.listWrapper}>
+            <div className={globalClasses.listItemWrapper}>
                 <List component="nav" aria-label="main mailbox folders">
                     <Link to={"/settings/accessibility_display_and_languages/accessibility"}>
                         <ListItem>
-                            <div className={classes.icon}>
+                            <div className={globalClasses.listIconWrapper}>
                                 {AccessibilityIcon}
                             </div>
                             <div>
@@ -31,14 +31,14 @@ const AccessibilityDisplayLanguages: FC = (): ReactElement => {
                                     motion.
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowRightIcon}
                             </div>
                         </ListItem>
                     </Link>
                     <Link to={"/settings/accessibility_display_and_languages/display"}>
                         <ListItem>
-                            <div className={classes.icon}>
+                            <div className={globalClasses.listIconWrapper}>
                                 {DisplayIcon}
                             </div>
                             <div>
@@ -50,14 +50,14 @@ const AccessibilityDisplayLanguages: FC = (): ReactElement => {
                                     Twitter accounts on this browser.
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowRightIcon}
                             </div>
                         </ListItem>
                     </Link>
                     <Link to={"/settings/accessibility_display_and_languages/languages"}>
                         <ListItem>
-                            <div className={classes.icon}>
+                            <div className={globalClasses.listIconWrapper}>
                                 {LanguagesIcon}
                             </div>
                             <div>
@@ -68,14 +68,14 @@ const AccessibilityDisplayLanguages: FC = (): ReactElement => {
                                     Manage which languages are used to personalize your Twitter experience.
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowRightIcon}
                             </div>
                         </ListItem>
                     </Link>
                     <Link to={"/settings/accessibility_display_and_languages/data"}>
                         <ListItem>
-                            <div className={classes.icon}>
+                            <div className={globalClasses.listIconWrapper}>
                                 {TweetActivityIcon}
                             </div>
                             <div>
@@ -87,7 +87,7 @@ const AccessibilityDisplayLanguages: FC = (): ReactElement => {
                                     Twitter accounts on this browser.
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowRightIcon}
                             </div>
                         </ListItem>

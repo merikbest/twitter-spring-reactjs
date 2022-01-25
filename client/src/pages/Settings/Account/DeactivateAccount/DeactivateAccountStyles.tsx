@@ -1,11 +1,6 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 export const useDeactivateAccountStyles = makeStyles((theme: Theme) => ({
-    deactivateAccountWrapper: {
-        "& a": {
-            textDecoration: "none",
-        },
-    },
     userInfoWrapper: {
         display: "flex",
         padding: "12px 16px",

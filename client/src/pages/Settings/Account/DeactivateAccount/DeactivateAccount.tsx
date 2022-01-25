@@ -14,8 +14,8 @@ const DeactivateAccount: FC = (): ReactElement => {
     const myProfile = useSelector(selectUserData);
 
     return (
-        <div className={classes.deactivateAccountWrapper}>
-            <Link to={`/user/${myProfile?.id}`}>
+        <div>
+            <Link to={`/user/${myProfile?.id}`} className={globalClasses.linkWrapper}>
                 <div className={classes.userInfoWrapper}>
                     <Avatar
                         className={globalClasses.avatar}

@@ -3,8 +3,10 @@ import {Link as MuiLink, Radio, Typography} from "@material-ui/core";
 import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
 
 import {useAutoplayStyles} from "./AutoplayStyles";
+import {useGlobalStyles} from "../../../../../util/globalClasses";
 
 const Autoplay: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useAutoplayStyles();
     const [selectedValue, setSelectedValue] = useState<string>("Never");
 
@@ -29,7 +31,7 @@ const Autoplay: FC = (): ReactElement => {
                         Learn more
                     </MuiLink>
                 </Typography>
-                <div className={classes.autoplayItemWrapper}>
+                <div className={globalClasses.infoItemRadioCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         On cellular or Wi-Fi
                     </Typography>
@@ -44,7 +46,7 @@ const Autoplay: FC = (): ReactElement => {
                         size="small"
                     />
                 </div>
-                <div className={classes.autoplayItemWrapper}>
+                <div className={globalClasses.infoItemRadioCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Never
                     </Typography>

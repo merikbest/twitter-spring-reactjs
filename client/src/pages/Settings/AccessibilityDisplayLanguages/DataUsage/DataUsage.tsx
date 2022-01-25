@@ -4,20 +4,22 @@ import {Link} from "react-router-dom";
 
 import {useDataUsageStyles} from "./DataUsageStyles";
 import {ArrowRightIcon} from "../../../../icons";
+import {useGlobalStyles} from "../../../../util/globalClasses";
 
 const DataUsage: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useDataUsageStyles();
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Limit how Twitter uses some of your network data. These settings affect all the Twitter accounts on
                     this browser.
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Data saver
                     </Typography>
@@ -27,8 +29,8 @@ const DataUsage: FC = (): ReactElement => {
                     If selected, Twitter will use less network data.
                 </Typography>
             </div>
-            <Link to={"/settings/accessibility_display_and_languages/autoplay"} className={classes.accessibilityWrapper}>
-                <div className={classes.accessibilityLink}>
+            <Link to={"/settings/accessibility_display_and_languages/autoplay"} className={globalClasses.linkWrapper}>
+                <div className={globalClasses.contentLink}>
                     <div className={classes.accessibilityInfo}>
                         <Typography variant={"body1"} component={"div"}>
                             Autoplay

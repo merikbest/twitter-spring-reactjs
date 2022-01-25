@@ -7,15 +7,4 @@ export const usePhotoTaggingStyles = makeStyles((theme: Theme) => ({
     switch: {
         float: "right",
     },
-    photoTaggingItemWrapper: {
-        padding: "4px 0px",
-        "& .MuiButtonBase-root": {
-            padding: 4,
-            float: "right",
-            "& .MuiSvgIcon-root": {
-                width: 20,
-                height: 20
-            },
-        },
-    },
 }));

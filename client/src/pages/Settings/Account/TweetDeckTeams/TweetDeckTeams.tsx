@@ -42,7 +42,7 @@ const TweetDeckTeams: FC = (): ReactElement => {
             </div>
             <Divider/>
             <div className={globalClasses.itemInfoWrapper}>
-                <div className={classes.tweetDeckItemWrapper}>
+                <div className={globalClasses.infoItemRadioCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Allow anyone to add you to their team
                     </Typography>
@@ -57,7 +57,7 @@ const TweetDeckTeams: FC = (): ReactElement => {
                         size="small"
                     />
                 </div>
-                <div className={classes.tweetDeckItemWrapper}>
+                <div className={globalClasses.infoItemRadioCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Only allow people you follow to add you to their team
                     </Typography>

@@ -59,7 +59,7 @@ const ChangeGender: FC = (): ReactElement => {
             </Typography>
             <Divider/>
             <div className={globalClasses.itemInfoWrapper}>
-                <div className={classes.genderItemWrapper}>
+                <div className={globalClasses.infoItemRadioCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Female
                     </Typography>
@@ -74,7 +74,7 @@ const ChangeGender: FC = (): ReactElement => {
                         size="small"
                     />
                 </div>
-                <div className={classes.genderItemWrapper}>
+                <div className={globalClasses.infoItemRadioCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Male
                     </Typography>
@@ -89,7 +89,7 @@ const ChangeGender: FC = (): ReactElement => {
                         size="small"
                     />
                 </div>
-                <div className={classes.genderItemWrapper}>
+                <div className={globalClasses.infoItemRadioCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Other
                     </Typography>

@@ -1,12 +1,10 @@
 import React, {FC, ReactElement} from 'react';
 import {Link as MuiLink, Typography} from "@material-ui/core";
 
-import {useConnectedAppsStyles} from "./ConnectedAppsStyles";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
 
 const ConnectedApps: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
-    const classes = useConnectedAppsStyles();
 
     return (
         <>
@@ -24,7 +22,7 @@ const ConnectedApps: FC = (): ReactElement => {
                     </MuiLink>
                 </Typography>
             </div>
-            <div className={classes.connectedAppsWrapper}>
+            <div className={globalClasses.infoText}>
                 <Typography variant={"h4"} component={"div"}>
                     You don’t have any connected apps
                 </Typography>

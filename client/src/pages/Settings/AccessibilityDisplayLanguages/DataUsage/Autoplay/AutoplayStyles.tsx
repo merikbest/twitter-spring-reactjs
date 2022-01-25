@@ -7,15 +7,4 @@ export const useAutoplayStyles = makeStyles((theme: Theme) => ({
             marginBottom: 4,
         },
     },
-    autoplayItemWrapper: {
-        padding: "4px 0px",
-        "& .MuiButtonBase-root": {
-            padding: 4,
-            float: "right",
-            "& .MuiSvgIcon-root": {
-                width: 20,
-                height: 20
-            },
-        },
-    },
 }));

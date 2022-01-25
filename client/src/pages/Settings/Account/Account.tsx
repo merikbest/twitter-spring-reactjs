@@ -1,15 +1,12 @@
 import React, {FC, ReactElement} from 'react';
 import {NavLink} from 'react-router-dom';
 import {List, ListItem, Typography} from "@material-ui/core";
-import classnames from "classnames";
 
-import {useAccountStyles} from "./AccountStyles";
 import {ArrowRightIcon, CommunityIcon, DeleteAccountIcon, DownloadIcon, KeyIcon, ProfileIcon} from "../../../icons";
 import {useGlobalStyles} from "../../../util/globalClasses";
 
 const Account: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
-    const classes = useAccountStyles();
 
     return (
         <>
@@ -17,11 +14,11 @@ const Account: FC = (): ReactElement => {
                 See information about your account, download an archive of your data, or learn about your
                 account deactivation options
             </Typography>
-            <div className={classnames(classes.listWrapper, globalClasses.svgSmall)}>
+            <div className={globalClasses.listItemWrapper}>
                 <List component="nav" aria-label="main mailbox folders">
                     <NavLink to={"/settings/info"}>
                         <ListItem>
-                            <div className={classes.icon}>
+                            <div className={globalClasses.listIconWrapper}>
                                 {ProfileIcon}
                             </div>
                             <div>
@@ -39,7 +36,7 @@ const Account: FC = (): ReactElement => {
                     </NavLink>
                     <NavLink to={"/settings/password"}>
                         <ListItem>
-                            <div className={classes.icon}>
+                            <div className={globalClasses.listIconWrapper}>
                                 {KeyIcon}
                             </div>
                             <div>
@@ -56,7 +53,7 @@ const Account: FC = (): ReactElement => {
                         </ListItem>
                     </NavLink>
                     <ListItem>
-                        <div className={classes.icon}>
+                        <div className={globalClasses.listIconWrapper}>
                             {DownloadIcon}
                         </div>
                         <div>
@@ -73,7 +70,7 @@ const Account: FC = (): ReactElement => {
                     </ListItem>
                     <NavLink to={"/settings/teams"}>
                         <ListItem>
-                            <div className={classes.icon}>
+                            <div className={globalClasses.listIconWrapper}>
                                 {CommunityIcon}
                             </div>
                             <div>
@@ -92,7 +89,7 @@ const Account: FC = (): ReactElement => {
                     </NavLink>
                     <NavLink to={"/settings/deactivate"}>
                         <ListItem>
-                            <div className={classes.icon}>
+                            <div className={globalClasses.listIconWrapper}>
                                 {DeleteAccountIcon}
                             </div>
                             <div>

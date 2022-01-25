@@ -1,28 +1,28 @@
 import React, {FC, ReactElement} from 'react';
 import {Switch, Typography} from "@material-ui/core";
 
-import {usePushNotificationsStyles} from "./PushNotificationsStyles";
+import {useGlobalStyles} from "../../../../../util/globalClasses";
 
 const PushNotifications: FC = (): ReactElement => {
-    const classes = usePushNotificationsStyles();
+    const globalClasses = useGlobalStyles();
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h6"} component={"div"}>
                     Push notifications
-                    <span className={classes.switch}>
+                    <span className={globalClasses.switch}>
                         <Switch defaultChecked/>
                     </span>
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Get push notifications to find out what’s going on when you’re not on Twitter. You can turn them off
                     anytime.
                 </Typography>
             </div>
-            <div className={classes.connectedAppsWrapper}>
+            <div className={globalClasses.infoText}>
                 <Typography variant={"h4"} component={"div"}>
                     Turn on push notifications
                 </Typography>

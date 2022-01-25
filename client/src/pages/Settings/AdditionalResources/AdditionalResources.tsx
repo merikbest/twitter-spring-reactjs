@@ -3,20 +3,23 @@ import {Divider, List, ListItem, Typography} from "@material-ui/core";
 
 import {useAdditionalResourcesStyles} from "./AdditionalResourcesStyles";
 import {ArrowTopIcon} from "../../../icons";
+import {useGlobalStyles} from "../../../util/globalClasses";
+import classnames from "classnames";
 
 const AdditionalResources: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useAdditionalResourcesStyles();
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Check out other places for helpful information to learn more about Twitter products and services.
                 </Typography>
             </div>
-            <div className={classes.listWrapper}>
+            <div className={classnames(classes.listWrapper, globalClasses.listItemWrapper)}>
                 <List component="nav" aria-label="main mailbox folders">
-                    <div className={classes.infoItemWrapper}>
+                    <div className={globalClasses.itemInfoWrapper}>
                         <Typography variant={"h5"} component={"div"}>
                             Release notes
                         </Typography>
@@ -28,13 +31,13 @@ const AdditionalResources: FC = (): ReactElement => {
                                     Privacy policy
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowTopIcon}
                             </div>
                         </ListItem>
                     </a>
                     <Divider/>
-                    <div className={classes.infoItemWrapper}>
+                    <div className={globalClasses.itemInfoWrapper}>
                         <Typography variant={"h5"} component={"div"}>
                             Legal
                         </Typography>
@@ -47,7 +50,7 @@ const AdditionalResources: FC = (): ReactElement => {
                                     Ads info
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowTopIcon}
                             </div>
                         </ListItem>
@@ -59,7 +62,7 @@ const AdditionalResources: FC = (): ReactElement => {
                                     Cookie Policy
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowTopIcon}
                             </div>
                         </ListItem>
@@ -71,7 +74,7 @@ const AdditionalResources: FC = (): ReactElement => {
                                     Privacy Policy
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowTopIcon}
                             </div>
                         </ListItem>
@@ -83,13 +86,13 @@ const AdditionalResources: FC = (): ReactElement => {
                                     Terms of Service
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowTopIcon}
                             </div>
                         </ListItem>
                     </a>
                     <Divider/>
-                    <div className={classes.infoItemWrapper}>
+                    <div className={globalClasses.itemInfoWrapper}>
                         <Typography variant={"h5"} component={"div"}>
                             Miscellaneous
                         </Typography>
@@ -101,7 +104,7 @@ const AdditionalResources: FC = (): ReactElement => {
                                     About
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowTopIcon}
                             </div>
                         </ListItem>
@@ -113,7 +116,7 @@ const AdditionalResources: FC = (): ReactElement => {
                                     Advertising
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowTopIcon}
                             </div>
                         </ListItem>
@@ -125,7 +128,7 @@ const AdditionalResources: FC = (): ReactElement => {
                                     Blog
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowTopIcon}
                             </div>
                         </ListItem>
@@ -137,7 +140,7 @@ const AdditionalResources: FC = (): ReactElement => {
                                     Brand Resources
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowTopIcon}
                             </div>
                         </ListItem>
@@ -149,7 +152,7 @@ const AdditionalResources: FC = (): ReactElement => {
                                     Careers
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowTopIcon}
                             </div>
                         </ListItem>
@@ -161,7 +164,7 @@ const AdditionalResources: FC = (): ReactElement => {
                                     Developers
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowTopIcon}
                             </div>
                         </ListItem>
@@ -173,7 +176,7 @@ const AdditionalResources: FC = (): ReactElement => {
                                     Directory
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowTopIcon}
                             </div>
                         </ListItem>
@@ -185,7 +188,7 @@ const AdditionalResources: FC = (): ReactElement => {
                                     Help Center
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowTopIcon}
                             </div>
                         </ListItem>
@@ -197,7 +200,7 @@ const AdditionalResources: FC = (): ReactElement => {
                                     Marketing
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowTopIcon}
                             </div>
                         </ListItem>
@@ -209,7 +212,7 @@ const AdditionalResources: FC = (): ReactElement => {
                                     Status
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowTopIcon}
                             </div>
                         </ListItem>
@@ -221,7 +224,7 @@ const AdditionalResources: FC = (): ReactElement => {
                                     Twitter for Business
                                 </Typography>
                             </div>
-                            <div className={classes.arrowIcon}>
+                            <div className={globalClasses.arrowIcon}>
                                 {ArrowTopIcon}
                             </div>
                         </ListItem>

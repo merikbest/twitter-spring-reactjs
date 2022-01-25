@@ -2,13 +2,11 @@ import React, {FC, ReactElement} from 'react';
 import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 import {Link} from "react-router-dom";
 
-import {useYourTweetsStyles} from "./YourTweetsStyles";
 import {ArrowRightIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 
 const YourTweets: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
-    const classes = useYourTweetsStyles();
 
     return (
         <>
@@ -38,7 +36,7 @@ const YourTweets: FC = (): ReactElement => {
                 </Typography>
             </div>
             <Link to={"/settings/privacy_and_safety/location"} className={globalClasses.linkWrapper}>
-                <div className={classes.yourTweetsLink}>
+                <div className={globalClasses.contentLink}>
                     <Typography variant={"body1"} component={"span"}>
                         Add location information to your Tweets
                     </Typography>

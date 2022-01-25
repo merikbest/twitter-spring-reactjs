@@ -38,11 +38,42 @@ export const useGlobalStyles = makeStyles((theme: Theme) => ({
     itemInfoWrapper: {
         padding: "12px 16px",
     },
+    listItemWrapper: {
+        "& a": {
+            textDecoration: "none"
+        },
+        "& .MuiListItem-root": {
+            padding: "12px 16px",
+            "&:hover": {
+                cursor: "pointer",
+                backgroundColor: theme.palette.secondary.main,
+            },
+        },
+        "& svg": {
+            color: theme.palette.text.secondary,
+            width: "1.156rem",
+            height: "1.156rem",
+        },
+    },
+    listIconWrapper: {
+        margin: "15px 30px 15px 15px",
+    },
     infoItemCheckbox: {
         paddingBottom: 12,
         "& .MuiCheckbox-root": {
             float: "right",
             marginTop: -10,
+        },
+    },
+    infoItemRadioCheckbox: {
+        padding: "4px 0px",
+        "& .MuiButtonBase-root": {
+            padding: 4,
+            float: "right",
+            "& .MuiSvgIcon-root": {
+                width: 20,
+                height: 20
+            },
         },
     },
     switch: {

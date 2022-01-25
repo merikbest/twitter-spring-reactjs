@@ -1,11 +1,11 @@
 import React, {FC, ReactElement, useState} from 'react';
 import {Checkbox, Divider, Link as MuiLink, Radio, Switch, Typography} from "@material-ui/core";
-
-import {useEmailNotificationsStyles} from "./EmailNotificationsStyles";
 import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
 
+import {useGlobalStyles} from "../../../../../util/globalClasses";
+
 const EmailNotifications: FC = (): ReactElement => {
-    const classes = useEmailNotificationsStyles();
+    const globalClasses = useGlobalStyles();
     const [selectedValue, setSelectedValue] = useState<string>("Periodically");
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -14,15 +14,15 @@ const EmailNotifications: FC = (): ReactElement => {
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
-                <Typography variant={"h6"} component={"div"} className={classes.itemTitle}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <Typography variant={"h6"} component={"div"} style={{paddingBottom: 4}}>
                     Email notifications
-                    <span className={classes.switch}>
+                    <span className={globalClasses.switch}>
                         <Switch defaultChecked/>
                     </span>
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {"Get emails to find out what’s going on when you’re not on Twitter. You can turn them off anytime. "}
                     <MuiLink
@@ -36,40 +36,40 @@ const EmailNotifications: FC = (): ReactElement => {
                 </Typography>
             </div>
             <Divider/>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
                     Related to you and your Tweets
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         New notifications
                     </Typography>
                     <Checkbox checked={true}/>
                 </div>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Direct messages
                     </Typography>
                     <Checkbox checked={true}/>
                 </div>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Tweets emailed to you
                     </Typography>
                     <Checkbox checked={true}/>
                 </div>
             </div>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h6"} component={"div"}>
                     Top Tweets and Stories
                 </Typography>
-                <div className={classes.emailNotificationsItemWrapper}>
+                <div className={globalClasses.infoItemRadioCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Daily
                     </Typography>
@@ -84,7 +84,7 @@ const EmailNotifications: FC = (): ReactElement => {
                         size="small"
                     />
                 </div>
-                <div className={classes.emailNotificationsItemWrapper}>
+                <div className={globalClasses.infoItemRadioCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Weekly
                     </Typography>
@@ -99,7 +99,7 @@ const EmailNotifications: FC = (): ReactElement => {
                         size="small"
                     />
                 </div>
-                <div className={classes.emailNotificationsItemWrapper}>
+                <div className={globalClasses.infoItemRadioCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Periodically
                     </Typography>
@@ -114,7 +114,7 @@ const EmailNotifications: FC = (): ReactElement => {
                         size="small"
                     />
                 </div>
-                <div className={classes.emailNotificationsItemWrapper}>
+                <div className={globalClasses.infoItemRadioCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Off
                     </Typography>
@@ -130,8 +130,8 @@ const EmailNotifications: FC = (): ReactElement => {
                     />
                 </div>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Updates about the performance of your Tweets
                     </Typography>
@@ -139,69 +139,69 @@ const EmailNotifications: FC = (): ReactElement => {
                 </div>
             </div>
             <Divider/>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
                     From Twitter
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         News about Twitter product and feature updates
                     </Typography>
                     <Checkbox checked={true}/>
                 </div>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Tips on getting more out of Twitter
                     </Typography>
                     <Checkbox checked={true}/>
                 </div>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Things you missed since you last logged into Twitter
                     </Typography>
                     <Checkbox checked={true}/>
                 </div>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         News about Twitter on partner products and other third party services
                     </Typography>
                     <Checkbox checked={true}/>
                 </div>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Participation in Twitter research surveys
                     </Typography>
                     <Checkbox checked={true}/>
                 </div>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Suggestions for recommended accounts
                     </Typography>
                     <Checkbox checked={true}/>
                 </div>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Suggestions based on your recent follows
                     </Typography>
                     <Checkbox checked={true}/>
                 </div>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Tips on Twitter business products
                     </Typography>

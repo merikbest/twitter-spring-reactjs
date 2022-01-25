@@ -2,21 +2,21 @@ import React, {FC, ReactElement} from 'react';
 import {Link} from 'react-router-dom';
 import {Checkbox, Typography, Link as MuiLink} from "@material-ui/core";
 
-import {useFiltersStyles} from "./FiltersStyles";
 import {ArrowRightIcon} from "../../../../icons";
+import {useGlobalStyles} from "../../../../util/globalClasses";
 
 const Filters: FC = (): ReactElement => {
-    const classes = useFiltersStyles();
+    const globalClasses = useGlobalStyles();
 
     return (
         <>
-            <div className={classes.infoItemWrapper}>
+            <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Choose the notifications you’d like to see — and those you don’t.
                 </Typography>
             </div>
-            <div className={classes.infoItemWrapper}>
-                <div className={classes.infoItem}>
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Quality filter
                     </Typography>
@@ -35,8 +35,8 @@ const Filters: FC = (): ReactElement => {
                     </MuiLink>
                 </Typography>
             </div>
-            <Link to={"/settings/privacy_and_safety/advanced_filters"} className={classes.filtersWrapper}>
-                <div className={classes.filtersLink}>
+            <Link to={"/settings/privacy_and_safety/advanced_filters"} className={globalClasses.linkWrapper}>
+                <div className={globalClasses.contentLink}>
                     <Typography variant={"body1"} component={"span"}>
                         Muted notifications
                     </Typography>

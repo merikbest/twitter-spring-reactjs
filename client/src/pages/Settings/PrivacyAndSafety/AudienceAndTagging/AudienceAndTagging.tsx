@@ -9,6 +9,7 @@ import {selectUserData} from "../../../../store/ducks/user/selectors";
 import {setUserLoadingStatus, updatePrivateProfile} from "../../../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../../../store/types";
 import {useGlobalStyles} from "../../../../util/globalClasses";
+import classnames from "classnames";
 
 const AudienceAndTagging: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -59,7 +60,7 @@ const AudienceAndTagging: FC = (): ReactElement => {
                 </Typography>
             </div>
             <Link to={"/settings/privacy_and_safety/tagging"} className={globalClasses.linkWrapper}>
-                <div className={classes.photoTaggingLink}>
+                <div className={classnames(globalClasses.contentLink, classes.photoTaggingLink)}>
                     <div className={classes.photoTagInfo}>
                         <Typography variant={"body1"} component={"div"}>
                             Photo tagging

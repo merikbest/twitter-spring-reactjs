@@ -29,7 +29,7 @@ const PhotoTagging: FC = (): ReactElement => {
             </div>
             <Divider/>
             <div className={globalClasses.itemInfoWrapper}>
-                <div className={classes.photoTaggingItemWrapper}>
+                <div className={globalClasses.infoItemRadioCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Anyone can tag you
                     </Typography>
@@ -44,7 +44,7 @@ const PhotoTagging: FC = (): ReactElement => {
                         size="small"
                     />
                 </div>
-                <div className={classes.photoTaggingItemWrapper}>
+                <div className={globalClasses.infoItemRadioCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
                         Only people you follow can tag you
                     </Typography>
