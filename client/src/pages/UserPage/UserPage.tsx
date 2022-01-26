@@ -111,12 +111,6 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
     const history = useHistory();
     const params = useParams<{ id: string }>();
 
-    const [isSubscriber, setIsSubscriber] = useState<boolean>(false);
-    const [isFollower, setIsFollower] = useState<boolean>(false);
-    const [isUserMuted, setIsUserMuted] = useState<boolean>(false);
-    const [isUserBlocked, setIsUserBlocked] = useState<boolean>(false);
-    const [isMyProfileBlocked, setIsMyProfileBlocked] = useState<boolean>(false);
-    const [isWaitingForApprove, setIsWaitingForApprove] = useState<boolean>(false);
     const [btnText, setBtnText] = useState<string>("");
     const [activeTab, setActiveTab] = useState<number>(0);
     const [sameFollowers, setSameFollowers] = useState<User[]>([]);
@@ -126,15 +120,12 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
     const pagesCount = useSelector(selectPagesCount);
     const [page, setPage] = useState<number>(0);
 
-    useEffect(() => {
-        console.log("FROM 0 useEffect");
-        setIsFollower(myProfile?.followers?.findIndex(follower => follower.id === userProfile?.id) !== -1);
-        setIsUserMuted(myProfile?.userMutedList?.findIndex(mutedUser => mutedUser.id === userProfile?.id) !== -1);
-        setIsUserBlocked(myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === userProfile?.id) !== -1);
-        setIsSubscriber(userProfile?.subscribers?.findIndex(subscriber => subscriber.id === myProfile?.id) !== -1);
-        setIsMyProfileBlocked(userProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1);
-        setIsWaitingForApprove(userProfile?.followerRequests?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1);
-    }, [myProfile, userProfile]);
+    const isSubscriber = userProfile?.subscribers?.findIndex(subscriber => subscriber.id === myProfile?.id) !== -1;
+    const isFollower = myProfile?.followers?.findIndex(follower => follower.id === userProfile?.id) !== -1;
+    const isUserMuted = myProfile?.userMutedList?.findIndex(mutedUser => mutedUser.id === userProfile?.id) !== -1;
+    const isUserBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === userProfile?.id) !== -1;
+    const isMyProfileBlocked = userProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
+    const isWaitingForApprove = userProfile?.followerRequests?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -142,7 +133,6 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
         if (params.id) {
             dispatch(fetchUserProfile(params.id));
         }
-        dispatch(fetchUserData());
         document.body.style.overflow = 'unset';
 
         stompClient = Stomp.over(new SockJS(WS_URL));
@@ -185,7 +175,6 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
     useEffect(() => {
         const isBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === userProfile?.id) !== -1;
         setBtnText(isWaitingForApprove ? ("Pending") : (isBlocked ? "Blocked" : "Following"));
-        setIsUserBlocked(isBlocked);
     }, [myProfile]);
 
     useEffect(() => {
@@ -602,7 +591,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                         {isUserProfileLoading ? (
                             <Spinner/>
                         ) : (
-                            (isMyProfileLoaded && isUserProfileSuccessLoaded) && (
+                            (isUserProfileSuccessLoaded) && (
                                 isMyProfileBlocked ? (
                                     <div className={classes.privateProfileInfo}>
                                         <Typography variant={"h4"} component={"div"}>

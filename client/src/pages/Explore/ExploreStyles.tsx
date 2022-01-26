@@ -25,18 +25,7 @@ export const useExploreStyles = makeStyles((theme: Theme) => ({
         paddingTop: 5
     },
     editButton: {
-        display: "inline-block",
-        "& .MuiIconButton-root": {
-            marginLeft: 25,
-            width: 40,
-            height: 40,
-            "& svg": {
-                marginTop: 5,
-                verticalAlign: "bottom",
-                color: theme.palette.primary.main,
-                height: "0.90em",
-            },
-        },
+        marginLeft: 35
     },
     contentWrapper: {
         paddingTop: 97

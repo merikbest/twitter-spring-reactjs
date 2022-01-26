@@ -3,16 +3,6 @@ import {makeStyles, Theme} from "@material-ui/core";
 export const useTopTweetsActionsModalStyles = makeStyles((theme: Theme) => ({
     root: {
         display: "inline-block",
-        "& .MuiIconButton-root": {
-            padding: 7,
-            color: theme.palette.primary.main,
-            "& .MuiIconButton-label": {
-                "& svg": {
-                    verticalAlign: "bottom",
-                    height: "0.9em",
-                },
-            },
-        },
     },
     dropdown: {
         padding: 0,

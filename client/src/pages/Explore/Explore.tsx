@@ -154,11 +154,9 @@ const Explore: FC = (): ReactElement => {
                                     ),
                                 }}
                             />
-                            <div className={classes.editButton}>
-                                <IconButton>
-                                    <>{EditIcon}</>
-                                </IconButton>
-                            </div>
+                            <IconButton className={classes.editButton} color="primary" size="small">
+                                <>{EditIcon}</>
+                            </IconButton>
                         </form>
                         <div className={classes.tabs}>
                             <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>

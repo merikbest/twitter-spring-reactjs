@@ -69,7 +69,7 @@ const EditListModal: FC<EditListModalProps> = ({visible, onClose}): ReactElement
         if (wallpaper) {
             wallpaperResponse = await uploadImage(wallpaper.file);
         }
-        dispatch(editList({...data, listOwner: list?.listOwner!, wallpaper: wallpaperResponse}));
+        dispatch(editList({...data, isPrivate: isListPrivate, listOwner: list?.listOwner!, wallpaper: wallpaperResponse}));
         onClose();
     };
 

@@ -3,8 +3,16 @@ import {ClickAwayListener, IconButton, List, ListItem, Typography} from "@materi
 
 import {useTopTweetsActionsModalStyles} from "./TopTweetsActionsModalStyles";
 import {EditIcon, NotShowIcon, SeeLatestIcon} from "../../../icons";
+import {HoverActionProps, HoverActions, withHoverAction} from "../../../hoc/withHoverAction";
+import HoverAction from "../../../components/HoverAction/HoverAction";
 
-const TopTweetsActionsModal: FC = (): ReactElement => {
+const TopTweetsActionsModal: FC<HoverActionProps> = (
+    {
+        visibleHoverAction,
+        handleHoverAction,
+        handleLeaveAction
+    }
+): ReactElement => {
     const classes = useTopTweetsActionsModalStyles();
     const [open, setOpen] = useState<boolean>(false);
 
@@ -20,8 +28,15 @@ const TopTweetsActionsModal: FC = (): ReactElement => {
         <>
             <ClickAwayListener onClickAway={handleClickAway}>
                 <div className={classes.root}>
-                    <IconButton onClick={handleClick}>
+                    <IconButton
+                        onClick={handleClick}
+                        onMouseEnter={() => handleHoverAction?.(HoverActions.MORE)}
+                        onMouseLeave={handleLeaveAction}
+                        color="primary"
+                        size="small"
+                    >
                         <>{EditIcon}</>
+                        <HoverAction visible={visibleHoverAction?.visibleMoreAction} actionText={"More"}/>
                     </IconButton>
                     {open ? (
                         <div className={classes.dropdown}>
@@ -36,7 +51,8 @@ const TopTweetsActionsModal: FC = (): ReactElement => {
                                                 See top Tweets
                                             </Typography>
                                             <Typography variant={"subtitle2"} component={"div"}>
-                                                You’re seeing top Tweets first. Latest Tweets will show up as they happen.
+                                                You’re seeing top Tweets first. Latest Tweets will show up as they
+                                                happen.
                                             </Typography>
                                         </div>
                                     </div>
@@ -65,4 +81,4 @@ const TopTweetsActionsModal: FC = (): ReactElement => {
     );
 };
 
-export default TopTweetsActionsModal;
+export default withHoverAction(TopTweetsActionsModal);

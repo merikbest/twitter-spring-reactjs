@@ -33,14 +33,6 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
     },
     icon: {
         display: "inline-block",
-        "& .MuiIconButton-root": {
-            padding: 7,
-            "& svg": {
-                color: theme.palette.primary.main,
-                verticalAlign: "bottom",
-                height: "0.90em",
-            },
-        },
     },
     dropdownLink: {
         color: "black",

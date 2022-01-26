@@ -3,8 +3,16 @@ import {ClickAwayListener, IconButton, List, ListItem, Typography} from "@materi
 
 import {useShareActionsModalStyles} from "./ShareActionsModalStyles";
 import {LinkIcon, MessagesIcon, ShareIcon, TweetThisIcon} from "../../../icons";
+import HoverAction from "../../../components/HoverAction/HoverAction";
+import {HoverActionProps, HoverActions, withHoverAction} from "../../../hoc/withHoverAction";
 
-const ShareActionsModal: FC = (): ReactElement => {
+const ShareActionsModal: FC<HoverActionProps> = (
+    {
+        visibleHoverAction,
+        handleHoverAction,
+        handleLeaveAction
+    }
+): ReactElement => {
     const classes = useShareActionsModalStyles();
     const [open, setOpen] = useState<boolean>(false);
 
@@ -20,8 +28,15 @@ const ShareActionsModal: FC = (): ReactElement => {
         <>
             <ClickAwayListener onClickAway={handleClickAway}>
                 <div className={classes.root}>
-                    <IconButton onClick={handleClick}>
+                    <IconButton
+                        onClick={handleClick}
+                        onMouseEnter={() => handleHoverAction?.(HoverActions.SHARE)}
+                        onMouseLeave={handleLeaveAction}
+                        color="primary"
+                        size="small"
+                    >
                         <>{ShareIcon}</>
+                        <HoverAction visible={visibleHoverAction?.visibleShareAction} actionText={"Share"}/>
                     </IconButton>
                     {open ? (
                         <div className={classes.dropdown}>
@@ -59,4 +74,4 @@ const ShareActionsModal: FC = (): ReactElement => {
     );
 };
 
-export default ShareActionsModal;
+export default withHoverAction(ShareActionsModal);

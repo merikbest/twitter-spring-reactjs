@@ -84,6 +84,8 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
                             onClick={onOpenCreateListModal}
                             onMouseEnter={() => handleHoverAction?.(HoverActions.CREATE_LIST)}
                             onMouseLeave={handleLeaveAction}
+                            color="primary"
+                            size="small"
                         >
                             <>{AddListsIcon}</>
                             <HoverAction visible={visibleHoverAction?.visibleCreateListAction} actionText={"Create"}/>
@@ -96,6 +98,8 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
                                     onClick={handleClick}
                                     onMouseEnter={() => handleHoverAction?.(HoverActions.MORE)}
                                     onMouseLeave={handleLeaveAction}
+                                    color="primary"
+                                    size="small"
                                 >
                                     <>{EditIcon}</>
                                     <HoverAction visible={visibleHoverAction?.visibleMoreAction} actionText={"More"}/>
