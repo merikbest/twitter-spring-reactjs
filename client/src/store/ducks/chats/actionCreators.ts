@@ -5,6 +5,7 @@ import {
     CreateChatActionInterface,
     FetchChatsActionInterface,
     LeaveFromConversationActionInterface,
+    ResetChatsStateActionInterface,
     SetChatActionInterface,
     SetChatsActionInterface,
     SetChatsLoadingStateActionInterface
@@ -32,6 +33,10 @@ export const createChat = (payload: number): CreateChatActionInterface => ({
 export const leaveFromConversation = (payload: { participantId: number, chatId: number }): LeaveFromConversationActionInterface => ({
     type: ChatsActionsType.LEAVE_FROM_CONVERSATION,
     payload,
+});
+
+export const resetChatsState = (): ResetChatsStateActionInterface => ({
+    type: ChatsActionsType.RESET_CHATS_STATE
 });
 
 export const setChatsLoadingState = (payload: LoadingStatus): SetChatsLoadingStateActionInterface => ({

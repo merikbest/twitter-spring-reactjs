@@ -38,7 +38,7 @@ const ManageMembersModal: FC<ManageMembersModalProps> = ({visible, onClose}): Re
             aria-labelledby="form-dialog-title"
         >
             <DialogTitle id="form-dialog-title">
-                <IconButton onClick={onClose} color="secondary" aria-label="close">
+                <IconButton onClick={onClose} color="primary" size="small">
                     <>{ArrowIcon}</>
                 </IconButton>
                 Manage members

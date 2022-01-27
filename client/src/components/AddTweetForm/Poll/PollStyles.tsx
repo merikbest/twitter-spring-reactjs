@@ -17,7 +17,7 @@ export const usePollStyles = makeStyles((theme: Theme) => ({
     addPollInputButton: {
         position: "absolute",
         bottom: 0,
-        marginLeft: 10,
+        marginLeft: 6,
         padding: 5,
     },
     pollLength: {

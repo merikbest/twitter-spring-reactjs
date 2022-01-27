@@ -4,6 +4,7 @@ import {
     FetchMutedUsersActionInterface,
     FetchRelevantUsersActionInterface,
     FetchUsersActionInterface,
+    ResetUsersStateActionInterface,
     SetUpdatedUserActionInterface,
     SetUsersActionInterface,
     SetUsersLoadingStatusActionInterface,
@@ -35,6 +36,10 @@ export const fetchBlockedUsers = (): FetchBlockedUsersActionInterface => ({
 
 export const fetchMutedUsers = (): FetchMutedUsersActionInterface => ({
     type: UsersActionsType.FETCH_MUTED_USERS
+});
+
+export const resetUsersState = (): ResetUsersStateActionInterface => ({
+    type: UsersActionsType.RESET_USERS_STATE,
 });
 
 export const setUsersLoadingState = (payload: UsersState["loadingState"]): SetUsersLoadingStatusActionInterface => ({

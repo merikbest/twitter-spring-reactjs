@@ -236,6 +236,7 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<Tweet> & HoverActi
                                 onClick={onOpenReplyModalWindow}
                                 onMouseEnter={() => handleHoverAction?.(HoverActions.REPLY)}
                                 onMouseLeave={handleLeaveAction}
+                                size="small"
                             >
                                 <>{ReplyIcon}</>
                                 <HoverAction visible={visibleHoverAction?.visibleReplyAction} actionText={"Reply"}/>
@@ -256,6 +257,7 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<Tweet> & HoverActi
                                 onClick={handleLike}
                                 onMouseEnter={() => handleHoverAction?.(HoverActions.LIKE)}
                                 onMouseLeave={handleLeaveAction}
+                                size="small"
                             >
                                 {isTweetLiked ? (
                                     <>{LikeIcon}</>
@@ -282,6 +284,7 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<Tweet> & HoverActi
                                     onClick={onOpenTweetAnalyticsModalWindow}
                                     onMouseEnter={() => handleHoverAction?.(HoverActions.ANALYTICS)}
                                     onMouseLeave={handleLeaveAction}
+                                    size="small"
                                 >
                                     <>{AnalyticsIcon}</>
                                     <HoverAction visible={visibleHoverAction?.visibleAnalyticsAction} actionText={"Analytics"}/>

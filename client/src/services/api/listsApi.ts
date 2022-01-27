@@ -37,6 +37,7 @@ export const ListsApi = {
         return data;
     },
     async editList(payload: EditLists): Promise<Response<Lists>> {
+        console.log(payload)
         const {data} = await axios.put<Response<Lists>>(`${API_URL}/lists`, payload);
         return data;
     },

@@ -5,7 +5,7 @@ import {List, ListItem, ListItemText, Typography} from "@material-ui/core";
 
 import {useTrendsStyles} from "./TrendsStyles";
 import {selectIsTagsLoading, selectTagsItems} from "../../store/ducks/tags/selectors";
-import {fetchTrends, resetTagsState} from "../../store/ducks/tags/actionCreators";
+import {fetchTrends} from "../../store/ducks/tags/actionCreators";
 import {EditIcon} from "../../icons";
 import Spinner from "../../components/Spinner/Spinner";
 
@@ -24,7 +24,7 @@ const Trends: FC = (): ReactElement => {
     return (
         <div>
             {isTrendsLoaded ? (
-                <Spinner/>
+                <Spinner paddingTop={80}/>
             ) : (
                 <List style={{paddingTop: 48,}}>
                     {trends.map(item => (

@@ -6,7 +6,7 @@ import {TagsState} from './contracts/state';
 
 const initialTagsState: TagsState = {
     items: [],
-    loadingState: LoadingStatus.NEVER,
+    loadingState: LoadingStatus.LOADING,
 };
 
 export const tagsReducer = produce((draft: Draft<TagsState>, action: TagsActions) => {

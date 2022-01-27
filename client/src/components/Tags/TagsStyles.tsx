@@ -26,7 +26,7 @@ export const useTagsStyles = makeStyles((theme) => ({
         borderRight: 0,
         borderBottom: `1px solid ${theme.palette.divider}`,
         backgroundColor: 'transparent',
-        padding: '10px 10px 10px 18px',
+        padding: '10px 10px 4px 18px',
     },
     item: {
         cursor: 'pointer',

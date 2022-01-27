@@ -8,10 +8,6 @@ export const useManageMembersModalStyles = makeStyles((theme: Theme) => ({
         },
         "& .MuiIconButton-root": {
             marginRight: 15,
-            "& svg": {
-                height: "1.0em",
-                fill: theme.palette.primary.main,
-            },
         },
     },
     content: {

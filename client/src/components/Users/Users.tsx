@@ -1,6 +1,6 @@
 import React, {FC, ReactElement} from 'react';
-import {Link, useLocation} from 'react-router-dom';
-import {useSelector} from "react-redux";
+import {useHistory} from 'react-router-dom';
+import {useDispatch, useSelector} from "react-redux";
 import {Paper, Typography} from "@material-ui/core";
 import List from "@material-ui/core/List/List";
 import ListItem from "@material-ui/core/ListItem/ListItem";
@@ -9,16 +9,23 @@ import {selectUsers, selectUsersIsLoading} from "../../store/ducks/users/selecto
 import UsersItem, {UserItemSize} from "../UsersItem/UsersItem";
 import {useUsersStyles} from "./UsersStyles";
 import Spinner from "../Spinner/Spinner";
+import {resetUsersState} from "../../store/ducks/users/actionCreators";
 
 const Users: FC = (): ReactElement => {
     const classes = useUsersStyles();
-    const location = useLocation();
+    const dispatch = useDispatch();
+    const history = useHistory();
     const users = useSelector(selectUsers);
     const isUsersLoading = useSelector(selectUsersIsLoading);
 
+    const clickToConnect = () => {
+        dispatch(resetUsersState());
+        history.push("/home/connect");
+    };
+
     return (
         <>
-            {(location.pathname !== "/home/connect") && (
+            {(history.location.pathname !== "/home/connect") && (
                 <Paper className={classes.container}>
                     <Paper className={classes.header} variant="outlined">
                         <Typography variant={"h5"} component={"div"}>
@@ -32,17 +39,15 @@ const Users: FC = (): ReactElement => {
                             {users.slice(0, 5).map((user) => (
                                 <UsersItem key={user.id} item={user} size={UserItemSize.SMALL}/>
                             ))}
-                            <Link to={"/home/connect"}>
-                                <ListItem className={classes.footer}>
-                                    <Typography variant={"subtitle1"} component={"div"}>
-                                        Show more
-                                    </Typography>
-                                </ListItem>
-                            </Link>
+                            <ListItem onClick={clickToConnect} className={classes.footer}>
+                                <Typography variant={"subtitle1"} component={"div"}>
+                                    Show more
+                                </Typography>
+                            </ListItem>
                         </List>
                     )}
-                </Paper>)
-            }
+                </Paper>
+            )}
         </>
     );
 };

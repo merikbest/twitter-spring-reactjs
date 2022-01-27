@@ -44,25 +44,8 @@ export const useSendDirectTweetModalStyles = makeStyles((theme: Theme) => ({
         bottom: 0,
     },
     chatIcon: {
-        marginLeft: 8,
-        "& .MuiIconButton-root": {
-            marginTop: 4,
-            display: "inline",
-            padding: 7,
-            "& svg": {
-                paddingTop: 2,
-                height: "0.90em",
-            },
-        },
-        "& .Mui-disabled": {
-            marginTop: 4,
-            display: "inline",
-            padding: 7,
-            "& svg": {
-                color: theme.palette.primary.light,
-                paddingTop: 2,
-                height: "0.90em",
-            },
-        },
+        display: "inline-block",
+        marginLeft: 3,
+        marginTop: 3,
     },
 }));

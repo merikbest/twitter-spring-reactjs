@@ -61,27 +61,29 @@ const ManageMembersItem: FC<ManageMembersItemProps<Lists> & HoverUserProps> = (
                             </Typography>
                         </div>
                         <div className={classes.buttonWrapper}>
-                            {(member?.id === myProfile?.id) ? null : (
-                                (!isMember) ? (
-                                    <Button
-                                        className={classes.outlinedButton}
-                                        onClick={(event) => onClickAddUserToList(event)}
-                                        variant="outlined"
-                                        color="primary"
-                                        size="small"
-                                    >
-                                        Add
-                                    </Button>
-                                ) : (
-                                    <Button
-                                        className={classes.containedButton}
-                                        onClick={(event) => onClickAddUserToList(event)}
-                                        variant="contained"
-                                        color="primary"
-                                        size="small"
-                                    >
-                                        Remove
-                                    </Button>
+                            {(list?.listOwner.id === myProfile?.id) && (
+                                (member?.id === myProfile?.id) ? null : (
+                                    (!isMember) ? (
+                                        <Button
+                                            className={classes.outlinedButton}
+                                            onClick={(event) => onClickAddUserToList(event)}
+                                            variant="outlined"
+                                            color="primary"
+                                            size="small"
+                                        >
+                                            Add
+                                        </Button>
+                                    ) : (
+                                        <Button
+                                            className={classes.containedButton}
+                                            onClick={(event) => onClickAddUserToList(event)}
+                                            variant="contained"
+                                            color="primary"
+                                            size="small"
+                                        >
+                                            Remove
+                                        </Button>
+                                    )
                                 )
                             )}
                         </div>

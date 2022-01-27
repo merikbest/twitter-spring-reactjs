@@ -8,11 +8,8 @@ interface QuoteTweetStyles {
 export const useQuoteTweetStyles = makeStyles<Theme, QuoteTweetStyles>((theme) => ({
     footerIcon: {
         "& .MuiIconButton-root": {
-            padding: 7,
             "& svg" : {
                 color: props => props.isTweetRetweetedByMe ? "rgb(23, 191, 99)" : theme.palette.text.secondary,
-                verticalAlign: "bottom",
-                height: "0.80em",
             },
             "&:hover": {
                 backgroundColor: "rgba(0, 186, 124, 0.1) !important",

@@ -20,10 +20,5 @@ export const useTrendsStyles = makeStyles((theme) => ({
             color: 'inherit',
             textDecoration: 'none',
         },
-        "& svg": {
-            color: theme.palette.text.secondary,
-            marginBottom: 15,
-            height: "1.2em",
-        },
     },
 }));

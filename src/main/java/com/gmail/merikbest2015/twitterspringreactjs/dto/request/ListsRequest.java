@@ -9,7 +9,7 @@ public class ListsRequest {
     private Long id;
     private String name;
     private String description;
-    private boolean isPrivate;
+    private Boolean isPrivate;
     private UserResponse listOwner;
     private String altWallpaper;
     private ImageResponse wallpaper;

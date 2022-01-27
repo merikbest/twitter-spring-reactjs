@@ -7,8 +7,8 @@ export const useShareTweetModalStyles = makeStyles((theme: Theme) => ({
             padding: (props: { isFullTweet: boolean }) => props.isFullTweet ? 12 : 7,
             "& svg": {
                 color: theme.palette.text.secondary,
-                verticalAlign: "bottom",
-                height: (props: { isFullTweet: boolean }) => props.isFullTweet ? "0.90em" : "0.80em",
+                // verticalAlign: "bottom",
+                // height: (props: { isFullTweet: boolean }) => props.isFullTweet ? "0.90em" : "0.80em",
             },
         },
     },

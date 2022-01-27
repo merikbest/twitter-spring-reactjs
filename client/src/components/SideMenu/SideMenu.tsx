@@ -55,8 +55,8 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
     const [visibleDisplayModal, setVisibleDisplayModal] = useState<boolean>(false);
     const [visibleFollowerRequestsModal, setVisibleFollowerRequestsModal] = useState<boolean>(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
-    const id = open ? "simple-popover" : undefined;
+    const openPopover = Boolean(anchorEl);
+    const popoverId = openPopover ? "simple-popover" : undefined;
 
     useEffect(() => {
         if (loadingStatus === LoadingStatus.SUCCESS) {
@@ -250,7 +250,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     </NavLink>
                 </li>
                 <li className={classes.itemWrapper}>
-                    <div aria-describedby={id} onClick={handleOpenPopup}>
+                    <div aria-describedby={popoverId} onClick={handleOpenPopup}>
                         <Hidden smDown>
                             <>
                                 <span>{MoreIcon}</span>
@@ -261,8 +261,8 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                         </Hidden>
                     </div>
                     <Popover
-                        id={id}
-                        open={open}
+                        id={popoverId}
+                        open={openPopover}
                         anchorEl={anchorEl}
                         onClose={handleClosePopup}
                         classes={{

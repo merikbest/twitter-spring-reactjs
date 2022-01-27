@@ -112,9 +112,14 @@ const Home: FC = (): ReactElement => {
                 </Route>
 
                 <Route path='/home' exact>
-                    {(!myProfile?.profileStarted && !isLoading) && (<Welcome/>)}
-                    {tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}
-                    {isLoading && <Spinner/>}
+                    {!myProfile?.profileStarted ? (
+                        <Welcome/>
+                    ) : (
+                        <>
+                            {tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}
+                            {isLoading && <Spinner/>}
+                        </>
+                    )}
                 </Route>
                 <Route path="/home/tweet/:id" exact>
                     <FullTweet/>

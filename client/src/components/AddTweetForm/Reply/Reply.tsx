@@ -23,8 +23,8 @@ interface ReplyProps {
 const Reply: FC<ReplyProps> = ({replyType, setReplyType, isUnsentTweet}): ReactElement => {
     const classes = useReplyStyles();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const open1 = Boolean(anchorEl);
-    const id = open1 ? "simple-popover" : undefined;
+    const openPopover = Boolean(anchorEl);
+    const popoverId = openPopover ? "simple-popover" : undefined;
 
     const handleListItemClick = (reply: ReplyType): void => {
         setReplyType(reply);
@@ -42,7 +42,7 @@ const Reply: FC<ReplyProps> = ({replyType, setReplyType, isUnsentTweet}): ReactE
     return (
         <>
             <div className={classes.reply}>
-                <Button onClick={handleOpenPopup} color="primary" disabled={isUnsentTweet}>
+                <Button onClick={handleOpenPopup} color="primary" disabled={isUnsentTweet} variant="text">
                     <span>
                         {replyType === ReplyType.EVERYONE && EveryoneReplyIcon}
                         {replyType === ReplyType.FOLLOW && FollowReplyIcon}
@@ -57,9 +57,9 @@ const Reply: FC<ReplyProps> = ({replyType, setReplyType, isUnsentTweet}): ReactE
                 <Divider/>
             </div>
             <Popover
-                id={id}
+                id={popoverId}
                 className={classes.popover}
-                open={open1}
+                open={openPopover}
                 anchorEl={anchorEl}
                 onClose={handleClosePopup}
             >

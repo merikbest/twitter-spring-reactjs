@@ -67,6 +67,7 @@ const QuoteTweet: FC<QuoteTweetProps> = (
                     onClick={handleClick}
                     onMouseEnter={() => handleHoverAction?.(HoverActions.RETWEET)}
                     onMouseLeave={handleLeaveAction}
+                    size="small"
                 >
                     {isTweetRetweetedByMe ? (
                         <>{RetweetIcon}</>

@@ -413,6 +413,13 @@ export const blueColor = {
             },
         },
         MuiIconButton: {
+            colorPrimary: {
+                "&.Mui-disabled": {
+                    "& svg": {
+                        color: "rgb(142, 205, 247)",
+                    },
+                },
+            },
             root: {
                 "&:hover": {
                     backgroundColor: "rgb(29, 155, 240, 0.1) !important",
@@ -479,6 +486,13 @@ export const yellowColor = {
             },
         },
         MuiIconButton: {
+            colorPrimary: {
+                "&.Mui-disabled": {
+                    "& svg": {
+                        color: "rgb(255, 234, 128)",
+                    },
+                },
+            },
             root: {
                 "&:hover": {
                     backgroundColor: "rgb(255, 212, 0, 0.1) !important",
@@ -545,6 +559,13 @@ export const crimsonColor = {
             },
         },
         MuiIconButton: {
+            colorPrimary: {
+                "&.Mui-disabled": {
+                    "& svg": {
+                        color: "rgb(252, 140, 192)",
+                    },
+                },
+            },
             root: {
                 "&:hover": {
                     backgroundColor: "rgb(249, 24, 128, 0.1) !important",
@@ -611,6 +632,13 @@ export const violetColor = {
             },
         },
         MuiIconButton: {
+            colorPrimary: {
+                "&.Mui-disabled": {
+                    "& svg": {
+                        color: "rgb(188, 171, 255)",
+                    },
+                },
+            },
             root: {
                 "&:hover": {
                     backgroundColor: "rgb(120, 86, 255, 0.1) !important",
@@ -677,6 +705,13 @@ export const orangeColor = {
             },
         },
         MuiIconButton: {
+            colorPrimary: {
+                "&.Mui-disabled": {
+                    "& svg": {
+                        color: "rgb(255, 189, 128)",
+                    },
+                },
+            },
             root: {
                 "&:hover": {
                     backgroundColor: "rgb(255, 122, 0, 0.1) !important",
@@ -743,6 +778,13 @@ export const greenColor = {
             },
         },
         MuiIconButton: {
+            colorPrimary: {
+                "&.Mui-disabled": {
+                    "& svg": {
+                        color: "rgb(128, 221, 190)",
+                    },
+                },
+            },
             root: {
                 "&:hover": {
                     backgroundColor: "rgb(0, 186, 124, 0.1) !important",

@@ -42,7 +42,8 @@ export enum AddTweetFormAction {
     GIF = "GIF",
     POLL = "POLL",
     EMOJI = "EMOJI",
-    SCHEDULE = "SCHEDULE"
+    SCHEDULE = "SCHEDULE",
+    REMOVE = "REMOVE",
 }
 
 export interface AddTweetFormProps {
@@ -99,14 +100,15 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
     const [visibleAddPollAction, setVisibleAddPollAction] = useState<boolean>(false);
     const [visibleAddEmojiAction, setVisibleAddEmojiAction] = useState<boolean>(false);
     const [visibleAddScheduleAction, setVisibleAddScheduleAction] = useState<boolean>(false);
+    const [visibleRemoveAction, setVisibleRemoveAction] = useState<boolean>(false);
     const [delayHandler, setDelayHandler] = useState<any>(null);
     const [visibleScheduleModal, setVisibleScheduleModal] = useState<boolean>(false);
     const [visibleUnsentTweetsModal, setVisibleUnsentTweetsModal] = useState<boolean>(false);
     const [selectedScheduleDate, setSelectedScheduleDate] = useState<Date | null>(null);
     // Popover
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
-    const id = open ? "simple-popover" : undefined;
+    const openPopover = Boolean(anchorEl);
+    const popoverId = openPopover ? "simple-popover" : undefined;
     // Poll
     const [visiblePoll, setVisiblePoll] = useState<boolean>(false);
     const [choice1, setChoice1] = useState<string>("");
@@ -296,6 +298,8 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
             setDelayHandler(setTimeout(() => setVisibleAddEmojiAction(true), HOVER_DELAY));
         } else if (action === AddTweetFormAction.SCHEDULE) {
             setDelayHandler(setTimeout(() => setVisibleAddScheduleAction(true), HOVER_DELAY));
+        } else if (action === AddTweetFormAction.REMOVE) {
+            setDelayHandler(setTimeout(() => setVisibleRemoveAction(true), HOVER_DELAY));
         }
     };
 
@@ -306,6 +310,7 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
         setVisibleAddPollAction(false);
         setVisibleAddEmojiAction(false);
         setVisibleAddScheduleAction(false);
+        setVisibleRemoveAction(false);
     };
 
     const onOpenScheduleModal = (): void => {
@@ -365,8 +370,14 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
             {(images.length !== 0) && (
                 <div className={(location.pathname.includes("/modal")) ? classes.imageSmall : classes.image}>
                     <img src={images[0].src} alt={images[0].src}/>
-                    <IconButton onClick={removeImage} className={classes.imageRemove}>
+                    <IconButton
+                        className={classes.imageRemove}
+                        onClick={removeImage}
+                        onMouseEnter={() => handleHoverAction(AddTweetFormAction.REMOVE)}
+                        onMouseLeave={handleLeaveAction}
+                    >
                         {CloseIcon}
+                        <HoverAction visible={visibleRemoveAction} actionText={"Remove"}/>
                     </IconButton>
                 </div>
             )}
@@ -497,8 +508,8 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
                     </Button>
                 </div>
                 <Popover
-                    id={id}
-                    open={open}
+                    id={popoverId}
+                    open={openPopover}
                     anchorEl={anchorEl}
                     onClose={handleClosePopup}
                     anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}

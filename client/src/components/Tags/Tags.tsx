@@ -12,7 +12,7 @@ import Spinner from "../Spinner/Spinner";
 const Tags: FC = (): ReactElement => {
     const classes = useTagsStyles();
     const tags = useSelector(selectTagsItems);
-    const isTagsLoaded = useSelector(selectIsTagsLoading);
+    const isTagsLoading = useSelector(selectIsTagsLoading);
 
     return (
         <Paper className={classes.container}>
@@ -24,7 +24,7 @@ const Tags: FC = (): ReactElement => {
                     <>{SettingsIcon}</>
                 </IconButton>
             </Paper>
-            {isTagsLoaded ? (
+            {isTagsLoading ? (
                 <Spinner/>
             ) : (
                 <List>

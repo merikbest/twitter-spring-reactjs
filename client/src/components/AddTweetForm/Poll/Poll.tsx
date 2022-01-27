@@ -8,6 +8,7 @@ import PollInput from "./PollInput/PollInput";
 import {FilledSelect} from "../../FilledSelect/FilledSelect";
 import {HoverActionProps, HoverActions, withHoverAction} from "../../../hoc/withHoverAction";
 import HoverAction from "../../HoverAction/HoverAction";
+import {PlusIcon} from "../../../icons";
 
 interface PollProps {
     choice1: string;
@@ -112,12 +113,12 @@ const Poll: FC<PollProps & HoverActionProps> = (
                                 <IconButton
                                     className={classes.addPollInputButton}
                                     onClick={addPollInput}
-                                    color="secondary"
-                                    aria-label="close"
                                     onMouseEnter={() => handleHoverAction?.(HoverActions.OTHER)}
                                     onMouseLeave={handleLeaveAction}
+                                    color="primary"
+                                    size="small"
                                 >
-                                    <AddIcon color="primary"/>
+                                    {PlusIcon}
                                     <HoverAction visible={visibleHoverAction?.visibleOtherAction} actionText={"Add"}/>
                                 </IconButton>
                             </div>

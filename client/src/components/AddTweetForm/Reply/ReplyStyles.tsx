@@ -6,13 +6,13 @@ export const useReplyStyles = makeStyles((theme: Theme) => ({
         marginTop: 5,
         "& .MuiButton-root": {
             marginLeft: 50,
-            fontSize: 14,
-            fontWeight: 700,
-            padding: "0px 8px",
+            height: 22,
+            padding: "0px 11px",
             "& svg": {
                 marginTop: 3,
                 marginRight: 3,
-                height: "1.2em",
+                width: 16,
+                height: 16,
             },
         },
         "& .MuiButton-root.Mui-disabled": {

@@ -177,15 +177,16 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
                         variant="outlined"
                         placeholder="Add a comment"
                     />
-                    <span className={classes.chatIcon}>
+                    <div className={classes.chatIcon}>
                         <IconButton
                             onClick={handleClickSendMessage}
                             disabled={selectedUsers.length === 0}
                             color="primary"
+                            size="small"
                         >
                             <>{SendMessageIcon}</>
                         </IconButton>
-                    </span>
+                    </div>
                 </div>
             </DialogContent>
         </Dialog>

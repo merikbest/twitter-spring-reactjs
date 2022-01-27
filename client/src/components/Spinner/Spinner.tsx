@@ -1,5 +1,4 @@
 import React, {FC, ReactElement} from 'react';
-import {CircularProgress} from "@material-ui/core";
 
 import {useSpinnerStyles} from "./SpinnerStyles";
 
@@ -12,7 +11,12 @@ const Spinner: FC<SpinnerProps> = ({paddingTop}): ReactElement => {
 
     return (
         <div className={classes.loading}>
-            <CircularProgress/>
+            <div className={classes.spinner}>
+                <svg viewBox="0 0 32 32">
+                    <circle cx="16" cy="16" fill="none" r="14" className={classes.backCircle}/>
+                    <circle cx="16" cy="16" fill="none" r="14" className={classes.frontCircle}/>
+                </svg>
+            </div>
         </div>
     );
 };

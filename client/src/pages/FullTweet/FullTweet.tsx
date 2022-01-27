@@ -16,7 +16,12 @@ import {
     selectIsTweetLoading,
     selectTweetData
 } from '../../store/ducks/tweet/selectors';
-import {fetchTweetData, setTweetData, setTweetLoadingState} from '../../store/ducks/tweet/actionCreators';
+import {
+    fetchTweetData,
+    resetTweetState,
+    setTweetData,
+    setTweetLoadingState
+} from '../../store/ducks/tweet/actionCreators';
 import {likeTweet, retweet} from "../../store/ducks/tweets/actionCreators";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import UsersListModal from "../../components/UsersListModal/UsersListModal";
@@ -105,8 +110,7 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
 
         return () => {
             stompClient?.disconnect();
-            dispatch(setTweetData(undefined));
-            dispatch(setTweetLoadingState(LoadingStatus.NEVER));
+            dispatch(resetTweetState());
         };
     }, [dispatch, params.id]);
 

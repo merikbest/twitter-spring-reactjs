@@ -6,7 +6,7 @@ import {UsersActions, UsersActionsType} from "./contracts/actionTypes";
 
 const initialUsersState: UsersState = {
     users: [],
-    loadingState: LoadingStatus.NEVER,
+    loadingState: LoadingStatus.LOADING,
 };
 
 export const usersReducer = produce((draft: Draft<UsersState>, action: UsersActions) => {
@@ -20,6 +20,11 @@ export const usersReducer = produce((draft: Draft<UsersState>, action: UsersActi
             const updatedUserIndex = draft.users.findIndex((user) => user.id === action.payload.id);
             if (updatedUserIndex !== -1) draft.users[updatedUserIndex] = action.payload;
             draft.loadingState = LoadingStatus.SUCCESS;
+            break;
+
+        case UsersActionsType.RESET_USERS_STATE:
+            draft.users = [];
+            draft.loadingState = LoadingStatus.LOADING;
             break;
 
         case UsersActionsType.SET_USER_LOADING_STATE:

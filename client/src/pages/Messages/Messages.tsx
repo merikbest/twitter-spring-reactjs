@@ -17,9 +17,9 @@ import classNames from "classnames";
 
 import {useMessagesStyles} from "./MessagesStyles";
 import MessagesModal from "./MessagesModal/MessagesModal";
-import {fetchChats} from "../../store/ducks/chats/actionCreators";
+import {fetchChats, resetChatsState} from "../../store/ducks/chats/actionCreators";
 import {selectUserData} from "../../store/ducks/user/selectors";
-import {selectChatsItems} from "../../store/ducks/chats/selectors";
+import {selectChatsItems, selectIsChatsLoading} from "../../store/ducks/chats/selectors";
 import {PeopleSearchInput} from "./PeopleSearchInput/PeopleSearchInput";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {
@@ -44,6 +44,7 @@ import HoverAction from "../../components/HoverAction/HoverAction";
 import BackButton from "../../components/BackButton/BackButton";
 import DirectMessages from "../Settings/PrivacyAndSafety/DirectMessages/DirectMessages";
 import ConversationInfo from "./ConversationInfo/ConversationInfo";
+import Spinner from "../../components/Spinner/Spinner";
 
 export enum MessagesAction {
     SETTINGS = "SETTINGS",
@@ -81,6 +82,7 @@ const Messages: FC = (): ReactElement => {
     const location = useLocation<{ removeParticipant: boolean | undefined; }>();
     const myProfile = useSelector(selectUserData);
     const chats = useSelector(selectChatsItems);
+    const isChatsLoading = useSelector(selectIsChatsLoading);
     const messages = useSelector(selectChatMessagesItems);
     const chatEndRef = useRef<HTMLDivElement>(null);
 
@@ -97,6 +99,10 @@ const Messages: FC = (): ReactElement => {
     useEffect(() => {
         dispatch(fetchChats());
         scrollToBottom();
+
+        return () => {
+            dispatch(resetChatsState());
+        };
     }, []);
 
     useEffect(() => {
@@ -214,89 +220,91 @@ const Messages: FC = (): ReactElement => {
                                 </div>
                             </div>
                         </Paper>
-                        {(chats.length === 0) ? (
-                            <>
-                                <Typography variant={"h4"} component={"div"} className={classes.messagesTitle}>
-                                    Send a message, get a message
-                                </Typography>
-                                <Typography variant={"subtitle1"} component={"div"} className={classes.messagesText}>
-                                    Direct Messages are private conversations between you and other people on Twitter.
-                                    Share Tweets, media, and more!
-                                </Typography>
-                                <Button
-                                    onClick={onOpenModalWindow}
-                                    className={classes.messagesButton}
-                                    variant="contained"
-                                    color="primary"
-                                    size="large"
-                                >
-                                    Start a conversation
-                                </Button>
-                            </>
-                        ) : (
-                            <>
-                                <div className={classes.searchWrapper}>
-                                    <PeopleSearchInput
-                                        placeholder="Explore for people and groups"
-                                        variant="outlined"
-                                        onChange={(event) => setText(event.target.value)}
-                                        value={text}
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    {SearchIcon}
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                    />
-                                </div>
-                                <List component="nav" className={classes.list} aria-label="main mailbox folders">
-                                    {chats.map((chat) => (
-                                        <ListItem
-                                            key={chat.id}
-                                            button
-                                            className={classes.listItem}
-                                            id={(participant?.user.id === chat.participants[0].user.id!) ? ("selected") : ("")}
-                                            selected={participant?.user.id === chat.participants[0].user.id!}
-                                            onClick={() => handleListItemClick(chat)}
-                                        >
-                                            <div className={classes.userWrapper}>
-                                                <Avatar
-                                                    className={classes.userAvatar}
-                                                    src={(myProfile?.id === chat.participants[1].user.id!) ? (
-                                                        (chat.participants[0].user.avatar?.src) ? (
-                                                            chat.participants[0].user.avatar.src
-                                                        ) : (
-                                                            DEFAULT_PROFILE_IMG
-                                                        )
-                                                    ) : ((chat.participants[1].user.avatar?.src) ? (
-                                                            chat.participants[1].user.avatar?.src
-                                                        ) : (
-                                                            DEFAULT_PROFILE_IMG
-                                                        )
-                                                    )}
-                                                />
-                                                <div>
-                                                    <Typography variant={"h6"} component={"span"}>
-                                                        {(myProfile?.id === chat.participants[1].user.id!) ? (
-                                                            chat.participants[0].user.fullName
-                                                        ) : (
-                                                            chat.participants[1].user.fullName
+                        {isChatsLoading ? <Spinner paddingTop={150}/> : (
+                            (chats.length === 0) ? (
+                                <>
+                                    <Typography variant={"h4"} component={"div"} className={classes.messagesTitle}>
+                                        Send a message, get a message
+                                    </Typography>
+                                    <Typography variant={"subtitle1"} component={"div"} className={classes.messagesText}>
+                                        Direct Messages are private conversations between you and other people on Twitter.
+                                        Share Tweets, media, and more!
+                                    </Typography>
+                                    <Button
+                                        onClick={onOpenModalWindow}
+                                        className={classes.messagesButton}
+                                        variant="contained"
+                                        color="primary"
+                                        size="large"
+                                    >
+                                        Start a conversation
+                                    </Button>
+                                </>
+                            ) : (
+                                <>
+                                    <div className={classes.searchWrapper}>
+                                        <PeopleSearchInput
+                                            placeholder="Explore for people and groups"
+                                            variant="outlined"
+                                            onChange={(event) => setText(event.target.value)}
+                                            value={text}
+                                            InputProps={{
+                                                startAdornment: (
+                                                    <InputAdornment position="start">
+                                                        {SearchIcon}
+                                                    </InputAdornment>
+                                                ),
+                                            }}
+                                        />
+                                    </div>
+                                    <List component="nav" className={classes.list} aria-label="main mailbox folders">
+                                        {chats.map((chat) => (
+                                            <ListItem
+                                                key={chat.id}
+                                                button
+                                                className={classes.listItem}
+                                                id={(participant?.user.id === chat.participants[0].user.id!) ? ("selected") : ("")}
+                                                selected={participant?.user.id === chat.participants[0].user.id!}
+                                                onClick={() => handleListItemClick(chat)}
+                                            >
+                                                <div className={classes.userWrapper}>
+                                                    <Avatar
+                                                        className={classes.userAvatar}
+                                                        src={(myProfile?.id === chat.participants[1].user.id!) ? (
+                                                            (chat.participants[0].user.avatar?.src) ? (
+                                                                chat.participants[0].user.avatar.src
+                                                            ) : (
+                                                                DEFAULT_PROFILE_IMG
+                                                            )
+                                                        ) : ((chat.participants[1].user.avatar?.src) ? (
+                                                                chat.participants[1].user.avatar?.src
+                                                            ) : (
+                                                                DEFAULT_PROFILE_IMG
+                                                            )
                                                         )}
-                                                    </Typography>
-                                                    <Typography variant={"subtitle1"} component={"span"} className={classes.username}>
-                                                        {(myProfile?.id === chat.participants[1].user.id!) ? (
-                                                            "@" + chat.participants[0].user.username
-                                                        ) : (
-                                                            "@" + chat.participants[1].user.username
-                                                        )}
-                                                    </Typography>
+                                                    />
+                                                    <div>
+                                                        <Typography variant={"h6"} component={"span"}>
+                                                            {(myProfile?.id === chat.participants[1].user.id!) ? (
+                                                                chat.participants[0].user.fullName
+                                                            ) : (
+                                                                chat.participants[1].user.fullName
+                                                            )}
+                                                        </Typography>
+                                                        <Typography variant={"subtitle1"} component={"span"} className={classes.username}>
+                                                            {(myProfile?.id === chat.participants[1].user.id!) ? (
+                                                                `@${chat.participants[0].user.username}`
+                                                            ) : (
+                                                                `@${chat.participants[1].user.username}`
+                                                            )}
+                                                        </Typography>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </ListItem>
-                                    ))}
-                                </List>
-                            </>
+                                            </ListItem>
+                                        ))}
+                                    </List>
+                                </>
+                            )
                         )}
                     </Paper>
                 </div>

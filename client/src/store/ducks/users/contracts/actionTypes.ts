@@ -10,6 +10,7 @@ export enum UsersActionsType {
     FETCH_RELEVANT_USERS = 'users/FETCH_RELEVANT_USERS',
     FETCH_BLOCKED_USERS = 'users/FETCH_BLOCKED_USERS',
     FETCH_MUTED_USERS = 'users/FETCH_MUTED_USERS',
+    RESET_USERS_STATE = 'users/RESET_USERS_STATE',
     SET_USER_LOADING_STATE = 'users/SET_USER_LOADING_STATE',
 }
 
@@ -39,6 +40,10 @@ export interface FetchMutedUsersActionInterface extends Action<UsersActionsType>
     type: UsersActionsType.FETCH_MUTED_USERS;
 }
 
+export interface ResetUsersStateActionInterface extends Action<UsersActionsType> {
+    type: UsersActionsType.RESET_USERS_STATE;
+}
+
 export interface SetUsersLoadingStatusActionInterface extends Action<UsersActionsType> {
     type: UsersActionsType.SET_USER_LOADING_STATE;
     payload: LoadingStatus;
@@ -46,4 +51,5 @@ export interface SetUsersLoadingStatusActionInterface extends Action<UsersAction
 export type UsersActions =
     | SetUsersActionInterface
     | SetUpdatedUserActionInterface
+    | ResetUsersStateActionInterface
     | SetUsersLoadingStatusActionInterface;

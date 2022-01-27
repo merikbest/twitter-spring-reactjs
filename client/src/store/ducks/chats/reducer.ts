@@ -6,7 +6,7 @@ import {ChatsState} from './contracts/state';
 
 const initialTagsState: ChatsState = {
     items: [],
-    loadingState: LoadingStatus.NEVER,
+    loadingState: LoadingStatus.LOADING,
 };
 
 export const chatsReducer = produce((draft: Draft<ChatsState>, action: ChatsActions) => {
@@ -24,6 +24,11 @@ export const chatsReducer = produce((draft: Draft<ChatsState>, action: ChatsActi
         case ChatsActionsType.LEAVE_FROM_CONVERSATION:
             draft.items = draft.items.filter((chat) => chat.id !== action.payload.chatId);
             draft.loadingState = LoadingStatus.LOADED
+            break;
+
+        case ChatsActionsType.RESET_CHATS_STATE:
+            draft.items = [];
+            draft.loadingState = LoadingStatus.LOADING;
             break;
 
         case ChatsActionsType.SET_LOADING_STATE:
