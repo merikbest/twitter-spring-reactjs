@@ -35,6 +35,7 @@ import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
 import ShareTweet from "../ShareTweet/ShareTweet";
 import ReplyModal from "../ReplyModal/ReplyModal";
 import {HoverUserProps, withHoverUser} from "../../hoc/withHoverUser";
+import {ReplyType} from "../../store/ducks/tweets/contracts/state";
 
 let stompClient: CompatClient | null = null;
 
@@ -57,9 +58,10 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
     const [visibleUsersListModalWindow, setVisibleUsersListModalWindow] = useState<boolean>(false);
     const [visibleReplyModalWindow, setVisibleReplyModalWindow] = useState<boolean>(false);
     const [modalWindowTitle, setModalWindowTitle] = useState<string>("");
-    const isTweetLiked = tweetData?.likedTweets.find((like) => like.user.id === myProfile?.id);
-    const isTweetRetweeted = tweetData?.retweets.find((retweet) => retweet.user.id === myProfile?.id);
-    const classes = useTweetImageStyles({isTweetRetweeted, isTweetLiked});
+    const isUserCanReply = (tweetData?.replyType === ReplyType.MENTION) && (myProfile?.id !== tweetData?.user.id);
+    const isTweetLiked = tweetData?.likedTweets.findIndex((like) => like.user.id === myProfile?.id) !== -1;
+    const isTweetRetweeted = tweetData?.retweets.findIndex((retweet) => retweet.user.id === myProfile?.id) !== -1;
+    const classes = useTweetImageStyles({isUserCanReply, isTweetRetweeted, isTweetLiked});
 
     useEffect(() => {
         dispatch(fetchTweetData(params.id));
@@ -75,13 +77,22 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
     }, []);
 
     const onCloseImageModalWindow = (event: any): void => {
+        console.log(event)
         if (event.target.classList[0]) {
             if (event.target.classList[0].includes('container')) {
-                setVisibleTweetImageModalWindow(false);
-                document.body.style.overflow = 'unset';
-                history.goBack();
+                onClose();
             }
         }
+    };
+
+    const onCloseModalWindow  = (): void => {
+        onClose();
+    };
+
+    const onClose = (): void => {
+        setVisibleTweetImageModalWindow(false);
+        document.body.style.overflow = 'unset';
+        history.goBack();
     };
 
     const onOpenLikesModalWindow = (): void => {
@@ -199,6 +210,7 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                                     onClick={onOpenReplyModalWindow}
                                     onMouseEnter={() => handleHoverAction?.(HoverActions.REPLY)}
                                     onMouseLeave={handleLeaveAction}
+                                    size="small"
                                 >
                                     <>{ReplyIcon}</>
                                     <HoverAction visible={visibleHoverAction?.visibleReplyAction} actionText={"Reply"}/>
@@ -209,6 +221,7 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                                     onClick={handleRetweet}
                                     onMouseEnter={() => handleHoverAction?.(HoverActions.RETWEET)}
                                     onMouseLeave={handleLeaveAction}
+                                    size="small"
                                 >
                                     {isTweetRetweeted ? (
                                         <>{RetweetIcon}</>
@@ -226,6 +239,7 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                                     onClick={handleLike}
                                     onMouseEnter={() => handleHoverAction?.(HoverActions.LIKE)}
                                     onMouseLeave={handleLeaveAction}
+                                    size="small"
                                 >
                                     {isTweetLiked ? (
                                         <>{LikeIcon}</>
@@ -282,7 +296,7 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                 <div className={classes.imageFooterContainer}>
                     <div className={classNames(classes.imageFooterWrapper)}>
                         <div className={classes.imageFooterIcon}>
-                            <IconButton>
+                            <IconButton size="small">
                                 <>{ReplyIcon}</>
                             </IconButton>
                             {(tweetData.replies?.length === 0 || tweetData.replies === null) ? null : (
@@ -292,7 +306,7 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                             )}
                         </div>
                         <div className={classes.imageFooterIcon}>
-                            <IconButton onClick={handleRetweet}>
+                            <IconButton onClick={handleRetweet} size="small">
                                 {isTweetRetweeted ? (
                                     <>{RetweetIcon}</>
                                 ) : (
@@ -308,7 +322,7 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                             )}
                         </div>
                         <div className={classes.imageFooterIcon}>
-                            <IconButton onClick={handleLike}>
+                            <IconButton onClick={handleLike} size="small">
                                 {isTweetLiked ? (
                                     <>{LikeIcon}</>
                                 ) : (
@@ -324,14 +338,14 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                             )}
                         </div>
                         <div className={classes.imageFooterIcon}>
-                            <IconButton>
+                            <IconButton size="small">
                                 <>{ShareIcon}</>
                             </IconButton>
                         </div>
                     </div>
                 </div>
                 <div className={classes.imageModalClose}>
-                    <IconButton>
+                    <IconButton onClick={onCloseModalWindow} size="small">
                         {CloseIcon}
                     </IconButton>
                 </div>

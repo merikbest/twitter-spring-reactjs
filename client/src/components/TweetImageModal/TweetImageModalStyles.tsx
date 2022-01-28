@@ -1,9 +1,9 @@
 import {makeStyles, Theme} from "@material-ui/core";
-import {LikeTweet, Retweet} from "../../store/ducks/tweets/contracts/state";
 
 interface TweetImageStylesProps {
-    isTweetRetweeted?: Retweet;
-    isTweetLiked?: LikeTweet;
+    isUserCanReply: boolean;
+    isTweetRetweeted: boolean;
+    isTweetLiked: boolean;
 }
 
 export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((theme) => ({
@@ -93,31 +93,34 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
     },
     tweetIcon: {
         "& .MuiIconButton-root": {
-            padding: 7,
-            "& svg": {
-                color: theme.palette.text.secondary,
-                verticalAlign: "bottom",
-                height: "0.80em",
-            }
+            "& svg" : {
+                color: props => props.isUserCanReply ? "rgb(185, 192, 197)" : theme.palette.text.secondary,
+            },
         },
     },
     retweetIcon: {
         "& .MuiIconButton-root": {
-            padding: 7,
             "& svg": {
                 color: props => props.isTweetRetweeted ? "rgb(23, 191, 99)" : theme.palette.text.secondary,
-                verticalAlign: "bottom",
-                height: "0.80em",
-            }
+            },
+            "&:hover": {
+                backgroundColor: "rgba(0, 186, 124, 0.1) !important",
+                "& svg": {
+                    color: "rgb(23, 191, 99) !important",
+                },
+            },
         },
     },
     likeIcon: {
         "& .MuiIconButton-root": {
-            padding: 7,
             "& svg": {
                 color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : theme.palette.text.secondary,
-                verticalAlign: "bottom",
-                height: "0.80em",
+            },
+            "&:hover": {
+                backgroundColor: "rgba(249, 24, 128, 0.1) !important",
+                "& svg": {
+                    color: "rgb(224, 36, 94) !important",
+                },
             },
         },
     },
@@ -126,12 +129,15 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
             verticalAlign: "text-top",
         },
         "& .MuiIconButton-root": {
-            padding: 7,
             "& svg": {
                 color: theme.palette.common.white,
-                verticalAlign: "bottom",
-                height: "0.80em",
-            }
+            },
+            "&:hover": {
+                backgroundColor: "rgba(255, 255, 255, 0.1) !important",
+                "& svg": {
+                    color: "rgb(255, 255, 255) !important",
+                },
+            },
         },
         "& span": {
             color: theme.palette.common.white,

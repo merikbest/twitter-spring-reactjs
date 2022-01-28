@@ -1,8 +1,7 @@
 import {makeStyles, Theme} from "@material-ui/core";
-import {Retweet} from "../../store/ducks/tweets/contracts/state";
 
 interface QuoteTweetStyles {
-    isTweetRetweetedByMe?: Retweet;
+    isTweetRetweetedByMe: boolean;
 }
 
 export const useQuoteTweetStyles = makeStyles<Theme, QuoteTweetStyles>((theme) => ({

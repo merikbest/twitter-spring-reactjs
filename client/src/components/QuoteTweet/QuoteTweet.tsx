@@ -13,7 +13,7 @@ import {useGlobalStyles} from "../../util/globalClasses";
 export interface QuoteTweetProps {
     quoteTweet: Tweet;
     retweets: Retweet[];
-    isTweetRetweetedByMe: Retweet | undefined;
+    isTweetRetweetedByMe: boolean;
     handleRetweet: () => void;
     visibleActionWindow?: boolean;
     visibleRetweetAction?: boolean;

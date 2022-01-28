@@ -64,10 +64,10 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<Tweet> & HoverActi
     const [visibleAnalyticsModalWindow, setVisibleAnalyticsModalWindow] = useState<boolean>(false);
     const [openYouTubeVideo, setOpenYouTubeVideo] = useState<boolean>(false);
 
-    const isTweetLiked = tweet?.likedTweets.find((like) => like.user.id === myProfile?.id);
-    const isTweetRetweetedByMe = tweet?.retweets.find((retweet) => retweet.user.id === myProfile?.id);
-    const isTweetRetweetedByUser = tweet?.retweets.find((retweet) => retweet.user.id === userProfile?.id);
-    const isFollower = myProfile?.following?.find((follower) => follower.id === tweet?.user?.id);
+    const isTweetLiked = tweet?.likedTweets.findIndex((like) => like.user.id === myProfile?.id) !== -1;
+    const isTweetRetweetedByMe = tweet?.retweets.findIndex((retweet) => retweet.user.id === myProfile?.id) !== -1;
+    const isTweetRetweetedByUser = tweet?.retweets.findIndex((retweet) => retweet.user.id === userProfile?.id) !== -1;
+    const isFollower = myProfile?.following?.findIndex((follower) => follower.id === tweet?.user?.id) !== -1;
     const isUserCanReply = (tweet?.replyType === ReplyType.MENTION) && (myProfile?.id !== tweet?.user.id);
     const isYouTubeLink = tweet?.link && tweet?.link.includes("youtu");
     const isModal = location.pathname.includes("/modal");
