@@ -8,18 +8,6 @@ export const useExploreStyles = makeStyles((theme: Theme) => ({
         borderBottom: 0,
         paddingBottom: 500,
     },
-    header: {
-        position: "fixed",
-        width: 602,
-        zIndex: 2,
-        display: 'flex',
-        alignItems: 'center',
-        flex: 1,
-        borderTop: 0,
-        borderLeft: 0,
-        borderRight: 0,
-        borderRadius: 0,
-    },
     backButtonWrapper: {
         display: "inline-block",
         paddingTop: 5

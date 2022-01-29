@@ -9,17 +9,6 @@ export const useUsersItemStyles = makeStyles<Theme , UsersItemStylesProps>((them
     container: {
         cursor: 'pointer',
         borderBottom: `1px solid ${theme.palette.divider}`,
-        '& .MuiListItem-root .MuiListItem-gutters': {
-            padding: "0px 0px 0px 0px",
-        },
-        '& .MuiListItemAvatar-root': {
-            minWidth: 50,
-            "& .MuiAvatar-root": {
-                width: "46px !important",
-                height: "46px !important",
-                marginRight: 12,
-            },
-        },
         '&:hover': {
             backgroundColor: theme.palette.secondary.dark,
         },
@@ -29,6 +18,7 @@ export const useUsersItemStyles = makeStyles<Theme , UsersItemStylesProps>((them
         },
     },
     userInfo: {
+        marginLeft: 12,
         width: props => (props.size === UserItemSize.SMALL) ? 120 : 360,
         textOverflow: "ellipsis",
         whiteSpace: "nowrap",

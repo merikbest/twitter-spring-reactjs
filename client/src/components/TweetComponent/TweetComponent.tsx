@@ -36,6 +36,7 @@ import HoverAction from "../HoverAction/HoverAction";
 import {HoverActionProps, HoverActions, withHoverAction} from "../../hoc/withHoverAction";
 import TweetAnalyticsModal from "../TweetAnalyticsModal/TweetAnalyticsModal";
 import {withHoverUser, HoverUserProps} from "../../hoc/withHoverUser";
+import {useGlobalStyles} from "../../util/globalClasses";
 
 export interface TweetComponentProps<T> {
     item?: T;
@@ -55,6 +56,7 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<Tweet> & HoverActi
         handleLeaveAction
     }
 ): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
     const userProfile = useSelector(selectUserProfile);
@@ -136,12 +138,12 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<Tweet> & HoverActi
             <div className={classes.tweetWrapper}>
                 <a onClick={handleClickUser}>
                     <Avatar
-                        className={classes.avatar}
+                        className={globalClasses.avatar}
                         alt={`avatar ${tweet?.user.id}`}
                         src={tweet?.user.avatar?.src ? tweet?.user.avatar?.src : DEFAULT_PROFILE_IMG}
                     />
                 </a>
-                <div style={{flex: 1}}>
+                <div className={classes.tweetContainer}>
                     <div className={classes.header}>
                         <a
                             onClick={handleClickUser}

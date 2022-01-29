@@ -51,8 +51,6 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         },
     },
     avatar: {
-        width: "46px !important",
-        height: "46px !important",
         marginRight: 15,
         margin: "12px 12px 16px 5px",
     },

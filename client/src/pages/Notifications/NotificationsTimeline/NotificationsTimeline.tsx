@@ -10,8 +10,10 @@ import {selectIsTweetsLoading, selectPagesCount, selectTweetsItems} from "../../
 import TweetComponent from "../../../components/TweetComponent/TweetComponent";
 import Spinner from "../../../components/Spinner/Spinner";
 import {resetTweets} from "../../../store/ducks/tweets/actionCreators";
+import {useGlobalStyles} from "../../../util/globalClasses";
 
 const NotificationsTimeline: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useNotificationsTimelineStyles();
     const dispatch = useDispatch();
     const tweets = useSelector(selectTweetsItems);
@@ -42,9 +44,9 @@ const NotificationsTimeline: FC = (): ReactElement => {
             loader={null}
         >
             <Paper className={classes.container} variant="outlined">
-                <Paper className={classes.header} variant="outlined">
+                <Paper className={globalClasses.pageHeader} variant="outlined">
                     <BackButton/>
-                    <Typography component="div" className={classes.title}>
+                    <Typography variant={"h5"} component="div">
                         Tweets
                     </Typography>
                 </Paper>

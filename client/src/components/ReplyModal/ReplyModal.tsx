@@ -4,6 +4,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import Dialog from "@material-ui/core/Dialog";
 import {Avatar, Link as MuiLink, Typography} from "@material-ui/core";
+import classnames from "classnames";
 
 import {useReplyModalStyles} from "./ReplyModalStyles";
 import {formatDate} from "../../util/formatDate";
@@ -13,6 +14,7 @@ import AddTweetForm from "../AddTweetForm/AddTweetForm";
 import {textFormatter} from "../../util/textFormatter";
 import {Image} from "../../store/ducks/tweets/contracts/state";
 import CloseButton from "../CloseButton/CloseButton";
+import {useGlobalStyles} from "../../util/globalClasses";
 
 interface ReplyModalProps {
     user: User;
@@ -35,6 +37,7 @@ const ReplyModal: FC<ReplyModalProps> = (
         onClose
     }
 ): ReactElement | null => {
+    const globalClasses = useGlobalStyles();
     const classes = useReplyModalStyles();
 
     if (!visible) {
@@ -56,7 +59,7 @@ const ReplyModal: FC<ReplyModalProps> = (
                 <div className={classes.modalWrapper}>
                     <div className={classes.verticalLine}/>
                     <Avatar
-                        className={classes.avatar}
+                        className={classnames(globalClasses.avatar, classes.avatar)}
                         alt={`avatar ${user.id}`}
                         src={user.avatar?.src ? user.avatar?.src : DEFAULT_PROFILE_IMG}
                     />

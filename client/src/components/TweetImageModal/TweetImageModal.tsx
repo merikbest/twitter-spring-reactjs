@@ -9,6 +9,7 @@ import usLang from "date-fns/locale/en-US/index";
 import {compose} from "recompose";
 import {CompatClient, Stomp} from "@stomp/stompjs";
 import SockJS from "sockjs-client";
+import classnames from "classnames";
 
 import {
     CloseIcon,
@@ -36,6 +37,7 @@ import ShareTweet from "../ShareTweet/ShareTweet";
 import ReplyModal from "../ReplyModal/ReplyModal";
 import {HoverUserProps, withHoverUser} from "../../hoc/withHoverUser";
 import {ReplyType} from "../../store/ducks/tweets/contracts/state";
+import {useGlobalStyles} from "../../util/globalClasses";
 
 let stompClient: CompatClient | null = null;
 
@@ -49,6 +51,7 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
         handleLeaveAction
     }
 ): ReactElement | null => {
+    const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
     const tweetData = useSelector(selectTweetData);
     const myProfile = useSelector(selectUserData);
@@ -143,7 +146,7 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                         <div className={classes.header}>
                             <Link to={`/user/${tweetData?.user.id}`}>
                                 <Avatar
-                                    className={classes.avatar}
+                                    className={classnames(globalClasses.avatar, classes.avatar)}
                                     alt={`avatar ${tweetData.user.id}`}
                                     src={tweetData.user.avatar?.src ? tweetData.user.avatar?.src : DEFAULT_PROFILE_IMG}
                                 />

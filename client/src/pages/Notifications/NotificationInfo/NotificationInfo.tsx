@@ -8,8 +8,10 @@ import {useNotificationInfoStyles} from "./NotificationInfoStyles";
 import {Notification, NotificationType} from "../../../store/ducks/notifications/contracts/state";
 import TweetComponent from "../../../components/TweetComponent/TweetComponent";
 import UsersItem, {UserItemSize} from "../../../components/UsersItem/UsersItem";
+import {useGlobalStyles} from "../../../util/globalClasses";
 
 const NotificationInfo: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useNotificationInfoStyles();
     const location = useLocation<{ notification: Notification; }>();
 
@@ -19,13 +21,13 @@ const NotificationInfo: FC = (): ReactElement => {
 
     return (
         <Paper className={classes.container} variant="outlined">
-            <Paper className={classes.header} variant="outlined">
+            <Paper className={globalClasses.pageHeader} variant="outlined">
                 <BackButton/>
                 <div>
-                    <Typography variant="h5">
+                    <Typography variant="h5" component={"div"}>
                         {location.state.notification.notificationType === NotificationType.LIKE ? "Liked" : "Retweeted"}
                     </Typography>
-                    <Typography variant="caption" display="block" gutterBottom>
+                    <Typography variant="caption" component={"div"}>
                         by {location.state.notification.user.fullName}
                     </Typography>
                 </div>

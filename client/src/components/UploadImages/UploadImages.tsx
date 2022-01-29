@@ -62,7 +62,6 @@ const UploadImages: FC<UploadImageProps> = (
                 onMouseEnter={() => handleHoverAction(AddTweetFormAction.MEDIA)}
                 onMouseLeave={handleLeaveAction}
                 color="primary"
-                size="small"
             >
                 <>{MediaIcon}</>
                 <HoverAction visible={visibleAddMediaAction} actionText={"Media"}/>

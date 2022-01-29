@@ -12,8 +12,10 @@ import {fetchUserProfile} from "../../store/ducks/userProfile/actionCreators";
 import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import Spinner from "../../components/Spinner/Spinner";
+import {useGlobalStyles} from "../../util/globalClasses";
 
 const FollowersYouKnow: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useFollowersYouKnowStyles();
     const dispatch = useDispatch();
     const params = useParams<{ id: string }>();
@@ -48,13 +50,13 @@ const FollowersYouKnow: FC = (): ReactElement => {
 
     return (
         <Paper className={classes.container} variant="outlined">
-            <Paper className={classes.header} variant="outlined">
+            <Paper className={globalClasses.pageHeader} variant="outlined">
                 <BackButton/>
                 <div>
-                    <Typography component={"span"} className={classes.headerFullName}>
+                    <Typography variant={"h5"} component={"span"}>
                         {userProfile?.fullName}
                     </Typography>
-                    <Typography component={"div"} className={classes.headerUsername}>
+                    <Typography variant={"subtitle2"} component={"div"}>
                         @{userProfile?.username}
                     </Typography>
                 </div>
@@ -64,7 +66,7 @@ const FollowersYouKnow: FC = (): ReactElement => {
             ) : (
                 (!isLoading && (overallFollowers.length === 0)) ? (
                     <div className={classes.contentWrapper}>
-                        <div className={classes.infoWrapper}>
+                        <div className={globalClasses.infoText}>
                             <Typography variant={"h4"} component={"div"}>
                                 {`@${userProfile?.username} doesn’t have any followers you know yet`}
                             </Typography>

@@ -27,7 +27,6 @@ const CloseButton: FC<CloseButtonProps & HoverActionProps> = (
                 onMouseEnter={() => handleHoverAction?.(HoverActions.OTHER)}
                 onMouseLeave={handleLeaveAction}
                 color="primary"
-                size="small"
                 aria-label="close"
             >
                 <>{CloseIcon}</>

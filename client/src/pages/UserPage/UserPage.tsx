@@ -76,6 +76,7 @@ import HoverAction from "../../components/HoverAction/HoverAction";
 import {User} from "../../store/ducks/user/contracts/state";
 import FollowerGroup from "../../components/FollowerGroup/FollowerGroup";
 import UserNotFound from "./UserNotFound/UserNotFound";
+import {useGlobalStyles} from "../../util/globalClasses";
 
 interface LinkToFollowersProps {
     children: ReactNode;
@@ -96,6 +97,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
         handleLeaveAction
     }
 ): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useUserPageStyles();
     const dispatch = useDispatch();
     const tweets = useSelector(selectUserTweetsItems);
@@ -325,7 +327,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                 <UserNotFound/>
             ) : (
                 <Paper className={classes.container} variant="outlined">
-                    <Paper className={classes.header} variant="outlined">
+                    <Paper className={globalClasses.pageHeader} variant="outlined">
                         <BackButton/>
                         <div>
                             <Typography variant={"h5"} component={"span"}>
@@ -333,8 +335,8 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                             </Typography>
                             {userProfile?.privateProfile && (
                                 <span className={classes.lockIcon}>
-                                {LockIcon}
-                            </span>
+                                    {LockIcon}
+                                </span>
                             )}
                             <Typography variant={"subtitle2"} component={"div"}>
                                 {showTweetCount()}

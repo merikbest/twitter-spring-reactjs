@@ -1,18 +1,11 @@
 import React, {FC, MouseEvent, ReactElement, useState} from 'react';
-import {Divider, List, ListItem, Popover, Typography} from "@material-ui/core";
+import {Divider, Popover} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 
 import {useReplyStyles} from "./ReplyStyles";
-import {
-    CheckIcon,
-    EveryoneReplyIcon,
-    EveryoneReplyOutlinedIcon,
-    FollowReplyIcon,
-    FollowReplyOutlinedIcon,
-    MentionReplyIcon,
-    MentionReplyOutlinedIcon
-} from "../../../icons";
+import {EveryoneReplyIcon, FollowReplyIcon, MentionReplyIcon} from "../../../icons";
 import {ReplyType} from "../../../store/ducks/tweets/contracts/state";
+import ChangeReplyWindow from "../../ChangeReplyWindow/ChangeReplyWindow";
 
 interface ReplyProps {
     replyType: ReplyType;
@@ -63,76 +56,10 @@ const Reply: FC<ReplyProps> = ({replyType, setReplyType, isUnsentTweet}): ReactE
                 anchorEl={anchorEl}
                 onClose={handleClosePopup}
             >
-                <div className={classes.dropdown}>
-                    <div className={classes.infoWrapper}>
-                        <Typography variant={"h6"} component={"div"}>
-                            Who can reply?
-                        </Typography>
-                        <Typography variant={"subtitle1"} component={"div"}>
-                            Choose who can reply to this Tweet.
-                            Anyone mentioned can always reply.
-                        </Typography>
-                    </div>
-                    <List component="nav" aria-label="main mailbox folders">
-                        <ListItem
-                            className={classes.listItem}
-                            onClick={() => handleListItemClick(ReplyType.EVERYONE)}
-                            button
-                        >
-                            <div className={classes.iconCircle}>
-                                <span className={classes.icon}>
-                                    {EveryoneReplyOutlinedIcon}
-                                </span>
-                            </div>
-                            <Typography variant={"body1"} component={"span"}>
-                                Everyone
-                            </Typography>
-                            {(replyType === ReplyType.EVERYONE) && (
-                                <span className={classes.checkIcon}>
-                                    {CheckIcon}
-                                </span>
-                            )}
-                        </ListItem>
-                        <ListItem
-                            className={classes.listItem}
-                            onClick={() => handleListItemClick(ReplyType.FOLLOW)}
-                            button
-                        >
-                            <div className={classes.iconCircle}>
-                                <span className={classes.icon}>
-                                    {FollowReplyOutlinedIcon}
-                                </span>
-                            </div>
-                            <Typography variant={"body1"} component={"span"}>
-                                People you follow
-                            </Typography>
-                            {(replyType === ReplyType.FOLLOW) && (
-                                <span className={classes.checkIcon}>
-                                    {CheckIcon}
-                                </span>
-                            )}
-                        </ListItem>
-                        <ListItem
-                            className={classes.listItem}
-                            onClick={() => handleListItemClick(ReplyType.MENTION)}
-                            button
-                        >
-                            <div className={classes.iconCircle}>
-                                <span className={classes.icon}>
-                                    {MentionReplyOutlinedIcon}
-                                </span>
-                            </div>
-                            <Typography variant={"body1"} component={"span"}>
-                                Only people you mention
-                            </Typography>
-                            {(replyType === ReplyType.MENTION) && (
-                                <span className={classes.checkIcon}>
-                                    {CheckIcon}
-                                </span>
-                            )}
-                        </ListItem>
-                    </List>
-                </div>
+                <ChangeReplyWindow
+                    replyType={replyType}
+                    onChangeTweetReplyType={handleListItemClick}
+                />
             </Popover>
         </>
     );

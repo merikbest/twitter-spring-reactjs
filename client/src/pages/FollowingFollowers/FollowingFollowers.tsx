@@ -15,8 +15,11 @@ import Spinner from "../../components/Spinner/Spinner";
 import {selectUsersSearch, selectUsersSearchIsLoading} from "../../store/ducks/usersSearch/selectors";
 import {fetchFollowers, fetchFollowings, resetUsersState} from "../../store/ducks/usersSearch/actionCreators";
 import UsersItem, {UserItemSize} from "../../components/UsersItem/UsersItem";
+import {useGlobalStyles} from "../../util/globalClasses";
+import classnames from "classnames";
 
 const FollowingFollowers: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useFollowingFollowersStyles();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -66,7 +69,7 @@ const FollowingFollowers: FC = (): ReactElement => {
 
     return (
         <Paper className={classes.container} variant="outlined">
-            <Paper className={classes.header}>
+            <Paper className={classnames(globalClasses.pageHeader, classes.header)} variant="outlined">
                 {(userProfile !== undefined) && (
                     <>
                         <BackButton/>

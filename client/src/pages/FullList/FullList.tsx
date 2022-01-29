@@ -17,8 +17,10 @@ import ShareActionsModal from "./ShareActionsModal/ShareActionsModal";
 import TopTweetsActionsModal from "./TopTweetsActionsModal/TopTweetsActionsModal";
 import Spinner from "../../components/Spinner/Spinner";
 import {LockIcon} from "../../icons";
+import {useGlobalStyles} from "../../util/globalClasses";
 
 const FullList: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useFullListStyles();
     const dispatch = useDispatch();
     const list = useSelector(selectListItem);
@@ -72,7 +74,7 @@ const FullList: FC = (): ReactElement => {
 
     return (
         <Paper className={classes.container} variant="outlined">
-            <Paper className={classes.header} variant="outlined">
+            <Paper className={globalClasses.pageHeader} variant="outlined">
                 <BackButton/>
                 <div>
                     <div>
@@ -189,7 +191,7 @@ const FullList: FC = (): ReactElement => {
                             </div>
                         </Paper>
                         {(list?.tweets.length === 0) ? (
-                            <div className={classes.listInfoWrapper}>
+                            <div className={globalClasses.infoText}>
                                 <Typography variant={"h4"} component={"div"}>
                                     There aren’t any Tweets in this List
                                 </Typography>

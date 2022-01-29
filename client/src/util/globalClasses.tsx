@@ -1,6 +1,19 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 export const useGlobalStyles = makeStyles((theme: Theme) => ({
+    pageHeader: {
+        position: "fixed",
+        width: 602,
+        minHeight: 53,
+        zIndex: 10,
+        display: 'flex',
+        alignItems: 'center',
+        flex: 1,
+        borderTop: 0,
+        borderLeft: 0,
+        borderRight: 0,
+        borderRadius: 0,
+    },
     avatar: {
         width: "46px !important",
         height: "46px !important",
@@ -21,8 +34,8 @@ export const useGlobalStyles = makeStyles((theme: Theme) => ({
     },
     svg: {
         "& svg": {
-            width: "1.25rem",
-            height: "1.25rem",
+            width: "1.172rem",
+            height: "1.172rem",
             fill: theme.palette.text.secondary,
         },
     },

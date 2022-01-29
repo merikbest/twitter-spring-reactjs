@@ -3,10 +3,9 @@ import {makeStyles, Theme} from "@material-ui/core";
 export const useUsersStyles = makeStyles((theme: Theme) => ({
     container: {
         backgroundColor: theme.palette.secondary.main,
-        borderRadius: 15,
+        borderRadius: 16,
         marginTop: 20,
         '& .MuiList-root': {
-            paddingTop: 0,
             '& .MuiListItemText-primary': {
                 color: 'black',
                 '&:hover': {
@@ -27,22 +26,13 @@ export const useUsersStyles = makeStyles((theme: Theme) => ({
         borderBottom: `1px solid ${theme.palette.divider}`,
     },
     footer: {
+        borderRadius: "0px 0px 16px 16px",
         cursor: 'pointer',
-        '& .MuiListItem-root .MuiListItem-gutters': {
-            padding: "0px 0px 0px 0px",
-        },
-        '& .MuiTypography-subtitle1': {
+        '& .MuiTypography-body1': {
             color: theme.palette.primary.main,
-        },
-        '& .MuiListItemAvatar-root': {
-            minWidth: 50,
         },
         '&:hover': {
             backgroundColor: theme.palette.secondary.dark,
-        },
-        '& a': {
-            color: 'inherit',
-            textDecoration: 'none',
         },
     },
 }));

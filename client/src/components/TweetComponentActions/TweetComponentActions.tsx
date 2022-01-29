@@ -31,7 +31,6 @@ import {
 } from "../../store/ducks/user/actionCreators";
 import TweetComponentActionsModal from "./TweetComponentActionsModal/TweetComponentActionsModal";
 import {changeReplyType, fetchDeleteTweet} from "../../store/ducks/tweets/actionCreators";
-import TweetComponentChangeReply from "./TweetComponentChangeReply/TweetComponentChangeReply";
 import {selectTweetData} from "../../store/ducks/tweet/selectors";
 import {deleteTweetReply} from "../../store/ducks/tweet/actionCreators";
 import ListsModal from "../ListsModal/ListsModal";
@@ -41,6 +40,7 @@ import ActionSnackbar from "../ActionSnackbar/ActionSnackbar";
 import {SnackbarProps, withSnackbar} from "../../hoc/withSnackbar";
 import {HoverActions} from "../../hoc/withHoverAction";
 import {useGlobalStyles} from "../../util/globalClasses";
+import ChangeReplyWindow from "../ChangeReplyWindow/ChangeReplyWindow";
 
 interface TweetComponentActionsProps {
     tweet: Tweet;
@@ -311,11 +311,14 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
                             </List>
                         </div>
                     ) : null}
-                    <TweetComponentChangeReply
-                        replyType={tweet.replyType}
-                        openChangeReplyDropdown={openChangeReplyDropdown}
-                        onChangeTweetReplyType={onChangeTweetReplyType}
-                    />
+                    {openChangeReplyDropdown && (
+                        <div className={classes.replyWindowWrapper}>
+                            <ChangeReplyWindow
+                                replyType={tweet.replyType}
+                                onChangeTweetReplyType={onChangeTweetReplyType}
+                            />
+                        </div>
+                    )}
                     <ActionSnackbar
                         snackBarMessage={snackBarMessage!}
                         openSnackBar={openSnackBar!}

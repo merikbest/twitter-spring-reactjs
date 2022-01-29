@@ -68,7 +68,7 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
 
     return (
         <Paper className={classes.container} variant="outlined">
-            <Paper className={classes.header} variant="outlined">
+            <Paper className={globalClasses.pageHeader} variant="outlined">
                 <BackButton/>
                 <div>
                     <Typography variant="h5" component={"div"}>
@@ -85,7 +85,6 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
                             onMouseEnter={() => handleHoverAction?.(HoverActions.CREATE_LIST)}
                             onMouseLeave={handleLeaveAction}
                             color="primary"
-                            size="small"
                         >
                             <>{AddListsIcon}</>
                             <HoverAction visible={visibleHoverAction?.visibleCreateListAction} actionText={"Create"}/>
@@ -99,7 +98,6 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
                                     onMouseEnter={() => handleHoverAction?.(HoverActions.MORE)}
                                     onMouseLeave={handleLeaveAction}
                                     color="primary"
-                                    size="small"
                                 >
                                     <>{EditIcon}</>
                                     <HoverAction visible={visibleHoverAction?.visibleMoreAction} actionText={"More"}/>
@@ -126,7 +124,7 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
             ) : (
                 <>
                     <Paper className={classes.pinnedLists} variant="outlined">
-                        <Typography variant="h5">
+                        <Typography variant="h5" className={globalClasses.itemInfoWrapper}>
                             Pinned Lists
                         </Typography>
                         {(pinnedLists.length === 0) ? (
@@ -142,7 +140,7 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
                         )}
                     </Paper>
                     <Paper className={classes.newLists} variant="outlined">
-                        <Typography variant="h5">
+                        <Typography variant="h5" className={globalClasses.itemInfoWrapper}>
                             Discover new Lists
                         </Typography>
                         {lists.slice(0, 3).map((list, index) => (
@@ -155,7 +153,7 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
                         </Link>
                     </Paper>
                     <Paper className={classes.myLists} variant="outlined">
-                        <Typography variant="h5">
+                        <Typography variant="h5" className={globalClasses.itemInfoWrapper}>
                             Your Lists
                         </Typography>
                         {userLists.map((list) => (<ListsItem key={list.id} isMyList={true} item={list}/>))}

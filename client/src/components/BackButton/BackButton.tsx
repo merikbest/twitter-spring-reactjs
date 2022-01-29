@@ -22,7 +22,6 @@ const BackButton: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction
                 onMouseEnter={() => handleHoverAction?.(HoverActions.OTHER)}
                 onMouseLeave={handleLeaveAction!}
                 color="primary"
-                size="small"
             >
                 <>{ArrowIcon}</>
                 <HoverAction visible={visibleHoverAction?.visibleOtherAction} actionText={"Back"}/>

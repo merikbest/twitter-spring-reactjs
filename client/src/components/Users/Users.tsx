@@ -40,7 +40,7 @@ const Users: FC = (): ReactElement => {
                                 <UsersItem key={user.id} item={user} size={UserItemSize.SMALL}/>
                             ))}
                             <ListItem onClick={clickToConnect} className={classes.footer}>
-                                <Typography variant={"subtitle1"} component={"div"}>
+                                <Typography variant={"body1"} component={"div"}>
                                     Show more
                                 </Typography>
                             </ListItem>

@@ -11,11 +11,6 @@ export const useAddTweetFormStyles = makeStyles<Theme, AddTweetFormStyles>((them
         display: 'flex',
         width: '100%',
     },
-    contentAvatar: {
-        width: "46px !important",
-        height: "46px !important",
-        marginRight: 15,
-    },
     infoWrapper: {
         marginBottom: 10,
         "& svg": {
@@ -26,6 +21,7 @@ export const useAddTweetFormStyles = makeStyles<Theme, AddTweetFormStyles>((them
         },
     },
     textareaWrapper: {
+        marginLeft: 15,
         width: "100%",
     },
     contentTextarea: {

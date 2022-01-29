@@ -29,8 +29,10 @@ import {fetchUsersSearch, fetchUsersSearchByUsername} from "../../store/ducks/us
 import {selectUsersSearch, selectUsersSearchIsLoading} from "../../store/ducks/usersSearch/selectors";
 import Spinner from "../../components/Spinner/Spinner";
 import UsersItem, {UserItemSize} from "../../components/UsersItem/UsersItem";
+import {useGlobalStyles} from "../../util/globalClasses";
 
 const Explore: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useExploreStyles();
     const dispatch = useDispatch();
     const isTweetsLoading = useSelector(selectIsTweetsLoading);
@@ -135,7 +137,7 @@ const Explore: FC = (): ReactElement => {
             loader={null}
         >
             <Paper className={classes.container} variant="outlined">
-                <Paper className={classes.header} variant="outlined">
+                <Paper className={globalClasses.pageHeader} variant="outlined">
                     <div>
                         <form style={{display: "block"}} onSubmit={handleClickSearch}>
                             <div className={classes.backButtonWrapper}>

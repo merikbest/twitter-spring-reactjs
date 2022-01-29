@@ -24,10 +24,9 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
         alignItems: 'flex-start',
         flex: 1,
     },
-    avatar: {
-        width: "46px !important",
-        height: "46px !important",
-        marginRight: 15,
+    tweetContainer: {
+        flex: 1,
+        marginLeft: 15,
     },
     headerWrapper: {
         color: 'inherit',
@@ -129,7 +128,8 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
             },
         },
         "& span": {
-            color: props => !props.isUserCanReply ? "rgb(185, 192, 197)" : theme.palette.text.secondary,
+            verticalAlign: "middle",
+            color: props => props.isUserCanReply ? "rgb(185, 192, 197)" : theme.palette.text.secondary,
         },
     },
     likeIcon: {
@@ -145,6 +145,7 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
             },
         },
         "& span": {
+            verticalAlign: "middle",
             color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : theme.palette.text.secondary,
         },
     },

@@ -57,9 +57,14 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
     },
     logoIcon: {
         marginLeft: 7,
-        "& svg" : {
-            color: theme.palette.primary.main,
-            height: "1.25em"
+        "& .MuiIconButton-root": {
+            minWidth: 52,
+            minHeight: 52,
+            "& svg" : {
+                color: theme.palette.primary.main,
+                height: "2rem",
+                width: "2rem"
+            },
         },
     },
     homeNotification: {

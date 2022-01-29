@@ -7,25 +7,6 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
         borderTop: '0',
         borderBottom: '0',
         paddingBottom: 500,
-        '& .MuiTypography-h5': {
-            margin: "12px 16px",
-        },
-    },
-    header: {
-        position: "fixed",
-        width: 602,
-        height: 52,
-        zIndex: 1,
-        display: 'flex',
-        alignItems: 'center',
-        flex: 1,
-        borderTop: '0',
-        borderLeft: '0',
-        borderRight: '0',
-        borderRadius: 0,
-        '& .MuiTypography-h5': {
-            margin: 0,
-        },
     },
     iconGroup: {
         marginLeft: "auto",
@@ -87,9 +68,9 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
     showMore: {
         padding: 16,
         color: theme.palette.primary.main,
-        "&:hover": {
+        '&:hover': {
             cursor: "pointer",
-            backgroundColor: "rgba(0, 0, 0, 0.03)"
+            backgroundColor: theme.palette.secondary.main,
         },
     },
     myLists: {

@@ -12,8 +12,10 @@ import {fetchUserListsById, resetListsState} from "../../../store/ducks/lists/ac
 import {selectIsListsLoaded, selectIsListsLoading, selectUserListsItems} from "../../../store/ducks/lists/selectors";
 import Spinner from "../../../components/Spinner/Spinner";
 import ListsItem from "../ListsItem/ListsItem";
+import {useGlobalStyles} from "../../../util/globalClasses";
 
 const ListsMemberships: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useListsMembershipsStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
@@ -35,13 +37,13 @@ const ListsMemberships: FC = (): ReactElement => {
 
     return (
         <Paper className={classes.container} variant="outlined">
-            <Paper className={classes.header} variant="outlined">
+            <Paper className={globalClasses.pageHeader} variant="outlined">
                 <BackButton/>
                 <div>
-                    <Typography component={"div"} className={classes.headerFullName}>
+                    <Typography variant={"h5"} component={"div"}>
                         Lists {(myProfile?.id === userProfile?.id) && ("you’re on")}
                     </Typography>
-                    <Typography component={"div"} className={classes.headerUsername}>
+                    <Typography variant={"subtitle2"} component={"div"}>
                         @{userProfile?.username}
                     </Typography>
                 </div>
@@ -51,7 +53,7 @@ const ListsMemberships: FC = (): ReactElement => {
                     <Spinner/>
                 ) : (
                     (lists.length === 0 && isLoaded) ? (
-                        <div className={classes.infoWrapper}>
+                        <div className={globalClasses.infoText}>
                             <Typography variant={"h4"} component={"div"}>
                                 {(myProfile?.id === userProfile?.id) ? (
                                     "You haven’t been added to any Lists yet"

@@ -20,7 +20,7 @@ const Tags: FC = (): ReactElement => {
                 <Typography variant={"h5"} component={"div"}>
                     Trends for you
                 </Typography>
-                <IconButton color="primary" size="small">
+                <IconButton color="primary">
                     <>{SettingsIcon}</>
                 </IconButton>
             </Paper>
@@ -44,7 +44,9 @@ const Tags: FC = (): ReactElement => {
                     ))}
                     <Link to={"/home/trends"}>
                         <ListItem className={classes.footer}>
-                            Show more
+                            <Typography variant={"body1"} component={"span"}>
+                                Show more
+                            </Typography>
                         </ListItem>
                     </Link>
                 </List>

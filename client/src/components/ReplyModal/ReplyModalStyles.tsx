@@ -36,8 +36,6 @@ export const useReplyModalStyles = makeStyles((theme: Theme) => ({
     },
     avatar: {
         zIndex: 1,
-        width: "46px !important",
-        height: "46px !important",
         border: `1px solid ${theme.palette.divider}`,
         marginRight: 15,
     },

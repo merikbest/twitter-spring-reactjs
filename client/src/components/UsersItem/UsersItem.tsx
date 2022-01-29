@@ -133,6 +133,7 @@ const UsersItem: FC<UsersItemProps<User> & SnackbarProps & HoverUserProps> = (
                 <ListItem className={classes.container}>
                     <ListItemAvatar>
                         <Avatar
+                            className={globalClasses.avatar}
                             alt={`${user?.id}`}
                             src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}
                         />

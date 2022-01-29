@@ -13,19 +13,6 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
             padding: "14px 12px !important",
         },
     },
-    header: {
-        position: "fixed",
-        width: 602,
-        height: 53,
-        zIndex: 1,
-        display: 'flex',
-        alignItems: 'center',
-        flex: 1,
-        borderTop: 0,
-        borderLeft: 0,
-        borderRight: 0,
-        borderRadius: 0,
-    },
     lockIcon: {
         "& svg": {
             marginLeft: 3,

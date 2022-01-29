@@ -8,8 +8,10 @@ import {fetchLists} from "../../store/ducks/lists/actionCreators";
 import {selectIsListsLoading, selectListsItems} from "../../store/ducks/lists/selectors";
 import ListsItem from "../Lists/ListsItem/ListsItem";
 import Spinner from "../../components/Spinner/Spinner";
+import {useGlobalStyles} from "../../util/globalClasses";
 
 const SuggestedLists: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useSuggestedListsStyles();
     const dispatch = useDispatch();
     const lists = useSelector(selectListsItems);
@@ -22,7 +24,7 @@ const SuggestedLists: FC = (): ReactElement => {
 
     return (
         <Paper className={classes.container} variant="outlined">
-            <Paper className={classes.header} variant="outlined">
+            <Paper className={globalClasses.pageHeader} variant="outlined">
                 <BackButton/>
                 <div>
                     <Typography variant="h5">

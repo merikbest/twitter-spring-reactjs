@@ -19,8 +19,11 @@ import Welcome from "../../components/Welcome/Welcome";
 import {LoadingStatus} from "../../store/types";
 import FullTweet from "../FullTweet/FullTweet";
 import Spinner from "../../components/Spinner/Spinner";
+import {useGlobalStyles} from "../../util/globalClasses";
+import classnames from "classnames";
 
 const Home: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useHomeStyles();
     const dispatch = useDispatch();
     const location = useLocation<{ background: Location }>();
@@ -59,13 +62,13 @@ const Home: FC = (): ReactElement => {
             loader={null}
         >
             <Paper className={classes.container} variant="outlined">
-                <Paper className={classes.header} variant="outlined">
+                <Paper className={classnames(globalClasses.pageHeader, classes.header)} variant="outlined">
                     <Route path='/home' exact>
                         <Typography variant="h5">
                             Home
                         </Typography>
                         <div className={classes.headerIcon}>
-                            <IconButton color="primary" size="small">
+                            <IconButton color="primary">
                                 <>{TopTweets}</>
                             </IconButton>
                         </div>

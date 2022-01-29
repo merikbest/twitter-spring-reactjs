@@ -40,13 +40,9 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
     headerWrapper: {
         display: 'flex',
     },
-    avatar: {
-        width: "46px !important",
-        height: "46px !important",
-        marginRight: 15,
-    },
     headerUserInfo: {
         position: "relative",
+        marginLeft: 15,
     },
     dateWrapper: {
         marginBottom: 16

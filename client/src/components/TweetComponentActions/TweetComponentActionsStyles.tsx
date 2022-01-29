@@ -36,4 +36,8 @@ export const useTweetComponentMoreStyles = makeStyles((theme: Theme) => createSt
             },
         },
     },
+    replyWindowWrapper: {
+        position: "absolute",
+        zIndex: 10
+    },
 }));

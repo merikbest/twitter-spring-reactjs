@@ -9,18 +9,7 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         paddingBottom: 500,
     },
     header: {
-        position: "fixed",
-        width: 602,
-        height: 52,
-        zIndex: 1,
-        display: 'flex',
-        alignItems: 'center',
-        flex: 1,
         justifyContent: "space-between",
-        borderTop: '0',
-        borderLeft: '0',
-        borderRight: '0',
-        borderRadius: 0,
         '& .MuiTypography-h5': {
             marginLeft: 16,
             display: "inline-block",

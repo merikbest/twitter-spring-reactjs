@@ -56,6 +56,7 @@ import TweetAnalyticsModal from "../../components/TweetAnalyticsModal/TweetAnaly
 import Spinner from "../../components/Spinner/Spinner";
 import {HoverUserProps, withHoverUser} from "../../hoc/withHoverUser";
 import {LoadingStatus} from "../../store/types";
+import {useGlobalStyles} from "../../util/globalClasses";
 
 let stompClient: CompatClient | null = null;
 
@@ -75,6 +76,7 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
         handleLeaveAction
     }
 ): ReactElement | null => {
+    const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
     const location = useLocation();
     const tweetData = useSelector(selectTweetData);
@@ -174,7 +176,7 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                     <div className={classes.header}>
                         <div className={classes.headerWrapper}>
                             <Avatar
-                                className={classes.avatar}
+                                className={globalClasses.avatar}
                                 alt={`avatar ${tweetData.user.id}`}
                                 src={tweetData.user.avatar?.src ? tweetData.user.avatar?.src : DEFAULT_PROFILE_IMG}
                             />

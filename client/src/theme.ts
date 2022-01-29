@@ -99,20 +99,22 @@ const commonTheme = {
             },
         },
         MuiIconButton: {
-            // root: {
-            //     minWidth: 38,
-            //     minHeight: 38,
-            //     "& svg": {
-            //         height: 24,
-            //         width: 24,
-            //     },
-            // },
-            sizeSmall: {
-                minWidth: 36,
-                minHeight: 36,
+            root: {
+                padding: 0,
+                minWidth: 35,
+                minHeight: 35,
                 "& svg": {
-                    height: 20,
-                    width: 20,
+                    height: "1.25rem",
+                    width: "1.25rem",
+                },
+            },
+            sizeSmall: {
+                padding: 0,
+                minWidth: 35,
+                minHeight: 35,
+                "& svg": {
+                    height: "1.172rem",
+                    width: "1.172rem",
                 },
             },
         },
@@ -120,6 +122,11 @@ const commonTheme = {
             padding: {
                 paddingTop: 0,
                 paddingBottom: 0,
+            },
+        },
+        MuiListItemAvatar: {
+            root: {
+                minWidth: 0,
             },
         },
         MuiTypography: {
