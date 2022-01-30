@@ -68,7 +68,7 @@ const FollowingFollowers: FC = (): ReactElement => {
     };
 
     return (
-        <Paper className={classes.container} variant="outlined">
+        <Paper className={globalClasses.pageContainer} variant="outlined">
             <Paper className={classnames(globalClasses.pageHeader, classes.header)} variant="outlined">
                 {(userProfile !== undefined) && (
                     <>
@@ -84,7 +84,7 @@ const FollowingFollowers: FC = (): ReactElement => {
                     </>
                 )}
             </Paper>
-            <div className={classes.contentWrapper}>
+            <div className={globalClasses.contentWrapper}>
                 <div className={classes.tabs}>
                     <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
                         <Tab onClick={handleShowFollowing} className={classes.tab} label="Following"/>

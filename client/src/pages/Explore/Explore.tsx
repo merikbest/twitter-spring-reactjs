@@ -136,7 +136,7 @@ const Explore: FC = (): ReactElement => {
             hasMore={page < pagesCount}
             loader={null}
         >
-            <Paper className={classes.container} variant="outlined">
+            <Paper className={globalClasses.pageContainer} variant="outlined">
                 <Paper className={globalClasses.pageHeader} variant="outlined">
                     <div>
                         <form style={{display: "block"}} onSubmit={handleClickSearch}>

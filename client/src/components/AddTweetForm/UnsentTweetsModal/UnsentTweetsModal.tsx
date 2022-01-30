@@ -11,6 +11,7 @@ import {formatScheduleDate} from "../../../util/formatDate";
 import AddTweetForm from "../AddTweetForm";
 import CloseButton from "../../CloseButton/CloseButton";
 import Spinner from "../../Spinner/Spinner";
+import {useGlobalStyles} from "../../../util/globalClasses";
 
 interface UnsentTweetsModalProps {
     visible?: boolean;
@@ -18,6 +19,7 @@ interface UnsentTweetsModalProps {
 }
 
 const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): ReactElement | null => {
+    const globalClasses = useGlobalStyles();
     const [tweets, setTweets] = useState<Tweet[]>([]);
     const [activeTab, setActiveTab] = useState<number>(0);
     const [unsentTweet, setUnsentTweet] = useState<Tweet | null>(null);
@@ -151,7 +153,7 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
                         <Spinner/>
                     ) : (
                         (tweets.length === 0) ? (
-                            <div className={classes.infoWrapper}>
+                            <div className={globalClasses.infoText}>
                                 <Typography variant={"h4"} component={"div"}>
                                     {(activeTab === 0) ? (
                                         "You don’t have any scheduled Tweets"

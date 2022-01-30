@@ -3,30 +3,11 @@ import {makeStyles, Theme} from "@material-ui/core";
 export const useConversationInfoStyles = makeStyles((theme: Theme) => ({
     container: {
         minWidth: 600,
-        "& .MuiPaper-outlined": {
-            padding: 0,
-            borderRadius: 0,
-            minHeight: '100vh',
-            borderLeft: 0,
-            borderTop: 0,
-            borderBottom: 0,
-        },
+        padding: 0,
+        borderLeft: 0,
     },
     header: {
-        position: "fixed",
-        display: 'flex',
-        margin: 0,
-        padding: 0,
         width: 598,
-        height: 53,
-        zIndex: 1,
-        borderTop: 0,
-        borderLeft: 0,
-        borderRight: 0,
-        borderBottom: 0,
-        borderRadius: 0,
-        alignItems: 'center',
-        flex: 1,
     },
     pageInfoWrapper: {
         paddingTop: 65,
@@ -74,9 +55,6 @@ export const useConversationInfoStyles = makeStyles((theme: Theme) => ({
         '&:hover': {
             backgroundColor: theme.palette.error.dark,
         },
-    },
-    notificationsInfoWrapper: {
-        padding: "12px 16px",
     },
     text: {
         paddingTop: 12,

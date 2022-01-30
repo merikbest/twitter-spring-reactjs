@@ -1,13 +1,6 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 export const useExploreStyles = makeStyles((theme: Theme) => ({
-    container: {
-        borderRadius: 0,
-        minHeight: '100vh',
-        borderTop: 0,
-        borderBottom: 0,
-        paddingBottom: 500,
-    },
     backButtonWrapper: {
         display: "inline-block",
         paddingTop: 5

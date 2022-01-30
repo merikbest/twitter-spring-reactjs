@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {Paper, Typography} from "@material-ui/core";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import {useNotificationsTimelineStyles} from "./NotificationsTimelineStyles";
 import BackButton from "../../../components/BackButton/BackButton";
 import {fetchNotificationsFromTweetAuthors} from "../../../store/ducks/notifications/actionCreators";
 import {selectIsTweetsLoading, selectPagesCount, selectTweetsItems} from "../../../store/ducks/tweets/selectors";
@@ -14,7 +13,6 @@ import {useGlobalStyles} from "../../../util/globalClasses";
 
 const NotificationsTimeline: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
-    const classes = useNotificationsTimelineStyles();
     const dispatch = useDispatch();
     const tweets = useSelector(selectTweetsItems);
     const pagesCount = useSelector(selectPagesCount);
@@ -43,14 +41,14 @@ const NotificationsTimeline: FC = (): ReactElement => {
             hasMore={page < pagesCount}
             loader={null}
         >
-            <Paper className={classes.container} variant="outlined">
+            <Paper className={globalClasses.pageContainer} variant="outlined">
                 <Paper className={globalClasses.pageHeader} variant="outlined">
                     <BackButton/>
                     <Typography variant={"h5"} component="div">
                         Tweets
                     </Typography>
                 </Paper>
-                <div className={classes.contentWrapper}>
+                <div className={globalClasses.contentWrapper}>
                     {(tweets.length === 0 && !isLoading) ? (
                         <Spinner/>
                     ) : (

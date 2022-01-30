@@ -35,10 +35,7 @@ export const useScheduleModalStyles = makeStyles((theme: Theme) => ({
         },
     },
     title: {
-        fontSize: 20,
         fontWeight: 400,
-        lineHeight: "24px",
-        color: theme.palette.text.primary,
     },
     subtitle: {
         marginBottom: 2,

@@ -101,7 +101,7 @@ const ShareTweet: FC<ShareTweetProps & SnackbarProps> = (
                         onClick={handleClick}
                         onMouseEnter={() => handleHoverAction?.(HoverActions.SHARE)}
                         onMouseLeave={handleLeaveAction}
-                        size="small"
+                        size={isFullTweet ? "medium" : "small"}
                     >
                         <>{ShareIcon}</>
                         <HoverAction visible={visibleShareAction} actionText={"Share"}/>

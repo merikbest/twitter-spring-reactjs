@@ -304,7 +304,7 @@ const ScheduleModal: FC<ScheduleModalProps> = (
                         <Typography variant={"subtitle1"} component={"div"} className={classes.subtitle}>
                             Time zone
                         </Typography>
-                        <Typography component={"div"} className={classes.title}>
+                        <Typography variant={"h5"} component={"div"} className={classes.title}>
                             {Intl.DateTimeFormat().resolvedOptions().timeZone + " Standard Time"}
                         </Typography>
                     </div>

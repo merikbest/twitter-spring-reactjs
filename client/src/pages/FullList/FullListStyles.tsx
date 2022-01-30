@@ -1,13 +1,6 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 export const useFullListStyles = makeStyles((theme: Theme) => ({
-    container: {
-        borderRadius: 0,
-        minHeight: '100vh',
-        paddingBottom: 500,
-        borderTop: 0,
-        borderBottom: 0,
-    },
     lockIcon: {
         "& svg": {
             marginLeft: 3,
@@ -18,9 +11,6 @@ export const useFullListStyles = makeStyles((theme: Theme) => ({
     iconGroup: {
         marginLeft: "auto",
         marginRight: 10,
-    },
-    content: {
-        paddingTop: 53
     },
     wallpaper: {
         height: 200,

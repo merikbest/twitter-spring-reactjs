@@ -77,6 +77,7 @@ import {User} from "../../store/ducks/user/contracts/state";
 import FollowerGroup from "../../components/FollowerGroup/FollowerGroup";
 import UserNotFound from "./UserNotFound/UserNotFound";
 import {useGlobalStyles} from "../../util/globalClasses";
+import classnames from "classnames";
 
 interface LinkToFollowersProps {
     children: ReactNode;
@@ -326,7 +327,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
             {isUserProfileNotLoaded ? (
                 <UserNotFound/>
             ) : (
-                <Paper className={classes.container} variant="outlined">
+                <Paper className={classnames(globalClasses.pageContainer, classes.container)} variant="outlined">
                     <Paper className={globalClasses.pageHeader} variant="outlined">
                         <BackButton/>
                         <div>
@@ -343,7 +344,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                             </Typography>
                         </div>
                     </Paper>
-                    <div style={{paddingTop: 53}}>
+                    <div className={globalClasses.contentWrapper}>
                         <div className={classes.wallpaper}>
                             {userProfile?.wallpaper?.src && (
                                 <img

@@ -61,7 +61,7 @@ const Home: FC = (): ReactElement => {
             hasMore={page < pagesCount}
             loader={null}
         >
-            <Paper className={classes.container} variant="outlined">
+            <Paper className={globalClasses.pageContainer} variant="outlined">
                 <Paper className={classnames(globalClasses.pageHeader, classes.header)} variant="outlined">
                     <Route path='/home' exact>
                         <Typography variant="h5">

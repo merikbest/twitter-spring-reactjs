@@ -1,13 +1,6 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 export const useSuggestedListsStyles = makeStyles((theme: Theme) => ({
-    container: {
-        borderRadius: 0,
-        minHeight: '100vh',
-        borderTop: '0',
-        borderBottom: '0',
-        paddingBottom: 500,
-    },
     content: {
         borderTop: 0,
         borderLeft: 0,
@@ -26,8 +19,5 @@ export const useSuggestedListsStyles = makeStyles((theme: Theme) => ({
     },
     infoTitle: {
         marginBottom: 8,
-    },
-    listsTitle: {
-        padding: "12px 16px",
     },
 }));

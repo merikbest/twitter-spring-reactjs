@@ -4,7 +4,6 @@ import {Typography} from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 
 import BackButton from "../../../components/BackButton/BackButton";
-import {useNotificationInfoStyles} from "./NotificationInfoStyles";
 import {Notification, NotificationType} from "../../../store/ducks/notifications/contracts/state";
 import TweetComponent from "../../../components/TweetComponent/TweetComponent";
 import UsersItem, {UserItemSize} from "../../../components/UsersItem/UsersItem";
@@ -12,7 +11,6 @@ import {useGlobalStyles} from "../../../util/globalClasses";
 
 const NotificationInfo: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
-    const classes = useNotificationInfoStyles();
     const location = useLocation<{ notification: Notification; }>();
 
     useEffect(() => {
@@ -20,7 +18,7 @@ const NotificationInfo: FC = (): ReactElement => {
     }, []);
 
     return (
-        <Paper className={classes.container} variant="outlined">
+        <Paper className={globalClasses.pageContainer} variant="outlined">
             <Paper className={globalClasses.pageHeader} variant="outlined">
                 <BackButton/>
                 <div>
@@ -32,7 +30,7 @@ const NotificationInfo: FC = (): ReactElement => {
                     </Typography>
                 </div>
             </Paper>
-            <div style={{paddingTop: 53}}>
+            <div className={globalClasses.contentWrapper}>
                 <TweetComponent item={location.state.notification.tweet}/>
             </div>
             <UsersItem item={location.state.notification.user} size={UserItemSize.MEDIUM}/>

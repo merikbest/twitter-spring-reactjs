@@ -34,11 +34,9 @@ import {
     LikeIcon,
     LikeOutlinedIcon,
     MentionReplyIcon,
-    PinOutlinedIcon,
     ReplyIcon,
     RetweetIcon,
     RetweetOutlinedIcon,
-    RetweetOutlinedIconSm,
 } from "../../icons";
 import {textFormatter} from "../../util/textFormatter";
 import VoteComponent from "../../components/VoteComponent/VoteComponent";
@@ -55,8 +53,9 @@ import {HoverActionProps, HoverActions, withHoverAction} from "../../hoc/withHov
 import TweetAnalyticsModal from "../../components/TweetAnalyticsModal/TweetAnalyticsModal";
 import Spinner from "../../components/Spinner/Spinner";
 import {HoverUserProps, withHoverUser} from "../../hoc/withHoverUser";
-import {LoadingStatus} from "../../store/types";
 import {useGlobalStyles} from "../../util/globalClasses";
+import classnames from "classnames";
+import TweetActionResult, {TweetActionResults} from "../../components/TweetActionResult/TweetActionResult";
 
 let stompClient: CompatClient | null = null;
 
@@ -155,24 +154,20 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
         return <Spinner paddingTop={200}/>;
     } else if (tweetData !== undefined && isLoadedSuccess) {
         return (
-            <div style={{paddingTop: 48}}>
-                {isTweetRetweeted && (
-                    <div className={classes.retweetWrapper}>
-                        <span>{RetweetOutlinedIconSm}</span>
-                        <Typography variant={"subtitle2"} component={"div"}>
-                            You Retweeted
-                        </Typography>
-                    </div>
-                )}
-                {(myProfile?.pinnedTweet?.id === tweetData.id) && (
-                    <div className={classes.retweetWrapper}>
-                        <span>{PinOutlinedIcon}</span>
-                        <Typography variant={"subtitle2"} component={"div"}>
-                            Pinned Tweet
-                        </Typography>
-                    </div>
-                )}
+            <div className={globalClasses.contentWrapper}>
                 <Paper className={classes.container}>
+                    {isTweetRetweeted && (
+                        <TweetActionResult
+                            action={TweetActionResults.RETWEET}
+                            text={((myProfile?.id === tweetData.user.id) ? ("You") : (tweetData.user.fullName)) + " Retweeted"}
+                        />
+                    )}
+                    {(myProfile?.pinnedTweet?.id === tweetData.id) && (
+                        <TweetActionResult
+                            action={TweetActionResults.PIN}
+                            text={"Pinned Tweet"}
+                        />
+                    )}
                     <div className={classes.header}>
                         <div className={classes.headerWrapper}>
                             <Avatar
@@ -207,7 +202,7 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                             onOpenTweetAnalytics={onOpenTweetAnalyticsModalWindow}
                         />
                     </div>
-                    <Typography className={classes.textWrapper} gutterBottom>
+                    <Typography variant={"h3"} className={classes.textWrapper}>
                         {textFormatter(tweetData.text)}
                         {(tweetData.images?.length !== 0) && (
                             <Link to={{pathname: `/modal/${params.id}`, state: {background: location}}}>
@@ -293,7 +288,7 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                                 <HoverAction visible={visibleHoverAction?.visibleReplyAction} actionText={"Reply"}/>
                             </IconButton>
                         </div>
-                        <div className={classes.retweetIcon}>
+                        <div className={classnames(globalClasses.svgLarge, classes.retweetIcon)}>
                             <IconButton
                                 onClick={handleRetweet}
                                 onMouseEnter={() => handleHoverAction?.(HoverActions.RETWEET)}

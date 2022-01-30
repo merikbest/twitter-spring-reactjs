@@ -73,7 +73,7 @@ const FullList: FC = (): ReactElement => {
     };
 
     return (
-        <Paper className={classes.container} variant="outlined">
+        <Paper className={globalClasses.pageContainer} variant="outlined">
             <Paper className={globalClasses.pageHeader} variant="outlined">
                 <BackButton/>
                 <div>
@@ -100,7 +100,7 @@ const FullList: FC = (): ReactElement => {
                 <Spinner paddingTop={250}/>
             ) : (
                 <>
-                    <div className={classes.content}>
+                    <div className={globalClasses.contentWrapper}>
                         <div className={classes.wallpaper}>
                             <img
                                 key={list?.wallpaper?.src ? list?.wallpaper?.src : list?.altWallpaper}

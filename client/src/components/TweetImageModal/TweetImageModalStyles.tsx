@@ -8,7 +8,7 @@ interface TweetImageStylesProps {
 
 export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((theme) => ({
     container: {
-        zIndex: 2,
+        zIndex: 12,
         position: "fixed",
         top: 0,
         left: 0,
@@ -55,8 +55,6 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         margin: "12px 12px 16px 5px",
     },
     text: {
-        fontSize: 23,
-        lineHeight: "28px",
         fontWeight: 400,
         marginTop: 16,
         marginBottom: 16,

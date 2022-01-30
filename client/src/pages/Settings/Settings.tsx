@@ -79,88 +79,86 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
     return (
         <>
             <Grid className={classes.grid} md={4} item>
-                <div className={classes.container}>
-                    <Paper variant="outlined">
-                        <Paper className={classes.leftSideHeader}>
-                            <Typography variant="h5">
-                                Settings
-                            </Typography>
-                        </Paper>
-                        <div className={classnames(classes.listWrapper, globalClasses.svg)}>
-                            <List component="nav" aria-label="main mailbox folders">
-                                <NavLink to={"/settings"}>
-                                    <ListItem
-                                        selected={selectedIndex === 1}
-                                        onClick={() => handleListItemClick(1)}
-                                    >
-                                        <Typography variant={"body1"} component={"span"}>
-                                            Your account
-                                        </Typography>
-                                        {ArrowRightIcon}
-                                    </ListItem>
-                                </NavLink>
-                                <NavLink to={"/settings/security_and_account_access"}>
-                                    <ListItem
-                                        selected={selectedIndex === 2}
-                                        onClick={() => handleListItemClick(2)}
-                                    >
-                                        <Typography variant={"body1"} component={"span"}>
-                                            Security and account access
-                                        </Typography>
-                                        {ArrowRightIcon}
-                                    </ListItem>
-                                </NavLink>
-                                <NavLink to={"/settings/privacy_and_safety"}>
-                                    <ListItem
-                                        selected={selectedIndex === 3}
-                                        onClick={() => handleListItemClick(3)}
-                                    >
-                                        <Typography variant={"body1"} component={"span"}>
-                                            Privacy and safety
-                                        </Typography>
-                                        {ArrowRightIcon}
-                                    </ListItem>
-                                </NavLink>
-                                <NavLink to={"/settings/notification"}>
-                                    <ListItem
-                                        selected={selectedIndex === 4}
-                                        onClick={() => handleListItemClick(4)}
-                                    >
-                                        <Typography variant={"body1"} component={"span"}>
-                                            Notifications
-                                        </Typography>
-                                        {ArrowRightIcon}
-                                    </ListItem>
-                                </NavLink>
-                                <NavLink to={"/settings/accessibility_display_and_languages"}>
-                                    <ListItem
-                                        selected={selectedIndex === 5}
-                                        onClick={() => handleListItemClick(5)}
-                                    >
-                                        <Typography variant={"body1"} component={"span"}>
-                                            Accessibility, display, and languages
-                                        </Typography>
-                                        {ArrowRightIcon}
-                                    </ListItem>
-                                </NavLink>
-                                <NavLink to={"/settings/about"}>
-                                    <ListItem
-                                        selected={selectedIndex === 6}
-                                        onClick={() => handleListItemClick(6)}
-                                    >
-                                        <Typography variant={"body1"} component={"span"}>
-                                            Additional resources
-                                        </Typography>
-                                        {ArrowRightIcon}
-                                    </ListItem>
-                                </NavLink>
-                            </List>
-                        </div>
+                <Paper className={classes.container} variant="outlined">
+                    <Paper className={classnames(globalClasses.pageHeader, classes.leftSideHeader)} variant="outlined">
+                        <Typography variant="h5" className={globalClasses.pageHeaderTitleWrapper}>
+                            Settings
+                        </Typography>
                     </Paper>
-                </div>
+                    <div className={classnames(classes.listWrapper, globalClasses.contentWrapper, globalClasses.svg)}>
+                        <List component="nav" aria-label="main mailbox folders">
+                            <NavLink to={"/settings"}>
+                                <ListItem
+                                    selected={selectedIndex === 1}
+                                    onClick={() => handleListItemClick(1)}
+                                >
+                                    <Typography variant={"body1"} component={"span"}>
+                                        Your account
+                                    </Typography>
+                                    {ArrowRightIcon}
+                                </ListItem>
+                            </NavLink>
+                            <NavLink to={"/settings/security_and_account_access"}>
+                                <ListItem
+                                    selected={selectedIndex === 2}
+                                    onClick={() => handleListItemClick(2)}
+                                >
+                                    <Typography variant={"body1"} component={"span"}>
+                                        Security and account access
+                                    </Typography>
+                                    {ArrowRightIcon}
+                                </ListItem>
+                            </NavLink>
+                            <NavLink to={"/settings/privacy_and_safety"}>
+                                <ListItem
+                                    selected={selectedIndex === 3}
+                                    onClick={() => handleListItemClick(3)}
+                                >
+                                    <Typography variant={"body1"} component={"span"}>
+                                        Privacy and safety
+                                    </Typography>
+                                    {ArrowRightIcon}
+                                </ListItem>
+                            </NavLink>
+                            <NavLink to={"/settings/notification"}>
+                                <ListItem
+                                    selected={selectedIndex === 4}
+                                    onClick={() => handleListItemClick(4)}
+                                >
+                                    <Typography variant={"body1"} component={"span"}>
+                                        Notifications
+                                    </Typography>
+                                    {ArrowRightIcon}
+                                </ListItem>
+                            </NavLink>
+                            <NavLink to={"/settings/accessibility_display_and_languages"}>
+                                <ListItem
+                                    selected={selectedIndex === 5}
+                                    onClick={() => handleListItemClick(5)}
+                                >
+                                    <Typography variant={"body1"} component={"span"}>
+                                        Accessibility, display, and languages
+                                    </Typography>
+                                    {ArrowRightIcon}
+                                </ListItem>
+                            </NavLink>
+                            <NavLink to={"/settings/about"}>
+                                <ListItem
+                                    selected={selectedIndex === 6}
+                                    onClick={() => handleListItemClick(6)}
+                                >
+                                    <Typography variant={"body1"} component={"span"}>
+                                        Additional resources
+                                    </Typography>
+                                    {ArrowRightIcon}
+                                </ListItem>
+                            </NavLink>
+                        </List>
+                    </div>
+                </Paper>
             </Grid>
             <Grid className={classes.grid} md={5} item>
-                <Paper className={classes.rightSideHeader}>
+                <Paper className={classnames(globalClasses.pageHeader, classes.rightSideHeader)} variant="outlined">
                     <Route exact path="/settings">
                         <Typography variant="h5">
                             Your Account
@@ -480,70 +478,68 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                         </Typography>
                     </Route>
                 </Paper>
-                <div className={classes.pageContainer}>
-                    <Paper variant="outlined">
-                        <div className={classes.pageInfoWrapper}>
-                            <Route exact path="/settings" component={Account}/>
-                            <Route exact path="/settings/info" component={AccountInformation}/>
-                            <Route exact path="/settings/info/username" component={ChangeUsername}/>
-                            <Route exact path="/settings/info/phone" component={ChangePhone}/>
-                            <Route exact path="/settings/info/email" component={ChangeEmail}/>
-                            <Route exact path="/settings/info/country" component={ChangeCountry}/>
-                            <Route exact path="/settings/info/languages" component={ChangeLanguage}/>
-                            <Route exact path="/settings/info/gender" component={ChangeGender}/>
-                            <Route exact path="/settings/info/age" component={ChangeAge}/>
-                            <Route exact path="/settings/password" component={ChangeYourPassword}/>
-                            <Route exact path="/settings/teams" component={TweetDeckTeams}/>
-                            <Route exact path="/settings/deactivate" component={DeactivateAccount}/>
-                            <Route exact path="/settings/security_and_account_access" component={SecurityAndAccountAccess}/>
-                            <Route exact path="/settings/security" component={Security}/>
-                            <Route exact path="/settings/security/login_verification" component={TwoFactorAuthentication}/>
-                            <Route exact path="/settings/security/apps_and_sessions" component={AppsAndSessions}/>
-                            <Route exact path="/settings/security/connected_apps" component={ConnectedApps}/>
-                            <Route exact path="/settings/security/sessions" component={Sessions}/>
-                            <Route exact path="/settings/security/sessions/current" component={CurrentSession}/>
-                            <Route exact path="/settings/security/login_history" component={AccountAccessHistory}/>
-                            <Route exact path="/settings/security/devices" component={LoggedDevices}/>
-                            <Route exact path="/settings/privacy_and_safety" component={PrivacyAndSafety}/>
-                            <Route exact path="/settings/privacy_and_safety/audience" component={AudienceAndTagging}/>
-                            <Route exact path="/settings/privacy_and_safety/tagging" component={PhotoTagging}/>
-                            <Route exact path="/settings/privacy_and_safety/your_tweets" component={YourTweets}/>
-                            <Route exact path="/settings/privacy_and_safety/location" component={LocationInformation}/>
-                            <Route exact path="/settings/privacy_and_safety/content_you_see" component={ContentYouSee}/>
-                            <Route exact path="/settings/privacy_and_safety/mute_and_block" component={MuteAndBlock}/>
-                            <Route exact path="/settings/privacy_and_safety/blocked" component={BlockedAccounts}/>
-                            <Route exact path="/settings/privacy_and_safety/muted" component={MutedAccounts}/>
-                            <Route exact path="/settings/privacy_and_safety/muted_keywords" component={MutedWords}/>
-                            <Route exact path="/settings/privacy_and_safety/advanced_filters" component={MutedNotifications}/>
-                            <Route exact path="/settings/privacy_and_safety/direct_messages" component={DirectMessages}/>
-                            <Route exact path="/settings/privacy_and_safety/spaces" component={Spaces}/>
-                            <Route exact path="/settings/privacy_and_safety/contacts" component={Discoverability}/>
-                            <Route exact path="/settings/privacy_and_safety/contacts_dashboard" component={ManageContacts}/>
-                            <Route exact path="/settings/privacy_and_safety/ads_preferences" component={AdsPreferences}/>
-                            <Route exact path="/settings/privacy_and_safety/audiences" component={YourAdvertiserList}/>
-                            <Route exact path="/settings/privacy_and_safety/off_twitter_activity" component={OffTwitterActivity}/>
-                            <Route exact path="/settings/privacy_and_safety/data_sharing_with_business_partners" component={DataSharing}/>
-                            <Route exact path="/settings/privacy_and_safety/location_information" component={Location}/>
-                            <Route exact path="/settings/privacy_and_safety/locations" component={Places}/>
-                            <Route exact path="/settings/notification" component={Notifications}/>
-                            <Route exact path="/settings/notification/filters" component={Filters}/>
-                            <Route exact path="/settings/notification/preferences" component={Preferences}/>
-                            <Route exact path="/settings/notification/push_notifications" component={PushNotifications}/>
-                            <Route exact path="/settings/notification/email_notifications" component={EmailNotifications}/>
-                            <Route exact path="/settings/accessibility_display_and_languages" component={AccessibilityDisplayLanguages}/>
-                            <Route exact path="/settings/accessibility_display_and_languages/accessibility" component={Accessibility}/>
-                            <Route exact path="/settings/accessibility_display_and_languages/display"
-                                   render={() => <Display
-                                       changeBackgroundColor={changeBackgroundColor}
-                                       changeColorScheme={changeColorScheme}/>
-                                   }/>
-                            <Route exact path="/settings/accessibility_display_and_languages/languages" component={Languages}/>
-                            <Route exact path="/settings/accessibility_display_and_languages/data" component={DataUsage}/>
-                            <Route exact path="/settings/accessibility_display_and_languages/autoplay" component={Autoplay}/>
-                            <Route exact path="/settings/about" component={AdditionalResources}/>
-                        </div>
-                    </Paper>
-                </div>
+                <Paper className={classnames(globalClasses.pageContainer, classes.pageContainer)} variant="outlined">
+                    <div className={globalClasses.contentWrapper}>
+                        <Route exact path="/settings" component={Account}/>
+                        <Route exact path="/settings/info" component={AccountInformation}/>
+                        <Route exact path="/settings/info/username" component={ChangeUsername}/>
+                        <Route exact path="/settings/info/phone" component={ChangePhone}/>
+                        <Route exact path="/settings/info/email" component={ChangeEmail}/>
+                        <Route exact path="/settings/info/country" component={ChangeCountry}/>
+                        <Route exact path="/settings/info/languages" component={ChangeLanguage}/>
+                        <Route exact path="/settings/info/gender" component={ChangeGender}/>
+                        <Route exact path="/settings/info/age" component={ChangeAge}/>
+                        <Route exact path="/settings/password" component={ChangeYourPassword}/>
+                        <Route exact path="/settings/teams" component={TweetDeckTeams}/>
+                        <Route exact path="/settings/deactivate" component={DeactivateAccount}/>
+                        <Route exact path="/settings/security_and_account_access" component={SecurityAndAccountAccess}/>
+                        <Route exact path="/settings/security" component={Security}/>
+                        <Route exact path="/settings/security/login_verification" component={TwoFactorAuthentication}/>
+                        <Route exact path="/settings/security/apps_and_sessions" component={AppsAndSessions}/>
+                        <Route exact path="/settings/security/connected_apps" component={ConnectedApps}/>
+                        <Route exact path="/settings/security/sessions" component={Sessions}/>
+                        <Route exact path="/settings/security/sessions/current" component={CurrentSession}/>
+                        <Route exact path="/settings/security/login_history" component={AccountAccessHistory}/>
+                        <Route exact path="/settings/security/devices" component={LoggedDevices}/>
+                        <Route exact path="/settings/privacy_and_safety" component={PrivacyAndSafety}/>
+                        <Route exact path="/settings/privacy_and_safety/audience" component={AudienceAndTagging}/>
+                        <Route exact path="/settings/privacy_and_safety/tagging" component={PhotoTagging}/>
+                        <Route exact path="/settings/privacy_and_safety/your_tweets" component={YourTweets}/>
+                        <Route exact path="/settings/privacy_and_safety/location" component={LocationInformation}/>
+                        <Route exact path="/settings/privacy_and_safety/content_you_see" component={ContentYouSee}/>
+                        <Route exact path="/settings/privacy_and_safety/mute_and_block" component={MuteAndBlock}/>
+                        <Route exact path="/settings/privacy_and_safety/blocked" component={BlockedAccounts}/>
+                        <Route exact path="/settings/privacy_and_safety/muted" component={MutedAccounts}/>
+                        <Route exact path="/settings/privacy_and_safety/muted_keywords" component={MutedWords}/>
+                        <Route exact path="/settings/privacy_and_safety/advanced_filters" component={MutedNotifications}/>
+                        <Route exact path="/settings/privacy_and_safety/direct_messages" component={DirectMessages}/>
+                        <Route exact path="/settings/privacy_and_safety/spaces" component={Spaces}/>
+                        <Route exact path="/settings/privacy_and_safety/contacts" component={Discoverability}/>
+                        <Route exact path="/settings/privacy_and_safety/contacts_dashboard" component={ManageContacts}/>
+                        <Route exact path="/settings/privacy_and_safety/ads_preferences" component={AdsPreferences}/>
+                        <Route exact path="/settings/privacy_and_safety/audiences" component={YourAdvertiserList}/>
+                        <Route exact path="/settings/privacy_and_safety/off_twitter_activity" component={OffTwitterActivity}/>
+                        <Route exact path="/settings/privacy_and_safety/data_sharing_with_business_partners" component={DataSharing}/>
+                        <Route exact path="/settings/privacy_and_safety/location_information" component={Location}/>
+                        <Route exact path="/settings/privacy_and_safety/locations" component={Places}/>
+                        <Route exact path="/settings/notification" component={Notifications}/>
+                        <Route exact path="/settings/notification/filters" component={Filters}/>
+                        <Route exact path="/settings/notification/preferences" component={Preferences}/>
+                        <Route exact path="/settings/notification/push_notifications" component={PushNotifications}/>
+                        <Route exact path="/settings/notification/email_notifications" component={EmailNotifications}/>
+                        <Route exact path="/settings/accessibility_display_and_languages" component={AccessibilityDisplayLanguages}/>
+                        <Route exact path="/settings/accessibility_display_and_languages/accessibility" component={Accessibility}/>
+                        <Route exact path="/settings/accessibility_display_and_languages/display"
+                               render={() => <Display
+                                   changeBackgroundColor={changeBackgroundColor}
+                                   changeColorScheme={changeColorScheme}/>
+                               }/>
+                        <Route exact path="/settings/accessibility_display_and_languages/languages" component={Languages}/>
+                        <Route exact path="/settings/accessibility_display_and_languages/data" component={DataUsage}/>
+                        <Route exact path="/settings/accessibility_display_and_languages/autoplay" component={Autoplay}/>
+                        <Route exact path="/settings/about" component={AdditionalResources}/>
+                    </div>
+                </Paper>
             </Grid>
         </>
     );

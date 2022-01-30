@@ -16,10 +16,7 @@ export const useDisplayModalStyles = makeStyles((theme: Theme) => ({
     title: {
         marginTop: 32,
         marginBottom: 12,
-        color: theme.palette.text.primary,
         textAlign: "center",
-        lineHeight: "28px",
-        fontSize: 23,
         fontWeight: 800,
     },
     text: {

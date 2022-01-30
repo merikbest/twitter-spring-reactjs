@@ -40,11 +40,6 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
         minWidth: 299,
         textTransform: 'none',
     },
-    infoWrapper: {
-        margin: "32px auto",
-        width: 336,
-        textAlign: "center",
-    },
     tweetContainer: {
         padding: "12px 16px",
         borderBottom: `1px solid ${theme.palette.divider}`,

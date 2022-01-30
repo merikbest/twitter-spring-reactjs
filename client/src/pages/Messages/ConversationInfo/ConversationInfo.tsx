@@ -20,6 +20,7 @@ import ActionSnackbar from "../../../components/ActionSnackbar/ActionSnackbar";
 import UnfollowModal from "../../../components/UnfollowModal/UnfollowModal";
 import {followProfile, processFollowRequest, unfollowProfile} from "../../../store/ducks/userProfile/actionCreators";
 import {useGlobalStyles} from "../../../util/globalClasses";
+import classnames from "classnames";
 
 interface ConversationInfoProps {
     participantId?: number;
@@ -127,9 +128,9 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
     };
 
     return (
-        <div className={classes.container}>
-            <Paper variant="outlined">
-                <Paper className={classes.header}>
+        <div>
+            <Paper className={classnames(globalClasses.pageContainer, classes.container)} variant="outlined">
+                <Paper className={classnames(globalClasses.pageHeader, classes.header)} variant="outlined">
                     <BackButton/>
                     <Typography variant="h5">
                         Conversation info
@@ -212,7 +213,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                     </div>
                 </Link>
                 <Divider/>
-                <div className={classes.notificationsInfoWrapper}>
+                <div className={globalClasses.itemInfoWrapper}>
                     <Typography variant={"h5"} component={"div"}>
                         Notifications
                     </Typography>

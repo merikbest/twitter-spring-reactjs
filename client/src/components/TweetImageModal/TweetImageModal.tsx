@@ -167,7 +167,7 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                                 </div>
                             </Link>
                         </div>
-                        <Typography className={classes.text}>
+                        <Typography variant={"h3"} className={classes.text}>
                             {textFormatter(tweetData.text)}
                         </Typography>
                         <Typography style={{marginBottom: 16}}>

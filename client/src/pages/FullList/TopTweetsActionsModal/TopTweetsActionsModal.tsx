@@ -33,7 +33,6 @@ const TopTweetsActionsModal: FC<HoverActionProps> = (
                         onMouseEnter={() => handleHoverAction?.(HoverActions.MORE)}
                         onMouseLeave={handleLeaveAction}
                         color="primary"
-                        size="small"
                     >
                         <>{EditIcon}</>
                         <HoverAction visible={visibleHoverAction?.visibleMoreAction} actionText={"More"}/>

@@ -9,8 +9,10 @@ import {UserApi} from "../../../../../services/api/userApi";
 import ManageMembersItem from "../ManageMembersItem/ManageMembersItem";
 import {SearchIcon} from "../../../../../icons";
 import {selectListItem} from "../../../../../store/ducks/list/selectors";
+import {useGlobalStyles} from "../../../../../util/globalClasses";
 
 const ManageMembersSuggested: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useManageMembersSuggestedStyles();
     const list = useSelector(selectListItem);
     const [searchText, setSearchText] = useState<string>("");
@@ -45,10 +47,10 @@ const ManageMembersSuggested: FC = (): ReactElement => {
             />
             {(users.length !== 0) ? (
                 <>
-                    {users.map((user) => (<ManageMembersItem key={user.id} item={list} member={user}/>))}
+                    {users.map((user) => <ManageMembersItem key={user.id} item={list} member={user}/>)}
                 </>
             ) : (
-                <div className={classes.suggestedInfoWrapper}>
+                <div className={globalClasses.infoText}>
                     <Typography variant={"h4"} component={"div"}>
                         There aren’t any suggested members
                     </Typography>

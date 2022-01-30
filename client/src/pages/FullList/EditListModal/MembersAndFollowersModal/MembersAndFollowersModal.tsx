@@ -7,6 +7,7 @@ import {User} from "../../../../store/ducks/user/contracts/state";
 import ManageMembersItem from "../ManageMembersModal/ManageMembersItem/ManageMembersItem";
 import CloseButton from "../../../../components/CloseButton/CloseButton";
 import {selectListItem} from "../../../../store/ducks/list/selectors";
+import {useGlobalStyles} from "../../../../util/globalClasses";
 
 interface MembersAndFollowersModalProps {
     visible: boolean;
@@ -21,6 +22,7 @@ const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
         onClose
     }
 ): ReactElement | null => {
+    const globalClasses = useGlobalStyles();
     const classes = useMembersAndFollowersModalStyles();
     const [users, setUsers] = useState<User[]>([]);
     const list = useSelector(selectListItem);
@@ -57,7 +59,7 @@ const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
                 {(users.length !== 0) ? (
                     users.map((user) => <ManageMembersItem key={user.id} item={list} member={user}/>)
                 ) : (
-                    <div className={classes.infoWrapper}>
+                    <div className={globalClasses.infoText}>
                         <Typography variant={"h4"} component={"div"}>
                             {(title === "List members") ? (
                                 "There isn’t anyone in this List"

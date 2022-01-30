@@ -67,7 +67,7 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
     };
 
     return (
-        <Paper className={classes.container} variant="outlined">
+        <Paper className={globalClasses.pageContainer} variant="outlined">
             <Paper className={globalClasses.pageHeader} variant="outlined">
                 <BackButton/>
                 <div>

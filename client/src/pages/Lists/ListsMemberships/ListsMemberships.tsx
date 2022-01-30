@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 import {Paper, Typography} from "@material-ui/core";
 
-import {useListsMembershipsStyles} from "./ListsMembershipsStyles";
 import BackButton from "../../../components/BackButton/BackButton";
 import {fetchUserProfile} from "../../../store/ducks/userProfile/actionCreators";
 import {selectUserProfile} from "../../../store/ducks/userProfile/selectors";
@@ -16,7 +15,6 @@ import {useGlobalStyles} from "../../../util/globalClasses";
 
 const ListsMemberships: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
-    const classes = useListsMembershipsStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
     const userProfile = useSelector(selectUserProfile);
@@ -36,7 +34,7 @@ const ListsMemberships: FC = (): ReactElement => {
     }, [params.id]);
 
     return (
-        <Paper className={classes.container} variant="outlined">
+        <Paper className={globalClasses.pageContainer} variant="outlined">
             <Paper className={globalClasses.pageHeader} variant="outlined">
                 <BackButton/>
                 <div>
@@ -48,7 +46,7 @@ const ListsMemberships: FC = (): ReactElement => {
                     </Typography>
                 </div>
             </Paper>
-            <div className={classes.contentWrapper}>
+            <div className={globalClasses.contentWrapper}>
                 {isLoading ? (
                     <Spinner/>
                 ) : (

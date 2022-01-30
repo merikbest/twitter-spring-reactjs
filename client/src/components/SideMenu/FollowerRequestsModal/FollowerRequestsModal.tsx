@@ -7,6 +7,7 @@ import {useFollowerRequestsModalStyles} from "./FollowerRequestsModalSyles";
 import CloseButton from "../../CloseButton/CloseButton";
 import {selectUserData} from "../../../store/ducks/user/selectors";
 import FollowerRequestsItem from "./FollowerRequestsItem/FollowerRequestsItem";
+import {useGlobalStyles} from "../../../util/globalClasses";
 
 interface FollowerRequestsModalProps {
     visible?: boolean;
@@ -14,6 +15,7 @@ interface FollowerRequestsModalProps {
 }
 
 const FollowerRequestsModal: FC<FollowerRequestsModalProps> = ({visible, onClose}): ReactElement | null => {
+    const globalClasses = useGlobalStyles();
     const classes = useFollowerRequestsModalStyles();
     const myProfile = useSelector(selectUserData);
 
@@ -29,8 +31,8 @@ const FollowerRequestsModal: FC<FollowerRequestsModalProps> = ({visible, onClose
             </DialogTitle>
             <DialogContent className={classes.content}>
                 {(myProfile?.followerRequests?.length === 0) ? (
-                    <div className={classes.contentWrapper}>
-                        <div className={classes.infoWrapper}>
+                    <div className={globalClasses.contentWrapper}>
+                        <div className={globalClasses.infoText}>
                             <Typography variant={"h4"} component={"div"}>
                                 You don’t have any follower requests
                             </Typography>

@@ -2,13 +2,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.SettingsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.AuthenticationResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetHeaderResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.NotificationResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.NotificationsResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.*;
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserSettingsService;
@@ -37,7 +31,15 @@ public class UserMapper {
     }
 
     NotificationResponse convertToNotificationResponse(Notification notification) {
-        return modelMapper.map(notification, NotificationResponse.class);
+        NotificationResponse notificationResponse = modelMapper.map(notification, NotificationResponse.class);
+
+        if (notification.getTweet().getQuoteTweet() != null) {
+            TweetResponseCommon tweetResponseCommon = tweetMapper.convertToTweetResponseCommon(notification.getTweet().getQuoteTweet());
+            notificationResponse.getTweet().setQuoteTweet(tweetResponseCommon);
+        } else {
+            notificationResponse.getTweet().setQuoteTweet(null);
+        }
+        return notificationResponse;
     }
 
     private List<NotificationResponse> convertListToNotificationResponse(List<Notification> notifications) {

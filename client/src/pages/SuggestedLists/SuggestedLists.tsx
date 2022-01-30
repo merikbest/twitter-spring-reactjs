@@ -23,14 +23,12 @@ const SuggestedLists: FC = (): ReactElement => {
     }, []);
 
     return (
-        <Paper className={classes.container} variant="outlined">
+        <Paper className={globalClasses.pageContainer} variant="outlined">
             <Paper className={globalClasses.pageHeader} variant="outlined">
                 <BackButton/>
-                <div>
-                    <Typography variant="h5">
-                        Suggested Lists
-                    </Typography>
-                </div>
+                <Typography variant="h5" component={"div"}>
+                    Suggested Lists
+                </Typography>
             </Paper>
             <Paper className={classes.content} variant="outlined">
                 <img
@@ -48,7 +46,7 @@ const SuggestedLists: FC = (): ReactElement => {
                     </Typography>
                 </div>
             </Paper>
-            <Typography variant={"h5"} component={"div"} className={classes.listsTitle}>
+            <Typography variant={"h5"} component={"div"} className={globalClasses.itemInfoWrapper}>
                 Discover new Lists
             </Typography>
             {isLoading ? (

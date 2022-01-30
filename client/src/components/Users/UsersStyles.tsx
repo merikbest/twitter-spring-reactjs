@@ -26,6 +26,7 @@ export const useUsersStyles = makeStyles((theme: Theme) => ({
         borderBottom: `1px solid ${theme.palette.divider}`,
     },
     footer: {
+        padding: 16,
         borderRadius: "0px 0px 16px 16px",
         cursor: 'pointer',
         '& .MuiTypography-body1': {

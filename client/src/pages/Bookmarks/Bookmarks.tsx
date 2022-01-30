@@ -4,14 +4,14 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import {Paper, Typography} from "@material-ui/core";
 
 import {selectIsTweetsLoading, selectPagesCount, selectTweetsItems} from "../../store/ducks/tweets/selectors";
-import {useBookmarksStyles} from "./BookmarksStyles";
 import {fetchUserBookmarks, resetTweets} from "../../store/ducks/tweets/actionCreators";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import Spinner from "../../components/Spinner/Spinner";
+import {useGlobalStyles} from "../../util/globalClasses";
 
 const Bookmarks: FC = (): ReactElement => {
-    const classes = useBookmarksStyles();
+    const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
     const tweets = useSelector(selectTweetsItems);
@@ -41,23 +41,23 @@ const Bookmarks: FC = (): ReactElement => {
             hasMore={page < pagesCount}
             loader={null}
         >
-            <Paper className={classes.container} variant="outlined">
-                <Paper className={classes.header} variant="outlined">
-                    <div>
-                        <Typography component={"div"} className={classes.headerFullName}>
+            <Paper className={globalClasses.pageContainer} variant="outlined">
+                <Paper className={globalClasses.pageHeader} variant="outlined">
+                    <div className={globalClasses.pageHeaderTitleWrapper}>
+                        <Typography variant={"h5"} component={"div"}>
                             Bookmarks
                         </Typography>
-                        <Typography component={"div"} className={classes.headerUsername}>
+                        <Typography variant={"subtitle2"} component={"div"}>
                             @{myProfile?.username}
                         </Typography>
                     </div>
                 </Paper>
-                <div className={classes.contentWrapper}>
+                <div className={globalClasses.contentWrapper}>
                     {(isLoading && tweets.length === 0) ? (
                         <Spinner/>
                     ) : (
                         (!isLoading && tweets.length === 0) ? (
-                            <div className={classes.infoWrapper}>
+                            <div className={globalClasses.infoText}>
                                 <Typography variant={"h4"} component={"div"}>
                                     You haven’t added any Tweets to your Bookmarks yet
                                 </Typography>

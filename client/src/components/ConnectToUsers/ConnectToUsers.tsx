@@ -6,6 +6,7 @@ import Spinner from "../Spinner/Spinner";
 import {User} from "../../store/ducks/user/contracts/state";
 import {useConnectToUsersStyles} from "./ConnectToUsersStyles";
 import UsersItem, {UserItemSize} from "../UsersItem/UsersItem";
+import {useGlobalStyles} from "../../util/globalClasses";
 
 interface ConnectToUsersProps {
     title: string,
@@ -14,10 +15,11 @@ interface ConnectToUsersProps {
 }
 
 const ConnectToUsers: FC<ConnectToUsersProps> = ({title, isUsersLoading, users}): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useConnectToUsersStyles();
 
     return (
-        <div className={classes.container}>
+        <div className={globalClasses.contentWrapper}>
             {isUsersLoading ? (
                 <Spinner/>
             ) : (
@@ -27,7 +29,7 @@ const ConnectToUsers: FC<ConnectToUsersProps> = ({title, isUsersLoading, users})
                             {title}
                         </Typography>
                     </Paper>
-                    <Paper className={classes.content} variant="outlined">
+                    <Paper className={globalClasses.pageContainer} variant="outlined">
                         <List>
                             {users.map((user) => <UsersItem key={user.id} item={user} size={UserItemSize.MEDIUM}/>)}
                         </List>

@@ -5,6 +5,7 @@ import {Avatar, Typography} from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Paper from "@material-ui/core/Paper";
+import classnames from "classnames";
 
 import {useNotificationsStyles} from "./NotificationsStyles";
 import {LikeIcon, NotificationsIconFilled, ProfileIconFilled, RetweetIcon} from "../../icons";
@@ -21,6 +22,7 @@ import {Notification, NotificationType} from "../../store/ducks/notifications/co
 import Spinner from "../../components/Spinner/Spinner";
 import {HoverUserProps, withHoverUser} from "../../hoc/withHoverUser";
 import PopperUserWindow from "../../components/PopperUserWindow/PopperUserWindow";
+import {useGlobalStyles} from "../../util/globalClasses";
 
 const Notifications: FC<HoverUserProps> = (
     {
@@ -31,6 +33,7 @@ const Notifications: FC<HoverUserProps> = (
         handleLeavePopper
     }
 ): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useNotificationsStyles();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -60,15 +63,15 @@ const Notifications: FC<HoverUserProps> = (
     };
 
     return (
-        <Paper className={classes.container} variant="outlined">
-            <Paper className={classes.header}>
-                <div>
+        <Paper className={classnames(globalClasses.pageContainer, classes.container)} variant="outlined">
+            <Paper className={classnames(globalClasses.pageHeader, classes.header)}>
+                <div className={globalClasses.pageHeaderTitleWrapper}>
                     <Typography variant="h5">
                         Notifications
                     </Typography>
                 </div>
             </Paper>
-            <div style={{paddingTop: 57,}}>
+            <div className={globalClasses.contentWrapper}>
                 <div className={classes.tabs}>
                     <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
                         <Tab className={classes.tab} label="All"/>

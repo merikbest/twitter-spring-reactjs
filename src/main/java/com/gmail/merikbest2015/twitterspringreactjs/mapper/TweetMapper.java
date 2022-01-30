@@ -34,11 +34,11 @@ public class TweetMapper {
         return modelMapper.map(tweetRequest, Tweet.class);
     }
 
-    private TweetResponseCommon convertToTweetResponseCommon(Tweet tweet) {
+    TweetResponseCommon convertToTweetResponseCommon(Tweet tweet) {
         return modelMapper.map(tweet, TweetResponseCommon.class);
     }
 
-    protected TweetResponse convertToTweetResponse(Tweet tweet) {
+    private TweetResponse convertToTweetResponse(Tweet tweet) {
         TweetResponse tweetResponse = modelMapper.map(tweet, TweetResponse.class);
 
         if (tweet.getQuoteTweet() != null) {

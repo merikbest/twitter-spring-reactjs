@@ -45,6 +45,8 @@ import BackButton from "../../components/BackButton/BackButton";
 import DirectMessages from "../Settings/PrivacyAndSafety/DirectMessages/DirectMessages";
 import ConversationInfo from "./ConversationInfo/ConversationInfo";
 import Spinner from "../../components/Spinner/Spinner";
+import {useGlobalStyles} from "../../util/globalClasses";
+import classnames from "classnames";
 
 export enum MessagesAction {
     SETTINGS = "SETTINGS",
@@ -77,6 +79,7 @@ const initialState = {
 }
 
 const Messages: FC = (): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation<{ removeParticipant: boolean | undefined; }>();
@@ -182,148 +185,144 @@ const Messages: FC = (): ReactElement => {
     return (
         <>
             <Grid className={classes.grid} md={4} item>
-                <div className={classes.messagesContainer}>
-                    <Paper variant="outlined">
-                        <Paper className={classes.header}>
-                            <Typography variant="h5">
-                                Messages
-                            </Typography>
-                            <div className={classes.iconGroup}>
-                                <div className={classes.icon}>
-                                    <Link to={"/messages/settings"}>
-                                        <IconButton
-                                            onMouseEnter={() => handleHoverAction(MessagesAction.SETTINGS)}
-                                            onMouseLeave={handleLeaveAction}
-                                            color="primary"
-                                        >
-                                            <>{SettingsIcon}</>
-                                            <HoverAction
-                                                visible={visibleHoverAction.visibleSettingsAction}
-                                                actionText={"Settings"}
-                                            />
-                                        </IconButton>
-                                    </Link>
-                                </div>
-                                <div className={classes.icon}>
+                <Paper className={globalClasses.pageContainer} variant="outlined">
+                    <Paper className={classnames(globalClasses.pageHeader, classes.header)} variant="outlined">
+                        <Typography variant="h5" className={globalClasses.pageHeaderTitleWrapper}>
+                            Messages
+                        </Typography>
+                        <div className={classes.iconGroup}>
+                            <div className={classes.icon}>
+                                <Link to={"/messages/settings"}>
                                     <IconButton
-                                        onClick={onOpenModalWindow}
-                                        onMouseEnter={() => handleHoverAction(MessagesAction.NEW_MESSAGE)}
+                                        onMouseEnter={() => handleHoverAction(MessagesAction.SETTINGS)}
                                         onMouseLeave={handleLeaveAction}
                                         color="primary"
                                     >
-                                        <>{NewMessageIcon}</>
+                                        <>{SettingsIcon}</>
                                         <HoverAction
-                                            visible={visibleHoverAction.visibleNewMessageAction}
-                                            actionText={"New message"}
+                                            visible={visibleHoverAction.visibleSettingsAction}
+                                            actionText={"Settings"}
                                         />
                                     </IconButton>
-                                </div>
+                                </Link>
                             </div>
-                        </Paper>
-                        {isChatsLoading ? <Spinner paddingTop={150}/> : (
-                            (chats.length === 0) ? (
-                                <>
-                                    <Typography variant={"h4"} component={"div"} className={classes.messagesTitle}>
-                                        Send a message, get a message
-                                    </Typography>
-                                    <Typography variant={"subtitle1"} component={"div"} className={classes.messagesText}>
-                                        Direct Messages are private conversations between you and other people on Twitter.
-                                        Share Tweets, media, and more!
-                                    </Typography>
-                                    <Button
-                                        onClick={onOpenModalWindow}
-                                        className={classes.messagesButton}
-                                        variant="contained"
-                                        color="primary"
-                                        size="large"
-                                    >
-                                        Start a conversation
-                                    </Button>
-                                </>
-                            ) : (
-                                <>
-                                    <div className={classes.searchWrapper}>
-                                        <PeopleSearchInput
-                                            placeholder="Explore for people and groups"
-                                            variant="outlined"
-                                            onChange={(event) => setText(event.target.value)}
-                                            value={text}
-                                            InputProps={{
-                                                startAdornment: (
-                                                    <InputAdornment position="start">
-                                                        {SearchIcon}
-                                                    </InputAdornment>
-                                                ),
-                                            }}
-                                        />
-                                    </div>
-                                    <List component="nav" className={classes.list} aria-label="main mailbox folders">
-                                        {chats.map((chat) => (
-                                            <ListItem
-                                                key={chat.id}
-                                                button
-                                                className={classes.listItem}
-                                                id={(participant?.user.id === chat.participants[0].user.id!) ? ("selected") : ("")}
-                                                selected={participant?.user.id === chat.participants[0].user.id!}
-                                                onClick={() => handleListItemClick(chat)}
-                                            >
-                                                <div className={classes.userWrapper}>
-                                                    <Avatar
-                                                        className={classes.userAvatar}
-                                                        src={(myProfile?.id === chat.participants[1].user.id!) ? (
-                                                            (chat.participants[0].user.avatar?.src) ? (
-                                                                chat.participants[0].user.avatar.src
-                                                            ) : (
-                                                                DEFAULT_PROFILE_IMG
-                                                            )
-                                                        ) : ((chat.participants[1].user.avatar?.src) ? (
-                                                                chat.participants[1].user.avatar?.src
-                                                            ) : (
-                                                                DEFAULT_PROFILE_IMG
-                                                            )
-                                                        )}
-                                                    />
-                                                    <div>
-                                                        <Typography variant={"h6"} component={"span"}>
-                                                            {(myProfile?.id === chat.participants[1].user.id!) ? (
-                                                                chat.participants[0].user.fullName
-                                                            ) : (
-                                                                chat.participants[1].user.fullName
-                                                            )}
-                                                        </Typography>
-                                                        <Typography variant={"subtitle1"} component={"span"} className={classes.username}>
-                                                            {(myProfile?.id === chat.participants[1].user.id!) ? (
-                                                                `@${chat.participants[0].user.username}`
-                                                            ) : (
-                                                                `@${chat.participants[1].user.username}`
-                                                            )}
-                                                        </Typography>
-                                                    </div>
-                                                </div>
-                                            </ListItem>
-                                        ))}
-                                    </List>
-                                </>
-                            )
-                        )}
+                            <div className={classes.icon}>
+                                <IconButton
+                                    onClick={onOpenModalWindow}
+                                    onMouseEnter={() => handleHoverAction(MessagesAction.NEW_MESSAGE)}
+                                    onMouseLeave={handleLeaveAction}
+                                    color="primary"
+                                >
+                                    <>{NewMessageIcon}</>
+                                    <HoverAction
+                                        visible={visibleHoverAction.visibleNewMessageAction}
+                                        actionText={"New message"}
+                                    />
+                                </IconButton>
+                            </div>
+                        </div>
                     </Paper>
-                </div>
+                    {isChatsLoading ? <Spinner paddingTop={150}/> : (
+                        (chats.length === 0) ? (
+                            <>
+                                <Typography variant={"h4"} component={"div"} className={classes.messagesTitle}>
+                                    Send a message, get a message
+                                </Typography>
+                                <Typography variant={"subtitle1"} component={"div"} className={classes.messagesText}>
+                                    Direct Messages are private conversations between you and other people on Twitter.
+                                    Share Tweets, media, and more!
+                                </Typography>
+                                <Button
+                                    onClick={onOpenModalWindow}
+                                    className={classes.messagesButton}
+                                    variant="contained"
+                                    color="primary"
+                                    size="large"
+                                >
+                                    Start a conversation
+                                </Button>
+                            </>
+                        ) : (
+                            <>
+                                <div className={classes.searchWrapper}>
+                                    <PeopleSearchInput
+                                        placeholder="Explore for people and groups"
+                                        variant="outlined"
+                                        onChange={(event) => setText(event.target.value)}
+                                        value={text}
+                                        InputProps={{
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    {SearchIcon}
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                </div>
+                                <List component="nav" className={classes.list} aria-label="main mailbox folders">
+                                    {chats.map((chat) => (
+                                        <ListItem
+                                            key={chat.id}
+                                            button
+                                            className={classes.listItem}
+                                            id={(participant?.user.id === chat.participants[0].user.id!) ? ("selected") : ("")}
+                                            selected={participant?.user.id === chat.participants[0].user.id!}
+                                            onClick={() => handleListItemClick(chat)}
+                                        >
+                                            <div className={classes.userWrapper}>
+                                                <Avatar
+                                                    className={classes.userAvatar}
+                                                    src={(myProfile?.id === chat.participants[1].user.id!) ? (
+                                                        (chat.participants[0].user.avatar?.src) ? (
+                                                            chat.participants[0].user.avatar.src
+                                                        ) : (
+                                                            DEFAULT_PROFILE_IMG
+                                                        )
+                                                    ) : ((chat.participants[1].user.avatar?.src) ? (
+                                                            chat.participants[1].user.avatar?.src
+                                                        ) : (
+                                                            DEFAULT_PROFILE_IMG
+                                                        )
+                                                    )}
+                                                />
+                                                <div>
+                                                    <Typography variant={"h6"} component={"span"}>
+                                                        {(myProfile?.id === chat.participants[1].user.id!) ? (
+                                                            chat.participants[0].user.fullName
+                                                        ) : (
+                                                            chat.participants[1].user.fullName
+                                                        )}
+                                                    </Typography>
+                                                    <Typography variant={"subtitle1"} component={"span"} className={classes.username}>
+                                                        {(myProfile?.id === chat.participants[1].user.id!) ? (
+                                                            `@${chat.participants[0].user.username}`
+                                                        ) : (
+                                                            `@${chat.participants[1].user.username}`
+                                                        )}
+                                                    </Typography>
+                                                </div>
+                                            </div>
+                                        </ListItem>
+                                    ))}
+                                </List>
+                            </>
+                        )
+                    )}
+                </Paper>
             </Grid>
             <Grid className={classes.grid} md={5} item>
                 <Route exact path="/messages/settings">
-                    <div className={classes.chatContainer}>
-                        <Paper variant="outlined">
-                            <Paper className={classes.chatHeader}>
-                                <BackButton/>
-                                <Typography variant="h5">
-                                    Direct Messages
-                                </Typography>
-                            </Paper>
-                            <div className={classes.pageInfoWrapper}>
-                                <DirectMessages/>
-                            </div>
+                    <Paper className={classnames(globalClasses.pageContainer, classes.chatContainer)} variant="outlined">
+                        <Paper className={classnames(globalClasses.pageHeader, classes.chatHeader)} variant="outlined">
+                            <BackButton/>
+                            <Typography variant="h5">
+                                Direct Messages
+                            </Typography>
                         </Paper>
-                    </div>
+                        <div className={globalClasses.contentWrapper}>
+                            <DirectMessages/>
+                        </div>
+                    </Paper>
                 </Route>
                 <Route exact path="/messages/:id/info">
                     <ConversationInfo
@@ -334,295 +333,291 @@ const Messages: FC = (): ReactElement => {
                 </Route>
                 <Route exact path="/messages">
                     {(participant?.user.id === undefined) ? (
-                        <div className={classes.chatContainer}>
-                            <Paper variant="outlined">
-                                <div className={classes.chatInfoWrapper}>
-                                    <Typography variant={"h4"} component={"div"}>
-                                        You don’t have a message selected
+                        <Paper className={classnames(globalClasses.pageContainer, classes.chatContainer)} variant="outlined">
+                            <div className={classes.chatInfoWrapper}>
+                                <Typography variant={"h4"} component={"div"}>
+                                    You don’t have a message selected
+                                </Typography>
+                                <Typography variant={"subtitle1"} component={"div"}>
+                                    Choose one from your existing messages, or start a new one.
+                                </Typography>
+                                <Button
+                                    onClick={onOpenModalWindow}
+                                    className={classes.chatInfoButton}
+                                    variant="contained"
+                                    color="primary"
+                                    size="large"
+                                >
+                                    New message
+                                </Button>
+                            </div>
+                        </Paper>
+                    ) : (
+                        <Paper className={classnames(globalClasses.pageContainer, classes.chatContainer)} variant="outlined">
+                            <Paper className={classnames(globalClasses.pageHeader, classes.chatHeader)}>
+                                <Avatar
+                                    className={classes.chatAvatar}
+                                    src={participant.user.avatar?.src ? participant.user.avatar.src : DEFAULT_PROFILE_IMG}
+                                />
+                                <div style={{flex: 1}}>
+                                    <Typography variant="h5">
+                                        {participant.user.fullName}
                                     </Typography>
-                                    <Typography variant={"subtitle1"} component={"div"}>
-                                        Choose one from your existing messages, or start a new one.
+                                    <Typography variant="subtitle2" component={"div"}>
+                                        @{participant.user.username}
                                     </Typography>
-                                    <Button
-                                        onClick={onOpenModalWindow}
-                                        className={classes.chatInfoButton}
-                                        variant="contained"
-                                        color="primary"
-                                        size="large"
-                                    >
-                                        New message
-                                    </Button>
+                                </div>
+                                <div className={classes.iconGroup}>
+                                    <div className={classes.icon}>
+                                        <Link to={`/messages/${participant.user.id}/info`}>
+                                            <IconButton
+                                                onMouseEnter={() => handleHoverAction(MessagesAction.DETAILS)}
+                                                onMouseLeave={handleLeaveAction}
+                                                color="primary"
+                                            >
+                                                <>{DetailsIcon}</>
+                                                <HoverAction
+                                                    visible={visibleHoverAction.visibleDetailsAction}
+                                                    actionText={"Details"}
+                                                />
+                                            </IconButton>
+                                        </Link>
+                                    </div>
                                 </div>
                             </Paper>
-                        </div>
-                    ) : (
-                        <div className={classes.chatContainer}>
-                            <Paper variant="outlined">
-                                <Paper className={classes.chatHeader} style={{paddingLeft: 15}}>
-                                    <Avatar
-                                        className={classes.chatAvatar}
-                                        src={participant.user.avatar?.src ? participant.user.avatar.src : DEFAULT_PROFILE_IMG}
-                                    />
-                                    <div style={{flex: 1}}>
-                                        <Typography variant="h5">
-                                            {participant.user.fullName}
-                                        </Typography>
-                                        <Typography variant="subtitle2" component={"div"}>
-                                            @{participant.user.username}
-                                        </Typography>
-                                    </div>
-                                    <div className={classes.iconGroup}>
-                                        <div className={classes.icon}>
-                                            <Link to={`/messages/${participant.user.id}/info`}>
+                            <Paper className={classes.chat}>
+                                {messages.map(message => (
+                                    (message.author.id === myProfile?.id) ? (
+                                        <React.Fragment key={message.id}>
+                                            {message.tweet && (
+                                                <div className={classes.tweetContainer}>
+                                                    <Link to={`/home/tweet/${message.tweet.id}`}>
+                                                        <div className={classes.tweetWrapper}>
+                                                            <div className={classes.tweetUserInfoWrapper}>
+                                                                <Avatar
+                                                                    className={classes.tweetAvatar}
+                                                                    src={(message.tweet?.user.avatar?.src) ? (
+                                                                        message.tweet?.user.avatar?.src
+                                                                    ) : (
+                                                                        DEFAULT_PROFILE_IMG
+                                                                    )}
+                                                                />
+                                                                <Typography variant={"h6"} component={"span"}>
+                                                                    {message.tweet?.user.fullName}
+                                                                </Typography>
+                                                                <Typography
+                                                                    variant={"subtitle1"}
+                                                                    component={"span"}
+                                                                    className={classes.tweetUsername}
+                                                                >
+                                                                    @{message.tweet?.user.username}
+                                                                </Typography>
+                                                                <Typography
+                                                                    variant={"subtitle1"}
+                                                                    component={"span"}
+                                                                    className={classes.tweetUsername}
+                                                                >·</Typography>
+                                                                <Typography
+                                                                    variant={"subtitle1"}
+                                                                    component={"span"}
+                                                                    className={classes.tweetUsername}
+                                                                >
+                                                                    {formatDate(new Date(message.tweet?.dateTime!))}
+                                                                </Typography>
+                                                            </div>
+                                                            <Typography variant={"body1"} component={"span"}>
+                                                                {textFormatter(message.tweet?.text)}
+                                                            </Typography>
+                                                        </div>
+                                                    </Link>
+                                                </div>
+                                            )}
+                                            {message.text && (
+                                                <div className={classNames(
+                                                    classes.myMessage,
+                                                    message.tweet ? classes.myMessageWithTweet : classes.myMessageCommon
+                                                )}>
+                                                    <Typography component={"span"}>
+                                                        {message.text}
+                                                    </Typography>
+                                                </div>
+                                            )}
+                                            <div className={classes.myMessageDate}>
+                                                <span>{CheckIcon}</span>
+                                                <Typography variant={"subtitle2"} component={"span"}>
+                                                    {formatChatMessageDate(new Date(message.date))}
+                                                </Typography>
+                                            </div>
+                                        </React.Fragment>
+                                    ) : (
+                                        <React.Fragment key={message.id}>
+                                            <div className={classes.participantContainer}>
+                                                <Avatar
+                                                    className={classes.participantAvatar}
+                                                    src={(myProfile?.id === chat?.participants[1].user.id!) ? (
+                                                        (chat?.participants[0].user.avatar?.src) ? (
+                                                            chat.participants[0].user.avatar.src
+                                                        ) : (
+                                                            DEFAULT_PROFILE_IMG
+                                                        )
+                                                    ) : ((chat?.participants[1].user.avatar?.src) ? (
+                                                            chat.participants[1].user.avatar.src
+                                                        ) : (
+                                                            DEFAULT_PROFILE_IMG
+                                                        )
+                                                    )}
+                                                />
+                                                <div>
+                                                    {message.tweet && (
+                                                        <div className={classes.participantTweetContainer}>
+                                                            <Link to={`/home/tweet/${message.tweet.id}`}>
+                                                                <div className={classes.participantTweetWrapper}>
+                                                                    <div className={classes.participantTweetInfoWrapper}>
+                                                                        <Avatar
+                                                                            className={classes.participantTweetAvatar}
+                                                                            src={(message.tweet.user.avatar?.src) ? (
+                                                                                message.tweet.user.avatar.src
+                                                                            ) : (
+                                                                                DEFAULT_PROFILE_IMG
+                                                                            )}
+                                                                        />
+                                                                        <Typography variant={"h6"} component={"span"}>
+                                                                            {message.tweet.user.fullName}
+                                                                        </Typography>
+                                                                        <Typography
+                                                                            variant={"subtitle1"}
+                                                                            component={"span"}
+                                                                            className={classes.participantTweetUsername}
+                                                                        >
+                                                                            @{message.tweet.user.username}
+                                                                        </Typography>
+                                                                        <Typography
+                                                                            variant={"subtitle1"}
+                                                                            component={"span"}
+                                                                            className={classes.participantTweetUsername}
+                                                                        >·</Typography>
+                                                                        <Typography
+                                                                            variant={"subtitle1"}
+                                                                            component={"span"}
+                                                                            className={classes.participantTweetUsername}
+                                                                        >
+                                                                            {formatDate(new Date(message.tweet.dateTime!))}
+                                                                        </Typography>
+                                                                    </div>
+                                                                    <Typography variant={"body1"} component={"span"}>
+                                                                        {textFormatter(message.tweet.text)}
+                                                                    </Typography>
+                                                                </div>
+                                                            </Link>
+                                                        </div>
+                                                    )}
+                                                    {message.text && (
+                                                        <div className={classNames(
+                                                            classes.participantMessage,
+                                                            message.tweet ? classes.participantMessageWithTweet : classes.participantMessageCommon
+                                                        )}>
+                                                            <Typography component={"span"}>
+                                                                {message.text}
+                                                            </Typography>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            <div className={classes.participantMessageDate}>
+                                                <Typography variant={"subtitle2"} component={"span"}>
+                                                    {formatChatMessageDate(new Date(message.date))}
+                                                </Typography>
+                                            </div>
+                                        </React.Fragment>
+                                    )
+                                ))}
+                                <div ref={chatEndRef}/>
+                            </Paper>
+                            <>
+                                {isUserBlocked ? (
+                                    <Typography variant={"subtitle2"} component={"div"} className={classes.blockedInfoText}>
+                                        You can no longer send messages to this person.
+                                        {" "}
+                                        <MuiLink
+                                            href="https://help.twitter.com/using-twitter/direct-messages#faq"
+                                            variant="subtitle2"
+                                            target="_blank"
+                                            rel="noopener"
+                                        >
+                                            Learn more
+                                        </MuiLink>
+                                    </Typography>
+                                    ) : (
+                                        <Paper className={classes.chatFooter}>
+                                            <div className={classes.chatIcon}>
                                                 <IconButton
-                                                    onMouseEnter={() => handleHoverAction(MessagesAction.DETAILS)}
+                                                    onMouseEnter={() => handleHoverAction(MessagesAction.MEDIA)}
                                                     onMouseLeave={handleLeaveAction}
                                                     color="primary"
                                                 >
-                                                    <>{DetailsIcon}</>
+                                                    <span>{MediaIcon}</span>
                                                     <HoverAction
-                                                        visible={visibleHoverAction.visibleDetailsAction}
-                                                        actionText={"Details"}
+                                                        visible={visibleHoverAction.visibleMediaAction}
+                                                        positionTop={true}
+                                                        actionText={"Media"}
                                                     />
                                                 </IconButton>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </Paper>
-                                <Paper className={classes.chat}>
-                                    {messages.map(message => (
-                                        (message.author.id === myProfile?.id) ? (
-                                            <React.Fragment key={message.id}>
-                                                {message.tweet && (
-                                                    <div className={classes.tweetContainer}>
-                                                        <Link to={`/home/tweet/${message.tweet.id}`}>
-                                                            <div className={classes.tweetWrapper}>
-                                                                <div className={classes.tweetUserInfoWrapper}>
-                                                                    <Avatar
-                                                                        className={classes.tweetAvatar}
-                                                                        src={(message.tweet?.user.avatar?.src) ? (
-                                                                            message.tweet?.user.avatar?.src
-                                                                        ) : (
-                                                                            DEFAULT_PROFILE_IMG
-                                                                        )}
-                                                                    />
-                                                                    <Typography variant={"h6"} component={"span"}>
-                                                                        {message.tweet?.user.fullName}
-                                                                    </Typography>
-                                                                    <Typography
-                                                                        variant={"subtitle1"}
-                                                                        component={"span"}
-                                                                        className={classes.tweetUsername}
-                                                                    >
-                                                                        @{message.tweet?.user.username}
-                                                                    </Typography>
-                                                                    <Typography
-                                                                        variant={"subtitle1"}
-                                                                        component={"span"}
-                                                                        className={classes.tweetUsername}
-                                                                    >·</Typography>
-                                                                    <Typography
-                                                                        variant={"subtitle1"}
-                                                                        component={"span"}
-                                                                        className={classes.tweetUsername}
-                                                                    >
-                                                                        {formatDate(new Date(message.tweet?.dateTime!))}
-                                                                    </Typography>
-                                                                </div>
-                                                                <Typography variant={"body1"} component={"span"}>
-                                                                    {textFormatter(message.tweet?.text)}
-                                                                </Typography>
-                                                            </div>
-                                                        </Link>
-                                                    </div>
-                                                )}
-                                                {message.text && (
-                                                    <div className={classNames(
-                                                        classes.myMessage,
-                                                        message.tweet ? classes.myMessageWithTweet : classes.myMessageCommon
-                                                    )}>
-                                                        <Typography component={"span"}>
-                                                            {message.text}
-                                                        </Typography>
-                                                    </div>
-                                                )}
-                                                <div className={classes.myMessageDate}>
-                                                    <span>{CheckIcon}</span>
-                                                    <Typography variant={"subtitle2"} component={"span"}>
-                                                        {formatChatMessageDate(new Date(message.date))}
-                                                    </Typography>
-                                                </div>
-                                            </React.Fragment>
-                                        ) : (
-                                            <React.Fragment key={message.id}>
-                                                <div className={classes.participantContainer}>
-                                                    <Avatar
-                                                        className={classes.participantAvatar}
-                                                        src={(myProfile?.id === chat?.participants[1].user.id!) ? (
-                                                            (chat?.participants[0].user.avatar?.src) ? (
-                                                                chat.participants[0].user.avatar.src
-                                                            ) : (
-                                                                DEFAULT_PROFILE_IMG
-                                                            )
-                                                        ) : ((chat?.participants[1].user.avatar?.src) ? (
-                                                                chat.participants[1].user.avatar.src
-                                                            ) : (
-                                                                DEFAULT_PROFILE_IMG
-                                                            )
-                                                        )}
+                                            </div>
+                                            <div className={classes.chatIcon}>
+                                                <IconButton
+                                                    onMouseEnter={() => handleHoverAction(MessagesAction.GIF)}
+                                                    onMouseLeave={handleLeaveAction}
+                                                    color="primary"
+                                                >
+                                                    <span>{GifIcon}</span>
+                                                    <HoverAction
+                                                        visible={visibleHoverAction.visibleGIFAction}
+                                                        positionTop={true}
+                                                        actionText={"GIF"}
                                                     />
-                                                    <div>
-                                                        {message.tweet && (
-                                                            <div className={classes.participantTweetContainer}>
-                                                                <Link to={`/home/tweet/${message.tweet.id}`}>
-                                                                    <div className={classes.participantTweetWrapper}>
-                                                                        <div className={classes.participantTweetInfoWrapper}>
-                                                                            <Avatar
-                                                                                className={classes.participantTweetAvatar}
-                                                                                src={(message.tweet.user.avatar?.src) ? (
-                                                                                    message.tweet.user.avatar.src
-                                                                                ) : (
-                                                                                    DEFAULT_PROFILE_IMG
-                                                                                )}
-                                                                            />
-                                                                            <Typography variant={"h6"} component={"span"}>
-                                                                                {message.tweet.user.fullName}
-                                                                            </Typography>
-                                                                            <Typography
-                                                                                variant={"subtitle1"}
-                                                                                component={"span"}
-                                                                                className={classes.participantTweetUsername}
-                                                                            >
-                                                                                @{message.tweet.user.username}
-                                                                            </Typography>
-                                                                            <Typography
-                                                                                variant={"subtitle1"}
-                                                                                component={"span"}
-                                                                                className={classes.participantTweetUsername}
-                                                                            >·</Typography>
-                                                                            <Typography
-                                                                                variant={"subtitle1"}
-                                                                                component={"span"}
-                                                                                className={classes.participantTweetUsername}
-                                                                            >
-                                                                                {formatDate(new Date(message.tweet.dateTime!))}
-                                                                            </Typography>
-                                                                        </div>
-                                                                        <Typography variant={"body1"} component={"span"}>
-                                                                            {textFormatter(message.tweet.text)}
-                                                                        </Typography>
-                                                                    </div>
-                                                                </Link>
-                                                            </div>
-                                                        )}
-                                                        {message.text && (
-                                                            <div className={classNames(
-                                                                classes.participantMessage,
-                                                                message.tweet ? classes.participantMessageWithTweet : classes.participantMessageCommon
-                                                            )}>
-                                                                <Typography component={"span"}>
-                                                                    {message.text}
-                                                                </Typography>
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                                <div className={classes.participantMessageDate}>
-                                                    <Typography variant={"subtitle2"} component={"span"}>
-                                                        {formatChatMessageDate(new Date(message.date))}
-                                                    </Typography>
-                                                </div>
-                                            </React.Fragment>
-                                        )
-                                    ))}
-                                    <div ref={chatEndRef}/>
-                                </Paper>
-                                <>
-                                    {isUserBlocked ? (
-                                        <Typography variant={"subtitle2"} component={"div"} className={classes.blockedInfoText}>
-                                            You can no longer send messages to this person.
-                                            {" "}
-                                            <MuiLink
-                                                href="https://help.twitter.com/using-twitter/direct-messages#faq"
-                                                variant="subtitle2"
-                                                target="_blank"
-                                                rel="noopener"
-                                            >
-                                                Learn more
-                                            </MuiLink>
-                                        </Typography>
-                                        ) : (
-                                            <Paper className={classes.chatFooter}>
-                                                <div className={classes.chatIcon}>
-                                                    <IconButton
-                                                        onMouseEnter={() => handleHoverAction(MessagesAction.MEDIA)}
-                                                        onMouseLeave={handleLeaveAction}
-                                                        color="primary"
-                                                    >
-                                                        <span>{MediaIcon}</span>
-                                                        <HoverAction
-                                                            visible={visibleHoverAction.visibleMediaAction}
-                                                            positionTop={true}
-                                                            actionText={"Media"}
-                                                        />
-                                                    </IconButton>
-                                                </div>
-                                                <div className={classes.chatIcon}>
-                                                    <IconButton
-                                                        onMouseEnter={() => handleHoverAction(MessagesAction.GIF)}
-                                                        onMouseLeave={handleLeaveAction}
-                                                        color="primary"
-                                                    >
-                                                        <span>{GifIcon}</span>
-                                                        <HoverAction
-                                                            visible={visibleHoverAction.visibleGIFAction}
-                                                            positionTop={true}
-                                                            actionText={"GIF"}
-                                                        />
-                                                    </IconButton>
-                                                </div>
-                                                <MessageInput
-                                                    multiline
-                                                    value={message}
-                                                    onChange={(event) => setMessage(event.target.value)}
-                                                    variant="outlined"
-                                                    placeholder="Start a new message"
-                                                />
-                                                <div className={classes.emojiIcon}>
-                                                    <IconButton
-                                                        onMouseEnter={() => handleHoverAction(MessagesAction.EMOJI)}
-                                                        onMouseLeave={handleLeaveAction}
-                                                        color="primary"
-                                                    >
-                                                        <span>{EmojiIcon}</span>
-                                                        <HoverAction
-                                                            visible={visibleHoverAction.visibleEmojiAction}
-                                                            positionTop={true}
-                                                            actionText={"Emoji"}
-                                                        />
-                                                    </IconButton>
-                                                </div>
-                                                <div style={{marginLeft: 8}} className={classes.chatIcon}>
-                                                    <IconButton
-                                                        onClick={onSendMessage}
-                                                        onMouseEnter={() => handleHoverAction(MessagesAction.SEND)}
-                                                        onMouseLeave={handleLeaveAction}
-                                                        color="primary"
-                                                    >
-                                                        <span>{SendMessageIcon}</span>
-                                                        <HoverAction
-                                                            visible={visibleHoverAction.visibleSendAction}
-                                                            positionTop={true}
-                                                            actionText={"Send"}
-                                                        />
-                                                    </IconButton>
-                                                </div>
-                                            </Paper>
-                                        )
-                                    }
-                                </>
-                            </Paper>
-                        </div>
+                                                </IconButton>
+                                            </div>
+                                            <MessageInput
+                                                multiline
+                                                value={message}
+                                                onChange={(event) => setMessage(event.target.value)}
+                                                variant="outlined"
+                                                placeholder="Start a new message"
+                                            />
+                                            <div className={classes.emojiIcon}>
+                                                <IconButton
+                                                    onMouseEnter={() => handleHoverAction(MessagesAction.EMOJI)}
+                                                    onMouseLeave={handleLeaveAction}
+                                                    color="primary"
+                                                >
+                                                    <span>{EmojiIcon}</span>
+                                                    <HoverAction
+                                                        visible={visibleHoverAction.visibleEmojiAction}
+                                                        positionTop={true}
+                                                        actionText={"Emoji"}
+                                                    />
+                                                </IconButton>
+                                            </div>
+                                            <div style={{marginLeft: 8}} className={classes.chatIcon}>
+                                                <IconButton
+                                                    onClick={onSendMessage}
+                                                    onMouseEnter={() => handleHoverAction(MessagesAction.SEND)}
+                                                    onMouseLeave={handleLeaveAction}
+                                                    color="primary"
+                                                >
+                                                    <span>{SendMessageIcon}</span>
+                                                    <HoverAction
+                                                        visible={visibleHoverAction.visibleSendAction}
+                                                        positionTop={true}
+                                                        actionText={"Send"}
+                                                    />
+                                                </IconButton>
+                                            </div>
+                                        </Paper>
+                                    )
+                                }
+                            </>
+                        </Paper>
                     )}
                 </Route>
             </Grid>

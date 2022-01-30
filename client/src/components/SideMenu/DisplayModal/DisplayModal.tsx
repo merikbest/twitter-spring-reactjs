@@ -81,7 +81,7 @@ const DisplayModal: FC<DisplayModalProps & DisplayProps> = (
 
     return (
         <Dialog open={visible} onClose={onClose} className={classes.dialog} aria-labelledby="form-dialog-title">
-            <Typography component={"div"} className={classes.title}>
+            <Typography variant={"h3"} component={"div"} className={classes.title}>
                 Customize your view
             </Typography>
             <DialogContent className={classes.content}>

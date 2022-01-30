@@ -33,7 +33,6 @@ const ShareActionsModal: FC<HoverActionProps> = (
                         onMouseEnter={() => handleHoverAction?.(HoverActions.SHARE)}
                         onMouseLeave={handleLeaveAction}
                         color="primary"
-                        size="small"
                     >
                         <>{ShareIcon}</>
                         <HoverAction visible={visibleHoverAction?.visibleShareAction} actionText={"Share"}/>

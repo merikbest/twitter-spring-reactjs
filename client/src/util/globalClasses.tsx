@@ -1,6 +1,13 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 export const useGlobalStyles = makeStyles((theme: Theme) => ({
+    pageContainer: {
+        borderRadius: 0,
+        minHeight: '100vh',
+        paddingBottom: 500,
+        borderTop: 0,
+        borderBottom: 0,
+    },
     pageHeader: {
         position: "fixed",
         width: 602,
@@ -13,6 +20,12 @@ export const useGlobalStyles = makeStyles((theme: Theme) => ({
         borderLeft: 0,
         borderRight: 0,
         borderRadius: 0,
+    },
+    contentWrapper: {
+        paddingTop: 53
+    },
+    pageHeaderTitleWrapper: {
+        marginLeft: 15,
     },
     avatar: {
         width: "46px !important",

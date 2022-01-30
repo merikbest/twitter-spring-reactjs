@@ -8,32 +8,8 @@ export const useMessagesStyles = makeStyles<Theme, MessagesStylesProps>((theme) 
     grid: {
         padding: "12px 0px 0px 0px !important",
     },
-    messagesContainer: {
-        "& .MuiPaper-outlined": {
-            padding: 0,
-            borderRadius: 0,
-            minHeight: '100vh',
-            borderTop: 0,
-            borderBottom: 0,
-        },
-    },
     header: {
-        position: "fixed",
-        display: 'flex',
-        margin: 0,
-        padding: 0,
         width: 416,
-        height: 53,
-        zIndex: 1,
-        borderTop: 0,
-        borderLeft: 0,
-        borderRight: 0,
-        borderRadius: 0,
-        alignItems: 'center',
-        flex: 1,
-        '& .MuiTypography-h5': {
-            marginLeft: 15,
-        },
     },
     iconGroup: {
         marginLeft: "auto",
@@ -101,14 +77,8 @@ export const useMessagesStyles = makeStyles<Theme, MessagesStylesProps>((theme) 
     },
     chatContainer: {
         minWidth: 600,
-        "& .MuiPaper-outlined": {
-            padding: 0,
-            borderRadius: 0,
-            minHeight: '100vh',
-            borderLeft: 0,
-            borderTop: 0,
-            borderBottom: 0,
-        },
+        padding: 0,
+        borderLeft: 0,
     },
     chatInfoWrapper: {
         width: 320,
@@ -120,34 +90,18 @@ export const useMessagesStyles = makeStyles<Theme, MessagesStylesProps>((theme) 
         height: 52,
     },
     chatHeader: {
-        position: "fixed",
-        display: 'flex',
-        margin: 0,
-        padding: 0,
         width: 598,
-        height: 53,
-        zIndex: 1,
-        borderTop: 0,
-        borderLeft: 0,
-        borderRight: 0,
-        borderBottom: `1px solid ${theme.palette.divider}`,
-        borderRadius: 0,
-        alignItems: 'center',
-        flex: 1,
-    },
-    pageInfoWrapper: {
-        paddingTop: 53
     },
     chatAvatar: {
         width: theme.spacing(4),
         height: theme.spacing(4),
-        marginRight: 15,
+        margin: "0px 15px",
     },
     chat: {
         padding: "53px 15px",
         height: 900,
         overflowY: "auto",
-        borderBottom: 0
+        border: 0,
     },
     tweetContainer: {
         marginTop: 10,

@@ -14,10 +14,4 @@ export const useMembersAndFollowersModalStyles = makeStyles((theme: Theme) => ({
         padding: "0px 0px",
         overflowX: "hidden",
     },
-    infoWrapper: {
-        width: 350,
-        margin: "0 auto",
-        marginTop: 32,
-        textAlign: "center",
-    },
 }));

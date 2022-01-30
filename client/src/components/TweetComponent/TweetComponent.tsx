@@ -1,7 +1,7 @@
 import React, {ComponentType, FC, ReactElement, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory, useLocation} from 'react-router-dom';
-import {Avatar, IconButton, Paper, Typography, Link as MuiLink} from '@material-ui/core';
+import {Avatar, IconButton, Link as MuiLink, Paper, Typography} from '@material-ui/core';
 import {compose} from "recompose";
 
 import {
@@ -11,8 +11,7 @@ import {
     LikeOutlinedIcon,
     LockIcon,
     PinOutlinedIcon,
-    ReplyIcon,
-    RetweetOutlinedIconSm
+    ReplyIcon
 } from "../../icons";
 import {useTweetComponentStyles} from "./TweetComponentStyles";
 import {formatDate} from '../../util/formatDate';
@@ -35,8 +34,9 @@ import SmallLinkPreview from "../SmallLinkPreview/SmallLinkPreview";
 import HoverAction from "../HoverAction/HoverAction";
 import {HoverActionProps, HoverActions, withHoverAction} from "../../hoc/withHoverAction";
 import TweetAnalyticsModal from "../TweetAnalyticsModal/TweetAnalyticsModal";
-import {withHoverUser, HoverUserProps} from "../../hoc/withHoverUser";
+import {HoverUserProps, withHoverUser} from "../../hoc/withHoverUser";
 import {useGlobalStyles} from "../../util/globalClasses";
+import TweetActionResult, {TweetActionResults} from "../TweetActionResult/TweetActionResult";
 
 export interface TweetComponentProps<T> {
     item?: T;
@@ -120,20 +120,16 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<Tweet> & HoverActi
     return (
         <Paper className={classes.container} variant="outlined">
             {isTweetRetweetedByUser && (
-                <div className={classes.retweetWrapper}>
-                    <span>{RetweetOutlinedIconSm}</span>
-                    <Typography variant={"subtitle2"}>
-                        {(myProfile?.id === userProfile?.id) ? ("You") : (userProfile?.fullName)} Retweeted
-                    </Typography>
-                </div>
+                <TweetActionResult
+                    action={TweetActionResults.RETWEET}
+                    text={((myProfile?.id === userProfile?.id) ? ("You") : (userProfile?.fullName)) + " Retweeted"}
+                />
             )}
             {((myProfile?.id === userProfile?.id && activeTab === 0) && myProfile?.pinnedTweet?.id === tweet?.id) && (
-                <div className={classes.retweetWrapper}>
-                    <span>{PinOutlinedIcon}</span>
-                    <Typography variant={"subtitle2"}>
-                        Pinned Tweet
-                    </Typography>
-                </div>
+                <TweetActionResult
+                    action={TweetActionResults.PIN}
+                    text={"Pinned Tweet"}
+                />
             )}
             <div className={classes.tweetWrapper}>
                 <a onClick={handleClickUser}>

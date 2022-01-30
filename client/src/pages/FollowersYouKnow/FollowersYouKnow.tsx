@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {useHistory, useParams} from "react-router-dom";
 import {Paper, Typography} from "@material-ui/core";
 
-import {useFollowersYouKnowStyles} from "./FollowersYouKnowStyles";
 import {UserApi} from "../../services/api/userApi";
 import {User} from "../../store/ducks/user/contracts/state";
 import BackButton from "../../components/BackButton/BackButton";
@@ -16,7 +15,6 @@ import {useGlobalStyles} from "../../util/globalClasses";
 
 const FollowersYouKnow: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
-    const classes = useFollowersYouKnowStyles();
     const dispatch = useDispatch();
     const params = useParams<{ id: string }>();
     const history = useHistory();
@@ -49,7 +47,7 @@ const FollowersYouKnow: FC = (): ReactElement => {
     }, [myProfile]);
 
     return (
-        <Paper className={classes.container} variant="outlined">
+        <Paper className={globalClasses.pageContainer} variant="outlined">
             <Paper className={globalClasses.pageHeader} variant="outlined">
                 <BackButton/>
                 <div>
@@ -65,7 +63,7 @@ const FollowersYouKnow: FC = (): ReactElement => {
                 <Spinner paddingTop={150}/>
             ) : (
                 (!isLoading && (overallFollowers.length === 0)) ? (
-                    <div className={classes.contentWrapper}>
+                    <div className={globalClasses.contentWrapper}>
                         <div className={globalClasses.infoText}>
                             <Typography variant={"h4"} component={"div"}>
                                 {`@${userProfile?.username} doesn’t have any followers you know yet`}

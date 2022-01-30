@@ -7,21 +7,6 @@ interface FullTweetStyles {
 }
 
 export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => ({
-    retweetWrapper: {
-        display: "flex",
-        alignItems: "center",
-        marginLeft: 20,
-        marginTop: 5,
-        color: theme.palette.text.secondary,
-        '& .MuiTypography-subtitle2': {
-            marginLeft: 15,
-            fontWeight: 700
-        },
-        "& svg": {
-            verticalAlign: "bottom",
-            height: "1.20em",
-        },
-    },
     container: {
         borderTop: '0',
         borderLeft: '0',
@@ -48,10 +33,9 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
         marginBottom: 16
     },
     textWrapper: {
-        fontSize: 24,
+        fontWeight: 400,
         marginTop: 16,
         marginBottom: 16,
-        lineHeight: 1.3125,
         wordBreak: 'break-word',
         '& #hashtag': {
             color: theme.palette.primary.main,
@@ -104,8 +88,8 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
         "& .MuiIconButton-root": {
             "& svg": {
                 color: theme.palette.text.secondary,
-                verticalAlign: "bottom",
-                height: "0.9em",
+                width: "1.406rem",
+                height: "1.406rem",
             },
         },
     },
@@ -113,8 +97,8 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
         "& .MuiIconButton-root": {
             "& svg": {
                 color: props => props.isTweetRetweeted ? "rgb(23, 191, 99)" : theme.palette.text.secondary,
-                verticalAlign: "bottom",
-                height: "0.9em",
+                width: "1.406rem",
+                height: "1.406rem",
             },
             "&:hover": {
                 backgroundColor: "rgba(0, 186, 124, 0.1) !important",
@@ -128,8 +112,8 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
         "& .MuiIconButton-root": {
             "& svg": {
                 color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : theme.palette.text.secondary,
-                verticalAlign: "bottom",
-                height: "0.9em",
+                width: "1.406rem",
+                height: "1.406rem",
             },
             "&:hover": {
                 backgroundColor: "rgba(249, 24, 128, 0.1) !important",

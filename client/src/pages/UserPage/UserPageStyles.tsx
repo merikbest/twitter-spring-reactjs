@@ -2,11 +2,6 @@ import {makeStyles, Theme} from "@material-ui/core";
 
 export const useUserPageStyles = makeStyles((theme: Theme) => ({
     container: {
-        borderRadius: 0,
-        minHeight: '100vh',
-        paddingBottom: 500,
-        borderTop: 0,
-        borderBottom: 0,
         "& .MuiTab-root": {
             textTransform: "none !important",
             minWidth: "150px !important",

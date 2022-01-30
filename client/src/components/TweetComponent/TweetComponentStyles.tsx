@@ -149,21 +149,6 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
             color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : theme.palette.text.secondary,
         },
     },
-    retweetWrapper: {
-        display: "flex",
-        alignItems: "center",
-        marginLeft: 32,
-        marginBottom: 4,
-        color: theme.palette.text.secondary,
-        "& svg": {
-            verticalAlign: "bottom",
-            height: "1.20em",
-        },
-        "& .MuiTypography-subtitle2": {
-            marginLeft: 12,
-            fontWeight: 700,
-        },
-    },
     popperUserWindow: {
         position: "absolute",
         width: 100,

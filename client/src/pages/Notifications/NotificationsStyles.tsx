@@ -2,28 +2,13 @@ import {makeStyles, Theme} from "@material-ui/core";
 
 export const useNotificationsStyles = makeStyles((theme: Theme) => ({
     container: {
-        borderRadius: 0,
-        minHeight: '100vh',
-        borderTop: '0',
-        borderBottom: '0',
         "& a": {
             color: theme.palette.primary.main,
             textDecoration: "none",
         },
     },
     header: {
-        marginLeft: 15,
-        position: "fixed",
-        display: 'flex',
-        width: 580,
-        height: 53,
-        zIndex: 1,
         border: 0,
-        alignItems: 'center',
-        flex: 1,
-        "& svg": {
-            marginRight: 20
-        },
     },
     tabs: {
         borderBottom: `1px solid ${theme.palette.divider}`,
