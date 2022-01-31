@@ -21,5 +21,7 @@ public interface ChatService {
 
     List<ChatMessage> addMessageWithTweet(String text, Tweet tweet, List<User> users);
 
+    User getParticipant(Long participantUserId);
+
     String leaveFromConversation(Long participantId, Long chatId);
 }

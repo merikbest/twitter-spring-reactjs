@@ -147,6 +147,18 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
+    public User getParticipant(Long participantUserId) {
+        Long userId = authenticationService.getAuthenticatedUserId();
+        Chat chat = chatRepository.getChatByUserIds(Arrays.asList(userId, participantUserId))
+                .orElseThrow(() -> new ApiRequestException("Chat not found", HttpStatus.NOT_FOUND));
+        ChatParticipant chatParticipant = chat.getParticipants().stream()
+                .filter(participant -> participant.getUser().getId().equals(participantUserId))
+                .findFirst()
+                .orElseThrow(() -> new ApiRequestException("Participant not found", HttpStatus.NOT_FOUND));
+        return chatParticipant.getUser();
+    }
+
+    @Override
     public String leaveFromConversation(Long participantId, Long chatId) {
         Chat chat = chatRepository.findById(chatId)
                 .orElseThrow(() -> new ApiRequestException("Chat not found", HttpStatus.NOT_FOUND));
