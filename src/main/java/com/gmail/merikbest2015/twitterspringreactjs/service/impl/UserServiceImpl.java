@@ -127,8 +127,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<Bookmark> getUserBookmarks(Pageable pageable) {
-        User user = authenticationService.getAuthenticatedUser();
-        return bookmarkRepository.findByUser(user, pageable);
+        Long userId = authenticationService.getAuthenticatedUserId();
+        return bookmarkRepository.findByUser(userId, pageable);
     }
 
     @Override

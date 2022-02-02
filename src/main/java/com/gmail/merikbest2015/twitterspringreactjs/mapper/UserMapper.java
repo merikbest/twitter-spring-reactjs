@@ -33,11 +33,13 @@ public class UserMapper {
     NotificationResponse convertToNotificationResponse(Notification notification) {
         NotificationResponse notificationResponse = modelMapper.map(notification, NotificationResponse.class);
 
-        if (notification.getTweet().getQuoteTweet() != null) {
-            TweetResponseCommon tweetResponseCommon = tweetMapper.convertToTweetResponseCommon(notification.getTweet().getQuoteTweet());
-            notificationResponse.getTweet().setQuoteTweet(tweetResponseCommon);
-        } else {
-            notificationResponse.getTweet().setQuoteTweet(null);
+        if (notification.getTweet() != null) {
+            if (notification.getTweet().getQuoteTweet() != null) {
+                TweetResponseCommon tweetResponseCommon = tweetMapper.convertToTweetResponseCommon(notification.getTweet().getQuoteTweet());
+                notificationResponse.getTweet().setQuoteTweet(tweetResponseCommon);
+            } else {
+                notificationResponse.getTweet().setQuoteTweet(null);
+            }
         }
         return notificationResponse;
     }

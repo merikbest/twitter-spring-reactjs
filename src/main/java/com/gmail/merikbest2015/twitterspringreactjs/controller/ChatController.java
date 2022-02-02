@@ -57,9 +57,9 @@ public class ChatController {
         return ResponseEntity.ok(chatMessages);
     }
 
-    @GetMapping("/participant/{participantUserId}")
-    public ResponseEntity<UserResponse> getParticipant(@PathVariable Long participantUserId) {
-        return ResponseEntity.ok(chatMapper.getParticipant(participantUserId));
+    @GetMapping("/participant/{participantId}/{chatId}")
+    public ResponseEntity<UserResponse> getParticipant(@PathVariable Long participantId, @PathVariable Long chatId) {
+        return ResponseEntity.ok(chatMapper.getParticipant(participantId, chatId));
     }
 
     @GetMapping("/leave/{participantId}/{chatId}")

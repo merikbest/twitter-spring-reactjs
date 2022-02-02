@@ -240,6 +240,67 @@ public class ChatControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/chat/participant/4/8 - Get chat participant")
+    public void getParticipant() throws Exception {
+        mockMvc.perform(get(URL_CHAT_BASIC + "/participant/4/8"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.email").value("merikbest2015@gmail.com"))
+                .andExpect(jsonPath("$.fullName").value("Vbhjckfd1"))
+                .andExpect(jsonPath("$.username").value("Vbhjckfd1"))
+                .andExpect(jsonPath("$.location").value("Kyiv"))
+                .andExpect(jsonPath("$.about").value("Hello2"))
+                .andExpect(jsonPath("$.countryCode").value(COUNTRY_CODE))
+                .andExpect(jsonPath("$.phone").value(PHONE))
+                .andExpect(jsonPath("$.country").value(COUNTRY))
+                .andExpect(jsonPath("$.gender").value(GENDER))
+                .andExpect(jsonPath("$.language").value(LANGUAGE))
+                .andExpect(jsonPath("$.backgroundColor").value(BACKGROUND_COLOR))
+                .andExpect(jsonPath("$.colorScheme").value(COLOR_SCHEME))
+                .andExpect(jsonPath("$.mutedDirectMessages").value(MUTED_DIRECT_MESSAGES))
+                .andExpect(jsonPath("$.privateProfile").value(PRIVATE_PROFILE))
+                .andExpect(jsonPath("$.website").value(WEBSITE))
+                .andExpect(jsonPath("$.birthday").isEmpty())
+                .andExpect(jsonPath("$.registrationDate").value(REGISTRATION_DATE))
+                .andExpect(jsonPath("$.tweetCount").value(TWEET_COUNT))
+                .andExpect(jsonPath("$.mediaTweetCount").value(MEDIA_TWEET_COUNT))
+                .andExpect(jsonPath("$.likeCount").value(LIKE_TWEET_COUNT))
+                .andExpect(jsonPath("$.notificationsCount").value(0))
+                .andExpect(jsonPath("$.pinnedTweet").isEmpty())
+                .andExpect(jsonPath("$.bookmarks").isEmpty())
+                .andExpect(jsonPath("$.avatar.id").value(11L))
+                .andExpect(jsonPath("$.wallpaper.id").value(22L))
+                .andExpect(jsonPath("$.profileCustomized").value(PROFILE_CUSTOMIZED))
+                .andExpect(jsonPath("$.profileStarted").value(PROFILE_STARTED))
+                .andExpect(jsonPath("$.unreadMessages").isNotEmpty())
+                .andExpect(jsonPath("$.userMutedList").isEmpty())
+                .andExpect(jsonPath("$.userBlockedList").isEmpty())
+                .andExpect(jsonPath("$.subscribers").isEmpty())
+                .andExpect(jsonPath("$.followerRequests").isEmpty())
+                .andExpect(jsonPath("$.followers").isNotEmpty())
+                .andExpect(jsonPath("$.following").isNotEmpty());
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] GET /api/v1/chat/participant/4/11 - Chat not created")
+    public void getParticipant_ChatNotFound() throws Exception {
+        mockMvc.perform(get(URL_CHAT_BASIC + "/participant/4/11"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("Chat not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] GET /api/v1/chat/participant/5/8 - Participant Not Found in chat")
+    public void getParticipant_ParticipantNotFound() throws Exception {
+        mockMvc.perform(get(URL_CHAT_BASIC + "/participant/5/8"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("Participant not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
     @DisplayName("[200] GET /api/v1/chat/leave/3/8 - Leave from conversation")
     public void leaveFromConversation() throws Exception {
         mockMvc.perform(get(URL_CHAT_BASIC + "/leave/3/8"))

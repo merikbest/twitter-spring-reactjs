@@ -17,7 +17,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findByActiveTrueAndIdNot(Long id);
 
-    @Query("SELECT u FROM User u WHERE u.email = :email")
+    @Query("SELECT user FROM User user WHERE user.email = :email")
     Optional<UserPrincipalProjection> findUserPrincipalByEmail(String email);
 
     Optional<User> findByEmail(String email);
@@ -40,21 +40,21 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "AND (user.privateProfile = false OR follower.id = :authUserId)")
     Optional<User> getValidUser(Long userId, Long authUserId);
 
-    @Query("SELECT CASE WHEN count(u) > 0 THEN true ELSE false END FROM User u WHERE u.id = :userId")
+    @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user WHERE user.id = :userId")
     boolean isUserExist(Long userId);
 
-    @Query("SELECT CASE WHEN count(b) > 0 THEN true ELSE false END FROM User u " +
-            "LEFT JOIN u.userBlockedList b " +
-            "WHERE u.id = :userId " +
-            "AND b.id = :blockedUserId")
+    @Query("SELECT CASE WHEN count(blockedUser) > 0 THEN true ELSE false END FROM User user " +
+            "LEFT JOIN user.userBlockedList blockedUser " +
+            "WHERE user.id = :userId " +
+            "AND blockedUser.id = :blockedUserId")
     boolean isUserBlocked(Long userId, Long blockedUserId);
 
-    @Query("SELECT u.followers from User u WHERE u.id = :userId")
+    @Query("SELECT user.followers from User user WHERE user.id = :userId")
     List<User> getFollowersById(Long userId);
 
-    @Query("SELECT u.following from User u WHERE u.id = :userId")
+    @Query("SELECT user.following from User user WHERE user.id = :userId")
     List<User> getFollowingById(Long userId);
 
-    @Query("SELECT u FROM User u WHERE u.id = :userId")
+    @Query("SELECT user FROM User user WHERE user.id = :userId")
     Optional<UserSubscribersProjection> findUserSubscribersById(Long userId);
 }

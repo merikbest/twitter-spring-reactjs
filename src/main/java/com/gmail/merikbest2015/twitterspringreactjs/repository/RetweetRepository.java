@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface RetweetRepository extends JpaRepository<Retweet, Long> {
 
-    @Query(value = "SELECT * FROM retweets WHERE users_id = ?1 ORDER BY retweets.retweet_date DESC", nativeQuery = true)
+    @Query("SELECT retweet FROM Retweet retweet WHERE retweet.user.id = :userId ORDER BY retweet.retweetDate DESC")
     List<Retweet> findRetweetsByUserId(Long userId);
 }

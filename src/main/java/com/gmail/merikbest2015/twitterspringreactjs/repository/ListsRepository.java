@@ -13,7 +13,15 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
 
     List<Lists> findByIsPrivateFalse();
 
+    List<Lists> findByListOwner_Id(Long id);
+
     Optional<Lists> findByIdAndIsPrivateFalse(Long id);
+
+    @Query("SELECT lists FROM Lists lists " +
+            "WHERE lists.listOwner.id = :userId " +
+            "AND lists.pinnedDate IS NOT NULL " +
+            "ORDER BY lists.pinnedDate DESC")
+    List<Lists> getUserPinnedLists(Long userId);
 
     @Query("SELECT lists FROM Lists lists " +
             "LEFT JOIN lists.followers listsFollower " +

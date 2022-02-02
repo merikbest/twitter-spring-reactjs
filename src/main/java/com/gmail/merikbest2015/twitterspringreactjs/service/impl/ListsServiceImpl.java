@@ -36,23 +36,20 @@ public class ListsServiceImpl implements ListsService {
 
     @Override
     public List<Lists> getUserTweetLists() {
-        User user = authenticationService.getAuthenticatedUser();
-        return user.getUserLists();
+        Long userId = authenticationService.getAuthenticatedUserId();
+        return listsRepository.findByListOwner_Id(userId);
     }
 
     @Override
     public List<Lists> getUserPinnedLists() {
-        User user = authenticationService.getAuthenticatedUser();
-        return user.getUserLists().stream()
-                .filter(list -> list.getPinnedDate() != null)
-                .sorted(Comparator.comparing(Lists::getPinnedDate).reversed())
-                .collect(Collectors.toList());
+        Long userId = authenticationService.getAuthenticatedUserId();
+        return listsRepository.getUserPinnedLists(userId);
     }
 
     @Override
     public Lists getListById(Long listId) {
-        User user = authenticationService.getAuthenticatedUser();
-        Lists list = listsRepository.getListById(listId, user.getId())
+        Long userId = authenticationService.getAuthenticatedUserId();
+        Lists list = listsRepository.getListById(listId, userId)
                 .orElseThrow(() -> new ApiRequestException("List not found", HttpStatus.NOT_FOUND));
         list.setTweets(mergeTweets(list));
         return list;
@@ -79,8 +76,8 @@ public class ListsServiceImpl implements ListsService {
 
     @Override
     public List<Lists> getTweetListsWhichUserIn() { // TODO add tests
-        User user = authenticationService.getAuthenticatedUser();
-        return listsRepository.findByMembers_Id(user.getId());
+        Long userId = authenticationService.getAuthenticatedUserId();
+        return listsRepository.findByMembers_Id(userId);
     }
 
     @Override
@@ -90,9 +87,9 @@ public class ListsServiceImpl implements ListsService {
         }
         Lists listFromDb = listsRepository.findById(listInfo.getId())
                 .orElseThrow(() -> new ApiRequestException("List not found", HttpStatus.NOT_FOUND));
-        User user = authenticationService.getAuthenticatedUser();
+        Long userId = authenticationService.getAuthenticatedUserId();
 
-        if (!listFromDb.getListOwner().getId().equals(user.getId())) {
+        if (!listFromDb.getListOwner().getId().equals(userId)) {
             throw new ApiRequestException("List owner not found", HttpStatus.NOT_FOUND);
         }
         listFromDb.setName(listInfo.getName());
@@ -106,11 +103,11 @@ public class ListsServiceImpl implements ListsService {
 
     @Override
     public String deleteList(Long listId) {  // TODO add tests
-        User user = authenticationService.getAuthenticatedUser();
+        Long userId = authenticationService.getAuthenticatedUserId();
         Lists list = listsRepository.findById(listId)
                 .orElseThrow(() -> new ApiRequestException("List not found", HttpStatus.NOT_FOUND));
 
-        if (!list.getListOwner().getId().equals(user.getId())) {
+        if (!list.getListOwner().getId().equals(userId)) {
             throw new ApiRequestException("List owner not found", HttpStatus.BAD_REQUEST);
         }
         list.getTweets().removeAll(list.getTweets());
@@ -120,7 +117,7 @@ public class ListsServiceImpl implements ListsService {
         if (list.getWallpaper() != null) {
             imageRepository.delete(list.getWallpaper());
         }
-        user.getUserLists().remove(list);
+        listsRepository.findByListOwner_Id(userId).remove(list);
         listsRepository.delete(list);
         return "List id:" + list.getId() + " deleted.";
     }
@@ -152,9 +149,9 @@ public class ListsServiceImpl implements ListsService {
 
     @Override
     public Lists pinList(Long listId) {
-        User user = authenticationService.getAuthenticatedUser();
-        List<Lists> userLists = user.getUserLists();
-        Optional<Lists> list = user.getUserLists().stream()
+        Long userId = authenticationService.getAuthenticatedUserId();
+        List<Lists> userLists = listsRepository.findByListOwner_Id(userId);
+        Optional<Lists> list = userLists.stream()
                 .filter(userList -> userList.getId().equals(listId))
                 .findFirst();
 
@@ -172,12 +169,12 @@ public class ListsServiceImpl implements ListsService {
 
     @Override
     public List<Lists> addUserToLists(Long userId, List<Lists> lists) {
-        User authUser = authenticationService.getAuthenticatedUser();
-        checkUserIsBlocked(userId, authUser);
-        User user = userRepository.getValidUser(userId, authUser.getId())
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        checkUserIsBlocked(authUserId, userId);
+        User user = userRepository.getValidUser(userId, authUserId)
                 .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
-        checkUserIsBlocked(authUser.getId(), user);
-        List<Lists> userLists = authUser.getUserLists();
+        checkUserIsBlocked(user.getId(), authUserId);
+        List<Lists> userLists = listsRepository.findByListOwner_Id(authUserId);
         Set<Lists> commonLists = userLists.stream()
                 .distinct()
                 .filter(lists::contains)
@@ -209,11 +206,11 @@ public class ListsServiceImpl implements ListsService {
 
     @Override
     public Lists addUserToList(Long userId, Long listId) {
-        User authUser = authenticationService.getAuthenticatedUser();
-        checkUserIsBlocked(userId, authUser);
-        User user = userRepository.getValidUser(userId, authUser.getId())
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        checkUserIsBlocked(authUserId, userId);
+        User user = userRepository.getValidUser(userId, authUserId)
                 .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
-        checkUserIsBlocked(authUser.getId(), user);
+        checkUserIsBlocked(user.getId(), authUserId);
         Lists list = listsRepository.findById(listId)
                 .orElseThrow(() -> new ApiRequestException("List not found", HttpStatus.NOT_FOUND));
         Optional<User> listMember = list.getMembers().stream()
@@ -230,12 +227,11 @@ public class ListsServiceImpl implements ListsService {
         return list;
     }
 
-    private void checkUserIsBlocked(Long userId, User user) {
-        boolean isPresent = user.getUserBlockedList().stream()
-                .anyMatch(blockedUser -> blockedUser.getId().equals(userId));
+    private void checkUserIsBlocked(Long userId, Long supposedBlockedUserId) {
+        boolean isPresent = userRepository.isUserBlocked(userId, supposedBlockedUserId);
 
         if (isPresent) {
-            throw new ApiRequestException("User with ID:" + userId +" is blocked", HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException("User with ID:" + supposedBlockedUserId +" is blocked", HttpStatus.BAD_REQUEST);
         }
     }
 

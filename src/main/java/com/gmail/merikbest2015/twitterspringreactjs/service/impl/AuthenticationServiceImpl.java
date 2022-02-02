@@ -144,7 +144,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public String findEmail(String email) {
-        User user = userRepository.findByEmail(email)
+        userRepository.findUserPrincipalByEmail(email)
                 .orElseThrow(() -> new ApiRequestException("Email not found", HttpStatus.NOT_FOUND));
         return "Reset password code is send to your E-mail";
     }

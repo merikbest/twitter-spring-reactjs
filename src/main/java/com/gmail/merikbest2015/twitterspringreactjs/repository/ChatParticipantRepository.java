@@ -12,6 +12,9 @@ public interface ChatParticipantRepository extends JpaRepository<ChatParticipant
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE chats_participants SET left_chat = true WHERE id = ?1 AND chat_id = ?2", nativeQuery = true)
+    @Query("UPDATE ChatParticipant chatParticipant " +
+            "SET chatParticipant.leftChat = true " +
+            "WHERE chatParticipant.id = :participantId " +
+            "AND chatParticipant.chat.id = :chatId")
     int leaveFromConversation(Long participantId, Long chatId);
 }

@@ -77,7 +77,7 @@ public class ChatMapper {
         return chatService.leaveFromConversation(participantId, chatId);
     }
 
-    public UserResponse getParticipant(Long participantUserId) {
-        return userMapper.convertToUserResponse(chatService.getParticipant(participantUserId));
+    public UserResponse getParticipant(Long participantId, Long chatId) {
+        return userMapper.convertToUserResponse(chatService.getParticipant(participantId, chatId));
     }
 }
