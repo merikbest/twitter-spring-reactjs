@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TweetRepository extends JpaRepository<Tweet, Long> {
@@ -72,4 +73,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "AND tweet.scheduledDate IS NULL " +
             "ORDER BY tweet.dateTime DESC")
     List<Tweet> findRepliesByUserId(Long userId);
+
+    @Query("SELECT user.pinnedTweet FROM User user WHERE user.id = :userId")
+    Optional<Tweet> getPinnedTweetByUserId(Long userId);
 }

@@ -5,7 +5,6 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.*;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.UserSubscribersProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -49,8 +48,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUsers() {
-        User user = authenticationService.getAuthenticatedUser();
-        return userRepository.findByActiveTrueAndIdNot(user.getId());
+        Long userId = authenticationService.getAuthenticatedUserId();
+        return userRepository.findByActiveTrueAndIdNot(userId);
     }
 
     @Override
@@ -72,24 +71,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<Tweet> getUserTweets(Long userId, Pageable pageable) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
-        List<Tweet> tweets = tweetRepository.findTweetsByUserId(user.getId());
-        List<Retweet> retweets = retweetRepository.findRetweetsByUserId(user.getId());
+        checkIsUserExist(userId);
+        List<Tweet> tweets = tweetRepository.findTweetsByUserId(userId);
+        List<Retweet> retweets = retweetRepository.findRetweetsByUserId(userId);
         List<Tweet> userTweets = combineTweetsArrays(tweets, retweets);
-        boolean isTweetExist = userTweets.removeIf(tweet -> tweet.equals(user.getPinnedTweet()));
-        if (isTweetExist) {
-            userTweets.add(0, user.getPinnedTweet());
+        Optional<Tweet> pinnedTweet = tweetRepository.getPinnedTweetByUserId(userId);
+
+        if (pinnedTweet.isPresent()) {
+            boolean isTweetExist = userTweets.removeIf(tweet -> tweet.getId().equals(pinnedTweet.get().getId()));
+
+            if (isTweetExist) {
+                userTweets.add(0, pinnedTweet.get());
+            }
         }
         return getPageableTweetList(pageable, userTweets, tweets.size() + retweets.size());
     }
 
     @Override
     public Page<Tweet> getUserRetweetsAndReplies(Long userId, Pageable pageable) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
-        List<Tweet> replies = tweetRepository.findRepliesByUserId(user.getId());
-        List<Retweet> retweets = retweetRepository.findRetweetsByUserId(user.getId());
+        checkIsUserExist(userId);
+        List<Tweet> replies = tweetRepository.findRepliesByUserId(userId);
+        List<Retweet> retweets = retweetRepository.findRetweetsByUserId(userId);
         List<Tweet> userTweets = combineTweetsArrays(replies, retweets);
         return getPageableTweetList(pageable, userTweets, replies.size() + retweets.size());
     }
@@ -157,16 +159,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<LikeTweet> getUserLikedTweets(Long userId, Pageable pageable) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
-        return likeTweetRepository.findByUserId(user.getId(), pageable);
+        checkIsUserExist(userId);
+        return likeTweetRepository.findByUserId(userId, pageable);
     }
 
     @Override
     public Page<Tweet> getUserMediaTweets(Long userId, Pageable pageable) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
-        return tweetRepository.findAllUserMediaTweets(user.getId(), pageable);
+        checkIsUserExist(userId);
+        return tweetRepository.findAllUserMediaTweets(userId, pageable);
     }
 
     @Override
@@ -343,8 +343,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getBlockList() {
-        User user = authenticationService.getAuthenticatedUser();
-        return user.getUserBlockedList();
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return userRepository.getUserBlockListById(authUserId);
     }
 
     @Override
@@ -361,8 +361,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getMutedList() {
-        User user = authenticationService.getAuthenticatedUser();
-        return user.getUserMutedList();
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return userRepository.getUserMutedListById(authUserId);
     }
 
     @Override

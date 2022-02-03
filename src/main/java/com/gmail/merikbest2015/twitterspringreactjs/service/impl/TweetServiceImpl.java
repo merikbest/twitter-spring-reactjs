@@ -76,8 +76,8 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public List<Tweet> getScheduledTweets() {
-        User user = authenticationService.getAuthenticatedUser();
-        return tweetRepository.findAllScheduledTweetsByUserId(user.getId());
+        Long userId = authenticationService.getAuthenticatedUserId();
+        return tweetRepository.findAllScheduledTweetsByUserId(userId);
     }
 
     @Override

@@ -55,6 +55,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT user.following from User user WHERE user.id = :userId")
     List<User> getFollowingById(Long userId);
 
+    @Query("SELECT user.userBlockedList from User user WHERE user.id = :userId")
+    List<User> getUserBlockListById(Long userId);
+
+    @Query("SELECT user.userMutedList from User user WHERE user.id = :userId")
+    List<User> getUserMutedListById(Long userId);
+
     @Query("SELECT user FROM User user WHERE user.id = :userId")
     Optional<UserSubscribersProjection> findUserSubscribersById(Long userId);
 }
