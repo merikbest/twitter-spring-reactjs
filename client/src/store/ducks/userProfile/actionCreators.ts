@@ -1,11 +1,13 @@
 import {User} from "../user/contracts/state";
 import {
+    FetchChatParticipantActionInterface,
     FetchUserProfileActionInterface,
     FollowProfileActionInterface,
     FollowUserProfileActionInterface,
     ProcessFollowRequestActionInterface,
     ProcessSubscribeActionInterface,
     ResetUserProfileActionInterface,
+    ResetUserProfileStateActionInterface,
     SetUserProfileActionInterface,
     SetUserProfileLoadingStatusActionInterface,
     UnfollowProfileActionInterface,
@@ -27,6 +29,11 @@ export const updatedUserData = (payload: User): UpdateUserDataActionInterface =>
 
 export const fetchUserProfile = (payload: string): FetchUserProfileActionInterface => ({
     type: UserProfileActionsType.FETCH_USER,
+    payload
+});
+
+export const fetchChatParticipant = (payload: { participantId: number, chatId: number }): FetchChatParticipantActionInterface => ({
+    type: UserProfileActionsType.FETCH_CHAT_PARTICIPANT,
     payload
 });
 
@@ -62,6 +69,10 @@ export const processSubscribe = (payload: number): ProcessSubscribeActionInterfa
 export const processFollowRequest = (payload: number): ProcessFollowRequestActionInterface => ({
     type: UserProfileActionsType.PROCESS_FOLLOW_REQUEST,
     payload,
+});
+
+export const resetUserProfileStateAction = (): ResetUserProfileStateActionInterface => ({
+    type: UserProfileActionsType.RESET_USER_PROFILE_STATE
 });
 
 export const setUserProfileLoadingState = (payload: UserProfileState["loadingState"]): SetUserProfileLoadingStatusActionInterface => ({

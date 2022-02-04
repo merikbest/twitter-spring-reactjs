@@ -5,14 +5,16 @@ import {LoadingStatus} from "../../../types";
 export enum UserProfileActionsType {
     SET_USER = 'userProfile/SET_USER',
     UPDATE_USER_DATA = "userProfile/UPDATE_USER_DATA",
-    FETCH_USER  = 'userProfile/FETCH_USER',
-    RESET_USER  = 'userProfile/RESET_USER',
-    FOLLOW  = 'userProfile/FOLLOW',
-    UNFOLLOW  = 'userProfile/UNFOLLOW',
-    FOLLOW_USER  = 'userProfile/FOLLOW_USER',
-    UNFOLLOW_USER  = 'userProfile/UNFOLLOW_USER',
+    FETCH_USER = 'userProfile/FETCH_USER',
+    FETCH_CHAT_PARTICIPANT = 'userProfile/FETCH_CHAT_PARTICIPANT',
+    RESET_USER = 'userProfile/RESET_USER',
+    FOLLOW = 'userProfile/FOLLOW',
+    UNFOLLOW = 'userProfile/UNFOLLOW',
+    FOLLOW_USER = 'userProfile/FOLLOW_USER',
+    UNFOLLOW_USER = 'userProfile/UNFOLLOW_USER',
     PROCESS_SUBSCRIBE = 'userProfile/PROCESS_SUBSCRIBE',
-    PROCESS_FOLLOW_REQUEST  = 'user/PROCESS_FOLLOW_REQUEST',
+    PROCESS_FOLLOW_REQUEST = 'userProfile/PROCESS_FOLLOW_REQUEST',
+    RESET_USER_PROFILE_STATE = "userProfile/RESET_USER_PROFILE_STATE",
     SET_USER_LOADING_STATE = 'userProfile/SET_USER_LOADING_STATE',
 }
 
@@ -29,6 +31,11 @@ export interface UpdateUserDataActionInterface extends Action<UserProfileActions
 export interface FetchUserProfileActionInterface extends Action<UserProfileActionsType> {
     type: UserProfileActionsType.FETCH_USER;
     payload: string;
+}
+
+export interface FetchChatParticipantActionInterface extends Action<UserProfileActionsType> {
+    type: UserProfileActionsType.FETCH_CHAT_PARTICIPANT;
+    payload: { participantId: number, chatId: number };
 }
 
 export interface ResetUserProfileActionInterface extends Action<UserProfileActionsType> {
@@ -65,6 +72,10 @@ export interface ProcessFollowRequestActionInterface extends Action<UserProfileA
     payload: number;
 }
 
+export interface ResetUserProfileStateActionInterface extends Action<UserProfileActionsType> {
+    type: UserProfileActionsType.RESET_USER_PROFILE_STATE;
+}
+
 export interface SetUserProfileLoadingStatusActionInterface extends Action<UserProfileActionsType> {
     type: UserProfileActionsType.SET_USER_LOADING_STATE;
     payload: LoadingStatus;
@@ -75,4 +86,5 @@ export type UserProfileActions =
     | ResetUserProfileActionInterface
     | FollowProfileActionInterface
     | UnfollowProfileActionInterface
+    | ResetUserProfileStateActionInterface
     | SetUserProfileLoadingStatusActionInterface;

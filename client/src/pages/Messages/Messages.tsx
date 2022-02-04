@@ -325,11 +325,7 @@ const Messages: FC = (): ReactElement => {
                     </Paper>
                 </Route>
                 <Route exact path="/messages/:id/info">
-                    <ConversationInfo
-                        participantId={participant?.id}
-                        chatId={chat?.id}
-                        chatParticipant={participant?.user}
-                    />
+                    <ConversationInfo participantId={participant?.id} chatId={chat?.id}/>
                 </Route>
                 <Route exact path="/messages">
                     {(participant?.user.id === undefined) ? (

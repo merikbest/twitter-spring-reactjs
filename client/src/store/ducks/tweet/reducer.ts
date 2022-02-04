@@ -6,7 +6,7 @@ import {LoadingStatus} from '../../types';
 
 const initialTweetState: TweetState = {
     data: undefined,
-    loadingState: LoadingStatus.NEVER
+    loadingState: LoadingStatus.LOADING
 };
 
 export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetActions) => {

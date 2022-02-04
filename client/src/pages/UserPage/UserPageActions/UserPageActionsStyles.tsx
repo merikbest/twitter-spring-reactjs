@@ -41,17 +41,4 @@ export const useUserPageActionsStyles = makeStyles((theme: Theme) => ({
         color: theme.palette.text.primary,
         textDecoration: "none",
     },
-    messageButton: {
-        marginTop: 84,
-        marginRight: 9,
-        fontSize: 15,
-        fontWeight: 700,
-        border: '1px solid',
-        borderRadius: '50%',
-        padding: 8,
-        "& svg": {
-            color: theme.palette.primary.main,
-            height: "1.6em",
-        },
-    },
 }));

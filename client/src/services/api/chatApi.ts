@@ -39,6 +39,10 @@ export const ChatApi = {
         const {data} = await axios.post<Response<ChatMessage[]>>(`${API_URL}/chat/add/message/tweet`, chatMessage);
         return data;
     },
+    async getParticipant(payload: { participantId: number, chatId: number }): Promise<Response<User>> {
+        const {data} = await axios.get<Response<User>>(`${API_URL}/chat/participant/${payload.participantId}/${payload.chatId}`);
+        return data;
+    },
     async leaveFromConversation(payload: { participantId: number, chatId: number }): Promise<Response<User>> {
         const {data} = await axios.get<Response<User>>(`${API_URL}/chat/leave/${payload.participantId}/${payload.chatId}`);
         return data;

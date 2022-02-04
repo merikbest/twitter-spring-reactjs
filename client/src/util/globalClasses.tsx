@@ -143,4 +143,16 @@ export const useGlobalStyles = makeStyles((theme: Theme) => ({
         width: 336,
         textAlign: "center",
     },
+    userPageIconButton: {
+        marginTop: 84,
+        marginRight: 9,
+        border: '1px solid',
+        borderRadius: '50%',
+        padding: 8,
+        "& svg": {
+            color: theme.palette.primary.main,
+            height: 23,
+            width: 23,
+        },
+    },
 }));

@@ -2,6 +2,7 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 
 import {LoadingStatus} from '../../types';
 import {
+    FetchChatParticipantActionInterface,
     FetchUserProfileActionInterface,
     FollowUserProfileActionInterface,
     ProcessFollowRequestActionInterface,
@@ -15,6 +16,7 @@ import {UserApi} from "../../../services/api/userApi";
 import {setUserProfile, setUserProfileLoadingState} from "./actionCreators";
 import {setUserLoadingStatus} from "../user/actionCreators";
 import {setUpdatedUsers} from "../users/actionCreators";
+import {ChatApi} from "../../../services/api/chatApi";
 
 export function* updateUserDataRequest({payload}: UpdateUserDataActionInterface) {
     try {
@@ -74,6 +76,16 @@ export function* processFollowRequest({payload}: ProcessFollowRequestActionInter
     }
 }
 
+export function* fetchChatParticipant({payload}: FetchChatParticipantActionInterface) {
+    try {
+        yield put(setUserProfileLoadingState(LoadingStatus.LOADING));
+        const item: User = yield call(ChatApi.getParticipant, payload);
+        yield put(setUserProfile(item));
+    } catch (error) {
+        yield put(setUserProfileLoadingState(LoadingStatus.ERROR));
+    }
+}
+
 export function* userProfileSaga() {
     yield takeLatest(UserProfileActionsType.UPDATE_USER_DATA, updateUserDataRequest);
     yield takeLatest(UserProfileActionsType.FETCH_USER, fetchUserRequest);
@@ -81,4 +93,5 @@ export function* userProfileSaga() {
     yield takeLatest(UserProfileActionsType.UNFOLLOW_USER, unfollowUseRequest);
     yield takeLatest(UserProfileActionsType.PROCESS_SUBSCRIBE, processSubscribeRequest);
     yield takeLatest(UserProfileActionsType.PROCESS_FOLLOW_REQUEST, processFollowRequest);
+    yield takeLatest(UserProfileActionsType.FETCH_CHAT_PARTICIPANT, fetchChatParticipant);
 }

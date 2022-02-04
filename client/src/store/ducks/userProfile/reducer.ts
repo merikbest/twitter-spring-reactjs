@@ -5,7 +5,7 @@ import {UserProfileActions, UserProfileActionsType} from "./contracts/actionType
 
 const initialUsersState: UserProfileState = {
     user: undefined,
-    loadingState: LoadingStatus.NEVER,
+    loadingState: LoadingStatus.LOADING,
 };
 
 export const userProfileReducer = produce((draft: Draft<UserProfileState>, action: UserProfileActions) => {
@@ -35,6 +35,11 @@ export const userProfileReducer = produce((draft: Draft<UserProfileState>, actio
                     ...draft?.user?.following?.slice(unfollowUserIndex + 1)];
             }
             draft.loadingState = LoadingStatus.SUCCESS;
+            break;
+
+        case UserProfileActionsType.RESET_USER_PROFILE_STATE:
+            draft.user = undefined;
+            draft.loadingState = LoadingStatus.LOADING;
             break;
 
         case UserProfileActionsType.SET_USER_LOADING_STATE:

@@ -387,7 +387,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                             {!isUserBlocked && (
                                                 !userProfile?.mutedDirectMessages || isFollower ? (
                                                     <IconButton
-                                                        className={classes.messageButton}
+                                                        className={globalClasses.userPageIconButton}
                                                         onClick={handleClickAddUserToChat}
                                                         onMouseEnter={() => handleHoverAction?.(HoverActions.MESSAGE)}
                                                         onMouseLeave={handleLeaveAction}
@@ -420,7 +420,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                                             onClick={handleSubscribeToNotifications}
                                                             onMouseEnter={() => handleHoverAction?.(HoverActions.OTHER)}
                                                             onMouseLeave={handleLeaveAction}
-                                                            className={classes.messageButton}
+                                                            className={globalClasses.userPageIconButton}
                                                             color="primary"
                                                         >
                                                             {isSubscriber ? NotificationsAddFilledIcon : NotificationsAddIcon}

@@ -25,6 +25,7 @@ import ActionSnackbar from "../../../components/ActionSnackbar/ActionSnackbar";
 import {SnackbarProps, withSnackbar} from "../../../hoc/withSnackbar";
 import HoverAction from "../../../components/HoverAction/HoverAction";
 import {HoverActions} from "../../../hoc/withHoverAction";
+import {useGlobalStyles} from "../../../util/globalClasses";
 
 interface UserPageActionsProps {
     user: User;
@@ -52,6 +53,7 @@ const UserPageActions: FC<UserPageActionsProps & SnackbarProps> = (
         onCloseSnackBar
     }
 ): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useUserPageActionsStyles();
     const location = useLocation();
 
@@ -91,7 +93,7 @@ const UserPageActions: FC<UserPageActionsProps & SnackbarProps> = (
                     onClick={handleClick}
                     onMouseEnter={() => handleHoverAction?.(HoverActions.MORE)}
                     onMouseLeave={handleLeaveAction}
-                    className={classes.messageButton}
+                    className={globalClasses.userPageIconButton}
                     color="primary"
                 >
                     {EditIcon}
