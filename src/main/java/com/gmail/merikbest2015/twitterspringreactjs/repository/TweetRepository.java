@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.repository;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,6 +14,24 @@ import java.util.Optional;
 
 @Repository
 public interface TweetRepository extends JpaRepository<Tweet, Long> {
+
+    @Query("SELECT new com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetProjection(" +
+            "t.id, t.text, t.dateTime, t.scheduledDate, t.addressedUsername, t.addressedId, t.addressedTweetId, t.replyType, " +
+            "t.link ,t.linkTitle, t.linkDescription, t.linkCover, t.linkCoverSize, t.user.id, t.user.email, " +
+            "t.user.fullName, t.user.username, t.user.avatar.id, t.user.avatar.src, i.id, i.src, " +
+            "qt.id, qt.text, qt.dateTime, qt.link, qt.linkTitle, qt.linkDescription, qt.linkCover, qt.linkCoverSize, " +
+            "uqt.id, uqt.email, uqt.fullName, uqt.username, uqta.id, uqta.src, " +
+            "tp.id, tp.dateTime, tpc.id, tpc.choice, tpcu.id) " +
+            "FROM Tweet t " +
+            "LEFT JOIN t.images i " +
+            "LEFT JOIN t.quoteTweet qt " +
+            "LEFT JOIN qt.user uqt " +
+            "LEFT JOIN uqt.avatar uqta " +
+            "LEFT JOIN t.poll tp " +
+            "LEFT JOIN tp.pollChoices tpc " +
+            "LEFT JOIN tpc.votedUser tpcu " +
+            "WHERE t.id = :tweetId")
+    Optional<TweetProjection> findTweetById(Long tweetId);
 
     @Query("SELECT tweet FROM Tweet tweet " +
             "WHERE tweet.addressedUsername IS NULL " +
