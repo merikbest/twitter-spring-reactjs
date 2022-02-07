@@ -15,12 +15,12 @@ export enum UserActionsType {
     SIGN_OUT = 'user/SIGN_OUT',
     FOLLOW_USER = 'user/FOLLOW_USER',
     UNFOLLOW_USER = 'user/UNFOLLOW_USER',
-    FOLLOW  = 'user/FOLLOW',
-    UNFOLLOW  = 'user/UNFOLLOW',
-    ACCEPT_FOLLOW_REQUEST  = 'user/ACCEPT_FOLLOW_REQUEST',
-    DECLINE_FOLLOW_REQUEST  = 'user/DECLINE_FOLLOW_REQUEST',
-    FETCH_PIN_TWEET  = 'user/FETCH_PIN_TWEET',
-    ADD_TWEET_TO_BOOKMARKS  = 'user/ADD_TWEET_TO_BOOKMARKS',
+    FOLLOW = 'user/FOLLOW',
+    UNFOLLOW = 'user/UNFOLLOW',
+    ACCEPT_FOLLOW_REQUEST = 'user/ACCEPT_FOLLOW_REQUEST',
+    DECLINE_FOLLOW_REQUEST = 'user/DECLINE_FOLLOW_REQUEST',
+    FETCH_PIN_TWEET = 'user/FETCH_PIN_TWEET',
+    ADD_TWEET_TO_BOOKMARKS = 'user/ADD_TWEET_TO_BOOKMARKS',
     START_USE_TWITTER = 'user/START_USE_TWITTER',
     FETCH_READ_MESSAGES = 'user/FETCH_READ_MESSAGES',
     SET_UNREAD_MESSAGE = 'user/SET_UNREAD_MESSAGE',
@@ -37,6 +37,16 @@ export enum UserActionsType {
     UPDATE_PRIVATE_PROFILE = 'user/UPDATE_PRIVATE_PROFILE',
     UPDATE_COLOR_SCHEME = 'user/UPDATE_COLOR_SCHEME',
     UPDATE_BACKGROUND_COLOR = 'user/UPDATE_BACKGROUND_COLOR',
+    SET_USERNAME = 'user/SET_USERNAME',
+    SET_EMAIL = 'user/SET_EMAIL',
+    SET_PHONE = 'user/SET_PHONE',
+    SET_COUNTRY = 'user/SET_COUNTRY',
+    SET_GENDER = 'user/SET_GENDER',
+    SET_LANGUAGE = 'user/SET_LANGUAGE',
+    SET_DIRECT = 'user/SET_DIRECT',
+    SET_PRIVATE_PROFILE = 'user/SET_PRIVATE_PROFILE',
+    SET_COLOR_SCHEME = 'user/SET_COLOR_SCHEME',
+    SET_BACKGROUND_COLOR = 'user/SET_BACKGROUND_COLOR',
 }
 
 export interface SignOutActionInterface extends Action<UserActionsType> {
@@ -186,6 +196,56 @@ export interface UpdateBackgroundColorActionInterface extends Action<UserActions
     payload: Settings;
 }
 
+export interface SetUsernameActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.SET_USERNAME;
+    payload: string;
+}
+
+export interface SetEmailActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.SET_EMAIL;
+    payload: string;
+}
+
+export interface SetPhoneActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.SET_PHONE;
+    payload: { countryCode: string; phone: number };
+}
+
+export interface SetCountryActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.SET_COUNTRY;
+    payload: string;
+}
+
+export interface SetGenderActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.SET_GENDER;
+    payload: string;
+}
+
+export interface SetLanguageActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.SET_LANGUAGE;
+    payload: string;
+}
+
+export interface SetDirectActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.SET_DIRECT;
+    payload: boolean;
+}
+
+export interface SetPrivateProfileActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.SET_PRIVATE_PROFILE;
+    payload: boolean;
+}
+
+export interface SetColorSchemeActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.SET_COLOR_SCHEME;
+    payload: string;
+}
+
+export interface SetBackgroundColorActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.SET_BACKGROUND_COLOR;
+    payload: string;
+}
+
 export type UserActions =
     | SetUserDataActionInterface
     | SetUserLoadingStateActionInterface
@@ -195,4 +255,14 @@ export type UserActions =
     | FollowUserActionInterface
     | UnfollowUserActionInterface
     | FollowActionInterface
-    | UnfollowActionInterface;
+    | UnfollowActionInterface
+    | SetUsernameActionInterface
+    | SetEmailActionInterface
+    | SetPhoneActionInterface
+    | SetCountryActionInterface
+    | SetGenderActionInterface
+    | SetLanguageActionInterface
+    | SetDirectActionInterface
+    | SetPrivateProfileActionInterface
+    | SetColorSchemeActionInterface
+    | SetBackgroundColorActionInterface;

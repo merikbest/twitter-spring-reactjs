@@ -1,5 +1,17 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
-import {setUserData, setUserLoadingStatus} from "./actionCreators";
+import {
+    setBackgroundColor,
+    setColorScheme,
+    setCountry,
+    setDirect,
+    setGender,
+    setLanguage,
+    setPhone,
+    setPrivateProfile,
+    setUserData,
+    setUserLoadingStatus,
+    setUsername
+} from "./actionCreators";
 import {AuthUser, User} from "./contracts/state";
 import {
     AcceptFollowRequestActionInterface,
@@ -168,8 +180,8 @@ export function* addUserToMuteListRequest({payload}: AddUserToMuteListActionInte
 export function* updateUsernameRequest({payload}: UpdateUsernameActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: User = yield call(UserSettingsApi.updateUsername, payload);
-        yield put(setUserData(item));
+        const item: string = yield call(UserSettingsApi.updateUsername, payload);
+        yield put(setUsername(item));
         yield put(setUserLoadingStatus(LoadingStatus.SUCCESS));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
@@ -191,8 +203,8 @@ export function* updateEmailRequest({payload}: UpdateEmailActionInterface) {
 export function* updatePhoneRequest({payload}: UpdatePhoneActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: User = yield call(UserSettingsApi.updatePhone, payload);
-        yield put(setUserData(item));
+        const item: { countryCode: string; phone: number } = yield call(UserSettingsApi.updatePhone, payload);
+        yield put(setPhone({countryCode: item.countryCode, phone: item.phone}));
         yield put(setUserLoadingStatus(LoadingStatus.SUCCESS));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
@@ -202,8 +214,8 @@ export function* updatePhoneRequest({payload}: UpdatePhoneActionInterface) {
 export function* updateCountryRequest({payload}: UpdateCountryActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: User = yield call(UserSettingsApi.updateCountry, payload);
-        yield put(setUserData(item));
+        const item: string = yield call(UserSettingsApi.updateCountry, payload);
+        yield put(setCountry(item));
         yield put(setUserLoadingStatus(LoadingStatus.SUCCESS));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
@@ -213,8 +225,8 @@ export function* updateCountryRequest({payload}: UpdateCountryActionInterface) {
 export function* updateGenderRequest({payload}: UpdateGenderActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: User = yield call(UserSettingsApi.updateGender, payload);
-        yield put(setUserData(item));
+        const item: string = yield call(UserSettingsApi.updateGender, payload);
+        yield put(setGender(item));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -223,8 +235,8 @@ export function* updateGenderRequest({payload}: UpdateGenderActionInterface) {
 export function* updateLanguageRequest({payload}: UpdateLanguageActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: User = yield call(UserSettingsApi.updateLanguage, payload);
-        yield put(setUserData(item));
+        const item: string = yield call(UserSettingsApi.updateLanguage, payload);
+        yield put(setLanguage(item));
         yield put(setUserLoadingStatus(LoadingStatus.SUCCESS));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
@@ -234,8 +246,8 @@ export function* updateLanguageRequest({payload}: UpdateLanguageActionInterface)
 export function* updateDirectRequest({payload}: UpdateDirectActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: User = yield call(UserSettingsApi.updateDirectMessageRequests, payload);
-        yield put(setUserData(item));
+        const item: boolean = yield call(UserSettingsApi.updateDirectMessageRequests, payload);
+        yield put(setDirect(item));
         yield put(setUserLoadingStatus(LoadingStatus.SUCCESS));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
@@ -245,8 +257,8 @@ export function* updateDirectRequest({payload}: UpdateDirectActionInterface) {
 export function* updatePrivateProfileRequest({payload}: UpdatePrivateProfileActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: User = yield call(UserSettingsApi.updatePrivateProfile, payload);
-        yield put(setUserData(item));
+        const item: boolean = yield call(UserSettingsApi.updatePrivateProfile, payload);
+        yield put(setPrivateProfile(item));
         yield put(setUserLoadingStatus(LoadingStatus.SUCCESS));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
@@ -256,8 +268,8 @@ export function* updatePrivateProfileRequest({payload}: UpdatePrivateProfileActi
 export function* updateColorSchemeRequest({payload}: UpdateColorSchemeActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: User = yield call(UserSettingsApi.updateColorScheme, payload);
-        yield put(setUserData(item));
+        const item: string = yield call(UserSettingsApi.updateColorScheme, payload);
+        yield put(setColorScheme(item));
         yield put(setUserLoadingStatus(LoadingStatus.SUCCESS));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
@@ -267,8 +279,8 @@ export function* updateColorSchemeRequest({payload}: UpdateColorSchemeActionInte
 export function* updateBackgroundColorRequest({payload}: UpdateBackgroundColorActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: User = yield call(UserSettingsApi.updateBackgroundColor, payload);
-        yield put(setUserData(item));
+        const item: string = yield call(UserSettingsApi.updateBackgroundColor, payload);
+        yield put(setBackgroundColor(item));
         yield put(setUserLoadingStatus(LoadingStatus.SUCCESS));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));

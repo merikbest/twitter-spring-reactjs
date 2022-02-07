@@ -5,11 +5,13 @@ import {
     DeleteTweetReplyActionInterface,
     FetchReplyTweetActionInterface,
     FetchTweetDataActionInterface,
+    FetchTweetProjectionDataActionInterface,
     TweetActionType
 } from "./contracts/actionTypes";
 import {Tweet} from '../tweets/contracts/state';
-import {setTweetData, setTweetLoadingState} from './actionCreators';
+import {setTweetData, setTweetLoadingState, setTweetProjectionData} from './actionCreators';
 import {LoadingStatus} from '../../types';
+import {TweetProjection} from "./contracts/state";
 
 export function* fetchTweetDataRequest({payload: tweetId}: FetchTweetDataActionInterface) {
     try {
@@ -37,8 +39,22 @@ export function* deleteTweetReplyRequest({payload}: DeleteTweetReplyActionInterf
     }
 }
 
+// Projection
+export function* fetchTweetProjectionData({payload: tweetId}: FetchTweetProjectionDataActionInterface) {
+    try {
+        yield put(setTweetLoadingState(LoadingStatus.LOADING));
+        const data: TweetProjection = yield call(TweetApi.fetchTweetProjectionData, tweetId);
+        yield put(setTweetProjectionData(data));
+    } catch (error) {
+        yield put(setTweetLoadingState(LoadingStatus.ERROR));
+    }
+}
+
 export function* tweetSaga() {
     yield takeEvery(TweetActionType.FETCH_TWEET_DATA, fetchTweetDataRequest);
     yield takeEvery(TweetActionType.FETCH_REPLY_TWEET, fetchReplyTweetRequest);
     yield takeEvery(TweetActionType.DELETE_TWEET_REPLY, deleteTweetReplyRequest);
+    // Projection
+    yield takeEvery(TweetActionType.FETCH_TWEET_PROJECTION_DATA, fetchTweetProjectionData);
+
 }

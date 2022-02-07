@@ -6,6 +6,7 @@ import {LoadingStatus} from '../../types';
 
 const initialTweetState: TweetState = {
     data: undefined,
+    dataProjection: undefined,
     loadingState: LoadingStatus.LOADING
 };
 
@@ -29,6 +30,17 @@ export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetActi
 
         case TweetActionType.SET_LOADING_STATE:
             draft.loadingState = action.payload;
+            break;
+
+        // Projection
+        case TweetActionType.SET_TWEET_PROJECTION_DATA:
+            draft.dataProjection = action.payload;
+            draft.loadingState = LoadingStatus.SUCCESS;
+            break;
+
+        case TweetActionType.FETCH_TWEET_PROJECTION_DATA:
+            draft.dataProjection = undefined;
+            draft.loadingState = LoadingStatus.LOADING;
             break;
 
         default:

@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.*;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.TweetService;
 import lombok.RequiredArgsConstructor;
@@ -53,9 +54,25 @@ public class TweetServiceImpl implements TweetService {
     @Value("${google.api.key}")
     private String googleApiKey;
 
+    public boolean isUserLikedTweet(Long tweetId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return tweetRepository.isUserLikedTweet(authUserId, tweetId);
+    }
+
+    public boolean isUserRetweetedTweet(Long tweetId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return tweetRepository.isUserRetweetedTweet(authUserId, tweetId);
+    }
+
     @Override
     public Page<Tweet> getTweets(Pageable pageable) {
         return tweetRepository.findAllTweets(pageable);
+    }
+
+    @Override
+    public TweetProjection getTweetByIdProjection(Long tweetId) {
+        return tweetRepository.findTweetById(tweetId)
+                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
     }
 
     @Override

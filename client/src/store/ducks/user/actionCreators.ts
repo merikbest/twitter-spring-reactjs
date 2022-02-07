@@ -12,10 +12,20 @@ import {
     FetchUserDataActionInterface,
     FollowActionInterface,
     FollowUserActionInterface,
+    SetBackgroundColorActionInterface,
+    SetColorSchemeActionInterface,
+    SetCountryActionInterface,
+    SetDirectActionInterface,
+    SetEmailActionInterface,
+    SetGenderActionInterface,
+    SetLanguageActionInterface,
     SetNewNotificationActionInterface,
+    SetPhoneActionInterface,
+    SetPrivateProfileActionInterface,
     SetUnreadMessageActionInterface,
     SetUserDataActionInterface,
     SetUserLoadingStateActionInterface,
+    SetUsernameActionInterface,
     SignOutActionInterface,
     StartUseTwitterActionInterface,
     UnfollowActionInterface,
@@ -180,5 +190,55 @@ export const updateColorScheme = (payload: Settings): UpdateColorSchemeActionInt
 
 export const updateBackgroundColor = (payload: Settings): UpdateBackgroundColorActionInterface => ({
     type: UserActionsType.UPDATE_BACKGROUND_COLOR,
+    payload,
+});
+
+export const setUsername = (payload: string): SetUsernameActionInterface => ({
+    type: UserActionsType.SET_USERNAME,
+    payload,
+});
+
+export const setEmail = (payload: string): SetEmailActionInterface => ({
+    type: UserActionsType.SET_EMAIL,
+    payload,
+});
+
+export const setPhone = (payload: { countryCode: string; phone: number }): SetPhoneActionInterface => ({
+    type: UserActionsType.SET_PHONE,
+    payload,
+});
+
+export const setCountry = (payload: string): SetCountryActionInterface => ({
+    type: UserActionsType.SET_COUNTRY,
+    payload,
+});
+
+export const setGender = (payload: string): SetGenderActionInterface => ({
+    type: UserActionsType.SET_GENDER,
+    payload,
+});
+
+export const setLanguage = (payload: string): SetLanguageActionInterface => ({
+    type: UserActionsType.SET_LANGUAGE,
+    payload,
+});
+
+export const setDirect = (payload: boolean): SetDirectActionInterface => ({
+    type: UserActionsType.SET_DIRECT,
+    payload,
+});
+
+export const setPrivateProfile = (payload: boolean): SetPrivateProfileActionInterface => ({
+    type: UserActionsType.SET_PRIVATE_PROFILE,
+    payload,
+});
+
+export const setColorScheme = (payload: string): SetColorSchemeActionInterface => ({
+    type: UserActionsType.SET_COLOR_SCHEME,
+    payload,
+});
+
+export const setBackgroundColor = (payload: string): SetBackgroundColorActionInterface => ({
+    type: UserActionsType.SET_BACKGROUND_COLOR,
     payload,
 });

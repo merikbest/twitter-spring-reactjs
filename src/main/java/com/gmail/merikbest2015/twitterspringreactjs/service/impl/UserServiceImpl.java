@@ -40,6 +40,11 @@ public class UserServiceImpl implements UserService {
     @Value("${amazon.s3.bucket.name}")
     private String bucketName;
 
+    public boolean isUserFollowByOtherUser(Long userId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return userRepository.isUserFollowByOtherUser(authUserId, userId);
+    }
+
     @Override
     public User getUserById(Long userId) {
         return userRepository.findById(userId)

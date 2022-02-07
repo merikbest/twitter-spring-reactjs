@@ -3,9 +3,11 @@ import {
     DeleteTweetReplyActionInterface,
     FetchReplyTweetActionInterface,
     FetchTweetDataActionInterface,
+    FetchTweetProjectionDataActionInterface,
     ResetTweetStateActionInterface,
     SetTweetDataActionInterface,
     SetTweetDataLoadingStateInterface,
+    SetTweetProjectionDataActionInterface,
     TweetActionType
 } from "./contracts/actionTypes";
 import {ReplyTweet, TweetState} from "./contracts/state";
@@ -36,5 +38,16 @@ export const resetTweetState = (): ResetTweetStateActionInterface => ({
 
 export const setTweetLoadingState = (payload: LoadingStatus): SetTweetDataLoadingStateInterface => ({
     type: TweetActionType.SET_LOADING_STATE,
+    payload
+});
+
+// Projection
+export const setTweetProjectionData = (payload: TweetState["dataProjection"]): SetTweetProjectionDataActionInterface => ({
+    type: TweetActionType.SET_TWEET_PROJECTION_DATA,
+    payload
+});
+
+export const fetchTweetProjectionData = (payload: string): FetchTweetProjectionDataActionInterface => ({
+    type: TweetActionType.FETCH_TWEET_PROJECTION_DATA,
     payload
 });

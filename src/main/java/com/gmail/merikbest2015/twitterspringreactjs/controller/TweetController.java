@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.VoteRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetHeaderResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.NotificationResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetProjectionResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.TweetMapper;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
@@ -158,5 +159,11 @@ public class TweetController {
         messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
         messagingTemplate.convertAndSend("/topic/user/update/tweet/" + tweet.getUser().getId(), tweet);
         return ResponseEntity.ok(tweet);
+    }
+
+    // Projection
+    @GetMapping("/projection/{tweetId}")
+    public ResponseEntity<TweetProjectionResponse> getTweetByIdProjection(@PathVariable Long tweetId) {
+        return ResponseEntity.ok(tweetMapper.getTweetByIdProjection(tweetId));
     }
 }

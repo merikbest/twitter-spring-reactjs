@@ -16,7 +16,7 @@ import java.util.Optional;
 public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId")
-    TweetProjection findTweetById(Long tweetId);
+    Optional<TweetProjection> findTweetById(Long tweetId);
 
     @Query("SELECT tweet FROM Tweet tweet " +
             "WHERE tweet.addressedUsername IS NULL " +
@@ -80,4 +80,18 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("SELECT user.pinnedTweet FROM User user WHERE user.id = :userId")
     Optional<Tweet> getPinnedTweetByUserId(Long userId);
+
+    @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END " +
+            "FROM User user " +
+            "LEFT JOIN user.likedTweets likedTweet " +
+            "WHERE user.id = :userId " +
+            "AND likedTweet.tweet.id = :tweetId")
+    boolean isUserLikedTweet(Long userId, Long tweetId);
+
+    @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END " +
+            "FROM User user " +
+            "LEFT JOIN user.retweets retweets " +
+            "WHERE user.id = :userId " +
+            "AND retweets.tweet.id = :tweetId")
+    boolean isUserRetweetedTweet(Long userId, Long tweetId);
 }

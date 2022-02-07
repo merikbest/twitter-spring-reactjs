@@ -3,7 +3,7 @@ import {AxiosResponse} from "axios";
 import {axios} from "../../core/axios";
 import {AddQuoteTweet, AddTweet, ReplyType, Tweet, Vote} from "../../store/ducks/tweets/contracts/state";
 import {API_URL} from "../../util/url";
-import {ReplyTweet} from "../../store/ducks/tweet/contracts/state";
+import {ReplyTweet, TweetProjection} from "../../store/ducks/tweet/contracts/state";
 
 interface Response<T> {
     status: string;
@@ -79,6 +79,11 @@ export const TweetApi = {
     },
     async voteInPoll(payload: Vote): Promise<Response<Tweet>> {
         const {data} = await axios.post<Response<Tweet>>(`${API_URL}/tweets/vote`, payload);
+        return data;
+    },
+    // Projection
+    async fetchTweetProjectionData(id: string): Promise<Response<TweetProjection>> {
+        const {data} = await axios.get<Response<TweetProjection>>(`${API_URL}/tweets/projection/${id}`);
         return data;
     },
 };

@@ -9,6 +9,9 @@ export enum TweetActionType {
     DELETE_TWEET_REPLY = "tweet/DELETE_TWEET_REPLY",
     RESET_TWEET_STATE = "tweet/RESET_TWEET_STATE",
     SET_LOADING_STATE = "tweet/SET_LOADING_STATE",
+    // Projection
+    SET_TWEET_PROJECTION_DATA = "tweet/SET_TWEET_PROJECTION_DATA",
+    FETCH_TWEET_PROJECTION_DATA = "tweet/FETCH_TWEET_PROJECTION_DATA",
 }
 
 export interface SetTweetDataActionInterface extends Action<TweetActionType> {
@@ -40,8 +43,21 @@ export interface SetTweetDataLoadingStateInterface extends Action<TweetActionTyp
     payload: LoadingStatus;
 }
 
+// Projection
+export interface SetTweetProjectionDataActionInterface extends Action<TweetActionType> {
+    type: TweetActionType.SET_TWEET_PROJECTION_DATA;
+    payload: TweetState["dataProjection"];
+}
+
+export interface FetchTweetProjectionDataActionInterface extends Action<TweetActionType> {
+    type: TweetActionType.FETCH_TWEET_PROJECTION_DATA;
+    payload: string;
+}
+
 export type TweetActions =
     | SetTweetDataActionInterface
     | FetchTweetDataActionInterface
     | ResetTweetStateActionInterface
     | SetTweetDataLoadingStateInterface
+    | SetTweetProjectionDataActionInterface
+    | FetchTweetProjectionDataActionInterface

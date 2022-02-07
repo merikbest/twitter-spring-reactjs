@@ -3,12 +3,10 @@ package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetDeleteRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.VoteRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetHeaderResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.NotificationResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponseCommon;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.*;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.TweetService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -130,5 +128,14 @@ public class TweetMapper {
 
     public TweetResponse voteInPoll(VoteRequest voteRequest) {
         return convertToTweetResponse(tweetService.voteInPoll(voteRequest.getTweetId(), voteRequest.getPollId(), voteRequest.getPollChoiceId()));
+    }
+
+    // Projection
+    TweetProjectionResponse convertToProjectionResponse(TweetProjection tweet) {
+        return modelMapper.map(tweet, TweetProjectionResponse.class);
+    }
+
+    public TweetProjectionResponse getTweetByIdProjection(Long tweetId) {
+        return convertToProjectionResponse(tweetService.getTweetByIdProjection(tweetId));
     }
 }

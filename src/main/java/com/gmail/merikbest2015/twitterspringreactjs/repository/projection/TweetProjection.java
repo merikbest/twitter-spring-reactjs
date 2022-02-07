@@ -24,7 +24,16 @@ public interface TweetProjection {
     UserProjection getUser();
     List<ImageProjection> getImages();
     QuoteTweetProjection getQuoteTweet();
-    List<PollProjection> getPoll();
+    PollProjection getPoll();
+
+    @Value("#{@tweetServiceImpl.isUserLikedTweet(target.id)}")
+    boolean getIsTweetLiked();
+
+    @Value("#{@tweetServiceImpl.isUserRetweetedTweet(target.id)}")
+    boolean getIsTweetRetweeted();
+
+    @Value("#{@userServiceImpl.isUserFollowByOtherUser(target.user.id)}")
+    boolean getIsUserFollowByOtherUser();
 
     @Value("#{target.retweets.size()}")
     Integer getRetweetsCount();
@@ -41,11 +50,6 @@ public interface TweetProjection {
         String getFullName();
         String getUsername();
         ImageProjection getAvatar();
-    }
-
-    interface ImageProjection {
-        Long getId();
-        String getSrc();
     }
 
     interface QuoteTweetProjection {
@@ -69,6 +73,10 @@ public interface TweetProjection {
     interface PollChoiceProjection {
         Long getId();
         String getChoice();
-        List<UserProjection> getVotedUser();
+        List<VotedUser> getVotedUser();
+    }
+
+    interface VotedUser {
+        Long getId();
     }
 }

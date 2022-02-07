@@ -182,8 +182,8 @@ public class UserMapper {
         return getTweetHeaderResponse(tweets.getContent(), tweets.getTotalPages());
     }
 
-    public UserResponse updateUsername(SettingsRequest request) {
-        return convertToUserResponse(userSettingsService.updateUsername(request.getUsername()));
+    public String updateUsername(SettingsRequest request) {
+        return userSettingsService.updateUsername(request.getUsername());
     }
 
     public AuthenticationResponse updateEmail(SettingsRequest request) {
@@ -194,36 +194,37 @@ public class UserMapper {
         return response;
     }
 
-    public UserResponse updatePhone(SettingsRequest request) {
-        return convertToUserResponse(userSettingsService.updatePhone(request.getCountryCode(), request.getPhone()));
+    public UserPhoneResponse updatePhone(SettingsRequest request) {
+        Map<String, Object> phoneParams = userSettingsService.updatePhone(request.getCountryCode(), request.getPhone());
+        return new UserPhoneResponse((String) phoneParams.get("countryCode"), (Long) phoneParams.get("phone"));
     }
 
-    public UserResponse updateCountry(SettingsRequest request) {
-        return convertToUserResponse(userSettingsService.updateCountry(request.getCountry()));
+    public String updateCountry(SettingsRequest request) {
+        return userSettingsService.updateCountry(request.getCountry());
     }
 
-    public UserResponse updateGender(SettingsRequest request) {
-        return convertToUserResponse(userSettingsService.updateGender(request.getGender()));
+    public String updateGender(SettingsRequest request) {
+        return userSettingsService.updateGender(request.getGender());
     }
 
-    public UserResponse updateLanguage(SettingsRequest request) {
-        return convertToUserResponse(userSettingsService.updateLanguage(request.getLanguage()));
+    public String updateLanguage(SettingsRequest request) {
+        return userSettingsService.updateLanguage(request.getLanguage());
     }
 
-    public UserResponse updateDirectMessageRequests(SettingsRequest request) {
-        return convertToUserResponse(userSettingsService.updateDirectMessageRequests(request.isMutedDirectMessages()));
+    public boolean updateDirectMessageRequests(SettingsRequest request) {
+        return userSettingsService.updateDirectMessageRequests(request.isMutedDirectMessages());
     }
 
-    public UserResponse updatePrivateProfile(SettingsRequest request) {
-        return convertToUserResponse(userSettingsService.updatePrivateProfile(request.isPrivateProfile()));
+    public boolean updatePrivateProfile(SettingsRequest request) {
+        return userSettingsService.updatePrivateProfile(request.isPrivateProfile());
     }
 
-    public UserResponse updateColorScheme(SettingsRequest request) {
-        return convertToUserResponse(userSettingsService.updateColorScheme(request.getColorScheme()));
+    public ColorSchemeType updateColorScheme(SettingsRequest request) {
+        return userSettingsService.updateColorScheme(request.getColorScheme());
     }
 
-    public UserResponse updateBackgroundColor(SettingsRequest request) {
-        return convertToUserResponse(userSettingsService.updateBackgroundColor(request.getBackgroundColor()));
+    public BackgroundColorType updateBackgroundColor(SettingsRequest request) {
+        return userSettingsService.updateBackgroundColor(request.getBackgroundColor());
     }
 
     public List<UserResponse> getBlockList() {
