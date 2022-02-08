@@ -4,9 +4,10 @@ import com.gmail.merikbest2015.twitterspringreactjs.model.BackgroundColorType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ColorSchemeType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.AuthUserProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.UserPrincipalProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.UserSubscribersProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.AuthUserProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.UserDetailProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -50,33 +51,56 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user WHERE user.id = :userId")
     boolean isUserExist(Long userId);
 
+    @Query("SELECT user.followers FROM User user WHERE user.id = :userId")
+    List<User> getFollowersById(Long userId);
+
+    @Query("SELECT user.following FROM User user WHERE user.id = :userId")
+    List<User> getFollowingById(Long userId);
+
+    @Query("SELECT user.userBlockedList FROM User user WHERE user.id = :userId")
+    List<User> getUserBlockListById(Long userId);
+
+    @Query("SELECT user.userMutedList FROM User user WHERE user.id = :userId")
+    List<User> getUserMutedListById(Long userId);
+
+    @Query("SELECT user FROM User user WHERE user.id = :userId")
+    Optional<UserSubscribersProjection> findUserSubscribersById(Long userId);
+
     @Query("SELECT CASE WHEN count(blockedUser) > 0 THEN true ELSE false END FROM User user " +
             "LEFT JOIN user.userBlockedList blockedUser " +
             "WHERE user.id = :userId " +
             "AND blockedUser.id = :blockedUserId")
     boolean isUserBlocked(Long userId, Long blockedUserId);
 
-    @Query("SELECT user.followers from User user WHERE user.id = :userId")
-    List<User> getFollowersById(Long userId);
-
-    @Query("SELECT user.following from User user WHERE user.id = :userId")
-    List<User> getFollowingById(Long userId);
-
-    @Query("SELECT user.userBlockedList from User user WHERE user.id = :userId")
-    List<User> getUserBlockListById(Long userId);
-
-    @Query("SELECT user.userMutedList from User user WHERE user.id = :userId")
-    List<User> getUserMutedListById(Long userId);
-
-    @Query("SELECT user FROM User user WHERE user.id = :userId")
-    Optional<UserSubscribersProjection> findUserSubscribersById(Long userId);
-
-    @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END " +
+    @Query("SELECT CASE WHEN count(follower) > 0 THEN true ELSE false END " +
             "FROM User user " +
             "LEFT JOIN user.followers follower " +
             "WHERE user.id = :authUserId " +
             "AND follower.id = :userId")
     boolean isUserFollowByOtherUser(Long authUserId, Long userId);
+
+    @Query("SELECT CASE WHEN count(followerRequest) > 0 THEN true ELSE false END FROM User user " +
+            "LEFT JOIN user.followerRequests followerRequest " +
+            "WHERE user.id = :userId " +
+            "AND followerRequest.id = :authUserId")
+    boolean isMyProfileWaitingForApprove(Long userId, Long authUserId);
+
+    @Query(value = "SELECT users.id as id, users.full_name as fullName FROM users " +
+            "LEFT JOIN user_avatar ON users.id = user_avatar.user_id " +
+            "LEFT JOIN images ON user_avatar.avatar_id = images.id " +
+            "WHERE users.id IN ( " +
+            "SELECT user_subscriptions.subscriber_id FROM users " +
+            "JOIN user_subscriptions ON users.id = user_subscriptions.user_id " +
+            "WHERE users.id = 2) " +
+            "INTERSECT " +
+            "SELECT users.id as id, users.full_name as fullName FROM users " +
+            "LEFT JOIN user_avatar ON users.id = user_avatar.user_id " +
+            "LEFT JOIN images ON user_avatar.avatar_id = images.id " +
+            "WHERE users.id IN ( " +
+            "SELECT user_subscriptions.subscriber_id FROM users " +
+            "JOIN user_subscriptions ON users.id = user_subscriptions.user_id " +
+            "WHERE users.id = 4)",  nativeQuery = true)
+    List<UserDetailProjection.SameFollower> getSameFollowers(Long userId, Long authUserId);
 
     @Modifying
     @Query("UPDATE User user SET user.username = :username WHERE user.id = :userId")

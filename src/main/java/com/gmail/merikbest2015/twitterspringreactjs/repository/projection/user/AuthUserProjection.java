@@ -1,7 +1,8 @@
-package com.gmail.merikbest2015.twitterspringreactjs.repository.projection;
+package com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.BackgroundColorType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ColorSchemeType;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.ImageProjection;
 import org.springframework.beans.factory.annotation.Value;
 
 public interface AuthUserProjection {

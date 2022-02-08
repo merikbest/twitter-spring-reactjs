@@ -40,11 +40,6 @@ public class UserServiceImpl implements UserService {
     @Value("${amazon.s3.bucket.name}")
     private String bucketName;
 
-    public boolean isUserFollowByOtherUser(Long userId) {
-        Long authUserId = authenticationService.getAuthenticatedUserId();
-        return userRepository.isUserFollowByOtherUser(authUserId, userId);
-    }
-
     @Override
     public User getUserById(Long userId) {
         return userRepository.findById(userId)
@@ -393,6 +388,26 @@ public class UserServiceImpl implements UserService {
         if (userBlocked) {
             throw new ApiRequestException("User (id:" + authUserId + ") is blocked", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    public boolean isUserFollowByOtherUser(Long userId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return userRepository.isUserFollowByOtherUser(authUserId, userId);
+    }
+
+    public boolean isUserBlockedByMyProfile(Long userId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return userRepository.isUserBlocked(authUserId, userId);
+    }
+
+    public boolean isMyProfileBlockedByUser(Long userId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return userRepository.isUserBlocked(userId, authUserId);
+    }
+
+    public boolean isMyProfileWaitingForApprove(Long userId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return userRepository.isMyProfileWaitingForApprove(userId, authUserId);
     }
 
     private User processUserList(User authenticatedUser, User currentUser, List<User> userLists) {
