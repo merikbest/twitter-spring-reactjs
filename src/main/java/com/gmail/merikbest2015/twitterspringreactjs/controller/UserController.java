@@ -1,12 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetHeaderResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.NotificationResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.NotificationsResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.*;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -175,5 +170,11 @@ public class UserController {
     @GetMapping("/muted/{userId}")
     public ResponseEntity<UserResponse> processMutedList(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.processMutedList(userId));
+    }
+
+    // Projection
+    @GetMapping("/details/{userId}") // TODO Add tests
+    public ResponseEntity<UserDetailProjectionResponse> getUserDetails(@PathVariable Long userId) {
+        return ResponseEntity.ok(userMapper.getUserDetails(userId));
     }
 }

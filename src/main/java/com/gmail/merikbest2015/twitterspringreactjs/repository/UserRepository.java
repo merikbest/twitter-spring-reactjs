@@ -26,7 +26,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<UserPrincipalProjection> findUserPrincipalByEmail(String email);
 
     @Query("SELECT user FROM User user WHERE user.email = :email")
-    Optional<AuthUserProjection> findUserByEmail123(String email);
+    Optional<AuthUserProjection> findUserProjectionByEmail(String email);
 
     Optional<User> findByEmail(String email);
 
@@ -85,21 +85,24 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "AND followerRequest.id = :authUserId")
     boolean isMyProfileWaitingForApprove(Long userId, Long authUserId);
 
-    @Query(value = "SELECT users.id as id, users.full_name as fullName FROM users " +
+    @Query("SELECT user FROM User user WHERE user.id = :userId")
+    Optional<UserDetailProjection> getUserDetails(Long userId);
+
+    @Query(value = "SELECT users.id as id, users.full_name as fullName, images.id as img_id, images.src as img_src FROM users " +
             "LEFT JOIN user_avatar ON users.id = user_avatar.user_id " +
             "LEFT JOIN images ON user_avatar.avatar_id = images.id " +
             "WHERE users.id IN ( " +
             "SELECT user_subscriptions.subscriber_id FROM users " +
             "JOIN user_subscriptions ON users.id = user_subscriptions.user_id " +
-            "WHERE users.id = 2) " +
+            "WHERE users.id = ?1) " +
             "INTERSECT " +
-            "SELECT users.id as id, users.full_name as fullName FROM users " +
+            "SELECT users.id as id, users.full_name as fullName, images.id as img_id, images.src as img_src FROM users " +
             "LEFT JOIN user_avatar ON users.id = user_avatar.user_id " +
             "LEFT JOIN images ON user_avatar.avatar_id = images.id " +
             "WHERE users.id IN ( " +
             "SELECT user_subscriptions.subscriber_id FROM users " +
             "JOIN user_subscriptions ON users.id = user_subscriptions.user_id " +
-            "WHERE users.id = 4)",  nativeQuery = true)
+            "WHERE users.id = ?2)", nativeQuery = true)
     List<UserDetailProjection.SameFollower> getSameFollowers(Long userId, Long authUserId);
 
     @Modifying

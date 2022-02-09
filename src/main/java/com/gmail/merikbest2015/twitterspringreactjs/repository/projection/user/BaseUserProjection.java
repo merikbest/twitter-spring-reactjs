@@ -9,16 +9,16 @@ public interface BaseUserProjection {
     String getUsername();
     String getAbout();
     ImageProjection getAvatar();
-    boolean isPrivateProfile();
+    boolean getIsPrivateProfile();
 
     @Value("#{@userServiceImpl.isUserBlockedByMyProfile(target.id)}")
-    boolean isUserBlocked();
+    boolean getIsUserBlocked();
 
     @Value("#{@userServiceImpl.isMyProfileBlockedByUser(target.id)}")
-    boolean isMyProfileBlocked();
+    boolean getIsMyProfileBlocked();
 
     @Value("#{@userServiceImpl.isMyProfileWaitingForApprove(target.id)}")
-    boolean isWaitingForApprove();
+    boolean getIsWaitingForApprove();
 
     @Value("#{@userServiceImpl.isUserFollowByOtherUser(target.id)}")
     boolean getIsFollower();

@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.request.SettingsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.*;
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.UserDetailProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserSettingsService;
 import lombok.RequiredArgsConstructor;
@@ -241,5 +242,14 @@ public class UserMapper {
 
     public UserResponse processMutedList(Long userId) {
         return convertToUserResponse(userService.processMutedList(userId));
+    }
+
+    // Projection
+    UserDetailProjectionResponse convertToProjectionResponse(UserDetailProjection user) {
+        return modelMapper.map(user, UserDetailProjectionResponse.class);
+    }
+
+    public UserDetailProjectionResponse getUserDetails(Long userId) {
+        return convertToProjectionResponse(userService.getUserDetails(userId));
     }
 }

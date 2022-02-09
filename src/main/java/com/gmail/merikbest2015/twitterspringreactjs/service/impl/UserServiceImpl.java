@@ -5,6 +5,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.*;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.UserDetailProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -373,6 +374,12 @@ public class UserServiceImpl implements UserService {
         return processUserList(user, currentUser, user.getUserMutedList());
     }
 
+    @Override
+    public UserDetailProjection getUserDetails(Long userId) {
+        return userRepository.getUserDetails(userId)
+                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
+    }
+
     private void checkIsUserExist(Long userId) {
         boolean userExist = userRepository.isUserExist(userId);
 
@@ -408,6 +415,11 @@ public class UserServiceImpl implements UserService {
     public boolean isMyProfileWaitingForApprove(Long userId) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
         return userRepository.isMyProfileWaitingForApprove(userId, authUserId);
+    }
+
+    public List<UserDetailProjection.SameFollower> getSameFollowers(Long userId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return userRepository.getSameFollowers(userId, authUserId);
     }
 
     private User processUserList(User authenticatedUser, User currentUser, List<User> userLists) {

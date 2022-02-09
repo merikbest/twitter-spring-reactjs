@@ -34,13 +34,7 @@ public class TweetProjectionResponse {
     private boolean isTweetLiked;
     private boolean isTweetRetweeted;
     private boolean isUserFollowByOtherUser;
-
-    @Getter
-    @Setter
-    static class ImageProjectionResponse {
-        private Long id;
-        private String src;
-    }
+    private boolean isTweetDeleted;
 
     @Getter
     @Setter

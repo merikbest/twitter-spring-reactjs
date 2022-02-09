@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.UserDetailProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -65,4 +66,6 @@ public interface UserService {
     List<User> getMutedList();
 
     User processMutedList(Long userId);
+
+    UserDetailProjection getUserDetails(Long userId);
 }
