@@ -15,7 +15,8 @@ import java.time.LocalDateTime;
 public class LikeTweet {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "like_tweets_seq")
+    @SequenceGenerator(name = "like_tweets_seq", sequenceName = "like_tweets_seq", initialValue = 100, allocationSize = 1)
     private Long id;
 
     @Column(name = "like_tweet_date")

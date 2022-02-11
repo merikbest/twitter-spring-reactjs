@@ -17,7 +17,8 @@ import java.util.List;
 public class Lists {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "lists_seq")
+    @SequenceGenerator(name = "lists_seq", sequenceName = "lists_seq", initialValue = 100, allocationSize = 1)
     private Long id;
 
     @Column(name = "name")

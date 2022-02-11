@@ -7,7 +7,7 @@ Twitter clone developed using Spring Boot and React.js. </br>
 The project is always updated with new features. </br>
 See more demo screenshots below.
 
-![Home page](screenshots/1.%20Home%20page.png)
+![Home page](screenshots/1_Preview.jpg)
 
 ## Used Technologies:
 
@@ -48,8 +48,8 @@ See more demo screenshots below.
 2. Install Java: [link](https://www.oracle.com/java/technologies/javase/jdk15-archive-downloads.html)
 3. Install Postgresql: [link](https://www.postgresql.org/download/)
 4. Install Intellij IDEA Ultimate: [link](https://www.jetbrains.com/idea/)
-5. Open pgAdmin and create a new DB (name twitter) in Postgresql: [link](https://www.postgresqltutorial.com/postgresql-create-database/#:~:text=database%20is%20100.-,3)%20Creating%20a%20new%20database%20using%20pgAdmin,-The%20pgAdmin%20tool )
-6. Add Lombok plugin in Intellij IDEA: [link](https://i.ibb.co/Gtwcw0t/6-lombok.jpg)
+5. Open pgAdmin and create a new DB (name: twitter and twittertest) in Postgresql: [link](https://www.guru99.com/postgresql-create-database.html#:~:text=PostgreSQL%20Create%20Database%20using%20pgAdmin)
+6. Add Lombok plugin to the Intellij IDEA: [link](https://i.ibb.co/Gtwcw0t/6-lombok.jpg)
 7. Configure project like: [link](https://i.ibb.co/HxzkCvj/7-configuration.jpg)
 8. Add Postgresql properties to the application.properties file: [link](https://i.ibb.co/tLnnCLZ/8-postgres.jpg)
 9. Register new AWS account: [link](https://portal.aws.amazon.com/billing/signup#/start)
@@ -67,57 +67,71 @@ See more demo screenshots below.
 18. Go to [link](https://myaccount.google.com/u/2/lesssecureapps) (important) and change to: “Allow less secure apps: ON”
 19. Install node.js and npm: [link](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 20. Open terminal in client directory and type: npm install (or yarn install)
-21. Now you can run TwitterApplication (port 8080) and open terminal in client directory and type: npm start (port 3000)
+21. Now you can run TwitterApplication (port 8080) and open terminal in client directory and type: npm start
+22. Navigate to http://localhost:3000/home
+
+#### To enter the application you can register or login:
+Login: user2016@gmail.com  
+Password: qwerty
 
 ## Screenshots
 
 #### Add tweet
-![AddTweet](screenshots/2.%20Add%20tweet.png)
+![AddTweet](screenshots/2_Add_tweet.jpg)
 ___
 #### Add Poll
-![AddTPoll](screenshots/3.%20Add%20poll.png)
+![AddTPoll](screenshots/3_Add_Poll.jpg)
 ___
 #### Reply tweet
-![Reply](screenshots/4.%20Reply.png)
+![Reply](screenshots/4_Reply_tweet.jpg)
 ___
 #### Tweet image modal
-![TweetImageModal](screenshots/5.%20Tweet%20Image.png)
+![TweetImageModal](screenshots/5_Tweet_image_modal.jpg)
 ___
 #### Notifications
-![Notifications](screenshots/6.%20Notifications.png)
+![Notifications](screenshots/6_Notifications.jpg)
 ___
 #### Full Notifications
-![FullNotifications](screenshots/7.%20Full%20Notification.png)
+![FullNotifications](screenshots/7_Full_Notifications.jpg)
 ___
 #### Search
-![Search](screenshots/8.%20Search.png)
+![Search](screenshots/8_Search.jpg)
 ___
 #### Search Videos
-![SearchVideos](screenshots/9.%20Search%20YouTube%20videos.png)
+![SearchVideos](screenshots/9_Search_Videos.jpg)
 ___
 #### Full tweet
-![FullTweet](screenshots/10.%20Full%20Tweet.png)
+![FullTweet](screenshots/10_Full_tweet.jpg)
 ___
 #### Liked by Modal window
-![LikedByModalWindow](screenshots/11.%20Liked%20by%20Modal.png)
+![LikedByModalWindow](screenshots/11_Liked_by_Modal_window.jpg)
 ___
 #### Following and Followers
-![FollowingAndFollowers](screenshots/12.%20Followers.png)
+![FollowingAndFollowers](screenshots/12_Following_and_Followers.jpg)
 ___
 #### Trends
-![Trends](screenshots/13.%20Trends.png)
+![Trends](screenshots/13_Trends.jpg)
 ___
 #### Bookmarks
-![Bookmarks](screenshots/14.%20Bookmarks.png)
+![Bookmarks](screenshots/14_Bookmarks.jpg)
 ___
 #### Chat
-![Chat](screenshots/15.%20Chat.png)
+![Chat](screenshots/15_Chat.jpg)
 ___
 #### Lists
-![Lists](screenshots/16.%20Lists.png)
+![Lists](screenshots/16_Lists.jpg)
 ___
 #### Full List
-![FullList](screenshots/17.%20Full%20List.png)
+![FullList](screenshots/17_Full_List.jpg)
 ___
 #### Suggested Lists
-![SuggestedLists](screenshots/18.%20Suggested%20Lists.png)
+![SuggestedLists](screenshots/18_Suggested_Lists.jpg)
+___
+#### Settings
+![Settings](screenshots/19_Settings.jpg)
+___
+#### Customization
+![Customization](screenshots/20_Profile_Customization.jpg)
+___
+#### Dark theme profile
+![Customization](screenshots/21_Profile_with_color_theme.jpg)

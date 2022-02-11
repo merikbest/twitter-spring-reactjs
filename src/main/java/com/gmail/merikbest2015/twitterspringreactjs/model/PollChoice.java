@@ -16,7 +16,8 @@ import java.util.List;
 public class PollChoice {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pool_choices_seq")
+    @SequenceGenerator(name = "pool_choices_seq", sequenceName = "pool_choices_seq", initialValue = 100, allocationSize = 1)
     private Long id;
 
     @Column(name = "choice")

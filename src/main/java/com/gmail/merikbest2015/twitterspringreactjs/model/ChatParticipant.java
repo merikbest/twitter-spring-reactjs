@@ -13,7 +13,8 @@ import javax.persistence.*;
 public class ChatParticipant {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chats_participants_seq")
+    @SequenceGenerator(name = "chats_participants_seq", sequenceName = "chats_participants_seq", initialValue = 100, allocationSize = 1)
     private Long id;
 
     @Column(name = "left_chat", columnDefinition = "boolean default false")

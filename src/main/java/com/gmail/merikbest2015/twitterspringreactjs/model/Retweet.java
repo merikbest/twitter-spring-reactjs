@@ -15,7 +15,8 @@ import java.time.LocalDateTime;
 public class Retweet {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "retweets_seq")
+    @SequenceGenerator(name = "retweets_seq", sequenceName = "retweets_seq", initialValue = 100, allocationSize = 1)
     private Long id;
 
     @Column(name = "retweet_date")

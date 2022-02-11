@@ -15,7 +15,8 @@ import java.time.LocalDateTime;
 public class Bookmark {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookmarks_seq")
+    @SequenceGenerator(name = "bookmarks_seq", sequenceName = "bookmarks_seq", initialValue = 100, allocationSize = 1)
     private Long id;
 
     @Column(name = "bookmark_date")
