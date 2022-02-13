@@ -3,11 +3,12 @@ package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.AuthenticationRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.PasswordResetRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.RegistrationRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.AuthenticationResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.model.User;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.AuthUserProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.AuthenticationProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.AuthUserProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -16,13 +17,13 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AuthenticationMapper {
 
-    private final UserMapper userMapper;
+    private final ModelMapper modelMapper;
     private final AuthenticationService authenticationService;
 
-    public AuthenticationResponse login(AuthenticationRequest request) {
+    public AuthenticationProjectionResponse login(AuthenticationRequest request) {
         Map<String, Object> credentials = authenticationService.login(request.getEmail(), request.getPassword());
-        AuthenticationResponse response = new AuthenticationResponse();
-        response.setUser(userMapper.convertToUserResponse((User) credentials.get("user")));
+        AuthenticationProjectionResponse response = new AuthenticationProjectionResponse();
+        response.setUser(modelMapper.map(credentials.get("user"), AuthUserProjectionResponse.class));
         response.setToken((String) credentials.get("token"));
         return response;
     }
@@ -31,10 +32,10 @@ public class AuthenticationMapper {
         return authenticationService.registration(request.getEmail(), request.getUsername(), request.getBirthday());
     }
 
-    public AuthenticationResponse getUserByToken() {
+    public AuthenticationProjectionResponse getUserByToken() {
         Map<String, Object> credentials = authenticationService.getUserByToken();
-        AuthenticationResponse authenticationResponse = new AuthenticationResponse();
-        authenticationResponse.setUser(userMapper.convertToUserResponse((User) credentials.get("user")));
+        AuthenticationProjectionResponse authenticationResponse = new AuthenticationProjectionResponse();
+        authenticationResponse.setUser(modelMapper.map(credentials.get("user"), AuthUserProjectionResponse.class));
         authenticationResponse.setToken((String) credentials.get("token"));
         return authenticationResponse;
     }
@@ -47,8 +48,9 @@ public class AuthenticationMapper {
         return authenticationService.sendPasswordResetCode(email);
     }
 
-    public UserResponse findByPasswordResetCode(String code) {
-        return userMapper.convertToUserResponse(authenticationService.findByPasswordResetCode(code));
+    public AuthUserProjectionResponse findByPasswordResetCode(String code) {
+        AuthUserProjection user = authenticationService.findByPasswordResetCode(code);
+        return modelMapper.map(user, AuthUserProjectionResponse.class);
     }
 
     public String passwordReset(PasswordResetRequest request) {
@@ -63,10 +65,10 @@ public class AuthenticationMapper {
         return authenticationService.sendRegistrationCode(email);
     }
 
-    public AuthenticationResponse endRegistration(RegistrationRequest request) {
+    public AuthenticationProjectionResponse endRegistration(RegistrationRequest request) {
         Map<String, Object> credentials = authenticationService.endRegistration(request.getEmail(), request.getPassword());
-        AuthenticationResponse authenticationResponse = new AuthenticationResponse();
-        authenticationResponse.setUser(userMapper.convertToUserResponse((User) credentials.get("user")));
+        AuthenticationProjectionResponse authenticationResponse = new AuthenticationProjectionResponse();
+        authenticationResponse.setUser(modelMapper.map(credentials.get("user"), AuthUserProjectionResponse.class));
         authenticationResponse.setToken((String) credentials.get("token"));
         return authenticationResponse;
     }

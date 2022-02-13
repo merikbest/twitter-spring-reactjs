@@ -1,18 +1,15 @@
 package com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user;
 
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.ImageProjection;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.util.Map;
-
-public interface BaseUserProjection {
+public interface UserProjection {
     Long getId();
     String getFullName();
     String getUsername();
     String getAbout();
     boolean getIsPrivateProfile();
-
-    @Value("#{T(com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.BaseUserProjection).convertToAvatar(target.img_id, target.img_src)}")
-    Map<String, Object> getAvatar();
+    ImageProjection getAvatar();
 
     @Value("#{@userServiceImpl.isUserBlockedByMyProfile(target.id)}")
     boolean getIsUserBlocked();
@@ -25,8 +22,4 @@ public interface BaseUserProjection {
 
     @Value("#{@userServiceImpl.isUserFollowByOtherUser(target.id)}")
     boolean getIsFollower();
-
-    static Map<String, Object> convertToAvatar(Long id, String src) {
-        return Map.of("id", id,"src", src);
-    }
 }

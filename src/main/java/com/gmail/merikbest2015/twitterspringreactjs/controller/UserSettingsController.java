@@ -1,14 +1,17 @@
 package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.SettingsRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.AuthenticationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserPhoneResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.AuthenticationProjectionResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.UserMapper;
 import com.gmail.merikbest2015.twitterspringreactjs.model.BackgroundColorType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ColorSchemeType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,7 +26,7 @@ public class UserSettingsController {
     }
 
     @PutMapping("/update/email")
-    public ResponseEntity<AuthenticationResponse> updateEmail(@RequestBody SettingsRequest request) {
+    public ResponseEntity<AuthenticationProjectionResponse> updateEmail(@RequestBody SettingsRequest request) {
         return ResponseEntity.ok(userMapper.updateEmail(request));
     }
 

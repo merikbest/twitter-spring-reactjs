@@ -5,14 +5,18 @@ import com.gmail.merikbest2015.twitterspringreactjs.model.BackgroundColorType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ColorSchemeType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.AuthUserProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.UserCommonProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.security.JwtProvider;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserSettingsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -37,13 +41,14 @@ public class UserSettingsServiceImpl implements UserSettingsService {
     }
 
     @Override
+    @Transactional
     public Map<String, Object> updateEmail(String email) {
-        User user = authenticationService.getAuthenticatedUser();
-        Optional<User> userByEmail = userRepository.findByEmail(email);
+        Optional<UserCommonProjection> userByEmail = userRepository.findCommonUserByEmail(email);
 
         if (userByEmail.isEmpty()) {
-            user.setEmail(email);
-            userRepository.save(user);
+            Principal principal = SecurityContextHolder.getContext().getAuthentication();
+            Optional<AuthUserProjection> user = userRepository.findAuthUserByEmail(principal.getName());
+            userRepository.updateEmail(email, user.get().getId());
             String token = jwtProvider.createToken(email, "USER");
             Map<String, Object> response = new HashMap<>();
             response.put("user", user);
