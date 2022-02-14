@@ -90,6 +90,13 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "ORDER BY notificationTweet.dateTime DESC")
     List<TweetsProjection> getNotificationsFromTweetAuthors(Long userId);
 
+    @Query("SELECT tagTweet as tweet " +
+            "FROM Tag tag " +
+            "LEFT JOIN tag.tweets tagTweet " +
+            "WHERE tag.tagName = :tagName " +
+            "ORDER BY tagTweet.dateTime DESC")
+    List<TweetsProjection> getTweetsByTagName(String tagName);
+
     @Query("SELECT COUNT(reply) FROM Tweet tweet LEFT JOIN tweet.replies reply WHERE tweet.id = :tweetId")
     Integer getRepliesCount(Long tweetId);
 

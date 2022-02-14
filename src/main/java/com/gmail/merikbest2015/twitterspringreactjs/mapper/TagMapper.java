@@ -1,8 +1,10 @@
 package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TagResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.model.Tag;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.TagProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.TweetProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tag.TagProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.TagService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -19,25 +21,25 @@ public class TagMapper {
     private final TagService tagService;
     private final TweetMapper tweetMapper;
 
-    private TagResponse convertToTagResponse(Tag tag) {
-        return modelMapper.map(tag, TagResponse.class);
+    private TagProjectionResponse convertToTagResponse(TagProjection tag) {
+        return modelMapper.map(tag, TagProjectionResponse.class);
     }
 
-    private List<TagResponse> convertTagsListToResponse(List<Tag> tags) {
+    private List<TagProjectionResponse> convertTagsListToResponse(List<TagProjection> tags) {
         return tags.stream()
                 .map(this::convertToTagResponse)
                 .collect(Collectors.toList());
     }
 
-    public List<TagResponse> getTags() {
+    public List<TagProjectionResponse> getTags() {
         return convertTagsListToResponse(tagService.getTags());
     }
 
-    public List<TagResponse> getTrends() {
+    public List<TagProjectionResponse> getTrends() {
         return convertTagsListToResponse(tagService.getTrends());
     }
 
-    public List<TweetResponse> getTweetsByTag(String tagName) {
-        return tweetMapper.convertListToResponse(tagService.getTweetsByTag(tagName));
+    public List<TweetProjectionResponse> getTweetsByTag(String tagName) {
+        return tweetMapper.convertListToProjectionResponse(tagService.getTweetsByTag(tagName));
     }
 }

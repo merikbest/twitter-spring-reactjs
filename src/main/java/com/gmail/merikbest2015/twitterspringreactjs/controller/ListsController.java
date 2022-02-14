@@ -3,6 +3,10 @@ package com.gmail.merikbest2015.twitterspringreactjs.controller;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.ListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ListsResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.lists.BaseListProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.lists.ListProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.lists.ListUserProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.lists.PinnedListProjectionResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.ListsMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,37 +22,37 @@ public class ListsController {
     private final ListsMapper listsMapper;
 
     @GetMapping
-    public ResponseEntity<List<ListsResponse>> getAllTweetLists() {
+    public ResponseEntity<List<ListProjectionResponse>> getAllTweetLists() {
         return ResponseEntity.ok(listsMapper.getAllTweetLists());
     }
 
     @GetMapping("/user")
-    public ResponseEntity<List<ListsResponse>> getUserTweetLists() {
+    public ResponseEntity<List<ListUserProjectionResponse>> getUserTweetLists() {
         return ResponseEntity.ok(listsMapper.getUserTweetLists());
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<ListsResponse>> getUserTweetListsById(@PathVariable Long userId) {
+    public ResponseEntity<List<ListProjectionResponse>> getUserTweetListsById(@PathVariable Long userId) {
         return ResponseEntity.ok(listsMapper.getUserTweetListsById(userId));
     }
 
     @GetMapping("/user/consist")
-    public ResponseEntity<List<ListsResponse>> getTweetListsWhichUserIn() {
+    public ResponseEntity<List<ListProjectionResponse>> getTweetListsWhichUserIn() {
         return ResponseEntity.ok(listsMapper.getTweetListsWhichUserIn());
     }
 
     @GetMapping("/pined")
-    public ResponseEntity<List<ListsResponse>> getUserPinnedLists() {
+    public ResponseEntity<List<PinnedListProjectionResponse>> getUserPinnedLists() {
         return ResponseEntity.ok(listsMapper.getUserPinnedLists());
     }
 
     @GetMapping("/{listId}")
-    public ResponseEntity<ListsResponse> getListById(@PathVariable Long listId) {
+    public ResponseEntity<BaseListProjectionResponse> getListById(@PathVariable Long listId) {
         return ResponseEntity.ok(listsMapper.getListById(listId));
     }
 
     @PostMapping
-    public ResponseEntity<ListsResponse> createTweetList(@RequestBody ListsRequest listsRequest) {
+    public ResponseEntity<ListUserProjectionResponse> createTweetList(@RequestBody ListsRequest listsRequest) {
         return ResponseEntity.ok(listsMapper.createTweetList(listsRequest));
     }
 
@@ -81,4 +85,7 @@ public class ListsController {
     public ResponseEntity<ListsResponse> addUserToList(@PathVariable Long userId, @PathVariable Long listId) {
         return ResponseEntity.ok(listsMapper.addUserToList(userId, listId));
     }
+
+    // TODO add Lists Details endpoint
+    // TODO add Get tweets by list id endpoint
 }

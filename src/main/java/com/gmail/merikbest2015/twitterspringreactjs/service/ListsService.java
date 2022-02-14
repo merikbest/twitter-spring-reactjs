@@ -1,24 +1,28 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.Lists;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.lists.BaseListProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.lists.ListProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.lists.ListUserProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.lists.PinnedListProjection;
 
 import java.util.List;
 
 public interface ListsService {
 
-    List<Lists> getAllTweetLists();
+    List<ListProjection> getAllTweetLists();
 
-    List<Lists> getUserTweetLists();
+    List<ListUserProjection> getUserTweetLists();
 
-    List<Lists> getUserPinnedLists();
+    List<PinnedListProjection> getUserPinnedLists();
 
-    Lists getListById(Long listId);
+    BaseListProjection getListById(Long listId);
 
-    Lists createTweetList(Lists lists);
+    ListUserProjection createTweetList(Lists lists);
 
-    List<Lists> getUserTweetListsById(Long userId);
+    List<ListProjection> getUserTweetListsById(Long userId);
 
-    List<Lists> getTweetListsWhichUserIn();
+    List<ListProjection> getTweetListsWhichUserIn();
 
     Lists editTweetList(Lists lists);
 
