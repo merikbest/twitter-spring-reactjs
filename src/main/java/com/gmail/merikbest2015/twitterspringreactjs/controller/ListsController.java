@@ -2,7 +2,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.ListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserToListsRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ListsResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.TweetProjectionResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.lists.BaseListProjectionResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.lists.ListProjectionResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.lists.ListUserProjectionResponse;
@@ -57,7 +57,7 @@ public class ListsController {
     }
 
     @PutMapping
-    public ResponseEntity<ListsResponse> editTweetList(@RequestBody ListsRequest listsRequest) {
+    public ResponseEntity<BaseListProjectionResponse> editTweetList(@RequestBody ListsRequest listsRequest) {
         return ResponseEntity.ok(listsMapper.editTweetList(listsRequest));
     }
 
@@ -67,25 +67,38 @@ public class ListsController {
     }
 
     @GetMapping("/follow/{listId}")
-    public ResponseEntity<ListsResponse> followList(@PathVariable Long listId) {
+    public ResponseEntity<Boolean> followList(@PathVariable Long listId) {
         return ResponseEntity.ok(listsMapper.followList(listId));
     }
 
     @GetMapping("/pin/{listId}")
-    public ResponseEntity<ListsResponse> pinList(@PathVariable Long listId) {
+    public ResponseEntity<Boolean> pinList(@PathVariable Long listId) {
         return ResponseEntity.ok(listsMapper.pinList(listId));
     }
 
     @PostMapping("/add/user")
-    public ResponseEntity<List<ListsResponse>> addUserToLists(@RequestBody UserToListsRequest userToListsRequest) {
+    public ResponseEntity<List<Long>> addUserToLists(@RequestBody UserToListsRequest userToListsRequest) {
         return ResponseEntity.ok(listsMapper.addUserToLists(userToListsRequest));
     }
 
     @GetMapping("/add/user/{userId}/{listId}")
-    public ResponseEntity<ListsResponse> addUserToList(@PathVariable Long userId, @PathVariable Long listId) {
+    public ResponseEntity<Boolean> addUserToList(@PathVariable Long userId, @PathVariable Long listId) {
         return ResponseEntity.ok(listsMapper.addUserToList(userId, listId));
     }
 
-    // TODO add Lists Details endpoint
-    // TODO add Get tweets by list id endpoint
+    @GetMapping("/{listId}/tweets") // TODO add tests
+    public ResponseEntity<List<TweetProjectionResponse>> getTweetsByListId(@PathVariable Long listId) {
+        return ResponseEntity.ok(listsMapper.getTweetsByListId(listId));
+    }
+
+    @GetMapping("/{listId}/details") // TODO add tests
+    public ResponseEntity<BaseListProjectionResponse> getListDetails(@PathVariable Long listId) {
+        return ResponseEntity.ok(listsMapper.getListDetails(listId));
+    }
+
+    @GetMapping("/{listId}/members") // TODO add tests
+    public ResponseEntity<BaseListProjectionResponse> getListMembers(@PathVariable Long listId) {
+        return ResponseEntity.ok(listsMapper.getListMembers(listId));
+    }
+
 }

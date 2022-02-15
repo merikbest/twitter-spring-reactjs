@@ -7,6 +7,8 @@ import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.ImageRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.ListsRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetsProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.lists.*;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.ListsService;
@@ -88,7 +90,8 @@ public class ListsServiceImpl implements ListsService {
     }
 
     @Override
-    public Lists editTweetList(Lists listInfo) {
+    @Transactional
+    public BaseListProjection editTweetList(Lists listInfo) {
         if (listInfo.getName().length() == 0 || listInfo.getName().length() > 25) {
             throw new ApiRequestException("Incorrect list name length", HttpStatus.BAD_REQUEST);
         }
@@ -103,9 +106,7 @@ public class ListsServiceImpl implements ListsService {
         listFromDb.setDescription(listInfo.getDescription());
         listFromDb.setWallpaper(listInfo.getWallpaper());
         listFromDb.setPrivate(listInfo.isPrivate());
-        Lists list = listsRepository.save(listFromDb);
-        list.setTweets(mergeTweets(list));
-        return list;
+        return listsRepository.getListById(listFromDb.getId(), userId).get();
     }
 
     @Override
@@ -130,7 +131,8 @@ public class ListsServiceImpl implements ListsService {
     }
 
     @Override
-    public Lists followList(Long listId) {
+    @Transactional
+    public Boolean followList(Long listId) {
         User user = authenticationService.getAuthenticatedUser();
         Lists list = listsRepository.findByIdAndIsPrivateFalse(listId)
                 .orElseThrow(() -> new ApiRequestException("List not found", HttpStatus.NOT_FOUND));
@@ -146,16 +148,17 @@ public class ListsServiceImpl implements ListsService {
                 list.setPinnedDate(null);
             }
             user.getUserLists().remove(list);
+            return false;
         } else {
             listFollowers.add(user);
             user.getUserLists().add(list);
+            return true;
         }
-        userRepository.save(user);
-        return listsRepository.save(list);
     }
 
     @Override
-    public Lists pinList(Long listId) {
+    @Transactional
+    public Boolean pinList(Long listId) {
         Long userId = authenticationService.getAuthenticatedUserId();
         List<Lists> userLists = listsRepository.findByListOwner_Id(userId);
         Optional<Lists> list = userLists.stream()
@@ -165,17 +168,19 @@ public class ListsServiceImpl implements ListsService {
         if (list.isPresent()) {
             if (list.get().getPinnedDate() == null) {
                 list.get().setPinnedDate(LocalDateTime.now().withNano(0));
+                return true;
             } else {
                 list.get().setPinnedDate(null);
+                return false;
             }
-            return listsRepository.save(list.get());
         } else {
             throw new ApiRequestException("List not found", HttpStatus.NOT_FOUND);
         }
     }
 
     @Override
-    public List<Lists> addUserToLists(Long userId, List<Lists> lists) {
+    @Transactional
+    public List<Long> addUserToLists(Long userId, List<Lists> lists) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
         checkUserIsBlocked(authUserId, userId);
         User user = userRepository.getValidUser(userId, authUserId)
@@ -208,11 +213,14 @@ public class ListsServiceImpl implements ListsService {
                 }
             });
         });
-        return userLists;
+        return userLists.stream()
+                .map(Lists::getId)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Lists addUserToList(Long userId, Long listId) {
+    @Transactional
+    public Boolean addUserToList(Long userId, Long listId) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
         checkUserIsBlocked(authUserId, userId);
         User user = userRepository.getValidUser(userId, authUserId)
@@ -226,12 +234,32 @@ public class ListsServiceImpl implements ListsService {
 
         if (listMember.isPresent()) {
             list.getMembers().remove(user);
+            return false;
         } else {
             list.getMembers().add(user);
+            return true;
         }
-        listsRepository.save(list);
-        list.setTweets(mergeTweets(list));
-        return list;
+    }
+
+    @Override
+    public List<TweetProjection> getTweetsByListId(Long listId) {
+        List<TweetsProjection> tweets = listsRepository.getTweetsByListId(listId);
+        return tweets.contains(null) ? new ArrayList<>() : tweets.stream()
+                .map(TweetsProjection::getTweet)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public BaseListProjection getListDetails(Long listId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return listsRepository.getListDetails(listId, authUserId)
+                .orElseThrow(() -> new ApiRequestException("List not found", HttpStatus.NOT_FOUND));
+    }
+
+    @Override
+    public List<ListMemberProjection> getListMembers(Long listId) {
+        listsRepository.getListMembers(listId);
+        return null;
     }
 
     public boolean isMyProfileFollowList(Long listId) {
