@@ -257,14 +257,32 @@ public class ListsServiceImpl implements ListsService {
     }
 
     @Override
-    public List<ListMemberProjection> getListMembers(Long listId) {
-        listsRepository.getListMembers(listId);
-        return null;
+    public Map<String, Object> getListMembers(Long listId, Long listOwnerId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+
+        if (!listOwnerId.equals(authUserId)) {
+            List<ListsMemberProjection> listMembers = listsRepository.getListMembers(listId, ListsMemberProjection.class);
+            return Map.of("userMembers", listMembers);
+        } else {
+            List<ListsOwnerMemberProjection> listMembers = listsRepository.getListMembers(listId, ListsOwnerMemberProjection.class);
+            return Map.of("authUserMembers", listMembers);
+        }
+    }
+
+    @Override
+    public List<ListsOwnerMemberProjection> searchListMembersByUsername(Long listId, String username) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return listsRepository.searchListMembersByUsername( username);
     }
 
     public boolean isMyProfileFollowList(Long listId) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
         return listsRepository.isMyProfileFollowList(listId, authUserId);
+    }
+
+    public boolean isListIncludeUser(Long listId, Long memberId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return listsRepository.isListIncludeUser(listId, authUserId, memberId);
     }
 
     private void checkUserIsBlocked(Long userId, Long supposedBlockedUserId) {

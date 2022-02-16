@@ -6,6 +6,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.Tweets
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.lists.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -57,6 +58,14 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
             "AND follower.id = :userId")
     boolean isMyProfileFollowList(Long listId, Long userId);
 
+    @Query("SELECT CASE WHEN count(meber) > 0 THEN true ELSE false END FROM User user " +
+            "LEFT JOIN user.userLists userList " +
+            "LEFT JOIN userList.members meber " +
+            "WHERE user.id = :authUserId " +
+            "AND userList.id = :listId " +
+            "AND meber.id = :memberId")
+    boolean isListIncludeUser(Long listId, Long authUserId, Long memberId);
+
     @Query("SELECT l as list FROM Lists l WHERE l.listOwner.id = :ownerId AND l.isPrivate = false")
     List<ListsProjection> findByListOwnerIdAndIsPrivateFalse(Long ownerId);
 
@@ -69,5 +78,10 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
     Optional<BaseListProjection> getListDetails(Long listId, Long authUserId);
 
     @Query("SELECT m as member, l.id as listId FROM Lists l LEFT JOIN l.members m WHERE l.id = :listId")
-    List<ListsMemberProjection> getListMembers(Long listId);
+    <T> List<T> getListMembers(Long listId, Class<T> type);
+
+    @Query("SELECT u as member FROM User u " +
+            "WHERE UPPER(u.fullName) LIKE UPPER(CONCAT('%',:name,'%')) " +
+            "OR UPPER(u.username) LIKE UPPER(CONCAT('%',:name,'%'))")
+    List<ListsOwnerMemberProjection> searchListMembersByUsername(@Param("name") String name);
 }

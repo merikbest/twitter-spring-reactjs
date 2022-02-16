@@ -3,10 +3,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.controller;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.ListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.TweetProjectionResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.lists.BaseListProjectionResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.lists.ListProjectionResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.lists.ListUserProjectionResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.lists.PinnedListProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.lists.*;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.ListsMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -96,9 +93,14 @@ public class ListsController {
         return ResponseEntity.ok(listsMapper.getListDetails(listId));
     }
 
-    @GetMapping("/{listId}/members") // TODO add tests
-    public ResponseEntity<BaseListProjectionResponse> getListMembers(@PathVariable Long listId) {
-        return ResponseEntity.ok(listsMapper.getListMembers(listId));
+    @GetMapping("/{listId}/{listOwnerId}/members") // TODO add tests
+    public ResponseEntity<List<?>> getListMembers(@PathVariable Long listId, @PathVariable Long listOwnerId) {
+        return ResponseEntity.ok(listsMapper.getListMembers(listId, listOwnerId));
     }
 
+    @GetMapping("/search/{listId}/{username}") // TODO add tests
+    public ResponseEntity<List<ListsOwnerMemberProjectionResponse>> searchListMembersByUsername(
+            @PathVariable Long listId, @PathVariable String username) {
+        return ResponseEntity.ok(listsMapper.searchListMembersByUsername(listId, username));
+    }
 }

@@ -8,6 +8,4 @@ public interface ListMemberProjection {
     String getUsername();
     String getAbout();
     ImageProjection getAvatar();
-
-//    boolean isMember();
 }

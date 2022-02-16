@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetP
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.lists.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ListsService {
 
@@ -38,5 +39,7 @@ public interface ListsService {
 
     BaseListProjection getListDetails(Long listId);
 
-    List<ListMemberProjection> getListMembers(Long listId);
+    Map<String, Object> getListMembers(Long listId, Long listOwnerId);
+
+    List<ListsOwnerMemberProjection> searchListMembersByUsername(Long listId, String username);
 }
