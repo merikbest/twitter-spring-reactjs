@@ -5,6 +5,8 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.request.MessageWithTweet
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ChatMessageResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ChatResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.chats.ChatMessageProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.chats.ChatProjectionResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.ChatMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,17 +24,17 @@ public class ChatController {
     private final SimpMessagingTemplate messagingTemplate;
 
     @GetMapping("/users")
-    public ResponseEntity<List<ChatResponse>> getUserChats() {
+    public ResponseEntity<List<ChatProjectionResponse>> getUserChats() {
         return ResponseEntity.ok(chatMapper.getUserChats());
     }
 
     @GetMapping("/create/{userId}")
-    public ResponseEntity<ChatResponse> createChat(@PathVariable Long userId) {
+    public ResponseEntity<ChatProjectionResponse> createChat(@PathVariable Long userId) {
         return ResponseEntity.ok(chatMapper.createChat(userId));
     }
 
     @GetMapping("/{chatId}/messages")
-    public ResponseEntity<List<ChatMessageResponse>> getChatMessages(@PathVariable Long chatId) {
+    public ResponseEntity<List<ChatMessageProjectionResponse>> getChatMessages(@PathVariable Long chatId) {
         return ResponseEntity.ok(chatMapper.getChatMessages(chatId));
     }
 

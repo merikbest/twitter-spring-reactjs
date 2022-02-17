@@ -132,28 +132,25 @@ public class ListsMapper {
             if (userMembers.get(0).getMember() == null) {
                 return new ArrayList<>();
             } else {
-                return getListsOwnerMemberProjectionResponses(userMembers);
+                List<ListsOwnerMemberProjectionResponse> members = new ArrayList<>();
+                userMembers.forEach(listsMemberProjection -> {
+                    ListsOwnerMemberProjectionResponse member = modelMapper.map(listsMemberProjection.getMember(), ListsOwnerMemberProjectionResponse.class);
+                    member.setMemberInList(listsMemberProjection.getIsMemberInList());
+                    members.add(member);
+                });
+                return members;
             }
         }
     }
 
     public List<ListsOwnerMemberProjectionResponse> searchListMembersByUsername(Long listId, String username) {
-        List<ListsOwnerMemberProjection> userMembers = listsService.searchListMembersByUsername(listId, username);
-
-        if (userMembers.get(0).getMember() == null) {
-            return new ArrayList<>();
-        } else {
-            return getListsOwnerMemberProjectionResponses(userMembers);
-        }
-    }
-
-    private List<ListsOwnerMemberProjectionResponse> getListsOwnerMemberProjectionResponses(List<ListsOwnerMemberProjection> userMembers) {
-        List<ListsOwnerMemberProjectionResponse> members = new ArrayList<>();
-        userMembers.forEach(listsMemberProjection -> {
-            ListsOwnerMemberProjectionResponse member = modelMapper.map(listsMemberProjection.getMember(), ListsOwnerMemberProjectionResponse.class);
-            member.setMemberInList(listsMemberProjection.getIsMemberInList());
-            members.add(member);
-        });
-        return members;
+        List<Map<String, Object>> userMembers = listsService.searchListMembersByUsername(listId, username);
+        return userMembers.stream()
+                .map(userMemberMap -> {
+                    ListsOwnerMemberProjectionResponse member = modelMapper.map(userMemberMap.get("member"), ListsOwnerMemberProjectionResponse.class);
+                    member.setMemberInList((Boolean) userMemberMap.get("isMemberInList"));
+                    return member;
+                })
+                .collect(Collectors.toList());
     }
 }

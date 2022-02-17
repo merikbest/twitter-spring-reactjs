@@ -41,5 +41,5 @@ public interface ListsService {
 
     Map<String, Object> getListMembers(Long listId, Long listOwnerId);
 
-    List<ListsOwnerMemberProjection> searchListMembersByUsername(Long listId, String username);
+    List<Map<String, Object>> searchListMembersByUsername(Long listId, String username);
 }

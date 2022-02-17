@@ -83,5 +83,5 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
     @Query("SELECT u as member FROM User u " +
             "WHERE UPPER(u.fullName) LIKE UPPER(CONCAT('%',:name,'%')) " +
             "OR UPPER(u.username) LIKE UPPER(CONCAT('%',:name,'%'))")
-    List<ListsOwnerMemberProjection> searchListMembersByUsername(@Param("name") String name);
+    List<ListsMemberProjection> searchListMembersByUsername(@Param("name") String name);
 }

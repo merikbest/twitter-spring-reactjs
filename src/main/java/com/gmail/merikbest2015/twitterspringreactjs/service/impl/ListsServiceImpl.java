@@ -2,7 +2,6 @@ package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 
 import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Lists;
-import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.ImageRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.ListsRepository;
@@ -270,9 +269,15 @@ public class ListsServiceImpl implements ListsService {
     }
 
     @Override
-    public List<ListsOwnerMemberProjection> searchListMembersByUsername(Long listId, String username) {
-        Long authUserId = authenticationService.getAuthenticatedUserId();
-        return listsRepository.searchListMembersByUsername( username);
+    public  List<Map<String, Object>> searchListMembersByUsername(Long listId, String username) {
+        List<Map<String, Object>> members = new ArrayList<>();
+        listsRepository.searchListMembersByUsername(username)
+                .forEach(member ->
+                        members.add(Map.of(
+                                "member", member.getMember(),
+                                "isMemberInList", isListIncludeUser(listId, member.getMember().getId()))
+                        ));
+        return members;
     }
 
     public boolean isMyProfileFollowList(Long listId) {
@@ -291,15 +296,5 @@ public class ListsServiceImpl implements ListsService {
         if (isPresent) {
             throw new ApiRequestException("User with ID:" + supposedBlockedUserId + " is blocked", HttpStatus.BAD_REQUEST);
         }
-    }
-
-    private List<Tweet> mergeTweets(Lists list) {
-        List<Tweet> tweets = list.getTweets();
-        List<User> members = list.getMembers();
-        members.forEach(member -> tweets.addAll(member.getTweets()));
-        return tweets.stream()
-                .filter(tweet -> tweet.getAddressedUsername() == null)
-                .sorted(Comparator.comparing(Tweet::getDateTime).reversed())
-                .collect(Collectors.toList());
     }
 }
