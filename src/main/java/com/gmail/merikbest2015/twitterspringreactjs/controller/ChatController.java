@@ -39,15 +39,15 @@ public class ChatController {
     }
 
     @GetMapping("/{chatId}/read/messages")
-    public ResponseEntity<UserResponse> readChatMessages(@PathVariable Long chatId) {
+    public ResponseEntity<Integer> readChatMessages(@PathVariable Long chatId) {
         return ResponseEntity.ok(chatMapper.readChatMessages(chatId));
     }
 
     @PostMapping("/add/message")
-    public ResponseEntity<ChatMessageResponse> addMessage(@RequestBody ChatMessageRequest chatMessage) {
-        ChatMessageResponse message = chatMapper.addMessage(chatMessage);
-        message.getChat().getParticipants()
-                .forEach(user -> messagingTemplate.convertAndSend("/topic/chat/" + user.getId(), message));
+    public ResponseEntity<ChatMessageProjectionResponse> addMessage(@RequestBody ChatMessageRequest chatMessage) {
+        ChatMessageProjectionResponse message = chatMapper.addMessage(chatMessage);
+        message.getChatParticipantsIds()
+                .forEach(userid -> messagingTemplate.convertAndSend("/topic/chat/" + userid, message));
         return ResponseEntity.ok(message);
     }
 

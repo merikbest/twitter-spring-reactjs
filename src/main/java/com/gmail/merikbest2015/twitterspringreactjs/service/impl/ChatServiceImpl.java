@@ -17,10 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -82,16 +79,18 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public User readChatMessages(Long chatId) {
+    @Transactional
+    public Integer readChatMessages(Long chatId) {
         User user = authenticationService.getAuthenticatedUser();
         user.setUnreadMessages(user.getUnreadMessages().stream()
                 .filter(message -> !message.getChat().getId().equals(chatId))
                 .collect(Collectors.toList()));
-        return userRepository.save(user);
+        return user.getUnreadMessages().size();
     }
 
     @Override
-    public ChatMessage addMessage(ChatMessage chatMessage, Long chatId) {
+    @Transactional
+    public Map<String, Object> addMessage(ChatMessage chatMessage, Long chatId) {
         User author = authenticationService.getAuthenticatedUser();
         Chat chat = chatRepository.findById(chatId)
                 .orElseThrow(() -> new ApiRequestException("Chat not found", HttpStatus.NOT_FOUND));
@@ -105,8 +104,8 @@ public class ChatServiceImpl implements ChatService {
 
         Optional<ChatParticipant> blockedChatParticipant = chat.getParticipants().stream()
                 .filter(participant -> !participant.getUser().getId().equals(author.getId())
-                        && isParticipantBlocked(participant.getUser(), author)
-                        || isParticipantBlocked(author, participant.getUser()))
+                        && userService.isUserBlockedByMyProfile(author.getId())
+                        || userService.isMyProfileBlockedByUser(participant.getUser().getId()))
                 .findFirst();
 
         if (blockedChatParticipant.isPresent()) {
@@ -118,12 +117,17 @@ public class ChatServiceImpl implements ChatService {
         chatMessageRepository.save(chatMessage);
         List<ChatMessage> messages = chat.getMessages();
         messages.add(chatMessage);
-        chatRepository.save(chat);
         notifyChatParticipants(chatMessage, author);
-        return chatMessage;
+
+        List<Long> chatParticipantsIds = chat.getParticipants().stream()
+                .map(participant -> participant.getUser().getId())
+                .collect(Collectors.toList());
+        ChatMessageProjection message = chatMessageRepository.getChatMessageById(chatMessage.getId());
+        return Map.of("chatParticipantsIds", chatParticipantsIds, "message", message);
     }
 
     @Override
+    @Transactional
     public List<ChatMessage> addMessageWithTweet(String text, Tweet tweet, List<User> users) {
         User author = authenticationService.getAuthenticatedUser();
         List<ChatMessage> chatMessages = new ArrayList<>();

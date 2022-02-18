@@ -16,6 +16,8 @@ public interface ChatParticipantRepository extends JpaRepository<ChatParticipant
     @Query("SELECT cp as participant FROM User u LEFT JOIN u.chats cp WHERE u.id = :userId")
     List<ChatParticipantsProjection> getChatParticipants(Long userId);
 
+
+
     @Modifying
     @Transactional
     @Query("UPDATE ChatParticipant chatParticipant " +

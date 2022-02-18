@@ -7,6 +7,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.C
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.ChatProjection;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ChatService {
 
@@ -16,9 +17,9 @@ public interface ChatService {
 
     List<ChatMessageProjection> getChatMessages(Long chatId);
 
-    User readChatMessages(Long chatId);
+    Integer readChatMessages(Long chatId);
 
-    ChatMessage addMessage(ChatMessage chatMessage, Long chatId);
+    Map<String, Object> addMessage(ChatMessage chatMessage, Long chatId);
 
     List<ChatMessage> addMessageWithTweet(String text, Tweet tweet, List<User> users);
 

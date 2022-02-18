@@ -1,10 +1,12 @@
 package com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.chats;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.ImageProjection;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,6 +16,8 @@ public class ChatMessageProjectionResponse {
     private LocalDateTime date;
     private ChatAuthorProjectionResponse author;
     private ChatTweetProjectionResponse tweet;
+    @JsonIgnore
+    private List<Long> chatParticipantsIds;
 
     @Getter
     @Setter

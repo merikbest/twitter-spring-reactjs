@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
@@ -73,13 +74,16 @@ public class ChatMapper {
                 .collect(Collectors.toList());
     }
 
-    public UserResponse readChatMessages(Long chatId) {
-        return userMapper.convertToUserResponse(chatService.readChatMessages(chatId));
+    public Integer readChatMessages(Long chatId) {
+        return chatService.readChatMessages(chatId);
     }
 
-    public ChatMessageResponse addMessage(ChatMessageRequest chatMessageRequest) {
-        return convertToChatMessageResponse(chatService.addMessage(
-                convertToChatMessageEntity(chatMessageRequest), chatMessageRequest.getChatId()));
+    public ChatMessageProjectionResponse addMessage(ChatMessageRequest chatMessageRequest) {
+        Map<String, Object> messageMap = chatService.addMessage(
+                convertToChatMessageEntity(chatMessageRequest), chatMessageRequest.getChatId());
+        ChatMessageProjectionResponse message = modelMapper.map((ChatMessageProjection) messageMap.get("message"), ChatMessageProjectionResponse.class);
+        message.setChatParticipantsIds((List<Long>) messageMap.get("chatParticipantsIds"));
+        return message;
     }
 
     public List<ChatMessageResponse> addMessageWithTweet(MessageWithTweetRequest request) {
