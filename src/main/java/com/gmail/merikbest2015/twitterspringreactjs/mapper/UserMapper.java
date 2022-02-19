@@ -3,8 +3,14 @@ package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.SettingsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.*;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.*;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.notification.NotificationProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.notification.NotificationUserProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.notification.NotificationsProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.refactor.NotificationResponseI;
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.UserDetailProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.*;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.*;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserSettingsService;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +35,10 @@ public class UserMapper {
 
     private ImageResponse convertToImageResponse(Image image) {
         return modelMapper.map(image, ImageResponse.class);
+    }
+
+    NotificationResponseI convertToNotificationResponseI(Notification notification) {
+        return modelMapper.map(notification, NotificationResponseI.class);
     }
 
     NotificationResponse convertToNotificationResponse(Notification notification) {
@@ -72,125 +82,167 @@ public class UserMapper {
         return new TweetHeaderResponse(tweetResponses, responseHeaders);
     }
 
-    public UserResponse getUserById(Long userId) {
-        return convertToUserResponse(userService.getUserById(userId));
+    private TweetHeaderProjectionResponse getTweetHeaderProjectionResponse(List<TweetProjection> tweets, Integer totalPages) {
+        List<TweetProjectionResponse> tweetResponses = tweetMapper.convertListToProjectionResponse(tweets);
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("page-total-count", String.valueOf(totalPages));
+        return new TweetHeaderProjectionResponse(tweetResponses, responseHeaders);
     }
 
-    public List<UserResponse> getUsers() {
-        return convertUserListToResponse(userService.getUsers());
+    public UserProfileProjectionResponse getUserById(Long userId) {
+        UserProfileProjection user = userService.getUserById(userId);
+        return modelMapper.map(user, UserProfileProjectionResponse.class);
+    }
+
+    public List<UserProjectionResponse> getUsers() {
+        List<UserProjection> users = userService.getUsers();
+        return users.stream()
+                .map(user -> modelMapper.map(user, UserProjectionResponse.class))
+                .collect(Collectors.toList());
     }
 
     public ImageResponse uploadImage(MultipartFile multipartFile) {
         return convertToImageResponse(userService.uploadImage(multipartFile));
     }
 
-    public UserResponse updateUserProfile(UserRequest userRequest) {
-        return convertToUserResponse(userService.updateUserProfile(convertToEntity(userRequest)));
+    public AuthUserProjectionResponse updateUserProfile(UserRequest userRequest) {
+        AuthUserProjection authUserProjection = userService.updateUserProfile(convertToEntity(userRequest));
+        return modelMapper.map(authUserProjection, AuthUserProjectionResponse.class);
     }
 
-    public UserResponse startUseTwitter(Long userId) {
-        return convertToUserResponse(userService.startUseTwitter(userId));
+    public Boolean startUseTwitter() {
+        return userService.startUseTwitter();
     }
 
-    public TweetHeaderResponse getUserTweets(Long userId, Pageable pageable) {
-        Page<Tweet> userTweets = userService.getUserTweets(userId, pageable);
-        return getTweetHeaderResponse(userTweets.getContent(), userTweets.getTotalPages());
+    public TweetHeaderProjectionResponse getUserTweets(Long userId, Pageable pageable) {
+        Page<TweetProjection> userTweets = userService.getUserTweets(userId, pageable);
+        return getTweetHeaderProjectionResponse(userTweets.getContent(), userTweets.getTotalPages());
     }
 
-    public TweetHeaderResponse getUserLikedTweets(Long userId, Pageable pageable) {
-        Page<LikeTweet> userLikedTweets = userService.getUserLikedTweets(userId, pageable);
-        List<Tweet> tweets = new ArrayList<>();
+    public TweetHeaderProjectionResponse getUserLikedTweets(Long userId, Pageable pageable) {
+        Page<LikeTweetProjection> userLikedTweets = userService.getUserLikedTweets(userId, pageable);
+        List<TweetProjection> tweets = new ArrayList<>();
         userLikedTweets.getContent().forEach(likeTweet -> tweets.add(likeTweet.getTweet()));
-        return getTweetHeaderResponse(tweets, userLikedTweets.getTotalPages());
+        return getTweetHeaderProjectionResponse(tweets, userLikedTweets.getTotalPages());
     }
 
-    public TweetHeaderResponse getUserMediaTweets(Long userId, Pageable pageable) {
-        Page<Tweet> mediaTweets = userService.getUserMediaTweets(userId, pageable);
-        return getTweetHeaderResponse(mediaTweets.getContent(), mediaTweets.getTotalPages());
+    public TweetHeaderProjectionResponse getUserMediaTweets(Long userId, Pageable pageable) {
+        Page<TweetProjection> mediaTweets = userService.getUserMediaTweets(userId, pageable);
+        return getTweetHeaderProjectionResponse(mediaTweets.getContent(), mediaTweets.getTotalPages());
     }
 
-    public TweetHeaderResponse getUserRetweetsAndReplies(Long userId, Pageable pageable) {
-        Page<Tweet> retweetsAndReplies = userService.getUserRetweetsAndReplies(userId, pageable);
-        return getTweetHeaderResponse(retweetsAndReplies.getContent(), retweetsAndReplies.getTotalPages());
+    public TweetHeaderProjectionResponse getUserRetweetsAndReplies(Long userId, Pageable pageable) {
+        Page<TweetProjection> retweetsAndReplies = userService.getUserRetweetsAndReplies(userId, pageable);
+        return getTweetHeaderProjectionResponse(retweetsAndReplies.getContent(), retweetsAndReplies.getTotalPages());
     }
 
-    public TweetHeaderResponse getUserBookmarks(Pageable pageable) {
-        Page<Bookmark> bookmarks = userService.getUserBookmarks(pageable);
-        List<Tweet> tweets = new ArrayList<>();
+    public TweetHeaderProjectionResponse getUserBookmarks(Pageable pageable) {
+        Page<BookmarkProjection> bookmarks = userService.getUserBookmarks(pageable);
+        List<TweetProjection> tweets = new ArrayList<>();
         bookmarks.getContent().forEach(bookmark -> tweets.add(bookmark.getTweet()));
-        return getTweetHeaderResponse(tweets, bookmarks.getTotalPages());
+        return getTweetHeaderProjectionResponse(tweets, bookmarks.getTotalPages());
     }
 
-    public UserResponse processUserBookmarks(Long tweetId) {
-        return convertToUserResponse(userService.processUserBookmarks(tweetId));
+    public Boolean processUserBookmarks(Long tweetId) {
+        return userService.processUserBookmarks(tweetId);
     }
 
-    public List<UserResponse> getFollowers(Long userId) {
-        return convertUserListToResponse(userService.getFollowers(userId));
+    public List<BaseUserProjectionResponse> getFollowers(Long userId) {
+        List<BaseUserProjection> followers = userService.getFollowers(userId);
+        return followers.stream()
+                .map(user -> modelMapper.map(user, BaseUserProjectionResponse.class))
+                .collect(Collectors.toList());
     }
 
-    public List<UserResponse> getFollowing(Long userId) {
-        return convertUserListToResponse(userService.getFollowing(userId));
+    public List<BaseUserProjectionResponse> getFollowing(Long userId) {
+        List<BaseUserProjection> following = userService.getFollowing(userId);
+        return following.stream()
+                .map(user -> modelMapper.map(user, BaseUserProjectionResponse.class))
+                .collect(Collectors.toList());
     }
 
-    public NotificationResponse processFollow(Long userId) {
-        return convertToNotificationResponse(userService.processFollow(userId));
+    public NotificationResponseI processFollow(Long userId) {
+        Map<String, Object> notificationDetails = userService.processFollow(userId);
+        NotificationResponseI notification = convertToNotificationResponseI((Notification) notificationDetails.get("notification"));
+        notification.getUserToFollow().setFollower((Boolean) notificationDetails.get("isFollower"));
+        return notification;
     }
 
-    public List<UserResponse> overallFollowers(Long userId) {
-        return convertUserListToResponse(userService.overallFollowers(userId));
+    public List<BaseUserProjectionResponse> overallFollowers(Long userId) {
+        List<BaseUserProjection> users = userService.overallFollowers(userId);
+        return users.stream()
+                .map(user -> modelMapper.map(user, BaseUserProjectionResponse.class))
+                .collect(Collectors.toList());
     }
 
-    public UserResponse processFollowRequestToPrivateProfile(Long userId) {
-        return convertToUserResponse(userService.processFollowRequestToPrivateProfile(userId));
+    public UserProfileProjectionResponse processFollowRequestToPrivateProfile(Long userId) {
+        UserProfileProjection userProfileProjection = userService.processFollowRequestToPrivateProfile(userId);
+        return modelMapper.map(userProfileProjection, UserProfileProjectionResponse.class);
     }
 
-    public UserResponse acceptFollowRequest(Long userId) {
-        return convertToUserResponse(userService.acceptFollowRequest(userId));
+    public String acceptFollowRequest(Long userId) {
+        return userService.acceptFollowRequest(userId);
     }
 
-    public UserResponse declineFollowRequest(Long userId) {
-        return convertToUserResponse(userService.declineFollowRequest(userId));
+    public String declineFollowRequest(Long userId) {
+        return userService.declineFollowRequest(userId);
     }
 
-    public UserResponse processSubscribeToNotifications(Long userId) {
-        return convertToUserResponse(userService.processSubscribeToNotifications(userId));
+    public Boolean processSubscribeToNotifications(Long userId) {
+        return userService.processSubscribeToNotifications(userId);
     }
 
-    public List<UserResponse> getRelevantUsers() {
-        return convertUserListToResponse(userService.getRelevantUsers());
+    public List<UserProjectionResponse> getRelevantUsers() {
+        List<UserProjection> relevantUsers = userService.getRelevantUsers();
+        return relevantUsers.stream()
+                .map(relevantUser -> modelMapper.map(relevantUser, UserProjectionResponse.class))
+                .collect(Collectors.toList());
     }
 
-    public List<UserResponse> searchUsersByUsername(String username) {
-        return convertUserListToResponse(userService.searchUsersByUsername(username));
+    public List<UserProjectionResponse> searchUsersByUsername(String username) {
+        List<UserProjection> baseUserProjections = userService.searchUsersByUsername(username);
+        return baseUserProjections.stream()
+                .map(baseUserProjection -> modelMapper.map(baseUserProjection, UserProjectionResponse.class))
+                .collect(Collectors.toList());
     }
 
-    public UserResponse processPinTweet(Long tweetId) {
-        return convertToUserResponse(userService.processPinTweet(tweetId));
+    public Long processPinTweet(Long tweetId) {
+        return userService.processPinTweet(tweetId);
     }
 
     @SuppressWarnings("unchecked")
-    public NotificationsResponse getUserNotifications() {
+    public NotificationsProjectionResponse getUserNotifications() {
         Map<String, Object> userNotifications = userService.getUserNotifications();
-        NotificationsResponse notificationsResponse = new NotificationsResponse();
-        notificationsResponse.setNotifications(convertListToNotificationResponse((List<Notification>) userNotifications.get("notifications")));
-        notificationsResponse.setTweetAuthors(convertUserListToResponse((Set<User>) userNotifications.get("tweetAuthors")));
+        NotificationsProjectionResponse notificationsResponse = new NotificationsProjectionResponse();
+        List<NotificationProjection> notificationProjections = (List<NotificationProjection>) userNotifications.get("notifications");
+        List<NotificationProjectionResponse> notifications = notificationProjections.stream()
+                .map(user -> modelMapper.map(user.getNotification(), NotificationProjectionResponse.class))
+                .collect(Collectors.toList());
+        List<TweetAuthorProjection> tweetAuthorsProjections = (List<TweetAuthorProjection>) userNotifications.get("tweetAuthors");
+        List<NotificationUserProjectionResponse> tweetAuthors = tweetAuthorsProjections.stream()
+                .map(user -> modelMapper.map(user.getTweetAuthor(), NotificationUserProjectionResponse.class))
+                .collect(Collectors.toList());
+        notificationsResponse.setNotifications(notifications);
+        notificationsResponse.setTweetAuthors(tweetAuthors);
         return notificationsResponse;
     }
 
-    public TweetHeaderResponse getNotificationsFromTweetAuthors(Pageable pageable) {
-        Page<Tweet> tweets = userService.getNotificationsFromTweetAuthors(pageable);
-        return getTweetHeaderResponse(tweets.getContent(), tweets.getTotalPages());
+    public TweetHeaderProjectionResponse getNotificationsFromTweetAuthors(Pageable pageable) {
+        Page<TweetsProjection> tweetsProjections = userService.getNotificationsFromTweetAuthors(pageable);
+        List<TweetProjection> tweets = tweetsProjections.getContent().stream()
+                .map(TweetsProjection::getTweet)
+                .collect(Collectors.toList());
+        return getTweetHeaderProjectionResponse(tweets, tweetsProjections.getTotalPages());
     }
 
     public String updateUsername(SettingsRequest request) {
         return userSettingsService.updateUsername(request.getUsername());
     }
 
-    public AuthenticationResponse updateEmail(SettingsRequest request) {
+    public AuthenticationProjectionResponse updateEmail(SettingsRequest request) {
         Map<String, Object> credentials = userSettingsService.updateEmail(request.getEmail());
-        AuthenticationResponse response = new AuthenticationResponse();
-        response.setUser(convertToUserResponse((User) credentials.get("user")));
+        AuthenticationProjectionResponse response = new AuthenticationProjectionResponse();
+        response.setUser(modelMapper.map(credentials.get("user"), AuthUserProjectionResponse.class));
         response.setToken((String) credentials.get("token"));
         return response;
     }
@@ -228,20 +280,26 @@ public class UserMapper {
         return userSettingsService.updateBackgroundColor(request.getBackgroundColor());
     }
 
-    public List<UserResponse> getBlockList() {
-        return convertUserListToResponse(userService.getBlockList());
+    public List<BlockedUserProjectionResponse> getBlockList() {
+        List<BlockedUserProjection> blockList = userService.getBlockList();
+        return blockList.stream()
+                .map(user -> modelMapper.map(user, BlockedUserProjectionResponse.class))
+                .collect(Collectors.toList());
     }
 
-    public UserResponse processBlockList(Long userId) {
-        return convertToUserResponse(userService.processBlockList(userId));
+    public Boolean processBlockList(Long userId) {
+        return userService.processBlockList(userId);
     }
 
-    public List<UserResponse> getMutedList() {
-        return convertUserListToResponse(userService.getMutedList());
+    public List<MutedUserProjectionResponse> getMutedList() {
+        List<MutedUserProjection> mutedList = userService.getMutedList();
+        return mutedList.stream()
+                .map(user -> modelMapper.map(user, MutedUserProjectionResponse.class))
+                .collect(Collectors.toList());
     }
 
-    public UserResponse processMutedList(Long userId) {
-        return convertToUserResponse(userService.processMutedList(userId));
+    public Boolean processMutedList(Long userId) {
+        return userService.processMutedList(userId);
     }
 
     // Projection

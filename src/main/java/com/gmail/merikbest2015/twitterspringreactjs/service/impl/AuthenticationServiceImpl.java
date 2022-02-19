@@ -3,6 +3,8 @@ package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.AuthUserProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.UserCommonProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.security.JwtProvider;
 import com.gmail.merikbest2015.twitterspringreactjs.security.UserPrincipal;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
@@ -15,6 +17,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.security.Principal;
@@ -50,7 +53,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public Map<String, Object> login(String email, String password) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-            User user = userRepository.findByEmail(email)
+            AuthUserProjection user = userRepository.findAuthUserByEmail(email)
                     .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
             String token = jwtProvider.createToken(email, "USER");
             Map<String, Object> response = new HashMap<>();
@@ -90,11 +93,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
+    @Transactional
     public String sendRegistrationCode(String email) {
-        User user = userRepository.findByEmail(email)
+        UserCommonProjection user = userRepository.findCommonUserByEmail(email)
                 .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
-        user.setActivationCode(UUID.randomUUID().toString().substring(0, 7));
-        userRepository.save(user);
+        userRepository.updateActivationCode(UUID.randomUUID().toString().substring(0, 7), user.getId());
 
         String subject = "Registration code";
         String template = "registration-template";
@@ -106,25 +109,24 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
+    @Transactional
     public String activateUser(String code) {
-        User user = userRepository.findByActivationCode(code)
+        UserCommonProjection user = userRepository.findCommonUserByActivationCode(code)
                 .orElseThrow(() -> new ApiRequestException("Activation code not found.", HttpStatus.NOT_FOUND));
-        user.setActivationCode(null);
-        userRepository.save(user);
+        userRepository.updateActivationCode(null, user.getId());
         return "User successfully activated.";
     }
 
     @Override
+    @Transactional
     public Map<String, Object> endRegistration(String email, String password) {
         if (password.length() < 8) {
             throw  new ApiRequestException("Your password needs to be at least 8 characters", HttpStatus.BAD_REQUEST);
         }
-        User user = userRepository.findByEmail(email)
+        AuthUserProjection user = userRepository.findAuthUserByEmail(email)
                 .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
-        user.setPassword(passwordEncoder.encode(password));
-        user.setActive(true);
-        userRepository.save(user);
-
+        userRepository.updatePassword(passwordEncoder.encode(password), user.getId());
+        userRepository.updateActiveUserProfile(user.getId());
         String token = jwtProvider.createToken(email, "USER");
         Map<String, Object> response = new HashMap<>();
         response.put("user", user);
@@ -134,7 +136,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public Map<String, Object> getUserByToken() {
-        User user = getAuthenticatedUser();
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        AuthUserProjection user = userRepository.findAuthUserByEmail(principal.getName())
+                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
         String token = jwtProvider.createToken(user.getEmail(), "USER");
         Map<String, Object> response = new HashMap<>();
         response.put("user", user);
@@ -144,23 +148,23 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public String findEmail(String email) {
-        userRepository.findUserPrincipalByEmail(email)
+        userRepository.findCommonUserByEmail(email)
                 .orElseThrow(() -> new ApiRequestException("Email not found", HttpStatus.NOT_FOUND));
         return "Reset password code is send to your E-mail";
     }
 
     @Override
-    public User findByPasswordResetCode(String code) {
+    public AuthUserProjection findByPasswordResetCode(String code) {
         return userRepository.findByPasswordResetCode(code)
                 .orElseThrow(() -> new ApiRequestException("Password reset code is invalid!", HttpStatus.BAD_REQUEST));
     }
 
     @Override
+    @Transactional
     public String sendPasswordResetCode(String email) {
-        User user = userRepository.findByEmail(email)
+        UserCommonProjection user = userRepository.findCommonUserByEmail(email)
                 .orElseThrow(() -> new ApiRequestException("Email not found", HttpStatus.NOT_FOUND));
-        user.setPasswordResetCode(UUID.randomUUID().toString().substring(0, 7));
-        userRepository.save(user);
+        userRepository.updatePasswordResetCode(UUID.randomUUID().toString().substring(0, 7), user.getId());
 
         String subject = "Password reset";
         String template = "password-reset-template";
@@ -172,6 +176,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
+    @Transactional
     public String passwordReset(String email, String password, String password2) {
         if (StringUtils.isEmpty(password2)) {
             throw new ApiRequestException("Password confirmation cannot be empty.", HttpStatus.BAD_REQUEST);
@@ -179,11 +184,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (password != null && !password.equals(password2)) {
             throw new ApiRequestException("Passwords do not match.", HttpStatus.BAD_REQUEST);
         }
-        User user = userRepository.findByEmail(email)
+        UserCommonProjection user = userRepository.findCommonUserByEmail(email)
                 .orElseThrow(() -> new ApiRequestException("Email not found", HttpStatus.NOT_FOUND));
-        user.setPassword(passwordEncoder.encode(password));
-        user.setPasswordResetCode(null);
-        userRepository.save(user);
+        userRepository.updatePassword(passwordEncoder.encode(password), user.getId());
+        userRepository.updatePasswordResetCode(null, user.getId());
         return "Password successfully changed!";
     }
 }

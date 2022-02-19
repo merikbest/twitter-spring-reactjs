@@ -33,7 +33,7 @@ public interface AuthUserProjection {
     ImageProjection getAvatar();
     ImageProjection getWallpaper();
 
-    @Value("#{target.pinnedTweet.id}")
+    @Value("#{target.pinnedTweet != null ? target.pinnedTweet.id : 0}")
     Integer getPinnedTweetId();
 
     @Value("#{target.followers.size()}")

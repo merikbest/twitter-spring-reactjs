@@ -5,7 +5,8 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.*;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.UserDetailProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.*;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.*;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -42,41 +44,46 @@ public class UserServiceImpl implements UserService {
     private String bucketName;
 
     @Override
-    public User getUserById(Long userId) {
-        return userRepository.findById(userId)
+    public UserProfileProjection getUserById(Long userId) {
+        return userRepository.getUserProfileById(userId)
                 .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
     }
 
     @Override
-    public List<User> getUsers() {
+    public List<UserProjection> getUsers() {
         Long userId = authenticationService.getAuthenticatedUserId();
         return userRepository.findByActiveTrueAndIdNot(userId);
     }
 
     @Override
-    public List<User> getRelevantUsers() {
+    public List<UserProjection> getRelevantUsers() {
         return userRepository.findTop5ByActiveTrue();
     }
 
     @Override
-    public List<User> searchUsersByUsername(String text) {
-        return userRepository.findByFullNameOrUsernameContainingIgnoreCase(text, text);
+    public List<UserProjection> searchUsersByUsername(String text) {
+        return userRepository.findByFullNameOrUsername(text).stream()
+                .map(UserListProjection::getUser)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public User startUseTwitter(Long userId) {
-        User user = authenticationService.getAuthenticatedUser();
-        user.setProfileStarted(true);
-        return userRepository.save(user);
+    @Transactional
+    public Boolean startUseTwitter() {
+        Long userId = authenticationService.getAuthenticatedUserId();
+        userRepository.updateProfileStarted(userId);
+        return true;
     }
 
     @Override
-    public Page<Tweet> getUserTweets(Long userId, Pageable pageable) {
+    public Page<TweetProjection> getUserTweets(Long userId, Pageable pageable) {
         checkIsUserExist(userId);
-        List<Tweet> tweets = tweetRepository.findTweetsByUserId(userId);
-        List<Retweet> retweets = retweetRepository.findRetweetsByUserId(userId);
-        List<Tweet> userTweets = combineTweetsArrays(tweets, retweets);
-        Optional<Tweet> pinnedTweet = tweetRepository.getPinnedTweetByUserId(userId);
+        List<TweetProjection> tweets = tweetRepository.findTweetsByUserId(userId).stream()
+                .map(TweetsProjection::getTweet)
+                .collect(Collectors.toList());
+        List<RetweetProjection> retweets = retweetRepository.findRetweetsByUserId(userId);
+        List<TweetProjection> userTweets = combineTweetsArrays(tweets, retweets);
+        Optional<TweetProjection> pinnedTweet = tweetRepository.getPinnedTweetByUserId(userId);
 
         if (pinnedTweet.isPresent()) {
             boolean isTweetExist = userTweets.removeIf(tweet -> tweet.getId().equals(pinnedTweet.get().getId()));
@@ -85,57 +92,49 @@ public class UserServiceImpl implements UserService {
                 userTweets.add(0, pinnedTweet.get());
             }
         }
-        return getPageableTweetList(pageable, userTweets, tweets.size() + retweets.size());
+        return getPageableTweetProjectionList(pageable, userTweets, tweets.size() + retweets.size());
     }
 
     @Override
-    public Page<Tweet> getUserRetweetsAndReplies(Long userId, Pageable pageable) {
+    public Page<TweetProjection> getUserRetweetsAndReplies(Long userId, Pageable pageable) {
         checkIsUserExist(userId);
-        List<Tweet> replies = tweetRepository.findRepliesByUserId(userId);
-        List<Retweet> retweets = retweetRepository.findRetweetsByUserId(userId);
-        List<Tweet> userTweets = combineTweetsArrays(replies, retweets);
-        return getPageableTweetList(pageable, userTweets, replies.size() + retweets.size());
+        List<TweetProjection> replies = tweetRepository.findRepliesByUserId(userId).stream()
+                .map(TweetsProjection::getTweet)
+                .collect(Collectors.toList());
+        List<RetweetProjection> retweets = retweetRepository.findRetweetsByUserId(userId);
+        List<TweetProjection> userTweets = combineTweetsArrays(replies, retweets);
+        return getPageableTweetProjectionList(pageable, userTweets, replies.size() + retweets.size());
     }
 
     @Override
+    @Transactional
     public Map<String, Object> getUserNotifications() {
         User user = authenticationService.getAuthenticatedUser();
         user.setNotificationsCount(0L);
-        List<Notification> notifications = user.getNotifications().stream()
-                .filter(notification -> !notification.getNotificationType().equals(NotificationType.TWEET))
-                .sorted(Comparator.comparing(Notification::getDate).reversed())
-                .collect(Collectors.toList());
-        Set<User> tweetAuthors = user.getNotifications().stream()
-                .filter(notification -> notification.getNotificationType().equals(NotificationType.TWEET)
-                        && notification.getTweet().getUser().getSubscribers().contains(user))
-                .map(notification -> notification.getTweet().getUser())
-                .collect(Collectors.toSet());
+        List<NotificationProjection> notifications = notificationRepository.getNotificationsByUserId(user.getId());
+        List<TweetAuthorProjection> tweetAuthors = userRepository.getNotificationsTweetAuthors(user.getId());
         Map<String, Object> response = new HashMap<>();
         response.put("notifications", notifications);
         response.put("tweetAuthors", tweetAuthors);
-        userRepository.save(user);
         return response;
     }
 
     @Override
-    public Page<Tweet> getNotificationsFromTweetAuthors(Pageable pageable) {
-        User user = authenticationService.getAuthenticatedUser();
-        List<Tweet> tweets = user.getNotifications().stream()
-                .filter(notification -> notification.getNotificationType().equals(NotificationType.TWEET))
-                .sorted(Comparator.comparing(Notification::getDate).reversed())
-                .map(Notification::getTweet)
-                .collect(Collectors.toList());
-        return getPageableTweetList(pageable, tweets, tweets.size());
+    public Page<TweetsProjection> getNotificationsFromTweetAuthors(Pageable pageable) {
+        Long userId = authenticationService.getAuthenticatedUserId();
+        List<TweetsProjection> tweets = tweetRepository.getNotificationsFromTweetAuthors(userId);
+        return getPageableTweetProjectionList(pageable, tweets, tweets.size());
     }
 
     @Override
-    public Page<Bookmark> getUserBookmarks(Pageable pageable) {
+    public Page<BookmarkProjection> getUserBookmarks(Pageable pageable) {
         Long userId = authenticationService.getAuthenticatedUserId();
         return bookmarkRepository.findByUser(userId, pageable);
     }
 
     @Override
-    public User processUserBookmarks(Long tweetId) {
+    @Transactional
+    public Boolean processUserBookmarks(Long tweetId) {
         User user = authenticationService.getAuthenticatedUser();
         Tweet tweet = tweetRepository.findById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
@@ -147,30 +146,31 @@ public class UserServiceImpl implements UserService {
         if (bookmark.isPresent()) {
             bookmarks.remove(bookmark.get());
             bookmarkRepository.delete(bookmark.get());
+            return false;
         } else {
             Bookmark newBookmark = new Bookmark();
             newBookmark.setTweet(tweet);
             newBookmark.setUser(user);
             bookmarkRepository.save(newBookmark);
             bookmarks.add(newBookmark);
+            return true;
         }
-
-        return userRepository.save(user);
     }
 
     @Override
-    public Page<LikeTweet> getUserLikedTweets(Long userId, Pageable pageable) {
+    public Page<LikeTweetProjection> getUserLikedTweets(Long userId, Pageable pageable) {
         checkIsUserExist(userId);
         return likeTweetRepository.findByUserId(userId, pageable);
     }
 
     @Override
-    public Page<Tweet> getUserMediaTweets(Long userId, Pageable pageable) {
+    public Page<TweetProjection> getUserMediaTweets(Long userId, Pageable pageable) {
         checkIsUserExist(userId);
         return tweetRepository.findAllUserMediaTweets(userId, pageable);
     }
 
     @Override
+    @Transactional
     public Image uploadImage(MultipartFile multipartFile) {
         Image image = new Image();
         if (multipartFile != null) {
@@ -189,7 +189,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUserProfile(User userInfo) {
+    @Transactional
+    public AuthUserProjection updateUserProfile(User userInfo) {
         if (userInfo.getUsername().length() == 0 || userInfo.getUsername().length() > 50) {
             throw new ApiRequestException("Incorrect username length", HttpStatus.BAD_REQUEST);
         }
@@ -197,34 +198,37 @@ public class UserServiceImpl implements UserService {
 
         if (userInfo.getAvatar() != null) {
             user.setAvatar(userInfo.getAvatar());
+            imageRepository.save(userInfo.getAvatar());
         }
         if (userInfo.getWallpaper() != null) {
             user.setWallpaper(userInfo.getWallpaper());
+            imageRepository.save(userInfo.getWallpaper());
         }
         user.setUsername(userInfo.getUsername());
         user.setAbout(userInfo.getAbout());
         user.setLocation(userInfo.getLocation());
         user.setWebsite(userInfo.getWebsite());
         user.setProfileCustomized(true);
-        return userRepository.save(user);
+        return userRepository.findAuthUserById(user.getId());
     }
 
     @Override
-    public List<User> getFollowers(Long userId) {
+    public List<BaseUserProjection> getFollowers(Long userId) {
         checkIsUserExist(userId);
         checkIsUserBlocked(userId);
         return userRepository.getFollowersById(userId);
     }
 
     @Override
-    public List<User> getFollowing(Long userId) {
+    public List<BaseUserProjection> getFollowing(Long userId) {
         checkIsUserExist(userId);
         checkIsUserBlocked(userId);
         return userRepository.getFollowingById(userId);
     }
 
     @Override
-    public Notification processFollow(Long userId) {
+    @Transactional
+    public Map<String, Object> processFollow(Long userId) {
         User user = authenticationService.getAuthenticatedUser();
         User currentUser = userRepository.findById(userId)
                 .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
@@ -232,6 +236,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> follower = followers.stream()
                 .filter(f -> f.getId().equals(currentUser.getId()))
                 .findFirst();
+        boolean isFollower;
 
         if (follower.isPresent()) {
             followers.remove(follower.get());
@@ -240,10 +245,11 @@ public class UserServiceImpl implements UserService {
                     .filter(s -> s.getId().equals(user.getId()))
                     .findFirst();
             subscriber.ifPresent(subscribers::remove);
+            isFollower = false;
         } else {
             followers.add(currentUser);
+            isFollower = true;
         }
-        userRepository.save(user);
 
         Notification notification = new Notification();
         notification.setNotificationType(NotificationType.FOLLOW);
@@ -261,30 +267,22 @@ public class UserServiceImpl implements UserService {
                 currentUser.setNotificationsCount(currentUser.getNotificationsCount() + 1);
                 List<Notification> notifications = currentUser.getNotifications();
                 notifications.add(newNotification);
-                userRepository.save(currentUser);
-                return newNotification;
+                return Map.of("notification", newNotification, "isFollower", isFollower);
             }
         }
-        return notification;
+        return Map.of("notification", notification, "isFollower", isFollower);
     }
 
     @Override
-    public List<User> overallFollowers(Long userId) {
-        User currentUser = userRepository.findById(userId)
-                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
-        User user = authenticationService.getAuthenticatedUser();
-
-        if (!user.getId().equals(userId)) {
-            return user.getFollowers().stream()
-                    .filter(follower -> currentUser.getFollowers().contains(follower))
-                    .collect(Collectors.toList());
-        } else {
-            return user.getFollowers();
-        }
+    public List<BaseUserProjection> overallFollowers(Long userId) {
+        checkIsUserExist(userId);
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return userRepository.getSameFollowers(userId, authUserId, BaseUserProjection.class);
     }
 
     @Override
-    public User processFollowRequestToPrivateProfile(Long userId) {
+    @Transactional
+    public UserProfileProjection processFollowRequestToPrivateProfile(Long userId) {
         User user = authenticationService.getAuthenticatedUser();
         User currentUser = userRepository.findById(userId)
                 .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
@@ -298,80 +296,98 @@ public class UserServiceImpl implements UserService {
         } else {
             followerRequests.add(user);
         }
-        return userRepository.save(currentUser);
+        return userRepository.getUserProfileById(userId).get();
     }
 
     @Override
-    public User acceptFollowRequest(Long userId) {
+    @Transactional
+    public String acceptFollowRequest(Long userId) { // Front-end: myProfile -> followersSize + 1
         User user = authenticationService.getAuthenticatedUser();
         User currentUser = userRepository.findById(userId)
                 .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
         user.getFollowerRequests().remove(currentUser);
         user.getFollowers().add(currentUser);
-        return userRepository.save(user);
+        return "User (id:" + userId + ") accepted.";
     }
 
     @Override
-    public User declineFollowRequest(Long userId) {
+    @Transactional
+    public String declineFollowRequest(Long userId) {
         User user = authenticationService.getAuthenticatedUser();
         User currentUser = userRepository.findById(userId)
                 .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
         user.getFollowerRequests().remove(currentUser);
-        return userRepository.save(user);
+        return "User (id:" + userId + ") declined.";
     }
 
     @Override
-    public User processSubscribeToNotifications(Long userId) {
+    @Transactional
+    public Boolean processSubscribeToNotifications(Long userId) { // Front-end: userProfile -> isSubscriber: true / false
         User user = authenticationService.getAuthenticatedUser();
         User currentUser = userRepository.findById(userId)
                 .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
-        return processUserList(currentUser, user, currentUser.getSubscribers());
+        return processUserList(user, currentUser.getSubscribers());
     }
 
     @Override
-    public User processPinTweet(Long tweetId) {
+    @Transactional
+    public Long processPinTweet(Long tweetId) { // Front-end: myProfile -> pinTweetId: number
         User user = authenticationService.getAuthenticatedUser();
         Tweet tweet = tweetRepository.findById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
 
         if (user.getPinnedTweet() == null || !user.getPinnedTweet().getId().equals(tweet.getId())) {
             user.setPinnedTweet(tweet);
+            return tweet.getId();
         } else {
             user.setPinnedTweet(null);
+            return 0L;
         }
-        return userRepository.save(user);
     }
 
     @Override
-    public List<User> getBlockList() {
+    public List<BlockedUserProjection> getBlockList() {
         Long authUserId = authenticationService.getAuthenticatedUserId();
         return userRepository.getUserBlockListById(authUserId);
     }
 
     @Override
-    public User processBlockList(Long userId) {
+    @Transactional
+    public Boolean processBlockList(Long userId) { // Front-end: userProfile -> isUserBlocked: boolean
         User user = authenticationService.getAuthenticatedUser();
         User currentUser = userRepository.findById(userId)
                 .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
-        user.getFollowers().removeIf(follower -> follower.getId().equals(currentUser.getId()));
-        user.getFollowing().removeIf(following -> following.getId().equals(currentUser.getId()));
-        user.getUserLists().removeIf(list -> list.getMembers().stream()
-                .anyMatch(member -> member.getId().equals(currentUser.getId())));
-        return processUserList(user, currentUser, user.getUserBlockedList());
+        List<User> userBlockedList = user.getUserBlockedList();
+        Optional<User> userFromList = userBlockedList.stream()
+                .filter(blockedUser -> blockedUser.getId().equals(currentUser.getId()))
+                .findFirst();
+
+        if (userFromList.isPresent()) {
+            userBlockedList.remove(userFromList.get());
+            return false;
+        } else {
+            userBlockedList.add(currentUser);
+            user.getFollowers().removeIf(follower -> follower.getId().equals(currentUser.getId()));
+            user.getFollowing().removeIf(following -> following.getId().equals(currentUser.getId()));
+            user.getUserLists().removeIf(list -> list.getMembers().stream()
+                    .anyMatch(member -> member.getId().equals(currentUser.getId())));
+            return true;
+        }
     }
 
     @Override
-    public List<User> getMutedList() {
+    public List<MutedUserProjection> getMutedList() {
         Long authUserId = authenticationService.getAuthenticatedUserId();
-        return userRepository.getUserMutedListById(authUserId);
+        return userRepository.getUserMuteListById(authUserId);
     }
 
     @Override
-    public User processMutedList(Long userId) {
+    @Transactional
+    public Boolean processMutedList(Long userId) { // Front-end: userProfile -> isUserMuted: boolean
         User user = authenticationService.getAuthenticatedUser();
         User currentUser = userRepository.findById(userId)
                 .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
-        return processUserList(user, currentUser, user.getUserMutedList());
+        return processUserList(currentUser, user.getUserMutedList());
     }
 
     @Override
@@ -407,6 +423,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.isUserBlocked(authUserId, userId);
     }
 
+    public boolean isUserMutedByMyProfile(Long userId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return userRepository.isUserMuted(authUserId, userId);
+    }
+
     public boolean isMyProfileBlockedByUser(Long userId) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
         return userRepository.isUserBlocked(userId, authUserId);
@@ -417,33 +438,39 @@ public class UserServiceImpl implements UserService {
         return userRepository.isMyProfileWaitingForApprove(userId, authUserId);
     }
 
-    public List<UserDetailProjection.SameFollower> getSameFollowers(Long userId) {
+    public boolean isMyProfileSubscribed(Long userId) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
-        return userRepository.getSameFollowers(userId, authUserId);
+        return userRepository.isMyProfileSubscribed(userId, authUserId);
     }
 
-    private User processUserList(User authenticatedUser, User currentUser, List<User> userLists) {
+    public List<SameFollower> getSameFollowers(Long userId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return userRepository.getSameFollowers(userId, authUserId, SameFollower.class);
+    }
+
+    private Boolean processUserList(User currentUser, List<User> userLists) {
         Optional<User> userFromList = userLists.stream()
                 .filter(user -> user.getId().equals(currentUser.getId()))
                 .findFirst();
 
         if (userFromList.isPresent()) {
             userLists.remove(userFromList.get());
+            return false;
         } else {
             userLists.add(currentUser);
+            return true;
         }
-        return userRepository.save(authenticatedUser);
     }
 
-    private Page<Tweet> getPageableTweetList(Pageable pageable, List<Tweet> tweets, int totalPages) {
-        PagedListHolder<Tweet> page = new PagedListHolder<>(tweets);
+    private <T> Page<T> getPageableTweetProjectionList(Pageable pageable, List<T> tweets, int totalPages) {
+        PagedListHolder<T> page = new PagedListHolder<>(tweets);
         page.setPage(pageable.getPageNumber());
         page.setPageSize(pageable.getPageSize());
         return new PageImpl<>(page.getPageList(), pageable, totalPages);
     }
 
-    private List<Tweet> combineTweetsArrays(List<Tweet> tweets, List<Retweet> retweets) {
-        List<Tweet> allTweets = new ArrayList<>();
+    private List<TweetProjection> combineTweetsArrays(List<TweetProjection> tweets, List<RetweetProjection> retweets) {
+        List<TweetProjection> allTweets = new ArrayList<>();
         int i = 0;
         int j = 0;
 

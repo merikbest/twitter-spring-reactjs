@@ -1,7 +1,11 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.UserDetailProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.BookmarkProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.LikeTweetProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetsProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,61 +15,61 @@ import java.util.Map;
 
 public interface UserService {
 
-    User getUserById(Long userId);
+    UserProfileProjection getUserById(Long userId);
 
-    List<User> getUsers();
+    List<UserProjection> getUsers();
 
-    List<User> getRelevantUsers();
+    List<UserProjection> getRelevantUsers();
 
-    List<User> searchUsersByUsername(String username);
+    List<UserProjection> searchUsersByUsername(String username);
 
-    User startUseTwitter(Long userId);
+    Boolean startUseTwitter();
 
-    Page<Tweet> getUserTweets(Long userId, Pageable pageable);
+    Page<TweetProjection> getUserTweets(Long userId, Pageable pageable);
 
-    Page<LikeTweet> getUserLikedTweets(Long userId, Pageable pageable);
+    Page<LikeTweetProjection> getUserLikedTweets(Long userId, Pageable pageable);
 
-    Page<Tweet> getUserMediaTweets(Long userId, Pageable pageable);
+    Page<TweetProjection> getUserMediaTweets(Long userId, Pageable pageable);
 
-    Page<Tweet> getUserRetweetsAndReplies(Long userId, Pageable pageable);
+    Page<TweetProjection> getUserRetweetsAndReplies(Long userId, Pageable pageable);
 
     Map<String, Object> getUserNotifications();
 
-    Page<Tweet> getNotificationsFromTweetAuthors(Pageable pageable);
+    Page<TweetsProjection> getNotificationsFromTweetAuthors(Pageable pageable);
 
-    Page<Bookmark> getUserBookmarks(Pageable pageable);
+    Page<BookmarkProjection> getUserBookmarks(Pageable pageable);
 
-    User processUserBookmarks(Long tweetId);
+    Boolean processUserBookmarks(Long tweetId);
 
     Image uploadImage(MultipartFile multipartFile);
 
-    User updateUserProfile(User userInfo);
+    AuthUserProjection updateUserProfile(User userInfo);
 
-    List<User> getFollowers(Long userId);
+    List<BaseUserProjection> getFollowers(Long userId);
 
-    List<User> getFollowing(Long userId);
+    List<BaseUserProjection> getFollowing(Long userId);
 
-    Notification processFollow(Long userId);
+    Map<String, Object> processFollow(Long userId);
 
-    List<User> overallFollowers(Long userId);
+    List<BaseUserProjection> overallFollowers(Long userId);
 
-    User processFollowRequestToPrivateProfile(Long userId);
+    UserProfileProjection processFollowRequestToPrivateProfile(Long userId);
 
-    User acceptFollowRequest(Long userId);
+    String acceptFollowRequest(Long userId);
 
-    User declineFollowRequest(Long userId);
+    String declineFollowRequest(Long userId);
 
-    User processSubscribeToNotifications(Long userId);
+    Boolean processSubscribeToNotifications(Long userId);
 
-    User processPinTweet(Long tweetId);
+    Long processPinTweet(Long tweetId);
 
-    List<User> getBlockList();
+    List<BlockedUserProjection> getBlockList();
 
-    User processBlockList(Long userId);
+    Boolean processBlockList(Long userId);
 
-    List<User> getMutedList();
+    List<MutedUserProjection> getMutedList();
 
-    User processMutedList(Long userId);
+    Boolean processMutedList(Long userId);
 
     UserDetailProjection getUserDetails(Long userId);
 }

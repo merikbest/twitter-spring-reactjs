@@ -1,14 +1,14 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service;
 
-import com.gmail.merikbest2015.twitterspringreactjs.model.Tag;
-import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tag.TagProjection;
 
 import java.util.List;
 
 public interface TagService {
-    List<Tag> getTags();
+    List<TagProjection> getTags();
 
-    List<Tag> getTrends();
+    List<TagProjection> getTrends();
 
-    List<Tweet> getTweetsByTag(String tagName);
+    List<TweetProjection> getTweetsByTag(String tagName);
 }

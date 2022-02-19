@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.twitterspringreactjs.dto.response;
+package com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.LinkCoverSize;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;

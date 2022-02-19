@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetDeleteReque
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.VoteRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.*;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.TweetProjectionResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetProjection;
@@ -16,6 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -133,6 +136,12 @@ public class TweetMapper {
     // Projection
     TweetProjectionResponse convertToProjectionResponse(TweetProjection tweet) {
         return modelMapper.map(tweet, TweetProjectionResponse.class);
+    }
+
+    public List<TweetProjectionResponse> convertListToProjectionResponse(List<TweetProjection> tweets) {
+        return tweets.stream()
+                .map(this::convertToProjectionResponse)
+                .collect(Collectors.toList());
     }
 
     public TweetProjectionResponse getTweetByIdProjection(Long tweetId) {

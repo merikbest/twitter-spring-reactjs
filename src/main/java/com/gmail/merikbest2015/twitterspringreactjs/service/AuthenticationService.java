@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.AuthUserProjection;
 
 import java.util.Map;
 
@@ -24,7 +25,7 @@ public interface AuthenticationService {
 
     String findEmail(String email);
 
-    User findByPasswordResetCode(String code);
+    AuthUserProjection findByPasswordResetCode(String code);
 
     String sendPasswordResetCode(String email);
 

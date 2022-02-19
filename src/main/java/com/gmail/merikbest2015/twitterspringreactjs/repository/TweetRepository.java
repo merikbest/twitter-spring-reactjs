@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.repository;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetsProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -53,33 +54,51 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     Page<Tweet> findAllTweetsWithImages(Pageable pageable);
 
     @Query("SELECT tweet FROM Tweet tweet " +
-            "JOIN tweet.images image " +
+            "LEFT JOIN tweet.images image " +
             "WHERE tweet.scheduledDate IS NULL " +
-            "AND image.id IS NOT NULL " +
-            "AND tweet.user.id = :userId " +
-            "OR UPPER('youtu') LIKE UPPER('%youtu%') " +
+            "AND (tweet.user.id = :userId AND image.id IS NOT NULL) " +
+            "OR (tweet.user.id = :userId AND tweet.text LIKE CONCAT('%','youtu','%')) " +
             "ORDER BY tweet.dateTime DESC")
-    Page<Tweet> findAllUserMediaTweets(Long userId, Pageable pageable);
+    Page<TweetProjection> findAllUserMediaTweets(Long userId, Pageable pageable);
 
     @Query("SELECT tweet FROM Tweet tweet WHERE tweet.quoteTweet.id = :quoteId")
     List<Tweet> findByQuoteTweetId(Long quoteId);
 
-    @Query("SELECT tweet FROM Tweet tweet " +
-            "WHERE tweet.user.id = :userId " +
-            "AND tweet.addressedUsername IS NULL " +
-            "AND tweet.scheduledDate IS NULL " +
-            "ORDER BY tweet.dateTime DESC")
-    List<Tweet> findTweetsByUserId(Long userId);
+    @Query("SELECT t as tweet FROM Tweet t " +
+            "WHERE t.user.id = :userId " +
+            "AND t.addressedUsername IS NULL " +
+            "AND t.scheduledDate IS NULL " +
+            "ORDER BY t.dateTime DESC")
+    List<TweetsProjection> findTweetsByUserId(Long userId);
 
-    @Query("SELECT tweet FROM Tweet tweet " +
-            "WHERE tweet.user.id = :userId " +
-            "AND tweet.addressedUsername IS NOT NULL " +
-            "AND tweet.scheduledDate IS NULL " +
-            "ORDER BY tweet.dateTime DESC")
-    List<Tweet> findRepliesByUserId(Long userId);
+    @Query("SELECT t as tweet FROM Tweet t " +
+            "WHERE t.user.id = :userId " +
+            "AND t.addressedUsername IS NOT NULL " +
+            "AND t.scheduledDate IS NULL " +
+            "ORDER BY t.dateTime DESC")
+    List<TweetsProjection> findRepliesByUserId(Long userId);
 
-    @Query("SELECT user.pinnedTweet FROM User user WHERE user.id = :userId")
-    Optional<Tweet> getPinnedTweetByUserId(Long userId);
+    @Query("SELECT tweet FROM User user LEFT JOIN user.pinnedTweet tweet WHERE user.id = :userId")
+    Optional<TweetProjection> getPinnedTweetByUserId(Long userId);
+
+    @Query("SELECT notificationTweet as tweet " +
+            "FROM User user " +
+            "LEFT JOIN user.notifications notification " +
+            "LEFT JOIN notification.tweet notificationTweet " +
+            "WHERE user.id = :userId " +
+            "AND notification.notificationType = 'TWEET' " +
+            "ORDER BY notificationTweet.dateTime DESC")
+    List<TweetsProjection> getNotificationsFromTweetAuthors(Long userId);
+
+    @Query("SELECT tagTweet as tweet " +
+            "FROM Tag tag " +
+            "LEFT JOIN tag.tweets tagTweet " +
+            "WHERE tag.tagName = :tagName " +
+            "ORDER BY tagTweet.dateTime DESC")
+    List<TweetsProjection> getTweetsByTagName(String tagName);
+
+    @Query("SELECT COUNT(reply) FROM Tweet tweet LEFT JOIN tweet.replies reply WHERE tweet.id = :tweetId")
+    Integer getRepliesCount(Long tweetId);
 
     @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END " +
             "FROM User user " +
