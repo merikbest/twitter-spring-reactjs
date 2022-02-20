@@ -23,35 +23,39 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "WHERE tweet.addressedUsername IS NULL " +
             "AND tweet.scheduledDate IS NULL " +
             "ORDER BY tweet.dateTime DESC")
-    Page<Tweet> findAllTweets(Pageable pageable);
-
-    @Query("SELECT tweet FROM Tweet tweet WHERE tweet.user.id = :userId AND tweet.scheduledDate IS NULL")
-    List<Tweet> findAllByUserId(Long userId);
+    Page<TweetProjection> findAllTweets(Pageable pageable);
 
     @Query("SELECT tweet FROM Tweet tweet WHERE tweet.scheduledDate <= :scheduledDate")
     List<Tweet> findAllByScheduledDate(LocalDateTime scheduledDate);
 
-    @Query("SELECT tweet FROM Tweet tweet WHERE tweet.user.id = :userId " +
+    @Query("SELECT tweet FROM Tweet tweet " +
+            "WHERE tweet.user.id = :userId " +
             "AND tweet.scheduledDate IS NOT NULL " +
             "ORDER BY tweet.scheduledDate DESC")
-    List<Tweet> findAllScheduledTweetsByUserId(Long userId);
+    List<TweetProjection> findAllScheduledTweetsByUserId(Long userId);
 
-    @Query("SELECT tweet FROM Tweet tweet " +
-            "WHERE tweet.scheduledDate IS NULL " +
-            "AND tweet.text LIKE CONCAT('%',:text,'%')")
-    List<Tweet> findAllByText(String text);
+    @Query("SELECT t as tweet FROM Tweet t " +
+            "LEFT JOIN t.user u " +
+            "WHERE t.scheduledDate IS NULL " +
+            "AND (t.text LIKE CONCAT('%',:text,'%') " +
+            "AND UPPER(u.fullName) LIKE UPPER(CONCAT('%',:text,'%')) " +
+            "OR UPPER(u.username) LIKE UPPER(CONCAT('%',:text,'%'))) " +
+            "OR (t.text LIKE CONCAT('%',:text,'%') " +
+            "OR UPPER(u.fullName) LIKE UPPER(CONCAT('%',:text,'%')) " +
+            "OR UPPER(u.username) LIKE UPPER(CONCAT('%',:text,'%'))) " +
+            "ORDER BY t.dateTime DESC")
+    List<TweetsProjection> findAllByText(String text);
 
     @Query("SELECT tweet FROM Tweet tweet " +
             "WHERE tweet.scheduledDate IS NULL " +
             "AND tweet.text LIKE CONCAT('%','youtu','%')")
-    Page<Tweet> findAllTweetsWithVideo(Pageable pageable);
+    Page<TweetProjection> findAllTweetsWithVideo(Pageable pageable);
 
     @Query("SELECT tweet FROM Tweet tweet " +
-            "JOIN tweet.images image " +
             "WHERE tweet.scheduledDate IS NULL " +
-            "AND image.id IS NOT NULL " +
+            "AND tweet.images.size != 0 " +
             "ORDER BY tweet.dateTime DESC")
-    Page<Tweet> findAllTweetsWithImages(Pageable pageable);
+    Page<TweetProjection> findAllTweetsWithImages(Pageable pageable);
 
     @Query("SELECT tweet FROM Tweet tweet " +
             "LEFT JOIN tweet.images image " +
@@ -97,9 +101,6 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "ORDER BY tagTweet.dateTime DESC")
     List<TweetsProjection> getTweetsByTagName(String tagName);
 
-    @Query("SELECT COUNT(reply) FROM Tweet tweet LEFT JOIN tweet.replies reply WHERE tweet.id = :tweetId")
-    Integer getRepliesCount(Long tweetId);
-
     @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END " +
             "FROM User user " +
             "LEFT JOIN user.likedTweets likedTweet " +
@@ -113,4 +114,11 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "WHERE user.id = :userId " +
             "AND retweets.tweet.id = :tweetId")
     boolean isUserRetweetedTweet(Long userId, Long tweetId);
+
+    @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END " +
+            "FROM User user " +
+            "LEFT JOIN user.bookmarks bookmark " +
+            "WHERE user.id = :userId " +
+            "AND bookmark.tweet.id = :tweetId")
+    boolean isUserBookmarkedTweet(Long userId, Long tweetId);
 }

@@ -2,11 +2,9 @@ package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.ChatMessageRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.MessageWithTweetRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ChatMessageResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ChatResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.chats.ChatMessageProjectionResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.chats.ChatProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.BaseUserProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.chats.ChatMessageProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.chats.ChatProjectionResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.ChatMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -47,20 +45,20 @@ public class ChatController {
     public ResponseEntity<ChatMessageProjectionResponse> addMessage(@RequestBody ChatMessageRequest chatMessage) {
         ChatMessageProjectionResponse message = chatMapper.addMessage(chatMessage);
         message.getChatParticipantsIds()
-                .forEach(userid -> messagingTemplate.convertAndSend("/topic/chat/" + userid, message));
+                .forEach(userId -> messagingTemplate.convertAndSend("/topic/chat/" + userId, message));
         return ResponseEntity.ok(message);
     }
 
     @PostMapping("/add/message/tweet")
-    public ResponseEntity<List<ChatMessageResponse>> addMessageWithTweet(@RequestBody MessageWithTweetRequest request) {
-        List<ChatMessageResponse> chatMessages = chatMapper.addMessageWithTweet(request);
-        chatMessages.forEach(chatMessage -> chatMessage.getChat().getParticipants()
-                .forEach(user -> messagingTemplate.convertAndSend("/topic/chat/" + user.getId(), chatMessage)));
+    public ResponseEntity<List<ChatMessageProjectionResponse>> addMessageWithTweet(@RequestBody MessageWithTweetRequest request) {
+        List<ChatMessageProjectionResponse> chatMessages = chatMapper.addMessageWithTweet(request);
+        chatMessages.forEach(chatMessage -> chatMessage.getChatParticipantsIds()
+                .forEach(userId -> messagingTemplate.convertAndSend("/topic/chat/" + userId, chatMessage)));
         return ResponseEntity.ok(chatMessages);
     }
 
     @GetMapping("/participant/{participantId}/{chatId}")
-    public ResponseEntity<UserResponse> getParticipant(@PathVariable Long participantId, @PathVariable Long chatId) {
+    public ResponseEntity<BaseUserProjectionResponse> getParticipant(@PathVariable Long participantId, @PathVariable Long chatId) {
         return ResponseEntity.ok(chatMapper.getParticipant(participantId, chatId));
     }
 

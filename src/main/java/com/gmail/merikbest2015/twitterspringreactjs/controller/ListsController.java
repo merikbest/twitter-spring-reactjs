@@ -2,10 +2,13 @@ package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.ListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserToListsRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.TweetProjectionResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.lists.*;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.lists.*;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetHeaderProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetProjectionResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.ListsMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,8 +87,9 @@ public class ListsController {
     }
 
     @GetMapping("/{listId}/tweets") // TODO add tests
-    public ResponseEntity<List<TweetProjectionResponse>> getTweetsByListId(@PathVariable Long listId) {
-        return ResponseEntity.ok(listsMapper.getTweetsByListId(listId));
+    public ResponseEntity<List<TweetProjectionResponse>> getTweetsByListId(@PathVariable Long listId, @PageableDefault(size = 10) Pageable pageable) {
+        TweetHeaderProjectionResponse response = listsMapper.getTweetsByListId(listId, pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getTweets());
     }
 
     @GetMapping("/{listId}/details") // TODO add tests

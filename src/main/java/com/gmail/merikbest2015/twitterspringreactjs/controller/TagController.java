@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.TagProjectionResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.TweetProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TagProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetProjectionResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.TagMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

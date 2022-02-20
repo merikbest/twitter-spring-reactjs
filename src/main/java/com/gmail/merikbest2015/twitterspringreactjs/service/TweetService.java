@@ -1,6 +1,5 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service;
 
-import com.gmail.merikbest2015.twitterspringreactjs.model.Notification;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetProjection;
@@ -8,42 +7,41 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TweetService {
 
-    Page<Tweet> getTweets(Pageable pageable);
+    Page<TweetProjection> getTweets(Pageable pageable);
 
-    TweetProjection getTweetByIdProjection(Long tweetId);
+    TweetProjection getTweetById(Long tweetId);
 
-    Tweet getTweetById(Long tweetId);
+    Page<TweetProjection> getMediaTweets(Pageable pageable);
 
-    Page<Tweet> getMediaTweets(Pageable pageable);
+    Page<TweetProjection> getTweetsWithVideo(Pageable pageable);
 
-    Page<Tweet> getTweetsWithVideo(Pageable pageable);
+    List<TweetProjection> getScheduledTweets();
 
-    List<Tweet> getScheduledTweets();
+    TweetProjection createNewTweet(Tweet tweet);
 
-    Tweet createTweet(Tweet tweet);
+    TweetProjection createPoll(Long pollDateTime, List<String> choices, Tweet tweet);
 
-    Tweet createPoll(Long pollDateTime, List<String> choices, Tweet tweet);
-
-    Tweet updateScheduledTweet(Tweet tweetInfo);
+    TweetProjection updateScheduledTweet(Tweet tweetInfo);
 
     String deleteScheduledTweets(List<Long> tweetsIds);
 
     Tweet deleteTweet(Long tweetId);
 
-    List<Tweet> searchTweets(String text);
+    List<TweetProjection> searchTweets(String text);
 
-    Notification likeTweet(Long tweetId);
+    Map<String, Object> likeTweet(Long tweetId);
 
-    Notification retweet(Long tweetId);
+    Map<String, Object> retweet(Long tweetId);
 
-    Tweet replyTweet(Long tweetId, Tweet reply);
+    TweetProjection replyTweet(Long tweetId, Tweet reply);
 
-    Tweet quoteTweet(Long tweetId, Tweet quote);
+    TweetProjection quoteTweet(Long tweetId, Tweet quote);
 
-    Tweet changeTweetReplyType(Long tweetId, ReplyType replyType);
+    TweetProjection changeTweetReplyType(Long tweetId, ReplyType replyType);
 
-    Tweet voteInPoll(Long tweetId, Long pollId, Long pollChoiceId);
+    TweetProjection voteInPoll(Long tweetId, Long pollId, Long pollChoiceId);
 }

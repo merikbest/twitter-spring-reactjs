@@ -1,10 +1,13 @@
 package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.*;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.*;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.notification.NotificationsProjectionResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.refactor.NotificationResponseI;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationUserProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationsProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetHeaderProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetProjectionResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -116,8 +119,8 @@ public class UserController {
     }
 
     @GetMapping("/follow/{userId}")
-    public ResponseEntity<NotificationResponseI.NotificationUserResponse> processFollow(@PathVariable Long userId) {
-        NotificationResponseI notification = userMapper.processFollow(userId);
+    public ResponseEntity<NotificationUserProjectionResponse> processFollow(@PathVariable Long userId) {
+        NotificationProjectionResponse notification = userMapper.processFollow(userId);
 
         if (notification.getId() != null) {
             messagingTemplate.convertAndSend("/topic/notifications/" + notification.getUserToFollow().getId(), notification);

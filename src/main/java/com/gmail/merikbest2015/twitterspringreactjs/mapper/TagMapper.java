@@ -1,9 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TweetResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.TagProjectionResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.projection.TweetProjectionResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TagProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetProjectionResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tag.TagProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.TagService;
 import lombok.RequiredArgsConstructor;

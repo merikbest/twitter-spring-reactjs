@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.ChatMessageProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.ChatProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.BaseUserProjection;
 
 import java.util.List;
 import java.util.Map;
@@ -21,9 +22,9 @@ public interface ChatService {
 
     Map<String, Object> addMessage(ChatMessage chatMessage, Long chatId);
 
-    List<ChatMessage> addMessageWithTweet(String text, Tweet tweet, List<User> users);
+    List<ChatMessageProjection> addMessageWithTweet(String text, Tweet tweet, List<User> users);
 
-    User getParticipant(Long participantId, Long chatId);
+    BaseUserProjection getParticipant(Long participantId, Long chatId);
 
     String leaveFromConversation(Long participantId, Long chatId);
 }

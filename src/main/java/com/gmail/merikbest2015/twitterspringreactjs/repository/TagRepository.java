@@ -17,6 +17,4 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
     Tag findByTagName(String tagName);
 
     List<Tag> findByTweets_Id(Long id);
-
-    List<Tag> findByTagNameContaining(String tagName);
 }

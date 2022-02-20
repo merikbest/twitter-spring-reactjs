@@ -4,6 +4,8 @@ import com.gmail.merikbest2015.twitterspringreactjs.model.Lists;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetsProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.lists.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -37,13 +39,13 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
             "ORDER BY l.pinnedDate DESC")
     List<PinnedListsProjection> getUserPinnedLists(Long userId);
 
-    @Query("SELECT t as tweet FROM Lists l " +
+    @Query("SELECT t FROM Lists l " +
             "LEFT JOIN l.members m " +
             "LEFT JOIN m.tweets t " +
             "WHERE l.id = :listId " +
             "AND t.addressedUsername IS NULL " +
             "ORDER BY t.dateTime DESC")
-    List<TweetsProjection> getTweetsByListId(Long listId);
+    Page<TweetProjection> getTweetsByListId(Long listId, Pageable pageable);
 
     @Query("SELECT lists FROM Lists lists " +
             "LEFT JOIN lists.followers listsFollower " +

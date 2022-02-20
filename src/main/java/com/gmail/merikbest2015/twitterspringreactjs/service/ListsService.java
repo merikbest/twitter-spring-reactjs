@@ -2,26 +2,29 @@ package com.gmail.merikbest2015.twitterspringreactjs.service;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.Lists;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetsProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.lists.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Map;
 
 public interface ListsService {
 
-    List<ListProjection> getAllTweetLists();
+    List<ListsProjection> getAllTweetLists();
 
-    List<ListUserProjection> getUserTweetLists();
+    List<ListsUserProjection> getUserTweetLists();
 
-    List<PinnedListProjection> getUserPinnedLists();
+    List<PinnedListsProjection> getUserPinnedLists();
 
     BaseListProjection getListById(Long listId);
 
     ListUserProjection createTweetList(Lists lists);
 
-    List<ListProjection> getUserTweetListsById(Long userId);
+    List<ListsProjection> getUserTweetListsById(Long userId);
 
-    List<ListProjection> getTweetListsWhichUserIn();
+    List<ListsProjection> getTweetListsWhichUserIn();
 
     BaseListProjection editTweetList(Lists lists);
 
@@ -35,7 +38,7 @@ public interface ListsService {
 
     Boolean addUserToList(Long userId, Long listId);
 
-    List<TweetProjection> getTweetsByListId(Long listId);
+    Page<TweetProjection> getTweetsByListId(Long listId, Pageable pageable);
 
     BaseListProjection getListDetails(Long listId);
 

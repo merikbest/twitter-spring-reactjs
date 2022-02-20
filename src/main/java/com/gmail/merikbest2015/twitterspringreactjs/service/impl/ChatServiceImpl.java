@@ -10,6 +10,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.C
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.ChatMessagesProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.ChatParticipantsProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.ChatProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.BaseUserProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.ChatService;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class ChatServiceImpl implements ChatService {
     public List<ChatProjection> getUserChats() {
         Long userId = authenticationService.getAuthenticatedUserId();
         List<ChatParticipantsProjection> chatParticipants = chatParticipantRepository.getChatParticipants(userId);
-        return chatParticipants.stream()
+        return chatParticipants.contains(null) ? new ArrayList<>() : chatParticipants.stream()
                 .filter(participant -> !participant.getParticipant().getLeftChat()
                         || !userService.isUserBlockedByMyProfile(participant.getParticipant().getUser().getId()))
                 .map(participant -> participant.getParticipant().getChat())
@@ -128,9 +129,9 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     @Transactional
-    public List<ChatMessage> addMessageWithTweet(String text, Tweet tweet, List<User> users) {
+    public List<ChatMessageProjection> addMessageWithTweet(String text, Tweet tweet, List<User> users) {
         User author = authenticationService.getAuthenticatedUser();
-        List<ChatMessage> chatMessages = new ArrayList<>();
+        List<ChatMessageProjection> chatMessages = new ArrayList<>();
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.setAuthor(author);
         chatMessage.setText(text);
@@ -156,25 +157,27 @@ public class ChatServiceImpl implements ChatService {
                 messages.add(newChatMessage);
                 chatRepository.save(participantsChat);
             }
-            chatMessages.add(chatMessage);
+            ChatMessageProjection chatMessageProjection = chatMessageRepository.getChatMessageById(chatMessage.getId());
+            chatMessages.add(chatMessageProjection);
             notifyChatParticipants(chatMessage, author);
         });
         return chatMessages;
     }
 
     @Override
-    public User getParticipant(Long participantId, Long chatId) {
+    public BaseUserProjection getParticipant(Long participantId, Long chatId) {
         Long userId = authenticationService.getAuthenticatedUserId();
-        Chat chat = chatRepository.getChatByUserId(chatId, userId)
-                .orElseThrow(() -> new ApiRequestException("Chat not found", HttpStatus.NOT_FOUND));
-        ChatParticipant chatParticipant = chat.getParticipants().stream()
-                .filter(participant -> participant.getId().equals(participantId))
-                .findFirst()
-                .orElseThrow(() -> new ApiRequestException("Participant not found", HttpStatus.NOT_FOUND));
-        return chatParticipant.getUser();
+
+        if (!chatRepository.getChatByUserId(chatId, userId)) {
+            throw new ApiRequestException("Chat not found", HttpStatus.NOT_FOUND);
+        } else {
+            return chatParticipantRepository.getChatParticipant(participantId, chatId)
+                    .orElseThrow(() -> new ApiRequestException("Participant not found", HttpStatus.NOT_FOUND));
+        }
     }
 
     @Override
+    @Transactional
     public String leaveFromConversation(Long participantId, Long chatId) {
         Chat chat = chatRepository.findById(chatId)
                 .orElseThrow(() -> new ApiRequestException("Chat not found", HttpStatus.NOT_FOUND));

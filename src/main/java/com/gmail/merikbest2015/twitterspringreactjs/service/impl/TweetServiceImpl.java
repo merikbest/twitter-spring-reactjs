@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestExceptio
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetsProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.TweetService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import javax.imageio.ImageIO;
@@ -54,85 +56,43 @@ public class TweetServiceImpl implements TweetService {
     @Value("${google.api.key}")
     private String googleApiKey;
 
-    public boolean isUserLikedTweet(Long tweetId) {
-        Long authUserId = authenticationService.getAuthenticatedUserId();
-        return tweetRepository.isUserLikedTweet(authUserId, tweetId);
-    }
-
-    public boolean isUserRetweetedTweet(Long tweetId) {
-        Long authUserId = authenticationService.getAuthenticatedUserId();
-        return tweetRepository.isUserRetweetedTweet(authUserId, tweetId);
-    }
-
     @Override
-    public Page<Tweet> getTweets(Pageable pageable) {
+    public Page<TweetProjection> getTweets(Pageable pageable) {
         return tweetRepository.findAllTweets(pageable);
     }
 
     @Override
-    public TweetProjection getTweetByIdProjection(Long tweetId) {
+    public TweetProjection getTweetById(Long tweetId) {
         return tweetRepository.findTweetById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
     }
 
     @Override
-    public Tweet getTweetById(Long tweetId) {
-        return tweetRepository.findById(tweetId)
-                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-    }
-
-    @Override
-    public Page<Tweet> getMediaTweets(Pageable pageable) {
+    public Page<TweetProjection> getMediaTweets(Pageable pageable) {
         return tweetRepository.findAllTweetsWithImages(pageable);
     }
 
     @Override
-    public Page<Tweet> getTweetsWithVideo(Pageable pageable) {
+    public Page<TweetProjection> getTweetsWithVideo(Pageable pageable) {
         return tweetRepository.findAllTweetsWithVideo(pageable);
     }
 
     @Override
-    public List<Tweet> getScheduledTweets() {
+    public List<TweetProjection> getScheduledTweets() {
         Long userId = authenticationService.getAuthenticatedUserId();
         return tweetRepository.findAllScheduledTweetsByUserId(userId);
     }
 
     @Override
-    public Tweet createTweet(Tweet tweet) {
-        if (tweet.getText().length() == 0 || tweet.getText().length() > 280) {
-            throw new ApiRequestException("Incorrect tweet text length", HttpStatus.BAD_REQUEST);
-        }
-        User user = authenticationService.getAuthenticatedUser();
-        tweet.setUser(user);
-        boolean isMediaTweetCreated = parseMetadataFromURL(tweet); // find metadata from url
-        Tweet createdTweet = tweetRepository.save(tweet);
-
-        if (isMediaTweetCreated || createdTweet.getImages() != null) {
-            user.setMediaTweetCount(user.getMediaTweetCount() + 1);
-        } else {
-            user.setTweetCount(user.getTweetCount() + 1);
-        }
-        user.getTweets().add(createdTweet);
-        userRepository.save(user);
-        parseHashtagInText(tweet); // find hashtag in text
-
-        Notification notification = new Notification();
-        notification.setNotificationType(NotificationType.TWEET);
-        notification.setUser(user);
-        notification.setTweet(tweet);
-
-        user.getSubscribers().forEach(subscriber -> {
-            subscriber.setNotificationsCount(subscriber.getNotificationsCount() + 1);
-            List<Notification> notifications = subscriber.getNotifications();
-            userRepository.save(subscriber);
-            notifications.add(notification);
-            notificationRepository.save(notification);
-        });
-        return createdTweet;
+    @Transactional
+    public TweetProjection createNewTweet(Tweet tweet) {
+        Tweet createdTweet = createTweet(tweet);
+        return getTweetById(createdTweet.getId());
     }
 
     @Override
-    public Tweet createPoll(Long pollDateTime, List<String> choices, Tweet tweet) {
+    @Transactional(rollbackFor = ApiRequestException.class)
+    public TweetProjection createPoll(Long pollDateTime, List<String> choices, Tweet tweet) {
         if (choices.size() < 2 || choices.size() > 4) {
             throw new ApiRequestException("Incorrect poll choices", HttpStatus.BAD_REQUEST);
         }
@@ -154,11 +114,13 @@ public class TweetServiceImpl implements TweetService {
         poll.setPollChoices(pollChoices);
         pollRepository.save(poll);
         createdTweet.setPoll(poll);
-        return tweetRepository.save(createdTweet);
+//        tweetRepository.save(createdTweet);
+        return getTweetById(createdTweet.getId());
     }
 
     @Override
-    public Tweet updateScheduledTweet(Tweet tweetInfo) {
+    @Transactional
+    public TweetProjection updateScheduledTweet(Tweet tweetInfo) {
         if (tweetInfo.getText().length() == 0 || tweetInfo.getText().length() > 280) {
             throw new ApiRequestException("Incorrect tweet text length", HttpStatus.BAD_REQUEST);
         }
@@ -166,16 +128,18 @@ public class TweetServiceImpl implements TweetService {
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
         tweet.setText(tweetInfo.getText());
         tweet.setImages(tweetInfo.getImages());
-        return tweetRepository.save(tweet);
+        return getTweetById(tweet.getId());
     }
 
     @Override
+    @Transactional
     public String deleteScheduledTweets(List<Long> tweetsIds) {
         tweetsIds.forEach(this::deleteTweet);
         return "Scheduled tweets deleted.";
     }
 
     @Override
+    @Transactional
     public Tweet deleteTweet(Long tweetId) {
         User user = authenticationService.getAuthenticatedUser();
         Tweet tweet = user.getTweets().stream()
@@ -247,26 +211,15 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
-    public List<Tweet> searchTweets(String text) {
-        Set<Tweet> tweets = new HashSet<>();
-        List<Tweet> tweetsByText = tweetRepository.findAllByText(text);
-        List<Tag> tagsByText = tagRepository.findByTagNameContaining(text);
-        List<User> usersByText = userRepository.findByFullNameOrUsernameContainingIgnoreCase(text, text);
-
-        if (tweetsByText != null) {
-            tweets.addAll(tweetsByText);
-        }
-        if (tagsByText != null) {
-            tagsByText.forEach(tag -> tweets.addAll(tag.getTweets()));
-        }
-        if (usersByText != null) {
-            usersByText.forEach(user -> tweets.addAll(tweetRepository.findAllByUserId(user.getId())));
-        }
-        return List.copyOf(tweets);
+    public List<TweetProjection> searchTweets(String text) {
+        return tweetRepository.findAllByText(text).stream()
+                .map(TweetsProjection::getTweet)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Notification likeTweet(Long tweetId) {
+    @Transactional
+    public Map<String, Object> likeTweet(Long tweetId) {
         User user = authenticationService.getAuthenticatedUser();
         Tweet tweet = tweetRepository.findById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
@@ -274,11 +227,13 @@ public class TweetServiceImpl implements TweetService {
         Optional<LikeTweet> likedTweet = likedTweets.stream()
                 .filter(t -> t.getTweet().getId().equals(tweet.getId()))
                 .findFirst();
+        boolean isTweetLiked;
 
         if (likedTweet.isPresent()) {
             likedTweets.remove(likedTweet.get());
             likeTweetRepository.delete(likedTweet.get());
             user.setLikeCount(user.getLikeCount() - 1);
+            isTweetLiked = false;
         } else {
             LikeTweet newLikedTweet = new LikeTweet();
             newLikedTweet.setTweet(tweet);
@@ -286,12 +241,15 @@ public class TweetServiceImpl implements TweetService {
             user.setLikeCount(user.getLikeCount() + 1);
             likeTweetRepository.save(newLikedTweet);
             likedTweets.add(newLikedTweet);
+            isTweetLiked = true;
         }
-        return notificationHandler(user, tweet, NotificationType.LIKE);
+        Notification notification = notificationHandler(user, tweet, NotificationType.LIKE);
+        return Map.of("notification", notification, "isTweetLiked", isTweetLiked);
     }
 
     @Override
-    public Notification retweet(Long tweetId) {
+    @Transactional
+    public Map<String, Object> retweet(Long tweetId) {
         User user = authenticationService.getAuthenticatedUser();
         Tweet tweet = tweetRepository.findById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
@@ -299,11 +257,13 @@ public class TweetServiceImpl implements TweetService {
         Optional<Retweet> retweet = retweets.stream()
                 .filter(t -> t.getTweet().getId().equals(tweet.getId()))
                 .findFirst();
+        boolean isTweetRetweeted;
 
         if (retweet.isPresent()) {
             retweets.remove(retweet.get());
             retweetRepository.delete(retweet.get());
             user.setTweetCount(user.getTweetCount() - 1);
+            isTweetRetweeted = false;
         } else {
             Retweet newRetweet = new Retweet();
             newRetweet.setTweet(tweet);
@@ -311,33 +271,38 @@ public class TweetServiceImpl implements TweetService {
             retweetRepository.save(newRetweet);
             retweets.add(newRetweet);
             user.setTweetCount(user.getTweetCount() + 1);
+            isTweetRetweeted = true;
         }
-        return notificationHandler(user, tweet, NotificationType.RETWEET);
+        Notification notification = notificationHandler(user, tweet, NotificationType.RETWEET);
+        return Map.of("notification", notification, "isTweetRetweeted", isTweetRetweeted);
     }
 
     @Override
-    public Tweet replyTweet(Long tweetId, Tweet reply) {
+    @Transactional
+    public TweetProjection replyTweet(Long tweetId, Tweet reply) {
         Tweet tweet = tweetRepository.findById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
         reply.setAddressedTweetId(tweetId);
         Tweet replyTweet = createTweet(reply);
         tweet.getReplies().add(replyTweet);
-        return tweetRepository.save(tweet);
+        return getTweetById(tweet.getId());
     }
 
     @Override
-    public Tweet quoteTweet(Long tweetId, Tweet quote) {
+    @Transactional
+    public TweetProjection quoteTweet(Long tweetId, Tweet quote) {
         Tweet tweet = tweetRepository.findById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
         User user = authenticationService.getAuthenticatedUser();
         user.setTweetCount(user.getTweetCount() + 1);
-        userRepository.save(user);
         quote.setQuoteTweet(tweet);
-        return createTweet(quote);
+        Tweet createdTweet = createTweet(quote);
+        return getTweetById(createdTweet.getId());
     }
 
     @Override
-    public Tweet changeTweetReplyType(Long tweetId, ReplyType replyType) {
+    @Transactional
+    public TweetProjection changeTweetReplyType(Long tweetId, ReplyType replyType) {
         Tweet tweet = tweetRepository.findById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
         User user = authenticationService.getAuthenticatedUser();
@@ -346,11 +311,12 @@ public class TweetServiceImpl implements TweetService {
                 .findFirst()
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
         tweet.setReplyType(replyType);
-        return tweetRepository.save(tweet);
+        return getTweetById(tweet.getId());
     }
 
     @Override
-    public Tweet voteInPoll(Long tweetId, Long pollId, Long pollChoiceId) {
+    @Transactional
+    public TweetProjection voteInPoll(Long tweetId, Long pollId, Long pollChoiceId) {
         Poll poll = pollRepository.findById(pollId)
                 .orElseThrow(() -> new ApiRequestException("Poll not found", HttpStatus.NOT_FOUND));
         PollChoice pollChoice = pollChoiceRepository.findById(pollChoiceId)
@@ -370,7 +336,22 @@ public class TweetServiceImpl implements TweetService {
                 })
                 .collect(Collectors.toList());
         tweet.getPoll().setPollChoices(pollChoices);
-        return tweetRepository.save(tweet);
+        return getTweetById(tweet.getId());
+    }
+
+    public boolean isUserLikedTweet(Long tweetId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return tweetRepository.isUserLikedTweet(authUserId, tweetId);
+    }
+
+    public boolean isUserRetweetedTweet(Long tweetId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return tweetRepository.isUserRetweetedTweet(authUserId, tweetId);
+    }
+
+    public boolean isUserBookmarkedTweet(Long tweetId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return tweetRepository.isUserBookmarkedTweet(authUserId, tweetId);
     }
 
     private Notification notificationHandler(User user, Tweet tweet, NotificationType notificationType) {
@@ -394,9 +375,42 @@ public class TweetServiceImpl implements TweetService {
                 userRepository.save(tweet.getUser());
                 return newNotification;
             }
-            tweetRepository.save(tweet);
         }
         return notification;
+    }
+
+    @Transactional
+    public Tweet createTweet(Tweet tweet) {
+        if (tweet.getText().length() == 0 || tweet.getText().length() > 280) {
+            throw new ApiRequestException("Incorrect tweet text length", HttpStatus.BAD_REQUEST);
+        }
+        User user = authenticationService.getAuthenticatedUser();
+        tweet.setUser(user);
+        boolean isMediaTweetCreated = parseMetadataFromURL(tweet); // find metadata from url
+        Tweet createdTweet = tweetRepository.save(tweet);
+
+        if (isMediaTweetCreated || createdTweet.getImages() != null) {
+            user.setMediaTweetCount(user.getMediaTweetCount() + 1);
+        } else {
+            user.setTweetCount(user.getTweetCount() + 1);
+        }
+        user.getTweets().add(createdTweet);
+//        userRepository.save(user);
+        parseHashtagInText(tweet); // find hashtag in text
+
+        Notification notification = new Notification();
+        notification.setNotificationType(NotificationType.TWEET);
+        notification.setUser(user);
+        notification.setTweet(tweet);
+
+        user.getSubscribers().forEach(subscriber -> {
+            subscriber.setNotificationsCount(subscriber.getNotificationsCount() + 1);
+            List<Notification> notifications = subscriber.getNotifications();
+//            userRepository.save(subscriber);
+            notifications.add(notification);
+            notificationRepository.save(notification);
+        });
+        return createdTweet;
     }
 
     private void parseHashtagInText(Tweet tweet) {

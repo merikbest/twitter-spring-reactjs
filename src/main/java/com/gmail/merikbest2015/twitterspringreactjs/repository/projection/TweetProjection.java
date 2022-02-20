@@ -32,6 +32,9 @@ public interface TweetProjection {
     @Value("#{@tweetServiceImpl.isUserRetweetedTweet(target.id)}")
     boolean getIsTweetRetweeted();
 
+    @Value("#{@tweetServiceImpl.isUserBookmarkedTweet(target.id)}")
+    boolean getIsTweetBookmarked();
+
     @Value("#{@userServiceImpl.isUserFollowByOtherUser(target.user.id)}")
     boolean getIsUserFollowByOtherUser();
 
