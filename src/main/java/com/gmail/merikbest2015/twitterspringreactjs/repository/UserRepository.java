@@ -92,6 +92,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "WHERE user.id = :userId")
     List<MutedUserProjection> getUserMuteListById(Long userId);
 
+    @Query("SELECT followerRequest FROM User user " +
+            "LEFT JOIN user.followerRequests followerRequest " +
+            "WHERE user.id = :userId")
+    List<FollowerUserProjection> getFollowerRequests(Long userId);
+
     @Query("SELECT user.userMutedList FROM User user WHERE user.id = :userId")
     List<User> getUserMutedListById(Long userId);
 

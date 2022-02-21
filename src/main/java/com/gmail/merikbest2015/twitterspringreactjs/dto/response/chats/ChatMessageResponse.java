@@ -10,32 +10,32 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ChatMessageProjectionResponse {
+public class ChatMessageResponse {
     private Long id;
     private String text;
     private LocalDateTime date;
-    private ChatAuthorProjectionResponse author;
-    private ChatTweetProjectionResponse tweet;
+    private ChatAuthorResponse author;
+    private ChatTweetResponse tweet;
     @JsonIgnore
     private List<Long> chatParticipantsIds;
 
     @Getter
     @Setter
-    static class ChatAuthorProjectionResponse {
+    static class ChatAuthorResponse {
         private Long id;
     }
 
     @Getter
     @Setter
-    static class ChatTweetProjectionResponse {
+    static class ChatTweetResponse {
         private Long id;
         private String text;
         private LocalDateTime dateTime;
-        private TweetUserProjectionResponse user;
+        private TweetUserResponse user;
 
         @Getter
         @Setter
-        static class TweetUserProjectionResponse {
+        static class TweetUserResponse {
             private Long id;
             private String fullName;
             private String username;

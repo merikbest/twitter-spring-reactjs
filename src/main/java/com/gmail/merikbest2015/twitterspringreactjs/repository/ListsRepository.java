@@ -30,8 +30,11 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
 
     Optional<Lists> findByIdAndIsPrivateFalse(Long id);
 
-    @Query("SELECT l as pinnedList FROM Lists l WHERE l.id IN :listIds")
-    List<PinnedListsProjection> getListsByIds(List<Long> listIds);
+    @Query("SELECT l FROM Lists l " +
+            "LEFT JOIN l.listOwner u " +
+            "WHERE u.id = :ownerId " +
+            "AND l.id IN :listIds")
+    List<Lists> getListsByIds(Long ownerId, List<Long> listIds);
 
     @Query("SELECT l as pinnedList FROM Lists l " +
             "WHERE l.listOwner.id = :userId " +

@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.dto.response.chats;
 
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,23 +9,23 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ChatProjectionResponse {
+public class ChatResponse {
     private Long id;
     private LocalDateTime creationDate;
-    private List<ParticipantProjectionResponse> participants;
+    private List<ParticipantResponse> participants;
 
     @Getter
     @Setter
-    static class ParticipantProjectionResponse {
-        private ChatUserProjection user;
+    static class ParticipantResponse {
+        private ChatProjection user;
 
         @Getter
         @Setter
-        static class ChatUserProjection {
+        static class ChatProjection {
             private Long id;
             private String fullName;
             private String username;
-            private ImageProjectionResponse avatar;
+            private ImageResponse avatar;
         }
     }
 }

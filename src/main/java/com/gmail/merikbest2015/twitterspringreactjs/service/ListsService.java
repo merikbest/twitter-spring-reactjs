@@ -2,7 +2,6 @@ package com.gmail.merikbest2015.twitterspringreactjs.service;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.Lists;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetProjection;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetsProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.lists.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,7 +33,7 @@ public interface ListsService {
 
     Boolean pinList(Long listId);
 
-    List<Long> addUserToLists(Long userId, List<Lists> lists);
+    List<Long> addUserToLists(Long userId, List<Long> listsIds);
 
     Boolean addUserToList(Long userId, Long listId);
 

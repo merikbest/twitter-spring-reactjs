@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class TweetHeaderProjectionResponse {
-    private List<TweetProjectionResponse> tweets;
+public class TweetHeaderResponse {
+    private List<TweetResponse> tweets;
     private HttpHeaders headers;
 }

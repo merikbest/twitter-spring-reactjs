@@ -3,10 +3,10 @@ package com.gmail.merikbest2015.twitterspringreactjs.controller;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetDeleteRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.VoteRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationProjectionResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationTweetProjectionResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetHeaderProjectionResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationTweetResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetHeaderResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.TweetMapper;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
 import lombok.RequiredArgsConstructor;
@@ -27,56 +27,56 @@ public class TweetController {
     private final SimpMessagingTemplate messagingTemplate;
 
     @GetMapping
-    public ResponseEntity<List<TweetProjectionResponse>> getTweets(@PageableDefault(size = 10) Pageable pageable) {
-        TweetHeaderProjectionResponse response = tweetMapper.getTweets(pageable);
+    public ResponseEntity<List<TweetResponse>> getTweets(@PageableDefault(size = 10) Pageable pageable) {
+        TweetHeaderResponse response = tweetMapper.getTweets(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getTweets());
     }
 
     @GetMapping("/{tweetId}")
-    public ResponseEntity<TweetProjectionResponse> getTweetById(@PathVariable Long tweetId) {
+    public ResponseEntity<TweetResponse> getTweetById(@PathVariable Long tweetId) {
         return ResponseEntity.ok(tweetMapper.getTweetById(tweetId));
     }
 
     @GetMapping("/media")
-    public ResponseEntity<List<TweetProjectionResponse>> getMediaTweets(@PageableDefault(size = 10) Pageable pageable) {
-        TweetHeaderProjectionResponse response = tweetMapper.getMediaTweets(pageable);
+    public ResponseEntity<List<TweetResponse>> getMediaTweets(@PageableDefault(size = 10) Pageable pageable) {
+        TweetHeaderResponse response = tweetMapper.getMediaTweets(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getTweets());
     }
 
     @GetMapping("/video")
-    public ResponseEntity<List<TweetProjectionResponse>> getTweetsWithVideo(@PageableDefault(size = 10) Pageable pageable) {
-        TweetHeaderProjectionResponse response = tweetMapper.getTweetsWithVideo(pageable);
+    public ResponseEntity<List<TweetResponse>> getTweetsWithVideo(@PageableDefault(size = 10) Pageable pageable) {
+        TweetHeaderResponse response = tweetMapper.getTweetsWithVideo(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getTweets());
     }
 
     @GetMapping("/schedule")
-    public ResponseEntity<List<TweetProjectionResponse>> getScheduledTweets() {
+    public ResponseEntity<List<TweetResponse>> getScheduledTweets() {
         return ResponseEntity.ok(tweetMapper.getScheduledTweets());
     }
 
     @PostMapping
-    public ResponseEntity<TweetProjectionResponse> createTweet(@RequestBody TweetRequest tweetRequest) {
-        TweetProjectionResponse tweet = tweetMapper.createTweet(tweetRequest);
+    public ResponseEntity<TweetResponse> createTweet(@RequestBody TweetRequest tweetRequest) {
+        TweetResponse tweet = tweetMapper.createTweet(tweetRequest);
         messagingTemplate.convertAndSend("/topic/feed/add", tweet);
         messagingTemplate.convertAndSend("/topic/user/add/tweet/" + tweet.getUser().getId(), tweet);
         return ResponseEntity.ok(tweet);
     }
 
     @PostMapping("/poll")
-    public ResponseEntity<TweetProjectionResponse> createPoll(@RequestBody TweetRequest tweetRequest) {
-        TweetProjectionResponse tweet = tweetMapper.createPoll(tweetRequest);
+    public ResponseEntity<TweetResponse> createPoll(@RequestBody TweetRequest tweetRequest) {
+        TweetResponse tweet = tweetMapper.createPoll(tweetRequest);
         messagingTemplate.convertAndSend("/topic/feed/add", tweet);
         messagingTemplate.convertAndSend("/topic/user/add/tweet/" + tweet.getUser().getId(), tweet);
         return ResponseEntity.ok(tweet);
     }
 
     @PostMapping("/schedule")
-    public ResponseEntity<TweetProjectionResponse> createScheduledTweet(@RequestBody TweetRequest tweetRequest) {
+    public ResponseEntity<TweetResponse> createScheduledTweet(@RequestBody TweetRequest tweetRequest) {
         return ResponseEntity.ok(tweetMapper.createTweet(tweetRequest));
     }
 
     @PutMapping("/schedule")
-    public ResponseEntity<TweetProjectionResponse> updateScheduledTweet(@RequestBody TweetRequest tweetRequest) {
+    public ResponseEntity<TweetResponse> updateScheduledTweet(@RequestBody TweetRequest tweetRequest) {
         return ResponseEntity.ok(tweetMapper.updateScheduledTweet(tweetRequest));
     }
 
@@ -86,8 +86,8 @@ public class TweetController {
     }
 
     @DeleteMapping("/{tweetId}")
-    public ResponseEntity<TweetProjectionResponse> deleteTweet(@PathVariable Long tweetId) {
-        TweetProjectionResponse tweet = tweetMapper.deleteTweet(tweetId);
+    public ResponseEntity<TweetResponse> deleteTweet(@PathVariable Long tweetId) {
+        TweetResponse tweet = tweetMapper.deleteTweet(tweetId);
         messagingTemplate.convertAndSend("/topic/feed", tweet);
         messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
         messagingTemplate.convertAndSend("/topic/user/update/tweet/" + tweet.getUser().getId(), tweet);
@@ -95,13 +95,13 @@ public class TweetController {
     }
 
     @GetMapping("/search/{text}")
-    public ResponseEntity<List<TweetProjectionResponse>> searchTweets(@PathVariable String text) {
+    public ResponseEntity<List<TweetResponse>> searchTweets(@PathVariable String text) {
         return ResponseEntity.ok(tweetMapper.searchTweets(text));
     }
 
     @GetMapping("/like/{tweetId}")
-    public ResponseEntity<NotificationTweetProjectionResponse> likeTweet(@PathVariable Long tweetId) {
-        NotificationProjectionResponse notification = tweetMapper.likeTweet(tweetId);
+    public ResponseEntity<NotificationTweetResponse> likeTweet(@PathVariable Long tweetId) {
+        NotificationResponse notification = tweetMapper.likeTweet(tweetId);
 
         if (notification.getId() != null) {
             messagingTemplate.convertAndSend("/topic/notifications/" + notification.getTweet().getUser().getId(), notification);
@@ -113,8 +113,8 @@ public class TweetController {
     }
 
     @GetMapping("/retweet/{tweetId}")
-    public ResponseEntity<NotificationTweetProjectionResponse> retweet(@PathVariable Long tweetId) {
-        NotificationProjectionResponse notification = tweetMapper.retweet(tweetId);
+    public ResponseEntity<NotificationTweetResponse> retweet(@PathVariable Long tweetId) {
+        NotificationResponse notification = tweetMapper.retweet(tweetId);
 
         if (notification.getId() != null) {
             messagingTemplate.convertAndSend("/topic/notifications/" + notification.getTweet().getUser().getId(), notification);
@@ -126,8 +126,8 @@ public class TweetController {
     }
 
     @PostMapping("/reply/{tweetId}")
-    public ResponseEntity<TweetProjectionResponse> replyTweet(@PathVariable Long tweetId, @RequestBody TweetRequest tweetRequest) {
-        TweetProjectionResponse tweet = tweetMapper.replyTweet(tweetId, tweetRequest);
+    public ResponseEntity<TweetResponse> replyTweet(@PathVariable Long tweetId, @RequestBody TweetRequest tweetRequest) {
+        TweetResponse tweet = tweetMapper.replyTweet(tweetId, tweetRequest);
         messagingTemplate.convertAndSend("/topic/feed", tweet);
         messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
         messagingTemplate.convertAndSend("/topic/user/update/tweet/" + tweet.getUser().getId(), tweet);
@@ -135,8 +135,8 @@ public class TweetController {
     }
 
     @PostMapping("/quote/{tweetId}")
-    public ResponseEntity<TweetProjectionResponse> quoteTweet(@PathVariable Long tweetId, @RequestBody TweetRequest tweetRequest) {
-        TweetProjectionResponse tweet = tweetMapper.quoteTweet(tweetId, tweetRequest);
+    public ResponseEntity<TweetResponse> quoteTweet(@PathVariable Long tweetId, @RequestBody TweetRequest tweetRequest) {
+        TweetResponse tweet = tweetMapper.quoteTweet(tweetId, tweetRequest);
         messagingTemplate.convertAndSend("/topic/feed/add", tweet);
         messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
         messagingTemplate.convertAndSend("/topic/user/add/tweet/" + tweet.getUser().getId(), tweet);
@@ -144,8 +144,8 @@ public class TweetController {
     }
 
     @GetMapping("/reply/change/{tweetId}")
-    public ResponseEntity<TweetProjectionResponse> changeTweetReplyType(@PathVariable Long tweetId, @RequestParam ReplyType replyType) {
-        TweetProjectionResponse tweet = tweetMapper.changeTweetReplyType(tweetId, replyType);
+    public ResponseEntity<TweetResponse> changeTweetReplyType(@PathVariable Long tweetId, @RequestParam ReplyType replyType) {
+        TweetResponse tweet = tweetMapper.changeTweetReplyType(tweetId, replyType);
         messagingTemplate.convertAndSend("/topic/feed", tweet);
         messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
         messagingTemplate.convertAndSend("/topic/user/update/tweet/" + tweet.getUser().getId(), tweet);
@@ -153,8 +153,8 @@ public class TweetController {
     }
 
     @PostMapping("/vote")
-    public ResponseEntity<TweetProjectionResponse> voteInPoll(@RequestBody VoteRequest voteRequest) {
-        TweetProjectionResponse tweet = tweetMapper.voteInPoll(voteRequest);
+    public ResponseEntity<TweetResponse> voteInPoll(@RequestBody VoteRequest voteRequest) {
+        TweetResponse tweet = tweetMapper.voteInPoll(voteRequest);
         messagingTemplate.convertAndSend("/topic/feed", tweet);
         messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
         messagingTemplate.convertAndSend("/topic/user/update/tweet/" + tweet.getUser().getId(), tweet);

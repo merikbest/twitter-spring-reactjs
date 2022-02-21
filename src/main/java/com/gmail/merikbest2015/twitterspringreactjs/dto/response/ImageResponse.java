@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ImageProjectionResponse {
+public class ImageResponse {
     private Long id;
     private String src;
 }

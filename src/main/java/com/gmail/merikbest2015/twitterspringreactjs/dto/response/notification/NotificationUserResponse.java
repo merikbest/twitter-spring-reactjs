@@ -1,14 +1,14 @@
 package com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification;
 
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class NotificationUserProjectionResponse {
+public class NotificationUserResponse {
     private Long id;
     private String username;
-    private ImageProjectionResponse avatar;
+    private ImageResponse avatar;
     private boolean isFollower;
 }

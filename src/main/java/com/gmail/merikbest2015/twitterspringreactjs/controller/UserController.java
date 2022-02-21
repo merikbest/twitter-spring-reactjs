@@ -3,11 +3,11 @@ package com.gmail.merikbest2015.twitterspringreactjs.controller;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.*;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationProjectionResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationUserProjectionResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationsProjectionResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetHeaderProjectionResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationUserResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationsResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetHeaderResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -28,22 +28,22 @@ public class UserController {
     private final SimpMessagingTemplate messagingTemplate;
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserProfileProjectionResponse> getUserById(@PathVariable Long userId) {
+    public ResponseEntity<UserProfileResponse> getUserById(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.getUserById(userId));
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<UserProjectionResponse>> getUsers() {
+    public ResponseEntity<List<UserResponse>> getUsers() {
         return ResponseEntity.ok(userMapper.getUsers());
     }
 
     @GetMapping("/relevant")
-    public ResponseEntity<List<UserProjectionResponse>> getRelevantUsers() {
+    public ResponseEntity<List<UserResponse>> getRelevantUsers() {
         return ResponseEntity.ok(userMapper.getRelevantUsers());
     }
 
     @GetMapping("/search/{username}")
-    public ResponseEntity<List<UserProjectionResponse>> searchUsersByUsername(@PathVariable String username) {
+    public ResponseEntity<List<UserResponse>> searchUsersByUsername(@PathVariable String username) {
         return ResponseEntity.ok(userMapper.searchUsersByUsername(username));
     }
 
@@ -53,43 +53,43 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/tweets")
-    public ResponseEntity<List<TweetProjectionResponse>> getUserTweets(@PathVariable Long userId, @PageableDefault(size = 10) Pageable pageable) {
-        TweetHeaderProjectionResponse response = userMapper.getUserTweets(userId, pageable);
+    public ResponseEntity<List<TweetResponse>> getUserTweets(@PathVariable Long userId, @PageableDefault(size = 10) Pageable pageable) {
+        TweetHeaderResponse response = userMapper.getUserTweets(userId, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getTweets());
     }
 
     @GetMapping("/{userId}/liked")
-    public ResponseEntity<List<TweetProjectionResponse>> getUserLikedTweets(@PathVariable Long userId, @PageableDefault(size = 10) Pageable pageable) {
-        TweetHeaderProjectionResponse response = userMapper.getUserLikedTweets(userId, pageable);
+    public ResponseEntity<List<TweetResponse>> getUserLikedTweets(@PathVariable Long userId, @PageableDefault(size = 10) Pageable pageable) {
+        TweetHeaderResponse response = userMapper.getUserLikedTweets(userId, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getTweets());
     }
 
     @GetMapping("/{userId}/media")
-    public ResponseEntity<List<TweetProjectionResponse>> getUserMediaTweets(@PathVariable Long userId, @PageableDefault(size = 10) Pageable pageable) {
-        TweetHeaderProjectionResponse response = userMapper.getUserMediaTweets(userId, pageable);
+    public ResponseEntity<List<TweetResponse>> getUserMediaTweets(@PathVariable Long userId, @PageableDefault(size = 10) Pageable pageable) {
+        TweetHeaderResponse response = userMapper.getUserMediaTweets(userId, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getTweets());
     }
 
     @GetMapping("/{userId}/replies")
-    public ResponseEntity<List<TweetProjectionResponse>> getUserRetweetsAndReplies(@PathVariable Long userId, @PageableDefault(size = 10) Pageable pageable) {
-        TweetHeaderProjectionResponse response = userMapper.getUserRetweetsAndReplies(userId, pageable);
+    public ResponseEntity<List<TweetResponse>> getUserRetweetsAndReplies(@PathVariable Long userId, @PageableDefault(size = 10) Pageable pageable) {
+        TweetHeaderResponse response = userMapper.getUserRetweetsAndReplies(userId, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getTweets());
     }
 
     @GetMapping("/notifications")
-    public ResponseEntity<NotificationsProjectionResponse> getUserNotifications() {
+    public ResponseEntity<NotificationsResponse> getUserNotifications() {
         return ResponseEntity.ok(userMapper.getUserNotifications());
     }
 
     @GetMapping("/notifications/timeline")
-    public ResponseEntity<List<TweetProjectionResponse>> getNotificationsFromTweetAuthors(@PageableDefault(size = 10) Pageable pageable) {
-        TweetHeaderProjectionResponse response = userMapper.getNotificationsFromTweetAuthors(pageable);
+    public ResponseEntity<List<TweetResponse>> getNotificationsFromTweetAuthors(@PageableDefault(size = 10) Pageable pageable) {
+        TweetHeaderResponse response = userMapper.getNotificationsFromTweetAuthors(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getTweets());
     }
 
     @GetMapping("/bookmarks")
-    public ResponseEntity<List<TweetProjectionResponse>> getUserBookmarks(@PageableDefault(size = 10) Pageable pageable) {
-        TweetHeaderProjectionResponse response = userMapper.getUserBookmarks(pageable);
+    public ResponseEntity<List<TweetResponse>> getUserBookmarks(@PageableDefault(size = 10) Pageable pageable) {
+        TweetHeaderResponse response = userMapper.getUserBookmarks(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getTweets());
     }
 
@@ -99,7 +99,7 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<AuthUserProjectionResponse> updateUserProfile(@RequestBody UserRequest userRequest) {
+    public ResponseEntity<AuthUserResponse> updateUserProfile(@RequestBody UserRequest userRequest) { // +check
         return ResponseEntity.ok(userMapper.updateUserProfile(userRequest));
     }
 
@@ -109,18 +109,23 @@ public class UserController {
     }
 
     @GetMapping("/followers/{userId}")
-    public ResponseEntity<List<BaseUserProjectionResponse>> getFollowers(@PathVariable Long userId) {
+    public ResponseEntity<List<BaseUserResponse>> getFollowers(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.getFollowers(userId));
     }
 
     @GetMapping("/following/{userId}")
-    public ResponseEntity<List<BaseUserProjectionResponse>> getFollowing(@PathVariable Long userId) {
+    public ResponseEntity<List<BaseUserResponse>> getFollowing(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.getFollowing(userId));
     }
 
-    @GetMapping("/follow/{userId}")
-    public ResponseEntity<NotificationUserProjectionResponse> processFollow(@PathVariable Long userId) {
-        NotificationProjectionResponse notification = userMapper.processFollow(userId);
+    @GetMapping("/follower-requests") // TODO add tests
+    public ResponseEntity<List<FollowerUserResponse>> getFollowerRequests() {
+        return ResponseEntity.ok(userMapper.getFollowerRequests());
+    }
+
+    @GetMapping("/follow/{userId}") //+
+    public ResponseEntity<NotificationUserResponse> processFollow(@PathVariable Long userId) {
+        NotificationResponse notification = userMapper.processFollow(userId);
 
         if (notification.getId() != null) {
             messagingTemplate.convertAndSend("/topic/notifications/" + notification.getUserToFollow().getId(), notification);
@@ -129,16 +134,16 @@ public class UserController {
     }
 
     @GetMapping("/follow/overall/{userId}")
-    public ResponseEntity<List<BaseUserProjectionResponse>> overallFollowers(@PathVariable Long userId) {
+    public ResponseEntity<List<BaseUserResponse>> overallFollowers(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.overallFollowers(userId));
     }
 
     @GetMapping("/follow/private/{userId}")
-    public ResponseEntity<UserProfileProjectionResponse> processFollowRequestToPrivateProfile(@PathVariable Long userId) {
+    public ResponseEntity<UserProfileResponse> processFollowRequestToPrivateProfile(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.processFollowRequestToPrivateProfile(userId));
     }
 
-    @GetMapping("/follow/accept/{userId}")
+    @GetMapping("/follow/accept/{userId}") //+
     public ResponseEntity<String> acceptFollowRequest(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.acceptFollowRequest(userId));
     }
@@ -159,7 +164,7 @@ public class UserController {
     }
 
     @GetMapping("/blocked")
-    public ResponseEntity<List<BlockedUserProjectionResponse>> getBlockList() {
+    public ResponseEntity<List<BlockedUserResponse>> getBlockList() {
         return ResponseEntity.ok(userMapper.getBlockList());
     }
 
@@ -169,7 +174,7 @@ public class UserController {
     }
 
     @GetMapping("/muted")
-    public ResponseEntity<List<MutedUserProjectionResponse>> getMutedList() {
+    public ResponseEntity<List<MutedUserResponse>> getMutedList() {
         return ResponseEntity.ok(userMapper.getMutedList());
     }
 
@@ -179,7 +184,7 @@ public class UserController {
     }
 
     @GetMapping("/details/{userId}") // TODO Add tests
-    public ResponseEntity<UserDetailProjectionResponse> getUserDetails(@PathVariable Long userId) {
+    public ResponseEntity<UserDetailResponse> getUserDetails(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.getUserDetails(userId));
     }
 }

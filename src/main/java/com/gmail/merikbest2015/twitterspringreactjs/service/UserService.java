@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service;
 
-import com.gmail.merikbest2015.twitterspringreactjs.model.*;
+import com.gmail.merikbest2015.twitterspringreactjs.model.Image;
+import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.BookmarkProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.LikeTweetProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetProjection;
@@ -72,4 +73,6 @@ public interface UserService {
     Boolean processMutedList(Long userId);
 
     UserDetailProjection getUserDetails(Long userId);
+
+    List<FollowerUserProjection> getFollowerRequests();
 }

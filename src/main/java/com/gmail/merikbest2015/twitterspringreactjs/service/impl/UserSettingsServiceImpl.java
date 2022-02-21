@@ -3,7 +3,6 @@ package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
 import com.gmail.merikbest2015.twitterspringreactjs.model.BackgroundColorType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ColorSchemeType;
-import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.AuthUserProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.UserCommonProjection;

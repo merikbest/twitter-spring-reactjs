@@ -3,8 +3,8 @@ package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.AuthenticationRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.PasswordResetRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.RegistrationRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.AuthUserProjectionResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.AuthenticationProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.AuthUserResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.AuthenticationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.AuthUserProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
@@ -20,23 +20,23 @@ public class AuthenticationMapper {
     private final ModelMapper modelMapper;
     private final AuthenticationService authenticationService;
 
-    AuthenticationProjectionResponse getAuthenticationProjectionResponse(Map<String, Object> credentials) {
-        AuthenticationProjectionResponse response = new AuthenticationProjectionResponse();
-        response.setUser(modelMapper.map(credentials.get("user"), AuthUserProjectionResponse.class));
+    AuthenticationResponse getAuthenticationResponse(Map<String, Object> credentials) {
+        AuthenticationResponse response = new AuthenticationResponse();
+        response.setUser(modelMapper.map(credentials.get("user"), AuthUserResponse.class));
         response.setToken((String) credentials.get("token"));
         return response;
     }
 
-    public AuthenticationProjectionResponse login(AuthenticationRequest request) {
-        return getAuthenticationProjectionResponse(authenticationService.login(request.getEmail(), request.getPassword()));
+    public AuthenticationResponse login(AuthenticationRequest request) {
+        return getAuthenticationResponse(authenticationService.login(request.getEmail(), request.getPassword()));
     }
 
     public String registration(RegistrationRequest request) {
         return authenticationService.registration(request.getEmail(), request.getUsername(), request.getBirthday());
     }
 
-    public AuthenticationProjectionResponse getUserByToken() {
-        return getAuthenticationProjectionResponse(authenticationService.getUserByToken());
+    public AuthenticationResponse getUserByToken() {
+        return getAuthenticationResponse(authenticationService.getUserByToken());
     }
 
     public String activateUser(String code) {
@@ -47,9 +47,9 @@ public class AuthenticationMapper {
         return authenticationService.sendPasswordResetCode(email);
     }
 
-    public AuthUserProjectionResponse findByPasswordResetCode(String code) {
+    public AuthUserResponse findByPasswordResetCode(String code) {
         AuthUserProjection user = authenticationService.findByPasswordResetCode(code);
-        return modelMapper.map(user, AuthUserProjectionResponse.class);
+        return modelMapper.map(user, AuthUserResponse.class);
     }
 
     public String passwordReset(PasswordResetRequest request) {
@@ -64,7 +64,7 @@ public class AuthenticationMapper {
         return authenticationService.sendRegistrationCode(email);
     }
 
-    public AuthenticationProjectionResponse endRegistration(RegistrationRequest request) {
-        return getAuthenticationProjectionResponse(authenticationService.endRegistration(request.getEmail(), request.getPassword()));
+    public AuthenticationResponse endRegistration(RegistrationRequest request) {
+        return getAuthenticationResponse(authenticationService.endRegistration(request.getEmail(), request.getPassword()));
     }
 }

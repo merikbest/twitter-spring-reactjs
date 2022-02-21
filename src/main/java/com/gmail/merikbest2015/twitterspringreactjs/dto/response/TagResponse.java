@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TagProjectionResponse {
+public class TagResponse {
     private Long id;
     private String tagName;
     private Long tweetsQuantity;

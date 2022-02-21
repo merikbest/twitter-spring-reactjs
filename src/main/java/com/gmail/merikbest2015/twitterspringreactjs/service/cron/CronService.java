@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service.cron;
 
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.TweetRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,7 @@ public class CronService {
         messagingTemplate.convertAndSend(
                 "/topic/feed/schedule",
                 tweets.stream()
-                        .map(tweet -> modelMapper.map(tweet, TweetProjectionResponse.class))
+                        .map(tweet -> modelMapper.map(tweet, TweetResponse.class))
                         .collect(Collectors.toList())
         );
     }

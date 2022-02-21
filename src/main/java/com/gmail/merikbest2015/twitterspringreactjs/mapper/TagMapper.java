@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TagProjectionResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TagResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tag.TagProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.TagService;
 import lombok.RequiredArgsConstructor;
@@ -19,25 +19,25 @@ public class TagMapper {
     private final TagService tagService;
     private final TweetMapper tweetMapper;
 
-    private TagProjectionResponse convertToTagResponse(TagProjection tag) {
-        return modelMapper.map(tag, TagProjectionResponse.class);
+    private TagResponse convertToTagResponse(TagProjection tag) {
+        return modelMapper.map(tag, TagResponse.class);
     }
 
-    private List<TagProjectionResponse> convertTagsListToResponse(List<TagProjection> tags) {
+    private List<TagResponse> convertTagsListToResponse(List<TagProjection> tags) {
         return tags.stream()
                 .map(this::convertToTagResponse)
                 .collect(Collectors.toList());
     }
 
-    public List<TagProjectionResponse> getTags() {
+    public List<TagResponse> getTags() {
         return convertTagsListToResponse(tagService.getTags());
     }
 
-    public List<TagProjectionResponse> getTrends() {
+    public List<TagResponse> getTrends() {
         return convertTagsListToResponse(tagService.getTrends());
     }
 
-    public List<TweetProjectionResponse> getTweetsByTag(String tagName) {
+    public List<TweetResponse> getTweetsByTag(String tagName) {
         return tweetMapper.convertListToProjectionResponse(tagService.getTweetsByTag(tagName));
     }
 }

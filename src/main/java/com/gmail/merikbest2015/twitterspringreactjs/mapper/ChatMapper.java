@@ -2,9 +2,9 @@ package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.ChatMessageRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.MessageWithTweetRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.BaseUserProjectionResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.chats.ChatMessageProjectionResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.chats.ChatProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.BaseUserResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.chats.ChatMessageResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.chats.ChatResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ChatMessage;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.ChatMessageProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.ChatProjection;
@@ -30,35 +30,35 @@ public class ChatMapper {
         return modelMapper.map(chatMessageRequest, ChatMessage.class);
     }
 
-    private ChatProjectionResponse convertToChatResponse(ChatProjection chat) {
-        return modelMapper.map(chat, ChatProjectionResponse.class);
+    private ChatResponse convertToChatResponse(ChatProjection chat) {
+        return modelMapper.map(chat, ChatResponse.class);
     }
 
-    private List<ChatProjectionResponse> convertListToChatResponse(List<ChatProjection> chats) {
+    private List<ChatResponse> convertListToChatResponse(List<ChatProjection> chats) {
         return chats.stream()
                 .map(this::convertToChatResponse)
                 .collect(Collectors.toList());
     }
 
-    private ChatMessageProjectionResponse convertToChatMessageResponse(ChatMessageProjection chatMessage) {
-        return modelMapper.map(chatMessage, ChatMessageProjectionResponse.class);
+    private ChatMessageResponse convertToChatMessageResponse(ChatMessageProjection chatMessage) {
+        return modelMapper.map(chatMessage, ChatMessageResponse.class);
     }
 
-    private List<ChatMessageProjectionResponse> convertListToChatMessageResponse(List<ChatMessageProjection> chatMessages) {
+    private List<ChatMessageResponse> convertListToChatMessageResponse(List<ChatMessageProjection> chatMessages) {
         return chatMessages.stream()
                 .map(this::convertToChatMessageResponse)
                 .collect(Collectors.toList());
     }
 
-    public List<ChatProjectionResponse> getUserChats() {
+    public List<ChatResponse> getUserChats() {
         return convertListToChatResponse(chatService.getUserChats());
     }
 
-    public ChatProjectionResponse createChat(Long userId) {
+    public ChatResponse createChat(Long userId) {
         return convertToChatResponse(chatService.createChat(userId));
     }
 
-    public List<ChatMessageProjectionResponse> getChatMessages(Long chatId) {
+    public List<ChatMessageResponse> getChatMessages(Long chatId) {
         List<ChatMessageProjection> chatMessages = chatService.getChatMessages(chatId);
         return chatMessages.contains(null) ? new ArrayList<>() : convertListToChatMessageResponse(chatMessages);
     }
@@ -67,15 +67,15 @@ public class ChatMapper {
         return chatService.readChatMessages(chatId);
     }
 
-    public ChatMessageProjectionResponse addMessage(ChatMessageRequest chatMessageRequest) {
+    public ChatMessageResponse addMessage(ChatMessageRequest chatMessageRequest) {
         Map<String, Object> messageMap = chatService.addMessage(
                 convertToChatMessageEntity(chatMessageRequest), chatMessageRequest.getChatId());
-        ChatMessageProjectionResponse message = convertToChatMessageResponse((ChatMessageProjection) messageMap.get("message"));
+        ChatMessageResponse message = convertToChatMessageResponse((ChatMessageProjection) messageMap.get("message"));
         message.setChatParticipantsIds((List<Long>) messageMap.get("chatParticipantsIds"));
         return message;
     }
 
-    public List<ChatMessageProjectionResponse> addMessageWithTweet(MessageWithTweetRequest request) {
+    public List<ChatMessageResponse> addMessageWithTweet(MessageWithTweetRequest request) {
         return convertListToChatMessageResponse(
                 chatService.addMessageWithTweet(request.getText(), request.getTweet(), request.getUsers()));
     }
@@ -84,7 +84,7 @@ public class ChatMapper {
         return chatService.leaveFromConversation(participantId, chatId);
     }
 
-    public BaseUserProjectionResponse getParticipant(Long participantId, Long chatId) {
+    public BaseUserResponse getParticipant(Long participantId, Long chatId) {
         return userMapper.convertToBaseUserResponse(chatService.getParticipant(participantId, chatId));
     }
 }

@@ -1,15 +1,14 @@
 package com.gmail.merikbest2015.twitterspringreactjs.dto.response.lists;
 
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageProjectionResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ListMemberProjectionResponse {
+public class ListOwnerResponse {
     private Long id;
     private String fullName;
     private String username;
-    private String about;
-    private ImageProjectionResponse avatar;
+    private ImageResponse avatar;
 }

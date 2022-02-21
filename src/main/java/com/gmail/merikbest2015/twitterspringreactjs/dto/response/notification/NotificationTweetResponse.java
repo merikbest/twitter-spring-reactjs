@@ -5,15 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class NotificationTweetProjectionResponse {
+public class NotificationTweetResponse {
     private Long id;
     private String text;
-    private NotificationCommonUserProjectionResponse user;
+    private NotificationCommonUserResponse user;
     private boolean notificationCondition;
-
-    @Getter
-    @Setter
-    static class NotificationCommonUserProjectionResponse {
-        private Long id;
-    }
 }

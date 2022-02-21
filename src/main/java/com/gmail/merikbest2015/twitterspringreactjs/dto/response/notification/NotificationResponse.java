@@ -8,11 +8,11 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class NotificationProjectionResponse {
+public class NotificationResponse {
     private Long id;
     private LocalDateTime date;
     private NotificationType notificationType;
-    private NotificationUserProjectionResponse user;
-    private NotificationUserProjectionResponse userToFollow;
-    private NotificationTweetProjectionResponse tweet;
+    private NotificationUserResponse user;
+    private NotificationUserResponse userToFollow;
+    private NotificationTweetResponse tweet;
 }

@@ -396,6 +396,12 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
     }
 
+    @Override
+    public List<FollowerUserProjection> getFollowerRequests() {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return userRepository.getFollowerRequests(authUserId);
+    }
+
     private void checkIsUserExist(Long userId) {
         boolean userExist = userRepository.isUserExist(userId);
 

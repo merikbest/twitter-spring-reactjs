@@ -1,12 +1,19 @@
 package com.gmail.merikbest2015.twitterspringreactjs.dto.request;
 
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ListsResponse;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Data
 public class UserToListsRequest {
     private Long userId;
-    private List<ListsResponse> lists;
+    private List<ListsRequest> lists;
+
+    @Getter
+    @Setter
+    public static class ListsRequest {
+        private Long id;
+    }
 }

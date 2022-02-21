@@ -7,7 +7,6 @@ import com.gmail.merikbest2015.twitterspringreactjs.repository.ImageRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.ListsRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetProjection;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetsProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.lists.*;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.ListsService;
@@ -171,8 +170,9 @@ public class ListsServiceImpl implements ListsService {
 
     @Override
     @Transactional
-    public List<Long> addUserToLists(Long userId, List<Lists> lists) {
+    public List<Long> addUserToLists(Long userId, List<Long> listsIds) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
+        List<Lists> lists = listsRepository.getListsByIds(authUserId, listsIds);
         checkUserIsBlocked(authUserId, userId);
         User user = userRepository.getValidUser(userId, authUserId)
                 .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
