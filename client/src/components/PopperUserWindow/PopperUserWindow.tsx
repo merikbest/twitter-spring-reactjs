@@ -66,8 +66,8 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
         if (user?.privateProfile) {
             handleProcessFollowRequest(user);
         } else {
-            dispatch(followUser(user));
-            dispatch(followProfile(user));
+            dispatch(followUser(user?.id!));
+            // dispatch(followProfile(user));
         }
     };
 
@@ -78,8 +78,8 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
         if (user?.privateProfile) {
             handleProcessFollowRequest(user);
         } else {
-            dispatch(unfollowUser(user));
-            dispatch(unfollowProfile(user));
+            dispatch(unfollowUser(user?.id!));
+            // dispatch(unfollowProfile(user));
         }
     };
 

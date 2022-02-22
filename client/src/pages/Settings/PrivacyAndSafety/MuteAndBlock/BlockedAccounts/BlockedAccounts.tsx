@@ -5,24 +5,31 @@ import Tab from "@material-ui/core/Tab";
 import {Divider, Link as MuiLink, Typography} from "@material-ui/core";
 
 import BlockedAccountItem from "./BlockedAccountItem/BlockedAccountItem";
-import {fetchBlockedUsers, setUsers} from "../../../../../store/ducks/users/actionCreators";
-import {selectUsers, selectUsersIsLoading, selectUsersLoadedSuccess} from "../../../../../store/ducks/users/selectors";
 import Spinner from "../../../../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
+import {
+    fetchBlockedUsers,
+    resetBlockedAndMutedUsersState
+} from "../../../../../store/ducks/blockedAndMutedUsers/actionCreators";
+import {
+    selectBlockedUsersItems,
+    selectIsBlockedAndMutedUsersLoaded,
+    selectIsBlockedAndMutedUsersLoading
+} from "../../../../../store/ducks/blockedAndMutedUsers/selectors";
 
 const BlockedAccounts: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
-    const blockedUsers = useSelector(selectUsers);
-    const isUsersLoading = useSelector(selectUsersIsLoading);
-    const isUsersLoadedSuccess = useSelector(selectUsersLoadedSuccess);
+    const blockedUsers = useSelector(selectBlockedUsersItems);
+    const isBlockedUsersLoading = useSelector(selectIsBlockedAndMutedUsersLoading);
+    const isBlockedUsersLoaded = useSelector(selectIsBlockedAndMutedUsersLoaded);
     const [activeTab, setActiveTab] = useState<number>(0);
 
     useEffect(() => {
         dispatch(fetchBlockedUsers());
 
         return () => {
-            dispatch(setUsers([]));
+            dispatch(resetBlockedAndMutedUsersState());
         };
     }, []);
 
@@ -53,10 +60,10 @@ const BlockedAccounts: FC = (): ReactElement => {
                 </Typography>
             </div>
             <Divider/>
-            {isUsersLoading ? (
+            {isBlockedUsersLoading ? (
                 <Spinner/>
             ) : (
-                (blockedUsers.length === 0 && isUsersLoadedSuccess) ? (
+                (blockedUsers.length === 0 && isBlockedUsersLoaded) ? (
                     <div className={globalClasses.infoText}>
                         <Typography variant={"h4"} component={"div"}>
                             {(activeTab === 0) ? (

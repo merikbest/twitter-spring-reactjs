@@ -2,33 +2,35 @@ import {Settings, User, UserState} from "./contracts/state";
 import {
     AcceptFollowRequestActionInterface,
     AddTweetToBookmarksActionInterface,
-    AddUserToBlocklistActionInterface,
-    AddUserToMuteListActionInterface,
     DeclineFollowRequestActionInterface,
     FetchPinTweetActionInterface,
     FetchReadMessagesActionInterface,
     FetchSignInActionInterface,
     FetchSignUpActionInterface,
     FetchUserDataActionInterface,
-    FollowActionInterface,
+    // FollowActionInterface,
     FollowUserActionInterface,
     SetBackgroundColorActionInterface,
     SetColorSchemeActionInterface,
     SetCountryActionInterface,
     SetDirectActionInterface,
     SetEmailActionInterface,
+    SetFollowersSizeActionInterface,
     SetGenderActionInterface,
     SetLanguageActionInterface,
     SetNewNotificationActionInterface,
     SetPhoneActionInterface,
+    SetPinTweetIdActionInterface,
     SetPrivateProfileActionInterface,
+    SetProfileStartedActionInterface,
+    SetReadMessageActionInterface,
     SetUnreadMessageActionInterface,
     SetUserDataActionInterface,
     SetUserLoadingStateActionInterface,
     SetUsernameActionInterface,
     SignOutActionInterface,
     StartUseTwitterActionInterface,
-    UnfollowActionInterface,
+    // UnfollowActionInterface,
     UnfollowUserActionInterface,
     UpdateBackgroundColorActionInterface,
     UpdateColorSchemeActionInterface,
@@ -39,14 +41,40 @@ import {
     UpdateLanguageActionInterface,
     UpdatePhoneActionInterface,
     UpdatePrivateProfileActionInterface,
+    UpdateUserDataActionInterface,
     UpdateUsernameActionInterface,
     UserActionsType
 } from "./contracts/actionTypes";
 import {RegistrationProps} from "../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
 import {LoginProps} from "../../../pages/Login/Login";
 import {ChatMessage} from "../chatMessages/contracts/state";
+import {AuthUserResponse} from "../../types/user";
 
-export const setUserData = (payload: UserState["data"]): SetUserDataActionInterface => ({
+export const updatedUserData = (payload: AuthUserResponse): UpdateUserDataActionInterface => ({  // +check
+    type: UserActionsType.UPDATE_USER_DATA,
+    payload
+});
+
+export const setFollowersSize = (): SetFollowersSizeActionInterface => ({ //+
+    type: UserActionsType.SET_FOLLOWERS_SIZE
+});
+
+export const setProfileStarted = (payload: boolean): SetProfileStartedActionInterface => ({ //+
+    type: UserActionsType.SET_PROFILE_STARTED,
+    payload
+});
+
+export const setPinTweetId = (payload: number): SetPinTweetIdActionInterface => ({ //+
+    type: UserActionsType.SET_PIN_TWEET_ID,
+    payload
+});
+
+export const setReadMessage = (payload: number): SetReadMessageActionInterface => ({ //+
+    type: UserActionsType.SET_READ_MESSAGE,
+    payload
+});
+
+export const setUserData = (payload: UserState["data"]): SetUserDataActionInterface => ({ //+
     type: UserActionsType.SET_USER_DATA,
     payload
 });
@@ -55,17 +83,17 @@ export const signOut = (): SignOutActionInterface => ({
     type: UserActionsType.SIGN_OUT,
 });
 
-export const fetchSignIn = (payload: LoginProps): FetchSignInActionInterface => ({
+export const fetchSignIn = (payload: LoginProps): FetchSignInActionInterface => ({ //+
     type: UserActionsType.FETCH_SIGN_IN,
     payload,
 });
 
-export const fetchSignUp = (payload: RegistrationProps): FetchSignUpActionInterface => ({
+export const fetchSignUp = (payload: RegistrationProps): FetchSignUpActionInterface => ({ //+
     type: UserActionsType.FETCH_SIGN_UP,
     payload,
 });
 
-export const fetchUserData = (): FetchUserDataActionInterface => ({
+export const fetchUserData = (): FetchUserDataActionInterface => ({ //+
     type: UserActionsType.FETCH_USER_DATA,
 });
 
@@ -74,25 +102,25 @@ export const setUserLoadingStatus = (payload: UserState["status"]): SetUserLoadi
     payload
 });
 
-export const followUser = (payload: User): FollowUserActionInterface => ({
+export const followUser = (payload: number): FollowUserActionInterface => ({ //+
     type: UserActionsType.FOLLOW_USER,
     payload,
 });
 
-export const unfollowUser = (payload: User): UnfollowUserActionInterface => ({
+export const unfollowUser = (payload: number): UnfollowUserActionInterface => ({ //+
     type: UserActionsType.UNFOLLOW_USER,
     payload,
 });
 
-export const follow = (payload: User): FollowActionInterface => ({
-    type: UserActionsType.FOLLOW,
-    payload,
-});
+// export const follow = (payload: number): FollowActionInterface => ({
+//     type: UserActionsType.FOLLOW,
+//     payload,
+// });
 
-export const unfollow = (payload: User): UnfollowActionInterface => ({
-    type: UserActionsType.UNFOLLOW,
-    payload,
-});
+// export const unfollow = (payload: number): UnfollowActionInterface => ({
+//     type: UserActionsType.UNFOLLOW,
+//     payload,
+// });
 
 export const acceptFollowRequest = (payload: number): AcceptFollowRequestActionInterface => ({
     type: UserActionsType.ACCEPT_FOLLOW_REQUEST,
@@ -133,15 +161,15 @@ export const setNewNotification = (): SetNewNotificationActionInterface => ({
     type: UserActionsType.SET_NEW_NOTIFICATION,
 });
 
-export const addUserToBlocklist = (payload: number): AddUserToBlocklistActionInterface => ({
-    type: UserActionsType.ADD_USER_TO_BLOCKLIST,
-    payload,
-});
+// export const addUserToBlocklist = (payload: number): AddUserToBlocklistActionInterface => ({
+//     type: UserActionsType.ADD_USER_TO_BLOCKLIST,
+//     payload,
+// });
 
-export const addUserToMuteList = (payload: number): AddUserToMuteListActionInterface => ({
-    type: UserActionsType.ADD_USER_TO_MUTELIST,
-    payload,
-});
+// export const addUserToMuteList = (payload: number): AddUserToMuteListActionInterface => ({
+//     type: UserActionsType.ADD_USER_TO_MUTELIST,
+//     payload,
+// });
 
 export const updateUsername = (payload: Settings): UpdateUsernameActionInterface => ({
     type: UserActionsType.UPDATE_USERNAME,

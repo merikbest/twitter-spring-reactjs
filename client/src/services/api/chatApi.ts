@@ -27,8 +27,8 @@ export const ChatApi = {
         const {data} = await axios.get<Response<ChatMessage[]>>(`${API_URL}/chat/${chatId}/messages`);
         return data;
     },
-    async readChatMessages(chatId: number): Promise<Response<User>> {
-        const {data} = await axios.get<Response<User>>(`${API_URL}/chat/${chatId}/read/messages`);
+    async readChatMessages(chatId: number): Promise<Response<number>> { // +
+        const {data} = await axios.get<Response<number>>(`${API_URL}/chat/${chatId}/read/messages`);
         return data;
     },
     async addMessage(chatMessage: ChatMessageRequest): Promise<Response<ChatMessage>> {

@@ -1,5 +1,5 @@
 import React, {ComponentType, FC, ReactElement} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {compose} from "recompose";
 import {Link} from "react-router-dom";
 import {Avatar, IconButton, Paper, Typography} from "@material-ui/core";
@@ -7,8 +7,6 @@ import classnames from "classnames";
 
 import {useMutedAccountItemStyles} from "./MutedAccountItemStyles";
 import {DEFAULT_PROFILE_IMG} from "../../../../../../util/url";
-import {selectUserData} from "../../../../../../store/ducks/user/selectors";
-import {User} from "../../../../../../store/ducks/user/contracts/state";
 import {MuteIcon, UnmuteIcon} from "../../../../../../icons";
 import {addUserToMuteList} from "../../../../../../store/ducks/user/actionCreators";
 import HoverAction from "../../../../../../components/HoverAction/HoverAction";
@@ -16,9 +14,10 @@ import ActionSnackbar from "../../../../../../components/ActionSnackbar/ActionSn
 import {SnackbarProps, withSnackbar} from "../../../../../../hoc/withSnackbar";
 import {HoverActionProps, HoverActions, withHoverAction} from "../../../../../../hoc/withHoverAction";
 import {useGlobalStyles} from "../../../../../../util/globalClasses";
+import {MutedUserResponse} from "../../../../../../store/types/user";
 
 interface MutedAccountItemProps {
-    mutedUser?: User;
+    mutedUser?: MutedUserResponse;
 }
 
 const MutedAccountItem: FC<MutedAccountItemProps & SnackbarProps & HoverActionProps> = (
@@ -36,13 +35,11 @@ const MutedAccountItem: FC<MutedAccountItemProps & SnackbarProps & HoverActionPr
 ): ReactElement => {
     const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
-    const myProfile = useSelector(selectUserData);
-    const isUserMuted = myProfile?.userMutedList?.findIndex(user => user.id === mutedUser?.id) !== -1;
-    const classes = useMutedAccountItemStyles({isUserMuted});
+    const classes = useMutedAccountItemStyles({isUserMuted: mutedUser?.isUserMuted!});
 
     const unmuteUser = (): void => {
         dispatch(addUserToMuteList(mutedUser?.id!));
-        setSnackBarMessage!(`@${mutedUser?.username} has been ${isUserMuted ? "unmuted" : "muted"}.`);
+        setSnackBarMessage!(`@${mutedUser?.username} has been ${mutedUser?.isUserMuted ? "unmuted" : "muted"}.`);
         setOpenSnackBar!(true);
     };
 
@@ -75,8 +72,8 @@ const MutedAccountItem: FC<MutedAccountItemProps & SnackbarProps & HoverActionPr
                             onMouseLeave={handleLeaveAction}
                             color="primary"
                         >
-                            {isUserMuted ? MuteIcon : UnmuteIcon}
-                            <HoverAction visible={visibleHoverAction?.visibleOtherAction} actionText={isUserMuted ? "Unmute" : "Mute"}/>
+                            {mutedUser?.isUserMuted ? MuteIcon : UnmuteIcon}
+                            <HoverAction visible={visibleHoverAction?.visibleOtherAction} actionText={mutedUser?.isUserMuted ? "Unmute" : "Mute"}/>
                         </IconButton>
                     </div>
                 </div>

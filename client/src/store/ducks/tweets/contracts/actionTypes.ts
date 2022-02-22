@@ -2,13 +2,14 @@ import {Action} from "redux";
 
 import {LoadingStatus} from "../../../types";
 import {AddQuoteTweet, AddTweet, ReplyType, Tweet, TweetsState, Vote} from "./state";
+import {UsersActionsType} from "../../users/contracts/actionTypes";
 
 export enum TweetsActionType {
-    SET_TWEETS = "tweets/SET_TWEETS",
+
     SET_SCHEDULED_TWEETS = "tweets/SET_SCHEDULED_TWEETS",
-    SET_PAGEABLE_TWEETS = "tweets/SET_PAGEABLE_TWEETS",
+
     SET_TWEET = "tweets/SET_TWEET",
-    RESET_TWEETS = "tweets/RESET_TWEETS",
+
     LIKE_TWEET = 'tweets/LIKE_TWEET',
     RETWEET = 'tweets/RETWEET',
     ADD_TWEET = "tweets/ADD_TWEET",
@@ -22,38 +23,89 @@ export enum TweetsActionType {
     FETCH_DELETE_TWEET = "tweets/FETCH_DELETE_TWEET",
     DELETE_SCHEDULED_TWEETS = "tweets/DELETE_SCHEDULED_TWEETS",
     DELETE_TWEET = "tweets/DELETE_TWEET",
-    FETCH_TWEETS = "tweets/FETCH_TWEETS",
-    FETCH_MEDIA_TWEETS = "tweets/FETCH_MEDIA_TWEETS",
-    FETCH_TWEETS_WITH_VIDEO = "tweets/FETCH_TWEETS_WITH_VIDEO",
-    FETCH_TWEETS_BY_TAG = "tweets/FETCH_TWEETS_BY_TAG",
-    FETCH_TWEETS_BY_TEXT = "tweets/FETCH_TWEETS_BY_TEXT",
+
+
+
+
+
     FETCH_BOOKMARKS = "tweets/FETCH_BOOKMARKS",
     REMOVE_TWEET_FROM_BOOKMARKS = "tweets/REMOVE_TWEET_FROM_BOOKMARKS",
-    SET_LOADING_STATE = "tweets/SET_LOADING_STATE",
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    SET_FOLLOW_TO_TWEETS_STATE = 'tweets/SET_FOLLOW_TO_TWEETS_STATE', // +
+    SET_TWEETS = "tweets/SET_TWEETS", // +
+    FETCH_TWEETS = "tweets/FETCH_TWEETS", // +
+    FETCH_MEDIA_TWEETS = "tweets/FETCH_MEDIA_TWEETS", // +
+    FETCH_TWEETS_WITH_VIDEO = "tweets/FETCH_TWEETS_WITH_VIDEO", // +
+    SET_PAGEABLE_TWEETS = "tweets/SET_PAGEABLE_TWEETS", // +
+    SET_LOADING_STATE = "tweets/SET_LOADING_STATE", // +
+    RESET_TWEETS = "tweets/RESET_TWEETS", // +
+    FETCH_TWEETS_BY_TAG = "tweets/FETCH_TWEETS_BY_TAG", // +
+    FETCH_TWEETS_BY_TEXT = "tweets/FETCH_TWEETS_BY_TEXT", //+
 }
 
-export interface SetTweetsActionInterface extends Action<TweetsActionType> {
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+export interface SetFollowToTweetsStateActionInterface extends Action<TweetsActionType> { //+
+    type: TweetsActionType.SET_FOLLOW_TO_TWEETS_STATE;
+    payload: { tweetId: number; isFollower: boolean; };
+}
+
+export interface SetTweetsActionInterface extends Action<TweetsActionType> { //+
     type: TweetsActionType.SET_TWEETS;
     payload: TweetsState["items"];
 }
+
+export interface FetchTweetsActionInterface extends Action<TweetsActionType> { //+
+    type: TweetsActionType.FETCH_TWEETS;
+    payload: number;
+}
+
+export interface SetPageableTweetsActionInterface extends Action<TweetsActionType> { //+
+    type: TweetsActionType.SET_PAGEABLE_TWEETS;
+    payload: { items: TweetsState["items"], pagesCount: TweetsState["pagesCount"] };
+}
+
+export interface SetTweetsLoadingStateInterface extends Action<TweetsActionType> { // +
+    type: TweetsActionType.SET_LOADING_STATE;
+    payload: LoadingStatus;
+}
+
+export interface ResetTweetsActionInterface extends Action<TweetsActionType> { // +
+    type: TweetsActionType.RESET_TWEETS;
+}
+
+export interface FetchMediaTweetsActionInterface extends Action<TweetsActionType> { // +
+    type: TweetsActionType.FETCH_MEDIA_TWEETS;
+    payload: number;
+}
+
+export interface FetchTweetsWithVideoActionInterface extends Action<TweetsActionType> { // +
+    type: TweetsActionType.FETCH_TWEETS_WITH_VIDEO;
+    payload: number;
+}
+
+export interface FetchTweetsByTagActionInterface extends Action<TweetsActionType> { // +
+    type: TweetsActionType.FETCH_TWEETS_BY_TAG;
+    payload: string;
+}
+
+export interface FetchTweetsByTextActionInterface extends Action<TweetsActionType> { // +
+    type: TweetsActionType.FETCH_TWEETS_BY_TEXT;
+    payload: string;
+}
+
+
+
+
 
 export interface SetScheduledTweetsActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.SET_SCHEDULED_TWEETS;
     payload: TweetsState["items"];
 }
 
-export interface SetPageableTweetsActionInterface extends Action<TweetsActionType> {
-    type: TweetsActionType.SET_PAGEABLE_TWEETS;
-    payload: { items: TweetsState["items"], pagesCount: TweetsState["pagesCount"] };
-}
-
 export interface SetTweetActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.SET_TWEET;
     payload: Tweet;
-}
-
-export interface ResetTweetsActionInterface extends Action<TweetsActionType> {
-    type: TweetsActionType.RESET_TWEETS;
 }
 
 export interface AddTweetActionInterface extends Action<TweetsActionType> {
@@ -121,35 +173,7 @@ export interface RetweetActionInterface extends Action<TweetsActionType> {
     payload: string;
 }
 
-export interface SetTweetsLoadingStateInterface extends Action<TweetsActionType> {
-    type: TweetsActionType.SET_LOADING_STATE;
-    payload: LoadingStatus;
-}
 
-export interface FetchTweetsActionInterface extends Action<TweetsActionType> {
-    type: TweetsActionType.FETCH_TWEETS;
-    payload: number;
-}
-
-export interface FetchMediaTweetsActionInterface extends Action<TweetsActionType> {
-    type: TweetsActionType.FETCH_MEDIA_TWEETS;
-    payload: number;
-}
-
-export interface FetchTweetsWithVideoActionInterface extends Action<TweetsActionType> {
-    type: TweetsActionType.FETCH_TWEETS_WITH_VIDEO;
-    payload: number;
-}
-
-export interface FetchTweetsByTagActionInterface extends Action<TweetsActionType> {
-    type: TweetsActionType.FETCH_TWEETS_BY_TAG;
-    payload: string;
-}
-
-export interface FetchTweetsByTextActionInterface extends Action<TweetsActionType> {
-    type: TweetsActionType.FETCH_TWEETS_BY_TEXT;
-    payload: string;
-}
 
 export interface FetchBookmarksActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_BOOKMARKS;
@@ -162,12 +186,13 @@ export interface RemoveTweetFromBookmarksActionInterface extends Action<TweetsAc
 }
 
 export type TweetsActions =
-    | SetTweetsActionInterface
+    | SetTweetsActionInterface // +
     | SetScheduledTweetsActionInterface
-    | SetPageableTweetsActionInterface
-    | SetTweetsLoadingStateInterface
-    | ResetTweetsActionInterface
+    | SetPageableTweetsActionInterface // +
+    | SetTweetsLoadingStateInterface // +
+    | ResetTweetsActionInterface // +
     | SetUpdatedTweetActionInterface
     | DeleteTweetActionInterface
     | SetTweetActionInterface
-    | RemoveTweetFromBookmarksActionInterface;
+    | RemoveTweetFromBookmarksActionInterface // +
+    | SetFollowToTweetsStateActionInterface;

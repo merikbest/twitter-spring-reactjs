@@ -1,25 +1,31 @@
 import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Divider, Link as MuiLink, Typography} from "@material-ui/core";
-
-import {fetchMutedUsers, setUsers} from "../../../../../store/ducks/users/actionCreators";
-import {selectUsers, selectUsersIsLoading, selectUsersLoadedSuccess} from "../../../../../store/ducks/users/selectors";
 import MutedAccountItem from "./MutedAccountItem/MutedAccountItem";
 import Spinner from "../../../../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
+import {
+    selectIsBlockedAndMutedUsersLoaded,
+    selectIsBlockedAndMutedUsersLoading,
+    selectMutedUsersItems
+} from "../../../../../store/ducks/blockedAndMutedUsers/selectors";
+import {
+    fetchMutedUsers,
+    resetBlockedAndMutedUsersState
+} from "../../../../../store/ducks/blockedAndMutedUsers/actionCreators";
 
 const MutedAccounts: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
-    const mutedUsers = useSelector(selectUsers);
-    const isUsersLoading = useSelector(selectUsersIsLoading);
-    const isUsersLoadedSuccess = useSelector(selectUsersLoadedSuccess);
+    const mutedUsers = useSelector(selectMutedUsersItems);
+    const isMutedUsersLoading = useSelector(selectIsBlockedAndMutedUsersLoading);
+    const isMutedUsersLoaded = useSelector(selectIsBlockedAndMutedUsersLoaded);
 
     useEffect(() => {
         dispatch(fetchMutedUsers());
 
         return () => {
-            dispatch(setUsers([]));
+            dispatch(resetBlockedAndMutedUsersState());
         };
     }, []);
 
@@ -39,10 +45,10 @@ const MutedAccounts: FC = (): ReactElement => {
                 </Typography>
             </div>
             <Divider/>
-            {isUsersLoading ? (
+            {isMutedUsersLoading ? (
                 <Spinner/>
             ) : (
-                (mutedUsers.length === 0 && isUsersLoadedSuccess) ? (
+                (mutedUsers.length === 0 && isMutedUsersLoaded) ? (
                     <div className={globalClasses.infoText}>
                         <Typography variant={"h4"} component={"div"}>
                             You aren’t muting anyone

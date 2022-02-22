@@ -5,18 +5,18 @@ import {Settings, User, UserState} from "./state";
 import {RegistrationProps} from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
 import {LoginProps} from "../../../../pages/Login/Login";
 import {ChatMessage} from "../../chatMessages/contracts/state";
+import {AuthUserResponse} from "../../../types/user";
 
 export enum UserActionsType {
-    FETCH_SIGN_IN = "user/FETCH_SIGN_IN",
-    FETCH_SIGN_UP = 'user/FETCH_SIGN_UP',
-    SET_USER_DATA = "user/SET_USER_DATA",
-    FETCH_USER_DATA = 'user/FETCH_USER_DATA',
-    SET_USER_LOADING_STATE = "user/SET_USER_LOADING_STATE",
-    SIGN_OUT = 'user/SIGN_OUT',
-    FOLLOW_USER = 'user/FOLLOW_USER',
-    UNFOLLOW_USER = 'user/UNFOLLOW_USER',
-    FOLLOW = 'user/FOLLOW',
-    UNFOLLOW = 'user/UNFOLLOW',
+
+
+    // FOLLOW = 'user/FOLLOW',
+    // UNFOLLOW = 'user/UNFOLLOW',
+
+    // ADD_USER_TO_BLOCKLIST = 'user/ADD_USER_TO_BLOCKLIST',
+    // ADD_USER_TO_MUTELIST = 'user/ADD_USER_TO_MUTELIST',
+
+
     ACCEPT_FOLLOW_REQUEST = 'user/ACCEPT_FOLLOW_REQUEST',
     DECLINE_FOLLOW_REQUEST = 'user/DECLINE_FOLLOW_REQUEST',
     FETCH_PIN_TWEET = 'user/FETCH_PIN_TWEET',
@@ -25,8 +25,7 @@ export enum UserActionsType {
     FETCH_READ_MESSAGES = 'user/FETCH_READ_MESSAGES',
     SET_UNREAD_MESSAGE = 'user/SET_UNREAD_MESSAGE',
     SET_NEW_NOTIFICATION = 'user/SET_NEW_NOTIFICATION',
-    ADD_USER_TO_BLOCKLIST = 'user/ADD_USER_TO_BLOCKLIST',
-    ADD_USER_TO_MUTELIST = 'user/ADD_USER_TO_MUTELIST',
+
     UPDATE_USERNAME = 'user/UPDATE_USERNAME',
     UPDATE_EMAIL = 'user/UPDATE_EMAIL',
     UPDATE_PHONE = 'user/UPDATE_PHONE',
@@ -47,55 +46,103 @@ export enum UserActionsType {
     SET_PRIVATE_PROFILE = 'user/SET_PRIVATE_PROFILE',
     SET_COLOR_SCHEME = 'user/SET_COLOR_SCHEME',
     SET_BACKGROUND_COLOR = 'user/SET_BACKGROUND_COLOR',
+    // followersSize
+    SIGN_OUT = 'user/SIGN_OUT',
+    FETCH_SIGN_IN = "user/FETCH_SIGN_IN",  //+
+    FETCH_SIGN_UP = 'user/FETCH_SIGN_UP', //+
+    SET_USER_DATA = "user/SET_USER_DATA", //+
+    FETCH_USER_DATA = 'user/FETCH_USER_DATA', //+
+    SET_USER_LOADING_STATE = "user/SET_USER_LOADING_STATE", //+
+
+    UPDATE_USER_DATA = "user/UPDATE_USER_DATA",
+    SET_FOLLOWERS_SIZE = 'user/SET_FOLLOWERS_SIZE', //+
+    SET_PROFILE_STARTED = 'user/SET_PROFILE_STARTED', //+
+    SET_PIN_TWEET_ID = 'user/SET_PIN_TWEET_ID', //+
+    SET_READ_MESSAGE = 'user/SET_READ_MESSAGE', //+
+    FOLLOW_USER = 'user/FOLLOW_USER', //+ ????
+    UNFOLLOW_USER = 'user/UNFOLLOW_USER', // +check ????
+
+
 }
 
 export interface SignOutActionInterface extends Action<UserActionsType> {
     type: UserActionsType.SIGN_OUT;
 }
 
-export interface FetchSignInActionInterface extends Action<UserActionsType> {
+export interface FetchSignInActionInterface extends Action<UserActionsType> { //+
     type: UserActionsType.FETCH_SIGN_IN;
     payload: LoginProps;
 }
 
-export interface FetchSignUpActionInterface extends Action<UserActionsType> {
+export interface FetchSignUpActionInterface extends Action<UserActionsType> { //+
     type: UserActionsType.FETCH_SIGN_UP;
     payload: RegistrationProps;
 }
 
-export interface FetchUserDataActionInterface extends Action<UserActionsType> {
-    type: UserActionsType.FETCH_USER_DATA;
-}
-
-export interface SetUserDataActionInterface extends Action<UserActionsType> {
+export interface SetUserDataActionInterface extends Action<UserActionsType> { //+
     type: UserActionsType.SET_USER_DATA;
     payload: UserState["data"] | undefined;
 }
 
-export interface SetUserLoadingStateActionInterface extends Action<UserActionsType> {
+export interface FetchUserDataActionInterface extends Action<UserActionsType> { //+
+    type: UserActionsType.FETCH_USER_DATA;
+}
+
+export interface SetUserLoadingStateActionInterface extends Action<UserActionsType> { //+
     type: UserActionsType.SET_USER_LOADING_STATE;
     payload: LoadingStatus;
 }
 
-export interface FollowUserActionInterface extends Action<UserActionsType> {
+export interface UpdateUserDataActionInterface extends Action<UserActionsType> { //+
+    type: UserActionsType.UPDATE_USER_DATA;
+    payload: AuthUserResponse;
+}
+
+export interface SetFollowersSizeActionInterface extends Action<UserActionsType> { //+
+    type: UserActionsType.SET_FOLLOWERS_SIZE;
+}
+
+export interface SetProfileStartedActionInterface extends Action<UserActionsType> { //+
+    type: UserActionsType.SET_PROFILE_STARTED;
+    payload: boolean;
+}
+
+export interface SetPinTweetIdActionInterface extends Action<UserActionsType> { //+
+    type: UserActionsType.SET_PIN_TWEET_ID;
+    payload: number;
+}
+
+export interface SetReadMessageActionInterface extends Action<UserActionsType> { //+
+    type: UserActionsType.SET_READ_MESSAGE;
+    payload: number;
+}
+
+export interface FollowUserActionInterface extends Action<UserActionsType> { // +check
     type: UserActionsType.FOLLOW_USER;
-    payload: User;
+    payload: number;
 }
 
-export interface UnfollowUserActionInterface extends Action<UserActionsType> {
+export interface UnfollowUserActionInterface extends Action<UserActionsType> { // +check
     type: UserActionsType.UNFOLLOW_USER;
-    payload: User;
+    payload: number;
 }
 
-export interface FollowActionInterface extends Action<UserActionsType> {
-    type: UserActionsType.FOLLOW;
-    payload: User;
-}
 
-export interface UnfollowActionInterface extends Action<UserActionsType> {
-    type: UserActionsType.UNFOLLOW;
-    payload: User;
-}
+
+////////////////////////////////////////////////////////////////////////////////
+
+// export interface FollowActionInterface extends Action<UserActionsType> {
+//     type: UserActionsType.FOLLOW;
+//     payload: number;
+// }
+//
+// export interface UnfollowActionInterface extends Action<UserActionsType> {
+//     type: UserActionsType.UNFOLLOW;
+//     payload: number;
+// }
+
+
+
 
 export interface AcceptFollowRequestActionInterface extends Action<UserActionsType> {
     type: UserActionsType.ACCEPT_FOLLOW_REQUEST;
@@ -136,15 +183,15 @@ export interface SetNewNotificationActionInterface extends Action<UserActionsTyp
     type: UserActionsType.SET_NEW_NOTIFICATION;
 }
 
-export interface AddUserToBlocklistActionInterface extends Action<UserActionsType> {
-    type: UserActionsType.ADD_USER_TO_BLOCKLIST;
-    payload: number;
-}
+// export interface AddUserToBlocklistActionInterface extends Action<UserActionsType> {
+//     type: UserActionsType.ADD_USER_TO_BLOCKLIST;
+//     payload: number;
+// }
 
-export interface AddUserToMuteListActionInterface extends Action<UserActionsType> {
-    type: UserActionsType.ADD_USER_TO_MUTELIST;
-    payload: number;
-}
+// export interface AddUserToMuteListActionInterface extends Action<UserActionsType> {
+//     type: UserActionsType.ADD_USER_TO_MUTELIST;
+//     payload: number;
+// }
 
 export interface UpdateUsernameActionInterface extends Action<UserActionsType> {
     type: UserActionsType.UPDATE_USERNAME;
@@ -252,10 +299,10 @@ export type UserActions =
     | SetUnreadMessageActionInterface
     | SetNewNotificationActionInterface
     | SignOutActionInterface
-    | FollowUserActionInterface
-    | UnfollowUserActionInterface
-    | FollowActionInterface
-    | UnfollowActionInterface
+    // | FollowUserActionInterface
+    // | UnfollowUserActionInterface
+    // | FollowActionInterface
+    // | UnfollowActionInterface
     | SetUsernameActionInterface
     | SetEmailActionInterface
     | SetPhoneActionInterface
@@ -265,4 +312,8 @@ export type UserActions =
     | SetDirectActionInterface
     | SetPrivateProfileActionInterface
     | SetColorSchemeActionInterface
-    | SetBackgroundColorActionInterface;
+    | SetBackgroundColorActionInterface
+    | SetFollowersSizeActionInterface
+    | SetProfileStartedActionInterface
+    | SetPinTweetIdActionInterface
+    | SetReadMessageActionInterface;

@@ -13,7 +13,7 @@ const initialTweetsState: TweetsState = {
 export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsActions) => {
 
     switch (action.type) {
-        case TweetsActionType.SET_TWEETS:
+        case TweetsActionType.SET_TWEETS: // +
             draft.items = [...draft.items, ...action.payload];
             draft.loadingState = LoadingStatus.LOADED;
             break;
@@ -22,7 +22,7 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
             draft.items = [...action.payload, ...draft.items];
             break;
 
-        case TweetsActionType.SET_PAGEABLE_TWEETS:
+        case TweetsActionType.SET_PAGEABLE_TWEETS: // +
             draft.items = [...draft.items, ...action.payload.items];
             draft.pagesCount = action.payload.pagesCount;
             draft.loadingState = LoadingStatus.LOADED;
@@ -32,7 +32,7 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
             draft.items = [action.payload, ...draft.items];
             break;
 
-        case TweetsActionType.RESET_TWEETS:
+        case TweetsActionType.RESET_TWEETS: // +
             draft.items = [];
             draft.pagesCount = 1;
             draft.loadingState = LoadingStatus.LOADING
@@ -49,7 +49,7 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
             }
             break;
 
-        case TweetsActionType.SET_LOADING_STATE:
+        case TweetsActionType.SET_LOADING_STATE: // +
             draft.loadingState = action.payload;
             break;
 
@@ -60,6 +60,13 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
 
         case TweetsActionType.DELETE_TWEET:
             draft.items = draft.items.filter((tweet) => tweet.id !== action.payload.id);
+            break;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        case TweetsActionType.SET_FOLLOW_TO_TWEETS_STATE: // +
+            const followUserTweetIndex = draft.items.findIndex((tweet) => tweet.id !== action.payload.tweetId);
+            if (followUserTweetIndex !== -1) draft.items[followUserTweetIndex].user.isFollower = action.payload.isFollower;
+            draft.loadingState = LoadingStatus.LOADED
             break;
 
         default:

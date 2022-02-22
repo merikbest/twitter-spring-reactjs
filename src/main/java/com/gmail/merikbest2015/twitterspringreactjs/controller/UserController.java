@@ -47,7 +47,7 @@ public class UserController {
         return ResponseEntity.ok(userMapper.searchUsersByUsername(username));
     }
 
-    @GetMapping("/start")
+    @GetMapping("/start") // +
     public ResponseEntity<Boolean> startUseTwitter() {
         return ResponseEntity.ok(userMapper.startUseTwitter());
     }
@@ -148,7 +148,7 @@ public class UserController {
         return ResponseEntity.ok(userMapper.acceptFollowRequest(userId));
     }
 
-    @GetMapping("/follow/decline/{userId}")
+    @GetMapping("/follow/decline/{userId}") //+
     public ResponseEntity<String> declineFollowRequest(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.declineFollowRequest(userId));
     }
@@ -158,12 +158,12 @@ public class UserController {
         return ResponseEntity.ok(userMapper.processSubscribeToNotifications(userId));
     }
 
-    @GetMapping("/pin/tweet/{tweetId}")
+    @GetMapping("/pin/tweet/{tweetId}") //+
     public ResponseEntity<Long> processPinTweet(@PathVariable Long tweetId) {
         return ResponseEntity.ok(userMapper.processPinTweet(tweetId));
     }
 
-    @GetMapping("/blocked")
+    @GetMapping("/blocked") // +
     public ResponseEntity<List<BlockedUserResponse>> getBlockList() {
         return ResponseEntity.ok(userMapper.getBlockList());
     }
@@ -173,7 +173,7 @@ public class UserController {
         return ResponseEntity.ok(userMapper.processBlockList(userId));
     }
 
-    @GetMapping("/muted")
+    @GetMapping("/muted") // +
     public ResponseEntity<List<MutedUserResponse>> getMutedList() {
         return ResponseEntity.ok(userMapper.getMutedList());
     }

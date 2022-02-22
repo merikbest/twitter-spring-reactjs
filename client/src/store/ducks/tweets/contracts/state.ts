@@ -1,5 +1,6 @@
 import {LoadingStatus} from "../../../types";
 import {User} from "../../user/contracts/state";
+import {TweetResponse} from "../../../types/tweet";
 
 export interface Image {
     id: number;
@@ -92,7 +93,7 @@ export interface Vote {
 }
 
 export interface TweetsState {
-    items: Tweet[];
+    items: TweetResponse[];
     pagesCount: number;
     loadingState: LoadingStatus;
 }

@@ -3,6 +3,7 @@ import axios from 'axios';
 import {Tag} from '../../store/ducks/tags/contracts/state';
 import {Tweet} from "../../store/ducks/tweets/contracts/state";
 import {API_URL} from "../../util/url";
+import {TweetResponse} from "../../store/types/tweet";
 
 interface Response<T> {
     status: string;
@@ -18,8 +19,8 @@ export const TagApi = {
         const {data} = await axios.get<Response<Tag[]>>(`${API_URL}/tags/trends`);
         return data;
     },
-    async fetchTweetsByTag(tag: string): Promise<Response<Tweet[]>> {
-        const {data} = await axios.get<Response<Tweet[]>>(`${API_URL}/tags/${tag}`);
+    async fetchTweetsByTag(tag: string): Promise<Response<TweetResponse[]>> { // +
+        const {data} = await axios.get<Response<TweetResponse[]>>(`${API_URL}/tags/${tag}`);
         return data;
     },
 };

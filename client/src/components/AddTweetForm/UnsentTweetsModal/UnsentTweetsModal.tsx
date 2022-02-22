@@ -12,6 +12,7 @@ import AddTweetForm from "../AddTweetForm";
 import CloseButton from "../../CloseButton/CloseButton";
 import Spinner from "../../Spinner/Spinner";
 import {useGlobalStyles} from "../../../util/globalClasses";
+import {TweetResponse} from "../../../store/types/tweet";
 
 interface UnsentTweetsModalProps {
     visible?: boolean;
@@ -20,7 +21,7 @@ interface UnsentTweetsModalProps {
 
 const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): ReactElement | null => {
     const globalClasses = useGlobalStyles();
-    const [tweets, setTweets] = useState<Tweet[]>([]);
+    const [tweets, setTweets] = useState<TweetResponse[]>([]);
     const [activeTab, setActiveTab] = useState<number>(0);
     const [unsentTweet, setUnsentTweet] = useState<Tweet | null>(null);
     const [visibleEditTweetModal, setVisibleEditTweetModal] = useState<boolean>(false);

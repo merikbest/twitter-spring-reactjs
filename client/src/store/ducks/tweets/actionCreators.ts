@@ -26,11 +26,17 @@ import {
     SetTweetsActionInterface,
     SetTweetsLoadingStateInterface,
     SetUpdatedTweetActionInterface,
-    TweetsActionType,
+    TweetsActionType, SetFollowToTweetsStateActionInterface,
 } from "./contracts/actionTypes";
 import {LoadingStatus} from "../../types";
 
-export const setTweets = (payload: TweetsState["items"]): SetTweetsActionInterface => ({
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+export const setFollowToTweetsState = (payload: { tweetId: number; isFollower: boolean; }): SetFollowToTweetsStateActionInterface => ({ // +
+    type: TweetsActionType.SET_FOLLOW_TO_TWEETS_STATE,
+    payload
+});
+
+export const setTweets = (payload: TweetsState["items"]): SetTweetsActionInterface => ({ // +
     type: TweetsActionType.SET_TWEETS,
     payload
 });
@@ -40,7 +46,7 @@ export const setScheduledTweets = (payload: TweetsState["items"]): SetScheduledT
     payload
 });
 
-export const setPageableTweets = (payload: { items: TweetsState["items"], pagesCount: TweetsState["pagesCount"] }): SetPageableTweetsActionInterface => ({
+export const setPageableTweets = (payload: { items: TweetsState["items"], pagesCount: TweetsState["pagesCount"] }): SetPageableTweetsActionInterface => ({ // +
     type: TweetsActionType.SET_PAGEABLE_TWEETS,
     payload
 });
@@ -50,7 +56,7 @@ export const setTweet = (payload: Tweet): SetTweetActionInterface => ({
     payload
 });
 
-export const resetTweets = (): ResetTweetsActionInterface => ({
+export const resetTweets = (): ResetTweetsActionInterface => ({ // +
     type: TweetsActionType.RESET_TWEETS,
 });
 
@@ -109,17 +115,17 @@ export const deleteTweet = (payload: Tweet): DeleteTweetActionInterface => ({
     payload
 });
 
-export const fetchTweetsByTag = (payload: string): FetchTweetsByTagActionInterface => ({
+export const fetchTweetsByTag = (payload: string): FetchTweetsByTagActionInterface => ({ // +
     type: TweetsActionType.FETCH_TWEETS_BY_TAG,
     payload
 });
 
-export const fetchTweetsByText = (payload: string): FetchTweetsByTextActionInterface => ({
+export const fetchTweetsByText = (payload: string): FetchTweetsByTextActionInterface => ({ //+
     type: TweetsActionType.FETCH_TWEETS_BY_TEXT,
     payload
 });
 
-export const setTweetsLoadingState = (payload: LoadingStatus): SetTweetsLoadingStateInterface => ({
+export const setTweetsLoadingState = (payload: LoadingStatus): SetTweetsLoadingStateInterface => ({ // +
     type: TweetsActionType.SET_LOADING_STATE,
     payload
 });
@@ -139,12 +145,12 @@ export const fetchTweets = (payload: number): FetchTweetsActionInterface => ({
     payload,
 });
 
-export const fetchMediaTweets = (payload: number): FetchMediaTweetsActionInterface => ({
+export const fetchMediaTweets = (payload: number): FetchMediaTweetsActionInterface => ({ // +
     type: TweetsActionType.FETCH_MEDIA_TWEETS,
     payload
 });
 
-export const fetchTweetsWithVideo = (payload: number): FetchTweetsWithVideoActionInterface => ({
+export const fetchTweetsWithVideo = (payload: number): FetchTweetsWithVideoActionInterface => ({ // +
     type: TweetsActionType.FETCH_TWEETS_WITH_VIDEO,
     payload
 });

@@ -41,6 +41,7 @@ import DisplayModal from "./DisplayModal/DisplayModal";
 import {DisplayProps} from "../../pages/Settings/AccessibilityDisplayLanguages/Display/Display";
 import FollowerRequestsModal from "./FollowerRequestsModal/FollowerRequestsModal";
 import {useGlobalStyles} from "../../util/globalClasses";
+import {resetFollowerRequestsState} from "../../store/ducks/followerRequests/actionCreators";
 
 const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -96,8 +97,9 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
         handleClosePopup();
     };
 
-    const onCloseFollowerRequestsModal= (): void => {
+    const onCloseFollowerRequestsModal = (): void => {
         setVisibleFollowerRequestsModal(false);
+        dispatch(resetFollowerRequestsState());
     };
 
     return (
@@ -177,9 +179,9 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                         <div>
                             <Hidden smDown>
                                 <>
-                                    {(myProfile?.unreadMessages?.length !== 0) ? (
+                                    {(myProfile?.unreadMessagesSize !== 0) ? (
                                         <span className={classes.count}>
-                                            {myProfile?.unreadMessages?.length}
+                                            {myProfile?.unreadMessagesSize}
                                         </span>
                                     ) : null}
                                     {(location.pathname.includes("/messages")) ? (
@@ -285,7 +287,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                         <Typography variant={"body1"} component={"span"}>
                                             Follower requests
                                             <span className={classes.followerRequestsCount}>
-                                                {myProfile?.followerRequests?.length}
+                                                {myProfile.followerRequestsSize}
                                             </span>
                                         </Typography>
                                     </ListItem>

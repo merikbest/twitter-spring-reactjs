@@ -22,39 +22,39 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
             draft.data = undefined;
             break;
 
-        case UserActionsType.FOLLOW:
-            if (draft.data?.followers) {
-                draft.data.followers = [...draft.data?.followers, action.payload];
-            }
-            draft.status = LoadingStatus.LOADED;
-            break;
-
-        case UserActionsType.FOLLOW_USER:
-            if (draft.data?.followers) {
-                draft.data.followers = [...draft.data?.followers, action.payload];
-            }
-            draft.status = LoadingStatus.LOADED;
-            break;
-
-        case UserActionsType.UNFOLLOW:
-            if (draft.data?.followers) {
-                const unfollowUserIndex = draft.data?.followers?.findIndex(follower => follower.id === action.payload.id);
-                draft.data.followers = [
-                    ...draft.data?.followers?.slice(0, unfollowUserIndex),
-                    ...draft.data?.followers?.slice(unfollowUserIndex + 1)];
-            }
-            draft.status = LoadingStatus.LOADED;
-            break;
-
-        case UserActionsType.UNFOLLOW_USER:
-            if (draft.data?.followers) {
-                const unfollowUserIndex = draft.data?.followers?.findIndex(follower => follower.id === action.payload.id);
-                draft.data.followers = [
-                    ...draft.data?.followers?.slice(0, unfollowUserIndex),
-                    ...draft.data?.followers?.slice(unfollowUserIndex + 1)];
-            }
-            draft.status = LoadingStatus.LOADED;
-            break;
+        // case UserActionsType.FOLLOW:
+        //     if (draft.data?.followers) {
+        //         draft.data.followers = [...draft.data?.followers, action.payload];
+        //     }
+        //     draft.status = LoadingStatus.LOADED;
+        //     break;
+        //
+        // case UserActionsType.FOLLOW_USER:
+        //     if (draft.data?.followers) {
+        //         draft.data.followers = [...draft.data?.followers, action.payload];
+        //     }
+        //     draft.status = LoadingStatus.LOADED;
+        //     break;
+        //
+        // case UserActionsType.UNFOLLOW:
+        //     if (draft.data?.followers) {
+        //         const unfollowUserIndex = draft.data?.followers?.findIndex(follower => follower.id === action.payload.id);
+        //         draft.data.followers = [
+        //             ...draft.data?.followers?.slice(0, unfollowUserIndex),
+        //             ...draft.data?.followers?.slice(unfollowUserIndex + 1)];
+        //     }
+        //     draft.status = LoadingStatus.LOADED;
+        //     break;
+        //
+        // case UserActionsType.UNFOLLOW_USER:
+        //     if (draft.data?.followers) {
+        //         const unfollowUserIndex = draft.data?.followers?.findIndex(follower => follower.id === action.payload.id);
+        //         draft.data.followers = [
+        //             ...draft.data?.followers?.slice(0, unfollowUserIndex),
+        //             ...draft.data?.followers?.slice(unfollowUserIndex + 1)];
+        //     }
+        //     draft.status = LoadingStatus.LOADED;
+        //     break;
 
         case UserActionsType.SET_UNREAD_MESSAGE:
             if (draft.data?.unreadMessages) {
@@ -103,6 +103,26 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
             // SET_BACKGROUND_COLOR
         case UserActionsType.SET_NEW_NOTIFICATION:
             draft.data = {...draft.data as User, notificationsCount: draft.data?.notificationsCount! + 1};
+            draft.status = LoadingStatus.LOADED;
+            break;
+
+        case UserActionsType.SET_FOLLOWERS_SIZE: //+
+            draft.data!.followersSize =  draft.data!.followersSize + 1;
+            draft.status = LoadingStatus.LOADED;
+            break;
+
+        case UserActionsType.SET_PROFILE_STARTED: //+
+            draft.data!.profileStarted = action.payload;
+            draft.status = LoadingStatus.LOADED;
+            break;
+
+        case UserActionsType.SET_PIN_TWEET_ID: //+
+            draft.data!.pinnedTweetId = action.payload;
+            draft.status = LoadingStatus.LOADED;
+            break;
+
+        case UserActionsType.SET_READ_MESSAGE: //+
+            draft.data!.unreadMessagesSize = action.payload;
             draft.status = LoadingStatus.LOADED;
             break;
 

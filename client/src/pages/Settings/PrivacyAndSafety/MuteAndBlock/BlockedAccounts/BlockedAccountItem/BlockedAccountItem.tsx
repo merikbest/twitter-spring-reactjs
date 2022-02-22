@@ -1,20 +1,19 @@
 import React, {FC, ReactElement} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {Avatar, Button, Paper, Typography} from "@material-ui/core";
 import {Link} from "react-router-dom";
 
 import {useBlockedAccountItemStyles} from "./BlockedAccountItemStyles";
-import {User} from "../../../../../../store/ducks/user/contracts/state";
 import {DEFAULT_PROFILE_IMG} from "../../../../../../util/url";
-import {selectUserData} from "../../../../../../store/ducks/user/selectors";
 import {addUserToBlocklist} from "../../../../../../store/ducks/user/actionCreators";
 import ActionSnackbar from "../../../../../../components/ActionSnackbar/ActionSnackbar";
 import {SnackbarProps, withSnackbar} from "../../../../../../hoc/withSnackbar";
 import {useGlobalStyles} from "../../../../../../util/globalClasses";
 import classnames from "classnames";
+import {BlockedUserResponse} from "../../../../../../store/types/user";
 
 interface BlockedAccountItemProps {
-    blockedUser: User;
+    blockedUser: BlockedUserResponse;
 }
 
 const BlockedAccountItem: FC<BlockedAccountItemProps & SnackbarProps> = (
@@ -29,14 +28,12 @@ const BlockedAccountItem: FC<BlockedAccountItemProps & SnackbarProps> = (
 ): ReactElement => {
     const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
-    const myProfile = useSelector(selectUserData);
-    const isUserBlocked = myProfile?.userBlockedList?.findIndex(user => user.id === blockedUser?.id) !== -1;
-    const classes = useBlockedAccountItemStyles({isUserBlocked});
+    const classes = useBlockedAccountItemStyles({isUserBlocked: blockedUser.isUserBlocked});
 
     const unblockUser = (event: React.MouseEvent<HTMLButtonElement>): void => {
         event.preventDefault();
         dispatch(addUserToBlocklist(blockedUser?.id!));
-        setSnackBarMessage!(`@${blockedUser.username} has been ${isUserBlocked ? "unblocked" : "blocked"}.`);
+        setSnackBarMessage!(`@${blockedUser.username} has been ${blockedUser.isUserBlocked ? "unblocked" : "blocked"}.`);
         setOpenSnackBar!(true);
     };
 
@@ -66,7 +63,7 @@ const BlockedAccountItem: FC<BlockedAccountItemProps & SnackbarProps> = (
                                 variant="contained"
                                 size="medium"
                             >
-                                {isUserBlocked ? "Blocked" : "Block"}
+                                {blockedUser.isUserBlocked ? "Blocked" : "Block"}
                             </Button>
                         </div>
                     </div>

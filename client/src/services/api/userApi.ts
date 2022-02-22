@@ -1,10 +1,18 @@
-import {AxiosResponse} from "axios";
+import {AxiosResponse, CancelTokenSource} from "axios";
 
-import {User} from "../../store/ducks/user/contracts/state";
+import {User, UserProjection} from "../../store/ducks/user/contracts/state";
 import {Notifications} from "../../store/ducks/notifications/contracts/state";
 import {axios} from "../../core/axios";
 import {Tweet} from "../../store/ducks/tweets/contracts/state";
 import {API_URL} from "../../util/url";
+import {
+    AuthUserResponse,
+    BlockedUserResponse,
+    FollowerUserResponse,
+    MutedUserResponse,
+    UserProfileResponse
+} from "../../store/types/user";
+import {NotificationUserResponse} from "../../store/types/notification";
 
 export interface Response<T> {
     status: string;
@@ -32,12 +40,12 @@ export const UserApi = {
         const {data} = await axios.get<User[] | undefined>(`${API_URL}/user/search/${name}`);
         return data;
     },
-    async getUserInfo(userId: string): Promise<User | undefined> {
-        const {data} = await axios.get<User | undefined>(`${API_URL}/user/${userId}`);
+    async getUserInfo(userId: number): Promise<UserProfileResponse> { // +check
+        const {data} = await axios.get<UserProfileResponse>(`${API_URL}/user/${userId}`);
         return data;
     },
-    async updateUserProfile(userData: User): Promise<User> {
-        const {data} = await axios.put<User>(`${API_URL}/user`, userData);
+    async updateUserProfile(userData: AuthUserResponse): Promise<AuthUserResponse> { // +check
+        const {data} = await axios.put<AuthUserResponse>(`${API_URL}/user`, userData);
         return data;
     },
     async getFollowers(userId: string): Promise<User[] | undefined> {
@@ -48,8 +56,12 @@ export const UserApi = {
         const {data} = await axios.get<User[] | undefined>(`${API_URL}/user/following/${userId}`);
         return data;
     },
-    async follow(user: User): Promise<User | undefined> {
-        const {data} = await axios.get<User | undefined>(`${API_URL}/user/follow/${user.id}`);
+    async getFollowerRequests(): Promise<FollowerUserResponse[]> {
+        const {data} = await axios.get<FollowerUserResponse[]>(`${API_URL}/user/follower-requests`);
+        return data;
+    },
+    async follow(userId: number): Promise<NotificationUserResponse | undefined> { // +check
+        const {data} = await axios.get<NotificationUserResponse | undefined>(`${API_URL}/user/follow/${userId}`);
         return data;
     },
     async overallFollowers(userId: string): Promise<User[]> {
@@ -60,11 +72,11 @@ export const UserApi = {
         const {data} = await axios.get<User>(`${API_URL}/user/follow/private/${userId}`);
         return data;
     },
-    async acceptFollowRequest(userId: number): Promise<User> {
+    async acceptFollowRequest(userId: number): Promise<User> { //+
         const {data} = await axios.get<User>(`${API_URL}/user/follow/accept/${userId}`);
         return data;
     },
-    async declineFollowRequest(userId: number): Promise<User> {
+    async declineFollowRequest(userId: number): Promise<User> { //+
         const {data} = await axios.get<User>(`${API_URL}/user/follow/decline/${userId}`);
         return data;
     },
@@ -98,28 +110,32 @@ export const UserApi = {
         const {data} = await axios.get<Response<User>>(`${API_URL}/user/bookmarks/${tweetId}`);
         return data;
     },
-    async startUseTwitter(id: number): Promise<Response<User>> {
-        const {data} = await axios.get<Response<User>>(`${API_URL}/user/${id}/start`);
+    async startUseTwitter(id: number): Promise<Response<boolean>> { // +
+        const {data} = await axios.get<Response<boolean>>(`${API_URL}/user/${id}/start`);
         return data;
     },
-    async pinTweet(tweetId: string): Promise<Response<User>> {
-        const {data} = await axios.get<Response<User>>(`${API_URL}/user/pin/tweet/${tweetId}`);
+    async pinTweet(tweetId: string): Promise<Response<number>> { // +
+        const {data} = await axios.get<Response<number>>(`${API_URL}/user/pin/tweet/${tweetId}`);
         return data;
     },
-    async getBlockList(): Promise<User[]> {
-        const {data} = await axios.get<User[]>(`${API_URL}/user/blocked`);
+    async getBlockList(): Promise<BlockedUserResponse[]> { // +
+        const {data} = await axios.get<BlockedUserResponse[]>(`${API_URL}/user/blocked`);
         return data;
     },
-    async getMutedList(): Promise<User[]> {
-        const {data} = await axios.get<User[]>(`${API_URL}/user/muted`);
+    async getMutedList(): Promise<MutedUserResponse[]> { // +
+        const {data} = await axios.get<MutedUserResponse[]>(`${API_URL}/user/muted`);
         return data;
     },
-    async processBlockList(userId: number): Promise<User> {
-        const {data} = await axios.get<User>(`${API_URL}/user/blocked/${userId}`);
+    async processBlockList(userId: number): Promise<boolean> { // +
+        const {data} = await axios.get<boolean>(`${API_URL}/user/blocked/${userId}`);
         return data;
     },
-    async processMutedList(userId: number): Promise<User> {
-        const {data} = await axios.get<User>(`${API_URL}/user/muted/${userId}`);
+    async processMutedList(userId: number): Promise<boolean> { // +
+        const {data} = await axios.get<boolean>(`${API_URL}/user/muted/${userId}`);
+        return data;
+    },
+    async getUserDetails(userId: number, cancelTokenSource: CancelTokenSource): Promise<UserProjection> {
+        const {data} = await axios.get<UserProjection>(`${API_URL}/user/details/${userId}`, {cancelToken: cancelTokenSource.token});
         return data;
     },
 };

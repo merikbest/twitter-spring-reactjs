@@ -27,11 +27,12 @@ import {LoadingStatus} from '../../types';
 import {TagApi} from "../../../services/api/tagApi";
 import {UserApi} from "../../../services/api/userApi";
 import {AxiosResponse} from "axios";
+import {TweetResponse} from "../../types/tweet";
 
-export function* fetchTweetsRequest({payload}: FetchTweetsActionInterface) {
+export function* fetchTweetsRequest({payload}: FetchTweetsActionInterface) { // +
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<Tweet[]> = yield call(TweetApi.fetchTweets, payload);
+        const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.fetchTweets, payload);
         yield put(setPageableTweets({
             items: response.data,
             pagesCount: parseInt(response.headers["page-total-count"])
@@ -41,10 +42,10 @@ export function* fetchTweetsRequest({payload}: FetchTweetsActionInterface) {
     }
 }
 
-export function* fetchMediaTweetsRequest({payload}: FetchMediaTweetsActionInterface) {
+export function* fetchMediaTweetsRequest({payload}: FetchMediaTweetsActionInterface) { // +
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<Tweet[]> = yield call(TweetApi.fetchMediaTweets, payload);
+        const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.fetchMediaTweets, payload);
         yield put(setPageableTweets({
             items: response.data,
             pagesCount: parseInt(response.headers["page-total-count"])
@@ -54,10 +55,10 @@ export function* fetchMediaTweetsRequest({payload}: FetchMediaTweetsActionInterf
     }
 }
 
-export function* fetchTweetsWithVideoRequest({payload}: FetchTweetsWithVideoActionInterface) {
+export function* fetchTweetsWithVideoRequest({payload}: FetchTweetsWithVideoActionInterface) { // +
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<Tweet[]> = yield call(TweetApi.fetchTweetsWithVideo, payload);
+        const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.fetchTweetsWithVideo, payload);
         yield put(setPageableTweets({
             items: response.data,
             pagesCount: parseInt(response.headers["page-total-count"])
@@ -67,20 +68,20 @@ export function* fetchTweetsWithVideoRequest({payload}: FetchTweetsWithVideoActi
     }
 }
 
-export function* fetchTweetsByTagRequest({payload}: FetchTweetsByTagActionInterface) {
+export function* fetchTweetsByTagRequest({payload}: FetchTweetsByTagActionInterface) { // +
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
-        const item: Tweet[] = yield call(TagApi.fetchTweetsByTag, payload);
+        const item: TweetResponse[] = yield call(TagApi.fetchTweetsByTag, payload);
         yield put(setTweets(item));
     } catch (e) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }
 }
 
-export function* fetchTweetsByTextRequest({payload}: FetchTweetsByTextActionInterface) {
+export function* fetchTweetsByTextRequest({payload}: FetchTweetsByTextActionInterface) { // +
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
-        const item: Tweet[] = yield call(TweetApi.searchTweets, payload);
+        const item: TweetResponse[] = yield call(TweetApi.searchTweets, payload);
         yield put(setTweets(item));
     } catch (e) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
@@ -181,9 +182,9 @@ export function* fetchUserBookmarksRequest({payload}: FetchBookmarksActionInterf
 }
 
 export function* tweetsSaga() {
-    yield takeLatest(TweetsActionType.FETCH_TWEETS, fetchTweetsRequest);
-    yield takeLatest(TweetsActionType.FETCH_MEDIA_TWEETS, fetchMediaTweetsRequest);
-    yield takeLatest(TweetsActionType.FETCH_TWEETS_WITH_VIDEO, fetchTweetsWithVideoRequest);
+    yield takeLatest(TweetsActionType.FETCH_TWEETS, fetchTweetsRequest); // +
+    yield takeLatest(TweetsActionType.FETCH_MEDIA_TWEETS, fetchMediaTweetsRequest); // +
+    yield takeLatest(TweetsActionType.FETCH_TWEETS_WITH_VIDEO, fetchTweetsWithVideoRequest); // +
     yield takeLatest(TweetsActionType.ADD_TWEET, addTweetRequest);
     yield takeLatest(TweetsActionType.ADD_POLL, addPollRequest);
     yield takeLatest(TweetsActionType.ADD_SCHEDULED_TWEET, addScheduledTweetRequest);
@@ -195,7 +196,7 @@ export function* tweetsSaga() {
     yield takeLatest(TweetsActionType.DELETE_SCHEDULED_TWEETS, deleteScheduledTweetsTweetRequest);
     yield takeLatest(TweetsActionType.LIKE_TWEET, likeTweetRequest);
     yield takeLatest(TweetsActionType.RETWEET, retweetRequest);
-    yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_TAG, fetchTweetsByTagRequest);
-    yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_TEXT, fetchTweetsByTextRequest);
+    yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_TAG, fetchTweetsByTagRequest); // +
+    yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_TEXT, fetchTweetsByTextRequest); // +
     yield takeLatest(TweetsActionType.FETCH_BOOKMARKS, fetchUserBookmarksRequest);
 }

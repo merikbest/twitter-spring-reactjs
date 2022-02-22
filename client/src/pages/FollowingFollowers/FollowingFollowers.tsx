@@ -8,7 +8,11 @@ import Tab from "@material-ui/core/Tab";
 
 import {selectUserData, selectUserIsLoading} from "../../store/ducks/user/selectors";
 import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
-import {fetchUserProfile, resetUserProfile} from "../../store/ducks/userProfile/actionCreators";
+import {
+    fetchUserProfile,
+    resetUserProfile,
+    resetUserProfileStateAction
+} from "../../store/ducks/userProfile/actionCreators";
 import {useFollowingFollowersStyles} from "./FollowingFollowersStyles";
 import BackButton from "../../components/BackButton/BackButton";
 import Spinner from "../../components/Spinner/Spinner";
@@ -46,7 +50,7 @@ const FollowingFollowers: FC = (): ReactElement => {
 
         return () => {
             dispatch(resetUsersState());
-            dispatch(resetUserProfile());
+            dispatch(resetUserProfileStateAction());
         };
     }, [params.id, params.follow]);
 

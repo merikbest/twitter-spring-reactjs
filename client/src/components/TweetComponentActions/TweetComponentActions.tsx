@@ -141,9 +141,9 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
 
     const handleFollow = (): void => {
         if (follower) {
-            dispatch(unfollowUser(tweet.user!));
+            dispatch(unfollowUser(tweet.user?.id!));
         } else {
-            dispatch(followUser(tweet.user!));
+            dispatch(followUser(tweet.user?.id!));
         }
     };
 

@@ -3,11 +3,11 @@ import {
     setBackgroundColor,
     setColorScheme,
     setCountry,
-    setDirect,
+    setDirect, setFollowersSize,
     setGender,
     setLanguage,
-    setPhone,
-    setPrivateProfile,
+    setPhone, setPinTweetId,
+    setPrivateProfile, setProfileStarted, setReadMessage,
     setUserData,
     setUserLoadingStatus,
     setUsername
@@ -34,7 +34,7 @@ import {
     UpdateGenderActionInterface,
     UpdateLanguageActionInterface,
     UpdatePhoneActionInterface,
-    UpdatePrivateProfileActionInterface,
+    UpdatePrivateProfileActionInterface, UpdateUserDataActionInterface,
     UpdateUsernameActionInterface,
     UserActionsType
 } from "./contracts/actionTypes";
@@ -43,11 +43,23 @@ import {UserApi} from "../../../services/api/userApi";
 import {LoadingStatus} from "../../types";
 import {ChatApi} from "../../../services/api/chatApi";
 import {UserSettingsApi} from "../../../services/api/userSettingsApi";
+import {AuthenticationResponse} from "../../types/auth";
+import {AuthUserResponse} from "../../types/user";
 
-export function* fetchSignInRequest({payload}: FetchSignInActionInterface) {
+export function* updateUserDataRequest({payload}: UpdateUserDataActionInterface) { // +check
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const data: AuthUser = yield call(AuthApi.signIn, payload);
+        const data: AuthUserResponse = yield call(UserApi.updateUserProfile, payload);
+        yield put(setUserData(data));
+    } catch (error) {
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
+export function* fetchSignInRequest({payload}: FetchSignInActionInterface) { //+
+    try {
+        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+        const data: AuthenticationResponse = yield call(AuthApi.signIn, payload);
         localStorage.setItem("token", data.token);
         yield put(setUserData(data.user));
         payload.history.push("/home");
@@ -56,10 +68,10 @@ export function* fetchSignInRequest({payload}: FetchSignInActionInterface) {
     }
 }
 
-export function* fetchSignUpRequest({payload}: FetchSignUpActionInterface) {
+export function* fetchSignUpRequest({payload}: FetchSignUpActionInterface) { //+
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const data: AuthUser = yield call(AuthApi.endRegistration, payload);
+        const data: AuthenticationResponse = yield call(AuthApi.endRegistration, payload);
         localStorage.setItem("token", data.token);
         yield put(setUserData(data.user));
         payload.history.push({pathname: `/user/${data.user.id}`, state: {isRegistered: true}});
@@ -68,10 +80,10 @@ export function* fetchSignUpRequest({payload}: FetchSignUpActionInterface) {
     }
 }
 
-export function* fetchUserDataRequest() {
+export function* fetchUserDataRequest() { //+
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const data: AuthUser = yield call(AuthApi.getMe);
+        const data: AuthenticationResponse = yield call(AuthApi.getMe);
         localStorage.setItem("token", data.token);
         yield put(setUserData(data.user));
     } catch (error) {
@@ -81,7 +93,7 @@ export function* fetchUserDataRequest() {
     }
 }
 
-export function* followUserRequest({payload}: FollowUserActionInterface) {
+export function* followUserRequest({payload}: FollowUserActionInterface) { //+
     try {
         yield call(UserApi.follow, payload);
     } catch (error) {
@@ -89,7 +101,7 @@ export function* followUserRequest({payload}: FollowUserActionInterface) {
     }
 }
 
-export function* unfollowUserRequest({payload}: UnfollowUserActionInterface) {
+export function* unfollowUserRequest({payload}: UnfollowUserActionInterface) { //+
     try {
         yield call(UserApi.follow, payload);
     } catch (error) {
@@ -97,47 +109,47 @@ export function* unfollowUserRequest({payload}: UnfollowUserActionInterface) {
     }
 }
 
-export function* acceptFollowRequest({payload}: AcceptFollowRequestActionInterface) {
+export function* acceptFollowRequest({payload}: AcceptFollowRequestActionInterface) { //+
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: User = yield call(UserApi.acceptFollowRequest, payload);
-        yield put(setUserData(item));
+        yield call(UserApi.acceptFollowRequest, payload);
+        yield put(setFollowersSize());
     } catch (error) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
 }
 
-export function* declineFollowRequest({payload}: DeclineFollowRequestActionInterface) {
+export function* declineFollowRequest({payload}: DeclineFollowRequestActionInterface) { //+
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: User = yield call(UserApi.declineFollowRequest, payload);
-        yield put(setUserData(item));
+        yield call(UserApi.declineFollowRequest, payload);
+        yield put(setUserLoadingStatus(LoadingStatus.LOADED));
     } catch (error) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
 }
 
-export function* startUseTwitterRequest({payload}: StartUseTwitterActionInterface) {
+export function* startUseTwitterRequest({payload}: StartUseTwitterActionInterface) { // +
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: User = yield call(UserApi.startUseTwitter, payload);
-        yield put(setUserData(item));
+        const item: boolean = yield call(UserApi.startUseTwitter, payload);
+        yield put(setProfileStarted(item));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
 }
 
-export function* fetchPinTweetRequest({payload}: FetchPinTweetActionInterface) {
+export function* fetchPinTweetRequest({payload}: FetchPinTweetActionInterface) { // +
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: User = yield call(UserApi.pinTweet, payload);
-        yield put(setUserData(item));
+        const item: number = yield call(UserApi.pinTweet, payload);
+        yield put(setPinTweetId(item));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
 }
 
-export function* addTweetToBookmarksRequest({payload}: AddTweetToBookmarksActionInterface) {
+export function* addTweetToBookmarksRequest({payload}: AddTweetToBookmarksActionInterface) { // REFACTOR
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const item: User = yield call(UserApi.addTweetToBookmarks, payload);
@@ -147,35 +159,35 @@ export function* addTweetToBookmarksRequest({payload}: AddTweetToBookmarksAction
     }
 }
 
-export function* fetchReadMessagesRequest({payload}: FetchReadMessagesActionInterface) {
+export function* fetchReadMessagesRequest({payload}: FetchReadMessagesActionInterface) { // +
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: User = yield call(ChatApi.readChatMessages, payload);
-        yield put(setUserData(item));
+        const item: number = yield call(ChatApi.readChatMessages, payload);
+        yield put(setReadMessage(item));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
 }
 
-export function* addUserToBlocklistRequest({payload}: AddUserToBlocklistActionInterface) {
-    try {
-        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: User = yield call(UserApi.processBlockList, payload);
-        yield put(setUserData(item));
-    } catch (e) {
-        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
-    }
-}
+// export function* addUserToBlocklistRequest({payload}: AddUserToBlocklistActionInterface) {
+//     try {
+//         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+//         const item: User = yield call(UserApi.processBlockList, payload);
+//         yield put(setUserData(item));
+//     } catch (e) {
+//         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+//     }
+// }
 
-export function* addUserToMuteListRequest({payload}: AddUserToMuteListActionInterface) {
-    try {
-        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: User = yield call(UserApi.processMutedList, payload);
-        yield put(setUserData(item));
-    } catch (e) {
-        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
-    }
-}
+// export function* addUserToMuteListRequest({payload}: AddUserToMuteListActionInterface) {
+//     try {
+//         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+//         const item: User = yield call(UserApi.processMutedList, payload);
+//         yield put(setUserData(item));
+//     } catch (e) {
+//         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+//     }
+// }
 
 export function* updateUsernameRequest({payload}: UpdateUsernameActionInterface) {
     try {
@@ -288,19 +300,20 @@ export function* updateBackgroundColorRequest({payload}: UpdateBackgroundColorAc
 }
 
 export function* userSaga() {
-    yield takeLatest(UserActionsType.FETCH_SIGN_IN, fetchSignInRequest);
-    yield takeLatest(UserActionsType.FETCH_SIGN_UP, fetchSignUpRequest);
-    yield takeLatest(UserActionsType.FETCH_USER_DATA, fetchUserDataRequest);
-    yield takeLatest(UserActionsType.FOLLOW_USER, followUserRequest);
-    yield takeLatest(UserActionsType.UNFOLLOW_USER, unfollowUserRequest);
-    yield takeLatest(UserActionsType.ACCEPT_FOLLOW_REQUEST, acceptFollowRequest);
-    yield takeLatest(UserActionsType.DECLINE_FOLLOW_REQUEST, declineFollowRequest);
-    yield takeLatest(UserActionsType.START_USE_TWITTER, startUseTwitterRequest);
+    yield takeLatest(UserActionsType.UPDATE_USER_DATA, updateUserDataRequest); //+
+    yield takeLatest(UserActionsType.FETCH_SIGN_IN, fetchSignInRequest); //+
+    yield takeLatest(UserActionsType.FETCH_SIGN_UP, fetchSignUpRequest); //+
+    yield takeLatest(UserActionsType.FETCH_USER_DATA, fetchUserDataRequest); //+
+    yield takeLatest(UserActionsType.FOLLOW_USER, followUserRequest);// +check
+    yield takeLatest(UserActionsType.UNFOLLOW_USER, unfollowUserRequest); //+
+    yield takeLatest(UserActionsType.ACCEPT_FOLLOW_REQUEST, acceptFollowRequest); // +
+    yield takeLatest(UserActionsType.DECLINE_FOLLOW_REQUEST, declineFollowRequest);  // +
+    yield takeLatest(UserActionsType.START_USE_TWITTER, startUseTwitterRequest); // +
     yield takeLatest(UserActionsType.FETCH_PIN_TWEET, fetchPinTweetRequest);
     yield takeLatest(UserActionsType.ADD_TWEET_TO_BOOKMARKS, addTweetToBookmarksRequest);
     yield takeLatest(UserActionsType.FETCH_READ_MESSAGES, fetchReadMessagesRequest);
-    yield takeLatest(UserActionsType.ADD_USER_TO_BLOCKLIST, addUserToBlocklistRequest);
-    yield takeLatest(UserActionsType.ADD_USER_TO_MUTELIST, addUserToMuteListRequest);
+    // yield takeLatest(UserActionsType.ADD_USER_TO_BLOCKLIST, addUserToBlocklistRequest);
+    // yield takeLatest(UserActionsType.ADD_USER_TO_MUTELIST, addUserToMuteListRequest);
     yield takeLatest(UserActionsType.UPDATE_USERNAME, updateUsernameRequest);
     yield takeLatest(UserActionsType.UPDATE_EMAIL, updateEmailRequest);
     yield takeLatest(UserActionsType.UPDATE_PHONE, updatePhoneRequest);

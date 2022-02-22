@@ -1,7 +1,7 @@
 import {LoadingStatus} from "../../../types";
-import {User} from "../../user/contracts/state";
+import {UserProfileResponse} from "../../../types/user";
 
 export interface UserProfileState {
-    user: User | undefined;
+    user: UserProfileResponse | undefined;
     loadingState: LoadingStatus;
 }

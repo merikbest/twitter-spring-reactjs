@@ -6,6 +6,7 @@ import {API_URL} from "../../util/url";
 import {RegistrationInfo} from "../../pages/Authentication/Authentication";
 import {RegistrationProps} from "../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
 import {LoginProps} from "../../pages/Login/Login";
+import {AuthenticationResponse} from "../../store/types/auth";
 
 export interface Response<T> {
     status: string;
@@ -13,8 +14,8 @@ export interface Response<T> {
 }
 
 export const AuthApi = {
-    async signIn(postData: LoginProps): Promise<Response<AuthUser>> {
-        const {data} = await axios.post<Response<AuthUser>>(`${API_URL}/auth/login`, postData);
+    async signIn(postData: LoginProps): Promise<Response<AuthenticationResponse>> { //+
+        const {data} = await axios.post<Response<AuthenticationResponse>>(`${API_URL}/auth/login`, postData);
         return data;
     },
     async signUp(postData: RegistrationProps): Promise<Response<AuthUser>> {
@@ -33,8 +34,8 @@ export const AuthApi = {
         const {data} = await axios.get<Response<string>>(`${API_URL}/auth/registration/activate/${registrationCode}`);
         return data;
     },
-    async endRegistration(postData: RegistrationProps): Promise<Response<AuthUser>> {
-        const {data} = await axios.post<Response<AuthUser>>(`${API_URL}/auth/registration/confirm`, postData);
+    async endRegistration(postData: RegistrationProps): Promise<Response<AuthenticationResponse>> { //+
+        const {data} = await axios.post<Response<AuthenticationResponse>>(`${API_URL}/auth/registration/confirm`, postData);
         return data;
     },
     async findExistingEmail(postData: { email: string }): Promise<AxiosResponse<string>> {
@@ -51,8 +52,8 @@ export const AuthApi = {
         const {data} = await axios.post<string>(`${API_URL}/auth/reset`, postData);
         return data;
     },
-    async getMe(): Promise<AuthUser> {
-        const {data} = await axios.get<AuthUser>(`${API_URL}/auth/user`);
+    async getMe(): Promise<AuthenticationResponse> { //+
+        const {data} = await axios.get<AuthenticationResponse>(`${API_URL}/auth/user`);
         return data;
     },
 };

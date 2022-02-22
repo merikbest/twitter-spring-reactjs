@@ -16,6 +16,8 @@ import {ChatMessageState} from "./ducks/chatMessages/contracts/state";
 import {NotificationsState} from "./ducks/notifications/contracts/state";
 import {ListsState} from "./ducks/lists/contracts/state";
 import {ListState} from "./ducks/list/contracts/state";
+import {FollowerRequestsState} from "./ducks/followerRequests/contracts/state";
+import {BlockedAndMutedUsersState} from "./ducks/blockedAndMutedUsers/contracts/state";
 
 export interface RootState {
     tweets: TweetsState;
@@ -31,6 +33,8 @@ export interface RootState {
     notifications: NotificationsState;
     lists: ListsState;
     list: ListState;
+    followerRequests: FollowerRequestsState;
+    blockedAndMutedUsers: BlockedAndMutedUsersState;
 }
 
 const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;

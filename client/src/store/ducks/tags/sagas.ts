@@ -8,7 +8,7 @@ import {TagsActionsType} from "./contracts/actionTypes";
 
 export function* fetchTagsRequest() {
     try {
-        setTagsLoadingState(LoadingStatus.LOADING);
+        yield setTagsLoadingState(LoadingStatus.LOADING);
         const items: Tag[] = yield call(TagApi.fetchTags);
         yield put(setTags(items));
     } catch (error) {
@@ -18,7 +18,7 @@ export function* fetchTagsRequest() {
 
 export function* fetchTrendsRequest() {
     try {
-        setTagsLoadingState(LoadingStatus.LOADING);
+        yield setTagsLoadingState(LoadingStatus.LOADING);
         const items: Tag[] = yield call(TagApi.fetchTrends);
         yield put(setTags(items));
     } catch (error) {

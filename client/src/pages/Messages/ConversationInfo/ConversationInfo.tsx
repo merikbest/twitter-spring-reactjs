@@ -18,7 +18,6 @@ import ActionSnackbar from "../../../components/ActionSnackbar/ActionSnackbar";
 import UnfollowModal from "../../../components/UnfollowModal/UnfollowModal";
 import {
     fetchChatParticipant,
-    followProfile,
     processFollowRequest,
     resetUserProfileStateAction,
     unfollowProfile
@@ -84,8 +83,8 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
         if (chatParticipant?.privateProfile) {
             handleProcessFollowRequest();
         } else {
-            dispatch(followUser(chatParticipant!));
-            dispatch(followProfile(chatParticipant!));
+            dispatch(followUser(chatParticipant?.id!));
+            // dispatch(followProfile(chatParticipant!));
         }
     };
 
@@ -93,8 +92,8 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
         if (chatParticipant?.privateProfile) {
             handleProcessFollowRequest();
         } else {
-            dispatch(unfollowUser(chatParticipant!));
-            dispatch(unfollowProfile(chatParticipant!));
+            dispatch(unfollowUser(chatParticipant?.id!));
+            // dispatch(unfollowProfile(chatParticipant!));
             setVisibleUnfollowModal(false);
         }
     };

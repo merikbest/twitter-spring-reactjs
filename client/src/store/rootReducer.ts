@@ -13,6 +13,8 @@ import {chatMessagesReducer} from "./ducks/chatMessages/reducer";
 import {notificationsReducer} from "./ducks/notifications/reducer";
 import {listsReducer} from "./ducks/lists/reducer";
 import {listReducer} from "./ducks/list/reducer";
+import {followerRequestsReducer} from "./ducks/followerRequests/reducer";
+import {blockedAndMutedUsersReducer} from "./ducks/blockedAndMutedUsers/reducer";
 
 export const rootReducer = combineReducers({
     tweets: tweetsReducer,
@@ -28,4 +30,6 @@ export const rootReducer = combineReducers({
     notifications: notificationsReducer,
     lists: listsReducer,
     list: listReducer,
+    followerRequests: followerRequestsReducer,
+    blockedAndMutedUsers: blockedAndMutedUsersReducer,
 });
