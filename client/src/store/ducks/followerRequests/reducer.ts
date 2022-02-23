@@ -16,6 +16,11 @@ export const followerRequestsReducer = produce((draft: Draft<FollowerRequestsSta
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
+        case FollowerRequestsActionsType.PROCESS_FOLLOW_REQUEST:
+            draft.items = draft.items.filter((user) => user.id !== action.payload);
+            draft.loadingState = LoadingStatus.LOADED
+            break;
+
         case FollowerRequestsActionsType.RESET_FOLLOWER_REQUESTS_STATE:
             draft.items = [];
             draft.loadingState = LoadingStatus.LOADING;

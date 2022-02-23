@@ -1,6 +1,9 @@
 import {
+    AcceptFollowerRequestActionInterface,
+    DeclineFollowerRequestActionInterface,
     FetchFollowerRequestsActionInterface,
     FollowerRequestsActionsType,
+    ProcessFollowerRequestActionInterface,
     ResetFollowerRequestsStateActionInterface,
     SetFollowerRequestsActionInterface,
     SetFollowerRequestsLoadingStateActionInterface
@@ -15,6 +18,21 @@ export const setFollowerRequests = (payload: FollowerUserResponse[]): SetFollowe
 
 export const fetchFollowerRequests = (): FetchFollowerRequestsActionInterface => ({
     type: FollowerRequestsActionsType.FETCH_FOLLOWER_REQUESTS,
+});
+
+export const acceptFollowRequest = (payload: number): AcceptFollowerRequestActionInterface => ({
+    type: FollowerRequestsActionsType.ACCEPT_FOLLOW_REQUEST,
+    payload,
+});
+
+export const declineFollowRequest = (payload: number): DeclineFollowerRequestActionInterface => ({
+    type: FollowerRequestsActionsType.DECLINE_FOLLOW_REQUEST,
+    payload,
+});
+
+export const processFollowRequest = (payload: number): ProcessFollowerRequestActionInterface => ({
+    type: FollowerRequestsActionsType.PROCESS_FOLLOW_REQUEST,
+    payload,
 });
 
 export const setFollowerRequestsLoadingState = (payload: LoadingStatus): SetFollowerRequestsLoadingStateActionInterface => ({

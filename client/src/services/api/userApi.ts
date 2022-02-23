@@ -13,6 +13,7 @@ import {
     UserProfileResponse
 } from "../../store/types/user";
 import {NotificationUserResponse} from "../../store/types/notification";
+import {TweetResponse} from "../../store/types/tweet";
 
 export interface Response<T> {
     status: string;
@@ -44,7 +45,7 @@ export const UserApi = {
         const {data} = await axios.get<UserProfileResponse>(`${API_URL}/user/${userId}`);
         return data;
     },
-    async updateUserProfile(userData: AuthUserResponse): Promise<AuthUserResponse> { // +check
+    async updateUserProfile(userData: AuthUserResponse): Promise<AuthUserResponse> { // +
         const {data} = await axios.put<AuthUserResponse>(`${API_URL}/user`, userData);
         return data;
     },
@@ -60,7 +61,7 @@ export const UserApi = {
         const {data} = await axios.get<FollowerUserResponse[]>(`${API_URL}/user/follower-requests`);
         return data;
     },
-    async follow(userId: number): Promise<NotificationUserResponse | undefined> { // +check
+    async follow(userId: number): Promise<NotificationUserResponse | undefined> { // +
         const {data} = await axios.get<NotificationUserResponse | undefined>(`${API_URL}/user/follow/${userId}`);
         return data;
     },
@@ -103,11 +104,11 @@ export const UserApi = {
     async getNotificationsFromTweetAuthors(payload: number): Promise<AxiosResponse<Tweet[]>> {
         return await axios.get<Tweet[]>(`${API_URL}/user/notifications/timeline`, {params: {page: payload}});
     },
-    async getUserBookmarks(payload: number): Promise<AxiosResponse<Tweet[]>> {
-        return await axios.get<Tweet[]>(`${API_URL}/user/bookmarks`, {params: {page: payload}});
+    async getUserBookmarks(payload: number): Promise<AxiosResponse<TweetResponse[]>> { // +
+        return await axios.get<TweetResponse[]>(`${API_URL}/user/bookmarks`, {params: {page: payload}});
     },
-    async addTweetToBookmarks(tweetId: string): Promise<Response<User>> {
-        const {data} = await axios.get<Response<User>>(`${API_URL}/user/bookmarks/${tweetId}`);
+    async addTweetToBookmarks(tweetId: string): Promise<Response<boolean>> { // +
+        const {data} = await axios.get<Response<boolean>>(`${API_URL}/user/bookmarks/${tweetId}`);
         return data;
     },
     async startUseTwitter(id: number): Promise<Response<boolean>> { // +

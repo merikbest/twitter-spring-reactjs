@@ -41,7 +41,7 @@ export const setTweets = (payload: TweetsState["items"]): SetTweetsActionInterfa
     payload
 });
 
-export const setScheduledTweets = (payload: TweetsState["items"]): SetScheduledTweetsActionInterface => ({
+export const setScheduledTweets = (payload: TweetsState["items"]): SetScheduledTweetsActionInterface => ({ // +
     type: TweetsActionType.SET_SCHEDULED_TWEETS,
     payload
 });
@@ -51,7 +51,7 @@ export const setPageableTweets = (payload: { items: TweetsState["items"], pagesC
     payload
 });
 
-export const setTweet = (payload: Tweet): SetTweetActionInterface => ({
+export const setTweet = (payload: Tweet): SetTweetActionInterface => ({ // +
     type: TweetsActionType.SET_TWEET,
     payload
 });
@@ -60,32 +60,32 @@ export const resetTweets = (): ResetTweetsActionInterface => ({ // +
     type: TweetsActionType.RESET_TWEETS,
 });
 
-export const addTweet = (payload: AddTweet): AddTweetActionInterface => ({
+export const addTweet = (payload: AddTweet): AddTweetActionInterface => ({ // +
     type: TweetsActionType.ADD_TWEET,
     payload
 });
 
-export const addPoll = (payload: AddTweet): AddPollActionInterface => ({
+export const addPoll = (payload: AddTweet): AddPollActionInterface => ({ // +
     type: TweetsActionType.ADD_POLL,
     payload
 });
 
-export const addScheduledTweet = (payload: AddTweet): AddScheduledTweetActionInterface => ({
+export const addScheduledTweet = (payload: AddTweet): AddScheduledTweetActionInterface => ({ // +
     type: TweetsActionType.ADD_SCHEDULED_TWEET,
     payload
 });
 
-export const updateScheduledTweet = (payload: AddTweet): UpdateScheduledTweetActionInterface => ({
+export const updateScheduledTweet = (payload: AddTweet): UpdateScheduledTweetActionInterface => ({ // +
     type: TweetsActionType.UPDATE_SCHEDULED_TWEET,
     payload
 });
 
-export const addQuoteTweet = (payload: AddQuoteTweet): AddQuoteTweetActionInterface => ({
+export const addQuoteTweet = (payload: AddQuoteTweet): AddQuoteTweetActionInterface => ({ // +
     type: TweetsActionType.ADD_QUOTE_TWEET,
     payload
 });
 
-export const vote = (payload: Vote): VoteActionInterface => ({
+export const vote = (payload: Vote): VoteActionInterface => ({ // +
     type: TweetsActionType.VOTE,
     payload
 });
@@ -105,7 +105,7 @@ export const fetchDeleteTweet = (payload: string): FetchDeleteTweetActionInterfa
     payload
 });
 
-export const deleteScheduledTweets = (payload: { tweetsIds: number[] }): DeleteScheduledTweetsActionInterface => ({
+export const deleteScheduledTweets = (payload: { tweetsIds: number[] }): DeleteScheduledTweetsActionInterface => ({ // +
     type: TweetsActionType.DELETE_SCHEDULED_TWEETS,
     payload
 });
@@ -155,7 +155,7 @@ export const fetchTweetsWithVideo = (payload: number): FetchTweetsWithVideoActio
     payload
 });
 
-export const fetchUserBookmarks = (payload: number): FetchBookmarksActionInterface => ({
+export const fetchUserBookmarks = (payload: number): FetchBookmarksActionInterface => ({ // +
     type: TweetsActionType.FETCH_BOOKMARKS,
     payload
 });

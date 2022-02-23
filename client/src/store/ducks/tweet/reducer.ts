@@ -31,6 +31,11 @@ export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetActi
             draft.loadingState = LoadingStatus.LOADING;
             break;
 
+        case TweetActionType.SET_BOOKMARKED_TWEET: // +
+            draft.data!.isTweetBookmarked = action.payload;
+            draft.loadingState = LoadingStatus.LOADING;
+            break;
+
         default:
             break;
     }

@@ -1,12 +1,14 @@
 import {LoadingStatus} from "../../types";
 import {
+    AddTweetToBookmarksActionInterface,
     DeleteTweetReplyActionInterface,
     FetchReplyTweetActionInterface,
     FetchTweetDataActionInterface,
-    ResetTweetStateActionInterface, SetFollowToTweetStateActionInterface,
+    ResetTweetStateActionInterface, SetBookmarkedTweetActionInterface,
+    SetFollowToTweetStateActionInterface,
     SetTweetDataActionInterface,
     SetTweetDataLoadingStateInterface,
-    TweetActionType
+    TweetActionType,
 } from "./contracts/actionTypes";
 import {ReplyTweet, TweetState} from "./contracts/state";
 
@@ -33,6 +35,16 @@ export const resetTweetState = (): ResetTweetStateActionInterface => ({ // +
 export const setTweetLoadingState = (payload: LoadingStatus): SetTweetDataLoadingStateInterface => ({ // +
     type: TweetActionType.SET_LOADING_STATE,
     payload
+});
+
+export const addTweetToBookmarks = (payload: string): AddTweetToBookmarksActionInterface => ({ // +
+    type: TweetActionType.ADD_TWEET_TO_BOOKMARKS,
+    payload,
+});
+
+export const setBookmarkedTweet = (payload: boolean): SetBookmarkedTweetActionInterface => ({ // +
+    type: TweetActionType.SET_BOOKMARKED_TWEET,
+    payload,
 });
 
 export const fetchReplyTweet = (payload: ReplyTweet): FetchReplyTweetActionInterface => ({

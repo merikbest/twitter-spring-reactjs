@@ -64,14 +64,15 @@ export interface AuthUserResponse {
     profileStarted: boolean;
     mutedDirectMessages: boolean;
     privateProfile: boolean;
-    backgroundColor: BackgroundTheme;
-    colorScheme: ColorScheme;
+    backgroundColor: string;
+    colorScheme: string;
     avatar: Image;
     wallpaper: Image;
     pinnedTweetId: number;
     followersSize: number;
     followingSize: number;
     followerRequestsSize: number;
+    unreadMessagesSize: number;
 }
 
 export interface BaseUserResponse {

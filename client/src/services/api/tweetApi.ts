@@ -37,15 +37,15 @@ export const TweetApi = {
         const {data} = await axios.post<Response<TweetResponse>>(`${API_URL}/tweets/poll`, payload);
         return data;
     },
-    async createScheduledTweet(payload: AddTweet): Promise<Response<Tweet>> {
-        const {data} = await axios.post<Response<Tweet>>(`${API_URL}/tweets/schedule`, payload);
+    async createScheduledTweet(payload: AddTweet): Promise<Response<TweetResponse>> { // +
+        const {data} = await axios.post<Response<TweetResponse>>(`${API_URL}/tweets/schedule`, payload);
         return data;
     },
-    async updateScheduledTweet(payload: AddTweet): Promise<Response<Tweet>> {
-        const {data} = await axios.put<Response<Tweet>>(`${API_URL}/tweets/schedule`, payload);
+    async updateScheduledTweet(payload: AddTweet): Promise<Response<TweetResponse>> { // +
+        const {data} = await axios.put<Response<TweetResponse>>(`${API_URL}/tweets/schedule`, payload);
         return data;
     },
-    async deleteScheduledTweets(payload: { tweetsIds: number[] }): Promise<Response<string>> {
+    async deleteScheduledTweets(payload: { tweetsIds: number[] }): Promise<Response<string>> { // +
         const {data} = await axios.delete<Response<string>>(`${API_URL}/tweets/schedule`, {data: payload});
         return data;
     },
@@ -69,17 +69,17 @@ export const TweetApi = {
         const {data} = await axios.post<Response<Tweet>>(`${API_URL}/tweets/reply/${payload.tweetId}`, payload);
         return data;
     },
-    async quoteTweet(payload: AddQuoteTweet): Promise<Response<Tweet>> {
-        const {data} = await axios.post<Response<Tweet>>(`${API_URL}/tweets/quote/${payload.tweetId}`, payload);
+    async quoteTweet(payload: AddQuoteTweet): Promise<Response<TweetResponse>> { // +
+        const {data} = await axios.post<Response<TweetResponse>>(`${API_URL}/tweets/quote/${payload.tweetId}`, payload);
         return data;
     },
-    async changeTweetReplyType(payload: { tweetId: string; replyType: ReplyType; }): Promise<Response<Tweet>> {
-        const {data} = await axios.get<Response<Tweet>>(`${API_URL}/tweets/reply/change/${payload.tweetId}`,
+    async changeTweetReplyType(payload: { tweetId: string; replyType: ReplyType; }): Promise<Response<TweetResponse>> { // +
+        const {data} = await axios.get<Response<TweetResponse>>(`${API_URL}/tweets/reply/change/${payload.tweetId}`,
             {params: {replyType: payload.replyType}});
         return data;
     },
-    async voteInPoll(payload: Vote): Promise<Response<Tweet>> {
-        const {data} = await axios.post<Response<Tweet>>(`${API_URL}/tweets/vote`, payload);
+    async voteInPoll(payload: Vote): Promise<Response<TweetResponse>> { // +
+        const {data} = await axios.post<Response<TweetResponse>>(`${API_URL}/tweets/vote`, payload);
         return data;
     },
 };

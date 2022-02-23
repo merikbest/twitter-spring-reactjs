@@ -6,30 +6,17 @@ import {UsersActionsType} from "../../users/contracts/actionTypes";
 
 export enum TweetsActionType {
 
-    SET_SCHEDULED_TWEETS = "tweets/SET_SCHEDULED_TWEETS",
 
-    SET_TWEET = "tweets/SET_TWEET",
+
+
 
     LIKE_TWEET = 'tweets/LIKE_TWEET',
     RETWEET = 'tweets/RETWEET',
-    ADD_TWEET = "tweets/ADD_TWEET",
-    ADD_POLL = "tweets/ADD_POLL",
-    ADD_SCHEDULED_TWEET = "tweets/ADD_SCHEDULED_TWEET",
-    UPDATE_SCHEDULED_TWEET = "tweets/UPDATE_SCHEDULED_TWEET",
-    ADD_QUOTE_TWEET = "tweets/ADD_QUOTE_TWEET",
-    VOTE = "tweets/VOTE",
-    CHANGE_REPLY_TYPE = "tweets/CHANGE_REPLY_TYPE",
+
     SET_UPDATED_TWEET = "tweets/SET_UPDATED_TWEET",
     FETCH_DELETE_TWEET = "tweets/FETCH_DELETE_TWEET",
-    DELETE_SCHEDULED_TWEETS = "tweets/DELETE_SCHEDULED_TWEETS",
+
     DELETE_TWEET = "tweets/DELETE_TWEET",
-
-
-
-
-
-    FETCH_BOOKMARKS = "tweets/FETCH_BOOKMARKS",
-    REMOVE_TWEET_FROM_BOOKMARKS = "tweets/REMOVE_TWEET_FROM_BOOKMARKS",
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     SET_FOLLOW_TO_TWEETS_STATE = 'tweets/SET_FOLLOW_TO_TWEETS_STATE', // +
@@ -42,6 +29,19 @@ export enum TweetsActionType {
     RESET_TWEETS = "tweets/RESET_TWEETS", // +
     FETCH_TWEETS_BY_TAG = "tweets/FETCH_TWEETS_BY_TAG", // +
     FETCH_TWEETS_BY_TEXT = "tweets/FETCH_TWEETS_BY_TEXT", //+
+    ADD_TWEET = "tweets/ADD_TWEET", //+
+    ADD_POLL = "tweets/ADD_POLL", //+
+    ADD_SCHEDULED_TWEET = "tweets/ADD_SCHEDULED_TWEET", //+
+    SET_TWEET = "tweets/SET_TWEET", // +
+    UPDATE_SCHEDULED_TWEET = "tweets/UPDATE_SCHEDULED_TWEET", // +
+    ADD_QUOTE_TWEET = "tweets/ADD_QUOTE_TWEET", // +
+    FETCH_BOOKMARKS = "tweets/FETCH_BOOKMARKS", // +
+    VOTE = "tweets/VOTE", // +
+    CHANGE_REPLY_TYPE = "tweets/CHANGE_REPLY_TYPE", // +
+    DELETE_SCHEDULED_TWEETS = "tweets/DELETE_SCHEDULED_TWEETS", // +
+    REMOVE_TWEET_FROM_BOOKMARKS = "tweets/REMOVE_TWEET_FROM_BOOKMARKS", // +
+    SET_SCHEDULED_TWEETS = "tweets/SET_SCHEDULED_TWEETS", // +
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,7 +50,7 @@ export interface SetFollowToTweetsStateActionInterface extends Action<TweetsActi
     payload: { tweetId: number; isFollower: boolean; };
 }
 
-export interface SetTweetsActionInterface extends Action<TweetsActionType> { //+
+export interface SetTweetsActionInterface extends Action<TweetsActionType> { // +
     type: TweetsActionType.SET_TWEETS;
     payload: TweetsState["items"];
 }
@@ -94,54 +94,72 @@ export interface FetchTweetsByTextActionInterface extends Action<TweetsActionTyp
     payload: string;
 }
 
-
-
-
-
-export interface SetScheduledTweetsActionInterface extends Action<TweetsActionType> {
-    type: TweetsActionType.SET_SCHEDULED_TWEETS;
-    payload: TweetsState["items"];
-}
-
-export interface SetTweetActionInterface extends Action<TweetsActionType> {
-    type: TweetsActionType.SET_TWEET;
-    payload: Tweet;
-}
-
-export interface AddTweetActionInterface extends Action<TweetsActionType> {
+export interface AddTweetActionInterface extends Action<TweetsActionType> { //+
     type: TweetsActionType.ADD_TWEET;
     payload: AddTweet;
 }
 
-export interface AddPollActionInterface extends Action<TweetsActionType> {
+export interface AddPollActionInterface extends Action<TweetsActionType> { //+
     type: TweetsActionType.ADD_POLL;
     payload: AddTweet;
 }
 
-export interface AddScheduledTweetActionInterface extends Action<TweetsActionType> {
+export interface AddScheduledTweetActionInterface extends Action<TweetsActionType> { //+
     type: TweetsActionType.ADD_SCHEDULED_TWEET;
     payload: AddTweet;
 }
 
-export interface UpdateScheduledTweetActionInterface extends Action<TweetsActionType> {
+export interface SetTweetActionInterface extends Action<TweetsActionType> { // +
+    type: TweetsActionType.SET_TWEET;
+    payload: Tweet;
+}
+
+export interface UpdateScheduledTweetActionInterface extends Action<TweetsActionType> { // +
     type: TweetsActionType.UPDATE_SCHEDULED_TWEET;
     payload: AddTweet;
 }
 
-export interface AddQuoteTweetActionInterface extends Action<TweetsActionType> {
+export interface AddQuoteTweetActionInterface extends Action<TweetsActionType> { // +
     type: TweetsActionType.ADD_QUOTE_TWEET;
     payload: AddQuoteTweet;
 }
 
-export interface VoteActionInterface extends Action<TweetsActionType> {
+export interface FetchBookmarksActionInterface extends Action<TweetsActionType> { // +
+    type: TweetsActionType.FETCH_BOOKMARKS;
+    payload: number;
+}
+
+export interface VoteActionInterface extends Action<TweetsActionType> { // +
     type: TweetsActionType.VOTE;
     payload: Vote;
 }
 
-export interface ChangeReplyTypeActionInterface extends Action<TweetsActionType> {
+export interface ChangeReplyTypeActionInterface extends Action<TweetsActionType> { // +
     type: TweetsActionType.CHANGE_REPLY_TYPE;
     payload: { tweetId: string; replyType: ReplyType; };
 }
+
+export interface DeleteScheduledTweetsActionInterface extends Action<TweetsActionType> { // +
+    type: TweetsActionType.DELETE_SCHEDULED_TWEETS;
+    payload: { tweetsIds: number[] };
+}
+
+export interface RemoveTweetFromBookmarksActionInterface extends Action<TweetsActionType> { // +
+    type: TweetsActionType.REMOVE_TWEET_FROM_BOOKMARKS;
+    payload: string;
+}
+
+export interface SetScheduledTweetsActionInterface extends Action<TweetsActionType> { // +
+    type: TweetsActionType.SET_SCHEDULED_TWEETS;
+    payload: TweetsState["items"];
+}
+
+
+
+
+
+
+
 
 export interface SetUpdatedTweetActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.SET_UPDATED_TWEET;
@@ -153,10 +171,7 @@ export interface FetchDeleteTweetActionInterface extends Action<TweetsActionType
     payload: string;
 }
 
-export interface DeleteScheduledTweetsActionInterface extends Action<TweetsActionType> {
-    type: TweetsActionType.DELETE_SCHEDULED_TWEETS;
-    payload: { tweetsIds: number[] };
-}
+
 
 export interface DeleteTweetActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.DELETE_TWEET;
@@ -174,25 +189,14 @@ export interface RetweetActionInterface extends Action<TweetsActionType> {
 }
 
 
-
-export interface FetchBookmarksActionInterface extends Action<TweetsActionType> {
-    type: TweetsActionType.FETCH_BOOKMARKS;
-    payload: number;
-}
-
-export interface RemoveTweetFromBookmarksActionInterface extends Action<TweetsActionType> {
-    type: TweetsActionType.REMOVE_TWEET_FROM_BOOKMARKS;
-    payload: string;
-}
-
 export type TweetsActions =
     | SetTweetsActionInterface // +
-    | SetScheduledTweetsActionInterface
+    | SetScheduledTweetsActionInterface  // +
     | SetPageableTweetsActionInterface // +
     | SetTweetsLoadingStateInterface // +
     | ResetTweetsActionInterface // +
     | SetUpdatedTweetActionInterface
     | DeleteTweetActionInterface
-    | SetTweetActionInterface
+    | SetTweetActionInterface // +
     | RemoveTweetFromBookmarksActionInterface // +
     | SetFollowToTweetsStateActionInterface;

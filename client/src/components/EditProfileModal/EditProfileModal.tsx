@@ -18,8 +18,8 @@ import {uploadImage} from "../../util/uploadImage";
 import UploadProfileImage from "./UploadProfileImage";
 import {useEditProfileModalStyles} from "./EditProfileModalStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
-import {updatedUserData} from "../../store/ducks/userProfile/actionCreators";
 import CloseButton from "../CloseButton/CloseButton";
+import {updatedUserData} from "../../store/ducks/user/actionCreators";
 
 interface EditProfileModalProps {
     visible?: boolean;

@@ -8,7 +8,6 @@ import classnames from "classnames";
 import {useShareTweetModalStyles} from "./ShareTweetStyles";
 import {AddBookmarksIcon, LinkIcon, MessagesIcon, ShareIcon} from "../../icons";
 import {selectUserData} from "../../store/ducks/user/selectors";
-import {addTweetToBookmarks} from "../../store/ducks/user/actionCreators";
 import {removeTweetFromBookmarks} from "../../store/ducks/tweets/actionCreators";
 import {CLIENT_URL} from "../../util/url";
 import HoverAction from "../HoverAction/HoverAction";
@@ -18,6 +17,7 @@ import ActionSnackbar from "../ActionSnackbar/ActionSnackbar";
 import {SnackbarProps, withSnackbar} from "../../hoc/withSnackbar";
 import {HoverActions} from "../../hoc/withHoverAction";
 import {useGlobalStyles} from "../../util/globalClasses";
+import {addTweetToBookmarks} from "../../store/ducks/tweet/actionCreators";
 
 interface ShareTweetProps {
     tweet: Tweet;

@@ -8,8 +8,8 @@ import {useFollowerRequestsItemStyles} from "./FollowerRequestsItemStyles";
 import {DEFAULT_PROFILE_IMG} from "../../../../util/url";
 import {HoverUserProps, withHoverUser} from "../../../../hoc/withHoverUser";
 import PopperUserWindow from "../../../PopperUserWindow/PopperUserWindow";
-import {acceptFollowRequest, declineFollowRequest} from "../../../../store/ducks/user/actionCreators";
 import {FollowerUserResponse} from "../../../../store/types/user";
+import {acceptFollowRequest, declineFollowRequest} from "../../../../store/ducks/followerRequests/actionCreators";
 
 interface FollowerRequestsItemProps {
     user: FollowerUserResponse,

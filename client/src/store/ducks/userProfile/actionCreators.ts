@@ -1,34 +1,18 @@
-import {User} from "../user/contracts/state";
 import {
-    AddUserToBlocklistActionInterface,
-    AddUserToMuteListActionInterface,
     FetchChatParticipantActionInterface,
     FetchUserProfileActionInterface,
-    // FollowProfileActionInterface,
-    // FollowUserProfileActionInterface,
     ProcessFollowRequestActionInterface,
     ProcessSubscribeActionInterface,
-    ResetUserProfileStateActionInterface, SeFollowToUserProfileActionInterface,
+    ResetUserProfileStateActionInterface,
+    SeFollowToUserProfileActionInterface,
     SetBlockedActionInterface,
     SetMutedActionInterface,
     SetUserProfileActionInterface,
     SetUserProfileLoadingStatusActionInterface,
-    // UnfollowProfileActionInterface,
-    // UnfollowUserProfileActionInterface,
     UserProfileActionsType,
 } from './contracts/actionTypes';
 import {UserProfileState} from "./contracts/state";
-import {AuthUserResponse, UserProfileResponse} from "../../types/user";
-
-export const addUserToBlocklist = (payload: number): AddUserToBlocklistActionInterface => ({ // +
-    type: UserProfileActionsType.ADD_USER_TO_BLOCKLIST,
-    payload,
-});
-
-export const addUserToMuteList = (payload: number): AddUserToMuteListActionInterface => ({ // +
-    type: UserProfileActionsType.ADD_USER_TO_MUTELIST,
-    payload,
-});
+import {UserProfileResponse} from "../../types/user";
 
 export const setBlocked = (payload: boolean): SetBlockedActionInterface => ({ // +
     type: UserProfileActionsType.SET_BLOCKED,

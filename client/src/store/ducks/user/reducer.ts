@@ -12,102 +12,79 @@ const initialUserState: UserState = {
 export const userReducer = produce((draft: Draft<UserState>, action: UserActions) => {
 
     switch (action.type) {
-        case UserActionsType.SET_USER_DATA:
+        case UserActionsType.SET_USER_DATA: //+
             draft.data = action.payload;
             draft.status = LoadingStatus.LOADED;
             break;
 
-        case UserActionsType.SIGN_OUT:
+        case UserActionsType.SIGN_OUT: // +
             draft.status = LoadingStatus.LOADED;
             draft.data = undefined;
             break;
 
-        // case UserActionsType.FOLLOW:
-        //     if (draft.data?.followers) {
-        //         draft.data.followers = [...draft.data?.followers, action.payload];
-        //     }
-        //     draft.status = LoadingStatus.LOADED;
-        //     break;
-        //
-        // case UserActionsType.FOLLOW_USER:
-        //     if (draft.data?.followers) {
-        //         draft.data.followers = [...draft.data?.followers, action.payload];
-        //     }
-        //     draft.status = LoadingStatus.LOADED;
-        //     break;
-        //
-        // case UserActionsType.UNFOLLOW:
-        //     if (draft.data?.followers) {
-        //         const unfollowUserIndex = draft.data?.followers?.findIndex(follower => follower.id === action.payload.id);
-        //         draft.data.followers = [
-        //             ...draft.data?.followers?.slice(0, unfollowUserIndex),
-        //             ...draft.data?.followers?.slice(unfollowUserIndex + 1)];
-        //     }
-        //     draft.status = LoadingStatus.LOADED;
-        //     break;
-        //
-        // case UserActionsType.UNFOLLOW_USER:
-        //     if (draft.data?.followers) {
-        //         const unfollowUserIndex = draft.data?.followers?.findIndex(follower => follower.id === action.payload.id);
-        //         draft.data.followers = [
-        //             ...draft.data?.followers?.slice(0, unfollowUserIndex),
-        //             ...draft.data?.followers?.slice(unfollowUserIndex + 1)];
-        //     }
-        //     draft.status = LoadingStatus.LOADED;
-        //     break;
-
-        case UserActionsType.SET_UNREAD_MESSAGE:
-            if (draft.data?.unreadMessages) {
-                draft.data!.unreadMessages = [...draft.data.unreadMessages, action.payload];
-            }
+        case UserActionsType.SET_UNREAD_MESSAGE: // +
+            draft.data!.unreadMessagesSize = draft.data!.unreadMessagesSize + 1;
             draft.status = LoadingStatus.LOADED;
             break;
 
-        case UserActionsType.SET_USERNAME:
+        case UserActionsType.SET_USERNAME: // +
             draft.data!.username = action.payload;
             draft.status = LoadingStatus.LOADED;
             break;
 
-        case UserActionsType.SET_PHONE:
+        case UserActionsType.SET_EMAIL: // +
+            draft.data!.email = action.payload;
+            draft.status = LoadingStatus.LOADED;
+            break;
+
+        case UserActionsType.SET_PHONE: // +
             draft.data!.countryCode = action.payload.countryCode;
             draft.data!.phone = action.payload.phone;
             draft.status = LoadingStatus.LOADED;
             break;
 
-        case UserActionsType.SET_COUNTRY:
+        case UserActionsType.SET_COUNTRY: // +
             draft.data!.country = action.payload;
             draft.status = LoadingStatus.LOADED;
             break;
 
-        case UserActionsType.SET_GENDER:
+        case UserActionsType.SET_GENDER: // +
             draft.data!.gender = action.payload;
             draft.status = LoadingStatus.LOADED;
             break;
 
-        case UserActionsType.SET_LANGUAGE:
+        case UserActionsType.SET_LANGUAGE: // +
             draft.data!.language = action.payload;
             draft.status = LoadingStatus.LOADED;
             break;
 
-        case UserActionsType.SET_DIRECT:
+        case UserActionsType.SET_DIRECT: // +
             draft.data!.mutedDirectMessages = action.payload;
             draft.status = LoadingStatus.LOADED;
             break;
 
-        case UserActionsType.SET_PRIVATE_PROFILE:
+        case UserActionsType.SET_PRIVATE_PROFILE: // +
             draft.data!.privateProfile = action.payload;
             draft.status = LoadingStatus.LOADED;
             break;
-            // SET_EMAIL
-            // SET_COLOR_SCHEME
-            // SET_BACKGROUND_COLOR
-        case UserActionsType.SET_NEW_NOTIFICATION:
-            draft.data = {...draft.data as User, notificationsCount: draft.data?.notificationsCount! + 1};
+
+        case UserActionsType.SET_COLOR_SCHEME: // +
+            draft.data!.colorScheme = action.payload;
+            draft.status = LoadingStatus.LOADED;
+            break;
+
+        case UserActionsType.SET_BACKGROUND_COLOR: // +
+            draft.data!.backgroundColor = action.payload;
+            draft.status = LoadingStatus.LOADED;
+            break;
+
+        case UserActionsType.SET_NEW_NOTIFICATION: // +
+            draft.data!.notificationsCount = draft.data!.notificationsCount + 1;
             draft.status = LoadingStatus.LOADED;
             break;
 
         case UserActionsType.SET_FOLLOWERS_SIZE: //+
-            draft.data!.followersSize =  draft.data!.followersSize + 1;
+            draft.data!.followersSize = draft.data!.followersSize + 1;
             draft.status = LoadingStatus.LOADED;
             break;
 
@@ -126,7 +103,7 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
             draft.status = LoadingStatus.LOADED;
             break;
 
-        case UserActionsType.SET_USER_LOADING_STATE:
+        case UserActionsType.SET_USER_LOADING_STATE: //+
             draft.status = action.payload;
             break;
 

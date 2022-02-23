@@ -13,6 +13,8 @@ export enum TweetActionType {
     FETCH_TWEET_DATA = "tweet/FETCH_TWEET_DATA", // +
     RESET_TWEET_STATE = "tweet/RESET_TWEET_STATE", // +
     SET_LOADING_STATE = "tweet/SET_LOADING_STATE", // +
+    ADD_TWEET_TO_BOOKMARKS = 'tweet/ADD_TWEET_TO_BOOKMARKS', // +
+    SET_BOOKMARKED_TWEET = 'tweet/SET_BOOKMARKED_TWEET', // +
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 export interface SetFollowToTweetStateActionInterface extends Action<TweetActionType> { //+
@@ -39,6 +41,18 @@ export interface SetTweetDataLoadingStateInterface extends Action<TweetActionTyp
     payload: LoadingStatus;
 }
 
+export interface AddTweetToBookmarksActionInterface extends Action<TweetActionType> { // +
+    type: TweetActionType.ADD_TWEET_TO_BOOKMARKS;
+    payload: string;
+}
+
+export interface SetBookmarkedTweetActionInterface extends Action<TweetActionType> { // +
+    type: TweetActionType.SET_BOOKMARKED_TWEET;
+    payload: boolean;
+}
+
+
+
 export interface FetchReplyTweetActionInterface extends Action<TweetActionType> {
     type: TweetActionType.FETCH_REPLY_TWEET;
     payload: ReplyTweet;
@@ -53,4 +67,5 @@ export type TweetActions =
     | SetTweetDataActionInterface // +
     | ResetTweetStateActionInterface // +
     | SetTweetDataLoadingStateInterface // +
+    | SetBookmarkedTweetActionInterface // +
     | SetFollowToTweetStateActionInterface // +

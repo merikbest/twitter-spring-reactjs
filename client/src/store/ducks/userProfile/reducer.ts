@@ -15,24 +15,6 @@ export const userProfileReducer = produce((draft: Draft<UserProfileState>, actio
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
-        // case UserProfileActionsType.FOLLOW:
-        //     if (draft.user?.following) {
-        //         draft.user.following = [...draft.user.following, action.payload];
-        //     }
-        //     draft.loadingState = LoadingStatus.SUCCESS;
-        //     break;
-        //
-        // case UserProfileActionsType.UNFOLLOW:
-        //     if (draft.user?.following) {
-        //         const unfollowUserIndex = draft.user?.following?.findIndex(follower => follower.id === action.payload.id);
-        //         draft.user.following = [
-        //             ...draft?.user?.following?.slice(0, unfollowUserIndex),
-        //             ...draft?.user?.following?.slice(unfollowUserIndex + 1)];
-        //     }
-        //     draft.loadingState = LoadingStatus.SUCCESS;
-        //     break;
-
-            ///////
         case UserProfileActionsType.SET_FOLLOW_TO_USER_PROFILE: // +
             draft.user!.isFollower = action.payload;
             draft.loadingState = LoadingStatus.SUCCESS;
