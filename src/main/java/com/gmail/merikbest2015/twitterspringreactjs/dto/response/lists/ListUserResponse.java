@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.dto.response.lists;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,5 +17,7 @@ public class ListUserResponse {
     private String altWallpaper;
     private ImageResponse wallpaper;
     private ListOwnerResponse listOwner;
-//    private boolean private;
+
+    @JsonProperty("isPrivate")
+    private boolean isPrivate;
 }

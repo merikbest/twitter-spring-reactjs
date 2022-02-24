@@ -7,9 +7,9 @@ import {
     SetTagsLoadingStateActionInterface,
     TagsActionsType
 } from './contracts/actionTypes';
-import {Tag} from './contracts/state';
+import {TagResponse} from "../../types/tag";
 
-export const setTags = (payload: Tag[]): SetTagsActionInterface => ({
+export const setTags = (payload: TagResponse[]): SetTagsActionInterface => ({
     type: TagsActionsType.SET_TAGS,
     payload,
 });

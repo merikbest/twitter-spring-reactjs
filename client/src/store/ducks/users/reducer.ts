@@ -17,8 +17,20 @@ export const usersReducer = produce((draft: Draft<UsersState>, action: UsersActi
             break;
 
         case UsersActionsType.SET_FOLLOW_TO_USERS_STATE: //+
-            const updatedUserIndex = draft.users.findIndex((user) => user.id === action.payload.userId);
-            if (updatedUserIndex !== -1) draft.users[updatedUserIndex].isFollower = action.payload.isFollower;
+            const followUserIndex = draft.users.findIndex((user) => user.id === action.payload.userId);
+            if (followUserIndex !== -1) draft.users[followUserIndex].isFollower = action.payload.isFollower;
+            draft.loadingState = LoadingStatus.SUCCESS;
+            break;
+
+        case UsersActionsType.SET_BLOCKED_USERS_STATE: //+
+            const blockedUserIndex = draft.users.findIndex((user) => user.id === action.payload.userId);
+            if (blockedUserIndex !== -1) draft.users[blockedUserIndex].isUserBlocked = action.payload.isUserBlocked;
+            draft.loadingState = LoadingStatus.SUCCESS;
+            break;
+
+        case UsersActionsType.SET_MUTED_USERS_STATE: //+
+            const mutedUserIndex = draft.users.findIndex((user) => user.id === action.payload.userId);
+            if (mutedUserIndex !== -1) draft.users[mutedUserIndex].isUserMuted = action.payload.isUserMuted;
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 

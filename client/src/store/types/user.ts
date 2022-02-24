@@ -86,6 +86,7 @@ export interface BaseUserResponse {
     isMyProfileBlocked: boolean;
     isWaitingForApprove: boolean;
     isFollower: boolean;
+    isUserMuted: boolean;
 }
 
 export interface BlockedUserResponse {

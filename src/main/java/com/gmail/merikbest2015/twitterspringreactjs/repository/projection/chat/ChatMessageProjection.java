@@ -10,6 +10,7 @@ public interface ChatMessageProjection {
     LocalDateTime getDate();
     ChatAuthorProjection getAuthor();
     ChatTweetProjection getTweet();
+    ChatProjection getChat();
 
     interface ChatAuthorProjection {
         Long getId();
@@ -27,5 +28,9 @@ public interface ChatMessageProjection {
             String getUsername();
             ImageProjection getAvatar();
         }
+    }
+
+    interface ChatProjection {
+        Long getId();
     }
 }

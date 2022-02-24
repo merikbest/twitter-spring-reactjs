@@ -224,8 +224,8 @@ public class ChatControllerTest {
         user.setId(2L);
         MessageWithTweetRequest request = new MessageWithTweetRequest();
         request.setText("test text");
-        request.setTweet(tweet);
-        request.setUsers(Collections.singletonList(user));
+//        request.setTweet(tweet);
+//        request.setUsers(Collections.singletonList(user));
 
         mockMvc.perform(post(URL_CHAT_BASIC + "/add/message/tweet")
                         .content(mapper.writeValueAsString(request))

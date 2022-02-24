@@ -4,8 +4,11 @@ import {
     DeleteTweetReplyActionInterface,
     FetchReplyTweetActionInterface,
     FetchTweetDataActionInterface,
-    ResetTweetStateActionInterface, SetBookmarkedTweetActionInterface,
+    ResetTweetStateActionInterface,
+    SetBlockedToTweetStateActionInterface,
+    SetBookmarkedTweetActionInterface,
     SetFollowToTweetStateActionInterface,
+    SetMutedToTweetStateActionInterface,
     SetTweetDataActionInterface,
     SetTweetDataLoadingStateInterface,
     TweetActionType,
@@ -15,6 +18,16 @@ import {ReplyTweet, TweetState} from "./contracts/state";
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 export const setFollowToTweetState = (payload: boolean): SetFollowToTweetStateActionInterface => ({ // +
     type: TweetActionType.SET_FOLLOW_TO_TWEET_STATE,
+    payload
+});
+
+export const setBlockedToTweetState = (payload: boolean): SetBlockedToTweetStateActionInterface => ({ // +
+    type: TweetActionType.SET_BLOCKED_TO_TWEET_STATE,
+    payload
+});
+
+export const setMutedToTweetState = (payload: boolean): SetMutedToTweetStateActionInterface => ({ // +
+    type: TweetActionType.SET_MUTED_TO_TWEET_STATE,
     payload
 });
 

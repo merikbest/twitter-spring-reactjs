@@ -12,5 +12,5 @@ public interface ListUserProjection {
     String getAltWallpaper();
     ImageProjection getWallpaper();
     ListOwnerProjection getListOwner();
-//    boolean getIsPrivate();
+    boolean getIsPrivate();
 }

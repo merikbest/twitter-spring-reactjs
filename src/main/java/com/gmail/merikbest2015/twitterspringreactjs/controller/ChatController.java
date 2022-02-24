@@ -22,27 +22,27 @@ public class ChatController {
     private final SimpMessagingTemplate messagingTemplate;
 
     @GetMapping("/users")
-    public ResponseEntity<List<ChatResponse>> getUserChats() {
+    public ResponseEntity<List<ChatResponse>> getUserChats() { // +
         return ResponseEntity.ok(chatMapper.getUserChats());
     }
 
     @GetMapping("/create/{userId}")
-    public ResponseEntity<ChatResponse> createChat(@PathVariable Long userId) {
+    public ResponseEntity<ChatResponse> createChat(@PathVariable Long userId) { // +
         return ResponseEntity.ok(chatMapper.createChat(userId));
     }
 
     @GetMapping("/{chatId}/messages")
-    public ResponseEntity<List<ChatMessageResponse>> getChatMessages(@PathVariable Long chatId) {
+    public ResponseEntity<List<ChatMessageResponse>> getChatMessages(@PathVariable Long chatId) { // +
         return ResponseEntity.ok(chatMapper.getChatMessages(chatId));
     }
 
     @GetMapping("/{chatId}/read/messages")
-    public ResponseEntity<Integer> readChatMessages(@PathVariable Long chatId) {
+    public ResponseEntity<Integer> readChatMessages(@PathVariable Long chatId) { // +
         return ResponseEntity.ok(chatMapper.readChatMessages(chatId));
     }
 
     @PostMapping("/add/message")
-    public ResponseEntity<ChatMessageResponse> addMessage(@RequestBody ChatMessageRequest chatMessage) {
+    public ResponseEntity<ChatMessageResponse> addMessage(@RequestBody ChatMessageRequest chatMessage) { // +
         ChatMessageResponse message = chatMapper.addMessage(chatMessage);
         message.getChatParticipantsIds()
                 .forEach(userId -> messagingTemplate.convertAndSend("/topic/chat/" + userId, message));

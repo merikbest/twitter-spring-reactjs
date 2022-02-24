@@ -1,38 +1,51 @@
 import {AddQuoteTweet, AddTweet, ReplyType, Tweet, TweetsState, Vote} from "./contracts/state";
 import {
-    DeleteTweetActionInterface,
     AddPollActionInterface,
     AddQuoteTweetActionInterface,
     AddScheduledTweetActionInterface,
     AddTweetActionInterface,
-    FetchBookmarksActionInterface,
     ChangeReplyTypeActionInterface,
     DeleteScheduledTweetsActionInterface,
+    DeleteTweetActionInterface,
+    FetchBookmarksActionInterface,
     FetchDeleteTweetActionInterface,
-    LikeTweetActionInterface,
     FetchMediaTweetsActionInterface,
-    RetweetActionInterface,
     FetchTweetsActionInterface,
     FetchTweetsByTagActionInterface,
     FetchTweetsByTextActionInterface,
     FetchTweetsWithVideoActionInterface,
-    UpdateScheduledTweetActionInterface,
-    VoteActionInterface,
+    LikeTweetActionInterface,
     RemoveTweetFromBookmarksActionInterface,
     ResetTweetsActionInterface,
+    RetweetActionInterface,
+    SetBlockedToTweetsStateActionInterface,
+    SetFollowToTweetsStateActionInterface,
+    SetMutedToTweetsStateActionInterface,
     SetPageableTweetsActionInterface,
     SetScheduledTweetsActionInterface,
     SetTweetActionInterface,
     SetTweetsActionInterface,
     SetTweetsLoadingStateInterface,
     SetUpdatedTweetActionInterface,
-    TweetsActionType, SetFollowToTweetsStateActionInterface,
+    TweetsActionType,
+    UpdateScheduledTweetActionInterface,
+    VoteActionInterface,
 } from "./contracts/actionTypes";
 import {LoadingStatus} from "../../types";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 export const setFollowToTweetsState = (payload: { tweetId: number; isFollower: boolean; }): SetFollowToTweetsStateActionInterface => ({ // +
     type: TweetsActionType.SET_FOLLOW_TO_TWEETS_STATE,
+    payload
+});
+
+export const setBlockedToTweetsState = (payload: { tweetId: number; isUserBlocked: boolean; }): SetBlockedToTweetsStateActionInterface => ({ // +
+    type: TweetsActionType.SET_BLOCKED_TO_TWEETS_STATE,
+    payload
+});
+
+export const setMutedToTweetsState = (payload: { tweetId: number; isUserMuted: boolean; }): SetMutedToTweetsStateActionInterface => ({ // +
+    type: TweetsActionType.SET_MUTED_TO_TWEETS_STATE,
     payload
 });
 

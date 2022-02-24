@@ -41,9 +41,10 @@ import {SnackbarProps, withSnackbar} from "../../hoc/withSnackbar";
 import {HoverActions} from "../../hoc/withHoverAction";
 import {useGlobalStyles} from "../../util/globalClasses";
 import ChangeReplyWindow from "../ChangeReplyWindow/ChangeReplyWindow";
+import {TweetResponse} from "../../store/types/tweet";
 
 interface TweetComponentActionsProps {
-    tweet: Tweet;
+    tweet: TweetResponse;
     isFullTweet: boolean;
     activeTab?: number;
     visibleMoreAction?: boolean;
@@ -141,9 +142,9 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
 
     const handleFollow = (): void => {
         if (follower) {
-            dispatch(unfollowUser(tweet.user?.id!));
+            dispatch(unfollowUser({userId: tweet.user?.id!, tweetId: tweet.id}));
         } else {
-            dispatch(followUser(tweet.user?.id!));
+            dispatch(followUser({userId: tweet.user?.id!, tweetId: tweet.id}));
         }
     };
 
@@ -180,13 +181,13 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
     };
 
     const onMuteUser = (): void => {
-        dispatch(addUserToMuteList(tweet.user.id!));
+        dispatch(addUserToMuteList({userId: tweet.user?.id!, tweetId: tweet.id}));
         setSnackBarMessage!(`@${tweet.user.username} has been ${isUserMuted ? "unmuted" : "muted"}.`);
         setOpenSnackBar!(true);
     };
 
     const onBlockUser = (): void => {
-        dispatch(addUserToBlocklist(tweet.user.id!));
+        dispatch(addUserToBlocklist({userId: tweet.user?.id!, tweetId: tweet.id}));
         setVisibleBlockUserModal(false);
         setSnackBarMessage!(`@${tweet.user.username} has been ${isUserBlocked ? "unblocked" : "blocked"}.`);
         setOpenSnackBar!(true);

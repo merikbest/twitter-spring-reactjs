@@ -83,7 +83,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
         if (chatParticipant?.privateProfile) {
             handleProcessFollowRequest();
         } else {
-            dispatch(followUser(chatParticipant?.id!));
+            dispatch(followUser({userId: chatParticipant?.id!}));
             // dispatch(followProfile(chatParticipant!));
         }
     };
@@ -92,7 +92,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
         if (chatParticipant?.privateProfile) {
             handleProcessFollowRequest();
         } else {
-            dispatch(unfollowUser(chatParticipant?.id!));
+            dispatch(unfollowUser({userId: chatParticipant?.id!}));
             // dispatch(unfollowProfile(chatParticipant!));
             setVisibleUnfollowModal(false);
         }
@@ -125,7 +125,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
     };
 
     const onBlockUser = (): void => {
-        dispatch(addUserToBlocklist(chatParticipant?.id!));
+        dispatch(addUserToBlocklist({userId: chatParticipant?.id!}));
         setVisibleBlockUserModal(false);
         setSnackBarMessage!(`@${chatParticipant?.username!} has been ${isUserBlocked ? "unblocked" : "blocked"}.`);
         setOpenSnackBar!(true);

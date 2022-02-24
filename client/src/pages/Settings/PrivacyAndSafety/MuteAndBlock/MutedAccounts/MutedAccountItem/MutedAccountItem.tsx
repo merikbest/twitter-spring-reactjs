@@ -38,7 +38,7 @@ const MutedAccountItem: FC<MutedAccountItemProps & SnackbarProps & HoverActionPr
     const classes = useMutedAccountItemStyles({isUserMuted: mutedUser?.isUserMuted!});
 
     const unmuteUser = (): void => {
-        dispatch(addUserToMuteList(mutedUser?.id!));
+        dispatch(addUserToMuteList({userId: mutedUser?.id!}));
         setSnackBarMessage!(`@${mutedUser?.username} has been ${mutedUser?.isUserMuted ? "unmuted" : "muted"}.`);
         setOpenSnackBar!(true);
     };

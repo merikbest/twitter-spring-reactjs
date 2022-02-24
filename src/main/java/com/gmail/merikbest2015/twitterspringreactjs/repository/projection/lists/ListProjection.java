@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.repository.projection.lists;
 
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.ImageProjection;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
 
@@ -12,5 +13,7 @@ public interface ListProjection {
     String getAltWallpaper();
     ImageProjection getWallpaper();
     ListOwnerProjection getListOwner();
+
+    @Value("#{@listsServiceImpl.isMyProfileFollowList(target.id)}")
     boolean getIsFollower();
 }

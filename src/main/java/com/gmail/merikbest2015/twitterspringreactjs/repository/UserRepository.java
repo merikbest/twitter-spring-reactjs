@@ -1,9 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.repository;
 
-import com.gmail.merikbest2015.twitterspringreactjs.model.BackgroundColorType;
-import com.gmail.merikbest2015.twitterspringreactjs.model.ColorSchemeType;
-import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
-import com.gmail.merikbest2015.twitterspringreactjs.model.User;
+import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.UserPrincipalProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.*;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -33,6 +30,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<UserProfileProjection> getUserProfileById(Long userId);
 
     Optional<User> findByEmail(String email);
+
+    List<User> findByIdIn(List<Long> ids);
 
     @Query("SELECT u AS user FROM User u " +
             "WHERE UPPER(u.fullName) LIKE UPPER(CONCAT('%',:name,'%')) " +

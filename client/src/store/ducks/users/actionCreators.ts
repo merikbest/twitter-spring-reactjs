@@ -1,8 +1,10 @@
-import {User} from "../user/contracts/state";
 import {
     FetchRelevantUsersActionInterface,
     FetchUsersActionInterface,
-    ResetUsersStateActionInterface, SetFollowToUsersStateActionInterface,
+    ResetUsersStateActionInterface,
+    SetBlockedUsersStateActionInterface,
+    SetFollowToUsersStateActionInterface,
+    SetMutedUsersStateActionInterface,
     SetUsersActionInterface,
     SetUsersLoadingStatusActionInterface,
     UsersActionsType
@@ -20,11 +22,21 @@ export const setFollowToUsersState = (payload: { userId: number; isFollower: boo
     payload
 });
 
-export const fetchUsers = (): FetchUsersActionInterface => ({
+export const setBlockedUsersState = (payload: { userId: number; isUserBlocked: boolean; }): SetBlockedUsersStateActionInterface => ({ // +
+    type: UsersActionsType.SET_BLOCKED_USERS_STATE,
+    payload
+});
+
+export const setMutedUsersState = (payload: { userId: number; isUserMuted: boolean; }): SetMutedUsersStateActionInterface => ({ // +
+    type: UsersActionsType.SET_MUTED_USERS_STATE,
+    payload
+});
+
+export const fetchUsers = (): FetchUsersActionInterface => ({ // +
     type: UsersActionsType.FETCH_USERS
 });
 
-export const fetchRelevantUsers = (): FetchRelevantUsersActionInterface => ({
+export const fetchRelevantUsers = (): FetchRelevantUsersActionInterface => ({ // +
     type: UsersActionsType.FETCH_RELEVANT_USERS
 });
 

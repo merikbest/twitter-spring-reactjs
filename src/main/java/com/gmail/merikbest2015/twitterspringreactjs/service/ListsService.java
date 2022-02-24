@@ -11,19 +11,19 @@ import java.util.Map;
 
 public interface ListsService {
 
-    List<ListsProjection> getAllTweetLists();
+    List<ListProjection> getAllTweetLists();
 
-    List<ListsUserProjection> getUserTweetLists();
+    List<ListUserProjection> getUserTweetLists();
 
-    List<PinnedListsProjection> getUserPinnedLists();
+    List<PinnedListProjection> getUserPinnedLists();
 
     BaseListProjection getListById(Long listId);
 
     ListUserProjection createTweetList(Lists lists);
 
-    List<ListsProjection> getUserTweetListsById(Long userId);
+    List<ListProjection> getUserTweetListsById(Long userId);
 
-    List<ListsProjection> getTweetListsWhichUserIn();
+    List<ListProjection> getTweetListsWhichUserIn();
 
     BaseListProjection editTweetList(Lists lists);
 
@@ -31,7 +31,7 @@ public interface ListsService {
 
     Boolean followList(Long listId);
 
-    Boolean pinList(Long listId);
+    PinnedListProjection pinList(Long listId);
 
     List<Long> addUserToLists(Long userId, List<Long> listsIds);
 

@@ -32,7 +32,7 @@ const BlockedAccountItem: FC<BlockedAccountItemProps & SnackbarProps> = (
 
     const unblockUser = (event: React.MouseEvent<HTMLButtonElement>): void => {
         event.preventDefault();
-        dispatch(addUserToBlocklist(blockedUser?.id!));
+        dispatch(addUserToBlocklist({userId: blockedUser?.id!}));
         setSnackBarMessage!(`@${blockedUser.username} has been ${blockedUser.isUserBlocked ? "unblocked" : "blocked"}.`);
         setOpenSnackBar!(true);
     };

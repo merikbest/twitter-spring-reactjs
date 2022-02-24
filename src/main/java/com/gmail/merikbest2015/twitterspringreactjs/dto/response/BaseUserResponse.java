@@ -18,6 +18,9 @@ public class BaseUserResponse {
     @JsonProperty("isPrivateProfile")
     private boolean isPrivateProfile;
 
+    @JsonProperty("isUserMuted")
+    private boolean isUserMuted;
+
     @JsonProperty("isUserBlocked")
     private boolean isUserBlocked;
 

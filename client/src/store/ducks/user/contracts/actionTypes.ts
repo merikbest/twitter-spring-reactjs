@@ -105,12 +105,12 @@ export interface SetReadMessageActionInterface extends Action<UserActionsType> {
 
 export interface FollowUserActionInterface extends Action<UserActionsType> { // +check
     type: UserActionsType.FOLLOW_USER;
-    payload: number;
+    payload: { userId: number; tweetId?: number; };
 }
 
 export interface UnfollowUserActionInterface extends Action<UserActionsType> { // +check
     type: UserActionsType.UNFOLLOW_USER;
-    payload: number;
+    payload: { userId: number; tweetId?: number; };
 }
 
 export interface FetchPinTweetActionInterface extends Action<UserActionsType> { //+
@@ -120,12 +120,12 @@ export interface FetchPinTweetActionInterface extends Action<UserActionsType> { 
 
 export interface AddUserToBlocklistActionInterface extends Action<UserActionsType> { // +
     type: UserActionsType.ADD_USER_TO_BLOCKLIST;
-    payload: number;
+    payload: { userId: number; tweetId?: number; };
 }
 
 export interface AddUserToMuteListActionInterface extends Action<UserActionsType> { // +
     type: UserActionsType.ADD_USER_TO_MUTELIST;
-    payload: number;
+    payload: { userId: number; tweetId?: number; };
 }
 
 export interface UpdateUsernameActionInterface extends Action<UserActionsType> { //+

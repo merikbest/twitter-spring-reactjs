@@ -291,13 +291,13 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
     };
 
     const onMuteUser = (): void => {
-        dispatch(addUserToMuteList(userProfile?.id!));
+        dispatch(addUserToMuteList({userId: userProfile?.id!}));
         setSnackBarMessage!(`@${userProfile?.username} has been ${isUserMuted ? "unmuted" : "muted"}.`);
         setOpenSnackBar!(true);
     };
 
     const onBlockUser = (): void => {
-        dispatch(addUserToBlocklist(userProfile?.id!));
+        dispatch(addUserToBlocklist({userId: userProfile?.id!}));
         setVisibleBlockUserModal(false);
         setBtnText(isUserBlocked ? "Following" : "Blocked");
         setSnackBarMessage!(`@${userProfile?.username} has been ${isUserBlocked ? "unblocked" : "blocked"}.`);

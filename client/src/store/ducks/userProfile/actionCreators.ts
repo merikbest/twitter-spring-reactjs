@@ -24,7 +24,7 @@ export const setMuted = (payload: boolean): SetMutedActionInterface => ({ // +
     payload,
 });
 
-export const seFollowToUserProfile = (payload: boolean): SeFollowToUserProfileActionInterface => ({ // +
+export const setFollowToUserProfile = (payload: boolean): SeFollowToUserProfileActionInterface => ({ // +
     type: UserProfileActionsType.SET_FOLLOW_TO_USER_PROFILE,
     payload,
 });

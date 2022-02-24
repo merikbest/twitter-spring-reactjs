@@ -4,7 +4,6 @@ import {useHistory, useParams} from "react-router-dom";
 import {Paper, Typography} from "@material-ui/core";
 
 import {UserApi} from "../../services/api/userApi";
-import {User} from "../../store/ducks/user/contracts/state";
 import BackButton from "../../components/BackButton/BackButton";
 import ConnectToUsers from "../../components/ConnectToUsers/ConnectToUsers";
 import {fetchUserProfile} from "../../store/ducks/userProfile/actionCreators";
@@ -12,6 +11,7 @@ import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import Spinner from "../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../util/globalClasses";
+import {BaseUserResponse} from "../../store/types/user";
 
 const FollowersYouKnow: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -20,7 +20,7 @@ const FollowersYouKnow: FC = (): ReactElement => {
     const history = useHistory();
     const userProfile = useSelector(selectUserProfile);
     const myProfile = useSelector(selectUserData);
-    const [overallFollowers, setOverallFollowers] = useState<User[]>([]);
+    const [overallFollowers, setOverallFollowers] = useState<BaseUserResponse[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {

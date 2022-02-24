@@ -33,4 +33,7 @@ export interface ChatMessageResponse {
             avatar: Image;
         }
     };
+    chat: {
+        id: number;
+    }
 }

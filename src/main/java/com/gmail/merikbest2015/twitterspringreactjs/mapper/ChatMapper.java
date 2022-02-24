@@ -77,7 +77,7 @@ public class ChatMapper {
 
     public List<ChatMessageResponse> addMessageWithTweet(MessageWithTweetRequest request) {
         return convertListToChatMessageResponse(
-                chatService.addMessageWithTweet(request.getText(), request.getTweet(), request.getUsers()));
+                chatService.addMessageWithTweet(request.getText(), request.getTweetId(), request.getUsersIds()));
     }
 
     public String leaveFromConversation(Long participantId, Long chatId) {

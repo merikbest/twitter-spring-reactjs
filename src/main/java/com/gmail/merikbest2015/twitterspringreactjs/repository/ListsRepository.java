@@ -42,6 +42,9 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
             "ORDER BY l.pinnedDate DESC")
     List<PinnedListsProjection> getUserPinnedLists(Long userId);
 
+    @Query("SELECT l FROM Lists l WHERE l.id = :userId")
+    PinnedListProjection getUserPinnedListById(Long listId);
+
     @Query("SELECT t FROM Lists l " +
             "LEFT JOIN l.members m " +
             "LEFT JOIN m.tweets t " +

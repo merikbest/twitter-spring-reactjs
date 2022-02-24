@@ -99,12 +99,12 @@ export const setUserLoadingStatus = (payload: UserState["status"]): SetUserLoadi
     payload
 });
 
-export const followUser = (payload: number): FollowUserActionInterface => ({ //+
+export const followUser = (payload: { userId: number; tweetId?: number; }): FollowUserActionInterface => ({ //+
     type: UserActionsType.FOLLOW_USER,
     payload,
 });
 
-export const unfollowUser = (payload: number): UnfollowUserActionInterface => ({ //+
+export const unfollowUser = (payload: { userId: number; tweetId?: number; }): UnfollowUserActionInterface => ({ //+
     type: UserActionsType.UNFOLLOW_USER,
     payload,
 });
@@ -114,12 +114,12 @@ export const fetchPinTweet = (payload: string): FetchPinTweetActionInterface => 
     payload,
 });
 
-export const addUserToBlocklist = (payload: number): AddUserToBlocklistActionInterface => ({ // +
+export const addUserToBlocklist = (payload: { userId: number; tweetId?: number; }): AddUserToBlocklistActionInterface => ({ // +
     type: UserActionsType.ADD_USER_TO_BLOCKLIST,
     payload,
 });
 
-export const addUserToMuteList = (payload: number): AddUserToMuteListActionInterface => ({ // +
+export const addUserToMuteList = (payload: { userId: number; tweetId?: number; }): AddUserToMuteListActionInterface => ({ // +
     type: UserActionsType.ADD_USER_TO_MUTELIST,
     payload,
 });

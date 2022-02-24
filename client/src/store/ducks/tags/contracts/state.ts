@@ -1,12 +1,7 @@
 import {LoadingStatus} from "../../../types";
-
-export interface Tag {
-    id: string;
-    tagName: string;
-    tweetsQuantity: number;
-}
+import {TagResponse} from "../../../types/tag";
 
 export interface TagsState {
-    items: Tag[];
+    items: TagResponse[];
     loadingState: LoadingStatus;
 }

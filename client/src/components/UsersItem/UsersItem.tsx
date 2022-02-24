@@ -91,7 +91,7 @@ const UsersItem: FC<UsersItemProps<User> & SnackbarProps & HoverUserProps> = (
         if (user?.privateProfile) {
             handleProcessFollowRequest(user);
         } else {
-            dispatch(followUser(user?.id!));
+            dispatch(followUser({userId: user?.id!}));
             // dispatch(followProfile(user));
         }
     };
@@ -100,7 +100,7 @@ const UsersItem: FC<UsersItemProps<User> & SnackbarProps & HoverUserProps> = (
         if (user?.privateProfile) {
             handleProcessFollowRequest(user);
         } else {
-            dispatch(unfollowUser(user?.id!));
+            dispatch(unfollowUser({userId: user?.id!}));
             // dispatch(unfollowProfile(user));
             setVisibleUnfollowModal(false);
         }
@@ -111,7 +111,7 @@ const UsersItem: FC<UsersItemProps<User> & SnackbarProps & HoverUserProps> = (
     };
 
     const onBlockUser = (): void => {
-        dispatch(addUserToBlocklist(user?.id!));
+        dispatch(addUserToBlocklist({userId: user?.id!}));
         setVisibleBlockUserModal(false);
         setBtnText(isUserBlocked ? "Following" : "Blocked");
         setSnackBarMessage!(`@${user?.username} has been ${isUserBlocked ? "unblocked" : "blocked"}.`);

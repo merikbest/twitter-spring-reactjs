@@ -9,6 +9,8 @@ export enum TweetActionType {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     SET_FOLLOW_TO_TWEET_STATE = 'tweet/SET_FOLLOW_TO_TWEET_STATE', // +
+    SET_BLOCKED_TO_TWEET_STATE = 'tweet/SET_BLOCKED_TO_TWEET_STATE', // +
+    SET_MUTED_TO_TWEET_STATE = 'tweet/SET_MUTED_TO_TWEET_STATE', // +
     SET_TWEET_DATA = "tweet/SET_TWEET_DATA", // +
     FETCH_TWEET_DATA = "tweet/FETCH_TWEET_DATA", // +
     RESET_TWEET_STATE = "tweet/RESET_TWEET_STATE", // +
@@ -19,6 +21,16 @@ export enum TweetActionType {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 export interface SetFollowToTweetStateActionInterface extends Action<TweetActionType> { //+
     type: TweetActionType.SET_FOLLOW_TO_TWEET_STATE;
+    payload: boolean;
+}
+
+export interface SetBlockedToTweetStateActionInterface extends Action<TweetActionType> { //+
+    type: TweetActionType.SET_BLOCKED_TO_TWEET_STATE;
+    payload: boolean;
+}
+
+export interface SetMutedToTweetStateActionInterface extends Action<TweetActionType> { //+
+    type: TweetActionType.SET_MUTED_TO_TWEET_STATE;
     payload: boolean;
 }
 
@@ -69,3 +81,5 @@ export type TweetActions =
     | SetTweetDataLoadingStateInterface // +
     | SetBookmarkedTweetActionInterface // +
     | SetFollowToTweetStateActionInterface // +
+    | SetBlockedToTweetStateActionInterface // +
+    | SetMutedToTweetStateActionInterface // +

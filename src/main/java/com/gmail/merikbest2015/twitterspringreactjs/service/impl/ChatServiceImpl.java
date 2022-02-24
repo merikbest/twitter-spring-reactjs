@@ -2,10 +2,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 
 import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.ChatMessageRepository;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.ChatParticipantRepository;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.ChatRepository;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.ChatMessageProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.ChatMessagesProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.ChatParticipantsProjection;
@@ -27,6 +24,7 @@ public class ChatServiceImpl implements ChatService {
 
     private final AuthenticationService authenticationService;
     private final UserRepository userRepository;
+    private final TweetRepository tweetRepository;
     private final ChatRepository chatRepository;
     private final ChatParticipantRepository chatParticipantRepository;
     private final ChatMessageRepository chatMessageRepository;
@@ -129,8 +127,11 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     @Transactional
-    public List<ChatMessageProjection> addMessageWithTweet(String text, Tweet tweet, List<User> users) {
+    public List<ChatMessageProjection> addMessageWithTweet(String text, Long tweetId, List<Long> usersIds) {
         User author = authenticationService.getAuthenticatedUser();
+        Tweet tweet = tweetRepository.findById(tweetId)
+                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+        List<User> users = userRepository.findByIdIn(usersIds);
         List<ChatMessageProjection> chatMessages = new ArrayList<>();
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.setAuthor(author);

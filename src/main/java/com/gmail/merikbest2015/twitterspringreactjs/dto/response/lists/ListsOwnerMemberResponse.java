@@ -12,5 +12,5 @@ public class ListsOwnerMemberResponse {
     private String username;
     private String about;
     private ImageResponse avatar;
-    boolean isMemberInList;
+    private boolean isMemberInList;
 }

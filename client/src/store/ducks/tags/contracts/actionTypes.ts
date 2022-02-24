@@ -1,6 +1,6 @@
 import {Action} from "redux";
-import {Tag} from "./state";
 import {LoadingStatus} from "../../../types";
+import {TagResponse} from "../../../types/tag";
 
 export enum TagsActionsType {
     SET_TAGS = 'tags/SET_TAGS',
@@ -12,7 +12,7 @@ export enum TagsActionsType {
 
 export interface SetTagsActionInterface extends Action<TagsActionsType> {
     type: TagsActionsType.SET_TAGS;
-    payload: Tag[];
+    payload: TagResponse[];
 }
 
 export interface FetchTagsActionInterface extends Action<TagsActionsType> {

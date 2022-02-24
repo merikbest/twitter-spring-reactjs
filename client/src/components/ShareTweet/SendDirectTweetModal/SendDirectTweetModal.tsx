@@ -20,9 +20,10 @@ import {addChatMessageWithTweet} from "../../../store/ducks/chatMessages/actionC
 import {Tweet} from "../../../store/ducks/tweets/contracts/state";
 import CloseButton from "../../CloseButton/CloseButton";
 import {selectUserData} from "../../../store/ducks/user/selectors";
+import {TweetResponse} from "../../../store/types/tweet";
 
 interface SendDirectTweetModalProps {
-    tweet: Tweet;
+    tweet: TweetResponse;
     visible?: boolean;
     onSendDirectTweet: () => void;
     closeShareTweet: () => void;
@@ -86,7 +87,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
     };
 
     const handleClickSendMessage = (): void => {
-        dispatch(addChatMessageWithTweet({text: message, tweet: tweet, users: selectedUsers}));
+        dispatch(addChatMessageWithTweet({text: message, tweetId: tweet.id, usersIds: selectedUsers.map(user => user.id!)}));
         onSendDirectTweet();
         setSearchText("");
         setMessage("");

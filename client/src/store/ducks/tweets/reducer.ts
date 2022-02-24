@@ -69,6 +69,18 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
             draft.loadingState = LoadingStatus.LOADED
             break;
 
+        case TweetsActionType.SET_BLOCKED_TO_TWEETS_STATE: // +
+            const blockedUserTweetIndex = draft.items.findIndex((tweet) => tweet.id !== action.payload.tweetId);
+            if (blockedUserTweetIndex !== -1) draft.items[blockedUserTweetIndex].user.isUserBlocked = action.payload.isUserBlocked;
+            draft.loadingState = LoadingStatus.LOADED
+            break;
+
+        case TweetsActionType.SET_MUTED_TO_TWEETS_STATE: // +
+            const mutedUserTweetIndex = draft.items.findIndex((tweet) => tweet.id !== action.payload.tweetId);
+            if (mutedUserTweetIndex !== -1) draft.items[mutedUserTweetIndex].user.isUserMuted = action.payload.isUserMuted;
+            draft.loadingState = LoadingStatus.LOADED
+            break;
+
         default:
             break;
     }

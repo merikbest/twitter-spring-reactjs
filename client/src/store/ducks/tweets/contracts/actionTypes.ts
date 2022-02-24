@@ -20,6 +20,8 @@ export enum TweetsActionType {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     SET_FOLLOW_TO_TWEETS_STATE = 'tweets/SET_FOLLOW_TO_TWEETS_STATE', // +
+    SET_BLOCKED_TO_TWEETS_STATE = 'tweets/SET_BLOCKED_TO_TWEETS_STATE', // +
+    SET_MUTED_TO_TWEETS_STATE = 'tweets/SET_MUTED_TO_TWEETS_STATE', // +
     SET_TWEETS = "tweets/SET_TWEETS", // +
     FETCH_TWEETS = "tweets/FETCH_TWEETS", // +
     FETCH_MEDIA_TWEETS = "tweets/FETCH_MEDIA_TWEETS", // +
@@ -48,6 +50,16 @@ export enum TweetsActionType {
 export interface SetFollowToTweetsStateActionInterface extends Action<TweetsActionType> { //+
     type: TweetsActionType.SET_FOLLOW_TO_TWEETS_STATE;
     payload: { tweetId: number; isFollower: boolean; };
+}
+
+export interface SetBlockedToTweetsStateActionInterface extends Action<TweetsActionType> { //+
+    type: TweetsActionType.SET_BLOCKED_TO_TWEETS_STATE;
+    payload: { tweetId: number; isUserBlocked: boolean; };
+}
+
+export interface SetMutedToTweetsStateActionInterface extends Action<TweetsActionType> { //+
+    type: TweetsActionType.SET_MUTED_TO_TWEETS_STATE;
+    payload: { tweetId: number; isUserMuted: boolean; };
 }
 
 export interface SetTweetsActionInterface extends Action<TweetsActionType> { // +
@@ -188,7 +200,6 @@ export interface RetweetActionInterface extends Action<TweetsActionType> {
     payload: string;
 }
 
-
 export type TweetsActions =
     | SetTweetsActionInterface // +
     | SetScheduledTweetsActionInterface  // +
@@ -199,4 +210,6 @@ export type TweetsActions =
     | DeleteTweetActionInterface
     | SetTweetActionInterface // +
     | RemoveTweetFromBookmarksActionInterface // +
-    | SetFollowToTweetsStateActionInterface;
+    | SetFollowToTweetsStateActionInterface
+    | SetBlockedToTweetsStateActionInterface
+    | SetMutedToTweetsStateActionInterface;

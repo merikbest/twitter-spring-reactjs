@@ -14,6 +14,9 @@ public interface BaseUserProjection {
     @Value("#{T(com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.BaseUserProjection).convertToAvatar(target.img_id, target.img_src)}")
     Map<String, Object> getAvatar();
 
+    @Value("#{@userServiceImpl.isUserMutedByMyProfile(target.id)}")
+    boolean getIsUserMuted();
+
     @Value("#{@userServiceImpl.isUserBlockedByMyProfile(target.id)}")
     boolean getIsUserBlocked();
 

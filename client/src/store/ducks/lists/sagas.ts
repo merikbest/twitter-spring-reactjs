@@ -27,91 +27,94 @@ import {LoadingStatus} from '../../types';
 import {ListsApi} from "../../../services/api/listsApi";
 import {Lists} from "./contracts/state";
 import {setList} from '../list/actionCreators';
+import {ListResponse, ListUserResponse, PinnedListResponse} from "../../types/lists";
 
-export function* fetchListsRequest() {
+export function* fetchListsRequest() { // +
     try {
         yield put(setListsLoadingState(LoadingStatus.LOADING));
-        const data: Lists[] = yield call(ListsApi.getAllTweetLists);
+        const data: ListResponse[] = yield call(ListsApi.getAllTweetLists);
         yield put(setLists(data));
     } catch (error) {
         yield put(setListsLoadingState(LoadingStatus.ERROR));
     }
 }
 
-export function* fetchUserListsRequest() {
+export function* fetchUserListsRequest() { // +
     try {
         yield put(setListsLoadingState(LoadingStatus.LOADING));
-        const data: Lists[] = yield call(ListsApi.getUserTweetLists);
+        const data: ListUserResponse[] = yield call(ListsApi.getUserTweetLists);
         yield put(setUserLists(data));
     } catch (error) {
         yield put(setListsLoadingState(LoadingStatus.ERROR));
     }
 }
 
-export function* fetchUserListsByIdRequest({payload}: FetchUserListsByIdActionInterface) {
+export function* fetchUserListsByIdRequest({payload}: FetchUserListsByIdActionInterface) { // +
     try {
         yield put(setListsLoadingState(LoadingStatus.LOADING));
-        const data: Lists[] = yield call(ListsApi.getUserTweetListsById, payload);
-        yield put(setUserLists(data));
+        const data: ListResponse[] = yield call(ListsApi.getUserTweetListsById, payload);
+        // yield put(setUserLists(data));
+        yield put(setLists(data));
     } catch (error) {
         yield put(setListsLoadingState(LoadingStatus.ERROR));
     }
 }
 
-export function* fetchTweetListsWhichUserInRequest() {
+export function* fetchTweetListsWhichUserInRequest() { // +
     try {
         yield put(setListsLoadingState(LoadingStatus.LOADING));
-        const data: Lists[] = yield call(ListsApi.getTweetListsWhichUserIn);
-        yield put(setUserLists(data));
+        const data: ListResponse[] = yield call(ListsApi.getTweetListsWhichUserIn);
+        // yield put(setUserLists(data));
+        yield put(setLists(data));
     } catch (error) {
         yield put(setListsLoadingState(LoadingStatus.ERROR));
     }
 }
 
-export function* fetchPinnedListsRequest() {
+export function* fetchPinnedListsRequest() { // +
     try {
         yield put(setListsLoadingState(LoadingStatus.LOADING));
-        const data: Lists[] = yield call(ListsApi.getUserPinnedLists);
+        const data: PinnedListResponse[] = yield call(ListsApi.getUserPinnedLists);
         yield put(setPinnedLists(data));
     } catch (error) {
         yield put(setListsLoadingState(LoadingStatus.ERROR));
     }
 }
 
-export function* createListRequest({payload}: CreateListActionInterface) {
+export function* createListRequest({payload}: CreateListActionInterface) { // +
     try {
         yield put(setListsLoadingState(LoadingStatus.LOADING));
-        const data: Lists = yield call(ListsApi.createTweetList, payload);
+        const data: ListUserResponse = yield call(ListsApi.createTweetList, payload);
         yield put(setCreatedList(data));
     } catch (error) {
         yield put(setListsLoadingState(LoadingStatus.ERROR));
     }
 }
 
-export function* addUserToListsRequest({payload}: AddUserToListsActionInterface) {
+export function* addUserToListsRequest({payload}: AddUserToListsActionInterface) { // + REFACTOR
     try {
-        const data: Lists[] = yield call(ListsApi.addUserToLists, payload);
-        yield put(setUserLists(data));
-        const list = data.find((list) => list.id === payload.listId);
-        if (list) yield put(setList(list));
+        const data: number[] = yield call(ListsApi.addUserToLists, payload);
+        // yield put(setUserLists(data));
+        // const list = data.find((list) => list.id === payload.listId);
+        // if (list) yield put(setList(list));
     } catch (error) {
         yield put(setListsLoadingState(LoadingStatus.ERROR));
     }
 }
 
-export function* processListMemberRequest({payload}: ProcessListMemberActionInterface) {
+export function* processListMemberRequest({payload}: ProcessListMemberActionInterface) { // + REFACTOR
     try {
-        const data: Lists = yield call(ListsApi.addUserToList, payload);
-        yield put(setUpdatedList(data));
+        const data: boolean = yield call(ListsApi.addUserToList, payload);
+        yield put(setUpdatedList({listId: payload.listId, isMember: data})); // +
         yield put(setList(data));
     } catch (error) {
         yield put(setListsLoadingState(LoadingStatus.ERROR));
     }
 }
 
-export function* pinListRequest({payload}: PinListActionInterface) {
+export function* pinListRequest({payload}: PinListActionInterface) { // +
     try {
-        const data: Lists = yield call(ListsApi.pinList, payload);
+        const data: PinnedListResponse = yield call(ListsApi.pinList, payload);
         yield put(setPinedList(data));
         yield put(setPinedListToUserList(data));
     } catch (error) {
@@ -119,9 +122,9 @@ export function* pinListRequest({payload}: PinListActionInterface) {
     }
 }
 
-export function* unpinListRequest({payload}: PinListActionInterface) {
+export function* unpinListRequest({payload}: PinListActionInterface) { // +
     try {
-        const data: Lists = yield call(ListsApi.pinList, payload);
+        const data: PinnedListResponse = yield call(ListsApi.pinList, payload);
         yield put(setUnpinList(data));
         yield put(setPinedListToUserList(data));
     } catch (error) {
@@ -129,10 +132,10 @@ export function* unpinListRequest({payload}: PinListActionInterface) {
     }
 }
 
-export function* followListRequest({payload}: FollowListActionInterface) {
+export function* followListRequest({payload}: FollowListActionInterface) { // +
     try {
-        const data: Lists = yield call(ListsApi.followList, payload);
-        yield put(setList(data));
+        const data: boolean = yield call(ListsApi.followList, payload);
+        yield put(setList(data)); // + REFACTOR
         yield put(setFollowList(data));
     } catch (error) {
         yield put(setListsLoadingState(LoadingStatus.ERROR));
@@ -150,16 +153,16 @@ export function* unfollowListRequest({payload}: UnfollowListActionInterface) {
 }
 
 export function* listsSaga() {
-    yield takeEvery(ListsActionType.FETCH_LISTS, fetchListsRequest);
-    yield takeEvery(ListsActionType.FETCH_USER_LISTS, fetchUserListsRequest);
-    yield takeEvery(ListsActionType.FETCH_USER_LISTS_BY_ID, fetchUserListsByIdRequest);
-    yield takeEvery(ListsActionType.FETCH_TWEET_LISTS_WHICH_USER_IN, fetchTweetListsWhichUserInRequest);
-    yield takeEvery(ListsActionType.FETCH_PINNED_LISTS, fetchPinnedListsRequest);
-    yield takeEvery(ListsActionType.CREATE_LIST, createListRequest);
+    yield takeEvery(ListsActionType.FETCH_LISTS, fetchListsRequest); // +
+    yield takeEvery(ListsActionType.FETCH_USER_LISTS, fetchUserListsRequest); // +
+    yield takeEvery(ListsActionType.FETCH_USER_LISTS_BY_ID, fetchUserListsByIdRequest); // +
+    yield takeEvery(ListsActionType.FETCH_TWEET_LISTS_WHICH_USER_IN, fetchTweetListsWhichUserInRequest); // +
+    yield takeEvery(ListsActionType.FETCH_PINNED_LISTS, fetchPinnedListsRequest); // +
+    yield takeEvery(ListsActionType.CREATE_LIST, createListRequest); // +
     yield takeEvery(ListsActionType.ADD_USER_TO_LISTS, addUserToListsRequest);
-    yield takeEvery(ListsActionType.PROCESS_LIST_MEMBER, processListMemberRequest);
-    yield takeEvery(ListsActionType.PIN_LIST, pinListRequest);
-    yield takeEvery(ListsActionType.UNPIN_LIST, unpinListRequest);
-    yield takeEvery(ListsActionType.FOLLOW_LIST, followListRequest);
+    yield takeEvery(ListsActionType.PROCESS_LIST_MEMBER, processListMemberRequest); // +
+    yield takeEvery(ListsActionType.PIN_LIST, pinListRequest); // +
+    yield takeEvery(ListsActionType.UNPIN_LIST, unpinListRequest); // +
+    yield takeEvery(ListsActionType.FOLLOW_LIST, followListRequest); // +
     yield takeEvery(ListsActionType.UNFOLLOW_LIST, unfollowListRequest);
 }
