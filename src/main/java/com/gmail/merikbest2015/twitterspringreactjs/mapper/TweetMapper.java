@@ -3,9 +3,12 @@ package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetDeleteRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.VoteRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationReplyResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationTweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetHeaderResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.model.NotificationType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetProjection;
@@ -111,8 +114,13 @@ public class TweetMapper {
         return convertListToProjectionResponse(tweetService.searchTweets(text));
     }
 
-    public TweetResponse replyTweet(Long tweetId, TweetRequest tweetRequest) {
-        return convertToProjectionResponse(tweetService.replyTweet(tweetId, convertToTweetEntity(tweetRequest)));
+    public NotificationReplyResponse replyTweet(Long tweetId, TweetRequest tweetRequest) {
+        TweetResponse replyTweet = convertToProjectionResponse(tweetService.replyTweet(tweetId, convertToTweetEntity(tweetRequest)));
+        NotificationReplyResponse notificationReplyResponse = new NotificationReplyResponse();
+        notificationReplyResponse.setTweetId(tweetId);
+        notificationReplyResponse.setNotificationType(NotificationType.REPLY);
+        notificationReplyResponse.setTweet(replyTweet);
+        return notificationReplyResponse;
     }
 
     public TweetResponse quoteTweet(Long tweetId, TweetRequest tweetRequest) {

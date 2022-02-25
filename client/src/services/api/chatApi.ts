@@ -1,11 +1,7 @@
 import axios from "axios";
 
 import {API_URL} from "../../util/url";
-import {
-    ChatMessageRequest,
-    ChatMessageWithTweetRequest
-} from "../../store/ducks/chatMessages/contracts/state";
-import {User} from "../../store/ducks/user/contracts/state";
+import {ChatMessageRequest, ChatMessageWithTweetRequest} from "../../store/ducks/chatMessages/contracts/state";
 import {ChatMessageResponse, ChatResponse} from "../../store/types/chat";
 import {BaseUserResponse} from "../../store/types/user";
 

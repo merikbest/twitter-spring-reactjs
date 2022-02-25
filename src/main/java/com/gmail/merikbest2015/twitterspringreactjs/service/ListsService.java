@@ -29,7 +29,7 @@ public interface ListsService {
 
     String deleteList(Long listId);
 
-    Boolean followList(Long listId);
+    ListUserProjection followList(Long listId);
 
     PinnedListProjection pinList(Long listId);
 

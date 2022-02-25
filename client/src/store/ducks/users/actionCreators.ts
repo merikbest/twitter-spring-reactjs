@@ -5,6 +5,7 @@ import {
     SetBlockedUsersStateActionInterface,
     SetFollowToUsersStateActionInterface,
     SetMutedUsersStateActionInterface,
+    SetSubscribedUsersStateActionInterface,
     SetUsersActionInterface,
     SetUsersLoadingStatusActionInterface,
     UsersActionsType
@@ -29,6 +30,11 @@ export const setBlockedUsersState = (payload: { userId: number; isUserBlocked: b
 
 export const setMutedUsersState = (payload: { userId: number; isUserMuted: boolean; }): SetMutedUsersStateActionInterface => ({ // +
     type: UsersActionsType.SET_MUTED_USERS_STATE,
+    payload
+});
+
+export const setSubscribedUsersState = (payload: { userId: number; isSubscriber: boolean; }): SetSubscribedUsersStateActionInterface => ({ // +
+    type: UsersActionsType.SET_SUBSCRIBED_USERS_STATE,
     payload
 });
 

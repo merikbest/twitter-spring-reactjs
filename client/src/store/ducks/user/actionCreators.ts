@@ -44,8 +44,8 @@ import {
 } from "./contracts/actionTypes";
 import {RegistrationProps} from "../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
 import {LoginProps} from "../../../pages/Login/Login";
-import {ChatMessage} from "../chatMessages/contracts/state";
 import {AuthUserResponse} from "../../types/user";
+import {ChatMessageResponse} from "../../types/chat";
 
 export const updatedUserData = (payload: AuthUserResponse): UpdateUserDataActionInterface => ({  // +
     type: UserActionsType.UPDATE_USER_DATA,
@@ -124,7 +124,6 @@ export const addUserToMuteList = (payload: { userId: number; tweetId?: number; }
     payload,
 });
 
-
 export const startUseTwitter = (payload: number): StartUseTwitterActionInterface => ({ // +
     type: UserActionsType.START_USE_TWITTER,
     payload,
@@ -135,7 +134,7 @@ export const fetchReadMessages = (payload: number): FetchReadMessagesActionInter
     payload,
 });
 
-export const setUnreadMessage = (payload: ChatMessage): SetUnreadMessageActionInterface => ({ // +
+export const setUnreadMessage = (payload: ChatMessageResponse): SetUnreadMessageActionInterface => ({ // +
     type: UserActionsType.SET_UNREAD_MESSAGE,
     payload,
 });
@@ -143,16 +142,6 @@ export const setUnreadMessage = (payload: ChatMessage): SetUnreadMessageActionIn
 export const setNewNotification = (): SetNewNotificationActionInterface => ({
     type: UserActionsType.SET_NEW_NOTIFICATION,
 });
-
-// export const addUserToBlocklist = (payload: number): AddUserToBlocklistActionInterface => ({
-//     type: UserActionsType.ADD_USER_TO_BLOCKLIST,
-//     payload,
-// });
-
-// export const addUserToMuteList = (payload: number): AddUserToMuteListActionInterface => ({
-//     type: UserActionsType.ADD_USER_TO_MUTELIST,
-//     payload,
-// });
 
 export const updateUsername = (payload: Settings): UpdateUsernameActionInterface => ({ // +
     type: UserActionsType.UPDATE_USERNAME,

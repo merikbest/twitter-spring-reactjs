@@ -1,6 +1,7 @@
 import {LoadingStatus} from "../../../types";
 import {User} from "../../user/contracts/state";
 import {Tweet} from "../../tweets/contracts/state";
+import {NotificationResponse, NotificationUserResponse} from "../../../types/notification";
 
 export interface Notification {
     id: number;
@@ -23,7 +24,7 @@ export enum NotificationType {
 }
 
 export interface NotificationsState {
-    notificationsList: Notification[];
-    tweetAuthors: User[];
+    notificationsList: NotificationResponse[];
+    tweetAuthors: NotificationUserResponse[];
     loadingState: LoadingStatus;
 }

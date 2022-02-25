@@ -1,7 +1,9 @@
 import {LoadingStatus} from "../../../types";
-import {Lists} from "../../lists/contracts/state";
+import {BaseListResponse} from "../../../types/lists";
+import {TweetResponse} from "../../../types/tweet";
 
 export interface ListState {
-    list: Lists | undefined;
+    list?: BaseListResponse;
+    listTweets: TweetResponse[];
     loadingState: LoadingStatus;
 }

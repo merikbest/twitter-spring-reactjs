@@ -1,4 +1,5 @@
 import {Image, NotificationType} from "./common";
+import {TweetResponse} from "./tweet";
 
 export interface NotificationsResponse {
     notifications: NotificationResponse[];
@@ -27,3 +28,10 @@ export interface NotificationTweetResponse {
     user: { id: number; }
     notificationCondition: boolean;
 }
+
+export interface NotificationReplyResponse {
+    tweetId: number;
+    notificationType: NotificationType;
+    tweet: TweetResponse;
+}
+

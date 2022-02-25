@@ -1,4 +1,4 @@
-import {BackgroundTheme, ColorScheme, Image, SameFollowerResponse} from "./common";
+import {Image, SameFollowerResponse} from "./common";
 
 export interface UserProfileResponse {
     id: number;
@@ -14,7 +14,7 @@ export interface UserProfileResponse {
     likeCount: number;
     notificationsCount: number;
     mutedDirectMessages: boolean;
-    privateProfile: boolean;
+    isPrivateProfile: boolean;
     avatar: Image;
     wallpaper: Image;
     pinnedTweetId: number;
@@ -25,6 +25,7 @@ export interface UserProfileResponse {
     isMyProfileBlocked: boolean;
     isWaitingForApprove: boolean;
     isFollower: boolean;
+    isSubscriber: boolean;
     sameFollowers: SameFollowerResponse;
 }
 
@@ -87,6 +88,7 @@ export interface BaseUserResponse {
     isWaitingForApprove: boolean;
     isFollower: boolean;
     isUserMuted: boolean;
+    isSubscriber: boolean;
 }
 
 export interface BlockedUserResponse {

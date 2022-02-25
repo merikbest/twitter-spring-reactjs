@@ -52,8 +52,8 @@ export const ListsApi = {
         const {data} = await axios.delete<Response<string>>(`${API_URL}/lists/${listId}`);
         return data;
     },
-    async followList(listId: number): Promise<Response<boolean>> { // +
-        const {data} = await axios.get<Response<boolean>>(`${API_URL}/lists/follow/${listId}`);
+    async followList(listId: number): Promise<Response<ListUserResponse>> { // +
+        const {data} = await axios.get<Response<ListUserResponse>>(`${API_URL}/lists/follow/${listId}`);
         return data;
     },
     async pinList(listId: number): Promise<Response<PinnedListResponse>> { // +
@@ -64,8 +64,8 @@ export const ListsApi = {
         const {data} = await axios.post<Response<number[]>>(`${API_URL}/lists/add/user`, payload);
         return data;
     },
-    async addUserToList(payload: MemberToList): Promise<Response<boolean>> { // +
-        const {data} = await axios.get<Response<boolean>>(`${API_URL}/lists/add/user/${payload.userId}/${payload.listId}`);
+    async addUserToList(userId: number, listId: number): Promise<Response<boolean>> { // +
+        const {data} = await axios.get<Response<boolean>>(`${API_URL}/lists/add/user/${userId}/${listId}`);
         return data;
     },
     // NEW //
@@ -77,8 +77,8 @@ export const ListsApi = {
         const {data} = await axios.get<Response<BaseListResponse>>(`${API_URL}/lists/${listId}/details`);
         return data;
     },
-    async getListMembers(listId: number, listOwnerId: number): Promise<Response<any[]>> { // +
-        const {data} = await axios.get<Response<any[]>>(`${API_URL}/lists/${listId}/${listOwnerId}/members`);
+    async getListMembers(listId: number, listOwnerId: number): Promise<Response<ListsOwnerMemberResponse[]>> { // +
+        const {data} = await axios.get<Response<ListsOwnerMemberResponse[]>>(`${API_URL}/lists/${listId}/${listOwnerId}/members`);
         return data;
     },
     async searchListMembersByUsername(listId: number, username: string): Promise<Response<ListsOwnerMemberResponse[]>> { // +

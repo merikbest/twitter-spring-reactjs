@@ -7,14 +7,14 @@ import {
     FetchUsersSearchByNameActionInterface,
     UsersSearchActionsType
 } from "./contracts/actionTypes";
-import {User} from "../user/contracts/state";
 import {UserApi} from "../../../services/api/userApi";
 import {setUsersSearch, setUsersSearchLoadingState} from "./actionCreators";
+import {BaseUserResponse, UserResponse} from "../../types/user";
 
 export function* fetchUsersSearchRequest() {
     try {
         yield put(setUsersSearchLoadingState(LoadingStatus.LOADING));
-        const item: User[] = yield call(UserApi.getUsers);
+        const item: UserResponse[] = yield call(UserApi.getUsers);
         yield put(setUsersSearch(item));
     } catch (error) {
         yield put(setUsersSearchLoadingState(LoadingStatus.ERROR));
@@ -24,7 +24,7 @@ export function* fetchUsersSearchRequest() {
 export function* fetchUsersSearchByUsernameRequest({payload}: FetchUsersSearchByNameActionInterface) {
     try {
         yield put(setUsersSearchLoadingState(LoadingStatus.LOADING));
-        const item: User[] = yield call(UserApi.searchUsersByUsername, payload);
+        const item: UserResponse[] = yield call(UserApi.searchUsersByUsername, payload);
         yield put(setUsersSearch(item));
     } catch (error) {
         yield put(setUsersSearchLoadingState(LoadingStatus.ERROR));
@@ -34,7 +34,7 @@ export function* fetchUsersSearchByUsernameRequest({payload}: FetchUsersSearchBy
 export function* fetchFollowersRequest({payload}: FetchFollowersActionInterface) {
     try {
         yield put(setUsersSearchLoadingState(LoadingStatus.LOADING));
-        const item: User[] = yield call(UserApi.getFollowers, payload);
+        const item: BaseUserResponse[] = yield call(UserApi.getFollowers, payload);
         yield put(setUsersSearch(item));
     } catch (error) {
         yield put(setUsersSearchLoadingState(LoadingStatus.ERROR));
@@ -44,7 +44,7 @@ export function* fetchFollowersRequest({payload}: FetchFollowersActionInterface)
 export function* fetchFollowingsRequest({payload}: FetchFollowingsActionInterface) {
     try {
         yield put(setUsersSearchLoadingState(LoadingStatus.LOADING));
-        const item: User[] = yield call(UserApi.getFollowing, payload);
+        const item: BaseUserResponse[] = yield call(UserApi.getFollowing, payload);
         yield put(setUsersSearch(item));
     } catch (error) {
         yield put(setUsersSearchLoadingState(LoadingStatus.ERROR));

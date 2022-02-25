@@ -29,6 +29,9 @@ public interface BaseUserProjection {
     @Value("#{@userServiceImpl.isUserFollowByOtherUser(target.id)}")
     boolean getIsFollower();
 
+    @Value("#{@userServiceImpl.isMyProfileSubscribed(target.id)}")
+    boolean getIsSubscriber();
+
     static Map<String, Object> convertToAvatar(Long id, String src) {
         return Map.of("id", id,"src", src);
     }

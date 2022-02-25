@@ -67,7 +67,7 @@ public class ListsController {
     }
 
     @GetMapping("/follow/{listId}")
-    public ResponseEntity<Boolean> followList(@PathVariable Long listId) {
+    public ResponseEntity<ListUserResponse> followList(@PathVariable Long listId) {
         return ResponseEntity.ok(listsMapper.followList(listId));
     }
 

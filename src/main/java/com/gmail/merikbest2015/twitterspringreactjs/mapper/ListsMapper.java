@@ -104,8 +104,8 @@ public class ListsMapper {
         return listsService.deleteList(listId);
     }
 
-    public Boolean followList(Long listId) {
-        return listsService.followList(listId);
+    public ListUserResponse followList(Long listId) {
+        return convertToListsUserResponse(listsService.followList(listId));
     }
 
     public PinnedListResponse pinList(Long listId) {

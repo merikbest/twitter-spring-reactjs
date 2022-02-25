@@ -34,12 +34,6 @@ export interface EditLists {
     wallpaper?: Image;
 }
 
-export interface AddUserToLists {
-    userId: number;
-    listId: number;
-    lists: Lists[];
-}
-
 export interface MemberToList {
     userId: number;
     listId: number;

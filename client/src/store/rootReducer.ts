@@ -15,6 +15,7 @@ import {listsReducer} from "./ducks/lists/reducer";
 import {listReducer} from "./ducks/list/reducer";
 import {followerRequestsReducer} from "./ducks/followerRequests/reducer";
 import {blockedAndMutedUsersReducer} from "./ducks/blockedAndMutedUsers/reducer";
+import {listMembersReducer} from "./ducks/listMembers/reducer";
 
 export const rootReducer = combineReducers({
     tweets: tweetsReducer,
@@ -32,4 +33,5 @@ export const rootReducer = combineReducers({
     list: listReducer,
     followerRequests: followerRequestsReducer,
     blockedAndMutedUsers: blockedAndMutedUsersReducer,
+    listMembers: listMembersReducer,
 });

@@ -3,11 +3,6 @@ import {LoadingStatus} from "../../../types";
 import {ReplyTweet, TweetState} from "./state";
 
 export enum TweetActionType {
-
-    FETCH_REPLY_TWEET = "tweet/FETCH_REPLY_TWEET",
-    DELETE_TWEET_REPLY = "tweet/DELETE_TWEET_REPLY",
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     SET_FOLLOW_TO_TWEET_STATE = 'tweet/SET_FOLLOW_TO_TWEET_STATE', // +
     SET_BLOCKED_TO_TWEET_STATE = 'tweet/SET_BLOCKED_TO_TWEET_STATE', // +
     SET_MUTED_TO_TWEET_STATE = 'tweet/SET_MUTED_TO_TWEET_STATE', // +
@@ -17,8 +12,10 @@ export enum TweetActionType {
     SET_LOADING_STATE = "tweet/SET_LOADING_STATE", // +
     ADD_TWEET_TO_BOOKMARKS = 'tweet/ADD_TWEET_TO_BOOKMARKS', // +
     SET_BOOKMARKED_TWEET = 'tweet/SET_BOOKMARKED_TWEET', // +
+    FETCH_REPLY_TWEET = "tweet/FETCH_REPLY_TWEET", // +
+    DELETE_TWEET_REPLY = "tweet/DELETE_TWEET_REPLY", // +
 }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export interface SetFollowToTweetStateActionInterface extends Action<TweetActionType> { //+
     type: TweetActionType.SET_FOLLOW_TO_TWEET_STATE;
     payload: boolean;
@@ -63,16 +60,14 @@ export interface SetBookmarkedTweetActionInterface extends Action<TweetActionTyp
     payload: boolean;
 }
 
-
-
-export interface FetchReplyTweetActionInterface extends Action<TweetActionType> {
+export interface FetchReplyTweetActionInterface extends Action<TweetActionType> { // +
     type: TweetActionType.FETCH_REPLY_TWEET;
     payload: ReplyTweet;
 }
 
-export interface DeleteTweetReplyActionInterface extends Action<TweetActionType> {
+export interface DeleteTweetReplyActionInterface extends Action<TweetActionType> { // +
     type: TweetActionType.DELETE_TWEET_REPLY;
-    payload: string;
+    payload: number;
 }
 
 export type TweetActions =

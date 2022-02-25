@@ -12,23 +12,24 @@ const initialTagsState: NotificationsState = {
 
 export const notificationsReducer = produce((draft: Draft<NotificationsState>, action: NotificationsActions) => {
     switch (action.type) {
-        case NotificationsActionsType.SET_NOTIFICATIONS:
+        case NotificationsActionsType.SET_NOTIFICATIONS: // +
             draft.notificationsList = action.payload.notifications ? action.payload.notifications : [];
             draft.tweetAuthors = action.payload.tweetAuthors ? action.payload.tweetAuthors : [];
+            draft.loadingState = LoadingStatus.LOADED;
             break;
 
-        case NotificationsActionsType.SET_NOTIFICATION:
+        case NotificationsActionsType.SET_NOTIFICATION: // +
             draft.notificationsList = [action.payload, ...draft.notificationsList];
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
-        case NotificationsActionsType.RESET_NOTIFICATION_STATE:
+        case NotificationsActionsType.RESET_NOTIFICATION_STATE: // +
             draft.notificationsList = [];
             draft.tweetAuthors = [];
             draft.loadingState = LoadingStatus.LOADING;
             break;
 
-        case NotificationsActionsType.SET_LOADING_STATE:
+        case NotificationsActionsType.SET_LOADING_STATE: // +
             draft.loadingState = action.payload;
             break;
 

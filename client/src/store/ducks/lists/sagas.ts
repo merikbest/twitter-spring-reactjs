@@ -1,13 +1,11 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
 
 import {
-    AddUserToListsActionInterface,
     CreateListActionInterface,
     FetchUserListsByIdActionInterface,
     FollowListActionInterface,
     ListsActionType,
     PinListActionInterface,
-    ProcessListMemberActionInterface,
     UnfollowListActionInterface
 } from "./contracts/actionTypes";
 import {
@@ -20,13 +18,11 @@ import {
     setPinnedLists,
     setUnfollowList,
     setUnpinList,
-    setUpdatedList,
     setUserLists
 } from './actionCreators';
 import {LoadingStatus} from '../../types';
 import {ListsApi} from "../../../services/api/listsApi";
-import {Lists} from "./contracts/state";
-import {setList} from '../list/actionCreators';
+import {setFollowToFullList, setUnfollowToFullList} from '../list/actionCreators';
 import {ListResponse, ListUserResponse, PinnedListResponse} from "../../types/lists";
 
 export function* fetchListsRequest() { // +
@@ -91,27 +87,6 @@ export function* createListRequest({payload}: CreateListActionInterface) { // +
     }
 }
 
-export function* addUserToListsRequest({payload}: AddUserToListsActionInterface) { // + REFACTOR
-    try {
-        const data: number[] = yield call(ListsApi.addUserToLists, payload);
-        // yield put(setUserLists(data));
-        // const list = data.find((list) => list.id === payload.listId);
-        // if (list) yield put(setList(list));
-    } catch (error) {
-        yield put(setListsLoadingState(LoadingStatus.ERROR));
-    }
-}
-
-export function* processListMemberRequest({payload}: ProcessListMemberActionInterface) { // + REFACTOR
-    try {
-        const data: boolean = yield call(ListsApi.addUserToList, payload);
-        yield put(setUpdatedList({listId: payload.listId, isMember: data})); // +
-        yield put(setList(data));
-    } catch (error) {
-        yield put(setListsLoadingState(LoadingStatus.ERROR));
-    }
-}
-
 export function* pinListRequest({payload}: PinListActionInterface) { // +
     try {
         const data: PinnedListResponse = yield call(ListsApi.pinList, payload);
@@ -134,18 +109,18 @@ export function* unpinListRequest({payload}: PinListActionInterface) { // +
 
 export function* followListRequest({payload}: FollowListActionInterface) { // +
     try {
-        const data: boolean = yield call(ListsApi.followList, payload);
-        yield put(setList(data)); // + REFACTOR
+        const data: ListUserResponse = yield call(ListsApi.followList, payload);
+        yield put(setFollowToFullList());
         yield put(setFollowList(data));
     } catch (error) {
         yield put(setListsLoadingState(LoadingStatus.ERROR));
     }
 }
 
-export function* unfollowListRequest({payload}: UnfollowListActionInterface) {
+export function* unfollowListRequest({payload}: UnfollowListActionInterface) { // +
     try {
-        const data: Lists = yield call(ListsApi.followList, payload);
-        yield put(setList(data));
+        const data: ListUserResponse = yield call(ListsApi.followList, payload);
+        yield put(setUnfollowToFullList());
         yield put(setUnfollowList(data));
     } catch (error) {
         yield put(setListsLoadingState(LoadingStatus.ERROR));
@@ -159,10 +134,8 @@ export function* listsSaga() {
     yield takeEvery(ListsActionType.FETCH_TWEET_LISTS_WHICH_USER_IN, fetchTweetListsWhichUserInRequest); // +
     yield takeEvery(ListsActionType.FETCH_PINNED_LISTS, fetchPinnedListsRequest); // +
     yield takeEvery(ListsActionType.CREATE_LIST, createListRequest); // +
-    yield takeEvery(ListsActionType.ADD_USER_TO_LISTS, addUserToListsRequest);
-    yield takeEvery(ListsActionType.PROCESS_LIST_MEMBER, processListMemberRequest); // +
     yield takeEvery(ListsActionType.PIN_LIST, pinListRequest); // +
     yield takeEvery(ListsActionType.UNPIN_LIST, unpinListRequest); // +
     yield takeEvery(ListsActionType.FOLLOW_LIST, followListRequest); // +
-    yield takeEvery(ListsActionType.UNFOLLOW_LIST, unfollowListRequest);
+    yield takeEvery(ListsActionType.UNFOLLOW_LIST, unfollowListRequest); // +
 }

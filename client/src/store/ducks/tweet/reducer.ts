@@ -25,7 +25,7 @@ export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetActi
         case TweetActionType.SET_LOADING_STATE: // +
             draft.loadingState = action.payload;
             break;
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         case TweetActionType.SET_FOLLOW_TO_TWEET_STATE: // +
             draft.data!.user.isFollower = action.payload;
             draft.loadingState = LoadingStatus.LOADING;

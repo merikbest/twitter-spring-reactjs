@@ -1,8 +1,8 @@
 import {Action} from "redux";
 
-import {AddLists, AddUserToLists, Lists, ListsState, MemberToList} from "./state";
+import {AddLists, ListsState} from "./state";
 import {LoadingStatus} from "../../../types";
-import {ListResponse, ListUserResponse, PinnedListResponse} from "../../../types/lists";
+import {ListUserResponse, PinnedListResponse} from "../../../types/lists";
 
 export enum ListsActionType {
     SET_LISTS = "lists/SET_LISTS", // +
@@ -10,18 +10,16 @@ export enum ListsActionType {
     SET_PINNED_LISTS = "lists/SET_PINNED_LISTS", // +
     SET_LIST = "lists/SET_LIST", // +
     SET_UPDATED_LISTS = "lists/SET_UPDATED_LISTS", // +
-    FOLLOW_LIST = "lists/FOLLOW_LIST",
-    UNFOLLOW_LIST = "lists/UNFOLLOW_LIST",
+    FOLLOW_LIST = "lists/FOLLOW_LIST", // +
+    UNFOLLOW_LIST = "lists/UNFOLLOW_LIST", // +
     SET_FOLLOW_LIST = "lists/SET_FOLLOW_LIST", // +
-    SET_UNFOLLOW_LIST = "lists/SET_UNFOLLOW_LIST",
+    SET_UNFOLLOW_LIST = "lists/SET_UNFOLLOW_LIST", // +
     CREATE_LIST = "lists/CREATE_LIST",
     FETCH_LISTS = "lists/FETCH_LISTS", // +
     FETCH_USER_LISTS = "lists/FETCH_USER_LISTS", // +
     FETCH_USER_LISTS_BY_ID = "lists/FETCH_USER_LISTS_BY_ID", // +
     FETCH_TWEET_LISTS_WHICH_USER_IN = "lists/FETCH_TWEET_LISTS_WHICH_USER_IN", // +
     FETCH_PINNED_LISTS = "lists/FETCH_PINNED_LISTS", // +
-    ADD_USER_TO_LISTS = "lists/ADD_USER_TO_LISTS",
-    PROCESS_LIST_MEMBER = "lists/PROCESS_LIST_MEMBER",
     PIN_LIST = "lists/PIN_LIST",
     UNPIN_LIST = "lists/UNPIN_LIST",
     SET_PINED_LIST = "lists/SET_PINED_LIST", // +
@@ -56,24 +54,24 @@ export interface SetUpdatedListActionInterface extends Action<ListsActionType> {
     payload: {listId: number; isMember: boolean };
 }
 
-export interface FollowListActionInterface extends Action<ListsActionType> {
+export interface FollowListActionInterface extends Action<ListsActionType> { // +
     type: ListsActionType.FOLLOW_LIST;
     payload: number;
 }
 
-export interface UnfollowListActionInterface extends Action<ListsActionType> {
+export interface UnfollowListActionInterface extends Action<ListsActionType> { // +
     type: ListsActionType.UNFOLLOW_LIST;
     payload: number;
 }
 
-export interface SetFollowListActionInterface extends Action<ListsActionType> {
+export interface SetFollowListActionInterface extends Action<ListsActionType> { // +
     type: ListsActionType.SET_FOLLOW_LIST;
-    payload: {listId: number; isFollower: boolean};
+    payload: ListUserResponse;
 }
 
-export interface SetUnfollowListActionInterface extends Action<ListsActionType> {
+export interface SetUnfollowListActionInterface extends Action<ListsActionType> { // +
     type: ListsActionType.SET_UNFOLLOW_LIST;
-    payload: Lists;
+    payload: ListUserResponse;
 }
 
 export interface CreateListActionInterface extends Action<ListsActionType> {
@@ -100,16 +98,6 @@ export interface FetchTweetListsWhichUserInActionInterface extends Action<ListsA
 
 export interface FetchPinnedListsActionInterface extends Action<ListsActionType> { // +
     type: ListsActionType.FETCH_PINNED_LISTS;
-}
-
-export interface AddUserToListsActionInterface extends Action<ListsActionType> {
-    type: ListsActionType.ADD_USER_TO_LISTS;
-    payload: AddUserToLists;
-}
-
-export interface ProcessListMemberActionInterface extends Action<ListsActionType> {
-    type: ListsActionType.PROCESS_LIST_MEMBER;
-    payload: MemberToList;
 }
 
 export interface PinListActionInterface extends Action<ListsActionType> {
@@ -151,8 +139,8 @@ export type ListsActions =
     | SetUserListsActionInterface // +
     | SetPinnedListsActionInterface // +
     | SetUpdatedListActionInterface // +
-    | SetFollowListActionInterface
-    | SetUnfollowListActionInterface
+    | SetFollowListActionInterface // +
+    | SetUnfollowListActionInterface // +
     | SetListActionInterface
     | SetPinedListActionInterface // +
     | SetUnpinListActionInterface // +

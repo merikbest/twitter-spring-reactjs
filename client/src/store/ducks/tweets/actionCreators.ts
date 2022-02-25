@@ -26,12 +26,16 @@ import {
     SetTweetActionInterface,
     SetTweetsActionInterface,
     SetTweetsLoadingStateInterface,
+    SetUpdatedLikedTweetActionInterface,
+    SetUpdatedRepliedTweetActionInterface,
+    SetUpdatedRetweetedTweetActionInterface,
     SetUpdatedTweetActionInterface,
     TweetsActionType,
     UpdateScheduledTweetActionInterface,
     VoteActionInterface,
 } from "./contracts/actionTypes";
 import {LoadingStatus} from "../../types";
+import {TweetResponse} from "../../types/tweet";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 export const setFollowToTweetsState = (payload: { tweetId: number; isFollower: boolean; }): SetFollowToTweetsStateActionInterface => ({ // +
@@ -64,7 +68,7 @@ export const setPageableTweets = (payload: { items: TweetsState["items"], pagesC
     payload
 });
 
-export const setTweet = (payload: Tweet): SetTweetActionInterface => ({ // +
+export const setTweet = (payload: TweetResponse): SetTweetActionInterface => ({ // +
     type: TweetsActionType.SET_TWEET,
     payload
 });
@@ -103,17 +107,17 @@ export const vote = (payload: Vote): VoteActionInterface => ({ // +
     payload
 });
 
-export const changeReplyType = (payload: { tweetId: string; replyType: ReplyType; }): ChangeReplyTypeActionInterface => ({
+export const changeReplyType = (payload: { tweetId: string; replyType: ReplyType; }): ChangeReplyTypeActionInterface => ({ // +
     type: TweetsActionType.CHANGE_REPLY_TYPE,
     payload
 });
 
-export const setUpdatedTweet = (payload: Tweet): SetUpdatedTweetActionInterface => ({
+export const setUpdatedTweet = (payload: TweetResponse): SetUpdatedTweetActionInterface => ({ // +
     type: TweetsActionType.SET_UPDATED_TWEET,
     payload
 });
 
-export const fetchDeleteTweet = (payload: string): FetchDeleteTweetActionInterface => ({
+export const fetchDeleteTweet = (payload: number): FetchDeleteTweetActionInterface => ({ // +
     type: TweetsActionType.FETCH_DELETE_TWEET,
     payload
 });
@@ -123,7 +127,7 @@ export const deleteScheduledTweets = (payload: { tweetsIds: number[] }): DeleteS
     payload
 });
 
-export const deleteTweet = (payload: Tweet): DeleteTweetActionInterface => ({
+export const deleteTweet = (payload: TweetResponse): DeleteTweetActionInterface => ({ // +
     type: TweetsActionType.DELETE_TWEET,
     payload
 });
@@ -143,15 +147,34 @@ export const setTweetsLoadingState = (payload: LoadingStatus): SetTweetsLoadingS
     payload
 });
 
-export const likeTweet = (payload: string): LikeTweetActionInterface => ({
+export const likeTweet = (payload: number): LikeTweetActionInterface => ({ // +
     type: TweetsActionType.LIKE_TWEET,
     payload,
 });
 
-export const retweet = (payload: string): RetweetActionInterface => ({
+export const retweet = (payload: number): RetweetActionInterface => ({ // +
     type: TweetsActionType.RETWEET,
     payload,
 });
+
+export const setUpdatedLikedTweet = (payload: { tweetId: number; isTweetLiked: boolean; }): SetUpdatedLikedTweetActionInterface => ({ // +
+    type: TweetsActionType.SET_UPDATED_LIKED_TWEET,
+    payload,
+});
+
+export const setUpdatedRetweetedTweet = (payload: { tweetId: number; isTweetRetweeted: boolean; }): SetUpdatedRetweetedTweetActionInterface => ({ // +
+    type: TweetsActionType.SET_UPDATED_RETWEETED_TWEET,
+    payload,
+});
+
+export const setUpdatedRepliedTweet = (payload: number): SetUpdatedRepliedTweetActionInterface => ({ // +
+    type: TweetsActionType.SET_UPDATED_REPLIED_TWEET,
+    payload,
+});
+
+
+
+
 
 export const fetchTweets = (payload: number): FetchTweetsActionInterface => ({
     type: TweetsActionType.FETCH_TWEETS,
@@ -173,7 +196,7 @@ export const fetchUserBookmarks = (payload: number): FetchBookmarksActionInterfa
     payload
 });
 
-export const removeTweetFromBookmarks = (payload: string): RemoveTweetFromBookmarksActionInterface => ({
+export const removeTweetFromBookmarks = (payload: number): RemoveTweetFromBookmarksActionInterface => ({ // +
     type: TweetsActionType.REMOVE_TWEET_FROM_BOOKMARKS,
     payload,
 });

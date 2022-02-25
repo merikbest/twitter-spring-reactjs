@@ -2,26 +2,25 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 
 import {setPageableTweets, setTweets, setTweetsLoadingState,} from "./actionCreators";
 import {TweetApi} from "../../../services/api/tweetApi";
-import {Tweet} from "./contracts/state";
 import {
     AddPollActionInterface,
     AddQuoteTweetActionInterface,
     AddScheduledTweetActionInterface,
     AddTweetActionInterface,
-    FetchBookmarksActionInterface,
     ChangeReplyTypeActionInterface,
     DeleteScheduledTweetsActionInterface,
+    FetchBookmarksActionInterface,
     FetchDeleteTweetActionInterface,
-    LikeTweetActionInterface,
     FetchMediaTweetsActionInterface,
-    RetweetActionInterface,
     FetchTweetsActionInterface,
     FetchTweetsByTagActionInterface,
     FetchTweetsByTextActionInterface,
     FetchTweetsWithVideoActionInterface,
+    LikeTweetActionInterface,
+    RetweetActionInterface,
+    TweetsActionType,
     UpdateScheduledTweetActionInterface,
-    VoteActionInterface,
-    TweetsActionType
+    VoteActionInterface
 } from "./contracts/actionTypes";
 import {LoadingStatus} from '../../types';
 import {TagApi} from "../../../services/api/tagApi";
@@ -144,7 +143,7 @@ export function* changeReplyTypeRequest({payload}: ChangeReplyTypeActionInterfac
     }
 }
 
-export function* fetchDeleteTweetRequest({payload}: FetchDeleteTweetActionInterface) {
+export function* fetchDeleteTweetRequest({payload}: FetchDeleteTweetActionInterface) { // +
     try {
         yield call(TweetApi.deleteTweet, payload);
     } catch (e) {
@@ -160,11 +159,11 @@ export function* deleteScheduledTweetsTweetRequest({payload}: DeleteScheduledTwe
     }
 }
 
-export function* likeTweetRequest({payload}: LikeTweetActionInterface) {
+export function* likeTweetRequest({payload}: LikeTweetActionInterface) { // +
     yield call(TweetApi.likeTweet, payload);
 }
 
-export function* retweetRequest({payload}: RetweetActionInterface) {
+export function* retweetRequest({payload}: RetweetActionInterface) { // +
     yield call(TweetApi.retweet, payload);
 }
 
@@ -192,10 +191,10 @@ export function* tweetsSaga() {
     yield takeLatest(TweetsActionType.ADD_QUOTE_TWEET, addQuoteTweet); // +
     yield takeLatest(TweetsActionType.VOTE, voteRequest); // +
     yield takeLatest(TweetsActionType.CHANGE_REPLY_TYPE, changeReplyTypeRequest); // +
-    yield takeLatest(TweetsActionType.FETCH_DELETE_TWEET, fetchDeleteTweetRequest);
+    yield takeLatest(TweetsActionType.FETCH_DELETE_TWEET, fetchDeleteTweetRequest); // +
     yield takeLatest(TweetsActionType.DELETE_SCHEDULED_TWEETS, deleteScheduledTweetsTweetRequest); // +
-    yield takeLatest(TweetsActionType.LIKE_TWEET, likeTweetRequest);
-    yield takeLatest(TweetsActionType.RETWEET, retweetRequest);
+    yield takeLatest(TweetsActionType.LIKE_TWEET, likeTweetRequest); // +
+    yield takeLatest(TweetsActionType.RETWEET, retweetRequest); // +
     yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_TAG, fetchTweetsByTagRequest); // +
     yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_TEXT, fetchTweetsByTextRequest); // +
     yield takeLatest(TweetsActionType.FETCH_BOOKMARKS, fetchUserBookmarksRequest); // +

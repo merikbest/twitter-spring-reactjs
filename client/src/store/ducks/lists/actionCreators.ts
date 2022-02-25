@@ -1,5 +1,4 @@
 import {
-    AddUserToListsActionInterface,
     CreateListActionInterface,
     FetchListsActionInterface,
     FetchPinnedListsActionInterface,
@@ -9,7 +8,6 @@ import {
     FollowListActionInterface,
     ListsActionType,
     PinListActionInterface,
-    ProcessListMemberActionInterface,
     ResetListsStateActionInterface,
     SetFollowListActionInterface,
     SetListActionInterface,
@@ -25,9 +23,9 @@ import {
     UnfollowListActionInterface,
     UnpinListActionInterface
 } from "./contracts/actionTypes";
-import {AddLists, AddUserToLists, Lists, ListsState, MemberToList} from "./contracts/state";
+import {AddLists, ListsState} from "./contracts/state";
 import {LoadingStatus} from "../../types";
-import {ListResponse, ListUserResponse, PinnedListResponse} from "../../types/lists";
+import {ListUserResponse, PinnedListResponse} from "../../types/lists";
 
 export const setLists = (payload: ListsState["lists"]): SetListsActionInterface => ({ // +
     type: ListsActionType.SET_LISTS,
@@ -54,33 +52,23 @@ export const setUpdatedList = (payload: {listId: number; isMember: boolean }): S
     payload
 });
 
-export const followList = (payload: number): FollowListActionInterface => ({
+export const followList = (payload: number): FollowListActionInterface => ({ // +
     type: ListsActionType.FOLLOW_LIST,
     payload
 });
 
-export const unfollowList = (payload: number): UnfollowListActionInterface => ({
+export const unfollowList = (payload: number): UnfollowListActionInterface => ({ // +
     type: ListsActionType.UNFOLLOW_LIST,
     payload
 });
 
-export const setFollowList = (payload: Lists): SetFollowListActionInterface => ({
+export const setFollowList = (payload: ListUserResponse): SetFollowListActionInterface => ({ // +
     type: ListsActionType.SET_FOLLOW_LIST,
     payload
 });
 
-export const setUnfollowList = (payload: Lists): SetUnfollowListActionInterface => ({
+export const setUnfollowList = (payload: ListUserResponse): SetUnfollowListActionInterface => ({ // +
     type: ListsActionType.SET_UNFOLLOW_LIST,
-    payload
-});
-
-export const addUserToLists = (payload: AddUserToLists): AddUserToListsActionInterface => ({
-    type: ListsActionType.ADD_USER_TO_LISTS,
-    payload
-});
-
-export const processListMember = (payload: MemberToList): ProcessListMemberActionInterface => ({
-    type: ListsActionType.PROCESS_LIST_MEMBER,
     payload
 });
 

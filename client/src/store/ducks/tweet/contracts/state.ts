@@ -1,5 +1,5 @@
 import {LoadingStatus} from "../../../types";
-import {Image, ReplyType} from "../../tweets/contracts/state";
+import {Image, ReplyType} from "../../../types/common";
 import {TweetResponse} from "../../../types/tweet";
 
 export interface TweetState {

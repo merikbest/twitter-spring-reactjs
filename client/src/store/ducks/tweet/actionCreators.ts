@@ -15,7 +15,6 @@ import {
 } from "./contracts/actionTypes";
 import {ReplyTweet, TweetState} from "./contracts/state";
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 export const setFollowToTweetState = (payload: boolean): SetFollowToTweetStateActionInterface => ({ // +
     type: TweetActionType.SET_FOLLOW_TO_TWEET_STATE,
     payload
@@ -60,12 +59,12 @@ export const setBookmarkedTweet = (payload: boolean): SetBookmarkedTweetActionIn
     payload,
 });
 
-export const fetchReplyTweet = (payload: ReplyTweet): FetchReplyTweetActionInterface => ({
+export const fetchReplyTweet = (payload: ReplyTweet): FetchReplyTweetActionInterface => ({ // +
     type: TweetActionType.FETCH_REPLY_TWEET,
     payload
 });
 
-export const deleteTweetReply = (payload: string): DeleteTweetReplyActionInterface => ({
+export const deleteTweetReply = (payload: string): DeleteTweetReplyActionInterface => ({ // +
     type: TweetActionType.DELETE_TWEET_REPLY,
     payload
 });

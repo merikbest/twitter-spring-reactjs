@@ -18,6 +18,7 @@ import {ListsState} from "./ducks/lists/contracts/state";
 import {ListState} from "./ducks/list/contracts/state";
 import {FollowerRequestsState} from "./ducks/followerRequests/contracts/state";
 import {BlockedAndMutedUsersState} from "./ducks/blockedAndMutedUsers/contracts/state";
+import {ListMembersState} from "./ducks/listMembers/contracts/state";
 
 export interface RootState {
     tweets: TweetsState;
@@ -35,6 +36,7 @@ export interface RootState {
     list: ListState;
     followerRequests: FollowerRequestsState;
     blockedAndMutedUsers: BlockedAndMutedUsersState;
+    listMembers: ListMembersState;
 }
 
 const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;

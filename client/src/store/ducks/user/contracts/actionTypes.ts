@@ -4,8 +4,8 @@ import {LoadingStatus} from "../../../types";
 import {Settings, UserState} from "./state";
 import {RegistrationProps} from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
 import {LoginProps} from "../../../../pages/Login/Login";
-import {ChatMessage} from "../../chatMessages/contracts/state";
 import {AuthUserResponse} from "../../../types/user";
+import {ChatMessageResponse} from "../../../types/chat";
 
 export enum UserActionsType {
     // followersSize
@@ -190,7 +190,7 @@ export interface FetchReadMessagesActionInterface extends Action<UserActionsType
 
 export interface SetUnreadMessageActionInterface extends Action<UserActionsType> { // +
     type: UserActionsType.SET_UNREAD_MESSAGE;
-    payload: ChatMessage;
+    payload: ChatMessageResponse;
 }
 
 export interface SetNewNotificationActionInterface extends Action<UserActionsType> { // +

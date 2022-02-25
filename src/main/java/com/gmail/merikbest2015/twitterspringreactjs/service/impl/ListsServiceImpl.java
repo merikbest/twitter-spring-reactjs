@@ -132,7 +132,7 @@ public class ListsServiceImpl implements ListsService {
 
     @Override
     @Transactional
-    public Boolean followList(Long listId) {
+    public ListUserProjection followList(Long listId) {
         User user = authenticationService.getAuthenticatedUser();
         Lists list = listsRepository.findByIdAndIsPrivateFalse(listId)
                 .orElseThrow(() -> new ApiRequestException("List not found", HttpStatus.NOT_FOUND));
@@ -148,12 +148,11 @@ public class ListsServiceImpl implements ListsService {
                 list.setPinnedDate(null);
             }
             user.getUserLists().remove(list);
-            return false;
         } else {
             listFollowers.add(user);
             user.getUserLists().add(list);
-            return true;
         }
+        return listsRepository.getUserTweetListById(list.getId());
     }
 
     @Override

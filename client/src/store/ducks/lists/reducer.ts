@@ -30,25 +30,23 @@ export const listsReducer = produce((draft: Draft<ListsState>, action: ListsActi
             break;
 
         case ListsActionType.SET_UPDATED_LISTS: // +
-            const updatedListIndex = draft.lists.findIndex((list) => list.id === action.payload.id);
+            const updatedListIndex = draft.lists.findIndex((list) => list.id === action.payload.listId);
             if (updatedListIndex !== -1) {
-                draft.lists[updatedListIndex].members = action.payload.members;
-                draft.userLists[updatedListIndex].members = action.payload.members;
-                draft.pinnedLists[updatedListIndex].members = action.payload.members;
+                // draft.lists[updatedListIndex].members = action.payload.members;
+                // draft.userLists[updatedListIndex].members = action.payload.members;
+                // draft.pinnedLists[updatedListIndex].members = action.payload.members;
             }
             break;
 
-        case ListsActionType.SET_FOLLOW_LIST:
+        case ListsActionType.SET_FOLLOW_LIST: // +
             const followListIndex = draft.lists.findIndex((list) => list.id === action.payload.id);
-            if (followListIndex !== -1) draft.lists[followListIndex].isFollower = action.payload.isFollower;
-            // if (followListIndex !== -1) draft.lists[followListIndex].isFollower = true;
+            if (followListIndex !== -1) draft.lists[followListIndex].isFollower = true;
             draft.userLists = [...draft.userLists, action.payload];
             break;
 
-        case ListsActionType.SET_UNFOLLOW_LIST:
+        case ListsActionType.SET_UNFOLLOW_LIST: // +
             const unfollowListIndex = draft.lists.findIndex((list) => list.id === action.payload.id);
-            if (unfollowListIndex !== -1) draft.lists[unfollowListIndex] = action.payload;
-            // if (unfollowListIndex !== -1) draft.lists[unfollowListIndex].isFollower = false;
+            if (unfollowListIndex !== -1) draft.lists[unfollowListIndex].isFollower = false;
             draft.userLists = draft.userLists.filter((list) => list.id !== action.payload.id);
             draft.pinnedLists = draft.pinnedLists.filter((list) => list.id !== action.payload.id);
             break;

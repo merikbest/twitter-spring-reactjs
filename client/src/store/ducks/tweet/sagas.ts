@@ -34,7 +34,7 @@ export function* addTweetToBookmarksRequest({payload}: AddTweetToBookmarksAction
     }
 }
 
-export function* fetchReplyTweetRequest({payload}: FetchReplyTweetActionInterface) {
+export function* fetchReplyTweetRequest({payload}: FetchReplyTweetActionInterface) { // +
     try {
         yield call(TweetApi.replyTweet, payload);
     } catch (error) {
@@ -42,7 +42,7 @@ export function* fetchReplyTweetRequest({payload}: FetchReplyTweetActionInterfac
     }
 }
 
-export function* deleteTweetReplyRequest({payload}: DeleteTweetReplyActionInterface) {
+export function* deleteTweetReplyRequest({payload}: DeleteTweetReplyActionInterface) { // +
     try {
         yield call(TweetApi.deleteTweet, payload);
     } catch (error) {
@@ -53,6 +53,6 @@ export function* deleteTweetReplyRequest({payload}: DeleteTweetReplyActionInterf
 export function* tweetSaga() {
     yield takeEvery(TweetActionType.FETCH_TWEET_DATA, fetchTweetDataRequest); // +
     yield takeEvery(TweetActionType.ADD_TWEET_TO_BOOKMARKS, addTweetToBookmarksRequest); // +
-    yield takeEvery(TweetActionType.FETCH_REPLY_TWEET, fetchReplyTweetRequest);
-    yield takeEvery(TweetActionType.DELETE_TWEET_REPLY, deleteTweetReplyRequest);
+    yield takeEvery(TweetActionType.FETCH_REPLY_TWEET, fetchReplyTweetRequest); // +
+    yield takeEvery(TweetActionType.DELETE_TWEET_REPLY, deleteTweetReplyRequest); // +
 }

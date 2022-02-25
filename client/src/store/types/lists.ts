@@ -34,7 +34,7 @@ export interface ListsOwnerMemberResponse {
     username: string;
     about: string;
     avatar: Image
-    isMemberInList: boolean;
+    isMemberInList?: boolean;
 }
 
 export interface ListResponse {
