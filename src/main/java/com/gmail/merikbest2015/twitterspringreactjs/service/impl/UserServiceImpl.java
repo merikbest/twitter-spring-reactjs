@@ -6,6 +6,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestExceptio
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.*;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.*;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserService;
@@ -76,14 +77,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<TweetProjection> getUserTweets(Long userId, Pageable pageable) {
+    public Page<TweetUserProjection> getUserTweets(Long userId, Pageable pageable) {
         checkIsUserExist(userId);
-        List<TweetProjection> tweets = tweetRepository.findTweetsByUserId(userId).stream()
-                .map(TweetsProjection::getTweet)
+        List<TweetUserProjection> tweets = tweetRepository.findTweetsByUserId(userId).stream()
+                .map(TweetsUserProjection::getTweet)
                 .collect(Collectors.toList());
-        List<RetweetProjection> retweets = retweetRepository.findRetweetsByUserId(userId);
-        List<TweetProjection> userTweets = combineTweetsArrays(tweets, retweets);
-        Optional<TweetProjection> pinnedTweet = tweetRepository.getPinnedTweetByUserId(userId);
+        List<RetweetProjection> retweets = retweetRepository.findRetweetsByUserId(userId).stream()
+                .map(RetweetsProjection::getRetweet)
+                .collect(Collectors.toList());
+        List<TweetUserProjection> userTweets = combineTweetsArrays(tweets, retweets);
+        Optional<TweetUserProjection> pinnedTweet = tweetRepository.getPinnedTweetByUserId(userId);
 
         if (pinnedTweet.isPresent()) {
             boolean isTweetExist = userTweets.removeIf(tweet -> tweet.getId().equals(pinnedTweet.get().getId()));
@@ -96,13 +99,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<TweetProjection> getUserRetweetsAndReplies(Long userId, Pageable pageable) {
+    public Page<TweetUserProjection> getUserRetweetsAndReplies(Long userId, Pageable pageable) {
         checkIsUserExist(userId);
-        List<TweetProjection> replies = tweetRepository.findRepliesByUserId(userId).stream()
-                .map(TweetsProjection::getTweet)
+        List<TweetUserProjection> replies = tweetRepository.findRepliesByUserId(userId).stream()
+                .map(TweetsUserProjection::getTweet)
                 .collect(Collectors.toList());
-        List<RetweetProjection> retweets = retweetRepository.findRetweetsByUserId(userId);
-        List<TweetProjection> userTweets = combineTweetsArrays(replies, retweets);
+        List<RetweetProjection> retweets = retweetRepository.findRetweetsByUserId(userId).stream()
+                .map(RetweetsProjection::getRetweet)
+                .collect(Collectors.toList());
+        List<TweetUserProjection> userTweets = combineTweetsArrays(replies, retweets);
         return getPageableTweetProjectionList(pageable, userTweets, replies.size() + retweets.size());
     }
 
@@ -475,8 +480,8 @@ public class UserServiceImpl implements UserService {
         return new PageImpl<>(page.getPageList(), pageable, totalPages);
     }
 
-    private List<TweetProjection> combineTweetsArrays(List<TweetProjection> tweets, List<RetweetProjection> retweets) {
-        List<TweetProjection> allTweets = new ArrayList<>();
+    private List<TweetUserProjection> combineTweetsArrays(List<TweetUserProjection> tweets, List<RetweetProjection> retweets) {
+        List<TweetUserProjection> allTweets = new ArrayList<>();
         int i = 0;
         int j = 0;
 

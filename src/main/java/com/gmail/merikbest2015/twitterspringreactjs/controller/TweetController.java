@@ -29,7 +29,7 @@ public class TweetController {
 
     @GetMapping
     public ResponseEntity<List<TweetResponse>> getTweets(@PageableDefault(size = 10) Pageable pageable) {
-        TweetHeaderResponse response = tweetMapper.getTweets(pageable);
+        TweetHeaderResponse<TweetResponse> response = tweetMapper.getTweets(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getTweets());
     }
 
@@ -40,13 +40,13 @@ public class TweetController {
 
     @GetMapping("/media")
     public ResponseEntity<List<TweetResponse>> getMediaTweets(@PageableDefault(size = 10) Pageable pageable) {
-        TweetHeaderResponse response = tweetMapper.getMediaTweets(pageable);
+        TweetHeaderResponse<TweetResponse> response = tweetMapper.getMediaTweets(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getTweets());
     }
 
     @GetMapping("/video")
     public ResponseEntity<List<TweetResponse>> getTweetsWithVideo(@PageableDefault(size = 10) Pageable pageable) {
-        TweetHeaderResponse response = tweetMapper.getTweetsWithVideo(pageable);
+        TweetHeaderResponse<TweetResponse> response = tweetMapper.getTweetsWithVideo(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getTweets());
     }
 

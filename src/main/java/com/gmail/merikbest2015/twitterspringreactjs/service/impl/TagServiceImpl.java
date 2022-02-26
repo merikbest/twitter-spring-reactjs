@@ -2,8 +2,8 @@ package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 
 import com.gmail.merikbest2015.twitterspringreactjs.repository.TagRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.TweetRepository;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetProjection;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetsProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetsProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tag.TagProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.TagService;
 import lombok.RequiredArgsConstructor;

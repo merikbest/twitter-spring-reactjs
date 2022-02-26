@@ -88,7 +88,7 @@ public class ListsController {
 
     @GetMapping("/{listId}/tweets") // TODO add tests
     public ResponseEntity<List<TweetResponse>> getTweetsByListId(@PathVariable Long listId, @PageableDefault(size = 10) Pageable pageable) {
-        TweetHeaderResponse response = listsMapper.getTweetsByListId(listId, pageable);
+        TweetHeaderResponse<TweetResponse> response = listsMapper.getTweetsByListId(listId, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getTweets());
     }
 

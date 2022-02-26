@@ -4,11 +4,14 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.request.ListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.lists.*;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetHeaderResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Lists;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.lists.*;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.ListsService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
@@ -123,8 +126,9 @@ public class ListsMapper {
         return listsService.addUserToList(userId, listId);
     }
 
-    public TweetHeaderResponse getTweetsByListId(Long listId, Pageable pageable) {
-        return tweetMapper.getTweetHeaderProjectionResponse(listsService.getTweetsByListId(listId, pageable));
+    public TweetHeaderResponse<TweetResponse> getTweetsByListId(Long listId, Pageable pageable) {
+        Page<TweetProjection> tweets = listsService.getTweetsByListId(listId, pageable);
+        return tweetMapper.getTweetHeaderResponse(tweets, TweetResponse.class);
     }
 
     public BaseListResponse getListDetails(Long listId) {

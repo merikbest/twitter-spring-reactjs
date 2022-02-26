@@ -26,7 +26,7 @@ public class TweetResponse {
     private String linkDescription;
     private String linkCover;
     private LinkCoverSize linkCoverSize;
-    private TweetUserResponse user;
+    private UserTweetResponse user;
     private List<ImageResponse> images;
     private QuoteTweetResponse quoteTweet;
     private PollResponse poll;
@@ -60,7 +60,7 @@ public class TweetResponse {
         private String linkDescription;
         private String linkCover;
         private LinkCoverSize linkCoverSize;
-        private TweetUserResponse user;
+        private UserTweetResponse user;
     }
 
     @Getter

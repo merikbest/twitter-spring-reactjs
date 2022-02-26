@@ -1,8 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.repository;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.Lists;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetProjection;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetsProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.lists.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,7 +41,7 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
             "ORDER BY l.pinnedDate DESC")
     List<PinnedListsProjection> getUserPinnedLists(Long userId);
 
-    @Query("SELECT l FROM Lists l WHERE l.id = :userId")
+    @Query("SELECT l FROM Lists l WHERE l.id = :listId")
     PinnedListProjection getUserPinnedListById(Long listId);
 
     @Query("SELECT t FROM Lists l " +

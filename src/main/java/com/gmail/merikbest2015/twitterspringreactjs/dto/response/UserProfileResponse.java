@@ -17,6 +17,7 @@ public class UserProfileResponse {
     private String website;
     private String country;
     private String birthday;
+    private String registrationDate;
     private Long tweetCount;
     private Long mediaTweetCount;
     private Long likeCount;

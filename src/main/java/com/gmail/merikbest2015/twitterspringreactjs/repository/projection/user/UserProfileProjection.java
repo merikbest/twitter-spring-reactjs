@@ -14,6 +14,7 @@ public interface UserProfileProjection {
     String getWebsite();
     String getCountry();
     String getBirthday();
+    String getRegistrationDate();
     Long getTweetCount();
     Long getMediaTweetCount();
     Long getLikeCount();

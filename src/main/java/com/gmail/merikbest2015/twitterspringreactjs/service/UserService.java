@@ -4,8 +4,9 @@ import com.gmail.merikbest2015.twitterspringreactjs.model.Image;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.BookmarkProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.LikeTweetProjection;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetProjection;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetsProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetUserProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetsProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,13 +27,13 @@ public interface UserService {
 
     Boolean startUseTwitter();
 
-    Page<TweetProjection> getUserTweets(Long userId, Pageable pageable);
+    Page<TweetUserProjection> getUserTweets(Long userId, Pageable pageable);
 
     Page<LikeTweetProjection> getUserLikedTweets(Long userId, Pageable pageable);
 
     Page<TweetProjection> getUserMediaTweets(Long userId, Pageable pageable);
 
-    Page<TweetProjection> getUserRetweetsAndReplies(Long userId, Pageable pageable);
+    Page<TweetUserProjection> getUserRetweetsAndReplies(Long userId, Pageable pageable);
 
     Map<String, Object> getUserNotifications();
 

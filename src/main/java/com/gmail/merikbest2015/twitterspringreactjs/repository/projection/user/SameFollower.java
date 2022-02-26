@@ -7,6 +7,7 @@ import java.util.Map;
 public interface SameFollower {
     Long getId();
     String getFullName();
+    String getUsername();
 
     @Value("#{T(com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.SameFollower).convertToAvatar(target.img_id, target.img_src)}")
     Map<String, Object> getAvatar();

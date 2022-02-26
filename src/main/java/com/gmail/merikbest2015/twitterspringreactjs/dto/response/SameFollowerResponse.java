@@ -10,5 +10,6 @@ import java.util.Map;
 public class SameFollowerResponse {
     private Long id;
     private String fullName;
+    private String username;
     private Map<String, Object> avatar;
 }

@@ -3,8 +3,8 @@ package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.*;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetProjection;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetsProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetsProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.TweetService;
 import lombok.RequiredArgsConstructor;
@@ -337,6 +337,11 @@ public class TweetServiceImpl implements TweetService {
                 .collect(Collectors.toList());
         tweet.getPoll().setPollChoices(pollChoices);
         return getTweetById(tweet.getId());
+    }
+
+    public List<Long> getRetweetsUserIds(Long tweetId) {
+        List<Long> retweetsUserIds = tweetRepository.getRetweetsUserIds(tweetId);
+        return retweetsUserIds.contains(null) ? new ArrayList<>() : retweetsUserIds;
     }
 
     public boolean isUserLikedTweet(Long tweetId) {

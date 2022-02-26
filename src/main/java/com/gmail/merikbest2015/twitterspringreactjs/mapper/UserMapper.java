@@ -3,14 +3,19 @@ package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.SettingsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.*;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationsResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetHeaderResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetUserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.*;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.BookmarkProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.LikeTweetProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.NotificationProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetUserProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetsProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.*;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserSettingsService;
@@ -18,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -73,13 +77,6 @@ public class UserMapper {
                 .collect(Collectors.toList());
     }
 
-    private TweetHeaderResponse getTweetHeaderProjectionResponse(List<TweetProjection> tweets, Integer totalPages) {
-        List<TweetResponse> tweetResponses = tweetMapper.convertListToProjectionResponse(tweets);
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.add("page-total-count", String.valueOf(totalPages));
-        return new TweetHeaderResponse(tweetResponses, responseHeaders);
-    }
-
     public UserProfileResponse getUserById(Long userId) {
         return convertToUserProfileResponse(userService.getUserById(userId));
     }
@@ -101,30 +98,33 @@ public class UserMapper {
         return userService.startUseTwitter();
     }
 
-    public TweetHeaderResponse getUserTweets(Long userId, Pageable pageable) {
-        return tweetMapper.getTweetHeaderProjectionResponse(userService.getUserTweets(userId, pageable));
+    public TweetHeaderResponse<TweetUserResponse> getUserTweets(Long userId, Pageable pageable) {
+        Page<TweetUserProjection> tweets = userService.getUserTweets(userId, pageable);
+        return tweetMapper.getTweetHeaderResponse(tweets, TweetUserResponse.class);
     }
 
-    public TweetHeaderResponse getUserLikedTweets(Long userId, Pageable pageable) {
+    public TweetHeaderResponse<TweetResponse> getUserLikedTweets(Long userId, Pageable pageable) {
         Page<LikeTweetProjection> userLikedTweets = userService.getUserLikedTweets(userId, pageable);
         List<TweetProjection> tweets = new ArrayList<>();
         userLikedTweets.getContent().forEach(likeTweet -> tweets.add(likeTweet.getTweet()));
-        return getTweetHeaderProjectionResponse(tweets, userLikedTweets.getTotalPages());
+        return tweetMapper.getTweetHeaderResponse(tweets, userLikedTweets.getTotalPages(), TweetResponse.class);
     }
 
-    public TweetHeaderResponse getUserMediaTweets(Long userId, Pageable pageable) {
-        return tweetMapper.getTweetHeaderProjectionResponse(userService.getUserMediaTweets(userId, pageable));
+    public TweetHeaderResponse<TweetResponse> getUserMediaTweets(Long userId, Pageable pageable) {
+        Page<TweetProjection> tweets = userService.getUserMediaTweets(userId, pageable);
+        return tweetMapper.getTweetHeaderResponse(tweets, TweetResponse.class);
     }
 
-    public TweetHeaderResponse getUserRetweetsAndReplies(Long userId, Pageable pageable) {
-        return tweetMapper.getTweetHeaderProjectionResponse(userService.getUserRetweetsAndReplies(userId, pageable));
+    public TweetHeaderResponse<TweetUserResponse> getUserRetweetsAndReplies(Long userId, Pageable pageable) {
+        Page<TweetUserProjection> tweets = userService.getUserRetweetsAndReplies(userId, pageable);
+        return tweetMapper.getTweetHeaderResponse(tweets, TweetUserResponse.class);
     }
 
-    public TweetHeaderResponse getUserBookmarks(Pageable pageable) {
+    public TweetHeaderResponse<TweetResponse> getUserBookmarks(Pageable pageable) {
         Page<BookmarkProjection> bookmarks = userService.getUserBookmarks(pageable);
         List<TweetProjection> tweets = new ArrayList<>();
         bookmarks.getContent().forEach(bookmark -> tweets.add(bookmark.getTweet()));
-        return getTweetHeaderProjectionResponse(tweets, bookmarks.getTotalPages());
+        return tweetMapper.getTweetHeaderResponse(tweets, bookmarks.getTotalPages(), TweetResponse.class);
     }
 
     public Boolean processUserBookmarks(Long tweetId) {
@@ -201,12 +201,12 @@ public class UserMapper {
         return notificationsResponse;
     }
 
-    public TweetHeaderResponse getNotificationsFromTweetAuthors(Pageable pageable) {
+    public TweetHeaderResponse<TweetResponse> getNotificationsFromTweetAuthors(Pageable pageable) {
         Page<TweetsProjection> tweetsProjections = userService.getNotificationsFromTweetAuthors(pageable);
         List<TweetProjection> tweets = tweetsProjections.getContent().stream()
                 .map(TweetsProjection::getTweet)
                 .collect(Collectors.toList());
-        return getTweetHeaderProjectionResponse(tweets, tweetsProjections.getTotalPages());
+        return tweetMapper.getTweetHeaderResponse(tweets, tweetsProjections.getTotalPages(), TweetResponse.class);
     }
 
     public String updateUsername(SettingsRequest request) {

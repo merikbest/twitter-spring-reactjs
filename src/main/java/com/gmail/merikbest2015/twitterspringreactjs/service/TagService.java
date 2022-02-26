@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service;
 
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TweetProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tag.TagProjection;
 
 import java.util.List;
