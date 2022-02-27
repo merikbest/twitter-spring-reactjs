@@ -2,7 +2,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.repository;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.ChatParticipant;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.ChatParticipantsProjection;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.BaseUserProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.UserProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -18,14 +18,12 @@ public interface ChatParticipantRepository extends JpaRepository<ChatParticipant
     @Query("SELECT cp as participant FROM User u LEFT JOIN u.chats cp WHERE u.id = :userId")
     List<ChatParticipantsProjection> getChatParticipants(Long userId);
 
-    @Query("SELECT u.id as id, u.fullName as fullName, u.username as username, u.about as about, " +
-            "u.privateProfile as isPrivateProfile, u.avatar.id as img_id, u.avatar.src as img_src " +
-            "FROM Chat c " +
-            "LEFT JOIN c.participants p " +
-            "LEFT JOIN p.user u " +
-            "WHERE c.id = :chatId " +
-            "AND p.id = :participantId")
-    Optional<BaseUserProjection> getChatParticipant(Long participantId, Long chatId);
+    @Query("SELECT user FROM User user " +
+            "LEFT JOIN user.chats participant " +
+            "LEFT JOIN participant.chat chat " +
+            "WHERE chat.id = :chatId " +
+            "AND participant.id = :participantId")
+    Optional<UserProjection> getChatParticipant(Long participantId, Long chatId);
 
     @Modifying
     @Transactional

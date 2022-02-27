@@ -5,7 +5,9 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.*;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.*;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.BookmarkProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.LikeTweetProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.NotificationProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.*;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
@@ -218,17 +220,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<BaseUserProjection> getFollowers(Long userId) {
+    public List<UserProjection> getFollowers(Long userId) {
         checkIsUserExist(userId);
         checkIsUserBlocked(userId);
-        return userRepository.getFollowersById(userId);
+        return userRepository.getFollowersById(userId).stream()
+                .map(UsersProjection::getUser)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<BaseUserProjection> getFollowing(Long userId) {
+    public List<UserProjection> getFollowing(Long userId) {
         checkIsUserExist(userId);
         checkIsUserBlocked(userId);
-        return userRepository.getFollowingById(userId);
+        return userRepository.getFollowingById(userId).stream()
+                .map(UsersProjection::getUser)
+                .collect(Collectors.toList());
     }
 
     @Override

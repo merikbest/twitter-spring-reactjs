@@ -3,6 +3,8 @@ package com.gmail.merikbest2015.twitterspringreactjs.controller;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetDeleteRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.VoteRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.BaseUserResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationReplyResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationTweetResponse;
@@ -36,6 +38,21 @@ public class TweetController {
     @GetMapping("/{tweetId}")
     public ResponseEntity<TweetResponse> getTweetById(@PathVariable Long tweetId) {
         return ResponseEntity.ok(tweetMapper.getTweetById(tweetId));
+    }
+
+    @GetMapping("/{tweetId}/replies")
+    public ResponseEntity<List<TweetResponse>> getRepliesByTweetId(@PathVariable Long tweetId) {
+        return ResponseEntity.ok(tweetMapper.getRepliesByTweetId(tweetId));
+    }
+
+    @GetMapping("/{tweetId}/liked-users")
+    public ResponseEntity<List<UserResponse>> getLikedUsersByTweetId(@PathVariable Long tweetId) {
+        return ResponseEntity.ok(tweetMapper.getLikedUsersByTweetId(tweetId));
+    }
+
+    @GetMapping("/{tweetId}/retweeted-users")
+    public ResponseEntity<List<UserResponse>> getRetweetedUsersByTweetId(@PathVariable Long tweetId) {
+        return ResponseEntity.ok(tweetMapper.getRetweetedUsersByTweetId(tweetId));
     }
 
     @GetMapping("/media")

@@ -7,7 +7,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.C
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.ChatMessagesProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.ChatParticipantsProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.ChatProjection;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.BaseUserProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.UserProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.ChatService;
 import lombok.RequiredArgsConstructor;
@@ -166,7 +166,7 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public BaseUserProjection getParticipant(Long participantId, Long chatId) {
+    public UserProjection getParticipant(Long participantId, Long chatId) {
         Long userId = authenticationService.getAuthenticatedUserId();
 
         if (!chatRepository.getChatByUserId(chatId, userId)) {

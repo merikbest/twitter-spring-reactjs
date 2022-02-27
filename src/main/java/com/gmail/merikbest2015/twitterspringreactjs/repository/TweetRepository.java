@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetUserProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetsProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetsUserProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.UserProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -129,4 +130,24 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "WHERE user.id = :userId " +
             "AND bookmark.tweet.id = :tweetId")
     boolean isUserBookmarkedTweet(Long userId, Long tweetId);
+
+    @Query("SELECT rp as tweet FROM Tweet t " +
+            "LEFT JOIN t.replies rp " +
+            "WHERE t.id = :tweetId " +
+            "ORDER BY rp.dateTime DESC")
+    List<TweetsProjection> getRepliesByTweetId(Long tweetId);
+
+    @Query("SELECT user FROM User user " +
+            "LEFT JOIN user.likedTweets likedTweet " +
+            "LEFT JOIN likedTweet.tweet tweet " +
+            "WHERE tweet.id = :tweetId " +
+            "ORDER BY likedTweet.likeTweetDate DESC")
+    List<UserProjection> getLikedUsersByTweetId(Long tweetId);
+
+    @Query("SELECT user FROM User user " +
+            "LEFT JOIN user.retweets retweet " +
+            "LEFT JOIN retweet.tweet tweet " +
+            "WHERE tweet.id = :tweetId " +
+            "ORDER BY retweet.retweetDate DESC")
+    List<UserProjection> getRetweetedUsersByTweetId(Long tweetId);
 }

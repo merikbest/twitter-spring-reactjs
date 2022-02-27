@@ -32,75 +32,54 @@ public class ListsMapper {
         return modelMapper.map(listsRequest, Lists.class);
     }
 
-    private BaseListResponse convertToBaseListsResponse(BaseListProjection list) {
-        return modelMapper.map(list, BaseListResponse.class);
+    private <T, S> S convertProjectionToResponse(T user, Class<S> type) {
+        return modelMapper.map(user, type);
     }
 
-    private ListResponse convertToListsResponse(ListProjection list) {
-        return modelMapper.map(list, ListResponse.class);
-    }
-
-    private List<ListResponse> convertListToResponse(List<ListProjection> lists) {
-        return lists.stream()
-                .map(this::convertToListsResponse)
-                .collect(Collectors.toList());
-    }
-
-    private ListUserResponse convertToListsUserResponse(ListUserProjection list) {
-        return modelMapper.map(list, ListUserResponse.class);
-    }
-
-    private List<ListUserResponse> convertListUserToResponse(List<ListUserProjection> lists) {
-        return lists.stream()
-                .map(this::convertToListsUserResponse)
-                .collect(Collectors.toList());
-    }
-
-    private PinnedListResponse convertToPinnedListsResponse(PinnedListProjection list) {
-        return modelMapper.map(list, PinnedListResponse.class);
-    }
-
-    private List<PinnedListResponse> convertPinnedListToResponse(List<PinnedListProjection> lists) {
-        return lists.stream()
-                .map(this::convertToPinnedListsResponse)
+    private <T, S> List<S> convertProjectionListToResponseList(List<T> users, Class<S> type) {
+        return users.stream()
+                .map(user -> convertProjectionToResponse(user, type))
                 .collect(Collectors.toList());
     }
 
     public List<ListResponse> getAllTweetLists() {
         List<ListProjection> lists = listsService.getAllTweetLists();
-        return lists.contains(null) ? new ArrayList<>() : convertListToResponse(lists);
+        return lists.contains(null) ? new ArrayList<>() : convertProjectionListToResponseList(lists, ListResponse.class);
     }
 
     public List<ListUserResponse> getUserTweetLists() {
         List<ListUserProjection> lists = listsService.getUserTweetLists();
-        return lists.contains(null) ? new ArrayList<>() : convertListUserToResponse(lists);
+        return lists.contains(null) ? new ArrayList<>() : convertProjectionListToResponseList(lists, ListUserResponse.class);
     }
 
     public List<ListResponse> getUserTweetListsById(Long userId) {
         List<ListProjection> lists = listsService.getUserTweetListsById(userId);
-        return lists.contains(null) ? new ArrayList<>() : convertListToResponse(lists);
+        return lists.contains(null) ? new ArrayList<>() : convertProjectionListToResponseList(lists, ListResponse.class);
     }
 
     public List<ListResponse> getTweetListsWhichUserIn() {
         List<ListProjection> lists = listsService.getTweetListsWhichUserIn();
-        return lists.contains(null) ? new ArrayList<>() : convertListToResponse(lists);
+        return lists.contains(null) ? new ArrayList<>() : convertProjectionListToResponseList(lists, ListResponse.class);
     }
 
     public List<PinnedListResponse> getUserPinnedLists() {
         List<PinnedListProjection> userPinnedLists = listsService.getUserPinnedLists();
-        return userPinnedLists.contains(null) ? new ArrayList<>() : convertPinnedListToResponse(userPinnedLists);
+        return userPinnedLists.contains(null) ? new ArrayList<>() : convertProjectionListToResponseList(userPinnedLists, PinnedListResponse.class);
     }
 
     public BaseListResponse getListById(Long listId) {
-        return convertToBaseListsResponse(listsService.getListById(listId));
+        BaseListProjection list = listsService.getListById(listId);
+        return convertProjectionToResponse(list, BaseListResponse.class);
     }
 
     public ListUserResponse createTweetList(ListsRequest listsRequest) {
-        return convertToListsUserResponse(listsService.createTweetList(convertToListsEntity(listsRequest)));
+        ListUserProjection list = listsService.createTweetList(convertToListsEntity(listsRequest));
+        return convertProjectionToResponse(list, ListUserResponse.class);
     }
 
     public BaseListResponse editTweetList(ListsRequest listsRequest) {
-        return convertToBaseListsResponse(listsService.editTweetList(convertToListsEntity(listsRequest)));
+        BaseListProjection list = listsService.editTweetList(convertToListsEntity(listsRequest));
+        return convertProjectionToResponse(list, BaseListResponse.class);
     }
 
     public String deleteList(Long listId) {
@@ -108,11 +87,13 @@ public class ListsMapper {
     }
 
     public ListUserResponse followList(Long listId) {
-        return convertToListsUserResponse(listsService.followList(listId));
+        ListUserProjection list = listsService.followList(listId);
+        return convertProjectionToResponse(list, ListUserResponse.class);
     }
 
     public PinnedListResponse pinList(Long listId) {
-        return convertToPinnedListsResponse(listsService.pinList(listId));
+        PinnedListProjection list = listsService.pinList(listId);
+        return convertProjectionToResponse(list, PinnedListResponse.class);
     }
 
     public List<Long> addUserToLists(UserToListsRequest userToListsRequest) {
@@ -132,7 +113,8 @@ public class ListsMapper {
     }
 
     public BaseListResponse getListDetails(Long listId) {
-        return convertToBaseListsResponse(listsService.getListDetails(listId));
+        BaseListProjection list = listsService.getListDetails(listId);
+        return convertProjectionToResponse(list, BaseListResponse.class);
     }
 
     public List<?> getListMembers(Long listId, Long listOwnerId) {
@@ -140,9 +122,9 @@ public class ListsMapper {
 
         if (listMembers.get("userMembers") != null) {
             List<ListsMemberProjection> userMembers = (List<ListsMemberProjection>) listMembers.get("userMembers");
-            return userMembers.contains(null) ? new ArrayList<>() : userMembers.stream()
-                    .map(list -> modelMapper.map(list.getMember(), ListMemberResponse.class))
-                    .collect(Collectors.toList());
+            return userMembers.contains(null)
+                    ? new ArrayList<>()
+                    : convertProjectionListToResponseList(userMembers, ListMemberResponse.class);
         } else {
             List<ListsOwnerMemberProjection> userMembers = (List<ListsOwnerMemberProjection>) listMembers.get("authUserMembers");
 
@@ -151,7 +133,7 @@ public class ListsMapper {
             } else {
                 List<ListsOwnerMemberResponse> members = new ArrayList<>();
                 userMembers.forEach(listsMemberProjection -> {
-                    ListsOwnerMemberResponse member = modelMapper.map(listsMemberProjection.getMember(), ListsOwnerMemberResponse.class);
+                    ListsOwnerMemberResponse member = convertProjectionToResponse(listsMemberProjection.getMember(), ListsOwnerMemberResponse.class);
                     member.setMemberInList(listsMemberProjection.getIsMemberInList());
                     members.add(member);
                 });

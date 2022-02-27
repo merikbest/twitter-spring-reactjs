@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -17,7 +18,7 @@ public class UserProfileResponse {
     private String website;
     private String country;
     private String birthday;
-    private String registrationDate;
+    private LocalDateTime registrationDate;
     private Long tweetCount;
     private Long mediaTweetCount;
     private Long likeCount;

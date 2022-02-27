@@ -41,57 +41,38 @@ public class UserMapper {
     private final UserService userService;
     private final UserSettingsService userSettingsService;
 
-    private ImageResponse convertToImageResponse(Image image) {
-        return modelMapper.map(image, ImageResponse.class);
-    }
-
-    NotificationResponse convertToNotificationResponse(Notification notification) {
-        return modelMapper.map(notification, NotificationResponse.class);
-    }
-
-    User convertToEntity(UserRequest userRequest) {
+    private User convertToEntity(UserRequest userRequest) {
         return modelMapper.map(userRequest, User.class);
     }
 
-    BaseUserResponse convertToBaseUserResponse(BaseUserProjection user) {
-        return modelMapper.map(user, BaseUserResponse.class);
+    private <T, S> S convertProjectionToResponse(T user, Class<S> type) {
+        return modelMapper.map(user, type);
     }
 
-    private UserProfileResponse convertToUserProfileResponse(UserProfileProjection user) {
-        return modelMapper.map(user, UserProfileResponse.class);
-    }
-
-    private UserResponse convertToUserResponse(UserProjection user) {
-        return modelMapper.map(user, UserResponse.class);
-    }
-
-    private List<UserResponse> convertUserListToResponse(List<UserProjection> users) {
+    private <T, S> List<S> convertProjectionListToResponseList(List<T> users, Class<S> type) {
         return users.stream()
-                .map(this::convertToUserResponse)
-                .collect(Collectors.toList());
-    }
-
-    private List<BaseUserResponse> convertBaseUserListToResponse(List<BaseUserProjection> users) {
-        return users.stream()
-                .map(this::convertToBaseUserResponse)
+                .map(user -> convertProjectionToResponse(user, type))
                 .collect(Collectors.toList());
     }
 
     public UserProfileResponse getUserById(Long userId) {
-        return convertToUserProfileResponse(userService.getUserById(userId));
+        UserProfileProjection user = userService.getUserById(userId);
+        return convertProjectionToResponse(user, UserProfileResponse.class);
     }
 
     public List<UserResponse> getUsers() {
-        return convertUserListToResponse(userService.getUsers());
+        List<UserProjection> users = userService.getUsers();
+        return convertProjectionListToResponseList(users, UserResponse.class);
     }
 
     public ImageResponse uploadImage(MultipartFile multipartFile) {
-        return convertToImageResponse(userService.uploadImage(multipartFile));
+        Image image = userService.uploadImage(multipartFile);
+        return convertProjectionToResponse(image, ImageResponse.class);
     }
 
     public AuthUserResponse updateUserProfile(UserRequest userRequest) {
         AuthUserProjection authUserProjection = userService.updateUserProfile(convertToEntity(userRequest));
-        return modelMapper.map(authUserProjection, AuthUserResponse.class);
+        return convertProjectionToResponse(authUserProjection, AuthUserResponse.class);
     }
 
     public Boolean startUseTwitter() {
@@ -131,33 +112,37 @@ public class UserMapper {
         return userService.processUserBookmarks(tweetId);
     }
 
-    public List<BaseUserResponse> getFollowers(Long userId) {
-        return convertBaseUserListToResponse(userService.getFollowers(userId));
+    public List<UserResponse> getFollowers(Long userId) {
+        List<UserProjection> users = userService.getFollowers(userId);
+        return convertProjectionListToResponseList(users, UserResponse.class);
     }
 
-    public List<BaseUserResponse> getFollowing(Long userId) {
-        return convertBaseUserListToResponse(userService.getFollowing(userId));
+    public List<UserResponse> getFollowing(Long userId) {
+        List<UserProjection> users = userService.getFollowing(userId);
+        return convertProjectionListToResponseList(users, UserResponse.class);
     }
 
     public List<FollowerUserResponse> getFollowerRequests() {
-        return userService.getFollowerRequests().stream()
-                .map(user -> modelMapper.map(user, FollowerUserResponse.class))
-                .collect(Collectors.toList());
+        List<FollowerUserProjection> followers = userService.getFollowerRequests();
+        return convertProjectionListToResponseList(followers, FollowerUserResponse.class);
     }
 
     public NotificationResponse processFollow(Long userId) {
         Map<String, Object> notificationDetails = userService.processFollow(userId);
-        NotificationResponse notification = convertToNotificationResponse((Notification) notificationDetails.get("notification"));
-        notification.getUserToFollow().setFollower((Boolean) notificationDetails.get("isFollower"));
-        return notification;
+        Notification notification = (Notification) notificationDetails.get("notification");
+        NotificationResponse notificationResponse = convertProjectionToResponse(notification, NotificationResponse.class);
+        notificationResponse.getUserToFollow().setFollower((Boolean) notificationDetails.get("isFollower"));
+        return notificationResponse;
     }
 
-    public List<BaseUserResponse> overallFollowers(Long userId) {
-        return convertBaseUserListToResponse(userService.overallFollowers(userId));
+    public List<UserResponse> overallFollowers(Long userId) {
+        List<BaseUserProjection> users = userService.overallFollowers(userId);
+        return convertProjectionListToResponseList(users, UserResponse.class);
     }
 
     public UserProfileResponse processFollowRequestToPrivateProfile(Long userId) {
-        return convertToUserProfileResponse(userService.processFollowRequestToPrivateProfile(userId));
+        UserProfileProjection user = userService.processFollowRequestToPrivateProfile(userId);
+        return convertProjectionToResponse(user, UserProfileResponse.class);
     }
 
     public String acceptFollowRequest(Long userId) {
@@ -173,11 +158,13 @@ public class UserMapper {
     }
 
     public List<UserResponse> getRelevantUsers() {
-        return convertUserListToResponse(userService.getRelevantUsers());
+        List<UserProjection> users = userService.getRelevantUsers();
+        return convertProjectionListToResponseList(users, UserResponse.class);
     }
 
     public List<UserResponse> searchUsersByUsername(String username) {
-        return convertUserListToResponse(userService.searchUsersByUsername(username));
+        List<UserProjection> users = userService.searchUsersByUsername(username);
+        return convertProjectionListToResponseList(users, UserResponse.class);
     }
 
     public Long processPinTweet(Long tweetId) {
@@ -189,13 +176,9 @@ public class UserMapper {
         Map<String, Object> userNotifications = userService.getUserNotifications();
         NotificationsResponse notificationsResponse = new NotificationsResponse();
         List<NotificationProjection> notificationProjections = (List<NotificationProjection>) userNotifications.get("notifications");
-        List<NotificationResponse> notifications = notificationProjections.stream()
-                .map(user -> modelMapper.map(user.getNotification(), NotificationResponse.class))
-                .collect(Collectors.toList());
+        List<NotificationResponse> notifications = convertProjectionListToResponseList(notificationProjections, NotificationResponse.class);
         List<TweetAuthorProjection> tweetAuthorsProjections = (List<TweetAuthorProjection>) userNotifications.get("tweetAuthors");
-        List<NotificationUserResponse> tweetAuthors = tweetAuthorsProjections.stream()
-                .map(user -> modelMapper.map(user.getTweetAuthor(), NotificationUserResponse.class))
-                .collect(Collectors.toList());
+        List<NotificationUserResponse> tweetAuthors = convertProjectionListToResponseList(tweetAuthorsProjections, NotificationUserResponse.class);
         notificationsResponse.setNotifications(notifications);
         notificationsResponse.setTweetAuthors(tweetAuthors);
         return notificationsResponse;
@@ -251,9 +234,8 @@ public class UserMapper {
     }
 
     public List<BlockedUserResponse> getBlockList() {
-        return userService.getBlockList().stream()
-                .map(user -> modelMapper.map(user, BlockedUserResponse.class))
-                .collect(Collectors.toList());
+        List<BlockedUserProjection> blockList = userService.getBlockList();
+        return convertProjectionListToResponseList(blockList, BlockedUserResponse.class);
     }
 
     public Boolean processBlockList(Long userId) {
@@ -261,9 +243,8 @@ public class UserMapper {
     }
 
     public List<MutedUserResponse> getMutedList() {
-        return userService.getMutedList().stream()
-                .map(user -> modelMapper.map(user, MutedUserResponse.class))
-                .collect(Collectors.toList());
+        List<MutedUserProjection> mutedList = userService.getMutedList();
+        return convertProjectionListToResponseList(mutedList, MutedUserResponse.class);
     }
 
     public Boolean processMutedList(Long userId) {
@@ -271,6 +252,7 @@ public class UserMapper {
     }
 
     public UserDetailResponse getUserDetails(Long userId) {
-        return modelMapper.map(userService.getUserDetails(userId), UserDetailResponse.class);
+        UserDetailProjection userDetails = userService.getUserDetails(userId);
+        return convertProjectionToResponse(userDetails, UserDetailResponse.class);
     }
 }

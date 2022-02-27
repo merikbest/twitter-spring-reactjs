@@ -109,12 +109,12 @@ public class UserController {
     }
 
     @GetMapping("/followers/{userId}") // +
-    public ResponseEntity<List<BaseUserResponse>> getFollowers(@PathVariable Long userId) {
+    public ResponseEntity<List<UserResponse>> getFollowers(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.getFollowers(userId));
     }
 
     @GetMapping("/following/{userId}") // +
-    public ResponseEntity<List<BaseUserResponse>> getFollowing(@PathVariable Long userId) {
+    public ResponseEntity<List<UserResponse>> getFollowing(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.getFollowing(userId));
     }
 
@@ -134,7 +134,7 @@ public class UserController {
     }
 
     @GetMapping("/follow/overall/{userId}") // +
-    public ResponseEntity<List<BaseUserResponse>> overallFollowers(@PathVariable Long userId) {
+    public ResponseEntity<List<UserResponse>> overallFollowers(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.overallFollowers(userId));
     }
 

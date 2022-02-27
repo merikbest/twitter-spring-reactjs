@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetsProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.UserProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.TweetService;
 import lombok.RequiredArgsConstructor;
@@ -65,6 +66,24 @@ public class TweetServiceImpl implements TweetService {
     public TweetProjection getTweetById(Long tweetId) {
         return tweetRepository.findTweetById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+    }
+
+    @Override
+    public List<TweetProjection> getRepliesByTweetId(Long tweetId) {
+        List<TweetsProjection> repliesByTweetId = tweetRepository.getRepliesByTweetId(tweetId);
+        return repliesByTweetId.contains(null) ? new ArrayList<>() : repliesByTweetId.stream()
+                .map(TweetsProjection::getTweet)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserProjection> getLikedUsersByTweetId(Long tweetId) {
+        return tweetRepository.getLikedUsersByTweetId(tweetId);
+    }
+
+    @Override
+    public List<UserProjection> getRetweetedUsersByTweetId(Long tweetId) {
+        return tweetRepository.getRetweetedUsersByTweetId(tweetId);
     }
 
     @Override

@@ -47,9 +47,9 @@ public interface UserService {
 
     AuthUserProjection updateUserProfile(User userInfo);
 
-    List<BaseUserProjection> getFollowers(Long userId);
+    List<UserProjection> getFollowers(Long userId);
 
-    List<BaseUserProjection> getFollowing(Long userId);
+    List<UserProjection> getFollowing(Long userId);
 
     Map<String, Object> processFollow(Long userId);
 

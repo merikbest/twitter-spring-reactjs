@@ -1,6 +1,9 @@
 package com.gmail.merikbest2015.twitterspringreactjs.repository;
 
-import com.gmail.merikbest2015.twitterspringreactjs.model.*;
+import com.gmail.merikbest2015.twitterspringreactjs.model.BackgroundColorType;
+import com.gmail.merikbest2015.twitterspringreactjs.model.ColorSchemeType;
+import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
+import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.UserPrincipalProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.*;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -63,19 +66,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user WHERE user.id = :userId")
     boolean isUserExist(Long userId);
 
-    @Query("SELECT f.id as id, f.fullName as fullName, f.username as username, f.about as about, " +
-            "f.privateProfile as isPrivateProfile, f.avatar.id as img_id, f.avatar.src as img_src " +
-            "FROM User user " +
-            "LEFT JOIN user.followers f " +
-            "WHERE user.id = :userId")
-    List<BaseUserProjection> getFollowersById(Long userId);
+    @Query("SELECT f as user FROM User u LEFT JOIN u.followers f WHERE u.id = :userId")
+    List<UsersProjection> getFollowersById(Long userId);
 
-    @Query("SELECT f.id as id, f.fullName as fullName, f.username as username, f.about as about, " +
-            "f.privateProfile as isPrivateProfile, f.avatar.id as img_id, f.avatar.src as img_src " +
-            "FROM User user " +
-            "LEFT JOIN user.following f " +
-            "WHERE user.id = :userId")
-    List<BaseUserProjection> getFollowingById(Long userId);
+    @Query("SELECT f as user FROM User u LEFT JOIN u.following f WHERE u.id = :userId")
+    List<UsersProjection> getFollowingById(Long userId);
 
     @Query("SELECT b.id as id, b.fullName as fullName, b.username as username, " +
             "b.about as about, b.avatar as avatar, b.privateProfile as isPrivateProfile " +

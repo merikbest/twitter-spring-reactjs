@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.ImageProjection;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface UserProfileProjection {
@@ -14,7 +15,7 @@ public interface UserProfileProjection {
     String getWebsite();
     String getCountry();
     String getBirthday();
-    String getRegistrationDate();
+    LocalDateTime getRegistrationDate();
     Long getTweetCount();
     Long getMediaTweetCount();
     Long getLikeCount();
