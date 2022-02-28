@@ -9,6 +9,7 @@ import lombok.Setter;
 public class NotificationUserResponse {
     private Long id;
     private String username;
+    private String fullName;
     private ImageResponse avatar;
     private boolean isFollower;
 }

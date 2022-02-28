@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,9 +12,22 @@ public class UserResponse {
     private String username;
     private String about;
     private ImageResponse avatar;
-    private boolean privateProfile;
+
+    @JsonProperty("isPrivateProfile")
+    private boolean isPrivateProfile;
+
+    @JsonProperty("isMutedDirectMessages")
+    private boolean isMutedDirectMessages;
+
+    @JsonProperty("isUserBlocked")
     private boolean isUserBlocked;
+
+    @JsonProperty("isMyProfileBlocked")
     private boolean isMyProfileBlocked;
+
+    @JsonProperty("isWaitingForApprove")
     private boolean isWaitingForApprove;
+
+    @JsonProperty("isFollower")
     private boolean isFollower;
 }

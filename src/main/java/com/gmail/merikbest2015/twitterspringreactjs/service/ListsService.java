@@ -41,6 +41,8 @@ public interface ListsService {
 
     BaseListProjection getListDetails(Long listId);
 
+    List<ListMemberProjection> getListFollowers(Long listId, Long listOwnerId);
+
     Map<String, Object> getListMembers(Long listId, Long listOwnerId);
 
     List<Map<String, Object>> searchListMembersByUsername(Long listId, String username);

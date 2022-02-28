@@ -253,6 +253,21 @@ public class ListsServiceImpl implements ListsService {
     }
 
     @Override
+    public List<ListMemberProjection> getListFollowers(Long listId, Long listOwnerId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+
+        if (!Objects.equals(listOwnerId, authUserId)) {
+            checkUserIsBlocked(listOwnerId, authUserId);
+            checkIsListExist(listOwnerId, authUserId);
+            checkIsListPrivate(listId);
+        }
+        List<ListsMemberProjection> listFollowers = listsRepository.getListFollowers(listId, listOwnerId);
+        return listFollowers.contains(null) ? new ArrayList<>() : listFollowers.stream()
+                .map(ListsMemberProjection::getMember)
+                .collect(Collectors.toList());
+    }
+
+    @Override  // add checks like in getListFollowers ^^^
     public Map<String, Object> getListMembers(Long listId, Long listOwnerId) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
 
@@ -266,7 +281,7 @@ public class ListsServiceImpl implements ListsService {
     }
 
     @Override
-    public  List<Map<String, Object>> searchListMembersByUsername(Long listId, String username) {
+    public List<Map<String, Object>> searchListMembersByUsername(Long listId, String username) {
         List<Map<String, Object>> members = new ArrayList<>();
         listsRepository.searchListMembersByUsername(username)
                 .forEach(member ->
@@ -292,6 +307,23 @@ public class ListsServiceImpl implements ListsService {
 
         if (isPresent) {
             throw new ApiRequestException("User with ID:" + supposedBlockedUserId + " is blocked", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    private void checkIsListPrivate(Long listId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        boolean isPrivate = listsRepository.isListPrivate(listId, authUserId);
+
+        if (isPrivate && !isMyProfileFollowList(listId)) {
+            throw new ApiRequestException("List not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    private void checkIsListExist(Long listId, Long listOwnerId) {
+        boolean isListExist = listsRepository.isListExist(listId, listOwnerId);
+
+        if (isListExist) {
+            throw new ApiRequestException("List not found", HttpStatus.NOT_FOUND);
         }
     }
 }

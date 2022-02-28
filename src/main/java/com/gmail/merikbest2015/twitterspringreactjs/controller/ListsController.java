@@ -97,6 +97,11 @@ public class ListsController {
         return ResponseEntity.ok(listsMapper.getListDetails(listId));
     }
 
+    @GetMapping("/{listId}/{listOwnerId}/followers") // TODO add tests
+    public ResponseEntity<List<ListMemberResponse>> getListFollowers(@PathVariable Long listId, @PathVariable Long listOwnerId) {
+        return ResponseEntity.ok(listsMapper.getListFollowers(listId, listOwnerId));
+    }
+
     @GetMapping("/{listId}/{listOwnerId}/members") // TODO add tests
     public ResponseEntity<List<?>> getListMembers(@PathVariable Long listId, @PathVariable Long listOwnerId) {
         return ResponseEntity.ok(listsMapper.getListMembers(listId, listOwnerId));

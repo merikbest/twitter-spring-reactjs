@@ -17,15 +17,17 @@ public class ChatResponse {
     @Getter
     @Setter
     static class ParticipantResponse {
-        private ChatProjection user;
+        private Long id;
+        private UserParticipantResponse user;
 
         @Getter
         @Setter
-        static class ChatProjection {
+        static class UserParticipantResponse {
             private Long id;
             private String fullName;
             private String username;
             private ImageResponse avatar;
+            private boolean isUserBlocked;
         }
     }
 }

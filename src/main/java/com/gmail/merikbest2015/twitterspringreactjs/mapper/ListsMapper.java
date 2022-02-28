@@ -117,6 +117,11 @@ public class ListsMapper {
         return convertProjectionToResponse(list, BaseListResponse.class);
     }
 
+    public List<ListMemberResponse> getListFollowers(Long listId, Long listOwnerId) {
+        List<ListMemberProjection> followers = listsService.getListFollowers(listId, listOwnerId);
+        return convertProjectionListToResponseList(followers, ListMemberResponse.class);
+    }
+
     public List<?> getListMembers(Long listId, Long listOwnerId) {
         Map<String, Object> listMembers = listsService.getListMembers(listId, listOwnerId);
 
