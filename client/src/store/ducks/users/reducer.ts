@@ -28,9 +28,9 @@ export const usersReducer = produce((draft: Draft<UsersState>, action: UsersActi
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
-        case UsersActionsType.SET_MUTED_USERS_STATE: //+
+        case UsersActionsType.SET_MUTED_USERS_STATE: // TODO NOT NEEDED ???
             const mutedUserIndex = draft.users.findIndex((user) => user.id === action.payload.userId);
-            if (mutedUserIndex !== -1) draft.users[mutedUserIndex].isUserMuted = action.payload.isUserMuted;
+            // if (mutedUserIndex !== -1) draft.users[mutedUserIndex].isUserMuted = action.payload.isUserMuted;
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 

@@ -3,15 +3,15 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {Avatar, Button, Typography} from "@material-ui/core";
 
-import {Lists} from "../../../store/ducks/lists/contracts/state";
 import {usePopperListWindowStyles} from "./PopperListWindowStyles";
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
 import {selectUserData} from "../../../store/ducks/user/selectors";
 import {followList, unfollowList} from "../../../store/ducks/lists/actionCreators";
 import MembersAndFollowersModal from "../../FullList/EditListModal/MembersAndFollowersModal/MembersAndFollowersModal";
+import {BaseListResponse} from "../../../store/types/lists";
 
 interface PopperListWindowProps {
-    list: Lists;
+    list: BaseListResponse;
     visible: boolean;
 }
 
@@ -24,14 +24,12 @@ const PopperListWindow: FC<PopperListWindowProps> = ({list, visible}): ReactElem
     const [visibleMembersAndFollowersModal, setVisibleMembersAndFollowersModal] = useState<boolean>(false);
     const [modalWindowTitle, setModalWindowTitle] = useState<string>("");
 
-    const follower = list?.followers.find((follower) => follower.id === myProfile?.id);
-
     // Follow | Unfollow
     const handleFollow = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
         event.preventDefault();
         event.stopPropagation();
 
-        if (follower) {
+        if (list.isFollower) {
             dispatch(unfollowList(list?.id!));
         } else {
             dispatch(followList(list?.id!));
@@ -93,7 +91,7 @@ const PopperListWindow: FC<PopperListWindowProps> = ({list, visible}): ReactElem
                 <div>
                     <span onClick={event => onOpenMembersModalWindow(event)} className={classes.popperListMembers}>
                         <Typography variant={"h6"} component={"span"}>
-                            {list?.members.length}
+                            {list?.membersSize}
                         </Typography>
                         <Typography variant={"subtitle1"} component={"span"}>
                             {" Members"}
@@ -101,7 +99,7 @@ const PopperListWindow: FC<PopperListWindowProps> = ({list, visible}): ReactElem
                     </span>
                     <span onClick={event => onOpenFollowersModalWindow(event)} className={classes.popperListMembers}>
                         <Typography variant={"h6"} component={"span"}>
-                            {list?.followers.length}
+                            {list?.followersSize}
                         </Typography>
                         <Typography variant={"subtitle1"} component={"span"}>
                             {" Followers"}
@@ -110,7 +108,7 @@ const PopperListWindow: FC<PopperListWindowProps> = ({list, visible}): ReactElem
                 </div>
                 <div className={classes.buttonWrapper}>
                     {(myProfile?.id === list?.listOwner.id) ? null :
-                        (follower ? (
+                        (list.isFollower ? (
                             <Button
                                 className={classes.primaryButton}
                                 onMouseOver={() => setBtnText("Unfollow")}

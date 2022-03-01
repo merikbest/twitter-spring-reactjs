@@ -9,11 +9,11 @@ import {MessagesModalInput} from "./MessagesModalInput/MessagesModalInput"
 import {fetchUsersSearchByUsername, setUsersSearch} from "../../../store/ducks/usersSearch/actionCreators";
 import {selectUsersSearch} from "../../../store/ducks/usersSearch/selectors";
 import MessagesModalUser from './MessagesModalUser/MessagesModalUser';
-import {User} from "../../../store/ducks/user/contracts/state";
 import {createChat} from "../../../store/ducks/chats/actionCreators";
 import {SearchIcon} from "../../../icons";
 import CloseButton from "../../../components/CloseButton/CloseButton";
 import {selectUserData} from "../../../store/ducks/user/selectors";
+import {UserResponse} from "../../../store/types/user";
 
 interface MessagesModalProps {
     visible?: boolean;
@@ -27,7 +27,7 @@ const MessagesModal: FC<MessagesModalProps> = ({visible, onClose}): ReactElement
     const myProfile = useSelector(selectUserData);
     const [text, setText] = useState<string>("");
     const [selectedIndex, setSelectedIndex] = useState<number>();
-    const [selectedUser, setSelectedUser] = useState<User>();
+    const [selectedUser, setSelectedUser] = useState<UserResponse>();
 
     const handleClickSearch = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
@@ -50,8 +50,8 @@ const MessagesModal: FC<MessagesModalProps> = ({visible, onClose}): ReactElement
         onClose();
     };
 
-    const handleListItemClick = (user: User): void => {
-        if (!user.mutedDirectMessages) {
+    const handleListItemClick = (user: UserResponse): void => {
+        if (user.isMutedDirectMessages) {
             if (user.id !== selectedIndex) {
                 setSelectedIndex(user.id);
                 setSelectedUser(user);
@@ -107,7 +107,7 @@ const MessagesModal: FC<MessagesModalProps> = ({visible, onClose}): ReactElement
                             key={user.id}
                             button
                             selected={selectedIndex === user.id!}
-                            disabled={user.mutedDirectMessages || user.id === myProfile?.id}
+                            disabled={user.isMutedDirectMessages || user.id === myProfile?.id}
                             onClick={() => handleListItemClick(user)}
                         >
                             <MessagesModalUser user={user}/>

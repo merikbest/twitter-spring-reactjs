@@ -140,7 +140,7 @@ export interface VoteActionInterface extends Action<TweetsActionType> { // +
 
 export interface ChangeReplyTypeActionInterface extends Action<TweetsActionType> { // +
     type: TweetsActionType.CHANGE_REPLY_TYPE;
-    payload: { tweetId: string; replyType: ReplyType; };
+    payload: { tweetId: number; replyType: ReplyType; };
 }
 
 export interface DeleteScheduledTweetsActionInterface extends Action<TweetsActionType> { // +

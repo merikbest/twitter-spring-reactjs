@@ -18,6 +18,7 @@ export interface NotificationResponse {
 export interface NotificationUserResponse {
     id: number;
     username: string;
+    fullName: string;
     avatar: Image;
     isFollower: boolean;
 }

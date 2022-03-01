@@ -3,16 +3,15 @@ import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import {Avatar, Button, IconButton, Paper, Typography} from "@material-ui/core";
 
-import {Lists} from "../../../store/ducks/lists/contracts/state";
 import {useListsItemStyles} from "./ListsItemStyles";
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
 import {selectUserData} from "../../../store/ducks/user/selectors";
 import {LockIcon, PinIcon, PinIconFilled} from "../../../icons";
 import {followList, pinList, unfollowList, unpinList} from "../../../store/ducks/lists/actionCreators";
-import PopperListWindow from "../PopperListWindow/PopperListWindow";
 import HoverAction from "../../../components/HoverAction/HoverAction";
 import {HoverActionProps, HoverActions, withHoverAction} from "../../../hoc/withHoverAction";
 import {useGlobalStyles} from "../../../util/globalClasses";
+import {ListResponse, ListUserResponse} from "../../../store/types/lists";
 
 interface ListsItemProps<T> {
     item?: T;
@@ -20,7 +19,7 @@ interface ListsItemProps<T> {
     isMyList?: boolean;
 }
 
-const ListsItem: FC<ListsItemProps<Lists> & HoverActionProps> = (
+const ListsItem: FC<ListsItemProps<ListResponse | ListUserResponse> & HoverActionProps> = (
     {
         item: list,
         listIndex,
@@ -34,7 +33,6 @@ const ListsItem: FC<ListsItemProps<Lists> & HoverActionProps> = (
     const classes = useListsItemStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
-    const follower = list?.followers.find((follower) => follower.id === myProfile?.id);
     const [btnText, setBtnText] = useState<string>("Following");
     const [visiblePopperListWindow, setVisiblePopperListWindow] = useState<boolean>(false);
     const [delayHandler, setDelayHandler] = useState<any>(null);
@@ -43,7 +41,7 @@ const ListsItem: FC<ListsItemProps<Lists> & HoverActionProps> = (
         event.preventDefault();
         event.stopPropagation();
 
-        if (follower) {
+        if ("isFollower" in list! && list.isFollower) {
             dispatch(unfollowList(list?.id!));
         } else {
             dispatch(followList(list?.id!));
@@ -84,7 +82,7 @@ const ListsItem: FC<ListsItemProps<Lists> & HoverActionProps> = (
                             <Typography variant={"h6"} component={"span"} className={classes.listTitle}>
                                 {list?.name}
                             </Typography>
-                            {list?.private && (
+                            {"isPrivate" in list! && list?.isPrivate && (
                                 <span className={classes.lockIcon}>
                                     {LockIcon}
                                 </span>
@@ -107,7 +105,7 @@ const ListsItem: FC<ListsItemProps<Lists> & HoverActionProps> = (
                                 @{list?.listOwner.username}
                             </Typography>
                         </div>
-                        <PopperListWindow visible={visiblePopperListWindow} list={list!}/>
+                        {/* TODO: <PopperListWindow visible={visiblePopperListWindow} list={list!}/> */}
                     </div>
                     {isMyList && (
                         <div className={classes.listPinWrapper}>
@@ -130,7 +128,7 @@ const ListsItem: FC<ListsItemProps<Lists> & HoverActionProps> = (
                         </div>
                     )}
                     {(myProfile?.id === list?.listOwner.id || isMyList) ? null : (
-                        follower ? (
+                        "isFollower" in list! && list.isFollower ? (
                             <Button
                                 className={classes.listPrimaryButton}
                                 onMouseOver={() => setBtnText("Unfollow")}

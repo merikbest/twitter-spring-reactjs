@@ -1,16 +1,18 @@
 import {Action} from "redux";
 import {LoadingStatus} from "../../../types";
 import {ListsOwnerMemberResponse} from "../../../types/lists";
-import {AddUserToLists} from "./state";
+import {AddUserToListsRequest} from "../../lists/contracts/state";
 
 export enum ListMembersActionsType {
     SET_LIST_MEMBERS = 'listMembers/SET_LIST_MEMBERS',
     FETCH_LIST_MEMBERS = 'listMembers/FETCH_LIST_MEMBERS',
+    FETCH_LIST_FOLLOWERS = 'listMembers/FETCH_LIST_FOLLOWERS',
     FETCH_LIST_MEMBERS_BY_USERNAME = 'listMembers/FETCH_LIST_MEMBERS_BY_USERNAME',
     PROCESS_USER_TO_LIST_MEMBERS = 'listMembers/PROCESS_USER_TO_LIST_MEMBERS',
     PROCESS_USER_TO_LISTS = "lists/PROCESS_USER_TO_LISTS",
     SET_USER_TO_LIST_MEMBERS = 'listMembers/SET_USER_TO_LIST_MEMBERS',
     RESET_LIST_MEMBERS_STATE = 'listMembers/RESET_LIST_MEMBERS_STATE',
+    RESET_LIST_MEMBERS = 'listMembers/RESET_LIST_MEMBERS',
     SET_LOADING_STATE = 'listMembers/SET_LOADING_STATE',
 }
 
@@ -21,6 +23,11 @@ export interface SetListMembersActionInterface extends Action<ListMembersActions
 
 export interface FetchListMembersActionInterface extends Action<ListMembersActionsType> {
     type: ListMembersActionsType.FETCH_LIST_MEMBERS;
+    payload: { listId: number; listOwnerId: number; };
+}
+
+export interface FetchListFollowersActionInterface extends Action<ListMembersActionsType> {
+    type: ListMembersActionsType.FETCH_LIST_FOLLOWERS;
     payload: { listId: number; listOwnerId: number; };
 }
 
@@ -36,7 +43,7 @@ export interface ProcessUserToListMembersActionInterface extends Action<ListMemb
 
 export interface ProcessUserToListsActionInterface extends Action<ListMembersActionsType> {
     type: ListMembersActionsType.PROCESS_USER_TO_LISTS;
-    payload: AddUserToLists;
+    payload: AddUserToListsRequest;
 }
 
 export interface SetUserToListMembersActionInterface extends Action<ListMembersActionsType> {
@@ -48,6 +55,10 @@ export interface ResetListMembersStateActionInterface extends Action<ListMembers
     type: ListMembersActionsType.RESET_LIST_MEMBERS_STATE;
 }
 
+export interface ResetListMembersActionInterface extends Action<ListMembersActionsType> {
+    type: ListMembersActionsType.RESET_LIST_MEMBERS;
+}
+
 export interface SetListMembersLoadingStateActionInterface extends Action<ListMembersActionsType> {
     type: ListMembersActionsType.SET_LOADING_STATE;
     payload: LoadingStatus;
@@ -56,5 +67,6 @@ export interface SetListMembersLoadingStateActionInterface extends Action<ListMe
 export type ListMembersActions =
     | SetListMembersActionInterface
     | ResetListMembersStateActionInterface
+    | ResetListMembersActionInterface
     | SetUserToListMembersActionInterface
     | SetListMembersLoadingStateActionInterface;

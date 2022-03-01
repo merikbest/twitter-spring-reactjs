@@ -9,12 +9,11 @@ import ListItem from "@material-ui/core/ListItem/ListItem";
 import classNames from "classnames";
 import {compose} from "recompose";
 
-import {User} from "../../store/ducks/user/contracts/state";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {addUserToBlocklist, followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 import {useUsersItemStyles} from "./UsersItemStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
-import {followProfile, processFollowRequest, unfollowProfile} from "../../store/ducks/userProfile/actionCreators";
+import {processFollowRequest} from "../../store/ducks/userProfile/actionCreators";
 import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
 import UnfollowModal from "../UnfollowModal/UnfollowModal";
 import {LockIcon} from "../../icons";
@@ -24,6 +23,7 @@ import {SnackbarProps, withSnackbar} from "../../hoc/withSnackbar";
 import {HoverActionProps} from "../../hoc/withHoverAction";
 import ActionSnackbar from "../ActionSnackbar/ActionSnackbar";
 import {useGlobalStyles} from "../../util/globalClasses";
+import {UserResponse} from "../../store/types/user";
 
 export interface UsersItemProps<T> {
     item?: T,
@@ -36,7 +36,7 @@ export enum UserItemSize {
     LARGE = "LARGE",
 }
 
-const UsersItem: FC<UsersItemProps<User> & SnackbarProps & HoverUserProps> = (
+const UsersItem: FC<UsersItemProps<UserResponse> & SnackbarProps & HoverUserProps> = (
     {
         item: user,
         size,
@@ -57,18 +57,9 @@ const UsersItem: FC<UsersItemProps<User> & SnackbarProps & HoverUserProps> = (
     const [btnText, setBtnText] = useState<string>("Following");
     const [visibleUnfollowModal, setVisibleUnfollowModal] = useState<boolean>(false);
     const [visibleBlockUserModal, setVisibleBlockUserModal] = useState<boolean>(false);
-    const [isUserBlocked, setIsUserBlocked] = useState<boolean>(false);
-    const [isWaitingForApprove, setIsWaitingForApprove] = useState<boolean>(false);
-
-    const isFollower = myProfile?.followers?.findIndex(follower => follower.id === user?.id) !== -1;
-    const isMyProfileBlocked = user?.userBlockedList?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
 
     useEffect(() => {
-        const userBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === user?.id) !== -1;
-        const waitingForApprove = user?.followerRequests?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
-        setBtnText(waitingForApprove ? ("Pending") : (userBlocked ? "Blocked" : "Following"));
-        setIsUserBlocked(userBlocked);
-        setIsWaitingForApprove(waitingForApprove);
+        setBtnText(user?.isWaitingForApprove ? ("Pending") : (user?.isUserBlocked ? "Blocked" : "Following"));
     }, [myProfile, user]);
 
     const handleClickOpenUnfollowModal = (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -85,10 +76,10 @@ const UsersItem: FC<UsersItemProps<User> & SnackbarProps & HoverUserProps> = (
         handleProcessFollowRequest(user!);
     };
 
-    const handleFollow = (event: React.MouseEvent<HTMLButtonElement>, user: User): void => {
+    const handleFollow = (event: React.MouseEvent<HTMLButtonElement>, user: UserResponse): void => {
         event.preventDefault();
 
-        if (user?.privateProfile) {
+        if (user?.isPrivateProfile) {
             handleProcessFollowRequest(user);
         } else {
             dispatch(followUser({userId: user?.id!}));
@@ -96,8 +87,8 @@ const UsersItem: FC<UsersItemProps<User> & SnackbarProps & HoverUserProps> = (
         }
     };
 
-    const handleUnfollow = (user: User): void => {
-        if (user?.privateProfile) {
+    const handleUnfollow = (user: UserResponse): void => {
+        if (user?.isPrivateProfile) {
             handleProcessFollowRequest(user);
         } else {
             dispatch(unfollowUser({userId: user?.id!}));
@@ -106,15 +97,15 @@ const UsersItem: FC<UsersItemProps<User> & SnackbarProps & HoverUserProps> = (
         }
     };
 
-    const handleProcessFollowRequest = (user: User): void => {
+    const handleProcessFollowRequest = (user: UserResponse): void => {
         dispatch(processFollowRequest(user.id!));
     };
 
     const onBlockUser = (): void => {
         dispatch(addUserToBlocklist({userId: user?.id!}));
         setVisibleBlockUserModal(false);
-        setBtnText(isUserBlocked ? "Following" : "Blocked");
-        setSnackBarMessage!(`@${user?.username} has been ${isUserBlocked ? "unblocked" : "blocked"}.`);
+        setBtnText(user?.isUserBlocked ? "Following" : "Blocked");
+        setSnackBarMessage!(`@${user?.username} has been ${user?.isUserBlocked ? "unblocked" : "blocked"}.`);
         setOpenSnackBar!(true);
     };
 
@@ -142,7 +133,7 @@ const UsersItem: FC<UsersItemProps<User> & SnackbarProps & HoverUserProps> = (
                         <Typography variant={"h6"} display={"inline"}>
                             {user?.fullName}
                         </Typography>
-                        {user?.privateProfile && (
+                        {user?.isPrivateProfile && (
                             <span className={classes.lockIcon}>
                                 {LockIcon}
                             </span>
@@ -150,20 +141,21 @@ const UsersItem: FC<UsersItemProps<User> & SnackbarProps & HoverUserProps> = (
                         <Typography variant={"subtitle1"} component={"div"}>
                             @{user?.username}
                         </Typography>
-                        {(isMyProfileBlocked) ? null : (
+                        {(user?.isMyProfileBlocked) ? null : (
                             (size !== UserItemSize.SMALL) && (
                                 <Typography variant={"body1"} display="block">
                                     {user?.about}
                                 </Typography>
                             )
                         )}
-                        <PopperUserWindow visible={visiblePopperWindow} user={user!}/>
+                        {/* TODO <PopperUserWindow (new state and action) */}
+                        {/*<PopperUserWindow visible={visiblePopperWindow} user={user!}/>*/}
                     </div>
                     <div className={classes.buttonWrapper}>
                         {(myProfile?.id === user?.id) ? null : (
-                            (isMyProfileBlocked) ? null : (
-                                (!isFollower) ? (
-                                    (isUserBlocked) ? (
+                            (user?.isMyProfileBlocked) ? null : (
+                                (user?.isFollower) ? (
+                                    (user?.isUserBlocked) ? (
                                         <Button
                                             className={classNames(classes.containedButton, classes.blockButton)}
                                             onClick={(event) => onOpenBlockUserModal(event)}
@@ -176,7 +168,7 @@ const UsersItem: FC<UsersItemProps<User> & SnackbarProps & HoverUserProps> = (
                                             {btnText}
                                         </Button>
                                     ) : (
-                                        (isWaitingForApprove) ? (
+                                        (user?.isWaitingForApprove) ? (
                                             <Button
                                                 className={classes.outlinedButton}
                                                 onClick={(event) => cancelFollow(event)}
@@ -226,7 +218,7 @@ const UsersItem: FC<UsersItemProps<User> & SnackbarProps & HoverUserProps> = (
             />
             <BlockUserModal
                 username={user?.username!}
-                isUserBlocked={isUserBlocked}
+                isUserBlocked={user?.isUserBlocked!}
                 visible={visibleBlockUserModal}
                 onClose={onCloseBlockUserModal}
                 onBlockUser={onBlockUser}
@@ -240,4 +232,4 @@ const UsersItem: FC<UsersItemProps<User> & SnackbarProps & HoverUserProps> = (
     );
 };
 
-export default compose(withSnackbar, withHoverUser)(UsersItem) as ComponentType<UsersItemProps<User> & SnackbarProps & HoverActionProps>;
+export default compose(withSnackbar, withHoverUser)(UsersItem) as ComponentType<UsersItemProps<UserResponse> & SnackbarProps & HoverActionProps>;

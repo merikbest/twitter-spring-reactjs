@@ -1,6 +1,5 @@
 import React, {ChangeEvent, FC, ReactElement, ReactNode, useState} from 'react';
 import {FormControl, Grid, InputLabel, Paper, Typography} from "@material-ui/core";
-import AddIcon from '@material-ui/icons/Add';
 import IconButton from "@material-ui/core/IconButton";
 
 import {usePollStyles} from "./PollStyles";

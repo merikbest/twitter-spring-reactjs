@@ -4,8 +4,8 @@ import {Link, useParams} from "react-router-dom";
 import {Avatar, Button, Paper, Typography} from "@material-ui/core";
 
 import {useFullListStyles} from "./FullListStyles";
-import {selectIsListLoading, selectListItem} from "../../store/ducks/list/selectors";
-import {fetchListById, resetListState} from "../../store/ducks/list/actionCreators";
+import {selectIsListLoading, selectListItem, selectListItemTweets} from "../../store/ducks/list/selectors";
+import {fetchListById, fetchTweetsByListId, resetListState} from "../../store/ducks/list/actionCreators";
 import BackButton from "../../components/BackButton/BackButton";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {selectUserData} from "../../store/ducks/user/selectors";
@@ -24,6 +24,7 @@ const FullList: FC = (): ReactElement => {
     const classes = useFullListStyles();
     const dispatch = useDispatch();
     const list = useSelector(selectListItem);
+    const tweets = useSelector(selectListItemTweets);
     const myProfile = useSelector(selectUserData);
     const isLoading = useSelector(selectIsListLoading);
     const params = useParams<{ listId: string }>();
@@ -33,16 +34,24 @@ const FullList: FC = (): ReactElement => {
     const [visibleMembersAndFollowersModal, setVisibleMembersAndFollowersModal] = useState<boolean>(false);
     const [modalWindowTitle, setModalWindowTitle] = useState<string>("");
 
-    const follower = list?.followers.find((follower) => follower.id === myProfile?.id);
-
     useEffect(() => {
         window.scrollTo(0, 0);
-        dispatch(fetchListById(params.listId));
+        dispatch(fetchListById(parseInt(params.listId)));
 
         return () => {
             dispatch(resetListState());
         };
     }, [params.listId]);
+
+    useEffect(() => {
+        dispatch(fetchTweetsByListId({listId: parseInt(params.listId), pageNumber: 0}));
+
+        return () => {
+            dispatch(resetListState());
+        };
+    }, [params.listId]);
+
+    // TODO: Add fetchTweetsByListId
 
     // Follow | Unfollow
     const handleFollow = (): void => {
@@ -81,7 +90,7 @@ const FullList: FC = (): ReactElement => {
                         <Typography variant={"h5"} component={"span"}>
                             {list?.name}
                         </Typography>
-                        {list?.private && (
+                        {list?.isPrivate && (
                             <span className={classes.lockIcon}>
                                 {LockIcon}
                             </span>
@@ -113,7 +122,7 @@ const FullList: FC = (): ReactElement => {
                                 <Typography variant={"h5"} component={"span"}>
                                     {list?.name}
                                 </Typography>
-                                {list?.private && (
+                                {list?.isPrivate && (
                                     <span className={classes.lockIcon}>
                                         {LockIcon}
                                     </span>
@@ -139,7 +148,7 @@ const FullList: FC = (): ReactElement => {
                             <div>
                                 <span onClick={onOpenMembersModalWindow} className={classes.listMembers}>
                                     <Typography variant={"h6"} component={"span"}>
-                                        {list?.members.length}
+                                        {list?.membersSize}
                                     </Typography>
                                     <Typography variant={"subtitle1"} component={"span"}>
                                         {" Members"}
@@ -147,7 +156,7 @@ const FullList: FC = (): ReactElement => {
                                 </span>
                                 <span onClick={onOpenFollowersModalWindow} className={classes.listMembers}>
                                     <Typography variant={"h6"} component={"span"}>
-                                        {list?.followers.length}
+                                        {list?.followersSize}
                                     </Typography>
                                     <Typography variant={"subtitle1"} component={"span"}>
                                         {" Followers"}
@@ -165,7 +174,7 @@ const FullList: FC = (): ReactElement => {
                                     >
                                         Edit List
                                     </Button>
-                                ) : (follower ? (
+                                ) : (list?.isFollower ? (
                                     <Button
                                         className={classes.primaryButton}
                                         onMouseOver={() => setBtnText("Unfollow")}
@@ -190,7 +199,7 @@ const FullList: FC = (): ReactElement => {
                                 ))}
                             </div>
                         </Paper>
-                        {(list?.tweets.length === 0) ? (
+                        {(tweets.length === 0) ? (
                             <div className={globalClasses.infoText}>
                                 <Typography variant={"h4"} component={"div"}>
                                     There aren’t any Tweets in this List
@@ -201,7 +210,7 @@ const FullList: FC = (): ReactElement => {
                             </div>
                         ) : (
                             <>
-                                {list?.tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}
+                                {tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}
                             </>
                         )}
                     </div>

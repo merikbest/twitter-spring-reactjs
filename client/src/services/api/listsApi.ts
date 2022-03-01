@@ -1,6 +1,6 @@
 import {axios} from "../../core/axios";
 import {API_URL} from "../../util/url";
-import {AddLists, AddUserToLists, EditLists, MemberToList} from "../../store/ducks/lists/contracts/state";
+import {AddLists, AddUserToListsRequest,} from "../../store/ducks/lists/contracts/state";
 import {
     BaseListResponse,
     ListResponse,
@@ -9,6 +9,7 @@ import {
     PinnedListResponse
 } from "../../store/types/lists";
 import {TweetResponse} from "../../store/types/tweet";
+import {EditListsRequest} from "../../store/ducks/list/contracts/state";
 
 interface Response<T> {
     status: string;
@@ -44,7 +45,7 @@ export const ListsApi = {
         const {data} = await axios.post<Response<ListUserResponse>>(`${API_URL}/lists`, payload);
         return data;
     },
-    async editList(payload: EditLists): Promise<Response<BaseListResponse>> { // +
+    async editList(payload: EditListsRequest): Promise<Response<BaseListResponse>> { // +
         const {data} = await axios.put<Response<BaseListResponse>>(`${API_URL}/lists`, payload);
         return data;
     },
@@ -60,7 +61,7 @@ export const ListsApi = {
         const {data} = await axios.get<Response<PinnedListResponse>>(`${API_URL}/lists/pin/${listId}`);
         return data;
     },
-    async addUserToLists(payload: AddUserToLists): Promise<Response<number[]>> { // +
+    async addUserToLists(payload: AddUserToListsRequest): Promise<Response<number[]>> { // +
         const {data} = await axios.post<Response<number[]>>(`${API_URL}/lists/add/user`, payload);
         return data;
     },
@@ -75,6 +76,10 @@ export const ListsApi = {
     },
     async getListDetails(listId: number): Promise<Response<BaseListResponse>> { // +
         const {data} = await axios.get<Response<BaseListResponse>>(`${API_URL}/lists/${listId}/details`);
+        return data;
+    },
+    async getListFollowers(listId: number, listOwnerId: number): Promise<Response<ListsOwnerMemberResponse[]>> { // +
+        const {data} = await axios.get<Response<ListsOwnerMemberResponse[]>>(`${API_URL}/lists/${listId}/${listOwnerId}/followers`);
         return data;
     },
     async getListMembers(listId: number, listOwnerId: number): Promise<Response<ListsOwnerMemberResponse[]>> { // +

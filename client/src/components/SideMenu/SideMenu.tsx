@@ -1,5 +1,5 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {Link, NavLink, useLocation} from 'react-router-dom';
 import {Button, Divider, Hidden, IconButton, List, ListItem, Popover, Typography} from "@material-ui/core";
 import CreateIcon from '@material-ui/icons/Create';
@@ -46,6 +46,7 @@ import {resetFollowerRequestsState} from "../../store/ducks/followerRequests/act
 const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useSideMenuStyles();
+    const dispatch = useDispatch();
     const location = useLocation();
     const myProfile = useSelector(selectUserData);
     const userData = useSelector(selectUserData);

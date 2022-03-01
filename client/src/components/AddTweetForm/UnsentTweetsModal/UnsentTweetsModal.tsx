@@ -4,7 +4,6 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
 import {useUnsentTweetsModalStyles} from "./UnsentTweetsModalStyles";
-import {Tweet} from "../../../store/ducks/tweets/contracts/state";
 import {TweetApi} from "../../../services/api/tweetApi";
 import {ScheduleIcon} from "../../../icons";
 import {formatScheduleDate} from "../../../util/formatDate";
@@ -23,11 +22,11 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
     const globalClasses = useGlobalStyles();
     const [tweets, setTweets] = useState<TweetResponse[]>([]);
     const [activeTab, setActiveTab] = useState<number>(0);
-    const [unsentTweet, setUnsentTweet] = useState<Tweet | null>(null);
+    const [unsentTweet, setUnsentTweet] = useState<TweetResponse | null>(null);
     const [visibleEditTweetModal, setVisibleEditTweetModal] = useState<boolean>(false);
     const [visibleEditListFooter, setVisibleEditListFooter] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [checkboxIndexes, setCheckboxIndexes] = useState<string[]>([]);
+    const [checkboxIndexes, setCheckboxIndexes] = useState<number[]>([]);
 
     const classes = useUnsentTweetsModalStyles({visibleEditTweetModal});
 
@@ -51,7 +50,7 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
         setActiveTab(newValue);
     };
 
-    const onOpenEditTweetModal = (tweet: Tweet): void => {
+    const onOpenEditTweetModal = (tweet: TweetResponse): void => {
         if (!visibleEditListFooter) {
             setUnsentTweet(tweet);
             setVisibleEditTweetModal(true);
@@ -65,7 +64,7 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
         setVisibleEditTweetModal(false);
     };
 
-    const onToggleCheckTweet = (tweetId: string): void => {
+    const onToggleCheckTweet = (tweetId: number): void => {
         const currentIndex = checkboxIndexes.findIndex((checkboxIndex) => checkboxIndex === tweetId) !== -1;
 
         if (currentIndex) {
@@ -75,7 +74,7 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
         }
     };
 
-    const isTweetSelected = (tweetId: string): boolean => {
+    const isTweetSelected = (tweetId: number): boolean => {
         return checkboxIndexes.findIndex((checkboxIndex) => checkboxIndex === tweetId) !== -1;
     };
 

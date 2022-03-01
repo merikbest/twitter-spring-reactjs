@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.dto.response.lists;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,5 +13,7 @@ public class ListsOwnerMemberResponse {
     private String username;
     private String about;
     private ImageResponse avatar;
+
+    @JsonProperty("isMemberInList")
     private boolean isMemberInList;
 }

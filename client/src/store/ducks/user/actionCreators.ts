@@ -1,4 +1,4 @@
-import {Settings, UserState} from "./contracts/state";
+import {Settings, UserRequest, UserState} from "./contracts/state";
 import {
     AddUserToBlocklistActionInterface,
     AddUserToMuteListActionInterface,
@@ -44,10 +44,9 @@ import {
 } from "./contracts/actionTypes";
 import {RegistrationProps} from "../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
 import {LoginProps} from "../../../pages/Login/Login";
-import {AuthUserResponse} from "../../types/user";
 import {ChatMessageResponse} from "../../types/chat";
 
-export const updatedUserData = (payload: AuthUserResponse): UpdateUserDataActionInterface => ({  // +
+export const updatedUserData = (payload: UserRequest): UpdateUserDataActionInterface => ({  // +
     type: UserActionsType.UPDATE_USER_DATA,
     payload
 });
@@ -109,7 +108,7 @@ export const unfollowUser = (payload: { userId: number; tweetId?: number; }): Un
     payload,
 });
 
-export const fetchPinTweet = (payload: string): FetchPinTweetActionInterface => ({ //+
+export const fetchPinTweet = (payload: number): FetchPinTweetActionInterface => ({ //+
     type: UserActionsType.FETCH_PIN_TWEET,
     payload,
 });

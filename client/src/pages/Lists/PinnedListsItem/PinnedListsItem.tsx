@@ -3,13 +3,12 @@ import {Link} from 'react-router-dom';
 import {Avatar, Typography} from "@material-ui/core";
 
 import {usePinnedListsItemStyles} from "./PinnedListsItemStyles";
-import {Lists} from "../../../store/ducks/lists/contracts/state";
-import PopperListWindow from "../PopperListWindow/PopperListWindow";
 import {LockIcon} from "../../../icons";
 import {useGlobalStyles} from "../../../util/globalClasses";
+import {PinnedListResponse} from "../../../store/types/lists";
 
 interface PinnedListsItemProps {
-    pinnedList: Lists;
+    pinnedList: PinnedListResponse;
 }
 
 const PinnedListsItem: FC<PinnedListsItemProps> = ({pinnedList}): ReactElement => {
@@ -38,12 +37,12 @@ const PinnedListsItem: FC<PinnedListsItemProps> = ({pinnedList}): ReactElement =
                 <Typography component={"div"} className={classes.pinnedListName}>
                     {pinnedList?.name}
                 </Typography>
-                {pinnedList?.private && (
+                {pinnedList?.isPrivate && (
                     <span className={classes.lockIcon}>
                         {LockIcon}
                     </span>
                 )}
-                <PopperListWindow visible={visiblePopperListWindow} list={pinnedList!}/>
+                {/*TODO <PopperListWindow visible={visiblePopperListWindow} list={pinnedList!}/> */}
             </div>
         </Link>
     );

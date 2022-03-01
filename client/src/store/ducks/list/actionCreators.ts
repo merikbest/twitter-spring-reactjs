@@ -13,9 +13,9 @@ import {
     SetUnfollowToFullListActionInterface,
 } from "./contracts/actionTypes";
 import {LoadingStatus} from "../../types";
-import {EditLists} from "../lists/contracts/state";
 import {BaseListResponse} from "../../types/lists";
 import {TweetResponse} from "../../types/tweet";
+import {EditListsRequest} from "./contracts/state";
 
 export const setList = (payload: BaseListResponse): SetListActionInterface => ({ // +
     type: ListActionType.SET_LIST,
@@ -50,7 +50,7 @@ export const fetchTweetsByListId = (payload: { listId: number, pageNumber: numbe
     payload
 });
 
-export const editList = (payload: EditLists): EditListActionInterface => ({ // +
+export const editList = (payload: EditListsRequest): EditListActionInterface => ({ // +
     type: ListActionType.EDIT_LIST,
     payload
 });

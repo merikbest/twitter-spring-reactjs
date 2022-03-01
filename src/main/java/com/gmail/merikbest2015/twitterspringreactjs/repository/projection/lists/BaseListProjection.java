@@ -13,6 +13,7 @@ public interface BaseListProjection {
     String getAltWallpaper();
     ImageProjection getWallpaper();
     ListOwnerProjection getListOwner();
+    boolean getIsPrivate();
 
     @Value("#{@listsServiceImpl.isMyProfileFollowList(target.id)}")
     boolean getIsFollower();

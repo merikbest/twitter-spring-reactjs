@@ -2,11 +2,11 @@ import React, {FC, ReactElement} from 'react';
 import {Typography} from "@material-ui/core";
 
 import {useYouTubeVideoStyles} from "./YouTubeVideoStyles";
-import {Tweet} from "../../store/ducks/tweets/contracts/state";
 import {LinkIcon} from "../../icons";
+import {TweetResponse} from "../../store/types/tweet";
 
 interface YouTubeVideoProps {
-    tweet: Tweet;
+    tweet: TweetResponse;
 }
 
 const YouTubeVideo: FC<YouTubeVideoProps> = ({tweet}): ReactElement => {

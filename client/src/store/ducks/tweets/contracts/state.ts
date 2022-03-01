@@ -57,8 +57,8 @@ export interface PollChoice {
     votedUser: User[];
 }
 
-export interface AddTweet {
-    id?: string;
+export interface AddTweet { // TODO move to types
+    id?: number;
     text: string;
     images: Image[];
     replyType: ReplyType;
@@ -67,11 +67,11 @@ export interface AddTweet {
     choices?: string[];
 }
 
-export interface AddQuoteTweet {
+export interface AddQuoteTweet { // TODO move to types
     text: string;
     images: Image[];
     replyType: ReplyType;
-    tweetId: string;
+    tweetId: number;
 }
 
 export enum ReplyType {
@@ -87,7 +87,7 @@ export enum LinkCoverSize {
 }
 
 export interface Vote {
-    tweetId: string;
+    tweetId: number;
     pollId: number;
     pollChoiceId: number;
 }

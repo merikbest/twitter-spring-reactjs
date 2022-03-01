@@ -1,17 +1,18 @@
 import {LoadingStatus} from '../../types';
 import {
+    FetchListFollowersActionInterface,
     FetchListMembersActionInterface,
     FetchListMembersByUsernameActionInterface,
     ListMembersActionsType,
     ProcessUserToListMembersActionInterface,
-    ProcessUserToListsActionInterface,
+    ProcessUserToListsActionInterface, ResetListMembersActionInterface,
     ResetListMembersStateActionInterface,
     SetListMembersActionInterface,
     SetListMembersLoadingStateActionInterface,
     SetUserToListMembersActionInterface,
 } from './contracts/actionTypes';
 import {ListsOwnerMemberResponse} from "../../types/lists";
-import {AddUserToLists} from "./contracts/state";
+import {AddUserToListsRequest} from "../lists/contracts/state";
 
 export const setListMembers = (payload: ListsOwnerMemberResponse[]): SetListMembersActionInterface => ({
     type: ListMembersActionsType.SET_LIST_MEMBERS,
@@ -20,6 +21,11 @@ export const setListMembers = (payload: ListsOwnerMemberResponse[]): SetListMemb
 
 export const fetchListMembers = (payload: { listId: number; listOwnerId: number; }): FetchListMembersActionInterface => ({
     type: ListMembersActionsType.FETCH_LIST_MEMBERS,
+    payload,
+});
+
+export const fetchListFollowers = (payload: { listId: number; listOwnerId: number; }): FetchListFollowersActionInterface => ({
+    type: ListMembersActionsType.FETCH_LIST_FOLLOWERS,
     payload,
 });
 
@@ -33,7 +39,7 @@ export const processUserToListMembers = (payload: { userId: number; listId: numb
     payload,
 });
 
-export const processUserToLists = (payload: AddUserToLists): ProcessUserToListsActionInterface => ({
+export const processUserToLists = (payload: AddUserToListsRequest): ProcessUserToListsActionInterface => ({
     type: ListMembersActionsType.PROCESS_USER_TO_LISTS,
     payload
 });
@@ -45,6 +51,10 @@ export const setUserToListMembers = (payload: { userId: number; isMember: boolea
 
 export const resetListMembersState = (): ResetListMembersStateActionInterface => ({
     type: ListMembersActionsType.RESET_LIST_MEMBERS_STATE,
+});
+
+export const resetListMembers = (): ResetListMembersActionInterface => ({
+    type: ListMembersActionsType.RESET_LIST_MEMBERS,
 });
 
 export const setListMembersLoadingState = (payload: LoadingStatus): SetListMembersLoadingStateActionInterface => ({

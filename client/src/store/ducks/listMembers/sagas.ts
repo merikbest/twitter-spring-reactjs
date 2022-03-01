@@ -1,6 +1,7 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 import {setListMembers, setListMembersLoadingState, setUserToListMembers} from "./actionCreators";
 import {
+    FetchListFollowersActionInterface,
     FetchListMembersActionInterface,
     FetchListMembersByUsernameActionInterface,
     ListMembersActionsType,
@@ -23,9 +24,18 @@ export function* fetchListMembersRequest({payload}: FetchListMembersActionInterf
     }
 }
 
-export function* fetchListMembersByUsernameRequest({payload}: FetchListMembersByUsernameActionInterface) { // +
+export function* fetchListFollowersRequest({payload}: FetchListFollowersActionInterface) { // +
     try {
         yield setListMembersLoadingState(LoadingStatus.LOADING);
+        const items: ListsOwnerMemberResponse[] = yield call(ListsApi.getListFollowers, payload.listId, payload.listOwnerId);
+        yield put(setListMembers(items));
+    } catch (error) {
+        yield put(setListMembersLoadingState(LoadingStatus.ERROR));
+    }
+}
+
+export function* fetchListMembersByUsernameRequest({payload}: FetchListMembersByUsernameActionInterface) { // +
+    try {
         const items: ListsOwnerMemberResponse[] = yield call(ListsApi.searchListMembersByUsername, payload.listId, payload.username);
         yield put(setListMembers(items));
     } catch (error) {
@@ -56,6 +66,7 @@ export function* processUserToListsRequest({payload}: ProcessUserToListsActionIn
 
 export function* listMembersSaga() {
     yield takeLatest(ListMembersActionsType.FETCH_LIST_MEMBERS, fetchListMembersRequest);
+    yield takeLatest(ListMembersActionsType.FETCH_LIST_FOLLOWERS, fetchListFollowersRequest);
     yield takeLatest(ListMembersActionsType.FETCH_LIST_MEMBERS_BY_USERNAME, fetchListMembersByUsernameRequest);
     yield takeLatest(ListMembersActionsType.PROCESS_USER_TO_LIST_MEMBERS, processListMemberRequest);
     yield takeLatest(ListMembersActionsType.PROCESS_USER_TO_LISTS, processUserToListsRequest);

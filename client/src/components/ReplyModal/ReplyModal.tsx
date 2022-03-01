@@ -9,16 +9,16 @@ import classnames from "classnames";
 import {useReplyModalStyles} from "./ReplyModalStyles";
 import {formatDate} from "../../util/formatDate";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
-import {User} from "../../store/ducks/user/contracts/state";
 import AddTweetForm from "../AddTweetForm/AddTweetForm";
 import {textFormatter} from "../../util/textFormatter";
 import {Image} from "../../store/ducks/tweets/contracts/state";
 import CloseButton from "../CloseButton/CloseButton";
 import {useGlobalStyles} from "../../util/globalClasses";
+import {UserTweetResponse} from "../../store/types/tweet";
 
 interface ReplyModalProps {
-    user: User;
-    tweetId: string;
+    user: UserTweetResponse;
+    tweetId: number;
     text: string;
     image?: Image;
     dateTime: string;

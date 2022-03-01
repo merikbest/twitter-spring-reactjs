@@ -9,6 +9,7 @@ export interface UserProfileResponse {
     website: string;
     country: string;
     birthday: string;
+    registrationDate: string;
     tweetCount: number;
     mediaTweetCount: number;
     likeCount: number;
@@ -26,7 +27,7 @@ export interface UserProfileResponse {
     isWaitingForApprove: boolean;
     isFollower: boolean;
     isSubscriber: boolean;
-    sameFollowers: SameFollowerResponse;
+    sameFollowers: SameFollowerResponse[];
 }
 
 export interface UserResponse {
@@ -35,7 +36,8 @@ export interface UserResponse {
     username: string;
     about: string;
     avatar: Image;
-    privateProfile: boolean;
+    isPrivateProfile: boolean;
+    isMutedDirectMessages: boolean;
     isUserBlocked: boolean;
     isMyProfileBlocked: boolean;
     isWaitingForApprove: boolean;
@@ -56,6 +58,7 @@ export interface AuthUserResponse {
     gender: string;
     language: string;
     birthday: string;
+    registrationDate: string;
     tweetCount: number;
     mediaTweetCount: number;
     likeCount: number;
@@ -74,21 +77,6 @@ export interface AuthUserResponse {
     followingSize: number;
     followerRequestsSize: number;
     unreadMessagesSize: number;
-}
-
-export interface BaseUserResponse {
-    id: number;
-    fullName: string;
-    username: string;
-    about: string;
-    avatar: Image;
-    isPrivateProfile: boolean;
-    isUserBlocked: boolean;
-    isMyProfileBlocked: boolean;
-    isWaitingForApprove: boolean;
-    isFollower: boolean;
-    isUserMuted: boolean;
-    isSubscriber: boolean;
 }
 
 export interface BlockedUserResponse {

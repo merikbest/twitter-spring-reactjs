@@ -3,7 +3,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import Typography from "@material-ui/core/Typography";
 import {Button} from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
-import classNames from "classnames";
 
 import {useTweetComponentActionsModalStyles} from "./TweetComponentActionsModalStyles";
 

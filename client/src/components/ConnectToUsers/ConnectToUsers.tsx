@@ -3,15 +3,15 @@ import Paper from "@material-ui/core/Paper";
 import {List, Typography} from "@material-ui/core";
 
 import Spinner from "../Spinner/Spinner";
-import {User} from "../../store/ducks/user/contracts/state";
 import {useConnectToUsersStyles} from "./ConnectToUsersStyles";
 import UsersItem, {UserItemSize} from "../UsersItem/UsersItem";
 import {useGlobalStyles} from "../../util/globalClasses";
+import {UserResponse} from "../../store/types/user";
 
 interface ConnectToUsersProps {
     title: string,
     isUsersLoading: boolean,
-    users: User[],
+    users: UserResponse[],
 }
 
 const ConnectToUsers: FC<ConnectToUsersProps> = ({title, isUsersLoading, users}): ReactElement => {

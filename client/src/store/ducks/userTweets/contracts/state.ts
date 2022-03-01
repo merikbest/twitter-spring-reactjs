@@ -1,18 +1,8 @@
 import {LoadingStatus} from "../../../types";
-import {Tweet} from "../../tweets/contracts/state";
-
-export interface Image {
-    id: number;
-    src: string;
-}
-
-export interface PinnedTweet {
-    tweet: Tweet;
-    activeTab: number | undefined;
-}
+import {TweetResponse} from "../../../types/tweet";
 
 export interface UserTweetsState {
-    items: Tweet[];
+    items: TweetResponse[];
     pagesCount: number;
     loadingState: LoadingStatus;
 }

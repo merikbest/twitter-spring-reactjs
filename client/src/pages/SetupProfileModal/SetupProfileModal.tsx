@@ -9,7 +9,7 @@ import ProfileUpdatedModal from "./ProfileUpdatedModal/ProfileUpdatedModal";
 import {Image} from "../../store/ducks/tweets/contracts/state";
 import {uploadImage} from "../../util/uploadImage";
 import {selectUserData} from "../../store/ducks/user/selectors";
-import {updatedUserData} from "../../store/ducks/userProfile/actionCreators";
+import {updatedUserData} from "../../store/ducks/user/actionCreators";
 import {useSetupProfileModalStyles} from "./SetupProfileModalStyles";
 
 interface SetupProfileModalProps {
@@ -50,8 +50,8 @@ const SetupProfileModal: FC<SetupProfileModalProps> = ({visible, onClose}): Reac
             username: myProfile?.username!,
             location: myProfile?.location!,
             website: myProfile?.website!,
-            avatar: avatarResponse,
-            wallpaper: wallpaperResponse,
+            avatar: avatarResponse!,
+            wallpaper: wallpaperResponse!,
             about: bio
         }));
         handleCloseModal();

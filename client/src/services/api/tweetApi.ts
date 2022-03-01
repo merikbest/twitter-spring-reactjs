@@ -6,6 +6,7 @@ import {API_URL} from "../../util/url";
 import {ReplyTweet} from "../../store/ducks/tweet/contracts/state";
 import {TweetResponse} from "../../store/types/tweet";
 import {NotificationTweetResponse} from "../../store/types/notification";
+import {UserResponse} from "../../store/types/user";
 
 interface Response<T> {
     status: string;
@@ -28,6 +29,18 @@ export const TweetApi = {
     },
     async fetchTweetData(id: number): Promise<Response<TweetResponse>> { // +
         const {data} = await axios.get<Response<TweetResponse>>(`${API_URL}/tweets/${id}`);
+        return data;
+    },
+    async getRepliesByTweetId(tweetId: number): Promise<Response<TweetResponse[]>> { // +
+        const {data} = await axios.get<Response<TweetResponse[]>>(`${API_URL}/tweets/${tweetId}/replies`);
+        return data;
+    },
+    async getLikedUsersByTweetId(tweetId: number): Promise<Response<UserResponse[]>> { // +
+        const {data} = await axios.get<Response<UserResponse[]>>(`${API_URL}/tweets/${tweetId}/liked-by`);
+        return data;
+    },
+    async getRetweetedUsersByTweetId(tweetId: number): Promise<Response<UserResponse[]>> { // +
+        const {data} = await axios.get<Response<UserResponse[]>>(`${API_URL}/tweets/${tweetId}/retweeted-by`);
         return data;
     },
     async createTweet(payload: AddTweet): Promise<Response<TweetResponse>> { // +
@@ -74,7 +87,7 @@ export const TweetApi = {
         const {data} = await axios.post<Response<TweetResponse>>(`${API_URL}/tweets/quote/${payload.tweetId}`, payload);
         return data;
     },
-    async changeTweetReplyType(payload: { tweetId: string; replyType: ReplyType; }): Promise<Response<TweetResponse>> { // +
+    async changeTweetReplyType(payload: { tweetId: number; replyType: ReplyType; }): Promise<Response<TweetResponse>> { // +
         const {data} = await axios.get<Response<TweetResponse>>(`${API_URL}/tweets/reply/change/${payload.tweetId}`,
             {params: {replyType: payload.replyType}});
         return data;

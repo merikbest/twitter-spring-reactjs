@@ -107,7 +107,7 @@ export const vote = (payload: Vote): VoteActionInterface => ({ // +
     payload
 });
 
-export const changeReplyType = (payload: { tweetId: string; replyType: ReplyType; }): ChangeReplyTypeActionInterface => ({ // +
+export const changeReplyType = (payload: { tweetId: number; replyType: ReplyType; }): ChangeReplyTypeActionInterface => ({ // +
     type: TweetsActionType.CHANGE_REPLY_TYPE,
     payload
 });

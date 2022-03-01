@@ -5,6 +5,8 @@ import com.gmail.merikbest2015.twitterspringreactjs.model.ColorSchemeType;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 public class AuthUserResponse {
@@ -21,6 +23,7 @@ public class AuthUserResponse {
     private String gender;
     private String language;
     private String birthday;
+    private LocalDateTime registrationDate;
     private Long tweetCount;
     private Long mediaTweetCount;
     private Long likeCount;

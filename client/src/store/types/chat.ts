@@ -7,11 +7,15 @@ export interface ChatResponse {
 }
 
 export interface ParticipantResponse {
+    id: number;
     user: {
         id: number;
         fullName: string;
         username: string;
         avatar: Image;
+        isMutedDirectMessages: boolean;
+        isUserBlocked: boolean;
+        isMyProfileBlocked: boolean;
     };
 }
 

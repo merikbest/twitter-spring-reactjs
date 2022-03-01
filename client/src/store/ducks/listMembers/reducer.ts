@@ -27,6 +27,10 @@ export const listMembersReducer = produce((draft: Draft<ListMembersState>, actio
             draft.loadingState = LoadingStatus.LOADING;
             break;
 
+        case ListMembersActionsType.RESET_LIST_MEMBERS:
+            draft.items = [];
+            break;
+
         case ListMembersActionsType.SET_LOADING_STATE:
             draft.loadingState = action.payload;
             break;

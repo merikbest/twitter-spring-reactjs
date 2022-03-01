@@ -34,7 +34,6 @@ import {
     SettingsIcon
 } from "../../icons";
 import {MessageInput} from "./MessageInput/MessageInput";
-import {Chat, ChatParticipant} from "../../store/ducks/chats/contracts/state";
 import {addChatMessage, fetchChatMessages, resetChatMessages} from "../../store/ducks/chatMessages/actionCreators";
 import {selectChatMessagesItems} from "../../store/ducks/chatMessages/selectors";
 import {fetchReadMessages} from "../../store/ducks/user/actionCreators";
@@ -47,6 +46,7 @@ import ConversationInfo from "./ConversationInfo/ConversationInfo";
 import Spinner from "../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../util/globalClasses";
 import classnames from "classnames";
+import {ChatResponse, ParticipantResponse} from "../../store/types/chat";
 
 export enum MessagesAction {
     SETTINGS = "SETTINGS",
@@ -91,10 +91,10 @@ const Messages: FC = (): ReactElement => {
 
     const [text, setText] = useState<string>("");
     const [message, setMessage] = useState<string>("");
-    const [isUserBlocked, setIsUserBlocked] = useState<boolean>(false);
+    // const [isUserBlocked, setIsUserBlocked] = useState<boolean>(false);
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
-    const [participant, setParticipant] = useState<ChatParticipant>();
-    const [chat, setChat] = useState<Chat>();
+    const [participant, setParticipant] = useState<ParticipantResponse>();
+    const [chat, setChat] = useState<ChatResponse>();
     const [delayHandler, setDelayHandler] = useState<any>(null);
     const [visibleHoverAction, setVisibleHoverAction] = useState<VisibleActions>({...initialState});
     const classes = useMessagesStyles({isUserBlocked: false});
@@ -112,12 +112,12 @@ const Messages: FC = (): ReactElement => {
         scrollToBottom();
     }, [messages]);
 
-    useEffect(() => {
-        if (participant !== undefined) {
-            const isBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === participant?.user.id) !== -1;
-            setIsUserBlocked(isBlocked);
-        }
-    }, [participant, myProfile]);
+    // useEffect(() => {
+    //     if (participant !== undefined) {
+    //         const isBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === participant?.user.id) !== -1;
+    //         setIsUserBlocked(isBlocked);
+    //     }
+    // }, [participant, myProfile]);
 
     useEffect(() => {
         if (location.state?.removeParticipant === true) {
@@ -140,7 +140,7 @@ const Messages: FC = (): ReactElement => {
         setVisibleModalWindow(false);
     };
 
-    const handleListItemClick = (chat: Chat): void => {
+    const handleListItemClick = (chat: ChatResponse): void => {
         history.push("/messages");
         dispatch(fetchChatMessages(chat?.id!));
         dispatch(fetchReadMessages(chat?.id!));
@@ -530,7 +530,7 @@ const Messages: FC = (): ReactElement => {
                                 <div ref={chatEndRef}/>
                             </Paper>
                             <>
-                                {isUserBlocked ? (
+                                {participant.user.isUserBlocked ? (
                                     <Typography variant={"subtitle2"} component={"div"} className={classes.blockedInfoText}>
                                         You can no longer send messages to this person.
                                         {" "}

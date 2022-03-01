@@ -6,22 +6,28 @@ import {UsersSearchActions, UsersSearchActionsType} from "./contracts/actionType
 
 const initialUsersState: UsersSearchState = {
     users: [],
+    followers: [],
     loadingState: LoadingStatus.LOADING,
 };
 
 export const usersSearchReducer = produce((draft: Draft<UsersSearchState>, action: UsersSearchActions) => {
     switch (action.type) {
-        case UsersSearchActionsType.SET_USERS:
+        case UsersSearchActionsType.SET_USERS: // +
             draft.users = action.payload;
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
-        case UsersSearchActionsType.RESET_USERS_STATE:
+        case UsersSearchActionsType.SET_FOLLOWERS: // +
+            draft.followers = action.payload;
+            draft.loadingState = LoadingStatus.LOADED;
+            break;
+
+        case UsersSearchActionsType.RESET_USERS_STATE: // +
             draft.users = [];
             draft.loadingState = LoadingStatus.LOADING;
             break;
 
-        case UsersSearchActionsType.SET_USERS_LOADING_STATE:
+        case UsersSearchActionsType.SET_USERS_LOADING_STATE: // +
             draft.loadingState = action.payload;
             break;
 

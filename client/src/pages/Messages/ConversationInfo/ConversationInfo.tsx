@@ -19,12 +19,13 @@ import UnfollowModal from "../../../components/UnfollowModal/UnfollowModal";
 import {
     fetchChatParticipant,
     processFollowRequest,
-    resetUserProfileStateAction,
-    unfollowProfile
+    resetUserProfileState,
+    // unfollowProfile
 } from "../../../store/ducks/userProfile/actionCreators";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {selectUserProfile, selectUsersIsLoading} from "../../../store/ducks/userProfile/selectors";
 import Spinner from "../../../components/Spinner/Spinner";
+import {UserResponse} from "../../../store/types/user";
 
 interface ConversationInfoProps {
     participantId?: number;
@@ -53,25 +54,17 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
     const [visibleUnfollowModal, setVisibleUnfollowModal] = useState<boolean>(false);
     const [visibleBlockUserModal, setVisibleBlockUserModal] = useState<boolean>(false);
     const [visibleLeaveFromConversationModal, setVisibleLeaveFromConversationModal] = useState<boolean>(false);
-    const [isUserBlocked, setIsUserBlocked] = useState<boolean>(false);
-    const [isWaitingForApprove, setIsWaitingForApprove] = useState<boolean>(false);
-
-    const isFollower = myProfile?.followers?.findIndex(follower => follower.id === chatParticipant?.id) !== -1;
 
     useEffect(() => {
         dispatch(fetchChatParticipant({participantId: participantId!, chatId: chatId!}));
 
         return () => {
-            dispatch(resetUserProfileStateAction());
+            dispatch(resetUserProfileState());
         };
     }, []);
 
     useEffect(() => {
-        const userBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === chatParticipant?.id) !== -1;
-        const waitingForApprove = chatParticipant?.followerRequests?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
-        setBtnText(waitingForApprove ? ("Pending") : (userBlocked ? "Blocked" : "Following"));
-        setIsUserBlocked(userBlocked);
-        setIsWaitingForApprove(waitingForApprove);
+        setBtnText(chatParticipant?.isWaitingForApprove ? ("Pending") : (chatParticipant?.isUserBlocked ? "Blocked" : "Following"));
     }, [chatParticipant, myProfile]);
 
     const handleClickButton = (event: React.MouseEvent<HTMLButtonElement>, callback: () => void): void => {
@@ -80,7 +73,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
     };
 
     const handleFollow = (): void => {
-        if (chatParticipant?.privateProfile) {
+        if (chatParticipant?.isPrivateProfile) {
             handleProcessFollowRequest();
         } else {
             dispatch(followUser({userId: chatParticipant?.id!}));
@@ -89,7 +82,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
     };
 
     const handleUnfollow = (): void => {
-        if (chatParticipant?.privateProfile) {
+        if (chatParticipant?.isPrivateProfile) {
             handleProcessFollowRequest();
         } else {
             dispatch(unfollowUser({userId: chatParticipant?.id!}));
@@ -127,7 +120,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
     const onBlockUser = (): void => {
         dispatch(addUserToBlocklist({userId: chatParticipant?.id!}));
         setVisibleBlockUserModal(false);
-        setSnackBarMessage!(`@${chatParticipant?.username!} has been ${isUserBlocked ? "unblocked" : "blocked"}.`);
+        setSnackBarMessage!(`@${chatParticipant?.username!} has been ${chatParticipant?.isUserBlocked ? "unblocked" : "blocked"}.`);
         setOpenSnackBar!(true);
     };
 
@@ -164,7 +157,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                                             <Typography variant={"h6"} component={"span"}>
                                                 {chatParticipant?.fullName}
                                             </Typography>
-                                            {chatParticipant?.privateProfile && (
+                                            {chatParticipant?.isPrivateProfile && (
                                                 <span className={classes.lockIcon}>
                                             {LockIcon}
                                         </span>
@@ -174,8 +167,8 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                                             </Typography>
                                         </div>
                                         <div className={classes.buttonWrapper}>
-                                            {(!isFollower) ? (
-                                                (isUserBlocked) ? (
+                                            {(chatParticipant?.isFollower) ? (
+                                                (chatParticipant?.isUserBlocked) ? (
                                                     <Button
                                                         onClick={(event) => handleClickButton(event, onOpenBlockUserModal)}
                                                         className={classnames(classes.containedButton, classes.blockButton)}
@@ -188,7 +181,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                                                         {btnText}
                                                     </Button>
                                                 ) : (
-                                                    (isWaitingForApprove) ? (
+                                                    (chatParticipant?.isWaitingForApprove) ? (
                                                         <Button
                                                             onClick={(event) => handleClickButton(event, handleProcessFollowRequest)}
                                                             className={classes.outlinedButton}
@@ -246,7 +239,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                             onClick={onOpenBlockUserModal}
                         >
                             <Typography variant={"body1"} component={"span"}>
-                                {isUserBlocked ? "Unblock " : "Block "} @{chatParticipant?.username}
+                                {chatParticipant?.isUserBlocked ? "Unblock " : "Block "} @{chatParticipant?.username}
                             </Typography>
                         </div>
                         <div className={classnames(classes.conversationInfoButton, classes.blockUser)}>
@@ -271,14 +264,14 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                 onClose={onCloseLeaveFromConversationModal}
             />
             <UnfollowModal
-                user={chatParticipant!}
+                user={chatParticipant! as unknown as UserResponse}
                 visible={visibleUnfollowModal}
                 onClose={onCloseUnfollowModal}
                 handleUnfollow={handleUnfollow}
             />
             <BlockUserModal
                 username={chatParticipant?.username!}
-                isUserBlocked={isUserBlocked}
+                isUserBlocked={chatParticipant?.isUserBlocked!}
                 visible={visibleBlockUserModal}
                 onClose={onCloseBlockUserModal}
                 onBlockUser={onBlockUser}

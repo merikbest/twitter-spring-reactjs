@@ -4,13 +4,13 @@ import {Button, Typography} from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 
 import {useUnfollowModalStyles} from "./UnfollowModalStyles";
-import {User} from "../../store/ducks/user/contracts/state";
+import {UserResponse} from "../../store/types/user";
 
 interface UnfollowModalProps {
-    user: User;
+    user: UserResponse;
     visible?: boolean;
     onClose: () => void;
-    handleUnfollow: (user: User) => void;
+    handleUnfollow: (user: UserResponse) => void;
 }
 
 const UnfollowModal: FC<UnfollowModalProps> = ({user, visible, onClose, handleUnfollow}): ReactElement | null => {

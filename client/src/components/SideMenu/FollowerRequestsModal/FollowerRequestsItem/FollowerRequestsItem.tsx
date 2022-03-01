@@ -58,7 +58,7 @@ const FollowerRequestsItem: FC<FollowerRequestsItemProps & HoverUserProps> = (
                         <Typography variant={"h6"} onMouseEnter={handleHoverPopper}>
                             {user?.fullName}
                         </Typography>
-                        <PopperUserWindow visible={visiblePopperWindow} user={user!}/>
+                        {/* TODO <PopperUserWindow visible={visiblePopperWindow} user={user!}/>*/}
                         <Typography variant={"subtitle1"}>
                             @{user?.username}
                         </Typography>

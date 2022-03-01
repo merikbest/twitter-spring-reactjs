@@ -6,11 +6,11 @@ import {UserApi} from "../services/api/userApi";
 
 export interface HoverUserProps {
     // userProjection?: UserProjection;
-    visibleUser?: User;
+    visibleUser?: any;
     visiblePopperWindow?: boolean;
     handleHoverPopper?: () => void;
     // handleHoverPopperProjection? : (userId: number) => void;
-    handleHoverPopperWithUser?: (visibleUser: User) => void;
+    handleHoverPopperWithUser?: (visibleUser: any) => void;
     handleLeavePopper?: () => void;
 }
 

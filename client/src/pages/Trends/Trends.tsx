@@ -12,7 +12,7 @@ import Spinner from "../../components/Spinner/Spinner";
 const Trends: FC = (): ReactElement => {
     const classes = useTrendsStyles();
     const dispatch = useDispatch();
-    const isTrendsLoaded = useSelector(selectIsTagsLoading);
+    const isLoading = useSelector(selectIsTagsLoading);
     const trends = useSelector(selectTagsItems);
 
     useEffect(() => {
@@ -23,7 +23,7 @@ const Trends: FC = (): ReactElement => {
 
     return (
         <div>
-            {isTrendsLoaded ? (
+            {isLoading ? (
                 <Spinner paddingTop={80}/>
             ) : (
                 <List style={{paddingTop: 48,}}>

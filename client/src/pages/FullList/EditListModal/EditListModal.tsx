@@ -52,7 +52,7 @@ const EditListModal: FC<EditListModalProps> = ({visible, onClose}): ReactElement
             id: list?.id,
             name: list?.name,
             description: list?.description,
-            isPrivate: list?.private,
+            isPrivate: list?.isPrivate,
             wallpaper: list?.wallpaper,
         },
         resolver: yupResolver(EditListModalFormSchema),
@@ -60,7 +60,7 @@ const EditListModal: FC<EditListModalProps> = ({visible, onClose}): ReactElement
     });
 
     useEffect(() => {
-        setIsListPrivate(list?.private!);
+        setIsListPrivate(list?.isPrivate!);
     }, [visible]);
 
     const onSubmit = async (data: EditListModalFormProps): Promise<void> => {

@@ -40,5 +40,6 @@ export enum NotificationType {
 export interface SameFollowerResponse {
     id: number;
     fullName: string;
+    username: string;
     avatar: { id: number; src: string; }
 }

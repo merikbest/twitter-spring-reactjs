@@ -14,7 +14,7 @@ export interface TweetResponse {
     linkDescription: string;
     linkCover: string;
     linkCoverSize: LinkCoverSize;
-    user: TweetUserResponse;
+    user: UserTweetResponse;
     images: Image[];
     quoteTweet: QuoteTweetResponse;
     poll: PollResponse;
@@ -26,9 +26,10 @@ export interface TweetResponse {
     isUserFollowByOtherUser: boolean;
     isTweetDeleted: boolean;
     isTweetBookmarked: boolean;
+    retweetsUserIds?: number[];
 }
 
-export interface TweetUserResponse {
+export interface UserTweetResponse {
     id: number;
     email: string;
     fullName: string;
@@ -50,7 +51,7 @@ export interface QuoteTweetResponse {
     linkDescription: string;
     linkCover: string;
     linkCoverSize: string;
-    user: TweetUserResponse;
+    user: UserTweetResponse;
 }
 
 export interface PollResponse {
@@ -62,5 +63,9 @@ export interface PollResponse {
 export interface PollChoiceResponse {
     id: number;
     choice: string;
-    votedUser: { id: number; }
+    votedUser: VotedUserResponse[];
+}
+
+export interface VotedUserResponse {
+    id: number;
 }

@@ -1,9 +1,8 @@
 import {makeStyles, Theme} from "@material-ui/core";
-import {LikeTweet, Retweet} from "../../store/ducks/tweets/contracts/state";
 
 interface FullTweetStyles {
-    isTweetLiked?: LikeTweet;
-    isTweetRetweeted?: Retweet;
+    isTweetLiked: boolean;
+    isTweetRetweeted: boolean;
 }
 
 export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => ({

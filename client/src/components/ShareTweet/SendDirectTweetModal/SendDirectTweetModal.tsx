@@ -11,16 +11,15 @@ import {MessagesModalInput} from "../../../pages/Messages/MessagesModal/Messages
 import {selectUsersSearch} from "../../../store/ducks/usersSearch/selectors";
 import {fetchChats} from "../../../store/ducks/chats/actionCreators";
 import {selectChatsItems} from "../../../store/ducks/chats/selectors";
-import {User} from "../../../store/ducks/user/contracts/state";
 import {fetchUsersSearchByUsername, setUsersSearch} from "../../../store/ducks/usersSearch/actionCreators";
 import {SearchIcon, SendMessageIcon} from "../../../icons";
 import DirectUserItem from "./DirectUserItem/DirectUserItem";
 import {SendDirectMessageInput} from "./SendDirectMessageInput";
 import {addChatMessageWithTweet} from "../../../store/ducks/chatMessages/actionCreators";
-import {Tweet} from "../../../store/ducks/tweets/contracts/state";
 import CloseButton from "../../CloseButton/CloseButton";
 import {selectUserData} from "../../../store/ducks/user/selectors";
 import {TweetResponse} from "../../../store/types/tweet";
+import {UserResponse} from "../../../store/types/user";
 
 interface SendDirectTweetModalProps {
     tweet: TweetResponse;
@@ -47,7 +46,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
     const [searchText, setSearchText] = useState<string>("");
     const [message, setMessage] = useState<string>("");
     const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
-    const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
+    const [selectedUsers, setSelectedUsers] = useState<UserResponse[]>([]);
 
     useEffect(() => {
         if (visible) {
@@ -65,12 +64,12 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
         }
     };
 
-    const handleDelete = (selectedUser: User) => (): void => {
+    const handleDelete = (selectedUser: UserResponse) => (): void => {
         setSelectedIndexes((indexes) => indexes.filter((index) => index !== selectedUser.id));
         setSelectedUsers((users) => users.filter((user) => user.id !== selectedUser.id));
     };
 
-    const handleListItemClick = (user: User): void => {
+    const handleListItemClick = (user: UserResponse): void => {
         const currentIndex = selectedIndexes.indexOf(user?.id!);
         const newChecked = [...selectedIndexes];
         const newSelectedUsers = [...selectedUsers];
@@ -97,14 +96,11 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
         closeShareTweet();
     };
 
-    const DirectUserItems: FC<{user: User}> = ({user}): JSX.Element => {
-        const isUserBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === user?.id) !== -1;
-        const isMyProfileBlocked = user?.userBlockedList?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
-
+    const DirectUserItems: FC<{user: UserResponse}> = ({user}): JSX.Element => {
         return (
             <ListItem
                 button
-                disabled={isUserBlocked || isMyProfileBlocked || user.mutedDirectMessages || user.id === myProfile?.id}
+                disabled={user.isUserBlocked || user.isMyProfileBlocked || user.isMutedDirectMessages || user.id === myProfile?.id}
                 selected={selectedIndexes.indexOf(user?.id!) !== -1}
                 onClick={() => handleListItemClick(user)}
             >
@@ -164,9 +160,9 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
                     ) : (
                         chats.map((chat) => <DirectUserItems key={chat.id} user={
                             (chat.participants[0].user.id === myProfile?.id) ? (
-                                chat.participants[1].user
+                                chat.participants[1].user as UserResponse
                             ) : (
-                                chat.participants[0].user
+                                chat.participants[0].user as UserResponse
                             )}/>)
                     )}
                 </List>

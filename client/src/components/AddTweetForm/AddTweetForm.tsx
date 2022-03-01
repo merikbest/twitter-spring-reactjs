@@ -17,7 +17,7 @@ import {
     addTweet,
     updateScheduledTweet,
 } from "../../store/ducks/tweets/actionCreators";
-import {Image, ReplyType, Tweet} from '../../store/ducks/tweets/contracts/state';
+import {ReplyType} from '../../store/ducks/tweets/contracts/state';
 import UploadImages from '../UploadImages/UploadImages';
 import {uploadImage} from "../../util/uploadImage";
 import {selectUserData} from "../../store/ducks/user/selectors";
@@ -35,6 +35,8 @@ import UnsentTweetsModal from "./UnsentTweetsModal/UnsentTweetsModal";
 import ActionSnackbar from "../ActionSnackbar/ActionSnackbar";
 import {SnackbarProps, withSnackbar} from "../../hoc/withSnackbar";
 import {useGlobalStyles} from "../../util/globalClasses";
+import {QuoteTweetResponse, TweetResponse} from "../../store/types/tweet";
+import {Image} from "../../store/types/common";
 
 export enum AddTweetFormAction {
     MEDIA = "MEDIA",
@@ -46,11 +48,11 @@ export enum AddTweetFormAction {
 }
 
 export interface AddTweetFormProps {
-    unsentTweet?: Tweet;
-    quoteTweet?: Tweet;
+    unsentTweet?: TweetResponse;
+    quoteTweet?: QuoteTweetResponse;
     maxRows?: number;
     minRows?: number;
-    tweetId?: string;
+    tweetId?: number;
     title: string;
     buttonName: string;
     addressedUsername?: string;
@@ -117,7 +119,7 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
     const [hour, setHour] = useState<number>(0);
     const [minute, setMinute] = useState<number>(0);
 
-    const classes = useAddTweetFormStyles({quoteTweet, isScheduled: selectedScheduleDate !== null});
+    const classes = useAddTweetFormStyles({quoteTweet: quoteTweet, isScheduled: selectedScheduleDate !== null});
     const textLimitPercent = Math.round((text.length / 280) * 100);
     const textCount = MAX_LENGTH - text.length;
 

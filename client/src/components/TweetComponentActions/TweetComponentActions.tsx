@@ -82,12 +82,7 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
     const [visibleListsModal, setVisibleListsModal] = useState<boolean>(false);
     const [visibleBlockUserModal, setVisibleBlockUserModal] = useState<boolean>(false);
     const [modalTitle, setModalTitle] = useState<string>("");
-
-    const follower = myProfile?.followers?.find((follower) => follower.id === tweet.user.id);
-    const isUserMuted = myProfile?.userMutedList?.findIndex(mutedUser => mutedUser.id === tweet.user.id) !== -1;
-    const isUserBlocked = myProfile?.userBlockedList?.findIndex(blockedUser => blockedUser.id === tweet.user.id) !== -1;
-    const isMyProfileBlocked = tweet.user.userBlockedList?.findIndex(blockedUser => blockedUser.id === myProfile?.id) !== -1;
-    const isTweetPinned = myProfile?.pinnedTweet?.id === tweet.id;
+    const isTweetPinned = myProfile?.pinnedTweetId === tweet.id;
 
     useEffect(() => {
         document.addEventListener('click', handleClickOutside, true);
@@ -127,13 +122,14 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
     };
 
     const onDeleteUserTweet = (): void => {
-        const isTweetReply = tweetData?.replies.find((reply) => reply.id === tweet.id);
-
-        if (isTweetReply) {
-            dispatch(deleteTweetReply(tweet.id));
-        } else {
-            dispatch(fetchDeleteTweet(tweet.id));
-        }
+        // TODO add Replies list to full tweet and refactor this function
+        // const isTweetReply = tweetData?.replies.find((reply) => reply.id === tweet.id);
+        //
+        // if (isTweetReply) {
+        //     dispatch(deleteTweetReply(tweet.id));
+        // } else {
+        //     dispatch(fetchDeleteTweet(tweet.id));
+        // }
         setSnackBarMessage!("Your Tweet was deleted");
         setOpenSnackBar!(true);
         setOpenActionsDropdown(false);
@@ -141,7 +137,7 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
     };
 
     const handleFollow = (): void => {
-        if (follower) {
+        if (tweet.user.isFollower) {
             dispatch(unfollowUser({userId: tweet.user?.id!, tweetId: tweet.id}));
         } else {
             dispatch(followUser({userId: tweet.user?.id!, tweetId: tweet.id}));
@@ -182,14 +178,14 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
 
     const onMuteUser = (): void => {
         dispatch(addUserToMuteList({userId: tweet.user?.id!, tweetId: tweet.id}));
-        setSnackBarMessage!(`@${tweet.user.username} has been ${isUserMuted ? "unmuted" : "muted"}.`);
+        setSnackBarMessage!(`@${tweet.user.username} has been ${tweet.user.isUserMuted ? "unmuted" : "muted"}.`);
         setOpenSnackBar!(true);
     };
 
     const onBlockUser = (): void => {
         dispatch(addUserToBlocklist({userId: tweet.user?.id!, tweetId: tweet.id}));
         setVisibleBlockUserModal(false);
-        setSnackBarMessage!(`@${tweet.user.username} has been ${isUserBlocked ? "unblocked" : "blocked"}.`);
+        setSnackBarMessage!(`@${tweet.user.username} has been ${tweet.user.isUserBlocked ? "unblocked" : "blocked"}.`);
         setOpenSnackBar!(true);
     };
 
@@ -265,13 +261,13 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
                                     </>
                                 ) : (
                                     <>
-                                        {isMyProfileBlocked ? null : (
+                                        {tweet.user.isMyProfileBlocked ? null : (
                                             <>
                                                 <ListItem onClick={handleFollow}>
                                                     <>
-                                                        <>{follower ? UnfollowIcon : FollowIcon}</>
+                                                        <>{tweet.user.isFollower ? UnfollowIcon : FollowIcon}</>
                                                         <Typography variant={"body1"} component={"span"}>
-                                                            {follower ? "Unfollow" : "Follow"} @{tweet.user.username}
+                                                            {tweet.user.isFollower ? "Unfollow" : "Follow"} @{tweet.user.username}
                                                         </Typography>
                                                     </>
                                                 </ListItem>
@@ -284,15 +280,15 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
                                             </>
                                         )}
                                         <ListItem onClick={onMuteUser}>
-                                            <>{isUserMuted ? UnmuteIcon : MuteIcon}</>
+                                            <>{tweet.user.isUserMuted ? UnmuteIcon : MuteIcon}</>
                                             <Typography variant={"body1"} component={"span"}>
-                                                {isUserMuted ? "Unmute" : "Mute"} @{tweet.user.username}
+                                                {tweet.user.isUserMuted ? "Unmute" : "Mute"} @{tweet.user.username}
                                             </Typography>
                                         </ListItem>
                                         <ListItem onClick={onOpenBlockUserModal}>
-                                            <>{isUserBlocked ? UnblockIcon : BlockIcon}</>
+                                            <>{tweet.user.isUserBlocked ? UnblockIcon : BlockIcon}</>
                                             <Typography variant={"body1"} component={"span"}>
-                                                {isUserBlocked ? "Unblock" : "Block"} @{tweet.user.username}
+                                                {tweet.user.isUserBlocked ? "Unblock" : "Block"} @{tweet.user.username}
                                             </Typography>
                                         </ListItem>
                                         <ListItem>
@@ -337,12 +333,13 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
             />
             <BlockUserModal
                 username={tweet.user.username}
-                isUserBlocked={isUserBlocked}
+                isUserBlocked={tweet.user.isUserBlocked}
                 visible={visibleBlockUserModal}
                 onClose={onCloseBlockUserModal}
                 onBlockUser={onBlockUser}
             />
-            <ListsModal user={tweet.user} visible={visibleListsModal} onClose={onCloseListsModal}/>
+            {/* TODO refactor */}
+            {/*<ListsModal user={tweet.user} visible={visibleListsModal} onClose={onCloseListsModal}/>*/}
         </div>
     );
 };

@@ -4,12 +4,12 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 
 import {useTweetAnalyticsModalStyles} from "./TweetAnalyticsModalStyles";
-import {Tweet} from "../../store/ducks/tweets/contracts/state";
 import {textFormatter} from "../../util/textFormatter";
 import CloseButton from "../CloseButton/CloseButton";
+import {TweetResponse} from "../../store/types/tweet";
 
 interface TweetAnalyticsModalStyles {
-    tweet: Tweet;
+    tweet: TweetResponse;
     visible?: boolean;
     onClose: () => void;
 }

@@ -2,11 +2,11 @@ import React, {FC, ReactElement} from 'react';
 import {Typography} from "@material-ui/core";
 
 import {useLargeLinkPreviewStyles} from "./LargeLinkPreviewStyles";
-import {Tweet} from "../../store/ducks/tweets/contracts/state";
 import {LinkIcon} from "../../icons";
+import {TweetResponse} from "../../store/types/tweet";
 
 interface LargeLinkPreviewProps {
-    tweet: Tweet;
+    tweet: TweetResponse;
     isFullTweet?: boolean;
 }
 

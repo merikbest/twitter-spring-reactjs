@@ -5,6 +5,8 @@ import com.gmail.merikbest2015.twitterspringreactjs.model.ColorSchemeType;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.ImageProjection;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.time.LocalDateTime;
+
 public interface AuthUserProjection {
     Long getId();
     String getEmail();
@@ -19,6 +21,7 @@ public interface AuthUserProjection {
     String getGender();
     String getLanguage();
     String getBirthday();
+    LocalDateTime getRegistrationDate();
     Long getTweetCount();
     Long getMediaTweetCount();
     Long getLikeCount();

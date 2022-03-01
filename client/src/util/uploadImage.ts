@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {Image} from "../store/ducks/tweets/contracts/state";
+import {Image} from "../store/types/common";
 
 export const uploadImage = async (image: File): Promise<Image> => {
   const formData = new FormData();

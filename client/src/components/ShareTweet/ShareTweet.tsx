@@ -12,15 +12,15 @@ import {removeTweetFromBookmarks} from "../../store/ducks/tweets/actionCreators"
 import {CLIENT_URL} from "../../util/url";
 import HoverAction from "../HoverAction/HoverAction";
 import SendDirectTweetModal from "./SendDirectTweetModal/SendDirectTweetModal";
-import {Tweet} from "../../store/ducks/tweets/contracts/state";
 import ActionSnackbar from "../ActionSnackbar/ActionSnackbar";
 import {SnackbarProps, withSnackbar} from "../../hoc/withSnackbar";
 import {HoverActions} from "../../hoc/withHoverAction";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {addTweetToBookmarks} from "../../store/ducks/tweet/actionCreators";
+import {TweetResponse} from "../../store/types/tweet";
 
 interface ShareTweetProps {
-    tweet: Tweet;
+    tweet: TweetResponse;
     isFullTweet: boolean;
     visibleShareAction?: boolean;
     handleHoverAction?: (action: HoverActions) => void;
@@ -48,7 +48,6 @@ const ShareTweet: FC<ShareTweetProps & SnackbarProps> = (
     const myProfile = useSelector(selectUserData);
     const [open, setOpen] = useState<boolean>(false);
     const [visibleSendDirectTweetModal, setVisibleSendDirectTweetModal] = useState<boolean>(false);
-    const isBookmarked = myProfile?.bookmarks?.find((bookmark) => bookmark.tweet.id === tweet.id);
 
     const handleClick = (): void => {
         setOpen((prev) => !prev);
@@ -73,7 +72,7 @@ const ShareTweet: FC<ShareTweetProps & SnackbarProps> = (
             dispatch(removeTweetFromBookmarks(tweet.id));
         }
         setOpenSnackBar!(true);
-        setSnackBarMessage!(isBookmarked ? "Tweet removed to your Bookmarks" : "Tweet added to your Bookmarks");
+        setSnackBarMessage!(tweet.isTweetBookmarked ? "Tweet removed to your Bookmarks" : "Tweet added to your Bookmarks");
         setOpen(false);
     };
 
@@ -118,7 +117,7 @@ const ShareTweet: FC<ShareTweetProps & SnackbarProps> = (
                                 <ListItem onClick={onClickAddTweetToBookmarks}>
                                     <>{AddBookmarksIcon}</>
                                     <Typography variant={"body1"} component={"span"}>
-                                        {isBookmarked ? "Remove Tweet from Bookmarks" : "Add Tweet to Bookmarks"}
+                                        {tweet.isTweetBookmarked ? "Remove Tweet from Bookmarks" : "Add Tweet to Bookmarks"}
                                     </Typography>
                                 </ListItem>
                                 <CopyToClipboard text={CLIENT_URL + location.pathname}>

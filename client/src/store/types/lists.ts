@@ -8,6 +8,7 @@ export interface BaseListResponse {
     altWallpaper: string;
     wallpaper: Image
     listOwner: ListOwnerResponse;
+    isPrivate: boolean;
     isFollower: boolean;
     membersSize: number;
     followersSize: number;

@@ -11,9 +11,9 @@ import {
     UsersActionsType
 } from './contracts/actionTypes';
 import {UsersState} from "./contracts/state";
-import {BaseUserResponse} from "../../types/user";
+import {UserResponse} from "../../types/user";
 
-export const setUsers = (payload: BaseUserResponse[]): SetUsersActionInterface => ({ // +
+export const setUsers = (payload: UserResponse[]): SetUsersActionInterface => ({ // +
     type: UsersActionsType.SET_USERS,
     payload
 });

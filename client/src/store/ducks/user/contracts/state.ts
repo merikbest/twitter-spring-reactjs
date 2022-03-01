@@ -1,6 +1,5 @@
 import {LoadingStatus} from "../../../types";
 import {Image, Tweet} from "../../tweets/contracts/state";
-import {ChatMessage} from "../../chatMessages/contracts/state";
 import {BackgroundTheme, ColorScheme} from "../../../../pages/Settings/AccessibilityDisplayLanguages/Display/Display";
 import { AuthUserResponse } from "../../../types/user";
 
@@ -60,7 +59,7 @@ export interface User {
     notificationsCount?: number;
     pinnedTweet?: Tweet;
     bookmarks?: Bookmark[];
-    unreadMessages?: ChatMessage[];
+    unreadMessages?: any[]; // ??
     userMutedList?: User[];
     userBlockedList?: User[];
     followers?: User[];
@@ -92,6 +91,16 @@ export interface Settings {
     privateProfile?: boolean;
     colorScheme?: ColorScheme;
     backgroundColor?: BackgroundTheme;
+}
+
+/////////////////////////////////
+export interface UserRequest {
+    username: string;
+    location: string;
+    website: string;
+    avatar: Image;
+    wallpaper: Image;
+    about: string;
 }
 
 export interface UserState {

@@ -1,7 +1,8 @@
 import {LoadingStatus} from "../../../types";
-import {User} from "../../user/contracts/state";
+import {UserResponse} from "../../../types/user";
 
 export interface UsersSearchState {
-    users: User[];
+    users: UserResponse[];
+    followers: UserResponse[];
     loadingState: LoadingStatus;
 }

@@ -36,10 +36,10 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
     const [selectedColor, setSelectedColor] = useState<ColorScheme>(ColorScheme.BLUE);
 
     useEffect(() => {
-            const background = localStorage.getItem("background");
-            const color = localStorage.getItem("color");
-            setSelectedBackgroundColor((background !== null) ? background as BackgroundTheme : BackgroundTheme.DEFAULT);
-            setSelectedColor((color !== null) ? color  as ColorScheme : ColorScheme.BLUE);
+        const background = localStorage.getItem("background");
+        const color = localStorage.getItem("color");
+        setSelectedBackgroundColor((background !== null) ? background as BackgroundTheme : BackgroundTheme.DEFAULT);
+        setSelectedColor((color !== null) ? color as ColorScheme : ColorScheme.BLUE);
     }, []);
 
     const handleChangeBackgroundColor = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -61,7 +61,7 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
         changeColorScheme(color);
     };
 
-    const ColorSelector: FC<{color: ColorScheme}> = ({color}): JSX.Element => {
+    const ColorSelector: FC<{ color: ColorScheme }> = ({color}): JSX.Element => {
         return (
             <div
                 id={color.toLowerCase()}
@@ -103,7 +103,7 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
                                 {VerifiedIcon}
                             </span>
                             <Typography variant={"subtitle1"} component={"span"}>
-                               @Twitter · 31m
+                                @Twitter · 31m
                             </Typography>
                         </div>
                         <Typography variant={"body1"} component={"div"} className={classes.tweetText}>

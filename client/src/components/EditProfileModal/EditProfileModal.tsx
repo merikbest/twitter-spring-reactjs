@@ -13,13 +13,14 @@ import FormGroup from "@material-ui/core/FormGroup";
 import TweeterInput from "./TweetInput/TweeterInput";
 import {ImageObj} from "../AddTweetForm/AddTweetForm";
 import {selectUserData} from "../../store/ducks/user/selectors";
-import {Image} from "../../store/ducks/tweets/contracts/state";
+
 import {uploadImage} from "../../util/uploadImage";
 import UploadProfileImage from "./UploadProfileImage";
 import {useEditProfileModalStyles} from "./EditProfileModalStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import CloseButton from "../CloseButton/CloseButton";
 import {updatedUserData} from "../../store/ducks/user/actionCreators";
+import {Image} from "../../store/types/common";
 
 interface EditProfileModalProps {
     visible?: boolean;
@@ -63,7 +64,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}): ReactE
         if (wallpaper) {
             wallpaperResponse = await uploadImage(wallpaper.file);
         }
-        dispatch(updatedUserData({...data, avatar: avatarResponse, wallpaper: wallpaperResponse}));
+        dispatch(updatedUserData({...data, avatar: avatarResponse!, wallpaper: wallpaperResponse!}));
         onClose();
     };
 

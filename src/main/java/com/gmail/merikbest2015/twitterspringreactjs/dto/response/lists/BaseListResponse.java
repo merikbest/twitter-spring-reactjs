@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.dto.response.lists;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +17,12 @@ public class BaseListResponse {
     private String altWallpaper;
     private ImageResponse wallpaper;
     private ListOwnerResponse listOwner;
-    private boolean follower;
     private Integer membersSize;
     private Integer followersSize;
+
+    @JsonProperty("isPrivate")
+    private boolean isPrivate;
+
+    @JsonProperty("isFollower")
+    private boolean isFollower;
 }

@@ -8,11 +8,7 @@ import Tab from "@material-ui/core/Tab";
 
 import {selectUserData, selectUserIsLoading} from "../../store/ducks/user/selectors";
 import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
-import {
-    fetchUserProfile,
-    resetUserProfile,
-    resetUserProfileStateAction
-} from "../../store/ducks/userProfile/actionCreators";
+import {fetchUserProfile, resetUserProfileState} from "../../store/ducks/userProfile/actionCreators";
 import {useFollowingFollowersStyles} from "./FollowingFollowersStyles";
 import BackButton from "../../components/BackButton/BackButton";
 import Spinner from "../../components/Spinner/Spinner";
@@ -38,7 +34,7 @@ const FollowingFollowers: FC = (): ReactElement => {
     const isMyProfile = (userProfile?.id === myProfile?.id);
 
     useEffect(() => {
-        dispatch(fetchUserProfile(params.id));
+        dispatch(fetchUserProfile(parseInt(params.id)));
 
         if (params.follow === "following") {
             setActiveTab(0);
@@ -50,7 +46,7 @@ const FollowingFollowers: FC = (): ReactElement => {
 
         return () => {
             dispatch(resetUsersState());
-            dispatch(resetUserProfileStateAction());
+            dispatch(resetUserProfileState());
         };
     }, [params.id, params.follow]);
 
@@ -99,7 +95,7 @@ const FollowingFollowers: FC = (): ReactElement => {
                     <Spinner/>
                 ) : (
                     (activeTab === 0) ? (
-                        (userProfile?.followers?.length !== 0) ? (
+                        (userProfile?.followersSize !== 0) ? (
                             <List>
                                 {users.map((user) => (
                                     <UsersItem key={user.id} item={user} size={UserItemSize.MEDIUM}/>
@@ -134,7 +130,7 @@ const FollowingFollowers: FC = (): ReactElement => {
                                 )}
                             </div>)
                     ) : (
-                        (userProfile?.following?.length !== 0) ? (
+                        (userProfile?.followingSize !== 0) ? (
                             <List>
                                 {users.map((user) => (
                                     <UsersItem key={user.id} item={user} size={UserItemSize.MEDIUM}/>

@@ -4,21 +4,19 @@ import {Link} from 'react-router-dom';
 import {Avatar, Button, Paper, Typography} from "@material-ui/core";
 
 import {useManageMembersItemStyles} from "./ManageMembersItemStyles";
-import {User} from "../../../../../store/ducks/user/contracts/state";
 import {DEFAULT_PROFILE_IMG} from "../../../../../util/url";
-import PopperUserWindow from "../../../../../components/PopperUserWindow/PopperUserWindow";
-import {Lists} from "../../../../../store/ducks/lists/contracts/state";
-import {processListMember} from "../../../../../store/ducks/lists/actionCreators";
 import {HoverUserProps, withHoverUser} from "../../../../../hoc/withHoverUser";
 import {selectUserData} from "../../../../../store/ducks/user/selectors";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
+import {BaseListResponse, ListsOwnerMemberResponse} from "../../../../../store/types/lists";
+import {processUserToListMembers} from "../../../../../store/ducks/listMembers/actionCreators";
 
 interface ManageMembersItemProps<T> {
     item?: T;
-    member?: User;
+    member?: ListsOwnerMemberResponse;
 }
 
-const ManageMembersItem: FC<ManageMembersItemProps<Lists> & HoverUserProps> = (
+const ManageMembersItem: FC<ManageMembersItemProps<BaseListResponse> & HoverUserProps> = (
     {
         item: list,
         member,
@@ -32,11 +30,9 @@ const ManageMembersItem: FC<ManageMembersItemProps<Lists> & HoverUserProps> = (
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
 
-    const isMember = list?.members?.findIndex((listMember) => listMember.id === member?.id) !== -1;
-
     const onClickAddUserToList = (event: React.MouseEvent<HTMLButtonElement>): void => {
         event.preventDefault();
-        dispatch(processListMember({userId: member?.id!, listId: list!.id}));
+        dispatch(processUserToListMembers({userId: member?.id!, listId: list!.id}));
     }
 
     return (
@@ -52,7 +48,7 @@ const ManageMembersItem: FC<ManageMembersItemProps<Lists> & HoverUserProps> = (
                             <Typography variant={"h6"} component={"div"} onMouseEnter={handleHoverPopper}>
                                 {member?.fullName}
                             </Typography>
-                            <PopperUserWindow visible={visiblePopperWindow} user={member!}/>
+                            {/* TODO <PopperUserWindow visible={visiblePopperWindow} user={member!}/>*/}
                             <Typography variant={"subtitle1"} component={"div"}>
                                 @{member?.username}
                             </Typography>
@@ -63,7 +59,7 @@ const ManageMembersItem: FC<ManageMembersItemProps<Lists> & HoverUserProps> = (
                         <div className={classes.buttonWrapper}>
                             {(list?.listOwner.id === myProfile?.id) && (
                                 (member?.id === myProfile?.id) ? null : (
-                                    (!isMember) ? (
+                                    (member?.isMemberInList) ? (
                                         <Button
                                             className={classes.outlinedButton}
                                             onClick={(event) => onClickAddUserToList(event)}

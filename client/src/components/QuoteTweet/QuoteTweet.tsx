@@ -3,16 +3,17 @@ import {ClickAwayListener, IconButton, List, ListItem, Typography} from "@materi
 import classnames from "classnames";
 
 import {useQuoteTweetStyles} from "./QuoteTweetSyles";
-import {Retweet, Tweet} from "../../store/ducks/tweets/contracts/state";
+import {Retweet} from "../../store/ducks/tweets/contracts/state";
 import {QuoteTweetIcon, RetweetIcon, RetweetOutlinedIcon} from "../../icons";
 import QuoteTweetModal from "./QuoteTweetModal/QuoteTweetModal";
 import HoverAction from "../HoverAction/HoverAction";
 import {HoverActions} from "../../hoc/withHoverAction";
 import {useGlobalStyles} from "../../util/globalClasses";
+import {QuoteTweetResponse} from "../../store/types/tweet";
 
 export interface QuoteTweetProps {
-    quoteTweet: Tweet;
-    retweets: Retweet[];
+    quoteTweet: QuoteTweetResponse;
+    retweetsCount: number;
     isTweetRetweetedByMe: boolean;
     handleRetweet: () => void;
     visibleActionWindow?: boolean;
@@ -24,7 +25,7 @@ export interface QuoteTweetProps {
 const QuoteTweet: FC<QuoteTweetProps> = (
     {
         quoteTweet,
-        retweets,
+        retweetsCount,
         isTweetRetweetedByMe,
         handleRetweet,
         visibleRetweetAction,
@@ -79,7 +80,7 @@ const QuoteTweet: FC<QuoteTweetProps> = (
                         actionText={isTweetRetweetedByMe ? "Undo Retweet" : "Retweet"}
                     />
                 </IconButton>
-                {(retweets.length !== 0) && (<span id={"retweets"}>{retweets.length}</span>)}
+                {(retweetsCount !== 0) && (<span id={"retweets"}>{retweetsCount}</span>)}
                 {open && (
                     <div className={classnames(classes.dropdown, globalClasses.svg)}>
                         <List>

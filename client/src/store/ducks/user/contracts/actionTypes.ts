@@ -1,10 +1,9 @@
 import {Action} from "redux";
 
 import {LoadingStatus} from "../../../types";
-import {Settings, UserState} from "./state";
+import {Settings, UserRequest, UserState} from "./state";
 import {RegistrationProps} from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
 import {LoginProps} from "../../../../pages/Login/Login";
-import {AuthUserResponse} from "../../../types/user";
 import {ChatMessageResponse} from "../../../types/chat";
 
 export enum UserActionsType {
@@ -81,7 +80,7 @@ export interface SetUserLoadingStateActionInterface extends Action<UserActionsTy
 
 export interface UpdateUserDataActionInterface extends Action<UserActionsType> { //+
     type: UserActionsType.UPDATE_USER_DATA;
-    payload: AuthUserResponse;
+    payload: UserRequest;
 }
 
 export interface SetFollowersSizeActionInterface extends Action<UserActionsType> { //+
@@ -115,7 +114,7 @@ export interface UnfollowUserActionInterface extends Action<UserActionsType> { /
 
 export interface FetchPinTweetActionInterface extends Action<UserActionsType> { //+
     type: UserActionsType.FETCH_PIN_TWEET;
-    payload: string;
+    payload: number;
 }
 
 export interface AddUserToBlocklistActionInterface extends Action<UserActionsType> { // +

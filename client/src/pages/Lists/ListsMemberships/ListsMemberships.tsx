@@ -25,8 +25,8 @@ const ListsMemberships: FC = (): ReactElement => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        dispatch(fetchUserProfile(params.id));
-        dispatch(fetchUserListsById(params.id));
+        dispatch(fetchUserProfile(parseInt(params.id)));
+        dispatch(fetchUserListsById(parseInt(params.id)));
 
         return () => {
             dispatch(resetListsState());

@@ -7,10 +7,10 @@ import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {formatDate} from "../../util/formatDate";
 import {textFormatter} from "../../util/textFormatter";
 import {useQuoteStyles} from "./QuoteStyles";
-import {Tweet} from "../../store/ducks/tweets/contracts/state";
+import {QuoteTweetResponse} from "../../store/types/tweet";
 
 interface QuoteProps {
-    quoteTweet: Tweet;
+    quoteTweet: QuoteTweetResponse;
     isTweetQuoted?: boolean;
     isFullTweet?: boolean;
 }

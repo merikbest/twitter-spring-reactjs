@@ -1,8 +1,9 @@
 import {makeStyles, Theme} from "@material-ui/core";
 import {Tweet} from "../../store/ducks/tweets/contracts/state";
+import {QuoteTweetResponse} from "../../store/types/tweet";
 
 interface AddTweetFormStyles {
-    quoteTweet?: Tweet;
+    quoteTweet?: QuoteTweetResponse;
     isScheduled?: boolean;
 }
 

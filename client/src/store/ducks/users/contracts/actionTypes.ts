@@ -1,6 +1,6 @@
 import {Action} from "redux";
 import {LoadingStatus} from "../../../types";
-import {BaseUserResponse} from "../../../types/user";
+import {UserResponse} from "../../../types/user";
 
 export enum UsersActionsType {
     FETCH_USERS = 'users/FETCH_USERS', // +
@@ -24,7 +24,7 @@ export interface FetchRelevantUsersActionInterface extends Action<UsersActionsTy
 
 export interface SetUsersActionInterface extends Action<UsersActionsType> { //+
     type: UsersActionsType.SET_USERS;
-    payload: BaseUserResponse[];
+    payload: UserResponse[];
 }
 
 export interface SetFollowToUsersStateActionInterface extends Action<UsersActionsType> { //+

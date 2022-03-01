@@ -2,7 +2,6 @@ package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.ChatMessageRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.MessageWithTweetRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.BaseUserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.chats.ChatMessageResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.chats.ChatResponse;

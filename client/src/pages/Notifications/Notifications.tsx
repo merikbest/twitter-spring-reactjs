@@ -18,11 +18,11 @@ import {
 } from "../../store/ducks/notifications/selectors";
 import {fetchNotifications, resetNotificationState} from "../../store/ducks/notifications/actionCreators";
 import {fetchUserData} from "../../store/ducks/user/actionCreators";
-import {Notification, NotificationType} from "../../store/ducks/notifications/contracts/state";
+import {NotificationType} from "../../store/ducks/notifications/contracts/state";
 import Spinner from "../../components/Spinner/Spinner";
 import {HoverUserProps, withHoverUser} from "../../hoc/withHoverUser";
-import PopperUserWindow from "../../components/PopperUserWindow/PopperUserWindow";
 import {useGlobalStyles} from "../../util/globalClasses";
+import {NotificationResponse} from "../../store/types/notification";
 
 const Notifications: FC<HoverUserProps> = (
     {
@@ -118,10 +118,10 @@ const Notifications: FC<HoverUserProps> = (
                                                                 DEFAULT_PROFILE_IMG
                                                             )}
                                                         />
-                                                        <PopperUserWindow
-                                                            visible={visiblePopperWindow && visibleUser?.id === tweetAuthor.id}
-                                                            user={tweetAuthor}
-                                                        />
+                                                        {/* TODO <PopperUserWindow*/}
+                                                        {/*    visible={visiblePopperWindow && visibleUser?.id === tweetAuthor.id}*/}
+                                                        {/*    user={tweetAuthor}*/}
+                                                        {/*/>*/}
                                                     </div>
                                                 ))}
                                                 <Typography variant={"body1"} component={"div"} className={classes.notificationInfoText}>
@@ -173,10 +173,10 @@ const Notifications: FC<HoverUserProps> = (
                                                             DEFAULT_PROFILE_IMG
                                                         )}
                                                     />
-                                                    <PopperUserWindow
-                                                        visible={visiblePopperWindow && !visibleUser}
-                                                        user={notification.user}
-                                                    />
+                                                    {/* TODO <PopperUserWindow*/}
+                                                    {/*    visible={visiblePopperWindow && !visibleUser}*/}
+                                                    {/*    user={notification.user}*/}
+                                                    {/*/>*/}
                                                 </a>
                                                 <div className={classes.notificationInfo}>
                                                     <Typography variant={"h6"} component={"span"}>
@@ -222,7 +222,7 @@ const Notifications: FC<HoverUserProps> = (
 };
 
 interface NotificationWithLinkProps {
-    notification: Notification,
+    notification: NotificationResponse,
     children: ReactNode
 }
 

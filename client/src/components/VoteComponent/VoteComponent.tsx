@@ -4,14 +4,14 @@ import {Button, Typography} from "@material-ui/core";
 import isAfter from "date-fns/isAfter";
 
 import {useVoteComponentStyles} from "./VoteComponentStyles";
-import {Poll} from "../../store/ducks/tweets/contracts/state";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {vote} from "../../store/ducks/tweets/actionCreators";
 import {voteFormatDate} from "../../util/formatDate";
+import {PollResponse} from "../../store/types/tweet";
 
 interface VoteComponentProps {
-    tweetId: string;
-    poll?: Poll;
+    tweetId: number;
+    poll?: PollResponse;
 }
 
 const VoteComponent: FC<VoteComponentProps> = ({tweetId, poll}): ReactElement => {

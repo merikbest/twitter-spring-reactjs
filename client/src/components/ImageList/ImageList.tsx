@@ -2,9 +2,9 @@ import React, {FC, ReactElement} from 'react';
 import ClearIcon from '@material-ui/icons/Clear';
 import {IconButton} from '@material-ui/core';
 
-import {Image} from "../../store/ducks/tweets/contracts/state";
 import {ImageObj} from "../AddTweetForm/AddTweetForm";
 import {useImageListStyles} from "./ImageListStyles";
+import {Image} from "../../store/types/common";
 
 interface ImageListProps {
     images: Image[] | ImageObj[];

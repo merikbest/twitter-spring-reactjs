@@ -17,7 +17,6 @@ import {
     UnblockIcon,
     UnmuteIcon
 } from "../../../icons";
-import {User} from "../../../store/ducks/user/contracts/state";
 import ListsModal from "../../../components/ListsModal/ListsModal";
 import CopyToClipboard from 'react-copy-to-clipboard';
 import {CLIENT_URL} from "../../../util/url";
@@ -26,9 +25,10 @@ import {SnackbarProps, withSnackbar} from "../../../hoc/withSnackbar";
 import HoverAction from "../../../components/HoverAction/HoverAction";
 import {HoverActions} from "../../../hoc/withHoverAction";
 import {useGlobalStyles} from "../../../util/globalClasses";
+import {UserProfileResponse} from "../../../store/types/user";
 
 interface UserPageActionsProps {
-    user: User;
+    user: UserProfileResponse;
     isUserMuted: boolean;
     isUserBlocked: boolean;
     onMuteUser: () => void;
@@ -102,7 +102,7 @@ const UserPageActions: FC<UserPageActionsProps & SnackbarProps> = (
                 {open ? (
                     <div className={classes.dropdown}>
                         <List>
-                            {!user.privateProfile && (
+                            {!user.isPrivateProfile && (
                                 <>
                                     <ListItem>
                                         <>{TopicIcon}</>
@@ -173,7 +173,8 @@ const UserPageActions: FC<UserPageActionsProps & SnackbarProps> = (
                         </List>
                     </div>
                 ) : null}
-                <ListsModal user={user} visible={visibleListsModal} onClose={onCloseListsModal}/>
+                {/* TODO refactor */}
+                {/*<ListsModal user={user} visible={visibleListsModal} onClose={onCloseListsModal}/>*/}
                 <ActionSnackbar
                     snackBarMessage={"Copied to clipboard"}
                     openSnackBar={openSnackBar!}

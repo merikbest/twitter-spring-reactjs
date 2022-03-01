@@ -60,7 +60,7 @@ export const processFollowRequest = (payload: number): ProcessFollowRequestActio
     payload,
 });
 
-export const resetUserProfileStateAction = (): ResetUserProfileStateActionInterface => ({ // +
+export const resetUserProfileState = (): ResetUserProfileStateActionInterface => ({ // +
     type: UserProfileActionsType.RESET_USER_PROFILE_STATE
 });
 

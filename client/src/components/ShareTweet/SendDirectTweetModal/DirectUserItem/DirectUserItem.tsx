@@ -2,12 +2,12 @@ import React, {FC, ReactElement} from 'react';
 import {Avatar, Typography} from "@material-ui/core";
 
 import {useDirectUserItemStyles} from "./DirectUserItemStyles";
-import {User} from "../../../../store/ducks/user/contracts/state";
 import {DEFAULT_PROFILE_IMG} from "../../../../util/url";
 import {CheckIcon, LockIcon} from "../../../../icons";
+import {UserResponse} from "../../../../store/types/user";
 
 interface DirectUserItemProps {
-    user: User;
+    user: UserResponse;
     selected: boolean;
 }
 
@@ -27,7 +27,7 @@ const DirectUserItem: FC<DirectUserItemProps> = ({user, selected}): ReactElement
                             <Typography variant={"h6"} component={"span"}>
                                 {user?.fullName}
                             </Typography>
-                            {user?.privateProfile && (
+                            {user?.isPrivateProfile && (
                                 <span className={classes.lockIcon}>
                                     {LockIcon}
                                 </span>

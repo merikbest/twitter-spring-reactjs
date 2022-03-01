@@ -7,9 +7,10 @@ import {useQuoteTweetModalStyles} from "./QuoteTweetModalStyles";
 import AddTweetForm from "../../AddTweetForm/AddTweetForm";
 import {Tweet} from "../../../store/ducks/tweets/contracts/state";
 import CloseButton from "../../CloseButton/CloseButton";
+import {QuoteTweetResponse} from "../../../store/types/tweet";
 
 interface QuoteTweetModalProps {
-    quoteTweet: Tweet;
+    quoteTweet: QuoteTweetResponse;
     visible?: boolean;
     onClose: () => void;
 }

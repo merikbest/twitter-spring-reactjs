@@ -10,6 +10,9 @@ export const useManageMembersModalStyles = makeStyles((theme: Theme) => ({
             marginRight: 15,
         },
     },
+    container: {
+        padding: "0px 12px",
+    },
     content: {
         height: 577,
         width: 598,

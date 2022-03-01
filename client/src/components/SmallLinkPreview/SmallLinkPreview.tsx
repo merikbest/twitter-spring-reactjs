@@ -2,11 +2,11 @@ import React, {FC, ReactElement} from 'react';
 import {Typography} from "@material-ui/core";
 
 import {useSmallLinkPreviewStyles} from "./SmallLinkPreviewStyles";
-import {Tweet} from "../../store/ducks/tweets/contracts/state";
 import {LinkIcon, PlayVideoIcon} from "../../icons";
+import {TweetResponse} from "../../store/types/tweet";
 
 interface SmallLinkPreviewProps {
-    tweet: Tweet;
+    tweet: TweetResponse;
     onOpenYouTubeVideo?: () => void;
     isFullTweet?: boolean;
 }

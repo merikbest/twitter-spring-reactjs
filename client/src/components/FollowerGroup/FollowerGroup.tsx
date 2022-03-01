@@ -6,12 +6,13 @@ import {Avatar, Typography} from "@material-ui/core";
 
 import {useFollowerGroupStyles} from "./FollowerGroupStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
-import {User} from "../../store/ducks/user/contracts/state";
 import {selectUserData} from "../../store/ducks/user/selectors";
+import {SameFollowerResponse} from "../../store/types/common";
+import {UserDetailResponse, UserProfileResponse} from "../../store/types/user";
 
 interface FollowerGroupProps {
-    user: User,
-    sameFollowers: User[],
+    user: UserProfileResponse | UserDetailResponse,
+    sameFollowers: SameFollowerResponse[],
 }
 
 const FollowerGroup: FC<FollowerGroupProps> = ({user, sameFollowers}): ReactElement => {

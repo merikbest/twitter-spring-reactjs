@@ -3,7 +3,7 @@ import axios from "axios";
 import {API_URL} from "../../util/url";
 import {ChatMessageRequest, ChatMessageWithTweetRequest} from "../../store/ducks/chatMessages/contracts/state";
 import {ChatMessageResponse, ChatResponse} from "../../store/types/chat";
-import {BaseUserResponse} from "../../store/types/user";
+import {UserResponse} from "../../store/types/user";
 
 export interface Response<T> {
     status: string;
@@ -35,8 +35,8 @@ export const ChatApi = {
         const {data} = await axios.post<Response<ChatMessageResponse[]>>(`${API_URL}/chat/add/message/tweet`, chatMessage);
         return data;
     },
-    async getParticipant(payload: { participantId: number, chatId: number }): Promise<Response<BaseUserResponse>> { // +
-        const {data} = await axios.get<Response<BaseUserResponse>>(`${API_URL}/chat/participant/${payload.participantId}/${payload.chatId}`);
+    async getParticipant(payload: { participantId: number, chatId: number }): Promise<Response<UserResponse>> { // +
+        const {data} = await axios.get<Response<UserResponse>>(`${API_URL}/chat/participant/${payload.participantId}/${payload.chatId}`);
         return data;
     },
     async leaveFromConversation(payload: { participantId: number, chatId: number }): Promise<Response<string>> { // +

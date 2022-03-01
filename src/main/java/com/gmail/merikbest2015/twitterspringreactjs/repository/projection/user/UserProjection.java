@@ -9,8 +9,8 @@ public interface UserProjection {
     String getUsername();
     String getAbout();
     ImageProjection getAvatar();
-    boolean getIsPrivateProfile();
-    boolean getIsMutedDirectMessages();
+    boolean getPrivateProfile();
+    boolean getMutedDirectMessages();
 
     @Value("#{@userServiceImpl.isUserBlockedByMyProfile(target.id)}")
     boolean getIsUserBlocked();

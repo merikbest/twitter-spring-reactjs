@@ -39,6 +39,15 @@ export interface MemberToList {
     listId: number;
 }
 
+export interface AddUserToListsRequest {
+    userId: number;
+    lists: UserIdsRequest[];
+}
+
+export interface UserIdsRequest {
+    id: number;
+}
+
 export interface ListsState {
     lists: ListResponse[];
     userLists: ListUserResponse[];

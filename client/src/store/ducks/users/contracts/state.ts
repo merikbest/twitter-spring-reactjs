@@ -1,7 +1,7 @@
 import {LoadingStatus} from "../../../types";
-import {BaseUserResponse} from "../../../types/user";
+import {UserResponse} from "../../../types/user";
 
 export interface UsersState {
-    users: BaseUserResponse[];
+    users: UserResponse[];
     loadingState: LoadingStatus;
 }

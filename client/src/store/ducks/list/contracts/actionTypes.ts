@@ -1,8 +1,7 @@
 import {Action} from "redux";
 
-import {ListState} from "./state";
+import {EditListsRequest, ListState} from "./state";
 import {LoadingStatus} from "../../../types";
-import {EditLists} from "../../lists/contracts/state";
 import {TweetResponse} from "../../../types/tweet";
 
 export enum ListActionType {
@@ -54,7 +53,7 @@ export interface FetchTweetsByListIdActionInterface extends Action<ListActionTyp
 
 export interface EditListActionInterface extends Action<ListActionType> { // +
     type: ListActionType.EDIT_LIST;
-    payload: EditLists;
+    payload: EditListsRequest;
 }
 
 export interface DeleteListActionInterface extends Action<ListActionType> { // +

@@ -1,14 +1,14 @@
 import React, {FC, ReactElement, useState} from 'react';
-import {Button, CircularProgress, Hidden, Typography} from "@material-ui/core";
+import {Button, Typography} from "@material-ui/core";
 
 import TweetComponent from '../../components/TweetComponent/TweetComponent';
 import {useUserPageStyles} from "./UserPageStyles";
 import AddTweetModal from "../../components/AddTweetModal/AddTweetModal";
-import {Tweet} from "../../store/ducks/tweets/contracts/state";
 import Spinner from "../../components/Spinner/Spinner";
+import {TweetResponse} from "../../store/types/tweet";
 
 interface UserPageTweetsProps {
-    tweets?: Tweet[];
+    tweets?: TweetResponse[];
     isTweetsLoading: boolean;
     activeTab: number;
     userProfileId?: number;

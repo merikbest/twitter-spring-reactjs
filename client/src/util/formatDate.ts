@@ -13,6 +13,7 @@ import differenceInDays from "date-fns/differenceInDays";
 import differenceInHours from "date-fns/differenceInHours";
 import differenceInMinutes from "date-fns/differenceInMinutes";
 import {Poll} from "../store/ducks/tweets/contracts/state";
+import {PollResponse} from "../store/types/tweet";
 
 export const formatDate = (date: Date): string => {
     return format(date, 'MMM d');
@@ -46,7 +47,7 @@ export const formatChatMessageDate = (date: Date): string => {
     return format(date, 'MMM dd, hh:mm a', {locale: usLang});
 };
 
-export const voteFormatDate = (poll: Poll): string => {
+export const voteFormatDate = (poll: PollResponse): string => {
     const diffInDays = differenceInDays(new Date(poll?.dateTime!), Date.now());
     const diffInHours = differenceInHours(new Date(poll?.dateTime!), Date.now());
     const diffInMinutes = differenceInMinutes(new Date(poll?.dateTime!), Date.now());

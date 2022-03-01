@@ -4,14 +4,17 @@ import {Typography} from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 
 import BackButton from "../../../components/BackButton/BackButton";
-import {Notification, NotificationType} from "../../../store/ducks/notifications/contracts/state";
+import {NotificationType} from "../../../store/ducks/notifications/contracts/state";
 import TweetComponent from "../../../components/TweetComponent/TweetComponent";
 import UsersItem, {UserItemSize} from "../../../components/UsersItem/UsersItem";
 import {useGlobalStyles} from "../../../util/globalClasses";
+import {NotificationResponse} from "../../../store/types/notification";
+import {TweetResponse} from "../../../store/types/tweet";
+import {UserResponse} from "../../../store/types/user";
 
 const NotificationInfo: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
-    const location = useLocation<{ notification: Notification; }>();
+    const location = useLocation<{ notification: NotificationResponse; }>();
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -31,9 +34,10 @@ const NotificationInfo: FC = (): ReactElement => {
                 </div>
             </Paper>
             <div className={globalClasses.contentWrapper}>
-                <TweetComponent item={location.state.notification.tweet}/>
+                {/* TODO check interfaces fields */}
+                <TweetComponent item={location.state.notification.tweet as unknown as TweetResponse}/>
             </div>
-            <UsersItem item={location.state.notification.user} size={UserItemSize.MEDIUM}/>
+            <UsersItem item={location.state.notification.user as UserResponse} size={UserItemSize.MEDIUM}/>
         </Paper>
     );
 };
