@@ -5,6 +5,7 @@ import {
     FetchUsersSearchByNameActionInterface,
     ResetUsersStateActionInterface,
     SetFollowersActionInterface,
+    SetFollowToUsersSearchStateActionInterface,
     SetUsersSearchActionInterface,
     SetUsersSearchLoadingStatusActionInterface,
     UsersSearchActionsType
@@ -18,6 +19,11 @@ export const setUsersSearch = (payload: UsersSearchState["users"]): SetUsersSear
 
 export const setFollowers = (payload: UsersSearchState["followers"]): SetFollowersActionInterface => ({ // +
     type: UsersSearchActionsType.SET_FOLLOWERS,
+    payload
+});
+
+export const setFollowToUsersSearchState = (payload: { userId: number; isFollower: boolean; }): SetFollowToUsersSearchStateActionInterface => ({ // +
+    type: UsersSearchActionsType.SET_FOLLOW_TO_USERS_SEARCH_STATE,
     payload
 });
 

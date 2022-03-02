@@ -1,45 +1,26 @@
 import React, {ComponentType, useState} from "react";
+import {useDispatch} from "react-redux";
 import axios from "axios";
 
-import {User, UserProjection} from "../store/ducks/user/contracts/state";
-import {UserApi} from "../services/api/userApi";
+import {fetchUserDetail} from "../store/ducks/userDetail/actionCreators";
 
 export interface HoverUserProps {
-    // userProjection?: UserProjection;
-    visibleUser?: any;
     visiblePopperWindow?: boolean;
-    handleHoverPopper?: () => void;
-    // handleHoverPopperProjection? : (userId: number) => void;
-    handleHoverPopperWithUser?: (visibleUser: any) => void;
+    handleHoverPopper?: (userId: number) => void;
     handleLeavePopper?: () => void;
 }
 
 export const withHoverUser = <T extends HoverUserProps>(Component: ComponentType<T>) => (props: T) => {
-    const [userProjection, setUserProjection] = useState<UserProjection>();
-    const [visibleUser, setVisibleUser] = useState<User | undefined>(undefined);
+    const dispatch = useDispatch();
     const [visiblePopperWindow, setVisiblePopperWindow] = useState<boolean>(false);
     const [delayHandler, setDelayHandler] = useState<any>(null);
     const cancelTokenSource = axios.CancelToken.source();
 
-    const handleHoverPopperWithUser = (visibleUser: User): void => {
-        setVisibleUser(visibleUser);
-        handleHoverPopper();
-    };
-
-    const handleHoverPopperProjection = (userId: number): void => {
+    const handleHoverPopper = (userId: number): void => {
         setDelayHandler(setTimeout(() => {
-            UserApi.getUserDetails(userId, cancelTokenSource)
-                .then(response => {
-                    setUserProjection(response);
-                });
+            dispatch(fetchUserDetail({userId, cancelTokenSource}));
         }, 777));
 
-        setDelayHandler(setTimeout(() => {
-            setVisiblePopperWindow(true);
-        }, 1337));
-    };
-
-    const handleHoverPopper = (): void => {
         setDelayHandler(setTimeout(() => {
             setVisiblePopperWindow(true);
         }, 1337));
@@ -49,18 +30,13 @@ export const withHoverUser = <T extends HoverUserProps>(Component: ComponentType
         cancelTokenSource.cancel();
         clearTimeout(delayHandler);
         setVisiblePopperWindow(false);
-        setVisibleUser(undefined);
     };
 
     return (
         <Component
             {...props as T}
-            // userProjection={userProjection}
-            // handleHoverPopperProjection={handleHoverPopperProjection}
-            visibleUser={visibleUser}
             visiblePopperWindow={visiblePopperWindow}
             handleHoverPopper={handleHoverPopper}
-            handleHoverPopperWithUser={handleHoverPopperWithUser}
             handleLeavePopper={handleLeavePopper}
         />
     );

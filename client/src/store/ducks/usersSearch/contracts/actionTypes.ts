@@ -5,6 +5,7 @@ import {UsersSearchState} from "./state";
 export enum UsersSearchActionsType {
     SET_USERS = 'usersSearch/SET_USERS', // +
     SET_FOLLOWERS = 'usersSearch/SET_FOLLOWERS', // +
+    SET_FOLLOW_TO_USERS_SEARCH_STATE = 'usersSearch/SET_FOLLOW_TO_USERS_SEARCH_STATE', // +
     FETCH_USERS  = 'usersSearch/FETCH_USERS', // +
     FETCH_USERS_BY_NAME  = 'usersSearch/FETCH_USERS_BY_NAME', // +
     FETCH_FOLLOWERS  = 'usersSearch/FETCH_FOLLOWERS', // +
@@ -21,6 +22,11 @@ export interface SetUsersSearchActionInterface extends Action<UsersSearchActions
 export interface SetFollowersActionInterface extends Action<UsersSearchActionsType> { // +
     type: UsersSearchActionsType.SET_FOLLOWERS;
     payload: UsersSearchState["followers"];
+}
+
+export interface SetFollowToUsersSearchStateActionInterface extends Action<UsersSearchActionsType> { // +
+    type: UsersSearchActionsType.SET_FOLLOW_TO_USERS_SEARCH_STATE;
+    payload: { userId: number; isFollower: boolean; };
 }
 
 export interface FetchUsersSearchActionInterface extends Action<UsersSearchActionsType> { // +
@@ -54,5 +60,6 @@ export interface SetUsersSearchLoadingStatusActionInterface extends Action<Users
 export type UsersSearchActions =
     | SetUsersSearchActionInterface // +
     | SetFollowersActionInterface // +
+    | SetFollowToUsersSearchStateActionInterface // +
     | ResetUsersStateActionInterface // +
     | SetUsersSearchLoadingStatusActionInterface; // +

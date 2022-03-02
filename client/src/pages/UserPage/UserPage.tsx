@@ -26,7 +26,7 @@ import {
 import {useUserPageStyles} from "./UserPageStyles";
 import BackButton from "../../components/BackButton/BackButton";
 import EditProfileModal from "../../components/EditProfileModal/EditProfileModal";
-import {addUserToBlocklist, addUserToMuteList} from "../../store/ducks/user/actionCreators";
+import {addUserToBlocklist, addUserToMuteList, followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 import {selectUserData, selectUserIsLoaded} from "../../store/ducks/user/selectors";
 import {
     selectIsUserTweetsLoaded,
@@ -157,7 +157,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
         return () => {
             dispatch(resetUserTweets());
         };
-    }, [userProfile]);
+    }, [isUserProfileSuccessLoaded]);
 
     useEffect(() => {
         setBtnText(userProfile?.isWaitingForApprove ? ("Pending") : (userProfile?.isUserBlocked ? "Blocked" : "Following"));
@@ -232,11 +232,9 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
             dispatch(processFollowRequest(userProfile.id!));
         } else {
             if (userProfile?.isFollower) {
-                // dispatch(unfollowUserProfile(userProfile!));
-                // dispatch(unfollow(userProfile!.id));
+                dispatch(unfollowUser({userId: userProfile?.id!}));
             } else {
-                // dispatch(followUserProfile(userProfile!));
-                // dispatch(follow(userProfile!.id));
+                dispatch(followUser({userId: userProfile?.id!}));
             }
         }
     };
@@ -361,7 +359,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                                 handleLeaveAction={handleLeaveAction}
                                             />
                                             {userProfile?.isUserBlocked && (
-                                                !userProfile?.mutedDirectMessages || userProfile?.isFollower ? (
+                                                !userProfile?.isMutedDirectMessages || userProfile?.isFollower ? (
                                                     <IconButton
                                                         className={globalClasses.userPageIconButton}
                                                         onClick={handleClickAddUserToChat}

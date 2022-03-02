@@ -22,6 +22,14 @@ export const usersSearchReducer = produce((draft: Draft<UsersSearchState>, actio
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
+        case UsersSearchActionsType.SET_FOLLOW_TO_USERS_SEARCH_STATE: // +
+            const userIndex = draft.users.findIndex((user) => user.id === action.payload.userId);
+            if (userIndex !== -1) draft.users[userIndex].isFollower = action.payload.isFollower;
+            const followerIndex = draft.followers.findIndex((user) => user.id === action.payload.userId);
+            if (followerIndex !== -1) draft.followers[followerIndex].isFollower = action.payload.isFollower;
+            draft.loadingState = LoadingStatus.LOADED;
+            break;
+
         case UsersSearchActionsType.RESET_USERS_STATE: // +
             draft.users = [];
             draft.loadingState = LoadingStatus.LOADING;

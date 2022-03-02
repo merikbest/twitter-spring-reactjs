@@ -12,7 +12,7 @@ import {fetchUserProfile, resetUserProfileState} from "../../store/ducks/userPro
 import {useFollowingFollowersStyles} from "./FollowingFollowersStyles";
 import BackButton from "../../components/BackButton/BackButton";
 import Spinner from "../../components/Spinner/Spinner";
-import {selectUsersSearch, selectUsersSearchIsLoading} from "../../store/ducks/usersSearch/selectors";
+import {selectFollowers, selectUsersSearchIsLoading} from "../../store/ducks/usersSearch/selectors";
 import {fetchFollowers, fetchFollowings, resetUsersState} from "../../store/ducks/usersSearch/actionCreators";
 import UsersItem, {UserItemSize} from "../../components/UsersItem/UsersItem";
 import {useGlobalStyles} from "../../util/globalClasses";
@@ -28,7 +28,7 @@ const FollowingFollowers: FC = (): ReactElement => {
     const userProfile = useSelector(selectUserProfile);
     const isUsersLoading = useSelector(selectUsersSearchIsLoading);
     const isUserProfileLoading = useSelector(selectUserIsLoading);
-    const users = useSelector(selectUsersSearch);
+    const users = useSelector(selectFollowers);
     const [activeTab, setActiveTab] = useState<number>(0);
 
     const isMyProfile = (userProfile?.id === myProfile?.id);

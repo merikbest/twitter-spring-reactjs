@@ -122,7 +122,7 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
                     text={((myProfile?.id === userProfile?.id) ? ("You") : (userProfile?.fullName)) + " Retweeted"}
                 />
             ) : null}
-            {((myProfile?.id === userProfile?.id && activeTab === 0) && myProfile?.pinnedTweetId === tweet?.id) && (
+            {((myProfile?.pinnedTweetId === tweet?.id || userProfile?.pinnedTweetId === tweet?.id) && activeTab === 0) && (
                 <TweetActionResult
                     action={TweetActionResults.PIN}
                     text={"Pinned Tweet"}
@@ -140,7 +140,7 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
                     <div className={classes.header}>
                         <a
                             onClick={handleClickUser}
-                            onMouseEnter={handleHoverPopper}
+                            onMouseEnter={() => handleHoverPopper!(tweet?.user.id!)}
                             onMouseLeave={handleLeavePopper}
                         >
                             <Typography variant={"h6"} component={"span"}>
@@ -157,7 +157,7 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
                             <Typography variant={"subtitle1"} component={"span"}>
                                 {formatDate(new Date(tweet!.dateTime))}
                             </Typography>
-                            {/* TODO <PopperUserWindow visible={visiblePopperWindow} user={tweet!.user} isTweetComponent={true}/>*/}
+                            <PopperUserWindow visible={visiblePopperWindow} isTweetComponent={true}/>
                         </a>
                         <TweetComponentActions
                             tweet={tweet!}
@@ -236,7 +236,7 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
                                 <>{ReplyIcon}</>
                                 <HoverAction visible={visibleHoverAction?.visibleReplyAction} actionText={"Reply"}/>
                             </IconButton>
-                            <span>{tweet?.repliesCount}</span>
+                            {(tweet?.repliesCount !== 0) && (<span>{tweet?.repliesCount}</span>)}
                         </div>
                         <QuoteTweet
                             quoteTweet={tweet!}
@@ -264,7 +264,7 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
                                     actionText={tweet?.isTweetLiked ? "Unlike" : "Like"}
                                 />
                             </IconButton>
-                            <span>{tweet?.likedTweetsCount}</span>
+                            {(tweet?.likedTweetsCount !== 0) && (<span>{tweet?.likedTweetsCount}</span>)}
                         </div>
                         <ShareTweet
                             tweet={tweet!}

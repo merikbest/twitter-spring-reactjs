@@ -23,14 +23,18 @@ public class UserProfileResponse {
     private Long mediaTweetCount;
     private Long likeCount;
     private Long notificationsCount;
-    private boolean mutedDirectMessages;
-    private boolean privateProfile;
     private ImageResponse avatar;
     private ImageResponse wallpaper;
     private Integer pinnedTweetId;
     private Integer followersSize;
     private Integer followingSize;
     private List<SameFollowerResponse> sameFollowers;
+
+    @JsonProperty("isMutedDirectMessages")
+    private boolean mutedDirectMessages;
+
+    @JsonProperty("isPrivateProfile")
+    private boolean privateProfile;
 
     @JsonProperty("isUserMuted")
     private boolean isUserMuted;

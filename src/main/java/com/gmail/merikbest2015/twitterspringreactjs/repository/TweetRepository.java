@@ -85,8 +85,8 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "ORDER BY t.dateTime DESC")
     List<TweetsUserProjection> findRepliesByUserId(Long userId);
 
-    @Query("SELECT tweet FROM User user LEFT JOIN user.pinnedTweet tweet WHERE user.id = :userId")
-    Optional<TweetUserProjection> getPinnedTweetByUserId(Long userId);
+    @Query("SELECT pinnedTweet as tweet FROM User user LEFT JOIN user.pinnedTweet pinnedTweet WHERE user.id = :userId")
+    Optional<TweetsUserProjection> getPinnedTweetByUserId(Long userId);
 
     @Query("SELECT notificationTweet as tweet " +
             "FROM User user " +

@@ -72,19 +72,30 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
             break;
 
         case TweetsActionType.SET_FOLLOW_TO_TWEETS_STATE: // +
-            const followUserTweetIndex = draft.items.findIndex((tweet) => tweet.id !== action.payload.tweetId);
-            if (followUserTweetIndex !== -1) draft.items[followUserTweetIndex].user.isFollower = action.payload.isFollower;
+            if (action.payload.tweetId !== undefined) {
+                const followUserTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.tweetId);
+                if (followUserTweetIndex !== -1) draft.items[followUserTweetIndex].user.isFollower = action.payload.isFollower;
+            } else {
+                draft.items = draft.items.map((tweet) => {
+                    if (tweet.user.id === action.payload.userId) {
+                        tweet.user.isFollower = action.payload.isFollower
+                        return tweet;
+                    } else {
+                        return tweet;
+                    }
+                });
+            }
             draft.loadingState = LoadingStatus.LOADED
             break;
 
         case TweetsActionType.SET_BLOCKED_TO_TWEETS_STATE: // +
-            const blockedUserTweetIndex = draft.items.findIndex((tweet) => tweet.id !== action.payload.tweetId);
+            const blockedUserTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.tweetId);
             if (blockedUserTweetIndex !== -1) draft.items[blockedUserTweetIndex].user.isUserBlocked = action.payload.isUserBlocked;
             draft.loadingState = LoadingStatus.LOADED
             break;
 
         case TweetsActionType.SET_MUTED_TO_TWEETS_STATE: // +
-            const mutedUserTweetIndex = draft.items.findIndex((tweet) => tweet.id !== action.payload.tweetId);
+            const mutedUserTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.tweetId);
             if (mutedUserTweetIndex !== -1) draft.items[mutedUserTweetIndex].user.isUserMuted = action.payload.isUserMuted;
             draft.loadingState = LoadingStatus.LOADED
             break;

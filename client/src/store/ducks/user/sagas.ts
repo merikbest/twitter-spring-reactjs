@@ -25,7 +25,6 @@ import {
     FetchSignUpActionInterface,
     FollowUserActionInterface,
     StartUseTwitterActionInterface,
-    UnfollowUserActionInterface,
     UpdateBackgroundColorActionInterface,
     UpdateColorSchemeActionInterface,
     UpdateCountryActionInterface,
@@ -51,6 +50,9 @@ import {setBlockedUsersState, setFollowToUsersState, setMutedUsersState} from ".
 import {setBlockedToTweetState, setFollowToTweetState, setMutedToTweetState} from "../tweet/actionCreators";
 import {NotificationUserResponse} from "../../types/notification";
 import {setBlockedToTweetsState, setFollowToTweetsState, setMutedToTweetsState} from "../tweets/actionCreators";
+import {setFollowToUsersSearchState} from "../usersSearch/actionCreators";
+import {setFollowToUserDetail} from "../userDetail/actionCreators";
+import {setFollowToUsersTweetState} from "../userTweets/actionCreators";
 
 export function* updateUserDataRequest({payload}: UpdateUserDataActionInterface) { // +
     try {
@@ -99,33 +101,18 @@ export function* fetchUserDataRequest() { //+
     }
 }
 
-export function* followUserRequest({payload}: FollowUserActionInterface) { //+
+export function* processFollowUserRequest({payload}: FollowUserActionInterface) { //+
     try {
         const item: NotificationUserResponse = yield call(UserApi.follow, payload.userId);
+        yield put(setFollowToTweetsState({userId: item.id, tweetId: payload.tweetId!, isFollower: item.isFollower}));
+        yield put(setFollowToUsersTweetState({userId: item.id, tweetId: payload.tweetId!, isFollower: item.isFollower}));
         yield put(setFollowToUserProfile(item.isFollower));
+        yield put(setFollowToUserDetail(item.isFollower));
         yield put(setFollowToUsersState({userId: item.id, isFollower: item.isFollower}));
+        yield put(setFollowToUsersSearchState({userId: item.id, isFollower: item.isFollower}));
         yield put(setFollowToTweetState(item.isFollower));
-
-        if (payload.tweetId !== undefined) {
-            yield put(setFollowToTweetsState({tweetId: payload.tweetId, isFollower: item.isFollower}));
-        }
     } catch (error) {
-        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
-    }
-}
-
-export function* unfollowUserRequest({payload}: UnfollowUserActionInterface) { //+
-    try {
-        const item: NotificationUserResponse = yield call(UserApi.follow, payload.userId);
-        yield put(setFollowToUserProfile(item.isFollower));
-        yield put(setFollowToUsersState({userId: item.id, isFollower: item.isFollower}));
-        yield put(setFollowToTweetState(item.isFollower));
-
-        if (payload.tweetId !== undefined) {
-            yield put(setFollowToTweetsState({tweetId: payload.tweetId, isFollower: item.isFollower}));
-        }
-    } catch (error) {
-        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+        // yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
 }
 
@@ -297,8 +284,8 @@ export function* userSaga() {
     yield takeLatest(UserActionsType.FETCH_SIGN_IN, fetchSignInRequest); //+
     yield takeLatest(UserActionsType.FETCH_SIGN_UP, fetchSignUpRequest); //+
     yield takeLatest(UserActionsType.FETCH_USER_DATA, fetchUserDataRequest); //+
-    yield takeLatest(UserActionsType.FOLLOW_USER, followUserRequest);// +
-    yield takeLatest(UserActionsType.UNFOLLOW_USER, unfollowUserRequest); //+
+    yield takeLatest(UserActionsType.FOLLOW_USER, processFollowUserRequest);// +
+    yield takeLatest(UserActionsType.UNFOLLOW_USER, processFollowUserRequest); //+
     yield takeLatest(UserActionsType.START_USE_TWITTER, startUseTwitterRequest); // +
     yield takeLatest(UserActionsType.FETCH_PIN_TWEET, fetchPinTweetRequest);
     yield takeLatest(UserActionsType.FETCH_READ_MESSAGES, fetchReadMessagesRequest); // +

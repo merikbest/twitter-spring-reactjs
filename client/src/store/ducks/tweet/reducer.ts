@@ -37,22 +37,22 @@ export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetActi
 
         case TweetActionType.SET_FOLLOW_TO_TWEET_STATE: // +
             draft.tweet!.user.isFollower = action.payload;
-            draft.loadingState = LoadingStatus.LOADING;
+            draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
         case TweetActionType.SET_BLOCKED_TO_TWEET_STATE: // +
             draft.tweet!.user.isUserBlocked = action.payload;
-            draft.loadingState = LoadingStatus.LOADING;
+            draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
         case TweetActionType.SET_MUTED_TO_TWEET_STATE: // +
             draft.tweet!.user.isUserMuted = action.payload;
-            draft.loadingState = LoadingStatus.LOADING;
+            draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
         case TweetActionType.SET_BOOKMARKED_TWEET: // +
             draft.tweet!.isTweetBookmarked = action.payload;
-            draft.loadingState = LoadingStatus.LOADING;
+            draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
         case TweetActionType.RESET_TWEET_STATE: // +
@@ -67,7 +67,7 @@ export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetActi
         // liked and retweeted users
         case TweetActionType.SET_LIKED_USERS: // +
             draft.likedUsers = action.payload;
-            draft.loadingState = LoadingStatus.SUCCESS;
+            draft.likedUsersLoadingState = LoadingStatus.SUCCESS;
             break;
 
         case TweetActionType.RESET_LIKED_USERS_STATE: // +

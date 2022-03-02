@@ -23,13 +23,12 @@ import Spinner from "../../components/Spinner/Spinner";
 import {HoverUserProps, withHoverUser} from "../../hoc/withHoverUser";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {NotificationResponse} from "../../store/types/notification";
+import PopperUserWindow from "../../components/PopperUserWindow/PopperUserWindow";
 
 const Notifications: FC<HoverUserProps> = (
     {
-        visibleUser,
         visiblePopperWindow,
         handleHoverPopper,
-        handleHoverPopperWithUser,
         handleLeavePopper
     }
 ): ReactElement => {
@@ -106,7 +105,7 @@ const Notifications: FC<HoverUserProps> = (
                                                     <div
                                                         key={tweetAuthor.id}
                                                         className={classes.notificationAvatarWrapper}
-                                                        onMouseEnter={() => handleHoverPopperWithUser!(tweetAuthor)}
+                                                        onMouseEnter={() => handleHoverPopper!(tweetAuthor?.id!)}
                                                         onMouseLeave={handleLeavePopper}
                                                     >
                                                         <Avatar
@@ -118,10 +117,8 @@ const Notifications: FC<HoverUserProps> = (
                                                                 DEFAULT_PROFILE_IMG
                                                             )}
                                                         />
-                                                        {/* TODO <PopperUserWindow*/}
-                                                        {/*    visible={visiblePopperWindow && visibleUser?.id === tweetAuthor.id}*/}
-                                                        {/*    user={tweetAuthor}*/}
-                                                        {/*/>*/}
+                                                        {/*visible={visiblePopperWindow && visibleUser?.id === tweetAuthor.id}*/}
+                                                        <PopperUserWindow visible={visiblePopperWindow}/>
                                                     </div>
                                                 ))}
                                                 <Typography variant={"body1"} component={"div"} className={classes.notificationInfoText}>
@@ -161,7 +158,7 @@ const Notifications: FC<HoverUserProps> = (
                                             <div style={{flex: 1}}>
                                                 <a href={`/user/${notification.user.id!}`}
                                                    onClick={event => handleClickUser(notification.user.id!, event)}
-                                                   onMouseEnter={handleHoverPopper}
+                                                   onMouseEnter={() => handleHoverPopper!(notification.user.id!)}
                                                    onMouseLeave={handleLeavePopper}
                                                 >
                                                     <Avatar
@@ -173,10 +170,8 @@ const Notifications: FC<HoverUserProps> = (
                                                             DEFAULT_PROFILE_IMG
                                                         )}
                                                     />
-                                                    {/* TODO <PopperUserWindow*/}
-                                                    {/*    visible={visiblePopperWindow && !visibleUser}*/}
-                                                    {/*    user={notification.user}*/}
-                                                    {/*/>*/}
+                                                    {/*visible={visiblePopperWindow && !visibleUser}*/}
+                                                    <PopperUserWindow visible={visiblePopperWindow}/>
                                                 </a>
                                                 <div className={classes.notificationInfo}>
                                                     <Typography variant={"h6"} component={"span"}>

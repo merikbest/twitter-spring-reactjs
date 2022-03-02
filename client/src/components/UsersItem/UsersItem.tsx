@@ -129,7 +129,11 @@ const UsersItem: FC<UsersItemProps<UserResponse> & SnackbarProps & HoverUserProp
                             src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}
                         />
                     </ListItemAvatar>
-                    <div className={classes.userInfo} onMouseEnter={handleHoverPopper} onMouseLeave={handleLeavePopper}>
+                    <div
+                        className={classes.userInfo}
+                        onMouseEnter={() => handleHoverPopper!(user?.id!)}
+                        onMouseLeave={handleLeavePopper}
+                    >
                         <Typography variant={"h6"} display={"inline"}>
                             {user?.fullName}
                         </Typography>
@@ -148,13 +152,12 @@ const UsersItem: FC<UsersItemProps<UserResponse> & SnackbarProps & HoverUserProp
                                 </Typography>
                             )
                         )}
-                        {/* TODO <PopperUserWindow (new state and action) */}
-                        {/*<PopperUserWindow visible={visiblePopperWindow} user={user!}/>*/}
+                        <PopperUserWindow visible={visiblePopperWindow}/>
                     </div>
                     <div className={classes.buttonWrapper}>
                         {(myProfile?.id === user?.id) ? null : (
                             (user?.isMyProfileBlocked) ? null : (
-                                (user?.isFollower) ? (
+                                (!user?.isFollower) ? (
                                     (user?.isUserBlocked) ? (
                                         <Button
                                             className={classNames(classes.containedButton, classes.blockButton)}

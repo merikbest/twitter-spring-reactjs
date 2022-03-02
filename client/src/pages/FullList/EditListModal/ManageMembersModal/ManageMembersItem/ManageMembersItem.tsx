@@ -10,6 +10,7 @@ import {selectUserData} from "../../../../../store/ducks/user/selectors";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
 import {BaseListResponse, ListsOwnerMemberResponse} from "../../../../../store/types/lists";
 import {processUserToListMembers} from "../../../../../store/ducks/listMembers/actionCreators";
+import PopperUserWindow from "../../../../../components/PopperUserWindow/PopperUserWindow";
 
 interface ManageMembersItemProps<T> {
     item?: T;
@@ -45,10 +46,14 @@ const ManageMembersItem: FC<ManageMembersItemProps<BaseListResponse> & HoverUser
                 <div style={{flex: 1}}>
                     <div className={classes.header}>
                         <div onMouseLeave={handleLeavePopper} className={classes.headerUserInfo}>
-                            <Typography variant={"h6"} component={"div"} onMouseEnter={handleHoverPopper}>
+                            <Typography
+                                variant={"h6"}
+                                component={"div"}
+                                onMouseEnter={() => handleHoverPopper!(member?.id!)}
+                            >
                                 {member?.fullName}
                             </Typography>
-                            {/* TODO <PopperUserWindow visible={visiblePopperWindow} user={member!}/>*/}
+                            <PopperUserWindow visible={visiblePopperWindow}/>
                             <Typography variant={"subtitle1"} component={"div"}>
                                 @{member?.username}
                             </Typography>

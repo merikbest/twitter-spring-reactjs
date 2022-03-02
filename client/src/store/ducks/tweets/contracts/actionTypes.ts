@@ -41,7 +41,7 @@ export enum TweetsActionType {
 
 export interface SetFollowToTweetsStateActionInterface extends Action<TweetsActionType> { //+
     type: TweetsActionType.SET_FOLLOW_TO_TWEETS_STATE;
-    payload: { tweetId: number; isFollower: boolean; };
+    payload: { userId: number; tweetId: number; isFollower: boolean; };
 }
 
 export interface SetBlockedToTweetsStateActionInterface extends Action<TweetsActionType> { //+

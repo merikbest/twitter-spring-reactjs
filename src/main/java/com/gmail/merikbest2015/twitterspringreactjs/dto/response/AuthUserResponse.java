@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gmail.merikbest2015.twitterspringreactjs.model.BackgroundColorType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ColorSchemeType;
 import lombok.Getter;
@@ -31,7 +32,9 @@ public class AuthUserResponse {
     private boolean active;
     private boolean profileCustomized;
     private boolean profileStarted;
+    @JsonProperty("isMutedDirectMessages")
     private boolean mutedDirectMessages;
+    @JsonProperty("isPrivateProfile")
     private boolean privateProfile;
     private BackgroundColorType backgroundColor;
     private ColorSchemeType colorScheme;

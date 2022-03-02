@@ -11,16 +11,17 @@ import {CompatClient, Stomp} from "@stomp/stompjs";
 import {compose} from "redux";
 
 import {
+    selectIsRepliesLoading,
     selectIsTweetError,
     selectIsTweetLoadedSuccess,
-    selectIsTweetLoading,
+    selectIsTweetLoading, selectReplies,
     selectTweetData
 } from '../../store/ducks/tweet/selectors';
 import {
-    fetchTweetData,
+    fetchReplies,
+    fetchTweetData, resetRepliesState,
     resetTweetState,
     setTweetData,
-    setTweetLoadingState
 } from '../../store/ducks/tweet/actionCreators';
 import {likeTweet, retweet} from "../../store/ducks/tweets/actionCreators";
 import {selectUserData} from "../../store/ducks/user/selectors";
@@ -79,9 +80,11 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
     const dispatch = useDispatch();
     const location = useLocation();
     const tweetData = useSelector(selectTweetData);
+    const replies = useSelector(selectReplies);
     const myProfile = useSelector(selectUserData);
-    const isLoading = useSelector(selectIsTweetLoading);
-    const isLoadedSuccess = useSelector(selectIsTweetLoadedSuccess);
+    const isTweetLoading = useSelector(selectIsTweetLoading);
+    const isTweetLoadedSuccess = useSelector(selectIsTweetLoadedSuccess);
+    const isRepliesLoading = useSelector(selectIsRepliesLoading);
     const isError = useSelector(selectIsTweetError);
     const params = useParams<{ id: string }>();
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
@@ -110,6 +113,14 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
             dispatch(resetTweetState());
         };
     }, [dispatch, params.id]);
+
+    useEffect(() => {
+        dispatch(fetchReplies(parseInt(params.id)));
+
+        return () => {
+            dispatch(resetRepliesState());
+        };
+    }, [isTweetLoadedSuccess]);
 
     const handleLike = (): void => {
         dispatch(likeTweet(parseInt(params.id)));
@@ -145,23 +156,17 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
         setVisibleAnalyticsModalWindow(false);
     };
 
-    if (isLoading) {
+    if (isTweetLoading) {
         return <Spinner paddingTop={200}/>;
-    } else if (tweetData !== undefined && isLoadedSuccess) {
+    } else if (tweetData !== undefined && isTweetLoadedSuccess) {
         return (
             <div className={globalClasses.contentWrapper}>
                 <Paper className={classes.container}>
                     {tweetData.isTweetRetweeted && (
-                        <TweetActionResult
-                            action={TweetActionResults.RETWEET}
-                            text={((myProfile?.id === tweetData.user.id) ? ("You") : (tweetData.user.fullName)) + " Retweeted"}
-                        />
+                        <TweetActionResult action={TweetActionResults.RETWEET} text={"You Retweeted"}/>
                     )}
                     {(myProfile?.pinnedTweetId === tweetData.id) && (
-                        <TweetActionResult
-                            action={TweetActionResults.PIN}
-                            text={"Pinned Tweet"}
-                        />
+                        <TweetActionResult action={TweetActionResults.PIN} text={"Pinned Tweet"}/>
                     )}
                     <div className={classes.header}>
                         <div className={classes.headerWrapper}>
@@ -172,7 +177,7 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                             />
                             <div
                                 className={classes.headerUserInfo}
-                                onMouseEnter={handleHoverPopper}
+                                onMouseEnter={() => handleHoverPopper!(tweetData.user.id)}
                                 onMouseLeave={handleLeavePopper}
                             >
                                 <Link to={`/user/${tweetData.user.id}`}>
@@ -185,7 +190,7 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                                         @{tweetData.user.username}
                                     </Typography>
                                 </div>
-                                {/* TODO <PopperUserWindow visible={visiblePopperWindow} user={tweetData.user}/>*/}
+                                <PopperUserWindow visible={visiblePopperWindow}/>
                             </div>
                         </div>
                         <TweetComponentActions
@@ -383,7 +388,9 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                     />
                 </Paper>
                 <div className={classes.divider}/>
-                {/* TODO fetch replies {tweetData.replies.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}*/}
+                {isRepliesLoading ? <Spinner/> : (
+                    replies.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)
+                )}
             </div>
         );
     } else if (tweetData === undefined && isError) {

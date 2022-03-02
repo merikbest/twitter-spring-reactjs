@@ -38,7 +38,7 @@ import {LoadingStatus} from "../../types";
 import {TweetResponse} from "../../types/tweet";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-export const setFollowToTweetsState = (payload: { tweetId: number; isFollower: boolean; }): SetFollowToTweetsStateActionInterface => ({ // +
+export const setFollowToTweetsState = (payload: { userId: number, tweetId: number; isFollower: boolean; }): SetFollowToTweetsStateActionInterface => ({ // +
     type: TweetsActionType.SET_FOLLOW_TO_TWEETS_STATE,
     payload
 });

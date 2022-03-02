@@ -8,6 +8,7 @@ import {
     FetchUserTweetsActionInterface,
     ResetUserTweetsActionInterface,
     SetAddedUserTweetActionInterface,
+    SetFollowToUsersTweetStateActionInterface,
     SetUpdatedUserTweetActionInterface,
     SetUserTweetsActionInterface,
     SetUserTweetsLoadingStatusInterface,
@@ -17,6 +18,11 @@ import {TweetResponse} from "../../types/tweet";
 
 export const setUserTweets = (payload: { items: UserTweetsState["items"], pagesCount: UserTweetsState["pagesCount"] }): SetUserTweetsActionInterface => ({ // +
     type: UserTweetsActionType.SET_TWEETS,
+    payload
+});
+
+export const setFollowToUsersTweetState = (payload: { userId: number; tweetId: number; isFollower: boolean; }): SetFollowToUsersTweetStateActionInterface => ({ // +
+    type: UserTweetsActionType.SET_FOLLOW_TO_USERS_TWEETS_STATE,
     payload
 });
 

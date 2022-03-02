@@ -14,7 +14,7 @@ export interface UserProfileResponse {
     mediaTweetCount: number;
     likeCount: number;
     notificationsCount: number;
-    mutedDirectMessages: boolean;
+    isMutedDirectMessages: boolean;
     isPrivateProfile: boolean;
     avatar: Image;
     wallpaper: Image;

@@ -6,6 +6,7 @@ import {TweetResponse} from "../../../types/tweet";
 
 export enum UserTweetsActionType {
     SET_TWEETS = "userTweets/SET_TWEETS", // +
+    SET_FOLLOW_TO_USERS_TWEETS_STATE = "userTweets/SET_FOLLOW_TO_USERS_TWEETS_STATE", // +
     RESET_TWEETS = "userTweets/RESET_TWEETS", // +
     SET_ADDED_TWEET = "userTweets/SET_ADDED_TWEET",
     SET_UPDATED_TWEET = "userTweets/SET_UPDATED_TWEET", // +
@@ -20,6 +21,11 @@ export enum UserTweetsActionType {
 export interface SetUserTweetsActionInterface extends Action<UserTweetsActionType> { // +
     type: UserTweetsActionType.SET_TWEETS;
     payload: { items: UserTweetsState["items"], pagesCount: UserTweetsState["pagesCount"] };
+}
+
+export interface SetFollowToUsersTweetStateActionInterface extends Action<UserTweetsActionType> { // +
+    type: UserTweetsActionType.SET_FOLLOW_TO_USERS_TWEETS_STATE;
+    payload: { userId: number; tweetId: number; isFollower: boolean; };
 }
 
 export interface ResetUserTweetsActionInterface extends Action<UserTweetsActionType> { // +
@@ -68,6 +74,7 @@ export interface SetUserTweetsLoadingStatusInterface extends Action<UserTweetsAc
 
 export type UserTweetsActions =
     | SetUserTweetsActionInterface // +
+    | SetFollowToUsersTweetStateActionInterface // +
     | ResetUserTweetsActionInterface // +
     | SetAddedUserTweetActionInterface // +
     | SetUpdatedUserTweetActionInterface // +

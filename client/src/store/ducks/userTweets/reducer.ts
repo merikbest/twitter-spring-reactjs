@@ -19,6 +19,23 @@ export const userTweetsReducer = produce((draft: Draft<UserTweetsState>, action:
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
+        case UserTweetsActionType.SET_FOLLOW_TO_USERS_TWEETS_STATE: // +
+            if (action.payload.tweetId !== undefined) {
+                const followUserTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.tweetId);
+                if (followUserTweetIndex !== -1) draft.items[followUserTweetIndex].user.isFollower = action.payload.isFollower;
+            } else {
+                draft.items = draft.items.map((tweet) => {
+                    if (tweet.user.id === action.payload.userId) {
+                        tweet.user.isFollower = action.payload.isFollower
+                        return tweet;
+                    } else {
+                        return tweet;
+                    }
+                });
+            }
+            draft.loadingState = LoadingStatus.LOADED
+            break;
+
         case UserTweetsActionType.RESET_TWEETS: // +
             draft.items = [];
             draft.pagesCount = 1;

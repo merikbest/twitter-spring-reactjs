@@ -36,11 +36,11 @@ export const TweetApi = {
         return data;
     },
     async getLikedUsersByTweetId(tweetId: number): Promise<Response<UserResponse[]>> { // +
-        const {data} = await axios.get<Response<UserResponse[]>>(`${API_URL}/tweets/${tweetId}/liked-by`);
+        const {data} = await axios.get<Response<UserResponse[]>>(`${API_URL}/tweets/${tweetId}/liked-users`);
         return data;
     },
     async getRetweetedUsersByTweetId(tweetId: number): Promise<Response<UserResponse[]>> { // +
-        const {data} = await axios.get<Response<UserResponse[]>>(`${API_URL}/tweets/${tweetId}/retweeted-by`);
+        const {data} = await axios.get<Response<UserResponse[]>>(`${API_URL}/tweets/${tweetId}/retweeted-users`);
         return data;
     },
     async createTweet(payload: AddTweet): Promise<Response<TweetResponse>> { // +

@@ -88,13 +88,13 @@ public class UserServiceImpl implements UserService {
                 .map(RetweetsProjection::getRetweet)
                 .collect(Collectors.toList());
         List<TweetUserProjection> userTweets = combineTweetsArrays(tweets, retweets);
-        Optional<TweetUserProjection> pinnedTweet = tweetRepository.getPinnedTweetByUserId(userId);
+        Optional<TweetsUserProjection> pinnedTweet = tweetRepository.getPinnedTweetByUserId(userId);
 
         if (pinnedTweet.isPresent()) {
-            boolean isTweetExist = userTweets.removeIf(tweet -> tweet.getId().equals(pinnedTweet.get().getId()));
+            boolean isTweetExist = userTweets.removeIf(tweet -> tweet.getId().equals(pinnedTweet.get().getTweet().getId()));
 
             if (isTweetExist) {
-                userTweets.add(0, pinnedTweet.get());
+                userTweets.add(0, pinnedTweet.get().getTweet());
             }
         }
         return getPageableTweetProjectionList(pageable, userTweets, tweets.size() + retweets.size());

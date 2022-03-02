@@ -65,12 +65,14 @@ const UsersListModal: FC<UsersListModalProps> = (
                 // dispatch(fetchQuotedUsers(tweetId));
             }
         }
-        return () => {
-            setTitle("");
-            dispatch(resetLikedUsersState());
-            dispatch(resetRetweetedUsersState());
-        };
     }, [visible]);
+
+    const onCloseUsersListModal = (): void => {
+        onClose();
+        setTitle("");
+        dispatch(resetLikedUsersState());
+        dispatch(resetRetweetedUsersState());
+    };
 
     if (!visible) {
         return null;
@@ -99,9 +101,9 @@ const UsersListModal: FC<UsersListModalProps> = (
     };
 
     return (
-        <Dialog className={classes.dialog} open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
+        <Dialog className={classes.dialog} open={visible} onClose={onCloseUsersListModal} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">
-                <CloseButton onClose={onClose}/>
+                <CloseButton onClose={onCloseUsersListModal}/>
                 {title}
             </DialogTitle>
             <DialogContent className={classes.content}>

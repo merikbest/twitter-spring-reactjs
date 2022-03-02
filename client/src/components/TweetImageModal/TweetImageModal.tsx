@@ -26,8 +26,20 @@ import UsersListModal, {UsersListModalAction} from "../UsersListModal/UsersListM
 import TweetComponent from '../TweetComponent/TweetComponent';
 import {likeTweet, retweet} from "../../store/ducks/tweets/actionCreators";
 import {useTweetImageStyles} from "./TweetImageModalStyles";
-import {fetchTweetData, setTweetData} from "../../store/ducks/tweet/actionCreators";
-import {selectTweetData} from "../../store/ducks/tweet/selectors";
+import {
+    fetchReplies,
+    fetchTweetData,
+    resetRepliesState,
+    resetTweetState,
+    setTweetData
+} from "../../store/ducks/tweet/actionCreators";
+import {
+    selectIsRepliesLoading,
+    selectIsTweetLoadedSuccess,
+    selectIsTweetLoading,
+    selectReplies,
+    selectTweetData
+} from "../../store/ducks/tweet/selectors";
 import {DEFAULT_PROFILE_IMG, WS_URL} from "../../util/url";
 import {textFormatter} from "../../util/textFormatter";
 import {HoverActionProps, HoverActions, withHoverAction} from "../../hoc/withHoverAction";
@@ -38,6 +50,7 @@ import ReplyModal from "../ReplyModal/ReplyModal";
 import {HoverUserProps, withHoverUser} from "../../hoc/withHoverUser";
 import {ReplyType} from "../../store/ducks/tweets/contracts/state";
 import {useGlobalStyles} from "../../util/globalClasses";
+import Spinner from "../Spinner/Spinner";
 
 let stompClient: CompatClient | null = null;
 
@@ -54,7 +67,11 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
     const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
     const tweetData = useSelector(selectTweetData);
+    const replies = useSelector(selectReplies);
     const myProfile = useSelector(selectUserData);
+    const isTweetLoading = useSelector(selectIsTweetLoading);
+    const isTweetLoadedSuccess = useSelector(selectIsTweetLoadedSuccess);
+    const isRepliesLoading = useSelector(selectIsRepliesLoading);
     const params: { id: string } = useParams();
     const history = useHistory();
     const [visibleTweetImageModalWindow, setVisibleTweetImageModalWindow] = useState<boolean>(false);
@@ -79,7 +96,20 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                 dispatch(setTweetData(JSON.parse(response.body)));
             });
         });
+
+        return () => {
+            stompClient?.disconnect();
+            dispatch(resetTweetState());
+        };
     }, []);
+
+    useEffect(() => {
+        dispatch(fetchReplies(parseInt(params.id)));
+
+        return () => {
+            dispatch(resetRepliesState());
+        };
+    }, [isTweetLoadedSuccess]);
 
     const onCloseImageModalWindow = (event: any): void => {
         console.log(event)
@@ -153,18 +183,17 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                                 />
                             </Link>
                             <Link to={`/user/${tweetData?.user.id}`}>
-                                <div onMouseEnter={handleHoverPopper} onMouseLeave={handleLeavePopper}>
+                                <div
+                                    onMouseEnter={() => handleHoverPopper!(tweetData.user.id)}
+                                    onMouseLeave={handleLeavePopper}
+                                >
                                     <Typography variant={"h6"} component={"div"} id={"link"}>
                                         {tweetData.user.fullName}
                                     </Typography>
                                     <Typography variant={"subtitle1"} component={"div"}>
                                         @{tweetData.user.username}
                                     </Typography>
-                                    {/* TODO <PopperUserWindow*/}
-                                    {/*    visible={visiblePopperWindow}*/}
-                                    {/*    user={tweetData!.user}*/}
-                                    {/*    isTweetImageModal={true}*/}
-                                    {/*/>*/}
+                                    <PopperUserWindow visible={visiblePopperWindow} isTweetImageModal={true}/>
                                 </div>
                             </Link>
                         </div>
@@ -286,7 +315,9 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                         visible={visibleUsersListModalWindow}
                         onClose={onCloseUsersListModalWindow}
                     />
-                    {/* TODO fetch replies {tweetData.replies.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}*/}
+                    {isRepliesLoading ? <Spinner/> : (
+                        replies.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)
+                    )}
                     <ReplyModal
                         user={tweetData.user}
                         tweetId={tweetData.id}

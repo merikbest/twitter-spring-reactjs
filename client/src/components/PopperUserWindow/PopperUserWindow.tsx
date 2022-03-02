@@ -14,18 +14,17 @@ import FollowerGroup from "../FollowerGroup/FollowerGroup";
 import {SnackbarProps, withSnackbar} from "../../hoc/withSnackbar";
 import ActionSnackbar from "../ActionSnackbar/ActionSnackbar";
 import {UserDetailResponse} from "../../store/types/user";
+import {selectUserDetailItem} from "../../store/ducks/userDetail/selectors";
 
 interface PopperUserWindowProps {
     visible?: boolean;
     isTweetComponent?: boolean;
     isTweetImageModal?: boolean;
-    user: UserDetailResponse;
 }
 
 const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
     {
         visible,
-        user,
         isTweetComponent,
         isTweetImageModal,
         snackBarMessage,
@@ -38,12 +37,13 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
     const classes = usePopperUserWindowStyles({isTweetComponent});
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
+    const user = useSelector(selectUserDetailItem);
     const history = useHistory();
     const [btnText, setBtnText] = useState<string>("Following");
 
     useEffect(() => {
         if (visible) {
-            setBtnText(user.isWaitingForApprove ? ("Pending") : (user.isUserBlocked ? "Blocked" : "Following"));
+            setBtnText(user?.isWaitingForApprove ? ("Pending") : (user?.isUserBlocked ? "Blocked" : "Following"));
         }
     }, [visible, user, myProfile]);
 
@@ -55,7 +55,6 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
             handleProcessFollowRequest(user);
         } else {
             dispatch(followUser({userId: user?.id!}));
-            // dispatch(followProfile(user));
         }
     };
 
@@ -67,7 +66,6 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
             handleProcessFollowRequest(user);
         } else {
             dispatch(unfollowUser({userId: user?.id!}));
-            // dispatch(unfollowProfile(user));
         }
     };
 
@@ -82,8 +80,8 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
 
     const onBlockUser = (): void => {
         dispatch(addUserToBlocklist({userId: user?.id!}));
-        setBtnText(user.isUserBlocked ? "Following" : "Blocked");
-        setSnackBarMessage!(`@${user?.username} has been ${user.isUserBlocked ? "unblocked" : "blocked"}.`);
+        setBtnText(user?.isUserBlocked ? "Following" : "Blocked");
+        setSnackBarMessage!(`@${user?.username} has been ${user?.isUserBlocked ? "unblocked" : "blocked"}.`);
         setOpenSnackBar!(true);
     };
 
@@ -107,14 +105,14 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
                 <Link to={`/user/${user?.id}`}>
                     <Avatar
                         className={classes.avatar}
-                        alt={`avatar ${user.id}`}
-                        src={user.avatar?.src ? user.avatar?.src : DEFAULT_PROFILE_IMG}
+                        alt={`avatar ${user?.id}`}
+                        src={user?.avatar?.src ? user?.avatar?.src : DEFAULT_PROFILE_IMG}
                     />
                 </Link>
-                {(myProfile?.id === user.id) ? null : (
-                    (user.isMyProfileBlocked) ? null : (
-                        (user.isFollower) ? (
-                            (user.isUserBlocked) ? (
+                {(myProfile?.id === user?.id) ? null : (
+                    (user?.isMyProfileBlocked) ? null : (
+                        (!user?.isFollower) ? (
+                            (user?.isUserBlocked) ? (
                                 <Button
                                     className={classNames(classes.containedButton, classes.blockButton)}
                                     onClick={onBlockUser}
@@ -126,7 +124,7 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
                                     {btnText}
                                 </Button>
                             ) : (
-                                (user.isWaitingForApprove) ? (
+                                (user?.isWaitingForApprove) ? (
                                     <Button
                                         className={classes.outlinedButton}
                                         onClick={(event) => cancelFollow(event)}
@@ -167,7 +165,7 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
                 <Link to={`/user/${user?.id}`}>
                     <div>
                         <Typography variant={"h6"} component={"span"}>
-                            {user.fullName}
+                            {user?.fullName}
                         </Typography>
                         {user?.isPrivateProfile && (
                             <span className={classes.lockIcon}>
@@ -177,13 +175,13 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
                     </div>
                 </Link>
                 <Typography variant={"subtitle1"} component={"div"}>
-                    @{user.username}
+                    @{user?.username}
                 </Typography>
             </div>
-            {(user.isMyProfileBlocked) ? null : (
+            {(user?.isMyProfileBlocked) ? null : (
                 <>
                     <Typography variant={"body1"} component={"div"} className={classes.userInfo}>
-                        {user.about}
+                        {user?.about}
                     </Typography>
                     <div className={classes.userFollowersWrapper}>
                         <Link to={`/user/${user?.id}/following`} className={classes.followLink}>
@@ -203,7 +201,7 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
                             </Typography>
                         </Link>
                     </div>
-                    {user.isPrivateProfile ? null : (
+                    {user?.isPrivateProfile ? null : (
                         <FollowerGroup user={user} sameFollowers={user?.sameFollowers}/>
                     )}
                 </>
