@@ -1,7 +1,7 @@
 import {Settings, UserRequest, UserState} from "./contracts/state";
 import {
-    AddUserToBlocklistActionInterface,
-    AddUserToMuteListActionInterface,
+    ProcessUserToBlocklistActionInterface,
+    ProcessUserToMuteListActionInterface,
     FetchPinTweetActionInterface,
     FetchReadMessagesActionInterface,
     FetchSignInActionInterface,
@@ -113,13 +113,13 @@ export const fetchPinTweet = (payload: number): FetchPinTweetActionInterface => 
     payload,
 });
 
-export const addUserToBlocklist = (payload: { userId: number; tweetId?: number; }): AddUserToBlocklistActionInterface => ({ // +
-    type: UserActionsType.ADD_USER_TO_BLOCKLIST,
+export const processUserToBlocklist = (payload: { userId: number; tweetId?: number; }): ProcessUserToBlocklistActionInterface => ({ // +
+    type: UserActionsType.PROCESS_USER_TO_BLOCKLIST,
     payload,
 });
 
-export const addUserToMuteList = (payload: { userId: number; tweetId?: number; }): AddUserToMuteListActionInterface => ({ // +
-    type: UserActionsType.ADD_USER_TO_MUTELIST,
+export const processUserToMuteList = (payload: { userId: number; tweetId?: number; }): ProcessUserToMuteListActionInterface => ({ // +
+    type: UserActionsType.PROCESS_USER_TO_MUTELIST,
     payload,
 });
 

@@ -33,6 +33,7 @@ export enum LinkCoverSize {
 export enum NotificationType {
     LIKE = "LIKE",
     RETWEET = "RETWEET",
+    REPLY = "REPLY",
     FOLLOW = "FOLLOW",
     TWEET = "TWEET"
 }

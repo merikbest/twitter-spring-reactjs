@@ -30,6 +30,14 @@ export const usersSearchReducer = produce((draft: Draft<UsersSearchState>, actio
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
+        case UsersSearchActionsType.SET_BLOCK_USERS_SEARCH_STATE: // +
+            const userBlockIndex = draft.users.findIndex((user) => user.id === action.payload.userId);
+            if (userBlockIndex !== -1) draft.users[userBlockIndex].isUserBlocked = action.payload.isUserBlocked;
+            const followerBlockIndex = draft.followers.findIndex((user) => user.id === action.payload.userId);
+            if (followerBlockIndex !== -1) draft.followers[followerBlockIndex].isUserBlocked = action.payload.isUserBlocked;
+            draft.loadingState = LoadingStatus.LOADED;
+            break;
+
         case UsersSearchActionsType.RESET_USERS_STATE: // +
             draft.users = [];
             draft.loadingState = LoadingStatus.LOADING;

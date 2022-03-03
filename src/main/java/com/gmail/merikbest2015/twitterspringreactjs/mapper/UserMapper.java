@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.SettingsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.*;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationInfoResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationsResponse;
@@ -12,7 +13,8 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetUser
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.BookmarkProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.LikeTweetProjection;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.NotificationProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.notification.NotificationInfoProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.notification.NotificationProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetUserProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetsProjection;
@@ -173,15 +175,30 @@ public class UserMapper {
 
     @SuppressWarnings("unchecked")
     public NotificationsResponse getUserNotifications() {
-        Map<String, Object> userNotifications = userService.getUserNotifications();
+        Map<String, Object> notificationsDetails = userService.getUserNotifications();
         NotificationsResponse notificationsResponse = new NotificationsResponse();
-        List<NotificationProjection> notificationProjections = (List<NotificationProjection>) userNotifications.get("notifications");
-        List<NotificationResponse> notifications = convertProjectionListToResponseList(notificationProjections, NotificationResponse.class);
-        List<TweetAuthorProjection> tweetAuthorsProjections = (List<TweetAuthorProjection>) userNotifications.get("tweetAuthors");
-        List<NotificationUserResponse> tweetAuthors = convertProjectionListToResponseList(tweetAuthorsProjections, NotificationUserResponse.class);
+        List<NotificationProjection> userNotifications = (List<NotificationProjection>) notificationsDetails.get("notifications");
+        List<NotificationProjection.Notification> notificationsProjection = userNotifications.contains(null)
+                ? new ArrayList<>()
+                : userNotifications.stream()
+                    .map(NotificationProjection::getNotification)
+                    .collect(Collectors.toList());
+        List<NotificationResponse> notifications = convertProjectionListToResponseList(notificationsProjection, NotificationResponse.class);
+        List<TweetAuthorProjection> tweetAuthorsNotifications = (List<TweetAuthorProjection>) notificationsDetails.get("tweetAuthors");
+        List<TweetAuthorProjection.AuthorProjection> tweetAuthorsProjection = tweetAuthorsNotifications.contains(null)
+                ? new ArrayList<>()
+                : tweetAuthorsNotifications.stream()
+                    .map(TweetAuthorProjection::getTweetAuthor)
+                    .collect(Collectors.toList());
+        List<NotificationUserResponse> tweetAuthors = convertProjectionListToResponseList(tweetAuthorsProjection, NotificationUserResponse.class);
         notificationsResponse.setNotifications(notifications);
         notificationsResponse.setTweetAuthors(tweetAuthors);
         return notificationsResponse;
+    }
+
+    public NotificationInfoResponse getUserNotificationById(Long notificationId) {
+        NotificationInfoProjection notification = userService.getUserNotificationById(notificationId);
+        return convertProjectionToResponse(notification, NotificationInfoResponse.class);
     }
 
     public TweetHeaderResponse<TweetResponse> getNotificationsFromTweetAuthors(Pageable pageable) {

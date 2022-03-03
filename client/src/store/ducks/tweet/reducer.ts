@@ -3,6 +3,8 @@ import produce, {Draft} from 'immer';
 import {TweetState} from "./contracts/state";
 import {TweetActions, TweetActionType} from './contracts/actionTypes';
 import {LoadingStatus} from '../../types';
+import {NotificationType} from "../../types/common";
+import {NotificationReplyResponse, NotificationResponse} from "../../types/notification";
 
 const initialTweetState: TweetState = {
     tweet: undefined,
@@ -26,32 +28,50 @@ export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetActi
             break;
 
         case TweetActionType.UPDATE_TWEET_DATA: // +
-            if (action.payload.notificationType === "LIKE") {
-                draft.tweet!.isTweetLiked = action.payload.tweet.notificationCondition;
-            } else if (action.payload.notificationType === "RETWEET") {
-                draft.tweet!.isTweetRetweeted = action.payload.tweet.notificationCondition;
+            if (action.payload.notificationType === NotificationType.LIKE) {
+                const payload = action.payload as NotificationResponse;
+                draft.tweet!.isTweetLiked = payload.tweet.notificationCondition;
+                draft.tweet!.likedTweetsCount = payload.tweet.notificationCondition
+                    ? draft.tweet!.likedTweetsCount + 1
+                    : draft.tweet!.likedTweetsCount - 1;
+            } else if (action.payload.notificationType === NotificationType.RETWEET) {
+                const payload = action.payload as NotificationResponse;
+                draft.tweet!.isTweetRetweeted = payload.tweet.notificationCondition;
+                draft.tweet!.retweetsCount = payload.tweet.notificationCondition
+                    ? draft.tweet!.retweetsCount + 1
+                    : draft.tweet!.retweetsCount - 1;
+            } else if (action.payload.notificationType === NotificationType.REPLY) {
+                const payload = action.payload as NotificationReplyResponse;
+                draft.replies = [...draft.replies, payload.tweet];
+                draft.repliesLoadingState = LoadingStatus.SUCCESS;
             }
-            // draft.data = action.payload;
-            draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
         case TweetActionType.SET_FOLLOW_TO_TWEET_STATE: // +
-            draft.tweet!.user.isFollower = action.payload;
+            if (draft.tweet !== undefined) {
+                draft.tweet.user.isFollower = action.payload;
+            }
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
         case TweetActionType.SET_BLOCKED_TO_TWEET_STATE: // +
-            draft.tweet!.user.isUserBlocked = action.payload;
+            if (draft.tweet !== undefined) {
+                draft.tweet.user.isUserBlocked = action.payload;
+            }
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
         case TweetActionType.SET_MUTED_TO_TWEET_STATE: // +
-            draft.tweet!.user.isUserMuted = action.payload;
+            if (draft.tweet !== undefined) {
+                draft.tweet.user.isUserMuted = action.payload;
+            }
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
         case TweetActionType.SET_BOOKMARKED_TWEET: // +
-            draft.tweet!.isTweetBookmarked = action.payload;
+            if (draft.tweet !== undefined) {
+                draft.tweet.isTweetBookmarked = action.payload;
+            }
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 

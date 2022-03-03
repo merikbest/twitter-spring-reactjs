@@ -1,6 +1,7 @@
-package com.gmail.merikbest2015.twitterspringreactjs.repository.projection;
+package com.gmail.merikbest2015.twitterspringreactjs.repository.projection.notification;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.NotificationType;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.ImageProjection;
 
 import java.time.LocalDateTime;
 

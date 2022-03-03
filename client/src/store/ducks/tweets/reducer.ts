@@ -3,6 +3,8 @@ import produce, {Draft} from 'immer';
 import {TweetsState} from "./contracts/state";
 import {TweetsActions, TweetsActionType} from './contracts/actionTypes';
 import {LoadingStatus} from '../../types';
+import {NotificationType} from "../../types/common";
+import {NotificationReplyResponse, NotificationResponse} from "../../types/notification";
 
 const initialTweetsState: TweetsState = {
     items: [],
@@ -39,23 +41,34 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
             break;
 
         case TweetsActionType.SET_UPDATED_TWEET: // +
-            const updatedTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.id);
-            if (updatedTweetIndex !== -1) draft.items[updatedTweetIndex] = action.payload;
+            if (action.payload.notificationType === NotificationType.LIKE) {
+                const payload = action.payload as NotificationResponse;
+                const likedTweetIndex = draft.items.findIndex((tweet) => tweet.id === payload.tweet.id);
+                if (likedTweetIndex !== -1) {
+                    draft.items[likedTweetIndex].isTweetLiked = payload.tweet.notificationCondition;
+                    draft.items[likedTweetIndex].likedTweetsCount = payload.tweet.notificationCondition
+                        ? draft.items[likedTweetIndex].likedTweetsCount + 1
+                        : draft.items[likedTweetIndex].likedTweetsCount - 1;
+                }
+            } else if (action.payload.notificationType === NotificationType.RETWEET) {
+                const payload = action.payload as NotificationResponse;
+                const retweetedTweetIndex = draft.items.findIndex((tweet) => tweet.id === payload.tweet.id);
+                if (retweetedTweetIndex !== -1) {
+                    draft.items[retweetedTweetIndex].isTweetRetweeted = payload.tweet.notificationCondition;
+                    draft.items[retweetedTweetIndex].retweetsCount = payload.tweet.notificationCondition
+                        ? draft.items[retweetedTweetIndex].retweetsCount + 1
+                        : draft.items[retweetedTweetIndex].retweetsCount - 1;
+                }
+            } else if (action.payload.notificationType === NotificationType.REPLY) {
+                const payload = action.payload as NotificationReplyResponse;
+                const repliedTweetIndex = draft.items.findIndex((tweet) => tweet.id === payload.tweetId);
+                if (repliedTweetIndex !== -1) draft.items[repliedTweetIndex].repliesCount = draft.items[repliedTweetIndex].repliesCount + 1;
+            }
             break;
 
-        case TweetsActionType.SET_UPDATED_LIKED_TWEET: // +
-            const likedTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.tweetId);
-            if (likedTweetIndex !== -1) draft.items[likedTweetIndex].isTweetLiked = action.payload.isTweetLiked;
-            break;
-
-        case TweetsActionType.SET_UPDATED_RETWEETED_TWEET: // +
-            const retweetedTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.tweetId);
-            if (retweetedTweetIndex !== -1) draft.items[retweetedTweetIndex].isTweetRetweeted = action.payload.isTweetRetweeted;
-            break;
-
-        case TweetsActionType.SET_UPDATED_REPLIED_TWEET: // +
-            const repliedTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload);
-            if (repliedTweetIndex !== -1) draft.items[repliedTweetIndex].repliesCount = draft.items[repliedTweetIndex].repliesCount + 1;
+        case TweetsActionType.SET_UPDATED_BOOKMARKED_TWEET: // +
+            const bookmarkedTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.tweetId);
+            if (bookmarkedTweetIndex !== -1) draft.items[bookmarkedTweetIndex].isTweetBookmarked = action.payload.isTweetBookmarked;
             break;
 
         case TweetsActionType.SET_LOADING_STATE: // +
@@ -89,14 +102,36 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
             break;
 
         case TweetsActionType.SET_BLOCKED_TO_TWEETS_STATE: // +
-            const blockedUserTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.tweetId);
-            if (blockedUserTweetIndex !== -1) draft.items[blockedUserTweetIndex].user.isUserBlocked = action.payload.isUserBlocked;
+            if (action.payload.tweetId !== undefined) {
+                const blockedUserTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.tweetId);
+                if (blockedUserTweetIndex !== -1) draft.items[blockedUserTweetIndex].user.isUserBlocked = action.payload.isUserBlocked;
+            } else {
+                draft.items = draft.items.map((tweet) => {
+                    if (tweet.user.id === action.payload.userId) {
+                        tweet.user.isUserBlocked = action.payload.isUserBlocked
+                        return tweet;
+                    } else {
+                        return tweet;
+                    }
+                });
+            }
             draft.loadingState = LoadingStatus.LOADED
             break;
 
         case TweetsActionType.SET_MUTED_TO_TWEETS_STATE: // +
-            const mutedUserTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.tweetId);
-            if (mutedUserTweetIndex !== -1) draft.items[mutedUserTweetIndex].user.isUserMuted = action.payload.isUserMuted;
+            if (action.payload.tweetId !== undefined) {
+                const mutedUserTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.tweetId);
+                if (mutedUserTweetIndex !== -1) draft.items[mutedUserTweetIndex].user.isUserMuted = action.payload.isUserMuted;
+            } else {
+                draft.items = draft.items.map((tweet) => {
+                    if (tweet.user.id === action.payload.userId) {
+                        tweet.user.isUserMuted = action.payload.isUserMuted
+                        return tweet;
+                    } else {
+                        return tweet;
+                    }
+                });
+            }
             draft.loadingState = LoadingStatus.LOADED
             break;
 

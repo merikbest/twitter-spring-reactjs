@@ -10,7 +10,7 @@ import classNames from "classnames";
 import {compose} from "recompose";
 
 import {selectUserData} from "../../store/ducks/user/selectors";
-import {addUserToBlocklist, followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
+import {processUserToBlocklist, followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 import {useUsersItemStyles} from "./UsersItemStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {processFollowRequest} from "../../store/ducks/userProfile/actionCreators";
@@ -102,7 +102,7 @@ const UsersItem: FC<UsersItemProps<UserResponse> & SnackbarProps & HoverUserProp
     };
 
     const onBlockUser = (): void => {
-        dispatch(addUserToBlocklist({userId: user?.id!}));
+        dispatch(processUserToBlocklist({userId: user?.id!}));
         setVisibleBlockUserModal(false);
         setBtnText(user?.isUserBlocked ? "Following" : "Blocked");
         setSnackBarMessage!(`@${user?.username} has been ${user?.isUserBlocked ? "unblocked" : "blocked"}.`);

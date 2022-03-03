@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 
 import {useBlockedAccountItemStyles} from "./BlockedAccountItemStyles";
 import {DEFAULT_PROFILE_IMG} from "../../../../../../util/url";
-import {addUserToBlocklist} from "../../../../../../store/ducks/user/actionCreators";
+import {processUserToBlocklist} from "../../../../../../store/ducks/user/actionCreators";
 import ActionSnackbar from "../../../../../../components/ActionSnackbar/ActionSnackbar";
 import {SnackbarProps, withSnackbar} from "../../../../../../hoc/withSnackbar";
 import {useGlobalStyles} from "../../../../../../util/globalClasses";
@@ -32,7 +32,7 @@ const BlockedAccountItem: FC<BlockedAccountItemProps & SnackbarProps> = (
 
     const unblockUser = (event: React.MouseEvent<HTMLButtonElement>): void => {
         event.preventDefault();
-        dispatch(addUserToBlocklist({userId: blockedUser?.id!}));
+        dispatch(processUserToBlocklist({userId: blockedUser?.id!}));
         setSnackBarMessage!(`@${blockedUser.username} has been ${blockedUser.isUserBlocked ? "unblocked" : "blocked"}.`);
         setOpenSnackBar!(true);
     };

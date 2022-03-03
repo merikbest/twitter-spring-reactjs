@@ -8,13 +8,17 @@ import {
     FetchUserTweetsActionInterface,
     ResetUserTweetsActionInterface,
     SetAddedUserTweetActionInterface,
+    SetBlockedUsersTweetStateActionInterface,
     SetFollowToUsersTweetStateActionInterface,
+    SetMutedUsersTweetStateActionInterface,
+    SetUpdatedBookmarkedTweetActionInterface,
     SetUpdatedUserTweetActionInterface,
     SetUserTweetsActionInterface,
     SetUserTweetsLoadingStatusInterface,
     UserTweetsActionType
 } from "./contracts/actionTypes";
 import {TweetResponse} from "../../types/tweet";
+import {NotificationReplyResponse, NotificationResponse} from "../../types/notification";
 
 export const setUserTweets = (payload: { items: UserTweetsState["items"], pagesCount: UserTweetsState["pagesCount"] }): SetUserTweetsActionInterface => ({ // +
     type: UserTweetsActionType.SET_TWEETS,
@@ -23,6 +27,16 @@ export const setUserTweets = (payload: { items: UserTweetsState["items"], pagesC
 
 export const setFollowToUsersTweetState = (payload: { userId: number; tweetId: number; isFollower: boolean; }): SetFollowToUsersTweetStateActionInterface => ({ // +
     type: UserTweetsActionType.SET_FOLLOW_TO_USERS_TWEETS_STATE,
+    payload
+});
+
+export const setBlockedUsersTweetState = (payload: { userId: number; tweetId: number; isUserBlocked: boolean; }): SetBlockedUsersTweetStateActionInterface => ({ // +
+    type: UserTweetsActionType.SET_BLOCKED_USERS_TWEETS_STATE,
+    payload
+});
+
+export const setMutedUsersTweetState = (payload: { userId: number; tweetId: number; isUserMuted: boolean; }): SetMutedUsersTweetStateActionInterface => ({ // +
+    type: UserTweetsActionType.SET_MUTED_USERS_TWEETS_STATE,
     payload
 });
 
@@ -35,8 +49,13 @@ export const setAddedUserTweet = (payload: TweetResponse): SetAddedUserTweetActi
     payload
 });
 
-export const setUpdatedUserTweet = (payload: TweetResponse): SetUpdatedUserTweetActionInterface => ({ // +
+export const setUpdatedUserTweet = (payload: NotificationResponse | NotificationReplyResponse): SetUpdatedUserTweetActionInterface => ({ // +
     type: UserTweetsActionType.SET_UPDATED_TWEET,
+    payload
+});
+
+export const setUpdatedBookmarkedTweetUserTweetState = (payload: { tweetId: number; isTweetBookmarked: boolean; }): SetUpdatedBookmarkedTweetActionInterface => ({ // +
+    type: UserTweetsActionType.SET_UPDATED_BOOKMARKED_TWEET,
     payload
 });
 

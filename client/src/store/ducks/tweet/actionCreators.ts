@@ -27,7 +27,7 @@ import {
     UpdateTweetDataActionInterface,
 } from "./contracts/actionTypes";
 import {ReplyTweet, TweetState} from "./contracts/state";
-import {NotificationResponse} from "../../types/notification";
+import {NotificationReplyResponse, NotificationResponse} from "../../types/notification";
 
 export const setFollowToTweetState = (payload: boolean): SetFollowToTweetStateActionInterface => ({ // +
     type: TweetActionType.SET_FOLLOW_TO_TWEET_STATE,
@@ -49,7 +49,7 @@ export const setTweetData = (payload: TweetState["tweet"]): SetTweetDataActionIn
     payload
 });
 
-export const updateTweetData = (payload: NotificationResponse): UpdateTweetDataActionInterface => ({ // +
+export const updateTweetData = (payload: NotificationResponse | NotificationReplyResponse): UpdateTweetDataActionInterface => ({ // +
     type: TweetActionType.UPDATE_TWEET_DATA,
     payload
 });

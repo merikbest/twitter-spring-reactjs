@@ -9,7 +9,7 @@ import BackButton from "../../../components/BackButton/BackButton";
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
 import {LockIcon} from "../../../icons";
 import {selectUserData} from "../../../store/ducks/user/selectors";
-import {addUserToBlocklist, followUser, unfollowUser} from "../../../store/ducks/user/actionCreators";
+import {processUserToBlocklist, followUser, unfollowUser} from "../../../store/ducks/user/actionCreators";
 import LeaveFromConversationModal from "./LeaveFromConversationModal/LeaveFromConversationModal";
 import {leaveFromConversation} from "../../../store/ducks/chats/actionCreators";
 import BlockUserModal from "../../../components/BlockUserModal/BlockUserModal";
@@ -118,7 +118,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
     };
 
     const onBlockUser = (): void => {
-        dispatch(addUserToBlocklist({userId: chatParticipant?.id!}));
+        dispatch(processUserToBlocklist({userId: chatParticipant?.id!}));
         setVisibleBlockUserModal(false);
         setSnackBarMessage!(`@${chatParticipant?.username!} has been ${chatParticipant?.isUserBlocked ? "unblocked" : "blocked"}.`);
         setOpenSnackBar!(true);

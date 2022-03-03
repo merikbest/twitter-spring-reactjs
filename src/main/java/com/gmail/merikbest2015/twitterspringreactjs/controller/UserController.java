@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.*;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationInfoResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationsResponse;
@@ -79,6 +80,11 @@ public class UserController {
     @GetMapping("/notifications") // +
     public ResponseEntity<NotificationsResponse> getUserNotifications() {
         return ResponseEntity.ok(userMapper.getUserNotifications());
+    }
+
+    @GetMapping("/notifications/{notificationId}") // + TODO Add tests
+    public ResponseEntity<NotificationInfoResponse> getUserNotificationById(@PathVariable Long notificationId) {
+        return ResponseEntity.ok(userMapper.getUserNotificationById(notificationId));
     }
 
     @GetMapping("/notifications/timeline") // +

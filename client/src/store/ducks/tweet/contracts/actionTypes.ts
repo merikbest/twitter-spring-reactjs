@@ -1,9 +1,7 @@
 import {Action} from "redux";
 import {LoadingStatus} from "../../../types";
 import {ReplyTweet, TweetState} from "./state";
-import {NotificationResponse} from "../../../types/notification";
-import {UserResponse} from "../../../types/user";
-import {TweetResponse} from "../../../types/tweet";
+import {NotificationReplyResponse, NotificationResponse} from "../../../types/notification";
 
 export enum TweetActionType {
     SET_FOLLOW_TO_TWEET_STATE = 'tweet/SET_FOLLOW_TO_TWEET_STATE', // +
@@ -56,7 +54,7 @@ export interface SetTweetDataActionInterface extends Action<TweetActionType> { /
 
 export interface UpdateTweetDataActionInterface extends Action<TweetActionType> { // +
     type: TweetActionType.UPDATE_TWEET_DATA;
-    payload: NotificationResponse;
+    payload: NotificationResponse | NotificationReplyResponse;
 }
 
 export interface FetchTweetDataActionInterface extends Action<TweetActionType> { // +

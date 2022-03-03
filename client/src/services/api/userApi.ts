@@ -10,7 +10,11 @@ import {
     UserProfileResponse,
     UserResponse
 } from "../../store/types/user";
-import {NotificationsResponse, NotificationUserResponse} from "../../store/types/notification";
+import {
+    NotificationInfoResponse,
+    NotificationsResponse,
+    NotificationUserResponse
+} from "../../store/types/notification";
 import {TweetResponse} from "../../store/types/tweet";
 import {UserRequest} from "../../store/ducks/user/contracts/state";
 
@@ -90,6 +94,10 @@ export const UserApi = {
     },
     async getUserNotifications(): Promise<Response<NotificationsResponse>> { // +
         const {data} = await axios.get<Response<NotificationsResponse>>(`${API_URL}/user/notifications`);
+        return data;
+    },
+    async getUserNotificationById(payload: number): Promise<Response<NotificationInfoResponse>> { // +
+        const {data} = await axios.get<Response<NotificationInfoResponse>>(`${API_URL}/user/notifications/${payload}`);
         return data;
     },
     async getNotificationsFromTweetAuthors(payload: number): Promise<AxiosResponse<TweetResponse[]>> { // +

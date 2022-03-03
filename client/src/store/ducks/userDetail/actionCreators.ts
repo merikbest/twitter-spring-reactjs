@@ -1,6 +1,7 @@
 import {
     FetchUserDetailActionInterface,
     ResetUserDetailStateActionInterface,
+    SetBlockUserDetailActionInterface,
     SetFollowToUserDetailActionInterface,
     SetUserDetailActionInterface,
     SetUserDetailLoadingStateActionInterface,
@@ -17,6 +18,11 @@ export const setUserDetail = (payload: UserDetailResponse): SetUserDetailActionI
 
 export const setFollowToUserDetail = (payload: boolean): SetFollowToUserDetailActionInterface => ({
     type: UserDetailActionsType.SET_FOLLOW_TO_USER_DETAIL,
+    payload,
+});
+
+export const setBlockUserDetail = (payload: boolean): SetBlockUserDetailActionInterface => ({
+    type: UserDetailActionsType.SET_BLOCK_USER_DETAIL,
     payload,
 });
 

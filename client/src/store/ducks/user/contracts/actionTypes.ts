@@ -22,8 +22,8 @@ export enum UserActionsType {
     FOLLOW_USER = 'user/FOLLOW_USER', //+ ????
     UNFOLLOW_USER = 'user/UNFOLLOW_USER', // +check ????
     FETCH_PIN_TWEET = 'user/FETCH_PIN_TWEET', //+
-    ADD_USER_TO_BLOCKLIST = 'user/ADD_USER_TO_BLOCKLIST', // +
-    ADD_USER_TO_MUTELIST = 'user/ADD_USER_TO_MUTELIST', // +
+    PROCESS_USER_TO_BLOCKLIST = 'user/PROCESS_USER_TO_BLOCKLIST', // +
+    PROCESS_USER_TO_MUTELIST = 'user/PROCESS_USER_TO_MUTELIST', // +
     UPDATE_USERNAME = 'user/UPDATE_USERNAME', //+
     UPDATE_EMAIL = 'user/UPDATE_EMAIL', // +
     UPDATE_PHONE = 'user/UPDATE_PHONE', // +
@@ -117,13 +117,13 @@ export interface FetchPinTweetActionInterface extends Action<UserActionsType> { 
     payload: number;
 }
 
-export interface AddUserToBlocklistActionInterface extends Action<UserActionsType> { // +
-    type: UserActionsType.ADD_USER_TO_BLOCKLIST;
+export interface ProcessUserToBlocklistActionInterface extends Action<UserActionsType> { // +
+    type: UserActionsType.PROCESS_USER_TO_BLOCKLIST;
     payload: { userId: number; tweetId?: number; };
 }
 
-export interface AddUserToMuteListActionInterface extends Action<UserActionsType> { // +
-    type: UserActionsType.ADD_USER_TO_MUTELIST;
+export interface ProcessUserToMuteListActionInterface extends Action<UserActionsType> { // +
+    type: UserActionsType.PROCESS_USER_TO_MUTELIST;
     payload: { userId: number; tweetId?: number; };
 }
 

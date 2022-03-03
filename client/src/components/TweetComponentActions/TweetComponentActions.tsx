@@ -23,8 +23,8 @@ import {
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {ReplyType, Tweet} from "../../store/ducks/tweets/contracts/state";
 import {
-    addUserToBlocklist,
-    addUserToMuteList,
+    processUserToBlocklist,
+    processUserToMuteList,
     fetchPinTweet,
     followUser,
     unfollowUser
@@ -177,13 +177,13 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
     };
 
     const onMuteUser = (): void => {
-        dispatch(addUserToMuteList({userId: tweet.user?.id!, tweetId: tweet.id}));
+        dispatch(processUserToMuteList({userId: tweet.user?.id!, tweetId: tweet.id}));
         setSnackBarMessage!(`@${tweet.user.username} has been ${tweet.user.isUserMuted ? "unmuted" : "muted"}.`);
         setOpenSnackBar!(true);
     };
 
     const onBlockUser = (): void => {
-        dispatch(addUserToBlocklist({userId: tweet.user?.id!, tweetId: tweet.id}));
+        dispatch(processUserToBlocklist({userId: tweet.user?.id!, tweetId: tweet.id}));
         setVisibleBlockUserModal(false);
         setSnackBarMessage!(`@${tweet.user.username} has been ${tweet.user.isUserBlocked ? "unblocked" : "blocked"}.`);
         setOpenSnackBar!(true);

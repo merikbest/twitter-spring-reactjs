@@ -7,7 +7,7 @@ import classNames from "classnames";
 import {usePopperUserWindowStyles} from "./PopperUserWindowStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {selectUserData} from "../../store/ducks/user/selectors";
-import {addUserToBlocklist, followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
+import {processUserToBlocklist, followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 import {processFollowRequest} from "../../store/ducks/userProfile/actionCreators";
 import {LockIcon} from "../../icons";
 import FollowerGroup from "../FollowerGroup/FollowerGroup";
@@ -79,7 +79,7 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
     };
 
     const onBlockUser = (): void => {
-        dispatch(addUserToBlocklist({userId: user?.id!}));
+        dispatch(processUserToBlocklist({userId: user?.id!}));
         setBtnText(user?.isUserBlocked ? "Following" : "Blocked");
         setSnackBarMessage!(`@${user?.username} has been ${user?.isUserBlocked ? "unblocked" : "blocked"}.`);
         setOpenSnackBar!(true);

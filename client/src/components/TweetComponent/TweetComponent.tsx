@@ -123,10 +123,7 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
                 />
             ) : null}
             {((myProfile?.pinnedTweetId === tweet?.id || userProfile?.pinnedTweetId === tweet?.id) && activeTab === 0) && (
-                <TweetActionResult
-                    action={TweetActionResults.PIN}
-                    text={"Pinned Tweet"}
-                />
+                <TweetActionResult action={TweetActionResults.PIN} text={"Pinned Tweet"}/>
             )}
             <div className={classes.tweetWrapper}>
                 <a onClick={handleClickUser}>

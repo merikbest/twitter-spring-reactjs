@@ -8,7 +8,7 @@ import classnames from "classnames";
 import {useMutedAccountItemStyles} from "./MutedAccountItemStyles";
 import {DEFAULT_PROFILE_IMG} from "../../../../../../util/url";
 import {MuteIcon, UnmuteIcon} from "../../../../../../icons";
-import {addUserToMuteList} from "../../../../../../store/ducks/user/actionCreators";
+import {processUserToMuteList} from "../../../../../../store/ducks/user/actionCreators";
 import HoverAction from "../../../../../../components/HoverAction/HoverAction";
 import ActionSnackbar from "../../../../../../components/ActionSnackbar/ActionSnackbar";
 import {SnackbarProps, withSnackbar} from "../../../../../../hoc/withSnackbar";
@@ -38,7 +38,7 @@ const MutedAccountItem: FC<MutedAccountItemProps & SnackbarProps & HoverActionPr
     const classes = useMutedAccountItemStyles({isUserMuted: mutedUser?.isUserMuted!});
 
     const unmuteUser = (): void => {
-        dispatch(addUserToMuteList({userId: mutedUser?.id!}));
+        dispatch(processUserToMuteList({userId: mutedUser?.id!}));
         setSnackBarMessage!(`@${mutedUser?.username} has been ${mutedUser?.isUserMuted ? "unmuted" : "muted"}.`);
         setOpenSnackBar!(true);
     };

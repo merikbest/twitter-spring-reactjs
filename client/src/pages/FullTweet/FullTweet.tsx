@@ -14,14 +14,16 @@ import {
     selectIsRepliesLoading,
     selectIsTweetError,
     selectIsTweetLoadedSuccess,
-    selectIsTweetLoading, selectReplies,
+    selectIsTweetLoading,
+    selectReplies,
     selectTweetData
 } from '../../store/ducks/tweet/selectors';
 import {
     fetchReplies,
-    fetchTweetData, resetRepliesState,
+    fetchTweetData,
+    resetRepliesState,
     resetTweetState,
-    setTweetData,
+    updateTweetData,
 } from '../../store/ducks/tweet/actionCreators';
 import {likeTweet, retweet} from "../../store/ducks/tweets/actionCreators";
 import {selectUserData} from "../../store/ducks/user/selectors";
@@ -103,7 +105,7 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
             stompClient = Stomp.over(new SockJS(WS_URL));
             stompClient.connect({}, () => {
                 stompClient?.subscribe("/topic/tweet/" + params.id, (response) => {
-                    dispatch(setTweetData(JSON.parse(response.body)));
+                    dispatch(updateTweetData(JSON.parse(response.body)));
                 });
             });
         }
@@ -112,7 +114,7 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
             stompClient?.disconnect();
             dispatch(resetTweetState());
         };
-    }, [dispatch, params.id]);
+    }, [params.id]);
 
     useEffect(() => {
         dispatch(fetchReplies(parseInt(params.id)));

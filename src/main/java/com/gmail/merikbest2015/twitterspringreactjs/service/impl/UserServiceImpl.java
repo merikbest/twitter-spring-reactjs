@@ -7,7 +7,8 @@ import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.BookmarkProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.LikeTweetProjection;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.NotificationProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.notification.NotificationInfoProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.notification.NotificationProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.*;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
@@ -124,6 +125,13 @@ public class UserServiceImpl implements UserService {
         response.put("notifications", notifications);
         response.put("tweetAuthors", tweetAuthors);
         return response;
+    }
+
+    @Override
+    public NotificationInfoProjection getUserNotificationById(Long notificationId) {
+        Long userId = authenticationService.getAuthenticatedUserId();
+        return notificationRepository.getUserNotificationById(userId, notificationId)
+                .orElseThrow(() -> new ApiRequestException("Notification not found", HttpStatus.NOT_FOUND));
     }
 
     @Override

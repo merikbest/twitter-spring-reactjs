@@ -19,7 +19,7 @@ export const useQuoteTweetStyles = makeStyles<Theme, QuoteTweetStyles>((theme) =
         },
         "& #retweets": {
             verticalAlign: "middle",
-            color: props => props.isTweetRetweetedByMe ? "rgb(23, 191, 99) !important" : theme.palette.text.secondary,
+            color: props => props.isTweetRetweetedByMe ? "rgb(23, 191, 99)" : theme.palette.text.secondary,
         },
     },
     dropdown: {

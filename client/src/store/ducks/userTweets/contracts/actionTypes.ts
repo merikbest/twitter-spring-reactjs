@@ -3,13 +3,17 @@ import {Action} from "redux";
 import {LoadingStatus} from "../../../types";
 import {UserTweetsState} from "./state";
 import {TweetResponse} from "../../../types/tweet";
+import {NotificationReplyResponse, NotificationResponse} from "../../../types/notification";
 
 export enum UserTweetsActionType {
     SET_TWEETS = "userTweets/SET_TWEETS", // +
     SET_FOLLOW_TO_USERS_TWEETS_STATE = "userTweets/SET_FOLLOW_TO_USERS_TWEETS_STATE", // +
+    SET_BLOCKED_USERS_TWEETS_STATE = "userTweets/SET_BLOCKED_USERS_TWEETS_STATE", // +
+    SET_MUTED_USERS_TWEETS_STATE = "userTweets/SET_MUTED_USERS_TWEETS_STATE", // +
     RESET_TWEETS = "userTweets/RESET_TWEETS", // +
     SET_ADDED_TWEET = "userTweets/SET_ADDED_TWEET",
     SET_UPDATED_TWEET = "userTweets/SET_UPDATED_TWEET", // +
+    SET_UPDATED_BOOKMARKED_TWEET = "userTweets/SET_UPDATED_BOOKMARKED_TWEET", // +
     DELETE_TWEET = "userTweets/DELETE_TWEET", // +
     FETCH_TWEETS = "userTweets/FETCH_TWEETS", // +
     FETCH_LIKED_TWEETS = "userTweets/FETCH_LIKED_TWEETS", // +
@@ -28,6 +32,16 @@ export interface SetFollowToUsersTweetStateActionInterface extends Action<UserTw
     payload: { userId: number; tweetId: number; isFollower: boolean; };
 }
 
+export interface SetBlockedUsersTweetStateActionInterface extends Action<UserTweetsActionType> { // +
+    type: UserTweetsActionType.SET_BLOCKED_USERS_TWEETS_STATE;
+    payload: { userId: number; tweetId: number; isUserBlocked: boolean; };
+}
+
+export interface SetMutedUsersTweetStateActionInterface extends Action<UserTweetsActionType> { // +
+    type: UserTweetsActionType.SET_MUTED_USERS_TWEETS_STATE;
+    payload: { userId: number; tweetId: number; isUserMuted: boolean; };
+}
+
 export interface ResetUserTweetsActionInterface extends Action<UserTweetsActionType> { // +
     type: UserTweetsActionType.RESET_TWEETS;
 }
@@ -39,7 +53,12 @@ export interface SetAddedUserTweetActionInterface extends Action<UserTweetsActio
 
 export interface SetUpdatedUserTweetActionInterface extends Action<UserTweetsActionType> { // +
     type: UserTweetsActionType.SET_UPDATED_TWEET;
-    payload: TweetResponse;
+    payload: NotificationResponse | NotificationReplyResponse;
+}
+
+export interface SetUpdatedBookmarkedTweetActionInterface extends Action<UserTweetsActionType> { // +
+    type: UserTweetsActionType.SET_UPDATED_BOOKMARKED_TWEET;
+    payload: { tweetId: number; isTweetBookmarked: boolean; };
 }
 
 export interface DeleteUserTweetActionInterface extends Action<UserTweetsActionType> { // +
@@ -75,8 +94,11 @@ export interface SetUserTweetsLoadingStatusInterface extends Action<UserTweetsAc
 export type UserTweetsActions =
     | SetUserTweetsActionInterface // +
     | SetFollowToUsersTweetStateActionInterface // +
+    | SetBlockedUsersTweetStateActionInterface // +
+    | SetMutedUsersTweetStateActionInterface // +
     | ResetUserTweetsActionInterface // +
     | SetAddedUserTweetActionInterface // +
     | SetUpdatedUserTweetActionInterface // +
+    | SetUpdatedBookmarkedTweetActionInterface // +
     | DeleteUserTweetActionInterface // +
     | SetUserTweetsLoadingStatusInterface; // +

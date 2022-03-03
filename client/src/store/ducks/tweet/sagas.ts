@@ -24,9 +24,10 @@ import {
 } from './actionCreators';
 import {LoadingStatus} from '../../types';
 import {TweetResponse} from "../../types/tweet";
-import {setUserLoadingStatus} from "../user/actionCreators";
 import {UserApi} from "../../../services/api/userApi";
 import {UserResponse} from "../../types/user";
+import {setUpdatedBookmarkedTweetTweetsState} from "../tweets/actionCreators";
+import {setUpdatedBookmarkedTweetUserTweetState} from "../userTweets/actionCreators";
 
 export function* fetchTweetDataRequest({payload: tweetId}: FetchTweetDataActionInterface) { // +
     try {
@@ -40,11 +41,12 @@ export function* fetchTweetDataRequest({payload: tweetId}: FetchTweetDataActionI
 
 export function* addTweetToBookmarksRequest({payload}: AddTweetToBookmarksActionInterface) { // +
     try {
-        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const item: boolean = yield call(UserApi.addTweetToBookmarks, payload);
         yield put(setBookmarkedTweet(item));
-    } catch (e) {
-        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+        yield put(setUpdatedBookmarkedTweetTweetsState({tweetId: payload, isTweetBookmarked: item}));
+        yield put(setUpdatedBookmarkedTweetUserTweetState({tweetId: payload, isTweetBookmarked: item}));
+    } catch (error) {
+        yield put(setTweetLoadingState(LoadingStatus.ERROR));
     }
 }
 

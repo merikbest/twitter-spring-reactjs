@@ -17,8 +17,18 @@ export const userDetailReducer = produce((draft: Draft<UserDetailState>, action:
             break;
 
         case UserDetailActionsType.SET_FOLLOW_TO_USER_DETAIL: // +
-            draft.item!.isFollower = action.payload;
-            draft.loadingState = LoadingStatus.LOADED;
+            if (draft.item !== undefined) {
+                draft.item.isFollower = action.payload;
+                draft.item.followingSize = action.payload ? draft.item.followingSize + 1 : draft.item.followingSize - 1;
+                draft.loadingState = LoadingStatus.LOADED;
+            }
+            break;
+
+        case UserDetailActionsType.SET_BLOCK_USER_DETAIL: // +
+            if (draft.item !== undefined) {
+                draft.item.isUserBlocked = action.payload;
+                draft.loadingState = LoadingStatus.LOADED;
+            }
             break;
 
         case UserDetailActionsType.RESET_USER_DETAIL_STATE: // +

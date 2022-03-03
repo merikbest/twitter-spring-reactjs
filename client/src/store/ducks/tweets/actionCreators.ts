@@ -1,4 +1,4 @@
-import {AddQuoteTweet, AddTweet, ReplyType, Tweet, TweetsState, Vote} from "./contracts/state";
+import {AddQuoteTweet, AddTweet, ReplyType, TweetsState, Vote} from "./contracts/state";
 import {
     AddPollActionInterface,
     AddQuoteTweetActionInterface,
@@ -26,9 +26,7 @@ import {
     SetTweetActionInterface,
     SetTweetsActionInterface,
     SetTweetsLoadingStateInterface,
-    SetUpdatedLikedTweetActionInterface,
-    SetUpdatedRepliedTweetActionInterface,
-    SetUpdatedRetweetedTweetActionInterface,
+    SetUpdatedBookmarkedTweetActionInterface,
     SetUpdatedTweetActionInterface,
     TweetsActionType,
     UpdateScheduledTweetActionInterface,
@@ -36,19 +34,19 @@ import {
 } from "./contracts/actionTypes";
 import {LoadingStatus} from "../../types";
 import {TweetResponse} from "../../types/tweet";
+import {NotificationReplyResponse, NotificationResponse} from "../../types/notification";
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 export const setFollowToTweetsState = (payload: { userId: number, tweetId: number; isFollower: boolean; }): SetFollowToTweetsStateActionInterface => ({ // +
     type: TweetsActionType.SET_FOLLOW_TO_TWEETS_STATE,
     payload
 });
 
-export const setBlockedToTweetsState = (payload: { tweetId: number; isUserBlocked: boolean; }): SetBlockedToTweetsStateActionInterface => ({ // +
+export const setBlockedToTweetsState = (payload: { userId: number; tweetId: number; isUserBlocked: boolean; }): SetBlockedToTweetsStateActionInterface => ({ // +
     type: TweetsActionType.SET_BLOCKED_TO_TWEETS_STATE,
     payload
 });
 
-export const setMutedToTweetsState = (payload: { tweetId: number; isUserMuted: boolean; }): SetMutedToTweetsStateActionInterface => ({ // +
+export const setMutedToTweetsState = (payload: { userId: number; tweetId: number; isUserMuted: boolean; }): SetMutedToTweetsStateActionInterface => ({ // +
     type: TweetsActionType.SET_MUTED_TO_TWEETS_STATE,
     payload
 });
@@ -112,7 +110,7 @@ export const changeReplyType = (payload: { tweetId: number; replyType: ReplyType
     payload
 });
 
-export const setUpdatedTweet = (payload: TweetResponse): SetUpdatedTweetActionInterface => ({ // +
+export const setUpdatedTweet = (payload: NotificationResponse | NotificationReplyResponse): SetUpdatedTweetActionInterface => ({ // +
     type: TweetsActionType.SET_UPDATED_TWEET,
     payload
 });
@@ -157,24 +155,10 @@ export const retweet = (payload: number): RetweetActionInterface => ({ // +
     payload,
 });
 
-export const setUpdatedLikedTweet = (payload: { tweetId: number; isTweetLiked: boolean; }): SetUpdatedLikedTweetActionInterface => ({ // +
-    type: TweetsActionType.SET_UPDATED_LIKED_TWEET,
+export const setUpdatedBookmarkedTweetTweetsState = (payload: { tweetId: number; isTweetBookmarked: boolean; }): SetUpdatedBookmarkedTweetActionInterface => ({ // +
+    type: TweetsActionType.SET_UPDATED_BOOKMARKED_TWEET,
     payload,
 });
-
-export const setUpdatedRetweetedTweet = (payload: { tweetId: number; isTweetRetweeted: boolean; }): SetUpdatedRetweetedTweetActionInterface => ({ // +
-    type: TweetsActionType.SET_UPDATED_RETWEETED_TWEET,
-    payload,
-});
-
-export const setUpdatedRepliedTweet = (payload: number): SetUpdatedRepliedTweetActionInterface => ({ // +
-    type: TweetsActionType.SET_UPDATED_REPLIED_TWEET,
-    payload,
-});
-
-
-
-
 
 export const fetchTweets = (payload: number): FetchTweetsActionInterface => ({
     type: TweetsActionType.FETCH_TWEETS,

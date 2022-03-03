@@ -26,7 +26,7 @@ import {
 import {useUserPageStyles} from "./UserPageStyles";
 import BackButton from "../../components/BackButton/BackButton";
 import EditProfileModal from "../../components/EditProfileModal/EditProfileModal";
-import {addUserToBlocklist, addUserToMuteList, followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
+import {processUserToBlocklist, processUserToMuteList, followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
 import {selectUserData, selectUserIsLoaded} from "../../store/ducks/user/selectors";
 import {
     selectIsUserTweetsLoaded,
@@ -265,13 +265,13 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
     };
 
     const onMuteUser = (): void => {
-        dispatch(addUserToMuteList({userId: userProfile?.id!}));
+        dispatch(processUserToMuteList({userId: userProfile?.id!}));
         setSnackBarMessage!(`@${userProfile?.username} has been ${userProfile?.isUserMuted ? "unmuted" : "muted"}.`);
         setOpenSnackBar!(true);
     };
 
     const onBlockUser = (): void => {
-        dispatch(addUserToBlocklist({userId: userProfile?.id!}));
+        dispatch(processUserToBlocklist({userId: userProfile?.id!}));
         setVisibleBlockUserModal(false);
         setBtnText(userProfile?.isUserBlocked ? "Following" : "Blocked");
         setSnackBarMessage!(`@${userProfile?.username} has been ${userProfile?.isUserBlocked ? "unblocked" : "blocked"}.`);

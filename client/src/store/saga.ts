@@ -19,8 +19,8 @@ import {listMembersSaga} from "./ducks/listMembers/sagas";
 import {userDetailSaga} from "./ducks/userDetail/sagas";
 
 export default function* rootSaga() {
-    yield all([userSaga(), tweetSaga(), tweetsSaga(), userProfileSaga(), usersSaga(), tagsSaga(), userTweetsSaga(),
+    yield all([userSaga(), tweetSaga(), userProfileSaga(), usersSaga(), tagsSaga(), userTweetsSaga(),
         usersSearchSaga(), chatsSaga(), chatMessagesSaga(), notificationsSaga(), listsSaga(), listSaga(), fetchFollowerSaga(),
-        blockedAndMutedUsersSaga(), listMembersSaga(), userDetailSaga()
+        blockedAndMutedUsersSaga(), listMembersSaga(), userDetailSaga(), tweetsSaga(), userTweetsSaga()
     ])
 }

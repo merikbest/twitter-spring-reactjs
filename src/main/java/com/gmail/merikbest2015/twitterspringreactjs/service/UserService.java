@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.model.Image;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.BookmarkProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.LikeTweetProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.notification.NotificationInfoProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetUserProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetsProjection;
@@ -36,6 +37,8 @@ public interface UserService {
     Page<TweetUserProjection> getUserRetweetsAndReplies(Long userId, Pageable pageable);
 
     Map<String, Object> getUserNotifications();
+
+    NotificationInfoProjection getUserNotificationById(Long notificationId);
 
     Page<TweetsProjection> getNotificationsFromTweetAuthors(Pageable pageable);
 

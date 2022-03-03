@@ -7,6 +7,8 @@ import {NotificationsActions, NotificationsActionsType} from "./contracts/action
 const initialTagsState: NotificationsState = {
     notificationsList: [],
     tweetAuthors: [],
+    notificationInfo: undefined,
+    notificationInfoLoadingState: LoadingStatus.LOADING,
     loadingState: LoadingStatus.LOADING,
 };
 
@@ -21,6 +23,11 @@ export const notificationsReducer = produce((draft: Draft<NotificationsState>, a
         case NotificationsActionsType.SET_NOTIFICATION: // +
             draft.notificationsList = [action.payload, ...draft.notificationsList];
             draft.loadingState = LoadingStatus.LOADED;
+            break;
+
+        case NotificationsActionsType.SET_NOTIFICATION_INFO: // +
+            // draft.notificationsList = [action.payload, ...draft.notificationsList];
+            draft.notificationInfoLoadingState = LoadingStatus.LOADED;
             break;
 
         case NotificationsActionsType.RESET_NOTIFICATION_STATE: // +

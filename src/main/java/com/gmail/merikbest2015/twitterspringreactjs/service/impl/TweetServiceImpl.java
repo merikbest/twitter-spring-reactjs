@@ -304,7 +304,7 @@ public class TweetServiceImpl implements TweetService {
         reply.setAddressedTweetId(tweetId);
         Tweet replyTweet = createTweet(reply);
         tweet.getReplies().add(replyTweet);
-        return getTweetById(tweet.getId());
+        return getTweetById(replyTweet.getId());
     }
 
     @Override

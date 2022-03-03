@@ -29,15 +29,7 @@ import {setChatMessage} from "./store/ducks/chatMessages/actionCreators";
 import {WS_URL} from "./util/url";
 import {fetchNotifications, setNotification} from "./store/ducks/notifications/actionCreators";
 import {selectNotificationsList} from "./store/ducks/notifications/selectors";
-import {
-    deleteTweet,
-    setScheduledTweets,
-    setTweet,
-    setUpdatedLikedTweet,
-    setUpdatedRepliedTweet,
-    setUpdatedRetweetedTweet,
-    setUpdatedTweet
-} from "./store/ducks/tweets/actionCreators";
+import {deleteTweet, setScheduledTweets, setTweet, setUpdatedTweet} from "./store/ducks/tweets/actionCreators";
 import Lists from "./pages/Lists/Lists";
 import FullList from "./pages/FullList/FullList";
 import SuggestedLists from "./pages/SuggestedLists/SuggestedLists";
@@ -93,23 +85,7 @@ const App: FC = (): ReactElement => {
                 if (JSON.parse(response.body).tweetDeleted) {
                     dispatch(deleteTweet(JSON.parse(response.body)));
                 } else {
-                    if (JSON.parse(response.body).notificationType === "LIKE") {
-                        dispatch(setUpdatedLikedTweet({
-                                tweetId: JSON.parse(response.body).tweet.id,
-                                isTweetLiked: JSON.parse(response.body).tweet.notificationCondition
-                            }
-                        ));
-                    } else if (JSON.parse(response.body).notificationType === "RETWEET") {
-                        dispatch(setUpdatedRetweetedTweet({
-                                tweetId: JSON.parse(response.body).tweet.id,
-                                isTweetRetweeted: JSON.parse(response.body).tweet.notificationCondition
-                            }
-                        ));
-                    } else if (JSON.parse(response.body).notificationType === "REPLY") {
-                        dispatch(setUpdatedRepliedTweet(JSON.parse(response.body).tweetId));
-                    } else {
-                        dispatch(setUpdatedTweet(JSON.parse(response.body)));
-                    }
+                    dispatch(setUpdatedTweet(JSON.parse(response.body)));
                 }
             });
 
