@@ -6,6 +6,7 @@ export enum UsersSearchActionsType {
     SET_USERS = 'usersSearch/SET_USERS', // +
     SET_FOLLOWERS = 'usersSearch/SET_FOLLOWERS', // +
     SET_FOLLOW_TO_USERS_SEARCH_STATE = 'usersSearch/SET_FOLLOW_TO_USERS_SEARCH_STATE', // +
+    SET_FOLLOW_REQUEST_TO_USERS_SEARCH_STATE = 'usersSearch/SET_FOLLOW_REQUEST_TO_USERS_SEARCH_STATE', // +
     SET_BLOCK_USERS_SEARCH_STATE = 'usersSearch/SET_BLOCK_USERS_SEARCH_STATE', // +
     FETCH_USERS  = 'usersSearch/FETCH_USERS', // +
     FETCH_USERS_BY_NAME  = 'usersSearch/FETCH_USERS_BY_NAME', // +
@@ -28,6 +29,11 @@ export interface SetFollowersActionInterface extends Action<UsersSearchActionsTy
 export interface SetFollowToUsersSearchStateActionInterface extends Action<UsersSearchActionsType> { // +
     type: UsersSearchActionsType.SET_FOLLOW_TO_USERS_SEARCH_STATE;
     payload: { userId: number; isFollower: boolean; };
+}
+
+export interface SetFollowRequestToUsersSearchStateActionInterface extends Action<UsersSearchActionsType> { // +
+    type: UsersSearchActionsType.SET_FOLLOW_REQUEST_TO_USERS_SEARCH_STATE;
+    payload: { userId: number; isWaitingForApprove: boolean; };
 }
 
 export interface SetBlockUsersSearchStateActionInterface extends Action<UsersSearchActionsType> { // +
@@ -67,6 +73,7 @@ export type UsersSearchActions =
     | SetUsersSearchActionInterface // +
     | SetFollowersActionInterface // +
     | SetFollowToUsersSearchStateActionInterface // +
+    | SetFollowRequestToUsersSearchStateActionInterface // +
     | SetBlockUsersSearchStateActionInterface // +
     | ResetUsersStateActionInterface // +
     | SetUsersSearchLoadingStatusActionInterface; // +

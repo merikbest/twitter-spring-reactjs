@@ -71,24 +71,6 @@ export const useNotificationsStyles = makeStyles((theme: Theme) => ({
             height: "2.30em",
         },
     },
-    notificationAvatarWrapper: {
-        display: "inline-block",
-    },
-    notificationAvatar: {
-        display: "inline-block",
-        marginRight: 8,
-        width: theme.spacing(4),
-        height: theme.spacing(4),
-        marginBottom: 11,
-    },
-    notificationInfo: {
-        marginBottom: 11,
-    },
-    notificationText: {
-        '& #hashtag': {
-            color: theme.palette.primary.main,
-        },
-    },
     notificationInfoText: {
         "& .MuiTypography-h5": {
             fontWeight: 700

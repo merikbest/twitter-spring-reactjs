@@ -10,10 +10,14 @@ import classNames from "classnames";
 import {compose} from "recompose";
 
 import {selectUserData} from "../../store/ducks/user/selectors";
-import {processUserToBlocklist, followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
+import {
+    followUser,
+    processFollowRequest,
+    processUserToBlocklist,
+    unfollowUser
+} from "../../store/ducks/user/actionCreators";
 import {useUsersItemStyles} from "./UsersItemStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
-import {processFollowRequest} from "../../store/ducks/userProfile/actionCreators";
 import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
 import UnfollowModal from "../UnfollowModal/UnfollowModal";
 import {LockIcon} from "../../icons";

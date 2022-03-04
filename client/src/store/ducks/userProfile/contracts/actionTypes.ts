@@ -12,7 +12,6 @@ export enum UserProfileActionsType {
     PROCESS_SUBSCRIBE = 'userProfile/PROCESS_SUBSCRIBE', // +
     RESET_USER_PROFILE_STATE = "userProfile/RESET_USER_PROFILE_STATE", // +
     SET_USER_LOADING_STATE = 'userProfile/SET_USER_LOADING_STATE', // +
-    PROCESS_FOLLOW_REQUEST = 'userProfile/PROCESS_FOLLOW_REQUEST', // +
     SET_FOLLOW_REQUEST_TO_USER_PROFILE = 'userProfile/SET_FOLLOW_REQUEST_TO_USER_PROFILE', // +
     FETCH_CHAT_PARTICIPANT = 'userProfile/FETCH_CHAT_PARTICIPANT', // +
 }
@@ -49,11 +48,6 @@ export interface SetSubscribeToUserProfileActionInterface extends Action<UserPro
 
 export interface ProcessSubscribeActionInterface extends Action<UserProfileActionsType> { // +
     type: UserProfileActionsType.PROCESS_SUBSCRIBE;
-    payload: number;
-}
-
-export interface ProcessFollowRequestActionInterface extends Action<UserProfileActionsType> {
-    type: UserProfileActionsType.PROCESS_FOLLOW_REQUEST;
     payload: number;
 }
 

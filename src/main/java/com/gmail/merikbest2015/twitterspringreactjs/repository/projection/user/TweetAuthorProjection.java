@@ -8,6 +8,7 @@ public interface TweetAuthorProjection {
     interface AuthorProjection {
         Long getId();
         String getUsername();
+        String getFullName();
         ImageProjection getAvatar();
     }
 }

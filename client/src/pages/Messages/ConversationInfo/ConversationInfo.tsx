@@ -9,19 +9,19 @@ import BackButton from "../../../components/BackButton/BackButton";
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
 import {LockIcon} from "../../../icons";
 import {selectUserData} from "../../../store/ducks/user/selectors";
-import {processUserToBlocklist, followUser, unfollowUser} from "../../../store/ducks/user/actionCreators";
+import {
+    followUser,
+    processFollowRequest,
+    processUserToBlocklist,
+    unfollowUser
+} from "../../../store/ducks/user/actionCreators";
 import LeaveFromConversationModal from "./LeaveFromConversationModal/LeaveFromConversationModal";
 import {leaveFromConversation} from "../../../store/ducks/chats/actionCreators";
 import BlockUserModal from "../../../components/BlockUserModal/BlockUserModal";
 import {SnackbarProps, withSnackbar} from "../../../hoc/withSnackbar";
 import ActionSnackbar from "../../../components/ActionSnackbar/ActionSnackbar";
 import UnfollowModal from "../../../components/UnfollowModal/UnfollowModal";
-import {
-    fetchChatParticipant,
-    processFollowRequest,
-    resetUserProfileState,
-    // unfollowProfile
-} from "../../../store/ducks/userProfile/actionCreators";
+import {fetchChatParticipant, resetUserProfileState} from "../../../store/ducks/userProfile/actionCreators";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {selectUserProfile, selectUsersIsLoading} from "../../../store/ducks/userProfile/selectors";
 import Spinner from "../../../components/Spinner/Spinner";

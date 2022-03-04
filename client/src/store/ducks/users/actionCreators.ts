@@ -3,6 +3,7 @@ import {
     FetchUsersActionInterface,
     ResetUsersStateActionInterface,
     SetBlockedUsersStateActionInterface,
+    SetFollowRequestToUsersStateActionInterface,
     SetFollowToUsersStateActionInterface,
     SetMutedUsersStateActionInterface,
     SetSubscribedUsersStateActionInterface,
@@ -20,6 +21,11 @@ export const setUsers = (payload: UserResponse[]): SetUsersActionInterface => ({
 
 export const setFollowToUsersState = (payload: { userId: number; isFollower: boolean; }): SetFollowToUsersStateActionInterface => ({ // +
     type: UsersActionsType.SET_FOLLOW_TO_USERS_STATE,
+    payload
+});
+
+export const setFollowRequestToUsers = (payload: { userId: number; isWaitingForApprove: boolean; }): SetFollowRequestToUsersStateActionInterface => ({ // +
+    type: UsersActionsType.SET_FOLLOW_REQUEST_TO_USERS_STATE,
     payload
 });
 

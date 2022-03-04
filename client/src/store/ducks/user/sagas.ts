@@ -1,4 +1,4 @@
-import {all, call, put, takeLatest} from 'redux-saga/effects';
+import {call, put, takeLatest} from 'redux-saga/effects';
 import {
     setBackgroundColor,
     setColorScheme,
@@ -22,6 +22,7 @@ import {
     FetchSignInActionInterface,
     FetchSignUpActionInterface,
     FollowUserActionInterface,
+    ProcessFollowRequestActionInterface,
     ProcessUserToBlocklistActionInterface,
     ProcessUserToMuteListActionInterface,
     StartUseTwitterActionInterface,
@@ -44,19 +45,38 @@ import {LoadingStatus} from "../../types";
 import {ChatApi} from "../../../services/api/chatApi";
 import {UserSettingsApi} from "../../../services/api/userSettingsApi";
 import {AuthenticationResponse} from "../../types/auth";
-import {AuthUserResponse} from "../../types/user";
-import {setBlocked, setFollowToUserProfile, setMuted} from "../userProfile/actionCreators";
-import {setBlockedUsersState, setFollowToUsersState, setMutedUsersState} from "../users/actionCreators";
+import {AuthUserResponse, UserProfileResponse} from "../../types/user";
+import {
+    setBlocked,
+    setFollowRequestToUserProfile,
+    setFollowToUserProfile,
+    setMuted
+} from "../userProfile/actionCreators";
+import {
+    setBlockedUsersState,
+    setFollowRequestToUsers,
+    setFollowToUsersState,
+    setMutedUsersState
+} from "../users/actionCreators";
 import {setBlockedToTweetState, setFollowToTweetState, setMutedToTweetState} from "../tweet/actionCreators";
 import {NotificationUserResponse} from "../../types/notification";
 import {setBlockedToTweetsState, setFollowToTweetsState, setMutedToTweetsState} from "../tweets/actionCreators";
-import {setBlockUsersSearchState, setFollowToUsersSearchState} from "../usersSearch/actionCreators";
-import {setBlockUserDetail, setFollowToUserDetail} from "../userDetail/actionCreators";
+import {
+    setBlockUsersSearchState,
+    setFollowRequestToUsersSearchState,
+    setFollowToUsersSearchState
+} from "../usersSearch/actionCreators";
+import {setBlockUserDetail, setFollowRequestToUserDetail, setFollowToUserDetail} from "../userDetail/actionCreators";
 import {
     setBlockedUsersTweetState,
     setFollowToUsersTweetState,
     setMutedUsersTweetState
 } from "../userTweets/actionCreators";
+import {
+    setBlockedNotificationInfo,
+    setFollowRequestToNotificationInfo,
+    setFollowToNotificationInfo
+} from "../notifications/actionCreators";
 
 export function* updateUserDataRequest({payload}: UpdateUserDataActionInterface) { // +
     try {
@@ -115,6 +135,7 @@ export function* processFollowUserRequest({payload}: FollowUserActionInterface) 
         yield put(setFollowToUsersState({userId: item.id, isFollower: item.isFollower}));
         yield put(setFollowToUsersSearchState({userId: item.id, isFollower: item.isFollower}));
         yield put(setFollowToTweetState(item.isFollower));
+        yield put(setFollowToNotificationInfo(item.isFollower));
     } catch (error) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -261,6 +282,7 @@ export function* processUserToBlocklistRequest({payload}: ProcessUserToBlocklist
         yield put(setBlockedUsersState({userId: payload.userId, isUserBlocked: item}));
         yield put(setBlockUsersSearchState({userId: payload.userId, isUserBlocked: item}));
         yield put(setBlockedToTweetState(item));
+        yield put(setBlockedNotificationInfo(item));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -275,6 +297,19 @@ export function* processUserToMuteListRequest({payload}: ProcessUserToMuteListAc
         yield put(setMutedUsersState({userId: payload.userId, isUserMuted: item})); // TODO NOT NEEDED ???
         yield put(setMutedToTweetState(item));
     } catch (e) {
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
+export function* processFollowRequest({payload}: ProcessFollowRequestActionInterface) {
+    try {
+        const item: UserProfileResponse = yield call(UserApi.processFollowRequestToPrivateProfile, payload);
+        yield put(setFollowRequestToUserProfile(item.isWaitingForApprove));
+        yield put(setFollowRequestToUserDetail(item.isWaitingForApprove));
+        yield put(setFollowRequestToUsers({userId: item.id, isWaitingForApprove: item.isWaitingForApprove}));
+        yield put(setFollowRequestToUsersSearchState({userId: item.id, isWaitingForApprove: item.isWaitingForApprove}));
+        yield put(setFollowRequestToNotificationInfo(item.isWaitingForApprove));
+    } catch (error) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
 }
@@ -301,4 +336,5 @@ export function* userSaga() {
     yield takeLatest(UserActionsType.UPDATE_BACKGROUND_COLOR, updateBackgroundColorRequest); // +
     yield takeLatest(UserActionsType.PROCESS_USER_TO_BLOCKLIST, processUserToBlocklistRequest); // +
     yield takeLatest(UserActionsType.PROCESS_USER_TO_MUTELIST, processUserToMuteListRequest); // +
+    yield takeLatest(UserActionsType.PROCESS_FOLLOW_REQUEST, processFollowRequest); // +
 }

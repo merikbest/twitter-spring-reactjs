@@ -20,7 +20,8 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
             "ORDER BY n.date DESC")
     List<NotificationProjection> getNotificationsByUserId(Long userId);
 
-    @Query("SELECT n FROM User u " +
+    @Query("SELECT n.id AS id, n.date AS date, n.notificationType AS notificationType, n.user AS user, n.tweet AS tweet " +
+            "FROM User u " +
             "LEFT JOIN u.notifications n " +
             "WHERE u.id = :userId " +
             "AND n.id = :notificationId")

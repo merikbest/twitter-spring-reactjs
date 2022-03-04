@@ -7,8 +7,12 @@ import classNames from "classnames";
 import {usePopperUserWindowStyles} from "./PopperUserWindowStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {selectUserData} from "../../store/ducks/user/selectors";
-import {processUserToBlocklist, followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
-import {processFollowRequest} from "../../store/ducks/userProfile/actionCreators";
+import {
+    processUserToBlocklist,
+    followUser,
+    unfollowUser,
+    processFollowRequest
+} from "../../store/ducks/user/actionCreators";
 import {LockIcon} from "../../icons";
 import FollowerGroup from "../FollowerGroup/FollowerGroup";
 import {SnackbarProps, withSnackbar} from "../../hoc/withSnackbar";
@@ -88,10 +92,6 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
     if (!visible) {
         return null;
     }
-
-    const nextPage = () => {
-        history.push(`/user/${user?.id}`);
-    };
 
     return (
         <div

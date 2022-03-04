@@ -26,7 +26,13 @@ import {
 import {useUserPageStyles} from "./UserPageStyles";
 import BackButton from "../../components/BackButton/BackButton";
 import EditProfileModal from "../../components/EditProfileModal/EditProfileModal";
-import {processUserToBlocklist, processUserToMuteList, followUser, unfollowUser} from "../../store/ducks/user/actionCreators";
+import {
+    followUser,
+    processFollowRequest,
+    processUserToBlocklist,
+    processUserToMuteList,
+    unfollowUser
+} from "../../store/ducks/user/actionCreators";
 import {selectUserData, selectUserIsLoaded} from "../../store/ducks/user/selectors";
 import {
     selectIsUserTweetsLoaded,
@@ -50,12 +56,7 @@ import {
     selectUsersIsLoading,
     selectUsersIsSuccessLoaded
 } from "../../store/ducks/userProfile/selectors";
-import {
-    fetchUserProfile,
-    processFollowRequest,
-    processSubscribe,
-    resetUserProfileState
-} from "../../store/ducks/userProfile/actionCreators";
+import {fetchUserProfile, processSubscribe, resetUserProfileState} from "../../store/ducks/userProfile/actionCreators";
 import UserPageTweets from "./UserPageTweets";
 import {DEFAULT_PROFILE_IMG, WS_URL} from "../../util/url";
 import SetupProfileModal from "../SetupProfileModal/SetupProfileModal";
@@ -146,7 +147,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
     useEffect(() => {
         setBtnText(userProfile?.isWaitingForApprove ? ("Pending") : (userProfile?.isUserBlocked ? "Blocked" : "Following"));
 
-        if (userProfile) {
+        if (isUserProfileSuccessLoaded) {
             dispatch(fetchUserTweets({userId: params.id, page: 0}));
             setPage(prevState => prevState + 1);
         }

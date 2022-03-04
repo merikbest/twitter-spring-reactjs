@@ -1,13 +1,14 @@
 import {Settings, UserRequest, UserState} from "./contracts/state";
 import {
-    ProcessUserToBlocklistActionInterface,
-    ProcessUserToMuteListActionInterface,
     FetchPinTweetActionInterface,
     FetchReadMessagesActionInterface,
     FetchSignInActionInterface,
     FetchSignUpActionInterface,
     FetchUserDataActionInterface,
     FollowUserActionInterface,
+    ProcessFollowRequestActionInterface,
+    ProcessUserToBlocklistActionInterface,
+    ProcessUserToMuteListActionInterface,
     SetBackgroundColorActionInterface,
     SetColorSchemeActionInterface,
     SetCountryActionInterface,
@@ -110,6 +111,11 @@ export const unfollowUser = (payload: { userId: number; tweetId?: number; }): Un
 
 export const fetchPinTweet = (payload: number): FetchPinTweetActionInterface => ({ //+
     type: UserActionsType.FETCH_PIN_TWEET,
+    payload,
+});
+
+export const processFollowRequest = (payload: number): ProcessFollowRequestActionInterface => ({ // +
+    type: UserActionsType.PROCESS_FOLLOW_REQUEST,
     payload,
 });
 

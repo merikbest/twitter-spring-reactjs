@@ -22,6 +22,7 @@ export enum UserActionsType {
     FOLLOW_USER = 'user/FOLLOW_USER', //+ ????
     UNFOLLOW_USER = 'user/UNFOLLOW_USER', // +check ????
     FETCH_PIN_TWEET = 'user/FETCH_PIN_TWEET', //+
+    PROCESS_FOLLOW_REQUEST = 'user/PROCESS_FOLLOW_REQUEST', // +
     PROCESS_USER_TO_BLOCKLIST = 'user/PROCESS_USER_TO_BLOCKLIST', // +
     PROCESS_USER_TO_MUTELIST = 'user/PROCESS_USER_TO_MUTELIST', // +
     UPDATE_USERNAME = 'user/UPDATE_USERNAME', //+
@@ -114,6 +115,11 @@ export interface UnfollowUserActionInterface extends Action<UserActionsType> { /
 
 export interface FetchPinTweetActionInterface extends Action<UserActionsType> { //+
     type: UserActionsType.FETCH_PIN_TWEET;
+    payload: number;
+}
+
+export interface ProcessFollowRequestActionInterface extends Action<UserActionsType> { // +
+    type: UserActionsType.PROCESS_FOLLOW_REQUEST;
     payload: number;
 }
 

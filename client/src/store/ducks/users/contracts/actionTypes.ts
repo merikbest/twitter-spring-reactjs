@@ -7,6 +7,7 @@ export enum UsersActionsType {
     FETCH_RELEVANT_USERS = 'users/FETCH_RELEVANT_USERS', // +
     SET_USERS = 'users/SET_USERS', // +
     SET_FOLLOW_TO_USERS_STATE = 'users/SET_FOLLOW_TO_USERS_STATE', // +
+    SET_FOLLOW_REQUEST_TO_USERS_STATE = 'users/SET_FOLLOW_REQUEST_TO_USERS_STATE', // +
     SET_BLOCKED_USERS_STATE = 'users/SET_BLOCKED_USERS_STATE', //+
     SET_MUTED_USERS_STATE = 'users/SET_MUTED_USERS_STATE', //+
     SET_SUBSCRIBED_USERS_STATE = 'users/SET_SUBSCRIBED_USERS_STATE', //+
@@ -30,6 +31,11 @@ export interface SetUsersActionInterface extends Action<UsersActionsType> { //+
 export interface SetFollowToUsersStateActionInterface extends Action<UsersActionsType> { //+
     type: UsersActionsType.SET_FOLLOW_TO_USERS_STATE;
     payload: { userId: number; isFollower: boolean; };
+}
+
+export interface SetFollowRequestToUsersStateActionInterface extends Action<UsersActionsType> { //+
+    type: UsersActionsType.SET_FOLLOW_REQUEST_TO_USERS_STATE;
+    payload: { userId: number; isWaitingForApprove: boolean; };
 }
 
 export interface SetBlockedUsersStateActionInterface extends Action<UsersActionsType> { //+
@@ -61,6 +67,7 @@ export type UsersActions =
     | ResetUsersStateActionInterface //+
     | SetUsersLoadingStatusActionInterface //+
     | SetFollowToUsersStateActionInterface //+
+    | SetFollowRequestToUsersStateActionInterface //+
     | SetBlockedUsersStateActionInterface //+
     | SetMutedUsersStateActionInterface //+
     | SetSubscribedUsersStateActionInterface; //+

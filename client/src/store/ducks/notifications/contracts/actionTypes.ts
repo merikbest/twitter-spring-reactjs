@@ -1,7 +1,12 @@
 import {Action} from "redux";
 
 import {LoadingStatus} from "../../../types";
-import {NotificationInfoResponse, NotificationResponse, NotificationsResponse} from "../../../types/notification";
+import {
+    NotificationInfoResponse,
+    NotificationReplyResponse,
+    NotificationResponse,
+    NotificationsResponse
+} from "../../../types/notification";
 
 export enum NotificationsActionsType {
     SET_NOTIFICATIONS = 'notification/SET_NOTIFICATIONS', // +
@@ -10,6 +15,10 @@ export enum NotificationsActionsType {
     SET_NOTIFICATION = 'notification/SET_NOTIFICATION', // +
     FETCH_NOTIFICATION_INFO = 'notification/FETCH_NOTIFICATION_INFO', // +
     SET_NOTIFICATION_INFO = 'notification/SET_NOTIFICATION_INFO', // +
+    SET_FOLLOW_TO_NOTIFICATION_INFO = 'notification/SET_FOLLOW_TO_NOTIFICATION_INFO', // +
+    SET_BLOCKED_NOTIFICATION_INFO = 'notification/SET_BLOCKED_NOTIFICATION_INFO', // +
+    SET_FOLLOW_REQUEST_TO_NOTIFICATION_INFO = 'notification/SET_FOLLOW_REQUEST_TO_NOTIFICATION_INFO', // +
+    UPDATE_NOTIFICATION_INFO_TWEET = 'notification/UPDATE_NOTIFICATION_INFO_TWEET', // +
     RESET_NOTIFICATION_STATE = 'notification/RESET_NOTIFICATION_STATE', // +
     SET_LOADING_STATE = 'notification/SET_LOADING_STATE', // +
 }
@@ -43,6 +52,26 @@ export interface SetNotificationInfoActionInterface extends Action<Notifications
     payload: NotificationInfoResponse;
 }
 
+export interface SetFollowToNotificationInfoActionInterface extends Action<NotificationsActionsType> { // +
+    type: NotificationsActionsType.SET_FOLLOW_TO_NOTIFICATION_INFO;
+    payload: boolean;
+}
+
+export interface SetBlockedNotificationInfoActionInterface extends Action<NotificationsActionsType> { // +
+    type: NotificationsActionsType.SET_BLOCKED_NOTIFICATION_INFO;
+    payload: boolean;
+}
+
+export interface SetFollowRequestToNotificationInfoActionInterface extends Action<NotificationsActionsType> { // +
+    type: NotificationsActionsType.SET_FOLLOW_REQUEST_TO_NOTIFICATION_INFO;
+    payload: boolean;
+}
+
+export interface UpdateNotificationInfoTweetActionInterface extends Action<NotificationsActionsType> { // +
+    type: NotificationsActionsType.UPDATE_NOTIFICATION_INFO_TWEET;
+    payload: NotificationResponse | NotificationReplyResponse;
+}
+
 export interface ResetNotificationStateActionInterface extends Action<NotificationsActionsType> { // +
     type: NotificationsActionsType.RESET_NOTIFICATION_STATE;
 }
@@ -56,5 +85,9 @@ export type NotificationsActions =
     | SetNotificationsActionInterface // +
     | SetNotificationActionInterface // +
     | SetNotificationInfoActionInterface // +
+    | SetFollowToNotificationInfoActionInterface // +
+    | SetBlockedNotificationInfoActionInterface // +
+    | SetFollowRequestToNotificationInfoActionInterface // +
+    | UpdateNotificationInfoTweetActionInterface // +
     | ResetNotificationStateActionInterface // +
     | SetNotificationsLoadingStateActionInterface; // +

@@ -27,7 +27,11 @@ import NotificationInfo from "./pages/Notifications/NotificationInfo/Notificatio
 import Messages from "./pages/Messages/Messages";
 import {setChatMessage} from "./store/ducks/chatMessages/actionCreators";
 import {WS_URL} from "./util/url";
-import {fetchNotifications, setNotification} from "./store/ducks/notifications/actionCreators";
+import {
+    fetchNotifications,
+    setNotification,
+    updateNotificationInfoTweet
+} from "./store/ducks/notifications/actionCreators";
 import {selectNotificationsList} from "./store/ducks/notifications/selectors";
 import {deleteTweet, setScheduledTweets, setTweet, setUpdatedTweet} from "./store/ducks/tweets/actionCreators";
 import Lists from "./pages/Lists/Lists";
@@ -86,6 +90,7 @@ const App: FC = (): ReactElement => {
                     dispatch(deleteTweet(JSON.parse(response.body)));
                 } else {
                     dispatch(setUpdatedTweet(JSON.parse(response.body)));
+                    dispatch(updateNotificationInfoTweet(JSON.parse(response.body)));
                 }
             });
 
@@ -186,7 +191,7 @@ const App: FC = (): ReactElement => {
                         <Route path="/search" component={Explore}/>
                         <Route path="/notifications" component={Notifications} exact/>
                         <Route path="/notifications/timeline" component={NotificationsTimeline} exact/>
-                        <Route path="/notification" component={NotificationInfo} exact/>
+                        <Route path="/notification/:id" component={NotificationInfo} exact/>
                         <Route path="/messages" component={Messages}/>
                         <Route path="/settings"
                                render={() => <Settings

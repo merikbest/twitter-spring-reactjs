@@ -1,12 +1,22 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 
-import {FetchNotificationsFromTweetAuthorsActionInterface, NotificationsActionsType} from "./contracts/actionTypes";
-import {setNotifications, setNotificationsLoadingState} from "./actionCreators";
+import {
+    FetchNotificationInfoActionInterface,
+    FetchNotificationsFromTweetAuthorsActionInterface,
+    NotificationsActionsType
+} from "./contracts/actionTypes";
+import {
+    fetchNotificationInfo,
+    setNotification,
+    setNotificationInfo,
+    setNotifications,
+    setNotificationsLoadingState
+} from "./actionCreators";
 import {LoadingStatus} from "../../types";
 import {UserApi} from "../../../services/api/userApi";
 import {setPageableTweets} from "../tweets/actionCreators";
 import {AxiosResponse} from "axios";
-import {NotificationsResponse} from "../../types/notification";
+import {NotificationInfoResponse, NotificationsResponse} from "../../types/notification";
 import {TweetResponse} from "../../types/tweet";
 
 export function* fetchNotificationsRequest() { // +
@@ -32,7 +42,18 @@ export function* fetchNotificationsFromTweetAuthorsRequest({payload}: FetchNotif
     }
 }
 
+export function* fetchNotificationInfoRequest({payload}: FetchNotificationInfoActionInterface) { // +
+    try {
+        const items: NotificationInfoResponse = yield call(UserApi.getUserNotificationById, payload);
+        yield put(setNotificationInfo(items));
+    } catch (error) {
+        console.log(error);
+        yield put(setNotificationsLoadingState(LoadingStatus.ERROR));
+    }
+}
+
 export function* notificationsSaga() {
     yield takeLatest(NotificationsActionsType.FETCH_NOTIFICATIONS, fetchNotificationsRequest); // +
     yield takeLatest(NotificationsActionsType.FETCH_NOTIFICATIONS_FROM_TWEET_AUTHORS, fetchNotificationsFromTweetAuthorsRequest); // +
+    yield takeLatest(NotificationsActionsType.FETCH_NOTIFICATION_INFO, fetchNotificationInfoRequest); // +
 }
