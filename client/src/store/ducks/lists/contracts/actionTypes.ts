@@ -27,6 +27,9 @@ export enum ListsActionType {
     SET_PINED_LIST_TO_USER_LIST = "lists/SET_PINED_LIST_TO_USER_LIST", // +
     RESET_LISTS_STATE = "lists/RESET_LISTS_STATE",
     SET_LOADING_STATE = "lists/SET_LOADING_STATE",
+    SET_LISTS_LOADING_STATE = "lists/SET_LISTS_LOADING_STATE",
+    SET_USER_LISTS_LOADING_STATE = "lists/SET_USER_LISTS_LOADING_STATE",
+    SET_PINNED_LISTS_LOADING_STATE = "lists/SET_PINNED_LISTS_LOADING_STATE",
 }
 
 export interface SetListsActionInterface extends Action<ListsActionType> { // +
@@ -129,8 +132,23 @@ export interface ResetListsStateActionInterface extends Action<ListsActionType> 
     type: ListsActionType.RESET_LISTS_STATE;
 }
 
-export interface SetListsLoadingStateInterface extends Action<ListsActionType> {
+export interface SetLoadingStateInterface extends Action<ListsActionType> {
     type: ListsActionType.SET_LOADING_STATE;
+    payload: LoadingStatus;
+}
+
+export interface SetListsLoadingStateInterface extends Action<ListsActionType> {
+    type: ListsActionType.SET_LISTS_LOADING_STATE;
+    payload: LoadingStatus;
+}
+
+export interface SetUserListsLoadingStateInterface extends Action<ListsActionType> {
+    type: ListsActionType.SET_USER_LISTS_LOADING_STATE;
+    payload: LoadingStatus;
+}
+
+export interface SetPinnedListsLoadingStateInterface extends Action<ListsActionType> {
+    type: ListsActionType.SET_PINNED_LISTS_LOADING_STATE;
     payload: LoadingStatus;
 }
 
@@ -146,4 +164,7 @@ export type ListsActions =
     | SetUnpinListActionInterface // +
     | SetPinedListToUserListActionInterface // +
     | ResetListsStateActionInterface
-    | SetListsLoadingStateInterface;
+    | SetLoadingStateInterface
+    | SetListsLoadingStateInterface
+    | SetUserListsLoadingStateInterface
+    | SetPinnedListsLoadingStateInterface

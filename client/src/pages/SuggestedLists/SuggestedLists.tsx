@@ -5,7 +5,7 @@ import {Paper, Typography} from "@material-ui/core";
 import {useSuggestedListsStyles} from "./SuggestedListsStyles";
 import BackButton from "../../components/BackButton/BackButton";
 import {fetchLists} from "../../store/ducks/lists/actionCreators";
-import {selectIsListsLoading, selectListsItems} from "../../store/ducks/lists/selectors";
+import {selectIsLoading, selectListsItems} from "../../store/ducks/lists/selectors";
 import ListsItem from "../Lists/ListsItem/ListsItem";
 import Spinner from "../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../util/globalClasses";
@@ -15,7 +15,7 @@ const SuggestedLists: FC = (): ReactElement => {
     const classes = useSuggestedListsStyles();
     const dispatch = useDispatch();
     const lists = useSelector(selectListsItems);
-    const isLoading = useSelector(selectIsListsLoading);
+    const isLoading = useSelector(selectIsLoading);
 
     useEffect(() => {
         window.scrollTo(0, 0);

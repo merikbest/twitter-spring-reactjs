@@ -52,7 +52,7 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
         padding: 4,
     },
     newLists: {
-        maxHeight: 316,
+        maxHeight: 345,
         borderTop: 0,
         borderLeft: 0,
         borderRight: 0,

@@ -5,7 +5,6 @@ import {Dialog, DialogContent, DialogTitle, Typography} from "@material-ui/core"
 import {useMembersAndFollowersModalStyles} from "./MembersAndFollowersModalStyles";
 import ManageMembersItem from "../ManageMembersModal/ManageMembersItem/ManageMembersItem";
 import CloseButton from "../../../../components/CloseButton/CloseButton";
-import {selectListItem} from "../../../../store/ducks/list/selectors";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {
     fetchListFollowers,
@@ -14,8 +13,10 @@ import {
 } from "../../../../store/ducks/listMembers/actionCreators";
 import {selectIsListMembersLoading, selectListMembersItems} from "../../../../store/ducks/listMembers/selectors";
 import Spinner from "../../../../components/Spinner/Spinner";
+import {BaseListResponse} from "../../../../store/types/lists";
 
 interface MembersAndFollowersModalProps {
+    list: BaseListResponse;
     visible: boolean;
     title: string;
     onClose: () => void;
@@ -23,6 +24,7 @@ interface MembersAndFollowersModalProps {
 
 const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
     {
+        list,
         visible,
         title,
         onClose
@@ -31,7 +33,6 @@ const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
     const globalClasses = useGlobalStyles();
     const classes = useMembersAndFollowersModalStyles();
     const dispatch = useDispatch();
-    const list = useSelector(selectListItem);
     const users = useSelector(selectListMembersItems);
     const isLoading = useSelector(selectIsListMembersLoading);
 

@@ -19,5 +19,5 @@ public class ListResponse {
     private ListOwnerResponse listOwner;
 
     @JsonProperty("isFollower")
-    private boolean follower;
+    private boolean isFollower;
 }

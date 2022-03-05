@@ -7,9 +7,8 @@ export const useActionSnackbarStyles = makeStyles<Theme>((theme) => ({
         },
         "& .MuiSnackbarContent-root": {
             color: theme.palette.common.white,
-            width: 179,
             height: 44,
-            padding: 0,
+            padding: "0px 15px",
             backgroundColor: theme.palette.primary.main,
             "& .MuiSnackbarContent-message": {
                 fontSize: 15,

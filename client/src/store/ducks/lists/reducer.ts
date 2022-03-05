@@ -6,8 +6,11 @@ import {LoadingStatus} from '../../types';
 
 const initialTweetState: ListsState = {
     lists: [],
+    listsLoadingState: LoadingStatus.LOADING,
     userLists: [],
+    userListsLoadingState: LoadingStatus.LOADING,
     pinnedLists: [],
+    pinnedListsLoadingState: LoadingStatus.LOADING,
     loadingState: LoadingStatus.LOADING
 };
 
@@ -17,16 +20,17 @@ export const listsReducer = produce((draft: Draft<ListsState>, action: ListsActi
         case ListsActionType.SET_LISTS: // +
             draft.lists = action.payload;
             draft.loadingState = LoadingStatus.LOADED;
+            draft.listsLoadingState = LoadingStatus.LOADED;
             break;
 
         case ListsActionType.SET_USER_LISTS: // +
             draft.userLists = action.payload;
-            draft.loadingState = LoadingStatus.LOADED;
+            draft.userListsLoadingState = LoadingStatus.LOADED;
             break;
 
         case ListsActionType.SET_PINNED_LISTS: // +
             draft.pinnedLists = action.payload;
-            draft.loadingState = LoadingStatus.LOADED;
+            draft.pinnedListsLoadingState = LoadingStatus.LOADED;
             break;
 
         case ListsActionType.SET_UPDATED_LISTS: // +
@@ -73,11 +77,26 @@ export const listsReducer = produce((draft: Draft<ListsState>, action: ListsActi
             draft.lists = [];
             draft.userLists = [];
             draft.pinnedLists = [];
+            draft.listsLoadingState = LoadingStatus.LOADING;
+            draft.userListsLoadingState = LoadingStatus.LOADING;
+            draft.pinnedListsLoadingState = LoadingStatus.LOADING;
             draft.loadingState = LoadingStatus.LOADING;
             break;
 
         case ListsActionType.SET_LOADING_STATE:
             draft.loadingState = action.payload;
+            break;
+
+        case ListsActionType.SET_LISTS_LOADING_STATE:
+            draft.listsLoadingState = action.payload;
+            break;
+
+        case ListsActionType.SET_USER_LISTS_LOADING_STATE:
+            draft.userListsLoadingState = action.payload;
+            break;
+
+        case ListsActionType.SET_PINNED_LISTS_LOADING_STATE:
+            draft.pinnedListsLoadingState = action.payload;
             break;
 
         default:

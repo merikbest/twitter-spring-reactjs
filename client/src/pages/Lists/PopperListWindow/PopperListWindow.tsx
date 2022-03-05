@@ -9,27 +9,27 @@ import {selectUserData} from "../../../store/ducks/user/selectors";
 import {followList, unfollowList} from "../../../store/ducks/lists/actionCreators";
 import MembersAndFollowersModal from "../../FullList/EditListModal/MembersAndFollowersModal/MembersAndFollowersModal";
 import {BaseListResponse} from "../../../store/types/lists";
+import {selectListDetailItem} from "../../../store/ducks/listDetail/selectors";
 
 interface PopperListWindowProps {
-    list: BaseListResponse;
-    visible: boolean;
+    list?: BaseListResponse;
+    visible?: boolean;
 }
 
-const PopperListWindow: FC<PopperListWindowProps> = ({list, visible}): ReactElement | null => {
+const PopperListWindow: FC<PopperListWindowProps> = ({visible}): ReactElement | null => {
     const classes = usePopperListWindowStyles();
-    const myProfile = useSelector(selectUserData);
     const dispatch = useDispatch();
-
+    const myProfile = useSelector(selectUserData);
+    const list = useSelector(selectListDetailItem);
     const [btnText, setBtnText] = useState<string>("Following");
     const [visibleMembersAndFollowersModal, setVisibleMembersAndFollowersModal] = useState<boolean>(false);
     const [modalWindowTitle, setModalWindowTitle] = useState<string>("");
 
-    // Follow | Unfollow
     const handleFollow = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
         event.preventDefault();
         event.stopPropagation();
 
-        if (list.isFollower) {
+        if (list?.isFollower) {
             dispatch(unfollowList(list?.id!));
         } else {
             dispatch(followList(list?.id!));
@@ -108,7 +108,7 @@ const PopperListWindow: FC<PopperListWindowProps> = ({list, visible}): ReactElem
                 </div>
                 <div className={classes.buttonWrapper}>
                     {(myProfile?.id === list?.listOwner.id) ? null :
-                        (list.isFollower ? (
+                        (list?.isFollower ? (
                             <Button
                                 className={classes.primaryButton}
                                 onMouseOver={() => setBtnText("Unfollow")}
@@ -134,6 +134,7 @@ const PopperListWindow: FC<PopperListWindowProps> = ({list, visible}): ReactElem
                 </div>
             </div>
             <MembersAndFollowersModal
+                list={list!}
                 visible={visibleMembersAndFollowersModal}
                 title={modalWindowTitle}
                 onClose={onCloseModalWindow}

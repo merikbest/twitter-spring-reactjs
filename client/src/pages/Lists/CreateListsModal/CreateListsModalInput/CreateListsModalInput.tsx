@@ -6,7 +6,8 @@ import {ListModalInputField} from "./ListsModalInputField";
 
 interface CreateListsModalInputProps {
     onChange: (...event: any[]) => void;
-    value?: string;
+    value: string;
+    name: string;
     label: string;
     maxTextLength: number;
     helperText?: string;
@@ -17,6 +18,7 @@ const CreateListsModalInput: FC<CreateListsModalInputProps> = (
     {
         onChange,
         value,
+        name,
         label,
         maxTextLength,
         helperText,
@@ -39,17 +41,19 @@ const CreateListsModalInput: FC<CreateListsModalInputProps> = (
                 )}
             </div>
             <ListModalInputField
-                label={label}
-                variant="filled"
+                id={name}
+                name={name}
                 onChange={(event) => onChange(event.target.value)}
                 value={value}
-                onFocus={onFocus}
-                onBlur={onBlur}
                 helperText={helperText}
                 error={error}
+                variant="filled"
+                label={label}
                 inputProps={{
                     maxLength: maxTextLength,
                 }}
+                onFocus={onFocus}
+                onBlur={onBlur}
                 multiline={label === "Description"}
                 rows={label === "Description" ? 3 : 1}
                 fullWidth

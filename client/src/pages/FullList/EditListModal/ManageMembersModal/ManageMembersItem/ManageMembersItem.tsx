@@ -1,4 +1,4 @@
-import React, {FC, ReactElement} from 'react';
+import React, {ComponentType, FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link} from 'react-router-dom';
 import {Avatar, Button, Paper, Typography} from "@material-ui/core";
@@ -11,25 +11,43 @@ import {useGlobalStyles} from "../../../../../util/globalClasses";
 import {BaseListResponse, ListsOwnerMemberResponse} from "../../../../../store/types/lists";
 import {processUserToListMembers} from "../../../../../store/ducks/listMembers/actionCreators";
 import PopperUserWindow from "../../../../../components/PopperUserWindow/PopperUserWindow";
+import {LockIcon} from "../../../../../icons";
+import {SnackbarProps, withSnackbar} from "../../../../../hoc/withSnackbar";
+import {compose} from "recompose";
+import {UserResponse} from "../../../../../store/types/user";
+import {HoverActionProps} from "../../../../../hoc/withHoverAction";
+import {UsersItemProps} from "../../../../../components/UsersItem/UsersItem";
+import ActionSnackbar from "../../../../../components/ActionSnackbar/ActionSnackbar";
+import {selectIsListSuggestedError} from "../../../../../store/ducks/listMembers/selectors";
 
 interface ManageMembersItemProps<T> {
     item?: T;
     member?: ListsOwnerMemberResponse;
 }
 
-const ManageMembersItem: FC<ManageMembersItemProps<BaseListResponse> & HoverUserProps> = (
+const ManageMembersItem: FC<ManageMembersItemProps<BaseListResponse> & HoverUserProps & SnackbarProps> = (
     {
         item: list,
         member,
         visiblePopperWindow,
         handleHoverPopper,
-        handleLeavePopper
+        handleLeavePopper,
+        openSnackBar,
+        setOpenSnackBar,
+        onCloseSnackBar
     }
 ): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useManageMembersItemStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
+    const isSuggestedError = useSelector(selectIsListSuggestedError);
+
+    useEffect(() => {
+        if (isSuggestedError) {
+            setOpenSnackBar!(true);
+        }
+    }, [isSuggestedError]);
 
     const onClickAddUserToList = (event: React.MouseEvent<HTMLButtonElement>): void => {
         event.preventDefault();
@@ -48,11 +66,16 @@ const ManageMembersItem: FC<ManageMembersItemProps<BaseListResponse> & HoverUser
                         <div onMouseLeave={handleLeavePopper} className={classes.headerUserInfo}>
                             <Typography
                                 variant={"h6"}
-                                component={"div"}
+                                component={"span"}
                                 onMouseEnter={() => handleHoverPopper!(member?.id!)}
                             >
                                 {member?.fullName}
                             </Typography>
+                            {member?.isPrivateProfile && (
+                                <span className={classes.lockIcon}>
+                                    {LockIcon}
+                                </span>
+                            )}
                             <PopperUserWindow visible={visiblePopperWindow}/>
                             <Typography variant={"subtitle1"} component={"div"}>
                                 @{member?.username}
@@ -64,7 +87,7 @@ const ManageMembersItem: FC<ManageMembersItemProps<BaseListResponse> & HoverUser
                         <div className={classes.buttonWrapper}>
                             {(list?.listOwner.id === myProfile?.id) && (
                                 (member?.id === myProfile?.id) ? null : (
-                                    (member?.isMemberInList) ? (
+                                    (!member?.isMemberInList) ? (
                                         <Button
                                             className={classes.outlinedButton}
                                             onClick={(event) => onClickAddUserToList(event)}
@@ -90,9 +113,14 @@ const ManageMembersItem: FC<ManageMembersItemProps<BaseListResponse> & HoverUser
                         </div>
                     </div>
                 </div>
+                <ActionSnackbar
+                    snackBarMessage={"You aren’t allowed to add this member to this List."}
+                    openSnackBar={openSnackBar!}
+                    onCloseSnackBar={onCloseSnackBar!}
+                />
             </Paper>
         </Link>
     );
 };
 
-export default withHoverUser(ManageMembersItem);
+export default compose(withHoverUser, withSnackbar)(ManageMembersItem) as ComponentType<ManageMembersItemProps<BaseListResponse> & HoverUserProps & SnackbarProps>;

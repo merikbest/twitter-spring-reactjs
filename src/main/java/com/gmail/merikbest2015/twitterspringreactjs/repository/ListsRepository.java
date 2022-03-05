@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.repository;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Lists;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.lists.*;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetsProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,7 +20,11 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
     @Query("SELECT l as list FROM Lists l WHERE l.isPrivate = false")
     List<ListsProjection> getAllTweetLists();
 
-    @Query("SELECT l as list FROM Lists l LEFT JOIN l.listOwner listOwner WHERE listOwner.id = :ownerId")
+    @Query("SELECT l as list FROM Lists l " +
+            "LEFT JOIN l.listOwner listOwner " +
+            "LEFT JOIN l.followers follower " +
+            "WHERE listOwner.id = :ownerId " +
+            "OR follower.id = :ownerId")
     List<ListsUserProjection> getUserTweetLists(Long ownerId);
 
     @Query("SELECT l FROM Lists l WHERE l.id = :listId")
@@ -35,7 +40,7 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
             "AND l.id IN :listIds")
     List<Lists> getListsByIds(Long ownerId, List<Long> listIds);
 
-    @Query("SELECT l as pinnedList FROM Lists l " +
+    @Query("SELECT l as list FROM Lists l " +
             "WHERE l.listOwner.id = :userId " +
             "AND l.pinnedDate IS NOT NULL " +
             "ORDER BY l.pinnedDate DESC")
@@ -44,13 +49,16 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
     @Query("SELECT l FROM Lists l WHERE l.id = :listId")
     PinnedListProjection getUserPinnedListById(Long listId);
 
-    @Query("SELECT t FROM Lists l " +
-            "LEFT JOIN l.members m " +
-            "LEFT JOIN m.tweets t " +
+    @Query("SELECT t FROM Tweet t " +
+            "JOIN t.user u " +
+            "JOIN u.userLists l " +
             "WHERE l.id = :listId " +
             "AND t.addressedUsername IS NULL " +
             "ORDER BY t.dateTime DESC")
     Page<TweetProjection> getTweetsByListId(Long listId, Pageable pageable);
+
+    @Query("SELECT m.id FROM Lists l LEFT JOIN l.members m WHERE l.id = :listId")
+    List<Long> getListMembersIds(Long listId);
 
     @Query("SELECT lists FROM Lists lists " +
             "LEFT JOIN lists.followers listsFollower " +
@@ -100,11 +108,14 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
             "AND l.listOwner.id = :listOwnerId")
     List<ListsMemberProjection> getListFollowers(Long listId, Long listOwnerId);
 
+    @Query("SELECT m as member FROM Lists l LEFT JOIN l.members m WHERE l.id = :listId")
+    List<ListsMemberProjection> getListMembers(Long listId);
+
     @Query("SELECT m as member, l.id as listId FROM Lists l LEFT JOIN l.members m WHERE l.id = :listId")
-    <T> List<T> getListMembers(Long listId, Class<T> type);
+    List<ListsOwnerMemberProjection> getListOwnerMembers(Long listId);
 
     @Query("SELECT u as member FROM User u " +
-            "WHERE UPPER(u.fullName) LIKE UPPER(CONCAT('%',:name,'%')) " +
-            "OR UPPER(u.username) LIKE UPPER(CONCAT('%',:name,'%'))")
+            "WHERE UPPER(u.fullName) LIKE UPPER(CONCAT('%',:name,'%')) AND u.active = true " +
+            "OR UPPER(u.username) LIKE UPPER(CONCAT('%',:name,'%')) AND u.active = true")
     List<ListsMemberProjection> searchListMembersByUsername(@Param("name") String name);
 }

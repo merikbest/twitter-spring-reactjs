@@ -11,79 +11,81 @@ import {
 import {
     setCreatedList,
     setFollowList,
-    setLists,
-    setListsLoadingState,
+    setLists, setListsLoadingState,
+    setLoadingState,
     setPinedList,
     setPinedListToUserList,
-    setPinnedLists,
+    setPinnedLists, setPinnedListsLoadingState,
     setUnfollowList,
     setUnpinList,
-    setUserLists
+    setUserLists, setUserListsLoadingState
 } from './actionCreators';
 import {LoadingStatus} from '../../types';
 import {ListsApi} from "../../../services/api/listsApi";
-import {setFollowToFullList, setUnfollowToFullList} from '../list/actionCreators';
+import {updateFollowToFullList} from '../list/actionCreators';
 import {ListResponse, ListUserResponse, PinnedListResponse} from "../../types/lists";
+import {updateFollowListDetail} from "../listDetail/actionCreators";
 
 export function* fetchListsRequest() { // +
     try {
+        yield put(setLoadingState(LoadingStatus.LOADING));
         yield put(setListsLoadingState(LoadingStatus.LOADING));
         const data: ListResponse[] = yield call(ListsApi.getAllTweetLists);
         yield put(setLists(data));
     } catch (error) {
-        yield put(setListsLoadingState(LoadingStatus.ERROR));
+        yield put(setLoadingState(LoadingStatus.ERROR));
     }
 }
 
 export function* fetchUserListsRequest() { // +
     try {
-        yield put(setListsLoadingState(LoadingStatus.LOADING));
+        yield put(setUserListsLoadingState(LoadingStatus.LOADING));
         const data: ListUserResponse[] = yield call(ListsApi.getUserTweetLists);
         yield put(setUserLists(data));
     } catch (error) {
-        yield put(setListsLoadingState(LoadingStatus.ERROR));
+        yield put(setUserListsLoadingState(LoadingStatus.ERROR));
     }
 }
 
 export function* fetchUserListsByIdRequest({payload}: FetchUserListsByIdActionInterface) { // +
     try {
-        yield put(setListsLoadingState(LoadingStatus.LOADING));
+        yield put(setLoadingState(LoadingStatus.LOADING));
         const data: ListResponse[] = yield call(ListsApi.getUserTweetListsById, payload);
         // yield put(setUserLists(data));
         yield put(setLists(data));
     } catch (error) {
-        yield put(setListsLoadingState(LoadingStatus.ERROR));
+        yield put(setLoadingState(LoadingStatus.ERROR));
     }
 }
 
 export function* fetchTweetListsWhichUserInRequest() { // +
     try {
-        yield put(setListsLoadingState(LoadingStatus.LOADING));
+        yield put(setLoadingState(LoadingStatus.LOADING));
         const data: ListResponse[] = yield call(ListsApi.getTweetListsWhichUserIn);
         // yield put(setUserLists(data));
         yield put(setLists(data));
     } catch (error) {
-        yield put(setListsLoadingState(LoadingStatus.ERROR));
+        yield put(setLoadingState(LoadingStatus.ERROR));
     }
 }
 
 export function* fetchPinnedListsRequest() { // +
     try {
-        yield put(setListsLoadingState(LoadingStatus.LOADING));
+        yield put(setPinnedListsLoadingState(LoadingStatus.LOADING));
         const data: PinnedListResponse[] = yield call(ListsApi.getUserPinnedLists);
         yield put(setPinnedLists(data));
     } catch (error) {
-        yield put(setListsLoadingState(LoadingStatus.ERROR));
+        yield put(setPinnedListsLoadingState(LoadingStatus.ERROR));
     }
 }
 
 export function* createListRequest({payload}: CreateListActionInterface) { // +
     try {
-        yield put(setListsLoadingState(LoadingStatus.LOADING));
+        yield put(setLoadingState(LoadingStatus.LOADING));
         const data: ListUserResponse = yield call(ListsApi.createTweetList, payload);
         yield put(setCreatedList(data));
     } catch (error) {
-        yield put(setListsLoadingState(LoadingStatus.ERROR));
+        yield put(setLoadingState(LoadingStatus.ERROR));
     }
 }
 
@@ -93,7 +95,7 @@ export function* pinListRequest({payload}: PinListActionInterface) { // +
         yield put(setPinedList(data));
         yield put(setPinedListToUserList(data));
     } catch (error) {
-        yield put(setListsLoadingState(LoadingStatus.ERROR));
+        yield put(setLoadingState(LoadingStatus.ERROR));
     }
 }
 
@@ -103,27 +105,29 @@ export function* unpinListRequest({payload}: PinListActionInterface) { // +
         yield put(setUnpinList(data));
         yield put(setPinedListToUserList(data));
     } catch (error) {
-        yield put(setListsLoadingState(LoadingStatus.ERROR));
+        yield put(setLoadingState(LoadingStatus.ERROR));
     }
 }
 
 export function* followListRequest({payload}: FollowListActionInterface) { // +
     try {
         const data: ListUserResponse = yield call(ListsApi.followList, payload);
-        yield put(setFollowToFullList());
         yield put(setFollowList(data));
+        yield put(updateFollowToFullList(true));
+        yield put(updateFollowListDetail(true));
     } catch (error) {
-        yield put(setListsLoadingState(LoadingStatus.ERROR));
+        yield put(setLoadingState(LoadingStatus.ERROR));
     }
 }
 
 export function* unfollowListRequest({payload}: UnfollowListActionInterface) { // +
     try {
         const data: ListUserResponse = yield call(ListsApi.followList, payload);
-        yield put(setUnfollowToFullList());
         yield put(setUnfollowList(data));
+        yield put(updateFollowToFullList(false));
+        yield put(updateFollowListDetail(false));
     } catch (error) {
-        yield put(setListsLoadingState(LoadingStatus.ERROR));
+        yield put(setLoadingState(LoadingStatus.ERROR));
     }
 }
 

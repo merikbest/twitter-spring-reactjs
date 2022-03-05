@@ -84,12 +84,14 @@ const CreateListsModal: FC<CreateListsModalProps> = ({visible, onClose}): ReactE
                         </div>
                         <CreateListsModalInput
                             label={"Name"}
+                            name={"name"}
                             onChange={setListName}
                             value={listName}
                             maxTextLength={25}
                         />
                         <CreateListsModalInput
                             label={"Description"}
+                            name={"description"}
                             onChange={setListDescription}
                             value={listDescription}
                             maxTextLength={50}

@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Link, useHistory} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {Avatar, Button, Typography} from "@material-ui/core";
 import classNames from "classnames";
 
@@ -42,7 +42,6 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
     const user = useSelector(selectUserDetailItem);
-    const history = useHistory();
     const [btnText, setBtnText] = useState<string>("Following");
 
     useEffect(() => {

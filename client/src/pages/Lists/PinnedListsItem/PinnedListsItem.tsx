@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useState} from 'react';
+import React, {FC, ReactElement} from 'react';
 import {Link} from 'react-router-dom';
 import {Avatar, Typography} from "@material-ui/core";
 
@@ -6,29 +6,31 @@ import {usePinnedListsItemStyles} from "./PinnedListsItemStyles";
 import {LockIcon} from "../../../icons";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {PinnedListResponse} from "../../../store/types/lists";
+import {HoverListProps, withHoverList} from "../../../hoc/withHoverList";
+import PopperListWindow from "../PopperListWindow/PopperListWindow";
 
 interface PinnedListsItemProps {
-    pinnedList: PinnedListResponse;
+    pinnedList?: PinnedListResponse;
 }
 
-const PinnedListsItem: FC<PinnedListsItemProps> = ({pinnedList}): ReactElement => {
+const PinnedListsItem: FC<PinnedListsItemProps & HoverListProps> = (
+    {
+        pinnedList,
+        visiblePopperWindow,
+        handleHoverPopper,
+        handleLeavePopper
+    }
+): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = usePinnedListsItemStyles();
-    const [visiblePopperListWindow, setVisiblePopperListWindow] = useState<boolean>(false);
-    const [delayHandler, setDelayHandler] = useState<any>(null);
-
-    const handleHoverList = (): void => {
-        setDelayHandler(setTimeout(() => setVisiblePopperListWindow(true), 1000));
-    };
-
-    const handleLeaveList  = (): void => {
-        clearTimeout(delayHandler);
-        setVisiblePopperListWindow(false);
-    };
 
     return (
         <Link to={`/lists/${pinnedList?.id}`} className={globalClasses.link}>
-            <div className={classes.pinnedListWrapper} onMouseEnter={handleHoverList} onMouseLeave={handleLeaveList}>
+            <div
+                className={classes.pinnedListWrapper}
+                onMouseEnter={() => handleHoverPopper!(pinnedList?.id!)}
+                onMouseLeave={handleLeavePopper}
+            >
                 <Avatar
                     variant="square"
                     className={classes.listAvatar}
@@ -42,10 +44,10 @@ const PinnedListsItem: FC<PinnedListsItemProps> = ({pinnedList}): ReactElement =
                         {LockIcon}
                     </span>
                 )}
-                {/*TODO <PopperListWindow visible={visiblePopperListWindow} list={pinnedList!}/> */}
+                <PopperListWindow visible={visiblePopperWindow}/>
             </div>
         </Link>
     );
 };
 
-export default PinnedListsItem;
+export default withHoverList(PinnedListsItem);

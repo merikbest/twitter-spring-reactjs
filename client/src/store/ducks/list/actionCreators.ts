@@ -2,19 +2,15 @@ import {
     DeleteListActionInterface,
     EditListActionInterface,
     FetchListByIdActionInterface,
-    FetchTweetsByListIdActionInterface,
     ListActionType,
     ResetListStateActionInterface,
-    SetFollowToFullListActionInterface,
     SetListActionInterface,
     SetListLoadingStateInterface,
-    SetListsTweetsActionInterface,
     SetMembersSizeActionInterface,
-    SetUnfollowToFullListActionInterface,
+    UpdateFollowToFullListActionInterface,
 } from "./contracts/actionTypes";
 import {LoadingStatus} from "../../types";
 import {BaseListResponse} from "../../types/lists";
-import {TweetResponse} from "../../types/tweet";
 import {EditListsRequest} from "./contracts/state";
 
 export const setList = (payload: BaseListResponse): SetListActionInterface => ({ // +
@@ -22,16 +18,8 @@ export const setList = (payload: BaseListResponse): SetListActionInterface => ({
     payload
 });
 
-export const setFollowToFullList = (): SetFollowToFullListActionInterface => ({ // +
-    type: ListActionType.SET_FOLLOW_TO_FULL_LIST,
-});
-
-export const setUnfollowToFullList = (): SetUnfollowToFullListActionInterface => ({ // +
-    type: ListActionType.SET_UNFOLLOW_TO_FULL_LIST,
-});
-
-export const setListsTweets = (payload: TweetResponse[]): SetListsTweetsActionInterface => ({ // +
-    type: ListActionType.SET_LIST_TWEETS,
+export const updateFollowToFullList = (payload: boolean): UpdateFollowToFullListActionInterface => ({ // +
+    type: ListActionType.UPDATE_FOLLOW_TO_FULL_LIST,
     payload
 });
 
@@ -42,11 +30,6 @@ export const setMembersSize = (payload: boolean): SetMembersSizeActionInterface 
 
 export const fetchListById = (payload: number): FetchListByIdActionInterface => ({ // +
     type: ListActionType.FETCH_LIST_BY_ID,
-    payload
-});
-
-export const fetchTweetsByListId = (payload: { listId: number, pageNumber: number }): FetchTweetsByListIdActionInterface => ({ // +
-    type: ListActionType.FETCH_TWEETS_BY_LIST_ID,
     payload
 });
 

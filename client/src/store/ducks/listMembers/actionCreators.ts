@@ -5,10 +5,15 @@ import {
     FetchListMembersByUsernameActionInterface,
     ListMembersActionsType,
     ProcessUserToListMembersActionInterface,
-    ProcessUserToListsActionInterface, ResetListMembersActionInterface,
+    ProcessUserToListsActionInterface,
+    ResetListMembersActionInterface,
     ResetListMembersStateActionInterface,
+    ResetListSuggestedStateActionInterface,
     SetListMembersActionInterface,
     SetListMembersLoadingStateActionInterface,
+    SetListSuggestedActionInterface,
+    SetLoadingMembersStateActionInterface,
+    SetLoadingSuggestedStateActionInterface,
     SetUserToListMembersActionInterface,
 } from './contracts/actionTypes';
 import {ListsOwnerMemberResponse} from "../../types/lists";
@@ -16,6 +21,11 @@ import {AddUserToListsRequest} from "../lists/contracts/state";
 
 export const setListMembers = (payload: ListsOwnerMemberResponse[]): SetListMembersActionInterface => ({
     type: ListMembersActionsType.SET_LIST_MEMBERS,
+    payload,
+});
+
+export const setListSuggested = (payload: ListsOwnerMemberResponse[]): SetListSuggestedActionInterface => ({
+    type: ListMembersActionsType.SET_LIST_SUGGESTED,
     payload,
 });
 
@@ -57,7 +67,21 @@ export const resetListMembers = (): ResetListMembersActionInterface => ({
     type: ListMembersActionsType.RESET_LIST_MEMBERS,
 });
 
+export const resetListSuggested = (): ResetListSuggestedStateActionInterface => ({
+    type: ListMembersActionsType.RESET_LIST_SUGGESTED_STATE,
+});
+
 export const setListMembersLoadingState = (payload: LoadingStatus): SetListMembersLoadingStateActionInterface => ({
     type: ListMembersActionsType.SET_LOADING_STATE,
+    payload,
+});
+
+export const setLoadingMembersState = (payload: LoadingStatus): SetLoadingMembersStateActionInterface => ({
+    type: ListMembersActionsType.SET_LOADING_MEMBERS_STATE,
+    payload,
+});
+
+export const setLoadingSuggestedState = (payload: LoadingStatus): SetLoadingSuggestedStateActionInterface => ({
+    type: ListMembersActionsType.SET_LOADING_SUGGESTED_STATE,
     payload,
 });

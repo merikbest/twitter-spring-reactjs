@@ -1,5 +1,11 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
-import {setListMembers, setListMembersLoadingState, setUserToListMembers} from "./actionCreators";
+import {
+    setListMembers,
+    setListSuggested,
+    setLoadingMembersState,
+    setLoadingSuggestedState,
+    setUserToListMembers
+} from "./actionCreators";
 import {
     FetchListFollowersActionInterface,
     FetchListMembersActionInterface,
@@ -11,45 +17,47 @@ import {
 import {LoadingStatus} from "../../types";
 import {ListsApi} from "../../../services/api/listsApi";
 import {ListsOwnerMemberResponse} from "../../types/lists";
-import {setListsLoadingState} from "../lists/actionCreators";
+import {setLoadingState} from "../lists/actionCreators";
 import {setMembersSize} from "../list/actionCreators";
 
 export function* fetchListMembersRequest({payload}: FetchListMembersActionInterface) { // +
     try {
-        yield setListMembersLoadingState(LoadingStatus.LOADING);
+        yield setLoadingMembersState(LoadingStatus.LOADING);
         const items: ListsOwnerMemberResponse[] = yield call(ListsApi.getListMembers, payload.listId, payload.listOwnerId);
         yield put(setListMembers(items));
     } catch (error) {
-        yield put(setListMembersLoadingState(LoadingStatus.ERROR));
+        yield put(setLoadingMembersState(LoadingStatus.ERROR));
     }
 }
 
 export function* fetchListFollowersRequest({payload}: FetchListFollowersActionInterface) { // +
     try {
-        yield setListMembersLoadingState(LoadingStatus.LOADING);
+        yield setLoadingMembersState(LoadingStatus.LOADING);
         const items: ListsOwnerMemberResponse[] = yield call(ListsApi.getListFollowers, payload.listId, payload.listOwnerId);
         yield put(setListMembers(items));
     } catch (error) {
-        yield put(setListMembersLoadingState(LoadingStatus.ERROR));
+        yield put(setLoadingMembersState(LoadingStatus.ERROR));
     }
 }
 
 export function* fetchListMembersByUsernameRequest({payload}: FetchListMembersByUsernameActionInterface) { // +
     try {
+        yield setLoadingSuggestedState(LoadingStatus.LOADING);
         const items: ListsOwnerMemberResponse[] = yield call(ListsApi.searchListMembersByUsername, payload.listId, payload.username);
-        yield put(setListMembers(items));
+        yield put(setListSuggested(items));
     } catch (error) {
-        yield put(setListMembersLoadingState(LoadingStatus.ERROR));
+        yield put(setLoadingSuggestedState(LoadingStatus.ERROR));
     }
 }
 
 export function* processListMemberRequest({payload}: ProcessUserToListMembersActionInterface) { // +
     try {
+        yield put(setLoadingSuggestedState(LoadingStatus.LOADING));
         const data: boolean = yield call(ListsApi.addUserToList, payload.userId, payload.listId);
         yield put(setUserToListMembers({userId: payload.userId, isMember: data}));
         yield put(setMembersSize(data));
     } catch (error) {
-        yield put(setListsLoadingState(LoadingStatus.ERROR));
+        yield put(setLoadingSuggestedState(LoadingStatus.ERROR));
     }
 }
 
@@ -60,7 +68,7 @@ export function* processUserToListsRequest({payload}: ProcessUserToListsActionIn
         // yield put(setUserToListMembers({userId: payload.userId, isMember: data}));
         // yield put(setMembersSize(data));
     } catch (error) {
-        yield put(setListsLoadingState(LoadingStatus.ERROR));
+        yield put(setLoadingState(LoadingStatus.ERROR));
     }
 }
 

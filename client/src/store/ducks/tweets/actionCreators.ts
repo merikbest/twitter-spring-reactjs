@@ -11,6 +11,7 @@ import {
     FetchDeleteTweetActionInterface,
     FetchMediaTweetsActionInterface,
     FetchTweetsActionInterface,
+    FetchTweetsByListIdActionInterface,
     FetchTweetsByTagActionInterface,
     FetchTweetsByTextActionInterface,
     FetchTweetsWithVideoActionInterface,
@@ -172,6 +173,11 @@ export const fetchMediaTweets = (payload: number): FetchMediaTweetsActionInterfa
 
 export const fetchTweetsWithVideo = (payload: number): FetchTweetsWithVideoActionInterface => ({ // +
     type: TweetsActionType.FETCH_TWEETS_WITH_VIDEO,
+    payload
+});
+
+export const fetchTweetsByListId = (payload: { listId: number, pageNumber: number }): FetchTweetsByListIdActionInterface => ({ // +
+    type: TweetsActionType.FETCH_TWEETS_BY_LIST_ID,
     payload
 });
 

@@ -21,6 +21,7 @@ export enum UserActionsType {
     SET_READ_MESSAGE = 'user/SET_READ_MESSAGE', //+
     FOLLOW_USER = 'user/FOLLOW_USER', //+ ????
     UNFOLLOW_USER = 'user/UNFOLLOW_USER', // +check ????
+    SET_USER_FOLLOWING = 'user/SET_USER_FOLLOWING', // +
     FETCH_PIN_TWEET = 'user/FETCH_PIN_TWEET', //+
     PROCESS_FOLLOW_REQUEST = 'user/PROCESS_FOLLOW_REQUEST', // +
     PROCESS_USER_TO_BLOCKLIST = 'user/PROCESS_USER_TO_BLOCKLIST', // +
@@ -111,6 +112,11 @@ export interface FollowUserActionInterface extends Action<UserActionsType> { // 
 export interface UnfollowUserActionInterface extends Action<UserActionsType> { // +check
     type: UserActionsType.UNFOLLOW_USER;
     payload: { userId: number; tweetId?: number; };
+}
+
+export interface SetUserFollowingActionInterface extends Action<UserActionsType> { // +check
+    type: UserActionsType.SET_USER_FOLLOWING;
+    payload: boolean;
 }
 
 export interface FetchPinTweetActionInterface extends Action<UserActionsType> { //+
@@ -271,4 +277,5 @@ export type UserActions =
     | SetFollowersSizeActionInterface // +
     | SetProfileStartedActionInterface // +
     | SetPinTweetIdActionInterface
-    | SetReadMessageActionInterface;
+    | SetReadMessageActionInterface
+    | SetUserFollowingActionInterface

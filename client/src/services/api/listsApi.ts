@@ -10,6 +10,7 @@ import {
 } from "../../store/types/lists";
 import {TweetResponse} from "../../store/types/tweet";
 import {EditListsRequest} from "../../store/ducks/list/contracts/state";
+import {AxiosResponse, CancelTokenSource} from "axios";
 
 interface Response<T> {
     status: string;
@@ -70,12 +71,11 @@ export const ListsApi = {
         return data;
     },
     // NEW //
-    async getTweetsByListId(listId: number, pageNumber: number): Promise<Response<TweetResponse[]>> { // +
-        const {data} = await axios.get<Response<TweetResponse[]>>(`${API_URL}/lists/${listId}/tweets`, {params: {page: pageNumber}});
-        return data;
+    async getTweetsByListId(listId: number, pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> { // +
+        return await axios.get<TweetResponse[]>(`${API_URL}/lists/${listId}/tweets`, {params: {page: pageNumber}});
     },
-    async getListDetails(listId: number): Promise<Response<BaseListResponse>> { // +
-        const {data} = await axios.get<Response<BaseListResponse>>(`${API_URL}/lists/${listId}/details`);
+    async getListDetails(listId: number, cancelTokenSource: CancelTokenSource): Promise<Response<BaseListResponse>> { // +
+        const {data} = await axios.get<Response<BaseListResponse>>(`${API_URL}/lists/${listId}/details`, {cancelToken: cancelTokenSource.token});
         return data;
     },
     async getListFollowers(listId: number, listOwnerId: number): Promise<Response<ListsOwnerMemberResponse[]>> { // +

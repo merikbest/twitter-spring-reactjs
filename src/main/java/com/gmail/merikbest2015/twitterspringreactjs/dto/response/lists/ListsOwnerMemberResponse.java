@@ -16,4 +16,7 @@ public class ListsOwnerMemberResponse {
 
     @JsonProperty("isMemberInList")
     private boolean isMemberInList;
+
+    @JsonProperty("isPrivateProfile")
+    private boolean privateProfile;
 }

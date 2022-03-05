@@ -21,6 +21,13 @@ export const useManageMembersItemStyles = makeStyles((theme: Theme) => ({
         height: theme.spacing(6.7),
         marginRight: 15,
     },
+    lockIcon: {
+        "& svg": {
+            marginLeft: 3,
+            marginBottom: -3,
+            height: "1.2em",
+        },
+    },
     header: {
         display: "flex",
         alignItems: "center",

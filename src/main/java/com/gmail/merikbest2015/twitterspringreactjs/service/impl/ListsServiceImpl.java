@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.model.Lists;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.ImageRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.ListsRepository;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.TweetRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.lists.*;
@@ -27,6 +28,7 @@ public class ListsServiceImpl implements ListsService {
 
     private final AuthenticationService authenticationService;
     private final ListsRepository listsRepository;
+    private final TweetRepository tweetRepository;
     private final UserRepository userRepository;
     private final ImageRepository imageRepository;
 
@@ -242,7 +244,8 @@ public class ListsServiceImpl implements ListsService {
 
     @Override
     public Page<TweetProjection> getTweetsByListId(Long listId, Pageable pageable) {
-        return listsRepository.getTweetsByListId(listId, pageable);
+        List<Long> listMembersIds = listsRepository.getListMembersIds(listId);
+        return tweetRepository.findTweetsByUserIds(listMembersIds, pageable);
     }
 
     @Override
@@ -272,10 +275,10 @@ public class ListsServiceImpl implements ListsService {
         Long authUserId = authenticationService.getAuthenticatedUserId();
 
         if (!listOwnerId.equals(authUserId)) {
-            List<ListsMemberProjection> listMembers = listsRepository.getListMembers(listId, ListsMemberProjection.class);
+            List<ListsMemberProjection> listMembers = listsRepository.getListMembers(listId);
             return Map.of("userMembers", listMembers);
         } else {
-            List<ListsOwnerMemberProjection> listMembers = listsRepository.getListMembers(listId, ListsOwnerMemberProjection.class);
+            List<ListsOwnerMemberProjection> listMembers = listsRepository.getListOwnerMembers(listId);
             return Map.of("authUserMembers", listMembers);
         }
     }

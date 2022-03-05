@@ -13,13 +13,16 @@ import {
     SetListActionInterface,
     SetListsActionInterface,
     SetListsLoadingStateInterface,
+    SetLoadingStateInterface,
     SetPinedListActionInterface,
     SetPinedListToUserListActionInterface,
     SetPinnedListsActionInterface,
+    SetPinnedListsLoadingStateInterface,
     SetUnfollowListActionInterface,
     SetUnpinListActionInterface,
     SetUpdatedListActionInterface,
     SetUserListsActionInterface,
+    SetUserListsLoadingStateInterface,
     UnfollowListActionInterface,
     UnpinListActionInterface
 } from "./contracts/actionTypes";
@@ -127,7 +130,22 @@ export const resetListsState = (): ResetListsStateActionInterface => ({
     type: ListsActionType.RESET_LISTS_STATE,
 });
 
-export const setListsLoadingState = (payload: LoadingStatus): SetListsLoadingStateInterface => ({
+export const setLoadingState = (payload: LoadingStatus): SetLoadingStateInterface => ({
     type: ListsActionType.SET_LOADING_STATE,
+    payload
+});
+
+export const setListsLoadingState = (payload: LoadingStatus): SetListsLoadingStateInterface => ({
+    type: ListsActionType.SET_LISTS_LOADING_STATE,
+    payload
+});
+
+export const setUserListsLoadingState = (payload: LoadingStatus): SetUserListsLoadingStateInterface => ({
+    type: ListsActionType.SET_USER_LISTS_LOADING_STATE,
+    payload
+});
+
+export const setPinnedListsLoadingState = (payload: LoadingStatus): SetPinnedListsLoadingStateInterface => ({
+    type: ListsActionType.SET_PINNED_LISTS_LOADING_STATE,
     payload
 });

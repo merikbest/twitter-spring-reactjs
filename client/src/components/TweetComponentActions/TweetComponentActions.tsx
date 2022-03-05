@@ -21,19 +21,17 @@ import {
     UnmuteIcon
 } from "../../icons";
 import {selectUserData} from "../../store/ducks/user/selectors";
-import {ReplyType, Tweet} from "../../store/ducks/tweets/contracts/state";
+import {ReplyType} from "../../store/ducks/tweets/contracts/state";
 import {
-    processUserToBlocklist,
-    processUserToMuteList,
     fetchPinTweet,
     followUser,
+    processUserToBlocklist,
+    processUserToMuteList,
     unfollowUser
 } from "../../store/ducks/user/actionCreators";
 import TweetComponentActionsModal from "./TweetComponentActionsModal/TweetComponentActionsModal";
 import {changeReplyType, fetchDeleteTweet} from "../../store/ducks/tweets/actionCreators";
-import {selectTweetData} from "../../store/ducks/tweet/selectors";
 import {deleteTweetReply} from "../../store/ducks/tweet/actionCreators";
-import ListsModal from "../ListsModal/ListsModal";
 import HoverAction from "../HoverAction/HoverAction";
 import BlockUserModal from "../BlockUserModal/BlockUserModal";
 import ActionSnackbar from "../ActionSnackbar/ActionSnackbar";
@@ -72,7 +70,6 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
     const globalClasses = useGlobalStyles();
     const classes = useTweetComponentMoreStyles({isFullTweet});
     const dispatch = useDispatch();
-    const tweetData = useSelector(selectTweetData);
     const myProfile = useSelector(selectUserData);
     const ref = useRef<HTMLDivElement>(null);
 
@@ -122,14 +119,11 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
     };
 
     const onDeleteUserTweet = (): void => {
-        // TODO add Replies list to full tweet and refactor this function
-        // const isTweetReply = tweetData?.replies.find((reply) => reply.id === tweet.id);
-        //
-        // if (isTweetReply) {
-        //     dispatch(deleteTweetReply(tweet.id));
-        // } else {
-        //     dispatch(fetchDeleteTweet(tweet.id));
-        // }
+        if (tweet.addressedTweetId !== null) {
+            dispatch(deleteTweetReply(tweet.id));
+        } else {
+            dispatch(fetchDeleteTweet(tweet.id));
+        }
         setSnackBarMessage!("Your Tweet was deleted");
         setOpenSnackBar!(true);
         setOpenActionsDropdown(false);

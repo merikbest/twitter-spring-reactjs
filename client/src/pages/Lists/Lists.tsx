@@ -8,14 +8,12 @@ import BackButton from "../../components/BackButton/BackButton";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {AddListsIcon, EditIcon, ListsIcon} from "../../icons";
 import CreateListsModal from "./CreateListsModal/CreateListsModal";
-import {
-    fetchLists,
-    fetchPinnedLists,
-    fetchUserLists,
-    resetListsState,
-} from "../../store/ducks/lists/actionCreators";
+import {fetchLists, fetchPinnedLists, fetchUserLists, resetListsState} from "../../store/ducks/lists/actionCreators";
 import {
     selectIsListsLoading,
+    selectIsLoading, selectIsPinnedListsLoaded,
+    selectIsPinnedListsLoading,
+    selectIsUserListsLoading,
     selectListsItems,
     selectPinnedListsItems,
     selectUserListsItems
@@ -35,7 +33,11 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
     const lists = useSelector(selectListsItems);
     const userLists = useSelector(selectUserListsItems);
     const pinnedLists = useSelector(selectPinnedListsItems);
-    const isLoading = useSelector(selectIsListsLoading);
+    const isLoading = useSelector(selectIsLoading);
+    const isPinnedListsLoading = useSelector(selectIsPinnedListsLoading);
+    const isPinnedListsLoaded = useSelector(selectIsPinnedListsLoaded);
+    const isListsLoading = useSelector(selectIsListsLoading);
+    const isUserListsLoading = useSelector(selectIsUserListsLoading);
     const [visibleCreateListModal, setVisibleCreateListModal] = useState<boolean>(false);
     const [openPopover, setOpenPopover] = useState<boolean>(false);
 
@@ -70,14 +72,16 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
         <Paper className={globalClasses.pageContainer} variant="outlined">
             <Paper className={globalClasses.pageHeader} variant="outlined">
                 <BackButton/>
-                <div>
-                    <Typography variant="h5" component={"div"}>
-                        Lists
-                    </Typography>
-                    <Typography variant="subtitle2" component={"div"}>
-                        @{myProfile?.username}
-                    </Typography>
-                </div>
+                {!isLoading && (
+                    <div>
+                        <Typography variant="h5" component={"div"}>
+                            Lists
+                        </Typography>
+                        <Typography variant="subtitle2" component={"div"}>
+                            @{myProfile?.username}
+                        </Typography>
+                    </div>
+                )}
                 <div className={classes.iconGroup}>
                     <div className={classes.icon}>
                         <IconButton
@@ -119,48 +123,56 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
                     </div>
                 </div>
             </Paper>
-            {isLoading ? (
-                <Spinner paddingTop={250}/>
-            ) : (
-                <>
-                    <Paper className={classes.pinnedLists} variant="outlined">
-                        <Typography variant="h5" className={globalClasses.itemInfoWrapper}>
-                            Pinned Lists
-                        </Typography>
-                        {(pinnedLists.length === 0) ? (
+            <Paper className={classes.pinnedLists} variant="outlined">
+                <Typography variant="h5" className={globalClasses.itemInfoWrapper}>
+                    Pinned Lists
+                </Typography>
+                <Typography component={"div"} className={classes.pinnedListsWrapper}>
+                    {isPinnedListsLoading ? (
+                        <Spinner paddingTop={34} />
+                    ) : (
+                        (pinnedLists.length === 0 && isPinnedListsLoaded) ? (
                             <Typography variant={"subtitle1"} component={"div"} className={classes.pinnedListsText}>
                                 Nothing to see here yet — pin your favorite Lists to access them quickly.
                             </Typography>
                         ) : (
-                            <Typography component={"div"} className={classes.pinnedListsWrapper}>
-                                {pinnedLists.map((pinnedList) => (
-                                    <PinnedListsItem key={pinnedList.id} pinnedList={pinnedList}/>
-                                ))}
-                            </Typography>
-                        )}
-                    </Paper>
-                    <Paper className={classes.newLists} variant="outlined">
-                        <Typography variant="h5" className={globalClasses.itemInfoWrapper}>
-                            Discover new Lists
-                        </Typography>
-                        {lists.slice(0, 3).map((list, index) => (
-                            <ListsItem key={list.id} item={list} listIndex={index}/>
-                        ))}
-                        <Link to={"/suggested"} className={globalClasses.link}>
-                            <Typography variant={"body1"} component={"div"} className={classes.showMore}>
-                                Show more
-                            </Typography>
-                        </Link>
-                    </Paper>
-                    <Paper className={classes.myLists} variant="outlined">
-                        <Typography variant="h5" className={globalClasses.itemInfoWrapper}>
-                            Your Lists
-                        </Typography>
-                        {userLists.map((list) => (<ListsItem key={list.id} isMyList={true} item={list}/>))}
-                    </Paper>
-                    <CreateListsModal visible={visibleCreateListModal} onClose={onCloseCreateListModal}/>
-                </>
-            )}
+                            pinnedLists.map((pinnedList) => (
+                                <PinnedListsItem key={pinnedList.id} pinnedList={pinnedList}/>
+                            ))
+                        )
+                    )}
+                </Typography>
+            </Paper>
+            <Paper className={classes.newLists} variant="outlined">
+                <Typography variant="h5" className={globalClasses.itemInfoWrapper}>
+                    Discover new Lists
+                </Typography>
+                {isListsLoading ? (
+                    <div style={{padding: "59px 0px"}}>
+                        <Spinner/>
+                    </div>
+                ) : (
+                    lists.slice(0, 3).map((list, index) => (
+                        <ListsItem key={list.id} item={list} listIndex={index}/>
+                    ))
+                )}
+                <Link to={"/suggested"} className={globalClasses.link}>
+                    <Typography variant={"body1"} component={"div"} className={classes.showMore}>
+                        Show more
+                    </Typography>
+                </Link>
+            </Paper>
+            <Paper className={classes.myLists} variant="outlined">
+                <Typography variant="h5" className={globalClasses.itemInfoWrapper}>
+                    Your Lists
+                </Typography>
+                {isUserListsLoading ? (
+                    <Spinner/>
+                ) : (
+                    userLists.map((list) => (<ListsItem key={list.id} isMyList={true} item={list}/>))
+                )}
+            </Paper>
+            <CreateListsModal visible={visibleCreateListModal} onClose={onCloseCreateListModal}/>
         </Paper>
     );
 };

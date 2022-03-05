@@ -26,6 +26,7 @@ export interface ListMemberResponse {
     fullName: string;
     username: string;
     about: string;
+    isPrivateProfile: boolean;
     avatar: Image
 }
 
@@ -35,6 +36,7 @@ export interface ListsOwnerMemberResponse {
     username: string;
     about: string;
     avatar: Image
+    isPrivateProfile: boolean;
     isMemberInList?: boolean;
 }
 

@@ -129,7 +129,9 @@ public class ListsMapper {
             List<ListsMemberProjection> userMembers = (List<ListsMemberProjection>) listMembers.get("userMembers");
             return userMembers.contains(null)
                     ? new ArrayList<>()
-                    : convertProjectionListToResponseList(userMembers, ListMemberResponse.class);
+                    : userMembers.stream()
+                        .map(userMember -> convertProjectionToResponse(userMember.getMember(), ListMemberResponse.class))
+                        .collect(Collectors.toList());
         } else {
             List<ListsOwnerMemberProjection> userMembers = (List<ListsOwnerMemberProjection>) listMembers.get("authUserMembers");
 

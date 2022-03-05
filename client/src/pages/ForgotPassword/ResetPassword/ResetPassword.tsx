@@ -9,9 +9,9 @@ import * as yup from "yup";
 
 import {ForgotPasswordTextField} from "../ForgotPasswordTextField/ForgotPasswordTextField";
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
-import {User} from "../../../store/ducks/user/contracts/state";
 import {AuthApi} from "../../../services/api/authApi";
 import {useResetPasswordStyles} from "./ResetPasswordStyles";
+import {AuthUserResponse} from "../../../store/types/user";
 
 interface ResetPasswordFormProps {
     password: string;
@@ -26,7 +26,7 @@ const ResetPasswordFormSchema = yup.object().shape({
 const ResetPassword: FC = (): ReactElement => {
     const classes = useResetPasswordStyles();
     const history = useHistory();
-    const location = useLocation<{ user: User }>();
+    const location = useLocation<{ user: AuthUserResponse }>();
     const {control, register, handleSubmit, formState: {errors}} = useForm<ResetPasswordFormProps>({
         resolver: yupResolver(ResetPasswordFormSchema)
     });

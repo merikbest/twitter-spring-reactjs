@@ -23,6 +23,13 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     Optional<TweetProjection> findTweetById(Long tweetId);
 
     @Query("SELECT tweet FROM Tweet tweet " +
+            "LEFT JOIN tweet.user user " +
+            "WHERE user.id IN :userIds " +
+            "AND tweet.addressedUsername IS NULL " +
+            "ORDER BY tweet.dateTime DESC")
+    Page<TweetProjection> findTweetsByUserIds(List<Long> userIds, Pageable pageable);
+
+    @Query("SELECT tweet FROM Tweet tweet " +
             "WHERE tweet.addressedUsername IS NULL " +
             "AND tweet.scheduledDate IS NULL " +
             "ORDER BY tweet.dateTime DESC")

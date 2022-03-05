@@ -13,6 +13,7 @@ import {
     FetchDeleteTweetActionInterface,
     FetchMediaTweetsActionInterface,
     FetchTweetsActionInterface,
+    FetchTweetsByListIdActionInterface,
     FetchTweetsByTagActionInterface,
     FetchTweetsByTextActionInterface,
     FetchTweetsWithVideoActionInterface,
@@ -27,6 +28,7 @@ import {TagApi} from "../../../services/api/tagApi";
 import {UserApi} from "../../../services/api/userApi";
 import {AxiosResponse} from "axios";
 import {TweetResponse} from "../../types/tweet";
+import {ListsApi} from "../../../services/api/listsApi";
 
 export function* fetchTweetsRequest({payload}: FetchTweetsActionInterface) { // +
     try {
@@ -82,6 +84,19 @@ export function* fetchTweetsByTextRequest({payload}: FetchTweetsByTextActionInte
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
         const item: TweetResponse[] = yield call(TweetApi.searchTweets, payload);
         yield put(setTweets(item));
+    } catch (e) {
+        yield put(setTweetsLoadingState(LoadingStatus.ERROR));
+    }
+}
+
+export function* fetchTweetsByListIdRequest({payload}: FetchTweetsByListIdActionInterface) { // +
+    try {
+        yield put(setTweetsLoadingState(LoadingStatus.LOADING));
+        const response: AxiosResponse<TweetResponse[]> = yield call(ListsApi.getTweetsByListId, payload.listId, payload.pageNumber);
+        yield put(setPageableTweets({
+            items: response.data,
+            pagesCount: parseInt(response.headers["page-total-count"])
+        }));
     } catch (e) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }
@@ -197,5 +212,6 @@ export function* tweetsSaga() {
     yield takeLatest(TweetsActionType.RETWEET, retweetRequest); // +
     yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_TAG, fetchTweetsByTagRequest); // +
     yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_TEXT, fetchTweetsByTextRequest); // +
+    yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_LIST_ID, fetchTweetsByListIdRequest); // +
     yield takeLatest(TweetsActionType.FETCH_BOOKMARKS, fetchUserBookmarksRequest); // +
 }

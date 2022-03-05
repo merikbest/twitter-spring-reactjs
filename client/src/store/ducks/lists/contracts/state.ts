@@ -50,7 +50,10 @@ export interface UserIdsRequest {
 
 export interface ListsState {
     lists: ListResponse[];
+    listsLoadingState: LoadingStatus;
     userLists: ListUserResponse[];
+    userListsLoadingState: LoadingStatus;
     pinnedLists: PinnedListResponse[];
+    pinnedListsLoadingState: LoadingStatus;
     loadingState: LoadingStatus;
 }
