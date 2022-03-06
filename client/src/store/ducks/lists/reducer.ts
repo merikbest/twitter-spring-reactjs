@@ -11,6 +11,8 @@ const initialTweetState: ListsState = {
     userListsLoadingState: LoadingStatus.LOADING,
     pinnedLists: [],
     pinnedListsLoadingState: LoadingStatus.LOADING,
+    simpleLists: [],
+    simpleListsLoadingState: LoadingStatus.LOADING,
     loadingState: LoadingStatus.LOADING
 };
 
@@ -31,6 +33,11 @@ export const listsReducer = produce((draft: Draft<ListsState>, action: ListsActi
         case ListsActionType.SET_PINNED_LISTS: // +
             draft.pinnedLists = action.payload;
             draft.pinnedListsLoadingState = LoadingStatus.LOADED;
+            break;
+
+        case ListsActionType.SET_SIMPLE_LISTS: // +
+            draft.simpleLists = action.payload;
+            draft.simpleListsLoadingState = LoadingStatus.LOADED;
             break;
 
         case ListsActionType.SET_UPDATED_LISTS: // +
@@ -77,9 +84,11 @@ export const listsReducer = produce((draft: Draft<ListsState>, action: ListsActi
             draft.lists = [];
             draft.userLists = [];
             draft.pinnedLists = [];
+            draft.simpleLists = [];
             draft.listsLoadingState = LoadingStatus.LOADING;
             draft.userListsLoadingState = LoadingStatus.LOADING;
             draft.pinnedListsLoadingState = LoadingStatus.LOADING;
+            draft.simpleListsLoadingState = LoadingStatus.LOADING;
             draft.loadingState = LoadingStatus.LOADING;
             break;
 
@@ -96,6 +105,10 @@ export const listsReducer = produce((draft: Draft<ListsState>, action: ListsActi
             break;
 
         case ListsActionType.SET_PINNED_LISTS_LOADING_STATE:
+            draft.pinnedListsLoadingState = action.payload;
+            break;
+
+        case ListsActionType.SET_SIMPLE_LISTS_LOADING_STATE:
             draft.pinnedListsLoadingState = action.payload;
             break;
 

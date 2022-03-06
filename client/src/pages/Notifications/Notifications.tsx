@@ -30,7 +30,6 @@ const Notifications: FC = (): ReactElement => {
     const tweetAuthors = useSelector(selectNotificationsTweetAuthors);
     const isNotificationLoading = useSelector(selectIsNotificationsLoading);
     const [activeTab, setActiveTab] = useState<number>(0);
-    // console.log(tweetAuthors[0].fullName)
 
     useEffect(() => {
         window.scrollTo(0, 0);

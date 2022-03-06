@@ -12,7 +12,7 @@ import {
     setPrivateProfile,
     setProfileStarted,
     setReadMessage,
-    setUserData,
+    setUserData, setUserFollowing,
     setUserLoadingStatus,
     setUsername
 } from "./actionCreators";
@@ -130,6 +130,7 @@ export function* processFollowUserRequest({payload}: FollowUserActionInterface) 
         const item: NotificationUserResponse = yield call(UserApi.follow, payload.userId);
         yield put(setFollowToTweetsState({userId: item.id, tweetId: payload.tweetId!, isFollower: item.isFollower}));
         yield put(setFollowToUsersTweetState({userId: item.id, tweetId: payload.tweetId!, isFollower: item.isFollower}));
+        yield put(setUserFollowing(item.isFollower));
         yield put(setFollowToUserProfile(item.isFollower));
         yield put(setFollowToUserDetail(item.isFollower));
         yield put(setFollowToUsersState({userId: item.id, isFollower: item.isFollower}));

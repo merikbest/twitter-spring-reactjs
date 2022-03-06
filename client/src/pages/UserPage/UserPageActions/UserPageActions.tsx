@@ -173,8 +173,7 @@ const UserPageActions: FC<UserPageActionsProps & SnackbarProps> = (
                         </List>
                     </div>
                 ) : null}
-                {/* TODO refactor */}
-                {/*<ListsModal user={user} visible={visibleListsModal} onClose={onCloseListsModal}/>*/}
+                <ListsModal user={user} visible={visibleListsModal} onClose={onCloseListsModal}/>
                 <ActionSnackbar
                     snackBarMessage={"Copied to clipboard"}
                     openSnackBar={openSnackBar!}

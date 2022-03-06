@@ -6,9 +6,9 @@ export const MessageInput = withStyles((theme: Theme) => ({
         '& .MuiOutlinedInput-root': {
             marginTop: 2,
             borderRadius: 20,
-            padding: "3px 14px",
+            padding: "9px 14px",
             border: `1px solid ${theme.palette.divider}`,
-            width: 490,
+            width: 475,
             '&.Mui-focused': {
                 backgroundColor: theme.palette.background.paper,
                 '& fieldset': { borderWidth: 1, borderColor: theme.palette.primary.main },

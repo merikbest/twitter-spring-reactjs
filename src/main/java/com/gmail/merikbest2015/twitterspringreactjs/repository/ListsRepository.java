@@ -27,6 +27,9 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
             "OR follower.id = :ownerId")
     List<ListsUserProjection> getUserTweetLists(Long ownerId);
 
+    @Query("SELECT l as list FROM Lists l LEFT JOIN l.listOwner listOwner WHERE listOwner.id = :ownerId")
+    List<SimpleListsProjection> getUserOwnerLists(Long ownerId);
+
     @Query("SELECT l FROM Lists l WHERE l.id = :listId")
     ListUserProjection getUserTweetListById(Long listId);
 

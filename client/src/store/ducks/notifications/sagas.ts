@@ -47,7 +47,6 @@ export function* fetchNotificationInfoRequest({payload}: FetchNotificationInfoAc
         const items: NotificationInfoResponse = yield call(UserApi.getUserNotificationById, payload);
         yield put(setNotificationInfo(items));
     } catch (error) {
-        console.log(error);
         yield put(setNotificationsLoadingState(LoadingStatus.ERROR));
     }
 }

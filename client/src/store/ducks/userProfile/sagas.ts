@@ -16,7 +16,6 @@ export function* fetchUserRequest({payload}: FetchUserProfileActionInterface) { 
     try {
         yield put(setUserProfileLoadingState(LoadingStatus.LOADING));
         const item: UserProfileResponse = yield call(UserApi.getUserInfo, payload);
-        console.log(item);
         yield put(setUserProfile(item));
     } catch (error) {
         yield put(setUserProfileLoadingState(LoadingStatus.ERROR));

@@ -70,3 +70,12 @@ export interface PinnedListResponse {
     wallpaper: Image
     isPrivate: boolean;
 }
+
+export interface SimpleListResponse {
+    id: number;
+    name: string;
+    altWallpaper: string;
+    wallpaper: Image
+    isMemberInList: boolean;
+    isPrivate: boolean;
+}

@@ -1,21 +1,6 @@
 import {LoadingStatus} from "../../../types";
-import {Image, Tweet} from "../../tweets/contracts/state";
-import {User} from "../../user/contracts/state";
-import {ListResponse, ListUserResponse, PinnedListResponse} from "../../../types/lists";
-
-export interface Lists {
-    id: number;
-    name: string;
-    description: string;
-    private: boolean;
-    pinnedDate?: string;
-    listOwner: User;
-    altWallpaper: string;
-    wallpaper?: Image;
-    tweets: Tweet[];
-    members: User[];
-    followers: User[];
-}
+import {ListResponse, ListUserResponse, PinnedListResponse, SimpleListResponse} from "../../../types/lists";
+import {Image} from "../../../types/common";
 
 export interface AddLists {
     name: string;
@@ -25,27 +10,9 @@ export interface AddLists {
     wallpaper?: Image;
 }
 
-export interface EditLists {
-    id?: number;
-    name?: string;
-    listOwner: User;
-    description?: string;
-    isPrivate?: boolean;
-    wallpaper?: Image;
-}
-
-export interface MemberToList {
-    userId: number;
-    listId: number;
-}
-
 export interface AddUserToListsRequest {
     userId: number;
-    lists: UserIdsRequest[];
-}
-
-export interface UserIdsRequest {
-    id: number;
+    lists: { listId: number; isMemberInList: boolean; }[];
 }
 
 export interface ListsState {
@@ -55,5 +22,7 @@ export interface ListsState {
     userListsLoadingState: LoadingStatus;
     pinnedLists: PinnedListResponse[];
     pinnedListsLoadingState: LoadingStatus;
+    simpleLists: SimpleListResponse[];
+    simpleListsLoadingState: LoadingStatus;
     loadingState: LoadingStatus;
 }

@@ -112,7 +112,6 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
     }, [isTweetLoadedSuccess]);
 
     const onCloseImageModalWindow = (event: any): void => {
-        console.log(event)
         if (event.target.classList[0]) {
             if (event.target.classList[0].includes('container')) {
                 onClose();

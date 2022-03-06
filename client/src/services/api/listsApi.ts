@@ -6,7 +6,7 @@ import {
     ListResponse,
     ListsOwnerMemberResponse,
     ListUserResponse,
-    PinnedListResponse
+    PinnedListResponse, SimpleListResponse
 } from "../../store/types/lists";
 import {TweetResponse} from "../../store/types/tweet";
 import {EditListsRequest} from "../../store/ducks/list/contracts/state";
@@ -60,6 +60,10 @@ export const ListsApi = {
     },
     async pinList(listId: number): Promise<Response<PinnedListResponse>> { // +
         const {data} = await axios.get<Response<PinnedListResponse>>(`${API_URL}/lists/pin/${listId}`);
+        return data;
+    },
+    async getListsToAddUser(userId: number): Promise<Response<SimpleListResponse[]>> { // +
+        const {data} = await axios.get<Response<SimpleListResponse[]>>(`${API_URL}/lists/add/user/${userId}`);
         return data;
     },
     async addUserToLists(payload: AddUserToListsRequest): Promise<Response<number[]>> { // +

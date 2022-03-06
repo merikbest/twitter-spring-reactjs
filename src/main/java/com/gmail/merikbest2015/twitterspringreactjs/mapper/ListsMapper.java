@@ -96,11 +96,19 @@ public class ListsMapper {
         return convertProjectionToResponse(list, PinnedListResponse.class);
     }
 
-    public List<Long> addUserToLists(UserToListsRequest userToListsRequest) {
-        return listsService.addUserToLists(userToListsRequest.getUserId(),
-                userToListsRequest.getLists().stream()
-                        .map(UserToListsRequest.ListsRequest::getId)
-                        .collect(Collectors.toList()));
+    public List<SimpleListResponse> getListsToAddUser(Long userId) {
+        List<Map<String, Object>> userLists = listsService.getListsToAddUser(userId);
+        return userLists.stream()
+                .map(list -> {
+                    SimpleListResponse simpleListResponse = modelMapper.map(list.get("list"), SimpleListResponse.class);
+                    simpleListResponse.setMemberInList((Boolean) list.get("isMemberInList"));
+                    return simpleListResponse;
+                })
+                .collect(Collectors.toList());
+    }
+
+    public String addUserToLists(UserToListsRequest userToListsRequest) {
+        return listsService.addUserToLists(userToListsRequest);
     }
 
     public Boolean addUserToList(Long userId, Long listId) {

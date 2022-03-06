@@ -77,7 +77,6 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
             handleProcessFollowRequest();
         } else {
             dispatch(followUser({userId: chatParticipant?.id!}));
-            // dispatch(followProfile(chatParticipant!));
         }
     };
 
@@ -86,7 +85,6 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
             handleProcessFollowRequest();
         } else {
             dispatch(unfollowUser({userId: chatParticipant?.id!}));
-            // dispatch(unfollowProfile(chatParticipant!));
             setVisibleUnfollowModal(false);
         }
     };
@@ -159,15 +157,15 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                                             </Typography>
                                             {chatParticipant?.isPrivateProfile && (
                                                 <span className={classes.lockIcon}>
-                                            {LockIcon}
-                                        </span>
+                                                    {LockIcon}
+                                                </span>
                                             )}
                                             <Typography variant={"subtitle1"} component={"div"}>
                                                 @{chatParticipant?.username}
                                             </Typography>
                                         </div>
                                         <div className={classes.buttonWrapper}>
-                                            {(chatParticipant?.isFollower) ? (
+                                            {(!chatParticipant?.isFollower) ? (
                                                 (chatParticipant?.isUserBlocked) ? (
                                                     <Button
                                                         onClick={(event) => handleClickButton(event, onOpenBlockUserModal)}

@@ -1,13 +1,13 @@
 import {RootState} from "../../store";
 import {LoadingStatus} from "../../types";
 import {ListsState} from "./contracts/state";
-import {ListResponse, ListUserResponse, PinnedListResponse} from "../../types/lists";
 
 export const selectLists = (state: RootState): ListsState => state.lists;
 export const selectLoadingState = (state: RootState): LoadingStatus => selectLists(state).loadingState;
-export const selectListsItems = (state: RootState): ListResponse[] => selectLists(state).lists;
-export const selectUserListsItems = (state: RootState): ListUserResponse[] => selectLists(state).userLists;
-export const selectPinnedListsItems = (state: RootState): PinnedListResponse[] => selectLists(state).pinnedLists;
+export const selectListsItems = (state: RootState): ListsState["lists"] => selectLists(state).lists;
+export const selectUserListsItems = (state: RootState): ListsState["userLists"] => selectLists(state).userLists;
+export const selectPinnedListsItems = (state: RootState): ListsState["pinnedLists"] => selectLists(state).pinnedLists;
+export const selectSimpleListsItems = (state: RootState): ListsState["simpleLists"] => selectLists(state).simpleLists;
 export const selectIsLoading = (state: RootState): boolean => selectLoadingState(state) === LoadingStatus.LOADING;
 export const selectIsLoaded = (state: RootState): boolean => selectLoadingState(state) === LoadingStatus.LOADED;
 
@@ -22,3 +22,7 @@ export const selectIsUserListsLoaded = (state: RootState): boolean => selectUser
 export const selectPinnedListsLoadingState = (state: RootState): LoadingStatus => selectLists(state).pinnedListsLoadingState;
 export const selectIsPinnedListsLoading = (state: RootState): boolean => selectPinnedListsLoadingState(state) === LoadingStatus.LOADING;
 export const selectIsPinnedListsLoaded = (state: RootState): boolean => selectPinnedListsLoadingState(state) === LoadingStatus.LOADED;
+
+export const selectSimpleListsLoadingState = (state: RootState): LoadingStatus => selectLists(state).simpleListsLoadingState;
+export const selectIsSimpleListsLoading = (state: RootState): boolean => selectSimpleListsLoadingState(state) === LoadingStatus.LOADING;
+export const selectIsSimpleListsLoaded = (state: RootState): boolean => selectSimpleListsLoadingState(state) === LoadingStatus.LOADED;

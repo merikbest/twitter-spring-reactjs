@@ -5,7 +5,6 @@ import {
     FetchListMembersByUsernameActionInterface,
     ListMembersActionsType,
     ProcessUserToListMembersActionInterface,
-    ProcessUserToListsActionInterface,
     ResetListMembersActionInterface,
     ResetListMembersStateActionInterface,
     ResetListSuggestedStateActionInterface,
@@ -17,7 +16,6 @@ import {
     SetUserToListMembersActionInterface,
 } from './contracts/actionTypes';
 import {ListsOwnerMemberResponse} from "../../types/lists";
-import {AddUserToListsRequest} from "../lists/contracts/state";
 
 export const setListMembers = (payload: ListsOwnerMemberResponse[]): SetListMembersActionInterface => ({
     type: ListMembersActionsType.SET_LIST_MEMBERS,
@@ -47,11 +45,6 @@ export const fetchListMembersByUsername = (payload: { listId: number; username: 
 export const processUserToListMembers = (payload: { userId: number; listId: number; }): ProcessUserToListMembersActionInterface => ({
     type: ListMembersActionsType.PROCESS_USER_TO_LIST_MEMBERS,
     payload,
-});
-
-export const processUserToLists = (payload: AddUserToListsRequest): ProcessUserToListsActionInterface => ({
-    type: ListMembersActionsType.PROCESS_USER_TO_LISTS,
-    payload
 });
 
 export const setUserToListMembers = (payload: { userId: number; isMember: boolean; }): SetUserToListMembersActionInterface => ({

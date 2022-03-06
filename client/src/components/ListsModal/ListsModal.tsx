@@ -1,96 +1,65 @@
 import React, {FC, FormEvent, ReactElement, useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {Button, Dialog, DialogContent, DialogTitle, List, ListItem, Typography} from "@material-ui/core";
+import {Avatar, Button, Dialog, DialogContent, DialogTitle, List, ListItem, Typography} from "@material-ui/core";
 
 import {useListsModalStyles} from "./ListsModalStyles";
-import {selectUserListsItems} from "../../store/ducks/lists/selectors";
-import {fetchUserLists} from "../../store/ducks/lists/actionCreators";
-import {CheckIcon} from "../../icons";
-import {Lists} from "../../store/ducks/lists/contracts/state";
+import {
+    selectIsSimpleListsLoaded,
+    selectIsSimpleListsLoading,
+    selectSimpleListsItems
+} from "../../store/ducks/lists/selectors";
+import {fetchSimpleLists, processUserToLists, resetListsState} from "../../store/ducks/lists/actionCreators";
 import CloseButton from "../CloseButton/CloseButton";
 import {TweetResponse, UserTweetResponse} from "../../store/types/tweet";
-import {processUserToLists} from "../../store/ducks/listMembers/actionCreators";
-import {ListResponse, ListUserResponse} from "../../store/types/lists";
+import {SimpleListResponse} from "../../store/types/lists";
+import Spinner from "../Spinner/Spinner";
+import {UserProfileResponse} from "../../store/types/user";
+import {CheckIcon, LockIcon} from "../../icons";
 
 interface ListsModalProps {
     tweet?: TweetResponse;
-    user?: UserTweetResponse;
+    user?: UserTweetResponse | UserProfileResponse;
     visible?: boolean;
     onClose: () => void;
 }
-// TODO REFACTOR
+
 const ListsModal: FC<ListsModalProps> = ({tweet, user, visible, onClose}): ReactElement | null => {
     const classes = useListsModalStyles();
     const dispatch = useDispatch();
-    const userLists = useSelector(selectUserListsItems);
-    const params = useParams<{ listId: string }>();
-
-    const [checkedListsIndexes, setCheckedListsIndexes] = useState<number[]>([]);
-    const [lists, setLists] = useState<ListUserResponse[]>([]);
+    const simpleLists = useSelector(selectSimpleListsItems);
+    const isSimpleListsLoading = useSelector(selectIsSimpleListsLoading);
+    const isSimpleListsLoaded = useSelector(selectIsSimpleListsLoaded);
+    const [lists, setLists] = useState<SimpleListResponse[]>([]);
 
     useEffect(() => {
         if (visible) {
-            dispatch(fetchUserLists());
+            dispatch(fetchSimpleLists(user?.id!));
         }
     }, [visible]);
 
     useEffect(() => {
-        const set = new Set([...checkedListsIndexes]);
+        setLists(simpleLists);
+    }, [isSimpleListsLoaded]);
 
-        // userLists.forEach((list, index) => {
-        //     let currentIndex = list.members.findIndex((listUser) => listUser.id === user!.id);
-        //
-        //     if (currentIndex !== -1) {
-        //         set.add(index)
-        //     }
-        // });
-        // setCheckedListsIndexes([...Array.from(set)]);
-        // setLists(userLists);
-    }, [userLists]);
-
-    // TODO change method
     const onSubmit = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-        // dispatch(addUserToLists({userId: user?.id!, listId: parseInt(params.listId), lists: lists}));
-        // dispatch(processUserToLists({userId: user?.id!, listId: parseInt(params.listId), lists: lists}));
+        const listsRequest = lists.map((list) => {
+            return {
+                listId: list.id,
+                isMemberInList: list.isMemberInList,
+            }
+        });
+        dispatch(processUserToLists({userId: user?.id!, lists: listsRequest}));
+        dispatch(resetListsState());
+        setLists([]);
         onClose();
     };
 
-    // TODO change method
-    const handleToggleCheckList = (list: Lists, index: number): void => {
-        const currentIndex = checkedListsIndexes.indexOf(index);
-        const newCheckedListsIndexes = [...checkedListsIndexes];
-
-        const newList = Object.assign({}, list);
-        const newMembers = Object.assign([], list.members);
-
+    const onSelect = (listId: number): void => {
         const listsCopy = [...lists];
-        const listsIndex = lists.findIndex((value) => value.id === newList.id);
-
-        if (currentIndex === -1) {
-            newCheckedListsIndexes.push(index);
-
-            // newMembers.push(user!);
-            newList.members = newMembers;
-
-            // listsCopy[listsIndex] = newList;
-            setLists(listsCopy);
-        } else {
-            newCheckedListsIndexes.splice(currentIndex, 1);
-
-            const memberIndex = list.members.findIndex((newMember) => newMember.id === user?.id!);
-            newMembers.splice(memberIndex, 1);
-            newList.members = newMembers;
-
-            // listsCopy[listsIndex] = newList;
-            setLists(listsCopy);
-        }
-        setCheckedListsIndexes(newCheckedListsIndexes);
-    };
-
-    const isListSelected = (listId: number): boolean => {
-        return checkedListsIndexes.findIndex((checkedList) => checkedList === listId) !== -1;
+        const index = listsCopy.findIndex((list) => list.id === listId);
+        listsCopy[index] = {...listsCopy[index], isMemberInList: !listsCopy[index].isMemberInList};
+        setLists(listsCopy);
     };
 
     if (!visible) {
@@ -117,21 +86,36 @@ const ListsModal: FC<ListsModalProps> = ({tweet, user, visible, onClose}): React
                         Create a new List
                     </Typography>
                     <div className={classes.list}>
-                        <List>
-                            {userLists.map((list, index) => (
-                                <>
+                        {isSimpleListsLoading ? <Spinner/> : (
+                            <List>
+                                {lists.map((list) => (
                                     <ListItem
-                                        key={list.id}
-                                        // onClick={() => handleToggleCheckList(list, index)}
-                                        selected={isListSelected(index)}
+                                        onClick={() => onSelect(list.id)}
+                                        selected={list.isMemberInList}
                                         dense button
                                     >
-                                        {list.name}
-                                        {isListSelected(index) && <span>{CheckIcon}</span>}
+                                        <Avatar
+                                            variant="square"
+                                            className={classes.listAvatar}
+                                            src={list?.wallpaper?.src ? list?.wallpaper?.src : list?.altWallpaper}
+                                        />
+                                        <Typography component={"span"}>
+                                            {list.name}
+                                        </Typography>
+                                        {!list?.isPrivate && (
+                                            <span className={classes.lockIcon}>
+                                                {LockIcon}
+                                            </span>
+                                        )}
+                                        {list.isMemberInList && (
+                                            <span id={"check"}>
+                                                {CheckIcon}
+                                            </span>
+                                        )}
                                     </ListItem>
-                                </>
-                            ))}
-                        </List>
+                                ))}
+                            </List>
+                        )}
                     </div>
                 </DialogContent>
             </form>

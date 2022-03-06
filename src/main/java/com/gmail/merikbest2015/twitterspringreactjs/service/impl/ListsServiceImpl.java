@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 
+import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Lists;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
@@ -179,44 +180,35 @@ public class ListsServiceImpl implements ListsService {
     }
 
     @Override
-    @Transactional
-    public List<Long> addUserToLists(Long userId, List<Long> listsIds) {
+    public List<Map<String, Object>> getListsToAddUser(Long userId) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
-        List<Lists> lists = listsRepository.getListsByIds(authUserId, listsIds);
-        checkUserIsBlocked(authUserId, userId);
-        User user = userRepository.getValidUser(userId, authUserId)
+        List<Map<String, Object>> lists = new ArrayList<>();
+        listsRepository.getUserOwnerLists(authUserId)
+                .forEach(list -> lists.add(Map.of(
+                        "list", list.getList(),
+                        "isMemberInList", isListIncludeUser(list.getList().getId(), userId))
+                ));
+        return lists;
+    }
+
+    @Override
+    @Transactional(rollbackFor = ApiRequestException.class)
+    public String addUserToLists(UserToListsRequest listsRequest) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        checkUserIsBlocked(authUserId, listsRequest.getUserId());
+        User user = userRepository.getValidUser(listsRequest.getUserId(), authUserId)
                 .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
-        checkUserIsBlocked(user.getId(), authUserId);
-        List<Lists> userLists = listsRepository.findByListOwner_Id(authUserId);
-        Set<Lists> commonLists = userLists.stream()
-                .distinct()
-                .filter(lists::contains)
-                .collect(Collectors.toSet());
-        commonLists.forEach((list) -> {
-            Optional<User> userInList = list.getMembers().stream()
-                    .filter(member -> member.getId().equals(user.getId()))
-                    .findFirst();
+        listsRequest.getLists().forEach(listRequest -> {
+            checkIsListExist(listRequest.getListId(), authUserId);
+            Lists list = listsRepository.getOne(listRequest.getListId());
 
-            userLists.forEach((userList) -> {
-                Optional<User> memberInUserList = userList.getMembers().stream()
-                        .filter(member -> member.getId().equals(user.getId()))
-                        .findFirst();
-
-                if (list.getId().equals(userList.getId())) {
-                    if (userInList.isPresent() && memberInUserList.isEmpty()) {
-                        userList.getMembers().add(user);
-                        listsRepository.save(userList);
-                    }
-                    if (userInList.isEmpty() && memberInUserList.isPresent()) {
-                        userList.getMembers().remove(user);
-                        listsRepository.save(userList);
-                    }
-                }
-            });
+            if (listRequest.getIsMemberInList()) {
+                list.getMembers().add(user);
+            } else {
+                list.getMembers().remove(user);
+            }
         });
-        return userLists.stream()
-                .map(Lists::getId)
-                .collect(Collectors.toList());
+        return "User added to lists success.";
     }
 
     @Override
@@ -261,7 +253,7 @@ public class ListsServiceImpl implements ListsService {
 
         if (!Objects.equals(listOwnerId, authUserId)) {
             checkUserIsBlocked(listOwnerId, authUserId);
-            checkIsListExist(listOwnerId, authUserId);
+            checkIsListExist(listId, authUserId);
             checkIsListPrivate(listId);
         }
         List<ListsMemberProjection> listFollowers = listsRepository.getListFollowers(listId, listOwnerId);
@@ -325,7 +317,7 @@ public class ListsServiceImpl implements ListsService {
     private void checkIsListExist(Long listId, Long listOwnerId) {
         boolean isListExist = listsRepository.isListExist(listId, listOwnerId);
 
-        if (isListExist) {
+        if (!isListExist) {
             throw new ApiRequestException("List not found", HttpStatus.NOT_FOUND);
         }
     }

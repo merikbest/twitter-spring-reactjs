@@ -76,8 +76,13 @@ public class ListsController {
         return ResponseEntity.ok(listsMapper.pinList(listId));
     }
 
+    @GetMapping("/add/user/{userId}") // TODO add tests
+    public ResponseEntity<List<SimpleListResponse>> getListsToAddUser(@PathVariable Long userId) {
+        return ResponseEntity.ok(listsMapper.getListsToAddUser(userId));
+    }
+
     @PostMapping("/add/user")
-    public ResponseEntity<List<Long>> addUserToLists(@RequestBody UserToListsRequest userToListsRequest) {
+    public ResponseEntity<String> addUserToLists(@RequestBody UserToListsRequest userToListsRequest) {
         return ResponseEntity.ok(listsMapper.addUserToLists(userToListsRequest));
     }
 

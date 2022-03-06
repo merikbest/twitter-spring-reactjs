@@ -25,6 +25,7 @@ import {
     SetReadMessageActionInterface,
     SetUnreadMessageActionInterface,
     SetUserDataActionInterface,
+    SetUserFollowingActionInterface,
     SetUserLoadingStateActionInterface,
     SetUsernameActionInterface,
     SignOutActionInterface,
@@ -106,6 +107,11 @@ export const followUser = (payload: { userId: number; tweetId?: number; }): Foll
 
 export const unfollowUser = (payload: { userId: number; tweetId?: number; }): UnfollowUserActionInterface => ({ //+
     type: UserActionsType.UNFOLLOW_USER,
+    payload,
+});
+
+export const setUserFollowing = (payload: boolean): SetUserFollowingActionInterface => ({ //+
+    type: UserActionsType.SET_USER_FOLLOWING,
     payload,
 });
 

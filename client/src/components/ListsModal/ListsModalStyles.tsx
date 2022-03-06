@@ -27,20 +27,24 @@ export const useListsModalStyles = makeStyles<Theme>((theme) => ({
             backgroundColor: theme.palette.secondary.main,
         },
     },
+    listAvatar: {
+        width: "48px !important",
+        height: "48px !important",
+        borderRadius: 12,
+        marginRight: 15,
+    },
     list: {
-        "& .MuiList-root": {
-            padding: 0,
-        },
         "& .MuiListItem-root": {
-            fontWeight: 700,
-            fontSize: 15,
+            "& .MuiTypography-body1": {
+                fontWeight: 700,
+                fontSize: 15,
+            },
             padding: "12px 16px",
-            justifyContent: "space-between",
             "&:hover": {
                 cursor: "pointer",
                 backgroundColor: "rgba(0, 0, 0, 0.03)"
             },
-            "& span": {
+            "& #check": {
                 position: "absolute",
                 right: 0,
                 marginRight: 16,
@@ -51,7 +55,14 @@ export const useListsModalStyles = makeStyles<Theme>((theme) => ({
             },
         },
         "& .Mui-selected": {
-            backgroundColor: theme.palette.common.white,
+            backgroundColor: theme.palette.action.hover,
+        },
+    },
+    lockIcon: {
+        "& svg": {
+            marginLeft: 3,
+            marginBottom: -3,
+            height: "1.2em",
         },
     },
 }));
