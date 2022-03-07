@@ -12,7 +12,8 @@ import {
     setPrivateProfile,
     setProfileStarted,
     setReadMessage,
-    setUserData, setUserFollowing,
+    setUserData,
+    setUserFollowing,
     setUserLoadingStatus,
     setUsername
 } from "./actionCreators";
@@ -77,6 +78,7 @@ import {
     setFollowRequestToNotificationInfo,
     setFollowToNotificationInfo
 } from "../notifications/actionCreators";
+import {setBlockedUser, setMutedUser} from "../blockedAndMutedUsers/actionCreators";
 
 export function* updateUserDataRequest({payload}: UpdateUserDataActionInterface) { // +
     try {
@@ -280,6 +282,7 @@ export function* processUserToBlocklistRequest({payload}: ProcessUserToBlocklist
         yield put(setBlockedUsersTweetState({userId: payload.userId, tweetId: payload.tweetId!, isUserBlocked: item}));
         yield put(setBlocked(item));
         yield put(setBlockUserDetail(item));
+        yield put(setBlockedUser({userId: payload.userId, isUserBlocked: item}));
         yield put(setBlockedUsersState({userId: payload.userId, isUserBlocked: item}));
         yield put(setBlockUsersSearchState({userId: payload.userId, isUserBlocked: item}));
         yield put(setBlockedToTweetState(item));
@@ -295,6 +298,7 @@ export function* processUserToMuteListRequest({payload}: ProcessUserToMuteListAc
         yield put(setMutedToTweetsState({userId: payload.userId, tweetId: payload.tweetId!, isUserMuted: item}));
         yield put(setMutedUsersTweetState({userId: payload.userId, tweetId: payload.tweetId!, isUserMuted: item}));
         yield put(setMuted(item));
+        yield put(setMutedUser({userId: payload.userId, isUserMuted: item}));
         yield put(setMutedUsersState({userId: payload.userId, isUserMuted: item})); // TODO NOT NEEDED ???
         yield put(setMutedToTweetState(item));
     } catch (e) {

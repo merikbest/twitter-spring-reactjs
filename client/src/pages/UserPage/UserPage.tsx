@@ -359,7 +359,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                                 handleHoverAction={handleHoverAction}
                                                 handleLeaveAction={handleLeaveAction}
                                             />
-                                            {userProfile?.isUserBlocked && (
+                                            {!userProfile?.isUserBlocked && (
                                                 !userProfile?.isMutedDirectMessages || userProfile?.isFollower ? (
                                                     <IconButton
                                                         className={globalClasses.userPageIconButton}
@@ -560,6 +560,21 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                     </List>
                                 )}
                             </div>
+                            {userProfile?.isUserMuted && (
+                                (userProfile !== undefined) && (
+                                    <Typography variant={"subtitle1"} component={"div"} className={classes.description}>
+                                        {"You have muted Tweets from this account. "}
+                                        <Typography
+                                            className={classes.unfollowLink}
+                                            onClick={onMuteUser}
+                                            variant={"subtitle1"}
+                                            component={"span"}
+                                        >
+                                            Unmute
+                                        </Typography>
+                                    </Typography>
+                                )
+                            )}
                             {(userProfile?.isMyProfileBlocked || userProfile?.isPrivateProfile) ? null : (
                                 (userProfile !== undefined) && (
                                     <FollowerGroup user={userProfile} sameFollowers={userProfile.sameFollowers}/>

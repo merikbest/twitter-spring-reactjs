@@ -50,14 +50,16 @@ const FollowersYouKnow: FC = (): ReactElement => {
         <Paper className={globalClasses.pageContainer} variant="outlined">
             <Paper className={globalClasses.pageHeader} variant="outlined">
                 <BackButton/>
-                <div>
-                    <Typography variant={"h5"} component={"span"}>
-                        {userProfile?.fullName}
-                    </Typography>
-                    <Typography variant={"subtitle2"} component={"div"}>
-                        @{userProfile?.username}
-                    </Typography>
-                </div>
+                {!isLoading && (
+                    <div>
+                        <Typography variant={"h5"} component={"span"}>
+                            {userProfile?.fullName}
+                        </Typography>
+                        <Typography variant={"subtitle2"} component={"div"}>
+                            @{userProfile?.username}
+                        </Typography>
+                    </div>
+                )}
             </Paper>
             {(isLoading && (overallFollowers.length === 0)) ? (
                 <Spinner paddingTop={150}/>

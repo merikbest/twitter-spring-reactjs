@@ -30,7 +30,7 @@ export const useListsModalStyles = makeStyles<Theme>((theme) => ({
     listAvatar: {
         width: "48px !important",
         height: "48px !important",
-        borderRadius: 12,
+        borderRadius: "12px !important",
         marginRight: 15,
     },
     list: {

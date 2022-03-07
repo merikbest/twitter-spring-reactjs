@@ -4,7 +4,9 @@ import {
     FetchMutedUsersActionInterface,
     ResetBlockedAndMutedUsersStateActionInterface,
     SetBlockedAndMutedUsersLoadingStateActionInterface,
+    SetBlockedUserActionInterface,
     SetBlockedUsersActionInterface,
+    SetMutedUserActionInterface,
     SetMutedUsersActionInterface
 } from "./contracts/actionTypes";
 import {BlockedUserResponse, MutedUserResponse} from "../../types/user";
@@ -17,6 +19,16 @@ export const setBlockedUsers = (payload: BlockedUserResponse[]): SetBlockedUsers
 
 export const setMutedUsers = (payload: MutedUserResponse[]): SetMutedUsersActionInterface => ({
     type: BlockedAndMutedUsersActionsType.SET_MUTED_USERS,
+    payload,
+});
+
+export const setBlockedUser = (payload: { userId: number; isUserBlocked: boolean }): SetBlockedUserActionInterface => ({
+    type: BlockedAndMutedUsersActionsType.SET_BLOCKED_USER,
+    payload,
+});
+
+export const setMutedUser = (payload: { userId: number; isUserMuted: boolean }): SetMutedUserActionInterface => ({
+    type: BlockedAndMutedUsersActionsType.SET_MUTED_USER,
     payload,
 });
 

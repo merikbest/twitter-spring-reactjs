@@ -37,8 +37,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByIdIn(List<Long> ids);
 
     @Query("SELECT u AS user FROM User u " +
-            "WHERE UPPER(u.fullName) LIKE UPPER(CONCAT('%',:name,'%')) " +
-            "OR UPPER(u.username) LIKE UPPER(CONCAT('%',:name,'%'))")
+            "WHERE UPPER(u.fullName) LIKE UPPER(CONCAT('%',:name,'%')) AND u.active = true " +
+            "OR UPPER(u.username) LIKE UPPER(CONCAT('%',:name,'%')) AND u.active = true")
     List<UserListProjection> findByFullNameOrUsername(String name);
 
     List<User> findByFullNameOrUsernameContainingIgnoreCase(

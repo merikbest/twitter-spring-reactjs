@@ -7,7 +7,7 @@ export const useEditListModalStyles = makeStyles((theme: Theme) => ({
         },
     },
     content: {
-        height: 580,
+        height: 569,
         width: 598,
         padding: "0px 0px",
         overflowX: "hidden",

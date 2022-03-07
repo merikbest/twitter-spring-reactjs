@@ -30,12 +30,14 @@ import {UserResponse} from "../../../store/types/user";
 interface ConversationInfoProps {
     participantId?: number;
     chatId?: number;
+    onBlockParticipant: () => void;
 }
 
 const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
     {
         participantId,
         chatId,
+        onBlockParticipant,
         snackBarMessage,
         openSnackBar,
         setSnackBarMessage,
@@ -117,6 +119,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
 
     const onBlockUser = (): void => {
         dispatch(processUserToBlocklist({userId: chatParticipant?.id!}));
+        onBlockParticipant();
         setVisibleBlockUserModal(false);
         setSnackBarMessage!(`@${chatParticipant?.username!} has been ${chatParticipant?.isUserBlocked ? "unblocked" : "blocked"}.`);
         setOpenSnackBar!(true);
@@ -140,7 +143,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                     </Typography>
                 </Paper>
                 {isChatParticipantLoading ? (
-                    <Spinner paddingTop={200} />
+                    <Spinner paddingTop={200}/>
                 ) : (
                     <>
                         <Link to={`/user/${chatParticipant?.id}`} className={globalClasses.link}>

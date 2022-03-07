@@ -40,6 +40,7 @@ import {HoverActions} from "../../hoc/withHoverAction";
 import {useGlobalStyles} from "../../util/globalClasses";
 import ChangeReplyWindow from "../ChangeReplyWindow/ChangeReplyWindow";
 import {TweetResponse} from "../../store/types/tweet";
+import ListsModal from "../ListsModal/ListsModal";
 
 interface TweetComponentActionsProps {
     tweet: TweetResponse;
@@ -332,8 +333,7 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
                 onClose={onCloseBlockUserModal}
                 onBlockUser={onBlockUser}
             />
-            {/* TODO refactor */}
-            {/*<ListsModal user={tweet.user} visible={visibleListsModal} onClose={onCloseListsModal}/>*/}
+            <ListsModal user={tweet.user} visible={visibleListsModal} onClose={onCloseListsModal}/>
         </div>
     );
 };

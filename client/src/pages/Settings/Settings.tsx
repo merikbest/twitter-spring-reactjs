@@ -1,4 +1,4 @@
-import React, {FC, ReactElement} from 'react';
+import React, {FC, ReactElement, useEffect} from 'react';
 import {NavLink, Route, useLocation} from 'react-router-dom';
 import {Grid, List, ListItem, Paper, Typography} from "@material-ui/core";
 import classnames from "classnames";
@@ -71,6 +71,26 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
     const location = useLocation<LocationState>();
     const classes = useSettingsStyles({location});
     const [selectedIndex, setSelectedIndex] = React.useState(1);
+
+    useEffect(() => {
+        if (location.pathname === "/settings") {
+            setSelectedIndex(1);
+        } else if (location.pathname.includes("/settings/security_and_account_access")) {
+            setSelectedIndex(2);
+        } else if (location.pathname.includes("/settings/privacy_and_safety")) {
+            setSelectedIndex(3);
+        } else if (location.pathname.includes("/settings/notification")) {
+            setSelectedIndex(4);
+        } else if (location.pathname.includes("/settings/accessibility_display_and_languages")) {
+            setSelectedIndex(5);
+        } else if (location.pathname.includes("/settings/about")) {
+            setSelectedIndex(6);
+        } else if (location.pathname.includes("/settings/about")) {
+            setSelectedIndex(6);
+        } else {
+            setSelectedIndex(1);
+        }
+    }, []);
 
     const handleListItemClick = (index: number): void => {
         setSelectedIndex(index);

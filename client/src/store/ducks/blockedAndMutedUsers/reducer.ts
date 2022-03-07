@@ -22,6 +22,18 @@ export const blockedAndMutedUsersReducer = produce((draft: Draft<BlockedAndMuted
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
+        case BlockedAndMutedUsersActionsType.SET_BLOCKED_USER:
+            const blockedUserIndex = draft.blockedUsers.findIndex((user) => user.id === action.payload.userId);
+            if (blockedUserIndex !== -1) draft.blockedUsers[blockedUserIndex].isUserBlocked = action.payload.isUserBlocked;
+            draft.loadingState = LoadingStatus.LOADED;
+            break;
+
+        case BlockedAndMutedUsersActionsType.SET_MUTED_USER:
+            const mutedUserIndex = draft.mutedUsers.findIndex((user) => user.id === action.payload.userId);
+            if (mutedUserIndex !== -1) draft.mutedUsers[mutedUserIndex].isUserMuted = action.payload.isUserMuted;
+            draft.loadingState = LoadingStatus.LOADED;
+            break;
+
         case BlockedAndMutedUsersActionsType.RESET_TAGS_STATE:
             draft.blockedUsers = [];
             draft.mutedUsers = [];

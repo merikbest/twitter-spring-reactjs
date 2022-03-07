@@ -18,7 +18,7 @@ export const useAddTweetModalStyles = makeStyles((theme: Theme) => ({
     },
     dialogContent: {
         width: 598,
-        minHeight: 284,
+        minHeight: 288,
         padding: "10px 20px 10px 20px",
     },
 }));

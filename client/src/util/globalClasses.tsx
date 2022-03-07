@@ -92,7 +92,7 @@ export const useGlobalStyles = makeStyles((theme: Theme) => ({
         },
     },
     infoItemRadioCheckbox: {
-        padding: "4px 0px",
+        padding: "7px 0px",
         "& .MuiButtonBase-root": {
             padding: 4,
             float: "right",

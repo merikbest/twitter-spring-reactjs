@@ -96,6 +96,7 @@ const Messages: FC = (): ReactElement => {
     useEffect(() => {
         if (location.pathname === "/messages") {
             if (participant !== undefined) {
+                handleLeaveAction();
                 dispatch(fetchChatMessages(chat?.id!));
                 dispatch(fetchReadMessages(chat?.id!));
             }
@@ -107,6 +108,16 @@ const Messages: FC = (): ReactElement => {
     const scrollToBottom = () => {
         if (chatEndRef.current) {
             chatEndRef.current.scrollIntoView({behavior: 'smooth'})
+        }
+    };
+
+    const onBlockParticipant = (): void => {
+        if (participant !== undefined) {
+            const newParticipant = {...participant};
+            const newUser = {...newParticipant.user};
+            newUser.isUserBlocked = !newUser.isUserBlocked;
+            newParticipant.user = newUser;
+            setParticipant(newParticipant);
         }
     };
 
@@ -296,7 +307,11 @@ const Messages: FC = (): ReactElement => {
                     </Paper>
                 </Route>
                 <Route exact path="/messages/:id/info">
-                    <ConversationInfo participantId={participant?.id} chatId={chat?.id}/>
+                    <ConversationInfo
+                        participantId={participant?.id}
+                        chatId={chat?.id}
+                        onBlockParticipant={onBlockParticipant}
+                    />
                 </Route>
                 <Route exact path="/messages">
                     <ChatMessages

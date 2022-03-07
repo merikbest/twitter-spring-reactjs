@@ -203,7 +203,13 @@ public class ListsServiceImpl implements ListsService {
             Lists list = listsRepository.getOne(listRequest.getListId());
 
             if (listRequest.getIsMemberInList()) {
-                list.getMembers().add(user);
+                boolean isMemberInList = list.getMembers().stream()
+                        .filter(member -> member.getId().equals(user.getId()))
+                        .findFirst()
+                        .isEmpty();
+                if (isMemberInList) {
+                    list.getMembers().add(user);
+                }
             } else {
                 list.getMembers().remove(user);
             }

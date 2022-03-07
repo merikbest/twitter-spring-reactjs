@@ -110,6 +110,13 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
             marginRight: 3,
         },
     },
+    unfollowLink: {
+        cursor: "pointer",
+        color: theme.palette.primary.main,
+        "&:hover": {
+            textDecoration: "underline",
+        },
+    },
     followLink: {
         cursor: "pointer",
         textDecoration: 'none',

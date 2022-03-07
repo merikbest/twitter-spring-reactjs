@@ -139,7 +139,14 @@ public class UserMapper {
 
     public List<UserResponse> overallFollowers(Long userId) {
         List<BaseUserProjection> users = userService.overallFollowers(userId);
-        return convertProjectionListToResponseList(users, UserResponse.class);
+        return users.stream()
+                .map(baseUserProjection -> {
+                    UserResponse userResponse = modelMapper.map(baseUserProjection, UserResponse.class);
+                    Map<String, Object> avatar = baseUserProjection.getAvatar();
+                    userResponse.setAvatar(new ImageResponse((Long) avatar.get("id"), (String) avatar.get("src")));
+                    return userResponse;
+                })
+                .collect(Collectors.toList());
     }
 
     public UserProfileResponse processFollowRequestToPrivateProfile(Long userId) {
@@ -181,15 +188,15 @@ public class UserMapper {
         List<NotificationProjection.Notification> notificationsProjection = userNotifications.contains(null)
                 ? new ArrayList<>()
                 : userNotifications.stream()
-                    .map(NotificationProjection::getNotification)
-                    .collect(Collectors.toList());
+                .map(NotificationProjection::getNotification)
+                .collect(Collectors.toList());
         List<NotificationResponse> notifications = convertProjectionListToResponseList(notificationsProjection, NotificationResponse.class);
         List<TweetAuthorProjection> tweetAuthorsNotifications = (List<TweetAuthorProjection>) notificationsDetails.get("tweetAuthors");
         List<TweetAuthorProjection.AuthorProjection> tweetAuthorsProjection = tweetAuthorsNotifications.contains(null)
                 ? new ArrayList<>()
                 : tweetAuthorsNotifications.stream()
-                    .map(TweetAuthorProjection::getTweetAuthor)
-                    .collect(Collectors.toList());
+                .map(TweetAuthorProjection::getTweetAuthor)
+                .collect(Collectors.toList());
         List<NotificationUserResponse> tweetAuthors = convertProjectionListToResponseList(tweetAuthorsProjection, NotificationUserResponse.class);
         notificationsResponse.setNotifications(notifications);
         notificationsResponse.setTweetAuthors(tweetAuthors);
