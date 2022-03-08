@@ -22,7 +22,6 @@ import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.*
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserSettingsService;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -37,44 +36,30 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserMapper {
 
-    private final ModelMapper modelMapper;
+    private final BasicMapper basicMapper;
     private final TweetMapper tweetMapper;
     private final AuthenticationMapper authenticationMapper;
     private final UserService userService;
     private final UserSettingsService userSettingsService;
 
-    private User convertToEntity(UserRequest userRequest) {
-        return modelMapper.map(userRequest, User.class);
-    }
-
-    private <T, S> S convertProjectionToResponse(T user, Class<S> type) {
-        return modelMapper.map(user, type);
-    }
-
-    private <T, S> List<S> convertProjectionListToResponseList(List<T> users, Class<S> type) {
-        return users.stream()
-                .map(user -> convertProjectionToResponse(user, type))
-                .collect(Collectors.toList());
-    }
-
     public UserProfileResponse getUserById(Long userId) {
         UserProfileProjection user = userService.getUserById(userId);
-        return convertProjectionToResponse(user, UserProfileResponse.class);
+        return basicMapper.convertToResponse(user, UserProfileResponse.class);
     }
 
     public List<UserResponse> getUsers() {
         List<UserProjection> users = userService.getUsers();
-        return convertProjectionListToResponseList(users, UserResponse.class);
+        return basicMapper.convertToResponseList(users, UserResponse.class);
     }
 
     public ImageResponse uploadImage(MultipartFile multipartFile) {
         Image image = userService.uploadImage(multipartFile);
-        return convertProjectionToResponse(image, ImageResponse.class);
+        return basicMapper.convertToResponse(image, ImageResponse.class);
     }
 
     public AuthUserResponse updateUserProfile(UserRequest userRequest) {
-        AuthUserProjection authUserProjection = userService.updateUserProfile(convertToEntity(userRequest));
-        return convertProjectionToResponse(authUserProjection, AuthUserResponse.class);
+        AuthUserProjection authUserProjection = userService.updateUserProfile(basicMapper.convertToEntity(userRequest, User.class));
+        return basicMapper.convertToResponse(authUserProjection, AuthUserResponse.class);
     }
 
     public Boolean startUseTwitter() {
@@ -116,23 +101,23 @@ public class UserMapper {
 
     public List<UserResponse> getFollowers(Long userId) {
         List<UserProjection> users = userService.getFollowers(userId);
-        return convertProjectionListToResponseList(users, UserResponse.class);
+        return basicMapper.convertToResponseList(users, UserResponse.class);
     }
 
     public List<UserResponse> getFollowing(Long userId) {
         List<UserProjection> users = userService.getFollowing(userId);
-        return convertProjectionListToResponseList(users, UserResponse.class);
+        return basicMapper.convertToResponseList(users, UserResponse.class);
     }
 
     public List<FollowerUserResponse> getFollowerRequests() {
         List<FollowerUserProjection> followers = userService.getFollowerRequests();
-        return convertProjectionListToResponseList(followers, FollowerUserResponse.class);
+        return basicMapper.convertToResponseList(followers, FollowerUserResponse.class);
     }
 
     public NotificationResponse processFollow(Long userId) {
         Map<String, Object> notificationDetails = userService.processFollow(userId);
         Notification notification = (Notification) notificationDetails.get("notification");
-        NotificationResponse notificationResponse = convertProjectionToResponse(notification, NotificationResponse.class);
+        NotificationResponse notificationResponse = basicMapper.convertToResponse(notification, NotificationResponse.class);
         notificationResponse.getUserToFollow().setFollower((Boolean) notificationDetails.get("isFollower"));
         return notificationResponse;
     }
@@ -141,7 +126,7 @@ public class UserMapper {
         List<BaseUserProjection> users = userService.overallFollowers(userId);
         return users.stream()
                 .map(baseUserProjection -> {
-                    UserResponse userResponse = modelMapper.map(baseUserProjection, UserResponse.class);
+                    UserResponse userResponse = basicMapper.convertToResponse(baseUserProjection, UserResponse.class);
                     Map<String, Object> avatar = baseUserProjection.getAvatar();
                     userResponse.setAvatar(new ImageResponse((Long) avatar.get("id"), (String) avatar.get("src")));
                     return userResponse;
@@ -151,7 +136,7 @@ public class UserMapper {
 
     public UserProfileResponse processFollowRequestToPrivateProfile(Long userId) {
         UserProfileProjection user = userService.processFollowRequestToPrivateProfile(userId);
-        return convertProjectionToResponse(user, UserProfileResponse.class);
+        return basicMapper.convertToResponse(user, UserProfileResponse.class);
     }
 
     public String acceptFollowRequest(Long userId) {
@@ -168,12 +153,12 @@ public class UserMapper {
 
     public List<UserResponse> getRelevantUsers() {
         List<UserProjection> users = userService.getRelevantUsers();
-        return convertProjectionListToResponseList(users, UserResponse.class);
+        return basicMapper.convertToResponseList(users, UserResponse.class);
     }
 
     public List<UserResponse> searchUsersByUsername(String username) {
         List<UserProjection> users = userService.searchUsersByUsername(username);
-        return convertProjectionListToResponseList(users, UserResponse.class);
+        return basicMapper.convertToResponseList(users, UserResponse.class);
     }
 
     public Long processPinTweet(Long tweetId) {
@@ -190,14 +175,14 @@ public class UserMapper {
                 : userNotifications.stream()
                 .map(NotificationProjection::getNotification)
                 .collect(Collectors.toList());
-        List<NotificationResponse> notifications = convertProjectionListToResponseList(notificationsProjection, NotificationResponse.class);
+        List<NotificationResponse> notifications = basicMapper.convertToResponseList(notificationsProjection, NotificationResponse.class);
         List<TweetAuthorProjection> tweetAuthorsNotifications = (List<TweetAuthorProjection>) notificationsDetails.get("tweetAuthors");
         List<TweetAuthorProjection.AuthorProjection> tweetAuthorsProjection = tweetAuthorsNotifications.contains(null)
                 ? new ArrayList<>()
                 : tweetAuthorsNotifications.stream()
                 .map(TweetAuthorProjection::getTweetAuthor)
                 .collect(Collectors.toList());
-        List<NotificationUserResponse> tweetAuthors = convertProjectionListToResponseList(tweetAuthorsProjection, NotificationUserResponse.class);
+        List<NotificationUserResponse> tweetAuthors = basicMapper.convertToResponseList(tweetAuthorsProjection, NotificationUserResponse.class);
         notificationsResponse.setNotifications(notifications);
         notificationsResponse.setTweetAuthors(tweetAuthors);
         return notificationsResponse;
@@ -205,7 +190,7 @@ public class UserMapper {
 
     public NotificationInfoResponse getUserNotificationById(Long notificationId) {
         NotificationInfoProjection notification = userService.getUserNotificationById(notificationId);
-        return convertProjectionToResponse(notification, NotificationInfoResponse.class);
+        return basicMapper.convertToResponse(notification, NotificationInfoResponse.class);
     }
 
     public TweetHeaderResponse<TweetResponse> getNotificationsFromTweetAuthors(Pageable pageable) {
@@ -259,7 +244,7 @@ public class UserMapper {
 
     public List<BlockedUserResponse> getBlockList() {
         List<BlockedUserProjection> blockList = userService.getBlockList();
-        return convertProjectionListToResponseList(blockList, BlockedUserResponse.class);
+        return basicMapper.convertToResponseList(blockList, BlockedUserResponse.class);
     }
 
     public Boolean processBlockList(Long userId) {
@@ -268,7 +253,7 @@ public class UserMapper {
 
     public List<MutedUserResponse> getMutedList() {
         List<MutedUserProjection> mutedList = userService.getMutedList();
-        return convertProjectionListToResponseList(mutedList, MutedUserResponse.class);
+        return basicMapper.convertToResponseList(mutedList, MutedUserResponse.class);
     }
 
     public Boolean processMutedList(Long userId) {
@@ -277,6 +262,6 @@ public class UserMapper {
 
     public UserDetailResponse getUserDetails(Long userId) {
         UserDetailProjection userDetails = userService.getUserDetails(userId);
-        return convertProjectionToResponse(userDetails, UserDetailResponse.class);
+        return basicMapper.convertToResponse(userDetails, UserDetailResponse.class);
     }
 }

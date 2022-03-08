@@ -1,4 +1,4 @@
-alter sequence users_id_seq restart with 10;
+-- alter sequence users_id_seq restart with 10;
 
 -- images
 INSERT INTO images (id, src) VALUES (1, 'https://twitterclonestorage.s3.eu-central-1.amazonaws.com/0a6c735d-def8-4587-a29f-221915ef6cb4_ff2d023b3220f93bbc79233614dea542.jpg');
