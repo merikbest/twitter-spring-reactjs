@@ -1,9 +1,8 @@
 package com.gmail.merikbest2015.twitterspringreactjs.repository;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.Lists;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.lists.*;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetsProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,18 +16,22 @@ import java.util.Optional;
 @Repository
 public interface ListsRepository extends JpaRepository<Lists, Long> {
 
-    @Query("SELECT l as list FROM Lists l WHERE l.isPrivate = false")
-    List<ListsProjection> getAllTweetLists();
+    @Query("SELECT list FROM Lists list WHERE list.isPrivate = false")
+    List<ListProjection> getAllTweetLists();
 
-    @Query("SELECT l as list FROM Lists l " +
-            "LEFT JOIN l.listOwner listOwner " +
-            "LEFT JOIN l.followers follower " +
+    @Query("SELECT list FROM Lists list " +
+            "LEFT JOIN list.listOwner listOwner " +
+            "LEFT JOIN list.followers follower " +
             "WHERE listOwner.id = :ownerId " +
             "OR follower.id = :ownerId")
-    List<ListsUserProjection> getUserTweetLists(Long ownerId);
+    List<ListUserProjection> getUserTweetLists(Long ownerId);
 
-    @Query("SELECT l as list FROM Lists l LEFT JOIN l.listOwner listOwner WHERE listOwner.id = :ownerId")
-    List<SimpleListsProjection> getUserOwnerLists(Long ownerId);
+    @Query("SELECT l.id AS id, l.name AS name, l.altWallpaper AS altWallpaper, w AS wallpaper, l.isPrivate AS isPrivate " +
+            "FROM Lists l " +
+            "LEFT JOIN l.listOwner lo " +
+            "LEFT JOIN l.wallpaper w " +
+            "WHERE lo.id = :ownerId")
+    List<SimpleListProjection> getUserOwnerLists(Long ownerId);
 
     @Query("SELECT l FROM Lists l WHERE l.id = :listId")
     ListUserProjection getUserTweetListById(Long listId);
@@ -43,14 +46,20 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
             "AND l.id IN :listIds")
     List<Lists> getListsByIds(Long ownerId, List<Long> listIds);
 
-    @Query("SELECT l as list FROM Lists l " +
-            "WHERE l.listOwner.id = :userId " +
-            "AND l.pinnedDate IS NOT NULL " +
-            "ORDER BY l.pinnedDate DESC")
-    List<PinnedListsProjection> getUserPinnedLists(Long userId);
+    @Query("SELECT list FROM Lists list " +
+            "WHERE list.listOwner.id = :userId " +
+            "AND list.pinnedDate IS NOT NULL " +
+            "ORDER BY list.pinnedDate DESC")
+    List<PinnedListProjection> getUserPinnedLists(Long userId);
 
-    @Query("SELECT l FROM Lists l WHERE l.id = :listId")
+    @Query("SELECT list FROM Lists list WHERE list.id = :listId")
     PinnedListProjection getUserPinnedListById(Long listId);
+
+    @Query("SELECT m.id FROM Lists l " +
+            "LEFT JOIN l.members m " +
+            "WHERE l.id = :listId AND l.isPrivate = false " +
+            "OR l.id = :listId AND l.listOwner.id = :userId")
+    List<Long> getListMembersIds(Long listId, Long userId);
 
     @Query("SELECT t FROM Tweet t " +
             "JOIN t.user u " +
@@ -59,9 +68,6 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
             "AND t.addressedUsername IS NULL " +
             "ORDER BY t.dateTime DESC")
     Page<TweetProjection> getTweetsByListId(Long listId, Pageable pageable);
-
-    @Query("SELECT m.id FROM Lists l LEFT JOIN l.members m WHERE l.id = :listId")
-    List<Long> getListMembersIds(Long listId);
 
     @Query("SELECT lists FROM Lists lists " +
             "LEFT JOIN lists.followers listsFollower " +
@@ -94,27 +100,38 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
             "AND meber.id = :memberId")
     boolean isListIncludeUser(Long listId, Long authUserId, Long memberId);
 
-    @Query("SELECT l as list FROM Lists l WHERE l.listOwner.id = :ownerId AND l.isPrivate = false")
-    List<ListsProjection> findByListOwnerIdAndIsPrivateFalse(Long ownerId);
+    @Query("SELECT list FROM Lists list WHERE list.listOwner.id = :ownerId AND list.isPrivate = false")
+    List<ListProjection> findByListOwnerIdAndIsPrivateFalse(Long ownerId);
 
-    @Query("SELECT l as list FROM Lists l LEFT JOIN l.members m WHERE m.id = :userId")
-    List<ListsProjection> findByMembers_Id(Long userId);
+    @Query("SELECT list FROM Lists list " +
+            "LEFT JOIN list.members m " + // <- QuerySyntaxException: unexpected token: LEFT JOIN list.members member ???
+            "WHERE m.id = :userId")
+    List<ListProjection> findByMembers_Id(Long userId);
 
     @Query("SELECT lists FROM Lists lists " +
             "WHERE lists.id = :listId AND lists.isPrivate = false " +
             "OR lists.id = :listId AND lists.listOwner.id = :authUserId")
     Optional<BaseListProjection> getListDetails(Long listId, Long authUserId);
 
-    @Query("SELECT f as member FROM Lists l " +
+    @Query("SELECT f.id AS id, f.fullName AS fullName, f.username AS username, f.about AS about, f.avatar AS avatar, " +
+            "f.privateProfile AS isPrivateProfile " +
+            "FROM Lists l " +
             "LEFT JOIN l.followers f " +
             "WHERE l.id = :listId " +
             "AND l.listOwner.id = :listOwnerId")
-    List<ListsMemberProjection> getListFollowers(Long listId, Long listOwnerId);
+    List<ListMemberProjection> getListFollowers(Long listId, Long listOwnerId);
 
-    @Query("SELECT m as member FROM Lists l LEFT JOIN l.members m WHERE l.id = :listId")
-    List<ListsMemberProjection> getListMembers(Long listId);
+    @Query("SELECT m.id AS id, m.fullName AS fullName, m.username AS username, m.about AS about, m.avatar AS avatar, " +
+            "m.privateProfile AS isPrivateProfile " +
+            "FROM Lists l " +
+            "LEFT JOIN l.members m " +
+            "WHERE l.id = :listId")
+    List<ListMemberProjection> getListMembers(Long listId);
 
-    @Query("SELECT m as member, l.id as listId FROM Lists l LEFT JOIN l.members m WHERE l.id = :listId")
+    @Query("SELECT m as member, l.id as listId " +
+            "FROM Lists l " +
+            "LEFT JOIN l.members m " +
+            "WHERE l.id = :listId")
     List<ListsOwnerMemberProjection> getListOwnerMembers(Long listId);
 
     @Query("SELECT u as member FROM User u " +

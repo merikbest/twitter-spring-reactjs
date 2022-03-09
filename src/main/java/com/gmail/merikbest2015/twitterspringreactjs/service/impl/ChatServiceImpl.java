@@ -3,10 +3,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.*;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.ChatMessageProjection;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.ChatMessagesProjection;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.ChatParticipantsProjection;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.ChatProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.UserProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.ChatService;
@@ -33,11 +30,10 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public List<ChatProjection> getUserChats() {
         Long userId = authenticationService.getAuthenticatedUserId();
-        List<ChatParticipantsProjection> chatParticipants = chatParticipantRepository.getChatParticipants(userId);
-        return chatParticipants.contains(null) ? new ArrayList<>() : chatParticipants.stream()
-                .filter(participant -> !participant.getParticipant().getLeftChat()
-                        || !userService.isUserBlockedByMyProfile(participant.getParticipant().getUser().getId()))
-                .map(participant -> participant.getParticipant().getChat())
+        List<ChatParticipantProjection> chatParticipants = chatParticipantRepository.getChatParticipants(userId);
+        return chatParticipants.stream()
+                .filter(participant -> !participant.getLeftChat() || !userService.isUserBlockedByMyProfile(participant.getUser().getId()))
+                .map(ChatParticipantProjection::getChat)
                 .collect(Collectors.toList());
     }
 
@@ -67,14 +63,7 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public List<ChatMessageProjection> getChatMessages(Long chatId) {
         Long userId = authenticationService.getAuthenticatedUserId();
-        List<ChatMessageProjection> messages = chatMessageRepository.getAllByChatId(chatId, userId).stream()
-                .map(ChatMessagesProjection::getMessage)
-                .collect(Collectors.toList());
-
-        if (messages.contains(null)) {
-            throw new ApiRequestException("Chat messages not found", HttpStatus.NOT_FOUND);
-        }
-        return messages;
+        return chatMessageRepository.getAllByChatId(chatId, userId);
     }
 
     @Override

@@ -11,6 +11,8 @@ import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.notifi
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.notification.NotificationProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.*;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.FollowerUserProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.MutedUserProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -66,9 +68,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserProjection> searchUsersByUsername(String text) {
-        return userRepository.findByFullNameOrUsername(text).stream()
-                .map(UserListProjection::getUser)
-                .collect(Collectors.toList());
+        return userRepository.findByFullNameOrUsername(text);
     }
 
     @Override
@@ -231,18 +231,14 @@ public class UserServiceImpl implements UserService {
     public List<UserProjection> getFollowers(Long userId) {
         checkIsUserExist(userId);
         checkIsUserBlocked(userId);
-        return userRepository.getFollowersById(userId).stream()
-                .map(UsersProjection::getUser)
-                .collect(Collectors.toList());
+        return userRepository.getFollowersById(userId);
     }
 
     @Override
     public List<UserProjection> getFollowing(Long userId) {
         checkIsUserExist(userId);
         checkIsUserBlocked(userId);
-        return userRepository.getFollowingById(userId).stream()
-                .map(UsersProjection::getUser)
-                .collect(Collectors.toList());
+        return userRepository.getFollowingById(userId);
     }
 
     @Override
@@ -444,6 +440,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public boolean isUserBlockedByMyProfile(Long userId) {
+        System.out.println(userId);
         Long authUserId = authenticationService.getAuthenticatedUserId();
         return userRepository.isUserBlocked(authUserId, userId);
     }

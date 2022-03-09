@@ -50,7 +50,7 @@ public class UserSettingsServiceImpl implements UserSettingsService {
             userRepository.updateEmail(email, user.get().getId());
             String token = jwtProvider.createToken(email, "USER");
             Map<String, Object> response = new HashMap<>();
-            response.put("user", user);
+            response.put("user", user.get());
             response.put("token", token);
             return response;
         }

@@ -9,6 +9,8 @@ import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetUserProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetsProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.*;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.FollowerUserProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.MutedUserProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;

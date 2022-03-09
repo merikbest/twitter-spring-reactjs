@@ -7,6 +7,6 @@ public interface ListMemberProjection {
     String getFullName();
     String getUsername();
     String getAbout();
-    boolean isPrivateProfile();
     ImageProjection getAvatar();
+    boolean getIsPrivateProfile();
 }

@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.repository;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.ChatParticipant;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.ChatParticipantsProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.ChatParticipantProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.UserProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -15,8 +15,9 @@ import java.util.Optional;
 @Repository
 public interface ChatParticipantRepository extends JpaRepository<ChatParticipant, Long> {
 
-    @Query("SELECT cp as participant FROM User u LEFT JOIN u.chats cp WHERE u.id = :userId")
-    List<ChatParticipantsProjection> getChatParticipants(Long userId);
+    @Query("SELECT cp.id AS id, cp.leftChat AS leftChat, cp.chat AS chat, cp.user AS user " +
+            "FROM User u LEFT JOIN u.chats cp WHERE u.id = :userId")
+    List<ChatParticipantProjection> getChatParticipants(Long userId);
 
     @Query("SELECT user FROM User user " +
             "LEFT JOIN user.chats participant " +

@@ -13,7 +13,6 @@ import com.gmail.merikbest2015.twitterspringreactjs.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,9 +35,7 @@ public class ChatMapper {
 
     public List<ChatMessageResponse> getChatMessages(Long chatId) {
         List<ChatMessageProjection> chatMessages = chatService.getChatMessages(chatId);
-        return chatMessages.contains(null)
-                ? new ArrayList<>()
-                : basicMapper.convertToResponseList(chatMessages, ChatMessageResponse.class);
+        return basicMapper.convertToResponseList(chatMessages, ChatMessageResponse.class);
     }
 
     public Integer readChatMessages(Long chatId) {

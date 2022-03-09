@@ -1,8 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.dto.request;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -13,6 +11,7 @@ public class UserToListsRequest {
 
     @Getter
     @Setter
+    @AllArgsConstructor
     public static class ListsRequest {
         private Long listId;
         private Boolean isMemberInList;

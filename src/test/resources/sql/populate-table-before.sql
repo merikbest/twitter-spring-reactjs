@@ -135,6 +135,7 @@ INSERT INTO lists (id, alt_wallpaper, description, private, name, user_id, wallp
 INSERT INTO lists (id, alt_wallpaper, description, private, name, user_id, wallpaper_id, pinned_date) VALUES (7, 'https://pbs.twimg.com/media/EXZ2rMvVAAAAfrN?format=png&name=small', 'test list description', true, 'test list name', 1, null, '2021-10-03 20:42:53.000000');
 INSERT INTO lists (id, alt_wallpaper, description, private, name, user_id, wallpaper_id, pinned_date) VALUES (8, 'https://pbs.twimg.com/media/EXZ2rMvVAAAAfrN?format=png&name=small', 'test list description', true, 'test list name', 1, null, '2021-10-03 20:42:53.000000');
 INSERT INTO lists (id, alt_wallpaper, description, private, name, user_id, wallpaper_id, pinned_date) VALUES (9, 'https://pbs.twimg.com/media/EXZ2rMvVAAAAfrN?format=png&name=small', 'test list description', false, 'test list name', 1, null, '2021-10-03 20:42:53.000000');
+INSERT INTO lists (id, alt_wallpaper, description, private, name, user_id, wallpaper_id, pinned_date) VALUES (10, 'https://pbs.twimg.com/media/EXZ2rMvVAAAAfrN?format=png&name=small', 'test list description', false, 'test list name', 5, null, '2021-10-03 20:42:53.000000');
 
 -- lists_followers
 INSERT INTO lists_followers (lists_id, followers_id) VALUES (4, 1);
@@ -142,6 +143,8 @@ INSERT INTO lists_followers (lists_id, followers_id) VALUES (7, 2);
 
 -- lists_members
 INSERT INTO lists_members (lists_id, members_id) VALUES (4, 1);
+INSERT INTO lists_members (lists_id, members_id) VALUES (5, 1);
+INSERT INTO lists_members (lists_id, members_id) VALUES (9, 1);
 
 -- users_user_lists
 INSERT INTO users_user_lists (user_id, user_lists_id) VALUES (2, 4);
@@ -167,6 +170,7 @@ INSERT INTO user_subscriptions (subscriber_id, user_id) VALUES (4, 1);
 INSERT INTO user_follower_requests (user_id, follower_id) VALUES (3, 1);
 INSERT INTO user_follower_requests (user_id, follower_id) VALUES (3, 2);
 INSERT INTO user_follower_requests (user_id, follower_id) VALUES (5, 2);
+INSERT INTO user_follower_requests (user_id, follower_id) VALUES (2, 7);
 
 -- users_notifications
 INSERT INTO users_notifications (user_id, notifications_id) VALUES (1, 39);

@@ -19,6 +19,8 @@ import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetUserProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetsProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.*;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.FollowerUserProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.MutedUserProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.UserSettingsService;
 import lombok.RequiredArgsConstructor;
@@ -206,7 +208,10 @@ public class UserMapper {
     }
 
     public AuthenticationResponse updateEmail(SettingsRequest request) {
-        return authenticationMapper.getAuthenticationResponse(userSettingsService.updateEmail(request.getEmail()));
+        Map<String, Object> stringObjectMap = userSettingsService.updateEmail(request.getEmail());
+        AuthenticationResponse authenticationResponse = authenticationMapper.getAuthenticationResponse(stringObjectMap);
+        authenticationResponse.getUser().setEmail(request.getEmail());
+        return authenticationResponse;
     }
 
     public UserPhoneResponse updatePhone(SettingsRequest request) {

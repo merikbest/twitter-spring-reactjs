@@ -42,6 +42,7 @@ public class TestConstants {
     public static final String LANGUAGE = "Ukrainian - українська";
     public static final String BACKGROUND_COLOR = "DEFAULT";
     public static final String COLOR_SCHEME = "BLUE";
+    public static final Long PINNED_TWEET_ID = 40L;
     public static final boolean MUTED_DIRECT_MESSAGES = true;
     public static final boolean PRIVATE_PROFILE = false;
     public static final boolean PROFILE_CUSTOMIZED = true;

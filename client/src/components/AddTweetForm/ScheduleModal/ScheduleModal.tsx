@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, ReactElement, ReactNode, useState} from 'react';
+import React, {ChangeEvent, FC, ReactElement, ReactNode, useEffect, useState} from 'react';
 import {addDays, getDate, getDaysInMonth, getMonth, getYear, isBefore} from "date-fns";
 import {Button, Dialog, DialogContent, FormControl, InputLabel, Typography} from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -29,31 +29,75 @@ const ScheduleModal: FC<ScheduleModalProps> = (
     }
 ): ReactElement | null => {
     const classes = useScheduleModalStyles();
-    let dateNow = new Date();
-    let scheduledDay = String(getDate(dateNow));
-
-    if (getDate(dateNow) + 2 > getDaysInMonth(dateNow)) {
-        dateNow = addDays(dateNow, 2);
-    } else {
-        scheduledDay = String(getDate(dateNow) + 2);
-    }
-
-    const formatMonth = (getMonth(dateNow) < 10) ? ("0" + String(getMonth(dateNow) + 1)) : (String(getMonth(dateNow) + 1));
-    const formatDay = (getDate(dateNow) < 10) ? ("0" + String(getDate(dateNow))) : (String(scheduledDay));
-    const [month, setMonth] = useState<string>(formatMonth);
-    const [day, setDay] = useState<string>(formatDay);
-    const [year, setYear] = useState<string>(String(getYear(dateNow)));
+    const [month, setMonth] = useState<string>("");
+    const [day, setDay] = useState<string>("");
+    const [year, setYear] = useState<string>("");
     const [hour, setHour] = useState<string>("00");
     const [minute, setMinute] = useState<string>("00");
     const [daysCount, setDaysCount] = useState<number>(28);
+    const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+    const [dateFormat, setDateFormat] = useState<string>("");
+    const [isValidSelectedDate, setIsValidSelectedDate] = useState<boolean>(false);
+    
+    useEffect(() => {
+        if (visible) {
+            let dateNow = new Date();
+            let scheduledDay = String(getDate(dateNow));
 
-    const selectedDate = new Date(`${year}-${month}-${day}T${hour}:${minute}:00Z`);
-    const dateFormat = formatScheduleDate(selectedDate);
-    const isValidSelectedDate = isBefore(selectedDate, Date.now());
+            if (getDate(dateNow) + 2 > getDaysInMonth(dateNow)) {
+                dateNow = addDays(dateNow, 2);
+            } else {
+                scheduledDay = String(getDate(dateNow) + 2);
+            }
+
+            const formatYear = String(getYear(dateNow));
+            const formatMonth = (getMonth(dateNow) < 10) ? ("0" + String(getMonth(dateNow) + 1)) : (String(getMonth(dateNow) + 1));
+            const formatDay = (parseInt(scheduledDay) < 10) ? ("0" + String(scheduledDay)) : (String(scheduledDay));
+            setYear(formatYear);
+            handleDaysCount(formatMonth);
+            setMonth(formatMonth);
+            setDay(formatDay);
+            const selectedDate = new Date(`${formatYear}-${formatMonth}-${formatDay}T00:00:00Z`);
+            const dateFormat = formatScheduleDate(selectedDate);
+            const isValidSelectedDate = isBefore(selectedDate, Date.now());
+            setSelectedDate(selectedDate);
+            setDateFormat(dateFormat);
+            setIsValidSelectedDate(isValidSelectedDate);
+        }
+    }, [visible]);
 
     const changeMonth = (event: ChangeEvent<{ value: unknown }>): void => {
         const monthNumber = event.target.value as string;
+        setMonth(monthNumber);
+        handleDaysCount(monthNumber);
+        handleDate(new Date(`${year}-${monthNumber}-${day}T${hour}:${minute}:00Z`));
+    };
 
+    const changeDay = (event: ChangeEvent<{ value: unknown }>): void => {
+        const dayNumber = event.target.value as string;
+        setDay(dayNumber);
+        handleDate(new Date(`${year}-${month}-${dayNumber}T${hour}:${minute}:00Z`));
+    };
+
+    const changeYear = (event: ChangeEvent<{ value: unknown }>): void => {
+        const yearNumber = event.target.value as string;
+        setYear(yearNumber);
+        handleDate(new Date(`${yearNumber}-${month}-${day}T${hour}:${minute}:00Z`));
+    };
+
+    const changeHour = (event: ChangeEvent<{ value: unknown }>): void => {
+        const hourNumber = event.target.value as string;
+        setHour(hourNumber);
+        handleDate(new Date(`${year}-${month}-${day}T${hourNumber}:${minute}:00Z`));
+    };
+
+    const changeMinute = (event: ChangeEvent<{ value: unknown }>): void => {
+        const minuteNumber = event.target.value as string;
+        setMinute(minuteNumber);
+        handleDate(new Date(`${year}-${month}-${day}T${hour}:${minuteNumber}:00Z`));
+    };
+    
+    const handleDaysCount = (monthNumber: string): void => {
         if (["01", "03", "05", "07", "08", "10", "12"].includes(monthNumber)) {
             setDaysCount(31);
         } else if (["04", "06", "09", "11"].includes(monthNumber)) {
@@ -61,23 +105,12 @@ const ScheduleModal: FC<ScheduleModalProps> = (
         } else {
             setDaysCount(28);
         }
-        setMonth(monthNumber);
     };
-
-    const changeDay = (event: ChangeEvent<{ value: unknown }>): void => {
-        setDay(event.target.value as string);
-    };
-
-    const changeYear = (event: ChangeEvent<{ value: unknown }>): void => {
-        setYear(event.target.value as string);
-    };
-
-    const changeHour = (event: ChangeEvent<{ value: unknown }>): void => {
-        setHour(event.target.value as string);
-    };
-
-    const changeMinute = (event: ChangeEvent<{ value: unknown }>): void => {
-        setMinute(event.target.value as string);
+    
+    const handleDate = (date: Date) => {
+        setSelectedDate(date);
+        setDateFormat(formatScheduleDate(date));
+        setIsValidSelectedDate(isBefore(date, Date.now()));
     };
 
     const showYear = (count: number): string => {
@@ -227,7 +260,13 @@ const ScheduleModal: FC<ScheduleModalProps> = (
                                         <option value={"30"}>30</option>
                                     </>
                                 )}
-                                {(daysCount === 31) && (<option value={"31"}>31</option>)}
+                                {(daysCount === 31) && (
+                                    <>
+                                        <option value={"29"}>29</option>
+                                        <option value={"30"}>30</option>
+                                        <option value={"31"}>31</option>
+                                    </>
+                                )}
                             </FilledSelect>
                         </FormControl>
                         <FormControl variant="filled" error={isValidSelectedDate}>
