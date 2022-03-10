@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ChatRepository extends JpaRepository<Chat, Long> {
 
-    @Query("SELECT c as chat FROM Chat c WHERE c.id = :chatId")
+    @Query("SELECT c FROM Chat c WHERE c.id = :chatId")
     ChatProjection getChatById(Long chatId);
 
     @Query("SELECT CASE WHEN count(chatParticipant) > 0 THEN true ELSE false END " +

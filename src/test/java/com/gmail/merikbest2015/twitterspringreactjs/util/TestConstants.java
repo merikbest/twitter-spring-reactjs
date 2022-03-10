@@ -19,13 +19,13 @@ public class TestConstants {
     public static final String ABOUT = "Hello twitter!";
     public static final String ACTIVATION_CODE = "1234567890";
     public static final Boolean ACTIVE = true;
-    public static final String BIRTHDAY = "Mar 10, 1991"; // null
+    public static final String BIRTHDAY = "Mar 10, 1991";
     public static final String USER_EMAIL = "test2015@test.test";
     public static final String NOT_VALID_EMAIL = "test2222@test.test";
     public static final String PASSWORD = "qwerty123";
     public static final String FULL_NAME = "MrCat";
     public static final String LOCATION = "New York";
-    public static final String PASSWORD_RESET_CODE = "1234567890"; // null
+    public static final String PASSWORD_RESET_CODE = "1234567890";
     public static final String REGISTRATION_DATE = "2021-08-01T23:34:32";
     public static final String ROLE = "USER";
     public static final String USERNAME = "MrCat";

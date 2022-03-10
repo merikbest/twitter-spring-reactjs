@@ -72,7 +72,7 @@ public class ListsControllerTest {
         mockMvc.perform(get(URL_LISTS_BASIC + "/user"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(3)))
-                .andExpect(jsonPath("$[0].id").value(4L))
+                .andExpect(jsonPath("$[0].id").isNotEmpty())
                 .andExpect(jsonPath("$[0].name").value(LIST_NAME))
                 .andExpect(jsonPath("$[0].description").value(LIST_DESCRIPTION))
                 .andExpect(jsonPath("$[0].pinnedDate").value(LIST_PINNED_DATE))
@@ -80,6 +80,40 @@ public class ListsControllerTest {
                 .andExpect(jsonPath("$[0].wallpaper").isEmpty())
                 .andExpect(jsonPath("$[0].listOwner.id").value(LIST_USER_ID))
                 .andExpect(jsonPath("$[0].isPrivate").value(false));
+    }
+
+    @Test
+    @DisplayName("[200] GET /api/v1/lists/user/2 - Get user tweet lists by id")
+    @WithUserDetails(USER_EMAIL)
+    public void getUserTweetListsById() throws Exception {
+        mockMvc.perform(get(URL_LISTS_BASIC + "/user/2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(1)))
+                .andExpect(jsonPath("$[0].id").value(4L))
+                .andExpect(jsonPath("$[0].name").value(LIST_NAME))
+                .andExpect(jsonPath("$[0].description").value(LIST_DESCRIPTION))
+                .andExpect(jsonPath("$[0].pinnedDate").value(LIST_PINNED_DATE))
+                .andExpect(jsonPath("$[0].altWallpaper").value(LIST_ALT_WALLPAPER))
+                .andExpect(jsonPath("$[0].wallpaper").isEmpty())
+                .andExpect(jsonPath("$[0].listOwner.id").value(LIST_USER_ID))
+                .andExpect(jsonPath("$[0].isFollower").value(false));
+    }
+
+    @Test
+    @DisplayName("[200] GET /api/v1/lists/user/consist - Get tweet lists which user in")
+    @WithUserDetails(USER_EMAIL)
+    public void getTweetListsWhichUserIn() throws Exception {
+        mockMvc.perform(get(URL_LISTS_BASIC + "/user/consist"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(1)))
+                .andExpect(jsonPath("$[0].id").value(7L))
+                .andExpect(jsonPath("$[0].name").value(LIST_NAME))
+                .andExpect(jsonPath("$[0].description").value(LIST_DESCRIPTION))
+                .andExpect(jsonPath("$[0].pinnedDate").value(LIST_PINNED_DATE))
+                .andExpect(jsonPath("$[0].altWallpaper").value(LIST_ALT_WALLPAPER))
+                .andExpect(jsonPath("$[0].wallpaper").isEmpty())
+                .andExpect(jsonPath("$[0].listOwner.id").value(1L))
+                .andExpect(jsonPath("$[0].isFollower").value(true));
     }
 
     @Test
@@ -148,7 +182,7 @@ public class ListsControllerTest {
                 .andExpect(jsonPath("$.altWallpaper").value(LIST_ALT_WALLPAPER))
                 .andExpect(jsonPath("$.wallpaper").isEmpty())
                 .andExpect(jsonPath("$.listOwner.id").value(1L))
-                .andExpect(jsonPath("$.membersSize").value(0L))
+                .andExpect(jsonPath("$.membersSize").value(1L))
                 .andExpect(jsonPath("$.followersSize").value(1L))
                 .andExpect(jsonPath("$.isPrivate").value(true))
                 .andExpect(jsonPath("$.isFollower").value(true));
@@ -320,6 +354,33 @@ public class ListsControllerTest {
                         .content(mapper.writeValueAsString(listsRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("List owner not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] DELETE /api/v1/lists/4 - Delete list")
+    public void deleteList() throws Exception {
+         mockMvc.perform(delete(URL_LISTS_BASIC + "/4"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is("List id:4 deleted.")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] DELETE /api/v1/lists/99 - Delete list Should Not found")
+    public void deleteList_ShouldNotFound() throws Exception {
+        mockMvc.perform(delete(URL_LISTS_BASIC + "/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("List not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] DELETE /api/v1/lists/5 - Delete another user list Should Not found")
+    public void deleteAnotherUserList_ShouldNotFound() throws Exception {
+        mockMvc.perform(delete(URL_LISTS_BASIC + "/5"))
+                .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is("List owner not found")));
     }
 

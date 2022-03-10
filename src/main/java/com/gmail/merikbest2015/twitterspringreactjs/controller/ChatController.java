@@ -50,11 +50,11 @@ public class ChatController {
     }
 
     @PostMapping("/add/message/tweet")
-    public ResponseEntity<List<ChatMessageResponse>> addMessageWithTweet(@RequestBody MessageWithTweetRequest request) {
-        List<ChatMessageResponse> chatMessages = chatMapper.addMessageWithTweet(request);
-        chatMessages.forEach(chatMessage -> chatMessage.getChatParticipantsIds()
-                .forEach(userId -> messagingTemplate.convertAndSend("/topic/chat/" + userId, chatMessage)));
-        return ResponseEntity.ok(chatMessages);
+    public ResponseEntity<ChatMessageResponse> addMessageWithTweet(@RequestBody MessageWithTweetRequest request) {
+        ChatMessageResponse message = chatMapper.addMessageWithTweet(request);
+        message.getChatParticipantsIds()
+                .forEach(userId -> messagingTemplate.convertAndSend("/topic/chat/" + userId, message));
+        return ResponseEntity.ok(message);
     }
 
     @GetMapping("/participant/{participantId}/{chatId}")

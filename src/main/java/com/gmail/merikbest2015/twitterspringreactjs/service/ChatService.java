@@ -20,7 +20,7 @@ public interface ChatService {
 
     Map<String, Object> addMessage(ChatMessage chatMessage, Long chatId);
 
-    List<ChatMessageProjection> addMessageWithTweet(String text, Long tweetId, List<Long> usersIds);
+    Map<String, Object> addMessageWithTweet(String text, Long tweetId, List<Long> usersIds);
 
     UserProjection getParticipant(Long participantId, Long chatId);
 

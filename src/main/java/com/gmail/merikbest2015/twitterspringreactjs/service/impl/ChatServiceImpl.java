@@ -116,12 +116,12 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     @Transactional
-    public List<ChatMessageProjection> addMessageWithTweet(String text, Long tweetId, List<Long> usersIds) {
+    public Map<String, Object> addMessageWithTweet(String text, Long tweetId, List<Long> usersIds) {
         User author = authenticationService.getAuthenticatedUser();
         Tweet tweet = tweetRepository.findById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
         List<User> users = userRepository.findByIdIn(usersIds);
-        List<ChatMessageProjection> chatMessages = new ArrayList<>();
+        List<Long> chatParticipantsIds = new ArrayList<>();
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.setAuthor(author);
         chatMessage.setText(text);
@@ -147,11 +147,11 @@ public class ChatServiceImpl implements ChatService {
                 messages.add(newChatMessage);
                 chatRepository.save(participantsChat);
             }
-            ChatMessageProjection chatMessageProjection = chatMessageRepository.getChatMessageById(chatMessage.getId());
-            chatMessages.add(chatMessageProjection);
+            chatParticipantsIds.add(user.getId());
             notifyChatParticipants(chatMessage, author);
         });
-        return chatMessages;
+        ChatMessageProjection chatMessageProjection = chatMessageRepository.getChatMessageById(chatMessage.getId());
+        return Map.of("chatParticipantsIds", chatParticipantsIds, "message", chatMessageProjection);
     }
 
     @Override

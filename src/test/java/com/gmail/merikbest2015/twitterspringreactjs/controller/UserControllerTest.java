@@ -45,7 +45,7 @@ public class UserControllerTest {
     @Test
     @WithUserDetails(USER_EMAIL)
     @DisplayName("[200] GET /api/v1/user/1 - Get user by id")
-    public void getUserById() throws Exception { // UserProfileResponse
+    public void getUserById() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))

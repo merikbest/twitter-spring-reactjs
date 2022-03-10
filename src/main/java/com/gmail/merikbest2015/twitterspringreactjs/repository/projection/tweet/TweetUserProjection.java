@@ -28,13 +28,13 @@ public interface TweetUserProjection {
     PollProjection getPoll();
 
     @Value("#{@tweetServiceImpl.getRetweetsUserIds(target.id)}")
-    List<Long> getRetweetsUserIds(); // isTweetRetweetedByUser
+    List<Long> getRetweetsUserIds();
 
     @Value("#{@tweetServiceImpl.isUserLikedTweet(target.id)}")
     boolean getIsTweetLiked();
 
     @Value("#{@tweetServiceImpl.isUserRetweetedTweet(target.id)}")
-    boolean getIsTweetRetweeted(); // isTweetRetweetedByMe
+    boolean getIsTweetRetweeted();
 
     @Value("#{@tweetServiceImpl.isUserBookmarkedTweet(target.id)}")
     boolean getIsTweetBookmarked();

@@ -71,12 +71,12 @@ public class ListsServiceImpl implements ListsService {
     }
 
     @Override
-    public List<ListProjection> getUserTweetListsById(Long userId) { // TODO add tests
+    public List<ListProjection> getUserTweetListsById(Long userId) {
         return listsRepository.findByListOwnerIdAndIsPrivateFalse(userId);
     }
 
     @Override
-    public List<ListProjection> getTweetListsWhichUserIn() { // TODO add tests
+    public List<ListProjection> getTweetListsWhichUserIn() {
         Long userId = authenticationService.getAuthenticatedUserId();
         return listsRepository.findByMembers_Id(userId);
     }
@@ -102,22 +102,24 @@ public class ListsServiceImpl implements ListsService {
     }
 
     @Override
-    public String deleteList(Long listId) {  // TODO add tests
-        Long userId = authenticationService.getAuthenticatedUserId();
+    @Transactional(rollbackFor = ApiRequestException.class)
+    public String deleteList(Long listId) {
+        User user = authenticationService.getAuthenticatedUser();
         Lists list = listsRepository.findById(listId)
                 .orElseThrow(() -> new ApiRequestException("List not found", HttpStatus.NOT_FOUND));
 
-        if (!list.getListOwner().getId().equals(userId)) {
+        if (!list.getListOwner().getId().equals(user.getId())) {
             throw new ApiRequestException("List owner not found", HttpStatus.BAD_REQUEST);
         }
+        user.getUserLists().remove(list);
         list.getTweets().removeAll(list.getTweets());
         list.getMembers().removeAll(list.getMembers());
+        list.getFollowers().forEach(follower -> follower.getUserLists().remove(list));
         list.getFollowers().removeAll(list.getFollowers());
 
         if (list.getWallpaper() != null) {
             imageRepository.delete(list.getWallpaper());
         }
-        listsRepository.findByListOwner_Id(userId).remove(list);
         listsRepository.delete(list);
         return "List id:" + list.getId() + " deleted.";
     }

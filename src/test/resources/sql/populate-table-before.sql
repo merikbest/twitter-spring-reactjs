@@ -144,6 +144,7 @@ INSERT INTO lists_followers (lists_id, followers_id) VALUES (7, 2);
 -- lists_members
 INSERT INTO lists_members (lists_id, members_id) VALUES (4, 1);
 INSERT INTO lists_members (lists_id, members_id) VALUES (5, 1);
+INSERT INTO lists_members (lists_id, members_id) VALUES (7, 2);
 INSERT INTO lists_members (lists_id, members_id) VALUES (9, 1);
 
 -- users_user_lists
