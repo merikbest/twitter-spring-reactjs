@@ -29,7 +29,7 @@ import {UserResponse} from "../../types/user";
 import {setUpdatedBookmarkedTweetTweetsState} from "../tweets/actionCreators";
 import {setUpdatedBookmarkedTweetUserTweetState} from "../userTweets/actionCreators";
 
-export function* fetchTweetDataRequest({payload: tweetId}: FetchTweetDataActionInterface) { // +
+export function* fetchTweetDataRequest({payload: tweetId}: FetchTweetDataActionInterface) {
     try {
         yield put(setTweetLoadingState(LoadingStatus.LOADING));
         const data: TweetResponse = yield call(TweetApi.fetchTweetData, tweetId);
@@ -39,7 +39,7 @@ export function* fetchTweetDataRequest({payload: tweetId}: FetchTweetDataActionI
     }
 }
 
-export function* addTweetToBookmarksRequest({payload}: AddTweetToBookmarksActionInterface) { // +
+export function* addTweetToBookmarksRequest({payload}: AddTweetToBookmarksActionInterface) {
     try {
         const item: boolean = yield call(UserApi.addTweetToBookmarks, payload);
         yield put(setBookmarkedTweet(item));
@@ -50,7 +50,7 @@ export function* addTweetToBookmarksRequest({payload}: AddTweetToBookmarksAction
     }
 }
 
-export function* fetchReplyTweetRequest({payload}: FetchReplyTweetActionInterface) { // +
+export function* fetchReplyTweetRequest({payload}: FetchReplyTweetActionInterface) {
     try {
         yield call(TweetApi.replyTweet, payload);
     } catch (error) {
@@ -58,7 +58,7 @@ export function* fetchReplyTweetRequest({payload}: FetchReplyTweetActionInterfac
     }
 }
 
-export function* deleteTweetReplyRequest({payload}: DeleteTweetReplyActionInterface) { // +
+export function* deleteTweetReplyRequest({payload}: DeleteTweetReplyActionInterface) {
     try {
         yield call(TweetApi.deleteTweet, payload);
     } catch (error) {
@@ -67,7 +67,7 @@ export function* deleteTweetReplyRequest({payload}: DeleteTweetReplyActionInterf
 }
 
 // liked and retweeted users
-export function* fetchLikedUsersRequest({payload}: FetchLikedUsersActionInterface) { // +
+export function* fetchLikedUsersRequest({payload}: FetchLikedUsersActionInterface) {
     try {
         yield put(setLikedUsersLoadingState(LoadingStatus.LOADING));
         const data: UserResponse[] = yield call(TweetApi.getLikedUsersByTweetId, payload);
@@ -77,7 +77,7 @@ export function* fetchLikedUsersRequest({payload}: FetchLikedUsersActionInterfac
     }
 }
 
-export function* fetchRetweetedUsersRequest({payload}: FetchRetweetedUsersActionInterface) { // +
+export function* fetchRetweetedUsersRequest({payload}: FetchRetweetedUsersActionInterface) {
     try {
         yield put(setRetweetedUsersLoadingState(LoadingStatus.LOADING));
         const data: UserResponse[] = yield call(TweetApi.getRetweetedUsersByTweetId, payload);
@@ -88,7 +88,7 @@ export function* fetchRetweetedUsersRequest({payload}: FetchRetweetedUsersAction
 }
 
 // replies
-export function* fetchRepliesRequest({payload}: FetchRepliesActionInterface) { // +
+export function* fetchRepliesRequest({payload}: FetchRepliesActionInterface) {
     try {
         yield put(setRepliesLoadingState(LoadingStatus.LOADING));
         const data: TweetResponse[] = yield call(TweetApi.getRepliesByTweetId, payload);
@@ -99,13 +99,13 @@ export function* fetchRepliesRequest({payload}: FetchRepliesActionInterface) { /
 }
 
 export function* tweetSaga() {
-    yield takeEvery(TweetActionType.FETCH_TWEET_DATA, fetchTweetDataRequest); // +
-    yield takeEvery(TweetActionType.ADD_TWEET_TO_BOOKMARKS, addTweetToBookmarksRequest); // +
-    yield takeEvery(TweetActionType.FETCH_REPLY_TWEET, fetchReplyTweetRequest); // +
-    yield takeEvery(TweetActionType.DELETE_TWEET_REPLY, deleteTweetReplyRequest); // +
+    yield takeEvery(TweetActionType.FETCH_TWEET_DATA, fetchTweetDataRequest);
+    yield takeEvery(TweetActionType.ADD_TWEET_TO_BOOKMARKS, addTweetToBookmarksRequest);
+    yield takeEvery(TweetActionType.FETCH_REPLY_TWEET, fetchReplyTweetRequest);
+    yield takeEvery(TweetActionType.DELETE_TWEET_REPLY, deleteTweetReplyRequest);
     // liked and retweeted users
-    yield takeEvery(TweetActionType.FETCH_LIKED_USERS, fetchLikedUsersRequest); // +
-    yield takeEvery(TweetActionType.FETCH_RETWEETED_USERS, fetchRetweetedUsersRequest); // +
+    yield takeEvery(TweetActionType.FETCH_LIKED_USERS, fetchLikedUsersRequest);
+    yield takeEvery(TweetActionType.FETCH_RETWEETED_USERS, fetchRetweetedUsersRequest);
     // replies
-    yield takeEvery(TweetActionType.FETCH_REPLIES, fetchRepliesRequest); // +
+    yield takeEvery(TweetActionType.FETCH_REPLIES, fetchRepliesRequest);
 }

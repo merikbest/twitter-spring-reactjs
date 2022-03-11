@@ -11,7 +11,7 @@ import {LoadingStatus} from '../../types';
 import {ListsApi} from "../../../services/api/listsApi";
 import {BaseListResponse} from "../../types/lists";
 
-export function* fetchListByIdRequest({payload}: FetchListByIdActionInterface) { // +
+export function* fetchListByIdRequest({payload}: FetchListByIdActionInterface) {
     try {
         yield put(setListLoadingState(LoadingStatus.LOADING));
         const data: BaseListResponse = yield call(ListsApi.getListById, payload);
@@ -21,7 +21,7 @@ export function* fetchListByIdRequest({payload}: FetchListByIdActionInterface) {
     }
 }
 
-export function* deleteListRequest({payload}: DeleteListActionInterface) { // +
+export function* deleteListRequest({payload}: DeleteListActionInterface) {
     try {
         yield call(ListsApi.deleteList, payload);
     } catch (error) {
@@ -29,7 +29,7 @@ export function* deleteListRequest({payload}: DeleteListActionInterface) { // +
     }
 }
 
-export function* editListRequest({payload}: EditListActionInterface) { // +
+export function* editListRequest({payload}: EditListActionInterface) {
     try {
         yield put(setListLoadingState(LoadingStatus.LOADING));
         const data: BaseListResponse = yield call(ListsApi.editList, payload);
@@ -40,7 +40,7 @@ export function* editListRequest({payload}: EditListActionInterface) { // +
 }
 
 export function* listSaga() {
-    yield takeEvery(ListActionType.FETCH_LIST_BY_ID, fetchListByIdRequest); // +
-    yield takeEvery(ListActionType.DELETE_LIST, deleteListRequest); // +
-    yield takeEvery(ListActionType.EDIT_LIST, editListRequest); // +
+    yield takeEvery(ListActionType.FETCH_LIST_BY_ID, fetchListByIdRequest);
+    yield takeEvery(ListActionType.DELETE_LIST, deleteListRequest);
+    yield takeEvery(ListActionType.EDIT_LIST, editListRequest);
 }

@@ -1,61 +1,6 @@
 import {LoadingStatus} from "../../../types";
-import {User} from "../../user/contracts/state";
 import {TweetResponse} from "../../../types/tweet";
-
-export interface Image {
-    id: number;
-    src: string;
-}
-
-export interface Tweet {
-    id: string;
-    text: string;
-    addressedUsername: string;
-    addressedId: number;
-    addressedTweetId?: number;
-    dateTime: string;
-    scheduledDate?: string;
-    link: string;
-    linkTitle: string;
-    linkDescription: string;
-    linkCover: string;
-    replyType: ReplyType;
-    linkCoverSize: LinkCoverSize;
-    images?: Image[];
-    likedTweets: LikeTweet[];
-    retweets: Retweet[];
-    replies: Tweet[];
-    quoteTweet?: Tweet;
-    user: User;
-    poll?: Poll;
-    tweetDeleted?: boolean;
-}
-
-export interface LikeTweet {
-    id: number;
-    likeTweetDate: string;
-    user: User;
-    tweet: Tweet;
-}
-
-export interface Retweet {
-    id: number;
-    retweetDate: string;
-    user: User;
-    tweet: Tweet;
-}
-
-export interface Poll {
-    id: number;
-    dateTime: string;
-    pollChoices: PollChoice[];
-}
-
-export interface PollChoice {
-    id: number;
-    choice: string;
-    votedUser: User[];
-}
+import {Image} from "../../../types/common";
 
 export interface AddTweet { // TODO move to types
     id?: number;
@@ -74,19 +19,19 @@ export interface AddQuoteTweet { // TODO move to types
     tweetId: number;
 }
 
-export enum ReplyType {
+export enum ReplyType { // +
     EVERYONE = "EVERYONE",
     FOLLOW = "FOLLOW",
     MENTION = "MENTION"
 }
 
-export enum LinkCoverSize {
+export enum LinkCoverSize { // +
     SMALL = "SMALL",
     MEDIUM = "MEDIUM",
     LARGE = "LARGE"
 }
 
-export interface Vote {
+export interface Vote { // +
     tweetId: number;
     pollId: number;
     pollChoiceId: number;

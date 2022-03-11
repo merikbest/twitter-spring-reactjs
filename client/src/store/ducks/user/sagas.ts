@@ -80,7 +80,7 @@ import {
 } from "../notifications/actionCreators";
 import {setBlockedUser, setMutedUser} from "../blockedAndMutedUsers/actionCreators";
 
-export function* updateUserDataRequest({payload}: UpdateUserDataActionInterface) { // +
+export function* updateUserDataRequest({payload}: UpdateUserDataActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const data: AuthUserResponse = yield call(UserApi.updateUserProfile, payload);
@@ -90,7 +90,7 @@ export function* updateUserDataRequest({payload}: UpdateUserDataActionInterface)
     }
 }
 
-export function* fetchSignInRequest({payload}: FetchSignInActionInterface) { //+
+export function* fetchSignInRequest({payload}: FetchSignInActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const data: AuthenticationResponse = yield call(AuthApi.signIn, payload);
@@ -102,7 +102,7 @@ export function* fetchSignInRequest({payload}: FetchSignInActionInterface) { //+
     }
 }
 
-export function* fetchSignUpRequest({payload}: FetchSignUpActionInterface) { //+
+export function* fetchSignUpRequest({payload}: FetchSignUpActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const data: AuthenticationResponse = yield call(AuthApi.endRegistration, payload);
@@ -114,7 +114,7 @@ export function* fetchSignUpRequest({payload}: FetchSignUpActionInterface) { //+
     }
 }
 
-export function* fetchUserDataRequest() { //+
+export function* fetchUserDataRequest() {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const data: AuthenticationResponse = yield call(AuthApi.getMe);
@@ -127,7 +127,7 @@ export function* fetchUserDataRequest() { //+
     }
 }
 
-export function* processFollowUserRequest({payload}: FollowUserActionInterface) { //+
+export function* processFollowUserRequest({payload}: FollowUserActionInterface) {
     try {
         const item: NotificationUserResponse = yield call(UserApi.follow, payload.userId);
         yield put(setFollowToTweetsState({userId: item.id, tweetId: payload.tweetId!, isFollower: item.isFollower}));
@@ -144,7 +144,7 @@ export function* processFollowUserRequest({payload}: FollowUserActionInterface) 
     }
 }
 
-export function* startUseTwitterRequest({payload}: StartUseTwitterActionInterface) { // +
+export function* startUseTwitterRequest({payload}: StartUseTwitterActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const item: boolean = yield call(UserApi.startUseTwitter, payload);
@@ -154,7 +154,7 @@ export function* startUseTwitterRequest({payload}: StartUseTwitterActionInterfac
     }
 }
 
-export function* fetchPinTweetRequest({payload}: FetchPinTweetActionInterface) { // +
+export function* fetchPinTweetRequest({payload}: FetchPinTweetActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const item: number = yield call(UserApi.pinTweet, payload);
@@ -164,7 +164,7 @@ export function* fetchPinTweetRequest({payload}: FetchPinTweetActionInterface) {
     }
 }
 
-export function* fetchReadMessagesRequest({payload}: FetchReadMessagesActionInterface) { // +
+export function* fetchReadMessagesRequest({payload}: FetchReadMessagesActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const item: number = yield call(ChatApi.readChatMessages, payload);
@@ -174,7 +174,7 @@ export function* fetchReadMessagesRequest({payload}: FetchReadMessagesActionInte
     }
 }
 
-export function* updateUsernameRequest({payload}: UpdateUsernameActionInterface) { // +
+export function* updateUsernameRequest({payload}: UpdateUsernameActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const item: string = yield call(UserSettingsApi.updateUsername, payload);
@@ -184,7 +184,7 @@ export function* updateUsernameRequest({payload}: UpdateUsernameActionInterface)
     }
 }
 
-export function* updateEmailRequest({payload}: UpdateEmailActionInterface) { // +
+export function* updateEmailRequest({payload}: UpdateEmailActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const item: AuthenticationResponse = yield call(UserSettingsApi.updateEmail, payload);
@@ -195,7 +195,7 @@ export function* updateEmailRequest({payload}: UpdateEmailActionInterface) { // 
     }
 }
 
-export function* updatePhoneRequest({payload}: UpdatePhoneActionInterface) { // +
+export function* updatePhoneRequest({payload}: UpdatePhoneActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const item: { countryCode: string; phone: number } = yield call(UserSettingsApi.updatePhone, payload);
@@ -205,7 +205,7 @@ export function* updatePhoneRequest({payload}: UpdatePhoneActionInterface) { // 
     }
 }
 
-export function* updateCountryRequest({payload}: UpdateCountryActionInterface) { // +
+export function* updateCountryRequest({payload}: UpdateCountryActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const item: string = yield call(UserSettingsApi.updateCountry, payload);
@@ -215,7 +215,7 @@ export function* updateCountryRequest({payload}: UpdateCountryActionInterface) {
     }
 }
 
-export function* updateGenderRequest({payload}: UpdateGenderActionInterface) { // +
+export function* updateGenderRequest({payload}: UpdateGenderActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const item: string = yield call(UserSettingsApi.updateGender, payload);
@@ -225,7 +225,7 @@ export function* updateGenderRequest({payload}: UpdateGenderActionInterface) { /
     }
 }
 
-export function* updateLanguageRequest({payload}: UpdateLanguageActionInterface) { // +
+export function* updateLanguageRequest({payload}: UpdateLanguageActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const item: string = yield call(UserSettingsApi.updateLanguage, payload);
@@ -235,7 +235,7 @@ export function* updateLanguageRequest({payload}: UpdateLanguageActionInterface)
     }
 }
 
-export function* updateDirectRequest({payload}: UpdateDirectActionInterface) { // +
+export function* updateDirectRequest({payload}: UpdateDirectActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const item: boolean = yield call(UserSettingsApi.updateDirectMessageRequests, payload);
@@ -245,7 +245,7 @@ export function* updateDirectRequest({payload}: UpdateDirectActionInterface) { /
     }
 }
 
-export function* updatePrivateProfileRequest({payload}: UpdatePrivateProfileActionInterface) { // +
+export function* updatePrivateProfileRequest({payload}: UpdatePrivateProfileActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const item: boolean = yield call(UserSettingsApi.updatePrivateProfile, payload);
@@ -255,7 +255,7 @@ export function* updatePrivateProfileRequest({payload}: UpdatePrivateProfileActi
     }
 }
 
-export function* updateColorSchemeRequest({payload}: UpdateColorSchemeActionInterface) { // +
+export function* updateColorSchemeRequest({payload}: UpdateColorSchemeActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const item: string = yield call(UserSettingsApi.updateColorScheme, payload);
@@ -265,7 +265,7 @@ export function* updateColorSchemeRequest({payload}: UpdateColorSchemeActionInte
     }
 }
 
-export function* updateBackgroundColorRequest({payload}: UpdateBackgroundColorActionInterface) { // +
+export function* updateBackgroundColorRequest({payload}: UpdateBackgroundColorActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const item: string = yield call(UserSettingsApi.updateBackgroundColor, payload);
@@ -275,7 +275,7 @@ export function* updateBackgroundColorRequest({payload}: UpdateBackgroundColorAc
     }
 }
 
-export function* processUserToBlocklistRequest({payload}: ProcessUserToBlocklistActionInterface) { // +
+export function* processUserToBlocklistRequest({payload}: ProcessUserToBlocklistActionInterface) {
     try {
         const item: boolean = yield call(UserApi.processBlockList, payload.userId);
         yield put(setBlockedToTweetsState({userId: payload.userId, tweetId: payload.tweetId!, isUserBlocked: item}));
@@ -292,7 +292,7 @@ export function* processUserToBlocklistRequest({payload}: ProcessUserToBlocklist
     }
 }
 
-export function* processUserToMuteListRequest({payload}: ProcessUserToMuteListActionInterface) { // +
+export function* processUserToMuteListRequest({payload}: ProcessUserToMuteListActionInterface) {
     try {
         const item: boolean = yield call(UserApi.processMutedList, payload.userId);
         yield put(setMutedToTweetsState({userId: payload.userId, tweetId: payload.tweetId!, isUserMuted: item}));
@@ -320,26 +320,26 @@ export function* processFollowRequest({payload}: ProcessFollowRequestActionInter
 }
 
 export function* userSaga() {
-    yield takeLatest(UserActionsType.UPDATE_USER_DATA, updateUserDataRequest); //+
-    yield takeLatest(UserActionsType.FETCH_SIGN_IN, fetchSignInRequest); //+
-    yield takeLatest(UserActionsType.FETCH_SIGN_UP, fetchSignUpRequest); //+
-    yield takeLatest(UserActionsType.FETCH_USER_DATA, fetchUserDataRequest); //+
+    yield takeLatest(UserActionsType.UPDATE_USER_DATA, updateUserDataRequest);
+    yield takeLatest(UserActionsType.FETCH_SIGN_IN, fetchSignInRequest);
+    yield takeLatest(UserActionsType.FETCH_SIGN_UP, fetchSignUpRequest);
+    yield takeLatest(UserActionsType.FETCH_USER_DATA, fetchUserDataRequest);
     yield takeLatest(UserActionsType.FOLLOW_USER, processFollowUserRequest);// +
-    yield takeLatest(UserActionsType.UNFOLLOW_USER, processFollowUserRequest); //+
-    yield takeLatest(UserActionsType.START_USE_TWITTER, startUseTwitterRequest); // +
+    yield takeLatest(UserActionsType.UNFOLLOW_USER, processFollowUserRequest);
+    yield takeLatest(UserActionsType.START_USE_TWITTER, startUseTwitterRequest);
     yield takeLatest(UserActionsType.FETCH_PIN_TWEET, fetchPinTweetRequest);
-    yield takeLatest(UserActionsType.FETCH_READ_MESSAGES, fetchReadMessagesRequest); // +
-    yield takeLatest(UserActionsType.UPDATE_USERNAME, updateUsernameRequest);  // +
-    yield takeLatest(UserActionsType.UPDATE_EMAIL, updateEmailRequest); // +
-    yield takeLatest(UserActionsType.UPDATE_PHONE, updatePhoneRequest); // +
-    yield takeLatest(UserActionsType.UPDATE_COUNTRY, updateCountryRequest); // +
-    yield takeLatest(UserActionsType.UPDATE_GENDER, updateGenderRequest); // +
-    yield takeLatest(UserActionsType.UPDATE_LANGUAGE, updateLanguageRequest); // +
-    yield takeLatest(UserActionsType.UPDATE_DIRECT, updateDirectRequest); // +
-    yield takeLatest(UserActionsType.UPDATE_PRIVATE_PROFILE, updatePrivateProfileRequest); // +
-    yield takeLatest(UserActionsType.UPDATE_COLOR_SCHEME, updateColorSchemeRequest); // +
-    yield takeLatest(UserActionsType.UPDATE_BACKGROUND_COLOR, updateBackgroundColorRequest); // +
-    yield takeLatest(UserActionsType.PROCESS_USER_TO_BLOCKLIST, processUserToBlocklistRequest); // +
-    yield takeLatest(UserActionsType.PROCESS_USER_TO_MUTELIST, processUserToMuteListRequest); // +
-    yield takeLatest(UserActionsType.PROCESS_FOLLOW_REQUEST, processFollowRequest); // +
+    yield takeLatest(UserActionsType.FETCH_READ_MESSAGES, fetchReadMessagesRequest);
+    yield takeLatest(UserActionsType.UPDATE_USERNAME, updateUsernameRequest);
+    yield takeLatest(UserActionsType.UPDATE_EMAIL, updateEmailRequest);
+    yield takeLatest(UserActionsType.UPDATE_PHONE, updatePhoneRequest);
+    yield takeLatest(UserActionsType.UPDATE_COUNTRY, updateCountryRequest);
+    yield takeLatest(UserActionsType.UPDATE_GENDER, updateGenderRequest);
+    yield takeLatest(UserActionsType.UPDATE_LANGUAGE, updateLanguageRequest);
+    yield takeLatest(UserActionsType.UPDATE_DIRECT, updateDirectRequest);
+    yield takeLatest(UserActionsType.UPDATE_PRIVATE_PROFILE, updatePrivateProfileRequest);
+    yield takeLatest(UserActionsType.UPDATE_COLOR_SCHEME, updateColorSchemeRequest);
+    yield takeLatest(UserActionsType.UPDATE_BACKGROUND_COLOR, updateBackgroundColorRequest);
+    yield takeLatest(UserActionsType.PROCESS_USER_TO_BLOCKLIST, processUserToBlocklistRequest);
+    yield takeLatest(UserActionsType.PROCESS_USER_TO_MUTELIST, processUserToMuteListRequest);
+    yield takeLatest(UserActionsType.PROCESS_FOLLOW_REQUEST, processFollowRequest);
 }

@@ -22,12 +22,12 @@ const initialTweetState: TweetState = {
 export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetActions) => {
 
     switch (action.type) {
-        case TweetActionType.SET_TWEET_DATA: // +
+        case TweetActionType.SET_TWEET_DATA:
             draft.tweet = action.payload;
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
-        case TweetActionType.UPDATE_TWEET_DATA: // +
+        case TweetActionType.UPDATE_TWEET_DATA:
             if (draft.tweet !== undefined) {
                 if (action.payload.notificationType === NotificationType.LIKE) {
                     const payload = action.payload as NotificationResponse;
@@ -49,84 +49,84 @@ export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetActi
             }
             break;
 
-        case TweetActionType.SET_FOLLOW_TO_TWEET_STATE: // +
+        case TweetActionType.SET_FOLLOW_TO_TWEET_STATE:
             if (draft.tweet !== undefined) {
                 draft.tweet.user.isFollower = action.payload;
             }
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
-        case TweetActionType.SET_BLOCKED_TO_TWEET_STATE: // +
+        case TweetActionType.SET_BLOCKED_TO_TWEET_STATE:
             if (draft.tweet !== undefined) {
                 draft.tweet.user.isUserBlocked = action.payload;
             }
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
-        case TweetActionType.SET_MUTED_TO_TWEET_STATE: // +
+        case TweetActionType.SET_MUTED_TO_TWEET_STATE:
             if (draft.tweet !== undefined) {
                 draft.tweet.user.isUserMuted = action.payload;
             }
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
-        case TweetActionType.SET_BOOKMARKED_TWEET: // +
+        case TweetActionType.SET_BOOKMARKED_TWEET:
             if (draft.tweet !== undefined) {
                 draft.tweet.isTweetBookmarked = action.payload;
             }
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
-        case TweetActionType.RESET_TWEET_STATE: // +
+        case TweetActionType.RESET_TWEET_STATE:
             draft.tweet = undefined;
             draft.loadingState = LoadingStatus.LOADING;
             break;
 
-        case TweetActionType.SET_LOADING_STATE: // +
+        case TweetActionType.SET_LOADING_STATE:
             draft.loadingState = action.payload;
             break;
 
         // liked and retweeted users
-        case TweetActionType.SET_LIKED_USERS: // +
+        case TweetActionType.SET_LIKED_USERS:
             draft.likedUsers = action.payload;
             draft.likedUsersLoadingState = LoadingStatus.SUCCESS;
             break;
 
-        case TweetActionType.RESET_LIKED_USERS_STATE: // +
+        case TweetActionType.RESET_LIKED_USERS_STATE:
             draft.likedUsers = [];
             draft.likedUsersLoadingState = LoadingStatus.LOADING;
             break;
 
-        case TweetActionType.SET_LIKED_USERS_LOADING_STATE: // +
+        case TweetActionType.SET_LIKED_USERS_LOADING_STATE:
             draft.likedUsersLoadingState = action.payload;
             break;
 
-        case TweetActionType.SET_RETWEETED_USERS: // +
+        case TweetActionType.SET_RETWEETED_USERS:
             draft.retweetedUsers = action.payload;
             draft.retweetedUsersLoadingState = LoadingStatus.SUCCESS;
             break;
 
-        case TweetActionType.RESET_RETWEETED_USERS_STATE: // +
+        case TweetActionType.RESET_RETWEETED_USERS_STATE:
             draft.retweetedUsers = [];
             draft.retweetedUsersLoadingState = LoadingStatus.LOADING;
             break;
 
-        case TweetActionType.SET_RETWEETED_USERS_LOADING_STATE: // +
+        case TweetActionType.SET_RETWEETED_USERS_LOADING_STATE:
             draft.retweetedUsersLoadingState = action.payload;
             break;
 
         // replies
-        case TweetActionType.SET_REPLIES: // +
+        case TweetActionType.SET_REPLIES:
             draft.replies = action.payload;
             draft.repliesLoadingState = LoadingStatus.SUCCESS;
             break;
 
-        case TweetActionType.RESET_REPLIES_STATE: // +
+        case TweetActionType.RESET_REPLIES_STATE:
             draft.replies = [];
             draft.repliesLoadingState = LoadingStatus.LOADING;
             break;
 
-        case TweetActionType.SET_REPLIES_LOADING_STATE: // +
+        case TweetActionType.SET_REPLIES_LOADING_STATE:
             draft.repliesLoadingState = action.payload;
             break;
 

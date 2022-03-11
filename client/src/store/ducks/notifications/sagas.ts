@@ -19,7 +19,7 @@ import {AxiosResponse} from "axios";
 import {NotificationInfoResponse, NotificationsResponse} from "../../types/notification";
 import {TweetResponse} from "../../types/tweet";
 
-export function* fetchNotificationsRequest() { // +
+export function* fetchNotificationsRequest() {
     try {
         yield put(setNotificationsLoadingState(LoadingStatus.LOADING));
         const items: NotificationsResponse = yield call(UserApi.getUserNotifications);
@@ -29,7 +29,7 @@ export function* fetchNotificationsRequest() { // +
     }
 }
 
-export function* fetchNotificationsFromTweetAuthorsRequest({payload}: FetchNotificationsFromTweetAuthorsActionInterface) { // +
+export function* fetchNotificationsFromTweetAuthorsRequest({payload}: FetchNotificationsFromTweetAuthorsActionInterface) {
     try {
         yield put(setNotificationsLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<TweetResponse[]>  = yield call(UserApi.getNotificationsFromTweetAuthors, payload);
@@ -42,7 +42,7 @@ export function* fetchNotificationsFromTweetAuthorsRequest({payload}: FetchNotif
     }
 }
 
-export function* fetchNotificationInfoRequest({payload}: FetchNotificationInfoActionInterface) { // +
+export function* fetchNotificationInfoRequest({payload}: FetchNotificationInfoActionInterface) {
     try {
         const items: NotificationInfoResponse = yield call(UserApi.getUserNotificationById, payload);
         yield put(setNotificationInfo(items));
@@ -52,7 +52,7 @@ export function* fetchNotificationInfoRequest({payload}: FetchNotificationInfoAc
 }
 
 export function* notificationsSaga() {
-    yield takeLatest(NotificationsActionsType.FETCH_NOTIFICATIONS, fetchNotificationsRequest); // +
-    yield takeLatest(NotificationsActionsType.FETCH_NOTIFICATIONS_FROM_TWEET_AUTHORS, fetchNotificationsFromTweetAuthorsRequest); // +
-    yield takeLatest(NotificationsActionsType.FETCH_NOTIFICATION_INFO, fetchNotificationInfoRequest); // +
+    yield takeLatest(NotificationsActionsType.FETCH_NOTIFICATIONS, fetchNotificationsRequest);
+    yield takeLatest(NotificationsActionsType.FETCH_NOTIFICATIONS_FROM_TWEET_AUTHORS, fetchNotificationsFromTweetAuthorsRequest);
+    yield takeLatest(NotificationsActionsType.FETCH_NOTIFICATION_INFO, fetchNotificationInfoRequest);
 }

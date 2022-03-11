@@ -54,7 +54,7 @@ public class TweetControllerTest {
                 .andExpect(jsonPath("$[0].addressedUsername").isEmpty())
                 .andExpect(jsonPath("$[0].addressedId").isEmpty())
                 .andExpect(jsonPath("$[0].addressedTweetId").isEmpty())
-                .andExpect(jsonPath("$[0].replyType").value("EVERYONE"))
+                .andExpect(jsonPath("$[0].replyType").value(ReplyType.EVERYONE.toString()))
                 .andExpect(jsonPath("$[0].link").isEmpty())
                 .andExpect(jsonPath("$[0].linkTitle").isEmpty())
                 .andExpect(jsonPath("$[0].linkDescription").isEmpty())
@@ -87,7 +87,7 @@ public class TweetControllerTest {
                 .andExpect(jsonPath("$.addressedUsername").isEmpty())
                 .andExpect(jsonPath("$.addressedId").isEmpty())
                 .andExpect(jsonPath("$.addressedTweetId").isEmpty())
-                .andExpect(jsonPath("$.replyType").value("EVERYONE"))
+                .andExpect(jsonPath("$.replyType").value(ReplyType.EVERYONE.toString()))
                 .andExpect(jsonPath("$.link").value(LINK))
                 .andExpect(jsonPath("$.linkTitle").value(LINK_TITLE))
                 .andExpect(jsonPath("$.linkDescription").value(LINK_DESCRIPTION))
@@ -130,7 +130,7 @@ public class TweetControllerTest {
                 .andExpect(jsonPath("$[0].addressedUsername").isEmpty())
                 .andExpect(jsonPath("$[0].addressedId").isEmpty())
                 .andExpect(jsonPath("$[0].addressedTweetId").isEmpty())
-                .andExpect(jsonPath("$[0].replyType").value("EVERYONE"))
+                .andExpect(jsonPath("$[0].replyType").value(ReplyType.EVERYONE.toString()))
                 .andExpect(jsonPath("$[0].link").isEmpty())
                 .andExpect(jsonPath("$[0].linkTitle").isEmpty())
                 .andExpect(jsonPath("$[0].linkDescription").isEmpty())
@@ -164,7 +164,7 @@ public class TweetControllerTest {
                 .andExpect(jsonPath("$[0].addressedUsername").isEmpty())
                 .andExpect(jsonPath("$[0].addressedId").isEmpty())
                 .andExpect(jsonPath("$[0].addressedTweetId").isEmpty())
-                .andExpect(jsonPath("$[0].replyType").value("EVERYONE"))
+                .andExpect(jsonPath("$[0].replyType").value(ReplyType.EVERYONE.toString()))
                 .andExpect(jsonPath("$[0].link").value(YOUTUBE_LINK))
                 .andExpect(jsonPath("$[0].linkTitle").value(YOUTUBE_LINK_TITLE))
                 .andExpect(jsonPath("$[0].linkDescription").isEmpty())
@@ -198,7 +198,7 @@ public class TweetControllerTest {
                 .andExpect(jsonPath("$[0].addressedUsername").isEmpty())
                 .andExpect(jsonPath("$[0].addressedId").isEmpty())
                 .andExpect(jsonPath("$[0].addressedTweetId").isEmpty())
-                .andExpect(jsonPath("$[0].replyType").value("EVERYONE"))
+                .andExpect(jsonPath("$[0].replyType").value(ReplyType.EVERYONE.toString()))
                 .andExpect(jsonPath("$[0].link").isEmpty())
                 .andExpect(jsonPath("$[0].linkTitle").isEmpty())
                 .andExpect(jsonPath("$[0].linkDescription").isEmpty())
@@ -267,7 +267,7 @@ public class TweetControllerTest {
                 .andExpect(jsonPath("$.addressedUsername").isEmpty())
                 .andExpect(jsonPath("$.addressedId").isEmpty())
                 .andExpect(jsonPath("$.addressedTweetId").isEmpty())
-                .andExpect(jsonPath("$.replyType").value("EVERYONE"))
+                .andExpect(jsonPath("$.replyType").value(ReplyType.EVERYONE.toString()))
                 .andExpect(jsonPath("$.link").isEmpty())
                 .andExpect(jsonPath("$.linkTitle").isEmpty())
                 .andExpect(jsonPath("$.linkDescription").isEmpty())
@@ -306,7 +306,7 @@ public class TweetControllerTest {
                 .andExpect(jsonPath("$.addressedUsername").isEmpty())
                 .andExpect(jsonPath("$.addressedId").isEmpty())
                 .andExpect(jsonPath("$.addressedTweetId").isEmpty())
-                .andExpect(jsonPath("$.replyType").value("EVERYONE"))
+                .andExpect(jsonPath("$.replyType").value(ReplyType.EVERYONE.toString()))
                 .andExpect(jsonPath("$.link").isNotEmpty())
                 .andExpect(jsonPath("$.linkTitle").isNotEmpty())
                 .andExpect(jsonPath("$.linkDescription").isNotEmpty())
@@ -345,7 +345,7 @@ public class TweetControllerTest {
                 .andExpect(jsonPath("$.addressedUsername").isEmpty())
                 .andExpect(jsonPath("$.addressedId").isEmpty())
                 .andExpect(jsonPath("$.addressedTweetId").isEmpty())
-                .andExpect(jsonPath("$.replyType").value("EVERYONE"))
+                .andExpect(jsonPath("$.replyType").value(ReplyType.EVERYONE.toString()))
                 .andExpect(jsonPath("$.link").value(YOUTUBE_LINK))
                 .andExpect(jsonPath("$.linkTitle").value(YOUTUBE_LINK_TITLE))
                 .andExpect(jsonPath("$.linkDescription").isEmpty())
@@ -373,7 +373,7 @@ public class TweetControllerTest {
         pollChoiceList.add("Choice 1");
         pollChoiceList.add("Choice 2");
         TweetRequest tweetRequest = new TweetRequest();
-        tweetRequest.setText("test text");
+        tweetRequest.setText(TEST_TWEET_TEXT);
         tweetRequest.setReplyType(ReplyType.EVERYONE);
         tweetRequest.setChoices(pollChoiceList);
         tweetRequest.setPollDateTime(100L);
@@ -383,13 +383,13 @@ public class TweetControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNotEmpty())
-                .andExpect(jsonPath("$.text").value("test text"))
+                .andExpect(jsonPath("$.text").value(TEST_TWEET_TEXT))
                 .andExpect(jsonPath("$.dateTime").isNotEmpty())
                 .andExpect(jsonPath("$.scheduledDate").isEmpty())
                 .andExpect(jsonPath("$.addressedUsername").isEmpty())
                 .andExpect(jsonPath("$.addressedId").isEmpty())
                 .andExpect(jsonPath("$.addressedTweetId").isEmpty())
-                .andExpect(jsonPath("$.replyType").value("EVERYONE"))
+                .andExpect(jsonPath("$.replyType").value(ReplyType.EVERYONE.toString()))
                 .andExpect(jsonPath("$.link").isEmpty())
                 .andExpect(jsonPath("$.linkTitle").isEmpty())
                 .andExpect(jsonPath("$.linkDescription").isEmpty())
@@ -418,7 +418,7 @@ public class TweetControllerTest {
         List<String> pollChoiceList = new ArrayList<>();
         pollChoiceList.add("Choice 1");
         TweetRequest tweetRequest = new TweetRequest();
-        tweetRequest.setText("test text");
+        tweetRequest.setText(TEST_TWEET_TEXT);
         tweetRequest.setReplyType(ReplyType.EVERYONE);
         tweetRequest.setChoices(pollChoiceList);
         tweetRequest.setPollDateTime(100L);
@@ -441,7 +441,7 @@ public class TweetControllerTest {
         pollChoiceList.add("Choice 4");
         pollChoiceList.add("Choice 5");
         TweetRequest tweetRequest = new TweetRequest();
-        tweetRequest.setText("test text");
+        tweetRequest.setText(TEST_TWEET_TEXT);
         tweetRequest.setReplyType(ReplyType.EVERYONE);
         tweetRequest.setChoices(pollChoiceList);
         tweetRequest.setPollDateTime(100L);
@@ -461,7 +461,7 @@ public class TweetControllerTest {
         pollChoiceList.add("Choice 1");
         pollChoiceList.add("");
         TweetRequest tweetRequest = new TweetRequest();
-        tweetRequest.setText("test text");
+        tweetRequest.setText(TEST_TWEET_TEXT);
         tweetRequest.setReplyType(ReplyType.EVERYONE);
         tweetRequest.setChoices(pollChoiceList);
         tweetRequest.setPollDateTime(100L);
@@ -481,7 +481,7 @@ public class TweetControllerTest {
         pollChoiceList.add("Choice 1");
         pollChoiceList.add(LINK_DESCRIPTION);
         TweetRequest tweetRequest = new TweetRequest();
-        tweetRequest.setText("test text");
+        tweetRequest.setText(TEST_TWEET_TEXT);
         tweetRequest.setReplyType(ReplyType.EVERYONE);
         tweetRequest.setChoices(pollChoiceList);
         tweetRequest.setPollDateTime(100L);
@@ -513,7 +513,7 @@ public class TweetControllerTest {
                 .andExpect(jsonPath("$.addressedUsername").isEmpty())
                 .andExpect(jsonPath("$.addressedId").isEmpty())
                 .andExpect(jsonPath("$.addressedTweetId").isEmpty())
-                .andExpect(jsonPath("$.replyType").value("EVERYONE"))
+                .andExpect(jsonPath("$.replyType").value(ReplyType.EVERYONE.toString()))
                 .andExpect(jsonPath("$.link").isEmpty())
                 .andExpect(jsonPath("$.linkTitle").isEmpty())
                 .andExpect(jsonPath("$.linkDescription").isEmpty())
@@ -553,7 +553,7 @@ public class TweetControllerTest {
                 .andExpect(jsonPath("$.addressedUsername").isEmpty())
                 .andExpect(jsonPath("$.addressedId").isEmpty())
                 .andExpect(jsonPath("$.addressedTweetId").isEmpty())
-                .andExpect(jsonPath("$.replyType").value("EVERYONE"))
+                .andExpect(jsonPath("$.replyType").value(ReplyType.EVERYONE.toString()))
                 .andExpect(jsonPath("$.link").isEmpty())
                 .andExpect(jsonPath("$.linkTitle").isEmpty())
                 .andExpect(jsonPath("$.linkDescription").isEmpty())
@@ -683,7 +683,7 @@ public class TweetControllerTest {
                 .andExpect(jsonPath("$[0].addressedUsername").isEmpty())
                 .andExpect(jsonPath("$[0].addressedId").isEmpty())
                 .andExpect(jsonPath("$[0].addressedTweetId").isEmpty())
-                .andExpect(jsonPath("$[0].replyType").value("EVERYONE"))
+                .andExpect(jsonPath("$[0].replyType").value(ReplyType.EVERYONE.toString()))
                 .andExpect(jsonPath("$[0].link").isEmpty())
                 .andExpect(jsonPath("$[0].linkTitle").isEmpty())
                 .andExpect(jsonPath("$[0].linkDescription").isEmpty())
@@ -875,7 +875,7 @@ public class TweetControllerTest {
                 .andExpect(jsonPath("$.addressedUsername").isEmpty())
                 .andExpect(jsonPath("$.addressedId").isEmpty())
                 .andExpect(jsonPath("$.addressedTweetId").isEmpty())
-                .andExpect(jsonPath("$.replyType").value("FOLLOW"))
+                .andExpect(jsonPath("$.replyType").value(ReplyType.FOLLOW.toString()))
                 .andExpect(jsonPath("$.link").value(LINK))
                 .andExpect(jsonPath("$.linkTitle").value(LINK_TITLE))
                 .andExpect(jsonPath("$.linkDescription").value(LINK_DESCRIPTION))
@@ -935,7 +935,7 @@ public class TweetControllerTest {
                 .andExpect(jsonPath("$.addressedUsername").isEmpty())
                 .andExpect(jsonPath("$.addressedId").isEmpty())
                 .andExpect(jsonPath("$.addressedTweetId").isEmpty())
-                .andExpect(jsonPath("$.replyType").value("EVERYONE"))
+                .andExpect(jsonPath("$.replyType").value(ReplyType.EVERYONE.toString()))
                 .andExpect(jsonPath("$.link").isEmpty())
                 .andExpect(jsonPath("$.linkTitle").isEmpty())
                 .andExpect(jsonPath("$.linkDescription").isEmpty())

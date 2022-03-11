@@ -6,7 +6,7 @@ import {FetchListDetailActionInterface, ListDetailActionsType} from "./contracts
 import {ListsApi} from "../../../services/api/listsApi";
 import {BaseListResponse} from "../../types/lists";
 
-export function* fetchListDetailRequest({payload}: FetchListDetailActionInterface) { // +
+export function* fetchListDetailRequest({payload}: FetchListDetailActionInterface) {
     try {
         yield setListDetailLoadingState(LoadingStatus.LOADING);
         const item: BaseListResponse = yield call(ListsApi.getListDetails, payload.listId, payload.cancelTokenSource);
@@ -17,5 +17,5 @@ export function* fetchListDetailRequest({payload}: FetchListDetailActionInterfac
 }
 
 export function* listDetailSaga() {
-    yield takeLatest(ListDetailActionsType.FETCH_LIST_DETAIL, fetchListDetailRequest); // +
+    yield takeLatest(ListDetailActionsType.FETCH_LIST_DETAIL, fetchListDetailRequest);
 }

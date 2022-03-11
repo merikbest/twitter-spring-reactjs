@@ -29,7 +29,7 @@ const Trends: FC = (): ReactElement => {
                 <List style={{paddingTop: 48,}}>
                     {trends.map(item => (
                         <div className={classes.item} key={item.id}>
-                            <Link to={{pathname: "/search", state: {tag: encodeURIComponent(item.tagName)}}}>
+                            <Link to={{pathname: "/search", state: {tag: item.tagName}}}>
                                 <ListItem>
                                     <ListItemText
                                         primary={item.tagName}

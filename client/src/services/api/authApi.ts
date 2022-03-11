@@ -1,7 +1,6 @@
 import {AxiosResponse} from "axios";
 
 import {axios} from "../../core/axios";
-import {AuthUser} from "../../store/ducks/user/contracts/state";
 import {API_URL} from "../../util/url";
 import {RegistrationInfo} from "../../pages/Authentication/Authentication";
 import {RegistrationProps} from "../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
@@ -15,12 +14,8 @@ export interface Response<T> {
 }
 
 export const AuthApi = {
-    async signIn(postData: LoginProps): Promise<Response<AuthenticationResponse>> { //+
+    async signIn(postData: LoginProps): Promise<Response<AuthenticationResponse>> {
         const {data} = await axios.post<Response<AuthenticationResponse>>(`${API_URL}/auth/login`, postData);
-        return data;
-    },
-    async signUp(postData: RegistrationProps): Promise<Response<AuthUser>> {
-        const {data} = await axios.post<Response<AuthUser>>(`${API_URL}/auth/registration`, postData);
         return data;
     },
     async checkEmail(postData: RegistrationInfo): Promise<Response<string>> {
@@ -35,7 +30,7 @@ export const AuthApi = {
         const {data} = await axios.get<Response<string>>(`${API_URL}/auth/registration/activate/${registrationCode}`);
         return data;
     },
-    async endRegistration(postData: RegistrationProps): Promise<Response<AuthenticationResponse>> { //+
+    async endRegistration(postData: RegistrationProps): Promise<Response<AuthenticationResponse>> {
         const {data} = await axios.post<Response<AuthenticationResponse>>(`${API_URL}/auth/registration/confirm`, postData);
         return data;
     },
@@ -53,7 +48,7 @@ export const AuthApi = {
         const {data} = await axios.post<string>(`${API_URL}/auth/reset`, postData);
         return data;
     },
-    async getMe(): Promise<AuthenticationResponse> { //+
+    async getMe(): Promise<AuthenticationResponse> {
         const {data} = await axios.get<AuthenticationResponse>(`${API_URL}/auth/user`);
         return data;
     },

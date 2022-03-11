@@ -13,7 +13,7 @@ import {LoadingStatus} from '../../types';
 import {UserApi} from "../../../services/api/userApi";
 import {TweetResponse} from "../../types/tweet";
 
-export function* fetchUserTweetsRequest({payload}: FetchUserTweetsActionInterface) { // +
+export function* fetchUserTweetsRequest({payload}: FetchUserTweetsActionInterface) {
     try {
         yield put(setUserTweetsLoadingStatus(LoadingStatus.LOADING));
         const response: AxiosResponse<TweetResponse[]> = yield call(UserApi.getUserTweets, payload);
@@ -23,7 +23,7 @@ export function* fetchUserTweetsRequest({payload}: FetchUserTweetsActionInterfac
     }
 }
 
-export function* fetchUserLikedTweetsRequest({payload}: FetchUserLikedTweetsActionInterface) { // +
+export function* fetchUserLikedTweetsRequest({payload}: FetchUserLikedTweetsActionInterface) {
     try {
         yield put(setUserTweetsLoadingStatus(LoadingStatus.LOADING));
         const response: AxiosResponse<TweetResponse[]> = yield call(UserApi.getUserLikedTweets, payload);
@@ -33,7 +33,7 @@ export function* fetchUserLikedTweetsRequest({payload}: FetchUserLikedTweetsActi
     }
 }
 
-export function* fetchUserMediaTweetsRequest({payload}: FetchUserMediaTweetsActionInterface) { // +
+export function* fetchUserMediaTweetsRequest({payload}: FetchUserMediaTweetsActionInterface) {
     try {
         yield put(setUserTweetsLoadingStatus(LoadingStatus.LOADING));
         const response: AxiosResponse<TweetResponse[]> = yield call(UserApi.getUserMediaTweets, payload);
@@ -43,7 +43,7 @@ export function* fetchUserMediaTweetsRequest({payload}: FetchUserMediaTweetsActi
     }
 }
 
-export function* fetchUserRetweetsAndReplies({payload}: FetchUserRetweetsAndRepliesActionInterface) { // +
+export function* fetchUserRetweetsAndReplies({payload}: FetchUserRetweetsAndRepliesActionInterface) {
     try {
         yield put(setUserTweetsLoadingStatus(LoadingStatus.LOADING));
         const response: AxiosResponse<TweetResponse[]> = yield call(UserApi.getUserRetweetsAndReplies, payload);
@@ -54,8 +54,8 @@ export function* fetchUserRetweetsAndReplies({payload}: FetchUserRetweetsAndRepl
 }
 
 export function* userTweetsSaga() {
-    yield takeLatest(UserTweetsActionType.FETCH_TWEETS, fetchUserTweetsRequest); // +
-    yield takeLatest(UserTweetsActionType.FETCH_LIKED_TWEETS, fetchUserLikedTweetsRequest); // +
-    yield takeLatest(UserTweetsActionType.FETCH_MEDIA_TWEETS, fetchUserMediaTweetsRequest); // +
-    yield takeLatest(UserTweetsActionType.FETCH_RETWEETS_AND_REPLIES, fetchUserRetweetsAndReplies); // +
+    yield takeLatest(UserTweetsActionType.FETCH_TWEETS, fetchUserTweetsRequest);
+    yield takeLatest(UserTweetsActionType.FETCH_LIKED_TWEETS, fetchUserLikedTweetsRequest);
+    yield takeLatest(UserTweetsActionType.FETCH_MEDIA_TWEETS, fetchUserMediaTweetsRequest);
+    yield takeLatest(UserTweetsActionType.FETCH_RETWEETS_AND_REPLIES, fetchUserRetweetsAndReplies);
 }

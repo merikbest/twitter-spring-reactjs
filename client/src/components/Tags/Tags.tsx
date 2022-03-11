@@ -29,7 +29,7 @@ const Tags: FC = (): ReactElement => {
             ) : (
                 <List>
                     {tags.slice(0, 3).map((tag: TagResponse) => (
-                        <Link key={tag.id} to={{pathname: "/search", state: {tag: encodeURIComponent(tag.tagName)}}}>
+                        <Link key={tag.id} to={{pathname: "/search", state: {tag: tag.tagName}}}>
                             <ListItem className={classes.item}>
                                 <ListItemText
                                     primary={tag.tagName}

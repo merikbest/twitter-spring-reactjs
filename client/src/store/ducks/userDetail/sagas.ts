@@ -6,7 +6,7 @@ import {FetchUserDetailActionInterface, UserDetailActionsType} from "./contracts
 import {UserDetailResponse} from "../../types/user";
 import {UserApi} from "../../../services/api/userApi";
 
-export function* fetchUserDetailRequest({payload}: FetchUserDetailActionInterface) { // +
+export function* fetchUserDetailRequest({payload}: FetchUserDetailActionInterface) {
     try {
         yield setUserDetailLoadingState(LoadingStatus.LOADING);
         const item: UserDetailResponse = yield call(UserApi.getUserDetails, payload.userId, payload.cancelTokenSource);
@@ -17,5 +17,5 @@ export function* fetchUserDetailRequest({payload}: FetchUserDetailActionInterfac
 }
 
 export function* userDetailSaga() {
-    yield takeLatest(UserDetailActionsType.FETCH_USER_DETAIL, fetchUserDetailRequest); // +
+    yield takeLatest(UserDetailActionsType.FETCH_USER_DETAIL, fetchUserDetailRequest);
 }

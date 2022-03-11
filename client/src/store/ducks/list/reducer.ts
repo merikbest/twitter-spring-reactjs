@@ -12,19 +12,19 @@ const initialTweetState: ListState = {
 export const listReducer = produce((draft: Draft<ListState>, action: ListActions) => {
 
     switch (action.type) {
-        case ListActionType.SET_LIST: // +
+        case ListActionType.SET_LIST:
             draft.list = action.payload;
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
-        case ListActionType.SET_MEMBERS_SIZE: // +
+        case ListActionType.SET_MEMBERS_SIZE:
             if (draft.list !== undefined) {
                 draft.list.membersSize = action.payload ? draft.list.membersSize + 1 : draft.list.membersSize - 1;
                 draft.loadingState = LoadingStatus.LOADED;
             }
             break;
 
-        case ListActionType.UPDATE_FOLLOW_TO_FULL_LIST: // +
+        case ListActionType.UPDATE_FOLLOW_TO_FULL_LIST:
             if (draft.list !== undefined) {
                 draft.list.isFollower = action.payload;
                 draft.list.followersSize = action.payload ? draft.list.followersSize + 1 : draft.list.followersSize - 1;
@@ -32,12 +32,12 @@ export const listReducer = produce((draft: Draft<ListState>, action: ListActions
             }
             break;
 
-        case ListActionType.RESET_LIST_STATE: // +
+        case ListActionType.RESET_LIST_STATE:
             draft.list = undefined;
             draft.loadingState = LoadingStatus.LOADING;
             break;
 
-        case ListActionType.SET_LOADING_STATE: // +
+        case ListActionType.SET_LOADING_STATE:
             draft.loadingState = action.payload;
             break;
 

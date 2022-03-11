@@ -11,12 +11,12 @@ const initialTagsState: UserDetailState = {
 
 export const userDetailReducer = produce((draft: Draft<UserDetailState>, action: UserDetailActions) => {
     switch (action.type) {
-        case UserDetailActionsType.SET_USER_DETAIL: // +
+        case UserDetailActionsType.SET_USER_DETAIL:
             draft.item = action.payload;
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
-        case UserDetailActionsType.SET_FOLLOW_TO_USER_DETAIL: // +
+        case UserDetailActionsType.SET_FOLLOW_TO_USER_DETAIL:
             if (draft.item !== undefined) {
                 draft.item.isFollower = action.payload;
                 draft.item.followingSize = action.payload ? draft.item.followingSize + 1 : draft.item.followingSize - 1;
@@ -24,26 +24,26 @@ export const userDetailReducer = produce((draft: Draft<UserDetailState>, action:
             }
             break;
 
-        case UserDetailActionsType.SET_BLOCK_USER_DETAIL: // +
+        case UserDetailActionsType.SET_BLOCK_USER_DETAIL:
             if (draft.item !== undefined) {
                 draft.item.isUserBlocked = action.payload;
                 draft.loadingState = LoadingStatus.LOADED;
             }
             break;
 
-        case UserDetailActionsType.SET_FOLLOW_REQUEST_TO_USER_DETAIL: // +
+        case UserDetailActionsType.SET_FOLLOW_REQUEST_TO_USER_DETAIL:
             if (draft.item !== undefined) {
                 draft.item.isWaitingForApprove = action.payload;
                 draft.loadingState = LoadingStatus.LOADED;
             }
             break;
 
-        case UserDetailActionsType.RESET_USER_DETAIL_STATE: // +
+        case UserDetailActionsType.RESET_USER_DETAIL_STATE:
             draft.item = undefined;
             draft.loadingState = LoadingStatus.LOADING;
             break;
 
-        case UserDetailActionsType.SET_LOADING_STATE: // +
+        case UserDetailActionsType.SET_LOADING_STATE:
             draft.loadingState = action.payload;
             break;
 

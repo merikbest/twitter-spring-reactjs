@@ -20,7 +20,7 @@ const AudienceAndTagging: FC = (): ReactElement => {
 
     useEffect(() => {
         if (myProfile) {
-            setChecked(myProfile?.privateProfile ? myProfile.privateProfile : false);
+            setChecked(myProfile?.isPrivateProfile ? myProfile.isPrivateProfile : false);
         }
 
         return () => {

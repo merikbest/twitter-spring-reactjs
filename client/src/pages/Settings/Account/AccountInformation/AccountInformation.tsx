@@ -44,7 +44,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 Phone
                             </Typography>
                             <Typography variant={"subtitle2"} component={"div"}>
-                                {`${getPhoneCode(myProfile)}${myProfile?.phone}`}
+                                {`${getPhoneCode(myProfile?.countryCode)}${myProfile?.phone}`}
                             </Typography>
                         </div>
                         <div className={globalClasses.arrowIcon}>
@@ -86,7 +86,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 Protected Tweets
                             </Typography>
                             <Typography variant={"subtitle2"} component={"div"}>
-                                {myProfile?.mutedDirectMessages ? "Yes" : "No"}
+                                {myProfile?.isPrivateProfile ? "Yes" : "No"}
                             </Typography>
                         </div>
                         <div className={globalClasses.arrowIcon}>
@@ -110,7 +110,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 Country
                             </Typography>
                             <Typography variant={"subtitle2"} component={"div"}>
-                                {getCountry(myProfile)}
+                                {getCountry(myProfile?.countryCode)}
                             </Typography>
                         </div>
                         <div className={globalClasses.arrowIcon}>

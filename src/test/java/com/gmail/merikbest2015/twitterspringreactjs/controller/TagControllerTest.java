@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
+import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +65,7 @@ public class TagControllerTest {
                 .andExpect(jsonPath("$[0].addressedUsername").isEmpty())
                 .andExpect(jsonPath("$[0].addressedId").isEmpty())
                 .andExpect(jsonPath("$[0].addressedTweetId").isEmpty())
-                .andExpect(jsonPath("$[0].replyType").value("EVERYONE"))
+                .andExpect(jsonPath("$[0].replyType").value(ReplyType.EVERYONE.toString()))
                 .andExpect(jsonPath("$[0].link").value(LINK))
                 .andExpect(jsonPath("$[0].linkTitle").value(LINK_TITLE))
                 .andExpect(jsonPath("$[0].linkDescription").value(LINK_DESCRIPTION))

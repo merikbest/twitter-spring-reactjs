@@ -282,7 +282,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     >
                         <div className={classnames(classes.listItemWrapper, globalClasses.svg)}>
                             <List>
-                                {(myProfile?.privateProfile) ? (
+                                {(myProfile?.isPrivateProfile) ? (
                                     <ListItem onClick={onOpenFollowerRequestsModal}>
                                         {FollowerRequestIcon}
                                         <Typography variant={"body1"} component={"span"}>

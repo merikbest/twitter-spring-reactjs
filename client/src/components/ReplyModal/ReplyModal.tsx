@@ -11,7 +11,7 @@ import {formatDate} from "../../util/formatDate";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import AddTweetForm from "../AddTweetForm/AddTweetForm";
 import {textFormatter} from "../../util/textFormatter";
-import {Image} from "../../store/ducks/tweets/contracts/state";
+import {Image} from "../../store/types/common";
 import CloseButton from "../CloseButton/CloseButton";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {UserTweetResponse} from "../../store/types/tweet";

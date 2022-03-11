@@ -12,7 +12,6 @@ import usLang from "date-fns/locale/en-US/index";
 import differenceInDays from "date-fns/differenceInDays";
 import differenceInHours from "date-fns/differenceInHours";
 import differenceInMinutes from "date-fns/differenceInMinutes";
-import {Poll} from "../store/ducks/tweets/contracts/state";
 import {PollResponse} from "../store/types/tweet";
 
 export const formatDate = (date: Date): string => {

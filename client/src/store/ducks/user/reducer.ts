@@ -12,38 +12,38 @@ const initialUserState: UserState = {
 export const userReducer = produce((draft: Draft<UserState>, action: UserActions) => {
 
     switch (action.type) {
-        case UserActionsType.SET_USER_DATA: //+
+        case UserActionsType.SET_USER_DATA:
             draft.data = action.payload;
             draft.status = LoadingStatus.LOADED;
             break;
 
-        case UserActionsType.SIGN_OUT: // +
+        case UserActionsType.SIGN_OUT:
             draft.status = LoadingStatus.LOADED;
             draft.data = undefined;
             break;
 
-        case UserActionsType.SET_UNREAD_MESSAGE: // +
+        case UserActionsType.SET_UNREAD_MESSAGE:
             if (draft.data !== undefined) {
                 draft.data.unreadMessagesSize = draft.data.unreadMessagesSize + 1;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
-        case UserActionsType.SET_USERNAME: // +
+        case UserActionsType.SET_USERNAME:
             if (draft.data !== undefined) {
                 draft.data.username = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
-        case UserActionsType.SET_EMAIL: // +
+        case UserActionsType.SET_EMAIL:
             if (draft.data !== undefined) {
                 draft.data.email = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
-        case UserActionsType.SET_PHONE: // +
+        case UserActionsType.SET_PHONE:
             if (draft.data !== undefined) {
                 draft.data.countryCode = action.payload.countryCode;
                 draft.data.phone = action.payload.phone;
@@ -51,98 +51,98 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
             }
             break;
 
-        case UserActionsType.SET_COUNTRY: // +
+        case UserActionsType.SET_COUNTRY:
             if (draft.data !== undefined) {
                 draft.data.country = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
-        case UserActionsType.SET_GENDER: // +
+        case UserActionsType.SET_GENDER:
             if (draft.data !== undefined) {
                 draft.data.gender = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
-        case UserActionsType.SET_LANGUAGE: // +
+        case UserActionsType.SET_LANGUAGE:
             if (draft.data !== undefined) {
                 draft.data.language = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
-        case UserActionsType.SET_DIRECT: // +
+        case UserActionsType.SET_DIRECT:
             if (draft.data !== undefined) {
                 draft.data.mutedDirectMessages = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
-        case UserActionsType.SET_PRIVATE_PROFILE: // +
+        case UserActionsType.SET_PRIVATE_PROFILE:
             if (draft.data !== undefined) {
-                draft.data.privateProfile = action.payload;
+                draft.data.isPrivateProfile = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
-        case UserActionsType.SET_COLOR_SCHEME: // +
+        case UserActionsType.SET_COLOR_SCHEME:
             if (draft.data !== undefined) {
                 draft.data.colorScheme = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
-        case UserActionsType.SET_BACKGROUND_COLOR: // +
+        case UserActionsType.SET_BACKGROUND_COLOR:
             if (draft.data !== undefined) {
                 draft.data.backgroundColor = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
-        case UserActionsType.SET_NEW_NOTIFICATION: // +
+        case UserActionsType.SET_NEW_NOTIFICATION:
             if (draft.data !== undefined) {
                 draft.data.notificationsCount = draft.data.notificationsCount + 1;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
-        case UserActionsType.SET_FOLLOWERS_SIZE: //+
+        case UserActionsType.SET_FOLLOWERS_SIZE:
             if (draft.data !== undefined) {
                 draft.data.followersSize = draft.data.followersSize + 1;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
-        case UserActionsType.SET_PROFILE_STARTED: //+
+        case UserActionsType.SET_PROFILE_STARTED:
             if (draft.data !== undefined) {
                 draft.data.profileStarted = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
-        case UserActionsType.SET_PIN_TWEET_ID: //+
+        case UserActionsType.SET_PIN_TWEET_ID:
             if (draft.data !== undefined) {
                 draft.data.pinnedTweetId = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
-        case UserActionsType.SET_READ_MESSAGE: //+
+        case UserActionsType.SET_READ_MESSAGE:
             if (draft.data !== undefined) {
                 draft.data.unreadMessagesSize = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
-        case UserActionsType.SET_USER_FOLLOWING: //+
+        case UserActionsType.SET_USER_FOLLOWING:
             if (draft.data !== undefined) {
                 draft.data.followersSize = action.payload ? draft.data.followersSize + 1 : draft.data.followersSize - 1;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
-        case UserActionsType.SET_USER_LOADING_STATE: //+
+        case UserActionsType.SET_USER_LOADING_STATE:
             draft.status = action.payload;
             break;
 

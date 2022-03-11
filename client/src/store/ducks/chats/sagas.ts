@@ -10,7 +10,7 @@ import {setChat, setChats, setChatsLoadingState} from "./actionCreators";
 import {ChatApi} from "../../../services/api/chatApi";
 import {ChatResponse} from "../../types/chat";
 
-export function* fetchChatsRequest() { // +
+export function* fetchChatsRequest() {
     try {
         setChatsLoadingState(LoadingStatus.LOADING);
         const items: ChatResponse[] = yield call(ChatApi.getUserChats);
@@ -20,7 +20,7 @@ export function* fetchChatsRequest() { // +
     }
 }
 
-export function* createChatRequest({payload}: CreateChatActionInterface) { // +
+export function* createChatRequest({payload}: CreateChatActionInterface) {
     try {
         setChatsLoadingState(LoadingStatus.LOADING);
         const item: ChatResponse = yield call(ChatApi.createChat, payload);
@@ -30,7 +30,7 @@ export function* createChatRequest({payload}: CreateChatActionInterface) { // +
     }
 }
 
-export function* leaveFromConversationRequest({payload}: LeaveFromConversationActionInterface) { // +
+export function* leaveFromConversationRequest({payload}: LeaveFromConversationActionInterface) {
     try {
         setChatsLoadingState(LoadingStatus.LOADING);
         yield call(ChatApi.leaveFromConversation, payload);
@@ -40,7 +40,7 @@ export function* leaveFromConversationRequest({payload}: LeaveFromConversationAc
 }
 
 export function* chatsSaga() {
-    yield takeLatest(ChatsActionsType.FETCH_CHATS, fetchChatsRequest); // +
-    yield takeLatest(ChatsActionsType.CREATE_CHAT, createChatRequest); // +
-    yield takeLatest(ChatsActionsType.LEAVE_FROM_CONVERSATION, leaveFromConversationRequest); // +
+    yield takeLatest(ChatsActionsType.FETCH_CHATS, fetchChatsRequest);
+    yield takeLatest(ChatsActionsType.CREATE_CHAT, createChatRequest);
+    yield takeLatest(ChatsActionsType.LEAVE_FROM_CONVERSATION, leaveFromConversationRequest);
 }

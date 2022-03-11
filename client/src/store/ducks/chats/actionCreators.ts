@@ -11,21 +11,21 @@ import {
 } from "./contracts/actionTypes";
 import {ChatResponse} from "../../types/chat";
 
-export const setChats = (payload: ChatResponse[]): SetChatsActionInterface => ({ // +
+export const setChats = (payload: ChatResponse[]): SetChatsActionInterface => ({
     type: ChatsActionsType.SET_CHATS,
     payload,
 });
 
-export const setChat = (payload: ChatResponse): SetChatActionInterface => ({ // +
+export const setChat = (payload: ChatResponse): SetChatActionInterface => ({
     type: ChatsActionsType.SET_CHAT,
     payload,
 });
 
-export const fetchChats = (): FetchChatsActionInterface => ({ // +
+export const fetchChats = (): FetchChatsActionInterface => ({
     type: ChatsActionsType.FETCH_CHATS,
 });
 
-export const createChat = (payload: number): CreateChatActionInterface => ({ // +
+export const createChat = (payload: number): CreateChatActionInterface => ({
     type: ChatsActionsType.CREATE_CHAT,
     payload,
 });
@@ -35,11 +35,11 @@ export const leaveFromConversation = (payload: { participantId: number, chatId: 
     payload,
 });
 
-export const resetChatsState = (): ResetChatsStateActionInterface => ({ // +
+export const resetChatsState = (): ResetChatsStateActionInterface => ({
     type: ChatsActionsType.RESET_CHATS_STATE
 });
 
-export const setChatsLoadingState = (payload: LoadingStatus): SetChatsLoadingStateActionInterface => ({ // +
+export const setChatsLoadingState = (payload: LoadingStatus): SetChatsLoadingStateActionInterface => ({
     type: ChatsActionsType.SET_LOADING_STATE,
     payload,
 });

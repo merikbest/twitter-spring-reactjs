@@ -9,85 +9,85 @@ import {
 } from "../../../types/notification";
 
 export enum NotificationsActionsType {
-    SET_NOTIFICATIONS = 'notification/SET_NOTIFICATIONS', // +
-    FETCH_NOTIFICATIONS = 'notification/FETCH_NOTIFICATIONS', // +
-    FETCH_NOTIFICATIONS_FROM_TWEET_AUTHORS = 'notification/FETCH_NOTIFICATIONS_FROM_TWEET_AUTHORS', // +
-    SET_NOTIFICATION = 'notification/SET_NOTIFICATION', // +
-    FETCH_NOTIFICATION_INFO = 'notification/FETCH_NOTIFICATION_INFO', // +
-    SET_NOTIFICATION_INFO = 'notification/SET_NOTIFICATION_INFO', // +
-    SET_FOLLOW_TO_NOTIFICATION_INFO = 'notification/SET_FOLLOW_TO_NOTIFICATION_INFO', // +
-    SET_BLOCKED_NOTIFICATION_INFO = 'notification/SET_BLOCKED_NOTIFICATION_INFO', // +
-    SET_FOLLOW_REQUEST_TO_NOTIFICATION_INFO = 'notification/SET_FOLLOW_REQUEST_TO_NOTIFICATION_INFO', // +
-    UPDATE_NOTIFICATION_INFO_TWEET = 'notification/UPDATE_NOTIFICATION_INFO_TWEET', // +
-    RESET_NOTIFICATION_STATE = 'notification/RESET_NOTIFICATION_STATE', // +
-    SET_LOADING_STATE = 'notification/SET_LOADING_STATE', // +
+    SET_NOTIFICATIONS = 'notification/SET_NOTIFICATIONS',
+    FETCH_NOTIFICATIONS = 'notification/FETCH_NOTIFICATIONS',
+    FETCH_NOTIFICATIONS_FROM_TWEET_AUTHORS = 'notification/FETCH_NOTIFICATIONS_FROM_TWEET_AUTHORS',
+    SET_NOTIFICATION = 'notification/SET_NOTIFICATION',
+    FETCH_NOTIFICATION_INFO = 'notification/FETCH_NOTIFICATION_INFO',
+    SET_NOTIFICATION_INFO = 'notification/SET_NOTIFICATION_INFO',
+    SET_FOLLOW_TO_NOTIFICATION_INFO = 'notification/SET_FOLLOW_TO_NOTIFICATION_INFO',
+    SET_BLOCKED_NOTIFICATION_INFO = 'notification/SET_BLOCKED_NOTIFICATION_INFO',
+    SET_FOLLOW_REQUEST_TO_NOTIFICATION_INFO = 'notification/SET_FOLLOW_REQUEST_TO_NOTIFICATION_INFO',
+    UPDATE_NOTIFICATION_INFO_TWEET = 'notification/UPDATE_NOTIFICATION_INFO_TWEET',
+    RESET_NOTIFICATION_STATE = 'notification/RESET_NOTIFICATION_STATE',
+    SET_LOADING_STATE = 'notification/SET_LOADING_STATE',
 }
 
-export interface SetNotificationsActionInterface extends Action<NotificationsActionsType> { // +
+export interface SetNotificationsActionInterface extends Action<NotificationsActionsType> {
     type: NotificationsActionsType.SET_NOTIFICATIONS;
     payload: NotificationsResponse;
 }
 
-export interface FetchNotificationsActionInterface extends Action<NotificationsActionsType> { // +
+export interface FetchNotificationsActionInterface extends Action<NotificationsActionsType> {
     type: NotificationsActionsType.FETCH_NOTIFICATIONS;
 }
 
-export interface FetchNotificationsFromTweetAuthorsActionInterface extends Action<NotificationsActionsType> { // +
+export interface FetchNotificationsFromTweetAuthorsActionInterface extends Action<NotificationsActionsType> {
     type: NotificationsActionsType.FETCH_NOTIFICATIONS_FROM_TWEET_AUTHORS;
     payload: number;
 }
 
-export interface SetNotificationActionInterface extends Action<NotificationsActionsType> { // +
+export interface SetNotificationActionInterface extends Action<NotificationsActionsType> {
     type: NotificationsActionsType.SET_NOTIFICATION;
     payload: NotificationResponse;
 }
 
-export interface FetchNotificationInfoActionInterface extends Action<NotificationsActionsType> { // +
+export interface FetchNotificationInfoActionInterface extends Action<NotificationsActionsType> {
     type: NotificationsActionsType.FETCH_NOTIFICATION_INFO;
     payload: number;
 }
 
-export interface SetNotificationInfoActionInterface extends Action<NotificationsActionsType> { // +
+export interface SetNotificationInfoActionInterface extends Action<NotificationsActionsType> {
     type: NotificationsActionsType.SET_NOTIFICATION_INFO;
     payload: NotificationInfoResponse;
 }
 
-export interface SetFollowToNotificationInfoActionInterface extends Action<NotificationsActionsType> { // +
+export interface SetFollowToNotificationInfoActionInterface extends Action<NotificationsActionsType> {
     type: NotificationsActionsType.SET_FOLLOW_TO_NOTIFICATION_INFO;
     payload: boolean;
 }
 
-export interface SetBlockedNotificationInfoActionInterface extends Action<NotificationsActionsType> { // +
+export interface SetBlockedNotificationInfoActionInterface extends Action<NotificationsActionsType> {
     type: NotificationsActionsType.SET_BLOCKED_NOTIFICATION_INFO;
     payload: boolean;
 }
 
-export interface SetFollowRequestToNotificationInfoActionInterface extends Action<NotificationsActionsType> { // +
+export interface SetFollowRequestToNotificationInfoActionInterface extends Action<NotificationsActionsType> {
     type: NotificationsActionsType.SET_FOLLOW_REQUEST_TO_NOTIFICATION_INFO;
     payload: boolean;
 }
 
-export interface UpdateNotificationInfoTweetActionInterface extends Action<NotificationsActionsType> { // +
+export interface UpdateNotificationInfoTweetActionInterface extends Action<NotificationsActionsType> {
     type: NotificationsActionsType.UPDATE_NOTIFICATION_INFO_TWEET;
     payload: NotificationResponse | NotificationReplyResponse;
 }
 
-export interface ResetNotificationStateActionInterface extends Action<NotificationsActionsType> { // +
+export interface ResetNotificationStateActionInterface extends Action<NotificationsActionsType> {
     type: NotificationsActionsType.RESET_NOTIFICATION_STATE;
 }
 
-export interface SetNotificationsLoadingStateActionInterface extends Action<NotificationsActionsType> { // +
+export interface SetNotificationsLoadingStateActionInterface extends Action<NotificationsActionsType> {
     type: NotificationsActionsType.SET_LOADING_STATE;
     payload: LoadingStatus;
 }
 
 export type NotificationsActions =
-    | SetNotificationsActionInterface // +
-    | SetNotificationActionInterface // +
-    | SetNotificationInfoActionInterface // +
-    | SetFollowToNotificationInfoActionInterface // +
-    | SetBlockedNotificationInfoActionInterface // +
-    | SetFollowRequestToNotificationInfoActionInterface // +
-    | UpdateNotificationInfoTweetActionInterface // +
-    | ResetNotificationStateActionInterface // +
-    | SetNotificationsLoadingStateActionInterface; // +
+    | SetNotificationsActionInterface
+    | SetNotificationActionInterface
+    | SetNotificationInfoActionInterface
+    | SetFollowToNotificationInfoActionInterface
+    | SetBlockedNotificationInfoActionInterface
+    | SetFollowRequestToNotificationInfoActionInterface
+    | UpdateNotificationInfoTweetActionInterface
+    | ResetNotificationStateActionInterface
+    | SetNotificationsLoadingStateActionInterface;

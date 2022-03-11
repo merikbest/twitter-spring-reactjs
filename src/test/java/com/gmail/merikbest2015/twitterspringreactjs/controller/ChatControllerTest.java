@@ -16,8 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 
-import static com.gmail.merikbest2015.twitterspringreactjs.util.TestConstants.URL_CHAT_BASIC;
-import static com.gmail.merikbest2015.twitterspringreactjs.util.TestConstants.USER_EMAIL;
+import static com.gmail.merikbest2015.twitterspringreactjs.util.TestConstants.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -113,14 +112,14 @@ public class ChatControllerTest {
     public void addMessage() throws Exception {
         ChatMessageRequest request = new ChatMessageRequest();
         request.setChatId(8L);
-        request.setText("test text");
+        request.setText(TEST_TWEET_TEXT);
 
         mockMvc.perform(post(URL_CHAT_BASIC + "/add/message")
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNotEmpty())
-                .andExpect(jsonPath("$.text").value("test text"))
+                .andExpect(jsonPath("$.text").value(TEST_TWEET_TEXT))
                 .andExpect(jsonPath("$.date").isNotEmpty())
                 .andExpect(jsonPath("$.author.id").value(2))
                 .andExpect(jsonPath("$.tweet").isEmpty())
@@ -133,7 +132,7 @@ public class ChatControllerTest {
     public void addMessage_ChatNotFound() throws Exception {
         ChatMessageRequest request = new ChatMessageRequest();
         request.setChatId(9L);
-        request.setText("test text");
+        request.setText(TEST_TWEET_TEXT);
 
         mockMvc.perform(post(URL_CHAT_BASIC + "/add/message")
                         .content(mapper.writeValueAsString(request))
@@ -148,7 +147,7 @@ public class ChatControllerTest {
     public void addMessage_ChatParticipantNotFound() throws Exception {
         ChatMessageRequest request = new ChatMessageRequest();
         request.setChatId(8L);
-        request.setText("test text");
+        request.setText(TEST_TWEET_TEXT);
 
         mockMvc.perform(post(URL_CHAT_BASIC + "/add/message")
                         .content(mapper.writeValueAsString(request))
@@ -163,7 +162,7 @@ public class ChatControllerTest {
     public void addMessage_ChatParticipantIsBlocked() throws Exception {
         ChatMessageRequest request = new ChatMessageRequest();
         request.setChatId(10L);
-        request.setText("test text");
+        request.setText(TEST_TWEET_TEXT);
 
         mockMvc.perform(post(URL_CHAT_BASIC + "/add/message")
                         .content(mapper.writeValueAsString(request))
@@ -177,7 +176,7 @@ public class ChatControllerTest {
     @DisplayName("[200] POST /api/v1/chat/add/message/tweet - Add message with Tweet")
     public void addMessageWithTweet() throws Exception {
         MessageWithTweetRequest request = new MessageWithTweetRequest();
-        request.setText("test text");
+        request.setText(TEST_TWEET_TEXT);
         request.setTweetId(40L);
         request.setUsersIds(Collections.singletonList(2L));
 
@@ -186,7 +185,7 @@ public class ChatControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNotEmpty())
-                .andExpect(jsonPath("$.text").value("test text"))
+                .andExpect(jsonPath("$.text").value(TEST_TWEET_TEXT))
                 .andExpect(jsonPath("$.author.id").value(2L))
                 .andExpect(jsonPath("$.tweet.id").value(40L))
                 .andExpect(jsonPath("$.chat.id").value(8));
@@ -199,9 +198,9 @@ public class ChatControllerTest {
         mockMvc.perform(get(URL_CHAT_BASIC + "/participant/4/8"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
-                .andExpect(jsonPath("$.fullName").value("Vbhjckfd1"))
-                .andExpect(jsonPath("$.username").value("Vbhjckfd1"))
-                .andExpect(jsonPath("$.about").value("Hello2"))
+                .andExpect(jsonPath("$.fullName").value(USERNAME2))
+                .andExpect(jsonPath("$.username").value(USERNAME2))
+                .andExpect(jsonPath("$.about").value(ABOUT2))
                 .andExpect(jsonPath("$.isPrivateProfile").value(false))
                 .andExpect(jsonPath("$.isMutedDirectMessages").value(true))
                 .andExpect(jsonPath("$.isUserBlocked").value(false))

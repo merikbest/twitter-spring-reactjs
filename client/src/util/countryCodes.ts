@@ -1,19 +1,17 @@
-import {User} from "../store/ducks/user/contracts/state";
-
-export const getPhoneCode = (myProfile: User | undefined): string => {
-    const countryCode = countryCodes.find((value) => (value.countryCode === myProfile?.countryCode));
+export const getPhoneCode = (userCountryCode?: string): string => {
+    const countryCode = countryCodes.find((value) => (value.countryCode === userCountryCode));
 
     return (countryCode !== undefined) ? countryCode.phoneCode : "";
 };
 
-export const getCountryCode = (myProfile: User | undefined): string => {
-    const countryCode = countryCodes.find((value) => (value.countryCode === myProfile?.countryCode));
+export const getCountryCode = (userCountryCode?: string): string => {
+    const countryCode = countryCodes.find((value) => (value.countryCode === userCountryCode));
 
     return (countryCode !== undefined) ? countryCode.countryCode : "";
 };
 
-export const getCountry = (myProfile: User | undefined): string => {
-    const countryCode = countryCodes.find((value) => (value.countryCode === myProfile?.country));
+export const getCountry = (userCountryCode?: string): string => {
+    const countryCode = countryCodes.find((value) => (value.countryCode === userCountryCode));
 
     return (countryCode !== undefined) ? countryCode.country : "";
 };

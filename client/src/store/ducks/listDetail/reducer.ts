@@ -11,12 +11,12 @@ const initialTagsState: ListDetailState = {
 
 export const listDetailReducer = produce((draft: Draft<ListDetailState>, action: UserDetailActions) => {
     switch (action.type) {
-        case ListDetailActionsType.SET_LIST_DETAIL: // +
+        case ListDetailActionsType.SET_LIST_DETAIL:
             draft.item = action.payload;
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
-        case ListDetailActionsType.UPDATE_FOLLOW_LIST_DETAIL: // +
+        case ListDetailActionsType.UPDATE_FOLLOW_LIST_DETAIL:
             if (draft.item !== undefined) {
                 draft.item.isFollower = action.payload;
                 draft.item.followersSize = action.payload ? draft.item.followersSize + 1 : draft.item.followersSize - 1;
@@ -24,12 +24,12 @@ export const listDetailReducer = produce((draft: Draft<ListDetailState>, action:
             }
             break;
 
-        case ListDetailActionsType.RESET_LIST_DETAIL_STATE: // +
+        case ListDetailActionsType.RESET_LIST_DETAIL_STATE:
             draft.item = undefined;
             draft.loadingState = LoadingStatus.LOADING;
             break;
 
-        case ListDetailActionsType.SET_LOADING_STATE: // +
+        case ListDetailActionsType.SET_LOADING_STATE:
             draft.loadingState = action.payload;
             break;
 

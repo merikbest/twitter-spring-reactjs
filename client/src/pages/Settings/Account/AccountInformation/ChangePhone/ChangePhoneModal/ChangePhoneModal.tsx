@@ -46,11 +46,11 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = ({visible, onClose}): ReactE
         resolver: yupResolver(SetPhoneFormSchema),
         mode: "onChange",
     });
-    const phoneCode = getPhoneCode(myProfile);
+    const phoneCode = getPhoneCode(myProfile?.countryCode);
 
     useEffect(() => {
         if (myProfile) {
-            setCountryCode(getCountryCode(myProfile));
+            setCountryCode(getCountryCode(myProfile.countryCode));
         }
     }, []);
 

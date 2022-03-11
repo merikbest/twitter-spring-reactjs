@@ -6,7 +6,7 @@ import {setUsers, setUsersLoadingState} from "./actionCreators";
 import {UserApi} from "../../../services/api/userApi";
 import {UserResponse} from "../../types/user";
 
-export function* fetchUsersRequest() { // +
+export function* fetchUsersRequest() {
     try {
         yield put(setUsersLoadingState(LoadingStatus.LOADING));
         const item: UserResponse[] = yield call(UserApi.getUsers);
@@ -16,7 +16,7 @@ export function* fetchUsersRequest() { // +
     }
 }
 
-export function* fetchRelevantUsersRequest() { // +
+export function* fetchRelevantUsersRequest() {
     try {
         yield put(setUsersLoadingState(LoadingStatus.LOADING));
         const item: UserResponse[] = yield call(UserApi.getRelevantUsers);
@@ -27,6 +27,6 @@ export function* fetchRelevantUsersRequest() { // +
 }
 
 export function* usersSaga() {
-    yield takeLatest(UsersActionsType.FETCH_USERS, fetchUsersRequest); // +
-    yield takeLatest(UsersActionsType.FETCH_RELEVANT_USERS, fetchRelevantUsersRequest); // +
+    yield takeLatest(UsersActionsType.FETCH_USERS, fetchUsersRequest);
+    yield takeLatest(UsersActionsType.FETCH_RELEVANT_USERS, fetchRelevantUsersRequest);
 }

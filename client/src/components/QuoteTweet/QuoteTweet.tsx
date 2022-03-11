@@ -3,7 +3,6 @@ import {ClickAwayListener, IconButton, List, ListItem, Typography} from "@materi
 import classnames from "classnames";
 
 import {useQuoteTweetStyles} from "./QuoteTweetSyles";
-import {Retweet} from "../../store/ducks/tweets/contracts/state";
 import {QuoteTweetIcon, RetweetIcon, RetweetOutlinedIcon} from "../../icons";
 import QuoteTweetModal from "./QuoteTweetModal/QuoteTweetModal";
 import HoverAction from "../HoverAction/HoverAction";

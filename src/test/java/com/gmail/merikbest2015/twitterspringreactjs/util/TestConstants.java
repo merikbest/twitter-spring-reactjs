@@ -47,6 +47,10 @@ public class TestConstants {
     public static final boolean PRIVATE_PROFILE = false;
     public static final boolean PROFILE_CUSTOMIZED = true;
     public static final boolean PROFILE_STARTED = true;
+    
+    public static final String TEST_TWEET_TEXT = "test text";
+    public static final String USERNAME2 = "John Doe";
+    public static final String ABOUT2 = "Hello2";
 
     public static final String TWEET_TEXT = "#JetBrains https://www.jetbrains.com/ ";
     public static final String TWEET_DATETIME = "2021-10-03T20:34:15";

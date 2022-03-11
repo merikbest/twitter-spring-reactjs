@@ -38,7 +38,7 @@ const ChangePhone: FC = (): ReactElement => {
                     label="Current"
                     type="text"
                     variant="filled"
-                    value={`${getPhoneCode(myProfile)}${myProfile?.phone}`}
+                    value={`${getPhoneCode(myProfile?.countryCode)}${myProfile?.phone}`}
                     fullWidth
                 />
             </div>

@@ -11,24 +11,24 @@ const initialTagsState: ChatMessageState = {
 
 export const chatMessagesReducer = produce((draft: Draft<ChatMessageState>, action: ChatMessageActions) => {
     switch (action.type) {
-        case ChatMessagesActionsType.SET_CHAT_MESSAGES: // +
+        case ChatMessagesActionsType.SET_CHAT_MESSAGES:
             draft.items = action.payload;
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
-        case ChatMessagesActionsType.SET_CHAT_MESSAGE: // +
+        case ChatMessagesActionsType.SET_CHAT_MESSAGE:
             if (draft.items[0].chat.id === action.payload.chat.id) {
                 draft.items = [...draft.items, action.payload];
             }
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
-        case ChatMessagesActionsType.RESET_CHAT_MESSAGES: // +
+        case ChatMessagesActionsType.RESET_CHAT_MESSAGES:
             draft.items = [];
             draft.loadingState = LoadingStatus.LOADING;
             break;
 
-        case ChatMessagesActionsType.SET_LOADING_STATE: // +
+        case ChatMessagesActionsType.SET_LOADING_STATE:
             draft.loadingState = action.payload;
             break;
 

@@ -15,7 +15,7 @@ import {
 import {useTweetComponentStyles} from "./TweetComponentStyles";
 import {formatDate} from '../../util/formatDate';
 import {likeTweet, retweet} from "../../store/ducks/tweets/actionCreators";
-import {LinkCoverSize, ReplyType, Tweet} from "../../store/ducks/tweets/contracts/state";
+import {LinkCoverSize, ReplyType} from "../../store/ducks/tweets/contracts/state";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import ReplyModal from "../ReplyModal/ReplyModal";

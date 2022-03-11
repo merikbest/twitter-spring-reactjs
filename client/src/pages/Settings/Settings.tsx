@@ -61,6 +61,7 @@ import Display, {DisplayProps} from "./AccessibilityDisplayLanguages/Display/Dis
 import Languages from "./AccessibilityDisplayLanguages/Languages/Languages";
 import Autoplay from "./AccessibilityDisplayLanguages/DataUsage/Autoplay/Autoplay";
 import {useGlobalStyles} from "../../util/globalClasses";
+import ContentPreferences from "./Notifications/ContentPreferences/ContentPreferences";
 
 export interface LocationState {
     pathname: string;
@@ -497,6 +498,11 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                             Additional resources
                         </Typography>
                     </Route>
+                    <Route exact path="/settings/content_preferences">
+                        <Typography variant="h5">
+                            Content preferences
+                        </Typography>
+                    </Route>
                 </Paper>
                 <Paper className={classnames(globalClasses.pageContainer, classes.pageContainer)} variant="outlined">
                     <div className={globalClasses.contentWrapper}>
@@ -558,6 +564,7 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                         <Route exact path="/settings/accessibility_display_and_languages/data" component={DataUsage}/>
                         <Route exact path="/settings/accessibility_display_and_languages/autoplay" component={Autoplay}/>
                         <Route exact path="/settings/about" component={AdditionalResources}/>
+                        <Route exact path="/settings/content_preferences" component={ContentPreferences}/>
                     </div>
                 </Paper>
             </Grid>

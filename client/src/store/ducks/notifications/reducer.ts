@@ -16,44 +16,44 @@ const initialTagsState: NotificationsState = {
 
 export const notificationsReducer = produce((draft: Draft<NotificationsState>, action: NotificationsActions) => {
     switch (action.type) {
-        case NotificationsActionsType.SET_NOTIFICATIONS: // +
+        case NotificationsActionsType.SET_NOTIFICATIONS:
             draft.notificationsList = action.payload.notifications ? action.payload.notifications : [];
             draft.tweetAuthors = action.payload.tweetAuthors ? action.payload.tweetAuthors : [];
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
-        case NotificationsActionsType.SET_NOTIFICATION: // +
+        case NotificationsActionsType.SET_NOTIFICATION:
             draft.notificationsList = [action.payload, ...draft.notificationsList];
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
-        case NotificationsActionsType.SET_NOTIFICATION_INFO: // +
+        case NotificationsActionsType.SET_NOTIFICATION_INFO:
             draft.notificationInfo = action.payload;
             draft.notificationInfoLoadingState = LoadingStatus.LOADED;
             break;
 
-        case NotificationsActionsType.SET_FOLLOW_TO_NOTIFICATION_INFO: // +
+        case NotificationsActionsType.SET_FOLLOW_TO_NOTIFICATION_INFO:
             if (draft.notificationInfo !== undefined) {
                 draft.notificationInfo.user.isFollower = action.payload;
                 draft.notificationInfoLoadingState = LoadingStatus.LOADED;
             }
             break;
 
-        case NotificationsActionsType.SET_BLOCKED_NOTIFICATION_INFO: // +
+        case NotificationsActionsType.SET_BLOCKED_NOTIFICATION_INFO:
             if (draft.notificationInfo !== undefined) {
                 draft.notificationInfo.user.isUserBlocked = action.payload;
                 draft.notificationInfoLoadingState = LoadingStatus.LOADED;
             }
             break;
 
-        case NotificationsActionsType.SET_FOLLOW_REQUEST_TO_NOTIFICATION_INFO: // +
+        case NotificationsActionsType.SET_FOLLOW_REQUEST_TO_NOTIFICATION_INFO:
             if (draft.notificationInfo !== undefined) {
                 draft.notificationInfo.user.isWaitingForApprove = action.payload;
                 draft.notificationInfoLoadingState = LoadingStatus.LOADED;
             }
             break;
 
-        case NotificationsActionsType.UPDATE_NOTIFICATION_INFO_TWEET: // +
+        case NotificationsActionsType.UPDATE_NOTIFICATION_INFO_TWEET:
             if (draft.notificationInfo !== undefined) {
                 if (action.payload.notificationType === NotificationType.LIKE) {
                     const payload = action.payload as NotificationResponse;
@@ -74,7 +74,7 @@ export const notificationsReducer = produce((draft: Draft<NotificationsState>, a
             }
             break;
 
-        case NotificationsActionsType.RESET_NOTIFICATION_STATE: // +
+        case NotificationsActionsType.RESET_NOTIFICATION_STATE:
             draft.notificationsList = [];
             draft.tweetAuthors = [];
             draft.notificationInfo = undefined;
@@ -82,7 +82,7 @@ export const notificationsReducer = produce((draft: Draft<NotificationsState>, a
             draft.loadingState = LoadingStatus.LOADING;
             break;
 
-        case NotificationsActionsType.SET_LOADING_STATE: // +
+        case NotificationsActionsType.SET_LOADING_STATE:
             draft.loadingState = action.payload;
             break;
 

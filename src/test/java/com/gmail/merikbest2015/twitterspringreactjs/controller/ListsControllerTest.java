@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.ListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -606,7 +607,7 @@ public class ListsControllerTest {
                 .andExpect(jsonPath("$[0].addressedUsername").isEmpty())
                 .andExpect(jsonPath("$[0].addressedId").isEmpty())
                 .andExpect(jsonPath("$[0].addressedTweetId").isEmpty())
-                .andExpect(jsonPath("$[0].replyType").value("EVERYONE"))
+                .andExpect(jsonPath("$[0].replyType").value(ReplyType.EVERYONE.toString()))
                 .andExpect(jsonPath("$[0].link").isEmpty())
                 .andExpect(jsonPath("$[0].linkTitle").isEmpty())
                 .andExpect(jsonPath("$[0].linkDescription").isEmpty())
@@ -671,9 +672,9 @@ public class ListsControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(1L))
-                .andExpect(jsonPath("$[0].fullName").value("Vbhjckfd1"))
-                .andExpect(jsonPath("$[0].username").value("Vbhjckfd1"))
-                .andExpect(jsonPath("$[0].about").value("Hello2"))
+                .andExpect(jsonPath("$[0].fullName").value(USERNAME2))
+                .andExpect(jsonPath("$[0].username").value(USERNAME2))
+                .andExpect(jsonPath("$[0].about").value(ABOUT2))
                 .andExpect(jsonPath("$[0].avatar.id").value(11L))
                 .andExpect(jsonPath("$[0].isPrivateProfile").value(false));
     }
@@ -713,9 +714,9 @@ public class ListsControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(1L))
-                .andExpect(jsonPath("$[0].fullName").value("Vbhjckfd1"))
-                .andExpect(jsonPath("$[0].username").value("Vbhjckfd1"))
-                .andExpect(jsonPath("$[0].about").value("Hello2"))
+                .andExpect(jsonPath("$[0].fullName").value(USERNAME2))
+                .andExpect(jsonPath("$[0].username").value(USERNAME2))
+                .andExpect(jsonPath("$[0].about").value(ABOUT2))
                 .andExpect(jsonPath("$[0].avatar.id").value(11L))
                 .andExpect(jsonPath("$[0].isPrivateProfile").value(false))
                 .andExpect(jsonPath("$[0].isMemberInList").value(true));
@@ -729,9 +730,9 @@ public class ListsControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(1L))
-                .andExpect(jsonPath("$[0].fullName").value("Vbhjckfd1"))
-                .andExpect(jsonPath("$[0].username").value("Vbhjckfd1"))
-                .andExpect(jsonPath("$[0].about").value("Hello2"))
+                .andExpect(jsonPath("$[0].fullName").value(USERNAME2))
+                .andExpect(jsonPath("$[0].username").value(USERNAME2))
+                .andExpect(jsonPath("$[0].about").value(ABOUT2))
                 .andExpect(jsonPath("$[0].avatar.id").value(11L))
                 .andExpect(jsonPath("$[0].isPrivateProfile").value(false));
     }

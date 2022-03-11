@@ -11,24 +11,24 @@ const initialUsersState: UsersState = {
 
 export const usersReducer = produce((draft: Draft<UsersState>, action: UsersActions) => {
     switch (action.type) {
-        case UsersActionsType.SET_USERS: //+
+        case UsersActionsType.SET_USERS:
             draft.users = action.payload;
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
-        case UsersActionsType.SET_FOLLOW_TO_USERS_STATE: //+
+        case UsersActionsType.SET_FOLLOW_TO_USERS_STATE:
             const followUserIndex = draft.users.findIndex((user) => user.id === action.payload.userId);
             if (followUserIndex !== -1) draft.users[followUserIndex].isFollower = action.payload.isFollower;
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
-        case UsersActionsType.SET_FOLLOW_REQUEST_TO_USERS_STATE: //+
+        case UsersActionsType.SET_FOLLOW_REQUEST_TO_USERS_STATE:
             const followUserRequestIndex = draft.users.findIndex((user) => user.id === action.payload.userId);
             if (followUserRequestIndex !== -1) draft.users[followUserRequestIndex].isWaitingForApprove = action.payload.isWaitingForApprove;
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
-        case UsersActionsType.SET_BLOCKED_USERS_STATE: //+
+        case UsersActionsType.SET_BLOCKED_USERS_STATE:
             const blockedUserIndex = draft.users.findIndex((user) => user.id === action.payload.userId);
             if (blockedUserIndex !== -1) draft.users[blockedUserIndex].isUserBlocked = action.payload.isUserBlocked;
             draft.loadingState = LoadingStatus.SUCCESS;
@@ -40,12 +40,12 @@ export const usersReducer = produce((draft: Draft<UsersState>, action: UsersActi
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
-        case UsersActionsType.RESET_USERS_STATE: //+
+        case UsersActionsType.RESET_USERS_STATE:
             draft.users = [];
             draft.loadingState = LoadingStatus.LOADING;
             break;
 
-        case UsersActionsType.SET_USER_LOADING_STATE: //+
+        case UsersActionsType.SET_USER_LOADING_STATE:
             draft.loadingState = action.payload;
             break;
 

@@ -18,7 +18,7 @@ import {ListsApi} from "../../../services/api/listsApi";
 import {ListsOwnerMemberResponse} from "../../types/lists";
 import {setMembersSize} from "../list/actionCreators";
 
-export function* fetchListMembersRequest({payload}: FetchListMembersActionInterface) { // +
+export function* fetchListMembersRequest({payload}: FetchListMembersActionInterface) {
     try {
         yield setLoadingMembersState(LoadingStatus.LOADING);
         const items: ListsOwnerMemberResponse[] = yield call(ListsApi.getListMembers, payload.listId, payload.listOwnerId);
@@ -28,7 +28,7 @@ export function* fetchListMembersRequest({payload}: FetchListMembersActionInterf
     }
 }
 
-export function* fetchListFollowersRequest({payload}: FetchListFollowersActionInterface) { // +
+export function* fetchListFollowersRequest({payload}: FetchListFollowersActionInterface) {
     try {
         yield setLoadingMembersState(LoadingStatus.LOADING);
         const items: ListsOwnerMemberResponse[] = yield call(ListsApi.getListFollowers, payload.listId, payload.listOwnerId);
@@ -38,7 +38,7 @@ export function* fetchListFollowersRequest({payload}: FetchListFollowersActionIn
     }
 }
 
-export function* fetchListMembersByUsernameRequest({payload}: FetchListMembersByUsernameActionInterface) { // +
+export function* fetchListMembersByUsernameRequest({payload}: FetchListMembersByUsernameActionInterface) {
     try {
         yield setLoadingSuggestedState(LoadingStatus.LOADING);
         const items: ListsOwnerMemberResponse[] = yield call(ListsApi.searchListMembersByUsername, payload.listId, payload.username);
@@ -48,7 +48,7 @@ export function* fetchListMembersByUsernameRequest({payload}: FetchListMembersBy
     }
 }
 
-export function* processListMemberRequest({payload}: ProcessUserToListMembersActionInterface) { // +
+export function* processListMemberRequest({payload}: ProcessUserToListMembersActionInterface) {
     try {
         yield put(setLoadingSuggestedState(LoadingStatus.LOADING));
         const data: boolean = yield call(ListsApi.addUserToList, payload.userId, payload.listId);

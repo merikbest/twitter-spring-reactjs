@@ -21,6 +21,7 @@ import FullTweet from "../FullTweet/FullTweet";
 import Spinner from "../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../util/globalClasses";
 import classnames from "classnames";
+import TopTweetActions from "./TopTweetActions/TopTweetActions";
 
 const Home: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -67,11 +68,7 @@ const Home: FC = (): ReactElement => {
                         <Typography variant="h5">
                             Home
                         </Typography>
-                        <div className={classes.headerIcon}>
-                            <IconButton color="primary">
-                                <>{TopTweets}</>
-                            </IconButton>
-                        </div>
+                        <TopTweetActions/>
                     </Route>
                     <Route path="/home/tweet">
                         <div>

@@ -32,7 +32,7 @@ import {updateFollowToFullList} from '../list/actionCreators';
 import {ListResponse, ListUserResponse, PinnedListResponse, SimpleListResponse} from "../../types/lists";
 import {updateFollowListDetail} from "../listDetail/actionCreators";
 
-export function* fetchListsRequest() { // +
+export function* fetchListsRequest() {
     try {
         yield put(setLoadingState(LoadingStatus.LOADING));
         yield put(setListsLoadingState(LoadingStatus.LOADING));
@@ -43,7 +43,7 @@ export function* fetchListsRequest() { // +
     }
 }
 
-export function* fetchUserListsRequest() { // +
+export function* fetchUserListsRequest() {
     try {
         yield put(setUserListsLoadingState(LoadingStatus.LOADING));
         const data: ListUserResponse[] = yield call(ListsApi.getUserTweetLists);
@@ -53,7 +53,7 @@ export function* fetchUserListsRequest() { // +
     }
 }
 
-export function* fetchUserListsByIdRequest({payload}: FetchUserListsByIdActionInterface) { // +
+export function* fetchUserListsByIdRequest({payload}: FetchUserListsByIdActionInterface) {
     try {
         yield put(setLoadingState(LoadingStatus.LOADING));
         const data: ListResponse[] = yield call(ListsApi.getUserTweetListsById, payload);
@@ -64,7 +64,7 @@ export function* fetchUserListsByIdRequest({payload}: FetchUserListsByIdActionIn
     }
 }
 
-export function* fetchTweetListsWhichUserInRequest() { // +
+export function* fetchTweetListsWhichUserInRequest() {
     try {
         yield put(setLoadingState(LoadingStatus.LOADING));
         const data: ListResponse[] = yield call(ListsApi.getTweetListsWhichUserIn);
@@ -75,7 +75,7 @@ export function* fetchTweetListsWhichUserInRequest() { // +
     }
 }
 
-export function* fetchPinnedListsRequest() { // +
+export function* fetchPinnedListsRequest() {
     try {
         yield put(setPinnedListsLoadingState(LoadingStatus.LOADING));
         const data: PinnedListResponse[] = yield call(ListsApi.getUserPinnedLists);
@@ -85,7 +85,7 @@ export function* fetchPinnedListsRequest() { // +
     }
 }
 
-export function* fetchSimpleListsRequest({payload}: FetchSimpleListsActionInterface) { // +
+export function* fetchSimpleListsRequest({payload}: FetchSimpleListsActionInterface) {
     try {
         yield put(setSimpleListsLoadingState(LoadingStatus.LOADING));
         const data: SimpleListResponse[] = yield call(ListsApi.getListsToAddUser, payload);
@@ -95,7 +95,7 @@ export function* fetchSimpleListsRequest({payload}: FetchSimpleListsActionInterf
     }
 }
 
-export function* createListRequest({payload}: CreateListActionInterface) { // +
+export function* createListRequest({payload}: CreateListActionInterface) {
     try {
         yield put(setLoadingState(LoadingStatus.LOADING));
         const data: ListUserResponse = yield call(ListsApi.createTweetList, payload);
@@ -105,7 +105,7 @@ export function* createListRequest({payload}: CreateListActionInterface) { // +
     }
 }
 
-export function* pinListRequest({payload}: PinListActionInterface) { // +
+export function* pinListRequest({payload}: PinListActionInterface) {
     try {
         const data: PinnedListResponse = yield call(ListsApi.pinList, payload);
         yield put(setPinedList(data));
@@ -115,7 +115,7 @@ export function* pinListRequest({payload}: PinListActionInterface) { // +
     }
 }
 
-export function* unpinListRequest({payload}: PinListActionInterface) { // +
+export function* unpinListRequest({payload}: PinListActionInterface) {
     try {
         const data: PinnedListResponse = yield call(ListsApi.pinList, payload);
         yield put(setUnpinList(data));
@@ -125,7 +125,7 @@ export function* unpinListRequest({payload}: PinListActionInterface) { // +
     }
 }
 
-export function* followListRequest({payload}: FollowListActionInterface) { // +
+export function* followListRequest({payload}: FollowListActionInterface) {
     try {
         const data: ListUserResponse = yield call(ListsApi.followList, payload);
         yield put(setFollowList(data));
@@ -136,7 +136,7 @@ export function* followListRequest({payload}: FollowListActionInterface) { // +
     }
 }
 
-export function* unfollowListRequest({payload}: UnfollowListActionInterface) { // +
+export function* unfollowListRequest({payload}: UnfollowListActionInterface) {
     try {
         const data: ListUserResponse = yield call(ListsApi.followList, payload);
         yield put(setUnfollowList(data));
@@ -147,7 +147,7 @@ export function* unfollowListRequest({payload}: UnfollowListActionInterface) { /
     }
 }
 
-export function* processUserToListsRequest({payload}: ProcessUserToListsActionInterface) { // +
+export function* processUserToListsRequest({payload}: ProcessUserToListsActionInterface) {
     try {
         yield call(ListsApi.addUserToLists, payload);
     } catch (error) {
@@ -156,16 +156,16 @@ export function* processUserToListsRequest({payload}: ProcessUserToListsActionIn
 }
 
 export function* listsSaga() {
-    yield takeEvery(ListsActionType.FETCH_LISTS, fetchListsRequest); // +
-    yield takeEvery(ListsActionType.FETCH_USER_LISTS, fetchUserListsRequest); // +
-    yield takeEvery(ListsActionType.FETCH_USER_LISTS_BY_ID, fetchUserListsByIdRequest); // +
-    yield takeEvery(ListsActionType.FETCH_TWEET_LISTS_WHICH_USER_IN, fetchTweetListsWhichUserInRequest); // +
-    yield takeEvery(ListsActionType.FETCH_PINNED_LISTS, fetchPinnedListsRequest); // +
-    yield takeEvery(ListsActionType.FETCH_SIMPLE_LISTS, fetchSimpleListsRequest); // +
-    yield takeEvery(ListsActionType.CREATE_LIST, createListRequest); // +
-    yield takeEvery(ListsActionType.PIN_LIST, pinListRequest); // +
-    yield takeEvery(ListsActionType.UNPIN_LIST, unpinListRequest); // +
-    yield takeEvery(ListsActionType.FOLLOW_LIST, followListRequest); // +
-    yield takeEvery(ListsActionType.UNFOLLOW_LIST, unfollowListRequest); // +
+    yield takeEvery(ListsActionType.FETCH_LISTS, fetchListsRequest);
+    yield takeEvery(ListsActionType.FETCH_USER_LISTS, fetchUserListsRequest);
+    yield takeEvery(ListsActionType.FETCH_USER_LISTS_BY_ID, fetchUserListsByIdRequest);
+    yield takeEvery(ListsActionType.FETCH_TWEET_LISTS_WHICH_USER_IN, fetchTweetListsWhichUserInRequest);
+    yield takeEvery(ListsActionType.FETCH_PINNED_LISTS, fetchPinnedListsRequest);
+    yield takeEvery(ListsActionType.FETCH_SIMPLE_LISTS, fetchSimpleListsRequest);
+    yield takeEvery(ListsActionType.CREATE_LIST, createListRequest);
+    yield takeEvery(ListsActionType.PIN_LIST, pinListRequest);
+    yield takeEvery(ListsActionType.UNPIN_LIST, unpinListRequest);
+    yield takeEvery(ListsActionType.FOLLOW_LIST, followListRequest);
+    yield takeEvery(ListsActionType.UNFOLLOW_LIST, unfollowListRequest);
     yield takeEvery(ListsActionType.PROCESS_USER_TO_LISTS, processUserToListsRequest);
 }

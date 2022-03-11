@@ -15,13 +15,13 @@ const initialTweetsState: UserTweetsState = {
 export const userTweetsReducer = produce((draft: Draft<UserTweetsState>, action: UserTweetsActions) => {
 
     switch (action.type) {
-        case UserTweetsActionType.SET_TWEETS: // +
+        case UserTweetsActionType.SET_TWEETS:
             draft.items = [...draft.items, ...action.payload.items];
             draft.pagesCount = action.payload.pagesCount;
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
-        case UserTweetsActionType.SET_FOLLOW_TO_USERS_TWEETS_STATE: // +
+        case UserTweetsActionType.SET_FOLLOW_TO_USERS_TWEETS_STATE:
             if (action.payload.tweetId !== undefined) {
                 const followUserTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.tweetId);
                 if (followUserTweetIndex !== -1) draft.items[followUserTweetIndex].user.isFollower = action.payload.isFollower;
@@ -38,7 +38,7 @@ export const userTweetsReducer = produce((draft: Draft<UserTweetsState>, action:
             draft.loadingState = LoadingStatus.LOADED
             break;
 
-        case UserTweetsActionType.SET_BLOCKED_USERS_TWEETS_STATE: // +
+        case UserTweetsActionType.SET_BLOCKED_USERS_TWEETS_STATE:
             if (action.payload.tweetId !== undefined) {
                 const blockedUserTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.tweetId);
                 if (blockedUserTweetIndex !== -1) draft.items[blockedUserTweetIndex].user.isUserBlocked = action.payload.isUserBlocked;
@@ -55,7 +55,7 @@ export const userTweetsReducer = produce((draft: Draft<UserTweetsState>, action:
             draft.loadingState = LoadingStatus.LOADED
             break;
 
-        case UserTweetsActionType.SET_MUTED_USERS_TWEETS_STATE: // +
+        case UserTweetsActionType.SET_MUTED_USERS_TWEETS_STATE:
             if (action.payload.tweetId !== undefined) {
                 const mutedUserTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.tweetId);
                 if (mutedUserTweetIndex !== -1) draft.items[mutedUserTweetIndex].user.isUserMuted = action.payload.isUserMuted;
@@ -72,24 +72,24 @@ export const userTweetsReducer = produce((draft: Draft<UserTweetsState>, action:
             draft.loadingState = LoadingStatus.LOADED
             break;
 
-        case UserTweetsActionType.SET_UPDATED_BOOKMARKED_TWEET: // +
+        case UserTweetsActionType.SET_UPDATED_BOOKMARKED_TWEET:
             const bookmarkedTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.tweetId);
             if (bookmarkedTweetIndex !== -1) draft.items[bookmarkedTweetIndex].isTweetBookmarked = action.payload.isTweetBookmarked;
             draft.loadingState = LoadingStatus.LOADED
             break;
 
-        case UserTweetsActionType.RESET_TWEETS: // +
+        case UserTweetsActionType.RESET_TWEETS:
             draft.items = [];
             draft.pagesCount = 1;
             draft.loadingState = LoadingStatus.LOADING
             break;
 
-        case UserTweetsActionType.SET_ADDED_TWEET: // +
+        case UserTweetsActionType.SET_ADDED_TWEET:
             draft.items = [action.payload, ...draft.items];
             draft.loadingState = LoadingStatus.LOADED
             break;
 
-        case UserTweetsActionType.SET_UPDATED_TWEET: // +
+        case UserTweetsActionType.SET_UPDATED_TWEET:
             if (action.payload.notificationType === NotificationType.LIKE) {
                 const payload = action.payload as NotificationResponse;
                 const likedTweetIndex = draft.items.findIndex((tweet) => tweet.id === payload.tweet.id);
@@ -119,7 +119,7 @@ export const userTweetsReducer = produce((draft: Draft<UserTweetsState>, action:
             draft.items = draft.items.filter((tweet) => tweet.id !== action.payload.id);
             break;
 
-        case UserTweetsActionType.SET_LOADING_STATUS: // +
+        case UserTweetsActionType.SET_LOADING_STATUS:
             draft.loadingState = action.payload;
             break;
 

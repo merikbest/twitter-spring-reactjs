@@ -12,7 +12,7 @@ import {setSubscribeToUserProfile, setUserProfile, setUserProfileLoadingState} f
 import {ChatApi} from "../../../services/api/chatApi";
 import {UserProfileResponse} from "../../types/user";
 
-export function* fetchUserRequest({payload}: FetchUserProfileActionInterface) { // +
+export function* fetchUserRequest({payload}: FetchUserProfileActionInterface) {
     try {
         yield put(setUserProfileLoadingState(LoadingStatus.LOADING));
         const item: UserProfileResponse = yield call(UserApi.getUserInfo, payload);
@@ -22,7 +22,7 @@ export function* fetchUserRequest({payload}: FetchUserProfileActionInterface) { 
     }
 }
 
-export function* processSubscribeRequest({payload}: ProcessSubscribeActionInterface) { // +
+export function* processSubscribeRequest({payload}: ProcessSubscribeActionInterface) {
     try {
         const item: boolean = yield call(UserApi.processSubscribeToNotifications, payload);
         yield put(setSubscribeToUserProfile(item));
@@ -31,7 +31,7 @@ export function* processSubscribeRequest({payload}: ProcessSubscribeActionInterf
     }
 }
 
-export function* fetchChatParticipant({payload}: FetchChatParticipantActionInterface) { // +
+export function* fetchChatParticipant({payload}: FetchChatParticipantActionInterface) {
     try {
         yield put(setUserProfileLoadingState(LoadingStatus.LOADING));
         const item: UserProfileResponse = yield call(ChatApi.getParticipant, payload);
@@ -42,7 +42,7 @@ export function* fetchChatParticipant({payload}: FetchChatParticipantActionInter
 }
 
 export function* userProfileSaga() {
-    yield takeLatest(UserProfileActionsType.FETCH_USER, fetchUserRequest); // +
-    yield takeLatest(UserProfileActionsType.PROCESS_SUBSCRIBE, processSubscribeRequest); // +
-    yield takeLatest(UserProfileActionsType.FETCH_CHAT_PARTICIPANT, fetchChatParticipant); // +
+    yield takeLatest(UserProfileActionsType.FETCH_USER, fetchUserRequest);
+    yield takeLatest(UserProfileActionsType.PROCESS_SUBSCRIBE, processSubscribeRequest);
+    yield takeLatest(UserProfileActionsType.FETCH_CHAT_PARTICIPANT, fetchChatParticipant);
 }

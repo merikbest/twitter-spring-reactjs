@@ -11,7 +11,7 @@ import {ChatApi} from "../../../services/api/chatApi";
 import {setChatMessages, setChatMessagesLoadingState} from "./actionCreators";
 import {ChatMessageResponse} from "../../types/chat";
 
-export function* fetchChatMessagesRequest({payload}: FetchChatMessagesActionInterface) { // +
+export function* fetchChatMessagesRequest({payload}: FetchChatMessagesActionInterface) {
     try {
         setChatMessagesLoadingState(LoadingStatus.LOADING);
         const items: ChatMessageResponse[] = yield call(ChatApi.getChatMessages, payload);
@@ -21,7 +21,7 @@ export function* fetchChatMessagesRequest({payload}: FetchChatMessagesActionInte
     }
 }
 
-export function* addChatMessageRequest({payload}: AddChatMessageActionInterface) { // +
+export function* addChatMessageRequest({payload}: AddChatMessageActionInterface) {
     try {
         setChatMessagesLoadingState(LoadingStatus.LOADING);
         yield call(ChatApi.addMessage, payload);
@@ -30,7 +30,7 @@ export function* addChatMessageRequest({payload}: AddChatMessageActionInterface)
     }
 }
 
-export function* addChatMessageWithTweetRequest({payload}: AddChatMessageWithTweetActionInterface) { // +
+export function* addChatMessageWithTweetRequest({payload}: AddChatMessageWithTweetActionInterface) {
     try {
         setChatMessagesLoadingState(LoadingStatus.LOADING);
         yield call(ChatApi.addMessageWithTweet, payload);
@@ -40,7 +40,7 @@ export function* addChatMessageWithTweetRequest({payload}: AddChatMessageWithTwe
 }
 
 export function* chatMessagesSaga() {
-    yield takeLatest(ChatMessagesActionsType.FETCH_CHAT_MESSAGES, fetchChatMessagesRequest); // +
-    yield takeLatest(ChatMessagesActionsType.ADD_CHAT_MESSAGE, addChatMessageRequest); // +
-    yield takeLatest(ChatMessagesActionsType.ADD_CHAT_MESSAGE_WITH_TWEET, addChatMessageWithTweetRequest); // +
+    yield takeLatest(ChatMessagesActionsType.FETCH_CHAT_MESSAGES, fetchChatMessagesRequest);
+    yield takeLatest(ChatMessagesActionsType.ADD_CHAT_MESSAGE, addChatMessageRequest);
+    yield takeLatest(ChatMessagesActionsType.ADD_CHAT_MESSAGE_WITH_TWEET, addChatMessageWithTweetRequest);
 }

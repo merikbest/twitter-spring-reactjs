@@ -6,7 +6,7 @@ import {useCreateListsModalStyles} from "./CreateListsModalStyles";
 import UploadProfileImage from "../../../components/EditProfileModal/UploadProfileImage";
 import {ImageObj} from "../../../components/AddTweetForm/AddTweetForm";
 import {uploadImage} from "../../../util/uploadImage";
-import {Image} from "../../../store/ducks/tweets/contracts/state";
+import {Image} from "../../../store/types/common";
 import CreateListsModalInput from "./CreateListsModalInput/CreateListsModalInput";
 import {createList} from "../../../store/ducks/lists/actionCreators";
 import {wallpapers} from "../../../util/wallpapers";

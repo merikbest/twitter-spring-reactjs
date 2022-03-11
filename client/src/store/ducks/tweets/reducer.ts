@@ -15,32 +15,32 @@ const initialTweetsState: TweetsState = {
 export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsActions) => {
 
     switch (action.type) {
-        case TweetsActionType.SET_TWEETS: // +
+        case TweetsActionType.SET_TWEETS:
             draft.items = [...draft.items, ...action.payload];
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
-        case TweetsActionType.SET_SCHEDULED_TWEETS: // +
+        case TweetsActionType.SET_SCHEDULED_TWEETS:
             draft.items = [...action.payload, ...draft.items];
             break;
 
-        case TweetsActionType.SET_PAGEABLE_TWEETS: // +
+        case TweetsActionType.SET_PAGEABLE_TWEETS:
             draft.items = [...draft.items, ...action.payload.items];
             draft.pagesCount = action.payload.pagesCount;
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
-        case TweetsActionType.SET_TWEET: // +
+        case TweetsActionType.SET_TWEET:
             draft.items = [action.payload, ...draft.items];
             break;
 
-        case TweetsActionType.RESET_TWEETS: // +
+        case TweetsActionType.RESET_TWEETS:
             draft.items = [];
             draft.pagesCount = 1;
             draft.loadingState = LoadingStatus.LOADING
             break;
 
-        case TweetsActionType.SET_UPDATED_TWEET: // +
+        case TweetsActionType.SET_UPDATED_TWEET:
             if (action.payload.notificationType === NotificationType.LIKE) {
                 const payload = action.payload as NotificationResponse;
                 const likedTweetIndex = draft.items.findIndex((tweet) => tweet.id === payload.tweet.id);
@@ -66,25 +66,25 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
             }
             break;
 
-        case TweetsActionType.SET_UPDATED_BOOKMARKED_TWEET: // +
+        case TweetsActionType.SET_UPDATED_BOOKMARKED_TWEET:
             const bookmarkedTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.tweetId);
             if (bookmarkedTweetIndex !== -1) draft.items[bookmarkedTweetIndex].isTweetBookmarked = action.payload.isTweetBookmarked;
             break;
 
-        case TweetsActionType.SET_LOADING_STATE: // +
+        case TweetsActionType.SET_LOADING_STATE:
             draft.loadingState = action.payload;
             break;
 
-        case TweetsActionType.REMOVE_TWEET_FROM_BOOKMARKS: // +
+        case TweetsActionType.REMOVE_TWEET_FROM_BOOKMARKS:
             draft.items = draft.items.filter((tweet) => tweet.id !== action.payload);
             draft.loadingState = LoadingStatus.LOADED
             break;
 
-        case TweetsActionType.DELETE_TWEET: // +
+        case TweetsActionType.DELETE_TWEET:
             draft.items = draft.items.filter((tweet) => tweet.id !== action.payload.id);
             break;
 
-        case TweetsActionType.SET_FOLLOW_TO_TWEETS_STATE: // +
+        case TweetsActionType.SET_FOLLOW_TO_TWEETS_STATE:
             if (action.payload.tweetId !== undefined) {
                 const followUserTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.tweetId);
                 if (followUserTweetIndex !== -1) draft.items[followUserTweetIndex].user.isFollower = action.payload.isFollower;
@@ -101,7 +101,7 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
             draft.loadingState = LoadingStatus.LOADED
             break;
 
-        case TweetsActionType.SET_BLOCKED_TO_TWEETS_STATE: // +
+        case TweetsActionType.SET_BLOCKED_TO_TWEETS_STATE:
             if (action.payload.tweetId !== undefined) {
                 const blockedUserTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.tweetId);
                 if (blockedUserTweetIndex !== -1) draft.items[blockedUserTweetIndex].user.isUserBlocked = action.payload.isUserBlocked;
@@ -118,7 +118,7 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
             draft.loadingState = LoadingStatus.LOADED
             break;
 
-        case TweetsActionType.SET_MUTED_TO_TWEETS_STATE: // +
+        case TweetsActionType.SET_MUTED_TO_TWEETS_STATE:
             if (action.payload.tweetId !== undefined) {
                 const mutedUserTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.tweetId);
                 if (mutedUserTweetIndex !== -1) draft.items[mutedUserTweetIndex].user.isUserMuted = action.payload.isUserMuted;

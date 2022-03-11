@@ -6,7 +6,7 @@ import {LoadingStatus} from '../../types';
 import {TagsActionsType} from "./contracts/actionTypes";
 import {TagResponse} from "../../types/tag";
 
-export function* fetchTagsRequest() { // +
+export function* fetchTagsRequest() {
     try {
         yield setTagsLoadingState(LoadingStatus.LOADING);
         const items: TagResponse[] = yield call(TagApi.fetchTags);
@@ -16,7 +16,7 @@ export function* fetchTagsRequest() { // +
     }
 }
 
-export function* fetchTrendsRequest() { // +
+export function* fetchTrendsRequest() {
     try {
         yield setTagsLoadingState(LoadingStatus.LOADING);
         const items: TagResponse[] = yield call(TagApi.fetchTrends);
@@ -27,6 +27,6 @@ export function* fetchTrendsRequest() { // +
 }
 
 export function* tagsSaga() {
-    yield takeLatest(TagsActionsType.FETCH_TAGS, fetchTagsRequest); // +
-    yield takeLatest(TagsActionsType.FETCH_TRENDS, fetchTrendsRequest); // +
+    yield takeLatest(TagsActionsType.FETCH_TAGS, fetchTagsRequest);
+    yield takeLatest(TagsActionsType.FETCH_TRENDS, fetchTrendsRequest);
 }
