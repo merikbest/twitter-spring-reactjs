@@ -75,6 +75,14 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "ORDER BY tweet.dateTime DESC")
     Page<TweetProjection> findAllUserMediaTweets(Long userId, Pageable pageable);
 
+    @Query("SELECT tweet FROM Tweet tweet " +
+            "LEFT JOIN tweet.images image " +
+            "WHERE tweet.scheduledDate IS NULL " +
+            "AND tweet.user.id = :userId " +
+            "AND image.id IS NOT NULL " +
+            "ORDER BY tweet.dateTime DESC")
+    List<TweetProjection> findUserTweetImages(Long userId, Pageable pageable);
+
     @Query("SELECT tweet FROM Tweet tweet WHERE tweet.quoteTweet.id = :quoteId")
     List<Tweet> findByQuoteTweetId(Long quoteId);
 

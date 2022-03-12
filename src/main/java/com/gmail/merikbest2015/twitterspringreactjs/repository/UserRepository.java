@@ -70,6 +70,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user WHERE user.id = :userId")
     boolean isUserExist(Long userId);
 
+    @Query("SELECT follower.id FROM User user LEFT JOIN user.followers follower WHERE user.id = :userId")
+    List<Long> getUserFollowersIds(Long userId);
+
     @Query("SELECT f.id AS id, f.fullName AS fullName, f.username AS username, f.about AS about, f.avatar AS avatar, " +
             "f.privateProfile AS privateProfile, f.mutedDirectMessages AS mutedDirectMessages " +
             "FROM User user " +

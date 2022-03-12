@@ -66,6 +66,12 @@ public class TweetController {
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getTweets());
     }
 
+    @GetMapping("/follower")
+    public ResponseEntity<List<TweetResponse>> getFollowersTweets(@PageableDefault(size = 10) Pageable pageable) {
+        TweetHeaderResponse<TweetResponse> response = tweetMapper.getFollowersTweets(pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getTweets());
+    }
+
     @GetMapping("/schedule")
     public ResponseEntity<List<TweetResponse>> getScheduledTweets() {
         return ResponseEntity.ok(tweetMapper.getScheduledTweets());

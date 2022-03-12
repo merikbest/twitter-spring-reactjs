@@ -58,6 +58,11 @@ public class UserMapper {
         Image image = userService.uploadImage(multipartFile);
         return basicMapper.convertToResponse(image, ImageResponse.class);
     }
+    
+    public List<TweetResponse> getUserTweetImages(Long userId) {
+        List<TweetProjection> tweets = userService.getUserTweetImages(userId);
+        return basicMapper.convertToResponseList(tweets, TweetResponse.class);
+    }
 
     public AuthUserResponse updateUserProfile(UserRequest userRequest) {
         AuthUserProjection authUserProjection = userService.updateUserProfile(basicMapper.convertToEntity(userRequest, User.class));

@@ -49,6 +49,8 @@ public interface UserService {
     Boolean processUserBookmarks(Long tweetId);
 
     Image uploadImage(MultipartFile multipartFile);
+    
+    List<TweetProjection> getUserTweetImages(Long userId);
 
     AuthUserProjection updateUserProfile(User userInfo);
 

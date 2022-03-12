@@ -60,6 +60,11 @@ public class TweetMapper {
         Page<TweetProjection> tweets = tweetService.getTweetsWithVideo(pageable);
         return getTweetHeaderResponse(tweets, TweetResponse.class);
     }
+    
+    public TweetHeaderResponse<TweetResponse> getFollowersTweets(Pageable pageable) {
+        Page<TweetProjection> tweets = tweetService.getFollowersTweets(pageable);
+        return getTweetHeaderResponse(tweets, TweetResponse.class);
+    }
 
     public List<TweetResponse> getScheduledTweets() {
         List<TweetProjection> tweets = tweetService.getScheduledTweets();

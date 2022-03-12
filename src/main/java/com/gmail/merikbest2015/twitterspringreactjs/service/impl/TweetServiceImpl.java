@@ -97,6 +97,14 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
+    public Page<TweetProjection> getFollowersTweets(Pageable pageable) {
+        Long userId = authenticationService.getAuthenticatedUserId();
+        List<Long> userFollowersIds = userRepository.getUserFollowersIds(userId);
+        userFollowersIds.add(userId);
+        return tweetRepository.findTweetsByUserIds(userFollowersIds, pageable);
+    }
+
+    @Override
     public List<TweetProjection> getScheduledTweets() {
         Long userId = authenticationService.getAuthenticatedUserId();
         return tweetRepository.findAllScheduledTweetsByUserId(userId);
@@ -159,7 +167,7 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     @Transactional
-    public Tweet deleteTweet(Long tweetId) {
+    public Tweet deleteTweet(Long tweetId) { // TODO rewrite
         User user = authenticationService.getAuthenticatedUser();
         Tweet tweet = user.getTweets().stream()
                 .filter(t -> t.getId().equals(tweetId))

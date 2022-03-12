@@ -186,6 +186,40 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/tweets/follower - Get followers tweets")
+    public void getFollowersTweets() throws Exception {
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/follower"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(9)))
+                .andExpect(jsonPath("$[6].id").value(42L))
+                .andExpect(jsonPath("$[6].text").value(YOUTUBE_LINK))
+                .andExpect(jsonPath("$[6].dateTime").value("2021-10-03T20:33:36"))
+                .andExpect(jsonPath("$[6].scheduledDate").isEmpty())
+                .andExpect(jsonPath("$[6].addressedUsername").isEmpty())
+                .andExpect(jsonPath("$[6].addressedId").isEmpty())
+                .andExpect(jsonPath("$[6].addressedTweetId").isEmpty())
+                .andExpect(jsonPath("$[6].replyType").value(ReplyType.EVERYONE.toString()))
+                .andExpect(jsonPath("$[6].link").value(YOUTUBE_LINK))
+                .andExpect(jsonPath("$[6].linkTitle").value(YOUTUBE_LINK_TITLE))
+                .andExpect(jsonPath("$[6].linkDescription").isEmpty())
+                .andExpect(jsonPath("$[6].linkCover").value(YOUTUBE_LINK_COVER))
+                .andExpect(jsonPath("$[6].linkCoverSize").isEmpty())
+                .andExpect(jsonPath("$[6].quoteTweet").isEmpty())
+                .andExpect(jsonPath("$[6].user.id").value(2L))
+                .andExpect(jsonPath("$[6].poll").isEmpty())
+                .andExpect(jsonPath("$[6].images").isEmpty())
+                .andExpect(jsonPath("$[6].retweetsCount").value(0L))
+                .andExpect(jsonPath("$[6].likedTweetsCount").value(0L))
+                .andExpect(jsonPath("$[6].repliesCount").value(0L))
+                .andExpect(jsonPath("$[6].isTweetLiked").value(false))
+                .andExpect(jsonPath("$[6].isTweetRetweeted").value(false))
+                .andExpect(jsonPath("$[6].isUserFollowByOtherUser").value(false))
+                .andExpect(jsonPath("$[6].isTweetDeleted").value(false))
+                .andExpect(jsonPath("$[6].isTweetBookmarked").value(false));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
     @DisplayName("[200] GET /api/v1/tweets/schedule - Get scheduled tweets")
     public void getScheduledTweets() throws Exception {
         mockMvc.perform(get(URL_TWEETS_BASIC + "/schedule"))

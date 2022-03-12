@@ -114,6 +114,11 @@ public class UserController {
         return ResponseEntity.ok(userMapper.uploadImage(file));
     }
 
+    @GetMapping("/images/{userId}")
+    public ResponseEntity<List<TweetResponse>> getUserTweetImages(@PathVariable Long userId) {
+        return ResponseEntity.ok(userMapper.getUserTweetImages(userId));
+    }
+
     @GetMapping("/followers/{userId}")
     public ResponseEntity<List<UserResponse>> getFollowers(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.getFollowers(userId));
