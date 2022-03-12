@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class MvcConfiguration implements WebMvcConfigurer {
 
-    @Value("${hostname}")
+    @Value("${host.name}")
     private String hostname;
 
     @Bean
