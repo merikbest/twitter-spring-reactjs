@@ -2,6 +2,7 @@ import React, {FC, ReactElement} from 'react';
 import {Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useGlobalStyles} from "../../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 
 const ConnectedApps: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -35,4 +36,4 @@ const ConnectedApps: FC = (): ReactElement => {
     );
 };
 
-export default ConnectedApps;
+export default withDocumentTitle(ConnectedApps);

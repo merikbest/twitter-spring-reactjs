@@ -30,6 +30,7 @@ import {selectUsersSearch, selectUsersSearchIsLoading} from "../../store/ducks/u
 import Spinner from "../../components/Spinner/Spinner";
 import UsersItem, {UserItemSize} from "../../components/UsersItem/UsersItem";
 import {useGlobalStyles} from "../../util/globalClasses";
+import {withDocumentTitle} from "../../hoc/withDocumentTitle";
 
 const Explore: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -192,4 +193,4 @@ const Explore: FC = (): ReactElement => {
     );
 };
 
-export default Explore;
+export default withDocumentTitle(Explore);

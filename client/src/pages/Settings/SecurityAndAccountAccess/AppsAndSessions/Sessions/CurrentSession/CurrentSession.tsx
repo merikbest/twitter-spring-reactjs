@@ -5,6 +5,7 @@ import {Divider, Typography} from "@material-ui/core";
 import {useCurrentSessionStyles} from "./CurrentSessionStyles";
 import {DeviceIcon} from "../../../../../../icons";
 import {useGlobalStyles} from "../../../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../../../hoc/withDocumentTitle";
 
 const CurrentSession: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -58,4 +59,4 @@ const CurrentSession: FC = (): ReactElement => {
     );
 };
 
-export default CurrentSession;
+export default withDocumentTitle(CurrentSession);

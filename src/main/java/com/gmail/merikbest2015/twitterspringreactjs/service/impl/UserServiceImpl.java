@@ -205,7 +205,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<TweetProjection> getUserTweetImages(Long userId) {
+    public List<TweetImageProjection> getUserTweetImages(Long userId) {
         return tweetRepository.findUserTweetImages(userId, PageRequest.of(0, 6)); 
     }
 

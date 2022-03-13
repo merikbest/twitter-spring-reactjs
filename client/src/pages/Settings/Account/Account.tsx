@@ -4,6 +4,7 @@ import {List, ListItem, Typography} from "@material-ui/core";
 
 import {ArrowRightIcon, CommunityIcon, DeleteAccountIcon, DownloadIcon, KeyIcon, ProfileIcon} from "../../../icons";
 import {useGlobalStyles} from "../../../util/globalClasses";
+import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
 
 const Account: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -111,4 +112,4 @@ const Account: FC = (): ReactElement => {
     );
 };
 
-export default Account;
+export default withDocumentTitle(Account);

@@ -3,13 +3,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory, useParams} from "react-router-dom";
 import {Avatar, Divider, IconButton} from '@material-ui/core';
 import classNames from "classnames";
+import classnames from "classnames";
 import Typography from "@material-ui/core/Typography";
 import format from "date-fns/format";
 import usLang from "date-fns/locale/en-US/index";
 import {compose} from "recompose";
 import {CompatClient, Stomp} from "@stomp/stompjs";
 import SockJS from "sockjs-client";
-import classnames from "classnames";
 
 import {
     CloseIcon,
@@ -31,7 +31,7 @@ import {
     fetchTweetData,
     resetRepliesState,
     resetTweetState,
-    setTweetData
+    updateTweetData
 } from "../../store/ducks/tweet/actionCreators";
 import {
     selectIsRepliesLoading,
@@ -88,12 +88,13 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
     useEffect(() => {
         dispatch(fetchTweetData(parseInt(params.id)));
         setVisibleTweetImageModalWindow(true);
+        document.body.style.marginRight = "15px";
         document.body.style.overflow = 'hidden';
 
         stompClient = Stomp.over(new SockJS(WS_URL));
         stompClient.connect({}, () => {
             stompClient?.subscribe("/topic/tweet/" + params.id, (response) => {
-                dispatch(setTweetData(JSON.parse(response.body)));
+                dispatch(updateTweetData(JSON.parse(response.body)));
             });
         });
 
@@ -125,6 +126,7 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
 
     const onClose = (): void => {
         setVisibleTweetImageModalWindow(false);
+        document.body.style.marginRight = "0px";
         document.body.style.overflow = 'unset';
         history.goBack();
     };
@@ -174,14 +176,14 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                     />
                     <div className={classes.tweetInfo}>
                         <div className={classes.header}>
-                            <Link to={`/user/${tweetData?.user.id}`}>
+                            <Link to={`/profile/${tweetData?.user.id}`}>
                                 <Avatar
                                     className={classnames(globalClasses.avatar, classes.avatar)}
                                     alt={`avatar ${tweetData.user.id}`}
                                     src={tweetData.user.avatar?.src ? tweetData.user.avatar?.src : DEFAULT_PROFILE_IMG}
                                 />
                             </Link>
-                            <Link to={`/user/${tweetData?.user.id}`}>
+                            <Link to={`/profile/${tweetData?.user.id}`}>
                                 <div
                                     onMouseEnter={() => handleHoverPopper!(tweetData.user.id)}
                                     onMouseLeave={handleLeavePopper}
@@ -295,7 +297,7 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                         <Divider/>
                         <Typography variant={"subtitle1"} component={"div"} className={classes.replyWrapper}>
                             {"Replying to "}
-                            <Link to={`/user/${tweetData.user.id}`}>
+                            <Link to={`/profile/${tweetData.user.id}`}>
                                 @{tweetData.user.username}
                             </Link>
                         </Typography>
@@ -315,7 +317,7 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                         onClose={onCloseUsersListModalWindow}
                     />
                     {isRepliesLoading ? <Spinner/> : (
-                        replies.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)
+                        replies.map((tweet) => <TweetComponent isTweetImageModal={true} key={tweet.id} item={tweet}/>)
                     )}
                     <ReplyModal
                         user={tweetData.user}

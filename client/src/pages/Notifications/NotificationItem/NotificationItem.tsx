@@ -31,7 +31,7 @@ const NotificationItem: FC<NotificationItemProps & HoverUserProps> = (
     return (
         <Link to={notification.notificationType !== NotificationType.FOLLOW
                 ? `/notification/${notification.id}`
-                : `/user/${notification.user.id}`}
+                : `/profile/${notification.user.id}`}
         >
             <Paper className={classes.notificationWrapper} variant="outlined">
                 <div className={classes.notificationIcon}>
@@ -46,7 +46,7 @@ const NotificationItem: FC<NotificationItemProps & HoverUserProps> = (
                     )}
                 </div>
                 <div style={{flex: 1}}>
-                    <a href={`/user/${notification.user.id!}`}
+                    <a href={`/profile/${notification.user.id!}`}
                        onClick={event => handleClickUser(notification.user.id!, event)}
                        onMouseEnter={() => handleHoverPopper!(notification.user.id!)}
                        onMouseLeave={handleLeavePopper}

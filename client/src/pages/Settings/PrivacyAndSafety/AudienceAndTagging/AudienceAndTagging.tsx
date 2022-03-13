@@ -10,6 +10,7 @@ import {setUserLoadingStatus, updatePrivateProfile} from "../../../../store/duck
 import {LoadingStatus} from "../../../../store/types";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import classnames from "classnames";
+import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 
 const AudienceAndTagging: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -76,4 +77,4 @@ const AudienceAndTagging: FC = (): ReactElement => {
     );
 };
 
-export default AudienceAndTagging;
+export default withDocumentTitle(AudienceAndTagging);

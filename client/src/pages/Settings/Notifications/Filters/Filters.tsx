@@ -4,6 +4,7 @@ import {Checkbox, Typography, Link as MuiLink} from "@material-ui/core";
 
 import {ArrowRightIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 
 const Filters: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -47,4 +48,4 @@ const Filters: FC = (): ReactElement => {
     );
 };
 
-export default Filters;
+export default withDocumentTitle(Filters);

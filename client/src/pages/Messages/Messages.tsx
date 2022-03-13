@@ -23,6 +23,7 @@ import Spinner from "../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {ChatResponse, ParticipantResponse} from "../../store/types/chat";
 import ChatMessages from "./ChatMessages/ChatMessages";
+import {withDocumentTitle} from "../../hoc/withDocumentTitle";
 
 export enum MessagesAction {
     SETTINGS = "SETTINGS",
@@ -333,4 +334,4 @@ const Messages: FC = (): ReactElement => {
     );
 };
 
-export default Messages;
+export default withDocumentTitle(Messages);

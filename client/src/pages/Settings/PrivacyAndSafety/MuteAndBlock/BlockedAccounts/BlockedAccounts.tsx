@@ -16,6 +16,7 @@ import {
     selectIsBlockedAndMutedUsersLoaded,
     selectIsBlockedAndMutedUsersLoading
 } from "../../../../../store/ducks/blockedAndMutedUsers/selectors";
+import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 
 const BlockedAccounts: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -109,4 +110,4 @@ const BlockedAccounts: FC = (): ReactElement => {
     );
 };
 
-export default BlockedAccounts;
+export default withDocumentTitle(BlockedAccounts);

@@ -4,6 +4,7 @@ import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
 
 import {usePhotoTaggingStyles} from "./PhotoTaggingStyles";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 
 const PhotoTagging: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -64,4 +65,4 @@ const PhotoTagging: FC = (): ReactElement => {
     );
 };
 
-export default PhotoTagging;
+export default withDocumentTitle(PhotoTagging);

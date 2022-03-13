@@ -3,6 +3,7 @@ import {Checkbox, Typography} from "@material-ui/core";
 
 import {ArrowRightIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 
 const ContentYouSee: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -50,4 +51,4 @@ const ContentYouSee: FC = (): ReactElement => {
     );
 };
 
-export default ContentYouSee;
+export default withDocumentTitle(ContentYouSee);

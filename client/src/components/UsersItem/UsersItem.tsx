@@ -124,7 +124,7 @@ const UsersItem: FC<UsersItemProps<UserResponse> & SnackbarProps & HoverUserProp
 
     return (
         <>
-            <Link to={`/user/${user?.id}`} className={globalClasses.link}>
+            <Link to={`/profile/${user?.id}`} className={globalClasses.link}>
                 <ListItem className={classes.container}>
                     <ListItemAvatar>
                         <Avatar

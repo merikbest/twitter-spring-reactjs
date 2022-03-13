@@ -5,6 +5,8 @@ import {UserProfileActions, UserProfileActionsType} from "./contracts/actionType
 
 const initialUsersState: UserProfileState = {
     user: undefined,
+    images: [],
+    imagesLoadingState: LoadingStatus.LOADING,
     loadingState: LoadingStatus.LOADING,
 };
 
@@ -13,6 +15,11 @@ export const userProfileReducer = produce((draft: Draft<UserProfileState>, actio
         case UserProfileActionsType.SET_USER:
             draft.user = action.payload;
             draft.loadingState = LoadingStatus.SUCCESS;
+            break;
+
+        case UserProfileActionsType.SET_IMAGES:
+            draft.images = action.payload;
+            draft.imagesLoadingState = LoadingStatus.SUCCESS;
             break;
 
         case UserProfileActionsType.SET_FOLLOW_TO_USER_PROFILE:
@@ -58,6 +65,15 @@ export const userProfileReducer = produce((draft: Draft<UserProfileState>, actio
 
         case UserProfileActionsType.SET_USER_LOADING_STATE:
             draft.loadingState = action.payload;
+            break;
+            
+        case UserProfileActionsType.RESET_IMAGES_STATE:
+            draft.images = [];
+            draft.imagesLoadingState = LoadingStatus.LOADING;
+            break;
+
+        case UserProfileActionsType.SET_IMAGES_LOADING_STATE:
+            draft.imagesLoadingState = action.payload;
             break;
 
         default:

@@ -1,11 +1,15 @@
 import {
     FetchChatParticipantActionInterface,
+    FetchImagesActionInterface,
     FetchUserProfileActionInterface,
     ProcessSubscribeActionInterface,
+    ResetImagesStateActionInterface,
     ResetUserProfileStateActionInterface,
     SetBlockedActionInterface,
     SetFollowRequestToUserProfileActionInterface,
     SetFollowToUserProfileActionInterface,
+    SetImagesActionInterface,
+    SetImagesLoadingStatusActionInterface,
     SetMutedActionInterface,
     SetSubscribeToUserProfileActionInterface,
     SetUserProfileActionInterface,
@@ -14,6 +18,7 @@ import {
 } from './contracts/actionTypes';
 import {UserProfileState} from "./contracts/state";
 import {UserProfileResponse} from "../../types/user";
+import {TweetImageResponse, TweetResponse} from "../../types/tweet";
 
 export const setBlocked = (payload: boolean): SetBlockedActionInterface => ({
     type: UserProfileActionsType.SET_BLOCKED,
@@ -42,6 +47,25 @@ export const setUserProfile = (payload: UserProfileResponse): SetUserProfileActi
 
 export const fetchUserProfile = (payload: number): FetchUserProfileActionInterface => ({
     type: UserProfileActionsType.FETCH_USER,
+    payload
+});
+
+export const fetchImages = (payload: number): FetchImagesActionInterface => ({
+    type: UserProfileActionsType.FETCH_IMAGES,
+    payload
+});
+
+export const setImages = (payload: TweetImageResponse[]): SetImagesActionInterface => ({
+    type: UserProfileActionsType.SET_IMAGES,
+    payload
+});
+
+export const resetImagesState = (): ResetImagesStateActionInterface => ({
+    type: UserProfileActionsType.RESET_IMAGES_STATE
+});
+
+export const setImagesLoadingStatus = (payload: UserProfileState["loadingState"]): SetImagesLoadingStatusActionInterface => ({
+    type: UserProfileActionsType.SET_IMAGES_LOADING_STATE,
     payload
 });
 

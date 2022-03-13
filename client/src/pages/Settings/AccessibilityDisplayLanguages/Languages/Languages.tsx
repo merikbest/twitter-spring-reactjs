@@ -8,6 +8,7 @@ import {ArrowRightIcon} from "../../../../icons";
 import {selectUserData} from "../../../../store/ducks/user/selectors";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import classnames from "classnames";
+import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 
 const Languages: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -83,4 +84,4 @@ const Languages: FC = (): ReactElement => {
     );
 };
 
-export default Languages;
+export default withDocumentTitle(Languages);

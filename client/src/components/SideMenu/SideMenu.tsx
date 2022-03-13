@@ -235,11 +235,11 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     </NavLink>
                 </li>
                 <li className={classes.itemWrapper}>
-                    <NavLink to={`/user/${userData?.id}`} activeClassName={"selected"}>
+                    <NavLink to={`/profile/${userData?.id}`} activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
                                 <>
-                                    {(location.pathname.includes(`/user/${myProfile?.id}`)) ? (
+                                    {(location.pathname.includes(`/profile/${myProfile?.id}`)) ? (
                                         <span>{ProfileIconFilled}</span>
                                     ) : (
                                         <span>{ProfileIcon}</span>

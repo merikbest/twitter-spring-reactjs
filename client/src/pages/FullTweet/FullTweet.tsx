@@ -119,6 +119,9 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
     useEffect(() => {
         dispatch(fetchReplies(parseInt(params.id)));
 
+        if (isTweetLoadedSuccess) {
+            document.title = `${tweetData?.user.fullName} on Twitter: "${tweetData?.text}"`;
+        }
         return () => {
             dispatch(resetRepliesState());
         };
@@ -182,7 +185,7 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                                 onMouseEnter={() => handleHoverPopper!(tweetData.user.id)}
                                 onMouseLeave={handleLeavePopper}
                             >
-                                <Link to={`/user/${tweetData.user.id}`}>
+                                <Link to={`/profile/${tweetData.user.id}`}>
                                     <Typography variant={"h6"} component={"div"}>
                                         {tweetData.user.fullName}
                                     </Typography>
@@ -363,7 +366,7 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                         <>
                             <Typography variant={"subtitle1"} className={classes.replyWrapper}>
                                 {"Replying to "}
-                                <Link to={`/user/${tweetData.user.id}`}>
+                                <Link to={`/profile/${tweetData.user.id}`}>
                                     @{tweetData.user.username}
                                 </Link>
                             </Typography>

@@ -10,18 +10,10 @@ export const useLayoutStyles = makeStyles((theme: Theme) => ({
             padding: "12px 0px",
         },
     },
-    rightSideGrid: {
-        "& .MuiGrid-item": {
-            position: "fixed",
-            minWidth: "350px",
-            padding: "12px 0px",
-            marginLeft: 12,
-        },
-    },
     rightSide: {
-        paddingTop: 4,
-        position: 'sticky',
-        top: 0,
+        position: "sticky",
+        top: 61,
+        paddingLeft: 12,
     },
     footer: {
         padding: "16px 16px",

@@ -2,6 +2,7 @@ import React, {FC, ReactElement} from 'react';
 import {Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useGlobalStyles} from "../../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 
 const MutedWords: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -30,4 +31,4 @@ const MutedWords: FC = (): ReactElement => {
     );
 };
 
-export default MutedWords;
+export default withDocumentTitle(MutedWords);

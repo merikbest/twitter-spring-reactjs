@@ -31,7 +31,7 @@ const FollowerRequestsItem: FC<FollowerRequestsItemProps & HoverUserProps> = (
 
     const onClickUser = () => {
         onClose();
-        history.push(`/user/${user?.id}`);
+        history.push(`/profile/${user?.id}`);
     };
 
     const handleDeclineFollowerRequest = (event: MouseEvent<HTMLButtonElement>): void => {

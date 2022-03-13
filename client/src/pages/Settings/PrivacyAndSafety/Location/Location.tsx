@@ -4,6 +4,7 @@ import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {ArrowRightIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 
 const Location: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -62,4 +63,4 @@ const Location: FC = (): ReactElement => {
     );
 };
 
-export default Location;
+export default withDocumentTitle(Location);

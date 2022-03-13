@@ -6,6 +6,7 @@ import {selectUserData} from "../../../../store/ducks/user/selectors";
 import {setUserLoadingStatus, updateDirect} from "../../../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../../../store/types";
 import {useGlobalStyles} from "../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 
 const DirectMessages: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -100,4 +101,4 @@ const DirectMessages: FC = (): ReactElement => {
     );
 };
 
-export default DirectMessages;
+export default withDocumentTitle(DirectMessages);

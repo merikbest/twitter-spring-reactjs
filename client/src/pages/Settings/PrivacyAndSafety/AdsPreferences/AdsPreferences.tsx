@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 
 import {ArrowRightIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 
 const AdsPreferences: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -57,4 +58,4 @@ const AdsPreferences: FC = (): ReactElement => {
     );
 };
 
-export default AdsPreferences;
+export default withDocumentTitle(AdsPreferences);

@@ -9,6 +9,7 @@ import {formatScheduleDate} from "../../../../util/formatDate";
 import {getCountry, getPhoneCode} from "../../../../util/countryCodes";
 import {fetchUserData} from "../../../../store/ducks/user/actionCreators";
 import {useGlobalStyles} from "../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 
 const AccountInformation: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -180,4 +181,4 @@ const AccountInformation: FC = (): ReactElement => {
     );
 };
 
-export default AccountInformation;
+export default withDocumentTitle(AccountInformation);

@@ -9,6 +9,7 @@ import {
     DeleteTweetActionInterface,
     FetchBookmarksActionInterface,
     FetchDeleteTweetActionInterface,
+    FetchFollowersTweetsActionInterface,
     FetchMediaTweetsActionInterface,
     FetchTweetsActionInterface,
     FetchTweetsByListIdActionInterface,
@@ -173,6 +174,11 @@ export const fetchMediaTweets = (payload: number): FetchMediaTweetsActionInterfa
 
 export const fetchTweetsWithVideo = (payload: number): FetchTweetsWithVideoActionInterface => ({
     type: TweetsActionType.FETCH_TWEETS_WITH_VIDEO,
+    payload
+});
+
+export const fetchFollowersTweets = (payload: number): FetchFollowersTweetsActionInterface => ({
+    type: TweetsActionType.FETCH_FOLLOWERS_TWEETS,
     payload
 });
 

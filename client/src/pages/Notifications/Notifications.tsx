@@ -20,6 +20,7 @@ import Spinner from "../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../util/globalClasses";
 import NotificationItem from "./NotificationItem/NotificationItem";
 import NotificationAuthorItem from "./NotificationAuthorItem/NotificationAuthorItem";
+import {withDocumentTitle} from "../../hoc/withDocumentTitle";
 
 const Notifications: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -48,7 +49,7 @@ const Notifications: FC = (): ReactElement => {
     const handleClickUser = (userId: number, event: React.MouseEvent<HTMLAnchorElement>): void => {
         event.preventDefault();
         event.stopPropagation();
-        history.push(`/user/${userId}`);
+        history.push(`/profile/${userId}`);
     };
 
     return (
@@ -135,4 +136,4 @@ const Notifications: FC = (): ReactElement => {
     );
 };
 
-export default Notifications;
+export default withDocumentTitle(Notifications);

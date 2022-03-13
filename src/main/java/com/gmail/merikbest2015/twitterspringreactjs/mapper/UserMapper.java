@@ -8,6 +8,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.No
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationsResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetHeaderResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetImageResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetUserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
@@ -15,6 +16,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.Bookma
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.LikeTweetProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.notification.NotificationInfoProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.notification.NotificationProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetImageProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetUserProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetsProjection;
@@ -59,9 +61,9 @@ public class UserMapper {
         return basicMapper.convertToResponse(image, ImageResponse.class);
     }
     
-    public List<TweetResponse> getUserTweetImages(Long userId) {
-        List<TweetProjection> tweets = userService.getUserTweetImages(userId);
-        return basicMapper.convertToResponseList(tweets, TweetResponse.class);
+    public List<TweetImageResponse> getUserTweetImages(Long userId) {
+        List<TweetImageProjection> tweets = userService.getUserTweetImages(userId);
+        return basicMapper.convertToResponseList(tweets, TweetImageResponse.class);
     }
 
     public AuthUserResponse updateUserProfile(UserRequest userRequest) {

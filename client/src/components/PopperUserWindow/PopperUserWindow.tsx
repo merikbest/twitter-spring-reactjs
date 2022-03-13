@@ -101,7 +101,7 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
             )}
         >
             <div className={classes.headerWrapper}>
-                <Link to={`/user/${user?.id}`}>
+                <Link to={`/profile/${user?.id}`}>
                     <Avatar
                         className={classes.avatar}
                         alt={`avatar ${user?.id}`}
@@ -161,7 +161,7 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
                 )}
             </div>
             <div className={classes.userInfoWrapper}>
-                <Link to={`/user/${user?.id}`}>
+                <Link to={`/profile/${user?.id}`}>
                     <div>
                         <Typography variant={"h6"} component={"span"}>
                             {user?.fullName}

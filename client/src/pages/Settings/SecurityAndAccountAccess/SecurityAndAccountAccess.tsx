@@ -4,6 +4,7 @@ import {List, ListItem, Typography} from "@material-ui/core";
 
 import {AppsIcon, ArrowRightIcon, ConnectedIcon, SecurityIcon} from "../../../icons";
 import {useGlobalStyles} from "../../../util/globalClasses";
+import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
 
 const SecurityAndAccountAccess: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -77,4 +78,4 @@ const SecurityAndAccountAccess: FC = (): ReactElement => {
     );
 };
 
-export default SecurityAndAccountAccess;
+export default withDocumentTitle(SecurityAndAccountAccess);

@@ -3,6 +3,7 @@ import {Divider, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useManageContactsStyles} from "./ManageContactsStyles";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 
 const ManageContacts: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -36,4 +37,4 @@ const ManageContacts: FC = (): ReactElement => {
     );
 };
 
-export default ManageContacts;
+export default withDocumentTitle(ManageContacts);

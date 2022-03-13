@@ -5,6 +5,7 @@ import {useAdditionalResourcesStyles} from "./AdditionalResourcesStyles";
 import {ArrowTopIcon} from "../../../icons";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import classnames from "classnames";
+import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
 
 const AdditionalResources: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -235,4 +236,4 @@ const AdditionalResources: FC = (): ReactElement => {
     );
 };
 
-export default AdditionalResources;
+export default withDocumentTitle(AdditionalResources);

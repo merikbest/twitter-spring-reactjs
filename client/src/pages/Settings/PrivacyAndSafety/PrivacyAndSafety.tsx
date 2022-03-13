@@ -20,6 +20,7 @@ import {
     SpacesIcon
 } from "../../../icons";
 import {useGlobalStyles} from "../../../util/globalClasses";
+import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
 
 const PrivacyAndSafety: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -294,4 +295,4 @@ const PrivacyAndSafety: FC = (): ReactElement => {
     );
 };
 
-export default PrivacyAndSafety;
+export default withDocumentTitle(PrivacyAndSafety);

@@ -23,6 +23,9 @@ export const TweetApi = {
     async fetchTweetsWithVideo(payload: number): Promise<AxiosResponse<TweetResponse[]>> {
         return await axios.get<TweetResponse[]>(`${API_URL}/tweets/video`, {params: {page: payload}});
     },
+    async fetchFollowersTweets(payload: number): Promise<AxiosResponse<TweetResponse[]>> {
+        return await axios.get<TweetResponse[]>(`${API_URL}/tweets/follower`, {params: {page: payload}});
+    },
     async fetchScheduledTweets(): Promise<TweetResponse[]> {
         const {data} = await axios.get<TweetResponse[]>(`${API_URL}/tweets/schedule`);
         return data;

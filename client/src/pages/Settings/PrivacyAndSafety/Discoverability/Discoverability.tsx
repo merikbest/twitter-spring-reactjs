@@ -4,6 +4,7 @@ import {Checkbox, Divider, Link as MuiLink, Typography} from "@material-ui/core"
 
 import {ArrowRightIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 
 const Discoverability: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -95,4 +96,4 @@ const Discoverability: FC = (): ReactElement => {
     );
 };
 
-export default Discoverability;
+export default withDocumentTitle(Discoverability);

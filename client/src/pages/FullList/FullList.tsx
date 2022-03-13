@@ -4,7 +4,7 @@ import {Link, useParams} from "react-router-dom";
 import {Avatar, Button, Paper, Typography} from "@material-ui/core";
 
 import {useFullListStyles} from "./FullListStyles";
-import {selectIsListLoading, selectListItem,} from "../../store/ducks/list/selectors";
+import {selectIsListLoaded, selectIsListLoading, selectListItem,} from "../../store/ducks/list/selectors";
 import {fetchListById, resetListState} from "../../store/ducks/list/actionCreators";
 import BackButton from "../../components/BackButton/BackButton";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
@@ -35,6 +35,7 @@ const FullList: FC = (): ReactElement => {
     const tweets = useSelector(selectTweetsItems);
     const myProfile = useSelector(selectUserData);
     const isListLoading = useSelector(selectIsListLoading);
+    const isListLoaded = useSelector(selectIsListLoaded);
     const isTweetsLoading = useSelector(selectIsTweetsLoading);
     const isTweetsLoaded = useSelector(selectIsTweetsLoaded);
     const pagesCount = useSelector(selectPagesCount);
@@ -48,6 +49,7 @@ const FullList: FC = (): ReactElement => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        
         dispatch(fetchListById(parseInt(params.listId)));
         loadTweets();
 
@@ -56,6 +58,12 @@ const FullList: FC = (): ReactElement => {
         };
     }, [params.listId]);
 
+    useEffect(() => {
+        if (isListLoaded) {
+            document.title = `@${list?.listOwner.username}/${list?.name} / Twitter`;
+        }
+    }, [isListLoaded]);
+    
     const handleFollow = (): void => {
         if (list?.isFollower) {
             dispatch(unfollowList(list?.id!));
@@ -151,7 +159,7 @@ const FullList: FC = (): ReactElement => {
                                 <Typography variant={"body1"} component={"div"}>
                                     {list?.description}
                                 </Typography>
-                                <Link to={`/user/${list?.listOwner.id}`} className={classes.listOwnerLink}>
+                                <Link to={`/profile/${list?.listOwner.id}`} className={classes.listOwnerLink}>
                                     <div className={classes.listOwnerWrapper}>
                                         <Avatar
                                             className={classes.listOwnerAvatar}

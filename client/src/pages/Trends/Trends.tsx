@@ -8,6 +8,7 @@ import {selectIsTagsLoading, selectTagsItems} from "../../store/ducks/tags/selec
 import {fetchTrends} from "../../store/ducks/tags/actionCreators";
 import {EditIcon} from "../../icons";
 import Spinner from "../../components/Spinner/Spinner";
+import {withDocumentTitle} from "../../hoc/withDocumentTitle";
 
 const Trends: FC = (): ReactElement => {
     const classes = useTrendsStyles();
@@ -50,4 +51,4 @@ const Trends: FC = (): ReactElement => {
     );
 };
 
-export default Trends;
+export default withDocumentTitle(Trends);

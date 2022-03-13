@@ -2,6 +2,7 @@ import React, {FC, ReactElement} from 'react';
 import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useGlobalStyles} from "../../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 
 const MutedNotifications: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -78,4 +79,4 @@ const MutedNotifications: FC = (): ReactElement => {
     );
 };
 
-export default MutedNotifications;
+export default withDocumentTitle(MutedNotifications);

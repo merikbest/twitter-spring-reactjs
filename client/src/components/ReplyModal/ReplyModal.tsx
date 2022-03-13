@@ -89,7 +89,7 @@ const ReplyModal: FC<ReplyModalProps> = (
                         <object>
                             <Typography variant={"subtitle1"} component={"div"} className={classes.replyWrapper}>
                                 {"Replying to "}
-                                <MuiLink variant="subtitle1" to={`/user/${user.id}`} component={Link}>
+                                <MuiLink variant="subtitle1" to={`/profile/${user.id}`} component={Link}>
                                     @{user.username}
                                 </MuiLink>
                             </Typography>

@@ -8,6 +8,7 @@ import {useContentPreferencesStyles} from "./ContentPreferencesStyles";
 import {ArrowRightIcon} from "../../../../icons";
 import ExploreModal from "./ExploreModal/ExploreModal";
 import RecommendationsModal from "./RecommendationsModal/RecommendationsModal";
+import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 
 const ContentPreferences = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -95,7 +96,7 @@ const ContentPreferences = (): ReactElement => {
                     Personalization and data
                 </Typography>
             </div>
-            <Link to={"/settings/account/personalization"} className={globalClasses.linkWrapper}>
+            <Link to={"/settings/personalization"} className={globalClasses.linkWrapper}>
                 <div className={classnames(classes.personalizationLink, globalClasses.contentLink)}>
                     <div className={classes.personalizationInfo}>
                         <Typography variant={"body1"} component={"div"}>
@@ -121,4 +122,4 @@ const ContentPreferences = (): ReactElement => {
     );
 };
 
-export default ContentPreferences;
+export default withDocumentTitle(ContentPreferences);

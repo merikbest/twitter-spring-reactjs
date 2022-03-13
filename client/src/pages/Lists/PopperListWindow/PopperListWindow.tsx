@@ -74,7 +74,7 @@ const PopperListWindow: FC<PopperListWindowProps> = ({visible}): ReactElement | 
                 <Typography variant={"body1"} component={"div"} className={classes.popperListDescription}>
                     {list?.description}
                 </Typography>
-                <Link to={`/user/${list?.listOwner.id}`} className={classes.popperListOwnerLink}>
+                <Link to={`/profile/${list?.listOwner.id}`} className={classes.popperListOwnerLink}>
                     <div className={classes.popperListOwnerWrapper}>
                         <Avatar
                             className={classes.popperListOwnerAvatar}

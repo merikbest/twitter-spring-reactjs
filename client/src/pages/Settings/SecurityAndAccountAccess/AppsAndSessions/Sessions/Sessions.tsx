@@ -7,6 +7,7 @@ import bowser from "bowser";
 import {useSessionsStyles} from "./SessionsStyles";
 import {ArrowRightIcon, DeviceIcon} from "../../../../../icons";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 
 const Sessions: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -105,4 +106,4 @@ const Sessions: FC = (): ReactElement => {
     );
 };
 
-export default Sessions;
+export default withDocumentTitle(Sessions);

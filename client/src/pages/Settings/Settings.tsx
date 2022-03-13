@@ -5,6 +5,7 @@ import classnames from "classnames";
 
 import {useSettingsStyles} from "./SettingsStyles";
 import {ArrowRightIcon} from "../../icons";
+import {useGlobalStyles} from "../../util/globalClasses";
 import BackButton from "../../components/BackButton/BackButton";
 import Account from "./Account/Account";
 import AccountInformation from "./Account/AccountInformation/AccountInformation";
@@ -60,8 +61,9 @@ import DataUsage from "./AccessibilityDisplayLanguages/DataUsage/DataUsage";
 import Display, {DisplayProps} from "./AccessibilityDisplayLanguages/Display/Display";
 import Languages from "./AccessibilityDisplayLanguages/Languages/Languages";
 import Autoplay from "./AccessibilityDisplayLanguages/DataUsage/Autoplay/Autoplay";
-import {useGlobalStyles} from "../../util/globalClasses";
 import ContentPreferences from "./Notifications/ContentPreferences/ContentPreferences";
+import PersonalizationAndData from "./Notifications/PersonalizationAndData/PersonalizationAndData";
+import {withDocumentTitle} from "../../hoc/withDocumentTitle";
 
 export interface LocationState {
     pathname: string;
@@ -84,8 +86,6 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
             setSelectedIndex(4);
         } else if (location.pathname.includes("/settings/accessibility_display_and_languages")) {
             setSelectedIndex(5);
-        } else if (location.pathname.includes("/settings/about")) {
-            setSelectedIndex(6);
         } else if (location.pathname.includes("/settings/about")) {
             setSelectedIndex(6);
         } else {
@@ -493,6 +493,12 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                             Autoplay
                         </Typography>
                     </Route>
+                    <Route exact path="/settings/personalization">
+                        <BackButton/>
+                        <Typography variant="h5">
+                            Personalization and data
+                        </Typography>
+                    </Route>
                     <Route exact path="/settings/about">
                         <Typography variant="h5">
                             Additional resources
@@ -565,6 +571,7 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                         <Route exact path="/settings/accessibility_display_and_languages/autoplay" component={Autoplay}/>
                         <Route exact path="/settings/about" component={AdditionalResources}/>
                         <Route exact path="/settings/content_preferences" component={ContentPreferences}/>
+                        <Route exact path="/settings/personalization" component={PersonalizationAndData}/>
                     </div>
                 </Paper>
             </Grid>
@@ -572,4 +579,4 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
     );
 };
 
-export default Settings;
+export default withDocumentTitle(Settings);

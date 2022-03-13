@@ -7,6 +7,7 @@ import {useDeactivateAccountStyles} from "./DeactivateAccountStyles";
 import {selectUserData} from "../../../../store/ducks/user/selectors";
 import {DEFAULT_PROFILE_IMG} from "../../../../util/url";
 import {useGlobalStyles} from "../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 
 const DeactivateAccount: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -15,7 +16,7 @@ const DeactivateAccount: FC = (): ReactElement => {
 
     return (
         <div>
-            <Link to={`/user/${myProfile?.id}`} className={globalClasses.linkWrapper}>
+            <Link to={`/profile/${myProfile?.id}`} className={globalClasses.linkWrapper}>
                 <div className={classes.userInfoWrapper}>
                     <Avatar
                         className={globalClasses.avatar}
@@ -106,4 +107,4 @@ const DeactivateAccount: FC = (): ReactElement => {
     );
 };
 
-export default DeactivateAccount;
+export default withDocumentTitle(DeactivateAccount);

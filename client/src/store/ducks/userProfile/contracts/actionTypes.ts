@@ -1,6 +1,7 @@
 import {Action} from "redux";
 import {LoadingStatus} from "../../../types";
 import {UserProfileResponse} from "../../../types/user";
+import {TweetImageResponse, TweetResponse} from "../../../types/tweet";
 
 export enum UserProfileActionsType {
     FETCH_USER = 'userProfile/FETCH_USER',
@@ -14,6 +15,11 @@ export enum UserProfileActionsType {
     SET_USER_LOADING_STATE = 'userProfile/SET_USER_LOADING_STATE',
     SET_FOLLOW_REQUEST_TO_USER_PROFILE = 'userProfile/SET_FOLLOW_REQUEST_TO_USER_PROFILE',
     FETCH_CHAT_PARTICIPANT = 'userProfile/FETCH_CHAT_PARTICIPANT',
+    // images
+    FETCH_IMAGES = 'userProfile/FETCH_IMAGES',
+    SET_IMAGES = 'userProfile/SET_IMAGES',
+    RESET_IMAGES_STATE = "userProfile/RESET_IMAGES_STATE",
+    SET_IMAGES_LOADING_STATE = 'userProfile/SET_IMAGES_LOADING_STATE',
 }
 
 export interface FetchUserProfileActionInterface extends Action<UserProfileActionsType> {
@@ -70,6 +76,26 @@ export interface SetUserProfileLoadingStatusActionInterface extends Action<UserP
     payload: LoadingStatus;
 }
 
+// images
+export interface FetchImagesActionInterface extends Action<UserProfileActionsType> {
+    type: UserProfileActionsType.FETCH_IMAGES;
+    payload: number;
+}
+
+export interface SetImagesActionInterface extends Action<UserProfileActionsType> {
+    type: UserProfileActionsType.SET_IMAGES;
+    payload: TweetImageResponse[];
+}
+
+export interface ResetImagesStateActionInterface extends Action<UserProfileActionsType> {
+    type: UserProfileActionsType.RESET_IMAGES_STATE;
+}
+
+export interface SetImagesLoadingStatusActionInterface extends Action<UserProfileActionsType> {
+    type: UserProfileActionsType.SET_IMAGES_LOADING_STATE;
+    payload: LoadingStatus;
+}
+
 export type UserProfileActions =
     | SetUserProfileActionInterface
     | ResetUserProfileStateActionInterface
@@ -78,4 +104,7 @@ export type UserProfileActions =
     | SetMutedActionInterface
     | SetFollowToUserProfileActionInterface
     | SetSubscribeToUserProfileActionInterface
-    | SetFollowRequestToUserProfileActionInterface;
+    | SetFollowRequestToUserProfileActionInterface
+    | SetImagesActionInterface
+    | ResetImagesStateActionInterface
+    | SetImagesLoadingStatusActionInterface;

@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import {useDataUsageStyles} from "./DataUsageStyles";
 import {ArrowRightIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 
 const DataUsage: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -46,4 +47,4 @@ const DataUsage: FC = (): ReactElement => {
     );
 };
 
-export default DataUsage;
+export default withDocumentTitle(DataUsage);

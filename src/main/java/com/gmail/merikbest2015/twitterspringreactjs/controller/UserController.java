@@ -7,6 +7,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.No
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationsResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetHeaderResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetImageResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetUserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.UserMapper;
@@ -115,7 +116,7 @@ public class UserController {
     }
 
     @GetMapping("/images/{userId}")
-    public ResponseEntity<List<TweetResponse>> getUserTweetImages(@PathVariable Long userId) {
+    public ResponseEntity<List<TweetImageResponse>> getUserTweetImages(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.getUserTweetImages(userId));
     }
 

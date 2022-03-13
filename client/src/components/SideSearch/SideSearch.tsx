@@ -4,8 +4,10 @@ import {InputAdornment,} from "@material-ui/core";
 
 import {SideSearchTextField} from "../SearchTextField/SideSearchTextField";
 import {SearchIcon} from "../../icons";
+import {useSideSearchStyles} from "./SideSearchStyles";
 
 const SideSearch: FC = (): ReactElement => {
+    const classes = useSideSearchStyles();
     const history = useHistory();
     const [text, setText] = React.useState<string>("");
 
@@ -15,7 +17,7 @@ const SideSearch: FC = (): ReactElement => {
     };
 
     return (
-        <form onSubmit={handleClickSearch}>
+        <form className={classes.content} onSubmit={handleClickSearch}>
             <SideSearchTextField
                 variant="outlined"
                 placeholder="Search Twitter"

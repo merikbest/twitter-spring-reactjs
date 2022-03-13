@@ -55,6 +55,7 @@ import NotificationsTimeline from "./pages/Notifications/NotificationsTimeline/N
 import FollowersYouKnow from "./pages/FollowersYouKnow/FollowersYouKnow";
 import {fetchTags} from "./store/ducks/tags/actionCreators";
 import {fetchRelevantUsers} from "./store/ducks/users/actionCreators";
+import UserImageModal from "./pages/UserPage/UserImageModal/UserImageModal";
 
 const App: FC = (): ReactElement => {
     const history = useHistory();
@@ -203,11 +204,13 @@ const App: FC = (): ReactElement => {
                         <Route path="/lists" component={Lists} exact/>
                         <Route path="/lists/memberships/:id" component={ListsMemberships} exact/>
                         <Route path="/lists/:listId" component={FullList} exact/>
-                        <Route path="/user/:id" component={UserPage} exact/>
+                        <Route path="/profile/:id" component={UserPage} exact/>
                         <Route path="/user/followers_you_follow/:id" component={FollowersYouKnow} exact/>
                         <Route path="/user/:id/:follow" component={FollowingFollowers} exact/>
                     </Switch>
                     {background && <Route path="/modal/:id" children={<TweetImageModal/>}/>}
+                    {background && <Route path="/profile/photo/:id" children={<UserImageModal/>}/>}
+                    {background && <Route path="/profile/header_photo/:id" children={<UserImageModal/>}/>}
                 </Layout>
             </div>
         </MuiThemeProvider>

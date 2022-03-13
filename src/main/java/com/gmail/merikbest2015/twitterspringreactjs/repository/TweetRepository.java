@@ -1,10 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.repository;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetProjection;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetUserProjection;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetsProjection;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetsUserProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.UserProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -75,13 +72,13 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "ORDER BY tweet.dateTime DESC")
     Page<TweetProjection> findAllUserMediaTweets(Long userId, Pageable pageable);
 
-    @Query("SELECT tweet FROM Tweet tweet " +
+    @Query("SELECT tweet.id AS tweetId, image.id AS imageId, image.src AS src FROM Tweet tweet " +
             "LEFT JOIN tweet.images image " +
             "WHERE tweet.scheduledDate IS NULL " +
             "AND tweet.user.id = :userId " +
             "AND image.id IS NOT NULL " +
             "ORDER BY tweet.dateTime DESC")
-    List<TweetProjection> findUserTweetImages(Long userId, Pageable pageable);
+    List<TweetImageProjection> findUserTweetImages(Long userId, Pageable pageable);
 
     @Query("SELECT tweet FROM Tweet tweet WHERE tweet.quoteTweet.id = :quoteId")
     List<Tweet> findByQuoteTweetId(Long quoteId);

@@ -36,7 +36,7 @@ const FollowersYouKnow: FC = (): ReactElement => {
 
     useEffect(() => {
         if (userProfile?.isPrivateProfile) {
-            history.push(`/user/${params.id}`);
+            history.push(`/profile/${params.id}`);
         }
     }, [userProfile]);
 

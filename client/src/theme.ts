@@ -197,6 +197,7 @@ export const dimTheme = createTheme(deepmerge({
             "500": "rgb(78, 92, 104)",
             "600": "rgb(25, 39, 52)",
             "700": "rgb(61, 84, 102)",
+            "800": "rgba(91, 112, 131, 0.4)",
         },
     },
     overrides: {
@@ -242,6 +243,11 @@ export const dimTheme = createTheme(deepmerge({
         MuiButton: {
             contained: {
                 color: "rgb(255, 255, 255)",
+            },
+        },
+        MuiBackdrop: {
+            root: {
+                backgroundColor: "rgba(91, 112, 131, 0.4)",
             },
         },
     },
@@ -271,6 +277,7 @@ export const lightsOutTheme = createTheme(deepmerge({
             "500": "rgb(110, 118, 125, 0.5)",
             "600": "rgb(21, 24, 28)",
             "700": "rgb(47, 51, 54)",
+            "800": "rgba(91, 112, 131, 0.4)",
         },
     },
     overrides: {
@@ -318,6 +325,11 @@ export const lightsOutTheme = createTheme(deepmerge({
                 color: "rgb(255, 255, 255)",
             },
         },
+        MuiBackdrop: {
+            root: {
+                backgroundColor: "rgba(91, 112, 131, 0.4)",
+            },
+        },
     },
 }, commonTheme));
 
@@ -345,6 +357,7 @@ export const defaultTheme = createTheme(deepmerge({
             "500": "rgb(83, 100, 113, 0.5)",
             "600": "rgb(247, 249, 249)",
             "700": "rgb(207, 217, 222)",
+            "800": "rgba(0, 0, 0, 0.4)",
         },
     },
     overrides: {
@@ -390,6 +403,11 @@ export const defaultTheme = createTheme(deepmerge({
         MuiButton: {
             contained: {
                 color: "rgb(15, 20, 25)",
+            },
+        },
+        MuiBackdrop: {
+            root: {
+                backgroundColor: "rgba(0, 0, 0, 0.4)",
             },
         },
     },

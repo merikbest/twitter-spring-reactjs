@@ -38,7 +38,7 @@ const BlockedAccountItem: FC<BlockedAccountItemProps & SnackbarProps> = (
     };
 
     return (
-        <Link to={`/user/${blockedUser?.id}`} className={globalClasses.link}>
+        <Link to={`/profile/${blockedUser?.id}`} className={globalClasses.link}>
             <Paper className={classes.container}>
                 <Avatar
                     className={classnames(classes.listAvatar, globalClasses.avatar)}

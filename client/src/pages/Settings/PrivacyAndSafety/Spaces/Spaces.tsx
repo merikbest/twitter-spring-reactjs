@@ -3,6 +3,7 @@ import {Link as MuiLink, Switch, Typography} from "@material-ui/core";
 
 import {useSpacesStyles} from "./SpacesStyles";
 import {useGlobalStyles} from "../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 
 const Spaces: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -41,4 +42,4 @@ const Spaces: FC = (): ReactElement => {
     );
 };
 
-export default Spaces;
+export default withDocumentTitle(Spaces);

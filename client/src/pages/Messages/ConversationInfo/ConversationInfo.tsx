@@ -146,7 +146,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                     <Spinner paddingTop={200}/>
                 ) : (
                     <>
-                        <Link to={`/user/${chatParticipant?.id}`} className={globalClasses.link}>
+                        <Link to={`/profile/${chatParticipant?.id}`} className={globalClasses.link}>
                             <div className={classes.pageInfoWrapper}>
                                 <Avatar
                                     className={classes.participantAvatar}

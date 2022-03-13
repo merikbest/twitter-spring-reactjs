@@ -37,9 +37,11 @@ const FollowingFollowers: FC = (): ReactElement => {
         dispatch(fetchUserProfile(parseInt(params.id)));
 
         if (params.follow === "following") {
+            document.title = `People followed by ${userProfile?.fullName} (@${userProfile?.username}) / Twitter`;
             setActiveTab(0);
             dispatch(fetchFollowers(params.id));
         } else {
+            document.title = `People following by ${userProfile?.fullName} (@${userProfile?.username}) / Twitter`;
             setActiveTab(1);
             dispatch(fetchFollowings(params.id));
         }

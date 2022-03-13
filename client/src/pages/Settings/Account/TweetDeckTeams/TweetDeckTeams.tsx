@@ -4,6 +4,7 @@ import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
 
 import {useTweetDeckTeamsStyles} from "./TweetDeckTeamsStyles";
 import {useGlobalStyles} from "../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 
 const TweetDeckTeams: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -77,4 +78,4 @@ const TweetDeckTeams: FC = (): ReactElement => {
     );
 };
 
-export default TweetDeckTeams;
+export default withDocumentTitle(TweetDeckTeams);

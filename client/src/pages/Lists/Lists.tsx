@@ -2,6 +2,7 @@ import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {ClickAwayListener, IconButton, Paper, Typography} from "@material-ui/core";
 import {Link} from 'react-router-dom';
+import {compose} from "recompose";
 
 import {useListsStyles} from "./ListsStyles";
 import BackButton from "../../components/BackButton/BackButton";
@@ -24,6 +25,7 @@ import HoverAction from "../../components/HoverAction/HoverAction";
 import Spinner from "../../components/Spinner/Spinner";
 import {HoverActionProps, HoverActions, withHoverAction} from "../../hoc/withHoverAction";
 import {useGlobalStyles} from "../../util/globalClasses";
+import {withDocumentTitle} from "../../hoc/withDocumentTitle";
 
 const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, handleLeaveAction}): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -177,4 +179,4 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
     );
 };
 
-export default withHoverAction(Lists);
+export default compose(withHoverAction, withDocumentTitle)(Lists);

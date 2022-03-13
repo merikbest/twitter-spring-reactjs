@@ -9,6 +9,7 @@ import {selectUserData} from "../../store/ducks/user/selectors";
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import Spinner from "../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../util/globalClasses";
+import {withDocumentTitle} from "../../hoc/withDocumentTitle";
 
 const Bookmarks: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -78,4 +79,4 @@ const Bookmarks: FC = (): ReactElement => {
     );
 };
 
-export default Bookmarks;
+export default withDocumentTitle(Bookmarks);

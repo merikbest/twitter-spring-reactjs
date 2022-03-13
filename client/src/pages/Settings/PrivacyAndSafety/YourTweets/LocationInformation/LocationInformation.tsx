@@ -3,6 +3,7 @@ import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useLocationInformationStyles} from "./LocationInformationStyles";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 
 const LocationInformation: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -40,4 +41,4 @@ const LocationInformation: FC = (): ReactElement => {
     );
 };
 
-export default LocationInformation;
+export default withDocumentTitle(LocationInformation);

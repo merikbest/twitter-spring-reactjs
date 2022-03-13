@@ -8,6 +8,7 @@ import {ChangeInfoTextField} from "../../../ChangeInfoTextField/ChangeInfoTextFi
 import {selectUserData, selectUserIsLoading} from "../../../../../store/ducks/user/selectors";
 import {updateUsername} from "../../../../../store/ducks/user/actionCreators";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 
 const ChangeUsername: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -77,4 +78,4 @@ const ChangeUsername: FC = (): ReactElement => {
     );
 };
 
-export default ChangeUsername;
+export default withDocumentTitle(ChangeUsername);

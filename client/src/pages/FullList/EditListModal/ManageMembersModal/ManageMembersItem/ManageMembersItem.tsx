@@ -55,7 +55,7 @@ const ManageMembersItem: FC<ManageMembersItemProps<BaseListResponse> & HoverUser
     }
 
     return (
-        <Link to={`/user/${member?.id}`} className={globalClasses.link}>
+        <Link to={`/profile/${member?.id}`} className={globalClasses.link}>
             <Paper className={classes.container} variant="outlined">
                 <Avatar
                     className={classes.listAvatar}

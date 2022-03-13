@@ -4,6 +4,7 @@ import {List, ListItem, Typography} from "@material-ui/core";
 
 import {ArrowRightIcon, FiltersIcon, PreferencesIcon,} from "../../../icons";
 import {useGlobalStyles} from "../../../util/globalClasses";
+import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
 
 const Notifications: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -59,4 +60,4 @@ const Notifications: FC = (): ReactElement => {
     );
 };
 
-export default Notifications;
+export default withDocumentTitle(Notifications);

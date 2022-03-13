@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.BookmarkProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.LikeTweetProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.notification.NotificationInfoProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetImageProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetUserProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetsProjection;
@@ -50,7 +51,7 @@ public interface UserService {
 
     Image uploadImage(MultipartFile multipartFile);
     
-    List<TweetProjection> getUserTweetImages(Long userId);
+    List<TweetImageProjection> getUserTweetImages(Long userId);
 
     AuthUserProjection updateUserProfile(User userInfo);
 

@@ -7,6 +7,7 @@ import {useDisplayStyles} from "./DisplayStyles";
 import {CheckIcon, TweetIcon, VerifiedIcon} from "../../../../icons";
 import {updateBackgroundColor} from "../../../../store/ducks/user/actionCreators";
 import {useGlobalStyles} from "../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 
 export enum ColorScheme {
     BLUE = "BLUE",
@@ -224,4 +225,4 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
     );
 };
 
-export default Display;
+export default withDocumentTitle(Display);

@@ -6,6 +6,7 @@ import {Typography} from "@material-ui/core";
 import {ArrowRightIcon} from "../../../../icons";
 import {setUsers} from "../../../../store/ducks/users/actionCreators";
 import {useGlobalStyles} from "../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 
 const MuteAndBlock: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -60,4 +61,4 @@ const MuteAndBlock: FC = (): ReactElement => {
     );
 };
 
-export default MuteAndBlock;
+export default withDocumentTitle(MuteAndBlock);

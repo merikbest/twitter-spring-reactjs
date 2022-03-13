@@ -7,6 +7,7 @@ import {FilledSelect} from "../../../../../components/FilledSelect/FilledSelect"
 import {selectUserData, selectUserIsLoading} from "../../../../../store/ducks/user/selectors";
 import {setUserLoadingStatus, updateLanguage} from "../../../../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../../../../store/types";
+import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 
 const ChangeLanguage: FC = (): ReactElement => {
     const classes = useChangeLanguageStyles();
@@ -76,7 +77,7 @@ const ChangeLanguage: FC = (): ReactElement => {
     );
 };
 
-export default ChangeLanguage;
+export default withDocumentTitle(ChangeLanguage);
 
 const languages = (): JSX.Element => {
     return (

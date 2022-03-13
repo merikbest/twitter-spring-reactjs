@@ -4,6 +4,7 @@ import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
 
 import {useAutoplayStyles} from "./AutoplayStyles";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 
 const Autoplay: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -66,4 +67,4 @@ const Autoplay: FC = (): ReactElement => {
     );
 };
 
-export default Autoplay;
+export default withDocumentTitle(Autoplay);

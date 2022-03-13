@@ -9,6 +9,7 @@ import {setUserLoadingStatus, updateGender} from "../../../../../store/ducks/use
 import {LoadingStatus} from "../../../../../store/types";
 import {selectUserData, selectUserIsLoading} from "../../../../../store/ducks/user/selectors";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 
 const ChangeGender: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -134,4 +135,4 @@ const ChangeGender: FC = (): ReactElement => {
     );
 };
 
-export default ChangeGender;
+export default withDocumentTitle(ChangeGender);

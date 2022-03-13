@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 
 import {ArrowRightIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 
 const YourTweets: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -47,4 +48,4 @@ const YourTweets: FC = (): ReactElement => {
     );
 };
 
-export default YourTweets;
+export default withDocumentTitle(YourTweets);

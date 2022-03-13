@@ -2,6 +2,7 @@ import React, {FC, ReactElement} from 'react';
 import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useGlobalStyles} from "../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 
 const DataSharing: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -39,4 +40,4 @@ const DataSharing: FC = (): ReactElement => {
     );
 };
 
-export default DataSharing;
+export default withDocumentTitle(DataSharing);

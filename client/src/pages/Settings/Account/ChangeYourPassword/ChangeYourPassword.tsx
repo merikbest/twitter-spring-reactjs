@@ -5,6 +5,7 @@ import classnames from "classnames";
 import {useChangeYourPasswordStyles} from "./ChangeYourPasswordStyles";
 import {ChangeInfoTextField} from "../../ChangeInfoTextField/ChangeInfoTextField";
 import {useGlobalStyles} from "../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 
 const ChangeYourPassword: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -61,4 +62,4 @@ const ChangeYourPassword: FC = (): ReactElement => {
     );
 };
 
-export default ChangeYourPassword;
+export default withDocumentTitle(ChangeYourPassword);

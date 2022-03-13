@@ -1,16 +1,30 @@
-import React, {ReactElement, useState} from 'react';
+import React, {FC, ReactElement, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {ClickAwayListener, Divider, IconButton, List, ListItem, Typography} from "@material-ui/core";
 
 import {useTopTweetActionsStyles} from "./TopTweetActionsStyles";
 import {SeeLatestIcon, SettingsIcon, ShowLatestTweets, ShowTopTweets, TopTweets} from "../../../icons";
 import {useGlobalStyles} from "../../../util/globalClasses";
+import {HoverActionProps, HoverActions, withHoverAction} from "../../../hoc/withHoverAction";
+import HoverAction from "../../../components/HoverAction/HoverAction";
 
-const TopTweetActions = (): ReactElement => {
+interface TopTweetActionsProps {
+    switchTweets: boolean;
+    handleSwitchTweets: () => void;
+}
+
+const TopTweetActions: FC<TopTweetActionsProps & HoverActionProps> = (
+    {
+        switchTweets,
+        handleSwitchTweets,
+        visibleHoverAction,
+        handleHoverAction,
+        handleLeaveAction
+    }
+): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useTopTweetActionsStyles();
     const [openTopTweetActions, setOpenTopTweetActions] = useState<boolean>(false);
-    const [switchTweets, setSwitchTweets] = useState<boolean>(false);
 
     const handleCLickTopTweetActions = (): void => {
         setOpenTopTweetActions((prevState) => !prevState);
@@ -20,16 +34,18 @@ const TopTweetActions = (): ReactElement => {
         setOpenTopTweetActions(false);
     };
 
-    const handleSwitchTweets = (): void => {
-        setSwitchTweets((prevState) => !prevState);
-    };
-
     return (
         <ClickAwayListener onClickAway={handleClickAwayTopTweetActions}>
             <div>
                 <div className={classes.headerIcon}>
-                    <IconButton color="primary" onClick={handleCLickTopTweetActions}>
+                    <IconButton
+                        color="primary"
+                        onClick={handleCLickTopTweetActions}
+                        onMouseEnter={() => handleHoverAction?.(HoverActions.OTHER)}
+                        onMouseLeave={handleLeaveAction}
+                    >
                         <>{TopTweets}</>
+                        <HoverAction visible={visibleHoverAction?.visibleOtherAction} actionText={"Top Tweets"}/>
                     </IconButton>
                 </div>
                 {!openTopTweetActions ? null : (
@@ -81,4 +97,4 @@ const TopTweetActions = (): ReactElement => {
     );
 };
 
-export default TopTweetActions;
+export default withHoverAction(TopTweetActions);

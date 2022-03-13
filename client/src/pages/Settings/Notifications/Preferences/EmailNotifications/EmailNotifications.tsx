@@ -3,6 +3,7 @@ import {Checkbox, Divider, Link as MuiLink, Radio, Switch, Typography} from "@ma
 import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
 
 import {useGlobalStyles} from "../../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 
 const EmailNotifications: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -212,4 +213,4 @@ const EmailNotifications: FC = (): ReactElement => {
     );
 };
 
-export default EmailNotifications;
+export default withDocumentTitle(EmailNotifications);

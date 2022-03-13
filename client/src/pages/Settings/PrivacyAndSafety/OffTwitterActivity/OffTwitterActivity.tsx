@@ -2,6 +2,7 @@ import React, {FC, ReactElement} from 'react';
 import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useGlobalStyles} from "../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 
 const OffTwitterActivity: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -62,4 +63,4 @@ const OffTwitterActivity: FC = (): ReactElement => {
     );
 };
 
-export default OffTwitterActivity;
+export default withDocumentTitle(OffTwitterActivity);

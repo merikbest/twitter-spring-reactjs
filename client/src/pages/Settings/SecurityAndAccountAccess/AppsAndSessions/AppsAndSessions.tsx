@@ -6,6 +6,7 @@ import classnames from "classnames";
 import {useAppsAndSessionsStyles} from "./AppsAndSessionsStyles";
 import {ArrowRightIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 
 const AppsAndSessions: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -59,4 +60,4 @@ const AppsAndSessions: FC = (): ReactElement => {
     );
 };
 
-export default AppsAndSessions;
+export default withDocumentTitle(AppsAndSessions);

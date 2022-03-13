@@ -13,6 +13,7 @@ import {
     fetchMutedUsers,
     resetBlockedAndMutedUsersState
 } from "../../../../../store/ducks/blockedAndMutedUsers/actionCreators";
+import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 
 const MutedAccounts: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -73,4 +74,4 @@ const MutedAccounts: FC = (): ReactElement => {
     );
 };
 
-export default MutedAccounts;
+export default withDocumentTitle(MutedAccounts);

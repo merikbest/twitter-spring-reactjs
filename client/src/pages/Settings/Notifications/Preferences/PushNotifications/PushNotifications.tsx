@@ -2,6 +2,7 @@ import React, {FC, ReactElement} from 'react';
 import {Switch, Typography} from "@material-ui/core";
 
 import {useGlobalStyles} from "../../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 
 const PushNotifications: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -35,4 +36,4 @@ const PushNotifications: FC = (): ReactElement => {
     );
 };
 
-export default PushNotifications;
+export default withDocumentTitle(PushNotifications);

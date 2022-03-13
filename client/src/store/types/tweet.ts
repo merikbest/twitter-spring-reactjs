@@ -69,3 +69,9 @@ export interface PollChoiceResponse {
 export interface VotedUserResponse {
     id: number;
 }
+
+export interface TweetImageResponse {
+    tweetId: number;
+    imageId: number;
+    src: string;
+}

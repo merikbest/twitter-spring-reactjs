@@ -5,6 +5,7 @@ import axios from "axios";
 import {useLocationStyles} from "./PlacesStyles";
 import {LocationIconFilled} from "../../../../../icons";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 
 const Places: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -49,4 +50,4 @@ const Places: FC = (): ReactElement => {
     );
 };
 
-export default Places;
+export default withDocumentTitle(Places);

@@ -4,6 +4,7 @@ import {Checkbox, Divider, Link as MuiLink, Typography} from "@material-ui/core"
 
 import {ArrowRightIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 
 const Security: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -76,4 +77,4 @@ const Security: FC = (): ReactElement => {
     );
 };
 
-export default Security;
+export default withDocumentTitle(Security);

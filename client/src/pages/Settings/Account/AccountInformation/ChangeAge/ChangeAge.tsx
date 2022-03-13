@@ -2,6 +2,7 @@ import React, {FC, ReactElement} from 'react';
 import {Divider, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useGlobalStyles} from "../../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 
 const ChangeAge: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -31,4 +32,4 @@ const ChangeAge: FC = (): ReactElement => {
     );
 };
 
-export default ChangeAge;
+export default withDocumentTitle(ChangeAge);

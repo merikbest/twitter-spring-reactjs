@@ -1,6 +1,7 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 interface TweetComponentStylesProps {
+    isTweetImageModal?: boolean;
     isTweetLiked: boolean;
     isUserCanReply: boolean;
 }
@@ -27,6 +28,7 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
     tweetContainer: {
         flex: 1,
         marginLeft: 15,
+        width: props => props.isTweetImageModal ? 263 : 0,
     },
     headerWrapper: {
         color: 'inherit',

@@ -32,5 +32,8 @@ export const SideSearchTextField = withStyles((theme: Theme) => ({
         '& .MuiOutlinedInput-input': {
             padding: '12px 14px 14px 5px',
         },
+        "&.MuiFormControl-root": {
+            paddingLeft: 12,
+        },
     },
 }))(TextField);

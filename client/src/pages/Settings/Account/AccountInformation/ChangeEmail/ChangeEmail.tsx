@@ -8,6 +8,7 @@ import {selectUserData, selectUserIsSuccess} from "../../../../../store/ducks/us
 import ChangeEmailModal from "./ChangeEmailModal/ChangeEmailModal";
 import {setUserLoadingStatus} from "../../../../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../../../../store/types";
+import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 
 const ChangeEmail: FC = (): ReactElement => {
     const classes = useChangeEmailStyles();
@@ -57,4 +58,4 @@ const ChangeEmail: FC = (): ReactElement => {
     );
 };
 
-export default ChangeEmail;
+export default withDocumentTitle(ChangeEmail);

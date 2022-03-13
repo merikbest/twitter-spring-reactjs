@@ -1,4 +1,4 @@
-import React, {FC, ReactElement} from 'react';
+import React, {FC, ReactElement, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {useSelector} from "react-redux";
 import {List, ListItem, ListItemText, Paper, Typography, IconButton} from "@material-ui/core";
@@ -8,11 +8,29 @@ import {selectIsTagsLoading, selectTagsItems} from "../../store/ducks/tags/selec
 import {useTagsStyles} from "./TagsStyles";
 import Spinner from "../Spinner/Spinner";
 import {TagResponse} from "../../store/types/tag";
+import {HoverActionProps, HoverActions, withHoverAction} from "../../hoc/withHoverAction";
+import HoverAction from "../HoverAction/HoverAction";
+import SettingsModal from "./SettingsModal/SettingsModal";
 
-const Tags: FC = (): ReactElement => {
+const Tags: FC<HoverActionProps> = (
+    {
+        visibleHoverAction,
+        handleHoverAction,
+        handleLeaveAction
+    }
+): ReactElement => {
     const classes = useTagsStyles();
     const tags = useSelector(selectTagsItems);
     const isTagsLoading = useSelector(selectIsTagsLoading);
+    const [visibleSettingsModal, setVisibleSettingsModal] = useState<boolean>(false);
+
+    const onOpenSettingsModal = (): void => {
+        setVisibleSettingsModal(true);
+    };
+
+    const onCloseSettingsModal = (): void => {
+        setVisibleSettingsModal(false);
+    };
 
     return (
         <Paper className={classes.container}>
@@ -20,8 +38,14 @@ const Tags: FC = (): ReactElement => {
                 <Typography variant={"h5"} component={"div"}>
                     Trends for you
                 </Typography>
-                <IconButton color="primary">
+                <IconButton
+                    color="primary"
+                    onClick={onOpenSettingsModal}
+                    onMouseEnter={() => handleHoverAction?.(HoverActions.OTHER)}
+                    onMouseLeave={handleLeaveAction}
+                >
                     <>{SettingsIcon}</>
+                    <HoverAction visible={visibleHoverAction?.visibleOtherAction} actionText={"Settings"}/>
                 </IconButton>
             </Paper>
             {isTagsLoading ? (
@@ -51,8 +75,9 @@ const Tags: FC = (): ReactElement => {
                     </Link>
                 </List>
             )}
+            <SettingsModal visible={visibleSettingsModal} onClose={onCloseSettingsModal}/>
         </Paper>
     );
 };
 
-export default Tags;
+export default withHoverAction(Tags);

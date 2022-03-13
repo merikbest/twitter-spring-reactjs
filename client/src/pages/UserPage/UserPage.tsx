@@ -3,7 +3,16 @@ import {Link, useHistory, useLocation, useParams, withRouter} from 'react-router
 import {useDispatch, useSelector} from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Paper from '@material-ui/core/Paper';
-import {Avatar, Button, Divider, IconButton, Link as MuiLink, List, ListItem, Typography} from '@material-ui/core';
+import {
+    Avatar,
+    Button,
+    Divider,
+    IconButton,
+    Link as MuiLink,
+    List,
+    ListItem,
+    Typography
+} from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Skeleton from '@material-ui/lab/Skeleton';
@@ -56,7 +65,12 @@ import {
     selectUsersIsLoading,
     selectUsersIsSuccessLoaded
 } from "../../store/ducks/userProfile/selectors";
-import {fetchUserProfile, processSubscribe, resetUserProfileState} from "../../store/ducks/userProfile/actionCreators";
+import {
+    fetchImages,
+    fetchUserProfile,
+    processSubscribe, resetImagesState,
+    resetUserProfileState
+} from "../../store/ducks/userProfile/actionCreators";
 import UserPageTweets from "./UserPageTweets";
 import {DEFAULT_PROFILE_IMG, WS_URL} from "../../util/url";
 import SetupProfileModal from "../SetupProfileModal/SetupProfileModal";
@@ -120,6 +134,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
 
         if (params.id) {
             dispatch(fetchUserProfile(parseInt(params.id)));
+            dispatch(fetchImages(parseInt(params.id)));
         }
         document.body.style.overflow = 'unset';
 
@@ -140,6 +155,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
         return () => {
             dispatch(resetUserProfileState());
             dispatch(resetUserTweets());
+            dispatch(resetImagesState());
             stompClient?.disconnect();
         };
     }, [params.id]);
@@ -148,6 +164,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
         setBtnText(userProfile?.isWaitingForApprove ? ("Pending") : (userProfile?.isUserBlocked ? "Blocked" : "Following"));
 
         if (isUserProfileSuccessLoaded) {
+            document.title = `${userProfile?.fullName} (@${userProfile?.username}) / Twitter`;
             dispatch(fetchUserTweets({userId: params.id, page: 0}));
             setPage(prevState => prevState + 1);
         }
@@ -156,6 +173,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
             setVisibleSetupProfile(true);
         }
         return () => {
+            document.title = "Twitter";
             dispatch(resetUserTweets());
         };
     }, [isUserProfileSuccessLoaded]);
@@ -322,19 +340,35 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                     <div className={globalClasses.contentWrapper}>
                         <div className={classes.wallpaper}>
                             {userProfile?.wallpaper?.src && (
-                                <img
-                                    key={userProfile?.wallpaper?.src}
-                                    src={userProfile?.wallpaper?.src}
-                                    alt={userProfile?.wallpaper?.src}
-                                />
+                                <Link to={{
+                                    pathname: `/profile/header_photo/${userProfile?.id}`,
+                                    state: {
+                                        background: location,
+                                        imageSrc: userProfile?.wallpaper?.src
+                                    },
+                                }}>
+                                    <img
+                                        key={userProfile?.wallpaper?.src}
+                                        src={userProfile?.wallpaper?.src}
+                                        alt={userProfile?.wallpaper?.src}
+                                    />
+                                </Link>
                             )}
                         </div>
                         <div className={classes.info}>
-                            <div style={{display: "inline-block"}}>
-                                <Avatar src={userProfile !== undefined ? userProfile?.avatar?.src ? userProfile?.avatar.src : DEFAULT_PROFILE_IMG : undefined}>
-                                    <div></div>
-                                </Avatar>
-                            </div>
+                            <Link to={{
+                                pathname: `/profile/photo/${userProfile?.id}`, 
+                                state: {
+                                    background: location, 
+                                    imageSrc: userProfile?.avatar?.src ? userProfile?.avatar.src : DEFAULT_PROFILE_IMG
+                                },
+                            }}>
+                                <div style={{display: "inline-block"}}>
+                                    <Avatar src={userProfile !== undefined ? userProfile?.avatar?.src ? userProfile?.avatar.src : DEFAULT_PROFILE_IMG : undefined}>
+                                        <div></div>
+                                    </Avatar>
+                                </div>
+                            </Link>
                             {(isMyProfileLoaded && isUserProfileSuccessLoaded) && (
                                 userProfile?.isMyProfileBlocked ? null : (
                                     (userProfile?.id === myProfile?.id) ? (

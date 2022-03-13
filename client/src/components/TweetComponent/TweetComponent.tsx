@@ -42,12 +42,14 @@ export interface TweetComponentProps<T> {
     item?: T;
     activeTab?: number;
     userProfileId?: number;
+    isTweetImageModal?: boolean;
 }
 
 const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & HoverActionProps> = (
     {
         item: tweet,
         activeTab,
+        isTweetImageModal,
         visiblePopperWindow,
         handleHoverPopper,
         handleLeavePopper,
@@ -70,7 +72,11 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
     const isUserCanReply = (tweet?.replyType === ReplyType.MENTION) && (myProfile?.id !== tweet?.user.id);
     const isYouTubeLink = tweet?.link && tweet?.link.includes("youtu");
     const isModal = location.pathname.includes("/modal");
-    const classes = useTweetComponentStyles({isTweetLiked: tweet!.isTweetLiked, isUserCanReply: isUserCanReply});
+    const classes = useTweetComponentStyles({
+        isTweetImageModal: isTweetImageModal, 
+        isTweetLiked: tweet!.isTweetLiked, 
+        isUserCanReply: isUserCanReply
+    });
     const image = tweet?.images?.[0];
 
     const handleClickTweet = (event: React.MouseEvent<HTMLAnchorElement>): void => {
@@ -81,7 +87,7 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
 
     const handleClickUser = (event: React.MouseEvent<HTMLAnchorElement>): void => {
         event.stopPropagation();
-        history.push(`/user/${tweet?.user.id}`);
+        history.push(`/profile/${tweet?.user.id}`);
     };
 
     const onOpenReplyModalWindow = (): void => {
@@ -171,7 +177,7 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
                             <object>
                                 <Typography variant={"subtitle1"} component={"div"}>
                                     {"Replying to "}
-                                    <MuiLink variant="subtitle1" to={`/user/${tweet?.addressedId}`} component={Link}>
+                                    <MuiLink variant="subtitle1" to={`/profile/${tweet?.addressedId}`} component={Link}>
                                         @{tweet?.addressedUsername}
                                     </MuiLink>
                                 </Typography>

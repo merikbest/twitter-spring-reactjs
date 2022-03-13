@@ -9,6 +9,7 @@ import {selectUserData} from "../../../../../store/ducks/user/selectors";
 import {setUserLoadingStatus, updateCountry} from "../../../../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../../../../store/types";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 
 const ChangeCountry: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -70,7 +71,7 @@ const ChangeCountry: FC = (): ReactElement => {
     );
 };
 
-export default ChangeCountry;
+export default withDocumentTitle(ChangeCountry);
 
 const countries = (): JSX.Element => {
     return (

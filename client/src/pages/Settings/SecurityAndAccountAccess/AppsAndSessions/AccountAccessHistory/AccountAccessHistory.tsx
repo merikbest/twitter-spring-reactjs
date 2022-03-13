@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useGlobalStyles} from "../../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 
 const AccountAccessHistory: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -30,4 +31,4 @@ const AccountAccessHistory: FC = (): ReactElement => {
     );
 };
 
-export default AccountAccessHistory;
+export default withDocumentTitle(AccountAccessHistory);

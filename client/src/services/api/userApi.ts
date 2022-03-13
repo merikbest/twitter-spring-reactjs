@@ -15,7 +15,7 @@ import {
     NotificationsResponse,
     NotificationUserResponse
 } from "../../store/types/notification";
-import {TweetResponse} from "../../store/types/tweet";
+import {TweetImageResponse, TweetResponse} from "../../store/types/tweet";
 import {UserRequest} from "../../store/ducks/user/contracts/state";
 
 export interface Response<T> {
@@ -42,6 +42,10 @@ export const UserApi = {
     },
     async updateUserProfile(userData: UserRequest): Promise<AuthUserResponse> {
         const {data} = await axios.put<AuthUserResponse>(`${API_URL}/user`, userData);
+        return data;
+    },
+    async getUserTweetImages(userId: number): Promise<TweetImageResponse[]> {
+        const {data} = await axios.get<TweetImageResponse[]>(`${API_URL}/user/images/${userId}`);
         return data;
     },
     async getFollowers(userId: string): Promise<UserResponse[]> {

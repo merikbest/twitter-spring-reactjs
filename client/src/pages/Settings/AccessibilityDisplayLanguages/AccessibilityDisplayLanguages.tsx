@@ -4,6 +4,7 @@ import {List, ListItem, Typography} from "@material-ui/core";
 
 import {AccessibilityIcon, ArrowRightIcon, DisplayIcon, LanguagesIcon, TweetActivityIcon} from "../../../icons";
 import {useGlobalStyles} from "../../../util/globalClasses";
+import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
 
 const AccessibilityDisplayLanguages: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -98,4 +99,4 @@ const AccessibilityDisplayLanguages: FC = (): ReactElement => {
     );
 };
 
-export default AccessibilityDisplayLanguages;
+export default withDocumentTitle(AccessibilityDisplayLanguages);

@@ -4,6 +4,7 @@ import {Link as MuiLink, Typography} from "@material-ui/core";
 
 import {ArrowRightIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 
 const Preferences: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -43,4 +44,4 @@ const Preferences: FC = (): ReactElement => {
     );
 };
 
-export default Preferences;
+export default withDocumentTitle(Preferences);
