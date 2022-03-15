@@ -30,25 +30,7 @@ import {NotificationReplyResponse, NotificationResponse} from "../../types/notif
 import {LoadingStatus} from "../../types";
 import {ReplyTweet} from "./contracts/state";
 import {UserResponse} from "../../types/user";
-
-// @ts-ignore
-export const testAction = (action, payload, expectedPayload) => {
-    describe(`${action.name}`, () => {
-        Object.keys(expectedPayload).forEach((key) => {
-            it(`should return a payload ${key}`, () => {
-                expect(payload[key]).toEqual(expectedPayload[key]);
-            });
-        });
-
-        it("should have all tested payload properties", () => {
-            expect(Object.keys(payload).length).toBe(Object.keys(expectedPayload).length);
-        });
-
-        it("should not return undefined", () => {
-            expect(payload.type).not.toBe(undefined);
-        });
-    });
-};
+import {testAction} from "../../../util/testHelper";
 
 describe("tweet actions", () => {
     testAction(setFollowToTweetState, setFollowToTweetState(true), {
@@ -172,4 +154,3 @@ describe("tweet actions", () => {
         payload: LoadingStatus.LOADING
     });
 });
-

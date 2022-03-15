@@ -2,7 +2,6 @@ import {Action} from "redux";
 import {LoadingStatus} from "../../../types";
 import {UserDetailResponse} from "../../../types/user";
 import {CancelTokenSource} from "axios";
-import {SetFollowRequestToUserProfileActionInterface} from "../../userProfile/contracts/actionTypes";
 
 export enum UserDetailActionsType {
     SET_USER_DETAIL = 'userDetail/SET_USER_DETAIL',
