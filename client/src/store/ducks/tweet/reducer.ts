@@ -6,7 +6,7 @@ import {LoadingStatus} from '../../types';
 import {NotificationType} from "../../types/common";
 import {NotificationReplyResponse, NotificationResponse} from "../../types/notification";
 
-const initialTweetState: TweetState = {
+export const initialTweetState: TweetState = {
     tweet: undefined,
     loadingState: LoadingStatus.LOADING,
     // liked and retweeted users
