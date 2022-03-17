@@ -18,3 +18,12 @@ export const testAction = (action, payload, expectedPayload) => {
         });
     });
 };
+
+// @ts-ignore
+export const testActionDispatch = (actionType, actualState, expectedState) => {
+    describe(`${actionType} action is dispatched`, () => {
+        it("should return the expected state", () => {
+            expect(actualState).toEqual(expectedState);
+        });
+    });
+};

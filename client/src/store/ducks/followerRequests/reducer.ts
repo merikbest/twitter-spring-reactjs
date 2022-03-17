@@ -4,7 +4,7 @@ import {LoadingStatus} from '../../types';
 import {FollowerRequestsState} from './contracts/state';
 import {FollowerRequestsActions, FollowerRequestsActionsType} from "./contracts/actionTypes";
 
-const initialTagsState: FollowerRequestsState = {
+export const initialFollowerRequestsState: FollowerRequestsState = {
     items: [],
     loadingState: LoadingStatus.LOADING,
 };
@@ -33,4 +33,4 @@ export const followerRequestsReducer = produce((draft: Draft<FollowerRequestsSta
         default:
             break;
     }
-}, initialTagsState);
+}, initialFollowerRequestsState);

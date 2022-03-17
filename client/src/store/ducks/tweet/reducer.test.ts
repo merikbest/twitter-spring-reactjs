@@ -5,14 +5,7 @@ import {LoadingStatus} from "../../types";
 import {NotificationReplyResponse, NotificationResponse} from "../../types/notification";
 import {NotificationType} from "../../types/common";
 import {UserResponse} from "../../types/user";
-
-export const testActionDispatch = (actionType: any, actualState: any, expectedState: any) => {
-    describe(`${actionType} action is dispatched`, () => {
-        it("should return the expected state", () => {
-            expect(actualState).toEqual(expectedState);
-        });
-    });
-};
+import { testActionDispatch } from "../../../util/testHelper";
 
 describe("tweetReducer:", () => {
     describe("initial state:", () => {

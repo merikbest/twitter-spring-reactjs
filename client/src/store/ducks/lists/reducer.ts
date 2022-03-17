@@ -4,7 +4,7 @@ import {ListsState} from "./contracts/state";
 import {ListsActions, ListsActionType} from './contracts/actionTypes';
 import {LoadingStatus} from '../../types';
 
-const initialTweetState: ListsState = {
+export const initialListsState: ListsState = {
     lists: [],
     listsLoadingState: LoadingStatus.LOADING,
     userLists: [],
@@ -109,13 +109,13 @@ export const listsReducer = produce((draft: Draft<ListsState>, action: ListsActi
             break;
 
         case ListsActionType.SET_SIMPLE_LISTS_LOADING_STATE:
-            draft.pinnedListsLoadingState = action.payload;
+            draft.simpleListsLoadingState = action.payload;
             break;
 
         default:
             break;
     }
-}, initialTweetState);
+}, initialListsState);
 
 
 

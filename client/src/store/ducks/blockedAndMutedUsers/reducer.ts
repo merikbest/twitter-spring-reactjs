@@ -4,7 +4,7 @@ import {LoadingStatus} from '../../types';
 import {BlockedAndMutedUsersActions, BlockedAndMutedUsersActionsType} from './contracts/actionTypes';
 import {BlockedAndMutedUsersState} from './contracts/state';
 
-const initialTagsState: BlockedAndMutedUsersState = {
+export const initialBlockedAndMutedUsersState: BlockedAndMutedUsersState = {
     blockedUsers: [],
     mutedUsers: [],
     loadingState: LoadingStatus.LOADING,
@@ -47,4 +47,4 @@ export const blockedAndMutedUsersReducer = produce((draft: Draft<BlockedAndMuted
         default:
             break;
     }
-}, initialTagsState);
+}, initialBlockedAndMutedUsersState);

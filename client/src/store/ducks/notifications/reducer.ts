@@ -6,7 +6,7 @@ import {NotificationsActions, NotificationsActionsType} from "./contracts/action
 import {NotificationType} from "../../types/common";
 import {NotificationReplyResponse, NotificationResponse} from "../../types/notification";
 
-const initialTagsState: NotificationsState = {
+export const initialNotificationsState: NotificationsState = {
     notificationsList: [],
     tweetAuthors: [],
     notificationInfo: undefined,
@@ -89,4 +89,4 @@ export const notificationsReducer = produce((draft: Draft<NotificationsState>, a
         default:
             break;
     }
-}, initialTagsState);
+}, initialNotificationsState);

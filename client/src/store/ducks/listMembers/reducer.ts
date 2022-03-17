@@ -4,7 +4,7 @@ import {LoadingStatus} from '../../types';
 import {ListMembersActions, ListMembersActionsType} from './contracts/actionTypes';
 import {ListMembersState} from './contracts/state';
 
-const initialTagsState: ListMembersState = {
+export const initialListMembersState: ListMembersState = {
     members: [],
     suggested: [],
     membersLoadingState: LoadingStatus.LOADING,
@@ -59,4 +59,4 @@ export const listMembersReducer = produce((draft: Draft<ListMembersState>, actio
         default:
             break;
     }
-}, initialTagsState);
+}, initialListMembersState);

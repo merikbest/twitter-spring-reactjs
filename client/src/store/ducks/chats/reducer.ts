@@ -4,7 +4,7 @@ import {LoadingStatus} from '../../types';
 import {ChatsActions, ChatsActionsType} from './contracts/actionTypes';
 import {ChatsState} from './contracts/state';
 
-const initialTagsState: ChatsState = {
+export const initialChatsState: ChatsState = {
     items: [],
     loadingState: LoadingStatus.LOADING,
 };
@@ -38,4 +38,4 @@ export const chatsReducer = produce((draft: Draft<ChatsState>, action: ChatsActi
         default:
             break;
     }
-}, initialTagsState);
+}, initialChatsState);

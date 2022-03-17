@@ -4,7 +4,7 @@ import {ListState} from "./contracts/state";
 import {ListActions, ListActionType} from './contracts/actionTypes';
 import {LoadingStatus} from '../../types';
 
-const initialTweetState: ListState = {
+export const initialListState: ListState = {
     list: undefined,
     loadingState: LoadingStatus.LOADING
 };
@@ -44,7 +44,4 @@ export const listReducer = produce((draft: Draft<ListState>, action: ListActions
         default:
             break;
     }
-}, initialTweetState);
-
-
-
+}, initialListState);

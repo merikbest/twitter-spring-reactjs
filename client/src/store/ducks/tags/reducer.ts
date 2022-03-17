@@ -4,7 +4,7 @@ import {LoadingStatus} from '../../types';
 import { TagsActions, TagsActionsType } from './contracts/actionTypes';
 import {TagsState} from './contracts/state';
 
-const initialTagsState: TagsState = {
+export const initialTagsState: TagsState = {
     items: [],
     loadingState: LoadingStatus.LOADING,
 };

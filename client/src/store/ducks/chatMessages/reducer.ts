@@ -4,7 +4,7 @@ import {LoadingStatus} from '../../types';
 import {ChatMessageActions, ChatMessagesActionsType} from './contracts/actionTypes';
 import {ChatMessageState} from './contracts/state';
 
-const initialTagsState: ChatMessageState = {
+export const initialChatMessagesState: ChatMessageState = {
     items: [],
     loadingState: LoadingStatus.LOADING,
 };
@@ -35,4 +35,4 @@ export const chatMessagesReducer = produce((draft: Draft<ChatMessageState>, acti
         default:
             break;
     }
-}, initialTagsState);
+}, initialChatMessagesState);
