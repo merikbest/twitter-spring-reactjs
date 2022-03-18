@@ -6,7 +6,7 @@ import {LoadingStatus} from '../../types';
 import {NotificationType} from "../../types/common";
 import {NotificationReplyResponse, NotificationResponse} from "../../types/notification";
 
-const initialTweetsState: TweetsState = {
+export const initialTweetsState: TweetsState = {
     items: [],
     pagesCount: 1,
     loadingState: LoadingStatus.LOADING

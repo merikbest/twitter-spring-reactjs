@@ -4,7 +4,7 @@ import {LoadingStatus} from '../../types';
 import {UsersSearchState} from "./contracts/state";
 import {UsersSearchActions, UsersSearchActionsType} from "./contracts/actionTypes";
 
-const initialUsersState: UsersSearchState = {
+export const initialUsersSearchState: UsersSearchState = {
     users: [],
     followers: [],
     loadingState: LoadingStatus.LOADING,
@@ -58,4 +58,4 @@ export const usersSearchReducer = produce((draft: Draft<UsersSearchState>, actio
         default:
             break;
     }
-}, initialUsersState);
+}, initialUsersSearchState);

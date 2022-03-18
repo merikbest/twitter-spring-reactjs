@@ -4,7 +4,7 @@ import {UserState} from "./contracts/state";
 import {UserActions, UserActionsType} from './contracts/actionTypes';
 import {LoadingStatus} from '../../types';
 
-const initialUserState: UserState = {
+export const initialUserState: UserState = {
     data: undefined,
     status: LoadingStatus.NEVER,
 };
@@ -18,8 +18,8 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
             break;
 
         case UserActionsType.SIGN_OUT:
-            draft.status = LoadingStatus.LOADED;
             draft.data = undefined;
+            draft.status = LoadingStatus.LOADED;
             break;
 
         case UserActionsType.SET_UNREAD_MESSAGE:

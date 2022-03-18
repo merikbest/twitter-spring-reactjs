@@ -4,7 +4,7 @@ import {LoadingStatus} from '../../types';
 import {UsersState} from "./contracts/state";
 import {UsersActions, UsersActionsType} from "./contracts/actionTypes";
 
-const initialUsersState: UsersState = {
+export const initialUsersState: UsersState = {
     users: [],
     loadingState: LoadingStatus.LOADING,
 };

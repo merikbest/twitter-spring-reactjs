@@ -3,7 +3,7 @@ import {UserProfileState} from "./contracts/state";
 import {LoadingStatus} from "../../types";
 import {UserProfileActions, UserProfileActionsType} from "./contracts/actionTypes";
 
-const initialUsersState: UserProfileState = {
+export const initialUserProfileState: UserProfileState = {
     user: undefined,
     images: [],
     imagesLoadingState: LoadingStatus.LOADING,
@@ -79,4 +79,4 @@ export const userProfileReducer = produce((draft: Draft<UserProfileState>, actio
         default:
             break;
     }
-}, initialUsersState);
+}, initialUserProfileState);

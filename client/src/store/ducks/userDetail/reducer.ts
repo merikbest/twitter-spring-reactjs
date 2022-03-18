@@ -4,7 +4,7 @@ import {LoadingStatus} from '../../types';
 import {UserDetailActions, UserDetailActionsType} from './contracts/actionTypes';
 import {UserDetailState} from './contracts/state';
 
-const initialTagsState: UserDetailState = {
+export const initialUserDetailState: UserDetailState = {
     item: undefined,
     loadingState: LoadingStatus.LOADING,
 };
@@ -50,4 +50,4 @@ export const userDetailReducer = produce((draft: Draft<UserDetailState>, action:
         default:
             break;
     }
-}, initialTagsState);
+}, initialUserDetailState);

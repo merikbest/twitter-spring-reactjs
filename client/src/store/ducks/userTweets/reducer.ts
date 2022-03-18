@@ -6,7 +6,7 @@ import {LoadingStatus} from '../../types';
 import {NotificationType} from "../../types/common";
 import {NotificationReplyResponse, NotificationResponse} from "../../types/notification";
 
-const initialTweetsState: UserTweetsState = {
+export const initialUserTweetsState: UserTweetsState = {
     items: [],
     pagesCount: 1,
     loadingState: LoadingStatus.LOADING
@@ -126,4 +126,4 @@ export const userTweetsReducer = produce((draft: Draft<UserTweetsState>, action:
         default:
             break;
     }
-}, initialTweetsState);
+}, initialUserTweetsState);
