@@ -306,7 +306,7 @@ export function* processUserToMuteListRequest({payload}: ProcessUserToMuteListAc
     }
 }
 
-export function* processFollowRequest({payload}: ProcessFollowRequestActionInterface) {
+export function* processFollowRequests({payload}: ProcessFollowRequestActionInterface) {
     try {
         const item: UserProfileResponse = yield call(UserApi.processFollowRequestToPrivateProfile, payload);
         yield put(setFollowRequestToUserProfile(item.isWaitingForApprove));
@@ -341,5 +341,5 @@ export function* userSaga() {
     yield takeLatest(UserActionsType.UPDATE_BACKGROUND_COLOR, updateBackgroundColorRequest);
     yield takeLatest(UserActionsType.PROCESS_USER_TO_BLOCKLIST, processUserToBlocklistRequest);
     yield takeLatest(UserActionsType.PROCESS_USER_TO_MUTELIST, processUserToMuteListRequest);
-    yield takeLatest(UserActionsType.PROCESS_FOLLOW_REQUEST, processFollowRequest);
+    yield takeLatest(UserActionsType.PROCESS_FOLLOW_REQUEST, processFollowRequests);
 }

@@ -148,7 +148,7 @@ export function* updateScheduledTweetRequest({payload}: UpdateScheduledTweetActi
     }
 }
 
-export function* addQuoteTweet({payload}: AddQuoteTweetActionInterface) {
+export function* addQuoteTweetRequest({payload}: AddQuoteTweetActionInterface) {
     try {
         yield call(TweetApi.quoteTweet, payload);
     } catch (e) {
@@ -218,7 +218,7 @@ export function* tweetsSaga() {
     yield takeLatest(TweetsActionType.ADD_POLL, addPollRequest);
     yield takeLatest(TweetsActionType.ADD_SCHEDULED_TWEET, addScheduledTweetRequest);
     yield takeLatest(TweetsActionType.UPDATE_SCHEDULED_TWEET, updateScheduledTweetRequest);
-    yield takeLatest(TweetsActionType.ADD_QUOTE_TWEET, addQuoteTweet);
+    yield takeLatest(TweetsActionType.ADD_QUOTE_TWEET, addQuoteTweetRequest);
     yield takeLatest(TweetsActionType.VOTE, voteRequest);
     yield takeLatest(TweetsActionType.CHANGE_REPLY_TYPE, changeReplyTypeRequest);
     yield takeLatest(TweetsActionType.FETCH_DELETE_TWEET, fetchDeleteTweetRequest);

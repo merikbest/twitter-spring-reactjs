@@ -8,7 +8,7 @@ import {TagResponse} from "../../types/tag";
 
 export function* fetchTagsRequest() {
     try {
-        yield setTagsLoadingState(LoadingStatus.LOADING);
+        yield put(setTagsLoadingState(LoadingStatus.LOADING));
         const items: TagResponse[] = yield call(TagApi.fetchTags);
         yield put(setTags(items));
     } catch (error) {
@@ -18,7 +18,7 @@ export function* fetchTagsRequest() {
 
 export function* fetchTrendsRequest() {
     try {
-        yield setTagsLoadingState(LoadingStatus.LOADING);
+        yield put(setTagsLoadingState(LoadingStatus.LOADING));
         const items: TagResponse[] = yield call(TagApi.fetchTrends);
         yield put(setTags(items));
     } catch (error) {

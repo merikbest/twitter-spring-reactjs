@@ -74,7 +74,7 @@ export const ListsApi = {
         const {data} = await axios.get<Response<boolean>>(`${API_URL}/lists/add/user/${userId}/${listId}`);
         return data;
     },
-    // NEW //
+
     async getTweetsByListId(listId: number, pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
         return await axios.get<TweetResponse[]>(`${API_URL}/lists/${listId}/tweets`, {params: {page: pageNumber}});
     },
