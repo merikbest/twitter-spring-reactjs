@@ -8,7 +8,7 @@ import {BaseListResponse} from "../../types/lists";
 
 export function* fetchListDetailRequest({payload}: FetchListDetailActionInterface) {
     try {
-        yield setListDetailLoadingState(LoadingStatus.LOADING);
+        yield put(setListDetailLoadingState(LoadingStatus.LOADING));
         const item: BaseListResponse = yield call(ListsApi.getListDetails, payload.listId, payload.cancelTokenSource);
         yield put(setListDetail(item));
     } catch (error) {

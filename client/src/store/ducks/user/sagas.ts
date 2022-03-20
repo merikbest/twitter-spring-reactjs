@@ -324,7 +324,7 @@ export function* userSaga() {
     yield takeLatest(UserActionsType.FETCH_SIGN_IN, fetchSignInRequest);
     yield takeLatest(UserActionsType.FETCH_SIGN_UP, fetchSignUpRequest);
     yield takeLatest(UserActionsType.FETCH_USER_DATA, fetchUserDataRequest);
-    yield takeLatest(UserActionsType.FOLLOW_USER, processFollowUserRequest);// +
+    yield takeLatest(UserActionsType.FOLLOW_USER, processFollowUserRequest);
     yield takeLatest(UserActionsType.UNFOLLOW_USER, processFollowUserRequest);
     yield takeLatest(UserActionsType.START_USE_TWITTER, startUseTwitterRequest);
     yield takeLatest(UserActionsType.FETCH_PIN_TWEET, fetchPinTweetRequest);

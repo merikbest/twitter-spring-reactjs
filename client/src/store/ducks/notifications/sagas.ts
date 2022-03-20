@@ -5,13 +5,7 @@ import {
     FetchNotificationsFromTweetAuthorsActionInterface,
     NotificationsActionsType
 } from "./contracts/actionTypes";
-import {
-    fetchNotificationInfo,
-    setNotification,
-    setNotificationInfo,
-    setNotifications,
-    setNotificationsLoadingState
-} from "./actionCreators";
+import {setNotificationInfo, setNotifications, setNotificationsLoadingState} from "./actionCreators";
 import {LoadingStatus} from "../../types";
 import {UserApi} from "../../../services/api/userApi";
 import {setPageableTweets} from "../tweets/actionCreators";

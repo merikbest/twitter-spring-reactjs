@@ -18,6 +18,7 @@ import {
     fetchUserBookmarksRequest,
     likeTweetRequest,
     retweetRequest,
+    tweetsSaga,
     updateScheduledTweetRequest,
     voteRequest
 } from "./sagas";
@@ -53,7 +54,8 @@ import {TagApi} from "../../../services/api/tagApi";
 import {ListsApi} from "../../../services/api/listsApi";
 import {AddQuoteTweet, AddTweet, ReplyType, Vote} from "./contracts/state";
 import {UserApi} from "../../../services/api/userApi";
-import {testCall, testLoadingStatus, testSetResponse} from "../../../util/testHelper";
+import {testCall, testLoadingStatus, testSetResponse, testWatchSaga} from "../../../util/testHelper";
+import {TweetsActionType} from "./contracts/actionTypes";
 
 describe("tweetsSaga:", () => {
     const mockTweets = [{id: 1}, {id: 2}] as TweetResponse[];
@@ -235,4 +237,26 @@ describe("tweetsSaga:", () => {
         }, "TweetResponse");
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
+
+    testWatchSaga(tweetsSaga, [
+        {actionType: TweetsActionType.FETCH_TWEETS, workSaga: fetchTweetsRequest},
+        {actionType: TweetsActionType.FETCH_MEDIA_TWEETS, workSaga: fetchMediaTweetsRequest},
+        {actionType: TweetsActionType.FETCH_TWEETS_WITH_VIDEO, workSaga: fetchTweetsWithVideoRequest},
+        {actionType: TweetsActionType.FETCH_FOLLOWERS_TWEETS, workSaga: fetchFollowersTweetsRequest},
+        {actionType: TweetsActionType.ADD_TWEET, workSaga: addTweetRequest},
+        {actionType: TweetsActionType.ADD_POLL, workSaga: addPollRequest},
+        {actionType: TweetsActionType.ADD_SCHEDULED_TWEET, workSaga: addScheduledTweetRequest},
+        {actionType: TweetsActionType.UPDATE_SCHEDULED_TWEET, workSaga: updateScheduledTweetRequest},
+        {actionType: TweetsActionType.ADD_QUOTE_TWEET, workSaga: addQuoteTweetRequest},
+        {actionType: TweetsActionType.VOTE, workSaga: voteRequest},
+        {actionType: TweetsActionType.CHANGE_REPLY_TYPE, workSaga: changeReplyTypeRequest},
+        {actionType: TweetsActionType.FETCH_DELETE_TWEET, workSaga: fetchDeleteTweetRequest},
+        {actionType: TweetsActionType.DELETE_SCHEDULED_TWEETS, workSaga: deleteScheduledTweetsTweetRequest},
+        {actionType: TweetsActionType.LIKE_TWEET, workSaga: likeTweetRequest},
+        {actionType: TweetsActionType.RETWEET, workSaga: retweetRequest},
+        {actionType: TweetsActionType.FETCH_TWEETS_BY_TAG, workSaga: fetchTweetsByTagRequest},
+        {actionType: TweetsActionType.FETCH_TWEETS_BY_TEXT, workSaga: fetchTweetsByTextRequest},
+        {actionType: TweetsActionType.FETCH_TWEETS_BY_LIST_ID, workSaga: fetchTweetsByListIdRequest},
+        {actionType: TweetsActionType.FETCH_BOOKMARKS, workSaga: fetchUserBookmarksRequest},
+    ]);
 });

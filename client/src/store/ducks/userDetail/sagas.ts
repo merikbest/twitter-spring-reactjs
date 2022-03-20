@@ -8,7 +8,7 @@ import {UserApi} from "../../../services/api/userApi";
 
 export function* fetchUserDetailRequest({payload}: FetchUserDetailActionInterface) {
     try {
-        yield setUserDetailLoadingState(LoadingStatus.LOADING);
+        yield put(setUserDetailLoadingState(LoadingStatus.LOADING));
         const item: UserDetailResponse = yield call(UserApi.getUserDetails, payload.userId, payload.cancelTokenSource);
         yield put(setUserDetail(item));
     } catch (error) {

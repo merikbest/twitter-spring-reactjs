@@ -8,7 +8,7 @@ import {BlockedUserResponse, MutedUserResponse} from "../../types/user";
 
 export function* fetchBlockedUsersRequest() {
     try {
-        yield setBlockedAndMutedUsersLoadingState(LoadingStatus.LOADING);
+        yield put(setBlockedAndMutedUsersLoadingState(LoadingStatus.LOADING));
         const items: BlockedUserResponse[] = yield call(UserApi.getBlockList);
         yield put(setBlockedUsers(items));
     } catch (error) {
@@ -18,7 +18,7 @@ export function* fetchBlockedUsersRequest() {
 
 export function* fetchMutedUsersRequest() {
     try {
-        yield setBlockedAndMutedUsersLoadingState(LoadingStatus.LOADING);
+        yield put(setBlockedAndMutedUsersLoadingState(LoadingStatus.LOADING));
         const items: MutedUserResponse[] = yield call(UserApi.getMutedList);
         yield put(setMutedUsers(items));
     } catch (error) {

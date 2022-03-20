@@ -7,7 +7,7 @@ import {
     FollowListActionInterface,
     ListsActionType,
     PinListActionInterface, ProcessUserToListsActionInterface,
-    UnfollowListActionInterface
+    UnfollowListActionInterface, UnpinListActionInterface
 } from "./contracts/actionTypes";
 import {
     setCreatedList,
@@ -35,7 +35,6 @@ import {updateFollowListDetail} from "../listDetail/actionCreators";
 export function* fetchListsRequest() {
     try {
         yield put(setLoadingState(LoadingStatus.LOADING));
-        yield put(setListsLoadingState(LoadingStatus.LOADING));
         const data: ListResponse[] = yield call(ListsApi.getAllTweetLists);
         yield put(setLists(data));
     } catch (error) {
@@ -115,7 +114,7 @@ export function* pinListRequest({payload}: PinListActionInterface) {
     }
 }
 
-export function* unpinListRequest({payload}: PinListActionInterface) {
+export function* unpinListRequest({payload}: UnpinListActionInterface) {
     try {
         const data: PinnedListResponse = yield call(ListsApi.pinList, payload);
         yield put(setUnpinList(data));
@@ -159,7 +158,7 @@ export function* listsSaga() {
     yield takeEvery(ListsActionType.FETCH_LISTS, fetchListsRequest);
     yield takeEvery(ListsActionType.FETCH_USER_LISTS, fetchUserListsRequest);
     yield takeEvery(ListsActionType.FETCH_USER_LISTS_BY_ID, fetchUserListsByIdRequest);
-    yield takeEvery(ListsActionType.FETCH_TWEET_LISTS_WHICH_USER_IN, fetchTweetListsWhichUserInRequest);
+    yield takeEvery(ListsActionType.FETCH_USER_LISTS_BY_ID, fetchTweetListsWhichUserInRequest);
     yield takeEvery(ListsActionType.FETCH_PINNED_LISTS, fetchPinnedListsRequest);
     yield takeEvery(ListsActionType.FETCH_SIMPLE_LISTS, fetchSimpleListsRequest);
     yield takeEvery(ListsActionType.CREATE_LIST, createListRequest);

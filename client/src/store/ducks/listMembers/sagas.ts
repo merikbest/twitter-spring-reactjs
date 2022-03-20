@@ -20,7 +20,7 @@ import {setMembersSize} from "../list/actionCreators";
 
 export function* fetchListMembersRequest({payload}: FetchListMembersActionInterface) {
     try {
-        yield setLoadingMembersState(LoadingStatus.LOADING);
+        yield put(setLoadingMembersState(LoadingStatus.LOADING));
         const items: ListsOwnerMemberResponse[] = yield call(ListsApi.getListMembers, payload.listId, payload.listOwnerId);
         yield put(setListMembers(items));
     } catch (error) {
@@ -30,7 +30,7 @@ export function* fetchListMembersRequest({payload}: FetchListMembersActionInterf
 
 export function* fetchListFollowersRequest({payload}: FetchListFollowersActionInterface) {
     try {
-        yield setLoadingMembersState(LoadingStatus.LOADING);
+        yield put(setLoadingMembersState(LoadingStatus.LOADING));
         const items: ListsOwnerMemberResponse[] = yield call(ListsApi.getListFollowers, payload.listId, payload.listOwnerId);
         yield put(setListMembers(items));
     } catch (error) {
@@ -40,7 +40,7 @@ export function* fetchListFollowersRequest({payload}: FetchListFollowersActionIn
 
 export function* fetchListMembersByUsernameRequest({payload}: FetchListMembersByUsernameActionInterface) {
     try {
-        yield setLoadingSuggestedState(LoadingStatus.LOADING);
+        yield put(setLoadingSuggestedState(LoadingStatus.LOADING));
         const items: ListsOwnerMemberResponse[] = yield call(ListsApi.searchListMembersByUsername, payload.listId, payload.username);
         yield put(setListSuggested(items));
     } catch (error) {

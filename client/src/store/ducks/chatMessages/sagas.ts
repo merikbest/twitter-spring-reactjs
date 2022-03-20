@@ -13,7 +13,7 @@ import {ChatMessageResponse} from "../../types/chat";
 
 export function* fetchChatMessagesRequest({payload}: FetchChatMessagesActionInterface) {
     try {
-        setChatMessagesLoadingState(LoadingStatus.LOADING);
+        yield put(setChatMessagesLoadingState(LoadingStatus.LOADING));
         const items: ChatMessageResponse[] = yield call(ChatApi.getChatMessages, payload);
         yield put(setChatMessages(items));
     } catch (error) {
@@ -23,7 +23,7 @@ export function* fetchChatMessagesRequest({payload}: FetchChatMessagesActionInte
 
 export function* addChatMessageRequest({payload}: AddChatMessageActionInterface) {
     try {
-        setChatMessagesLoadingState(LoadingStatus.LOADING);
+        yield put(setChatMessagesLoadingState(LoadingStatus.LOADING));
         yield call(ChatApi.addMessage, payload);
     } catch (error) {
         yield put(setChatMessagesLoadingState(LoadingStatus.ERROR));
@@ -32,7 +32,7 @@ export function* addChatMessageRequest({payload}: AddChatMessageActionInterface)
 
 export function* addChatMessageWithTweetRequest({payload}: AddChatMessageWithTweetActionInterface) {
     try {
-        setChatMessagesLoadingState(LoadingStatus.LOADING);
+        yield put(setChatMessagesLoadingState(LoadingStatus.LOADING));
         yield call(ChatApi.addMessageWithTweet, payload);
     } catch (error) {
         yield put(setChatMessagesLoadingState(LoadingStatus.ERROR));

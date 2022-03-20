@@ -18,7 +18,7 @@ import {
 } from "./actionCreators";
 import {ChatApi} from "../../../services/api/chatApi";
 import {UserProfileResponse} from "../../types/user";
-import {TweetImageResponse, TweetResponse} from "../../types/tweet";
+import {TweetImageResponse} from "../../types/tweet";
 
 export function* fetchUserRequest({payload}: FetchUserProfileActionInterface) {
     try {

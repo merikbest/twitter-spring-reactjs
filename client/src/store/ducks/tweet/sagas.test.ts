@@ -5,7 +5,8 @@ import {
     fetchRepliesRequest,
     fetchReplyTweetRequest,
     fetchRetweetedUsersRequest,
-    fetchTweetDataRequest
+    fetchTweetDataRequest,
+    tweetSaga
 } from "./sagas";
 import {
     addTweetToBookmarks,
@@ -33,12 +34,14 @@ import {setUpdatedBookmarkedTweetTweetsState} from "../tweets/actionCreators";
 import {setUpdatedBookmarkedTweetUserTweetState} from "../userTweets/actionCreators";
 import {ReplyTweet} from "./contracts/state";
 import {UserResponse} from "../../types/user";
-import {testCall, testLoadingStatus, testSetResponse} from "../../../util/testHelper";
+import {testCall, testLoadingStatus, testSetResponse, testWatchSaga} from "../../../util/testHelper";
+import {TweetActionType} from "./contracts/actionTypes";
+import {takeEvery} from "redux-saga/effects";
 
 describe("tweetSaga:", () => {
     const mockTweet = {id: 1} as TweetResponse;
-    const usersMock = [{id:1}, {id:2}] as UserResponse[];
-    
+    const usersMock = [{id: 1}, {id: 2}] as UserResponse[];
+
     describe("fetchTweetDataRequest:", () => {
         const worker = fetchTweetDataRequest(fetchTweetData(1));
 
@@ -58,7 +61,7 @@ describe("tweetSaga:", () => {
         testSetResponse(worker, true, setUpdatedBookmarkedTweetUserTweetState, mockPayload, "boolean");
         testLoadingStatus(worker, setTweetLoadingState, LoadingStatus.ERROR);
     });
-    
+
     describe("fetchReplyTweetRequest:", () => {
         const mockReplyTweet = {tweetId: 1} as ReplyTweet;
         const worker = fetchReplyTweetRequest(fetchReplyTweet(mockReplyTweet));
@@ -76,7 +79,7 @@ describe("tweetSaga:", () => {
 
     describe("fetchLikedUsersRequest:", () => {
         const worker = fetchLikedUsersRequest(fetchLikedUsers(1));
-        
+
         testLoadingStatus(worker, setLikedUsersLoadingState, LoadingStatus.LOADING);
         testCall(worker, TweetApi.getLikedUsersByTweetId, 1, usersMock);
         testSetResponse(worker, usersMock, setLikedUsers, usersMock, "UserResponse");
@@ -101,4 +104,14 @@ describe("tweetSaga:", () => {
         testSetResponse(worker, tweetsMock, setReplies, tweetsMock, "UserResponse");
         testLoadingStatus(worker, setRepliesLoadingState, LoadingStatus.ERROR);
     });
+
+    testWatchSaga(tweetSaga, [
+        {actionType: TweetActionType.FETCH_TWEET_DATA, workSaga: fetchTweetDataRequest},
+        {actionType: TweetActionType.ADD_TWEET_TO_BOOKMARKS, workSaga: addTweetToBookmarksRequest},
+        {actionType: TweetActionType.FETCH_REPLY_TWEET, workSaga: fetchReplyTweetRequest},
+        {actionType: TweetActionType.DELETE_TWEET_REPLY, workSaga: deleteTweetReplyRequest},
+        {actionType: TweetActionType.FETCH_LIKED_USERS, workSaga: fetchLikedUsersRequest},
+        {actionType: TweetActionType.FETCH_RETWEETED_USERS, workSaga: fetchRetweetedUsersRequest},
+        {actionType: TweetActionType.FETCH_REPLIES, workSaga: fetchRepliesRequest},
+    ], takeEvery);
 });

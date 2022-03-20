@@ -12,7 +12,7 @@ import {ChatResponse} from "../../types/chat";
 
 export function* fetchChatsRequest() {
     try {
-        setChatsLoadingState(LoadingStatus.LOADING);
+        yield put(setChatsLoadingState(LoadingStatus.LOADING));
         const items: ChatResponse[] = yield call(ChatApi.getUserChats);
         yield put(setChats(items));
     } catch (error) {
@@ -22,7 +22,7 @@ export function* fetchChatsRequest() {
 
 export function* createChatRequest({payload}: CreateChatActionInterface) {
     try {
-        setChatsLoadingState(LoadingStatus.LOADING);
+        yield put(setChatsLoadingState(LoadingStatus.LOADING));
         const item: ChatResponse = yield call(ChatApi.createChat, payload);
         yield put(setChat(item));
     } catch (error) {
@@ -32,7 +32,7 @@ export function* createChatRequest({payload}: CreateChatActionInterface) {
 
 export function* leaveFromConversationRequest({payload}: LeaveFromConversationActionInterface) {
     try {
-        setChatsLoadingState(LoadingStatus.LOADING);
+        yield put(setChatsLoadingState(LoadingStatus.LOADING));
         yield call(ChatApi.leaveFromConversation, payload);
     } catch (error) {
         yield put(setChatsLoadingState(LoadingStatus.ERROR));

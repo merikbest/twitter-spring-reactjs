@@ -19,7 +19,8 @@ import {
     updatePhoneRequest,
     updatePrivateProfileRequest,
     updateUserDataRequest,
-    updateUsernameRequest
+    updateUsernameRequest,
+    userSaga
 } from "./sagas";
 import {
     fetchPinTweet,
@@ -61,7 +62,7 @@ import {
 } from "./actionCreators";
 
 import {LoadingStatus} from "../../types";
-import {testCall, testLoadingStatus, testSetResponse} from "../../../util/testHelper";
+import {testCall, testLoadingStatus, testSetResponse, testWatchSaga} from "../../../util/testHelper";
 import {UserApi} from "../../../services/api/userApi";
 import {AuthUserResponse, UserProfileResponse} from "../../types/user";
 import {UserRequest} from "./contracts/state";
@@ -104,10 +105,11 @@ import {ChatApi} from "../../../services/api/chatApi";
 import {UserSettingsApi} from "../../../services/api/userSettingsApi";
 import {BackgroundTheme, ColorScheme} from "../../../pages/Settings/AccessibilityDisplayLanguages/Display/Display";
 import {setBlockedUser, setMutedUser} from "../blockedAndMutedUsers/actionCreators";
+import {UserActionsType} from "./contracts/actionTypes";
 
 describe("userSaga:", () => {
-    const mockAuthUser = {id: 1} as AuthUserResponse;
-    const mockAuthentication = {user: {id: 1, email: "test@test.test"}, token: "test"} as AuthenticationResponse;
+    const mockAuthUser = {id: 1, email: "test@test.test"} as AuthUserResponse;
+    const mockAuthentication = {user: mockAuthUser, token: "test"} as AuthenticationResponse;
 
     describe("updateUserDataRequest:", () => {
         const mockUserRequest = {username: "test", location: "test"} as UserRequest;
@@ -334,4 +336,29 @@ describe("userSaga:", () => {
         testSetResponse(worker, mockUserProfileResponse, setFollowRequestToNotificationInfo, true, "boolean");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
+    
+    testWatchSaga(userSaga, [
+        {actionType: UserActionsType.UPDATE_USER_DATA, workSaga: updateUserDataRequest},
+        {actionType: UserActionsType.FETCH_SIGN_IN, workSaga: fetchSignInRequest},
+        {actionType: UserActionsType.FETCH_SIGN_UP, workSaga: fetchSignUpRequest},
+        {actionType: UserActionsType.FETCH_USER_DATA, workSaga: fetchUserDataRequest},
+        {actionType: UserActionsType.FOLLOW_USER, workSaga: processFollowUserRequest},
+        {actionType: UserActionsType.UNFOLLOW_USER, workSaga: processFollowUserRequest},
+        {actionType: UserActionsType.START_USE_TWITTER, workSaga: startUseTwitterRequest},
+        {actionType: UserActionsType.FETCH_PIN_TWEET, workSaga: fetchPinTweetRequest},
+        {actionType: UserActionsType.FETCH_READ_MESSAGES, workSaga: fetchReadMessagesRequest},
+        {actionType: UserActionsType.UPDATE_USERNAME, workSaga: updateUsernameRequest},
+        {actionType: UserActionsType.UPDATE_EMAIL, workSaga: updateEmailRequest},
+        {actionType: UserActionsType.UPDATE_PHONE, workSaga: updatePhoneRequest},
+        {actionType: UserActionsType.UPDATE_COUNTRY, workSaga: updateCountryRequest},
+        {actionType: UserActionsType.UPDATE_GENDER, workSaga: updateGenderRequest},
+        {actionType: UserActionsType.UPDATE_LANGUAGE, workSaga: updateLanguageRequest},
+        {actionType: UserActionsType.UPDATE_DIRECT, workSaga: updateDirectRequest},
+        {actionType: UserActionsType.UPDATE_PRIVATE_PROFILE, workSaga: updatePrivateProfileRequest},
+        {actionType: UserActionsType.UPDATE_COLOR_SCHEME, workSaga: updateColorSchemeRequest},
+        {actionType: UserActionsType.UPDATE_BACKGROUND_COLOR, workSaga: updateBackgroundColorRequest},
+        {actionType: UserActionsType.PROCESS_USER_TO_BLOCKLIST, workSaga: processUserToBlocklistRequest},
+        {actionType: UserActionsType.PROCESS_USER_TO_MUTELIST, workSaga: processUserToMuteListRequest},
+        {actionType: UserActionsType.PROCESS_FOLLOW_REQUEST, workSaga: processFollowRequests},
+    ]);
 });

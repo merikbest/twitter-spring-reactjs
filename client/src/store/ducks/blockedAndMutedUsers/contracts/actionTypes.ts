@@ -8,8 +8,8 @@ export enum BlockedAndMutedUsersActionsType {
     SET_MUTED_USERS = 'blockedAndMutedUsers/SET_MUTED_USERS',
     SET_BLOCKED_USER = 'blockedAndMutedUsers/SET_BLOCKED_USER',
     SET_MUTED_USER = 'blockedAndMutedUsers/SET_MUTED_USER',
-    FETCH_BLOCKED_USERS = 'blockedAndMutedUsers/FETCH_TAGS',
-    FETCH_MUTED_USERS = 'blockedAndMutedUsers/FETCH_TAGS',
+    FETCH_BLOCKED_USERS = 'blockedAndMutedUsers/FETCH_BLOCKED_USERS',
+    FETCH_MUTED_USERS = 'blockedAndMutedUsers/FETCH_MUTED_USERS',
     RESET_TAGS_STATE = 'blockedAndMutedUsers/RESET_TRENDS_STATE',
     SET_LOADING_STATE = 'blockedAndMutedUsers/SET_LOADING_STATE',
 }

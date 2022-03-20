@@ -1,5 +1,5 @@
 import React from "react";
-import {call, put} from "redux-saga/effects";
+import {call, put, takeLatest} from "redux-saga/effects";
 import {LoadingStatus} from "../store/types";
 
 // @ts-ignore
@@ -69,5 +69,22 @@ export const testSetResponse = (worker, mockData = {}, action, payload: {}, resp
         const expectedYield = put(action(payload));
 
         expect(actualYield).toEqual(expectedYield);
+    });
+};
+
+// @ts-ignore
+export const testWatchSaga = (watchSaga, requests, effect = takeLatest) => {
+    describe(`watch ${watchSaga.name}:`, () => {
+        const watcher = watchSaga();
+        
+        // @ts-ignore
+        requests.forEach((request) => {
+            it(`should listen to ${request.actionType} and yield ${request.workSaga.name}`, () => {
+                const actualYield = watcher.next().value;
+                const expectedYield = effect(request.actionType, request.workSaga);
+
+                expect(actualYield).toEqual(expectedYield);
+            });
+        })
     });
 };
