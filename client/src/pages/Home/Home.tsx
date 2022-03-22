@@ -45,7 +45,7 @@ const Home: FC = (): ReactElement => {
         dispatch(fetchUserData());
 
         if (location.pathname !== "/search") {
-            loadTweets();
+            loadTweets(handleSetPage);
         }
         document.body.style.overflow = 'unset';
         window.scrollTo(0, 0);
@@ -56,15 +56,19 @@ const Home: FC = (): ReactElement => {
     }, []);
     
     useEffect(() => {
-        loadTweets();
+        loadTweets(handleSetPage);
     }, [switchTweets]);
 
-    const loadTweets = () => {
+    const loadTweets = (callback: () => void): void => {
         if (switchTweets) {
             dispatch(fetchFollowersTweets(page));
         } else {
             dispatch(fetchTweets(page));
         }
+        callback();
+    };
+    
+    const handleSetPage = (): void => {
         setPage(prevState => prevState + 1);
     };
     
@@ -78,7 +82,7 @@ const Home: FC = (): ReactElement => {
         <InfiniteScroll
             style={{overflow: "unset"}}
             dataLength={tweets.length}
-            next={loadTweets}
+            next={() => loadTweets(handleSetPage)}
             hasMore={page < pagesCount}
             loader={null}
         >
