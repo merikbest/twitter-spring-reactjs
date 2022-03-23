@@ -45,7 +45,7 @@ const Home: FC = (): ReactElement => {
         dispatch(fetchUserData());
 
         if (location.pathname !== "/search") {
-            loadTweets(handleSetPage);
+            loadTweets();
         }
         document.body.style.overflow = 'unset';
         window.scrollTo(0, 0);
@@ -55,34 +55,37 @@ const Home: FC = (): ReactElement => {
         };
     }, []);
     
-    useEffect(() => {
-        loadTweets(handleSetPage);
-    }, [switchTweets]);
-
-    const loadTweets = (callback: () => void): void => {
+    const loadTweets = (): void => {
         if (switchTweets) {
             dispatch(fetchFollowersTweets(page));
         } else {
             dispatch(fetchTweets(page));
         }
-        callback();
-    };
-    
-    const handleSetPage = (): void => {
         setPage(prevState => prevState + 1);
     };
     
-    const handleSwitchTweets = (): void => {
-        setPage(0);
+    const handleLatestTweets = (): void => {
         dispatch(resetTweets());
-        setSwitchTweets((prevState) => !prevState);
+        dispatch(fetchFollowersTweets(0));
+        handleSwitchTweets(true);
+    };
+    
+    const handleTopTweets = (): void => {
+        dispatch(resetTweets());
+        dispatch(fetchTweets(0));
+        handleSwitchTweets(false);
+    };
+
+    const handleSwitchTweets = (condition: boolean): void => {
+        setSwitchTweets(condition);
+        setPage(prevState => prevState + 1);
     };
 
     return (
         <InfiniteScroll
             style={{overflow: "unset"}}
             dataLength={tweets.length}
-            next={() => loadTweets(handleSetPage)}
+            next={loadTweets}
             hasMore={page < pagesCount}
             loader={null}
         >
@@ -92,7 +95,11 @@ const Home: FC = (): ReactElement => {
                         <Typography variant="h5">
                             Home
                         </Typography>
-                        <TopTweetActions switchTweets={switchTweets} handleSwitchTweets={handleSwitchTweets} />
+                        <TopTweetActions
+                            switchTweets={switchTweets}
+                            handleLatestTweets={handleLatestTweets}
+                            handleTopTweets={handleTopTweets}
+                        />
                     </Route>
                     <Route path="/home/tweet">
                         <div>

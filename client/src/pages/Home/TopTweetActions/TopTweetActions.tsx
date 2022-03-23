@@ -10,13 +10,15 @@ import HoverAction from "../../../components/HoverAction/HoverAction";
 
 interface TopTweetActionsProps {
     switchTweets: boolean;
-    handleSwitchTweets: () => void;
+    handleLatestTweets: () => void;
+    handleTopTweets: () => void;
 }
 
 const TopTweetActions: FC<TopTweetActionsProps & HoverActionProps> = (
     {
         switchTweets,
-        handleSwitchTweets,
+        handleLatestTweets,
+        handleTopTweets,
         visibleHoverAction,
         handleHoverAction,
         handleLeaveAction
@@ -60,7 +62,7 @@ const TopTweetActions: FC<TopTweetActionsProps & HoverActionProps> = (
                         </div>
                         <Divider/>
                         <List>
-                            <ListItem onClick={handleSwitchTweets}>
+                            <ListItem onClick={switchTweets ? handleTopTweets : handleLatestTweets}>
                                 <div className={classes.listItemWrapper}>
                                     <span className={classes.textIcon}>
                                         {SeeLatestIcon}
