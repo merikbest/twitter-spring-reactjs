@@ -30,4 +30,6 @@ public interface AuthenticationService {
     String sendPasswordResetCode(String email);
 
     String passwordReset(String email, String password, String password2);
+
+    String currentPasswordReset(String currentPassword, String password, String password2);
 }

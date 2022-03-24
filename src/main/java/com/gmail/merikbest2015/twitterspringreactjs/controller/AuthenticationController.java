@@ -1,6 +1,9 @@
 package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
+import javax.validation.Valid;
+
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.AuthenticationRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.request.CurrentPasswordResetRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.PasswordResetRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.RegistrationRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.AuthUserResponse;
@@ -8,6 +11,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.response.AuthenticationR
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.AuthenticationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -62,8 +66,13 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationMapper.findByPasswordResetCode(code));
     }
 
-    @PostMapping("/reset")
+    @PostMapping("/reset") // TODO add tests
     public ResponseEntity<String> passwordReset(@RequestBody PasswordResetRequest passwordReset) {
         return ResponseEntity.ok(authenticationMapper.passwordReset(passwordReset));
+    }
+
+    @PostMapping("/reset/current") // TODO add tests
+    public ResponseEntity<String> currentPasswordReset(@Valid @RequestBody CurrentPasswordResetRequest request, BindingResult bindingResult) {
+        return ResponseEntity.ok(authenticationMapper.currentPasswordReset(request, bindingResult));
     }
 }

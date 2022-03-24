@@ -1,15 +1,18 @@
 package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.AuthenticationRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.request.CurrentPasswordResetRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.PasswordResetRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.RegistrationRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.AuthUserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.AuthenticationResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.exception.InputFieldException;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.AuthUserProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.BindingResult;
 
 import java.util.Map;
 
@@ -66,5 +69,12 @@ public class AuthenticationMapper {
 
     public AuthenticationResponse endRegistration(RegistrationRequest request) {
         return getAuthenticationResponse(authenticationService.endRegistration(request.getEmail(), request.getPassword()));
+    }
+
+    public String currentPasswordReset(CurrentPasswordResetRequest request, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new InputFieldException(bindingResult);
+        }
+        return authenticationService.currentPasswordReset(request.getCurrentPassword(), request.getPassword(), request.getPassword2());
     }
 }

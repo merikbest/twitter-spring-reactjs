@@ -1,5 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
@@ -9,7 +11,9 @@ import com.gmail.merikbest2015.twitterspringreactjs.security.JwtProvider;
 import com.gmail.merikbest2015.twitterspringreactjs.security.UserPrincipal;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.email.MailSender;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,6 +40,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
     private final MailSender mailSender;
+    private final ObjectMapper mapper;
 
     @Override
     public Long getAuthenticatedUserId() {
@@ -121,7 +126,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Transactional
     public Map<String, Object> endRegistration(String email, String password) {
         if (password.length() < 8) {
-            throw  new ApiRequestException("Your password needs to be at least 8 characters", HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException("Your password needs to be at least 8 characters", HttpStatus.BAD_REQUEST);
         }
         AuthUserProjection user = userRepository.findAuthUserByEmail(email)
                 .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
@@ -178,16 +183,39 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     @Transactional
     public String passwordReset(String email, String password, String password2) {
-        if (StringUtils.isEmpty(password2)) {
-            throw new ApiRequestException("Password confirmation cannot be empty.", HttpStatus.BAD_REQUEST);
-        }
-        if (password != null && !password.equals(password2)) {
-            throw new ApiRequestException("Passwords do not match.", HttpStatus.BAD_REQUEST);
-        }
+        checkMatchPasswords(password, password2);
         UserCommonProjection user = userRepository.findCommonUserByEmail(email)
                 .orElseThrow(() -> new ApiRequestException("Email not found", HttpStatus.NOT_FOUND));
         userRepository.updatePassword(passwordEncoder.encode(password), user.getId());
         userRepository.updatePasswordResetCode(null, user.getId());
         return "Password successfully changed!";
+    }
+
+    @Override
+    @Transactional
+    public String currentPasswordReset(String currentPassword, String password, String password2) {
+        Long userId = getAuthenticatedUserId();
+        String userPassword = userRepository.getUserPasswordById(userId);
+
+        if (!passwordEncoder.matches(userPassword, currentPassword)) {
+            processPasswordException("currentPassword", "The password you entered was incorrect.", HttpStatus.NOT_FOUND);
+        }
+        checkMatchPasswords(password, password2);
+        userRepository.updatePassword(passwordEncoder.encode(password), userId);
+        return "Password successfully changed!";
+    }
+
+    private void checkMatchPasswords(String password, String password2) {
+        if (password != null && !password.equals(password2)) {
+            processPasswordException("password", "Passwords do not match.", HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    private void processPasswordException(String paramName, String exceptionMessage, HttpStatus status) {
+        try {
+            throw new ApiRequestException(mapper.writeValueAsString(Map.of(paramName, exceptionMessage)), status);
+        } catch (JsonProcessingException error) {
+            error.printStackTrace();
+        }
     }
 }
