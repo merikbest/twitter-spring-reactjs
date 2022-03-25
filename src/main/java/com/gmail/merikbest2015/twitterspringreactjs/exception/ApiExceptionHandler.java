@@ -16,7 +16,13 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(InputFieldException.class)
     public ResponseEntity<Map<String, String>> handleInputFieldException(InputFieldException exception) {
-        InputFieldException inputFieldException = new InputFieldException(exception.getBindingResult());
-        return ResponseEntity.badRequest().body(inputFieldException.getErrorsMap());
+        InputFieldException inputFieldException;
+        
+        if (exception.getBindingResult() != null) {
+            inputFieldException = new InputFieldException(exception.getBindingResult());
+        } else {
+            inputFieldException = new InputFieldException(exception.getStatus(), exception.getErrorsMap());
+        }
+        return ResponseEntity.status(inputFieldException.getStatus()).body(inputFieldException.getErrorsMap());
     }
 }

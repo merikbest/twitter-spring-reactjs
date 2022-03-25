@@ -1,8 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
+import com.gmail.merikbest2015.twitterspringreactjs.exception.InputFieldException;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.AuthUserProjection;
@@ -22,7 +21,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -40,7 +38,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
     private final MailSender mailSender;
-    private final ObjectMapper mapper;
 
     @Override
     public Long getAuthenticatedUserId() {
@@ -197,12 +194,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         Long userId = getAuthenticatedUserId();
         String userPassword = userRepository.getUserPasswordById(userId);
 
-        if (!passwordEncoder.matches(userPassword, currentPassword)) {
+        if (!passwordEncoder.matches(currentPassword, userPassword)) {
             processPasswordException("currentPassword", "The password you entered was incorrect.", HttpStatus.NOT_FOUND);
         }
         checkMatchPasswords(password, password2);
         userRepository.updatePassword(passwordEncoder.encode(password), userId);
-        return "Password successfully changed!";
+        return "Your password has been successfully updated.";
     }
 
     private void checkMatchPasswords(String password, String password2) {
@@ -210,12 +207,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             processPasswordException("password", "Passwords do not match.", HttpStatus.BAD_REQUEST);
         }
     }
-    
+
     private void processPasswordException(String paramName, String exceptionMessage, HttpStatus status) {
-        try {
-            throw new ApiRequestException(mapper.writeValueAsString(Map.of(paramName, exceptionMessage)), status);
-        } catch (JsonProcessingException error) {
-            error.printStackTrace();
-        }
+        throw new InputFieldException(status, Map.of(paramName, exceptionMessage));
     }
 }
