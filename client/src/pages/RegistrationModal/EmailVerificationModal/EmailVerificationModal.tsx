@@ -5,6 +5,7 @@ import {Button, Dialog, DialogContent, Link as MuiLink, Typography} from "@mater
 import {useEmailVerificationModalStyles} from "./EmailVerificationModalStyles";
 import {RegistrationInputField} from "../RegistrationInput/RegistrationInputField";
 import {AuthApi} from "../../../services/api/authApi";
+import {useGlobalStyles} from "../../../util/globalClasses";
 
 interface CustomizeModalProps {
     email: string;
@@ -14,6 +15,7 @@ interface CustomizeModalProps {
 }
 
 const EmailVerificationModal: FC<CustomizeModalProps> = ({email, open, onClose, onOpenSetPassword}): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useEmailVerificationModalStyles()
     const [verificationCode, setVerificationCode] = useState<string>("");
     const [error, setError] = useState<string>("");
@@ -26,6 +28,7 @@ const EmailVerificationModal: FC<CustomizeModalProps> = ({email, open, onClose, 
 
     return (
         <Dialog
+            className={globalClasses.modalShadow}
             hideBackdrop={true}
             transitionDuration={0}
             open={open}

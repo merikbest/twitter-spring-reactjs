@@ -6,6 +6,7 @@ import {RegistrationInputField} from "../RegistrationInput/RegistrationInputFiel
 import {RegistrationInfo} from "../../Authentication/Authentication";
 import {AuthApi} from "../../../services/api/authApi";
 import Spinner from "../../../components/Spinner/Spinner";
+import {useGlobalStyles} from "../../../util/globalClasses";
 
 interface CustomizeModalProps {
     open: boolean;
@@ -22,6 +23,7 @@ const CreateAccountModal: FC<CustomizeModalProps> = (
         onOpenEmailVerification
     }
 ): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useCreateAccountModalStyles();
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -41,6 +43,7 @@ const CreateAccountModal: FC<CustomizeModalProps> = (
 
     return (
         <Dialog
+            className={globalClasses.modalShadow}
             hideBackdrop={true}
             transitionDuration={0}
             open={open}

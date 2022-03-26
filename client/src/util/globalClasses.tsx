@@ -155,4 +155,9 @@ export const useGlobalStyles = makeStyles((theme: Theme) => ({
             width: 23,
         },
     },
+    modalShadow: {
+        "& .MuiPaper-elevation24": {
+            boxShadow: "none",
+        },
+    },
 }));

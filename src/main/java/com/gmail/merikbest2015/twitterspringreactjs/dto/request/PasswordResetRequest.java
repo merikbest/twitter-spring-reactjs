@@ -2,15 +2,21 @@ package com.gmail.merikbest2015.twitterspringreactjs.dto.request;
 
 import lombok.Data;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Data
 public class PasswordResetRequest {
+
+    @Email(regexp = ".+@.+\\..+", message = "Please enter a valid email address.")
     private String email;
 
-    @Size(min = 6, max = 16, message = "The password must be between 6 and 16 characters long")
+    @NotBlank(message = "Password cannot be empty.")
+    @Size(min = 8, message = "Your password needs to be at least 8 characters. Please enter a longer one.")
     private String password;
 
-    @Size(min = 6, max = 16, message = "The password confirmation must be between 6 and 16 characters long")
+    @NotBlank(message = "Password cannot be empty.")
+    @Size(min = 8, message = "Your password needs to be at least 8 characters. Please enter a longer one.")
     private String password2;
 }

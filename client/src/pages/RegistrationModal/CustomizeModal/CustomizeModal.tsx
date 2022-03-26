@@ -3,6 +3,7 @@ import {Button, Dialog, DialogContent, Link as MuiLink, Radio, Typography} from 
 import TwitterIcon from "@material-ui/icons/Twitter";
 
 import {useCustomizeModalStyles} from "./CustomizeModalStyles";
+import {useGlobalStyles} from "../../../util/globalClasses";
 
 interface CustomizeModalProps {
     open: boolean;
@@ -11,10 +12,12 @@ interface CustomizeModalProps {
 }
 
 const CustomizeModal: FC<CustomizeModalProps> = ({open, onClose, onOpenCreateAccount}): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useCustomizeModalStyles();
 
     return (
         <Dialog
+            className={globalClasses.modalShadow}
             hideBackdrop={true}
             transitionDuration={0}
             open={open}

@@ -14,7 +14,7 @@ import lombok.Getter;
 public class InputFieldException extends RuntimeException {
     private final HttpStatus status;
     private final Map<String, String> errorsMap;
-    private final BindingResult bindingResult;
+    private BindingResult bindingResult;
 
     public InputFieldException(BindingResult bindingResult) {
         this.status = HttpStatus.BAD_REQUEST;
@@ -25,12 +25,11 @@ public class InputFieldException extends RuntimeException {
     public InputFieldException(HttpStatus status, Map<String, String> errorsMap) {
         this.status = status;
         this.errorsMap = errorsMap;
-        this.bindingResult = null;
     }
     
     private Map<String, String> handleErrors(BindingResult bindingResult) {
-        Map<String, String> map = new HashMap<>();
-        bindingResult.getFieldErrors().forEach(fieldError -> map.put(fieldError.getField(), fieldError.getDefaultMessage()));
-        return map;
+        Map<String, String> errors = new HashMap<>();
+        bindingResult.getFieldErrors().forEach(fieldError -> errors.put(fieldError.getField(), fieldError.getDefaultMessage()));
+        return errors;
     }
 }

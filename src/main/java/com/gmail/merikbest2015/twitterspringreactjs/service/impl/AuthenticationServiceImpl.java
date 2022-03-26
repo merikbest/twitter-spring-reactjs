@@ -182,7 +182,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public String passwordReset(String email, String password, String password2) {
         checkMatchPasswords(password, password2);
         UserCommonProjection user = userRepository.findCommonUserByEmail(email)
-                .orElseThrow(() -> new ApiRequestException("Email not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new InputFieldException(HttpStatus.NOT_FOUND, Map.of("email", "Email not found")));
         userRepository.updatePassword(passwordEncoder.encode(password), user.getId());
         userRepository.updatePasswordResetCode(null, user.getId());
         return "Password successfully changed!";

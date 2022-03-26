@@ -38,11 +38,10 @@ const RegistrationModal: FC<RegistrationModalProps> = (
     }
 ): ReactElement => {
     const classes = useRegistrationModalStyles();
-    const [emailError, setEmailError] = useState<string>("");
     const [month, setMonth] = useState<string>("");
     const [day, setDay] = useState<number>(0);
     const [year, setYear] = useState<number>(0);
-    const {control, register, handleSubmit, formState: {errors}} = useForm<RegistrationFormProps>({
+    const {control, register, handleSubmit, setError, formState: {errors}} = useForm<RegistrationFormProps>({
         resolver: yupResolver(RegistrationFormSchema)
     });
 
@@ -58,7 +57,16 @@ const RegistrationModal: FC<RegistrationModalProps> = (
                 onChangeRegistrationInfo(registrationData);
                 onOpenCustomize(true);
             })
-            .catch((error) => setEmailError(error.response.data));
+            .catch((error) => {
+                const errors = error.response.data;
+
+                if (errors.username) {
+                    setError("username", {type: "server", message: errors.username});
+                }
+                if (errors.email) {
+                    setError("email", {type: "server", message: errors.email});
+                }
+            });
     };
 
     const changeMonth = (event: ChangeEvent<{ value: unknown }>): void => {
@@ -132,8 +140,8 @@ const RegistrationModal: FC<RegistrationModalProps> = (
                                     render={({field: {onChange, value}}) => (
                                         <RegistrationInput
                                             name="email"
-                                            helperText={errors.email?.message || emailError}
-                                            error={!!errors.email || emailError !== ""}
+                                            helperText={errors.email?.message}
+                                            error={!!errors.email}
                                             label={"Email"}
                                             maxTextLength={50}
                                             onChange={onChange}

@@ -32,8 +32,6 @@ export const useCustomizeModalStyles = makeStyles((theme: Theme) => ({
     },
     radio: {
         display: "inline-block",
-        padding: 0,
-        marginLeft: 15,
         marginBottom: 45,
         "& svg": {
             width: 16,

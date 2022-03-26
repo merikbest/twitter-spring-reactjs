@@ -11,6 +11,7 @@ import * as yup from "yup";
 import {useSetPasswordModalStyles} from "./SetPasswordModalStyles";
 import {RegistrationInputField} from "../RegistrationInput/RegistrationInputField";
 import {fetchSignUp} from "../../../store/ducks/user/actionCreators";
+import {useGlobalStyles} from "../../../util/globalClasses";
 
 interface SetPasswordProps {
     email: string;
@@ -33,6 +34,7 @@ const SetPasswordFormSchema = yup.object().shape({
 });
 
 const SetPasswordModal: FC<SetPasswordProps> = ({email, open, onClose}): ReactElement => {
+    const globalClasses = useGlobalStyles();
     const classes = useSetPasswordModalStyles();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -48,6 +50,7 @@ const SetPasswordModal: FC<SetPasswordProps> = ({email, open, onClose}): ReactEl
 
     return (
         <Dialog
+            className={globalClasses.modalShadow}
             hideBackdrop={true}
             transitionDuration={0}
             open={open}

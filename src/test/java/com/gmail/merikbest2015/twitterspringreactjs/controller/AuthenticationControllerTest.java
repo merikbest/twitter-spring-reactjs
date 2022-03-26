@@ -1,10 +1,9 @@
 package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.request.AuthenticationRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.request.PasswordResetRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.request.RegistrationRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.request.*;
 import com.gmail.merikbest2015.twitterspringreactjs.security.JwtAuthenticationException;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -58,29 +57,66 @@ public class AuthenticationControllerTest {
         authenticationRequest.setPassword(PASSWORD);
 
         mockMvc.perform(post(URL_AUTH_BASIC + "/login")
-                .content(mapper.writeValueAsString(authenticationRequest))
-                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .content(mapper.writeValueAsString(authenticationRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
     }
 
     @Test
     @DisplayName("[403] POST /api/v1/auth/login - Should email or password be not valid")
     public void login_ShouldEmailOrPasswordBeNotValid() throws Exception {
+        authenticationRequest.setPassword("test1234");
+
+        mockMvc.perform(post(URL_AUTH_BASIC + "/login")
+                        .content(mapper.writeValueAsString(authenticationRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$", is("Incorrect password or email")));
+    }
+
+    @Test
+    @DisplayName("[400] POST /api/v1/auth/login - Should Email not valid")
+    public void login_ShouldEmailNotValid() throws Exception {
+        authenticationRequest.setEmail("notvalidemail@test");
+        authenticationRequest.setPassword(PASSWORD);
+
+        mockMvc.perform(post(URL_AUTH_BASIC + "/login")
+                        .content(mapper.writeValueAsString(authenticationRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.email", is("Please enter a valid email address.")));
+    }
+    
+    @Test
+    @DisplayName("[400] POST /api/v1/auth/login - Should password is empty")
+    public void login_ShouldPasswordIsEmpty() throws Exception {
+        authenticationRequest.setPassword(null);
+
+        mockMvc.perform(post(URL_AUTH_BASIC + "/login")
+                        .content(mapper.writeValueAsString(authenticationRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.password", is("Password cannot be empty.")));
+    }
+
+    @Test
+    @DisplayName("[400] POST /api/v1/auth/login - Should password less then 8 characters")
+    public void login_ShouldPasswordLessThen8Characters() throws Exception {
         authenticationRequest.setPassword("test123");
 
         mockMvc.perform(post(URL_AUTH_BASIC + "/login")
-                .content(mapper.writeValueAsString(authenticationRequest))
-                .contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$", is("Incorrect password or email")));
+                        .content(mapper.writeValueAsString(authenticationRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.password", is("Your password needs to be at least 8 characters. Please enter a longer one.")));
     }
 
     @Test
     @DisplayName("[200] POST /api/v1/auth/registration/check - Check Email")
     public void checkEmail() throws Exception {
         mockMvc.perform(post(URL_AUTH_REGISTRATION + "/check")
-                .content(mapper.writeValueAsString(registrationRequest))
-                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .content(mapper.writeValueAsString(registrationRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is("User data checked.")));
     }
@@ -91,32 +127,83 @@ public class AuthenticationControllerTest {
         registrationRequest.setEmail(USER_EMAIL);
 
         mockMvc.perform(post(URL_AUTH_REGISTRATION + "/check")
-                .content(mapper.writeValueAsString(registrationRequest))
-                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .content(mapper.writeValueAsString(registrationRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$", is("Email has already been taken.")));
     }
 
     @Test
+    @DisplayName("[400] POST /api/v1/auth/registration/check - Should email not valid")
+    public void checkEmail_ShouldEmailNotValid() throws Exception {
+        registrationRequest.setEmail("test2015@test");
+
+        mockMvc.perform(post(URL_AUTH_REGISTRATION + "/check")
+                        .content(mapper.writeValueAsString(registrationRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.email", is("Please enter a valid email address.")));
+    }
+
+    @Test
+    @DisplayName("[400] POST /api/v1/auth/registration/check - Should username is empty")
+    public void checkEmail_ShouldUsernameIsEmpty() throws Exception {
+        registrationRequest.setUsername(null);
+
+        mockMvc.perform(post(URL_AUTH_REGISTRATION + "/check")
+                        .content(mapper.writeValueAsString(registrationRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.username", is("What’s your name?")));
+    }
+
+    @Test
+    @DisplayName("[400] POST /api/v1/auth/registration/check - Should username more then 50 characters")
+    public void checkEmail_ShouldUsernameMoreThen50Characters() throws Exception {
+        registrationRequest.setUsername("qwertqwertqwertqwertqwertqwertqwertqwertqwertqwert123");
+
+        mockMvc.perform(post(URL_AUTH_REGISTRATION + "/check")
+                        .content(mapper.writeValueAsString(registrationRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.username", is("Please enter a valid name.")));
+    }
+
+    @Test
     @DisplayName("[200] POST /api/v1/auth/registration/code - Send registration code")
     public void sendRegistrationCode() throws Exception {
-        registrationRequest.setEmail(USER_EMAIL);
+        ProcessEmailRequest request = new ProcessEmailRequest();
+        request.setEmail(USER_EMAIL);
 
         mockMvc.perform(post(URL_AUTH_REGISTRATION + "/code")
-                .content(mapper.writeValueAsString(registrationRequest))
-                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .content(mapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is("Registration code sent successfully")));
     }
 
     @Test
-    @DisplayName("[404] POST /api/v1/auth/registration/code - User not found")
-    public void sendRegistrationCode_ShouldUserNotFound() throws Exception {
-        registrationRequest.setEmail(NOT_VALID_EMAIL);
+    @DisplayName("[400] POST /api/v1/auth/registration/code - Should email not valid")
+    public void sendRegistrationCode_ShouldEmailNotValid() throws Exception {
+        ProcessEmailRequest request = new ProcessEmailRequest();
+        request.setEmail("test2015@test");
 
         mockMvc.perform(post(URL_AUTH_REGISTRATION + "/code")
-                .content(mapper.writeValueAsString(registrationRequest))
-                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .content(mapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.email", is("Please enter a valid email address.")));
+    }
+
+    @Test
+    @DisplayName("[404] POST /api/v1/auth/registration/code - User not found")
+    public void sendRegistrationCode_ShouldUserNotFound() throws Exception {
+        ProcessEmailRequest request = new ProcessEmailRequest();
+        request.setEmail(NOT_VALID_EMAIL);
+
+        mockMvc.perform(post(URL_AUTH_REGISTRATION + "/code")
+                        .content(mapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is("User not found")));
     }
@@ -143,8 +230,8 @@ public class AuthenticationControllerTest {
         authenticationRequest.setPassword(PASSWORD);
 
         mockMvc.perform(post(URL_AUTH_REGISTRATION + "/confirm")
-                .content(mapper.writeValueAsString(authenticationRequest))
-                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .content(mapper.writeValueAsString(authenticationRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.user.id").value(USER_ID))
                 .andExpect(jsonPath("$.user.email").value(USER_EMAIL))
@@ -163,6 +250,18 @@ public class AuthenticationControllerTest {
     }
 
     @Test
+    @DisplayName("[400] POST /api/v1/auth/registration/confirm - Should email not valid")
+    public void endRegistration_ShouldEmailNotValid() throws Exception {
+        authenticationRequest.setEmail("test2015@test");
+
+        mockMvc.perform(post(URL_AUTH_REGISTRATION + "/confirm")
+                        .content(mapper.writeValueAsString(authenticationRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.email", is("Please enter a valid email address.")));
+    }
+
+    @Test
     @DisplayName("[400] POST /api/v1/auth/registration/confirm - Should short password")
     public void endRegistration_ShouldShortPassword() throws Exception {
         authenticationRequest.setPassword("123");
@@ -171,7 +270,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(authenticationRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is("Your password needs to be at least 8 characters")));
+                .andExpect(jsonPath("$.password", is("Your password needs to be at least 8 characters. Please enter a longer one.")));
     }
 
     @Test
@@ -214,7 +313,7 @@ public class AuthenticationControllerTest {
     public void getUserByToken_JwtExpired() throws Exception {
         Assertions.assertThrows(JwtAuthenticationException.class, () -> {
             mockMvc.perform(get(URL_AUTH_BASIC + "/user")
-                    .header("Authorization", "jwt"))
+                            .header("Authorization", "jwt"))
                     .andExpect(status().isUnauthorized());
         });
     }
@@ -222,50 +321,76 @@ public class AuthenticationControllerTest {
     @Test
     @DisplayName("[200] POST /api/v1/auth/forgot/email - Find existing email")
     public void findExistingEmail() throws Exception {
-        PasswordResetRequest passwordResetRequest = new PasswordResetRequest();
-        passwordResetRequest.setEmail(USER_EMAIL);
+        ProcessEmailRequest request = new ProcessEmailRequest();
+        request.setEmail(USER_EMAIL);
 
         mockMvc.perform(post(URL_AUTH_FORGOT + "/email")
-                .content(mapper.writeValueAsString(passwordResetRequest))
-                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .content(mapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is("Reset password code is send to your E-mail")));
+    }
+
+    @Test
+    @DisplayName("[400] POST /api/v1/auth/forgot/email - Should email not valid")
+    public void findExistingEmail_ShouldEmailNotValid() throws Exception {
+        ProcessEmailRequest request = new ProcessEmailRequest();
+        request.setEmail("test2015@test");
+
+        mockMvc.perform(post(URL_AUTH_FORGOT + "/email")
+                        .content(mapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.email", is("Please enter a valid email address.")));
     }
 
     @Test
     @DisplayName("[404] POST /api/v1/auth/forgot/email - Email not found")
     public void findExistingEmail_EmailNotFound() throws Exception {
-        PasswordResetRequest passwordResetRequest = new PasswordResetRequest();
-        passwordResetRequest.setEmail(NOT_VALID_EMAIL);
+        ProcessEmailRequest request = new ProcessEmailRequest();
+        request.setEmail(NOT_VALID_EMAIL);
 
         mockMvc.perform(post(URL_AUTH_FORGOT + "/email")
-                .content(mapper.writeValueAsString(passwordResetRequest))
-                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .content(mapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is("Email not found")));
     }
 
     @Test
-    @DisplayName("[200] POST /api/v1/auth/forgot/email - Send password reset code")
+    @DisplayName("[200] POST /api/v1/auth/forgot - Send password reset code")
     public void sendPasswordResetCode() throws Exception {
-        PasswordResetRequest passwordResetRequest = new PasswordResetRequest();
-        passwordResetRequest.setEmail(USER_EMAIL);
+        ProcessEmailRequest request = new ProcessEmailRequest();
+        request.setEmail(USER_EMAIL);
 
         mockMvc.perform(post(URL_AUTH_FORGOT)
-                .content(mapper.writeValueAsString(passwordResetRequest))
-                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .content(mapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is("Reset password code is send to your E-mail")));
     }
 
     @Test
-    @DisplayName("[404] POST /api/v1/auth/forgot/email - Should email Not Found")
-    public void sendPasswordResetCode_ShouldEmailNotFound() throws Exception {
-        PasswordResetRequest passwordResetRequest = new PasswordResetRequest();
-        passwordResetRequest.setEmail(NOT_VALID_EMAIL);
+    @DisplayName("[400] POST /api/v1/auth/forgot - Should email not valid")
+    public void sendPasswordResetCode_ShouldEmailNotValid() throws Exception {
+        ProcessEmailRequest request = new ProcessEmailRequest();
+        request.setEmail("test2015@test");
 
         mockMvc.perform(post(URL_AUTH_FORGOT)
-                        .content(mapper.writeValueAsString(passwordResetRequest))
+                        .content(mapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.email", is("Please enter a valid email address.")));
+    }
+
+    @Test
+    @DisplayName("[404] POST /api/v1/auth/forgot - Should email Not Found")
+    public void sendPasswordResetCode_ShouldEmailNotFound() throws Exception {
+        ProcessEmailRequest request = new ProcessEmailRequest();
+        request.setEmail(NOT_VALID_EMAIL);
+
+        mockMvc.perform(post(URL_AUTH_FORGOT)
+                        .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is("Email not found")));
@@ -309,8 +434,8 @@ public class AuthenticationControllerTest {
         passwordResetRequest.setPassword2(PASSWORD);
 
         mockMvc.perform(post(URL_AUTH_RESET)
-                .content(mapper.writeValueAsString(passwordResetRequest))
-                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .content(mapper.writeValueAsString(passwordResetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is("Password successfully changed!")));
     }
@@ -327,7 +452,36 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is("Email not found")));
+                .andExpect(jsonPath("$.email", is("Email not found")));
+    }
+
+    @Test
+    @DisplayName("[400] POST /api/v1/auth/reset - Should Email not valid")
+    public void passwordReset_ShouldEmailNotValid() throws Exception {
+        PasswordResetRequest passwordResetRequest = new PasswordResetRequest();
+        passwordResetRequest.setEmail("notvalidemail@test");
+        passwordResetRequest.setPassword(PASSWORD);
+        passwordResetRequest.setPassword2(PASSWORD);
+
+        mockMvc.perform(post(URL_AUTH_RESET)
+                        .content(mapper.writeValueAsString(passwordResetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.email", is("Please enter a valid email address.")));
+    }
+
+    @Test
+    @DisplayName("[400] POST /api/v1/auth/reset - Should password be empty")
+    public void passwordReset_ShouldPasswordBeEmpty() throws Exception {
+        PasswordResetRequest passwordResetRequest = new PasswordResetRequest();
+        passwordResetRequest.setEmail(USER_EMAIL);
+        passwordResetRequest.setPassword2(PASSWORD);
+
+        mockMvc.perform(post(URL_AUTH_RESET)
+                        .content(mapper.writeValueAsString(passwordResetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.password", is("Password cannot be empty.")));
     }
 
     @Test
@@ -338,10 +492,40 @@ public class AuthenticationControllerTest {
         passwordResetRequest.setPassword(PASSWORD);
 
         mockMvc.perform(post(URL_AUTH_RESET)
-                .content(mapper.writeValueAsString(passwordResetRequest))
-                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .content(mapper.writeValueAsString(passwordResetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is("Password confirmation cannot be empty.")));
+                .andExpect(jsonPath("$.password2", is("Password cannot be empty.")));
+    }
+
+    @Test
+    @DisplayName("[400] POST /api/v1/auth/reset - Should password less then 8 characters")
+    public void passwordReset_ShouldPasswordLessThen8Characters() throws Exception {
+        PasswordResetRequest passwordResetRequest = new PasswordResetRequest();
+        passwordResetRequest.setEmail(USER_EMAIL);
+        passwordResetRequest.setPassword("qwerty");
+        passwordResetRequest.setPassword2(PASSWORD);
+
+        mockMvc.perform(post(URL_AUTH_RESET)
+                        .content(mapper.writeValueAsString(passwordResetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.password", is("Your password needs to be at least 8 characters. Please enter a longer one.")));
+    }
+
+    @Test
+    @DisplayName("[400] POST /api/v1/auth/reset - Should password2 less then 8 characters")
+    public void passwordReset_ShouldPassword2LessThen8Characters() throws Exception {
+        PasswordResetRequest passwordResetRequest = new PasswordResetRequest();
+        passwordResetRequest.setEmail(USER_EMAIL);
+        passwordResetRequest.setPassword(PASSWORD);
+        passwordResetRequest.setPassword2("qwerty");
+
+        mockMvc.perform(post(URL_AUTH_RESET)
+                        .content(mapper.writeValueAsString(passwordResetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.password2", is("Your password needs to be at least 8 characters. Please enter a longer one.")));
     }
 
     @Test
@@ -350,12 +534,140 @@ public class AuthenticationControllerTest {
         PasswordResetRequest passwordResetRequest = new PasswordResetRequest();
         passwordResetRequest.setEmail(USER_EMAIL);
         passwordResetRequest.setPassword(PASSWORD);
-        passwordResetRequest.setPassword2("test123");
+        passwordResetRequest.setPassword2("test1234");
 
         mockMvc.perform(post(URL_AUTH_RESET)
-                .content(mapper.writeValueAsString(passwordResetRequest))
-                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                        .content(mapper.writeValueAsString(passwordResetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is("Passwords do not match.")));
+                .andExpect(jsonPath("$.password", is("Passwords do not match.")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] POST /api/v1/auth/reset/current - Current Password Reset")
+    public void currentPasswordReset() throws Exception {
+        CurrentPasswordResetRequest passwordResetRequest = new CurrentPasswordResetRequest();
+        passwordResetRequest.setCurrentPassword(PASSWORD);
+        passwordResetRequest.setPassword(PASSWORD);
+        passwordResetRequest.setPassword2(PASSWORD);
+
+        mockMvc.perform(post(URL_AUTH_RESET + "/current")
+                        .content(mapper.writeValueAsString(passwordResetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is("Your password has been successfully updated.")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] POST /api/v1/auth/reset/current - Should current password is empty")
+    public void currentPasswordReset_ShouldCurrentPasswordIsEmpty() throws Exception {
+        CurrentPasswordResetRequest passwordResetRequest = new CurrentPasswordResetRequest();
+        passwordResetRequest.setCurrentPassword("");
+        passwordResetRequest.setPassword(PASSWORD);
+        passwordResetRequest.setPassword2(PASSWORD);
+
+        mockMvc.perform(post(URL_AUTH_RESET + "/current")
+                        .content(mapper.writeValueAsString(passwordResetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.currentPassword", is("Current password cannot be empty.")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] POST /api/v1/auth/reset/current - Should password is empty")
+    public void currentPasswordReset_ShouldPasswordIsEmpty() throws Exception {
+        CurrentPasswordResetRequest passwordResetRequest = new CurrentPasswordResetRequest();
+        passwordResetRequest.setCurrentPassword(PASSWORD);
+        passwordResetRequest.setPassword(null);
+        passwordResetRequest.setPassword2(PASSWORD);
+
+        mockMvc.perform(post(URL_AUTH_RESET + "/current")
+                        .content(mapper.writeValueAsString(passwordResetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.password", is("Password cannot be empty.")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] POST /api/v1/auth/reset/current - Should password2 is empty")
+    public void currentPasswordReset_ShouldPassword2IsEmpty() throws Exception {
+        CurrentPasswordResetRequest passwordResetRequest = new CurrentPasswordResetRequest();
+        passwordResetRequest.setCurrentPassword(PASSWORD);
+        passwordResetRequest.setPassword(PASSWORD);
+        passwordResetRequest.setPassword2(null);
+
+        mockMvc.perform(post(URL_AUTH_RESET + "/current")
+                        .content(mapper.writeValueAsString(passwordResetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.password2", is("Password confirmation cannot be empty.")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] POST /api/v1/auth/reset/current - Should password less then 8 characters")
+    public void currentPasswordReset_ShouldPasswordLessThen8Characters() throws Exception {
+        CurrentPasswordResetRequest passwordResetRequest = new CurrentPasswordResetRequest();
+        passwordResetRequest.setCurrentPassword(PASSWORD);
+        passwordResetRequest.setPassword("test");
+        passwordResetRequest.setPassword2(PASSWORD);
+
+        mockMvc.perform(post(URL_AUTH_RESET + "/current")
+                        .content(mapper.writeValueAsString(passwordResetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.password", is("Your password needs to be at least 8 characters. Please enter a longer one.")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] POST /api/v1/auth/reset/current - Should password2 less then 8 characters")
+    public void currentPasswordReset_ShouldPassword2LessThen8Characters() throws Exception {
+        CurrentPasswordResetRequest passwordResetRequest = new CurrentPasswordResetRequest();
+        passwordResetRequest.setCurrentPassword(PASSWORD);
+        passwordResetRequest.setPassword(PASSWORD);
+        passwordResetRequest.setPassword2("test");
+
+        mockMvc.perform(post(URL_AUTH_RESET + "/current")
+                        .content(mapper.writeValueAsString(passwordResetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.password2", is("Your password needs to be at least 8 characters. Please enter a longer one.")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] POST /api/v1/auth/reset/current - Should current password reset not found")
+    public void currentPasswordReset_ShouldCurrentPasswordResetNotFound() throws Exception {
+        CurrentPasswordResetRequest passwordResetRequest = new CurrentPasswordResetRequest();
+        passwordResetRequest.setCurrentPassword("qwerty123456");
+        passwordResetRequest.setPassword(PASSWORD);
+        passwordResetRequest.setPassword2(PASSWORD);
+
+        mockMvc.perform(post(URL_AUTH_RESET + "/current")
+                        .content(mapper.writeValueAsString(passwordResetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.currentPassword", is("The password you entered was incorrect.")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[400] POST /api/v1/auth/reset/current - Should passwords not match")
+    public void currentPasswordReset_ShouldPasswordsNotMatch() throws Exception {
+        CurrentPasswordResetRequest passwordResetRequest = new CurrentPasswordResetRequest();
+        passwordResetRequest.setCurrentPassword(PASSWORD);
+        passwordResetRequest.setPassword("qwerty123456");
+        passwordResetRequest.setPassword2(PASSWORD);
+
+        mockMvc.perform(post(URL_AUTH_RESET + "/current")
+                        .content(mapper.writeValueAsString(passwordResetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.password", is("Passwords do not match.")));
     }
 }

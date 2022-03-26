@@ -1,9 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
-import com.gmail.merikbest2015.twitterspringreactjs.dto.request.AuthenticationRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.request.CurrentPasswordResetRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.request.PasswordResetRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.request.RegistrationRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.request.*;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.AuthUserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.AuthenticationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.exception.InputFieldException;
@@ -30,11 +27,19 @@ public class AuthenticationMapper {
         return response;
     }
 
-    public AuthenticationResponse login(AuthenticationRequest request) {
+    private void processInputErrors(BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new InputFieldException(bindingResult);
+        }
+    }
+
+    public AuthenticationResponse login(AuthenticationRequest request, BindingResult bindingResult) {
+        processInputErrors(bindingResult);
         return getAuthenticationResponse(authenticationService.login(request.getEmail(), request.getPassword()));
     }
 
-    public String registration(RegistrationRequest request) {
+    public String registration(RegistrationRequest request, BindingResult bindingResult) {
+        processInputErrors(bindingResult);
         return authenticationService.registration(request.getEmail(), request.getUsername(), request.getBirthday());
     }
 
@@ -46,7 +51,8 @@ public class AuthenticationMapper {
         return authenticationService.activateUser(code);
     }
 
-    public String sendPasswordResetCode(String email) {
+    public String sendPasswordResetCode(String email, BindingResult bindingResult) {
+        processInputErrors(bindingResult);
         return authenticationService.sendPasswordResetCode(email);
     }
 
@@ -55,26 +61,28 @@ public class AuthenticationMapper {
         return modelMapper.map(user, AuthUserResponse.class);
     }
 
-    public String passwordReset(PasswordResetRequest request) {
+    public String passwordReset(PasswordResetRequest request, BindingResult bindingResult) {
+        processInputErrors(bindingResult);
         return authenticationService.passwordReset(request.getEmail(), request.getPassword(), request.getPassword2());
     }
 
-    public String findEmail(String email) {
+    public String findEmail(String email, BindingResult bindingResult) {
+        processInputErrors(bindingResult);
         return authenticationService.findEmail(email);
     }
 
-    public String sendRegistrationCode(String email) {
+    public String sendRegistrationCode(String email, BindingResult bindingResult) {
+        processInputErrors(bindingResult);
         return authenticationService.sendRegistrationCode(email);
     }
 
-    public AuthenticationResponse endRegistration(RegistrationRequest request) {
+    public AuthenticationResponse endRegistration(EndRegistrationRequest request, BindingResult bindingResult) {
+        processInputErrors(bindingResult);
         return getAuthenticationResponse(authenticationService.endRegistration(request.getEmail(), request.getPassword()));
     }
 
     public String currentPasswordReset(CurrentPasswordResetRequest request, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw new InputFieldException(bindingResult);
-        }
+        processInputErrors(bindingResult);
         return authenticationService.currentPasswordReset(request.getCurrentPassword(), request.getPassword(), request.getPassword2());
     }
 }
