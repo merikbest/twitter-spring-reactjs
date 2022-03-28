@@ -1,5 +1,5 @@
 import React, {FC, FormEvent, MouseEvent, ReactElement, useEffect, useState} from 'react';
-import {useLocation} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -343,11 +343,13 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
     return (
         <div>
             <div className={classes.content}>
-                <Avatar
-                    className={globalClasses.avatar}
-                    alt={`avatar ${userData?.id}`}
-                    src={userData?.avatar?.src ? userData?.avatar?.src : DEFAULT_PROFILE_IMG}
-                />
+                <Link to={`/profile/${userData?.id}`}>
+                    <Avatar
+                        className={globalClasses.avatar}
+                        alt={`avatar ${userData?.id}`}
+                        src={userData?.avatar?.src ? userData?.avatar?.src : DEFAULT_PROFILE_IMG}
+                    />
+                </Link>
                 <div className={classes.textareaWrapper}>
                     {selectedScheduleDate && (
                         <div className={classes.infoWrapper}>

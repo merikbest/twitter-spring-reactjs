@@ -16,9 +16,5 @@ public class RegistrationRequest {
     @Size(min = 1, max = 50, message = "Please enter a valid name.")
     private String username;
 
-//    @NotBlank(message = "Password confirmation cannot be empty.")
-//    @Size(min = 8, message = "Your password needs to be at least 8 characters. Please enter a longer one.")
-//    private String password;
-
     private String birthday;
 }
