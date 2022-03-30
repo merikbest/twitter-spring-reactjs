@@ -15,6 +15,7 @@
     "@types/classnames": "^2.3.1",
     "@types/emoji-js": "^3.5.0",
     "@types/emoji-mart": "^3.0.5",
+    "@types/enzyme": "^3.10.11",
     "@types/history": "^4.7.9",
     "@types/jest": "^26.0.15",
     "@types/node": "^12.0.0",
@@ -23,6 +24,7 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-redux": "^7.1.16",
     "@types/react-router-dom": "^5.1.7",
+    "@types/react-test-renderer": "^17.0.1",
     "@types/recompose": "^0.30.8",
     "@types/redux-mock-store": "^1.0.3",
     "@types/sockjs-client": "^1.5.1",
@@ -36,6 +38,8 @@
     "date-fns": "^2.22.1",
     "emoji-js": "^3.5.0",
     "emoji-mart": "^3.0.1",
+    "enzyme": "^3.11.0",
+    "enzyme-to-json": "^3.6.2",
     "immer": "^9.0.2",
     "json-server": "^0.16.3",
     "medium-zoom": "^1.0.6",
@@ -50,6 +54,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-string-replace": "^0.4.4",
+    "react-test-renderer": "^18.0.0",
     "recompose": "^0.30.0",
     "redux": "^4.1.0",
     "redux-mock-store": "^1.5.4",
@@ -71,9 +76,6 @@
       "react-app",
       "react-app/jest"
     ]
-  },
-  "jest": {
-    "setupFilesAfterEnv": ["<rootDir>/src/setupTests.js"]
   },
   "browserslist": {
     "production": [

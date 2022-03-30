@@ -23,6 +23,11 @@ import {
 } from "../store/types/lists";
 import {NotificationInfoResponse, NotificationResponse, NotificationUserResponse} from "../store/types/notification";
 import {TagResponse} from "../store/types/tag";
+import configureStore from "redux-mock-store";
+import {mount} from "enzyme";
+import {Router} from "react-router-dom";
+import {Provider} from "react-redux";
+import {createMemoryHistory} from "history";
 
 // @ts-ignore
 export const testAction = (action, payload, expectedPayload) => {
@@ -109,6 +114,21 @@ export const testWatchSaga = (watchSaga, requests, effect = takeLatest) => {
             });
         })
     });
+};
+
+// @ts-ignore
+export const mountWithStore = (component, mockState) => {
+    const history = createMemoryHistory();
+    const mockStore = configureStore([]);
+    const store = mockStore(mockState);
+
+    return mount(
+        <Router history={history}>
+            <Provider store={store}>
+                {component}
+            </Provider>
+        </Router>
+    );
 };
 
 export const mockListsOwnerMemberResponse = [{id: 1}, {id: 2}] as ListsOwnerMemberResponse[];
