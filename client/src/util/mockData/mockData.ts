@@ -1,4 +1,4 @@
-export const mockBookmarks = [
+export const mockData = [
     {
         "id": 1,
         "text": "My #FirstTweet :slightly_smiling_face:",
@@ -146,3 +146,37 @@ export const mockUser = {
     "isMutedDirectMessages": false,
     "isPrivateProfile": false
 };
+
+export const mockUsers = [
+    {
+        "id": 4,
+        "fullName": "JavaCat",
+        "username": "JavaCat",
+        "about": "Hello twitter!",
+        "avatar": {
+            "id": 5,
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png"
+        },
+        "isPrivateProfile": false,
+        "isMutedDirectMessages": false,
+        "isUserBlocked": false,
+        "isMyProfileBlocked": false,
+        "isWaitingForApprove": false,
+        "isFollower": false
+    }, {
+        "id": 1,
+        "fullName": "Random",
+        "username": "Random",
+        "about": null,
+        "avatar": {
+            "id": 11,
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
+        },
+        "isPrivateProfile": false,
+        "isMutedDirectMessages": false,
+        "isUserBlocked": false,
+        "isMyProfileBlocked": false,
+        "isWaitingForApprove": false,
+        "isFollower": true
+    }
+];
