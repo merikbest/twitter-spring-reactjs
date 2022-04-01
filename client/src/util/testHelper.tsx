@@ -117,7 +117,7 @@ export const testWatchSaga = (watchSaga, requests, effect = takeLatest) => {
 };
 
 // @ts-ignore
-export const mountWithStore = (component, mockState) => {
+export const mountWithStore = (component, mockState?) => {
     const history = createMemoryHistory();
     const mockStore = configureStore([]);
     const store = mockStore(mockState);
