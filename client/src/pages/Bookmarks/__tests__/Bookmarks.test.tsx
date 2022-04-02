@@ -1,7 +1,7 @@
 import Bookmarks from "../Bookmarks";
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
 import {LoadingStatus} from "../../../store/types";
-import {mockData, mockUser} from "../../../util/mockData/mockData";
+import {mockTweets, mockUser} from "../../../util/mockData/mockData";
 import Spinner from "../../../components/Spinner/Spinner";
 import TweetComponent from "../../../components/TweetComponent/TweetComponent";
 
@@ -10,7 +10,7 @@ window.scrollTo = jest.fn();
 describe("Bookmarks", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADING);
     const mockUserState = {data: mockUser, status: LoadingStatus.LOADING};
-    const mockTweetsState = {items: mockData, pagesCount: 1, loadingState: LoadingStatus.LOADING};
+    const mockTweetsState = {items: mockTweets, pagesCount: 1, loadingState: LoadingStatus.LOADING};
 
     it("should render loading Spinner", () => {
         const mockStore = {...mockRootState, user: mockUserState, tweets: mockTweetsState};

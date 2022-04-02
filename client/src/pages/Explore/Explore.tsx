@@ -71,12 +71,20 @@ const Explore: FC = (): ReactElement => {
     }, [location.state?.tag, location.state?.text]);
 
     const loadTweets = () => {
-        if (activeTab === 3) {
-            dispatch(fetchMediaTweets(page));
-        } else if (activeTab === 4) {
-            dispatch(fetchTweetsWithVideo(page));
+        if (text !== "") {
+            if (activeTab !== 2) {
+                dispatch(fetchTweetsByText(encodeURIComponent(text)));
+            } else {
+                dispatch(fetchUsersSearchByUsername(encodeURIComponent(text)));
+            }
         } else {
-            dispatch(fetchTweets(page));
+            if (activeTab === 3) {
+                dispatch(fetchMediaTweets(page));
+            } else if (activeTab === 4) {
+                dispatch(fetchTweetsWithVideo(page));
+            } else {
+                dispatch(fetchTweets(page));
+            }
         }
 
         if (isTweetsLoaded) {
@@ -95,8 +103,10 @@ const Explore: FC = (): ReactElement => {
 
         if (text !== "") {
             if (activeTab !== 2) {
+                dispatch(resetTweets());
                 dispatch(fetchTweetsByText(encodeURIComponent(text)));
             } else {
+                dispatch(resetTweets());
                 dispatch(fetchUsersSearchByUsername(encodeURIComponent(text)));
             }
         }

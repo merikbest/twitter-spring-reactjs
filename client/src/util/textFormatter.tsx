@@ -5,21 +5,22 @@ import 'emoji-mart/css/emoji-mart.css'
 
 export const textFormatter = (text: string): ReactNodeArray => {
     let replacedText: ReactNodeArray;
+    let index: number = 1;
 
-    replacedText = reactStringReplace(text, /(\n)/g, (match, i) => (
+    replacedText = reactStringReplace(text, /(\n)/g, (match) => (
         <>{match}<br/></>
     ));
 
-    replacedText = reactStringReplace(replacedText, /(#\w+)\b/ig, (match, i) => (
-        <b key={i} id="hashtag">{match}</b>
+    replacedText = reactStringReplace(replacedText, /(#\w+)\b/ig, (match) => (
+        <b key={index++} id="hashtag">{match}</b>
     ));
 
-    replacedText = reactStringReplace(replacedText, /(https?:\/\/[^\s]+)/g, (match, i) => (
-        <a key={i} href={match} id="link" target="_blank">{match}</a>
+    replacedText = reactStringReplace(replacedText, /(https?:\/\/[^\s]+)/g, (match) => (
+        <a key={index++} href={match} id="link" target="_blank">{match}</a>
     ));
 
-    replacedText = reactStringReplace(replacedText, /:(.+?):/g, (match, i) => (
-        <Emoji native={false} key={i} emoji={match} set={'twitter'} size={20} />
+    replacedText = reactStringReplace(replacedText, /:(.+?):/g, (match) => (
+        <Emoji native={false} key={index++} emoji={match} set={'twitter'} size={20} />
     ));
 
     return replacedText;

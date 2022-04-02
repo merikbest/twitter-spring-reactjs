@@ -28,6 +28,7 @@ import {mount} from "enzyme";
 import {Router} from "react-router-dom";
 import {Provider} from "react-redux";
 import {createMemoryHistory} from "history";
+import {mockTweets, mockUser, mockUsers} from "./mockData/mockData";
 
 // @ts-ignore
 export const testAction = (action, payload, expectedPayload) => {
@@ -221,12 +222,12 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             repliesLoadingState: loadingStatus,
         },
         tweets: {
-            items: mockTweetResponseArray,
+            items: mockTweets,
             pagesCount: 1,
             loadingState: loadingStatus
         },
         user: {
-            data: mockAuthUserResponse,
+            data: mockUser,
             status: loadingStatus,
         },
         userDetail: {
@@ -244,8 +245,8 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             loadingState: loadingStatus
         },
         usersSearch: {
-            users: mockUserResponse,
-            followers: mockUserResponse,
+            users: mockUsers,
+            followers: mockUsers,
             loadingState: loadingStatus
         },
         userTweets: {

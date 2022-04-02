@@ -1,5 +1,5 @@
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {mockData, mockUser} from "../../../util/mockData/mockData";
+import {mockTweets, mockUser} from "../../../util/mockData/mockData";
 import Spinner from "../../../components/Spinner/Spinner";
 import Connect from "../Connect";
 import {LoadingStatus} from "../../../store/types";
@@ -10,7 +10,7 @@ window.scrollTo = jest.fn();
 describe("Connect", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADING);
     const mockUserState = {data: mockUser, status: LoadingStatus.LOADING};
-    const mockUsersState = {users: mockData, loadingState: LoadingStatus.LOADING};
+    const mockUsersState = {users: mockTweets, loadingState: LoadingStatus.LOADING};
     
     it("should render loading Spinner", () => {
         const mockStore = {...mockRootState, user: mockUserState, users: mockUsersState};
