@@ -88,5 +88,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "axios-mock-adapter": "^1.20.0"
   }
 }

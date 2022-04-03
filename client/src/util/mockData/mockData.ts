@@ -1,5 +1,5 @@
-import {TweetResponse} from "../../store/types/tweet";
-import {AuthUserResponse, UserResponse} from "../../store/types/user";
+import {TweetImageResponse, TweetResponse} from "../../store/types/tweet";
+import {AuthUserResponse, UserProfileResponse, UserResponse} from "../../store/types/user";
 
 export const mockTweets = [
     {
@@ -184,6 +184,104 @@ export const mockUsers = [
         "isFollower": true
     }
 ] as unknown as UserResponse[];
+
+export const mockMyProfile = {
+    "id": 2,
+    "fullName": "MrCat",
+    "username": "Cat",
+    "location": "New York",
+    "about": "Hello twitter!",
+    "website": "https://www.google.com",
+    "country": "UA",
+    "birthday": null,
+    "registrationDate": "2021-08-01T23:34:32",
+    "tweetCount": 4,
+    "mediaTweetCount": 25,
+    "likeCount": 30,
+    "notificationsCount": 0,
+    "avatar": {
+        "id": 33,
+        "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg"
+    },
+    "wallpaper": {
+        "id": 44,
+        "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/d0e5b95f-acc0-47ef-b499-477f7e5a1a06_PrMnWa2z.jpg"
+    },
+    "pinnedTweetId": 0,
+    "followersSize": 1,
+    "followingSize": 1,
+    "sameFollowers": [{
+        "id": 1,
+        "fullName": "Random",
+        "username": "Random",
+        "avatar": {
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg",
+            "id": 11
+        }
+    }],
+    "isMutedDirectMessages": false,
+    "isPrivateProfile": false,
+    "isUserMuted": false,
+    "isUserBlocked": false,
+    "isMyProfileBlocked": false,
+    "isWaitingForApprove": false,
+    "isFollower": false,
+    "isSubscriber": false
+} as unknown as UserProfileResponse;
+
+export const mockPrivateProfile = {
+    "id": 3,
+    "fullName": "Kitty",
+    "username": "Kitty",
+    "location": "New York",
+    "about": "Hello twitter!",
+    "website": "https://www.google.com",
+    "country": null,
+    "birthday": null,
+    "registrationDate": "2021-08-01T23:34:32",
+    "tweetCount": 0,
+    "mediaTweetCount": 0,
+    "likeCount": 0,
+    "notificationsCount": 2,
+    "avatar": {
+        "id": 3,
+        "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/a7e03e7c-c05f-4e30-ba8c-2271fd0b4b43_779301.jpg"
+    },
+    "wallpaper": null,
+    "pinnedTweetId": 0,
+    "followersSize": 1,
+    "followingSize": 0,
+    "sameFollowers": [{
+        "id": 1,
+        "fullName": "Random",
+        "username": "Random",
+        "avatar": {
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg",
+            "id": 11
+        }
+    }],
+    "isMutedDirectMessages": true,
+    "isPrivateProfile": true,
+    "isUserMuted": false,
+    "isUserBlocked": false,
+    "isMyProfileBlocked": false,
+    "isWaitingForApprove": false,
+    "isFollower": false,
+    "isSubscriber": false
+} as unknown as UserProfileResponse;
+
+export const mockProfileImages = [
+    {
+        "tweetId": 6,
+        "imageId": 1,
+        "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/0a6c735d-def8-4587-a29f-221915ef6cb4_ff2d023b3220f93bbc79233614dea542.jpg"
+    },
+    {
+        "tweetId": 5,
+        "imageId": 1001,
+        "src": "https://pbs.twimg.com/media/FNsBisCVQAEVY4K?format=jpg&name=medium"
+    }
+] as unknown as TweetImageResponse[];
 
 export const mockMediaTweets = [
     {

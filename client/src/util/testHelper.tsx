@@ -28,7 +28,9 @@ import {mount} from "enzyme";
 import {Router} from "react-router-dom";
 import {Provider} from "react-redux";
 import {createMemoryHistory} from "history";
-import {mockTweets, mockUser, mockUsers} from "./mockData/mockData";
+import {mockMyProfile, mockProfileImages, mockTweets, mockUser, mockUsers} from "./mockData/mockData";
+import * as redux from "react-redux";
+import routeData from "react-router";
 
 // @ts-ignore
 export const testAction = (action, payload, expectedPayload) => {
@@ -118,18 +120,33 @@ export const testWatchSaga = (watchSaga, requests, effect = takeLatest) => {
 };
 
 // @ts-ignore
-export const mountWithStore = (component, mockState?) => {
-    const history = createMemoryHistory();
+export const mountWithStore = (component, mockState?, mockHistory?) => {
     const mockStore = configureStore([]);
     const store = mockStore(mockState);
 
     return mount(
-        <Router history={history}>
+        <Router history={mockHistory ? mockHistory : createMemoryHistory()}>
             <Provider store={store}>
                 {component}
             </Provider>
         </Router>
     );
+};
+
+export const mockDispatch = () => {
+    const useDispatchSpy = jest.spyOn(redux, "useDispatch");
+    const mockDispatchFn = jest.fn();
+    useDispatchSpy.mockReturnValue(mockDispatchFn);
+    return mockDispatchFn;
+};
+
+export const mockLocation = (mockLocationState: { tag: string } | { text: string }): void => {
+    jest.spyOn(routeData, "useLocation").mockReturnValue({
+        pathname: "/search",
+        hash: "",
+        search: "",
+        state: mockLocationState
+    });
 };
 
 export const mockListsOwnerMemberResponse = [{id: 1}, {id: 2}] as ListsOwnerMemberResponse[];
@@ -235,13 +252,13 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             loadingState: loadingStatus
         },
         userProfile: {
-            user: mockUserProfileResponse,
-            images: mockTweetImageResponse,
+            user: mockMyProfile,
+            images: mockProfileImages,
             imagesLoadingState: loadingStatus,
             loadingState: loadingStatus
         },
         users: {
-            users: mockUserResponse,
+            users: mockUsers,
             loadingState: loadingStatus
         },
         usersSearch: {
