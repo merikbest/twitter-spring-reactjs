@@ -185,6 +185,52 @@ export const mockUsers = [
     }
 ] as unknown as UserResponse[];
 
+export const createMockMyProfile = (followersSize: number = 1, followingSize: number = 1): UserProfileResponse => {
+    return {
+        "id": 2,
+        "fullName": "MrCat",
+        "username": "Cat",
+        "location": "New York",
+        "about": "Hello twitter!",
+        "website": "https://www.google.com",
+        "country": "UA",
+        "birthday": null,
+        "registrationDate": "2021-08-01T23:34:32",
+        "tweetCount": 4,
+        "mediaTweetCount": 25,
+        "likeCount": 30,
+        "notificationsCount": 0,
+        "avatar": {
+            "id": 33,
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg"
+        },
+        "wallpaper": {
+            "id": 44,
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/d0e5b95f-acc0-47ef-b499-477f7e5a1a06_PrMnWa2z.jpg"
+        },
+        "pinnedTweetId": 0,
+        "followersSize": followersSize,
+        "followingSize": followingSize,
+        "sameFollowers": [{
+            "id": 1,
+            "fullName": "Random",
+            "username": "Random",
+            "avatar": {
+                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg",
+                "id": 11
+            }
+        }],
+        "isMutedDirectMessages": false,
+        "isPrivateProfile": false,
+        "isUserMuted": false,
+        "isUserBlocked": false,
+        "isMyProfileBlocked": false,
+        "isWaitingForApprove": false,
+        "isFollower": false,
+        "isSubscriber": false
+    } as unknown as UserProfileResponse
+};
+
 export const mockMyProfile = {
     "id": 2,
     "fullName": "MrCat",
@@ -229,7 +275,81 @@ export const mockMyProfile = {
     "isSubscriber": false
 } as unknown as UserProfileResponse;
 
-export const mockPrivateProfile = {
+export const createMockUserProfile = (followersSize: number = 1, followingSize: number = 1): UserProfileResponse => {
+    return {
+        "id": 1,
+        "fullName": "Random",
+        "username": "Random",
+        "location": null,
+        "about": null,
+        "website": null,
+        "country": null,
+        "birthday": null,
+        "registrationDate": "2021-11-15T14:05:08",
+        "tweetCount": 0,
+        "mediaTweetCount": 0,
+        "likeCount": 1,
+        "notificationsCount": 1,
+        "avatar": {
+            "id": 11,
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
+        },
+        "wallpaper": {
+            "id": 22,
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/dfc8a223-45fc-43da-8b7c-f76e2c2507cd_82ecbca14eb4999212c07257f41c70e7.jpg"
+        },
+        "pinnedTweetId": 1,
+        "followersSize": followersSize,
+        "followingSize": followingSize,
+        "sameFollowers": [],
+        "isMutedDirectMessages": false,
+        "isPrivateProfile": false,
+        "isUserMuted": false,
+        "isUserBlocked": false,
+        "isMyProfileBlocked": false,
+        "isWaitingForApprove": false,
+        "isFollower": true,
+        "isSubscriber": false
+    } as unknown as UserProfileResponse
+};
+
+export const mockUserProfile = {
+    "id": 1,
+    "fullName": "Random",
+    "username": "Random",
+    "location": null,
+    "about": null,
+    "website": null,
+    "country": null,
+    "birthday": null,
+    "registrationDate": "2021-11-15T14:05:08",
+    "tweetCount": 0,
+    "mediaTweetCount": 0,
+    "likeCount": 1,
+    "notificationsCount": 1,
+    "avatar": {
+        "id": 11,
+        "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
+    },
+    "wallpaper": {
+        "id": 22,
+        "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/dfc8a223-45fc-43da-8b7c-f76e2c2507cd_82ecbca14eb4999212c07257f41c70e7.jpg"
+    },
+    "pinnedTweetId": 1,
+    "followersSize": 2,
+    "followingSize": 4,
+    "sameFollowers": [],
+    "isMutedDirectMessages": false,
+    "isPrivateProfile": false,
+    "isUserMuted": false,
+    "isUserBlocked": false,
+    "isMyProfileBlocked": false,
+    "isWaitingForApprove": false,
+    "isFollower": true,
+    "isSubscriber": false
+} as unknown as UserProfileResponse;
+
+export const mockUserPrivateProfile = {
     "id": 3,
     "fullName": "Kitty",
     "username": "Kitty",

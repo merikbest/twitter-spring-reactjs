@@ -7,7 +7,7 @@ import React from "react";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
 import Spinner from "../../../components/Spinner/Spinner";
 import FollowersYouKnow from "../FollowersYouKnow";
-import {mockMyProfile, mockPrivateProfile, mockUsers} from "../../../util/mockData/mockData";
+import {mockMyProfile, mockUserPrivateProfile, mockUsers} from "../../../util/mockData/mockData";
 import {API_URL} from "../../../util/url";
 import UsersItem from "../../../components/UsersItem/UsersItem";
 import {LoadingStatus} from "../../../store/types";
@@ -80,7 +80,7 @@ describe("FollowersYouKnow", () => {
         const pushSpy = jest.spyOn(history, "push");
         setupTest(mockUserId, []);
         
-        const store = {...mockStore, userProfile: {...mockStore.userProfile, user: mockPrivateProfile}}
+        const store = {...mockStore, userProfile: {...mockStore.userProfile, user: mockUserPrivateProfile}}
         const wrapper = mountWithStore(<FollowersYouKnow/>, store, history);
         
         setImmediate(() => {

@@ -28,7 +28,14 @@ import {mount} from "enzyme";
 import {Router} from "react-router-dom";
 import {Provider} from "react-redux";
 import {createMemoryHistory} from "history";
-import {mockMyProfile, mockProfileImages, mockTweets, mockUser, mockUsers} from "./mockData/mockData";
+import {
+    createMockMyProfile,
+    mockMyProfile,
+    mockProfileImages,
+    mockTweets,
+    mockUser,
+    mockUsers
+} from "./mockData/mockData";
 import * as redux from "react-redux";
 import routeData from "react-router";
 
@@ -252,7 +259,7 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             loadingState: loadingStatus
         },
         userProfile: {
-            user: mockMyProfile,
+            user: createMockMyProfile(),
             images: mockProfileImages,
             imagesLoadingState: loadingStatus,
             loadingState: loadingStatus
