@@ -27,9 +27,7 @@ const CheckEmailCode: FC = (): ReactElement => {
     };
 
     const handleChangeResetCode = (event: ChangeEvent<HTMLInputElement>): void => {
-        if (event.currentTarget) {
-            setResetCode(event.currentTarget.value);
-        }
+        setResetCode(event.target.value);
     };
 
     return (

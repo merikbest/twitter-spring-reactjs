@@ -26,10 +26,10 @@ const ForgotPassword: FC = (): ReactElement => {
                 </div>
             </div>
             <div className={classes.content}>
-                <Route exact path="/account/forgot" component={() => <FindEmail/>}/>
-                <Route exact path="/account/forgot/send_password_reset" component={() => <ResetPasswordOption/>}/>
-                <Route exact path="/account/forgot/confirm_pin_reset" component={() => <CheckEmailCode/>}/>
-                <Route exact path="/account/forgot/reset_password" component={() => <ResetPassword/>}/>
+                <Route exact path="/account/forgot" component={FindEmail}/>
+                <Route exact path="/account/forgot/send_password_reset" component={ResetPasswordOption}/>
+                <Route exact path="/account/forgot/confirm_pin_reset" component={CheckEmailCode}/>
+                <Route exact path="/account/forgot/reset_password" component={ResetPassword}/>
                 <Route exact path="/account/forgot/password_reset_complete" component={ResetPasswordSuccess}/>
             </div>
         </div>
