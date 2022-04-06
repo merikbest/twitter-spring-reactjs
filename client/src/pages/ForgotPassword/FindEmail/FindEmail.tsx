@@ -23,9 +23,7 @@ const FindEmail: FC = (): ReactElement => {
     };
 
     const handleChangeEmail = (event: ChangeEvent<HTMLInputElement>): void => {
-        if (event.currentTarget) {
-            setEmail(event.currentTarget.value);
-        }
+        setEmail(event.target.value);
     };
 
     return (
