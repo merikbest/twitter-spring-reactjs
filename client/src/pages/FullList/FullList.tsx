@@ -174,7 +174,7 @@ const FullList: FC = (): ReactElement => {
                                     </Typography>
                                 </Link>
                                 <div>
-                                    <span onClick={onOpenMembersModalWindow} className={classes.listMembers}>
+                                    <span id={"listMembers"} onClick={onOpenMembersModalWindow} className={classes.listMembers}>
                                         <Typography variant={"h6"} component={"span"}>
                                             {list?.membersSize}
                                         </Typography>
@@ -182,7 +182,7 @@ const FullList: FC = (): ReactElement => {
                                             {" Members"}
                                         </Typography>
                                     </span>
-                                    <span onClick={onOpenFollowersModalWindow} className={classes.listMembers}>
+                                    <span id={"listMembers"} onClick={onOpenFollowersModalWindow} className={classes.listMembers}>
                                         <Typography variant={"h6"} component={"span"}>
                                             {list?.followersSize}
                                         </Typography>

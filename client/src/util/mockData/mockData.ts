@@ -1,5 +1,6 @@
 import {TweetImageResponse, TweetResponse} from "../../store/types/tweet";
 import {AuthUserResponse, UserProfileResponse, UserResponse} from "../../store/types/user";
+import {BaseListResponse} from "../../store/types/lists";
 
 export const mockTweets = [
     {
@@ -537,3 +538,50 @@ export const mockVideoTweets = [
         "isTweetBookmarked": false
     },
 ];
+
+// lists
+export const mockFullList = {
+    "id": 3,
+    "name": "Hello World!",
+    "description": "Hello from my list",
+    "pinnedDate": "2022-03-29T20:03:47",
+    "altWallpaper": "https://pbs.twimg.com/media/EXZ27UwVcAIcDfd?format=png&name=small",
+    "wallpaper": null,
+    "listOwner": {
+        "id": 2,
+        "fullName": "MrCat",
+        "username": "Cat",
+        "avatar": {
+            "id": 33,
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg"
+        },
+        "isPrivateProfile": false
+    },
+    "membersSize": 1,
+    "followersSize": 0,
+    "isPrivate": false,
+    "isFollower": false
+} as unknown as BaseListResponse;
+
+export const mockUserFullList = {
+    "id": 1,
+    "name": "Random List",
+    "description": "Random List Description",
+    "pinnedDate": "2021-10-16T16:36:08",
+    "altWallpaper": "https://pbs.twimg.com/media/EXZ1_hkUYAA56JA?format=png&name=small",
+    "wallpaper": null,
+    "listOwner": {
+        "id": 1,
+        "fullName": "Random",
+        "username": "Random",
+        "avatar": {
+            "id": 11,
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
+        },
+        "isPrivateProfile": false
+    },
+    "membersSize": 2,
+    "followersSize": 0,
+    "isPrivate": false,
+    "isFollower": false
+} as unknown as BaseListResponse;
