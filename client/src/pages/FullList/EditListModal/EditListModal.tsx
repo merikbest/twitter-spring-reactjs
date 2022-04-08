@@ -178,11 +178,23 @@ const EditListModal: FC<EditListModalProps> = ({visible, onClose}): ReactElement
                                 When you make a List private, only you can see it.
                             </Typography>
                         </div>
-                        <Typography variant={"body1"} component={"div"} className={classes.manageMembers} onClick={onOpenManageMembersModal}>
+                        <Typography
+                            id={"onOpenManageMembersModal"}
+                            className={classes.manageMembers}
+                            onClick={onOpenManageMembersModal}
+                            variant={"body1"}
+                            component={"div"} 
+                        >
                             Manage members
                             <>{ForwardArrowIcon}</>
                         </Typography>
-                        <Typography variant={"body1"} component={"div"} className={classes.deleteList} onClick={onOpenDeleteListModal}>
+                        <Typography
+                            id={"onOpenDeleteListModal"}
+                            className={classes.deleteList}
+                            onClick={onOpenDeleteListModal}
+                            variant={"body1"}
+                            component={"div"} 
+                        >
                             Delete List
                         </Typography>
                     </div>

@@ -5,7 +5,7 @@ import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/t
 import Spinner from "../../../components/Spinner/Spinner";
 import FullList from "../FullList";
 import {LoadingStatus} from "../../../store/types";
-import {mockFullList, mockUserFullList} from "../../../util/mockData/mockData";
+import {mockFullList, mockMyProfile, mockUserFullList} from "../../../util/mockData/mockData";
 import TweetComponent from "../../../components/TweetComponent/TweetComponent";
 import {TweetsActionType} from "../../../store/ducks/tweets/contracts/actionTypes";
 import {ListActionType} from "../../../store/ducks/list/contracts/actionTypes";
@@ -44,6 +44,7 @@ describe("FullList", () => {
         const wrapper = mountWithStore(<FullList/>, {...mockStore, list: {...mockStore.list, list: mockFullList}});
 
         expect(wrapper.find(Spinner).exists()).toBe(false);
+        expect(global.window.document.title).toBe(`@${mockFullList.listOwner.username}/${mockFullList.name} / Twitter`);
         expect(wrapper.text().includes(mockFullList.name)).toBe(true);
         expect(wrapper.text().includes(mockFullList.description)).toBe(true);
         expect(wrapper.text().includes(mockFullList.listOwner.fullName)).toBe(true);
