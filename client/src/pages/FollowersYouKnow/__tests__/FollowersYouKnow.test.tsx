@@ -1,8 +1,8 @@
+import React from "react";
 import ReactRouter from "react-router";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import {createMemoryHistory} from "history";
-import React from "react";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
 import Spinner from "../../../components/Spinner/Spinner";

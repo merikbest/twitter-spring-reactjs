@@ -1,3 +1,5 @@
+import React from "react";
+
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
 import Spinner from "../../../components/Spinner/Spinner";
 import Connect from "../Connect";

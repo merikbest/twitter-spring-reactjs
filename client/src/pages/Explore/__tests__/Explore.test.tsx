@@ -1,4 +1,6 @@
+import React from "react";
 import Tab from "@material-ui/core/Tab";
+
 import {createMockRootState, mockDispatch, mockLocation, mountWithStore} from "../../../util/testHelper";
 import Spinner from "../../../components/Spinner/Spinner";
 import {LoadingStatus} from "../../../store/types";

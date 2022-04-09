@@ -1,3 +1,5 @@
+import React from "react";
+
 import Bookmarks from "../Bookmarks";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
 import {LoadingStatus} from "../../../store/types";

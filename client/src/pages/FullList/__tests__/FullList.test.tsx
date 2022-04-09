@@ -1,3 +1,4 @@
+import React from "react";
 import {Button} from "@material-ui/core";
 import ReactRouter from "react-router";
 
@@ -5,7 +6,7 @@ import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/t
 import Spinner from "../../../components/Spinner/Spinner";
 import FullList from "../FullList";
 import {LoadingStatus} from "../../../store/types";
-import {mockFullList, mockMyProfile, mockUserFullList} from "../../../util/mockData/mockData";
+import {mockFullList, mockUserFullList} from "../../../util/mockData/mockData";
 import TweetComponent from "../../../components/TweetComponent/TweetComponent";
 import {TweetsActionType} from "../../../store/ducks/tweets/contracts/actionTypes";
 import {ListActionType} from "../../../store/ducks/list/contracts/actionTypes";

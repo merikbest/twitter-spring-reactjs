@@ -1,4 +1,6 @@
+import React from "react";
 import {Button, Checkbox, Dialog} from "@material-ui/core";
+
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
 import {LoadingStatus} from "../../../../store/types";
 import EditListModal from "../EditListModal";

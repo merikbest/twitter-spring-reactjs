@@ -1,10 +1,12 @@
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {Button} from "@material-ui/core";
-import FindEmail from "../FindEmail";
-import MockAdapter from "axios-mock-adapter";
+import React from "react";
 import axios from "axios";
-import {API_URL} from "../../../../util/url";
 import {createMemoryHistory} from "history";
+import MockAdapter from "axios-mock-adapter";
+import {Button} from "@material-ui/core";
+
+import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
+import FindEmail from "../FindEmail";
+import {API_URL} from "../../../../util/url";
 import {ForgotPasswordTextField} from "../../ForgotPasswordTextField/ForgotPasswordTextField";
 
 describe("FindEmail", () => {

@@ -1,21 +1,21 @@
 import {selectFollowers, selectUsersSearch, selectUsersSearchIsLoading} from "./selectors";
 import {LoadingStatus} from "../../types";
-import {createMockRootState, mockUserResponse} from "../../../util/testHelper";
+import {createMockRootState} from "../../../util/testHelper";
+import {mockUsers} from "../../../util/mockData/mockData";
 
 describe("usersSearch selectors:", () => {
     
     describe("selectUsersSearch", () => {
         it("should return UserResponse array", () => {
-            expect(selectUsersSearch(createMockRootState())).toBe(mockUserResponse);
+            expect(selectUsersSearch(createMockRootState())).toBe(mockUsers);
         });
     });
 
     describe("selectFollowers", () => {
         it("should return UserResponse array", () => {
-            expect(selectFollowers(createMockRootState())).toBe(mockUserResponse);
+            expect(selectFollowers(createMockRootState())).toBe(mockUsers);
         });
     });
-
 
     describe("selectUsersSearchIsLoading", () => {
         it("should return correct result", () => {

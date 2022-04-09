@@ -1,3 +1,4 @@
+import React from "react";
 import MockAdapter from "axios-mock-adapter";
 import {createMemoryHistory} from "history";
 import axios from "axios";

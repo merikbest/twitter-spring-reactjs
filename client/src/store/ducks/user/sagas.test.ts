@@ -65,7 +65,7 @@ import {LoadingStatus} from "../../types";
 import {testCall, testLoadingStatus, testSetResponse, testWatchSaga} from "../../../util/testHelper";
 import {UserApi} from "../../../services/api/userApi";
 import {AuthUserResponse, UserProfileResponse} from "../../types/user";
-import {UserRequest} from "./contracts/state";
+import {Settings, UserRequest} from "./contracts/state";
 import {AuthApi} from "../../../services/api/authApi";
 import {AuthenticationResponse} from "../../types/auth";
 import {LoginProps} from "../../../pages/Login/Login";
@@ -239,7 +239,7 @@ describe("userSaga:", () => {
     });
 
     describe("updateGenderRequest:", () => {
-        const worker = updateGenderRequest(updateGender({updateGender: "testGender"}));
+        const worker = updateGenderRequest(updateGender({updateGender: "testGender"} as Settings));
 
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
         testCall(worker, UserSettingsApi.updateGender, {updateGender: "testGender"}, "testGender");

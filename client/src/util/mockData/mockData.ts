@@ -1,6 +1,6 @@
 import {TweetImageResponse, TweetResponse} from "../../store/types/tweet";
 import {AuthUserResponse, UserProfileResponse, UserResponse} from "../../store/types/user";
-import {BaseListResponse} from "../../store/types/lists";
+import {BaseListResponse, ListsOwnerMemberResponse} from "../../store/types/lists";
 
 export const mockTweets = [
     {
@@ -557,7 +557,7 @@ export const mockFullList = {
         },
         "isPrivateProfile": false
     },
-    "membersSize": 1,
+    "membersSize": 2,
     "followersSize": 0,
     "isPrivate": false,
     "isFollower": false
@@ -585,3 +585,28 @@ export const mockUserFullList = {
     "isPrivate": false,
     "isFollower": false
 } as unknown as BaseListResponse;
+
+export const mockListsOwnerMember = [
+    {
+        "id": 2,
+        "fullName": "MrCat",
+        "username": "Cat",
+        "about": "Hello twitter!",
+        "avatar": {
+            "id": 33,
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg"
+        },
+        "isPrivateProfile": false
+    },
+    {
+        "id": 4,
+        "fullName": "JavaCat",
+        "username": "JavaCat",
+        "about": "Hello twitter!",
+        "avatar": {
+            "id": 5,
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png"
+        },
+        "isPrivateProfile": false
+    }
+] as unknown as ListsOwnerMemberResponse[];

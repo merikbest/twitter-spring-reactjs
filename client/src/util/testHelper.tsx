@@ -1,4 +1,6 @@
 import React from "react";
+import Adapter from "enzyme-adapter-react-16";
+import {configure} from "enzyme";
 import {call, put, takeLatest} from "redux-saga/effects";
 import {LoadingStatus} from "../store/types";
 import {RootState} from "../store/store";
@@ -30,7 +32,6 @@ import {Provider} from "react-redux";
 import {createMemoryHistory} from "history";
 import {
     createMockMyProfile,
-    mockMyProfile,
     mockProfileImages,
     mockTweets,
     mockUser,
@@ -38,6 +39,9 @@ import {
 } from "./mockData/mockData";
 import * as redux from "react-redux";
 import routeData from "react-router";
+
+
+configure({ adapter: new Adapter() });
 
 // @ts-ignore
 export const testAction = (action, payload, expectedPayload) => {

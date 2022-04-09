@@ -37,8 +37,8 @@ const ManageMembersModal: FC<ManageMembersModalProps> = ({visible, onClose}): Re
     const members = useSelector(selectListMembersItems);
     const suggested = useSelector(selectListSuggestedItems);
     const isMembersLoading = useSelector(selectIsListMembersLoading);
-    const [searchText, setSearchText] = useState<string>("");
-    const [activeTab, setActiveTab] = useState<number>(0);
+    const [activeTab, setActiveTab] = React.useState<number>(0);
+    const [searchText, setSearchText] = React.useState<string>("");
 
     useEffect(() => {
         if (visible) {
