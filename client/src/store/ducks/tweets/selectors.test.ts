@@ -1,12 +1,13 @@
 import {selectIsTweetsLoaded, selectIsTweetsLoading, selectPagesCount, selectTweetsItems} from "./selectors";
 import {LoadingStatus} from "../../types";
-import {createMockRootState, mockTweetResponseArray} from "../../../util/testHelper";
+import {createMockRootState} from "../../../util/testHelper";
+import {mockTweets} from "../../../util/mockData/mockData";
 
 describe("tweets selectors:", () => {
     
     describe("selectTweetsItems", () => {
         it("should return TweetResponse array", () => {
-            expect(selectTweetsItems(createMockRootState())).toBe(mockTweetResponseArray);
+            expect(selectTweetsItems(createMockRootState())).toBe(mockTweets);
         });
     });
 

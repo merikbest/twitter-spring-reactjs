@@ -8,13 +8,18 @@ import {
     selectUsersIsSuccessLoaded
 } from "./selectors";
 import {LoadingStatus} from "../../types";
-import {createMockRootState, mockTweetImageResponse, mockUserProfileResponse} from "../../../util/testHelper";
+import {createMockRootState} from "../../../util/testHelper";
+import {mockMyProfile, mockProfileImages} from "../../../util/mockData/mockData";
 
 describe("userProfile selectors:", () => {
+    const mockState = createMockRootState();
 
     describe("selectUserProfile", () => {
         it("should return UserProfileResponse", () => {
-            expect(selectUserProfile(createMockRootState())).toBe(mockUserProfileResponse);
+            expect(selectUserProfile({
+                ...mockState,
+                userProfile: {...mockState.userProfile, user: mockMyProfile}
+            })).toBe(mockMyProfile);
         });
     });
 
@@ -38,7 +43,7 @@ describe("userProfile selectors:", () => {
 
     describe("selectImages", () => {
         it("should return TweetImageResponse array", () => {
-            expect(selectImages(createMockRootState())).toBe(mockTweetImageResponse);
+            expect(selectImages(createMockRootState())).toBe(mockProfileImages);
         });
     });
 

@@ -168,7 +168,8 @@ export const mockUsers = [
         "isMyProfileBlocked": false,
         "isWaitingForApprove": false,
         "isFollower": false
-    }, {
+    },
+    {
         "id": 1,
         "fullName": "Random",
         "username": "Random",
@@ -608,5 +609,96 @@ export const mockListsOwnerMember = [
             "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png"
         },
         "isPrivateProfile": false
+    },
+    {
+        "id": 5,
+        "fullName": "JavaCat",
+        "username": "JavaCat",
+        "about": "Hello twitter!",
+        "avatar": {
+            "id": 5,
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png"
+        },
+        "isPrivateProfile": false,
+        "isMemberInList": true,
     }
 ] as unknown as ListsOwnerMemberResponse[];
+
+// fulltweet
+export const mockFullTweet = {
+    "id": 9,
+    "text": "#FirstTweet",
+    "dateTime": "2021-10-15T21:20:33",
+    "scheduledDate": null,
+    "addressedUsername": null,
+    "addressedId": null,
+    "addressedTweetId": null,
+    "replyType": "EVERYONE",
+    "link": "https://www.youtube.com/watch?v=ewZZNeYDiLo&ab_channel=TeamSESH",
+    "linkTitle": "Bones - RestInPeace",
+    "linkDescription": null,
+    "linkCover": "https://i.ytimg.com/vi/ewZZNeYDiLo/mqdefault.jpg",
+    "linkCoverSize": null,
+    "user": {
+        "id": 4,
+        "email": "user2019@gmail.com",
+        "fullName": "JavaCat",
+        "username": "JavaCat",
+        "avatar": {
+            "id": 5,
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png"
+        },
+        "isPrivateProfile": false,
+        "isFollower": false,
+        "isMyProfileBlocked": false,
+        "isUserBlocked": false,
+        "isUserMuted": false
+    },
+    "images": [
+        {
+            "id": 8,
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/a2692fac-4b70-4828-845c-2fe439473f82_Cl5DjoUWYAAslnd.jfif",
+        },
+    ],
+    "quoteTweet": {
+        "id": 13,
+        "dateTime": "2021-10-15T21:57:21",
+        "link": null,
+        "linkCover": null,
+        "linkCoverSize": null,
+        "linkDescription": null,
+        "linkTitle": null,
+        "text": "#JavaScript",
+        "user": {
+            "id": 4,
+            "email": "user2019@gmail.com",
+            "fullName": "JavaCat",
+            "username": "JavaCat",
+            "avatar": {
+                "id": 5,
+                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png",
+            },
+            "isFollower": false,
+            "isMyProfileBlocked": false,
+            "isPrivateProfile": false,
+            "isUserBlocked": false,
+            "isUserMuted": false,
+        },
+    },
+    "poll": {
+        "id": 100,
+        "dateTime": "2022-04-11T16:53:49.696909",
+        "pollChoices": [
+            {"id": 100, "choice": "test choice 1", "votedUser": [{"id": 2}]},
+            {"id": 101, "choice": "test choice 2", "votedUser": []},
+            {"id": 102, "choice": "test choice 3", "votedUser": []}]
+    },
+    "retweetsCount": 2,
+    "likedTweetsCount": 2,
+    "repliesCount": 2,
+    "isTweetLiked": true,
+    "isTweetRetweeted": false,
+    "isUserFollowByOtherUser": false,
+    "isTweetDeleted": false,
+    "isTweetBookmarked": false
+} as unknown as TweetResponse;

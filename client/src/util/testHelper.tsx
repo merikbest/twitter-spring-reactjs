@@ -31,7 +31,7 @@ import {Router} from "react-router-dom";
 import {Provider} from "react-redux";
 import {createMemoryHistory} from "history";
 import {
-    createMockMyProfile,
+    createMockMyProfile, mockFullTweet,
     mockProfileImages,
     mockTweets,
     mockUser,
@@ -240,10 +240,10 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             loadingState: loadingStatus
         },
         tweet: {
-            tweet: mockTweetResponse,
-            likedUsers: mockUserResponse,
-            retweetedUsers: mockUserResponse,
-            replies: mockTweetResponseArray,
+            tweet: mockFullTweet,
+            likedUsers: mockUsers,
+            retweetedUsers: mockUsers,
+            replies: mockTweets,
             loadingState: loadingStatus,
             likedUsersLoadingState: loadingStatus,
             retweetedUsersLoadingState: loadingStatus,

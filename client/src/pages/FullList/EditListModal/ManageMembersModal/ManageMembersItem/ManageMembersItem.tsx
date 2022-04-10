@@ -2,6 +2,7 @@ import React, {ComponentType, FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link} from 'react-router-dom';
 import {Avatar, Button, Paper, Typography} from "@material-ui/core";
+import {compose} from "recompose";
 
 import {useManageMembersItemStyles} from "./ManageMembersItemStyles";
 import {DEFAULT_PROFILE_IMG} from "../../../../../util/url";
@@ -13,10 +14,6 @@ import {processUserToListMembers} from "../../../../../store/ducks/listMembers/a
 import PopperUserWindow from "../../../../../components/PopperUserWindow/PopperUserWindow";
 import {LockIcon} from "../../../../../icons";
 import {SnackbarProps, withSnackbar} from "../../../../../hoc/withSnackbar";
-import {compose} from "recompose";
-import {UserResponse} from "../../../../../store/types/user";
-import {HoverActionProps} from "../../../../../hoc/withHoverAction";
-import {UsersItemProps} from "../../../../../components/UsersItem/UsersItem";
 import ActionSnackbar from "../../../../../components/ActionSnackbar/ActionSnackbar";
 import {selectIsListSuggestedError} from "../../../../../store/ducks/listMembers/selectors";
 
@@ -65,6 +62,7 @@ const ManageMembersItem: FC<ManageMembersItemProps<BaseListResponse> & HoverUser
                     <div className={classes.header}>
                         <div onMouseLeave={handleLeavePopper} className={classes.headerUserInfo}>
                             <Typography
+                                id={"fullName"}
                                 variant={"h6"}
                                 component={"span"}
                                 onMouseEnter={() => handleHoverPopper!(member?.id!)}

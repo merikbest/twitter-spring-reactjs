@@ -17,7 +17,7 @@ module.exports = {
             statements: 80
         },
     },
-    // collectCoverage: true,
+    collectCoverage: true,
     collectCoverageFrom: ["**/*.{ts,tsx}"],
     coverageDirectory: "coverage",
     moduleNameMapper: {

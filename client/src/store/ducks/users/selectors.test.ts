@@ -1,12 +1,13 @@
 import {selectUsers, selectUsersIsLoading, selectUsersLoadedSuccess} from "./selectors";
 import {LoadingStatus} from "../../types";
-import {createMockRootState, mockUserResponse} from "../../../util/testHelper";
+import {createMockRootState} from "../../../util/testHelper";
+import {mockUsers} from "../../../util/mockData/mockData";
 
 describe("users selectors:", () => {
     
     describe("selectUsers", () => {
         it("should return UserResponse array", () => {
-            expect(selectUsers(createMockRootState())).toBe(mockUserResponse);
+            expect(selectUsers(createMockRootState())).toBe(mockUsers);
         });
     });
 

@@ -55,7 +55,7 @@ describe("ManageMembersModal", () => {
         });
 
         expect(wrapper.find(Spinner).exists()).toBe(false);
-        expect(wrapper.find(ManageMembersItem).length).toEqual(2);
+        expect(wrapper.find(ManageMembersItem).length).toEqual(3);
     });
 
     it("should render empty list of Members", () => {
@@ -69,7 +69,7 @@ describe("ManageMembersModal", () => {
         expect(wrapper.text().includes("There isn’t anyone in this List")).toBe(true);
         expect(wrapper.text().includes("When people get added, they’ll show up here.")).toBe(true);
     });
-    
+
     it("should render list of suggested ManageMembersItem", () => {
         React.useState = jest.fn().mockReturnValue([1, jest.fn()]);
         const wrapper = mountWithStore(<ManageMembersModal visible={true} onClose={jest.fn()}/>, {
@@ -83,7 +83,7 @@ describe("ManageMembersModal", () => {
 
         expect(wrapper.find(Spinner).exists()).toBe(false);
         expect(wrapper.find(ManageMembersInput).exists()).toBe(true);
-        expect(wrapper.find(ManageMembersItem).length).toEqual(2);
+        expect(wrapper.find(ManageMembersItem).length).toEqual(3);
     });
 
     it("should render empty list of suggested Members", () => {
@@ -127,11 +127,31 @@ describe("ManageMembersModal", () => {
         });
         const input = wrapper.find(ManageMembersInput).find("input").at(0);
         input.simulate("change", {target: {value: "test"}});
-        
+
         expect(wrapper.find(ManageMembersInput).exists()).toBe(true);
         expect(mockDispatchFn).nthCalledWith(2, {
             payload: {listId: 3, username: "test"},
             type: ListMembersActionsType.FETCH_LIST_MEMBERS_BY_USERNAME
         });
+    });
+
+    it("should clear text input", () => {
+        React.useState = jest.fn().mockReturnValue([1, jest.fn()]);
+        const wrapper = mountWithStore(<ManageMembersModal visible={true} onClose={jest.fn()}/>, {
+            ...mockListStore,
+            listMembers: {...mockStore.listMembers, suggested: [], suggestedLoadingState: LoadingStatus.LOADED}
+        });
+        const input = wrapper.find(ManageMembersInput).find("input").at(0);
+        input.simulate("change", {target: {value: undefined}});
+
+        expect(wrapper.find(ManageMembersInput).exists()).toBe(true);
+        expect(mockDispatchFn).nthCalledWith(2, {type: ListMembersActionsType.RESET_LIST_SUGGESTED_STATE});
+    });
+
+    it("should reset List Members State", () => {
+        const wrapper = mountWithStore(<ManageMembersModal visible={true} onClose={jest.fn()}/>, mockListStore);
+        wrapper.unmount();
+
+        expect(mockDispatchFn).nthCalledWith(2, {type: ListMembersActionsType.RESET_LIST_MEMBERS_STATE});
     });
 });

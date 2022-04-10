@@ -8,13 +8,14 @@ import {
     selectUserStatus
 } from "./selectors";
 import {LoadingStatus} from "../../types";
-import {createMockRootState, mockAuthUserResponse} from "../../../util/testHelper";
+import {createMockRootState} from "../../../util/testHelper";
+import {mockUser} from "../../../util/mockData/mockData";
 
 describe("user selectors:", () => {
 
     describe("selectUserData", () => {
         it("should return AuthUserResponse", () => {
-            expect(selectUserData(createMockRootState())).toBe(mockAuthUserResponse);
+            expect(selectUserData(createMockRootState())).toBe(mockUser);
         });
     });
 
