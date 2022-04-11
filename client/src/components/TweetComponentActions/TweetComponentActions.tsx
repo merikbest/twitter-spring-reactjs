@@ -247,7 +247,7 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
                                                 Embed Tweet
                                             </Typography>
                                         </ListItem>
-                                        <ListItem onClick={onOpenTweetAnalytics}>
+                                        <ListItem id={"tweetAnalytics"} onClick={onOpenTweetAnalytics}>
                                             <>{TweetActivityIcon}</>
                                             <Typography variant={"body1"} component={"span"}>
                                                 View Tweet activity

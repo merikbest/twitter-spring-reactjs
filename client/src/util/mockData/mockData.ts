@@ -143,7 +143,7 @@ export const mockUser = {
         "id": 44,
         "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/d0e5b95f-acc0-47ef-b499-477f7e5a1a06_PrMnWa2z.jpg"
     },
-    "pinnedTweetId": 0,
+    "pinnedTweetId": 102,
     "followersSize": 1,
     "followingSize": 1,
     "followerRequestsSize": null,
@@ -697,7 +697,49 @@ export const mockFullTweet = {
     "likedTweetsCount": 2,
     "repliesCount": 2,
     "isTweetLiked": true,
-    "isTweetRetweeted": false,
+    "isTweetRetweeted": true,
+    "isUserFollowByOtherUser": false,
+    "isTweetDeleted": false,
+    "isTweetBookmarked": false
+} as unknown as TweetResponse;
+
+export const mockMyFullTweet = {
+    "id": 102,
+    "text": "hello23",
+    "dateTime": "2022-03-22T21:49:28",
+    "scheduledDate": null,
+    "addressedUsername": null,
+    "addressedId": null,
+    "addressedTweetId": null,
+    "replyType": "EVERYONE",
+    "link": "testlink",
+    "linkTitle": "test",
+    "linkDescription": "test",
+    "linkCover": null,
+    "linkCoverSize": null,
+    "user": {
+        "id": 2,
+        "email": "user2016@gmail.com",
+        "fullName": "MrCat",
+        "username": "Cat",
+        "avatar": {
+            "id": 33,
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg"
+        },
+        "isPrivateProfile": false,
+        "isFollower": false,
+        "isMyProfileBlocked": false,
+        "isUserBlocked": false,
+        "isUserMuted": false
+    },
+    "images": [],
+    "quoteTweet": null,
+    "poll": null,
+    "retweetsCount": 0,
+    "likedTweetsCount": 0,
+    "repliesCount": 0,
+    "isTweetLiked": true,
+    "isTweetRetweeted": true,
     "isUserFollowByOtherUser": false,
     "isTweetDeleted": false,
     "isTweetBookmarked": false

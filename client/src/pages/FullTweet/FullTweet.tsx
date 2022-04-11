@@ -181,6 +181,7 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                                 src={tweetData.user.avatar?.src ? tweetData.user.avatar?.src : DEFAULT_PROFILE_IMG}
                             />
                             <div
+                                id={"userInfo"}
                                 className={classes.headerUserInfo}
                                 onMouseEnter={() => handleHoverPopper!(tweetData.user.id)}
                                 onMouseLeave={handleLeavePopper}

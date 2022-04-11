@@ -19,7 +19,7 @@ const SmallLinkPreview: FC<SmallLinkPreviewProps> = ({tweet, onOpenYouTubeVideo,
     const LinkPreview = (): JSX.Element => {
         if (onOpenYouTubeVideo) {
             return (
-                <div className={classes.container} onClick={onOpenYouTubeVideo}>
+                <div id={"openYouTubeVideo"} className={classes.container} onClick={onOpenYouTubeVideo}>
                     <div className={classes.linkPreviewImage}>
                         <div className={classes.videoIcon}>
                             {PlayVideoIcon}
