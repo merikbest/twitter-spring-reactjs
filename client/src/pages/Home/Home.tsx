@@ -37,8 +37,8 @@ const Home: FC = (): ReactElement => {
     const tweets = useSelector(selectTweetsItems);
     const isLoading = useSelector(selectIsTweetsLoading);
     const pagesCount = useSelector(selectPagesCount);
-    const [switchTweets, setSwitchTweets] = useState<boolean>(false);
-    const [page, setPage] = useState<number>(0);
+    const [switchTweets, setSwitchTweets] = React.useState<boolean>(false);
+    const [page, setPage] = React.useState<number>(0);
 
     useEffect(() => {
         dispatch(setTweetsLoadingState(LoadingStatus.NEVER));

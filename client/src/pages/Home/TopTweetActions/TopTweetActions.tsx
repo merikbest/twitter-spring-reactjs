@@ -26,9 +26,9 @@ const TopTweetActions: FC<TopTweetActionsProps & HoverActionProps> = (
 ): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useTopTweetActionsStyles();
-    const [openTopTweetActions, setOpenTopTweetActions] = useState<boolean>(false);
+    const [openTopTweetActions, setOpenTopTweetActions] = React.useState<boolean>(false);
 
-    const handleCLickTopTweetActions = (): void => {
+    const handleClickTopTweetActions = (): void => {
         setOpenTopTweetActions((prevState) => !prevState);
     };
 
@@ -42,7 +42,7 @@ const TopTweetActions: FC<TopTweetActionsProps & HoverActionProps> = (
                 <div className={classes.headerIcon}>
                     <IconButton
                         color="primary"
-                        onClick={handleCLickTopTweetActions}
+                        onClick={handleClickTopTweetActions}
                         onMouseEnter={() => handleHoverAction?.(HoverActions.OTHER)}
                         onMouseLeave={handleLeaveAction}
                     >
@@ -62,7 +62,7 @@ const TopTweetActions: FC<TopTweetActionsProps & HoverActionProps> = (
                         </div>
                         <Divider/>
                         <List>
-                            <ListItem onClick={switchTweets ? handleTopTweets : handleLatestTweets}>
+                            <ListItem id={"switchTweets"} onClick={switchTweets ? handleTopTweets : handleLatestTweets}>
                                 <div className={classes.listItemWrapper}>
                                     <span className={classes.textIcon}>
                                         {SeeLatestIcon}
