@@ -1,6 +1,12 @@
 import {TweetImageResponse, TweetResponse} from "../../store/types/tweet";
 import {AuthUserResponse, UserProfileResponse, UserResponse} from "../../store/types/user";
-import {BaseListResponse, ListsOwnerMemberResponse} from "../../store/types/lists";
+import {
+    BaseListResponse,
+    ListResponse,
+    ListsOwnerMemberResponse, ListUserResponse,
+    PinnedListResponse,
+    SimpleListResponse
+} from "../../store/types/lists";
 
 export const mockTweets = [
     {
@@ -623,6 +629,110 @@ export const mockListsOwnerMember = [
         "isMemberInList": true,
     }
 ] as unknown as ListsOwnerMemberResponse[];
+
+export const mockPinnedLists = [
+    {
+        "id": 3,
+        "name": "Hello World!",
+        "pinnedDate": "2022-03-29T20:03:47",
+        "altWallpaper": "https://pbs.twimg.com/media/EXZ27UwVcAIcDfd?format=png&name=small",
+        "wallpaper": null,
+        "isPrivate": false
+    }
+] as unknown as PinnedListResponse[];
+
+export const mockLists = [
+    {
+        "id": 2,
+        "name": "Internal",
+        "description": "Some description",
+        "pinnedDate": null,
+        "altWallpaper": "https://pbs.twimg.com/media/EXZ2w_qUcAMwN3x?format=png&name=small",
+        "wallpaper": null,
+        "listOwner": {
+            "id": 1,
+            "fullName": "Random",
+            "username": "Random",
+            "avatar": {
+                "id": 11,
+                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
+            },
+            "isPrivateProfile": false
+        },
+        "isFollower": false
+    },
+    {
+        "id": 1,
+        "name": "Random List",
+        "description": "Random List Description",
+        "pinnedDate": "2021-10-16T16:36:08",
+        "altWallpaper": "https://pbs.twimg.com/media/EXZ1_hkUYAA56JA?format=png&name=small",
+        "wallpaper": null,
+        "listOwner": {
+            "id": 1,
+            "fullName": "Random",
+            "username": "Random",
+            "avatar": {
+                "id": 11,
+                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
+            },
+            "isPrivateProfile": false
+        },
+        "isFollower": false
+    },
+    {
+        "id": 3,
+        "name": "Hello World!",
+        "description": "Hello from my list",
+        "pinnedDate": "2022-03-29T20:03:47",
+        "altWallpaper": "https://pbs.twimg.com/media/EXZ27UwVcAIcDfd?format=png&name=small",
+        "wallpaper": null,
+        "listOwner": {
+            "id": 2,
+            "fullName": "MrCat",
+            "username": "Cat",
+            "avatar": {
+                "id": 33,
+                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg"
+            },
+            "isPrivateProfile": false
+        },
+        "isFollower": false
+    }
+] as unknown as ListResponse[];
+
+export const mockUserLists = [
+    {
+        "id": 3,
+        "name": "Hello World!",
+        "description": "Hello from my list",
+        "pinnedDate": "2022-03-29T20:03:47",
+        "altWallpaper": "https://pbs.twimg.com/media/EXZ27UwVcAIcDfd?format=png&name=small",
+        "wallpaper": null,
+        "listOwner": {
+            "id": 2,
+            "fullName": "MrCat",
+            "username": "Cat",
+            "avatar": {
+                "id": 33,
+                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg"
+            },
+            "isPrivateProfile": false
+        },
+        "isPrivate": false
+    }
+] as unknown as ListUserResponse[];
+
+export const mockSimpleList = [
+    {
+    "id": 3,
+    "name": "Hello World!",
+    "altWallpaper": "https://pbs.twimg.com/media/EXZ27UwVcAIcDfd?format=png&name=small",
+    "wallpaper": null,
+    "isMemberInList": true,
+    "isPrivate": false
+}
+] as unknown as SimpleListResponse[]
 
 // fulltweet
 export const mockFullTweet = {

@@ -145,7 +145,7 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
                     )}
                 </Typography>
             </Paper>
-            <Paper className={classes.newLists} variant="outlined">
+            <Paper id={"list"} className={classes.newLists} variant="outlined">
                 <Typography variant="h5" className={globalClasses.itemInfoWrapper}>
                     Discover new Lists
                 </Typography>
@@ -164,7 +164,7 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
                     </Typography>
                 </Link>
             </Paper>
-            <Paper className={classes.myLists} variant="outlined">
+            <Paper id={"userLists"} className={classes.myLists} variant="outlined">
                 <Typography variant="h5" className={globalClasses.itemInfoWrapper}>
                     Your Lists
                 </Typography>

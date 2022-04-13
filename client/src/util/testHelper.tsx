@@ -218,10 +218,10 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             loadingState: loadingStatus
         },
         lists: {
-            lists: mockListResponse,
-            userLists: mockListUserResponse,
-            pinnedLists: mockPinnedListResponse,
-            simpleLists: mockSimpleListResponse,
+            lists: [],
+            userLists: [],
+            pinnedLists: [],
+            simpleLists: [],
             listsLoadingState: loadingStatus,
             userListsLoadingState: loadingStatus,
             pinnedListsLoadingState: loadingStatus,
