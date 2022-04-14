@@ -6,7 +6,7 @@ export interface AddLists {
     name: string;
     description?: string;
     isPrivate: boolean;
-    altWallpaper: string;
+    altWallpaper?: string;
     wallpaper?: Image;
 }
 
