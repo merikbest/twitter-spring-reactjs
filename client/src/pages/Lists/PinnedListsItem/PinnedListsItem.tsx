@@ -27,6 +27,7 @@ const PinnedListsItem: FC<PinnedListsItemProps & HoverListProps> = (
     return (
         <Link to={`/lists/${pinnedList?.id}`} className={globalClasses.link}>
             <div
+                id={"pinnedListWrapper"}
                 className={classes.pinnedListWrapper}
                 onMouseEnter={() => handleHoverPopper!(pinnedList?.id!)}
                 onMouseLeave={handleLeavePopper}
@@ -40,7 +41,7 @@ const PinnedListsItem: FC<PinnedListsItemProps & HoverListProps> = (
                     {pinnedList?.name}
                 </Typography>
                 {pinnedList?.isPrivate && (
-                    <span className={classes.lockIcon}>
+                    <span id={"lockIcon"} className={classes.lockIcon}>
                         {LockIcon}
                     </span>
                 )}

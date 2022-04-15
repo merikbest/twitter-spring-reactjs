@@ -73,6 +73,7 @@ const ListsItem: FC<ListsItemProps<ListResponse | ListUserResponse> & HoverActio
                 />
                 <div className={classes.listInfoContainer}>
                     <div
+                        id={"listInfoWrapper"}
                         className={classes.listInfoWrapper}
                         onMouseEnter={() => handleHoverPopper!(list?.id!)}
                         onMouseLeave={handleLeavePopper}

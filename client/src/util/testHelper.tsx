@@ -207,7 +207,7 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             loadingState: loadingStatus
         },
         listDetail: {
-            item: mockBaseListResponse,
+            item: undefined,
             loadingState: loadingStatus
         },
         listMembers: {
