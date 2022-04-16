@@ -37,15 +37,11 @@ const Login: FC = (): ReactElement => {
     };
 
     const handleChangeEmail = (event: ChangeEvent<HTMLInputElement>): void => {
-        if (event.currentTarget) {
-            setEmail(event.currentTarget.value);
-        }
+        setEmail(event.target.value);
     };
 
     const handleChangePassword = (event: ChangeEvent<HTMLInputElement>): void => {
-        if (event.currentTarget) {
-            setPassword(event.currentTarget.value);
-        }
+        setPassword(event.target.value);
     };
 
     return (

@@ -60,7 +60,7 @@ const PopperListWindow: FC<PopperListWindowProps> = ({visible}): ReactElement | 
     }
 
     return (
-        <div className={classes.popperListWindow}>
+        <div id={"popperListWindow"} className={classes.popperListWindow}>
             <img
                 className={classes.wallpaperListImg}
                 key={list?.wallpaper?.src ? list?.wallpaper?.src : list?.altWallpaper}
@@ -89,7 +89,11 @@ const PopperListWindow: FC<PopperListWindowProps> = ({visible}): ReactElement | 
                     </Typography>
                 </Link>
                 <div>
-                    <span onClick={event => onOpenMembersModalWindow(event)} className={classes.popperListMembers}>
+                    <span 
+                        id={"openMembersModalWindow"}
+                        className={classes.popperListMembers}
+                        onClick={event => onOpenMembersModalWindow(event)}
+                    >
                         <Typography variant={"h6"} component={"span"}>
                             {list?.membersSize}
                         </Typography>
@@ -97,7 +101,11 @@ const PopperListWindow: FC<PopperListWindowProps> = ({visible}): ReactElement | 
                             {" Members"}
                         </Typography>
                     </span>
-                    <span onClick={event => onOpenFollowersModalWindow(event)} className={classes.popperListMembers}>
+                    <span
+                        id={"openFollowersModalWindow"}
+                        className={classes.popperListMembers}
+                        onClick={event => onOpenFollowersModalWindow(event)} 
+                    >
                         <Typography variant={"h6"} component={"span"}>
                             {list?.followersSize}
                         </Typography>

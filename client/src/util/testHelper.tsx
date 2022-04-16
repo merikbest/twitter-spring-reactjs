@@ -178,10 +178,7 @@ export const mockTagResponse = [{id: 1}, {id: 2}] as TagResponse[];
 export const mockTweetResponse = {id: 1} as TweetResponse;
 export const mockUserResponse = [{id: 1}, {id: 2}] as UserResponse[];
 export const mockTweetResponseArray = [{id: 1}, {id: 2}] as TweetResponse[];
-export const mockAuthUserResponse = {id: 1} as AuthUserResponse;
 export const mockUserDetailResponse = {id: 1} as UserDetailResponse;
-export const mockUserProfileResponse = {id: 1} as UserProfileResponse;
-export const mockTweetImageResponse = [{tweetId: 1, imageId: 1}, {tweetId: 2, imageId: 2}] as TweetImageResponse[];
 
 export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): RootState => {
     return {
