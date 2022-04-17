@@ -188,11 +188,11 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             loadingState: loadingStatus
         },
         chatMessages: {
-            items: mockChatMessageResponse,
+            items: [],
             loadingState: loadingStatus
         },
         chats: {
-            items: mockChatResponse,
+            items: [],
             loadingState: loadingStatus
         },
         followerRequests: {

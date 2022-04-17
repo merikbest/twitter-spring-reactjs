@@ -236,6 +236,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                         </div>
                         <Divider/>
                         <div
+                            id={"onOpenBlockUserModal"}
                             className={classnames(classes.conversationInfoButton, classes.blockUser)}
                             onClick={onOpenBlockUserModal}
                         >

@@ -7,6 +7,7 @@ import {
     PinnedListResponse,
     SimpleListResponse
 } from "../../store/types/lists";
+import {ChatMessageResponse, ChatResponse} from "../../store/types/chat";
 
 export const mockTweets = [
     {
@@ -725,13 +726,13 @@ export const mockUserLists = [
 
 export const mockSimpleList = [
     {
-    "id": 3,
-    "name": "Hello World!",
-    "altWallpaper": "https://pbs.twimg.com/media/EXZ27UwVcAIcDfd?format=png&name=small",
-    "wallpaper": null,
-    "isMemberInList": true,
-    "isPrivate": false
-}
+        "id": 3,
+        "name": "Hello World!",
+        "altWallpaper": "https://pbs.twimg.com/media/EXZ27UwVcAIcDfd?format=png&name=small",
+        "wallpaper": null,
+        "isMemberInList": true,
+        "isPrivate": false
+    }
 ] as unknown as SimpleListResponse[]
 
 // fulltweet
@@ -854,3 +855,101 @@ export const mockMyFullTweet = {
     "isTweetDeleted": false,
     "isTweetBookmarked": false
 } as unknown as TweetResponse;
+
+// chat
+export const mockChats = [
+    {
+        "id": 1,
+        "creationDate": "2021-10-16T16:40:07",
+        "participants": [
+            {
+                "id": 1,
+                "user": {
+                    "id": 1,
+                    "fullName": "Random",
+                    "username": "Random",
+                    "avatar": {
+                        "id": 11,
+                        "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
+                    },
+                    "isMutedDirectMessages": false,
+                    "isUserBlocked": false,
+                    "isMyProfileBlocked": false
+                },
+                "isLeftChat": false
+            },
+            {
+                "id": 2,
+                "user": {
+                    "id": 2,
+                    "fullName": "MrCat",
+                    "username": "Cat",
+                    "avatar": {
+                        "id": 33,
+                        "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg"
+                    },
+                    "isMutedDirectMessages": false,
+                    "isUserBlocked": false,
+                    "isMyProfileBlocked": false
+                },
+                "isLeftChat": false
+            }
+        ]
+    }
+] as unknown as ChatResponse[];
+
+export const mockMessages = [
+    {
+        "id": 1,
+        "text": "Hello Cat",
+        "date": "2021-10-16T16:40:07",
+        "author": {"id": 1},
+        "tweet": null,
+        "chat": {"id": 1}
+    },
+    {
+        "id": 2,
+        "text": "How are you?",
+        "date": "2021-10-16T16:40:41",
+        "author": {"id": 1},
+        "tweet": null,
+        "chat": {"id": 1}
+    },
+    {
+        "id": 3,
+        "text": "I'm fine, thanks, and you? ",
+        "date": "2021-10-16T16:41:59",
+        "author": {"id": 2},
+        "tweet": null,
+        "chat": {"id": 1}
+    },
+    {
+        "id": 4,
+        "text": "Good)",
+        "date": "2021-10-16T16:42:50",
+        "author": {"id": 1},
+        "tweet": {
+            "id": 14,
+            "text": "Feels Good Man  :sunglasses:",
+            "dateTime": "2021-10-15T22:10:14",
+            "user": {
+                "id": 1,
+                "fullName": "Random",
+                "username": "Random",
+                "avatar": {
+                    "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg",
+                    "id": 11
+                }
+            }
+        },
+        "chat": {"id": 1}
+    },
+    {
+        "id": 100,
+        "text": "helo",
+        "date": "2022-03-10T20:47:10",
+        "author": {"id": 2},
+        "tweet": null,
+        "chat": {"id": 1}
+    }
+] as unknown as ChatMessageResponse[];

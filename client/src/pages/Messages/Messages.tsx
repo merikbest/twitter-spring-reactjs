@@ -67,9 +67,9 @@ const Messages: FC = (): ReactElement => {
     const messages = useSelector(selectChatMessagesItems);
     const chatEndRef = useRef<HTMLDivElement>(null);
 
+    const [participant, setParticipant] = React.useState<ParticipantResponse>();
     const [text, setText] = useState<string>("");
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
-    const [participant, setParticipant] = useState<ParticipantResponse>();
     const [chat, setChat] = useState<ChatResponse>();
     const [delayHandler, setDelayHandler] = useState<any>(null);
     const [visibleHoverAction, setVisibleHoverAction] = useState<VisibleActions>({...initialState});
