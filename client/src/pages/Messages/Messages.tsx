@@ -45,7 +45,7 @@ export interface VisibleActions {
     visibleDetailsAction: boolean;
 }
 
-const initialState = {
+export const actionsInitialState = {
     visibleSettingsAction: false,
     visibleMediaAction: false,
     visibleGIFAction: false,
@@ -72,7 +72,7 @@ const Messages: FC = (): ReactElement => {
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
     const [chat, setChat] = useState<ChatResponse>();
     const [delayHandler, setDelayHandler] = useState<any>(null);
-    const [visibleHoverAction, setVisibleHoverAction] = useState<VisibleActions>({...initialState});
+    const [visibleHoverAction, setVisibleHoverAction] = useState<VisibleActions>({...actionsInitialState});
 
     useEffect(() => {
         dispatch(fetchChats());
@@ -140,19 +140,19 @@ const Messages: FC = (): ReactElement => {
 
     const handleHoverAction = (action: MessagesAction): void => {
         if (action === MessagesAction.SETTINGS) {
-            setHoverAction({...initialState, visibleSettingsAction: true});
+            setHoverAction({...actionsInitialState, visibleSettingsAction: true});
         } else if (action === MessagesAction.MEDIA) {
-            setHoverAction({...initialState, visibleMediaAction: true});
+            setHoverAction({...actionsInitialState, visibleMediaAction: true});
         } else if (action === MessagesAction.GIF) {
-            setHoverAction({...initialState, visibleGIFAction: true});
+            setHoverAction({...actionsInitialState, visibleGIFAction: true});
         } else if (action === MessagesAction.EMOJI) {
-            setHoverAction({...initialState, visibleEmojiAction: true});
+            setHoverAction({...actionsInitialState, visibleEmojiAction: true});
         } else if (action === MessagesAction.SEND) {
-            setHoverAction({...initialState, visibleSendAction: true});
+            setHoverAction({...actionsInitialState, visibleSendAction: true});
         } else if (action === MessagesAction.NEW_MESSAGE) {
-            setHoverAction({...initialState, visibleNewMessageAction: true});
+            setHoverAction({...actionsInitialState, visibleNewMessageAction: true});
         } else if (action === MessagesAction.DETAILS) {
-            setHoverAction({...initialState, visibleDetailsAction: true});
+            setHoverAction({...actionsInitialState, visibleDetailsAction: true});
         }
     };
 
@@ -162,7 +162,7 @@ const Messages: FC = (): ReactElement => {
 
     const handleLeaveAction = (): void => {
         clearTimeout(delayHandler);
-        setVisibleHoverAction({...initialState})
+        setVisibleHoverAction({...actionsInitialState})
     };
 
     return (

@@ -17,6 +17,9 @@ import MessagesModal from "../MessagesModal/MessagesModal";
 import CloseButton from "../../../components/CloseButton/CloseButton";
 import ConversationInfo from "../ConversationInfo/ConversationInfo";
 import BlockUserModal from "../../../components/BlockUserModal/BlockUserModal";
+import HoverAction from "../../../components/HoverAction/HoverAction";
+import {MessageInput} from "../MessageInput/MessageInput";
+import {PeopleSearchInput} from "../PeopleSearchInput/PeopleSearchInput";
 
 window.scrollTo = jest.fn();
 
@@ -43,6 +46,13 @@ describe("Messages", () => {
         expect(wrapper.text().includes("Send a message, get a message")).toBe(true);
         expect(wrapper.text().includes("Direct Messages are private conversations between you and other people on Twitter.")).toBe(true);
         expect(wrapper.find(Button).at(0).text().includes("Start a conversation")).toBe(true);
+    });
+
+    it("should search people", () => {
+        const wrapper = mountWithStore(<Messages/>, mockChatsStore);
+        wrapper.find(PeopleSearchInput).find("input").at(0).simulate("change", {target: {value: "test"}});
+
+        expect(wrapper.find(PeopleSearchInput).prop("value")).toBe("test");
     });
 
     it("should render chats", () => {
@@ -99,7 +109,7 @@ describe("Messages", () => {
         wrapper.find(MessagesModal).find(CloseButton).find(IconButton).simulate("click");
         expect(wrapper.find(MessagesModal).prop("visible")).toBe(false);
     });
-    // |   83.59 |    64.48 |   66.66 |    82.6 | 82,111,142-155,160,180-234 
+
     it("should click block participant", () => {
         jest.spyOn(routeData, "useLocation").mockReturnValue({
             pathname: "/messages", hash: "", search: "", state: {removeParticipant: true}
@@ -123,31 +133,86 @@ describe("Messages", () => {
             type: UserActionsType.PROCESS_USER_TO_BLOCKLIST
         });
     });
+
+    it("should hover Settings icon and render Hover Action", () => {
+        jest.spyOn(routeData, "useLocation").mockReturnValue({
+            pathname: "/messages", hash: "", search: "", state: {removeParticipant: true}
+        });
+        jest.useFakeTimers();
+        const wrapper = mountWithStore(<Messages/>, mockChatsStore);
+        wrapper.find(IconButton).at(0).simulate("mouseenter");
+        jest.runAllTimers();
+        wrapper.update();
+
+        expect(wrapper.find(HoverAction).exists()).toBeTruthy();
+        expect(wrapper.find(HoverAction).at(0).prop("visible")).toBe(true);
+        expect(wrapper.find(HoverAction).at(0).prop("actionText")).toBe("Settings");
+    });
+
+    it("should hover New Message icon and render Hover Action", () => {
+        jest.spyOn(routeData, "useLocation").mockReturnValue({
+            pathname: "/messages", hash: "", search: "", state: {removeParticipant: true}
+        });
+        jest.useFakeTimers();
+        const wrapper = mountWithStore(<Messages/>, mockChatsStore);
+        wrapper.find(IconButton).at(1).simulate("mouseenter");
+        jest.runAllTimers();
+        wrapper.update();
+
+        expect(wrapper.find(HoverAction).exists()).toBeTruthy();
+        expect(wrapper.find(HoverAction).at(1).prop("visible")).toBe(true);
+        expect(wrapper.find(HoverAction).at(1).prop("actionText")).toBe("New message");
+    });
+
+    it("should hover Details icon and render Hover Action", () => {
+        processHoverAction(0, "Details");
+    });
+
+    it("should hover Media icon and render Hover Action", () => {
+        processHoverAction(1, "Media");
+    });
+
+    it("should hover Gif icon and render Hover Action", () => {
+        processHoverAction(2, "GIF");
+    });
+
+    it("should hover Emoji icon and render Hover Action", () => {
+        processHoverAction(3, "Emoji");
+    });
+
+    it("should hover Send icon and render Hover Action", () => {
+        processHoverAction(4, "Send");
+    });
+
+    it("should reset Messages State", () => {
+        const wrapper = mountWithStore(<Messages/>, mockChatsStore);
+        wrapper.unmount();
+
+        expect(mockDispatchFn).nthCalledWith(3, {type: ChatsActionsType.RESET_CHATS_STATE});
+    });
+    
+    const processHoverAction = (actionIndex: number, actionText: string): void => {
+        jest.useFakeTimers();
+        jest.spyOn(routeData, "useLocation").mockReturnValue({
+            pathname: "/messages", hash: "", search: "", state: {removeParticipant: true}
+        });
+        const history = createMemoryHistory({
+            initialEntries: [{
+                pathname: "/messages",
+                search: "",
+                hash: "",
+                state: undefined
+            }]
+        });
+        const wrapper = mountWithStore(<Messages/>, mockChatsStore, history);
+        wrapper.find(ListItem).at(0).simulate("click");
+        wrapper.find(ChatMessages).find(MessageInput).find("textarea").at(0).simulate("change", {target: {value: "test"}});
+        wrapper.find(ChatMessages).find(IconButton).at(actionIndex).simulate("mouseenter");
+        jest.runAllTimers();
+        wrapper.update();
+
+        expect(wrapper.find(ChatMessages).find(HoverAction).exists()).toBeTruthy();
+        expect(wrapper.find(ChatMessages).find(HoverAction).at(actionIndex).prop("visible")).toBe(true);
+        expect(wrapper.find(ChatMessages).find(HoverAction).at(actionIndex).prop("actionText")).toBe(actionText);
+    };
 });
-
-// const mockChatsWithMessages = {
-//     ...mockStore,
-//     chats: {...mockStore.chats, items: mockChats},
-//     chatMessages: {...mockStore.chatMessages, items: mockMessages}
-// };
-
-
-// let scrollIntoViewMock = jest.fn();
-// window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
-// expect(scrollIntoViewMock).toBeCalled();
-
-// jest.spyOn(routeData, "useLocation").mockReturnValue({
-//     pathname: "/message", hash: "", search: "", state: {removeParticipant: true}
-// });
-
-// // @ts-ignore
-// jest.spyOn(React, "useState").mockImplementation(() => useState([
-//     mockChats[0].participants[0], jest.fn()
-// ]));
-
-// const history = createMemoryHistory();
-// const pushSpy = jest.spyOn(history, "push");
-
-// setImmediate(() => {
-//     wrapper.update();
-//     done();

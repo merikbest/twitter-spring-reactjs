@@ -33,7 +33,7 @@ interface ChatMessagesProps {
     visibleHoverAction: VisibleActions;
     participant?: ParticipantResponse;
     chat?: ChatResponse;
-    chatEndRef: RefObject<HTMLDivElement>;
+    chatEndRef: RefObject<HTMLDivElement> | null;
 }
 
 const ChatMessages: FC<ChatMessagesProps> = (
