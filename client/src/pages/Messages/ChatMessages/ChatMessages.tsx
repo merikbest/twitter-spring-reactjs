@@ -350,7 +350,11 @@ const ChatMessages: FC<ChatMessagesProps> = (
                                     variant="outlined"
                                     placeholder="Start a new message"
                                 />
-                                <div className={classes.emojiIcon} onClick={handleOpenPopup}>
+                                <div
+                                    id={"handleOpenPopup"}
+                                    className={classes.emojiIcon}
+                                    onClick={handleOpenPopup}
+                                >
                                     <IconButton
                                         onMouseEnter={() => handleHoverAction(MessagesAction.EMOJI)}
                                         onMouseLeave={handleLeaveAction}
