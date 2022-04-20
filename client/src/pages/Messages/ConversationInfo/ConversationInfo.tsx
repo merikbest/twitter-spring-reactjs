@@ -250,6 +250,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                             </Typography>
                         </div>
                         <div
+                            id={"leaveFromConversation"}
                             className={classnames(classes.conversationInfoButton, classes.leaveConversation)}
                             onClick={handleClickOpenLeaveFromConversationModal}
                         >
