@@ -51,7 +51,7 @@ const MessagesModal: FC<MessagesModalProps> = ({visible, onClose}): ReactElement
     };
 
     const handleListItemClick = (user: UserResponse): void => {
-        if (user.isMutedDirectMessages) {
+        if (!user.isMutedDirectMessages) {
             if (user.id !== selectedIndex) {
                 setSelectedIndex(user.id);
                 setSelectedUser(user);
