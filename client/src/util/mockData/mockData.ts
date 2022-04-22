@@ -8,6 +8,7 @@ import {
     SimpleListResponse
 } from "../../store/types/lists";
 import {ChatMessageResponse, ChatResponse} from "../../store/types/chat";
+import {NotificationResponse} from "../../store/types/notification";
 
 export const mockTweets = [
     {
@@ -953,3 +954,68 @@ export const mockMessages = [
         "chat": {"id": 1}
     }
 ] as unknown as ChatMessageResponse[];
+
+export const mockNotifications = {
+    "notifications": [
+        {
+            "id": 13,
+            "date": "2021-10-15T21:43:52",
+            "notificationType": "FOLLOW",
+            "user": {
+                "id": 1,
+                "username": "Random",
+                "fullName": null,
+                "avatar": {
+                    "id": 11,
+                    "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
+                },
+                "isFollower": false
+            },
+            "userToFollow": {
+                "id": 2,
+                "username": "Cat",
+                "fullName": null,
+                "avatar": {
+                    "id": 33,
+                    "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg"
+                },
+                "isFollower": false
+            },
+            "tweet": null
+        },
+        {
+            "id": 12,
+            "date": "2021-10-15T21:43:39",
+            "notificationType": "LIKE",
+            "user": {
+                "id": 1,
+                "username": "Random",
+                "fullName": null,
+                "avatar": {
+                    "id": 11,
+                    "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
+                },
+                "isFollower": false
+            },
+            "userToFollow": null,
+            "tweet": {"id": 6, "text": "#myCat  :smile_cat:", "user": {"id": 2}, "notificationCondition": false}
+        },
+        {
+            "id": 11,
+            "date": "2021-10-15T21:43:36",
+            "notificationType": "LIKE",
+            "user": {
+                "id": 1,
+                "username": "Random",
+                "fullName": null,
+                "avatar": {
+                    "id": 11,
+                    "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
+                },
+                "isFollower": false
+            },
+            "userToFollow": null,
+            "tweet": {"id": 5, "text": "Another #FirstTweet", "user": {"id": 2}, "notificationCondition": false}
+        }
+    ], "tweetAuthors": []
+} as unknown as NotificationResponse[];

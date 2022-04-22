@@ -24,7 +24,7 @@ const MessagesModalUser: FC<MessagesModalUser> = ({user}): ReactElement => {
                                 {user?.fullName}
                             </Typography>
                             {user?.isPrivateProfile && (
-                                <span className={classes.lockIcon}>
+                                <span id={"privateProfile"} className={classes.lockIcon}>
                                     {LockIcon}
                                 </span>
                             )}
