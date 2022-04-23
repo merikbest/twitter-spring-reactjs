@@ -8,7 +8,7 @@ import {
     SimpleListResponse
 } from "../../store/types/lists";
 import {ChatMessageResponse, ChatResponse} from "../../store/types/chat";
-import {NotificationResponse} from "../../store/types/notification";
+import {NotificationInfoResponse, NotificationResponse, NotificationUserResponse} from "../../store/types/notification";
 
 export const mockTweets = [
     {
@@ -955,67 +955,157 @@ export const mockMessages = [
     }
 ] as unknown as ChatMessageResponse[];
 
-export const mockNotifications = {
-    "notifications": [
-        {
-            "id": 13,
-            "date": "2021-10-15T21:43:52",
-            "notificationType": "FOLLOW",
-            "user": {
-                "id": 1,
-                "username": "Random",
-                "fullName": null,
-                "avatar": {
-                    "id": 11,
-                    "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
-                },
-                "isFollower": false
+// notifications
+export const mockNotifications = [
+    {
+        "id": 13,
+        "date": "2021-10-15T21:43:52",
+        "notificationType": "FOLLOW",
+        "user": {
+            "id": 1,
+            "username": "Random",
+            "fullName": null,
+            "avatar": {
+                "id": 11,
+                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
             },
-            "userToFollow": {
-                "id": 2,
-                "username": "Cat",
-                "fullName": null,
-                "avatar": {
-                    "id": 33,
-                    "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg"
-                },
-                "isFollower": false
-            },
-            "tweet": null
+            "isFollower": false
         },
-        {
-            "id": 12,
-            "date": "2021-10-15T21:43:39",
-            "notificationType": "LIKE",
-            "user": {
-                "id": 1,
-                "username": "Random",
-                "fullName": null,
-                "avatar": {
-                    "id": 11,
-                    "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
-                },
-                "isFollower": false
+        "userToFollow": {
+            "id": 2,
+            "username": "Cat",
+            "fullName": null,
+            "avatar": {
+                "id": 33,
+                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg"
             },
-            "userToFollow": null,
-            "tweet": {"id": 6, "text": "#myCat  :smile_cat:", "user": {"id": 2}, "notificationCondition": false}
+            "isFollower": false
         },
-        {
+        "tweet": null
+    },
+    {
+        "id": 12,
+        "date": "2021-10-15T21:43:39",
+        "notificationType": "LIKE",
+        "user": {
+            "id": 1,
+            "username": "Random",
+            "fullName": null,
+            "avatar": {
+                "id": 11,
+                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
+            },
+            "isFollower": false
+        },
+        "userToFollow": null,
+        "tweet": {"id": 6, "text": "#myCat  :smile_cat:", "user": {"id": 2}, "notificationCondition": false}
+    },
+    {
+        "id": 11,
+        "date": "2021-10-15T21:43:36",
+        "notificationType": "RETWEET",
+        "user": {
+            "id": 1,
+            "username": "Random",
+            "fullName": null,
+            "avatar": {
+                "id": 11,
+                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
+            },
+            "isFollower": false
+        },
+        "userToFollow": null,
+        "tweet": {"id": 5, "text": "Another #FirstTweet", "user": {"id": 2}, "notificationCondition": false}
+    }
+] as unknown as NotificationResponse[];
+
+export const mockTweetAuthors = [
+    {
+        "id": 1,
+        "username": "Random",
+        "fullName": "Random",
+        "avatar": {
             "id": 11,
-            "date": "2021-10-15T21:43:36",
-            "notificationType": "LIKE",
-            "user": {
-                "id": 1,
-                "username": "Random",
-                "fullName": null,
-                "avatar": {
-                    "id": 11,
-                    "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
-                },
-                "isFollower": false
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
+        },
+        "isFollower": false
+    },
+    {
+        "id": 4,
+        "username": "JavaCat",
+        "fullName": "JavaCat",
+        "avatar": {
+            "id": 5,
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png"
+        },
+        "isFollower": false
+    },
+] as unknown as NotificationUserResponse[];
+
+export const mockNotificationInfo = {
+    "id": 12,
+    "date": "2021-10-15T21:43:39",
+    "notificationType": "LIKE",
+    "user": {
+        "id": 1,
+        "fullName": "Random",
+        "username": "Random",
+        "about": null,
+        "avatar": {
+            "id": 11,
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
+        },
+        "isPrivateProfile": false,
+        "isMutedDirectMessages": false,
+        "isUserBlocked": false,
+        "isMyProfileBlocked": false,
+        "isWaitingForApprove": false,
+        "isFollower": true
+    },
+    "tweet": {
+        "id": 6,
+        "text": "#myCat  :smile_cat:",
+        "dateTime": "2021-10-15T21:20:26",
+        "scheduledDate": null,
+        "addressedUsername": null,
+        "addressedId": null,
+        "addressedTweetId": null,
+        "replyType": "EVERYONE",
+        "link": null,
+        "linkTitle": null,
+        "linkDescription": null,
+        "linkCover": null,
+        "linkCoverSize": null,
+        "user": {
+            "id": 2,
+            "email": "user2016@gmail.com",
+            "fullName": "MrCat",
+            "username": "Cat",
+            "avatar": {
+                "id": 33,
+                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg"
             },
-            "userToFollow": null,
-            "tweet": {"id": 5, "text": "Another #FirstTweet", "user": {"id": 2}, "notificationCondition": false}
+            "isPrivateProfile": false,
+            "isFollower": false,
+            "isMyProfileBlocked": false,
+            "isUserBlocked": false,
+            "isUserMuted": false
+        },
+        "images": [
+            {
+            "id": 1,
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/0a6c735d-def8-4587-a29f-221915ef6cb4_ff2d023b3220f93bbc79233614dea542.jpg"
         }
-    ], "tweetAuthors": []
-} as unknown as NotificationResponse[];
+        ],
+        "quoteTweet": null,
+        "poll": null,
+        "retweetsCount": 0,
+        "likedTweetsCount": 2,
+        "repliesCount": 0,
+        "isTweetLiked": true,
+        "isTweetRetweeted": false,
+        "isUserFollowByOtherUser": false,
+        "isTweetDeleted": false,
+        "isTweetBookmarked": false
+    }
+} as unknown as NotificationInfoResponse;

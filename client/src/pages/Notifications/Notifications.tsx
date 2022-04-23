@@ -92,8 +92,8 @@ const Notifications: FC = (): ReactElement => {
                                                 </span>
                                             </div>
                                             <div style={{flex: 1}}>
-                                                {tweetAuthors.slice(0, 6).map((tweetAuthor) => (
-                                                    <NotificationAuthorItem tweetAuthor={tweetAuthor}/>
+                                                {tweetAuthors.slice(0, 6).map((tweetAuthor, index) => (
+                                                    <NotificationAuthorItem key={index} tweetAuthor={tweetAuthor}/>
                                                 ))}
                                                 <Typography variant={"body1"} component={"div"} className={classes.notificationInfoText}>
                                                     {"New Tweet notifications for "}
@@ -104,10 +104,14 @@ const Notifications: FC = (): ReactElement => {
                                                         ` and ${tweetAuthors.length -1} others`
                                                     ) : (
                                                         (tweetAuthors.length === 2) && (
-                                                            " and " +
-                                                            <Typography variant={"h6"} component={"span"}>
-                                                                {tweetAuthors[1].fullName}
-                                                            </Typography>
+                                                            <>
+                                                                <Typography variant={"body1"} component={"span"} className={classes.notificationInfoText}>
+                                                                    {" and "}
+                                                                </Typography>
+                                                                <Typography variant={"h6"} component={"span"}>
+                                                                    {tweetAuthors[1].fullName}
+                                                                </Typography>
+                                                            </>
                                                         )
                                                     )}
                                                 </Typography>
@@ -115,8 +119,8 @@ const Notifications: FC = (): ReactElement => {
                                         </Paper>
                                     </Link>
                                 )}
-                                {notifications.map((notification) => (
-                                    <NotificationItem notification={notification} handleClickUser={handleClickUser}/>
+                                {notifications.map((notification, index) => (
+                                    <NotificationItem key={index} notification={notification} handleClickUser={handleClickUser}/>
                                 ))}
                             </div>
                         )

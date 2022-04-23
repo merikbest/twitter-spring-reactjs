@@ -46,10 +46,12 @@ const NotificationItem: FC<NotificationItemProps & HoverUserProps> = (
                     )}
                 </div>
                 <div style={{flex: 1}}>
-                    <a href={`/profile/${notification.user.id!}`}
-                       onClick={event => handleClickUser(notification.user.id!, event)}
-                       onMouseEnter={() => handleHoverPopper!(notification.user.id!)}
-                       onMouseLeave={handleLeavePopper}
+                    <a 
+                        id={"clickUser"}
+                        href={`/profile/${notification.user.id!}`}
+                        onClick={event => handleClickUser(notification.user.id!, event)}
+                        onMouseEnter={() => handleHoverPopper!(notification.user.id!)}
+                        onMouseLeave={handleLeavePopper}
                     >
                         <Avatar
                             className={classes.notificationAvatar}
@@ -80,7 +82,7 @@ const NotificationItem: FC<NotificationItemProps & HoverUserProps> = (
                             )}
                         </Typography>
                     </div>
-                    <Typography variant={"body1"} component={"div"} className={classes.notificationText}>
+                    <Typography id={"asd"} variant={"body1"} component={"div"} className={classes.notificationText}>
                         {notification.tweet && textFormatter(notification.tweet.text)}
                     </Typography>
                 </div>
