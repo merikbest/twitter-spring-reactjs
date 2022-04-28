@@ -21,7 +21,8 @@ import TweetDeckTeams from "./Account/TweetDeckTeams/TweetDeckTeams";
 import SecurityAndAccountAccess from "./SecurityAndAccountAccess/SecurityAndAccountAccess";
 import DeactivateAccount from "./Account/DeactivateAccount/DeactivateAccount";
 import Security from "./SecurityAndAccountAccess/Security/Security";
-import TwoFactorAuthentication from "./SecurityAndAccountAccess/Security/TwoFactorAuthentication/TwoFactorAuthentication";
+import TwoFactorAuthentication
+    from "./SecurityAndAccountAccess/Security/TwoFactorAuthentication/TwoFactorAuthentication";
 import AppsAndSessions from "./SecurityAndAccountAccess/AppsAndSessions/AppsAndSessions";
 import ConnectedApps from "./SecurityAndAccountAccess/AppsAndSessions/ConnectedApps/ConnectedApps";
 import Sessions from "./SecurityAndAccountAccess/AppsAndSessions/Sessions/Sessions";
@@ -64,6 +65,21 @@ import Autoplay from "./AccessibilityDisplayLanguages/DataUsage/Autoplay/Autopla
 import ContentPreferences from "./Notifications/ContentPreferences/ContentPreferences";
 import PersonalizationAndData from "./Notifications/PersonalizationAndData/PersonalizationAndData";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
+import {
+    SETTINGS,
+    SETTINGS_ABOUT,
+    SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES,
+    SETTINGS_INFO,
+    SETTINGS_INFO_COUNTRY,
+    SETTINGS_INFO_EMAIL,
+    SETTINGS_INFO_GENDER,
+    SETTINGS_INFO_LANGUAGES,
+    SETTINGS_INFO_PHONE,
+    SETTINGS_INFO_USERNAME,
+    SETTINGS_NOTIFICATION,
+    SETTINGS_PRIVACY_AND_SAFETY,
+    SETTINGS_SECURITY_AND_ACCOUNT_ACCESS
+} from "../../util/pathConstants";
 
 export interface LocationState {
     pathname: string;
@@ -76,17 +92,17 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
     const [selectedIndex, setSelectedIndex] = React.useState(1);
 
     useEffect(() => {
-        if (location.pathname === "/settings") {
+        if (location.pathname === SETTINGS) {
             setSelectedIndex(1);
-        } else if (location.pathname.includes("/settings/security_and_account_access")) {
+        } else if (location.pathname.includes(SETTINGS_SECURITY_AND_ACCOUNT_ACCESS)) {
             setSelectedIndex(2);
-        } else if (location.pathname.includes("/settings/privacy_and_safety")) {
+        } else if (location.pathname.includes(SETTINGS_PRIVACY_AND_SAFETY)) {
             setSelectedIndex(3);
-        } else if (location.pathname.includes("/settings/notification")) {
+        } else if (location.pathname.includes(SETTINGS_NOTIFICATION)) {
             setSelectedIndex(4);
-        } else if (location.pathname.includes("/settings/accessibility_display_and_languages")) {
+        } else if (location.pathname.includes(SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES)) {
             setSelectedIndex(5);
-        } else if (location.pathname.includes("/settings/about")) {
+        } else if (location.pathname.includes(SETTINGS_ABOUT)) {
             setSelectedIndex(6);
         } else {
             setSelectedIndex(1);
@@ -108,7 +124,7 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     </Paper>
                     <div className={classnames(classes.listWrapper, globalClasses.contentWrapper, globalClasses.svg)}>
                         <List component="nav" aria-label="main mailbox folders">
-                            <NavLink to={"/settings"}>
+                            <NavLink to={SETTINGS}>
                                 <ListItem
                                     selected={selectedIndex === 1}
                                     onClick={() => handleListItemClick(1)}
@@ -119,7 +135,7 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                     {ArrowRightIcon}
                                 </ListItem>
                             </NavLink>
-                            <NavLink to={"/settings/security_and_account_access"}>
+                            <NavLink to={SETTINGS_SECURITY_AND_ACCOUNT_ACCESS}>
                                 <ListItem
                                     selected={selectedIndex === 2}
                                     onClick={() => handleListItemClick(2)}
@@ -130,7 +146,7 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                     {ArrowRightIcon}
                                 </ListItem>
                             </NavLink>
-                            <NavLink to={"/settings/privacy_and_safety"}>
+                            <NavLink to={SETTINGS_PRIVACY_AND_SAFETY}>
                                 <ListItem
                                     selected={selectedIndex === 3}
                                     onClick={() => handleListItemClick(3)}
@@ -141,7 +157,7 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                     {ArrowRightIcon}
                                 </ListItem>
                             </NavLink>
-                            <NavLink to={"/settings/notification"}>
+                            <NavLink to={SETTINGS_NOTIFICATION}>
                                 <ListItem
                                     selected={selectedIndex === 4}
                                     onClick={() => handleListItemClick(4)}
@@ -152,7 +168,7 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                     {ArrowRightIcon}
                                 </ListItem>
                             </NavLink>
-                            <NavLink to={"/settings/accessibility_display_and_languages"}>
+                            <NavLink to={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES}>
                                 <ListItem
                                     selected={selectedIndex === 5}
                                     onClick={() => handleListItemClick(5)}
@@ -163,7 +179,7 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                     {ArrowRightIcon}
                                 </ListItem>
                             </NavLink>
-                            <NavLink to={"/settings/about"}>
+                            <NavLink to={SETTINGS_ABOUT}>
                                 <ListItem
                                     selected={selectedIndex === 6}
                                     onClick={() => handleListItemClick(6)}
@@ -180,48 +196,48 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
             </Grid>
             <Grid className={classes.grid} md={5} item>
                 <Paper className={classnames(globalClasses.pageHeader, classes.rightSideHeader)} variant="outlined">
-                    <Route exact path="/settings">
+                    <Route exact path={SETTINGS}>
                         <Typography variant="h5">
                             Your Account
                         </Typography>
                     </Route>
-                    <Route exact path="/settings/info">
+                    <Route exact path={SETTINGS_INFO}>
                         <BackButton/>
                         <Typography variant="h5">
                             Account information
                         </Typography>
                     </Route>
-                    <Route exact path="/settings/info/username">
+                    <Route exact path={SETTINGS_INFO_USERNAME}>
                         <BackButton/>
                         <Typography variant="h5">
                             Change username
                         </Typography>
                     </Route>
-                    <Route exact path="/settings/info/phone">
+                    <Route exact path={SETTINGS_INFO_PHONE}>
                         <BackButton/>
                         <Typography variant="h5">
                             Change phone
                         </Typography>
                     </Route>
-                    <Route exact path="/settings/info/email">
+                    <Route exact path={SETTINGS_INFO_EMAIL}>
                         <BackButton/>
                         <Typography variant="h5">
                             Change email
                         </Typography>
                     </Route>
-                    <Route exact path="/settings/info/country">
+                    <Route exact path={SETTINGS_INFO_COUNTRY}>
                         <BackButton/>
                         <Typography variant="h5">
                             Change country
                         </Typography>
                     </Route>
-                    <Route exact path="/settings/info/languages">
+                    <Route exact path={SETTINGS_INFO_LANGUAGES}>
                         <BackButton/>
                         <Typography variant="h5">
                             Change display language
                         </Typography>
                     </Route>
-                    <Route exact path="/settings/info/gender">
+                    <Route exact path={SETTINGS_INFO_GENDER}>
                         <BackButton/>
                         <Typography variant="h5">
                             Gender
@@ -251,7 +267,7 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                             Deactivate account
                         </Typography>
                     </Route>
-                    <Route exact path="/settings/security_and_account_access">
+                    <Route exact path={SETTINGS_SECURITY_AND_ACCOUNT_ACCESS}>
                         <Typography variant="h5">
                             Security and account access
                         </Typography>
@@ -304,7 +320,7 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                             Logged-in devices and apps
                         </Typography>
                     </Route>
-                    <Route exact path="/settings/privacy_and_safety">
+                    <Route exact path={SETTINGS_PRIVACY_AND_SAFETY}>
                         <Typography variant="h5">
                             Privacy and safety
                         </Typography>
@@ -429,7 +445,7 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                             See places you’ve been
                         </Typography>
                     </Route>
-                    <Route exact path="/settings/notification">
+                    <Route exact path={SETTINGS_NOTIFICATION}>
                         <Typography variant="h5">
                             Notifications
                         </Typography>
@@ -458,7 +474,7 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                             Email notifications
                         </Typography>
                     </Route>
-                    <Route exact path="/settings/accessibility_display_and_languages">
+                    <Route exact path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES}>
                         <Typography variant="h5">
                             Accessibility, display and languages
                         </Typography>
@@ -499,7 +515,7 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                             Personalization and data
                         </Typography>
                     </Route>
-                    <Route exact path="/settings/about">
+                    <Route exact path={SETTINGS_ABOUT}>
                         <Typography variant="h5">
                             Additional resources
                         </Typography>
@@ -512,19 +528,19 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                 </Paper>
                 <Paper className={classnames(globalClasses.pageContainer, classes.pageContainer)} variant="outlined">
                     <div className={globalClasses.contentWrapper}>
-                        <Route exact path="/settings" component={Account}/>
-                        <Route exact path="/settings/info" component={AccountInformation}/>
-                        <Route exact path="/settings/info/username" component={ChangeUsername}/>
-                        <Route exact path="/settings/info/phone" component={ChangePhone}/>
-                        <Route exact path="/settings/info/email" component={ChangeEmail}/>
-                        <Route exact path="/settings/info/country" component={ChangeCountry}/>
-                        <Route exact path="/settings/info/languages" component={ChangeLanguage}/>
-                        <Route exact path="/settings/info/gender" component={ChangeGender}/>
+                        <Route exact path={SETTINGS} component={Account}/>
+                        <Route exact path={SETTINGS_INFO} component={AccountInformation}/>
+                        <Route exact path={SETTINGS_INFO_USERNAME} component={ChangeUsername}/>
+                        <Route exact path={SETTINGS_INFO_PHONE} component={ChangePhone}/>
+                        <Route exact path={SETTINGS_INFO_EMAIL} component={ChangeEmail}/>
+                        <Route exact path={SETTINGS_INFO_COUNTRY} component={ChangeCountry}/>
+                        <Route exact path={SETTINGS_INFO_LANGUAGES} component={ChangeLanguage}/>
+                        <Route exact path={SETTINGS_INFO_GENDER} component={ChangeGender}/>
                         <Route exact path="/settings/info/age" component={ChangeAge}/>
                         <Route exact path="/settings/password" component={ChangeYourPassword}/>
                         <Route exact path="/settings/teams" component={TweetDeckTeams}/>
                         <Route exact path="/settings/deactivate" component={DeactivateAccount}/>
-                        <Route exact path="/settings/security_and_account_access" component={SecurityAndAccountAccess}/>
+                        <Route exact path={SETTINGS_SECURITY_AND_ACCOUNT_ACCESS} component={SecurityAndAccountAccess}/>
                         <Route exact path="/settings/security" component={Security}/>
                         <Route exact path="/settings/security/login_verification" component={TwoFactorAuthentication}/>
                         <Route exact path="/settings/security/apps_and_sessions" component={AppsAndSessions}/>
@@ -533,7 +549,7 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                         <Route exact path="/settings/security/sessions/current" component={CurrentSession}/>
                         <Route exact path="/settings/security/login_history" component={AccountAccessHistory}/>
                         <Route exact path="/settings/security/devices" component={LoggedDevices}/>
-                        <Route exact path="/settings/privacy_and_safety" component={PrivacyAndSafety}/>
+                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY} component={PrivacyAndSafety}/>
                         <Route exact path="/settings/privacy_and_safety/audience" component={AudienceAndTagging}/>
                         <Route exact path="/settings/privacy_and_safety/tagging" component={PhotoTagging}/>
                         <Route exact path="/settings/privacy_and_safety/your_tweets" component={YourTweets}/>
@@ -554,12 +570,12 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                         <Route exact path="/settings/privacy_and_safety/data_sharing_with_business_partners" component={DataSharing}/>
                         <Route exact path="/settings/privacy_and_safety/location_information" component={Location}/>
                         <Route exact path="/settings/privacy_and_safety/locations" component={Places}/>
-                        <Route exact path="/settings/notification" component={Notifications}/>
+                        <Route exact path={SETTINGS_NOTIFICATION} component={Notifications}/>
                         <Route exact path="/settings/notification/filters" component={Filters}/>
                         <Route exact path="/settings/notification/preferences" component={Preferences}/>
                         <Route exact path="/settings/notification/push_notifications" component={PushNotifications}/>
                         <Route exact path="/settings/notification/email_notifications" component={EmailNotifications}/>
-                        <Route exact path="/settings/accessibility_display_and_languages" component={AccessibilityDisplayLanguages}/>
+                        <Route exact path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES} component={AccessibilityDisplayLanguages}/>
                         <Route exact path="/settings/accessibility_display_and_languages/accessibility" component={Accessibility}/>
                         <Route exact path="/settings/accessibility_display_and_languages/display"
                                render={() => <Display
@@ -569,7 +585,7 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                         <Route exact path="/settings/accessibility_display_and_languages/languages" component={Languages}/>
                         <Route exact path="/settings/accessibility_display_and_languages/data" component={DataUsage}/>
                         <Route exact path="/settings/accessibility_display_and_languages/autoplay" component={Autoplay}/>
-                        <Route exact path="/settings/about" component={AdditionalResources}/>
+                        <Route exact path={SETTINGS_ABOUT} component={AdditionalResources}/>
                         <Route exact path="/settings/content_preferences" component={ContentPreferences}/>
                         <Route exact path="/settings/personalization" component={PersonalizationAndData}/>
                     </div>

@@ -56,6 +56,7 @@ import FollowersYouKnow from "./pages/FollowersYouKnow/FollowersYouKnow";
 import {fetchTags} from "./store/ducks/tags/actionCreators";
 import {fetchRelevantUsers} from "./store/ducks/users/actionCreators";
 import UserImageModal from "./pages/UserPage/UserImageModal/UserImageModal";
+import {SETTINGS} from "./util/pathConstants";
 
 const App: FC = (): ReactElement => {
     const history = useHistory();
@@ -194,7 +195,7 @@ const App: FC = (): ReactElement => {
                         <Route path="/notifications/timeline" component={NotificationsTimeline} exact/>
                         <Route path="/notification/:id" component={NotificationInfo} exact/>
                         <Route path="/messages" component={Messages}/>
-                        <Route path="/settings"
+                        <Route path={SETTINGS}
                                render={() => <Settings
                                    changeBackgroundColor={changeBackgroundColor}
                                    changeColorScheme={changeColorScheme}/>

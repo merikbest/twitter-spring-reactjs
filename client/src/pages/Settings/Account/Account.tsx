@@ -5,6 +5,7 @@ import {List, ListItem, Typography} from "@material-ui/core";
 import {ArrowRightIcon, CommunityIcon, DeleteAccountIcon, DownloadIcon, KeyIcon, ProfileIcon} from "../../../icons";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
+import {SETTINGS_INFO} from "../../../util/pathConstants";
 
 const Account: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -17,7 +18,7 @@ const Account: FC = (): ReactElement => {
             </Typography>
             <div className={globalClasses.listItemWrapper}>
                 <List component="nav" aria-label="main mailbox folders">
-                    <NavLink to={"/settings/info"}>
+                    <NavLink to={SETTINGS_INFO}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {ProfileIcon}

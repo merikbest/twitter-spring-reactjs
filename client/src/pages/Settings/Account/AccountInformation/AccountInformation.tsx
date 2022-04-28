@@ -10,6 +10,13 @@ import {getCountry, getPhoneCode} from "../../../../util/countryCodes";
 import {fetchUserData} from "../../../../store/ducks/user/actionCreators";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
+import {
+    SETTINGS_INFO_COUNTRY,
+    SETTINGS_INFO_EMAIL,
+    SETTINGS_INFO_GENDER,
+    SETTINGS_INFO_PHONE,
+    SETTINGS_INFO_USERNAME
+} from "../../../../util/pathConstants";
 
 const AccountInformation: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -23,7 +30,7 @@ const AccountInformation: FC = (): ReactElement => {
     return (
         <div className={globalClasses.listItemWrapper}>
             <List>
-                <NavLink to={"/settings/info/username"}>
+                <NavLink to={SETTINGS_INFO_USERNAME}>
                     <ListItem>
                         <div>
                             <Typography variant={"body1"} component={"div"}>
@@ -38,7 +45,7 @@ const AccountInformation: FC = (): ReactElement => {
                         </div>
                     </ListItem>
                 </NavLink>
-                <NavLink to={"/settings/info/phone"}>
+                <NavLink to={SETTINGS_INFO_PHONE}>
                     <ListItem>
                         <div>
                             <Typography variant={"body1"} component={"div"}>
@@ -53,7 +60,7 @@ const AccountInformation: FC = (): ReactElement => {
                         </div>
                     </ListItem>
                 </NavLink>
-                <NavLink to={"/settings/info/email"}>
+                <NavLink to={SETTINGS_INFO_EMAIL}>
                     <ListItem>
                         <div>
                             <Typography variant={"body1"} component={"div"}>
@@ -104,7 +111,7 @@ const AccountInformation: FC = (): ReactElement => {
                     </Typography>
                 </div>
                 <Divider/>
-                <NavLink to={"/settings/info/country"}>
+                <NavLink to={SETTINGS_INFO_COUNTRY}>
                     <ListItem>
                         <div>
                             <Typography variant={"body1"} component={"div"}>
@@ -134,7 +141,7 @@ const AccountInformation: FC = (): ReactElement => {
                         </div>
                     </ListItem>
                 </NavLink>
-                <NavLink to={"/settings/info/gender"}>
+                <NavLink to={SETTINGS_INFO_GENDER}>
                     <ListItem>
                         <div>
                             <Typography variant={"body1"} component={"div"}>

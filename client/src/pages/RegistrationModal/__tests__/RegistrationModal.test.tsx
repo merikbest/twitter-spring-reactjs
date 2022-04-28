@@ -4,7 +4,7 @@ import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
 import RegistrationModal from "../RegistrationModal";
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
+import {createMockRootState, mountWithStore} from "../../../util/testHelper";
 import {LoadingStatus} from "../../../store/types";
 import RegistrationInput from "../RegistrationInput/RegistrationInput";
 import {FilledSelect} from "../../../components/FilledSelect/FilledSelect";
@@ -12,11 +12,6 @@ import {API_URL} from "../../../util/url";
 
 describe("RegistrationModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
-    let mockDispatchFn: jest.Mock;
-
-    beforeEach(() => {
-        mockDispatchFn = mockDispatch();
-    });
 
     it("should render empty RegistrationModal", () => {
         const wrapper = mountWithStore(

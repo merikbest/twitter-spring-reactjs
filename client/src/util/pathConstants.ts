@@ -1,0 +1,13 @@
+export const SETTINGS = "/settings";
+export const SETTINGS_SECURITY_AND_ACCOUNT_ACCESS = SETTINGS + "/security_and_account_access";
+export const SETTINGS_PRIVACY_AND_SAFETY = SETTINGS + "/privacy_and_safety";
+export const SETTINGS_NOTIFICATION = SETTINGS + "/notification";
+export const SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES = SETTINGS + "/accessibility_display_and_languages";
+export const SETTINGS_ABOUT = SETTINGS + "/about";
+export const SETTINGS_INFO = SETTINGS + "/info";
+export const SETTINGS_INFO_USERNAME = SETTINGS_INFO + "/username";
+export const SETTINGS_INFO_PHONE = SETTINGS_INFO + "/phone";
+export const SETTINGS_INFO_EMAIL = SETTINGS_INFO + "/email";
+export const SETTINGS_INFO_COUNTRY = SETTINGS_INFO + "/country";
+export const SETTINGS_INFO_LANGUAGES = SETTINGS_INFO + "/languages";
+export const SETTINGS_INFO_GENDER = SETTINGS_INFO + "/gender";

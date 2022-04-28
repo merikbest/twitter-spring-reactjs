@@ -1,5 +1,19 @@
 import React, {ComponentType, useEffect} from "react";
 import {useLocation} from "react-router-dom";
+import {
+    SETTINGS,
+    SETTINGS_ABOUT,
+    SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES,
+    SETTINGS_INFO,
+    SETTINGS_INFO_COUNTRY,
+    SETTINGS_INFO_EMAIL,
+    SETTINGS_INFO_LANGUAGES,
+    SETTINGS_INFO_PHONE,
+    SETTINGS_INFO_USERNAME,
+    SETTINGS_NOTIFICATION,
+    SETTINGS_PRIVACY_AND_SAFETY,
+    SETTINGS_SECURITY_AND_ACCOUNT_ACCESS
+} from "../util/pathConstants";
 
 export const withDocumentTitle = <T extends object>(Component: ComponentType<T>) => (props: T) => {
     const {pathname} = useLocation();
@@ -21,19 +35,19 @@ export const withDocumentTitle = <T extends object>(Component: ComponentType<T>)
             document.title = "Trends / Twitter";
         } else if (pathname === "/home/connect") {
             document.title = "Connect / Twitter";
-        } else if (pathname === "/settings") {
+        } else if (pathname === SETTINGS) {
             document.title = "Settings / Twitter";
-        } else if (pathname === "/settings/info") {
+        } else if (pathname === SETTINGS_INFO) {
             document.title = "Account information / Twitter";
-        } else if (pathname === "/settings/info/username") {
+        } else if (pathname === SETTINGS_INFO_USERNAME) {
             document.title = "Change username / Twitter";
-        } else if (pathname === "/settings/info/phone") {
+        } else if (pathname === SETTINGS_INFO_PHONE) {
             document.title = "Change phone / Twitter";
-        } else if (pathname === "/settings/info/email") {
+        } else if (pathname === SETTINGS_INFO_EMAIL) {
             document.title = "Change email / Twitter";
-        } else if (pathname === "/settings/info/country") {
+        } else if (pathname === SETTINGS_INFO_COUNTRY) {
             document.title = "Change country / Twitter";
-        } else if (pathname === "/settings/info/languages") {
+        } else if (pathname === SETTINGS_INFO_LANGUAGES) {
             document.title = "Change display language / Twitter";
         } else if (pathname === "/settings/info/age") {
             document.title = "Age / Twitter";
@@ -43,7 +57,7 @@ export const withDocumentTitle = <T extends object>(Component: ComponentType<T>)
             document.title = "TweetDeck Teams / Twitter";
         } else if (pathname === "/settings/deactivate") {
             document.title = "Deactivate account / Twitter";
-        } else if (pathname === "/settings/security_and_account_access") {
+        } else if (pathname === SETTINGS_SECURITY_AND_ACCOUNT_ACCESS) {
             document.title = "Security and account access / Twitter";
         } else if (pathname === "/settings/security") {
             document.title = "Security / Twitter";
@@ -59,7 +73,7 @@ export const withDocumentTitle = <T extends object>(Component: ComponentType<T>)
             document.title = "Account access history / Twitter";
         } else if (pathname === "/settings/security/devices") {
             document.title = "Logged-in devices and apps / Twitter";
-        } else if (pathname === "/settings/privacy_and_safety") {
+        } else if (pathname === SETTINGS_PRIVACY_AND_SAFETY) {
             document.title = "Privacy and safety / Twitter";
         } else if (pathname === "/settings/privacy_and_safety/audience") {
             document.title = "Audience and tagging / Twitter";
@@ -101,7 +115,7 @@ export const withDocumentTitle = <T extends object>(Component: ComponentType<T>)
             document.title = "Location information / Twitter";
         } else if (pathname === "/settings/privacy_and_safety/locations") {
             document.title = "See places you’ve been / Twitter";
-        } else if (pathname === "/settings/notification") {
+        } else if (pathname === SETTINGS_NOTIFICATION) {
             document.title = "Notifications / Twitter";
         } else if (pathname === "/settings/notification/filters") {
             document.title = "Filters / Twitter";
@@ -111,7 +125,7 @@ export const withDocumentTitle = <T extends object>(Component: ComponentType<T>)
             document.title = "Push notifications / Twitter";
         } else if (pathname === "/settings/notification/email_notifications") {
             document.title = "Email notifications / Twitter";
-        } else if (pathname === "/settings/accessibility_display_and_languages") {
+        } else if (pathname === SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES) {
             document.title = "Accessibility, display and languages / Twitter";
         } else if (pathname === "/settings/accessibility_display_and_languages/accessibility") {
             document.title = "Accessibility / Twitter";
@@ -125,7 +139,7 @@ export const withDocumentTitle = <T extends object>(Component: ComponentType<T>)
             document.title = "Autoplay / Twitter";
         } else if (pathname === "/settings/personalization") {
             document.title = "Personalization and data / Twitter";
-        } else if (pathname === "/settings/about") {
+        } else if (pathname === SETTINGS_ABOUT) {
             document.title = "Additional resources / Twitter";
         } else if (pathname === "/settings/content_preferences") {
             document.title = "Content preferences / Twitter";

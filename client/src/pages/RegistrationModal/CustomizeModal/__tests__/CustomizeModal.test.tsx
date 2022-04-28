@@ -1,17 +1,12 @@
 import React from "react";
 import {Button, Dialog} from "@material-ui/core";
 
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
+import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
 import {LoadingStatus} from "../../../../store/types";
 import CustomizeModal from "../CustomizeModal";
 
 describe("CustomizeModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
-    let mockDispatchFn: jest.Mock;
-
-    beforeEach(() => {
-        mockDispatchFn = mockDispatch();
-    });
 
     it("should render correctly CustomizeModal", () => {
         const mockOnOpenCreateAccount = jest.fn();

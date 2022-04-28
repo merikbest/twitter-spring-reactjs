@@ -3,7 +3,7 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import {Button, Dialog} from "@material-ui/core";
 
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
+import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
 import {LoadingStatus} from "../../../../store/types";
 import EmailVerificationModal from "../EmailVerificationModal";
 import {RegistrationInputField} from "../../RegistrationInput/RegistrationInputField";
@@ -12,11 +12,6 @@ import {API_URL} from "../../../../util/url";
 describe("EmailVerificationModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
     const mockEmail = "test@test.test";
-    let mockDispatchFn: jest.Mock;
-
-    beforeEach(() => {
-        mockDispatchFn = mockDispatch();
-    });
 
     it("should click and render correctly", (done) => {
         const mockAdapter = new MockAdapter(axios);

@@ -42,6 +42,7 @@ import {DisplayProps} from "../../pages/Settings/AccessibilityDisplayLanguages/D
 import FollowerRequestsModal from "./FollowerRequestsModal/FollowerRequestsModal";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {resetFollowerRequestsState} from "../../store/ducks/followerRequests/actionCreators";
+import {SETTINGS} from "../../util/pathConstants";
 
 const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -316,7 +317,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                     </ListItem>
                                 </a>
                                 <Divider/>
-                                <Link to={"/settings"}>
+                                <Link to={SETTINGS}>
                                     <ListItem onClick={handleClosePopup}>
                                         {SettingsIcon}
                                         <Typography variant={"body1"} component={"span"}>

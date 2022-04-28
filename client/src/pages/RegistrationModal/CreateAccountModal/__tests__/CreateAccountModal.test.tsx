@@ -3,7 +3,7 @@ import {Button, Dialog} from "@material-ui/core";
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
+import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
 import {LoadingStatus} from "../../../../store/types";
 import CreateAccountModal from "../CreateAccountModal";
 import {RegistrationInputField} from "../../RegistrationInput/RegistrationInputField";
@@ -13,11 +13,6 @@ import {API_URL} from "../../../../util/url";
 describe("CreateAccountModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
     const mockRegistrationData = {username: "test_username", email: "test@test.test", birthday: "Feb 31, 1901"};
-    let mockDispatchFn: jest.Mock;
-
-    beforeEach(() => {
-        mockDispatchFn = mockDispatch();
-    });
 
     it("should render empty CreateAccountModal", () => {
         const wrapper = mountWithStore(

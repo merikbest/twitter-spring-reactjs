@@ -13,6 +13,7 @@ import {EditIcon} from "../icons";
 import {DisplayProps} from "./Settings/AccessibilityDisplayLanguages/Display/Display";
 import ProfileImages from "../components/ProfileImages/ProfileImages";
 import {selectImages} from "../store/ducks/userProfile/selectors";
+import {SETTINGS} from "../util/pathConstants";
 
 interface Layout {
     children: ReactNode;
@@ -41,7 +42,7 @@ export const Layout: FC<Layout & DisplayProps> = (
                         <SideMenu changeBackgroundColor={changeBackgroundColor} changeColorScheme={changeColorScheme}/>
                     </Grid>
                 </div>
-                {(location.pathname.includes("/message") || location.pathname.includes("/settings")) ? (
+                {(location.pathname.includes("/message") || location.pathname.includes(SETTINGS)) ? (
                     <>
                         {children}
                     </>

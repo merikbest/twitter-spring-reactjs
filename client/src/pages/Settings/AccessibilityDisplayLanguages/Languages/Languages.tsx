@@ -9,6 +9,7 @@ import {selectUserData} from "../../../../store/ducks/user/selectors";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import classnames from "classnames";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
+import {SETTINGS_INFO_LANGUAGES} from "../../../../util/pathConstants";
 
 const Languages: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -32,7 +33,7 @@ const Languages: FC = (): ReactElement => {
                     Select your preferred language for headlines, buttons, and other text from Twitter.
                 </Typography>
             </div>
-            <Link to={"/settings/info/languages"} className={globalClasses.linkWrapper}>
+            <Link to={SETTINGS_INFO_LANGUAGES} className={globalClasses.linkWrapper}>
                 <div className={classnames(globalClasses.contentLink, classes.accessibilityWrapper)}>
                     <div className={classes.accessibilityInfo}>
                         <Typography variant={"body1"} component={"div"}>

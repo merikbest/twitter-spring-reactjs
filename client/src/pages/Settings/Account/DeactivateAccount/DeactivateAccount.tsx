@@ -8,6 +8,7 @@ import {selectUserData} from "../../../../store/ducks/user/selectors";
 import {DEFAULT_PROFILE_IMG} from "../../../../util/url";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
+import {SETTINGS_INFO} from "../../../../util/pathConstants";
 
 const DeactivateAccount: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -74,7 +75,7 @@ const DeactivateAccount: FC = (): ReactElement => {
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {"If you just want to change your @username, you don’t need to deactivate your account — edit it in your "}
-                    <MuiLink variant="subtitle2" to={"/settings/info"} component={Link}>
+                    <MuiLink variant="subtitle2" to={SETTINGS_INFO} component={Link}>
                         settings.
                     </MuiLink>
                 </Typography>
@@ -83,7 +84,7 @@ const DeactivateAccount: FC = (): ReactElement => {
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {"To use your current @username or email address with a different Twitter account, "}
-                    <MuiLink variant="subtitle2" to={"/settings/info"} component={Link}>
+                    <MuiLink variant="subtitle2" to={SETTINGS_INFO} component={Link}>
                         change them
                     </MuiLink>
                     {" before you deactivate this account."}
