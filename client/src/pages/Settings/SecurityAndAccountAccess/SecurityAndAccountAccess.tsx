@@ -5,6 +5,7 @@ import {List, ListItem, Typography} from "@material-ui/core";
 import {AppsIcon, ArrowRightIcon, ConnectedIcon, SecurityIcon} from "../../../icons";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
+import {SETTINGS_SECURITY, SETTINGS_SECURITY_APPS_AND_SESSIONS} from "../../../util/pathConstants";
 
 const SecurityAndAccountAccess: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -19,7 +20,7 @@ const SecurityAndAccountAccess: FC = (): ReactElement => {
             </div>
             <div className={globalClasses.listItemWrapper}>
                 <List component="nav" aria-label="main mailbox folders">
-                    <Link to={"/settings/security"}>
+                    <Link to={SETTINGS_SECURITY}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {SecurityIcon}
@@ -37,7 +38,7 @@ const SecurityAndAccountAccess: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </Link>
-                    <Link to={"/settings/security/apps_and_sessions"}>
+                    <Link to={SETTINGS_SECURITY_APPS_AND_SESSIONS}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {AppsIcon}

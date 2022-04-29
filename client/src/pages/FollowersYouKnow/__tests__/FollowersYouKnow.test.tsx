@@ -13,6 +13,7 @@ import UsersItem from "../../../components/UsersItem/UsersItem";
 import {LoadingStatus} from "../../../store/types";
 import {UserProfileActionsType} from "../../../store/ducks/userProfile/contracts/actionTypes";
 import {UserResponse} from "../../../store/types/user";
+import {PROFILE, USER} from "../../../util/pathConstants";
 
 describe("FollowersYouKnow", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -69,7 +70,7 @@ describe("FollowersYouKnow", () => {
             wrapper.update();
             done();
             expect(pushSpy).toHaveBeenCalled();
-            expect(pushSpy).toHaveBeenCalledWith(`/user/${mockUserId}/followers`);
+            expect(pushSpy).toHaveBeenCalledWith(`${USER}/${mockUserId}/followers`);
             expect(mockDispatchFn).toHaveBeenCalledWith({payload: mockUserId, type: UserProfileActionsType.FETCH_USER});
         });
     });
@@ -87,7 +88,7 @@ describe("FollowersYouKnow", () => {
             wrapper.update();
             done();
             expect(pushSpy).toHaveBeenCalled();
-            expect(pushSpy).toHaveBeenCalledWith(`/profile/${mockUserId}`);
+            expect(pushSpy).toHaveBeenCalledWith(`${PROFILE}/${mockUserId}`);
             expect(mockDispatchFn).toHaveBeenCalledWith({payload: mockUserId, type: UserProfileActionsType.FETCH_USER});
         });
     });

@@ -51,6 +51,7 @@ import {HoverUserProps, withHoverUser} from "../../hoc/withHoverUser";
 import {ReplyType} from "../../store/ducks/tweets/contracts/state";
 import {useGlobalStyles} from "../../util/globalClasses";
 import Spinner from "../Spinner/Spinner";
+import {PROFILE} from "../../util/pathConstants";
 
 let stompClient: CompatClient | null = null;
 
@@ -176,14 +177,14 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                     />
                     <div className={classes.tweetInfo}>
                         <div className={classes.header}>
-                            <Link to={`/profile/${tweetData?.user.id}`}>
+                            <Link to={`${PROFILE}/${tweetData?.user.id}`}>
                                 <Avatar
                                     className={classnames(globalClasses.avatar, classes.avatar)}
                                     alt={`avatar ${tweetData.user.id}`}
                                     src={tweetData.user.avatar?.src ? tweetData.user.avatar?.src : DEFAULT_PROFILE_IMG}
                                 />
                             </Link>
-                            <Link to={`/profile/${tweetData?.user.id}`}>
+                            <Link to={`${PROFILE}/${tweetData?.user.id}`}>
                                 <div
                                     onMouseEnter={() => handleHoverPopper!(tweetData.user.id)}
                                     onMouseLeave={handleLeavePopper}
@@ -297,7 +298,7 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                         <Divider/>
                         <Typography variant={"subtitle1"} component={"div"} className={classes.replyWrapper}>
                             {"Replying to "}
-                            <Link to={`/profile/${tweetData.user.id}`}>
+                            <Link to={`${PROFILE}/${tweetData.user.id}`}>
                                 @{tweetData.user.username}
                             </Link>
                         </Typography>

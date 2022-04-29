@@ -9,6 +9,13 @@ import FindEmail from "./FindEmail/FindEmail";
 import ResetPasswordOption from "./ResetPasswordOption/ResetPasswordOption";
 import ResetPassword from "./ResetPassword/ResetPassword";
 import ResetPasswordSuccess from "./ResetPasswordSuccess/ResetPasswordSuccess";
+import {
+    ACCOUNT_FORGOT,
+    ACCOUNT_FORGOT_CONFIRM_PIN_RESET,
+    ACCOUNT_FORGOT_PASSWORD_RESET_COMPLETE,
+    ACCOUNT_FORGOT_RESET_PASSWORD,
+    ACCOUNT_FORGOT_SEND_PASSWORD_RESET
+} from "../../util/pathConstants";
 
 const ForgotPassword: FC = (): ReactElement => {
     const classes = useForgotPasswordStyles();
@@ -26,11 +33,11 @@ const ForgotPassword: FC = (): ReactElement => {
                 </div>
             </div>
             <div className={classes.content}>
-                <Route exact path="/account/forgot" component={FindEmail}/>
-                <Route exact path="/account/forgot/send_password_reset" component={ResetPasswordOption}/>
-                <Route exact path="/account/forgot/confirm_pin_reset" component={CheckEmailCode}/>
-                <Route exact path="/account/forgot/reset_password" component={ResetPassword}/>
-                <Route exact path="/account/forgot/password_reset_complete" component={ResetPasswordSuccess}/>
+                <Route exact path={ACCOUNT_FORGOT} component={FindEmail}/>
+                <Route exact path={ACCOUNT_FORGOT_SEND_PASSWORD_RESET} component={ResetPasswordOption}/>
+                <Route exact path={ACCOUNT_FORGOT_CONFIRM_PIN_RESET} component={CheckEmailCode}/>
+                <Route exact path={ACCOUNT_FORGOT_RESET_PASSWORD} component={ResetPassword}/>
+                <Route exact path={ACCOUNT_FORGOT_PASSWORD_RESET_COMPLETE} component={ResetPasswordSuccess}/>
             </div>
         </div>
     );

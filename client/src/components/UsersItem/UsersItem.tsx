@@ -28,6 +28,7 @@ import {HoverActionProps} from "../../hoc/withHoverAction";
 import ActionSnackbar from "../ActionSnackbar/ActionSnackbar";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {UserResponse} from "../../store/types/user";
+import {PROFILE} from "../../util/pathConstants";
 
 export interface UsersItemProps<T> {
     item?: T,
@@ -124,7 +125,7 @@ const UsersItem: FC<UsersItemProps<UserResponse> & SnackbarProps & HoverUserProp
 
     return (
         <>
-            <Link to={`/profile/${user?.id}`} className={globalClasses.link}>
+            <Link to={`${PROFILE}/${user?.id}`} className={globalClasses.link}>
                 <ListItem className={classes.container}>
                     <ListItemAvatar>
                         <Avatar

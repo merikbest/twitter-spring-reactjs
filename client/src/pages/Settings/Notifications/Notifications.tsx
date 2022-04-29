@@ -5,6 +5,7 @@ import {List, ListItem, Typography} from "@material-ui/core";
 import {ArrowRightIcon, FiltersIcon, PreferencesIcon,} from "../../../icons";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
+import {SETTINGS_NOTIFICATION_FILTERS, SETTINGS_NOTIFICATION_PREFERENCES} from "../../../util/pathConstants";
 
 const Notifications: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -18,7 +19,7 @@ const Notifications: FC = (): ReactElement => {
             </div>
             <div className={globalClasses.listItemWrapper}>
                 <List component="nav" aria-label="main mailbox folders">
-                    <Link to={"/settings/notification/filters"}>
+                    <Link to={SETTINGS_NOTIFICATION_FILTERS}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {FiltersIcon}
@@ -36,7 +37,7 @@ const Notifications: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </Link>
-                    <Link to={"/settings/notification/preferences"}>
+                    <Link to={SETTINGS_NOTIFICATION_PREFERENCES}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {PreferencesIcon}

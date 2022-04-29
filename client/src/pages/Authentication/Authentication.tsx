@@ -10,6 +10,7 @@ import CustomizeModal from "../RegistrationModal/CustomizeModal/CustomizeModal";
 import CreateAccountModal from "../RegistrationModal/CreateAccountModal/CreateAccountModal";
 import EmailVerificationModal from "../RegistrationModal/EmailVerificationModal/EmailVerificationModal";
 import SetPasswordModal from "../RegistrationModal/SetPasswordModal/SetPasswordModal";
+import {ACCOUNT_LOGIN} from "../../util/pathConstants";
 
 export interface RegistrationInfo {
     username: string;
@@ -30,7 +31,7 @@ const Authentication: FC = (): ReactElement => {
     const [visibleSetPasswordModal, setVisibleSetPasswordModal] = useState<boolean>(false);
 
     const handleClickOpenSignIn = (): void => {
-        history.push("/account/login");
+        history.push(ACCOUNT_LOGIN);
     };
 
     const handleClickOpenSignUp = (): void => {

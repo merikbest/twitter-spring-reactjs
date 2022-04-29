@@ -6,6 +6,7 @@ import {useDataUsageStyles} from "./DataUsageStyles";
 import {ArrowRightIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
+import {SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_AUTOPLAY} from "../../../../util/pathConstants";
 
 const DataUsage: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -30,7 +31,7 @@ const DataUsage: FC = (): ReactElement => {
                     If selected, Twitter will use less network data.
                 </Typography>
             </div>
-            <Link to={"/settings/accessibility_display_and_languages/autoplay"} className={globalClasses.linkWrapper}>
+            <Link to={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_AUTOPLAY} className={globalClasses.linkWrapper}>
                 <div className={globalClasses.contentLink}>
                     <div className={classes.accessibilityInfo}>
                         <Typography variant={"body1"} component={"div"}>

@@ -5,7 +5,7 @@ import {List, ListItem, Typography} from "@material-ui/core";
 import {ArrowRightIcon, CommunityIcon, DeleteAccountIcon, DownloadIcon, KeyIcon, ProfileIcon} from "../../../icons";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
-import {SETTINGS_INFO} from "../../../util/pathConstants";
+import {SETTINGS_DEACTIVATE, SETTINGS_INFO, SETTINGS_PASSWORD, SETTINGS_TEAMS} from "../../../util/pathConstants";
 
 const Account: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -36,7 +36,7 @@ const Account: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </NavLink>
-                    <NavLink to={"/settings/password"}>
+                    <NavLink to={SETTINGS_PASSWORD}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {KeyIcon}
@@ -70,7 +70,7 @@ const Account: FC = (): ReactElement => {
                             {ArrowRightIcon}
                         </div>
                     </ListItem>
-                    <NavLink to={"/settings/teams"}>
+                    <NavLink to={SETTINGS_TEAMS}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {CommunityIcon}
@@ -89,7 +89,7 @@ const Account: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </NavLink>
-                    <NavLink to={"/settings/deactivate"}>
+                    <NavLink to={SETTINGS_DEACTIVATE}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {DeleteAccountIcon}

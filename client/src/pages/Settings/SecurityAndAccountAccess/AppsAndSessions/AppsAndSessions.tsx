@@ -7,6 +7,12 @@ import {useAppsAndSessionsStyles} from "./AppsAndSessionsStyles";
 import {ArrowRightIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
+import {
+    SETTINGS_SECURITY_CONNECTED_APPS,
+    SETTINGS_SECURITY_DEVICES,
+    SETTINGS_SECURITY_LOGIN_HISTORY,
+    SETTINGS_SECURITY_SESSIONS
+} from "../../../../util/pathConstants";
 
 const AppsAndSessions: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -22,7 +28,7 @@ const AppsAndSessions: FC = (): ReactElement => {
             </div>
             <div className={classnames(classes.listWrapper, globalClasses.svg)}>
                 <List component="nav" aria-label="main mailbox folders">
-                    <Link to={"/settings/security/connected_apps"}>
+                    <Link to={SETTINGS_SECURITY_CONNECTED_APPS}>
                         <ListItem>
                             <Typography variant={"body1"} component={"span"}>
                                 Connected apps
@@ -30,7 +36,7 @@ const AppsAndSessions: FC = (): ReactElement => {
                             {ArrowRightIcon}
                         </ListItem>
                     </Link>
-                    <Link to={"/settings/security/sessions"}>
+                    <Link to={SETTINGS_SECURITY_SESSIONS}>
                         <ListItem>
                             <Typography variant={"body1"} component={"span"}>
                                 Sessions
@@ -38,7 +44,7 @@ const AppsAndSessions: FC = (): ReactElement => {
                             {ArrowRightIcon}
                         </ListItem>
                     </Link>
-                    <Link to={"/settings/security/login_history"}>
+                    <Link to={SETTINGS_SECURITY_LOGIN_HISTORY}>
                         <ListItem>
                             <Typography variant={"body1"} component={"span"}>
                                 Account access history
@@ -46,7 +52,7 @@ const AppsAndSessions: FC = (): ReactElement => {
                             {ArrowRightIcon}
                         </ListItem>
                     </Link>
-                    <Link to={"/settings/security/devices"}>
+                    <Link to={SETTINGS_SECURITY_DEVICES}>
                         <ListItem>
                             <Typography variant={"body1"} component={"span"}>
                                 Logged-in devices and apps

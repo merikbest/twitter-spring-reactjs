@@ -42,7 +42,7 @@ import {DisplayProps} from "../../pages/Settings/AccessibilityDisplayLanguages/D
 import FollowerRequestsModal from "./FollowerRequestsModal/FollowerRequestsModal";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {resetFollowerRequestsState} from "../../store/ducks/followerRequests/actionCreators";
-import {SETTINGS} from "../../util/pathConstants";
+import {BOOKMARKS, HOME, LISTS, MESSAGES, NOTIFICATIONS, PROFILE, SEARCH, SETTINGS} from "../../util/pathConstants";
 
 const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -108,7 +108,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
         <>
             <ul className={classes.container}>
                 <li>
-                    <NavLink to="/home" activeClassName={"selected"}>
+                    <NavLink to={HOME} activeClassName={"selected"}>
                         <div className={classes.logoIcon}>
                             <IconButton color="primary">
                                 {TweetIcon}
@@ -117,12 +117,12 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     </NavLink>
                 </li>
                 <li className={classes.itemWrapper}>
-                    <NavLink to="/home" activeClassName={"selected"}>
+                    <NavLink to={HOME} activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
                                 <>
                                     {visibleHomeNotification && <span className={classes.homeNotification}/>}
-                                    {(location.pathname.includes("/home")) ? (
+                                    {(location.pathname.includes(HOME)) ? (
                                         <span>{HomeIconFilled}</span>
                                     ) : (
                                         <span>{HomeIcon}</span>
@@ -136,11 +136,11 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     </NavLink>
                 </li>
                 <li className={classes.itemWrapper}>
-                    <NavLink to="/search" activeClassName={"selected"}>
+                    <NavLink to={SEARCH} activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
                                 <>
-                                    {(location.pathname.includes("/search")) ? (
+                                    {(location.pathname.includes(SEARCH)) ? (
                                         <span>{ExploreIconFilled}</span>
                                     ) : (
                                         <span>{ExploreIcon}</span>
@@ -154,7 +154,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     </NavLink>
                 </li>
                 <li className={classes.itemWrapper}>
-                    <NavLink to="/notifications" activeClassName={"selected"}>
+                    <NavLink to={NOTIFICATIONS} activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
                                 <>
@@ -163,7 +163,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                             {myProfile?.notificationsCount}
                                         </span>
                                     ) : null}
-                                    {(location.pathname.includes("/notifications")) ? (
+                                    {(location.pathname.includes(NOTIFICATIONS)) ? (
                                         <span>{NotificationsIconFilled}</span>
                                     ) : (
                                         <span>{NotificationsIcon}</span>
@@ -177,7 +177,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     </NavLink>
                 </li>
                 <li className={classes.itemWrapper}>
-                    <NavLink to="/messages" activeClassName={"selected"}>
+                    <NavLink to={MESSAGES} activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
                                 <>
@@ -186,7 +186,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                             {myProfile?.unreadMessagesSize}
                                         </span>
                                     ) : null}
-                                    {(location.pathname.includes("/messages")) ? (
+                                    {(location.pathname.includes(MESSAGES)) ? (
                                         <span>{MessagesIconFilled}</span>
                                     ) : (
                                         <span>{MessagesIcon}</span>
@@ -200,11 +200,11 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     </NavLink>
                 </li>
                 <li className={classes.itemWrapper}>
-                    <NavLink to="/bookmarks" activeClassName={"selected"}>
+                    <NavLink to={BOOKMARKS} activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
                                 <>
-                                    {(location.pathname.includes("/bookmarks")) ? (
+                                    {(location.pathname.includes(BOOKMARKS)) ? (
                                         <span>{BookmarksIconFilled}</span>
                                     ) : (
                                         <span>{BookmarksIcon}</span>
@@ -218,11 +218,11 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     </NavLink>
                 </li>
                 <li className={classes.itemWrapper}>
-                    <NavLink to={"/lists"} activeClassName={"selected"}>
+                    <NavLink to={LISTS} activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
                                 <>
-                                    {(location.pathname.includes("/lists")) ? (
+                                    {(location.pathname.includes(LISTS)) ? (
                                         <span>{ListsIconFilled}</span>
                                     ) : (
                                         <span>{ListsIcon}</span>
@@ -236,11 +236,11 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     </NavLink>
                 </li>
                 <li className={classes.itemWrapper}>
-                    <NavLink to={`/profile/${userData?.id}`} activeClassName={"selected"}>
+                    <NavLink to={`${PROFILE}/${userData?.id}`} activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
                                 <>
-                                    {(location.pathname.includes(`/profile/${myProfile?.id}`)) ? (
+                                    {(location.pathname.includes(`${PROFILE}/${myProfile?.id}`)) ? (
                                         <span>{ProfileIconFilled}</span>
                                     ) : (
                                         <span>{ProfileIcon}</span>

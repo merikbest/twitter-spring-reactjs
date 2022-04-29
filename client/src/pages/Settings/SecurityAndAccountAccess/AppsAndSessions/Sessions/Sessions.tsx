@@ -8,6 +8,7 @@ import {useSessionsStyles} from "./SessionsStyles";
 import {ArrowRightIcon, DeviceIcon} from "../../../../../icons";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
+import {SETTINGS_SECURITY_SESSIONS_CURRENT} from "../../../../../util/pathConstants";
 
 const Sessions: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -47,7 +48,7 @@ const Sessions: FC = (): ReactElement => {
             </div>
             <Link
                 to={{
-                    pathname: "/settings/security/sessions/current",
+                    pathname: SETTINGS_SECURITY_SESSIONS_CURRENT,
                     state: {OSName: OSName, browserName: browserName, countryName: countryName}
                 }}
                 className={classes.sessionWrapper}

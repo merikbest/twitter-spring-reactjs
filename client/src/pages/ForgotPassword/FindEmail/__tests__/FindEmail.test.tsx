@@ -8,6 +8,7 @@ import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
 import FindEmail from "../FindEmail";
 import {API_URL} from "../../../../util/url";
 import {ForgotPasswordTextField} from "../../ForgotPasswordTextField/ForgotPasswordTextField";
+import { ACCOUNT_FORGOT_SEND_PASSWORD_RESET } from "../../../../util/pathConstants";
 
 describe("FindEmail", () => {
     const mockEmail = "test@test.com";
@@ -36,7 +37,7 @@ describe("FindEmail", () => {
             wrapper.update();
             done();
             expect(pushSpy).toHaveBeenCalled();
-            expect(pushSpy).toHaveBeenCalledWith({pathname: "/account/forgot/send_password_reset", state: {email: mockEmail}});
+            expect(pushSpy).toHaveBeenCalledWith({pathname: ACCOUNT_FORGOT_SEND_PASSWORD_RESET, state: {email: mockEmail}});
         });
     });
 

@@ -12,6 +12,7 @@ import {DEFAULT_PROFILE_IMG} from "../../../util/url";
 import {AuthApi} from "../../../services/api/authApi";
 import {useResetPasswordStyles} from "./ResetPasswordStyles";
 import {AuthUserResponse} from "../../../store/types/user";
+import {ACCOUNT_FORGOT_PASSWORD_RESET_COMPLETE} from "../../../util/pathConstants";
 
 interface ResetPasswordFormProps {
     password: string;
@@ -34,7 +35,7 @@ const ResetPassword: FC = (): ReactElement => {
     const onSubmit = (data: ResetPasswordFormProps): void => {
         AuthApi.passwordReset({email: location.state.user?.email!, password: data.password, password2: data.password2})
             .then((data) => {
-                history.push("/account/forgot/password_reset_complete");
+                history.push(ACCOUNT_FORGOT_PASSWORD_RESET_COMPLETE);
             })
             .catch((error) => console.log(error));
     };

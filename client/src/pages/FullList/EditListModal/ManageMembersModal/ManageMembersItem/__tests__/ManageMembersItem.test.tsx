@@ -9,6 +9,7 @@ import {LoadingStatus} from "../../../../../../store/types";
 import {ListMembersActionsType} from "../../../../../../store/ducks/listMembers/contracts/actionTypes";
 import ActionSnackbar from "../../../../../../components/ActionSnackbar/ActionSnackbar";
 import PopperUserWindow from "../../../../../../components/PopperUserWindow/PopperUserWindow";
+import {PROFILE} from "../../../../../../util/pathConstants";
 
 describe("ManageMembersItem", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -22,7 +23,7 @@ describe("ManageMembersItem", () => {
     it("should render Manage Members Item correctly", () => {
         const wrapper = mountWithStore(<ManageMembersItem item={mockFullList} member={mockMember}/>, mockStore);
 
-        expect(wrapper.find(Link).prop("to")).toBe(`/profile/${mockMember.id}`);
+        expect(wrapper.find(Link).prop("to")).toBe(`${PROFILE}/${mockMember.id}`);
         expect(wrapper.find(Avatar).prop("src")).toBe(mockMember.avatar.src);
         expect(wrapper.text().includes(mockMember.fullName)).toBe(true);
         expect(wrapper.text().includes(`@${mockMember.username}`)).toBe(true);

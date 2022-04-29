@@ -5,6 +5,7 @@ import {Checkbox, Divider, Link as MuiLink, Typography} from "@material-ui/core"
 import {ArrowRightIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
+import {SETTINGS_PRIVACY_AND_SAFETY_CONTACTS_DASHBOARD} from "../../../../util/pathConstants";
 
 const Discoverability: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -84,7 +85,7 @@ const Discoverability: FC = (): ReactElement => {
                     </MuiLink>
                 </Typography>
             </div>
-            <Link to={"/settings/privacy_and_safety/contacts_dashboard"} className={globalClasses.linkWrapper}>
+            <Link to={SETTINGS_PRIVACY_AND_SAFETY_CONTACTS_DASHBOARD} className={globalClasses.linkWrapper}>
                 <div className={globalClasses.contentLink}>
                     <Typography variant={"body1"} component={"span"}>
                         Manage contacts

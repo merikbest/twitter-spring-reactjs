@@ -5,6 +5,12 @@ import {List, ListItem, Typography} from "@material-ui/core";
 import {AccessibilityIcon, ArrowRightIcon, DisplayIcon, LanguagesIcon, TweetActivityIcon} from "../../../icons";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
+import {
+    SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_ACCESSIBILITY,
+    SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_DATA,
+    SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_DISPLAY,
+    SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_LANGUAGES
+} from "../../../util/pathConstants";
 
 const AccessibilityDisplayLanguages: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -18,7 +24,7 @@ const AccessibilityDisplayLanguages: FC = (): ReactElement => {
             </div>
             <div className={globalClasses.listItemWrapper}>
                 <List component="nav" aria-label="main mailbox folders">
-                    <Link to={"/settings/accessibility_display_and_languages/accessibility"}>
+                    <Link to={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_ACCESSIBILITY}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {AccessibilityIcon}
@@ -37,7 +43,7 @@ const AccessibilityDisplayLanguages: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </Link>
-                    <Link to={"/settings/accessibility_display_and_languages/display"}>
+                    <Link to={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_DISPLAY}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {DisplayIcon}
@@ -56,7 +62,7 @@ const AccessibilityDisplayLanguages: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </Link>
-                    <Link to={"/settings/accessibility_display_and_languages/languages"}>
+                    <Link to={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_LANGUAGES}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {LanguagesIcon}
@@ -74,7 +80,7 @@ const AccessibilityDisplayLanguages: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </Link>
-                    <Link to={"/settings/accessibility_display_and_languages/data"}>
+                    <Link to={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_DATA}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {TweetActivityIcon}

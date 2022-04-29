@@ -8,6 +8,7 @@ import {formatDate} from "../../util/formatDate";
 import {textFormatter} from "../../util/textFormatter";
 import {useQuoteStyles} from "./QuoteStyles";
 import {QuoteTweetResponse} from "../../store/types/tweet";
+import {HOME_TWEET} from "../../util/pathConstants";
 
 interface QuoteProps {
     quoteTweet: QuoteTweetResponse;
@@ -19,7 +20,7 @@ const Quote: FC<QuoteProps> = ({quoteTweet, isTweetQuoted, isFullTweet}): ReactE
     const classes = useQuoteStyles({isTweetQuoted, isFullTweet});
 
     return (
-        <Link to={`/home/tweet/${quoteTweet.id}`} className={classes.quoteTweetLink}>
+        <Link to={`${HOME_TWEET}/${quoteTweet.id}`} className={classes.quoteTweetLink}>
             <div className={classes.quoteTweetContainer}>
                 <div className={classes.quoteTweetWrapper}>
                     <Avatar

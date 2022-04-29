@@ -26,6 +26,7 @@ import {useGlobalStyles} from "../../../util/globalClasses";
 import {selectUserProfile, selectUsersIsLoading} from "../../../store/ducks/userProfile/selectors";
 import Spinner from "../../../components/Spinner/Spinner";
 import {UserResponse} from "../../../store/types/user";
+import {MESSAGES, PROFILE} from "../../../util/pathConstants";
 
 interface ConversationInfoProps {
     participantId?: number;
@@ -105,7 +106,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
 
     const handleLeaveFromConversation = (): void => {
         dispatch(leaveFromConversation({participantId: participantId!, chatId: chatId!}));
-        history.push({pathname: "/messages", state: {removeParticipant: true}});
+        history.push({pathname: MESSAGES, state: {removeParticipant: true}});
         setVisibleLeaveFromConversationModal(false);
     };
 
@@ -146,7 +147,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                     <Spinner paddingTop={200}/>
                 ) : (
                     <>
-                        <Link to={`/profile/${chatParticipant?.id}`} className={globalClasses.link}>
+                        <Link to={`${PROFILE}/${chatParticipant?.id}`} className={globalClasses.link}>
                             <div className={classes.pageInfoWrapper}>
                                 <Avatar
                                     className={classes.participantAvatar}

@@ -18,6 +18,7 @@ import {HoverActions} from "../../hoc/withHoverAction";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {addTweetToBookmarks} from "../../store/ducks/tweet/actionCreators";
 import {TweetResponse} from "../../store/types/tweet";
+import {BOOKMARKS} from "../../util/pathConstants";
 
 interface ShareTweetProps {
     tweet: TweetResponse;
@@ -68,7 +69,7 @@ const ShareTweet: FC<ShareTweetProps & SnackbarProps> = (
     const onClickAddTweetToBookmarks = (): void => {
         dispatch(addTweetToBookmarks(tweet.id));
 
-        if (location.pathname.includes("/bookmarks")) {
+        if (location.pathname.includes(BOOKMARKS)) {
             dispatch(removeTweetFromBookmarks(tweet.id));
         }
         setOpenSnackBar!(true);

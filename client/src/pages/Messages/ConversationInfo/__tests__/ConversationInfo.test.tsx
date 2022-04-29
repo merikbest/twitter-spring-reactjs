@@ -14,6 +14,7 @@ import ActionSnackbar from "../../../../components/ActionSnackbar/ActionSnackbar
 import UnfollowModal from "../../../../components/UnfollowModal/UnfollowModal";
 import LeaveFromConversationModal from "../LeaveFromConversationModal/LeaveFromConversationModal";
 import {ChatsActionsType} from "../../../../store/ducks/chats/contracts/actionTypes";
+import {MESSAGES} from "../../../../util/pathConstants";
 
 describe("ConversationInfo", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -210,7 +211,7 @@ describe("ConversationInfo", () => {
             type: ChatsActionsType.LEAVE_FROM_CONVERSATION
         });
         expect(pushSpy).toHaveBeenCalled();
-        expect(pushSpy).toHaveBeenCalledWith({pathname: "/messages", state: {removeParticipant: true}});
+        expect(pushSpy).toHaveBeenCalledWith({pathname: MESSAGES, state: {removeParticipant: true}});
     });
 
     it("should open leave conversation modal and close", () => {

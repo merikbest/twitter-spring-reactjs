@@ -37,6 +37,7 @@ import {HoverUserProps, withHoverUser} from "../../hoc/withHoverUser";
 import {useGlobalStyles} from "../../util/globalClasses";
 import TweetActionResult, {TweetActionResults} from "../TweetActionResult/TweetActionResult";
 import {TweetResponse} from "../../store/types/tweet";
+import {HOME_TWEET, MODAL, PROFILE} from "../../util/pathConstants";
 
 export interface TweetComponentProps<T> {
     item?: T;
@@ -71,7 +72,7 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
     const isTweetRetweetedByUser = tweet?.retweetsUserIds?.findIndex((id) => id === userProfile?.id) !== -1;
     const isUserCanReply = (tweet?.replyType === ReplyType.MENTION) && (myProfile?.id !== tweet?.user.id);
     const isYouTubeLink = tweet?.link && tweet?.link.includes("youtu");
-    const isModal = location.pathname.includes("/modal");
+    const isModal = location.pathname.includes(MODAL);
     const classes = useTweetComponentStyles({
         isTweetImageModal: isTweetImageModal, 
         isTweetLiked: tweet!.isTweetLiked, 
@@ -82,12 +83,12 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
     const handleClickTweet = (event: React.MouseEvent<HTMLAnchorElement>): void => {
         event.preventDefault();
         event.stopPropagation();
-        history.push(`/home/tweet/${tweet?.id}`);
+        history.push(`${HOME_TWEET}/${tweet?.id}`);
     };
 
     const handleClickUser = (event: React.MouseEvent<HTMLAnchorElement>): void => {
         event.stopPropagation();
-        history.push(`/profile/${tweet?.user.id}`);
+        history.push(`${PROFILE}/${tweet?.user.id}`);
     };
 
     const onOpenReplyModalWindow = (): void => {
@@ -177,19 +178,19 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
                             <object>
                                 <Typography variant={"subtitle1"} component={"div"}>
                                     {"Replying to "}
-                                    <MuiLink variant="subtitle1" to={`/profile/${tweet?.addressedId}`} component={Link}>
+                                    <MuiLink variant="subtitle1" to={`${PROFILE}/${tweet?.addressedId}`} component={Link}>
                                         @{tweet?.addressedUsername}
                                     </MuiLink>
                                 </Typography>
                             </object>
                         )}
                         <Typography variant={"body1"} className={classes.text}>
-                            <a onClick={handleClickTweet} href={`/home/tweet/${tweet?.id}`}>
+                            <a onClick={handleClickTweet} href={`${HOME_TWEET}/${tweet?.id}`}>
                                 {textFormatter(tweet!.text)}
                             </a>
                         </Typography>
                         {(tweet?.images?.length !== 0) && (
-                            <Link to={{pathname: `/modal/${tweet?.id}`, state: {background: location}}}>
+                            <Link to={{pathname: `${MODAL}/${tweet?.id}`, state: {background: location}}}>
                                 <div className={classes.image}>
                                     <img className={isModal ? "small" : ""} src={image?.src} alt={image?.src}/>
                                 </div>

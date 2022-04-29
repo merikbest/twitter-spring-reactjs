@@ -7,6 +7,7 @@ import {SeeLatestIcon, SettingsIcon, ShowLatestTweets, ShowTopTweets, TopTweets}
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {HoverActionProps, HoverActions, withHoverAction} from "../../../hoc/withHoverAction";
 import HoverAction from "../../../components/HoverAction/HoverAction";
+import {SETTINGS_CONTENT_PREFERENCES} from "../../../util/pathConstants";
 
 interface TopTweetActionsProps {
     switchTweets: boolean;
@@ -77,7 +78,7 @@ const TopTweetActions: FC<TopTweetActionsProps & HoverActionProps> = (
                                     </div>
                                 </div>
                             </ListItem>
-                            <Link to={"/settings/content_preferences"} className={globalClasses.linkWrapper}>
+                            <Link to={SETTINGS_CONTENT_PREFERENCES} className={globalClasses.linkWrapper}>
                                 <ListItem>
                                     <div className={classes.listItemWrapper}>
                                     <span className={classes.textIcon}>

@@ -12,6 +12,7 @@ import {useUserSideProfileStyles} from "./UserSideProfileStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {CheckIcon, EditIcon} from "../../icons";
 import LogoutModal from "./LogoutModal/LogoutModal";
+import {ACCOUNT_SIGNIN} from "../../util/pathConstants";
 
 const UserSideProfile: FC = (): ReactElement | null => {
     const classes = useUserSideProfileStyles();
@@ -42,7 +43,7 @@ const UserSideProfile: FC = (): ReactElement | null => {
     const handleSignOut = (): void => {
         window.localStorage.removeItem('token');
         dispatch(signOut());
-        history.push("/account/signin")
+        history.push(ACCOUNT_SIGNIN);
     };
 
     if (!myProfile) {

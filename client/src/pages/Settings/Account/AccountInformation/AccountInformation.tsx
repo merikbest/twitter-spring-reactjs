@@ -11,11 +11,14 @@ import {fetchUserData} from "../../../../store/ducks/user/actionCreators";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 import {
+    SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_LANGUAGES,
+    SETTINGS_INFO_AGE,
     SETTINGS_INFO_COUNTRY,
     SETTINGS_INFO_EMAIL,
     SETTINGS_INFO_GENDER,
     SETTINGS_INFO_PHONE,
-    SETTINGS_INFO_USERNAME
+    SETTINGS_INFO_USERNAME,
+    SETTINGS_PRIVACY_AND_SAFETY_AUDIENCE
 } from "../../../../util/pathConstants";
 
 const AccountInformation: FC = (): ReactElement => {
@@ -87,7 +90,7 @@ const AccountInformation: FC = (): ReactElement => {
                     </Typography>
                 </div>
                 <Divider/>
-                <NavLink to={"/settings/privacy_and_safety/audience"}>
+                <NavLink to={SETTINGS_PRIVACY_AND_SAFETY_AUDIENCE}>
                     <ListItem>
                         <div>
                             <Typography variant={"body1"} component={"div"}>
@@ -126,7 +129,7 @@ const AccountInformation: FC = (): ReactElement => {
                         </div>
                     </ListItem>
                 </NavLink>
-                <NavLink to={"/settings/accessibility_display_and_languages/languages"}>
+                <NavLink to={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_LANGUAGES}>
                     <ListItem>
                         <div>
                             <Typography variant={"body1"} component={"div"}>
@@ -168,7 +171,7 @@ const AccountInformation: FC = (): ReactElement => {
                     </Typography>
                 </div>
                 <Divider/>
-                <NavLink to={"/settings/info/age"}>
+                <NavLink to={SETTINGS_INFO_AGE}>
                     <ListItem>
                         <div>
                             <Typography variant={"body1"} component={"div"}>

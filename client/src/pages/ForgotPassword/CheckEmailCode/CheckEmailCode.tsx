@@ -5,6 +5,7 @@ import {Button, Link as MuiLink, Typography} from "@material-ui/core";
 import {ForgotPasswordTextField} from "../ForgotPasswordTextField/ForgotPasswordTextField";
 import {AuthApi} from "../../../services/api/authApi";
 import {useCheckEmailCodeStyles} from "./CheckEmailCodeStyles";
+import { ACCOUNT_FORGOT_RESET_PASSWORD } from '../../../util/pathConstants';
 
 const CheckEmailCode: FC = (): ReactElement => {
     const classes = useCheckEmailCodeStyles();
@@ -20,7 +21,7 @@ const CheckEmailCode: FC = (): ReactElement => {
         } else {
             AuthApi.getUserByResetCode(resetCode)
                 .then((data) => {
-                    history.push({pathname: "/account/forgot/reset_password", state: {user: data}});
+                    history.push({pathname: ACCOUNT_FORGOT_RESET_PASSWORD, state: {user: data}});
                 })
                 .catch(() => setError(true));
         }

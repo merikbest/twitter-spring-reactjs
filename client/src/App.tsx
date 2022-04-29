@@ -56,7 +56,23 @@ import FollowersYouKnow from "./pages/FollowersYouKnow/FollowersYouKnow";
 import {fetchTags} from "./store/ducks/tags/actionCreators";
 import {fetchRelevantUsers} from "./store/ducks/users/actionCreators";
 import UserImageModal from "./pages/UserPage/UserImageModal/UserImageModal";
-import {SETTINGS} from "./util/pathConstants";
+import {
+    ACCOUNT_FORGOT,
+    ACCOUNT_LOGIN,
+    ACCOUNT_SIGNIN,
+    BOOKMARKS,
+    HOME,
+    HOME_CONNECT,
+    LISTS,
+    LISTS_MEMBERSHIPS,
+    MESSAGES, MODAL,
+    NOTIFICATION,
+    NOTIFICATIONS,
+    NOTIFICATIONS_TIMELINE, PROFILE, PROFILE_HEADER_PHOTO, PROFILE_PHOTO,
+    SEARCH,
+    SETTINGS,
+    SUGGESTED, USER, USER_FOLLOWERS_YOU_FOLLOW
+} from "./util/pathConstants";
 
 const App: FC = (): ReactElement => {
     const history = useHistory();
@@ -75,11 +91,11 @@ const App: FC = (): ReactElement => {
     useEffect(() => {
         dispatch(fetchUserData());
 
-        if (!isAuth && isReady && !location.pathname.includes("/account/login")) {
-            history.push('/account/signin');
+        if (!isAuth && isReady && !location.pathname.includes(ACCOUNT_LOGIN)) {
+            history.push(ACCOUNT_SIGNIN);
         }
         if (!localStorage.getItem('token')) {
-            history.push('/account/signin');
+            history.push(ACCOUNT_SIGNIN);
         }
     }, []);
 
@@ -115,7 +131,7 @@ const App: FC = (): ReactElement => {
         let stompClient = Stomp.over(new SockJS(WS_URL));
 
         if (myProfile) {
-            if (location.pathname !== "/home/connect") {
+            if (location.pathname !== HOME_CONNECT) {
                 dispatch(fetchRelevantUsers());
             }
             dispatch(fetchTags());
@@ -186,32 +202,32 @@ const App: FC = (): ReactElement => {
             <div className="App">
                 <Layout changeBackgroundColor={changeBackgroundColor} changeColorScheme={changeColorScheme}>
                     <Switch location={background || location}>
-                        <Route path="/account/signin" component={Authentication} exact/>
-                        <Route path="/account/login" component={Login} exact/>
-                        <Route path="/account/forgot" component={ForgotPassword}/>
-                        <Route path="/home" component={Home}/>
-                        <Route path="/search" component={Explore}/>
-                        <Route path="/notifications" component={Notifications} exact/>
-                        <Route path="/notifications/timeline" component={NotificationsTimeline} exact/>
-                        <Route path="/notification/:id" component={NotificationInfo} exact/>
-                        <Route path="/messages" component={Messages}/>
+                        <Route path={ACCOUNT_SIGNIN} component={Authentication} exact/>
+                        <Route path={ACCOUNT_LOGIN} component={Login} exact/>
+                        <Route path={ACCOUNT_FORGOT} component={ForgotPassword}/>
+                        <Route path={HOME} component={Home}/>
+                        <Route path={SEARCH} component={Explore}/>
+                        <Route path={NOTIFICATIONS} component={Notifications} exact/>
+                        <Route path={NOTIFICATIONS_TIMELINE} component={NotificationsTimeline} exact/>
+                        <Route path={NOTIFICATION + "/:id"} component={NotificationInfo} exact/>
+                        <Route path={MESSAGES} component={Messages}/>
                         <Route path={SETTINGS}
                                render={() => <Settings
                                    changeBackgroundColor={changeBackgroundColor}
                                    changeColorScheme={changeColorScheme}/>
                                }/>
-                        <Route path="/bookmarks" component={Bookmarks}/>
-                        <Route path="/suggested" component={SuggestedLists}/>
-                        <Route path="/lists" component={Lists} exact/>
-                        <Route path="/lists/memberships/:id" component={ListsMemberships} exact/>
-                        <Route path="/lists/:listId" component={FullList} exact/>
-                        <Route path="/profile/:id" component={UserPage} exact/>
-                        <Route path="/user/followers_you_follow/:id" component={FollowersYouKnow} exact/>
-                        <Route path="/user/:id/:follow" component={FollowingFollowers} exact/>
+                        <Route path={BOOKMARKS} component={Bookmarks}/>
+                        <Route path={SUGGESTED} component={SuggestedLists}/>
+                        <Route path={LISTS} component={Lists} exact/>
+                        <Route path={LISTS_MEMBERSHIPS + "/:id"} component={ListsMemberships} exact/>
+                        <Route path={LISTS + "/:listId"} component={FullList} exact/>
+                        <Route path={PROFILE + "/:id"} component={UserPage} exact/>
+                        <Route path={USER_FOLLOWERS_YOU_FOLLOW + "/:id"} component={FollowersYouKnow} exact/>
+                        <Route path={USER + "/:id/:follow"} component={FollowingFollowers} exact/>
                     </Switch>
-                    {background && <Route path="/modal/:id" children={<TweetImageModal/>}/>}
-                    {background && <Route path="/profile/photo/:id" children={<UserImageModal/>}/>}
-                    {background && <Route path="/profile/header_photo/:id" children={<UserImageModal/>}/>}
+                    {background && <Route path={MODAL + "/:id"} children={<TweetImageModal/>}/>}
+                    {background && <Route path={PROFILE_PHOTO + "/:id"} children={<UserImageModal/>}/>}
+                    {background && <Route path={PROFILE_HEADER_PHOTO + "/:id"} children={<UserImageModal/>}/>}
                 </Layout>
             </div>
         </MuiThemeProvider>

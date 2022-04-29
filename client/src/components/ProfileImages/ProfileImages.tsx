@@ -6,6 +6,7 @@ import {Link, useLocation} from "react-router-dom";
 import {useProfileImagesStyles} from "./ProfileImagesStyles";
 import {selectImages} from "../../store/ducks/userProfile/selectors";
 import {TweetImageResponse} from "../../store/types/tweet";
+import {MODAL} from "../../util/pathConstants";
 
 const ProfileImages: FC = (): ReactElement => {
     const location = useLocation();
@@ -70,7 +71,7 @@ const ProfileImages: FC = (): ReactElement => {
                                     cols={item?.cols || 1}
                                     rows={item?.rows || 1}
                                 >
-                                    <Link to={{pathname: `/modal/${item?.tweetId}`, state: {background: location}}}>
+                                    <Link to={{pathname: `${MODAL}/${item?.tweetId}`, state: {background: location}}}>
                                         <img className={classes.img} src={item?.src} alt={item?.src}/>
                                     </Link>
                                 </ImageListItem>

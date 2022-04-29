@@ -19,6 +19,7 @@ import {SnackbarProps, withSnackbar} from "../../hoc/withSnackbar";
 import ActionSnackbar from "../ActionSnackbar/ActionSnackbar";
 import {UserDetailResponse} from "../../store/types/user";
 import {selectUserDetailItem} from "../../store/ducks/userDetail/selectors";
+import {PROFILE, USER} from "../../util/pathConstants";
 
 interface PopperUserWindowProps {
     visible?: boolean;
@@ -101,7 +102,7 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
             )}
         >
             <div className={classes.headerWrapper}>
-                <Link to={`/profile/${user?.id}`}>
+                <Link to={`${PROFILE}/${user?.id}`}>
                     <Avatar
                         className={classes.avatar}
                         alt={`avatar ${user?.id}`}
@@ -161,7 +162,7 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
                 )}
             </div>
             <div className={classes.userInfoWrapper}>
-                <Link to={`/profile/${user?.id}`}>
+                <Link to={`${PROFILE}/${user?.id}`}>
                     <div>
                         <Typography variant={"h6"} component={"span"}>
                             {user?.fullName}
@@ -183,7 +184,7 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
                         {user?.about}
                     </Typography>
                     <div className={classes.userFollowersWrapper}>
-                        <Link to={`/user/${user?.id}/following`} className={classes.followLink}>
+                        <Link to={`${USER}/${user?.id}/following`} className={classes.followLink}>
                             <Typography variant={"h6"} component={"span"}>
                                 {user?.followersSize}
                             </Typography>
@@ -191,7 +192,7 @@ const PopperUserWindow: FC<PopperUserWindowProps & SnackbarProps> = (
                                 {"Following"}
                             </Typography>
                         </Link>
-                        <Link to={`/user/${user?.id}/followers`} className={classes.followLink}>
+                        <Link to={`${USER}/${user?.id}/followers`} className={classes.followLink}>
                             <Typography variant={"h6"} component={"span"}>
                                 {user?.followingSize}
                             </Typography>

@@ -8,6 +8,7 @@ import {createMemoryHistory} from "history";
 import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
 import ResetPasswordOption from "../ResetPasswordOption";
 import {API_URL} from "../../../../util/url";
+import {ACCOUNT_FORGOT_CONFIRM_PIN_RESET, ACCOUNT_FORGOT_SEND_PASSWORD_RESET } from "../../../../util/pathConstants";
 
 describe("ResetPasswordOption", () => {
     const mockStore = createMockRootState();
@@ -15,7 +16,7 @@ describe("ResetPasswordOption", () => {
     
     beforeEach(() => {
         jest.spyOn(routeData, "useLocation").mockReturnValue({
-            pathname: "/account/forgot/send_password_reset", hash: "", search: "", state: {email: mockUser?.email}
+            pathname: ACCOUNT_FORGOT_SEND_PASSWORD_RESET, hash: "", search: "", state: {email: mockUser?.email}
         });
     });
 
@@ -40,7 +41,7 @@ describe("ResetPasswordOption", () => {
             wrapper.update();
             done();
             expect(pushSpy).toHaveBeenCalled();
-            expect(pushSpy).toHaveBeenCalledWith("/account/forgot/confirm_pin_reset");
+            expect(pushSpy).toHaveBeenCalledWith(ACCOUNT_FORGOT_CONFIRM_PIN_RESET);
         });
     });
 });

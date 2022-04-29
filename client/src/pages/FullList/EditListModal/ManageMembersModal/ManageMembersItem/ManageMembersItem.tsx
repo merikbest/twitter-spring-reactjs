@@ -16,6 +16,7 @@ import {LockIcon} from "../../../../../icons";
 import {SnackbarProps, withSnackbar} from "../../../../../hoc/withSnackbar";
 import ActionSnackbar from "../../../../../components/ActionSnackbar/ActionSnackbar";
 import {selectIsListSuggestedError} from "../../../../../store/ducks/listMembers/selectors";
+import {PROFILE} from "../../../../../util/pathConstants";
 
 interface ManageMembersItemProps<T> {
     item?: T;
@@ -52,7 +53,7 @@ const ManageMembersItem: FC<ManageMembersItemProps<BaseListResponse> & HoverUser
     }
 
     return (
-        <Link to={`/profile/${member?.id}`} className={globalClasses.link}>
+        <Link to={`${PROFILE}/${member?.id}`} className={globalClasses.link}>
             <Paper className={classes.container} variant="outlined">
                 <Avatar
                     className={classes.listAvatar}

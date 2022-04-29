@@ -21,6 +21,19 @@ import {
 } from "../../../icons";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
+import {
+    SETTINGS_PRIVACY_AND_SAFETY_ADS_PREFERENCES,
+    SETTINGS_PRIVACY_AND_SAFETY_AUDIENCE,
+    SETTINGS_PRIVACY_AND_SAFETY_CONTACTS,
+    SETTINGS_PRIVACY_AND_SAFETY_CONTENT_YOU_SEE,
+    SETTINGS_PRIVACY_AND_SAFETY_DATA_SHARING_WITH_BUSINESS_PARTNERS,
+    SETTINGS_PRIVACY_AND_SAFETY_DIRECT_MESSAGES,
+    SETTINGS_PRIVACY_AND_SAFETY_LOCATION_INFORMATION,
+    SETTINGS_PRIVACY_AND_SAFETY_MUTE_AND_BLOCK,
+    SETTINGS_PRIVACY_AND_SAFETY_OFF_TWITTER_ACTIVITY,
+    SETTINGS_PRIVACY_AND_SAFETY_SPACES,
+    SETTINGS_PRIVACY_AND_SAFETY_YOUR_TWEETS
+} from "../../../util/pathConstants";
 
 const PrivacyAndSafety: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -41,7 +54,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
             </div>
             <div className={classnames(classes.listWrapper, globalClasses.listItemWrapper)}>
                 <List component="nav" aria-label="main mailbox folders">
-                    <Link to={"/settings/privacy_and_safety/audience"}>
+                    <Link to={SETTINGS_PRIVACY_AND_SAFETY_AUDIENCE}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {AudienceIcon}
@@ -59,7 +72,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </Link>
-                    <Link to={"/settings/privacy_and_safety/your_tweets"}>
+                    <Link to={SETTINGS_PRIVACY_AND_SAFETY_YOUR_TWEETS}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {QuoteTweetIcon}
@@ -77,7 +90,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </Link>
-                    <Link to={"/settings/privacy_and_safety/content_you_see"}>
+                    <Link to={SETTINGS_PRIVACY_AND_SAFETY_CONTENT_YOU_SEE}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {ContentIcon}
@@ -96,7 +109,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </Link>
-                    <Link to={"/settings/privacy_and_safety/mute_and_block"}>
+                    <Link to={SETTINGS_PRIVACY_AND_SAFETY_MUTE_AND_BLOCK}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {MuteIcon}
@@ -114,7 +127,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </Link>
-                    <Link to={"/settings/privacy_and_safety/direct_messages"}>
+                    <Link to={SETTINGS_PRIVACY_AND_SAFETY_DIRECT_MESSAGES}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {MessagesIcon}
@@ -132,7 +145,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </Link>
-                    <Link to={"/settings/privacy_and_safety/spaces"}>
+                    <Link to={SETTINGS_PRIVACY_AND_SAFETY_SPACES}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {SpacesIcon}
@@ -150,7 +163,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </Link>
-                    <Link to={"/settings/privacy_and_safety/contacts"}>
+                    <Link to={SETTINGS_PRIVACY_AND_SAFETY_CONTACTS}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {DiscoverIcon}
@@ -174,7 +187,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                             Data sharing and off-Twitter activity
                         </Typography>
                     </div>
-                    <Link to={"/settings/privacy_and_safety/ads_preferences"}>
+                    <Link to={SETTINGS_PRIVACY_AND_SAFETY_ADS_PREFERENCES}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {AdsIcon}
@@ -192,7 +205,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </Link>
-                    <Link to={"/settings/privacy_and_safety/off_twitter_activity"}>
+                    <Link to={SETTINGS_PRIVACY_AND_SAFETY_OFF_TWITTER_ACTIVITY}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {OffTwitterIcon}
@@ -211,7 +224,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </Link>
-                    <Link to={"/settings/privacy_and_safety/data_sharing_with_business_partners"}>
+                    <Link to={SETTINGS_PRIVACY_AND_SAFETY_DATA_SHARING_WITH_BUSINESS_PARTNERS}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {DataSharingIcon}
@@ -229,7 +242,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </Link>
-                    <Link to={"/settings/privacy_and_safety/location_information"}>
+                    <Link to={SETTINGS_PRIVACY_AND_SAFETY_LOCATION_INFORMATION}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {LocationIcon}

@@ -9,6 +9,7 @@ import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {SameFollowerResponse} from "../../store/types/common";
 import {UserDetailResponse, UserProfileResponse} from "../../store/types/user";
+import {USER_FOLLOWERS_YOU_FOLLOW} from "../../util/pathConstants";
 
 interface FollowerGroupProps {
     user?: UserProfileResponse | UserDetailResponse,
@@ -24,7 +25,7 @@ const FollowerGroup: FC<FollowerGroupProps> = ({user, sameFollowers}): ReactElem
             {(user?.id !== myProfile?.id) && (
                 (sameFollowers?.length !== 0) ? (
                     <div className={classes.followedTextInfoWrapper}>
-                        <Link to={`/user/followers_you_follow/${user?.id}`}>
+                        <Link to={`${USER_FOLLOWERS_YOU_FOLLOW}/${user?.id}`}>
                             <AvatarGroup>
                                 {sameFollowers?.slice(0, 3).map(follower => (
                                     <Avatar

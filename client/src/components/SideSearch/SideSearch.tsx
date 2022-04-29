@@ -5,6 +5,7 @@ import {InputAdornment,} from "@material-ui/core";
 import {SideSearchTextField} from "../SearchTextField/SideSearchTextField";
 import {SearchIcon} from "../../icons";
 import {useSideSearchStyles} from "./SideSearchStyles";
+import {SEARCH} from "../../util/pathConstants";
 
 const SideSearch: FC = (): ReactElement => {
     const classes = useSideSearchStyles();
@@ -13,7 +14,7 @@ const SideSearch: FC = (): ReactElement => {
 
     const handleClickSearch = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-        history.push({pathname: "/search", state: {text: encodeURIComponent(text)}});
+        history.push({pathname: SEARCH, state: {text: encodeURIComponent(text)}});
     };
 
     return (

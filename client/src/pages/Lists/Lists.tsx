@@ -26,6 +26,7 @@ import Spinner from "../../components/Spinner/Spinner";
 import {HoverActionProps, HoverActions, withHoverAction} from "../../hoc/withHoverAction";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
+import {LISTS_MEMBERSHIPS, SUGGESTED} from "../../util/pathConstants";
 
 const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, handleLeaveAction}): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -109,7 +110,7 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
                                     <HoverAction visible={visibleHoverAction?.visibleMoreAction} actionText={"More"}/>
                                 </IconButton>
                                 {openPopover ? (
-                                    <Link to={`/lists/memberships/${myProfile?.id}`} className={classes.dropdownLink}>
+                                    <Link to={`${LISTS_MEMBERSHIPS}/${myProfile?.id}`} className={classes.dropdownLink}>
                                         <div className={classes.dropdown}>
                                             <span className={classes.textIcon}>
                                                 {ListsIcon}
@@ -158,7 +159,7 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
                         <ListsItem key={list.id} item={list} listIndex={index}/>
                     ))
                 )}
-                <Link to={"/suggested"} className={globalClasses.link}>
+                <Link to={SUGGESTED} className={globalClasses.link}>
                     <Typography variant={"body1"} component={"div"} className={classes.showMore}>
                         Show more
                     </Typography>

@@ -9,6 +9,7 @@ import {LoadingStatus} from "../../../../store/types";
 import {mockPinnedLists, mockUserFullList} from "../../../../util/mockData/mockData";
 import PinnedListsItem from "../PinnedListsItem";
 import PopperListWindow from "../../PopperListWindow/PopperListWindow";
+import {LISTS} from "../../../../util/pathConstants";
 
 describe("PinnedListsItem", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -48,6 +49,6 @@ describe("PinnedListsItem", () => {
 
         expect(wrapper.find("#lockIcon").exists()).toBeTruthy();
         expect(pushSpy).toHaveBeenCalled();
-        expect(pushSpy).toHaveBeenCalledWith(`/lists/${mockPinnedList.id}`);
+        expect(pushSpy).toHaveBeenCalledWith(`${LISTS}/${mockPinnedList.id}`);
     });
 });

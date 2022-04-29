@@ -10,6 +10,7 @@ import {HoverUserProps, withHoverUser} from "../../../../hoc/withHoverUser";
 import PopperUserWindow from "../../../PopperUserWindow/PopperUserWindow";
 import {FollowerUserResponse} from "../../../../store/types/user";
 import {acceptFollowRequest, declineFollowRequest} from "../../../../store/ducks/followerRequests/actionCreators";
+import {PROFILE} from "../../../../util/pathConstants";
 
 interface FollowerRequestsItemProps {
     user: FollowerUserResponse,
@@ -31,7 +32,7 @@ const FollowerRequestsItem: FC<FollowerRequestsItemProps & HoverUserProps> = (
 
     const onClickUser = () => {
         onClose();
-        history.push(`/profile/${user?.id}`);
+        history.push(`${PROFILE}/${user?.id}`);
     };
 
     const handleDeclineFollowerRequest = (event: MouseEvent<HTMLButtonElement>): void => {

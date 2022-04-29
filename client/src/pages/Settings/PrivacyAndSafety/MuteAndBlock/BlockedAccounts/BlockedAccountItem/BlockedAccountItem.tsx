@@ -11,6 +11,7 @@ import {SnackbarProps, withSnackbar} from "../../../../../../hoc/withSnackbar";
 import {useGlobalStyles} from "../../../../../../util/globalClasses";
 import classnames from "classnames";
 import {BlockedUserResponse} from "../../../../../../store/types/user";
+import {PROFILE} from "../../../../../../util/pathConstants";
 
 interface BlockedAccountItemProps {
     blockedUser: BlockedUserResponse;
@@ -38,7 +39,7 @@ const BlockedAccountItem: FC<BlockedAccountItemProps & SnackbarProps> = (
     };
 
     return (
-        <Link to={`/profile/${blockedUser?.id}`} className={globalClasses.link}>
+        <Link to={`${PROFILE}/${blockedUser?.id}`} className={globalClasses.link}>
             <Paper className={classes.container}>
                 <Avatar
                     className={classnames(classes.listAvatar, globalClasses.avatar)}

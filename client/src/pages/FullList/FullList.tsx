@@ -26,6 +26,7 @@ import {
     selectPagesCount,
     selectTweetsItems
 } from "../../store/ducks/tweets/selectors";
+import {PROFILE} from "../../util/pathConstants";
 
 const FullList: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -159,7 +160,7 @@ const FullList: FC = (): ReactElement => {
                                 <Typography variant={"body1"} component={"div"}>
                                     {list?.description}
                                 </Typography>
-                                <Link to={`/profile/${list?.listOwner.id}`} className={classes.listOwnerLink}>
+                                <Link to={`${PROFILE}/${list?.listOwner.id}`} className={classes.listOwnerLink}>
                                     <div className={classes.listOwnerWrapper}>
                                         <Avatar
                                             className={classes.listOwnerAvatar}

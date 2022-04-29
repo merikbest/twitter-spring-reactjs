@@ -9,6 +9,7 @@ import CheckEmailCode from "../CheckEmailCode";
 import {ForgotPasswordTextField} from "../../ForgotPasswordTextField/ForgotPasswordTextField";
 import {API_URL} from "../../../../util/url";
 import {mockUser} from "../../../../util/mockData/mockData";
+import { ACCOUNT_FORGOT_RESET_PASSWORD } from "../../../../util/pathConstants";
 
 describe("CheckEmailCode", () => {
     const mockStore = createMockRootState();
@@ -39,7 +40,7 @@ describe("CheckEmailCode", () => {
             wrapper.update();
             done();
             expect(pushSpy).toHaveBeenCalled();
-            expect(pushSpy).toHaveBeenCalledWith({pathname: "/account/forgot/reset_password", state: {user: mockUser}});
+            expect(pushSpy).toHaveBeenCalledWith({pathname: ACCOUNT_FORGOT_RESET_PASSWORD, state: {user: mockUser}});
         });
     });
     

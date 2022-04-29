@@ -10,6 +10,7 @@ import {followList, unfollowList} from "../../../store/ducks/lists/actionCreator
 import MembersAndFollowersModal from "../../FullList/EditListModal/MembersAndFollowersModal/MembersAndFollowersModal";
 import {BaseListResponse} from "../../../store/types/lists";
 import {selectListDetailItem} from "../../../store/ducks/listDetail/selectors";
+import {PROFILE} from "../../../util/pathConstants";
 
 interface PopperListWindowProps {
     list?: BaseListResponse;
@@ -74,7 +75,7 @@ const PopperListWindow: FC<PopperListWindowProps> = ({visible}): ReactElement | 
                 <Typography variant={"body1"} component={"div"} className={classes.popperListDescription}>
                     {list?.description}
                 </Typography>
-                <Link to={`/profile/${list?.listOwner.id}`} className={classes.popperListOwnerLink}>
+                <Link to={`${PROFILE}/${list?.listOwner.id}`} className={classes.popperListOwnerLink}>
                     <div className={classes.popperListOwnerWrapper}>
                         <Avatar
                             className={classes.popperListOwnerAvatar}

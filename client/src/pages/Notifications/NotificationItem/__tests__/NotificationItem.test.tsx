@@ -11,6 +11,7 @@ import {mockNotifications} from "../../../../util/mockData/mockData";
 import {NotificationResponse} from "../../../../store/types/notification";
 import {DEFAULT_PROFILE_IMG} from "../../../../util/url";
 import PopperUserWindow from "../../../../components/PopperUserWindow/PopperUserWindow";
+import {NOTIFICATION} from "../../../../util/pathConstants";
 
 describe("NotificationItem", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -29,7 +30,7 @@ describe("NotificationItem", () => {
                 handleClickUser={jest.fn()}
             />, mockStore);
 
-        expect(wrapper.find(Link).prop("to")).toBe(`/profile/${mockNotificationFollow.user.id}`);
+        expect(wrapper.find(Link).prop("to")).toBe(`${PROFILE}/${mockNotificationFollow.user.id}`);
         expect(wrapper.find("#follow").exists()).toBe(true);
         expect(wrapper.find(Avatar).prop("alt")).toBe(`avatar ${mockNotificationFollow.id}`);
         expect(wrapper.find(Avatar).prop("src")).toBe(mockNotificationFollow.user.avatar.src);
@@ -44,7 +45,7 @@ describe("NotificationItem", () => {
                 handleClickUser={jest.fn()}
             />, mockStore);
 
-        expect(wrapper.find(Link).prop("to")).toBe(`/notification/${mockNotificationLike.id}`);
+        expect(wrapper.find(Link).prop("to")).toBe(`${NOTIFICATION}/${mockNotificationLike.id}`);
         expect(wrapper.find("#like").exists()).toBe(true);
         expect(wrapper.text().includes(`${mockNotificationLike.user.username} liked your Tweet`)).toBe(true);
         expect(wrapper.text().includes("#myCat")).toBe(true);

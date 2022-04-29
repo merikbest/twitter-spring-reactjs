@@ -15,6 +15,7 @@ import {SnackbarProps, withSnackbar} from "../../../../../../hoc/withSnackbar";
 import {HoverActionProps, HoverActions, withHoverAction} from "../../../../../../hoc/withHoverAction";
 import {useGlobalStyles} from "../../../../../../util/globalClasses";
 import {MutedUserResponse} from "../../../../../../store/types/user";
+import {PROFILE} from "../../../../../../util/pathConstants";
 
 interface MutedAccountItemProps {
     mutedUser?: MutedUserResponse;
@@ -45,7 +46,7 @@ const MutedAccountItem: FC<MutedAccountItemProps & SnackbarProps & HoverActionPr
 
     return (
         <Paper className={classes.container}>
-            <Link to={`/profile/${mutedUser?.id}`}>
+            <Link to={`${PROFILE}/${mutedUser?.id}`}>
                 <Avatar
                     className={classnames(classes.listAvatar, globalClasses.avatar)}
                     src={mutedUser?.avatar?.src ? mutedUser?.avatar.src : DEFAULT_PROFILE_IMG}
@@ -53,7 +54,7 @@ const MutedAccountItem: FC<MutedAccountItemProps & SnackbarProps & HoverActionPr
             </Link>
             <div style={{flex: 1}}>
                 <div className={classes.userInfoWrapper}>
-                    <Link to={`/profile/${mutedUser?.id}`} className={globalClasses.link}>
+                    <Link to={`${PROFILE}/${mutedUser?.id}`} className={globalClasses.link}>
                         <div className={classes.userInfo}>
                             <div>
                                 <Typography variant={"h6"} component={"span"}>

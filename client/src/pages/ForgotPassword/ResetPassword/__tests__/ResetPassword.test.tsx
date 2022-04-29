@@ -9,6 +9,7 @@ import ResetPassword from "../ResetPassword";
 import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
 import {ForgotPasswordTextField} from "../../ForgotPasswordTextField/ForgotPasswordTextField";
 import {API_URL} from "../../../../util/url";
+import {ACCOUNT_FORGOT_PASSWORD_RESET_COMPLETE, ACCOUNT_FORGOT_RESET_PASSWORD} from "../../../../util/pathConstants";
 
 describe("ResetPassword", () => {
     const mockStore = createMockRootState();
@@ -17,7 +18,7 @@ describe("ResetPassword", () => {
 
     beforeEach(() => {
         jest.spyOn(routeData, "useLocation").mockReturnValue({
-            pathname: "/account/forgot/reset_password", hash: "", search: "", state: {user: mockUser}
+            pathname: ACCOUNT_FORGOT_RESET_PASSWORD, hash: "", search: "", state: {user: mockUser}
         });
     });
 
@@ -70,7 +71,7 @@ describe("ResetPassword", () => {
             wrapper.update();
             done();
             expect(pushSpy).toHaveBeenCalled();
-            expect(pushSpy).toHaveBeenCalledWith("/account/forgot/password_reset_complete");
+            expect(pushSpy).toHaveBeenCalledWith(ACCOUNT_FORGOT_PASSWORD_RESET_COMPLETE);
         });
     });
 });

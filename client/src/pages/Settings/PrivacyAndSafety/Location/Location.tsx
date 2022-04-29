@@ -5,6 +5,7 @@ import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 import {ArrowRightIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
+import {SETTINGS_PRIVACY_AND_SAFETY_LOCATION, SETTINGS_PRIVACY_AND_SAFETY_LOCATIONS} from "../../../../util/pathConstants";
 
 const Location: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -37,7 +38,7 @@ const Location: FC = (): ReactElement => {
                     </MuiLink>
                 </Typography>
             </div>
-            <Link to={"/settings/privacy_and_safety/locations"} className={globalClasses.linkWrapper}>
+            <Link to={SETTINGS_PRIVACY_AND_SAFETY_LOCATIONS} className={globalClasses.linkWrapper}>
                 <div className={globalClasses.contentLink}>
                     <Typography variant={"body1"} component={"span"}>
                         See places you’ve been
@@ -45,7 +46,7 @@ const Location: FC = (): ReactElement => {
                     {ArrowRightIcon}
                 </div>
             </Link>
-            <Link to={"/settings/privacy_and_safety/location"} className={globalClasses.linkWrapper}>
+            <Link to={SETTINGS_PRIVACY_AND_SAFETY_LOCATION} className={globalClasses.linkWrapper}>
                 <div className={globalClasses.contentLink}>
                     <Typography variant={"body1"} component={"span"}>
                         Add location information to your Tweets

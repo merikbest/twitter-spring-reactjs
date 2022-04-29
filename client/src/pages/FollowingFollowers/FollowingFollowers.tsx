@@ -17,6 +17,7 @@ import {fetchFollowers, fetchFollowings, resetUsersState} from "../../store/duck
 import UsersItem, {UserItemSize} from "../../components/UsersItem/UsersItem";
 import {useGlobalStyles} from "../../util/globalClasses";
 import classnames from "classnames";
+import {HOME_CONNECT, USER} from "../../util/pathConstants";
 
 const FollowingFollowers: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -62,11 +63,11 @@ const FollowingFollowers: FC = (): ReactElement => {
     };
 
     const handleShowFollowing = (): void => {
-        history.push(`/user/${userProfile?.id}/following`)
+        history.push(`${USER}/${userProfile?.id}/following`)
     };
 
     const handleShowFollowers = (): void => {
-        history.push(`/user/${userProfile?.id}/followers`)
+        history.push(`${USER}/${userProfile?.id}/followers`)
     };
 
     return (
@@ -121,7 +122,7 @@ const FollowingFollowers: FC = (): ReactElement => {
                                 </Typography>
                                 {(isMyProfile) && (
                                     <Button
-                                        to={"/home/connect"}
+                                        to={HOME_CONNECT}
                                         component={Link}
                                         variant="contained"
                                         color="primary"

@@ -6,6 +6,7 @@ import classnames from "classnames";
 import {useLoggedDevicesStyles} from "./LoggedDevicesStyles";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
+import {SETTINGS_PRIVACY_AND_SAFETY_OFF_TWITTER_ACTIVITY} from "../../../../../util/pathConstants";
 
 const LoggedDevices: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -34,7 +35,7 @@ const LoggedDevices: FC = (): ReactElement => {
                 </Typography>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`You can remove this information by disabling “Personalize based on your inferred identity” in your `}
-                    <MuiLink component={Link} variant="subtitle2" to={"/settings/privacy_and_safety/off_twitter_activity"}>
+                    <MuiLink component={Link} variant="subtitle2" to={SETTINGS_PRIVACY_AND_SAFETY_OFF_TWITTER_ACTIVITY}>
                         Off-Twitter activity
                     </MuiLink> settings.
                 </Typography>
@@ -46,7 +47,7 @@ const LoggedDevices: FC = (): ReactElement => {
                 </Typography>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`You can remove this information by disabling “Personalize based on your inferred identity” in your `}
-                    <MuiLink component={Link} variant="subtitle2" to={"/settings/privacy_and_safety/off_twitter_activity"}>
+                    <MuiLink component={Link} variant="subtitle2" to={SETTINGS_PRIVACY_AND_SAFETY_OFF_TWITTER_ACTIVITY}>
                         Off-Twitter activity
                     </MuiLink> settings.
                 </Typography>
@@ -60,7 +61,7 @@ const LoggedDevices: FC = (): ReactElement => {
                     {`There are inferred hashes of email addresses that share common components with the email
                         address you have provided to Twitter. You can remove this information by disabling
                         “Personalize based on your inferred identity” in your `}
-                    <MuiLink component={Link} variant="subtitle2" to={"/settings/privacy_and_safety/off_twitter_activity"}>
+                    <MuiLink component={Link} variant="subtitle2" to={SETTINGS_PRIVACY_AND_SAFETY_OFF_TWITTER_ACTIVITY}>
                         Off-Twitter activity
                     </MuiLink> settings.
                 </Typography>

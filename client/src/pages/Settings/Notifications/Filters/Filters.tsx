@@ -5,6 +5,7 @@ import {Checkbox, Typography, Link as MuiLink} from "@material-ui/core";
 import {ArrowRightIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
+import {SETTINGS_PRIVACY_AND_SAFETY_ADVANCED_FILTERS} from "../../../../util/pathConstants";
 
 const Filters: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -36,7 +37,7 @@ const Filters: FC = (): ReactElement => {
                     </MuiLink>
                 </Typography>
             </div>
-            <Link to={"/settings/privacy_and_safety/advanced_filters"} className={globalClasses.linkWrapper}>
+            <Link to={SETTINGS_PRIVACY_AND_SAFETY_ADVANCED_FILTERS} className={globalClasses.linkWrapper}>
                 <div className={globalClasses.contentLink}>
                     <Typography variant={"body1"} component={"span"}>
                         Muted notifications

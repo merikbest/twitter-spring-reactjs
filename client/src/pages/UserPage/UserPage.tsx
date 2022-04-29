@@ -85,6 +85,7 @@ import HoverAction from "../../components/HoverAction/HoverAction";
 import FollowerGroup from "../../components/FollowerGroup/FollowerGroup";
 import UserNotFound from "./UserNotFound/UserNotFound";
 import {useGlobalStyles} from "../../util/globalClasses";
+import {MESSAGES, PROFILE_HEADER_PHOTO, PROFILE_PHOTO, USER} from "../../util/pathConstants";
 
 interface LinkToFollowersProps {
     children: ReactNode;
@@ -242,7 +243,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
         if (userProfile?.isPrivateProfile && linkTo && userProfile?.id !== myProfile?.id) {
             return <div className={classes.followLink}>{children}</div>;
         } else {
-            return <Link to={`/user/${userProfile?.id}/${linkTo}`} className={classes.followLink}>{children}</Link>
+            return <Link to={`${USER}/${userProfile?.id}/${linkTo}`} className={classes.followLink}>{children}</Link>
         }
     };
 
@@ -280,7 +281,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
 
     const handleClickAddUserToChat = (): void => {
         dispatch(createChat(userProfile?.id!));
-        history.push("/messages");
+        history.push(MESSAGES);
     };
 
     const onMuteUser = (): void => {
@@ -341,7 +342,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                         <div className={classes.wallpaper}>
                             {userProfile?.wallpaper?.src && (
                                 <Link to={{
-                                    pathname: `/profile/header_photo/${userProfile?.id}`,
+                                    pathname: `${PROFILE_HEADER_PHOTO}/${userProfile?.id}`,
                                     state: {
                                         background: location,
                                         imageSrc: userProfile?.wallpaper?.src
@@ -357,7 +358,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                         </div>
                         <div className={classes.info}>
                             <Link to={{
-                                pathname: `/profile/photo/${userProfile?.id}`, 
+                                pathname: `${PROFILE_PHOTO}/${userProfile?.id}`, 
                                 state: {
                                     background: location, 
                                     imageSrc: userProfile?.avatar?.src ? userProfile?.avatar.src : DEFAULT_PROFILE_IMG

@@ -7,6 +7,12 @@ import {ArrowRightIcon} from "../../../../icons";
 import {setUsers} from "../../../../store/ducks/users/actionCreators";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
+import {
+    SETTINGS_PRIVACY_AND_SAFETY_ADVANCED_FILTERS,
+    SETTINGS_PRIVACY_AND_SAFETY_BLOCKED,
+    SETTINGS_PRIVACY_AND_SAFETY_MUTED,
+    SETTINGS_PRIVACY_AND_SAFETY_MUTED_KEYWORDS
+} from "../../../../util/pathConstants";
 
 const MuteAndBlock: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -24,7 +30,7 @@ const MuteAndBlock: FC = (): ReactElement => {
                 </Typography>
             </div>
             <div>
-                <Link to={"/settings/privacy_and_safety/blocked"} className={globalClasses.linkWrapper}>
+                <Link to={SETTINGS_PRIVACY_AND_SAFETY_BLOCKED} className={globalClasses.linkWrapper}>
                     <div className={globalClasses.contentLink}>
                         <Typography variant={"body1"} component={"span"}>
                             Blocked accounts
@@ -32,7 +38,7 @@ const MuteAndBlock: FC = (): ReactElement => {
                         {ArrowRightIcon}
                     </div>
                 </Link>
-                <Link to={"/settings/privacy_and_safety/muted"} className={globalClasses.linkWrapper}>
+                <Link to={SETTINGS_PRIVACY_AND_SAFETY_MUTED} className={globalClasses.linkWrapper}>
                     <div className={globalClasses.contentLink}>
                         <Typography variant={"body1"} component={"span"}>
                             Muted accounts
@@ -40,7 +46,7 @@ const MuteAndBlock: FC = (): ReactElement => {
                         {ArrowRightIcon}
                     </div>
                 </Link>
-                <Link to={"/settings/privacy_and_safety/muted_keywords"} className={globalClasses.linkWrapper}>
+                <Link to={SETTINGS_PRIVACY_AND_SAFETY_MUTED_KEYWORDS} className={globalClasses.linkWrapper}>
                     <div className={globalClasses.contentLink}>
                         <Typography variant={"body1"} component={"span"}>
                             Muted words
@@ -48,7 +54,7 @@ const MuteAndBlock: FC = (): ReactElement => {
                         {ArrowRightIcon}
                     </div>
                 </Link>
-                <Link to={"/settings/privacy_and_safety/advanced_filters"} className={globalClasses.linkWrapper}>
+                <Link to={SETTINGS_PRIVACY_AND_SAFETY_ADVANCED_FILTERS} className={globalClasses.linkWrapper}>
                     <div className={globalClasses.contentLink}>
                         <Typography variant={"body1"} component={"span"}>
                             Muted notifications

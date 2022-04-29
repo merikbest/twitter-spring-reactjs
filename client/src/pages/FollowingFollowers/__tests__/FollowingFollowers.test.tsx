@@ -18,6 +18,7 @@ import UsersItem from "../../../components/UsersItem/UsersItem";
 import {RootState} from "../../../store/store";
 import {UserProfileActionsType} from "../../../store/ducks/userProfile/contracts/actionTypes";
 import {UsersSearchActionsType} from "../../../store/ducks/usersSearch/contracts/actionTypes";
+import {USER} from "../../../util/pathConstants";
 
 describe("FollowingFollowers", () => {
     const mockStore: RootState = createMockRootState(LoadingStatus.LOADED);
@@ -109,7 +110,7 @@ describe("FollowingFollowers", () => {
         tab.simulate("click");
 
         expect(pushSpy).toHaveBeenCalled();
-        expect(pushSpy).toHaveBeenCalledWith(`/user/${mockMyProfileId}/following`);
+        expect(pushSpy).toHaveBeenCalledWith(`${USER}/${mockMyProfileId}/following`);
         expect(wrapper.text().includes(mockMyProfile.fullName)).toBe(true);
         expect(wrapper.text().includes(`@${mockMyProfile.username}`)).toBe(true);
         expect(wrapper.find(Tab).at(0).prop("selected")).toBe(true);
@@ -129,7 +130,7 @@ describe("FollowingFollowers", () => {
         tab.simulate("click");
 
         expect(pushSpy).toHaveBeenCalled();
-        expect(pushSpy).toHaveBeenCalledWith(`/user/${mockMyProfileId}/followers`);
+        expect(pushSpy).toHaveBeenCalledWith(`${USER}/${mockMyProfileId}/followers`);
         expect(wrapper.text().includes(mockMyProfile.fullName)).toBe(true);
         expect(wrapper.text().includes(`@${mockMyProfile.username}`)).toBe(true);
         expect(wrapper.find(Tab).at(1).prop("selected")).toBe(true);

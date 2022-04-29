@@ -59,6 +59,7 @@ import {HoverUserProps, withHoverUser} from "../../hoc/withHoverUser";
 import {useGlobalStyles} from "../../util/globalClasses";
 import classnames from "classnames";
 import TweetActionResult, {TweetActionResults} from "../../components/TweetActionResult/TweetActionResult";
+import {MODAL, PROFILE} from "../../util/pathConstants";
 
 let stompClient: CompatClient | null = null;
 
@@ -186,7 +187,7 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                                 onMouseEnter={() => handleHoverPopper!(tweetData.user.id)}
                                 onMouseLeave={handleLeavePopper}
                             >
-                                <Link to={`/profile/${tweetData.user.id}`}>
+                                <Link to={`${PROFILE}/${tweetData.user.id}`}>
                                     <Typography variant={"h6"} component={"div"}>
                                         {tweetData.user.fullName}
                                     </Typography>
@@ -211,7 +212,7 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                     <Typography variant={"h3"} className={classes.textWrapper}>
                         {textFormatter(tweetData.text)}
                         {(tweetData.images?.length !== 0) && (
-                            <Link to={{pathname: `/modal/${params.id}`, state: {background: location}}}>
+                            <Link to={{pathname: `${MODAL}/${params.id}`, state: {background: location}}}>
                                 <div className={classes.image}>
                                     <img src={image?.src} alt={image?.src}/>
                                 </div>
@@ -367,7 +368,7 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                         <>
                             <Typography variant={"subtitle1"} className={classes.replyWrapper}>
                                 {"Replying to "}
-                                <Link to={`/profile/${tweetData.user.id}`}>
+                                <Link to={`${PROFILE}/${tweetData.user.id}`}>
                                     @{tweetData.user.username}
                                 </Link>
                             </Typography>

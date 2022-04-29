@@ -3,6 +3,7 @@ import {Button} from "@material-ui/core";
 import {mountWithStore} from "../../../util/testHelper";
 import Authentication from "../Authentication";
 import RegistrationModal from "../../RegistrationModal/RegistrationModal";
+import {ACCOUNT_LOGIN} from "../../../util/pathConstants";
 
 const mockHistoryPush = jest.fn();
 
@@ -32,6 +33,6 @@ describe("Authentication", () => {
     it("should route to Login page on click Log In button", () => {
         const wrapper = mountWithStore(<Authentication/>);
         wrapper.find(Button).at(1).simulate("click");
-        expect(mockHistoryPush).toHaveBeenCalledWith("/account/login");
+        expect(mockHistoryPush).toHaveBeenCalledWith(ACCOUNT_LOGIN);
     });
 });

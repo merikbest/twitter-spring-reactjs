@@ -37,6 +37,7 @@ import {SnackbarProps, withSnackbar} from "../../hoc/withSnackbar";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {QuoteTweetResponse, TweetResponse} from "../../store/types/tweet";
 import {Image} from "../../store/types/common";
+import {MODAL, PROFILE} from "../../util/pathConstants";
 
 export enum AddTweetFormAction {
     MEDIA = "MEDIA",
@@ -343,7 +344,7 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
     return (
         <div>
             <div className={classes.content}>
-                <Link to={`/profile/${userData?.id}`}>
+                <Link to={`${PROFILE}/${userData?.id}`}>
                     <Avatar
                         className={globalClasses.avatar}
                         alt={`avatar ${userData?.id}`}
@@ -370,7 +371,7 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
                 </div>
             </div>
             {(images.length !== 0) && (
-                <div className={(location.pathname.includes("/modal")) ? classes.imageSmall : classes.image}>
+                <div className={(location.pathname.includes(MODAL)) ? classes.imageSmall : classes.image}>
                     <img src={images[0].src} alt={images[0].src}/>
                     <IconButton
                         className={classes.imageRemove}

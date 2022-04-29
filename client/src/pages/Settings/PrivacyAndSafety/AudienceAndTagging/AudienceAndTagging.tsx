@@ -11,6 +11,7 @@ import {LoadingStatus} from "../../../../store/types";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import classnames from "classnames";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
+import {SETTINGS_PRIVACY_AND_SAFETY_TAGGING} from "../../../../util/pathConstants";
 
 const AudienceAndTagging: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -60,7 +61,7 @@ const AudienceAndTagging: FC = (): ReactElement => {
                     </MuiLink>
                 </Typography>
             </div>
-            <Link to={"/settings/privacy_and_safety/tagging"} className={globalClasses.linkWrapper}>
+            <Link to={SETTINGS_PRIVACY_AND_SAFETY_TAGGING} className={globalClasses.linkWrapper}>
                 <div className={classnames(globalClasses.contentLink, classes.photoTaggingLink)}>
                     <div className={classes.photoTagInfo}>
                         <Typography variant={"body1"} component={"div"}>

@@ -4,6 +4,7 @@ import {Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useGlobalStyles} from "../../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
+import {SETTINGS_SECURITY_CONNECTED_APPS} from "../../../../../util/pathConstants";
 
 const AccountAccessHistory: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -13,7 +14,7 @@ const AccountAccessHistory: FC = (): ReactElement => {
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {"If you see any suspicious activity from an app, go to "}
-                    <MuiLink variant="subtitle2" to={"/settings/security/connected_apps"} component={Link}>
+                    <MuiLink variant="subtitle2" to={SETTINGS_SECURITY_CONNECTED_APPS} component={Link}>
                         Connected apps
                     </MuiLink>
                     {" to revoke its access. In some cases the IP location may differ from your physical location. "}

@@ -4,6 +4,7 @@ import {Button, Link as MuiLink, Radio, Typography} from "@material-ui/core";
 
 import {AuthApi} from "../../../services/api/authApi";
 import {useResetPasswordOptionStyles} from "./ResetPasswordOptionStyles";
+import {ACCOUNT_FORGOT_CONFIRM_PIN_RESET} from "../../../util/pathConstants";
 
 const ResetPasswordOption: FC = (): ReactElement => {
     const classes = useResetPasswordOptionStyles();
@@ -16,7 +17,7 @@ const ResetPasswordOption: FC = (): ReactElement => {
         setIsLoading(true);
         AuthApi.sendPasswordResetCode({email: location.state.email})
             .then(() => {
-                history.push("/account/forgot/confirm_pin_reset");
+                history.push(ACCOUNT_FORGOT_CONFIRM_PIN_RESET);
                 setIsLoading(false);
             })
             .catch((error) => {

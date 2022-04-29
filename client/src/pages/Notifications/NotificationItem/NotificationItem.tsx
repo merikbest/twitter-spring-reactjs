@@ -11,6 +11,7 @@ import {DEFAULT_PROFILE_IMG} from "../../../util/url";
 import PopperUserWindow from "../../../components/PopperUserWindow/PopperUserWindow";
 import {textFormatter} from "../../../util/textFormatter";
 import {HoverUserProps, withHoverUser} from "../../../hoc/withHoverUser";
+import {NOTIFICATION, PROFILE} from "../../../util/pathConstants";
 
 export interface NotificationItemProps {
     notification: NotificationResponse;
@@ -30,8 +31,8 @@ const NotificationItem: FC<NotificationItemProps & HoverUserProps> = (
 
     return (
         <Link to={notification.notificationType !== NotificationType.FOLLOW
-                ? `/notification/${notification.id}`
-                : `/profile/${notification.user.id}`}
+                ? `${NOTIFICATION}/${notification.id}`
+                : `${PROFILE}/${notification.user.id}`}
         >
             <Paper className={classes.notificationWrapper} variant="outlined">
                 <div className={classes.notificationIcon}>
@@ -48,7 +49,7 @@ const NotificationItem: FC<NotificationItemProps & HoverUserProps> = (
                 <div style={{flex: 1}}>
                     <a 
                         id={"clickUser"}
-                        href={`/profile/${notification.user.id!}`}
+                        href={`${PROFILE}/${notification.user.id!}`}
                         onClick={event => handleClickUser(notification.user.id!, event)}
                         onMouseEnter={() => handleHoverPopper!(notification.user.id!)}
                         onMouseLeave={handleLeavePopper}

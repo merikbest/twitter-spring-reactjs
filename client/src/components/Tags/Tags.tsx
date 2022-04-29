@@ -11,6 +11,7 @@ import {TagResponse} from "../../store/types/tag";
 import {HoverActionProps, HoverActions, withHoverAction} from "../../hoc/withHoverAction";
 import HoverAction from "../HoverAction/HoverAction";
 import SettingsModal from "./SettingsModal/SettingsModal";
+import {HOME_TRENDS, SEARCH} from "../../util/pathConstants";
 
 const Tags: FC<HoverActionProps> = (
     {
@@ -53,7 +54,7 @@ const Tags: FC<HoverActionProps> = (
             ) : (
                 <List>
                     {tags.slice(0, 3).map((tag: TagResponse) => (
-                        <Link key={tag.id} to={{pathname: "/search", state: {tag: tag.tagName}}}>
+                        <Link key={tag.id} to={{pathname: SEARCH, state: {tag: tag.tagName}}}>
                             <ListItem className={classes.item}>
                                 <ListItemText
                                     primary={tag.tagName}
@@ -66,7 +67,7 @@ const Tags: FC<HoverActionProps> = (
                             </ListItem>
                         </Link>
                     ))}
-                    <Link to={"/home/trends"}>
+                    <Link to={HOME_TRENDS}>
                         <ListItem className={classes.footer}>
                             <Typography variant={"body1"} component={"span"}>
                                 Show more

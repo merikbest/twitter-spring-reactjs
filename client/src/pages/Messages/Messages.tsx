@@ -24,6 +24,7 @@ import {useGlobalStyles} from "../../util/globalClasses";
 import {ChatResponse, ParticipantResponse} from "../../store/types/chat";
 import ChatMessages from "./ChatMessages/ChatMessages";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
+import {MESSAGES, MESSAGES_SETTINGS} from "../../util/pathConstants";
 
 export enum MessagesAction {
     SETTINGS = "SETTINGS",
@@ -95,7 +96,7 @@ const Messages: FC = (): ReactElement => {
     }, [location.state?.removeParticipant]);
 
     useEffect(() => {
-        if (location.pathname === "/messages") {
+        if (location.pathname === MESSAGES) {
             if (participant !== undefined) {
                 handleLeaveAction();
                 dispatch(fetchChatMessages(chat?.id!));
@@ -131,7 +132,7 @@ const Messages: FC = (): ReactElement => {
     };
 
     const handleListItemClick = (chat: ChatResponse): void => {
-        history.push("/messages");
+        history.push(MESSAGES);
         dispatch(fetchChatMessages(chat?.id!));
         dispatch(fetchReadMessages(chat?.id!));
         setParticipant((chat.participants[0].user.id === myProfile?.id) ? chat.participants[1] : chat.participants[0]);
@@ -175,7 +176,7 @@ const Messages: FC = (): ReactElement => {
                         </Typography>
                         <div className={classes.iconGroup}>
                             <div className={classes.icon}>
-                                <Link to={"/messages/settings"}>
+                                <Link to={MESSAGES_SETTINGS}>
                                     <IconButton
                                         onMouseEnter={() => handleHoverAction(MessagesAction.SETTINGS)}
                                         onMouseLeave={handleLeaveAction}
@@ -294,7 +295,7 @@ const Messages: FC = (): ReactElement => {
                 </Paper>
             </Grid>
             <Grid className={classes.grid} md={5} item>
-                <Route exact path="/messages/settings">
+                <Route exact path={MESSAGES_SETTINGS}>
                     <Paper className={classnames(globalClasses.pageContainer, classes.chatContainer)} variant="outlined">
                         <Paper className={classnames(globalClasses.pageHeader, classes.chatHeader)} variant="outlined">
                             <BackButton/>
@@ -307,14 +308,14 @@ const Messages: FC = (): ReactElement => {
                         </div>
                     </Paper>
                 </Route>
-                <Route exact path="/messages/:id/info">
+                <Route exact path={MESSAGES + "/:id/info"}>
                     <ConversationInfo
                         participantId={participant?.id}
                         chatId={chat?.id}
                         onBlockParticipant={onBlockParticipant}
                     />
                 </Route>
-                <Route exact path="/messages">
+                <Route exact path={MESSAGES}>
                     <ChatMessages
                         onOpenModalWindow={onOpenModalWindow}
                         visibleHoverAction={visibleHoverAction}

@@ -79,6 +79,7 @@ import {
     setFollowToNotificationInfo
 } from "../notifications/actionCreators";
 import {setBlockedUser, setMutedUser} from "../blockedAndMutedUsers/actionCreators";
+import {HOME, PROFILE} from '../../../util/pathConstants';
 
 export function* updateUserDataRequest({payload}: UpdateUserDataActionInterface) {
     try {
@@ -96,7 +97,7 @@ export function* fetchSignInRequest({payload}: FetchSignInActionInterface) {
         const data: AuthenticationResponse = yield call(AuthApi.signIn, payload);
         localStorage.setItem("token", data.token);
         yield put(setUserData(data.user));
-        payload.history.push("/home");
+        payload.history.push(HOME);
     } catch (error) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -108,7 +109,7 @@ export function* fetchSignUpRequest({payload}: FetchSignUpActionInterface) {
         const data: AuthenticationResponse = yield call(AuthApi.endRegistration, payload);
         localStorage.setItem("token", data.token);
         yield put(setUserData(data.user));
-        payload.history.push({pathname: `/profile/${data.user.id}`, state: {isRegistered: true}});
+        payload.history.push({pathname: `${PROFILE}/${data.user.id}`, state: {isRegistered: true}});
     } catch (error) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }

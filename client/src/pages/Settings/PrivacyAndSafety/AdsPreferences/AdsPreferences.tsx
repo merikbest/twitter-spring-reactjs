@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import {ArrowRightIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
+import {SETTINGS_PRIVACY_AND_SAFETY_AUDIENCES} from "../../../../util/pathConstants";
 
 const AdsPreferences: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -46,7 +47,7 @@ const AdsPreferences: FC = (): ReactElement => {
                     {ArrowRightIcon}
                 </div>
             {/*</Link>*/}
-            <Link to={"/settings/privacy_and_safety/audiences"} className={globalClasses.linkWrapper}>
+            <Link to={SETTINGS_PRIVACY_AND_SAFETY_AUDIENCES} className={globalClasses.linkWrapper}>
                 <div className={globalClasses.contentLink}>
                     <Typography variant={"body1"} component={"span"}>
                         Your advertiser list

@@ -14,6 +14,7 @@ import ListsItem from "../ListsItem/ListsItem";
 import CreateListsModal from "../CreateListsModal/CreateListsModal";
 import CloseButton from "../../../components/CloseButton/CloseButton";
 import HoverAction from "../../../components/HoverAction/HoverAction";
+import {LISTS_MEMBERSHIPS} from "../../../util/pathConstants";
 
 window.scrollTo = jest.fn();
 
@@ -34,7 +35,7 @@ describe("Lists", () => {
     beforeEach(() => {
         mockDispatchFn = mockDispatch();
         jest.spyOn(routeData, "useLocation").mockReturnValue({
-            pathname: "/lists", hash: "", search: "", state: ""
+            pathname: LISTS, hash: "", search: "", state: ""
         });
     });
 
@@ -95,7 +96,7 @@ describe("Lists", () => {
         const wrapper = mountWithStore(<Lists/>, mockListsStore);
         wrapper.find(IconButton).at(2).simulate("click");
 
-        expect(wrapper.find(Link).at(0).prop("to")).toBe(`/lists/memberships/${mockUser.id}`);
+        expect(wrapper.find(Link).at(0).prop("to")).toBe(`${LISTS_MEMBERSHIPS}/${mockUser.id}`);
         expect(wrapper.text().includes("Lists you’re on")).toBe(true);
     });
 

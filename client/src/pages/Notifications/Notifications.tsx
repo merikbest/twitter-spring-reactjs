@@ -21,6 +21,7 @@ import {useGlobalStyles} from "../../util/globalClasses";
 import NotificationItem from "./NotificationItem/NotificationItem";
 import NotificationAuthorItem from "./NotificationAuthorItem/NotificationAuthorItem";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
+import {NOTIFICATIONS_TIMELINE, PROFILE} from "../../util/pathConstants";
 
 const Notifications: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -49,7 +50,7 @@ const Notifications: FC = (): ReactElement => {
     const handleClickUser = (userId: number, event: React.MouseEvent<HTMLAnchorElement>): void => {
         event.preventDefault();
         event.stopPropagation();
-        history.push(`/profile/${userId}`);
+        history.push(`${PROFILE}/${userId}`);
     };
 
     return (
@@ -84,7 +85,7 @@ const Notifications: FC = (): ReactElement => {
                         ) : (
                             <div>
                                 {(tweetAuthors.length !== 0) && (
-                                    <Link to={"/notifications/timeline"}>
+                                    <Link to={NOTIFICATIONS_TIMELINE}>
                                         <Paper className={classes.notificationWrapper} variant="outlined">
                                             <div className={classes.notificationIcon}>
                                                 <span id={"notification"}>

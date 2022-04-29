@@ -27,6 +27,7 @@ import {useGlobalStyles} from "../../util/globalClasses";
 import classnames from "classnames";
 import TopTweetActions from "./TopTweetActions/TopTweetActions";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
+import {HOME, HOME_CONNECT, HOME_TRENDS, HOME_TWEET, SEARCH} from "../../util/pathConstants";
 
 const Home: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -44,7 +45,7 @@ const Home: FC = (): ReactElement => {
         dispatch(setTweetsLoadingState(LoadingStatus.NEVER));
         dispatch(fetchUserData());
 
-        if (location.pathname !== "/search") {
+        if (location.pathname !== SEARCH) {
             loadTweets();
         }
         document.body.style.overflow = 'unset';
@@ -91,7 +92,7 @@ const Home: FC = (): ReactElement => {
         >
             <Paper className={globalClasses.pageContainer} variant="outlined">
                 <Paper className={classnames(globalClasses.pageHeader, classes.header)} variant="outlined">
-                    <Route path='/home' exact>
+                    <Route path={HOME} exact>
                         <Typography variant="h5">
                             Home
                         </Typography>
@@ -101,7 +102,7 @@ const Home: FC = (): ReactElement => {
                             handleTopTweets={handleTopTweets}
                         />
                     </Route>
-                    <Route path="/home/tweet">
+                    <Route path={HOME_TWEET}>
                         <div>
                             <BackButton/>
                             <Typography variant="h5">
@@ -109,7 +110,7 @@ const Home: FC = (): ReactElement => {
                             </Typography>
                         </div>
                     </Route>
-                    <Route path="/home/connect">
+                    <Route path={HOME_CONNECT}>
                         <div>
                             <BackButton/>
                             <Typography variant="h5">
@@ -117,7 +118,7 @@ const Home: FC = (): ReactElement => {
                             </Typography>
                         </div>
                     </Route>
-                    <Route path="/home/trends">
+                    <Route path={HOME_TRENDS}>
                         <div>
                             <BackButton/>
                             <Typography variant="h5">
@@ -127,22 +128,22 @@ const Home: FC = (): ReactElement => {
                     </Route>
                 </Paper>
 
-                <Route path='/home' exact>
+                <Route path={HOME} exact>
                     <div className={classes.addForm}>
                         <AddTweetForm title={"What's happening?"} buttonName={"Tweet"}/>
                     </div>
                     <Divider/>
                 </Route>
 
-                <Route path="/home/connect" exact>
+                <Route path={HOME_CONNECT} exact>
                     <Connect/>
                 </Route>
 
-                <Route path="/home/trends" exact>
+                <Route path={HOME_TRENDS} exact>
                     <Trends/>
                 </Route>
 
-                <Route path='/home' exact>
+                <Route path={HOME} exact>
                     {!myProfile?.profileStarted ? (
                         <Welcome/>
                     ) : (
@@ -152,7 +153,7 @@ const Home: FC = (): ReactElement => {
                         </>
                     )}
                 </Route>
-                <Route path="/home/tweet/:id" exact>
+                <Route path={HOME_TWEET + "/:id"} exact>
                     <FullTweet/>
                 </Route>
             </Paper>

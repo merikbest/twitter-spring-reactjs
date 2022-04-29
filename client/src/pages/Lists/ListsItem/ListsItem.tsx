@@ -15,6 +15,7 @@ import {useGlobalStyles} from "../../../util/globalClasses";
 import {ListResponse, ListUserResponse} from "../../../store/types/lists";
 import {HoverListProps, withHoverList} from "../../../hoc/withHoverList";
 import PopperListWindow from "../PopperListWindow/PopperListWindow";
+import {LISTS} from "../../../util/pathConstants";
 
 interface ListsItemProps<T> {
     item?: T;
@@ -64,7 +65,7 @@ const ListsItem: FC<ListsItemProps<ListResponse | ListUserResponse> & HoverActio
     };
 
     return (
-        <Link to={`/lists/${list?.id}`} className={globalClasses.link}>
+        <Link to={`${LISTS}/${list?.id}`} className={globalClasses.link}>
             <Paper className={classes.container} style={{border: (listIndex === 2) ? 0 : 1}} variant="outlined">
                 <Avatar
                     variant="square"

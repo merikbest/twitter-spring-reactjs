@@ -24,6 +24,7 @@ import PopperUserWindow from "../../../components/PopperUserWindow/PopperUserWin
 import HoverAction from "../../../components/HoverAction/HoverAction";
 import YouTubeVideo from "../../../components/YouTubeVideo/YouTubeVideo";
 import TweetActionResult, {TweetActionResults} from "../../../components/TweetActionResult/TweetActionResult";
+import {PROFILE} from "../../../util/pathConstants";
 
 window.scrollTo = jest.fn();
 
@@ -55,7 +56,7 @@ describe("FullTweet", () => {
         expect(mockDispatchFn).nthCalledWith(1, {payload: 9, type: TweetActionType.FETCH_TWEET_DATA});
         expect(mockDispatchFn).nthCalledWith(2, {payload: 9, type: TweetActionType.FETCH_REPLIES});
         expect(wrapper.find(Avatar).at(0).prop("src")).toEqual(mockFullTweet.user.avatar.src);
-        expect(wrapper.find(Link).at(0).prop("to")).toBe(`/profile/${mockFullTweet.user.id}`);
+        expect(wrapper.find(Link).at(0).prop("to")).toBe(`${PROFILE}/${mockFullTweet.user.id}`);
         expect(wrapper.find("img").at(1).prop("src")).toBe(mockFullTweet.images[0].src);
         expect(wrapper.text().includes(mockFullTweet.user.fullName)).toBe(true);
         expect(wrapper.text().includes(`@${mockFullTweet.user.username}`)).toBe(true);

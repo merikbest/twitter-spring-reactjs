@@ -9,6 +9,7 @@ import {fetchTrends} from "../../store/ducks/tags/actionCreators";
 import {EditIcon} from "../../icons";
 import Spinner from "../../components/Spinner/Spinner";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
+import {SEARCH} from "../../util/pathConstants";
 
 const Trends: FC = (): ReactElement => {
     const classes = useTrendsStyles();
@@ -30,7 +31,7 @@ const Trends: FC = (): ReactElement => {
                 <List style={{paddingTop: 48,}}>
                     {trends.map(item => (
                         <div className={classes.item} key={item.id}>
-                            <Link to={{pathname: "/search", state: {tag: item.tagName}}}>
+                            <Link to={{pathname: SEARCH, state: {tag: item.tagName}}}>
                                 <ListItem>
                                     <ListItemText
                                         primary={item.tagName}

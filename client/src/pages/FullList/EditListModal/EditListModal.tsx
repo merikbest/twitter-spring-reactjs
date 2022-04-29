@@ -18,6 +18,7 @@ import {uploadImage} from "../../../util/uploadImage";
 import CloseButton from "../../../components/CloseButton/CloseButton";
 import {selectListItem} from "../../../store/ducks/list/selectors";
 import {Image} from "../../../store/types/common";
+import {LISTS} from "../../../util/pathConstants";
 
 interface EditListModalProps {
     visible?: boolean;
@@ -96,7 +97,7 @@ const EditListModal: FC<EditListModalProps> = ({visible, onClose}): ReactElement
     const onDeleteList = (): void => {
         setVisibleDeleteListModal(false);
         dispatch(deleteList(list?.id!));
-        history.push("/lists");
+        history.push(LISTS);
     };
 
     if (!visible) {

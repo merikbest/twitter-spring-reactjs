@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useResetPasswordSuccessStyles} from "./ResetPasswordSuccessStyles";
+import { ACCOUNT_LOGIN } from '../../../util/pathConstants';
 
 const ResetPasswordSuccess: FC = (): ReactElement => {
     const classes = useResetPasswordSuccessStyles();
@@ -40,7 +41,7 @@ const ResetPasswordSuccess: FC = (): ReactElement => {
                 </Typography>
             </div>
             <div className={classes.footer}>
-                <MuiLink variant="subtitle2" to={"/account/login"} component={Link}>
+                <MuiLink variant="subtitle2" to={ACCOUNT_LOGIN} component={Link}>
                     Continue to Twitter
                 </MuiLink>
             </div>

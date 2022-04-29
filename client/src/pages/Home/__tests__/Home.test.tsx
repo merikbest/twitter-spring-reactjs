@@ -13,6 +13,7 @@ import AddTweetForm from "../../../components/AddTweetForm/AddTweetForm";
 import TopTweetActions from "../TopTweetActions/TopTweetActions";
 import {mockUser} from "../../../util/mockData/mockData";
 import Welcome from "../../../components/Welcome/Welcome";
+import {HOME} from "../../../util/pathConstants";
 
 window.scrollTo = jest.fn();
 
@@ -24,11 +25,11 @@ describe("Home", () => {
     beforeEach(() => {
         mockDispatchFn = mockDispatch();
         jest.spyOn(routeData, "useLocation").mockReturnValue({
-            pathname: "/home", hash: "", search: "", state: ""
+            pathname: HOME, hash: "", search: "", state: ""
         });
         history = createMemoryHistory({
             initialEntries: [{
-                pathname: "/home",
+                pathname: HOME,
                 search: "",
                 hash: "",
                 state: undefined

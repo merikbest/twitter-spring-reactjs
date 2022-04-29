@@ -12,6 +12,7 @@ import {selectUserData} from "../../store/ducks/user/selectors";
 import Spinner from "../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {UserResponse} from "../../store/types/user";
+import {PROFILE, USER} from "../../util/pathConstants";
 
 const FollowersYouKnow: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -36,13 +37,13 @@ const FollowersYouKnow: FC = (): ReactElement => {
 
     useEffect(() => {
         if (userProfile?.isPrivateProfile) {
-            history.push(`/profile/${params.id}`);
+            history.push(`${PROFILE}/${params.id}`);
         }
     }, [userProfile]);
 
     useEffect(() => {
         if (parseInt(params.id) === myProfile?.id) {
-            history.push(`/user/${myProfile?.id}/followers`);
+            history.push(`${USER}/${myProfile?.id}/followers`);
         }
     }, [myProfile]);
 

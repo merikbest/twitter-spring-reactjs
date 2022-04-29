@@ -10,6 +10,7 @@ import {useLoginStyles} from "./LoginStyles";
 import {selectUserStatus} from "../../store/ducks/user/selectors";
 import {fetchSignIn, setUserLoadingStatus} from "../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../store/types";
+import {ACCOUNT_FORGOT, ACCOUNT_SIGNIN} from "../../util/pathConstants";
 
 export interface LoginProps {
     email: string;
@@ -90,13 +91,13 @@ const Login: FC = (): ReactElement => {
             </form>
             <div className={classes.footer}>
                 <Typography variant={"body1"} component={"span"}>
-                    <Link to={"/account/forgot"}>
+                    <Link to={ACCOUNT_FORGOT}>
                         Forgot password?
                     </Link>
                 </Typography>
                 {" · "}
                 <Typography variant={"body1"} component={"span"}>
-                    <Link to={"/account/signin"}>
+                    <Link to={ACCOUNT_SIGNIN}>
                         Sign up for Twitter
                     </Link>
                 </Typography>

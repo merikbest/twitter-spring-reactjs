@@ -10,6 +10,7 @@ import UsersItem, {UserItemSize} from "../UsersItem/UsersItem";
 import {useUsersStyles} from "./UsersStyles";
 import Spinner from "../Spinner/Spinner";
 import {resetUsersState} from "../../store/ducks/users/actionCreators";
+import {HOME_CONNECT} from "../../util/pathConstants";
 
 const Users: FC = (): ReactElement => {
     const classes = useUsersStyles();
@@ -20,12 +21,12 @@ const Users: FC = (): ReactElement => {
 
     const clickToConnect = () => {
         dispatch(resetUsersState());
-        history.push("/home/connect");
+        history.push(HOME_CONNECT);
     };
 
     return (
         <>
-            {(history.location.pathname !== "/home/connect") && (
+            {(history.location.pathname !== HOME_CONNECT) && (
                 <Paper className={classes.container}>
                     <Paper className={classes.header} variant="outlined">
                         <Typography variant={"h5"} component={"div"}>

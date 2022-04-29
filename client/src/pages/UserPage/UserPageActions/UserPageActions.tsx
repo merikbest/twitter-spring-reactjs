@@ -26,6 +26,7 @@ import HoverAction from "../../../components/HoverAction/HoverAction";
 import {HoverActions} from "../../../hoc/withHoverAction";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {UserProfileResponse} from "../../../store/types/user";
+import {LISTS_MEMBERSHIPS} from "../../../util/pathConstants";
 
 interface UserPageActionsProps {
     user: UserProfileResponse;
@@ -116,7 +117,7 @@ const UserPageActions: FC<UserPageActionsProps & SnackbarProps> = (
                                             Add/remove @{user.username} from Lists
                                         </Typography>
                                     </ListItem>
-                                    <Link to={`/lists/memberships/${user?.id}`} className={classes.routeLink}>
+                                    <Link to={`${LISTS_MEMBERSHIPS}/${user?.id}`} className={classes.routeLink}>
                                         <ListItem>
                                             <>{ListsIcon}</>
                                             <Typography component={"span"}>

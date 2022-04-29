@@ -8,6 +8,7 @@ import {useGlobalStyles} from "../../../util/globalClasses";
 import {PinnedListResponse} from "../../../store/types/lists";
 import {HoverListProps, withHoverList} from "../../../hoc/withHoverList";
 import PopperListWindow from "../PopperListWindow/PopperListWindow";
+import {LISTS} from "../../../util/pathConstants";
 
 interface PinnedListsItemProps {
     pinnedList?: PinnedListResponse;
@@ -25,7 +26,7 @@ const PinnedListsItem: FC<PinnedListsItemProps & HoverListProps> = (
     const classes = usePinnedListsItemStyles();
 
     return (
-        <Link to={`/lists/${pinnedList?.id}`} className={globalClasses.link}>
+        <Link to={`${LISTS}/${pinnedList?.id}`} className={globalClasses.link}>
             <div
                 id={"pinnedListWrapper"}
                 className={classes.pinnedListWrapper}

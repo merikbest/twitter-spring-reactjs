@@ -20,6 +20,7 @@ import BlockUserModal from "../../../components/BlockUserModal/BlockUserModal";
 import HoverAction from "../../../components/HoverAction/HoverAction";
 import {MessageInput} from "../MessageInput/MessageInput";
 import {PeopleSearchInput} from "../PeopleSearchInput/PeopleSearchInput";
+import {HOME, MESSAGES} from "../../../util/pathConstants";
 
 window.scrollTo = jest.fn();
 
@@ -70,7 +71,7 @@ describe("Messages", () => {
         wrapper.find(ListItem).at(0).simulate("click");
 
         expect(pushSpy).toHaveBeenCalled();
-        expect(pushSpy).toHaveBeenCalledWith("/messages");
+        expect(pushSpy).toHaveBeenCalledWith(MESSAGES);
         expect(wrapper.find(ListItem).at(0).prop("id")).toBe("selected");
         expect(mockDispatchFn).nthCalledWith(1, {type: ChatsActionsType.FETCH_CHATS});
         expect(mockDispatchFn).nthCalledWith(2, {type: ChatMessagesActionsType.RESET_CHAT_MESSAGES});
@@ -82,7 +83,7 @@ describe("Messages", () => {
 
     it("should reset chat participant", () => {
         jest.spyOn(routeData, "useLocation").mockReturnValue({
-            pathname: "/home", hash: "", search: "", state: {removeParticipant: true}
+            pathname: HOME, hash: "", search: "", state: {removeParticipant: true}
         });
         mountWithStore(<Messages/>, mockChatsStore);
 
@@ -91,11 +92,11 @@ describe("Messages", () => {
 
     it("should click open/close MessagesModal", () => {
         jest.spyOn(routeData, "useLocation").mockReturnValue({
-            pathname: "/messages", hash: "", search: "", state: {removeParticipant: true}
+            pathname: MESSAGES, hash: "", search: "", state: {removeParticipant: true}
         });
         const history = createMemoryHistory({
             initialEntries: [{
-                pathname: "/messages",
+                pathname: MESSAGES,
                 search: "",
                 hash: "",
                 state: undefined
@@ -112,11 +113,11 @@ describe("Messages", () => {
 
     it("should click block participant", () => {
         jest.spyOn(routeData, "useLocation").mockReturnValue({
-            pathname: "/messages", hash: "", search: "", state: {removeParticipant: true}
+            pathname: MESSAGES, hash: "", search: "", state: {removeParticipant: true}
         });
         const history = createMemoryHistory({
             initialEntries: [{
-                pathname: "/messages",
+                pathname: MESSAGES,
                 search: "",
                 hash: "",
                 state: undefined
@@ -136,7 +137,7 @@ describe("Messages", () => {
 
     it("should hover Settings icon and render Hover Action", () => {
         jest.spyOn(routeData, "useLocation").mockReturnValue({
-            pathname: "/messages", hash: "", search: "", state: {removeParticipant: true}
+            pathname: MESSAGES, hash: "", search: "", state: {removeParticipant: true}
         });
         jest.useFakeTimers();
         const wrapper = mountWithStore(<Messages/>, mockChatsStore);
@@ -151,7 +152,7 @@ describe("Messages", () => {
 
     it("should hover New Message icon and render Hover Action", () => {
         jest.spyOn(routeData, "useLocation").mockReturnValue({
-            pathname: "/messages", hash: "", search: "", state: {removeParticipant: true}
+            pathname: MESSAGES, hash: "", search: "", state: {removeParticipant: true}
         });
         jest.useFakeTimers();
         const wrapper = mountWithStore(<Messages/>, mockChatsStore);
@@ -194,11 +195,11 @@ describe("Messages", () => {
     const processHoverAction = (actionIndex: number, actionText: string): void => {
         jest.useFakeTimers();
         jest.spyOn(routeData, "useLocation").mockReturnValue({
-            pathname: "/messages", hash: "", search: "", state: {removeParticipant: true}
+            pathname: MESSAGES, hash: "", search: "", state: {removeParticipant: true}
         });
         const history = createMemoryHistory({
             initialEntries: [{
-                pathname: "/messages",
+                pathname: MESSAGES,
                 search: "",
                 hash: "",
                 state: undefined

@@ -5,6 +5,7 @@ import {Link as MuiLink, Typography} from "@material-ui/core";
 import {ArrowRightIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
+import {SETTINGS_NOTIFICATION_EMAIL_NOTIFICATIONS, SETTINGS_NOTIFICATION_PUSH_NOTIFICATIONS} from "../../../../util/pathConstants";
 
 const Preferences: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -24,7 +25,7 @@ const Preferences: FC = (): ReactElement => {
                     </MuiLink>
                 </Typography>
             </div>
-            <Link to={"/settings/notification/push_notifications"} className={globalClasses.linkWrapper}>
+            <Link to={SETTINGS_NOTIFICATION_PUSH_NOTIFICATIONS} className={globalClasses.linkWrapper}>
                 <div className={globalClasses.contentLink}>
                     <Typography variant={"body1"} component={"span"}>
                         Push notifications
@@ -32,7 +33,7 @@ const Preferences: FC = (): ReactElement => {
                     {ArrowRightIcon}
                 </div>
             </Link>
-            <Link to={"/settings/notification/email_notifications"} className={globalClasses.linkWrapper}>
+            <Link to={SETTINGS_NOTIFICATION_EMAIL_NOTIFICATIONS} className={globalClasses.linkWrapper}>
                 <div className={globalClasses.contentLink}>
                     <Typography variant={"body1"} component={"span"}>
                         Email notifications

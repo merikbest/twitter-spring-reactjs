@@ -7,6 +7,7 @@ import {useAccessibilityStyles} from "./AccessibilityStyles";
 import {ArrowRightIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
+import {SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_AUTOPLAY} from "../../../../util/pathConstants";
 
 const Accessibility: FC = (): ReactElement => {
     const classes = useAccessibilityStyles();
@@ -53,7 +54,7 @@ const Accessibility: FC = (): ReactElement => {
                     Limits the amount of in-app animations, including live engagement counts.
                 </Typography>
             </div>
-            <Link to={"/settings/accessibility_display_and_languages/autoplay"} className={globalClasses.linkWrapper}>
+            <Link to={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_AUTOPLAY} className={globalClasses.linkWrapper}>
                 <div className={classnames(classes.accessibilityLink, globalClasses.contentLink)}>
                     <div className={classes.accessibilityInfo}>
                         <Typography variant={"body1"} component={"div"}>

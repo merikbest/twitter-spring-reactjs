@@ -5,6 +5,7 @@ import {Link as MuiLink} from "@material-ui/core";
 import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
 import ResetPasswordOption from "../../ResetPasswordOption/ResetPasswordOption";
 import ResetPasswordSuccess from "../ResetPasswordSuccess";
+import {ACCOUNT_LOGIN} from "../../../../util/pathConstants";
 
 describe("ResetPasswordOption", () => {
     const mockStore = createMockRootState();
@@ -19,7 +20,7 @@ describe("ResetPasswordOption", () => {
             wrapper.update();
             done();
             expect(pushSpy).toHaveBeenCalled();
-            expect(pushSpy).toHaveBeenCalledWith("/account/login");
+            expect(pushSpy).toHaveBeenCalledWith(ACCOUNT_LOGIN);
             expect(wrapper.text().includes("You’re all set. You've successfully changed your password.")).toBe(true);
             expect(wrapper.text().includes("Take a moment to review the applications that have access to your account. Revoke those you don't recognize or no longer use.")).toBe(true);
             expect(wrapper.text().includes("This makes it easy to get back into your account if you're ever locked out.")).toBe(true);

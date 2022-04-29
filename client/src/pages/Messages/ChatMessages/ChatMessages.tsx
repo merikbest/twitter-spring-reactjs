@@ -25,6 +25,7 @@ import {selectUserData} from "../../../store/ducks/user/selectors";
 import Spinner from "../../../components/Spinner/Spinner";
 import {EmojiData, Picker} from "emoji-mart";
 import EmojiConvertor from "emoji-js";
+import {HOME_TWEET, MESSAGES} from "../../../util/pathConstants";
 
 interface ChatMessagesProps {
     onOpenModalWindow: () => void;
@@ -128,7 +129,7 @@ const ChatMessages: FC<ChatMessagesProps> = (
                         </div>
                         <div className={classes.iconGroup}>
                             <div className={classes.icon}>
-                                <Link to={`/messages/${participant.user.id}/info`}>
+                                <Link to={`${MESSAGES}/${participant.user.id}/info`}>
                                     <IconButton
                                         onMouseEnter={() => handleHoverAction(MessagesAction.DETAILS)}
                                         onMouseLeave={handleLeaveAction}
@@ -152,7 +153,7 @@ const ChatMessages: FC<ChatMessagesProps> = (
                                         <React.Fragment key={message.id}>
                                             {message.tweet && (
                                                 <div className={classes.tweetContainer}>
-                                                    <Link to={`/home/tweet/${message.tweet.id}`}>
+                                                    <Link to={`${HOME_TWEET}/${message.tweet.id}`}>
                                                         <div className={classes.tweetWrapper}>
                                                             <div className={classes.tweetUserInfoWrapper}>
                                                                 <Avatar
@@ -231,7 +232,7 @@ const ChatMessages: FC<ChatMessagesProps> = (
                                                 <div>
                                                     {message.tweet && (
                                                         <div className={classes.participantTweetContainer}>
-                                                            <Link to={`/home/tweet/${message.tweet.id}`}>
+                                                            <Link to={`${HOME_TWEET}/${message.tweet.id}`}>
                                                                 <div className={classes.participantTweetWrapper}>
                                                                     <div
                                                                         className={classes.participantTweetInfoWrapper}>

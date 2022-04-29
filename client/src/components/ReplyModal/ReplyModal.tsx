@@ -15,6 +15,7 @@ import {Image} from "../../store/types/common";
 import CloseButton from "../CloseButton/CloseButton";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {UserTweetResponse} from "../../store/types/tweet";
+import {PROFILE} from "../../util/pathConstants";
 
 interface ReplyModalProps {
     user: UserTweetResponse;
@@ -89,7 +90,7 @@ const ReplyModal: FC<ReplyModalProps> = (
                         <object>
                             <Typography variant={"subtitle1"} component={"div"} className={classes.replyWrapper}>
                                 {"Replying to "}
-                                <MuiLink variant="subtitle1" to={`/profile/${user.id}`} component={Link}>
+                                <MuiLink variant="subtitle1" to={`${PROFILE}/${user.id}`} component={Link}>
                                     @{user.username}
                                 </MuiLink>
                             </Typography>
