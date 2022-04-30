@@ -11,6 +11,7 @@ import {UserActionsType} from "../../../store/ducks/user/contracts/actionTypes";
 import {mockNotifications, mockTweetAuthors} from "../../../util/mockData/mockData";
 import NotificationAuthorItem from "../NotificationAuthorItem/NotificationAuthorItem";
 import NotificationItem from "../NotificationItem/NotificationItem";
+import { PROFILE } from "../../../util/pathConstants";
 
 window.scrollTo = jest.fn();
 

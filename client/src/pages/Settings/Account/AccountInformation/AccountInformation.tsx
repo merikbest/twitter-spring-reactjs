@@ -1,7 +1,7 @@
 import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Divider, Link as MuiLink, List, ListItem, Typography} from "@material-ui/core";
-import {NavLink} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 import {ArrowRightIcon} from "../../../../icons";
 import {selectUserData} from "../../../../store/ducks/user/selectors";
@@ -33,7 +33,7 @@ const AccountInformation: FC = (): ReactElement => {
     return (
         <div className={globalClasses.listItemWrapper}>
             <List>
-                <NavLink to={SETTINGS_INFO_USERNAME}>
+                <Link to={SETTINGS_INFO_USERNAME}>
                     <ListItem>
                         <div>
                             <Typography variant={"body1"} component={"div"}>
@@ -47,8 +47,8 @@ const AccountInformation: FC = (): ReactElement => {
                             {ArrowRightIcon}
                         </div>
                     </ListItem>
-                </NavLink>
-                <NavLink to={SETTINGS_INFO_PHONE}>
+                </Link>
+                <Link to={SETTINGS_INFO_PHONE}>
                     <ListItem>
                         <div>
                             <Typography variant={"body1"} component={"div"}>
@@ -62,8 +62,8 @@ const AccountInformation: FC = (): ReactElement => {
                             {ArrowRightIcon}
                         </div>
                     </ListItem>
-                </NavLink>
-                <NavLink to={SETTINGS_INFO_EMAIL}>
+                </Link>
+                <Link to={SETTINGS_INFO_EMAIL}>
                     <ListItem>
                         <div>
                             <Typography variant={"body1"} component={"div"}>
@@ -77,7 +77,7 @@ const AccountInformation: FC = (): ReactElement => {
                             {ArrowRightIcon}
                         </div>
                     </ListItem>
-                </NavLink>
+                </Link>
                 <div className={globalClasses.itemInfoWrapper}>
                     <Typography variant={"body1"} component={"div"}>
                         Verified
@@ -90,7 +90,7 @@ const AccountInformation: FC = (): ReactElement => {
                     </Typography>
                 </div>
                 <Divider/>
-                <NavLink to={SETTINGS_PRIVACY_AND_SAFETY_AUDIENCE}>
+                <Link to={SETTINGS_PRIVACY_AND_SAFETY_AUDIENCE}>
                     <ListItem>
                         <div>
                             <Typography variant={"body1"} component={"div"}>
@@ -104,7 +104,7 @@ const AccountInformation: FC = (): ReactElement => {
                             {ArrowRightIcon}
                         </div>
                     </ListItem>
-                </NavLink>
+                </Link>
                 <div className={globalClasses.itemInfoWrapper}>
                     <Typography variant={"body1"} component={"div"}>
                         Account creation
@@ -114,7 +114,7 @@ const AccountInformation: FC = (): ReactElement => {
                     </Typography>
                 </div>
                 <Divider/>
-                <NavLink to={SETTINGS_INFO_COUNTRY}>
+                <Link to={SETTINGS_INFO_COUNTRY}>
                     <ListItem>
                         <div>
                             <Typography variant={"body1"} component={"div"}>
@@ -128,8 +128,8 @@ const AccountInformation: FC = (): ReactElement => {
                             {ArrowRightIcon}
                         </div>
                     </ListItem>
-                </NavLink>
-                <NavLink to={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_LANGUAGES}>
+                </Link>
+                <Link to={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_LANGUAGES}>
                     <ListItem>
                         <div>
                             <Typography variant={"body1"} component={"div"}>
@@ -143,8 +143,8 @@ const AccountInformation: FC = (): ReactElement => {
                             {ArrowRightIcon}
                         </div>
                     </ListItem>
-                </NavLink>
-                <NavLink to={SETTINGS_INFO_GENDER}>
+                </Link>
+                <Link to={SETTINGS_INFO_GENDER}>
                     <ListItem>
                         <div>
                             <Typography variant={"body1"} component={"div"}>
@@ -158,7 +158,7 @@ const AccountInformation: FC = (): ReactElement => {
                             {ArrowRightIcon}
                         </div>
                     </ListItem>
-                </NavLink>
+                </Link>
                 <div className={globalClasses.itemInfoWrapper}>
                     <Typography variant={"body1"} component={"div"}>
                         Birth date
@@ -171,7 +171,7 @@ const AccountInformation: FC = (): ReactElement => {
                     </Typography>
                 </div>
                 <Divider/>
-                <NavLink to={SETTINGS_INFO_AGE}>
+                <Link to={SETTINGS_INFO_AGE}>
                     <ListItem>
                         <div>
                             <Typography variant={"body1"} component={"div"}>
@@ -185,7 +185,7 @@ const AccountInformation: FC = (): ReactElement => {
                             {ArrowRightIcon}
                         </div>
                     </ListItem>
-                </NavLink>
+                </Link>
             </List>
         </div>
     );

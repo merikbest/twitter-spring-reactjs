@@ -33,8 +33,8 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
     const globalClasses = useGlobalStyles();
     const classes = useDisplayStyles();
     const dispatch = useDispatch();
-    const [selectedBackgroundColor, setSelectedBackgroundColor] = useState<BackgroundTheme>(BackgroundTheme.DEFAULT);
-    const [selectedColor, setSelectedColor] = useState<ColorScheme>(ColorScheme.BLUE);
+    const [selectedBackgroundColor, setSelectedBackgroundColor] = React.useState<BackgroundTheme>(BackgroundTheme.DEFAULT);
+    const [selectedColor, setSelectedColor] = React.useState<ColorScheme>(ColorScheme.BLUE);
 
     useEffect(() => {
         const background = localStorage.getItem("background");
@@ -200,7 +200,7 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
                     </div>
                 </div>
                 <div className={classes.backgroundWrapper}>
-                    <div id={"lights-out"} className={classes.backgroundItem}
+                    <div id={"lights_out"} className={classes.backgroundItem}
                          onClick={() => onClickBackgroundColor(BackgroundTheme.LIGHTS_OUT)}
                     >
                         <div className={classes.backgroundItemWrapper}>

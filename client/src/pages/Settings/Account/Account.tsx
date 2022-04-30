@@ -1,5 +1,5 @@
 import React, {FC, ReactElement} from 'react';
-import {NavLink} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {List, ListItem, Typography} from "@material-ui/core";
 
 import {ArrowRightIcon, CommunityIcon, DeleteAccountIcon, DownloadIcon, KeyIcon, ProfileIcon} from "../../../icons";
@@ -18,7 +18,7 @@ const Account: FC = (): ReactElement => {
             </Typography>
             <div className={globalClasses.listItemWrapper}>
                 <List component="nav" aria-label="main mailbox folders">
-                    <NavLink to={SETTINGS_INFO}>
+                    <Link to={SETTINGS_INFO}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {ProfileIcon}
@@ -35,8 +35,8 @@ const Account: FC = (): ReactElement => {
                                 {ArrowRightIcon}
                             </div>
                         </ListItem>
-                    </NavLink>
-                    <NavLink to={SETTINGS_PASSWORD}>
+                    </Link>
+                    <Link to={SETTINGS_PASSWORD}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {KeyIcon}
@@ -53,7 +53,7 @@ const Account: FC = (): ReactElement => {
                                 {ArrowRightIcon}
                             </div>
                         </ListItem>
-                    </NavLink>
+                    </Link>
                     <ListItem>
                         <div className={globalClasses.listIconWrapper}>
                             {DownloadIcon}
@@ -70,7 +70,7 @@ const Account: FC = (): ReactElement => {
                             {ArrowRightIcon}
                         </div>
                     </ListItem>
-                    <NavLink to={SETTINGS_TEAMS}>
+                    <Link to={SETTINGS_TEAMS}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {CommunityIcon}
@@ -88,8 +88,8 @@ const Account: FC = (): ReactElement => {
                                 {ArrowRightIcon}
                             </div>
                         </ListItem>
-                    </NavLink>
-                    <NavLink to={SETTINGS_DEACTIVATE}>
+                    </Link>
+                    <Link to={SETTINGS_DEACTIVATE}>
                         <ListItem>
                             <div className={globalClasses.listIconWrapper}>
                                 {DeleteAccountIcon}
@@ -106,7 +106,7 @@ const Account: FC = (): ReactElement => {
                                 {ArrowRightIcon}
                             </div>
                         </ListItem>
-                    </NavLink>
+                    </Link>
                 </List>
             </div>
         </>
