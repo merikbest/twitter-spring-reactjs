@@ -43,7 +43,11 @@ const ChangeEmail: FC = (): ReactElement => {
                 />
             </div>
             <Divider/>
-            <div className={classes.updateEmailAddress} onClick={onOpenChangeEmailModal}>
+            <div
+                id={"openChangeEmailModal"}
+                className={classes.updateEmailAddress}
+                onClick={onOpenChangeEmailModal}
+            >
                 <Typography variant={"body1"} component={"span"}>
                     Update email address
                 </Typography>
