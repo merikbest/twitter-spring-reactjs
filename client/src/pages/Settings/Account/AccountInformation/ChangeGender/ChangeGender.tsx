@@ -34,18 +34,16 @@ const ChangeGender: FC = (): ReactElement => {
         };
     }, []);
 
-    const handleSelectedGender = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const handleSelectedGender = (event: ChangeEvent<HTMLInputElement>): void => {
         setSelectedGender(event.target.value);
     };
 
     const handleChangeGender = (event: ChangeEvent<HTMLInputElement>): void => {
-        if (event.currentTarget) {
-            setOtherGender(event.currentTarget.value);
-        }
+        setOtherGender(event.target.value);
     };
 
     const onSubmit = (): void => {
-        if (otherGender !== "") {
+        if (selectedGender === "Other") {
             dispatch(updateGender({gender: otherGender}));
         } else {
             dispatch(updateGender({gender: selectedGender}));

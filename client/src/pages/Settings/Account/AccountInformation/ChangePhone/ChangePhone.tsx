@@ -44,7 +44,11 @@ const ChangePhone: FC = (): ReactElement => {
                 />
             </div>
             <Divider/>
-            <div className={classes.updatePhoneNumber} onClick={onOpenChangePhoneModal}>
+            <div
+                id={"openChangePhoneModal"}
+                className={classes.updatePhoneNumber}
+                onClick={onOpenChangePhoneModal}
+            >
                 <Typography variant={"body1"} component={"span"}>
                     Update phone number
                 </Typography>

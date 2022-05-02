@@ -12,7 +12,6 @@ import {
 } from "@material-ui/core";
 import {Controller, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
-import classNames from "classnames";
 import * as yup from "yup";
 
 import {useChangePhoneModalStyles} from "./ChangePhoneModalStyles";

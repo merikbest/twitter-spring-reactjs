@@ -29,9 +29,7 @@ const ChangeUsername: FC = (): ReactElement => {
     };
 
     const handleChangeUsername = (event: ChangeEvent<HTMLInputElement>): void => {
-        if (event.currentTarget) {
-            setUsername(event.currentTarget.value);
-        }
+        setUsername(event.target.value);
     };
 
     const setSuggestedUsername = (): void => {
@@ -56,7 +54,12 @@ const ChangeUsername: FC = (): ReactElement => {
                     <Typography variant={"h5"} component={"div"}>
                         Suggestions
                     </Typography>
-                    <Typography variant={"body1"} component={"span"} onClick={setSuggestedUsername}>
+                    <Typography
+                        id={"suggestedUsername"}
+                        onClick={setSuggestedUsername}
+                        variant={"body1"}
+                        component={"span"}
+                    >
                         {`${myProfile?.username}123`}
                     </Typography>
                 </div>
