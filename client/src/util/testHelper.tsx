@@ -194,6 +194,10 @@ export const mockUserDetailResponse = {id: 1} as UserDetailResponse;
 
 export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): RootState => {
     return {
+        user: {
+            data: mockUser,
+            status: loadingStatus,
+        },
         blockedAndMutedUsers: {
             mutedUsers: mockMutedUserResponse,
             blockedUsers: mockBlockedUserResponse,
@@ -262,10 +266,6 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             items: mockTweets,
             pagesCount: 1,
             loadingState: loadingStatus
-        },
-        user: {
-            data: mockUser,
-            status: loadingStatus,
         },
         userDetail: {
             item: mockUserDetailResponse,

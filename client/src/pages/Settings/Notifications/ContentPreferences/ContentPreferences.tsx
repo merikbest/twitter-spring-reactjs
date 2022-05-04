@@ -22,7 +22,7 @@ const ContentPreferences = (): ReactElement => {
     const [visibleRecommendationsModal, setVisibleRecommendationsModal] = useState<boolean>(false);
     const [isSearchModal, setIsSearchModal] = useState<boolean>(true);
 
-    const onOpenBlockUserModal = (condition: boolean): void => {
+    const onOpenSettingsModal = (condition: boolean): void => {
         setVisibleExploreModal(true);
         setIsSearchModal(condition);
     };
@@ -44,13 +44,21 @@ const ContentPreferences = (): ReactElement => {
                     Explore
                 </Typography>
             </div>
-            <div className={globalClasses.contentLink} onClick={() => onOpenBlockUserModal(true)}>
+            <div 
+                id={"searchSettings"}
+                className={globalClasses.contentLink} 
+                onClick={() => onOpenSettingsModal(true)}
+            >
                 <Typography variant={"body1"} component={"span"}>
                     Search settings
                 </Typography>
                 {ArrowRightIcon}
             </div>
-            <div className={globalClasses.contentLink} onClick={() => onOpenBlockUserModal(false)}>
+            <div
+                id={"exploreSettings"}
+                className={globalClasses.contentLink} 
+                onClick={() => onOpenSettingsModal(false)}
+            >
                 <Typography variant={"body1"} component={"span"}>
                     Explore settings
                 </Typography>
@@ -62,7 +70,11 @@ const ContentPreferences = (): ReactElement => {
                     Languages
                 </Typography>
             </div>
-            <div className={globalClasses.contentLink} onClick={onOpenVisibleRecommendationsModal}>
+            <div
+                id={"openVisibleRecommendationsModal"}
+                className={globalClasses.contentLink} 
+                onClick={onOpenVisibleRecommendationsModal}
+            >
                 <Typography variant={"body1"} component={"span"}>
                     Recommendations
                 </Typography>

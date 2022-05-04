@@ -1,10 +1,10 @@
 import React, {FC, ReactElement} from 'react';
 import {Divider, List, ListItem, Typography} from "@material-ui/core";
+import classnames from "classnames";
 
 import {useAdditionalResourcesStyles} from "./AdditionalResourcesStyles";
 import {ArrowTopIcon} from "../../../icons";
 import {useGlobalStyles} from "../../../util/globalClasses";
-import classnames from "classnames";
 import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
 
 const AdditionalResources: FC = (): ReactElement => {
