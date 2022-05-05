@@ -2,6 +2,7 @@ import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
+import classnames from "classnames";
 
 import {useAudienceAndTaggingStyles} from "./AudienceAndTaggingStyles";
 import {ArrowRightIcon} from "../../../../icons";
@@ -9,7 +10,6 @@ import {selectUserData} from "../../../../store/ducks/user/selectors";
 import {setUserLoadingStatus, updatePrivateProfile} from "../../../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../../../store/types";
 import {useGlobalStyles} from "../../../../util/globalClasses";
-import classnames from "classnames";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 import {SETTINGS_PRIVACY_AND_SAFETY_TAGGING} from "../../../../util/pathConstants";
 
