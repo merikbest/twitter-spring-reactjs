@@ -3,6 +3,7 @@ import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
+import {DATA_THROUGH_PARTNERSHIPS} from "../../../../util/url";
 
 const DataSharing: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -26,12 +27,7 @@ const DataSharing: FC = (): ReactElement => {
                         When enabled, this allows Twitter to share additional information with those partners to help
                         support running Twitter’s business, including making Twitter’s marketing activities on other sites
                         and apps more relevant for you. `}
-                    <MuiLink
-                        href="https://help.twitter.com/safety-and-security/data-through-partnerships"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={DATA_THROUGH_PARTNERSHIPS} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>

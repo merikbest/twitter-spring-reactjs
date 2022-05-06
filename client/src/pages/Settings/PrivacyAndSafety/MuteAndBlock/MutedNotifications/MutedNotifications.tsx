@@ -3,6 +3,7 @@ import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useGlobalStyles} from "../../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
+import {UNDERSTANDING_THE_NOTIFICATIONS_TIMELINE} from "../../../../../util/url";
 
 const MutedNotifications: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -65,12 +66,7 @@ const MutedNotifications: FC = (): ReactElement => {
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`These filters won’t affect notifications from people you follow. `}
-                    <MuiLink
-                        href="https://help.twitter.com/managing-your-account/understanding-the-notifications-timeline"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={UNDERSTANDING_THE_NOTIFICATIONS_TIMELINE} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>

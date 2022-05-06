@@ -6,6 +6,7 @@ import {ArrowRightIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 import {SETTINGS_PRIVACY_AND_SAFETY_ADVANCED_FILTERS} from "../../../../util/pathConstants";
+import {UNDERSTANDING_THE_NOTIFICATIONS_TIMELINE} from "../../../../util/url";
 
 const Filters: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -27,12 +28,7 @@ const Filters: FC = (): ReactElement => {
                 <Typography variant={"subtitle2"} component={"div"}>
                     {"Choose to filter out content such as duplicate or automated Tweets. This doesn’t apply to " +
                     "notifications from accounts you follow or have interacted with recently. "}
-                    <MuiLink
-                        href="https://help.twitter.com/managing-your-account/understanding-the-notifications-timeline"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={UNDERSTANDING_THE_NOTIFICATIONS_TIMELINE} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>

@@ -7,7 +7,7 @@ import {Link} from "react-router-dom";
 
 import {useChatMessagesStyles} from "./ChatMessagesStyles";
 import {useGlobalStyles} from "../../../util/globalClasses";
-import {DEFAULT_PROFILE_IMG} from "../../../util/url";
+import {DEFAULT_PROFILE_IMG, DIRECT_MESSAGES} from "../../../util/url";
 import {CheckIcon, DetailsIcon, EmojiIcon, GifIcon, MediaIcon, SendMessageIcon} from "../../../icons";
 import HoverAction from "../../../components/HoverAction/HoverAction";
 import {formatChatMessageDate, formatDate} from "../../../util/formatDate";
@@ -305,12 +305,7 @@ const ChatMessages: FC<ChatMessagesProps> = (
                             <Typography variant={"subtitle2"} component={"div"} className={classes.blockedInfoText}>
                                 You can no longer send messages to this person.
                                 {" "}
-                                <MuiLink
-                                    href="https://help.twitter.com/using-twitter/direct-messages#faq"
-                                    variant="subtitle2"
-                                    target="_blank"
-                                    rel="noopener"
-                                >
+                                <MuiLink href={DIRECT_MESSAGES} variant="subtitle2" target="_blank" rel="noopener">
                                     Learn more
                                 </MuiLink>
                             </Typography>

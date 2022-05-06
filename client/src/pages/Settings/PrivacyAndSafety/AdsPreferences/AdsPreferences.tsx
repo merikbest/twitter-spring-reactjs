@@ -6,6 +6,7 @@ import {ArrowRightIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 import {SETTINGS_PRIVACY_AND_SAFETY_AUDIENCES} from "../../../../util/pathConstants";
+import {EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS} from "../../../../util/url";
 
 const AdsPreferences: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -29,12 +30,7 @@ const AdsPreferences: FC = (): ReactElement => {
                     Twitter may further personalize ads from Twitter advertisers, on and off Twitter, by combining your
                     Twitter activity with other online activity and information from our partners.
                     {" "}
-                    <MuiLink
-                        href={"https://help.twitter.com/safety-and-security/email-and-phone-discoverability-settings"}
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>

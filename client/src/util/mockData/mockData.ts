@@ -1,5 +1,11 @@
 import {TweetImageResponse, TweetResponse} from "../../store/types/tweet";
-import {AuthUserResponse, UserProfileResponse, UserResponse} from "../../store/types/user";
+import {
+    AuthUserResponse,
+    BlockedUserResponse,
+    MutedUserResponse,
+    UserProfileResponse,
+    UserResponse
+} from "../../store/types/user";
 import {
     BaseListResponse,
     ListResponse,
@@ -412,6 +418,60 @@ export const mockProfileImages = [
         "src": "https://pbs.twimg.com/media/FNsBisCVQAEVY4K?format=jpg&name=medium"
     }
 ] as unknown as TweetImageResponse[];
+
+export const mockBlockedUsers = [
+    {
+        "id": 1,
+        "fullName": "Random",
+        "username": "Random",
+        "about": null,
+        "avatar": {
+            "id": 11,
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
+        },
+        "isPrivateProfile": false,
+        "isUserBlocked": true
+    },
+    {
+        "id": 3,
+        "fullName": "Kitty",
+        "username": "Kitty",
+        "about": "Hello twitter!",
+        "avatar": {
+            "id": 3,
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/a7e03e7c-c05f-4e30-ba8c-2271fd0b4b43_779301.jpg"
+        },
+        "isPrivateProfile": true,
+        "isUserBlocked": true
+    }
+] as unknown as BlockedUserResponse[];
+
+export const mockMutedUser = [
+    {
+        "id": 1,
+        "fullName": "Random",
+        "username": "Random",
+        "about": null,
+        "avatar": {
+            "id": 11,
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
+        },
+        "isPrivateProfile": false,
+        "isUserMuted": true
+    },
+    {
+        "id": 3,
+        "fullName": "Kitty",
+        "username": "Kitty",
+        "about": "Hello twitter!",
+        "avatar": {
+            "id": 3,
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/a7e03e7c-c05f-4e30-ba8c-2271fd0b4b43_779301.jpg"
+        },
+        "isPrivateProfile": true,
+        "isUserMuted": true
+    }
+] as unknown as MutedUserResponse[];
 
 export const mockMediaTweets = [
     {
@@ -1093,9 +1153,9 @@ export const mockNotificationInfo = {
         },
         "images": [
             {
-            "id": 1,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/0a6c735d-def8-4587-a29f-221915ef6cb4_ff2d023b3220f93bbc79233614dea542.jpg"
-        }
+                "id": 1,
+                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/0a6c735d-def8-4587-a29f-221915ef6cb4_ff2d023b3220f93bbc79233614dea542.jpg"
+            }
         ],
         "quoteTweet": null,
         "poll": null,

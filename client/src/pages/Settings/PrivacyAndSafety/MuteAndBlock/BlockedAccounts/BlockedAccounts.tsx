@@ -17,6 +17,7 @@ import {
     selectIsBlockedAndMutedUsersLoading
 } from "../../../../../store/ducks/blockedAndMutedUsers/selectors";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
+import {ADVANCED_TWITTER_BLOCK_OPTIONS, BLOCKING_AND_UNBLOCKING_ACCOUNTS} from "../../../../../util/url";
 
 const BlockedAccounts: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -50,12 +51,7 @@ const BlockedAccounts: FC = (): ReactElement => {
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`When you block someone, that person won’t be able to follow or message you, and you won’t see
                         notifications from them. `}
-                    <MuiLink
-                        href="https://help.twitter.com/using-twitter/blocking-and-unblocking-accounts"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={BLOCKING_AND_UNBLOCKING_ACCOUNTS} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>
@@ -78,11 +74,8 @@ const BlockedAccounts: FC = (): ReactElement => {
                                 <>
                                     {`When you block someone, that person won’t be able to follow or message you, and you
                                         won’t see notifications from them. `}
-                                    <MuiLink
-                                        href="https://help.twitter.com/using-twitter/blocking-and-unblocking-accounts"
-                                        variant="subtitle1"
-                                        target="_blank"
-                                        rel="noopener"
+                                    <MuiLink href={BLOCKING_AND_UNBLOCKING_ACCOUNTS} variant="subtitle1" target="_blank" 
+                                             rel="noopener"
                                     >
                                         Learn more
                                     </MuiLink>
@@ -90,10 +83,7 @@ const BlockedAccounts: FC = (): ReactElement => {
                             ) : (
                                 <>
                                     {`Find out how you can import a block list. `}
-                                    <MuiLink
-                                        href="https://help.twitter.com/using-twitter/advanced-twitter-block-options"
-                                        variant="subtitle1"
-                                        target="_blank"
+                                    <MuiLink href={ADVANCED_TWITTER_BLOCK_OPTIONS} variant="subtitle1" target="_blank"
                                         rel="noopener"
                                     >
                                         Learn more

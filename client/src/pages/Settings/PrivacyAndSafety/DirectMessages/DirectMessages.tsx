@@ -7,6 +7,7 @@ import {setUserLoadingStatus, updateDirect} from "../../../../store/ducks/user/a
 import {LoadingStatus} from "../../../../store/types";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
+import {DIRECT_MESSAGES, DIRECT_MESSAGES_RECEIPTS, DIRECT_MESSAGES_RECEIVE} from "../../../../util/url";
 
 const DirectMessages: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -46,12 +47,7 @@ const DirectMessages: FC = (): ReactElement => {
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`Let people who you don’t follow send you message requests and add you to group conversations. To
                         reply to their messages, you need to accept the request. `}
-                    <MuiLink
-                        href="https://help.twitter.com/using-twitter/direct-messages#receive"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={DIRECT_MESSAGES_RECEIVE} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>
@@ -67,12 +63,7 @@ const DirectMessages: FC = (): ReactElement => {
                     {`Hide message requests that have been detected as being potentially spam or low-quality. These will
                     be sent to a separate inbox at the bottom of your message requests. You can still access them if you
                     want. `}
-                    <MuiLink
-                        href="https://help.twitter.com/using-twitter/direct-messages"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={DIRECT_MESSAGES} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>
@@ -87,12 +78,7 @@ const DirectMessages: FC = (): ReactElement => {
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`Let people you’re messaging with know when you’ve seen their messages. Read receipts are not shown
                         on message requests. `}
-                    <MuiLink
-                        href="https://help.twitter.com/using-twitter/direct-messages#receipts"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={DIRECT_MESSAGES_RECEIPTS} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>

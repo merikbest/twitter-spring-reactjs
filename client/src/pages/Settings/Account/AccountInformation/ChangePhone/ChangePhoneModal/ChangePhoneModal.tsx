@@ -21,6 +21,7 @@ import {FilledSelect} from "../../../../../../components/FilledSelect/FilledSele
 import {selectUserData, selectUserIsLoading} from "../../../../../../store/ducks/user/selectors";
 import {updatePhone} from "../../../../../../store/ducks/user/actionCreators";
 import {getCountryCode, getPhoneCode} from "../../../../../../util/countryCodes";
+import {EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS} from "../../../../../../util/url";
 
 interface ChangePhoneModalProps {
     visible?: boolean;
@@ -129,12 +130,7 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = ({visible, onClose}): ReactE
                     <div className={classes.infoWrapper}>
                         <Typography variant={"body1"} component={"span"}>
                             {"Let people who have your phone number find and connect with you on Twitter. "}
-                            <MuiLink
-                                href="https://help.twitter.com/safety-and-security/email-and-phone-discoverability-settings"
-                                variant="body1"
-                                target="_blank"
-                                rel="noopener"
-                            >
+                            <MuiLink href={EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS} variant="body1" target="_blank" rel="noopener">
                                 Learn more
                             </MuiLink>
                         </Typography>

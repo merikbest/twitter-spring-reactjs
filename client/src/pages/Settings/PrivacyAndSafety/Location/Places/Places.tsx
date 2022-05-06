@@ -6,6 +6,7 @@ import {useLocationStyles} from "./PlacesStyles";
 import {LocationIconFilled} from "../../../../../icons";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
+import {FIND_USER_LOCATION} from "../../../../../util/url";
 
 const Places: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -13,7 +14,7 @@ const Places: FC = (): ReactElement => {
     const [countryName, setCountryName] = useState<string>("Unknown");
 
     useEffect(() => {
-        axios.get('https://ipapi.co/json/')
+        axios.get(FIND_USER_LOCATION)
             .then((response) => {
                 setCountryName(response.data.country_name)
             }).catch((error) => console.log(error));
