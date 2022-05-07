@@ -5,6 +5,7 @@ import {Button, Link as MuiLink, Radio, Typography} from "@material-ui/core";
 import {AuthApi} from "../../../services/api/authApi";
 import {useResetPasswordOptionStyles} from "./ResetPasswordOptionStyles";
 import {ACCOUNT_FORGOT_CONFIRM_PIN_RESET} from "../../../util/pathConstants";
+import {REGAIN_ACCESS} from "../../../util/url";
 
 const ResetPasswordOption: FC = (): ReactElement => {
     const classes = useResetPasswordOptionStyles();
@@ -55,12 +56,7 @@ const ResetPasswordOption: FC = (): ReactElement => {
                     Next
                 </Button>
             </form>
-            <MuiLink
-                href="https://help.twitter.com/forms/account-access/regain-access"
-                variant="subtitle2"
-                target="_blank"
-                rel="noopener"
-            >
+            <MuiLink href={REGAIN_ACCESS} variant="subtitle2" target="_blank" rel="noopener">
                 Don’t have access to these?
             </MuiLink>
         </>

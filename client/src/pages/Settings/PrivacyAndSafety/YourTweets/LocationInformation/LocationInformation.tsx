@@ -4,6 +4,7 @@ import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 import {useLocationInformationStyles} from "./LocationInformationStyles";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
+import {TWEET_LOCATION_SETTINGS} from "../../../../../util/url";
 
 const LocationInformation: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -14,12 +15,7 @@ const LocationInformation: FC = (): ReactElement => {
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`If enabled, you will be able to attach location information to your Tweets. `}
-                    <MuiLink
-                        href="https://help.twitter.com/safety-and-security/tweet-location-settings"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={TWEET_LOCATION_SETTINGS} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>

@@ -6,6 +6,7 @@ import {ArrowRightIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 import {SETTINGS_NOTIFICATION_EMAIL_NOTIFICATIONS, SETTINGS_NOTIFICATION_PUSH_NOTIFICATIONS} from "../../../../util/pathConstants";
+import {NOTIFICATIONS_ON_MOBILE_DEVICES} from "../../../../util/url";
 
 const Preferences: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -15,12 +16,7 @@ const Preferences: FC = (): ReactElement => {
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`Select your preferences by notification type. `}
-                    <MuiLink
-                        href="https://help.twitter.com/managing-your-account/notifications-on-mobile-devices"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={NOTIFICATIONS_ON_MOBILE_DEVICES} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>

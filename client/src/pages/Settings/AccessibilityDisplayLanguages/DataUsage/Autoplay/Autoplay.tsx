@@ -5,6 +5,7 @@ import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
 import {useAutoplayStyles} from "./AutoplayStyles";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
+import {PUBLIC_AND_PROTECTED_TWEETS} from "../../../../../util/url";
 
 const Autoplay: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -23,12 +24,7 @@ const Autoplay: FC = (): ReactElement => {
                 </Typography>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {"Select whether videos and GIFs should play automatically on this device. "}
-                    <MuiLink
-                        href="https://help.twitter.com/safety-and-security/public-and-protected-tweets"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={PUBLIC_AND_PROTECTED_TWEETS} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>

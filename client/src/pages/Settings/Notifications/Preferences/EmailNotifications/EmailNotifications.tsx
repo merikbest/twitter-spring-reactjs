@@ -4,6 +4,7 @@ import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
 
 import {useGlobalStyles} from "../../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
+import {TWEET_ACTIVITY} from "../../../../../util/url";
 
 const EmailNotifications: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -26,12 +27,7 @@ const EmailNotifications: FC = (): ReactElement => {
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {"Get emails to find out what’s going on when you’re not on Twitter. You can turn them off anytime. "}
-                    <MuiLink
-                        href="https://help.twitter.com/managing-your-account/updating-email-preferences#tweet-activity"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={TWEET_ACTIVITY} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>

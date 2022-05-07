@@ -3,6 +3,7 @@ import {Divider, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useGlobalStyles} from "../../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
+import {PRIVACY_CONTROLS_FOR_TAILORED_ADS} from "../../../../../util/url";
 
 const YourAdvertiserList: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -14,12 +15,7 @@ const YourAdvertiserList: FC = (): ReactElement => {
                     Tailored audiences are often built from email lists or browsing behaviors. They help advertisers
                     reach prospective customers or people who have already expressed interest in their business.
                     {" "}
-                    <MuiLink
-                        href={"https://help.twitter.com/safety-and-security/privacy-controls-for-tailored-ads"}
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={PRIVACY_CONTROLS_FOR_TAILORED_ADS} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>

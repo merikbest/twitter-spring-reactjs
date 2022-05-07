@@ -14,6 +14,7 @@ import {DisplayProps} from "./Settings/AccessibilityDisplayLanguages/Display/Dis
 import ProfileImages from "../components/ProfileImages/ProfileImages";
 import {selectImages} from "../store/ducks/userProfile/selectors";
 import {SETTINGS} from "../util/pathConstants";
+import {TWITTER_ADS_WORK, TWITTER_COOKIES, TWITTER_PRIVACY, TWITTER_TOS} from "../util/url";
 
 interface Layout {
     children: ReactNode;
@@ -59,26 +60,24 @@ export const Layout: FC<Layout & DisplayProps> = (
                                 <Users/>
                                 <div className={classes.footer}>
                                     <div>
-                                        <a href="https://twitter.com/tos" target={"_blank"}>
+                                        <a href={TWITTER_TOS} target={"_blank"}>
                                             <Typography component={"span"}>
                                                 Terms of Service
                                             </Typography>
                                         </a>
-                                        <a href="https://twitter.com/privacy" target={"_blank"}>
+                                        <a href={TWITTER_PRIVACY} target={"_blank"}>
                                             <Typography component={"span"}>
                                                 Privacy Policy
                                             </Typography>
                                         </a>
-                                        <a href="https://help.twitter.com/rules-and-policies/twitter-cookies"
-                                           target={"_blank"}>
+                                        <a href={TWITTER_COOKIES} target={"_blank"}>
                                             <Typography component={"span"}>
                                                 Cookie Policy
                                             </Typography>
                                         </a>
                                     </div>
                                     <div>
-                                        <a href="https://business.twitter.com/en/help/troubleshooting/how-twitter-ads-work.html"
-                                           target={"_blank"}>
+                                        <a href={TWITTER_ADS_WORK} target={"_blank"}>
                                             <Typography component={"span"}>
                                                 Ads info
                                             </Typography>

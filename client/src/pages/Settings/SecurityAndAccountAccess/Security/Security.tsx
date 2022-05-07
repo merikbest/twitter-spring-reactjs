@@ -5,7 +5,8 @@ import {Checkbox, Divider, Link as MuiLink, Typography} from "@material-ui/core"
 import {ArrowRightIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
-import { SETTINGS_SECURITY_LOGIN_VERIFICATION } from '../../../../util/pathConstants';
+import {SETTINGS_SECURITY_LOGIN_VERIFICATION} from '../../../../util/pathConstants';
+import {ACCOUNT_SECURITY_TIPS, TWO_FACTOR_AUTHENTICATION} from "../../../../util/url";
 
 const Security: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -27,12 +28,7 @@ const Security: FC = (): ReactElement => {
                     {`Help protect your account from unauthorized access by requiring a second authentication
                         method in addition to your Twitter password. You can choose a text message, authentication
                         app, or security key. `}
-                    <MuiLink
-                        href="https://help.twitter.com/managing-your-account/two-factor-authentication"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={TWO_FACTOR_AUTHENTICATION} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>
@@ -65,12 +61,7 @@ const Security: FC = (): ReactElement => {
                     </Typography>
                     <Checkbox/>
                 </div>
-                <MuiLink
-                    href="https://help.twitter.com/safety-and-security/account-security-tips"
-                    variant="body1"
-                    target="_blank"
-                    rel="noopener"
-                >
+                <MuiLink href={ACCOUNT_SECURITY_TIPS} variant="body1" target="_blank" rel="noopener">
                     Learn more
                 </MuiLink>
             </div>

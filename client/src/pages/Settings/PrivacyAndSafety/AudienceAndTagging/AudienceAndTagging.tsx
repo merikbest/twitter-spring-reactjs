@@ -12,6 +12,7 @@ import {LoadingStatus} from "../../../../store/types";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 import {SETTINGS_PRIVACY_AND_SAFETY_TAGGING} from "../../../../util/pathConstants";
+import {PUBLIC_AND_PROTECTED_TWEETS} from "../../../../util/url";
 
 const AudienceAndTagging: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -51,12 +52,7 @@ const AudienceAndTagging: FC = (): ReactElement => {
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`When selected, your Tweets and other account information are only visible to people who follow you. `}
-                    <MuiLink
-                        href="https://help.twitter.com/safety-and-security/public-and-protected-tweets"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={PUBLIC_AND_PROTECTED_TWEETS} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>

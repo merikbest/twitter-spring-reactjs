@@ -5,7 +5,12 @@ import {usePersonalizationAndDataStyles} from "./PersonalizationAndDataStyles";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {ArrowRightIcon} from "../../../../icons";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
-import {DATA_THROUGH_PARTNERSHIPS} from "../../../../util/url";
+import {
+    ACROSS_YOUR_DEVICES,
+    DATA_THROUGH_PARTNERSHIPS,
+    PRIVACY_CONTROLS_FOR_TAILORED_ADS,
+    TAILORED_SUGGESTIONS
+} from "../../../../util/url";
 
 const PersonalizationAndData = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -51,12 +56,7 @@ const PersonalizationAndData = (): ReactElement => {
                     {`You will always see ads on Twitter based on your Twitter activity. When this setting is enabled, 
                     Twitter may further personalize ads from Twitter advertisers, on and off Twitter, by combining your 
                     Twitter activity with other online activity and information from our partners. `}
-                    <MuiLink
-                        href="https://help.twitter.com/safety-and-security/privacy-controls-for-tailored-ads"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={PRIVACY_CONTROLS_FOR_TAILORED_ADS} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>
@@ -73,12 +73,7 @@ const PersonalizationAndData = (): ReactElement => {
                     the devices you’ve used to log in. When this setting is enabled, Twitter may also personalize based 
                     on other inferences about your identity, like devices and browsers you haven’t used to log in to 
                     Twitter or email addresses and phone numbers similar to those linked to your Twitter account. `}
-                    <MuiLink
-                        href="https://help.twitter.com/about-personalization-across-your-devices"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={ACROSS_YOUR_DEVICES} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>
@@ -114,12 +109,7 @@ const PersonalizationAndData = (): ReactElement => {
                     content, such as embedded timelines. That information makes Twitter better for you, such as by 
                     personalizing your experience. This web browsing history will never be stored with your name, email, 
                     or phone number. `}
-                    <MuiLink
-                        href="https://help.twitter.com/using-twitter/tailored-suggestions"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={TAILORED_SUGGESTIONS} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>

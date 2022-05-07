@@ -34,6 +34,7 @@ import {
     SETTINGS_PRIVACY_AND_SAFETY_SPACES,
     SETTINGS_PRIVACY_AND_SAFETY_YOUR_TWEETS
 } from "../../../util/pathConstants";
+import {FORMS_PRIVACY, PRIVACY_TWITTER, TWITTER_PRIVACY} from "../../../util/url";
 
 const PrivacyAndSafety: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -266,7 +267,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                             Learn more about privacy on Twitter
                         </Typography>
                     </div>
-                    <a href="https://privacy.twitter.com/" target={"_blank"}>
+                    <a href={PRIVACY_TWITTER} target={"_blank"}>
                         <ListItem>
                             <div>
                                 <Typography variant={"body1"} component={"div"}>
@@ -278,7 +279,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </a>
-                    <a href="https://twitter.com/privacy" target={"_blank"}>
+                    <a href={TWITTER_PRIVACY} target={"_blank"}>
                         <ListItem>
                             <div>
                                 <Typography variant={"body1"} component={"div"}>
@@ -290,7 +291,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </a>
-                    <a href="https://help.twitter.com/forms/privacy" target={"_blank"}>
+                    <a href={FORMS_PRIVACY} target={"_blank"}>
                         <ListItem>
                             <div>
                                 <Typography variant={"body1"} component={"div"}>

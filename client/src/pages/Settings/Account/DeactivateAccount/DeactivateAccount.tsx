@@ -5,7 +5,7 @@ import {Avatar, Divider, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useDeactivateAccountStyles} from "./DeactivateAccountStyles";
 import {selectUserData} from "../../../../store/ducks/user/selectors";
-import {DEFAULT_PROFILE_IMG} from "../../../../util/url";
+import {DEFAULT_PROFILE_IMG, REMOVE_TWITTER_PROFILE_FROM_GOOGLE_SEARCH} from "../../../../util/url";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 import {PROFILE, SETTINGS_INFO} from "../../../../util/pathConstants";
@@ -61,12 +61,7 @@ const DeactivateAccount: FC = (): ReactElement => {
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {"Some account information may still be available in search engines, such as Google or Bing. "}
-                    <MuiLink
-                        href="https://help.twitter.com/safety-and-security/remove-twitter-profile-from-google-search"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={REMOVE_TWITTER_PROFILE_FROM_GOOGLE_SEARCH} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>

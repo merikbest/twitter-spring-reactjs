@@ -9,6 +9,7 @@ import {ArrowRightIcon, DeviceIcon} from "../../../../../icons";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 import {SETTINGS_SECURITY_SESSIONS_CURRENT} from "../../../../../util/pathConstants";
+import {ACCESS_TO_THIRD_PARTY_APPS, FIND_USER_LOCATION} from "../../../../../util/url";
 
 const Sessions: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -22,7 +23,7 @@ const Sessions: FC = (): ReactElement => {
         setOSName(result.getOS().name);
         setBrowserName(result.getBrowserName());
 
-        axios.get('https://ipapi.co/json/')
+        axios.get(FIND_USER_LOCATION)
             .then((response) => {
                 setCountryName(response.data.country_name)
             }).catch((error) => console.log(error));
@@ -88,12 +89,7 @@ const Sessions: FC = (): ReactElement => {
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`Logging out will end 1 of your other active Twitter sessions. It won’t affect your current active session. `}
-                    <MuiLink
-                        href="https://help.twitter.com/managing-your-account/connect-or-revoke-access-to-third-party-apps"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={ACCESS_TO_THIRD_PARTY_APPS} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>

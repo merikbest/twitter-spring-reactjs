@@ -72,7 +72,7 @@ import {
     resetUserProfileState
 } from "../../store/ducks/userProfile/actionCreators";
 import UserPageTweets from "./UserPageTweets";
-import {DEFAULT_PROFILE_IMG, WS_URL} from "../../util/url";
+import {DEFAULT_PROFILE_IMG, PUBLIC_AND_PROTECTED_TWEETS, SOMEONE_BLOCKED_ME_ON_TWITTER, WS_URL} from "../../util/url";
 import SetupProfileModal from "../SetupProfileModal/SetupProfileModal";
 import UserPageActions from "./UserPageActions/UserPageActions";
 import {createChat} from "../../store/ducks/chats/actionCreators";
@@ -627,12 +627,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                         </Typography>
                                         <Typography variant={"subtitle1"} component={"div"}>
                                             {`You can’t follow or see @${userProfile?.username}’s Tweets.`}
-                                            <MuiLink
-                                                href="https://help.twitter.com/using-twitter/someone-blocked-me-on-twitter"
-                                                variant="subtitle1"
-                                                target="_blank"
-                                                rel="noopener"
-                                            >
+                                            <MuiLink href={SOMEONE_BLOCKED_ME_ON_TWITTER} variant="subtitle1" target="_blank" rel="noopener">
                                                 Learn more
                                             </MuiLink>
                                         </Typography>
@@ -646,12 +641,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                             <Typography variant={"subtitle1"} component={"div"}>
                                                 {`Only approved followers can see @${userProfile?.username}’s Tweets. To 
                                                 request access, click Follow. `}
-                                                <MuiLink
-                                                    href="https://help.twitter.com/safety-and-security/public-and-protected-tweets"
-                                                    variant="subtitle1"
-                                                    target="_blank"
-                                                    rel="noopener"
-                                                >
+                                                <MuiLink href={PUBLIC_AND_PROTECTED_TWEETS} variant="subtitle1" target="_blank" rel="noopener">
                                                     Learn more
                                                 </MuiLink>
                                             </Typography>

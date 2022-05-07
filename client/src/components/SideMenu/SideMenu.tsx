@@ -43,6 +43,7 @@ import FollowerRequestsModal from "./FollowerRequestsModal/FollowerRequestsModal
 import {useGlobalStyles} from "../../util/globalClasses";
 import {resetFollowerRequestsState} from "../../store/ducks/followerRequests/actionCreators";
 import {BOOKMARKS, HOME, LISTS, MESSAGES, NOTIFICATIONS, PROFILE, SEARCH, SETTINGS} from "../../util/pathConstants";
+import {HELP_TWITTER, TWITTER_ABOUT, TWITTER_LOGIN} from "../../util/url";
 
 const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -300,7 +301,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                         Newsletters
                                     </Typography>
                                 </ListItem>
-                                <a href="https://ads.twitter.com/login" target="_blank">
+                                <a href={TWITTER_LOGIN} target="_blank">
                                     <ListItem>
                                         {TwitterAdsIcon}
                                         <Typography variant={"body1"} component={"span"}>
@@ -308,7 +309,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                         </Typography>
                                     </ListItem>
                                 </a>
-                                <a href="https://analytics.twitter.com/about" target="_blank">
+                                <a href={TWITTER_ABOUT} target="_blank">
                                     <ListItem>
                                         {AnalyticsIcon}
                                         <Typography variant={"body1"} component={"span"}>
@@ -325,7 +326,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                         </Typography>
                                     </ListItem>
                                 </Link>
-                                <a href="https://help.twitter.com" target="_blank">
+                                <a href={HELP_TWITTER} target="_blank">
                                     <ListItem>
                                         {HelpCenterIcon}
                                         <Typography variant={"body1"} component={"span"}>

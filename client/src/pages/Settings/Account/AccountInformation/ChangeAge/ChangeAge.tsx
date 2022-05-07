@@ -3,6 +3,7 @@ import {Divider, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useGlobalStyles} from "../../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
+import {BIRTHDAY_VISIBILITY_SETTINGS} from "../../../../../util/url";
 
 const ChangeAge: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -12,11 +13,7 @@ const ChangeAge: FC = (): ReactElement => {
             <Typography variant={"body1"} component={"div"} className={globalClasses.itemInfoWrapper}>
                 {`If you haven’t provided a date of birth, we’ve provided an age range based on your Twitter
                     profile and activity. Age information is used to personalize your experience. `}
-                <MuiLink
-                    href="https://help.twitter.com/safety-and-security/birthday-visibility-settings"
-                    target="_blank"
-                    rel="noopener"
-                >
+                <MuiLink href={BIRTHDAY_VISIBILITY_SETTINGS} target="_blank" rel="noopener">
                     Learn more
                 </MuiLink>
             </Typography>

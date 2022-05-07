@@ -5,6 +5,7 @@ import {Link as MuiLink, Typography} from "@material-ui/core";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 import {SETTINGS_SECURITY_CONNECTED_APPS} from "../../../../../util/pathConstants";
+import {ACCESSING_YOUR_TWITTER_DATA} from "../../../../../util/url";
 
 const AccountAccessHistory: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -18,12 +19,7 @@ const AccountAccessHistory: FC = (): ReactElement => {
                         Connected apps
                     </MuiLink>
                     {" to revoke its access. In some cases the IP location may differ from your physical location. "}
-                    <MuiLink
-                        href="https://help.twitter.com/managing-your-account/accessing-your-twitter-data"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={ACCESSING_YOUR_TWITTER_DATA} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>

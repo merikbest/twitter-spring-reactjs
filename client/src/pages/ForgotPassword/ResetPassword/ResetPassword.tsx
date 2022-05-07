@@ -8,7 +8,7 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import {ForgotPasswordTextField} from "../ForgotPasswordTextField/ForgotPasswordTextField";
-import {DEFAULT_PROFILE_IMG} from "../../../util/url";
+import {ACCOUNT_SECURITY_TIPS, DEFAULT_PROFILE_IMG} from "../../../util/url";
 import {AuthApi} from "../../../services/api/authApi";
 import {useResetPasswordStyles} from "./ResetPasswordStyles";
 import {AuthUserResponse} from "../../../store/types/user";
@@ -62,7 +62,7 @@ const ResetPassword: FC = (): ReactElement => {
             </div>
             <Typography variant={"body1"} component={"div"} className={classes.resetPasswordText}>
                 Strong passwords include numbers, letters, and punctuation marks.
-                <a href={"https://help.twitter.com/safety-and-security/account-security-tips"} target={"_blank"}>
+                <a href={ACCOUNT_SECURITY_TIPS} target={"_blank"}>
                     Learn more
                 </a>
             </Typography>

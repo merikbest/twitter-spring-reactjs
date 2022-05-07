@@ -6,6 +6,24 @@ import {useAdditionalResourcesStyles} from "./AdditionalResourcesStyles";
 import {ArrowTopIcon} from "../../../icons";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
+import {
+    ABOUT_TWITTER,
+    ADS_TWITTER,
+    BLOG_TWITTER,
+    BRAND_TOOLKIT,
+    BUSINESS_TWITTER,
+    CAREERS_TWITTER,
+    DEVELOPER_TWITTER,
+    HELP_TWITTER,
+    HOW_TWITTER_ADS_WORK,
+    MARKETING_TWITTER,
+    STATUS_TWITTER,
+    TWITTER_COOKIES,
+    TWITTER_DIRECTORY_PROFILES,
+    TWITTER_PRIVACY,
+    TWITTER_RELEASE_NOTES,
+    TWITTER_TOS
+} from "../../../util/url";
 
 const AdditionalResources: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -25,7 +43,7 @@ const AdditionalResources: FC = (): ReactElement => {
                             Release notes
                         </Typography>
                     </div>
-                    <a href="https://twitter.com/i/release_notes" target={"_blank"}>
+                    <a href={TWITTER_RELEASE_NOTES} target={"_blank"}>
                         <ListItem>
                             <div>
                                 <Typography variant={"body1"} component={"div"}>
@@ -43,8 +61,7 @@ const AdditionalResources: FC = (): ReactElement => {
                             Legal
                         </Typography>
                     </div>
-                    <a href="https://business.twitter.com/en/help/troubleshooting/how-twitter-ads-work.html?ref=web-twc-ao-gbl-adsinfo&utm_source=twc&utm_medium=web&utm_campaign=ao&utm_content=adsinfo"
-                       target={"_blank"}>
+                    <a href={HOW_TWITTER_ADS_WORK} target={"_blank"}>
                         <ListItem>
                             <div>
                                 <Typography variant={"body1"} component={"div"}>
@@ -56,7 +73,7 @@ const AdditionalResources: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </a>
-                    <a href="https://help.twitter.com/rules-and-policies/twitter-cookies" target={"_blank"}>
+                    <a href={TWITTER_COOKIES} target={"_blank"}>
                         <ListItem>
                             <div>
                                 <Typography variant={"body1"} component={"div"}>
@@ -68,7 +85,7 @@ const AdditionalResources: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </a>
-                    <a href="https://twitter.com/privacy" target={"_blank"}>
+                    <a href={TWITTER_PRIVACY} target={"_blank"}>
                         <ListItem>
                             <div>
                                 <Typography variant={"body1"} component={"div"}>
@@ -80,7 +97,7 @@ const AdditionalResources: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </a>
-                    <a href="https://twitter.com/tos" target={"_blank"}>
+                    <a href={TWITTER_TOS} target={"_blank"}>
                         <ListItem>
                             <div>
                                 <Typography variant={"body1"} component={"div"}>
@@ -98,7 +115,7 @@ const AdditionalResources: FC = (): ReactElement => {
                             Miscellaneous
                         </Typography>
                     </div>
-                    <a href="https://about.twitter.com/en" target={"_blank"}>
+                    <a href={ABOUT_TWITTER} target={"_blank"}>
                         <ListItem>
                             <div>
                                 <Typography variant={"body1"} component={"div"}>
@@ -110,7 +127,7 @@ const AdditionalResources: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </a>
-                    <a href="https://ads.twitter.com" target={"_blank"}>
+                    <a href={ADS_TWITTER} target={"_blank"}>
                         <ListItem>
                             <div>
                                 <Typography variant={"body1"} component={"div"}>
@@ -122,7 +139,7 @@ const AdditionalResources: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </a>
-                    <a href="https://blog.twitter.com/" target={"_blank"}>
+                    <a href={BLOG_TWITTER} target={"_blank"}>
                         <ListItem>
                             <div>
                                 <Typography variant={"body1"} component={"div"}>
@@ -134,7 +151,7 @@ const AdditionalResources: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </a>
-                    <a href="https://about.twitter.com/who-we-are/brand-toolkit" target={"_blank"}>
+                    <a href={BRAND_TOOLKIT} target={"_blank"}>
                         <ListItem>
                             <div>
                                 <Typography variant={"body1"} component={"div"}>
@@ -146,7 +163,7 @@ const AdditionalResources: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </a>
-                    <a href="https://careers.twitter.com" target={"_blank"}>
+                    <a href={CAREERS_TWITTER} target={"_blank"}>
                         <ListItem>
                             <div>
                                 <Typography variant={"body1"} component={"div"}>
@@ -158,7 +175,7 @@ const AdditionalResources: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </a>
-                    <a href="https://developer.twitter.com" target={"_blank"}>
+                    <a href={DEVELOPER_TWITTER} target={"_blank"}>
                         <ListItem>
                             <div>
                                 <Typography variant={"body1"} component={"div"}>
@@ -170,7 +187,7 @@ const AdditionalResources: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </a>
-                    <a href="https://twitter.com/i/directory/profiles" target={"_blank"}>
+                    <a href={TWITTER_DIRECTORY_PROFILES} target={"_blank"}>
                         <ListItem>
                             <div>
                                 <Typography variant={"body1"} component={"div"}>
@@ -182,7 +199,7 @@ const AdditionalResources: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </a>
-                    <a href="https://help.twitter.com" target={"_blank"}>
+                    <a href={HELP_TWITTER} target={"_blank"}>
                         <ListItem>
                             <div>
                                 <Typography variant={"body1"} component={"div"}>
@@ -194,7 +211,7 @@ const AdditionalResources: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </a>
-                    <a href="https://marketing.twitter.com" target={"_blank"}>
+                    <a href={MARKETING_TWITTER} target={"_blank"}>
                         <ListItem>
                             <div>
                                 <Typography variant={"body1"} component={"div"}>
@@ -206,7 +223,7 @@ const AdditionalResources: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </a>
-                    <a href="https://status.twitterstat.us" target={"_blank"}>
+                    <a href={STATUS_TWITTER} target={"_blank"}>
                         <ListItem>
                             <div>
                                 <Typography variant={"body1"} component={"div"}>
@@ -218,7 +235,7 @@ const AdditionalResources: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </a>
-                    <a href="https://business.twitter.com/" target={"_blank"}>
+                    <a href={BUSINESS_TWITTER} target={"_blank"}>
                         <ListItem>
                             <div>
                                 <Typography variant={"body1"} component={"div"}>

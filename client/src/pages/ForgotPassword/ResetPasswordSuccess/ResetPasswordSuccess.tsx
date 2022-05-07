@@ -3,7 +3,8 @@ import {Link} from "react-router-dom";
 import {Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useResetPasswordSuccessStyles} from "./ResetPasswordSuccessStyles";
-import { ACCOUNT_LOGIN } from '../../../util/pathConstants';
+import {ACCOUNT_LOGIN} from '../../../util/pathConstants';
+import {DEVELOPER_ACCOUNT, HOW_TO_UPDATE_YOUR_ACCOUNT_PHONE_NUMBER} from "../../../util/url";
 
 const ResetPasswordSuccess: FC = (): ReactElement => {
     const classes = useResetPasswordSuccessStyles();
@@ -14,12 +15,7 @@ const ResetPasswordSuccess: FC = (): ReactElement => {
                 You’re all set. You've successfully changed your password.
             </Typography>
             <div className={classes.infoWrapper}>
-                <MuiLink
-                    href="https://developer.twitter.com/support/twitter-api/developer-account"
-                    variant="body1"
-                    target="_blank"
-                    rel="noopener"
-                >
+                <MuiLink href={DEVELOPER_ACCOUNT} variant="body1" target="_blank" rel="noopener">
                     Review your applications
                 </MuiLink>
                 <Typography variant={"body1"} component={"div"}>
@@ -28,12 +24,7 @@ const ResetPasswordSuccess: FC = (): ReactElement => {
                 </Typography>
             </div>
             <div className={classes.infoWrapper}>
-                <MuiLink
-                    href="https://help.twitter.com/bg/managing-your-account/how-to-update-your-account-phone-number"
-                    variant="body1"
-                    target="_blank"
-                    rel="noopener"
-                >
+                <MuiLink href={HOW_TO_UPDATE_YOUR_ACCOUNT_PHONE_NUMBER} variant="body1" target="_blank" rel="noopener">
                     Add a phone number to your account
                 </MuiLink>
                 <Typography variant={"body1"} component={"div"}>

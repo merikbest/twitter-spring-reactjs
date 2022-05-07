@@ -10,6 +10,7 @@ import {setUserLoadingStatus, updateCountry} from "../../../../../store/ducks/us
 import {LoadingStatus} from "../../../../../store/types";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
+import {HOW_TO_CHANGE_COUNTRY_SETTINGS} from "../../../../../util/url";
 
 const ChangeCountry: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -57,12 +58,7 @@ const ChangeCountry: FC = (): ReactElement => {
                 <Typography variant={"subtitle2"} component={"div"}>
                     {"This is the primary country associated with your account. Your country helps us to customize " +
                     "your Twitter experience. "}
-                    <MuiLink
-                        href="https://help.twitter.com/managing-your-account/how-to-change-country-settings"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={HOW_TO_CHANGE_COUNTRY_SETTINGS} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>

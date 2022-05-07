@@ -5,6 +5,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import {useExploreModalStyles} from "./ExploreModalStyles";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
 import CloseButton from "../../../../../components/CloseButton/CloseButton";
+import {TWITTER_SEARCH} from "../../../../../util/url";
 
 export interface ExploreModalProps {
     visible?: boolean;
@@ -47,12 +48,7 @@ const ExploreModal: FC<ExploreModalProps> = ({visible, onClose, isSearchModal}):
                         {isSearchModal ? (
                             <>
                                 {`This prevents Tweets with potentially sensitive content from displaying in your search results. `}
-                                <MuiLink
-                                    href="https://help.twitter.com/using-twitter/twitter-search"
-                                    variant="subtitle2"
-                                    target="_blank"
-                                    rel="noopener"
-                                >
+                                <MuiLink href={TWITTER_SEARCH} variant="subtitle2" target="_blank" rel="noopener">
                                     Learn more
                                 </MuiLink>
                             </>
@@ -82,12 +78,7 @@ const ExploreModal: FC<ExploreModalProps> = ({visible, onClose, isSearchModal}):
                         {isSearchModal ? (
                             <>
                                 {`Use this to eliminate search results from accounts you’ve blocked or muted. `}
-                                <MuiLink
-                                    href="https://help.twitter.com/using-twitter/twitter-search"
-                                    variant="subtitle2"
-                                    target="_blank"
-                                    rel="noopener"
-                                >
+                                <MuiLink href={TWITTER_SEARCH} variant="subtitle2" target="_blank" rel="noopener">
                                     Learn more
                                 </MuiLink>
                             </>

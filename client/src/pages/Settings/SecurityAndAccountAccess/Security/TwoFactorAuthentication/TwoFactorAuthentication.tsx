@@ -3,6 +3,7 @@ import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useGlobalStyles} from "../../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
+import {TWO_FACTOR_AUTHENTICATION} from "../../../../../util/url";
 
 const TwoFactorAuthentication: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -48,12 +49,7 @@ const TwoFactorAuthentication: FC = (): ReactElement => {
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`Use a security key that inserts into your computer or syncs to your mobile device when you 
                     log in to Twitter. You’ll need to use a supported mobile device or web browser. `}
-                    <MuiLink
-                        href="https://help.twitter.com/managing-your-account/two-factor-authentication"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={TWO_FACTOR_AUTHENTICATION} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>

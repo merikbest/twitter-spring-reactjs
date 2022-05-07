@@ -7,6 +7,7 @@ import {useLoggedDevicesStyles} from "./LoggedDevicesStyles";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 import {SETTINGS_PRIVACY_AND_SAFETY_OFF_TWITTER_ACTIVITY} from "../../../../../util/pathConstants";
+import {ACROSS_YOUR_DEVICES} from "../../../../../util/url";
 
 const LoggedDevices: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -19,11 +20,7 @@ const LoggedDevices: FC = (): ReactElement => {
                     These are browsers, devices, and information Twitter uses to personalize your experience.
                     This includes devices and browsers you haven’t used to log in to Twitter, as well as email
                     addresses and phone numbers like those linked to your Twitter account. <MuiLink
-                    href="https://help.twitter.com/about-personalization-across-your-devices"
-                    variant="subtitle2"
-                    target="_blank"
-                    rel="noopener"
-                >
+                    href={ACROSS_YOUR_DEVICES} variant="subtitle2" target="_blank" rel="noopener">
                     Learn more
                 </MuiLink>
                 </Typography>

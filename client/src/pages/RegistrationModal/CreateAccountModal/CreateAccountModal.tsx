@@ -7,6 +7,7 @@ import {RegistrationInfo} from "../../Authentication/Authentication";
 import {AuthApi} from "../../../services/api/authApi";
 import Spinner from "../../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../../util/globalClasses";
+import {TWITTER_COOKIES, TWITTER_PRIVACY, TWITTER_TOS_NEW} from "../../../util/url";
 
 interface CustomizeModalProps {
     open: boolean;
@@ -86,20 +87,19 @@ const CreateAccountModal: FC<CustomizeModalProps> = (
                         </div>
                         <Typography variant={"body1"} component={"div"} className={classes.text}>
                             {"By signing up, you agree to the "}
-                            <MuiLink href="https://twitter.com/tos#new" variant="body1" target="_blank" rel="noopener">
+                            <MuiLink href={TWITTER_TOS_NEW} variant="body1" target="_blank" rel="noopener">
                                 Terms of Service
                             </MuiLink>
                             {" and "}
-                            <MuiLink href="https://twitter.com/privacy" variant="body1" target="_blank" rel="noopener">
+                            <MuiLink href={TWITTER_PRIVACY} variant="body1" target="_blank" rel="noopener">
                                 Privacy Policy
                             </MuiLink>
                             {", including "}
-                            <MuiLink href="https://help.twitter.com/rules-and-policies/twitter-cookies" variant="body1"
-                                target="_blank" rel="noopener">
+                            <MuiLink href={TWITTER_COOKIES} variant="body1" target="_blank" rel="noopener">
                                 Cookie Use
                             </MuiLink>
                             {". Others will be able to find you by email or phone number when provided · "}
-                            <MuiLink href="https://twitter.com/privacy" variant="body1" target="_blank" rel="noopener">
+                            <MuiLink href={TWITTER_PRIVACY} variant="body1" target="_blank" rel="noopener">
                                 Privacy Options
                             </MuiLink>
                         </Typography>

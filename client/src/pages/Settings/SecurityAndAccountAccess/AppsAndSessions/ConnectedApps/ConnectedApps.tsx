@@ -3,6 +3,7 @@ import {Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useGlobalStyles} from "../../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
+import {ACCESS_TO_THIRD_PARTY_APPS} from "../../../../../util/url";
 
 const ConnectedApps: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -13,12 +14,7 @@ const ConnectedApps: FC = (): ReactElement => {
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`These are the apps which you connected to your account. You can see the information these apps 
                     have access to and revoke access. `}
-                    <MuiLink
-                        href="https://help.twitter.com/managing-your-account/connect-or-revoke-access-to-third-party-apps"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={ACCESS_TO_THIRD_PARTY_APPS} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>

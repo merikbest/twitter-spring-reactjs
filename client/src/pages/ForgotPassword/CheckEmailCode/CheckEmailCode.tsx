@@ -6,6 +6,7 @@ import {ForgotPasswordTextField} from "../ForgotPasswordTextField/ForgotPassword
 import {AuthApi} from "../../../services/api/authApi";
 import {useCheckEmailCodeStyles} from "./CheckEmailCodeStyles";
 import { ACCOUNT_FORGOT_RESET_PASSWORD } from '../../../util/pathConstants';
+import {REGAIN_ACCESS} from "../../../util/url";
 
 const CheckEmailCode: FC = (): ReactElement => {
     const classes = useCheckEmailCodeStyles();
@@ -67,12 +68,7 @@ const CheckEmailCode: FC = (): ReactElement => {
                     If you don't see the email, check other places it might be, like your junk, spam, social,
                     or other folders.
                 </Typography>
-                <MuiLink
-                    href="https://help.twitter.com/forms/account-access/regain-access"
-                    variant="subtitle2"
-                    target="_blank"
-                    rel="noopener"
-                >
+                <MuiLink href={REGAIN_ACCESS} variant="subtitle2" target="_blank" rel="noopener">
                     Didn’t receive your code?
                 </MuiLink>
             </div>

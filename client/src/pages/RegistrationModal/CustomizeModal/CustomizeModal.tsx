@@ -4,6 +4,7 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 
 import {useCustomizeModalStyles} from "./CustomizeModalStyles";
 import {useGlobalStyles} from "../../../util/globalClasses";
+import {NEW_ACCOUNT_SETTINGS} from "../../../util/url";
 
 interface CustomizeModalProps {
     open: boolean;
@@ -41,12 +42,7 @@ const CustomizeModal: FC<CustomizeModalProps> = ({open, onClose, onOpenCreateAcc
                 <Radio className={classes.radio} checked={true} color="primary"/>
                 <Typography variant={"body1"} component={"div"}>
                     {"For more details about these settings, visit the "}
-                    <MuiLink
-                        href="https://help.twitter.com/managing-your-account/new-account-settings"
-                        variant="body1"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={NEW_ACCOUNT_SETTINGS} variant="body1" target="_blank" rel="noopener">
                         Help Center
                     </MuiLink>.
                 </Typography>

@@ -3,6 +3,7 @@ import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
+import {ACROSS_YOUR_DEVICES, TAILORED_SUGGESTIONS} from "../../../../util/url";
 
 const OffTwitterActivity: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -27,12 +28,7 @@ const OffTwitterActivity: FC = (): ReactElement => {
                         content, such as embedded timelines. That information makes Twitter better for you, such as by
                         personalizing your experience. This web browsing history will never be stored with your name, email,
                         or phone number. `}
-                    <MuiLink
-                        href="https://help.twitter.com/using-twitter/tailored-suggestions"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={TAILORED_SUGGESTIONS} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>
@@ -49,12 +45,7 @@ const OffTwitterActivity: FC = (): ReactElement => {
                         devices you’ve used to log in. When this setting is enabled, Twitter may also personalize based on
                         other inferences about your identity, like devices and browsers you haven’t used to log in to
                         Twitter or email addresses and phone numbers similar to those linked to your Twitter account. `}
-                    <MuiLink
-                        href="https://help.twitter.com/about-personalization-across-your-devices"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={ACROSS_YOUR_DEVICES} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>

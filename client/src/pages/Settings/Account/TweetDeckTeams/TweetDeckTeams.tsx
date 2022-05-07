@@ -5,6 +5,7 @@ import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
 import {useTweetDeckTeamsStyles} from "./TweetDeckTeamsStyles";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
+import {TWEETDECK_TEAMS} from "../../../../util/url";
 
 const TweetDeckTeams: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -31,12 +32,7 @@ const TweetDeckTeams: FC = (): ReactElement => {
                 </Typography>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {"When this setting is on, you can invite anyone to Tweet from this account using TweetDeck Teams. "}
-                    <MuiLink
-                        href="https://help.twitter.com/using-twitter/tweetdeck-teams"
-                        variant="subtitle2"
-                        target="_blank"
-                        rel="noopener"
-                    >
+                    <MuiLink href={TWEETDECK_TEAMS} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>
