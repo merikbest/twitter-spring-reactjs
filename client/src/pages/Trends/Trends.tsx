@@ -1,18 +1,14 @@
 import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Link} from "react-router-dom";
-import {List, ListItem, ListItemText, Typography} from "@material-ui/core";
+import {List} from "@material-ui/core";
 
-import {useTrendsStyles} from "./TrendsStyles";
+import TrendsItem from "./TrendsItem/TrendsItem";
 import {selectIsTagsLoading, selectTagsItems} from "../../store/ducks/tags/selectors";
 import {fetchTrends} from "../../store/ducks/tags/actionCreators";
-import {EditIcon} from "../../icons";
 import Spinner from "../../components/Spinner/Spinner";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
-import {SEARCH} from "../../util/pathConstants";
 
 const Trends: FC = (): ReactElement => {
-    const classes = useTrendsStyles();
     const dispatch = useDispatch();
     const isLoading = useSelector(selectIsTagsLoading);
     const trends = useSelector(selectTagsItems);
@@ -20,7 +16,6 @@ const Trends: FC = (): ReactElement => {
     useEffect(() => {
         dispatch(fetchTrends());
         window.scrollTo(0, 0);
-
     }, []);
 
     return (
@@ -28,26 +23,10 @@ const Trends: FC = (): ReactElement => {
             {isLoading ? (
                 <Spinner paddingTop={80}/>
             ) : (
-                <List style={{paddingTop: 48,}}>
-                    {trends.map(item => (
-                        <div className={classes.item} key={item.id}>
-                            <Link to={{pathname: SEARCH, state: {tag: item.tagName}}}>
-                                <ListItem>
-                                    <ListItemText
-                                        primary={item.tagName}
-                                        secondary={
-                                            <Typography component="span" variant="body2" color="textSecondary">
-                                                {item.tweetsQuantity} Tweets
-                                            </Typography>
-                                        }
-                                    />
-                                    <span>{EditIcon}</span>
-                                </ListItem>
-                            </Link>
-                        </div>
-                    ))}
-                </List>)
-            }
+                <List style={{paddingTop: 48}}>
+                    {trends.map((tag) => <TrendsItem key={tag.id} tag={tag}/>)}
+                </List>
+            )}
         </div>
     );
 };

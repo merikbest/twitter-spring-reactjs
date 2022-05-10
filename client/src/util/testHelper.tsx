@@ -249,7 +249,7 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             loadingState: loadingStatus
         },
         tags: {
-            items: mockTagResponse,
+            items: [],
             loadingState: loadingStatus
         },
         tweet: {

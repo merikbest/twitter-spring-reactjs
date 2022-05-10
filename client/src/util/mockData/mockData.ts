@@ -15,6 +15,7 @@ import {
 } from "../../store/types/lists";
 import {ChatMessageResponse, ChatResponse} from "../../store/types/chat";
 import {NotificationInfoResponse, NotificationResponse, NotificationUserResponse} from "../../store/types/notification";
+import {TagResponse} from "../../store/types/tag";
 
 export const mockTweets = [
     {
@@ -1169,3 +1170,22 @@ export const mockNotificationInfo = {
         "isTweetBookmarked": false
     }
 } as unknown as NotificationInfoResponse;
+
+// tag
+export const mockTags = [
+    {
+        "id": 1,
+        "tagName": "#FirstTweet",
+        "tweetsQuantity": 5
+    },
+    {
+        "id": 2,
+        "tagName": "#myCat",
+        "tweetsQuantity": 4
+    },
+    {
+        "id": 3,
+        "tagName": "#JavaScript",
+        "tweetsQuantity": 1
+    }
+] as unknown as TagResponse[];
