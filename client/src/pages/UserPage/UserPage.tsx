@@ -19,7 +19,6 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import format from 'date-fns/format';
 import {CompatClient, Stomp} from "@stomp/stompjs";
 import SockJS from "sockjs-client";
-import classNames from "classnames";
 import classnames from "classnames";
 import {compose} from "recompose";
 
@@ -357,6 +356,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                             )}
                         </div>
                         <div className={classes.info}>
+                            {/* TODO test Link */}
                             <Link to={{
                                 pathname: `${PROFILE_PHOTO}/${userProfile?.id}`, 
                                 state: {
@@ -364,6 +364,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                     imageSrc: userProfile?.avatar?.src ? userProfile?.avatar.src : DEFAULT_PROFILE_IMG
                                 },
                             }}>
+                                {/* TODO test DEFAULT_PROFILE_IMG */}
                                 <div style={{display: "inline-block"}}>
                                     <Avatar src={userProfile !== undefined ? userProfile?.avatar?.src ? userProfile?.avatar.src : DEFAULT_PROFILE_IMG : undefined}>
                                         <div></div>
@@ -413,7 +414,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                             )}
                                             {userProfile?.isUserBlocked ? (
                                                 <Button
-                                                    className={classNames(classes.primaryButton, classes.blockButton)}
+                                                    className={classnames(classes.primaryButton, classes.blockButton)}
                                                     onClick={onOpenBlockUserModal}
                                                     onMouseOver={() => setBtnText("Unblock")}
                                                     onMouseLeave={() => setBtnText("Blocked")}
@@ -529,6 +530,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                         {userProfile?.website && (
                                             <ListItem>
                                                 <>{LinkIcon}</>
+                                                {/* TODO link to website */}
                                                 <MuiLink
                                                     href={userProfile?.website}
                                                     variant="subtitle1"

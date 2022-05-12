@@ -287,7 +287,7 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             loadingState: loadingStatus
         },
         userTweets: {
-            items: mockTweetResponseArray,
+            items: [],
             pagesCount: 1,
             loadingState: loadingStatus
         },
