@@ -9,7 +9,8 @@ import {
 import {
     BaseListResponse,
     ListResponse,
-    ListsOwnerMemberResponse, ListUserResponse,
+    ListsOwnerMemberResponse,
+    ListUserResponse,
     PinnedListResponse,
     SimpleListResponse
 } from "../../store/types/lists";
