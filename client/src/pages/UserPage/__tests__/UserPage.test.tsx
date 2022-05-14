@@ -1,7 +1,7 @@
 import React from "react";
 import ReactRouter from "react-router";
 import routeData from "react-router";
-import {Avatar} from "@material-ui/core";
+import {Avatar, Button, IconButton} from "@material-ui/core";
 import Tab from "@material-ui/core/Tab";
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -9,12 +9,19 @@ import UserPage from "../UserPage";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
 import {LoadingStatus} from "../../../store/types";
 import {UserProfileActionsType} from "../../../store/ducks/userProfile/contracts/actionTypes";
-import {mockTweets, mockUser} from "../../../util/mockData/mockData";
+import {mockTweets, mockUser, mockUserProfile} from "../../../util/mockData/mockData";
 import Spinner from "../../../components/Spinner/Spinner";
 import UserNotFound from "../UserNotFound/UserNotFound";
-import {PROFILE} from "../../../util/pathConstants";
+import {MESSAGES, PROFILE, USER} from "../../../util/pathConstants";
 import SetupProfileModal from "../../SetupProfileModal/SetupProfileModal";
 import {UserTweetsActionType} from "../../../store/ducks/userTweets/contracts/actionTypes";
+import ProfilePictureModal from "../../SetupProfileModal/ProfilePictureModal/ProfilePictureModal";
+import EditProfileModal from "../../../components/EditProfileModal/EditProfileModal";
+import CloseButton from "../../../components/CloseButton/CloseButton";
+import {UserActionsType} from "../../../store/ducks/user/contracts/actionTypes";
+import HoverAction from "../../../components/HoverAction/HoverAction";
+import {ChatsActionsType} from "../../../store/ducks/chats/contracts/actionTypes";
+import {createMemoryHistory} from "history";
 
 window.scrollTo = jest.fn();
 
@@ -40,7 +47,7 @@ describe("UserPage", () => {
     });
 
     it("should fetch user and images", () => {
-        const wrapper = mountWithStore(<UserPage/>, createMockRootState());
+        mountWithStore(<UserPage/>, createMockRootState());
 
         expect(mockDispatchFn).nthCalledWith(1, {payload: 2, type: UserProfileActionsType.FETCH_USER});
         expect(mockDispatchFn).nthCalledWith(2, {payload: 2, type: UserProfileActionsType.FETCH_IMAGES});
@@ -189,23 +196,10 @@ describe("UserPage", () => {
         const wrapper = mountWithStore(<UserPage/>, mockWithSingleTweetsCount);
 
         wrapper.find(Tab).at(2).simulate("click");
-        console.log(wrapper.debug())
 
         expect(wrapper.text().includes(`${mockUserWithSingleCount.mediaTweetCount} Photo & video`)).toBe(true);
     });
-    // |    74.4 |     43.4 |   44.68 |   72.25 | 143-150,186-197,211,226,230,234,238,243,250-256,282-283,287-289,293-297,301,305,309,404-462 
-    it("should scroll and fetch User Tweets", () => {
-        const wrapper = mountWithStore(<UserPage/>, mockWithTweets);
-        
-        // @ts-ignore
-        wrapper.find(InfiniteScroll).prop("next")(jest.fn());
 
-        expect(mockDispatchFn).nthCalledWith(4, {
-            payload: {userId: "2", page: 1},
-            type: UserTweetsActionType.FETCH_TWEETS
-        });
-    });
-    
     it("should unmount UserPage", () => {
         const wrapper = mountWithStore(<UserPage/>, mockRootState);
 
@@ -216,4 +210,164 @@ describe("UserPage", () => {
         expect(mockDispatchFn).nthCalledWith(6, {type: UserProfileActionsType.RESET_IMAGES_STATE});
         expect(mockDispatchFn).nthCalledWith(7, {type: UserTweetsActionType.RESET_TWEETS});
     });
+
+    it("should click on Setup profile button and close", () => {
+        const wrapper = mountWithStore(<UserPage/>, {
+            ...mockRootState,
+            user: {...mockRootState.user, status: LoadingStatus.LOADED}
+        });
+
+        expect(wrapper.find(SetupProfileModal).prop("visible")).toBe(false);
+        expect(wrapper.find(Button).at(0).text()).toEqual("Setup profile");
+
+        wrapper.find(Button).at(0).simulate("click");
+        expect(wrapper.find(SetupProfileModal).prop("visible")).toBe(true);
+
+        wrapper.find(SetupProfileModal).find(ProfilePictureModal).find(".MuiBackdrop-root").simulate("click");
+        expect(wrapper.find(SetupProfileModal).prop("visible")).toBe(false);
+    });
+
+    it("should click on Edit profile button and close", () => {
+        const wrapper = mountWithStore(<UserPage/>, {
+            ...mockRootState,
+            user: {
+                ...mockRootState.user,
+                data: {...mockRootState.user.data, profileCustomized: true},
+                status: LoadingStatus.LOADED,
+            }
+        });
+
+        expect(wrapper.find(EditProfileModal).prop("visible")).toBe(false);
+        expect(wrapper.find(Button).at(0).text()).toEqual("Edit profile");
+
+        wrapper.find(Button).at(0).simulate("click");
+        expect(wrapper.find(EditProfileModal).prop("visible")).toBe(true);
+
+        wrapper.find(EditProfileModal).find(CloseButton).find(IconButton).simulate("click");
+        expect(wrapper.find(SetupProfileModal).prop("visible")).toBe(false);
+    });
+
+    it("should click follow to private user profile", () => {
+        const wrapper = mountWithStore(<UserPage/>, {
+            ...mockRootState,
+            user: {
+                ...mockRootState.user, status: LoadingStatus.LOADED},
+            userProfile: {
+                ...mockRootState.userProfile,
+                user: {...mockUserProfile, isPrivateProfile: true, isFollower: false}
+            }
+        });
+        
+        expect(wrapper.find(Button).at(0).text()).toEqual("Follow");
+
+        wrapper.find(Button).at(0).simulate("click");
+
+        expect(mockDispatchFn).nthCalledWith(4, {payload: 1, type: UserActionsType.PROCESS_FOLLOW_REQUEST});
+    });
+    
+    it("should click follow to user profile", () => {
+        const wrapper = mountWithStore(<UserPage/>, {
+            ...mockRootState,
+            user: {
+                ...mockRootState.user, status: LoadingStatus.LOADED},
+            userProfile: {
+                ...mockRootState.userProfile,
+                user: {...mockUserProfile, isFollower: false}
+            }
+        });
+
+        expect(wrapper.find(Button).at(0).text()).toEqual("Follow");
+
+        wrapper.find(Button).at(0).simulate("click");
+
+        expect(mockDispatchFn).nthCalledWith(4, {payload: {userId: 1}, type: UserActionsType.FOLLOW_USER});
+    });
+    
+    it("should click unfollow to user profile", () => {
+        const wrapper = mountWithStore(<UserPage/>, {
+            ...mockRootState,
+            user: {
+                ...mockRootState.user, status: LoadingStatus.LOADED},
+            userProfile: {
+                ...mockRootState.userProfile,
+                user: mockUserProfile
+            }
+        });
+
+        expect(wrapper.find(Button).at(0).text()).toEqual("Following");
+
+        wrapper.find(Button).at(0).simulate("mouseover");
+        expect(wrapper.find(Button).text().includes("Unfollow")).toBe(true);
+
+        wrapper.find(Button).at(0).simulate("mouseleave");
+        expect(wrapper.find(Button).text().includes("Following")).toBe(true);
+        
+        wrapper.find(Button).at(0).simulate("click");
+
+        expect(mockDispatchFn).nthCalledWith(4, {payload: {userId: 1}, type: UserActionsType.UNFOLLOW_USER});
+    });
+
+    it("should click Add User To Chat", () => {
+        const history = createMemoryHistory();
+        const pushSpy = jest.spyOn(history, "push");
+        const wrapper = mountWithStore(<UserPage/>, {
+            ...mockRootState,
+            user: {
+                ...mockRootState.user, status: LoadingStatus.LOADED},
+            userProfile: {
+                ...mockRootState.userProfile,
+                user: mockUserProfile
+            }
+        }, history);
+
+        wrapper.find(IconButton).at(2).simulate("click");
+        
+        expect(pushSpy).toHaveBeenCalled();
+        expect(pushSpy).toHaveBeenCalledWith(MESSAGES);
+        expect(mockDispatchFn).nthCalledWith(4, {payload: 1, type: ChatsActionsType.CREATE_CHAT});
+    });
+    
+    it("should hover Message icon and render Hover Action", () => {
+        jest.useFakeTimers();
+        const wrapper = mountWithStore(<UserPage/>, {
+            ...mockRootState,
+            user: {
+                ...mockRootState.user, status: LoadingStatus.LOADED},
+            userProfile: {
+                ...mockRootState.userProfile,
+                user: mockUserProfile
+            }
+        });
+        wrapper.find(IconButton).at(2).simulate("mouseenter");
+        jest.runAllTimers();
+        wrapper.update();
+        
+        expect(wrapper.find(HoverAction).exists()).toBeTruthy();
+        expect(wrapper.find(HoverAction).at(2).prop("visible")).toBe(true);
+        expect(wrapper.find(HoverAction).at(2).prop("actionText")).toBe("Message");
+    });
+    // |    74.4 |     43.4 |   44.68 |   72.25 | 143-150,211,243,287-289,293-297,301,305,309,404-462
+    
+    it("should scroll and fetch User Tweets", () => {
+        testLoadUserTweets(0, UserTweetsActionType.FETCH_TWEETS);
+    });
+
+    it("should scroll and fetch User Retweets And Replies", () => {
+        testLoadUserTweets(1, UserTweetsActionType.FETCH_RETWEETS_AND_REPLIES);
+    });
+
+    it("should scroll and fetch User Media Tweets", () => {
+        testLoadUserTweets(2, UserTweetsActionType.FETCH_MEDIA_TWEETS);
+    });
+
+    it("should scroll and fetch User Liked Tweets", () => {
+        testLoadUserTweets(3, UserTweetsActionType.FETCH_LIKED_TWEETS);
+    });
+
+    const testLoadUserTweets = (tabIndex: number, actionType: UserTweetsActionType): void => {
+        const wrapper = mountWithStore(<UserPage/>, mockWithTweets);
+        wrapper.find(Tab).at(tabIndex).simulate("click");
+        wrapper.find(InfiniteScroll).prop("next")();
+        expect(mockDispatchFn).nthCalledWith(5, {payload: {userId: "2", page: 0}, type: actionType});
+    };
 });

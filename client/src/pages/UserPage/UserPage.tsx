@@ -182,15 +182,15 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
         setBtnText(userProfile?.isWaitingForApprove ? ("Pending") : (userProfile?.isUserBlocked ? "Blocked" : "Following"));
     }, [myProfile]);
 
-    const loadUserTweets = (): void => {
+    const loadUserTweets = (): void => { // +
         if (activeTab === 1) {
-            dispatch(fetchUserRetweetsAndReplies({userId: params.id, page: page}));
+            dispatch(fetchUserRetweetsAndReplies({userId: params.id, page: page})); // +
         } else if (activeTab === 2) {
-            dispatch(fetchUserMediaTweets({userId: params.id, page: page}));
+            dispatch(fetchUserMediaTweets({userId: params.id, page: page})); // +
         } else if (activeTab === 3) {
-            dispatch(fetchUserLikedTweets({userId: params.id, page: page}));
+            dispatch(fetchUserLikedTweets({userId: params.id, page: page})); // +
         } else {
-            dispatch(fetchUserTweets({userId: params.id, page: page}));
+            dispatch(fetchUserTweets({userId: params.id, page: page})); // +
         }
 
         if (isTweetsLoaded) {
@@ -222,19 +222,19 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
         setActiveTab(newValue);
     };
 
-    const onOpenEditProfile = (): void => {
+    const onOpenEditProfile = (): void => { // +
         setVisibleEditProfile(true);
     };
 
-    const onCloseEditProfile = (): void => {
+    const onCloseEditProfile = (): void => { // +
         setVisibleEditProfile(false);
     };
 
-    const onOpenSetupProfile = (): void => {
+    const onOpenSetupProfile = (): void => { // +
         setVisibleSetupProfile(true);
     };
 
-    const onCloseSetupProfile = (): void => {
+    const onCloseSetupProfile = (): void => { // +
         setVisibleSetupProfile(false);
     };
 
@@ -246,14 +246,14 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
         }
     };
 
-    const handleFollow = (): void => {
+    const handleFollow = (): void => { // +
         if (userProfile?.isPrivateProfile) {
-            dispatch(processFollowRequest(userProfile.id!));
+            dispatch(processFollowRequest(userProfile.id!)); // +
         } else {
             if (userProfile?.isFollower) {
-                dispatch(unfollowUser({userId: userProfile?.id!}));
+                dispatch(unfollowUser({userId: userProfile?.id!})); // +
             } else {
-                dispatch(followUser({userId: userProfile?.id!}));
+                dispatch(followUser({userId: userProfile?.id!})); // +
             }
         }
     };
@@ -278,7 +278,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
         setPage(prevState => prevState + 1);
     };
 
-    const handleClickAddUserToChat = (): void => {
+    const handleClickAddUserToChat = (): void => { // +
         dispatch(createChat(userProfile?.id!));
         history.push(MESSAGES);
     };
