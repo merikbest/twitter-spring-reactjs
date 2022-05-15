@@ -152,14 +152,14 @@ const UserPageActions: FC<UserPageActionsProps & SnackbarProps> = (
                                 </>
                             )}
                             {!isUserBlocked && (
-                                <ListItem onClick={handleMuteUser}>
+                                <ListItem id={"handleMuteUser"} onClick={handleMuteUser}>
                                     <>{isUserMuted ? UnmuteIcon : MuteIcon}</>
                                     <Typography component={"span"}>
                                         {isUserMuted ? "Unmute" : "Mute"} @{user.username}
                                     </Typography>
                                 </ListItem>
                             )}
-                            <ListItem onClick={onOpenBlockUserModal}>
+                            <ListItem id={"openBlockUserModal"} onClick={onOpenBlockUserModal}>
                                 <>{isUserBlocked ? UnblockIcon : BlockIcon}</>
                                 <Typography component={"span"}>
                                     {isUserBlocked ? "Unblock" : "Block"} @{user.username}
