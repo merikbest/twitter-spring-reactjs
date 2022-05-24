@@ -1,47 +1,26 @@
 import React from "react";
 import Adapter from "enzyme-adapter-react-16";
-import {configure} from "enzyme";
+import {configure, mount} from "enzyme";
 import {call, put, takeLatest} from "redux-saga/effects";
 import {LoadingStatus} from "../store/types";
 import {RootState} from "../store/store";
-import {TweetImageResponse, TweetResponse} from "../store/types/tweet";
-import {
-    AuthUserResponse,
-    BlockedUserResponse,
-    FollowerUserResponse,
-    MutedUserResponse,
-    UserDetailResponse,
-    UserProfileResponse,
-    UserResponse
-} from "../store/types/user";
-import {ChatMessageResponse, ChatResponse} from "../store/types/chat";
-import {
-    BaseListResponse,
-    ListResponse,
-    ListsOwnerMemberResponse,
-    ListUserResponse,
-    PinnedListResponse,
-    SimpleListResponse
-} from "../store/types/lists";
-import {NotificationInfoResponse, NotificationResponse, NotificationUserResponse} from "../store/types/notification";
-import {TagResponse} from "../store/types/tag";
 import configureStore from "redux-mock-store";
-import {mount} from "enzyme";
 import {Link, Router} from "react-router-dom";
+import * as redux from "react-redux";
 import {Provider} from "react-redux";
 import {createMemoryHistory} from "history";
 import {
-    createMockMyProfile, mockFullTweet,
+    createMockMyProfile,
+    mockFullTweet,
     mockProfileImages,
     mockTweets,
     mockUser,
     mockUsers
 } from "./mockData/mockData";
-import * as redux from "react-redux";
 import routeData from "react-router";
 
 
-configure({ adapter: new Adapter() });
+configure({adapter: new Adapter()});
 
 // @ts-ignore
 export const testAction = (action, payload, expectedPayload) => {
@@ -75,7 +54,7 @@ export const testActionDispatch = (actionType, actualState, expectedState) => {
 export const testLoadingStatus = (worker, loadingAction, loadingStatus) => {
     it(`should yield put ${loadingAction.name} with ${loadingStatus}`, () => {
         let actualYield;
-        
+
         if (loadingStatus === LoadingStatus.ERROR) {
             actualYield = worker.throw("ERROR").value;
         } else {
@@ -92,7 +71,7 @@ export const testCall = (worker, apiCall, payload?, data = {}) => {
     it(`should call ${apiCall.name}`, () => {
         const actualYield = worker.next(data).value;
         let expectedYield;
-        
+
         if (payload !== undefined) {
             expectedYield = call(apiCall, payload);
         } else {
@@ -117,7 +96,7 @@ export const testSetResponse = (worker, mockData = {}, action, payload: {}, resp
 export const testWatchSaga = (watchSaga, requests, effect = takeLatest) => {
     describe(`watch ${watchSaga.name}:`, () => {
         const watcher = watchSaga();
-        
+
         // @ts-ignore
         requests.forEach((request) => {
             it(`should listen to ${request.actionType} and yield ${request.workSaga.name}`, () => {
@@ -166,31 +145,11 @@ export const testClickOnLink = (component: any, path: string, linkIndex: number)
     const pushSpy = jest.spyOn(history, "push");
     const wrapper = mountWithStore(component, mockStore, history);
 
-    wrapper.find(Link).at(linkIndex).simulate("click", { button: 0 });
+    wrapper.find(Link).at(linkIndex).simulate("click", {button: 0});
 
     expect(pushSpy).toHaveBeenCalled();
     expect(pushSpy).toHaveBeenCalledWith(path);
 };
-
-export const mockListsOwnerMemberResponse = [{id: 1}, {id: 2}] as ListsOwnerMemberResponse[];
-export const mockMutedUserResponse = [{id: 1}, {id: 2}] as MutedUserResponse[];
-export const mockBlockedUserResponse = [{id: 1}, {id: 2}] as BlockedUserResponse[];
-export const mockChatMessageResponse = [{id: 1}, {id: 2}] as ChatMessageResponse[];
-export const mockChatResponse = [{id: 1}, {id: 2}] as ChatResponse[];
-export const mockFollowerUserResponse = [{id: 1}, {id: 2}] as FollowerUserResponse[];
-export const mockBaseListResponse = {id: 1} as BaseListResponse;
-export const mockListResponse = [{id: 1}, {id: 2}] as ListResponse[];
-export const mockListUserResponse = [{id: 1}, {id: 2}] as ListUserResponse[];
-export const mockPinnedListResponse = [{id: 1}, {id: 2}] as PinnedListResponse[];
-export const mockSimpleListResponse = [{id: 1}, {id: 2}] as SimpleListResponse[];
-export const mockNotificationResponse = [{id: 1}, {id: 1}] as NotificationResponse[];
-export const mockNotificationUserResponse = [{id: 1}, {id: 1}] as NotificationUserResponse[];
-export const mockNotificationInfoResponse = {id: 1} as NotificationInfoResponse;
-export const mockTagResponse = [{id: 1}, {id: 2}] as TagResponse[];
-export const mockTweetResponse = {id: 1} as TweetResponse;
-export const mockUserResponse = [{id: 1}, {id: 2}] as UserResponse[];
-export const mockTweetResponseArray = [{id: 1}, {id: 2}] as TweetResponse[];
-export const mockUserDetailResponse = {id: 1} as UserDetailResponse;
 
 export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): RootState => {
     return {
@@ -212,11 +171,11 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             loadingState: loadingStatus
         },
         followerRequests: {
-            items: mockFollowerUserResponse,
+            items: [],
             loadingState: loadingStatus
         },
         list: {
-            list: mockBaseListResponse,
+            list: undefined,
             loadingState: loadingStatus
         },
         listDetail: {
@@ -224,8 +183,8 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             loadingState: loadingStatus
         },
         listMembers: {
-            members: mockListsOwnerMemberResponse,
-            suggested: mockListsOwnerMemberResponse,
+            members: [],
+            suggested: [],
             membersLoadingState: loadingStatus,
             suggestedLoadingState: loadingStatus,
             loadingState: loadingStatus
@@ -268,7 +227,7 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             loadingState: loadingStatus
         },
         userDetail: {
-            item: mockUserDetailResponse,
+            item: undefined,
             loadingState: loadingStatus
         },
         userProfile: {

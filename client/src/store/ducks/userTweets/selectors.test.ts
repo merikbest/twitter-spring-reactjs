@@ -5,13 +5,18 @@ import {
     selectUserTweetsItems
 } from "./selectors";
 import {LoadingStatus} from "../../types";
-import {createMockRootState, mockTweetResponseArray} from "../../../util/testHelper";
+import {createMockRootState} from "../../../util/testHelper";
+import {mockTweets} from "../../../util/mockData/mockData";
 
 describe("userTweets selectors:", () => {
+    const mockState = createMockRootState();
 
     describe("selectUserTweetsItems", () => {
         it("should return TweetResponse array", () => {
-            expect(selectUserTweetsItems(createMockRootState())).toBe(mockTweetResponseArray);
+            expect(selectUserTweetsItems({
+                ...mockState,
+                userTweets: {...mockState.userTweets, items: mockTweets}
+            })).toBe(mockTweets);
         });
     });
 

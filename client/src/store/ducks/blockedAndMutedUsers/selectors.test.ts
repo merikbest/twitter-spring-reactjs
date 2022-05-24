@@ -5,19 +5,27 @@ import {
     selectMutedUsersItems
 } from "./selectors";
 import {LoadingStatus} from "../../types";
-import {createMockRootState, mockBlockedUserResponse, mockMutedUserResponse} from "../../../util/testHelper";
+import {createMockRootState} from "../../../util/testHelper";
+import {mockBlockedUsers, mockMutedUsers} from "../../../util/mockData/mockData";
 
 describe("blockedAndMutedUsers selectors:", () => {
+    const mockState = createMockRootState();
     
     describe("selectMutedUsersItems", () => {
         it("should return MutedUserResponse array", () => {
-            expect(selectMutedUsersItems(createMockRootState())).toBe(mockMutedUserResponse);
+            expect(selectMutedUsersItems({
+                ...mockState,
+                blockedAndMutedUsers: {...mockState.blockedAndMutedUsers, mutedUsers: mockMutedUsers}
+            })).toBe(mockMutedUsers);
         });
     });
 
     describe("selectBlockedUsersItems", () => {
         it("should return BlockedUserResponse array", () => {
-            expect(selectBlockedUsersItems(createMockRootState())).toBe(mockBlockedUserResponse);
+            expect(selectBlockedUsersItems({
+                ...mockState,
+                blockedAndMutedUsers: {...mockState.blockedAndMutedUsers, blockedUsers: mockBlockedUsers}
+            })).toBe(mockBlockedUsers);
         });
     });
 

@@ -8,13 +8,18 @@ import {
     selectListSuggestedItems
 } from "./selectors";
 import {LoadingStatus} from "../../types";
-import {createMockRootState, mockListsOwnerMemberResponse} from "../../../util/testHelper";
+import {createMockRootState} from "../../../util/testHelper";
+import {mockListsOwnerMember} from "../../../util/mockData/mockData";
 
 describe("listMembers selectors:", () => {
-    
+    const mockState = createMockRootState();
+
     describe("selectListMembersItems", () => {
         it("should return ListsOwnerMemberResponse list", () => {
-            expect(selectListMembersItems(createMockRootState())).toBe(mockListsOwnerMemberResponse);
+            expect(selectListMembersItems({
+                ...mockState,
+                listMembers: {...mockState.listMembers, members: mockListsOwnerMember}
+            })).toBe(mockListsOwnerMember);
         });
     });
 
@@ -32,7 +37,10 @@ describe("listMembers selectors:", () => {
 
     describe("selectListSuggestedItems", () => {
         it("should return ListsOwnerMemberResponse list", () => {
-            expect(selectListSuggestedItems(createMockRootState())).toBe(mockListsOwnerMemberResponse);
+            expect(selectListSuggestedItems({
+                ...mockState,
+                listMembers: {...mockState.listMembers, suggested: mockListsOwnerMember}
+            })).toBe(mockListsOwnerMember);
         });
     });
 

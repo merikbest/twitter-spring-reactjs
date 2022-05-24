@@ -4,13 +4,19 @@ import {
     selectIsFollowerRequestsLoading
 } from "./selectors";
 import {LoadingStatus} from "../../types";
-import {createMockRootState, mockFollowerUserResponse} from "../../../util/testHelper";
+import {createMockRootState} from "../../../util/testHelper";
+import {FollowerUserResponse} from "../../types/user";
 
 describe("followerRequests selectors:", () => {
+    const mockState = createMockRootState();
+    const mockFollowerUserResponse = [{id: 1}, {id: 2}] as FollowerUserResponse[];
 
     describe("selectFollowerRequestsItems", () => {
         it("should return FollowerUserResponse array", () => {
-            expect(selectFollowerRequestsItems(createMockRootState())).toBe(mockFollowerUserResponse);
+            expect(selectFollowerRequestsItems({
+                ...mockState,
+                followerRequests: {...mockState.notifications, items: mockFollowerUserResponse}
+            })).toBe(mockFollowerUserResponse);
         });
     });
 

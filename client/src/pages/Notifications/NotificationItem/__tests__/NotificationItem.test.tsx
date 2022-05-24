@@ -11,7 +11,7 @@ import {mockNotifications} from "../../../../util/mockData/mockData";
 import {NotificationResponse} from "../../../../store/types/notification";
 import {DEFAULT_PROFILE_IMG} from "../../../../util/url";
 import PopperUserWindow from "../../../../components/PopperUserWindow/PopperUserWindow";
-import {NOTIFICATION} from "../../../../util/pathConstants";
+import {NOTIFICATION, PROFILE} from "../../../../util/pathConstants";
 
 describe("NotificationItem", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

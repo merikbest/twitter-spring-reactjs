@@ -7,24 +7,27 @@ import {
     selectNotificationsTweetAuthors
 } from "./selectors";
 import {LoadingStatus} from "../../types";
-import {
-    createMockRootState,
-    mockNotificationInfoResponse,
-    mockNotificationResponse,
-    mockNotificationUserResponse
-} from "../../../util/testHelper";
+import {createMockRootState} from "../../../util/testHelper";
+import {mockNotificationInfo, mockNotifications, mockTweetAuthors} from "../../../util/mockData/mockData";
 
 describe("notifications selectors:", () => {
+    const mockState = createMockRootState();
 
     describe("selectNotificationsList", () => {
         it("should return NotificationResponse array", () => {
-            expect(selectNotificationsList(createMockRootState())).toBe(mockNotificationResponse);
+            expect(selectNotificationsList({
+                ...mockState,
+                notifications: {...mockState.notifications, notificationsList: mockNotifications}
+            })).toBe(mockNotifications);
         });
     });
 
     describe("selectNotificationsTweetAuthors", () => {
         it("should return NotificationUserResponse array", () => {
-            expect(selectNotificationsTweetAuthors(createMockRootState())).toBe(mockNotificationUserResponse);
+            expect(selectNotificationsTweetAuthors({
+                ...mockState,
+                notifications: {...mockState.notifications, tweetAuthors: mockTweetAuthors}
+            })).toBe(mockTweetAuthors);
         });
     });
 
@@ -42,7 +45,10 @@ describe("notifications selectors:", () => {
 
     describe("selectNotificationInfo", () => {
         it("should return NotificationInfoResponse", () => {
-            expect(selectNotificationInfo(createMockRootState())).toBe(mockNotificationInfoResponse);
+            expect(selectNotificationInfo({
+                ...mockState,
+                notifications: {...mockState.notifications, notificationInfo: mockNotificationInfo}
+            })).toBe(mockNotificationInfo);
         });
     });
 

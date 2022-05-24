@@ -1,12 +1,16 @@
 import {selectIsListDetailLoaded, selectIsListDetailLoading, selectListDetailItem} from "./selectors";
 import {LoadingStatus} from "../../types";
-import {createMockRootState, mockBaseListResponse} from "../../../util/testHelper";
+import {createMockRootState} from "../../../util/testHelper";
 
 describe("listDetail selectors:", () => {
+    const mockState = createMockRootState();
     
     describe("selectListDetailItem", () => {
         it("should return BaseListResponse", () => {
-            expect(selectListDetailItem(createMockRootState())).toBe(mockBaseListResponse);
+            expect(selectListDetailItem({
+                ...mockState,
+                userDetail: {...mockState.userDetail, item: undefined} // TODO add UserDetailResponse
+            })).toBe(undefined);
         });
     });
 

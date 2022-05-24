@@ -1,12 +1,17 @@
 import {selectIsTagsLoaded, selectIsTagsLoading, selectTagsItems} from "./selectors";
 import {LoadingStatus} from "../../types";
-import {createMockRootState, mockTagResponse} from "../../../util/testHelper";
+import {createMockRootState} from "../../../util/testHelper";
+import {mockTags} from "../../../util/mockData/mockData";
 
 describe("tags selectors:", () => {
+    const mockState = createMockRootState();
     
     describe("selectTagsItems", () => {
         it("should return TagResponse array", () => {
-            expect(selectTagsItems(createMockRootState())).toBe(mockTagResponse);
+            expect(selectTagsItems({
+                ...mockState,
+                tags: {...mockState.tags, items: mockTags}
+            })).toBe(mockTags);
         });
     });
 

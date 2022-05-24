@@ -14,18 +14,18 @@ import {
     selectTweetData
 } from "./selectors";
 import {LoadingStatus} from "../../types";
-import {
-    createMockRootState,
-    mockTweetResponse,
-    mockTweetResponseArray,
-    mockUserResponse
-} from "../../../util/testHelper";
+import {createMockRootState} from "../../../util/testHelper";
+import {mockFullTweet, mockTweets, mockUsers} from "../../../util/mockData/mockData";
 
 describe("tweet selectors:", () => {
+    const mockState = createMockRootState();
 
     describe("selectTweetData", () => {
         it("should return TweetResponse", () => {
-            expect(selectTweetData(createMockRootState())).toBe(mockTweetResponse);
+            expect(selectTweetData({
+                ...mockState,
+                tweet: {...mockState.tweet, tweet: mockFullTweet}
+            })).toBe(mockFullTweet);
         });
     });
 
@@ -49,7 +49,10 @@ describe("tweet selectors:", () => {
 
     describe("selectLikedUsers", () => {
         it("should return UserResponse array", () => {
-            expect(selectLikedUsers(createMockRootState())).toBe(mockUserResponse);
+            expect(selectLikedUsers({
+                ...mockState,
+                tweet: {...mockState.tweet, likedUsers: mockUsers}
+            })).toBe(mockUsers);
         });
     });
 
@@ -67,7 +70,10 @@ describe("tweet selectors:", () => {
 
     describe("selectRetweetedUsers", () => {
         it("should return UserResponse array", () => {
-            expect(selectRetweetedUsers(createMockRootState())).toBe(mockUserResponse);
+            expect(selectRetweetedUsers({
+                ...mockState,
+                tweet: {...mockState.tweet, retweetedUsers: mockUsers}
+            })).toBe(mockUsers);
         });
     });
 
@@ -82,10 +88,13 @@ describe("tweet selectors:", () => {
             expect(selectIsRetweetedUsersLoadedSuccess(createMockRootState(LoadingStatus.SUCCESS))).toBe(true);
         });
     });
-    
+
     describe("selectReplies", () => {
         it("should return TweetResponse array", () => {
-            expect(selectReplies(createMockRootState())).toBe(mockTweetResponseArray);
+            expect(selectReplies({
+                ...mockState,
+                tweet: {...mockState.tweet, replies: mockTweets}
+            })).toBe(mockTweets);
         });
     });
 
