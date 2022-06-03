@@ -19,7 +19,7 @@ export const withHoverUser = <T extends HoverUserProps>(Component: ComponentType
     const handleHoverPopper = (userId: number): void => {
         setDelayHandler(setTimeout(() => {
             dispatch(fetchUserDetail({userId, cancelTokenSource}));
-        }, 1000));
+        }, 777));
 
         setDelayHandler(setTimeout(() => {
             setVisiblePopperWindow(true);

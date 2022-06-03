@@ -19,7 +19,7 @@ export const withHoverList = <T extends HoverListProps>(Component: ComponentType
     const handleHoverPopper = (listId: number): void => {
         setDelayHandler(setTimeout(() => {
             dispatch(fetchListDetail({listId, cancelTokenSource}));
-        }, 1000));
+        }, 777));
 
         setDelayHandler(setTimeout(() => {
             setVisiblePopperWindow(true);
