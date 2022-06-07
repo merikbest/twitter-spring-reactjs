@@ -111,7 +111,7 @@ const UserPageActions: FC<UserPageActionsProps & SnackbarProps> = (
                                             View Topics
                                         </Typography>
                                     </ListItem>
-                                    <ListItem onClick={onOpenListsModal}>
+                                    <ListItem id={"openListsModal"} onClick={onOpenListsModal}>
                                         <>{AddListsIcon}</>
                                         <Typography component={"span"}>
                                             Add/remove @{user.username} from Lists
@@ -140,7 +140,7 @@ const UserPageActions: FC<UserPageActionsProps & SnackbarProps> = (
                                                 </Typography>
                                             </ListItem>
                                             <CopyToClipboard text={CLIENT_URL + location.pathname}>
-                                                <ListItem onClick={onCopyLinkToProfile}>
+                                                <ListItem id={"copyLinkToProfile"} onClick={onCopyLinkToProfile}>
                                                     <>{LinkIcon}</>
                                                     <Typography component={"span"}>
                                                         Copy link to profile
