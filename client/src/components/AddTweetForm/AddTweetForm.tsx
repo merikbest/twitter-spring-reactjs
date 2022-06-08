@@ -1,4 +1,4 @@
-import React, {FC, FormEvent, MouseEvent, ReactElement, useEffect, useState} from 'react';
+import React, {ChangeEvent, FC, MouseEvent, ReactElement, useEffect, useState} from 'react';
 import {Link, useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import Avatar from '@material-ui/core/Avatar';
@@ -138,10 +138,8 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
         }
     }, [unsentTweet]);
 
-    const handleChangeTextarea = (e: FormEvent<HTMLTextAreaElement>): void => {
-        if (e.currentTarget) {
-            setText(e.currentTarget.value);
-        }
+    const handleChangeTextarea = (event: ChangeEvent<HTMLTextAreaElement>): void => {
+        setText(event.target.value);
     };
 
     const addEmoji = (emoji: EmojiData): void => {
@@ -342,7 +340,7 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
     };
 
     return (
-        <div>
+        <>
             <div className={classes.content}>
                 <Link to={`${PROFILE}/${userData?.id}`}>
                     <Avatar
@@ -353,7 +351,7 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
                 </Link>
                 <div className={classes.textareaWrapper}>
                     {selectedScheduleDate && (
-                        <div className={classes.infoWrapper}>
+                        <div id={"tweetScheduleDate"} className={classes.infoWrapper}>
                             {ScheduleIcon}
                             <Typography variant={"subtitle2"} component={"span"}>
                                 {`Will send on ${formatScheduleDate(selectedScheduleDate)}`}
@@ -468,7 +466,7 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
                 <div className={classes.footerAddForm}>
                     {text && (
                         <>
-                            <span>{textCount}</span>
+                            <span id={"textCount"}>{textCount}</span>
                             <div className={classes.footerAddFormCircleProgress}>
                                 <CircularProgress
                                     variant="static"
@@ -538,7 +536,7 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
                     />
                 )}
             </div>
-        </div>
+        </>
     );
 };
 

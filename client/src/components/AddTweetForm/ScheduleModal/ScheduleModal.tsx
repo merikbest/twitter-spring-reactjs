@@ -122,7 +122,7 @@ const ScheduleModal: FC<ScheduleModalProps> = (
 
         for (let i = 1; i <= 28; i++) {
             const value = i < 10 ? "0" + i : i;
-            days.push(<option value={value}>{i}</option>);
+            days.push(<option key={i} value={value}>{i}</option>);
         }
         return days;
     };
@@ -132,7 +132,7 @@ const ScheduleModal: FC<ScheduleModalProps> = (
 
         for (let i = 0; i < 24; i++) {
             const value = i < 10 ? "0" + i : i;
-            days.push(<option value={value}>{value}</option>);
+            days.push(<option key={i} value={value}>{value}</option>);
         }
         return days;
     };
@@ -142,7 +142,7 @@ const ScheduleModal: FC<ScheduleModalProps> = (
 
         for (let i = 0; i < 60; i++) {
             const value = i < 10 ? "0" + i : i;
-            days.push(<option value={value}>{value}</option>);
+            days.push(<option key={i} value={value}>{value}</option>);
         }
         return days;
     };

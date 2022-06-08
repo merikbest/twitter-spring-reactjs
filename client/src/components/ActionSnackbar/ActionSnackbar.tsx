@@ -13,16 +13,14 @@ const ActionSnackbar: FC<ActionSnackbarProps> = ({snackBarMessage, openSnackBar,
     const classes = useActionSnackbarStyles();
 
     return (
-        <>
-            <Snackbar
-                className={classes.snackBar}
-                anchorOrigin={{horizontal: "center", vertical: "bottom"}}
-                open={openSnackBar}
-                message={snackBarMessage}
-                onClose={onCloseSnackBar}
-                autoHideDuration={3000}
-            />
-        </>
+        <Snackbar
+            className={classes.snackBar}
+            anchorOrigin={{horizontal: "center", vertical: "bottom"}}
+            open={openSnackBar}
+            message={snackBarMessage}
+            onClose={onCloseSnackBar}
+            autoHideDuration={3000}
+        />
     );
 };
 
