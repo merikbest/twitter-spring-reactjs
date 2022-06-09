@@ -438,7 +438,7 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
                             </IconButton>
                         </div>
                     )}
-                    <div onClick={handleOpenPopup}>
+                    <div id={"onClickAddEmoji"} onClick={handleOpenPopup}>
                         <IconButton
                             onMouseEnter={() => handleHoverAction(AddTweetFormAction.EMOJI)}
                             onMouseLeave={handleLeaveAction}
@@ -469,7 +469,7 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
                             <span id={"textCount"}>{textCount}</span>
                             <div className={classes.footerAddFormCircleProgress}>
                                 <CircularProgress
-                                    variant="static"
+                                    variant="determinate"
                                     size={20}
                                     thickness={5}
                                     value={text.length >= MAX_LENGTH ? 100 : textLimitPercent}
@@ -477,7 +477,7 @@ const AddTweetForm: FC<AddTweetFormProps & SnackbarProps> = (
                                 />
                                 <CircularProgress
                                     style={{color: 'rgba(0, 0, 0, 0.1)'}}
-                                    variant="static"
+                                    variant="determinate"
                                     size={20}
                                     thickness={5}
                                     value={100}

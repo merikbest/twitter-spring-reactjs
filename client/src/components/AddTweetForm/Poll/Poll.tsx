@@ -75,7 +75,7 @@ const Poll: FC<PollProps & HoverActionProps> = (
         let days = [];
 
         for (let i = start; i <= value; i++) {
-            days.push(<option value={i}>{i}</option>);
+            days.push(<option key={i} value={i}>{i}</option>);
         }
         return days;
     };

@@ -1,4 +1,4 @@
-import {TweetImageResponse, TweetResponse} from "../../store/types/tweet";
+import {QuoteTweetResponse, TweetImageResponse, TweetResponse} from "../../store/types/tweet";
 import {
     AuthUserResponse,
     BlockedUserResponse,
@@ -918,6 +918,32 @@ export const mockMyFullTweet = {
     "isTweetDeleted": false,
     "isTweetBookmarked": false
 } as unknown as TweetResponse;
+
+export const mockQuoteTweet = {
+    "id": 13,
+    "text": "#JavaScript",
+    "dateTime": "2021-10-15T21:57:21",
+    "link": null,
+    "linkCover": null,
+    "linkCoverSize": null,
+    "linkDescription": null,
+    "linkTitle": null,
+    "user": {
+        "id": 4,
+        "email": "user2019@gmail.com",
+        "fullName": "JavaCat",
+        "isFollower": true,
+        "isMyProfileBlocked": false,
+        "isPrivateProfile": false,
+        "isUserBlocked": false,
+        "isUserMuted": false,
+        "username": "JavaCat",
+        "avatar": {
+            "id": 5,
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png"
+        }
+    }
+} as unknown as QuoteTweetResponse;
 
 // chat
 export const mockChats = [
