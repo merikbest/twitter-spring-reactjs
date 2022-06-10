@@ -1,11 +1,12 @@
 import axios from 'axios';
 import {Image} from "../store/types/common";
+import {API_URL} from "./url";
 
 export const uploadImage = async (image: File): Promise<Image> => {
   const formData = new FormData();
   formData.append('file', image);
 
-  const { data } = await axios.post('http://localhost:8080/api/v1/user/upload', formData, {
+  const { data } = await axios.post(`${API_URL}/user/upload`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
