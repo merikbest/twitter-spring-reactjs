@@ -80,7 +80,7 @@ const Poll: FC<PollProps & HoverActionProps> = (
         return days;
     };
 
-    const onClosePool = (): void => {
+    const onClosePoll = (): void => {
         setPollInputSize(0);
         onClose();
     };
@@ -104,7 +104,7 @@ const Poll: FC<PollProps & HoverActionProps> = (
                         )}
                     </Grid>
                     {(pollInputSize !== 2) ? (
-                        <Grid md={1} item>
+                        <Grid id={"addPollChoiceButton"} md={1} item>
                             <div
                                 className={classes.addPollInputWrapper}
                                 style={{minHeight: (pollInputSize === 0) ? 115 : 185}}
@@ -181,7 +181,7 @@ const Poll: FC<PollProps & HoverActionProps> = (
                     </FilledSelect>
                 </FormControl>
             </Paper>
-            <Paper onClick={onClosePool} className={classes.footer} variant="outlined">
+            <Paper id={"removePoll"} onClick={onClosePoll} className={classes.footer} variant="outlined">
                 <Typography variant={"body1"} component={"div"}>
                     Remove poll
                 </Typography>
