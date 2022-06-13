@@ -1,17 +1,16 @@
 import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
-import {Button, Checkbox, Dialog, DialogContent, DialogTitle, Typography} from "@material-ui/core";
+import {Button, Dialog, DialogContent, DialogTitle, Typography} from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
 import {useUnsentTweetsModalStyles} from "./UnsentTweetsModalStyles";
 import {TweetApi} from "../../../services/api/tweetApi";
-import {ScheduleIcon} from "../../../icons";
-import {formatScheduleDate} from "../../../util/formatDate";
 import AddTweetForm from "../AddTweetForm";
 import CloseButton from "../../CloseButton/CloseButton";
 import Spinner from "../../Spinner/Spinner";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {TweetResponse} from "../../../store/types/tweet";
+import UnsentTweetItem from "./UnsentTweetItem/UnsentTweetItem";
 
 interface UnsentTweetsModalProps {
     visible?: boolean;
@@ -167,47 +166,19 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
                             </div>
                         ) : (
                             tweets.map((tweet) => (
-                                <div
+                                <UnsentTweetItem
                                     key={tweet.id}
-                                    className={classes.tweetContainer}
-                                    onClick={() => onOpenEditTweetModal(tweet)}
-                                >
-                                    {visibleEditListFooter && (
-                                        <div>
-                                            <Checkbox
-                                                value={tweet.id}
-                                                onClick={() => onToggleCheckTweet(tweet.id)}
-                                                checked={isTweetSelected(tweet.id)}
-                                            />
-                                        </div>
-                                    )}
-                                    <div className={classes.tweetWrapper}>
-                                        <div className={classes.scheduledDateWrapper}>
-                                            {ScheduleIcon}
-                                            <Typography variant={"subtitle2"} component={"span"}>
-                                                {`Will send on ${formatScheduleDate(new Date(tweet.scheduledDate!))}`}
-                                            </Typography>
-                                        </div>
-                                        <div className={classes.tweetInfo}>
-                                            <Typography variant={"body1"} component={"span"}>
-                                                {tweet.text}
-                                            </Typography>
-                                            {(tweet?.images?.length !== 0) && (
-                                                <div className={classes.imageWrapper}>
-                                                    <img
-                                                        src={tweet?.images?.[0].src}
-                                                        alt={String(tweet?.images?.[0].id)}
-                                                    />
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
+                                    tweet={tweet}
+                                    onOpenEditTweetModal={onOpenEditTweetModal}
+                                    onToggleCheckTweet={onToggleCheckTweet}
+                                    isTweetSelected={isTweetSelected}
+                                    visibleEditListFooter={visibleEditListFooter}
+                                />
                             ))
                         )
                     )}
                     {visibleEditListFooter && (
-                        <div className={classes.footer}>
+                        <div id={"editListFooter"} className={classes.footer}>
                             <Button
                                 onClick={(checkboxIndexes.length === 0) ? onSelectAllTweets : onDeselectAllTweets}
                                 type="submit"
