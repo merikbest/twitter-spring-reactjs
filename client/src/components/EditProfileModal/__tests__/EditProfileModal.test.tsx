@@ -31,7 +31,7 @@ describe("EditProfileModal", () => {
         expect(wrapper.find(TweeterInput).at(2).prop("value")).toBe(mockUser.location);
         expect(wrapper.find(TweeterInput).at(3).prop("value")).toBe(mockUser.website);
     });
-    // |   84.05 |    66.66 |   71.42 |   81.81 | 59-68
+
     it("should submit Edit Profile Modal form", (done) => {
         const wrapper = mountWithStore(<EditProfileModal visible={true} onClose={jest.fn()}/>, mockRootState);
         mock.onPost(`${API_URL}/user/upload`).reply(200, mockFullTweet.images[0]);

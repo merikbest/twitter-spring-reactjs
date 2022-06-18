@@ -6,7 +6,7 @@ import {useTweetInputStyles} from "./TweetInputStyles";
 
 interface TweeterInputProps {
     onChange: (...event: any[]) => void;
-    value: string
+    value?: string
     helperText?: string;
     error?: boolean;
     name: string;
@@ -44,8 +44,8 @@ const TweeterInput: FC<TweeterInputProps> = (
                         <InputLabel style={{fontSize: 13}}>
                             {value?.length === undefined ? 0 : value.length} / {maxTextLength}
                         </InputLabel>
-                    </div>)
-                }
+                    </div>
+                )}
             </div>
             <TweetInputField
                 id={name}
