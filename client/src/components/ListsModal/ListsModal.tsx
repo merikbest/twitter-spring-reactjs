@@ -90,6 +90,7 @@ const ListsModal: FC<ListsModalProps> = ({tweet, user, visible, onClose}): React
                             <List>
                                 {lists.map((list) => (
                                     <ListItem
+                                        key={list.id}
                                         onClick={() => onSelect(list.id)}
                                         selected={list.isMemberInList}
                                         dense button
