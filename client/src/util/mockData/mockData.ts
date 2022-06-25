@@ -2,7 +2,7 @@ import {QuoteTweetResponse, TweetImageResponse, TweetResponse} from "../../store
 import {
     AuthUserResponse,
     BlockedUserResponse,
-    MutedUserResponse,
+    MutedUserResponse, UserDetailResponse,
     UserProfileResponse,
     UserResponse
 } from "../../store/types/user";
@@ -408,6 +408,25 @@ export const mockUserPrivateProfile = {
     "isFollower": false,
     "isSubscriber": false
 } as unknown as UserProfileResponse;
+
+export const mockUserDetailResponse = {
+    id: 1,
+    followersSize: 2,
+    followingSize: 4,
+    fullName: "Random",
+    isFollower: true,
+    isMyProfileBlocked: false,
+    isPrivateProfile: false,
+    isUserBlocked: false,
+    isWaitingForApprove: false,
+    sameFollowers: [],
+    username: "Random",
+    about: null,
+    avatar: {
+        id: 11,
+        src: "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
+    },
+} as unknown as UserDetailResponse;
 
 export const mockProfileImages = [
     {
