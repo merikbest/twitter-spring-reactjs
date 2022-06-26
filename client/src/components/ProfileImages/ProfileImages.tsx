@@ -57,27 +57,25 @@ const ProfileImages: FC = (): ReactElement => {
         <>
             {(tweetImages.length === 1) ? null : (
                 <div className={classes.container}>
-                    <div>
-                        <ImageList
-                            className={classes.imageList}
-                            gap={0}
-                            rowHeight={90}
-                            cols={(tweetImages.length <= 4) ? 2 : 3}
-                        >
-                            {convertData(tweetImages).map((item, index) => (
-                                <ImageListItem
-                                    className={showClass(index)}
-                                    key={item?.tweetId}
-                                    cols={item?.cols || 1}
-                                    rows={item?.rows || 1}
-                                >
-                                    <Link to={{pathname: `${MODAL}/${item?.tweetId}`, state: {background: location}}}>
-                                        <img className={classes.img} src={item?.src} alt={item?.src}/>
-                                    </Link>
-                                </ImageListItem>
-                            ))}
-                        </ImageList>
-                    </div>
+                    <ImageList
+                        className={classes.imageList}
+                        gap={0}
+                        rowHeight={90}
+                        cols={(tweetImages.length <= 4) ? 2 : 3}
+                    >
+                        {convertData(tweetImages).map((item, index) => (
+                            <ImageListItem
+                                className={showClass(index)}
+                                key={item?.tweetId}
+                                cols={item?.cols || 1}
+                                rows={item?.rows || 1}
+                            >
+                                <Link to={{pathname: `${MODAL}/${item?.tweetId}`, state: {background: location}}}>
+                                    <img className={classes.img} src={item?.src} alt={item?.src}/>
+                                </Link>
+                            </ImageListItem>
+                        ))}
+                    </ImageList>
                 </div>
             )}
         </>
