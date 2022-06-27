@@ -83,13 +83,13 @@ const QuoteTweet: FC<QuoteTweetProps> = (
                 {open && (
                     <div className={classnames(classes.dropdown, globalClasses.svg)}>
                         <List>
-                            <ListItem onClick={onClickRetweet}>
+                            <ListItem id={"clickRetweet"} onClick={onClickRetweet}>
                                 <>{RetweetOutlinedIcon}</>
                                 <Typography variant={"body1"} component={"span"}>
                                     {isTweetRetweetedByMe ? ("Undo Retweet") : ("Retweet")}
                                 </Typography>
                             </ListItem>
-                            <ListItem onClick={handleClickOpenAddTweet}>
+                            <ListItem id={"clickOpenAddTweet"} onClick={handleClickOpenAddTweet}>
                                 <>{QuoteTweetIcon}</>
                                 <Typography variant={"body1"} component={"span"}>
                                     Quote Tweet

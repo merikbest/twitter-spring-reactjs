@@ -72,7 +72,7 @@ See more demo screenshots below.
 
 #### To enter the application you can register or login:
 Login: user2016@gmail.com  
-Password: qwerty
+Password: qwerty123
 
 ## Screenshots
 
