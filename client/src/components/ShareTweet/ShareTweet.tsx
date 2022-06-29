@@ -109,20 +109,20 @@ const ShareTweet: FC<ShareTweetProps & SnackbarProps> = (
                     {open ? (
                         <div className={classnames(classes.dropdown, globalClasses.svg)}>
                             <List>
-                                <ListItem onClick={onClickSendViaDirectMessage}>
+                                <ListItem id={"clickSendViaDirectMessage"} onClick={onClickSendViaDirectMessage}>
                                     <>{MessagesIcon}</>
                                     <Typography variant={"body1"} component={"span"}>
                                         Send via Direct Message
                                     </Typography>
                                 </ListItem>
-                                <ListItem onClick={onClickAddTweetToBookmarks}>
+                                <ListItem id={"clickAddTweetToBookmarks"} onClick={onClickAddTweetToBookmarks}>
                                     <>{AddBookmarksIcon}</>
                                     <Typography variant={"body1"} component={"span"}>
                                         {tweet.isTweetBookmarked ? "Remove Tweet from Bookmarks" : "Add Tweet to Bookmarks"}
                                     </Typography>
                                 </ListItem>
                                 <CopyToClipboard text={CLIENT_URL + location.pathname}>
-                                    <ListItem onClick={onCopyLinkToTweet}>
+                                    <ListItem id={"copyLinkToTweet"} onClick={onCopyLinkToTweet}>
                                         <>{LinkIcon}</>
                                         <Typography variant={"body1"} component={"span"}>
                                             Copy link to Tweet
