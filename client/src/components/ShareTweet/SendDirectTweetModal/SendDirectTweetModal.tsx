@@ -29,6 +29,13 @@ interface SendDirectTweetModalProps {
     onClose: () => void;
 }
 
+interface DirectUserItemsProps {
+    user: UserResponse;
+    selectedIndexes: number[];
+    myProfileId: number;
+    handleListItemClick: (user: UserResponse) => void;
+}
+
 const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
     {
         tweet,
@@ -86,7 +93,11 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
     };
 
     const handleClickSendMessage = (): void => {
-        dispatch(addChatMessageWithTweet({text: message, tweetId: tweet.id, usersIds: selectedUsers.map(user => user.id!)}));
+        dispatch(addChatMessageWithTweet({
+            text: message,
+            tweetId: tweet.id,
+            usersIds: selectedUsers.map(user => user.id!)
+        }));
         onSendDirectTweet();
         setSearchText("");
         setMessage("");
@@ -94,22 +105,6 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
         setSelectedUsers([]);
         onClose();
         closeShareTweet();
-    };
-
-    const DirectUserItems: FC<{user: UserResponse}> = ({user}): JSX.Element => {
-        return (
-            <ListItem
-                button
-                disabled={user.isUserBlocked || user.isMyProfileBlocked || user.isMutedDirectMessages || user.id === myProfile?.id}
-                selected={selectedIndexes.indexOf(user?.id!) !== -1}
-                onClick={() => handleListItemClick(user)}
-            >
-                <DirectUserItem
-                    user={user}
-                    selected={selectedIndexes.indexOf(user?.id!) !== -1}
-                />
-            </ListItem>
-        );
     };
 
     if (!visible) {
@@ -156,14 +151,30 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
                 <div className={classes.divider}/>
                 <List component="nav" aria-label="main mailbox folders">
                     {searchText ? (
-                        users.map((user) => <DirectUserItems key={user.id} user={user}/>)
+                        users.map((user) => (
+                            <DirectUserItems
+                                key={user.id}
+                                user={user}
+                                selectedIndexes={selectedIndexes}
+                                myProfileId={myProfile!.id}
+                                handleListItemClick={handleListItemClick}
+                            />
+                        ))
                     ) : (
-                        chats.map((chat) => <DirectUserItems key={chat.id} user={
-                            (chat.participants[0].user.id === myProfile?.id) ? (
-                                chat.participants[1].user as UserResponse
-                            ) : (
-                                chat.participants[0].user as UserResponse
-                            )}/>)
+                        chats.map((chat) => (
+                            <DirectUserItems
+                                key={chat.id}
+                                user={
+                                    (chat.participants[0].user.id === myProfile?.id) ? (
+                                        chat.participants[1].user as UserResponse
+                                    ) : (
+                                        chat.participants[0].user as UserResponse
+                                    )}
+                                selectedIndexes={selectedIndexes}
+                                myProfileId={myProfile!.id}
+                                handleListItemClick={handleListItemClick}
+                            />
+                        ))
                     )}
                 </List>
                 <div className={classes.footer}>
@@ -187,6 +198,30 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
                 </div>
             </DialogContent>
         </Dialog>
+    );
+};
+
+
+export const DirectUserItems: FC<DirectUserItemsProps> = (
+    {
+        user,
+        selectedIndexes,
+        myProfileId,
+        handleListItemClick
+    }
+): JSX.Element => {
+    return (
+        <ListItem
+            button
+            disabled={user.isUserBlocked || user.isMyProfileBlocked || user.isMutedDirectMessages || user.id === myProfileId}
+            selected={selectedIndexes.indexOf(user?.id!) !== -1}
+            onClick={() => handleListItemClick(user)}
+        >
+            <DirectUserItem
+                user={user}
+                selected={selectedIndexes.indexOf(user?.id!) !== -1}
+            />
+        </ListItem>
     );
 };
 
