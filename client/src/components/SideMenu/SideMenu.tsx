@@ -122,7 +122,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                         <div>
                             <Hidden smDown>
                                 <>
-                                    {visibleHomeNotification && <span className={classes.homeNotification}/>}
+                                    {visibleHomeNotification && <span id={"homeNotification"} className={classes.homeNotification}/>}
                                     {(location.pathname.includes(HOME)) ? (
                                         <span>{HomeIconFilled}</span>
                                     ) : (
@@ -160,7 +160,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                             <Hidden smDown>
                                 <>
                                     {(myProfile?.notificationsCount !== 0) ? (
-                                        <span className={classes.count}>
+                                        <span id={"notificationsCount"} className={classes.count}>
                                             {myProfile?.notificationsCount}
                                         </span>
                                     ) : null}
@@ -255,7 +255,11 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     </NavLink>
                 </li>
                 <li className={classes.itemWrapper}>
-                    <div aria-describedby={popoverId} onClick={handleOpenPopup}>
+                    <div
+                        id={"openPopup"}
+                        aria-describedby={popoverId}
+                        onClick={handleOpenPopup}
+                    >
                         <Hidden smDown>
                             <>
                                 <span>{MoreIcon}</span>
@@ -285,7 +289,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                         <div className={classnames(classes.listItemWrapper, globalClasses.svg)}>
                             <List>
                                 {(myProfile?.isPrivateProfile) ? (
-                                    <ListItem onClick={onOpenFollowerRequestsModal}>
+                                    <ListItem id={"openFollowerRequestsModal"} onClick={onOpenFollowerRequestsModal}>
                                         {FollowerRequestIcon}
                                         <Typography variant={"body1"} component={"span"}>
                                             Follower requests
@@ -319,7 +323,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                 </a>
                                 <Divider/>
                                 <Link to={SETTINGS}>
-                                    <ListItem onClick={handleClosePopup}>
+                                    <ListItem id={"closePopup"} onClick={handleClosePopup}>
                                         {SettingsIcon}
                                         <Typography variant={"body1"} component={"span"}>
                                             Settings and privacy
@@ -334,7 +338,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                         </Typography>
                                     </ListItem>
                                 </a>
-                                <ListItem onClick={onOpenDisplayModal}>
+                                <ListItem id={"openDisplayModal"} onClick={onOpenDisplayModal}>
                                     {DisplayIcon}
                                     <Typography variant={"body1"} component={"span"}>
                                         Display
