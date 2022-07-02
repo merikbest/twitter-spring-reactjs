@@ -45,7 +45,7 @@ const FollowerRequestsModal: FC<FollowerRequestsModalProps> = ({visible, onClose
                 Follower requests
             </DialogTitle>
             <DialogContent className={classes.content}>
-                {(myProfile?.followerRequestsSize === 0) ? (
+                {(!myProfile?.followerRequestsSize) ? (
                     <div className={globalClasses.contentWrapper}>
                         <div className={globalClasses.infoText}>
                             <Typography variant={"h4"} component={"div"}>

@@ -55,8 +55,8 @@ const FollowerRequestsItem: FC<FollowerRequestsItemProps & HoverUserProps> = (
             />
             <div style={{flex: 1}}>
                 <div className={classes.header}>
-                    <div onMouseLeave={handleLeavePopper} className={classes.headerUserInfo}>
-                        <Typography variant={"h6"} onMouseEnter={() => handleHoverPopper!(user.id!)}>
+                    <div id={"handleLeavePopper"} onMouseLeave={handleLeavePopper} className={classes.headerUserInfo}>
+                        <Typography id={"handleHoverPopper"} variant={"h6"} onMouseEnter={() => handleHoverPopper!(user.id!)}>
                             {user?.fullName}
                         </Typography>
                         <PopperUserWindow visible={visiblePopperWindow}/>
