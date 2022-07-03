@@ -1,7 +1,7 @@
 import React, {FC, ReactElement, useState} from 'react';
 import {Link} from 'react-router-dom';
 import {useSelector} from "react-redux";
-import {List, ListItem, ListItemText, Paper, Typography, IconButton} from "@material-ui/core";
+import {IconButton, List, ListItem, Paper, Typography} from "@material-ui/core";
 
 import {SettingsIcon} from "../../icons";
 import {selectIsTagsLoading, selectTagsItems} from "../../store/ducks/tags/selectors";
@@ -11,7 +11,8 @@ import {TagResponse} from "../../store/types/tag";
 import {HoverActionProps, HoverActions, withHoverAction} from "../../hoc/withHoverAction";
 import HoverAction from "../HoverAction/HoverAction";
 import SettingsModal from "./SettingsModal/SettingsModal";
-import {HOME_TRENDS, SEARCH} from "../../util/pathConstants";
+import {HOME_TRENDS} from "../../util/pathConstants";
+import TagItem from "./TagItem/TagItem";
 
 const Tags: FC<HoverActionProps> = (
     {
@@ -53,20 +54,7 @@ const Tags: FC<HoverActionProps> = (
                 <Spinner/>
             ) : (
                 <List>
-                    {tags.slice(0, 3).map((tag: TagResponse) => (
-                        <Link key={tag.id} to={{pathname: SEARCH, state: {tag: tag.tagName}}}>
-                            <ListItem className={classes.item}>
-                                <ListItemText
-                                    primary={tag.tagName}
-                                    secondary={
-                                        <Typography component="span" variant="body2" color="textSecondary">
-                                            {tag.tweetsQuantity} Tweets
-                                        </Typography>
-                                    }
-                                />
-                            </ListItem>
-                        </Link>
-                    ))}
+                    {tags.slice(0, 3).map((tag) => (<TagItem key={tag.id} tag={tag} classes={classes}/>))}
                     <Link to={HOME_TRENDS}>
                         <ListItem className={classes.footer}>
                             <Typography variant={"body1"} component={"span"}>
