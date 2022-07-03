@@ -931,6 +931,7 @@ export const mockFullTweet = {
             {"id": 101, "choice": "test choice 2", "votedUser": []},
             {"id": 102, "choice": "test choice 3", "votedUser": []}]
     },
+    "retweetsUserIds": [1, 2],
     "retweetsCount": 2,
     "likedTweetsCount": 2,
     "repliesCount": 2,

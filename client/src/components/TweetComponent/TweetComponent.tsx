@@ -185,13 +185,13 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
                             </object>
                         )}
                         <Typography variant={"body1"} className={classes.text}>
-                            <a onClick={handleClickTweet} href={`${HOME_TWEET}/${tweet?.id}`}>
+                            <a id={"handleClickTweet"} onClick={handleClickTweet} href={`${HOME_TWEET}/${tweet?.id}`}>
                                 {textFormatter(tweet!.text)}
                             </a>
                         </Typography>
                         {(tweet?.images?.length !== 0) && (
                             <Link to={{pathname: `${MODAL}/${tweet?.id}`, state: {background: location}}}>
-                                <div className={classes.image}>
+                                <div id={"tweetImage"} className={classes.image}>
                                     <img className={isModal ? "small" : ""} src={image?.src} alt={image?.src}/>
                                 </div>
                             </Link>
@@ -240,7 +240,7 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
                                 <>{ReplyIcon}</>
                                 <HoverAction visible={visibleHoverAction?.visibleReplyAction} actionText={"Reply"}/>
                             </IconButton>
-                            {(tweet?.repliesCount !== 0) && (<span>{tweet?.repliesCount}</span>)}
+                            {(tweet?.repliesCount !== 0) && (<span id={"repliesCount"}>{tweet?.repliesCount}</span>)}
                         </div>
                         <QuoteTweet
                             quoteTweet={tweet!}
@@ -268,7 +268,7 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
                                     actionText={tweet?.isTweetLiked ? "Unlike" : "Like"}
                                 />
                             </IconButton>
-                            {(tweet?.likedTweetsCount !== 0) && (<span>{tweet?.likedTweetsCount}</span>)}
+                            {(tweet?.likedTweetsCount !== 0) && (<span id={"likedTweetsCount"}>{tweet?.likedTweetsCount}</span>)}
                         </div>
                         <ShareTweet
                             tweet={tweet!}
@@ -278,7 +278,7 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
                             handleLeaveAction={handleLeaveAction}
                         />
                         {(myProfile?.id === tweet?.user.id) && (
-                            <div className={classes.replyIcon}>
+                            <div id={"analytics"} className={classes.replyIcon}>
                                 <IconButton
                                     onClick={onOpenTweetAnalyticsModalWindow}
                                     onMouseEnter={() => handleHoverAction?.(HoverActions.ANALYTICS)}
