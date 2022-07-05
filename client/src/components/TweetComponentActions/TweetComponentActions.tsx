@@ -219,7 +219,10 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
                                                 Delete
                                             </Typography>
                                         </ListItem>
-                                        <ListItem onClick={() => onOpenTweetComponentActionsModal("Pin")}>
+                                        <ListItem 
+                                            id={"pin"} 
+                                            onClick={() => onOpenTweetComponentActionsModal("Pin")}
+                                        >
                                             <>{PinIcon}</>
                                             <Typography variant={"body1"} component={"span"}>
                                                 {(isTweetPinned) ? (
@@ -229,13 +232,13 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
                                                 )}
                                             </Typography>
                                         </ListItem>
-                                        <ListItem onClick={onOpenListsModal}>
+                                        <ListItem id={"openListsModal"} onClick={onOpenListsModal}>
                                             <>{AddListsIcon}</>
                                             <Typography variant={"body1"} component={"span"}>
                                                 {`Add/remove @${tweet.user.username} from Lists`}
                                             </Typography>
                                         </ListItem>
-                                        <ListItem onClick={handleClickReplyDropdown}>
+                                        <ListItem id={"clickReplyDropdown"} onClick={handleClickReplyDropdown}>
                                             <>{ReplyIcon}</>
                                             <Typography variant={"body1"} component={"span"}>
                                                 Change who can reply
