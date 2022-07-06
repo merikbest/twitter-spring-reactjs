@@ -261,7 +261,7 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
                                     <>
                                         {tweet.user.isMyProfileBlocked ? null : (
                                             <>
-                                                <ListItem onClick={handleFollow}>
+                                                <ListItem id={"handleFollow"} onClick={handleFollow}>
                                                     <>
                                                         <>{tweet.user.isFollower ? UnfollowIcon : FollowIcon}</>
                                                         <Typography variant={"body1"} component={"span"}>
@@ -269,7 +269,7 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
                                                         </Typography>
                                                     </>
                                                 </ListItem>
-                                                <ListItem onClick={onOpenListsModal}>
+                                                <ListItem id={"onOpenListsModal"} onClick={onOpenListsModal}>
                                                     <>{AddListsIcon}</>
                                                     <Typography variant={"body1"} component={"span"}>
                                                         {`Add/remove @${tweet.user.username} from Lists`}
@@ -277,13 +277,13 @@ const TweetComponentActions: FC<TweetComponentActionsProps & SnackbarProps> = (
                                                 </ListItem>
                                             </>
                                         )}
-                                        <ListItem onClick={onMuteUser}>
+                                        <ListItem id={"onMuteUser"} onClick={onMuteUser}>
                                             <>{tweet.user.isUserMuted ? UnmuteIcon : MuteIcon}</>
                                             <Typography variant={"body1"} component={"span"}>
                                                 {tweet.user.isUserMuted ? "Unmute" : "Mute"} @{tweet.user.username}
                                             </Typography>
                                         </ListItem>
-                                        <ListItem onClick={onOpenBlockUserModal}>
+                                        <ListItem id={"onOpenBlockUserModal"} onClick={onOpenBlockUserModal}>
                                             <>{tweet.user.isUserBlocked ? UnblockIcon : BlockIcon}</>
                                             <Typography variant={"body1"} component={"span"}>
                                                 {tweet.user.isUserBlocked ? "Unblock" : "Block"} @{tweet.user.username}
