@@ -239,7 +239,7 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                                 )}
                             </div>
                         )}
-                        <div className={classes.tweetFooter}>
+                        <div id={"tweetFooter"} className={classes.tweetFooter}>
                             <div className={classes.tweetIcon}>
                                 <IconButton
                                     onClick={onOpenReplyModalWindow}
@@ -330,7 +330,7 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                         onClose={onCloseReplyModalWindow}
                     />
                 </div>
-                <div className={classes.imageFooterContainer}>
+                <div id={"imageFooter"} className={classes.imageFooterContainer}>
                     <div className={classNames(classes.imageFooterWrapper)}>
                         <div className={classes.imageFooterIcon}>
                             <IconButton size="small">
