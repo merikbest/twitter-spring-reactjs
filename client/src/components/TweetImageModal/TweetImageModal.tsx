@@ -121,7 +121,7 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
         }
     };
 
-    const onCloseModalWindow  = (): void => {
+    const onCloseModalWindow = (): void => {
         onClose();
     };
 
@@ -186,6 +186,7 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                             </Link>
                             <Link to={`${PROFILE}/${tweetData?.user.id}`}>
                                 <div
+                                    id={"userInfo"}
                                     onMouseEnter={() => handleHoverPopper!(tweetData.user.id)}
                                     onMouseLeave={handleLeavePopper}
                                 >
@@ -212,9 +213,13 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                         </Typography>
                         <Divider/>
                         {(tweetData.retweetsCount !== 0 || tweetData.likedTweetsCount !== 0) && (
-                            <div className={classes.content}>
+                            <div id={"content"} className={classes.content}>
                                 {(tweetData.retweetsCount !== 0) && (
-                                    <a href={"javascript:void(0);"} onClick={onOpenRetweetsModalWindow}>
+                                    <a
+                                        id={"onOpenRetweetsModalWindow"}
+                                        href={"javascript:void(0);"}
+                                        onClick={onOpenRetweetsModalWindow}
+                                    >
                                         <span style={{marginRight: 20}}>
                                             <Typography variant={"h6"} component={"span"}>
                                                 {tweetData.retweetsCount}
@@ -226,7 +231,11 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                                     </a>
                                 )}
                                 {(tweetData.likedTweetsCount !== 0) && (
-                                    <a href={"javascript:void(0);"} onClick={onOpenLikesModalWindow}>
+                                    <a
+                                        id={"onOpenLikesModalWindow"}
+                                        href={"javascript:void(0);"} 
+                                        onClick={onOpenLikesModalWindow}
+                                    >
                                         <span style={{marginRight: 20}}>
                                             <Typography variant={"h6"} component={"span"}>
                                                 {tweetData.likedTweetsCount}
@@ -337,7 +346,7 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                                 <>{ReplyIcon}</>
                             </IconButton>
                             {(tweetData.repliesCount === 0 || tweetData.repliesCount === null) ? null : (
-                                <Typography variant={"body1"} component={"span"}>
+                                <Typography id={"repliesCount"} variant={"body1"} component={"span"}>
                                     {tweetData.repliesCount}
                                 </Typography>
                             )}
@@ -352,7 +361,7 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                             </IconButton>
                             {(tweetData.retweetsCount === 0 || tweetData.retweetsCount === null) ? null : (
                                 tweetData.isTweetRetweeted && (
-                                    <Typography variant={"body1"} component={"span"}>
+                                    <Typography id={"retweetsCount"} variant={"body1"} component={"span"}>
                                         {tweetData.retweetsCount}
                                     </Typography>
                                 )
@@ -368,7 +377,7 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                             </IconButton>
                             {(tweetData.likedTweetsCount === 0 || tweetData.likedTweetsCount === null) ? null : (
                                 tweetData.isTweetLiked && (
-                                    <Typography variant={"body1"} component={"span"}>
+                                    <Typography id={"likedTweetsCount"} variant={"body1"} component={"span"}>
                                         {tweetData.likedTweetsCount}
                                     </Typography>
                                 )
@@ -382,7 +391,7 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                     </div>
                 </div>
                 <div className={classes.imageModalClose}>
-                    <IconButton onClick={onCloseModalWindow} size="small">
+                    <IconButton id={"closeModalWindow"} onClick={onCloseModalWindow} size="small">
                         {CloseIcon}
                     </IconButton>
                 </div>
