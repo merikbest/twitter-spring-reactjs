@@ -40,7 +40,7 @@ const Users: FC = (): ReactElement => {
                             {users.slice(0, 5).map((user) => (
                                 <UsersItem key={user.id} item={user} size={UserItemSize.SMALL}/>
                             ))}
-                            <ListItem onClick={clickToConnect} className={classes.footer}>
+                            <ListItem id={"clickToConnect"} onClick={clickToConnect} className={classes.footer}>
                                 <Typography variant={"body1"} component={"div"}>
                                     Show more
                                 </Typography>
