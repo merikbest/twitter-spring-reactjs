@@ -113,7 +113,7 @@ const UserSideProfile: FC = (): ReactElement | null => {
                             </Typography>
                         </ListItem>
                         <Divider component="li"/>
-                        <ListItem onClick={onOpenLogoutModal}>
+                        <ListItem id={"onOpenLogoutModal"} onClick={onOpenLogoutModal}>
                             <Typography variant="body1" component="div">
                                 Log out @{myProfile?.username}
                             </Typography>
