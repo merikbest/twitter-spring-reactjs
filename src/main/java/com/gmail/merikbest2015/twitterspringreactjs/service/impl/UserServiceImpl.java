@@ -68,8 +68,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserProjection> searchUsersByUsername(String text) {
-        return userRepository.findByFullNameOrUsername(text);
+    public <T> List<T> searchUsersByUsername(String text, Class<T> type) {
+        return userRepository.findByFullNameOrUsername(text, type);
     }
 
     @Override
@@ -468,6 +468,11 @@ public class UserServiceImpl implements UserService {
     public boolean isMyProfileSubscribed(Long userId) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
         return userRepository.isMyProfileSubscribed(userId, authUserId);
+    }
+
+    public boolean isUserChatParticipant(Long userId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return userRepository.isUserChatParticipant(userId, authUserId);
     }
 
     public List<SameFollower> getSameFollowers(Long userId) {

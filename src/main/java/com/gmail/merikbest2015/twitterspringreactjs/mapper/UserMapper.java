@@ -166,7 +166,7 @@ public class UserMapper {
     }
 
     public List<UserResponse> searchUsersByUsername(String username) {
-        List<UserProjection> users = userService.searchUsersByUsername(username);
+        List<UserProjection> users = userService.searchUsersByUsername(username, UserProjection.class);
         return basicMapper.convertToResponseList(users, UserResponse.class);
     }
 

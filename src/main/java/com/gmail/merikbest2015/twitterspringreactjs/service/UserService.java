@@ -27,7 +27,7 @@ public interface UserService {
 
     List<UserProjection> getRelevantUsers();
 
-    List<UserProjection> searchUsersByUsername(String username);
+    <T> List<T> searchUsersByUsername(String username, Class<T> type);
 
     Boolean startUseTwitter();
 

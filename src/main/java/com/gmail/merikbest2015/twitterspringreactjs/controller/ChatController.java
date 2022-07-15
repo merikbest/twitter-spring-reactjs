@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.ChatMessageRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.MessageWithTweetRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserChatResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.chats.ChatMessageResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.chats.ChatResponse;
@@ -55,6 +56,11 @@ public class ChatController {
         message.getChatParticipantsIds()
                 .forEach(userId -> messagingTemplate.convertAndSend("/topic/chat/" + userId, message));
         return ResponseEntity.ok(message);
+    }
+    
+    @GetMapping("/search/{username}") // TODO add test
+    public ResponseEntity<List<UserChatResponse>> searchParticipantsByUsername(@PathVariable String username) {
+        return ResponseEntity.ok(chatMapper.searchParticipantsByUsername(username));
     }
 
     @GetMapping("/participant/{participantId}/{chatId}")

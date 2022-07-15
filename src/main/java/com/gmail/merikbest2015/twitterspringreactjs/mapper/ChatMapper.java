@@ -2,14 +2,18 @@ package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.ChatMessageRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.MessageWithTweetRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserChatResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.chats.ChatMessageResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.chats.ChatResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.ChatMessage;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.ChatMessageProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.chat.ChatProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.UserChatProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.UserProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.ChatService;
+import com.gmail.merikbest2015.twitterspringreactjs.service.UserService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +26,7 @@ public class ChatMapper {
 
     private final BasicMapper basicMapper;
     private final ChatService chatService;
+    private final UserService userService;
 
     private ChatMessageResponse getChatMessageResponse(Map<String, Object> messageMap) {
         ChatMessageProjection chatMessageProjection = (ChatMessageProjection) messageMap.get("message");
@@ -67,5 +72,10 @@ public class ChatMapper {
     public UserResponse getParticipant(Long participantId, Long chatId) {
         UserProjection participant = chatService.getParticipant(participantId, chatId);
         return basicMapper.convertToResponse(participant, UserResponse.class);
+    }
+    
+    public List<UserChatResponse> searchParticipantsByUsername(String username) {
+        List<UserChatProjection> participants = userService.searchUsersByUsername(username, UserChatProjection.class);
+        return basicMapper.convertToResponseList(participants, UserChatResponse.class);
     }
 }
