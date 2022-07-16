@@ -1,6 +1,7 @@
 import {
     FetchFollowersActionInterface,
     FetchFollowingsActionInterface,
+    FetchParticipantsSearchByNameActionInterface,
     FetchUsersSearchActionInterface,
     FetchUsersSearchByNameActionInterface,
     ResetUsersStateActionInterface,
@@ -55,6 +56,11 @@ export const fetchFollowings = (payload: string): FetchFollowingsActionInterface
 
 export const fetchUsersSearchByUsername = (payload: string): FetchUsersSearchByNameActionInterface => ({
     type: UsersSearchActionsType.FETCH_USERS_BY_NAME,
+    payload
+});
+
+export const fetchParticipantsByUsername = (payload: string): FetchParticipantsSearchByNameActionInterface => ({
+    type: UsersSearchActionsType.FETCH_PARTICIPANTS_BY_NAME,
     payload
 });
 

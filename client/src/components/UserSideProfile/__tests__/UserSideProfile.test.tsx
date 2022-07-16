@@ -58,4 +58,10 @@ describe("UserSideProfile", () => {
         expect(pushSpy).toHaveBeenCalled();
         expect(pushSpy).toHaveBeenCalledWith(ACCOUNT_SIGNIN);
     });
+
+    it("should render empty UserSideProfile", () => {
+        const mockState = {...mockRootState, user: {...mockRootState.user, data: undefined}};
+        const wrapper = mountWithStore(<UserSideProfile/>, mockState);
+        expect(wrapper.find("div").exists()).toBeFalsy();
+    });
 });

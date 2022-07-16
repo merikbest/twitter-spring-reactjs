@@ -635,7 +635,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                         </Typography>
                                     </div>
                                 ) : (
-                                    userProfile?.isPrivateProfile && userProfile?.id !== myProfile?.id ? (
+                                    userProfile?.isPrivateProfile && !userProfile?.isFollower && userProfile?.id !== myProfile?.id ? (
                                         <div className={classes.privateProfileInfo}>
                                             <Typography variant={"h4"} component={"div"}>
                                                 These Tweets are protected

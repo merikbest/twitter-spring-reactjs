@@ -11,7 +11,7 @@ import {MessagesModalInput} from "../../../pages/Messages/MessagesModal/Messages
 import {selectUsersSearch} from "../../../store/ducks/usersSearch/selectors";
 import {fetchChats} from "../../../store/ducks/chats/actionCreators";
 import {selectChatsItems} from "../../../store/ducks/chats/selectors";
-import {fetchUsersSearchByUsername, setUsersSearch} from "../../../store/ducks/usersSearch/actionCreators";
+import {fetchParticipantsByUsername, setUsersSearch} from "../../../store/ducks/usersSearch/actionCreators";
 import {SearchIcon, SendMessageIcon} from "../../../icons";
 import DirectUserItem from "./DirectUserItem/DirectUserItem";
 import {SendDirectMessageInput} from "./SendDirectMessageInput";
@@ -30,6 +30,7 @@ interface SendDirectTweetModalProps {
 }
 
 interface DirectUserItemsProps {
+    userFromChat?: boolean;
     user: UserResponse;
     selectedIndexes: number[];
     myProfileId: number;
@@ -64,7 +65,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
     const onSearch = (text: string): void => {
         if (text) {
             setSearchText(text);
-            dispatch(fetchUsersSearchByUsername(encodeURIComponent(text)));
+            dispatch(fetchParticipantsByUsername(encodeURIComponent(text)));
         } else {
             setSearchText("");
             dispatch(setUsersSearch([]));
@@ -154,6 +155,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
                         users.map((user) => (
                             <DirectUserItems
                                 key={user.id}
+                                userFromChat={user.isUserChatParticipant}
                                 user={user}
                                 selectedIndexes={selectedIndexes}
                                 myProfileId={myProfile!.id}
@@ -164,6 +166,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
                         chats.map((chat) => (
                             <DirectUserItems
                                 key={chat.id}
+                                userFromChat={true}
                                 user={
                                     (chat.participants[0].user.id === myProfile?.id) ? (
                                         chat.participants[1].user as UserResponse
@@ -204,6 +207,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
 
 export const DirectUserItems: FC<DirectUserItemsProps> = (
     {
+        userFromChat,
         user,
         selectedIndexes,
         myProfileId,
@@ -213,7 +217,12 @@ export const DirectUserItems: FC<DirectUserItemsProps> = (
     return (
         <ListItem
             button
-            disabled={user.isUserBlocked || user.isMyProfileBlocked || user.isMutedDirectMessages || user.id === myProfileId}
+            disabled={
+                (user.isMutedDirectMessages && !userFromChat) ||
+                user.isUserBlocked ||
+                user.isMyProfileBlocked ||
+                user.id === myProfileId
+            }
             selected={selectedIndexes.indexOf(user?.id!) !== -1}
             onClick={() => handleListItemClick(user)}
         >

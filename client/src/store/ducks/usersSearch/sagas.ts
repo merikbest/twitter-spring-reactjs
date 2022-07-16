@@ -10,6 +10,7 @@ import {
 import {UserApi} from "../../../services/api/userApi";
 import {setFollowers, setUsersSearch, setUsersSearchLoadingState} from "./actionCreators";
 import {UserResponse} from "../../types/user";
+import {ChatApi} from "../../../services/api/chatApi";
 
 export function* fetchUsersSearchRequest() {
     try {
@@ -25,6 +26,16 @@ export function* fetchUsersSearchByUsernameRequest({payload}: FetchUsersSearchBy
     try {
         yield put(setUsersSearchLoadingState(LoadingStatus.LOADING));
         const item: UserResponse[] = yield call(UserApi.searchUsersByUsername, payload);
+        yield put(setUsersSearch(item));
+    } catch (error) {
+        yield put(setUsersSearchLoadingState(LoadingStatus.ERROR));
+    }
+}
+
+export function* fetchParticipantsByUsernameRequest({payload}: FetchUsersSearchByNameActionInterface) {
+    try {
+        yield put(setUsersSearchLoadingState(LoadingStatus.LOADING));
+        const item: UserResponse[] = yield call(ChatApi.searchParticipantsByUsername, payload);
         yield put(setUsersSearch(item));
     } catch (error) {
         yield put(setUsersSearchLoadingState(LoadingStatus.ERROR));
@@ -54,6 +65,7 @@ export function* fetchFollowingsRequest({payload}: FetchFollowingsActionInterfac
 export function* usersSearchSaga() {
     yield takeLatest(UsersSearchActionsType.FETCH_USERS, fetchUsersSearchRequest);
     yield takeLatest(UsersSearchActionsType.FETCH_USERS_BY_NAME, fetchUsersSearchByUsernameRequest);
+    yield takeLatest(UsersSearchActionsType.FETCH_PARTICIPANTS_BY_NAME, fetchParticipantsByUsernameRequest);
     yield takeLatest(UsersSearchActionsType.FETCH_FOLLOWERS, fetchFollowersRequest);
     yield takeLatest(UsersSearchActionsType.FETCH_FOLLOWINGS, fetchFollowingsRequest);
 }

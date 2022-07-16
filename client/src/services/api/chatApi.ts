@@ -43,4 +43,8 @@ export const ChatApi = {
         const {data} = await axios.get<Response<string>>(`${API_URL}/chat/leave/${payload.participantId}/${payload.chatId}`);
         return data;
     },
+    async searchParticipantsByUsername(name: string): Promise<UserResponse[]> { // TODO add tests
+        const {data} = await axios.get<UserResponse[]>(`${API_URL}/chat/search/${name}`);
+        return data;
+    },
 };

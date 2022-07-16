@@ -8,10 +8,11 @@ export enum UsersSearchActionsType {
     SET_FOLLOW_TO_USERS_SEARCH_STATE = 'usersSearch/SET_FOLLOW_TO_USERS_SEARCH_STATE',
     SET_FOLLOW_REQUEST_TO_USERS_SEARCH_STATE = 'usersSearch/SET_FOLLOW_REQUEST_TO_USERS_SEARCH_STATE',
     SET_BLOCK_USERS_SEARCH_STATE = 'usersSearch/SET_BLOCK_USERS_SEARCH_STATE',
-    FETCH_USERS  = 'usersSearch/FETCH_USERS',
-    FETCH_USERS_BY_NAME  = 'usersSearch/FETCH_USERS_BY_NAME',
-    FETCH_FOLLOWERS  = 'usersSearch/FETCH_FOLLOWERS',
-    FETCH_FOLLOWINGS  = 'usersSearch/FETCH_FOLLOWINGS',
+    FETCH_USERS = 'usersSearch/FETCH_USERS',
+    FETCH_USERS_BY_NAME = 'usersSearch/FETCH_USERS_BY_NAME',
+    FETCH_PARTICIPANTS_BY_NAME = 'usersSearch/FETCH_PARTICIPANTS_BY_NAME',
+    FETCH_FOLLOWERS = 'usersSearch/FETCH_FOLLOWERS',
+    FETCH_FOLLOWINGS = 'usersSearch/FETCH_FOLLOWINGS',
     RESET_USERS_STATE = 'usersSearch/RESET_USERS_STATE',
     SET_USERS_LOADING_STATE = 'usersSearch/SET_USER_LOADING_STATE',
 }
@@ -47,6 +48,11 @@ export interface FetchUsersSearchActionInterface extends Action<UsersSearchActio
 
 export interface FetchUsersSearchByNameActionInterface extends Action<UsersSearchActionsType> {
     type: UsersSearchActionsType.FETCH_USERS_BY_NAME;
+    payload: string;
+}
+
+export interface FetchParticipantsSearchByNameActionInterface extends Action<UsersSearchActionsType> {
+    type: UsersSearchActionsType.FETCH_PARTICIPANTS_BY_NAME;
     payload: string;
 }
 

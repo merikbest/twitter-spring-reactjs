@@ -184,7 +184,10 @@ const Explore: FC = (): ReactElement => {
                 </Paper>
                 <div className={classes.contentWrapper}>
                     {(activeTab !== 2) ? (
-                        tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)
+                        <>
+                            <>{tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}</>
+                            <>{isTweetsLoading && <Spinner/>}</>
+                        </>
                     ) : (
                         isUsersLoading ? (
                             <Spinner/>
@@ -196,7 +199,6 @@ const Explore: FC = (): ReactElement => {
                             </List>
                         )
                     )}
-                    {isTweetsLoading && <Spinner/>}
                 </div>
             </Paper>
         </InfiniteScroll>

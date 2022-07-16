@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import {Button, List, Typography} from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import classnames from "classnames";
 
 import {selectUserData, selectUserIsLoading} from "../../store/ducks/user/selectors";
 import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
@@ -16,8 +17,7 @@ import {selectFollowers, selectUsersSearchIsLoading} from "../../store/ducks/use
 import {fetchFollowers, fetchFollowings, resetUsersState} from "../../store/ducks/usersSearch/actionCreators";
 import UsersItem, {UserItemSize} from "../../components/UsersItem/UsersItem";
 import {useGlobalStyles} from "../../util/globalClasses";
-import classnames from "classnames";
-import {HOME_CONNECT, USER} from "../../util/pathConstants";
+import {HOME_CONNECT, PROFILE, USER} from "../../util/pathConstants";
 
 const FollowingFollowers: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -37,21 +37,29 @@ const FollowingFollowers: FC = (): ReactElement => {
     useEffect(() => {
         dispatch(fetchUserProfile(parseInt(params.id)));
 
-        if (params.follow === "following") {
-            document.title = `People followed by ${userProfile?.fullName} (@${userProfile?.username}) / Twitter`;
-            setActiveTab(0);
-            dispatch(fetchFollowers(params.id));
-        } else {
-            document.title = `People following by ${userProfile?.fullName} (@${userProfile?.username}) / Twitter`;
-            setActiveTab(1);
-            dispatch(fetchFollowings(params.id));
-        }
-
         return () => {
             dispatch(resetUsersState());
             dispatch(resetUserProfileState());
         };
     }, [params.id, params.follow]);
+    
+    useEffect(() => {
+        if (userProfile) {
+            if ((userProfile.isPrivateProfile && !userProfile.isFollower) || userProfile.isMyProfileBlocked) {
+                history.push(`${PROFILE}/${userProfile.id}`);
+            } else {
+                if (params.follow === "following") {
+                    document.title = `People followed by ${userProfile?.fullName} (@${userProfile?.username}) / Twitter`;
+                    setActiveTab(0);
+                    dispatch(fetchFollowers(params.id));
+                } else {
+                    document.title = `People following by ${userProfile?.fullName} (@${userProfile?.username}) / Twitter`;
+                    setActiveTab(1);
+                    dispatch(fetchFollowings(params.id));
+                }
+            }
+        }
+    }, [userProfile]);
 
     const handleChangeTab = (event: ChangeEvent<{}>, newValue: number): void => {
         if (newValue === 0) {

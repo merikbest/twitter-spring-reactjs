@@ -41,6 +41,7 @@ export interface UserResponse {
     isUserBlocked: boolean;
     isMyProfileBlocked: boolean;
     isWaitingForApprove: boolean;
+    isUserChatParticipant?: boolean;
     isFollower: boolean;
 }
 
