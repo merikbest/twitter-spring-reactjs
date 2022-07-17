@@ -3,16 +3,7 @@ import {Link, useHistory, useLocation, useParams, withRouter} from 'react-router
 import {useDispatch, useSelector} from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Paper from '@material-ui/core/Paper';
-import {
-    Avatar,
-    Button,
-    Divider,
-    IconButton,
-    Link as MuiLink,
-    List,
-    ListItem,
-    Typography
-} from '@material-ui/core';
+import {Avatar, Button, Divider, IconButton, Link as MuiLink, List, ListItem, Typography} from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Skeleton from '@material-ui/lab/Skeleton';
@@ -67,7 +58,8 @@ import {
 import {
     fetchImages,
     fetchUserProfile,
-    processSubscribe, resetImagesState,
+    processSubscribe,
+    resetImagesState,
     resetUserProfileState
 } from "../../store/ducks/userProfile/actionCreators";
 import UserPageTweets from "./UserPageTweets";
@@ -247,7 +239,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
     };
 
     const handleFollow = (): void => {
-        if (userProfile?.isPrivateProfile) {
+        if (userProfile?.isPrivateProfile && !userProfile?.isFollower) {
             dispatch(processFollowRequest(userProfile.id!));
         } else {
             if (userProfile?.isFollower) {
@@ -342,10 +334,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                             {userProfile?.wallpaper?.src && (
                                 <Link to={{
                                     pathname: `${PROFILE_HEADER_PHOTO}/${userProfile?.id}`,
-                                    state: {
-                                        background: location,
-                                        imageSrc: userProfile?.wallpaper?.src
-                                    },
+                                    state: {background: location, imageSrc: userProfile?.wallpaper?.src}
                                 }}>
                                     <img
                                         key={userProfile?.wallpaper?.src}
@@ -361,11 +350,11 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                 state: {
                                     background: location,
                                     imageSrc: userProfile?.avatar?.src ? userProfile?.avatar.src : DEFAULT_PROFILE_IMG
-                                },
+                                }
                             }}>
                                 <div style={{display: "inline-block"}}>
                                     <Avatar
-                                        src={userProfile !== undefined ? userProfile?.avatar?.src ? userProfile?.avatar.src : DEFAULT_PROFILE_IMG : undefined}>
+                                        src={userProfile ? userProfile?.avatar?.src ? userProfile?.avatar.src : DEFAULT_PROFILE_IMG : undefined}>
                                         <div></div>
                                     </Avatar>
                                 </div>
@@ -394,22 +383,24 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                                 handleHoverAction={handleHoverAction}
                                                 handleLeaveAction={handleLeaveAction}
                                             />
-                                            {!userProfile?.isUserBlocked && (
-                                                !userProfile?.isMutedDirectMessages || userProfile?.isFollower ? (
-                                                    <IconButton
-                                                        className={globalClasses.userPageIconButton}
-                                                        onClick={handleClickAddUserToChat}
-                                                        onMouseEnter={() => handleHoverAction?.(HoverActions.MESSAGE)}
-                                                        onMouseLeave={handleLeaveAction}
-                                                        color="primary"
-                                                    >
-                                                        {MessagesIcon}
-                                                        <HoverAction
-                                                            visible={visibleHoverAction?.visibleMessageAction}
-                                                            actionText={"Message"}
-                                                        />
-                                                    </IconButton>
-                                                ) : null
+                                            {(
+                                                (!userProfile?.isPrivateProfile || userProfile?.isFollower) &&
+                                                !userProfile?.isMutedDirectMessages &&
+                                                !userProfile?.isUserBlocked
+                                            ) && (
+                                                <IconButton
+                                                    className={globalClasses.userPageIconButton}
+                                                    onClick={handleClickAddUserToChat}
+                                                    onMouseEnter={() => handleHoverAction?.(HoverActions.MESSAGE)}
+                                                    onMouseLeave={handleLeaveAction}
+                                                    color="primary"
+                                                >
+                                                    {MessagesIcon}
+                                                    <HoverAction
+                                                        visible={visibleHoverAction?.visibleMessageAction}
+                                                        actionText={"Message"}
+                                                    />
+                                                </IconButton>
                                             )}
                                             {userProfile?.isUserBlocked ? (
                                                 <Button
@@ -451,7 +442,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                                             {btnText}
                                                         </Button>
                                                     </>
-                                                ) : ((userProfile !== undefined) ? (
+                                                ) : (userProfile && (
                                                         userProfile?.isWaitingForApprove ? (
                                                             <Button
                                                                 className={classes.outlinedButton}
@@ -475,14 +466,14 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                                                 Follow
                                                             </Button>
                                                         )
-                                                    ) : null
+                                                    )
                                                 )
                                             )}
                                         </div>
                                     )
                                 )
                             )}
-                            {(userProfile === undefined) ? (
+                            {!userProfile ? (
                                 <Skeleton variant="text" width={250} height={30}/>
                             ) : (
                                 <div>
@@ -496,27 +487,27 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                     )}
                                 </div>
                             )}
-                            {(userProfile === undefined) ? (
+                            {!userProfile ? (
                                 <Skeleton variant="text" width={60}/>
                             ) : (
                                 <Typography variant={"subtitle1"} component={"div"}>
                                     @{userProfile.username}
                                 </Typography>
                             )}
-                            {userProfile?.isMyProfileBlocked ? null : (
+                            {!userProfile?.isMyProfileBlocked && (
                                 <Typography variant={"body1"} component={"div"} className={classes.description}>
                                     {userProfile?.about}
                                 </Typography>
                             )}
                             <div className={classes.infoList}>
-                                {(userProfile === undefined) && (
+                                {!userProfile && (
                                     <div className={classes.skeletonDetails}>
                                         <Skeleton component={"span"} variant="text" width={80}/>
                                         <Skeleton component={"span"} variant="text" width={150}/>
                                         <Skeleton component={"span"} variant="text" width={150}/>
                                     </div>
                                 )}
-                                {userProfile?.isMyProfileBlocked ? null : (
+                                {!userProfile?.isMyProfileBlocked && (
                                     <List>
                                         {userProfile?.location && (
                                             <ListItem>
@@ -557,13 +548,13 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                         )}
                                     </List>
                                 )}
-                                {(userProfile === undefined) && (
+                                {!userProfile && (
                                     <div className={classes.skeletonDetails}>
                                         <Skeleton component={"span"} variant="text" width={80}/>
                                         <Skeleton component={"span"} variant="text" width={80}/>
                                     </div>
                                 )}
-                                {userProfile?.isMyProfileBlocked ? null : (
+                                {!userProfile?.isMyProfileBlocked && (
                                     <List className={classes.details}>
                                         <LinkToFollowers linkTo={"following"}>
                                             <ListItem>
@@ -597,7 +588,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                 )}
                             </div>
                             {userProfile?.isUserMuted && (
-                                (userProfile !== undefined) && (
+                                !userProfile && (
                                     <Typography variant={"subtitle1"} component={"div"} className={classes.description}>
                                         {"You have muted Tweets from this account. "}
                                         <Typography
@@ -612,10 +603,8 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                     </Typography>
                                 )
                             )}
-                            {(userProfile?.isMyProfileBlocked || userProfile?.isPrivateProfile) ? null : (
-                                (userProfile !== undefined) && (
-                                    <FollowerGroup user={userProfile} sameFollowers={userProfile.sameFollowers}/>
-                                )
+                            {userProfile && !userProfile.isMyProfileBlocked && !userProfile.isPrivateProfile && (
+                                <FollowerGroup user={userProfile} sameFollowers={userProfile.sameFollowers}/>
                             )}
                         </div>
                         {isUserProfileLoading ? (

@@ -5,7 +5,7 @@ export const usePollStyles = makeStyles((theme: Theme) => ({
         maxWidth: 507,
         minHeight: 300,
         marginLeft: 55,
-        border: `1px solid ${theme.palette.divider}`,
+        border: `1px solid ${theme.palette.grey[100]}`,
         borderRadius: 16,
     },
     pollInputWrapper: {
@@ -24,7 +24,7 @@ export const usePollStyles = makeStyles((theme: Theme) => ({
         padding: 11,
         borderLeft: 0,
         borderRight: 0,
-        border: `1px solid ${theme.palette.divider}`,
+        border: `1px solid ${theme.palette.grey[100]}`,
     },
     pollLengthTitle: {
         marginBottom: 4,

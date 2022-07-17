@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {Paper, Typography} from "@material-ui/core";
 
 import BackButton from "../../../components/BackButton/BackButton";
@@ -12,26 +12,37 @@ import {selectIsLoaded, selectIsLoading, selectUserListsItems} from "../../../st
 import Spinner from "../../../components/Spinner/Spinner";
 import ListsItem from "../ListsItem/ListsItem";
 import {useGlobalStyles} from "../../../util/globalClasses";
+import {PROFILE} from "../../../util/pathConstants";
 
 const ListsMemberships: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
+    const history = useHistory();
+    const params = useParams<{ id: string }>();
     const myProfile = useSelector(selectUserData);
     const userProfile = useSelector(selectUserProfile);
     const lists = useSelector(selectUserListsItems);
     const isLoading = useSelector(selectIsLoading);
     const isLoaded = useSelector(selectIsLoaded);
-    const params = useParams<{ id: string }>();
 
     useEffect(() => {
         window.scrollTo(0, 0);
         dispatch(fetchUserProfile(parseInt(params.id)));
-        dispatch(fetchUserListsById(parseInt(params.id)));
 
         return () => {
             dispatch(resetListsState());
         };
     }, [params.id]);
+    
+    useEffect(() => {
+        if (userProfile) {
+            if ((userProfile.isPrivateProfile && !userProfile.isFollower) || userProfile.isMyProfileBlocked) {
+                history.push(`${PROFILE}/${userProfile.id}`);
+            } else {
+                dispatch(fetchUserListsById(parseInt(params.id)));
+            }
+        }
+    }, [userProfile])
 
     return (
         <Paper className={globalClasses.pageContainer} variant="outlined">

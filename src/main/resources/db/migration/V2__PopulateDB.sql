@@ -1,16 +1,16 @@
 -- images
-INSERT INTO images (id, src) VALUES (11, 'https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg');
-INSERT INTO images (id, src) VALUES (22, 'https://twitterclonestorage.s3.eu-central-1.amazonaws.com/dfc8a223-45fc-43da-8b7c-f76e2c2507cd_82ecbca14eb4999212c07257f41c70e7.jpg');
-INSERT INTO images (id, src) VALUES (33, 'https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg');
-INSERT INTO images (id, src) VALUES (44, 'https://twitterclonestorage.s3.eu-central-1.amazonaws.com/d0e5b95f-acc0-47ef-b499-477f7e5a1a06_PrMnWa2z.jpg');
-INSERT INTO images (id, src) VALUES (1, 'https://twitterclonestorage.s3.eu-central-1.amazonaws.com/0a6c735d-def8-4587-a29f-221915ef6cb4_ff2d023b3220f93bbc79233614dea542.jpg');
-INSERT INTO images (id, src) VALUES (2, 'https://twitterclonestorage.s3.eu-central-1.amazonaws.com/bd8ae60c-4231-4624-8cdd-dfe61fa38921_779301.jpg');
-INSERT INTO images (id, src) VALUES (3, 'https://twitterclonestorage.s3.eu-central-1.amazonaws.com/a7e03e7c-c05f-4e30-ba8c-2271fd0b4b43_779301.jpg');
-INSERT INTO images (id, src) VALUES (4, 'https://twitterclonestorage.s3.eu-central-1.amazonaws.com/25e1a117-8eac-4156-9cc3-2311319082af_EH0yOTgWwAAXPdT.png');
-INSERT INTO images (id, src) VALUES (5, 'https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png');
-INSERT INTO images (id, src) VALUES (6, 'https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ac48eb0e-73e7-4887-a523-47c5a557d1ad_Ec1OBK3XsAEjVZR.png');
-INSERT INTO images (id, src) VALUES (7, 'https://twitterclonestorage.s3.eu-central-1.amazonaws.com/68a7b0d5-2b0c-493e-85ff-098725c52ecc_Cl5DjoUWYAAslnd.jfif');
-INSERT INTO images (id, src) VALUES (8, 'https://twitterclonestorage.s3.eu-central-1.amazonaws.com/a2692fac-4b70-4828-845c-2fe439473f82_Cl5DjoUWYAAslnd.jfif');
+INSERT INTO images (id, src) VALUES (11, 'https://perfumeweb2.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg');
+INSERT INTO images (id, src) VALUES (22, 'https://perfumeweb2.s3.eu-central-1.amazonaws.com/dfc8a223-45fc-43da-8b7c-f76e2c2507cd_82ecbca14eb4999212c07257f41c70e7.jpg');
+INSERT INTO images (id, src) VALUES (33, 'https://perfumeweb2.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg');
+INSERT INTO images (id, src) VALUES (44, 'https://perfumeweb2.s3.eu-central-1.amazonaws.com/d0e5b95f-acc0-47ef-b499-477f7e5a1a06_PrMnWa2z.jpg');
+INSERT INTO images (id, src) VALUES (1, 'https://perfumeweb2.s3.eu-central-1.amazonaws.com/0a6c735d-def8-4587-a29f-221915ef6cb4_ff2d023b3220f93bbc79233614dea542.jpg');
+INSERT INTO images (id, src) VALUES (2, 'https://perfumeweb2.s3.eu-central-1.amazonaws.com/bd8ae60c-4231-4624-8cdd-dfe61fa38921_779301.jpg');
+INSERT INTO images (id, src) VALUES (3, 'https://perfumeweb2.s3.eu-central-1.amazonaws.com/a7e03e7c-c05f-4e30-ba8c-2271fd0b4b43_779301.jpg');
+INSERT INTO images (id, src) VALUES (4, 'https://perfumeweb2.s3.eu-central-1.amazonaws.com/25e1a117-8eac-4156-9cc3-2311319082af_EH0yOTgWwAAXPdT.png');
+INSERT INTO images (id, src) VALUES (5, 'https://perfumeweb2.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png');
+INSERT INTO images (id, src) VALUES (6, 'https://perfumeweb2.s3.eu-central-1.amazonaws.com/ac48eb0e-73e7-4887-a523-47c5a557d1ad_Ec1OBK3XsAEjVZR.png');
+INSERT INTO images (id, src) VALUES (7, 'https://perfumeweb2.s3.eu-central-1.amazonaws.com/68a7b0d5-2b0c-493e-85ff-098725c52ecc_Cl5DjoUWYAAslnd.jfif');
+INSERT INTO images (id, src) VALUES (8, 'https://perfumeweb2.s3.eu-central-1.amazonaws.com/a2692fac-4b70-4828-845c-2fe439473f82_Cl5DjoUWYAAslnd.jfif');
 -- users
 INSERT INTO users (id, about, activation_code, active, background_color, birthday, color_scheme, country, country_code, email, full_name, gender, language, like_count, location, media_tweet_count, muted_direct_messages, notifications_count, password, password_reset_code, phone, private_profile, profile_customized, profile_started, registration_date, role, tweet_count, username, website) VALUES (1, null, null, true, 'DEFAULT', null, 'BLUE', null, null, 'user2015@gmail.com', 'Random', null, null, 1, null, 0, true, 0, '$2a$08$TZekzxmq.KO2f.juYNUa4eU/ePYPx3r2MWONVjPDKOBJB4qUlhkxW', null, null, false, true, true, '2021-11-15 14:05:08.000000', 'USER', 0, 'Random', null);
 INSERT INTO users (id, about, activation_code, active, background_color, birthday, color_scheme, country, country_code, email, full_name, gender, language, like_count, location, media_tweet_count, muted_direct_messages, notifications_count, password, password_reset_code, phone, private_profile, profile_customized, profile_started, registration_date, role, tweet_count, username, website) VALUES (2, 'Hello twitter!', null, true, 'DIM', null, 'BLUE', 'UA', 'UA', 'user2016@gmail.com', 'MrCat', 'Cat', 'Ukrainian - українська', 30, 'New York', 22, false, 0, '$2a$08$TZekzxmq.KO2f.juYNUa4eU/ePYPx3r2MWONVjPDKOBJB4qUlhkxW', null, 666966623, true, false, true, '2021-08-01 23:34:32.000000', 'USER', 4, 'Cat', 'https://www.google.com');
