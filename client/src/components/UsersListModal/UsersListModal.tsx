@@ -74,10 +74,6 @@ const UsersListModal: FC<UsersListModalProps> = (
         dispatch(resetRetweetedUsersState());
     };
 
-    if (!visible) {
-        return null;
-    }
-
     const showLoading = (): boolean => {
         let isLoading = true;
 
@@ -99,6 +95,10 @@ const UsersListModal: FC<UsersListModalProps> = (
         }
         return users.map((user) => (<UsersItem key={user.id} item={user} size={UserItemSize.MEDIUM}/>));
     };
+    
+    if (!visible) {
+        return null;
+    }
 
     return (
         <Dialog className={classes.dialog} open={visible} onClose={onCloseUsersListModal} aria-labelledby="form-dialog-title">
