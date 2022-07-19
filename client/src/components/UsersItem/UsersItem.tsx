@@ -135,6 +135,7 @@ const UsersItem: FC<UsersItemProps<UserResponse> & SnackbarProps & HoverUserProp
                         />
                     </ListItemAvatar>
                     <div
+                        id={"userInfo"}
                         className={classes.userInfo}
                         onMouseEnter={() => handleHoverPopper!(user?.id!)}
                         onMouseLeave={handleLeavePopper}
