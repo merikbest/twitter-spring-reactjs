@@ -35,7 +35,7 @@ const VoteComponent: FC<VoteComponentProps> = ({tweetId, poll}): ReactElement =>
                     {poll?.pollChoices.map((pollChoice) => {
                             const voteNumber = (pollChoice.votedUser.length / ((userVoteSum! === 0) ? 1 : userVoteSum!)) * 100;
                             return (
-                                <div key={pollChoice.id} className={classes.container}>
+                                <div key={pollChoice.id} id={`choice_${pollChoice.id}`} className={classes.container}>
                                     <div className={classes.voteOption}>
                                         <Typography variant={"body1"} component={"div"} className={classes.voteChoice}>
                                             {pollChoice.choice}
