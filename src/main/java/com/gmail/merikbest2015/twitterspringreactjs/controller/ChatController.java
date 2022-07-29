@@ -58,7 +58,7 @@ public class ChatController {
         return ResponseEntity.ok(message);
     }
     
-    @GetMapping("/search/{username}") // TODO add test
+    @GetMapping("/search/{username}")
     public ResponseEntity<List<UserChatResponse>> searchParticipantsByUsername(@PathVariable String username) {
         return ResponseEntity.ok(chatMapper.searchParticipantsByUsername(username));
     }

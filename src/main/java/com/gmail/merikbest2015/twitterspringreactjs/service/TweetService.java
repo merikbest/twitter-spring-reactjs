@@ -22,6 +22,8 @@ public interface TweetService {
 
     List<UserProjection> getRetweetedUsersByTweetId(Long tweetId);
 
+    List<TweetProjection.UserProjection> getQuotedUsersByTweetId(Long tweetId);
+
     Page<TweetProjection> getMediaTweets(Pageable pageable);
 
     Page<TweetProjection> getTweetsWithVideo(Pageable pageable);

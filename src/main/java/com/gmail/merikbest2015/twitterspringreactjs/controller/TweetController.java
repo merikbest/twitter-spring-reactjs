@@ -54,6 +54,11 @@ public class TweetController {
         return ResponseEntity.ok(tweetMapper.getRetweetedUsersByTweetId(tweetId));
     }
 
+    @GetMapping("/{tweetId}/quoted-users")
+    public ResponseEntity<List<UserResponse>> getQuotedUsersByTweetId(@PathVariable Long tweetId) {
+        return ResponseEntity.ok(tweetMapper.getQuotedUsersByTweetId(tweetId));
+    }
+
     @GetMapping("/media")
     public ResponseEntity<List<TweetResponse>> getMediaTweets(@PageableDefault(size = 10) Pageable pageable) {
         TweetHeaderResponse<TweetResponse> response = tweetMapper.getMediaTweets(pageable);

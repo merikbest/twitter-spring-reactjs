@@ -87,6 +87,14 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
+    public List<TweetProjection.UserProjection> getQuotedUsersByTweetId(Long tweetId) {
+        List<TweetsProjection> tweets = tweetRepository.getQuotedUsersByTweetId(tweetId);
+        return tweets.contains(null) ? new ArrayList<>() : tweets.stream()
+                .map(tweet -> tweet.getTweet().getUser())
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Page<TweetProjection> getMediaTweets(Pageable pageable) {
         return tweetRepository.findAllTweetsWithImages(pageable);
     }

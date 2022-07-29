@@ -90,6 +90,11 @@ public class TweetMapper {
         List<UserProjection> users = tweetService.getRetweetedUsersByTweetId(tweetId);
         return basicMapper.convertToResponseList(users, UserResponse.class);
     }
+    
+    public List<UserResponse> getQuotedUsersByTweetId(Long tweetId) {
+        List<TweetProjection.UserProjection> users = tweetService.getQuotedUsersByTweetId(tweetId);
+        return basicMapper.convertToResponseList(users, UserResponse.class);
+    }
 
     public TweetResponse createTweet(TweetRequest tweetRequest) {
         TweetProjection tweet = tweetService.createNewTweet(basicMapper.convertToEntity(tweetRequest, Tweet.class));

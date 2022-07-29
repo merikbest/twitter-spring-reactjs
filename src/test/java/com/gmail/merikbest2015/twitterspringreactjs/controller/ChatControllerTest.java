@@ -193,6 +193,25 @@ public class ChatControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/chat/search/MrCat - Search users by username")
+    public void searchParticipantsByUsername() throws Exception {
+        mockMvc.perform(get(URL_CHAT_BASIC + "/search/" + USERNAME))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(6)))
+                .andExpect(jsonPath("$[*].id").isNotEmpty())
+                .andExpect(jsonPath("$[*].fullName").isNotEmpty())
+                .andExpect(jsonPath("$[*].username").isNotEmpty())
+                .andExpect(jsonPath("$[*].about").isNotEmpty())
+                .andExpect(jsonPath("$[*].isPrivateProfile").isNotEmpty())
+                .andExpect(jsonPath("$[*].isMutedDirectMessages").isNotEmpty())
+                .andExpect(jsonPath("$[*].isUserBlocked").isNotEmpty())
+                .andExpect(jsonPath("$[*].isMyProfileBlocked").isNotEmpty())
+                .andExpect(jsonPath("$[*].isWaitingForApprove").isNotEmpty())
+                .andExpect(jsonPath("$[*].isFollower").isNotEmpty());
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
     @DisplayName("[200] GET /api/v1/chat/participant/4/8 - Get chat participant")
     public void getParticipant() throws Exception {
         mockMvc.perform(get(URL_CHAT_BASIC + "/participant/4/8"))
