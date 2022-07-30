@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.twitterspringreactjs.dto.request;
 
 import com.gmail.merikbest2015.twitterspringreactjs.model.Image;
-import com.gmail.merikbest2015.twitterspringreactjs.model.LinkCoverSize;
-import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.LinkCoverSize;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.ReplyType;
 import lombok.Data;
 
 import java.time.LocalDateTime;

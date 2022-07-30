@@ -1,5 +1,8 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 
+import com.gmail.merikbest2015.twitterspringreactjs.enums.LinkCoverSize;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.NotificationType;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.ReplyType;
 import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.*;
@@ -77,6 +80,11 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
+    public Page<TweetProjection> getQuotesByTweetId(Pageable pageable, Long tweetId) {
+        return tweetRepository.getQuotesByTweetId(pageable, tweetId);
+    }
+
+    @Override
     public List<UserProjection> getLikedUsersByTweetId(Long tweetId) {
         return tweetRepository.getLikedUsersByTweetId(tweetId);
     }
@@ -84,14 +92,6 @@ public class TweetServiceImpl implements TweetService {
     @Override
     public List<UserProjection> getRetweetedUsersByTweetId(Long tweetId) {
         return tweetRepository.getRetweetedUsersByTweetId(tweetId);
-    }
-
-    @Override
-    public List<TweetProjection.UserProjection> getQuotedUsersByTweetId(Long tweetId) {
-        List<TweetsProjection> tweets = tweetRepository.getQuotedUsersByTweetId(tweetId);
-        return tweets.contains(null) ? new ArrayList<>() : tweets.stream()
-                .map(tweet -> tweet.getTweet().getUser())
-                .collect(Collectors.toList());
     }
 
     @Override
@@ -332,6 +332,7 @@ public class TweetServiceImpl implements TweetService {
         user.setTweetCount(user.getTweetCount() + 1);
         quote.setQuoteTweet(tweet);
         Tweet createdTweet = createTweet(quote);
+        tweet.getQuotes().add(createdTweet);
         return getTweetById(createdTweet.getId());
     }
 

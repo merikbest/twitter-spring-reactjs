@@ -91,6 +91,8 @@ INSERT INTO retweets (id, retweet_date, tweets_id, users_id) VALUES (2, '2021-10
 INSERT INTO retweets (id, retweet_date, tweets_id, users_id) VALUES (3, '2021-10-15 22:07:48.000000', 10, 2);
 -- replies
 INSERT INTO replies (tweets_id, reply_id) VALUES (10, 16);
+-- quotes
+INSERT INTO quotes (tweets_id, quote_id) VALUES (13, 15);
 -- user_pinned_tweet
 INSERT INTO user_pinned_tweet (tweet_id, user_id) VALUES (1, 1);
 -- tags

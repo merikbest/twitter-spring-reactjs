@@ -2,8 +2,8 @@ package com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.ImageResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.model.LinkCoverSize;
-import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.LinkCoverSize;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.ReplyType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,6 +33,7 @@ public class TweetResponse {
     private Integer retweetsCount;
     private Integer likedTweetsCount;
     private Integer repliesCount;
+    private Integer quotesCount;
 
     @JsonProperty("isTweetLiked")
     private boolean isTweetLiked;

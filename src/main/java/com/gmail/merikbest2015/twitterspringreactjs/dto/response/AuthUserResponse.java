@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.twitterspringreactjs.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.gmail.merikbest2015.twitterspringreactjs.model.BackgroundColorType;
-import com.gmail.merikbest2015.twitterspringreactjs.model.ColorSchemeType;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.BackgroundColorType;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.ColorSchemeType;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service;
 
-import com.gmail.merikbest2015.twitterspringreactjs.model.BackgroundColorType;
-import com.gmail.merikbest2015.twitterspringreactjs.model.ColorSchemeType;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.BackgroundColorType;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.ColorSchemeType;
 
 import java.util.Map;
 

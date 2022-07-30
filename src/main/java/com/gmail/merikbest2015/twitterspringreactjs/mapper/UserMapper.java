@@ -11,6 +11,8 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetHead
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetImageResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetUserResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.BackgroundColorType;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.ColorSchemeType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.BookmarkProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.LikeTweetProjection;

@@ -2,8 +2,8 @@ package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.SettingsRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.model.BackgroundColorType;
-import com.gmail.merikbest2015.twitterspringreactjs.model.ColorSchemeType;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.BackgroundColorType;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.ColorSchemeType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

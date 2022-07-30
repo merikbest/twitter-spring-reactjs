@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetDeleteRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TweetRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.VoteRequest;
-import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.ReplyType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,6 +114,112 @@ public class TweetControllerTest {
         mockMvc.perform(get(URL_TWEETS_BASIC + "/99"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is("Tweet not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/tweets/40/replies - Get Replies By Tweet Id")
+    public void getRepliesByTweetId() throws Exception {
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/40/replies"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(1)))
+                .andExpect(jsonPath("$[0].id").value(41L))
+                .andExpect(jsonPath("$[0].text").value("test reply"))
+                .andExpect(jsonPath("$[0].dateTime").value("2021-10-03T20:31:55"))
+                .andExpect(jsonPath("$[0].scheduledDate").isEmpty())
+                .andExpect(jsonPath("$[0].addressedUsername").value("MrCat"))
+                .andExpect(jsonPath("$[0].addressedId").value(2L))
+                .andExpect(jsonPath("$[0].addressedTweetId").value(40L))
+                .andExpect(jsonPath("$[0].replyType").value(ReplyType.EVERYONE.toString()))
+                .andExpect(jsonPath("$[0].link").isEmpty())
+                .andExpect(jsonPath("$[0].linkTitle").isEmpty())
+                .andExpect(jsonPath("$[0].linkDescription").isEmpty())
+                .andExpect(jsonPath("$[0].linkCover").isEmpty())
+                .andExpect(jsonPath("$[0].linkCoverSize").isEmpty())
+                .andExpect(jsonPath("$[0].quoteTweet").isEmpty())
+                .andExpect(jsonPath("$[0].user.id").value(1L))
+                .andExpect(jsonPath("$[0].poll").isEmpty())
+                .andExpect(jsonPath("$[0].images").isEmpty())
+                .andExpect(jsonPath("$[0].retweetsCount").value(0L))
+                .andExpect(jsonPath("$[0].likedTweetsCount").value(0L))
+                .andExpect(jsonPath("$[0].repliesCount").value(0L))
+                .andExpect(jsonPath("$[0].isTweetLiked").value(false))
+                .andExpect(jsonPath("$[0].isTweetRetweeted").value(false))
+                .andExpect(jsonPath("$[0].isUserFollowByOtherUser").value(true))
+                .andExpect(jsonPath("$[0].isTweetDeleted").value(false))
+                .andExpect(jsonPath("$[0].isTweetBookmarked").value(false));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/tweets/40/quotes - Get Quotes By Tweet Id")
+    public void getQuotesByTweetId() throws Exception {
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/40/quotes"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(1)))
+                .andExpect(jsonPath("$[0].id").value(45L))
+                .andExpect(jsonPath("$[0].text").value("media tweet test"))
+                .andExpect(jsonPath("$[0].dateTime").value("2021-10-03T20:38:51"))
+                .andExpect(jsonPath("$[0].scheduledDate").isEmpty())
+                .andExpect(jsonPath("$[0].addressedUsername").isEmpty())
+                .andExpect(jsonPath("$[0].addressedId").isEmpty())
+                .andExpect(jsonPath("$[0].addressedTweetId").isEmpty())
+                .andExpect(jsonPath("$[0].replyType").value(ReplyType.EVERYONE.toString()))
+                .andExpect(jsonPath("$[0].link").isEmpty())
+                .andExpect(jsonPath("$[0].linkTitle").isEmpty())
+                .andExpect(jsonPath("$[0].linkDescription").isEmpty())
+                .andExpect(jsonPath("$[0].linkCover").isEmpty())
+                .andExpect(jsonPath("$[0].linkCoverSize").isEmpty())
+                .andExpect(jsonPath("$[0].quoteTweet.id").value(40L))
+                .andExpect(jsonPath("$[0].user.id").value(1L))
+                .andExpect(jsonPath("$[0].poll").isEmpty())
+                .andExpect(jsonPath("$[*].images", hasSize(1)))
+                .andExpect(jsonPath("$[0].retweetsCount").value(1L))
+                .andExpect(jsonPath("$[0].likedTweetsCount").value(1L))
+                .andExpect(jsonPath("$[0].repliesCount").value(0L))
+                .andExpect(jsonPath("$[0].isTweetLiked").value(true))
+                .andExpect(jsonPath("$[0].isTweetRetweeted").value(true))
+                .andExpect(jsonPath("$[0].isUserFollowByOtherUser").value(true))
+                .andExpect(jsonPath("$[0].isTweetDeleted").value(false))
+                .andExpect(jsonPath("$[0].isTweetBookmarked").value(false));
+    }
+    
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/tweets/40/liked-users - Get Liked Users By Tweet Id")
+    public void getLikedUsersByTweetId() throws Exception {
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/40/liked-users"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(1)))
+                .andExpect(jsonPath("$[0].id").value(1L))
+                .andExpect(jsonPath("$[0].fullName").value(USERNAME2))
+                .andExpect(jsonPath("$[0].username").value(USERNAME2))
+                .andExpect(jsonPath("$[0].about").value(ABOUT2))
+                .andExpect(jsonPath("$[0].isPrivateProfile").value(false))
+                .andExpect(jsonPath("$[0].isMutedDirectMessages").value(true))
+                .andExpect(jsonPath("$[0].isUserBlocked").value(false))
+                .andExpect(jsonPath("$[0].isMyProfileBlocked").value(false))
+                .andExpect(jsonPath("$[0].isWaitingForApprove").value(false))
+                .andExpect(jsonPath("$[0].isFollower").value(true));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/tweets/40/retweeted-users - Get Retweeted Users By Tweet Id")
+    public void getRetweetedUsersByTweetId() throws Exception {
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/40/retweeted-users"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(1)))
+                .andExpect(jsonPath("$[0].id").value(1L))
+                .andExpect(jsonPath("$[0].fullName").value(USERNAME2))
+                .andExpect(jsonPath("$[0].username").value(USERNAME2))
+                .andExpect(jsonPath("$[0].about").value(ABOUT2))
+                .andExpect(jsonPath("$[0].isPrivateProfile").value(false))
+                .andExpect(jsonPath("$[0].isMutedDirectMessages").value(true))
+                .andExpect(jsonPath("$[0].isUserBlocked").value(false))
+                .andExpect(jsonPath("$[0].isMyProfileBlocked").value(false))
+                .andExpect(jsonPath("$[0].isWaitingForApprove").value(false))
+                .andExpect(jsonPath("$[0].isFollower").value(true));
     }
 
     @Test

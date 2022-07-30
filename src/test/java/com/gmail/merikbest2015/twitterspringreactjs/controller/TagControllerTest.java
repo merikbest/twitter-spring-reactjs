@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
-import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.ReplyType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

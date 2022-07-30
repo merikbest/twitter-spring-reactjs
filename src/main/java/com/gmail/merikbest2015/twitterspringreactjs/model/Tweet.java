@@ -9,6 +9,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gmail.merikbest2015.twitterspringreactjs.enums.LinkCoverSize;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.ReplyType;
+
 @Entity
 @Getter
 @Setter
@@ -90,11 +93,18 @@ public class Tweet {
             inverseJoinColumns = @JoinColumn(name = "reply_id"))
     private List<Tweet> replies;
 
+    @OneToMany
+    @JoinTable(name = "quotes",
+            joinColumns = @JoinColumn(name = "tweets_id"),
+            inverseJoinColumns = @JoinColumn(name = "quote_id"))
+    private List<Tweet> quotes;
+
     public Tweet() {
         this.dateTime = LocalDateTime.now().withNano(0);
         this.images = new ArrayList<>();
         this.likedTweets = new ArrayList<>();
         this.retweets = new ArrayList<>();
         this.replies = new ArrayList<>();
+        this.quotes = new ArrayList<>();
     }
 }

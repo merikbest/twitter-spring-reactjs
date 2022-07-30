@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet;
 
-import com.gmail.merikbest2015.twitterspringreactjs.model.LinkCoverSize;
-import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.LinkCoverSize;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.ReplyType;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.ImageProjection;
 import org.springframework.beans.factory.annotation.Value;
 

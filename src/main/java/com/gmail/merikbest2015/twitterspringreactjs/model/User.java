@@ -9,6 +9,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gmail.merikbest2015.twitterspringreactjs.enums.BackgroundColorType;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.ColorSchemeType;
+
 @Entity
 @Getter
 @Setter

@@ -8,8 +8,8 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.No
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetHeaderResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.model.NotificationType;
-import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.NotificationType;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.ReplyType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.UserProjection;
@@ -81,6 +81,11 @@ public class TweetMapper {
         return basicMapper.convertToResponseList(tweets, TweetResponse.class);
     }
 
+    public TweetHeaderResponse<TweetResponse> getQuotesByTweetId(Pageable pageable, Long tweetId) {
+        Page<TweetProjection> tweets = tweetService.getQuotesByTweetId(pageable, tweetId);
+        return getTweetHeaderResponse(tweets, TweetResponse.class);
+    }
+
     public List<UserResponse> getLikedUsersByTweetId(Long tweetId) {
         List<UserProjection> users = tweetService.getLikedUsersByTweetId(tweetId);
         return basicMapper.convertToResponseList(users, UserResponse.class);
@@ -88,11 +93,6 @@ public class TweetMapper {
 
     public List<UserResponse> getRetweetedUsersByTweetId(Long tweetId) {
         List<UserProjection> users = tweetService.getRetweetedUsersByTweetId(tweetId);
-        return basicMapper.convertToResponseList(users, UserResponse.class);
-    }
-    
-    public List<UserResponse> getQuotedUsersByTweetId(Long tweetId) {
-        List<TweetProjection.UserProjection> users = tweetService.getQuotedUsersByTweetId(tweetId);
         return basicMapper.convertToResponseList(users, UserResponse.class);
     }
 

@@ -1,4 +1,5 @@
 delete from replies;
+delete from quotes;
 delete from tweets_images;
 delete from tweets_tags;
 delete from user_blocked;

@@ -7,6 +7,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import com.gmail.merikbest2015.twitterspringreactjs.enums.NotificationType;
+
 @Entity
 @Getter
 @Setter

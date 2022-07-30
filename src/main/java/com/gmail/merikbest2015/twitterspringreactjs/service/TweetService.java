@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service;
 
-import com.gmail.merikbest2015.twitterspringreactjs.model.ReplyType;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.ReplyType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.UserProjection;
@@ -18,11 +18,11 @@ public interface TweetService {
 
     List<TweetProjection> getRepliesByTweetId(Long tweetId);
 
+    Page<TweetProjection> getQuotesByTweetId(Pageable pageable, Long tweetId);
+
     List<UserProjection> getLikedUsersByTweetId(Long tweetId);
 
     List<UserProjection> getRetweetedUsersByTweetId(Long tweetId);
-
-    List<TweetProjection.UserProjection> getQuotedUsersByTweetId(Long tweetId);
 
     Page<TweetProjection> getMediaTweets(Pageable pageable);
 

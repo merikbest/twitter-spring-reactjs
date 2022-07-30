@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.repository;
 
-import com.gmail.merikbest2015.twitterspringreactjs.model.BackgroundColorType;
-import com.gmail.merikbest2015.twitterspringreactjs.model.ColorSchemeType;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.BackgroundColorType;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.ColorSchemeType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.UserPrincipalProjection;
@@ -11,7 +11,6 @@ import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.M
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

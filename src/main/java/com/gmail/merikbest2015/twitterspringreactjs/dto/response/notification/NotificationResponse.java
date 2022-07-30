@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification;
 
-import com.gmail.merikbest2015.twitterspringreactjs.model.NotificationType;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.NotificationType;
 import lombok.Getter;
 import lombok.Setter;
 
