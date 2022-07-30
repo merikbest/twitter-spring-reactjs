@@ -66,4 +66,4 @@ const AppsAndSessions: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(AppsAndSessions);
+export default withDocumentTitle(AppsAndSessions)("Apps and sessions");

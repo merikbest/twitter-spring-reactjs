@@ -21,6 +21,7 @@ export interface TweetResponse {
     retweetsCount: number;
     likedTweetsCount: number;
     repliesCount: number;
+    quotesCount: number;
     isTweetLiked: boolean;
     isTweetRetweeted: boolean;
     isUserFollowByOtherUser: boolean;

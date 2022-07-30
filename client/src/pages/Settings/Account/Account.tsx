@@ -113,4 +113,4 @@ const Account: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(Account);
+export default withDocumentTitle(Account)("Settings");

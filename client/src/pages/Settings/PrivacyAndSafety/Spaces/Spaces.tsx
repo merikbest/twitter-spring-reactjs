@@ -38,4 +38,4 @@ const Spaces: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(Spaces);
+export default withDocumentTitle(Spaces)("Spaces");

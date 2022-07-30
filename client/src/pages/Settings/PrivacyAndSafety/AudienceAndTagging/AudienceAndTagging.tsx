@@ -74,4 +74,4 @@ const AudienceAndTagging: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(AudienceAndTagging);
+export default withDocumentTitle(AudienceAndTagging)("Audience and tagging");

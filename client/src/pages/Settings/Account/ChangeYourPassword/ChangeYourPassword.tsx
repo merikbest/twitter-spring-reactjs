@@ -1,15 +1,13 @@
-import React, {FC, ReactElement} from 'react';
+import React, {FC, ReactElement, useEffect} from 'react';
 import {Button, Divider, Link as MuiLink} from "@material-ui/core";
 import classnames from "classnames";
 import * as yup from "yup";
 import {Controller, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {compose} from "recompose";
 
 import {useChangeYourPasswordStyles} from "./ChangeYourPasswordStyles";
 import {ChangeInfoTextField} from "../../ChangeInfoTextField/ChangeInfoTextField";
 import {useGlobalStyles} from "../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 import {AuthApi} from "../../../../services/api/authApi";
 import {SnackbarProps, withSnackbar} from "../../../../hoc/withSnackbar";
 import ActionSnackbar from "../../../../components/ActionSnackbar/ActionSnackbar";
@@ -47,6 +45,10 @@ const ChangeYourPassword: FC<SnackbarProps> = (
     } = useForm<ChangeYourPasswordFormProps>({
         resolver: yupResolver(ChangeYourPasswordFormSchema),
     });
+    
+    useEffect(() => {
+        document.title = "Change your password / Twitter";
+    }, []);
 
     const onSubmit = (data: ChangeYourPasswordFormProps): void => {
         AuthApi.currentPasswordReset({
@@ -163,4 +165,4 @@ const ChangeYourPassword: FC<SnackbarProps> = (
     );
 };
 
-export default compose(withDocumentTitle, withSnackbar)(ChangeYourPassword);
+export default withSnackbar(ChangeYourPassword);

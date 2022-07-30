@@ -29,4 +29,4 @@ const ChangeAge: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(ChangeAge);
+export default withDocumentTitle(ChangeAge)("Age");

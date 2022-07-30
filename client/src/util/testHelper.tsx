@@ -215,11 +215,13 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             tweet: mockFullTweet,
             likedUsers: mockUsers,
             retweetedUsers: mockUsers,
+            quotedUsers: mockUsers,
             replies: mockTweets,
             loadingState: loadingStatus,
             likedUsersLoadingState: loadingStatus,
             retweetedUsersLoadingState: loadingStatus,
             repliesLoadingState: loadingStatus,
+            quotedUsersLoadingState: loadingStatus,
         },
         tweets: {
             items: mockTweets,

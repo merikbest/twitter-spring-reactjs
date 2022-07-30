@@ -17,7 +17,6 @@ import {
     addTweet,
     updateScheduledTweet,
 } from "../../store/ducks/tweets/actionCreators";
-import {ReplyType} from '../../store/ducks/tweets/contracts/state';
 import UploadImages from '../UploadImages/UploadImages';
 import {uploadImage} from "../../util/uploadImage";
 import {selectUserData} from "../../store/ducks/user/selectors";
@@ -36,7 +35,7 @@ import ActionSnackbar from "../ActionSnackbar/ActionSnackbar";
 import {SnackbarProps, withSnackbar} from "../../hoc/withSnackbar";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {QuoteTweetResponse, TweetResponse} from "../../store/types/tweet";
-import {Image} from "../../store/types/common";
+import {Image, ReplyType} from "../../store/types/common";
 import {MODAL, PROFILE} from "../../util/pathConstants";
 
 export enum AddTweetFormAction {

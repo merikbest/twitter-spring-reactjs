@@ -77,7 +77,7 @@ const ChangeLanguage: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(ChangeLanguage);
+export default withDocumentTitle(ChangeLanguage)("Change display language");
 
 const languages = (): JSX.Element => {
     return (

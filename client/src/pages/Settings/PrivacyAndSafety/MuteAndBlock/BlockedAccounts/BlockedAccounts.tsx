@@ -100,4 +100,4 @@ const BlockedAccounts: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(BlockedAccounts);
+export default withDocumentTitle(BlockedAccounts)("Blocked accounts");

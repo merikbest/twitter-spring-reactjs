@@ -139,4 +139,4 @@ const ContentPreferences = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(ContentPreferences);
+export default withDocumentTitle(ContentPreferences)("Content preferences");

@@ -71,4 +71,4 @@ const Accessibility: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(Accessibility);
+export default withDocumentTitle(Accessibility)("Accessibility");

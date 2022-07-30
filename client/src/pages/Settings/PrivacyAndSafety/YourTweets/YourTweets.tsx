@@ -45,4 +45,4 @@ const YourTweets: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(YourTweets);
+export default withDocumentTitle(YourTweets)("Your Tweets");

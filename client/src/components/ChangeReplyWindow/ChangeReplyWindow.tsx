@@ -2,8 +2,8 @@ import React, {FC, ReactElement} from 'react';
 import {List, ListItem, Typography} from "@material-ui/core";
 
 import {useChangeReplyWindowStyles} from "./ChangeReplyWindowStyles";
-import {ReplyType} from "../../store/ducks/tweets/contracts/state";
 import {CheckIcon, EveryoneReplyOutlinedIcon, FollowReplyOutlinedIcon, MentionReplyOutlinedIcon} from "../../icons";
+import {ReplyType} from "../../store/types/common";
 
 interface ChangeReplyWindowProps {
     replyType: ReplyType;

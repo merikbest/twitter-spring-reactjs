@@ -103,4 +103,4 @@ const DeactivateAccount: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(DeactivateAccount);
+export default withDocumentTitle(DeactivateAccount)("Deactivate account");

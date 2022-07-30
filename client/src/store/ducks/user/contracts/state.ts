@@ -1,6 +1,5 @@
 import {LoadingStatus} from "../../../types";
-import {Image} from "../../../types/common";
-import {BackgroundTheme, ColorScheme} from "../../../../pages/Settings/AccessibilityDisplayLanguages/Display/Display";
+import {BackgroundTheme, ColorScheme, Image} from "../../../types/common";
 import {AuthUserResponse} from "../../../types/user";
 
 export interface Settings {

@@ -41,4 +41,4 @@ const Preferences: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(Preferences);
+export default withDocumentTitle(Preferences)("Preferences");

@@ -309,4 +309,4 @@ const PrivacyAndSafety: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(PrivacyAndSafety);
+export default withDocumentTitle(PrivacyAndSafety)("Privacy and safety");

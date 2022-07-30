@@ -67,4 +67,4 @@ const MuteAndBlock: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(MuteAndBlock);
+export default withDocumentTitle(MuteAndBlock)("Mute and block");

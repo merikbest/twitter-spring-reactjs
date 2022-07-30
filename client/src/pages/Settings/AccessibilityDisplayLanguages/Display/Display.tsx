@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
+import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch} from "react-redux";
 import {Divider, Radio, Typography} from "@material-ui/core";
 import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
@@ -8,21 +8,7 @@ import {CheckIcon, TweetIcon, VerifiedIcon} from "../../../../icons";
 import {updateBackgroundColor} from "../../../../store/ducks/user/actionCreators";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
-
-export enum ColorScheme {
-    BLUE = "BLUE",
-    YELLOW = "YELLOW",
-    CRIMSON = "CRIMSON",
-    VIOLET = "VIOLET",
-    ORANGE = "ORANGE",
-    GREEN = "GREEN",
-}
-
-export enum BackgroundTheme {
-    DEFAULT = "DEFAULT",
-    DIM = "DIM",
-    LIGHTS_OUT = "LIGHTS_OUT",
-}
+import {BackgroundTheme, ColorScheme} from "../../../../store/types/common";
 
 export interface DisplayProps {
     changeBackgroundColor: (background: BackgroundTheme) => void;
@@ -225,4 +211,4 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
     );
 };
 
-export default withDocumentTitle(Display);
+export default withDocumentTitle(Display)("Display");

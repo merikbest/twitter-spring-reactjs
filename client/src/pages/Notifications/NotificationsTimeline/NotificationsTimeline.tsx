@@ -10,6 +10,7 @@ import TweetComponent from "../../../components/TweetComponent/TweetComponent";
 import Spinner from "../../../components/Spinner/Spinner";
 import {resetTweets} from "../../../store/ducks/tweets/actionCreators";
 import {useGlobalStyles} from "../../../util/globalClasses";
+import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
 
 const NotificationsTimeline: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -63,4 +64,4 @@ const NotificationsTimeline: FC = (): ReactElement => {
     );
 };
 
-export default NotificationsTimeline;
+export default withDocumentTitle(NotificationsTimeline)("Notifications");

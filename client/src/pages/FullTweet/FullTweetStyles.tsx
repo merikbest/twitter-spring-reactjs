@@ -130,7 +130,8 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
     },
     replyInfo: {
         height: 72,
-        backgroundColor: "rgb(215, 246, 255)",
+        // backgroundColor: "rgb(215, 246, 255)",
+        backgroundColor: theme.palette.info.dark,
         margin: "16px 0px",
         borderRadius: 16,
         display: "flex",

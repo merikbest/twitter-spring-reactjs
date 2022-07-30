@@ -638,4 +638,4 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
     );
 };
 
-export default withDocumentTitle(Settings);
+export default withDocumentTitle(Settings)("Settings");

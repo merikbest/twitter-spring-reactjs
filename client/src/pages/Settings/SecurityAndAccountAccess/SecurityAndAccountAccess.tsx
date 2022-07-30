@@ -79,4 +79,4 @@ const SecurityAndAccountAccess: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(SecurityAndAccountAccess);
+export default withDocumentTitle(SecurityAndAccountAccess)("Security and account access");

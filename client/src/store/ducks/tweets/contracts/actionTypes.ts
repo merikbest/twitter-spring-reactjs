@@ -1,9 +1,10 @@
 import {Action} from "redux";
 
 import {LoadingStatus} from "../../../types";
-import {AddQuoteTweet, AddTweet, ReplyType, TweetsState, Vote} from "./state";
+import {AddQuoteTweet, AddTweet, TweetsState, Vote} from "./state";
 import {TweetResponse} from "../../../types/tweet";
 import {NotificationReplyResponse, NotificationResponse} from "../../../types/notification";
+import {ReplyType} from "../../../types/common";
 
 export enum TweetsActionType {
     SET_FOLLOW_TO_TWEETS_STATE = 'tweets/SET_FOLLOW_TO_TWEETS_STATE',
@@ -15,6 +16,7 @@ export enum TweetsActionType {
     FETCH_TWEETS_WITH_VIDEO = "tweets/FETCH_TWEETS_WITH_VIDEO",
     FETCH_FOLLOWERS_TWEETS = "tweets/FETCH_FOLLOWERS_TWEETS",
     FETCH_TWEETS_BY_LIST_ID = "tweets/FETCH_TWEETS_BY_LIST_ID",
+    FETCH_TWEETS_WITH_QUOTES_BY_ID = "tweets/FETCH_TWEETS_WITH_QUOTES_BY_ID",
     SET_PAGEABLE_TWEETS = "tweets/SET_PAGEABLE_TWEETS",
     SET_LOADING_STATE = "tweets/SET_LOADING_STATE",
     RESET_TWEETS = "tweets/RESET_TWEETS",
@@ -97,6 +99,11 @@ export interface FetchFollowersTweetsActionInterface extends Action<TweetsAction
 export interface FetchTweetsByListIdActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_TWEETS_BY_LIST_ID;
     payload: { listId: number, pageNumber: number };
+}
+
+export interface FetchTweetsWithQuotesByIdActionInterface extends Action<TweetsActionType> {
+    type: TweetsActionType.FETCH_TWEETS_WITH_QUOTES_BY_ID;
+    payload: { tweetId: number, pageNumber: number };
 }
 
 export interface FetchTweetsByTagActionInterface extends Action<TweetsActionType> {

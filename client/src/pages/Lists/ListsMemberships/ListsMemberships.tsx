@@ -13,6 +13,7 @@ import Spinner from "../../../components/Spinner/Spinner";
 import ListsItem from "../ListsItem/ListsItem";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {PROFILE} from "../../../util/pathConstants";
+import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
 
 const ListsMemberships: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -87,4 +88,4 @@ const ListsMemberships: FC = (): ReactElement => {
     );
 };
 
-export default ListsMemberships;
+export default withDocumentTitle(ListsMemberships)("Lists");

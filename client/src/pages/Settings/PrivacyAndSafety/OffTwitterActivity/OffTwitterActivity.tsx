@@ -54,4 +54,4 @@ const OffTwitterActivity: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(OffTwitterActivity);
+export default withDocumentTitle(OffTwitterActivity)("Off-Twitter activity");

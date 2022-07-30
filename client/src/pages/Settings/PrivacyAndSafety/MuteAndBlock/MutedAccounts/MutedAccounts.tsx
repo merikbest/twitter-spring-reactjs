@@ -65,4 +65,4 @@ const MutedAccounts: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(MutedAccounts);
+export default withDocumentTitle(MutedAccounts)("Muted accounts");

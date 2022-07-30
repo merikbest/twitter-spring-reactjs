@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchUsers} from "../../store/ducks/users/actionCreators";
 import {selectUsers, selectUsersIsLoading} from "../../store/ducks/users/selectors";
 import ConnectToUsers from "../../components/ConnectToUsers/ConnectToUsers";
+import {withDocumentTitle} from "../../hoc/withDocumentTitle";
 
 const Connect: FC = (): ReactElement => {
     const dispatch = useDispatch();
@@ -24,4 +25,4 @@ const Connect: FC = (): ReactElement => {
     );
 };
 
-export default Connect;
+export default withDocumentTitle(Connect)("Connect");

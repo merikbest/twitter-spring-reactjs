@@ -105,4 +105,4 @@ const AccessibilityDisplayLanguages: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(AccessibilityDisplayLanguages);
+export default withDocumentTitle(AccessibilityDisplayLanguages)("Accessibility, display and languages");

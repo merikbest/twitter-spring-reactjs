@@ -83,4 +83,4 @@ const Discoverability: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(Discoverability);
+export default withDocumentTitle(Discoverability)("Discoverability and contacts");

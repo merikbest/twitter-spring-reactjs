@@ -103,4 +103,4 @@ const Sessions: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(Sessions);
+export default withDocumentTitle(Sessions)("Sessions");

@@ -15,7 +15,6 @@ import {
 import {useTweetComponentStyles} from "./TweetComponentStyles";
 import {formatDate} from '../../util/formatDate';
 import {likeTweet, retweet} from "../../store/ducks/tweets/actionCreators";
-import {LinkCoverSize, ReplyType} from "../../store/ducks/tweets/contracts/state";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import ReplyModal from "../ReplyModal/ReplyModal";
@@ -38,6 +37,7 @@ import {useGlobalStyles} from "../../util/globalClasses";
 import TweetActionResult, {TweetActionResults} from "../TweetActionResult/TweetActionResult";
 import {TweetResponse} from "../../store/types/tweet";
 import {HOME_TWEET, MODAL, PROFILE} from "../../util/pathConstants";
+import {LinkCoverSize, ReplyType} from "../../store/types/common";
 
 export interface TweetComponentProps<T> {
     item?: T;

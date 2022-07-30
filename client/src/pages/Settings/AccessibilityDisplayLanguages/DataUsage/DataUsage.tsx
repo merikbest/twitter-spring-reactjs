@@ -48,4 +48,4 @@ const DataUsage: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(DataUsage);
+export default withDocumentTitle(DataUsage)("Data usage");

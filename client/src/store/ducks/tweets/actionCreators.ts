@@ -1,4 +1,4 @@
-import {AddQuoteTweet, AddTweet, ReplyType, TweetsState, Vote} from "./contracts/state";
+import {AddQuoteTweet, AddTweet, TweetsState, Vote} from "./contracts/state";
 import {
     AddPollActionInterface,
     AddQuoteTweetActionInterface,
@@ -15,6 +15,7 @@ import {
     FetchTweetsByListIdActionInterface,
     FetchTweetsByTagActionInterface,
     FetchTweetsByTextActionInterface,
+    FetchTweetsWithQuotesByIdActionInterface,
     FetchTweetsWithVideoActionInterface,
     LikeTweetActionInterface,
     RemoveTweetFromBookmarksActionInterface,
@@ -37,6 +38,7 @@ import {
 import {LoadingStatus} from "../../types";
 import {TweetResponse} from "../../types/tweet";
 import {NotificationReplyResponse, NotificationResponse} from "../../types/notification";
+import {ReplyType} from "../../types/common";
 
 export const setFollowToTweetsState = (payload: { userId: number, tweetId: number; isFollower: boolean; }): SetFollowToTweetsStateActionInterface => ({
     type: TweetsActionType.SET_FOLLOW_TO_TWEETS_STATE,
@@ -184,6 +186,11 @@ export const fetchFollowersTweets = (payload: number): FetchFollowersTweetsActio
 
 export const fetchTweetsByListId = (payload: { listId: number, pageNumber: number }): FetchTweetsByListIdActionInterface => ({
     type: TweetsActionType.FETCH_TWEETS_BY_LIST_ID,
+    payload
+});
+
+export const fetchQuotesByTweetId = (payload: { tweetId: number, pageNumber: number }): FetchTweetsWithQuotesByIdActionInterface => ({
+    type: TweetsActionType.FETCH_TWEETS_WITH_QUOTES_BY_ID,
     payload
 });
 

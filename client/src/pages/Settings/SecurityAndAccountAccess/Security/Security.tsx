@@ -69,4 +69,4 @@ const Security: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(Security);
+export default withDocumentTitle(Security)("Security");

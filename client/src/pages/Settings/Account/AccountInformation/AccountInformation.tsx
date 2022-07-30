@@ -191,4 +191,4 @@ const AccountInformation: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(AccountInformation);
+export default withDocumentTitle(AccountInformation)("Account information");

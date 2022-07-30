@@ -1,8 +1,8 @@
 import {LoadingStatus} from "../../../types";
 import {TweetResponse} from "../../../types/tweet";
-import {Image} from "../../../types/common";
+import {Image, ReplyType} from "../../../types/common";
 
-export interface AddTweet { // TODO move to types
+export interface AddTweet {
     id?: number;
     text: string;
     images: Image[];
@@ -12,26 +12,14 @@ export interface AddTweet { // TODO move to types
     choices?: string[];
 }
 
-export interface AddQuoteTweet { // TODO move to types
+export interface AddQuoteTweet {
     text: string;
     images: Image[];
     replyType: ReplyType;
     tweetId: number;
 }
 
-export enum ReplyType { // +
-    EVERYONE = "EVERYONE",
-    FOLLOW = "FOLLOW",
-    MENTION = "MENTION"
-}
-
-export enum LinkCoverSize { // +
-    SMALL = "SMALL",
-    MEDIUM = "MEDIUM",
-    LARGE = "LARGE"
-}
-
-export interface Vote { // +
+export interface Vote {
     tweetId: number;
     pollId: number;
     pollChoiceId: number;

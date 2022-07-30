@@ -4,8 +4,8 @@ import Button from "@material-ui/core/Button";
 
 import {useReplyStyles} from "./ReplyStyles";
 import {EveryoneReplyIcon, FollowReplyIcon, MentionReplyIcon} from "../../../icons";
-import {ReplyType} from "../../../store/ducks/tweets/contracts/state";
 import ChangeReplyWindow from "../../ChangeReplyWindow/ChangeReplyWindow";
+import {ReplyType} from '../../../store/types/common';
 
 interface ReplyProps {
     replyType: ReplyType;

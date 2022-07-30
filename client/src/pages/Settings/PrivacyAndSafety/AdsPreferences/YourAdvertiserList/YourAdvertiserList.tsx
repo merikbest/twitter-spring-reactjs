@@ -44,4 +44,4 @@ const YourAdvertiserList: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(YourAdvertiserList);
+export default withDocumentTitle(YourAdvertiserList)("Your advertiser list");

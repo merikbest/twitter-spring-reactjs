@@ -32,4 +32,4 @@ const ConnectedApps: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(ConnectedApps);
+export default withDocumentTitle(ConnectedApps)("Connected apps");

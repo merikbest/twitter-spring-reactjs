@@ -1,16 +1,13 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {Button, Dialog, DialogContent, Radio, Typography} from "@material-ui/core";
 import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
+import {useDispatch} from "react-redux";
 
 import {useDisplayModalStyles} from "./DisplayModalStyles";
 import {CheckIcon, TweetIcon, VerifiedIcon} from "../../../icons";
-import {
-    BackgroundTheme,
-    ColorScheme,
-    DisplayProps
-} from "../../../pages/Settings/AccessibilityDisplayLanguages/Display/Display";
-import {useDispatch} from "react-redux";
+import {DisplayProps} from "../../../pages/Settings/AccessibilityDisplayLanguages/Display/Display";
 import {updateBackgroundColor, updateColorScheme} from "../../../store/ducks/user/actionCreators";
+import {BackgroundTheme, ColorScheme} from "../../../store/types/common";
 
 interface DisplayModalProps {
     visible?: boolean;

@@ -48,10 +48,10 @@ import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
 import ShareTweet from "../ShareTweet/ShareTweet";
 import ReplyModal from "../ReplyModal/ReplyModal";
 import {HoverUserProps, withHoverUser} from "../../hoc/withHoverUser";
-import {ReplyType} from "../../store/ducks/tweets/contracts/state";
 import {useGlobalStyles} from "../../util/globalClasses";
 import Spinner from "../Spinner/Spinner";
 import {PROFILE} from "../../util/pathConstants";
+import {ReplyType} from "../../store/types/common";
 
 let stompClient: CompatClient | null = null;
 

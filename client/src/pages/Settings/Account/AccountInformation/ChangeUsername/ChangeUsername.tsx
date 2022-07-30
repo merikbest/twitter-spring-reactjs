@@ -81,4 +81,4 @@ const ChangeUsername: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(ChangeUsername);
+export default withDocumentTitle(ChangeUsername)("Change username");

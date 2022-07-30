@@ -141,4 +141,4 @@ const PersonalizationAndData = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(PersonalizationAndData);
+export default withDocumentTitle(PersonalizationAndData)("Personalization and data");

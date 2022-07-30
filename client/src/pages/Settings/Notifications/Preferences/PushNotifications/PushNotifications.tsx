@@ -36,4 +36,4 @@ const PushNotifications: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(PushNotifications);
+export default withDocumentTitle(PushNotifications)("Push notifications");

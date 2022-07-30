@@ -1,4 +1,5 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
+import {AxiosResponse} from "axios";
 
 import {setPageableTweets, setTweets, setTweetsLoadingState,} from "./actionCreators";
 import {TweetApi} from "../../../services/api/tweetApi";
@@ -17,6 +18,7 @@ import {
     FetchTweetsByListIdActionInterface,
     FetchTweetsByTagActionInterface,
     FetchTweetsByTextActionInterface,
+    FetchTweetsWithQuotesByIdActionInterface,
     FetchTweetsWithVideoActionInterface,
     LikeTweetActionInterface,
     RetweetActionInterface,
@@ -27,7 +29,6 @@ import {
 import {LoadingStatus} from '../../types';
 import {TagApi} from "../../../services/api/tagApi";
 import {UserApi} from "../../../services/api/userApi";
-import {AxiosResponse} from "axios";
 import {TweetResponse} from "../../types/tweet";
 import {ListsApi} from "../../../services/api/listsApi";
 
@@ -107,6 +108,19 @@ export function* fetchTweetsByListIdRequest({payload}: FetchTweetsByListIdAction
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<TweetResponse[]> = yield call(ListsApi.getTweetsByListId, payload.listId, payload.pageNumber);
+        yield put(setPageableTweets({
+            items: response.data,
+            pagesCount: parseInt(response.headers["page-total-count"])
+        }));
+    } catch (e) {
+        yield put(setTweetsLoadingState(LoadingStatus.ERROR));
+    }
+}
+
+export function* fetchQuotesByTweetIdRequest({payload}: FetchTweetsWithQuotesByIdActionInterface) {
+    try {
+        yield put(setTweetsLoadingState(LoadingStatus.LOADING));
+        const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.getQuotesByTweetId, payload.tweetId, payload.pageNumber);
         yield put(setPageableTweets({
             items: response.data,
             pagesCount: parseInt(response.headers["page-total-count"])
@@ -228,5 +242,6 @@ export function* tweetsSaga() {
     yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_TAG, fetchTweetsByTagRequest);
     yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_TEXT, fetchTweetsByTextRequest);
     yield takeLatest(TweetsActionType.FETCH_TWEETS_BY_LIST_ID, fetchTweetsByListIdRequest);
+    yield takeLatest(TweetsActionType.FETCH_TWEETS_WITH_QUOTES_BY_ID, fetchQuotesByTweetIdRequest);
     yield takeLatest(TweetsActionType.FETCH_BOOKMARKS, fetchUserBookmarksRequest);
 }

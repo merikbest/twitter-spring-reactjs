@@ -51,17 +51,17 @@ const Explore: FC = (): ReactElement => {
     useEffect(() => {
         window.scrollTo(0, 0);
 
-        if (location.state?.tag !== undefined) {
+        if (location.state?.tag) {
             dispatch(fetchTweetsByTag(location.state?.tag));
             setText(decodeURIComponent(location.state?.tag));
         }
 
-        if (location.state?.text !== undefined) {
+        if (location.state?.text) {
             dispatch(fetchTweetsByText(location.state?.text));
             setText(decodeURIComponent(location.state?.text));
         }
 
-        if (location.state?.tag === undefined && location.state?.text === undefined) {
+        if (!location.state?.tag && !location.state?.text) {
             loadTweets();
         }
 
@@ -71,7 +71,7 @@ const Explore: FC = (): ReactElement => {
     }, [location.state?.tag, location.state?.text]);
 
     const loadTweets = () => {
-        if (text !== "") {
+        if (text) {
             if (activeTab !== 2) {
                 dispatch(fetchTweetsByText(encodeURIComponent(text)));
             } else {
@@ -98,10 +98,10 @@ const Explore: FC = (): ReactElement => {
         setActiveTab(newValue);
     };
 
-    const handleClickSearch = (event: FormEvent<HTMLFormElement>): void => {
+    const handleSubmitSearch = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
 
-        if (text !== "") {
+        if (text) {
             if (activeTab !== 2) {
                 dispatch(resetTweets());
                 dispatch(fetchTweetsByText(encodeURIComponent(text)));
@@ -150,7 +150,7 @@ const Explore: FC = (): ReactElement => {
             <Paper className={globalClasses.pageContainer} variant="outlined">
                 <Paper className={globalClasses.pageHeader} variant="outlined">
                     <div>
-                        <form style={{display: "block"}} onSubmit={handleClickSearch}>
+                        <form style={{display: "block"}} onSubmit={handleSubmitSearch}>
                             <div className={classes.backButtonWrapper}>
                                 <BackButton/>
                             </div>
@@ -205,4 +205,4 @@ const Explore: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(Explore);
+export default withDocumentTitle(Explore)("Explore");

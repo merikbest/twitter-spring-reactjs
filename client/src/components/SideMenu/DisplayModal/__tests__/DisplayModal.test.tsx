@@ -3,8 +3,7 @@ import {Dialog, Radio} from "@material-ui/core";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
 import {LoadingStatus} from "../../../../store/types";
-import {BackgroundTheme} from "../../../../store/types/common";
-import {ColorScheme} from "../../../../pages/Settings/AccessibilityDisplayLanguages/Display/Display";
+import {BackgroundTheme, ColorScheme} from "../../../../store/types/common";
 import DisplayModal from "../DisplayModal";
 
 describe("DisplayModal", () => {

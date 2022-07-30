@@ -28,4 +28,4 @@ const AccountAccessHistory: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(AccountAccessHistory);
+export default withDocumentTitle(AccountAccessHistory)("Account access history");

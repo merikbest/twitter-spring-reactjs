@@ -22,11 +22,6 @@ const commonTheme = {
             main: "rgb(244, 33, 46)",
             dark: "rgb(202, 32, 85)",
         },
-        info: {
-            light: "rgb(207, 217, 222)",
-            main: "rgb(207, 217, 222)",
-            dark: "",
-        },
         common: {
             black: "rgb(15, 20, 25)",
             white: "rgb(255, 255, 255)",
@@ -420,6 +415,11 @@ export const blueColor = {
             main: "rgb(29, 155, 240)",
             dark: "rgb(26, 140, 216)",
         },
+        info: {
+            light: "rgb(207, 217, 222)",
+            main: "rgb(207, 217, 222)",
+            dark: "rgb(2, 17, 61)",
+        },
         action: {
             disabledBackground: "rgb(29, 155, 240, 0.5)",
             disabled: "rgb(255, 255, 255, 0.5)",
@@ -492,6 +492,11 @@ export const yellowColor = {
             light: "rgb(255, 234, 128)",
             main: "rgb(255, 212, 0)",
             dark: "rgb(255, 255, 0)",
+        },
+        info: {
+            light: "rgb(207, 217, 222)",
+            main: "rgb(207, 217, 222)",
+            dark: "rgb(61, 30, 2)",
         },
         action: {
             disabledBackground: "rgb(255, 212, 0, 0.5)",
@@ -566,6 +571,11 @@ export const crimsonColor = {
             main: "rgb(249, 24, 128)",
             dark: "rgb(249, 24, 128)",
         },
+        info: {
+            light: "rgb(207, 217, 222)",
+            main: "rgb(207, 217, 222)",
+            dark: "rgb(55, 1, 28)",
+        },
         action: {
             disabledBackground: "rgb(249, 24, 128, 0.5)",
             disabled: "rgb(255, 255, 255, 0.5)",
@@ -638,6 +648,11 @@ export const violetColor = {
             light: "rgb(188, 171, 255)",
             main: "rgb(120, 86, 255)",
             dark: "rgb(120, 86, 255)",
+        },
+        info: {
+            light: "rgb(207, 217, 222)",
+            main: "rgb(207, 217, 222)",
+            dark: "rgb(22, 6, 52)",
         },
         action: {
             disabledBackground: "rgb(120, 86, 255, 0.5)",
@@ -712,6 +727,11 @@ export const orangeColor = {
             main: "rgb(255, 122, 0)",
             dark: "rgb(255, 122, 0)",
         },
+        info: {
+            light: "rgb(207, 217, 222)",
+            main: "rgb(207, 217, 222)",
+            dark: "rgb(60, 18, 1)",
+        },
         action: {
             disabledBackground: "rgb(255, 122, 0, 0.5)",
             disabled: "rgb(255, 255, 255, 0.5)",
@@ -784,6 +804,11 @@ export const greenColor = {
             light: "rgb(128, 221, 190)",
             main: "rgb(0, 186, 124)",
             dark: "rgb(0, 186, 124)",
+        },
+        info: {
+            light: "rgb(207, 217, 222)",
+            main: "rgb(207, 217, 222)",
+            dark: "rgb(0, 34, 24)",
         },
         action: {
             disabledBackground: "rgb(0, 186, 124, 0.5)",

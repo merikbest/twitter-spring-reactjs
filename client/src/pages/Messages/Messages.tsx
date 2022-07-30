@@ -335,4 +335,4 @@ const Messages: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(Messages);
+export default withDocumentTitle(Messages)("Messages");

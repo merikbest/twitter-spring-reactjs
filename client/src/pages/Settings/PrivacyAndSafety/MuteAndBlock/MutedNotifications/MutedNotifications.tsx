@@ -75,4 +75,4 @@ const MutedNotifications: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(MutedNotifications);
+export default withDocumentTitle(MutedNotifications)("Muted notifications");

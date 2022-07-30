@@ -45,4 +45,4 @@ const Filters: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(Filters);
+export default withDocumentTitle(Filters)("Filters");

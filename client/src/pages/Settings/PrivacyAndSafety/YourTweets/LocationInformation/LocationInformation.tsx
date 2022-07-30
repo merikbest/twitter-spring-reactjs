@@ -37,4 +37,4 @@ const LocationInformation: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(LocationInformation);
+export default withDocumentTitle(LocationInformation)("Add location information to your Tweets");

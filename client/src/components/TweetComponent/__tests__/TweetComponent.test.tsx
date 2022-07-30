@@ -12,7 +12,6 @@ import {HOME_TWEET, MODAL, PROFILE} from "../../../util/pathConstants";
 import TweetComponent from "../TweetComponent";
 import VoteComponent from "../../VoteComponent/VoteComponent";
 import {TweetResponse} from "../../../store/types/tweet";
-import {LinkCoverSize, ReplyType} from "../../../store/ducks/tweets/contracts/state";
 import Quote from "../../Quote/Quote";
 import YouTubeVideo from "../../YouTubeVideo/YouTubeVideo";
 import SmallLinkPreview from "../../SmallLinkPreview/SmallLinkPreview";
@@ -25,6 +24,7 @@ import {TweetsActionType} from "../../../store/ducks/tweets/contracts/actionType
 import QuoteTweet from "../../QuoteTweet/QuoteTweet";
 import PopperUserWindow from "../../PopperUserWindow/PopperUserWindow";
 import HoverAction from "../../HoverAction/HoverAction";
+import {LinkCoverSize, ReplyType} from "../../../store/types/common";
 
 describe("TweetComponent", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

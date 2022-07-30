@@ -133,4 +133,4 @@ const ChangeGender: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(ChangeGender);
+export default withDocumentTitle(ChangeGender)("Change gender");

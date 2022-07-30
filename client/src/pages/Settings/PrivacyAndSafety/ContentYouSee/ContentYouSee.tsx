@@ -51,4 +51,4 @@ const ContentYouSee: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(ContentYouSee);
+export default withDocumentTitle(ContentYouSee)("Content you see");

@@ -67,4 +67,4 @@ const LoggedDevices: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(LoggedDevices);
+export default withDocumentTitle(LoggedDevices)("Logged-in devices and apps");

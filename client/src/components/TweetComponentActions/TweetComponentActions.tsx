@@ -21,7 +21,6 @@ import {
     UnmuteIcon
 } from "../../icons";
 import {selectUserData} from "../../store/ducks/user/selectors";
-import {ReplyType} from "../../store/ducks/tweets/contracts/state";
 import {
     fetchPinTweet,
     followUser,
@@ -41,6 +40,7 @@ import {useGlobalStyles} from "../../util/globalClasses";
 import ChangeReplyWindow from "../ChangeReplyWindow/ChangeReplyWindow";
 import {TweetResponse} from "../../store/types/tweet";
 import ListsModal from "../ListsModal/ListsModal";
+import {ReplyType} from "../../store/types/common";
 
 interface TweetComponentActionsProps {
     tweet: TweetResponse;

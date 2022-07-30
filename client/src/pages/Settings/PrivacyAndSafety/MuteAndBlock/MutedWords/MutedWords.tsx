@@ -26,4 +26,4 @@ const MutedWords: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(MutedWords);
+export default withDocumentTitle(MutedWords)("Muted words");

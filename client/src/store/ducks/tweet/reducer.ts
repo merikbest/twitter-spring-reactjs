@@ -134,6 +134,3 @@ export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetActi
             break;
     }
 }, initialTweetState);
-
-
-

@@ -60,4 +60,4 @@ const Location: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(Location);
+export default withDocumentTitle(Location)("Location information");

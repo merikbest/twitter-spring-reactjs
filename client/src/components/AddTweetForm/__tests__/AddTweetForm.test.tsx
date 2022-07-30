@@ -11,7 +11,6 @@ import {mockFullTweet, mockMyProfile, mockQuoteTweet, mockUser} from "../../../u
 import {PROFILE} from "../../../util/pathConstants";
 import HoverAction from "../../HoverAction/HoverAction";
 import {TweetsActionType} from "../../../store/ducks/tweets/contracts/actionTypes";
-import {ReplyType} from "../../../store/ducks/tweets/contracts/state";
 import ScheduleModal from "../ScheduleModal/ScheduleModal";
 import Poll from "../Poll/Poll";
 import PollInput from "../Poll/PollInput/PollInput";
@@ -21,6 +20,7 @@ import CloseButton from "../../CloseButton/CloseButton";
 import UnsentTweetsModal from "../UnsentTweetsModal/UnsentTweetsModal";
 import {API_URL} from "../../../util/url";
 import {createMemoryHistory} from "history";
+import {ReplyType} from "../../../store/types/common";
 
 describe("AddTweetForm", () => {
     const mock = new MockAdapter(axios);

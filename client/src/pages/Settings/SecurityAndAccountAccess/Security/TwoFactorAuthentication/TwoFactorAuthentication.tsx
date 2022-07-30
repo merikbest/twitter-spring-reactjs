@@ -58,4 +58,4 @@ const TwoFactorAuthentication: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(TwoFactorAuthentication);
+export default withDocumentTitle(TwoFactorAuthentication)("Two-factor authentication");

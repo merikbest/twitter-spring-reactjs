@@ -59,4 +59,4 @@ const CurrentSession: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(CurrentSession);
+export default withDocumentTitle(CurrentSession)("Current session");

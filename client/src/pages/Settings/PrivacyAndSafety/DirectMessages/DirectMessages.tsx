@@ -87,4 +87,4 @@ const DirectMessages: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(DirectMessages);
+export default withDocumentTitle(DirectMessages)("Direct Messages");

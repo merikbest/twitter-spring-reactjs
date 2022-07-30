@@ -67,7 +67,7 @@ const ChangeCountry: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(ChangeCountry);
+export default withDocumentTitle(ChangeCountry)("Change country");
 
 const countries = (): JSX.Element => {
     return (

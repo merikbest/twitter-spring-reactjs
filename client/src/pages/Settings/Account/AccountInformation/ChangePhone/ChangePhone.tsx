@@ -63,4 +63,4 @@ const ChangePhone: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(ChangePhone);
+export default withDocumentTitle(ChangePhone)("Change phone");

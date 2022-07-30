@@ -51,4 +51,4 @@ const Places: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(Places);
+export default withDocumentTitle(Places)("See places you’ve been");

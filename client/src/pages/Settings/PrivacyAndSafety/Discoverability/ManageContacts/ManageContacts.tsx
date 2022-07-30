@@ -33,4 +33,4 @@ const ManageContacts: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(ManageContacts);
+export default withDocumentTitle(ManageContacts)("Manage contacts");

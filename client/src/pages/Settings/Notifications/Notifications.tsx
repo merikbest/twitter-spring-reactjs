@@ -61,4 +61,4 @@ const Notifications: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(Notifications);
+export default withDocumentTitle(Notifications)("Notifications");

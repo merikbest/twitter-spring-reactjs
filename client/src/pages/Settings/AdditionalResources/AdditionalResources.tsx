@@ -253,4 +253,4 @@ const AdditionalResources: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(AdditionalResources);
+export default withDocumentTitle(AdditionalResources)("Additional resources");

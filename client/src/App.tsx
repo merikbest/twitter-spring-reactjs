@@ -50,7 +50,6 @@ import {
     violetColor,
     yellowColor
 } from "./theme";
-import {BackgroundTheme, ColorScheme} from "./pages/Settings/AccessibilityDisplayLanguages/Display/Display";
 import NotificationsTimeline from "./pages/Notifications/NotificationsTimeline/NotificationsTimeline";
 import FollowersYouKnow from "./pages/FollowersYouKnow/FollowersYouKnow";
 import {fetchTags} from "./store/ducks/tags/actionCreators";
@@ -65,14 +64,23 @@ import {
     HOME_CONNECT,
     LISTS,
     LISTS_MEMBERSHIPS,
-    MESSAGES, MODAL,
+    MESSAGES,
+    MODAL,
     NOTIFICATION,
     NOTIFICATIONS,
-    NOTIFICATIONS_TIMELINE, PROFILE, PROFILE_HEADER_PHOTO, PROFILE_PHOTO,
+    NOTIFICATIONS_TIMELINE,
+    PROFILE,
+    PROFILE_HEADER_PHOTO,
+    PROFILE_PHOTO,
+    QUOTES,
     SEARCH,
     SETTINGS,
-    SUGGESTED, USER, USER_FOLLOWERS_YOU_FOLLOW
+    SUGGESTED,
+    USER,
+    USER_FOLLOWERS_YOU_FOLLOW
 } from "./util/pathConstants";
+import QuoteTweets from "./pages/QuoteTweets/QuoteTweets";
+import {BackgroundTheme, ColorScheme} from "./store/types/common";
 
 const App: FC = (): ReactElement => {
     const history = useHistory();
@@ -209,7 +217,7 @@ const App: FC = (): ReactElement => {
                         <Route path={SEARCH} component={Explore}/>
                         <Route path={NOTIFICATIONS} component={Notifications} exact/>
                         <Route path={NOTIFICATIONS_TIMELINE} component={NotificationsTimeline} exact/>
-                        <Route path={NOTIFICATION + "/:id"} component={NotificationInfo} exact/>
+                        <Route path={`${NOTIFICATION}/:id`} component={NotificationInfo} exact/>
                         <Route path={MESSAGES} component={Messages}/>
                         <Route path={SETTINGS}
                                render={() => <Settings
@@ -217,17 +225,18 @@ const App: FC = (): ReactElement => {
                                    changeColorScheme={changeColorScheme}/>
                                }/>
                         <Route path={BOOKMARKS} component={Bookmarks}/>
+                        <Route path={`${QUOTES}/:tweetId`} component={QuoteTweets}/>
                         <Route path={SUGGESTED} component={SuggestedLists}/>
                         <Route path={LISTS} component={Lists} exact/>
-                        <Route path={LISTS_MEMBERSHIPS + "/:id"} component={ListsMemberships} exact/>
-                        <Route path={LISTS + "/:listId"} component={FullList} exact/>
-                        <Route path={PROFILE + "/:id"} component={UserPage} exact/>
-                        <Route path={USER_FOLLOWERS_YOU_FOLLOW + "/:id"} component={FollowersYouKnow} exact/>
-                        <Route path={USER + "/:id/:follow"} component={FollowingFollowers} exact/>
+                        <Route path={`${LISTS_MEMBERSHIPS}/:id`} component={ListsMemberships} exact/>
+                        <Route path={`${LISTS}/:listId`} component={FullList} exact/>
+                        <Route path={`${PROFILE}/:id`} component={UserPage} exact/>
+                        <Route path={`${USER_FOLLOWERS_YOU_FOLLOW}/:id`} component={FollowersYouKnow} exact/>
+                        <Route path={`${USER}/:id/:follow`} component={FollowingFollowers} exact/>
                     </Switch>
-                    {background && <Route path={MODAL + "/:id"} children={<TweetImageModal/>}/>}
-                    {background && <Route path={PROFILE_PHOTO + "/:id"} children={<UserImageModal/>}/>}
-                    {background && <Route path={PROFILE_HEADER_PHOTO + "/:id"} children={<UserImageModal/>}/>}
+                    {background && <Route path={`${MODAL}/:id`} children={<TweetImageModal/>}/>}
+                    {background && <Route path={`${PROFILE_PHOTO}/:id`} children={<UserImageModal/>}/>}
+                    {background && <Route path={`${PROFILE_HEADER_PHOTO}/:id`} children={<UserImageModal/>}/>}
                 </Layout>
             </div>
         </MuiThemeProvider>

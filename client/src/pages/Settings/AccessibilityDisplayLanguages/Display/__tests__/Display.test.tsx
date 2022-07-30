@@ -1,9 +1,10 @@
 import React from "react";
 import {Radio} from "@material-ui/core";
 
-import Display, {BackgroundTheme, ColorScheme} from "../Display";
+import Display from "../Display";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
 import {UserActionsType} from "../../../../../store/ducks/user/contracts/actionTypes";
+import {BackgroundTheme, ColorScheme} from "../../../../../store/types/common";
 
 describe("Display", () => {
     let mockDispatchFn: jest.Mock;

@@ -32,6 +32,7 @@ export const USER_FOLLOWERS_YOU_FOLLOW = USER + "/followers_you_follow";
 
 export const MODAL = "/modal";
 export const SEARCH = "/search";
+export const QUOTES = "/quotes";
 
 export const SETTINGS = "/settings";
 export const SETTINGS_SECURITY_AND_ACCOUNT_ACCESS = SETTINGS + "/security_and_account_access";

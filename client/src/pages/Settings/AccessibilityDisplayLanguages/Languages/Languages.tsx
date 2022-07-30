@@ -85,4 +85,4 @@ const Languages: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(Languages);
+export default withDocumentTitle(Languages)("Languages");

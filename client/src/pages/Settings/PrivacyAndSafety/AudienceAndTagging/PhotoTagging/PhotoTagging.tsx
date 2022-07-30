@@ -65,4 +65,4 @@ const PhotoTagging: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(PhotoTagging);
+export default withDocumentTitle(PhotoTagging)("Photo tagging");

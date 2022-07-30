@@ -1,5 +1,5 @@
 import React, {ComponentType, FC, ReactElement, useEffect, useState} from 'react';
-import {Link, useLocation, useParams} from 'react-router-dom';
+import {Link, useHistory, useLocation, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import Paper from '@material-ui/core/Paper';
 import {Avatar, Divider, IconButton} from "@material-ui/core";
@@ -43,7 +43,6 @@ import {
 } from "../../icons";
 import {textFormatter} from "../../util/textFormatter";
 import VoteComponent from "../../components/VoteComponent/VoteComponent";
-import {LinkCoverSize, ReplyType} from "../../store/ducks/tweets/contracts/state";
 import ShareTweet from "../../components/ShareTweet/ShareTweet";
 import TweetComponentActions from "../../components/TweetComponentActions/TweetComponentActions";
 import Quote from "../../components/Quote/Quote";
@@ -59,7 +58,8 @@ import {HoverUserProps, withHoverUser} from "../../hoc/withHoverUser";
 import {useGlobalStyles} from "../../util/globalClasses";
 import classnames from "classnames";
 import TweetActionResult, {TweetActionResults} from "../../components/TweetActionResult/TweetActionResult";
-import {MODAL, PROFILE} from "../../util/pathConstants";
+import {MODAL, PROFILE, QUOTES} from "../../util/pathConstants";
+import {LinkCoverSize, ReplyType} from "../../store/types/common";
 
 let stompClient: CompatClient | null = null;
 
@@ -82,6 +82,7 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
     const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
     const location = useLocation();
+    const history = useHistory();
     const tweetData = useSelector(selectTweetData);
     const replies = useSelector(selectReplies);
     const myProfile = useSelector(selectUserData);
@@ -118,9 +119,8 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
     }, [params.id]);
 
     useEffect(() => {
-        dispatch(fetchReplies(parseInt(params.id)));
-
         if (isTweetLoadedSuccess) {
+            dispatch(fetchReplies(parseInt(params.id)));
             document.title = `${tweetData?.user.fullName} on Twitter: "${tweetData?.text}"`;
         }
         return () => {
@@ -136,14 +136,13 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
         dispatch(retweet(parseInt(params.id)));
     };
 
-    const onOpenLikesModalWindow = (): void => {
-        setVisibleModalWindow(true);
-        setUsersListModalAction(UsersListModalAction.LIKED);
+    const onClickQuotes = (): void => {
+        history.push(`${QUOTES}/${params.id}`);
     };
-
-    const onOpenRetweetsModalWindow = (): void => {
+    
+    const onOpenUsersListModal = (modalAction: UsersListModalAction): void => {
         setVisibleModalWindow(true);
-        setUsersListModalAction(UsersListModalAction.RETWEETED);
+        setUsersListModalAction(modalAction);
     };
 
     const onCloseModalWindow = (): void => {
@@ -258,8 +257,11 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                         <>
                             <Divider/>
                             <div className={classes.content}>
-                                {(tweetData.retweetsCount !== 0) && (
-                                    <a href={"javascript:void(0);"} onClick={onOpenRetweetsModalWindow}>
+                                {(tweetData.retweetsCount) && (
+                                    <a
+                                        href={"javascript:void(0);"} 
+                                        onClick={() => onOpenUsersListModal(UsersListModalAction.RETWEETED)}
+                                    >
                                         <div className={classes.contentItem}>
                                             <Typography variant={"h6"} component={"span"}>
                                                 {tweetData.retweetsCount}
@@ -270,8 +272,23 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                                         </div>
                                     </a>
                                 )}
-                                {(tweetData.likedTweetsCount !== 0) && (
-                                    <a href={"javascript:void(0);"} onClick={onOpenLikesModalWindow}>
+                                {(tweetData.quotesCount) && (
+                                    <a href={"javascript:void(0);"} onClick={onClickQuotes}>
+                                        <div className={classes.contentItem}>
+                                            <Typography variant={"h6"} component={"span"}>
+                                                {tweetData.quotesCount}
+                                            </Typography>
+                                            <Typography variant={"subtitle1"} component={"span"}>
+                                                Quote Tweets
+                                            </Typography>
+                                        </div>
+                                    </a>
+                                )}
+                                {(tweetData.likedTweetsCount) && (
+                                    <a
+                                        href={"javascript:void(0);"}
+                                        onClick={() => onOpenUsersListModal(UsersListModalAction.LIKED)}
+                                    >
                                         <div className={classes.contentItem}>
                                             <Typography variant={"h6"} component={"span"}>
                                                 {tweetData.likedTweetsCount}

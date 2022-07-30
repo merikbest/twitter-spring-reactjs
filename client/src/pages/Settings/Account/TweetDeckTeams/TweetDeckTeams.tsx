@@ -74,4 +74,4 @@ const TweetDeckTeams: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(TweetDeckTeams);
+export default withDocumentTitle(TweetDeckTeams)("TweetDeck Teams");

@@ -63,4 +63,4 @@ const Autoplay: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(Autoplay);
+export default withDocumentTitle(Autoplay)("Autoplay");

@@ -55,4 +55,4 @@ const AdsPreferences: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(AdsPreferences);
+export default withDocumentTitle(AdsPreferences)("Ads preferences");

@@ -31,4 +31,4 @@ const Trends: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(Trends);
+export default withDocumentTitle(Trends)("Trends");

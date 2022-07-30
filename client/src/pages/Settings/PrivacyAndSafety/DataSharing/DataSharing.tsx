@@ -36,4 +36,4 @@ const DataSharing: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(DataSharing);
+export default withDocumentTitle(DataSharing)("Data sharing with business partners");

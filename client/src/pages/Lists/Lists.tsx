@@ -46,6 +46,7 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        document.title = "Lists / Twitter";
         dispatch(fetchLists());
         dispatch(fetchUserLists());
         dispatch(fetchPinnedLists());
@@ -180,4 +181,4 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
     );
 };
 
-export default compose(withHoverAction, withDocumentTitle)(Lists);
+export default withHoverAction(Lists);

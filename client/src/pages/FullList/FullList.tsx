@@ -5,7 +5,7 @@ import {Avatar, Button, Paper, Typography} from "@material-ui/core";
 
 import {useFullListStyles} from "./FullListStyles";
 import {selectIsListLoaded, selectIsListLoading, selectListItem,} from "../../store/ducks/list/selectors";
-import {fetchListById, resetListState} from "../../store/ducks/list/actionCreators";
+import {fetchListById} from "../../store/ducks/list/actionCreators";
 import BackButton from "../../components/BackButton/BackButton";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {selectUserData} from "../../store/ducks/user/selectors";
@@ -27,6 +27,7 @@ import {
     selectTweetsItems
 } from "../../store/ducks/tweets/selectors";
 import {PROFILE} from "../../util/pathConstants";
+import {withDocumentTitle} from "../../hoc/withDocumentTitle";
 
 const FullList: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -258,4 +259,4 @@ const FullList: FC = (): ReactElement => {
     );
 };
 
-export default FullList;
+export default withDocumentTitle(FullList)("List");

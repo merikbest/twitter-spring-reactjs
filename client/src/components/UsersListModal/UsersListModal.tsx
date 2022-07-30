@@ -33,7 +33,6 @@ interface UsersListModalProps {
 export enum UsersListModalAction {
     LIKED = "LIKED",
     RETWEETED = "RETWEETED",
-    QUOTED = "QUOTED",
 }
 
 const UsersListModal: FC<UsersListModalProps> = (
@@ -60,9 +59,6 @@ const UsersListModal: FC<UsersListModalProps> = (
             } else if (usersListModalAction === UsersListModalAction.RETWEETED) {
                 setTitle("Retweeted by");
                 dispatch(fetchRetweetedUsers(tweetId));
-            } else if (usersListModalAction === UsersListModalAction.QUOTED) {
-                setTitle("Quoted by");
-                // dispatch(fetchQuotedUsers(tweetId));
             }
         }
     }, [visible]);

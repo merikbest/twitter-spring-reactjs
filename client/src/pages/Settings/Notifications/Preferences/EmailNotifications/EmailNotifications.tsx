@@ -209,4 +209,4 @@ const EmailNotifications: FC = (): ReactElement => {
     );
 };
 
-export default withDocumentTitle(EmailNotifications);
+export default withDocumentTitle(EmailNotifications)("Email notifications");
