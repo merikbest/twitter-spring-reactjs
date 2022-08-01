@@ -3,9 +3,11 @@ package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.ListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.lists.*;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetHeaderResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Lists;
+import com.gmail.merikbest2015.twitterspringreactjs.model.Notification;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.lists.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.ListsService;
@@ -96,8 +98,12 @@ public class ListsMapper {
         return listsService.addUserToLists(userToListsRequest);
     }
 
-    public Boolean addUserToList(Long userId, Long listId) {
-        return listsService.addUserToList(userId, listId);
+    public NotificationResponse addUserToList(Long userId, Long listId) {
+        Map<String, Object> notificationDetails = listsService.addUserToList(userId, listId);
+        Notification notification = (Notification) notificationDetails.get("notification");
+        NotificationResponse notificationResponse = basicMapper.convertToResponse(notification, NotificationResponse.class);
+        notificationResponse.setAddedToList((Boolean) notificationDetails.get("isAddedToList"));
+        return notificationResponse;
     }
 
     public TweetHeaderResponse<TweetResponse> getTweetsByListId(Long listId, Pageable pageable) {

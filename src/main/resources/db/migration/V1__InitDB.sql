@@ -93,6 +93,7 @@ create table notifications
     tweet_id          int8,
     user_id           int8,
     user_to_follow_id int8,
+    list_id           int8,
     primary key (id)
 );
 create table pool_choices

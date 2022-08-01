@@ -38,7 +38,7 @@ public interface ListsService {
 
     String addUserToLists(UserToListsRequest userToListsRequest);
 
-    Boolean addUserToList(Long userId, Long listId);
+    Map<String, Object> addUserToList(Long userId, Long listId);
 
     Page<TweetProjection> getTweetsByListId(Long listId, Pageable pageable);
 

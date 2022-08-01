@@ -1,11 +1,14 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserToListsRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.NotificationType;
 import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Lists;
+import com.gmail.merikbest2015.twitterspringreactjs.model.Notification;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.ImageRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.ListsRepository;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.NotificationRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.TweetRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.UserRepository;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.lists.*;
@@ -30,6 +33,7 @@ public class ListsServiceImpl implements ListsService {
     private final ListsRepository listsRepository;
     private final TweetRepository tweetRepository;
     private final UserRepository userRepository;
+    private final NotificationRepository notificationRepository;
     private final ImageRepository imageRepository;
 
     @Override
@@ -211,7 +215,7 @@ public class ListsServiceImpl implements ListsService {
 
     @Override
     @Transactional
-    public Boolean addUserToList(Long userId, Long listId) {
+    public Map<String, Object> addUserToList(Long userId, Long listId) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
         checkUserIsBlocked(authUserId, userId);
         User user = userRepository.getValidUser(userId, authUserId)
@@ -222,14 +226,36 @@ public class ListsServiceImpl implements ListsService {
         Optional<User> listMember = list.getMembers().stream()
                 .filter(member -> member.getId().equals(user.getId()))
                 .findFirst();
+        boolean isAddedToList;
 
         if (listMember.isPresent()) {
             list.getMembers().remove(user);
-            return false;
+            isAddedToList = false;
         } else {
             list.getMembers().add(user);
-            return true;
+            isAddedToList = true;
         }
+
+        Notification notification = new Notification();
+        notification.setNotificationType(NotificationType.LISTS);
+        notification.setUser(user);
+        notification.setList(list);
+
+        if (!user.getId().equals(authUserId)) {
+            Optional<Notification> userNotification = user.getNotifications().stream()
+                    .filter(n -> n.getNotificationType().equals(NotificationType.LISTS)
+                            && n.getUser().getId().equals(authUserId))
+                    .findFirst();
+
+            if (userNotification.isEmpty()) {
+                Notification newNotification = notificationRepository.save(notification);
+                user.setNotificationsCount(user.getNotificationsCount() + 1);
+                List<Notification> notifications = user.getNotifications();
+                notifications.add(newNotification);
+                return Map.of("notification", newNotification, "isAddedToList", isAddedToList);
+            }
+        }
+        return Map.of("notification", notification, "isAddedToList", isAddedToList);
     }
 
     @Override
