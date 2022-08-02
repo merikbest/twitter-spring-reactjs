@@ -35,7 +35,8 @@ export enum NotificationType {
     RETWEET = "RETWEET",
     REPLY = "REPLY",
     FOLLOW = "FOLLOW",
-    TWEET = "TWEET"
+    TWEET = "TWEET",
+    LISTS = "LISTS",
 }
 
 export interface SameFollowerResponse {

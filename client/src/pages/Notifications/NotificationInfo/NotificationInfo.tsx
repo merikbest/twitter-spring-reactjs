@@ -5,7 +5,7 @@ import {Typography} from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 
 import BackButton from "../../../components/BackButton/BackButton";
-import {NotificationType} from "../../../store/ducks/notifications/contracts/state";
+import {NotificationType} from "../../../store/types/common";
 import TweetComponent from "../../../components/TweetComponent/TweetComponent";
 import UsersItem, {UserItemSize} from "../../../components/UsersItem/UsersItem";
 import {useGlobalStyles} from "../../../util/globalClasses";

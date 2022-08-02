@@ -32,6 +32,9 @@ export const useNotificationItemStyles = makeStyles((theme: Theme) => ({
         '& #follow': {
             color: "rgb(29, 155, 240)",
         },
+        '& #list': {
+            color: "rgb(83, 100, 113)",
+        },
         "& svg": {
             verticalAlign: "bottom",
             height: "2.30em",

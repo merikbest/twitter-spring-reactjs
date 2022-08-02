@@ -14,6 +14,7 @@ export interface NotificationResponse {
     user: NotificationUserResponse;
     userToFollow: NotificationUserResponse;
     tweet: NotificationTweetResponse;
+    list: NotificationListResponse;
 }
 
 export interface NotificationUserResponse {
@@ -35,6 +36,11 @@ export interface NotificationReplyResponse {
     tweetId: number;
     notificationType: NotificationType;
     tweet: TweetResponse;
+}
+
+export interface NotificationListResponse {
+    id: number;
+    name: string;
 }
 
 export interface NotificationInfoResponse {

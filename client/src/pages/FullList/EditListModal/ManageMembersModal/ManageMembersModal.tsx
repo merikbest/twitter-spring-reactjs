@@ -47,6 +47,7 @@ const ManageMembersModal: FC<ManageMembersModalProps> = ({visible, onClose}): Re
 
         return () => {
             dispatch(resetListMembersState());
+            dispatch(resetListSuggested());
         };
     }, [visible]);
 
@@ -54,6 +55,8 @@ const ManageMembersModal: FC<ManageMembersModalProps> = ({visible, onClose}): Re
         setActiveTab(newValue);
 
         if (newValue === 0) {
+            setSearchText("");
+            dispatch(resetListSuggested());
             dispatch(fetchListMembers({listId: list?.id!, listOwnerId: list?.listOwner.id!}));
         }
     };

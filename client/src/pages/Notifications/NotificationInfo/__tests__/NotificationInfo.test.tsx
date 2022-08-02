@@ -9,7 +9,7 @@ import {NotificationsActionsType} from "../../../../store/ducks/notifications/co
 import {mockNotificationInfo} from "../../../../util/mockData/mockData";
 import TweetComponent from "../../../../components/TweetComponent/TweetComponent";
 import UsersItem, {UserItemSize} from "../../../../components/UsersItem/UsersItem";
-import { NotificationType } from "../../../../store/ducks/notifications/contracts/state";
+import {NotificationType} from "../../../../store/types/common";
 
 window.scrollTo = jest.fn();
 

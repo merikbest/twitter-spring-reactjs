@@ -3,6 +3,7 @@ import ReactRouter from "react-router";
 import {Link} from "react-router-dom";
 import {Avatar, IconButton} from "@material-ui/core";
 import routeData from "react-router";
+import {createMemoryHistory} from "history";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
 import {LoadingStatus} from "../../../store/types";
@@ -24,7 +25,7 @@ import PopperUserWindow from "../../../components/PopperUserWindow/PopperUserWin
 import HoverAction from "../../../components/HoverAction/HoverAction";
 import YouTubeVideo from "../../../components/YouTubeVideo/YouTubeVideo";
 import TweetActionResult, {TweetActionResults} from "../../../components/TweetActionResult/TweetActionResult";
-import {PROFILE} from "../../../util/pathConstants";
+import {MODAL, PROFILE, QUOTES} from "../../../util/pathConstants";
 
 window.scrollTo = jest.fn();
 
@@ -36,6 +37,12 @@ describe("FullTweet", () => {
         mockDispatchFn = mockDispatch();
         jest.spyOn(ReactRouter, "useParams").mockReturnValue({id: "9"});
         jest.spyOn(routeData, "useLocation");
+        jest.spyOn(routeData, "useLocation").mockReturnValue({
+            pathname: MODAL,
+            hash: "",
+            search: "",
+            state: undefined
+        });
     });
 
     it("should render loading Spinner", () => {
@@ -120,9 +127,19 @@ describe("FullTweet", () => {
         expect(wrapper.find(UsersListModal).prop("visible")).toBe(true);
     });
 
+    it("should click Quote Tweets", () => {
+        const history = createMemoryHistory();
+        const pushSpy = jest.spyOn(history, "push");
+        const wrapper = mountWithStore(<FullTweet/>, mockStore, history);
+        wrapper.find("a").at(4).simulate("click");
+        
+        expect(pushSpy).toHaveBeenCalled();
+        expect(pushSpy).toHaveBeenCalledWith(`${QUOTES}/9`);
+    });
+
     it("should click open Liked Modal Window on FullTweet", () => {
         const wrapper = mountWithStore(<FullTweet/>, mockStore);
-        const likedModalButton = wrapper.find("a").at(4);
+        const likedModalButton = wrapper.find("a").at(5);
         likedModalButton.simulate("click");
 
         expect(wrapper.find(UsersListModal).prop("tweetId")).toBe(9);
@@ -132,7 +149,7 @@ describe("FullTweet", () => {
 
     it("should click open Liked Modal Window on FullTweet and close", () => {
         const wrapper = mountWithStore(<FullTweet/>, mockStore);
-        const likedModalButton = wrapper.find("a").at(4);
+        const likedModalButton = wrapper.find("a").at(5);
         likedModalButton.simulate("click");
         wrapper.find(UsersListModal).find(CloseButton).find(IconButton).simulate("click");
         

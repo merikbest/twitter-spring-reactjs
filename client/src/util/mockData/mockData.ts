@@ -934,6 +934,7 @@ export const mockFullTweet = {
     "retweetsUserIds": [1, 2],
     "retweetsCount": 2,
     "likedTweetsCount": 2,
+    "quotesCount": 2,
     "repliesCount": 2,
     "isTweetLiked": true,
     "isTweetRetweeted": true,
