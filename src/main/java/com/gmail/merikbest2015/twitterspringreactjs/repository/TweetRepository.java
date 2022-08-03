@@ -175,4 +175,9 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "WHERE quoteTweet.id = :tweetId " +
             "AND quoteTweetUser.id = :userId ")
     List<UserProjection> getQuotedUsersByTweetId(Long userId, Long tweetId);
+
+    @Query("SELECT tweet FROM Tweet tweet " +
+            "WHERE tweet.addressedId = :userId " +
+            "ORDER BY tweet.dateTime DESC")
+    List<TweetsProjection> getUserMentions(Long userId);
 }

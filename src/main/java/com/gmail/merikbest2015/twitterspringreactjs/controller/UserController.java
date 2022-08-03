@@ -93,6 +93,12 @@ public class UserController {
         TweetHeaderResponse<TweetResponse> response = userMapper.getNotificationsFromTweetAuthors(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getTweets());
     }
+    
+    @GetMapping("/mentions") // TODO add tests
+    public ResponseEntity<List<TweetResponse>> getUserMentions(@PageableDefault(size = 10) Pageable pageable) {
+        TweetHeaderResponse<TweetResponse> response = userMapper.getUserMentions(pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getTweets());
+    }
 
     @GetMapping("/bookmarks")
     public ResponseEntity<List<TweetResponse>> getUserBookmarks(@PageableDefault(size = 10) Pageable pageable) {
