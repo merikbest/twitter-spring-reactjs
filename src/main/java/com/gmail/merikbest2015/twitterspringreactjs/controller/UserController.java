@@ -94,7 +94,7 @@ public class UserController {
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getTweets());
     }
     
-    @GetMapping("/mentions") // TODO add tests
+    @GetMapping("/mentions")
     public ResponseEntity<List<TweetResponse>> getUserMentions(@PageableDefault(size = 10) Pageable pageable) {
         TweetHeaderResponse<TweetResponse> response = userMapper.getUserMentions(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getTweets());

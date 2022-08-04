@@ -213,11 +213,8 @@ public class UserMapper {
     }
     
     public TweetHeaderResponse<TweetResponse> getUserMentions(Pageable pageable) {
-        Page<TweetsProjection> tweetsProjections = userService.getUserMentions(pageable);
-        List<TweetProjection> tweets = tweetsProjections.getContent().stream()
-                .map(TweetsProjection::getTweet)
-                .collect(Collectors.toList());
-        return tweetMapper.getTweetHeaderResponse(tweets, tweetsProjections.getTotalPages(), TweetResponse.class);
+        Page<TweetProjection> tweets = userService.getUserMentions(pageable);
+        return tweetMapper.getTweetHeaderResponse(tweets.getContent(), tweets.getTotalPages(), TweetResponse.class);
     }
 
     public String updateUsername(SettingsRequest request) {

@@ -30,8 +30,8 @@ delete from pool_choices;
 delete from retweets;
 
 delete from chats;
-delete from lists;
 delete from notifications;
+delete from lists;
 delete from tweets;
 delete from pools;
 delete from tags;

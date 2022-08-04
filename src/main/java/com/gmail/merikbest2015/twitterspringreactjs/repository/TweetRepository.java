@@ -179,5 +179,5 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query("SELECT tweet FROM Tweet tweet " +
             "WHERE tweet.addressedId = :userId " +
             "ORDER BY tweet.dateTime DESC")
-    List<TweetsProjection> getUserMentions(Long userId);
+    Page<TweetProjection> getUserMentions(Pageable pageable, Long userId);
 }

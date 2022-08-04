@@ -376,6 +376,40 @@ public class UserControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/user/mentions - Get user mentions")
+    public void getUserMentions() throws Exception {
+        mockMvc.perform(get(URL_USER_BASIC + "/mentions"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(1)))
+                .andExpect(jsonPath("$[0].id").value(41L))
+                .andExpect(jsonPath("$[0].text").value("test reply"))
+                .andExpect(jsonPath("$[0].dateTime").value("2021-10-03T20:31:55"))
+                .andExpect(jsonPath("$[0].scheduledDate").isEmpty())
+                .andExpect(jsonPath("$[0].addressedUsername").value("MrCat"))
+                .andExpect(jsonPath("$[0].addressedId").value(2L))
+                .andExpect(jsonPath("$[0].addressedTweetId").value(40L))
+                .andExpect(jsonPath("$[0].replyType").value(ReplyType.EVERYONE.toString()))
+                .andExpect(jsonPath("$[0].link").isEmpty())
+                .andExpect(jsonPath("$[0].linkTitle").isEmpty())
+                .andExpect(jsonPath("$[0].linkDescription").isEmpty())
+                .andExpect(jsonPath("$[0].linkCover").isEmpty())
+                .andExpect(jsonPath("$[0].linkCoverSize").isEmpty())
+                .andExpect(jsonPath("$[0].quoteTweet").isEmpty())
+                .andExpect(jsonPath("$[0].user.id").value(1L))
+                .andExpect(jsonPath("$[0].poll").isEmpty())
+                .andExpect(jsonPath("$[0].images").isEmpty())
+                .andExpect(jsonPath("$[0].retweetsCount").value(0L))
+                .andExpect(jsonPath("$[0].likedTweetsCount").value(0L))
+                .andExpect(jsonPath("$[0].repliesCount").value(0L))
+                .andExpect(jsonPath("$[0].isTweetLiked").value(false))
+                .andExpect(jsonPath("$[0].isTweetRetweeted").value(false))
+                .andExpect(jsonPath("$[0].isUserFollowByOtherUser").value(true))
+                .andExpect(jsonPath("$[0].isTweetDeleted").value(false))
+                .andExpect(jsonPath("$[0].isTweetBookmarked").value(false));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
     @DisplayName("[200] GET /api/v1/user/bookmarks - Get user bookmarks")
     public void getUserBookmarks() throws Exception {
         mockMvc.perform(get(URL_USER_BASIC + "/bookmarks"))
