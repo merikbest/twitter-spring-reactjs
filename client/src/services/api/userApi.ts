@@ -107,6 +107,9 @@ export const UserApi = {
     async getNotificationsFromTweetAuthors(payload: number): Promise<AxiosResponse<TweetResponse[]>> {
         return await axios.get<TweetResponse[]>(`${API_URL}/user/notifications/timeline`, {params: {page: payload}});
     },
+    async getUserMentions(payload: number): Promise<AxiosResponse<TweetResponse[]>> {
+        return await axios.get<TweetResponse[]>(`${API_URL}/user/mentions`, {params: {page: payload}});
+    },
     async getUserBookmarks(payload: number): Promise<AxiosResponse<TweetResponse[]>> {
         return await axios.get<TweetResponse[]>(`${API_URL}/user/bookmarks`, {params: {page: payload}});
     },

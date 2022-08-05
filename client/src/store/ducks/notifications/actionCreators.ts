@@ -1,4 +1,5 @@
 import {
+    FetchMentionsActionInterface,
     FetchNotificationInfoActionInterface,
     FetchNotificationsActionInterface,
     FetchNotificationsFromTweetAuthorsActionInterface,
@@ -32,6 +33,11 @@ export const fetchNotifications = (): FetchNotificationsActionInterface => ({
 
 export const fetchNotificationsFromTweetAuthors = (payload: number): FetchNotificationsFromTweetAuthorsActionInterface => ({
     type: NotificationsActionsType.FETCH_NOTIFICATIONS_FROM_TWEET_AUTHORS,
+    payload,
+});
+
+export const fetchMentions = (payload: number): FetchMentionsActionInterface => ({
+    type: NotificationsActionsType.FETCH_MENTIONS,
     payload,
 });
 

@@ -14,7 +14,11 @@ import {
     selectNotificationsList,
     selectNotificationsTweetAuthors
 } from "../../store/ducks/notifications/selectors";
-import {fetchNotifications, resetNotificationState} from "../../store/ducks/notifications/actionCreators";
+import {
+    fetchMentions,
+    fetchNotifications,
+    resetNotificationState
+} from "../../store/ducks/notifications/actionCreators";
 import {fetchUserData} from "../../store/ducks/user/actionCreators";
 import Spinner from "../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../util/globalClasses";
@@ -44,7 +48,17 @@ const Notifications: FC = (): ReactElement => {
     }, []);
 
     const handleChangeTab = (event: ChangeEvent<{}>, newValue: number): void => {
-        setActiveTab(newValue);
+        if (newValue) {
+            fetchNotificationsWithTweets(1);
+        } else {
+            fetchNotificationsWithTweets(0);
+        }
+    };
+
+    const fetchNotificationsWithTweets = (activeTabIndex: number): void => {
+        setActiveTab(activeTabIndex);
+        dispatch(resetNotificationState());
+        dispatch(activeTabIndex ? fetchMentions(0) : fetchNotifications());
     };
 
     const handleClickUser = (userId: number, event: React.MouseEvent<HTMLAnchorElement>): void => {
@@ -73,7 +87,7 @@ const Notifications: FC = (): ReactElement => {
                     <Spinner/>
                 ) : (
                     (activeTab === 0) ? (
-                        (notifications.length === 0) ? (
+                        (!notifications.length) ? (
                             <div className={classes.infoWindow}>
                                 <Typography variant={"h4"} component={"div"}>
                                     Nothing to see here — yet
