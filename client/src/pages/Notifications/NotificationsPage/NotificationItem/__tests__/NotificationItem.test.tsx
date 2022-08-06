@@ -5,13 +5,13 @@ import {Avatar} from "@material-ui/core";
 import {Emoji} from "emoji-mart";
 
 import NotificationItem from "../NotificationItem";
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
-import {mockNotifications} from "../../../../util/mockData/mockData";
-import {NotificationResponse} from "../../../../store/types/notification";
-import {DEFAULT_PROFILE_IMG} from "../../../../util/url";
-import PopperUserWindow from "../../../../components/PopperUserWindow/PopperUserWindow";
-import {NOTIFICATION, PROFILE} from "../../../../util/pathConstants";
+import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
+import {LoadingStatus} from "../../../../../store/types";
+import {mockNotifications} from "../../../../../util/mockData/mockData";
+import {NotificationResponse} from "../../../../../store/types/notification";
+import {DEFAULT_PROFILE_IMG} from "../../../../../util/url";
+import PopperUserWindow from "../../../../../components/PopperUserWindow/PopperUserWindow";
+import {NOTIFICATION, PROFILE} from "../../../../../util/pathConstants";
 
 describe("NotificationItem", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

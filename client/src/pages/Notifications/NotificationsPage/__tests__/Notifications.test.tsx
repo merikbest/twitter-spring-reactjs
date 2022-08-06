@@ -2,16 +2,16 @@ import React from "react";
 import Tab from "@material-ui/core/Tab";
 import {createMemoryHistory} from "history";
 
-import Notifications from "../Notifications";
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
-import Spinner from "../../../components/Spinner/Spinner";
-import {NotificationsActionsType} from "../../../store/ducks/notifications/contracts/actionTypes";
-import {UserActionsType} from "../../../store/ducks/user/contracts/actionTypes";
-import {mockNotifications, mockTweetAuthors} from "../../../util/mockData/mockData";
+import Notifications from "../../Notifications";
+import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
+import {LoadingStatus} from "../../../../store/types";
+import Spinner from "../../../../components/Spinner/Spinner";
+import {NotificationsActionsType} from "../../../../store/ducks/notifications/contracts/actionTypes";
+import {UserActionsType} from "../../../../store/ducks/user/contracts/actionTypes";
+import {mockNotifications, mockTweetAuthors} from "../../../../util/mockData/mockData";
 import NotificationAuthorItem from "../NotificationAuthorItem/NotificationAuthorItem";
 import NotificationItem from "../NotificationItem/NotificationItem";
-import { PROFILE } from "../../../util/pathConstants";
+import { PROFILE } from "../../../../util/pathConstants";
 
 window.scrollTo = jest.fn();
 

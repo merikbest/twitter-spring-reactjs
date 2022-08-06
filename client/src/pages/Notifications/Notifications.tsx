@@ -1,6 +1,5 @@
-import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {Link, useHistory} from "react-router-dom";
+import React, {ChangeEvent, FC, ReactElement, useState} from 'react';
+import {Route, useHistory} from "react-router-dom";
 import {Typography} from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -8,63 +7,25 @@ import Paper from "@material-ui/core/Paper";
 import classnames from "classnames";
 
 import {useNotificationsStyles} from "./NotificationsStyles";
-import {NotificationsIconFilled} from "../../icons";
-import {
-    selectIsNotificationsLoading,
-    selectNotificationsList,
-    selectNotificationsTweetAuthors
-} from "../../store/ducks/notifications/selectors";
-import {
-    fetchMentions,
-    fetchNotifications,
-    resetNotificationState
-} from "../../store/ducks/notifications/actionCreators";
-import {fetchUserData} from "../../store/ducks/user/actionCreators";
-import Spinner from "../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../util/globalClasses";
-import NotificationItem from "./NotificationItem/NotificationItem";
-import NotificationAuthorItem from "./NotificationAuthorItem/NotificationAuthorItem";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
-import {NOTIFICATIONS_TIMELINE, PROFILE} from "../../util/pathConstants";
+import {NOTIFICATIONS, NOTIFICATIONS_MENTIONS} from "../../util/pathConstants";
+import NotificationsPage from "./NotificationsPage/NotificationsPage";
+import MentionsPage from "./MentionsPage/MentionsPage";
 
 const Notifications: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useNotificationsStyles();
-    const dispatch = useDispatch();
     const history = useHistory();
-    const notifications = useSelector(selectNotificationsList);
-    const tweetAuthors = useSelector(selectNotificationsTweetAuthors);
-    const isNotificationLoading = useSelector(selectIsNotificationsLoading);
     const [activeTab, setActiveTab] = useState<number>(0);
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-        dispatch(fetchNotifications());
-        dispatch(fetchUserData());
-
-        return () => {
-            dispatch(resetNotificationState());
-        };
-    }, []);
-
     const handleChangeTab = (event: ChangeEvent<{}>, newValue: number): void => {
-        if (newValue) {
-            fetchNotificationsWithTweets(1);
+        if (newValue === 0) {
+            history.push(NOTIFICATIONS);
         } else {
-            fetchNotificationsWithTweets(0);
+            history.push(NOTIFICATIONS_MENTIONS);
         }
-    };
-
-    const fetchNotificationsWithTweets = (activeTabIndex: number): void => {
-        setActiveTab(activeTabIndex);
-        dispatch(resetNotificationState());
-        dispatch(activeTabIndex ? fetchMentions(0) : fetchNotifications());
-    };
-
-    const handleClickUser = (userId: number, event: React.MouseEvent<HTMLAnchorElement>): void => {
-        event.preventDefault();
-        event.stopPropagation();
-        history.push(`${PROFILE}/${userId}`);
+        setActiveTab(newValue);
     };
 
     return (
@@ -83,73 +44,8 @@ const Notifications: FC = (): ReactElement => {
                         <Tab className={classes.tab} label="Mentions"/>
                     </Tabs>
                 </div>
-                {isNotificationLoading ? (
-                    <Spinner/>
-                ) : (
-                    (activeTab === 0) ? (
-                        (!notifications.length) ? (
-                            <div className={classes.infoWindow}>
-                                <Typography variant={"h4"} component={"div"}>
-                                    Nothing to see here — yet
-                                </Typography>
-                                <Typography variant={"subtitle1"} component={"div"}>
-                                    From like to Retweets and whole lot more, this is where all the actions happens.
-                                </Typography>
-                            </div>
-                        ) : (
-                            <div>
-                                {(tweetAuthors.length !== 0) && (
-                                    <Link to={NOTIFICATIONS_TIMELINE}>
-                                        <Paper className={classes.notificationWrapper} variant="outlined">
-                                            <div className={classes.notificationIcon}>
-                                                <span id={"notification"}>
-                                                    {NotificationsIconFilled}
-                                                </span>
-                                            </div>
-                                            <div style={{flex: 1}}>
-                                                {tweetAuthors.slice(0, 6).map((tweetAuthor, index) => (
-                                                    <NotificationAuthorItem key={index} tweetAuthor={tweetAuthor}/>
-                                                ))}
-                                                <Typography variant={"body1"} component={"div"} className={classes.notificationInfoText}>
-                                                    {"New Tweet notifications for "}
-                                                    <Typography variant={"h6"} component={"span"}>
-                                                        {tweetAuthors[0].fullName}
-                                                    </Typography>
-                                                    {(tweetAuthors.length > 2) ? (
-                                                        ` and ${tweetAuthors.length -1} others`
-                                                    ) : (
-                                                        (tweetAuthors.length === 2) && (
-                                                            <>
-                                                                <Typography variant={"body1"} component={"span"} className={classes.notificationInfoText}>
-                                                                    {" and "}
-                                                                </Typography>
-                                                                <Typography variant={"h6"} component={"span"}>
-                                                                    {tweetAuthors[1].fullName}
-                                                                </Typography>
-                                                            </>
-                                                        )
-                                                    )}
-                                                </Typography>
-                                            </div>
-                                        </Paper>
-                                    </Link>
-                                )}
-                                {notifications.map((notification, index) => (
-                                    <NotificationItem key={index} notification={notification} handleClickUser={handleClickUser}/>
-                                ))}
-                            </div>
-                        )
-                    ) : (
-                        <div className={classes.infoWindow}>
-                            <Typography variant={"h4"} component={"div"}>
-                                Nothing to see here — yet
-                            </Typography>
-                            <Typography variant={"subtitle1"} component={"div"}>
-                                When someone mentions you, you’ll find it here.
-                            </Typography>
-                        </div>
-                    )
-                )}
+                <Route exact path={NOTIFICATIONS} component={NotificationsPage}/>
+                <Route exact path={NOTIFICATIONS_MENTIONS} component={MentionsPage}/>
             </div>
         </Paper>
     );

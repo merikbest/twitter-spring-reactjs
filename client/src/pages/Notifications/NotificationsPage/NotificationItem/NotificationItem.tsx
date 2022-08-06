@@ -4,14 +4,14 @@ import Paper from "@material-ui/core/Paper";
 import {Link} from "react-router-dom";
 
 import {useNotificationItemStyles} from "./NotificationItemStyles";
-import {NotificationResponse} from "../../../store/types/notification";
-import {NotificationType} from '../../../store/types/common';
-import {LikeIcon, ListsIconFilled, ProfileIconFilled, RetweetIcon} from "../../../icons";
-import {DEFAULT_PROFILE_IMG} from "../../../util/url";
-import PopperUserWindow from "../../../components/PopperUserWindow/PopperUserWindow";
-import {textFormatter} from "../../../util/textFormatter";
-import {HoverUserProps, withHoverUser} from "../../../hoc/withHoverUser";
-import {LISTS, NOTIFICATION, PROFILE} from "../../../util/pathConstants";
+import {NotificationResponse} from "../../../../store/types/notification";
+import {NotificationType} from '../../../../store/types/common';
+import {LikeIcon, ListsIconFilled, ProfileIconFilled, RetweetIcon} from "../../../../icons";
+import {DEFAULT_PROFILE_IMG} from "../../../../util/url";
+import PopperUserWindow from "../../../../components/PopperUserWindow/PopperUserWindow";
+import {textFormatter} from "../../../../util/textFormatter";
+import {HoverUserProps, withHoverUser} from "../../../../hoc/withHoverUser";
+import {LISTS, NOTIFICATION, PROFILE} from "../../../../util/pathConstants";
 
 export interface NotificationItemProps {
     notification: NotificationResponse;

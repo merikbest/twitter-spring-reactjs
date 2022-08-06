@@ -2,14 +2,14 @@ import React from "react";
 import ReactRouter from "react-router";
 
 import NotificationInfo from "../NotificationInfo";
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
-import Spinner from "../../../../components/Spinner/Spinner";
-import {NotificationsActionsType} from "../../../../store/ducks/notifications/contracts/actionTypes";
-import {mockNotificationInfo} from "../../../../util/mockData/mockData";
-import TweetComponent from "../../../../components/TweetComponent/TweetComponent";
-import UsersItem, {UserItemSize} from "../../../../components/UsersItem/UsersItem";
-import {NotificationType} from "../../../../store/types/common";
+import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
+import {LoadingStatus} from "../../../../../store/types";
+import Spinner from "../../../../../components/Spinner/Spinner";
+import {NotificationsActionsType} from "../../../../../store/ducks/notifications/contracts/actionTypes";
+import {mockNotificationInfo} from "../../../../../util/mockData/mockData";
+import TweetComponent from "../../../../../components/TweetComponent/TweetComponent";
+import UsersItem, {UserItemSize} from "../../../../../components/UsersItem/UsersItem";
+import {NotificationType} from "../../../../../store/types/common";
 
 window.scrollTo = jest.fn();
 

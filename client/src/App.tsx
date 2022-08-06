@@ -23,7 +23,7 @@ import Login from "./pages/Login/Login";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import Bookmarks from "./pages/Bookmarks/Bookmarks";
 import Notifications from "./pages/Notifications/Notifications";
-import NotificationInfo from "./pages/Notifications/NotificationInfo/NotificationInfo";
+import NotificationInfo from "./pages/Notifications/NotificationsPage/NotificationInfo/NotificationInfo";
 import Messages from "./pages/Messages/Messages";
 import {setChatMessage} from "./store/ducks/chatMessages/actionCreators";
 import {WS_URL} from "./util/url";
@@ -50,7 +50,7 @@ import {
     violetColor,
     yellowColor
 } from "./theme";
-import NotificationsTimeline from "./pages/Notifications/NotificationsTimeline/NotificationsTimeline";
+import NotificationsTimeline from "./pages/Notifications/NotificationsPage/NotificationsTimeline/NotificationsTimeline";
 import FollowersYouKnow from "./pages/FollowersYouKnow/FollowersYouKnow";
 import {fetchTags} from "./store/ducks/tags/actionCreators";
 import {fetchRelevantUsers} from "./store/ducks/users/actionCreators";
@@ -215,7 +215,7 @@ const App: FC = (): ReactElement => {
                         <Route path={ACCOUNT_FORGOT} component={ForgotPassword}/>
                         <Route path={HOME} component={Home}/>
                         <Route path={SEARCH} component={Explore}/>
-                        <Route path={NOTIFICATIONS} component={Notifications} exact/>
+                        <Route path={NOTIFICATIONS} component={Notifications}/>
                         <Route path={NOTIFICATIONS_TIMELINE} component={NotificationsTimeline} exact/>
                         <Route path={`${NOTIFICATION}/:id`} component={NotificationInfo} exact/>
                         <Route path={MESSAGES} component={Messages}/>

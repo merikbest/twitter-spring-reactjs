@@ -2,10 +2,10 @@ import React, {FC, ReactElement} from 'react';
 import {Avatar} from "@material-ui/core";
 
 import {useNotificationAuthorItemStyles} from "./NotificationAuthorItemStyles";
-import {DEFAULT_PROFILE_IMG} from "../../../util/url";
-import {NotificationUserResponse} from "../../../store/types/notification";
-import {HoverUserProps, withHoverUser} from "../../../hoc/withHoverUser";
-import PopperUserWindow from "../../../components/PopperUserWindow/PopperUserWindow";
+import {DEFAULT_PROFILE_IMG} from "../../../../util/url";
+import {NotificationUserResponse} from "../../../../store/types/notification";
+import {HoverUserProps, withHoverUser} from "../../../../hoc/withHoverUser";
+import PopperUserWindow from "../../../../components/PopperUserWindow/PopperUserWindow";
 
 interface NotificationAuthorItemProps {
     tweetAuthor: NotificationUserResponse;

@@ -14,6 +14,7 @@ export const ACCOUNT_FORGOT_PASSWORD_RESET_COMPLETE = ACCOUNT_FORGOT + "/passwor
 
 export const NOTIFICATIONS = "/notifications";
 export const NOTIFICATIONS_TIMELINE = NOTIFICATIONS + "/timeline";
+export const NOTIFICATIONS_MENTIONS = NOTIFICATIONS + "/mentions";
 export const NOTIFICATION = "/notification";
 
 export const MESSAGES = "/messages";

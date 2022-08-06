@@ -3,14 +3,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {Paper, Typography} from "@material-ui/core";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import BackButton from "../../../components/BackButton/BackButton";
-import {fetchNotificationsFromTweetAuthors} from "../../../store/ducks/notifications/actionCreators";
-import {selectIsTweetsLoading, selectPagesCount, selectTweetsItems} from "../../../store/ducks/tweets/selectors";
-import TweetComponent from "../../../components/TweetComponent/TweetComponent";
-import Spinner from "../../../components/Spinner/Spinner";
-import {resetTweets} from "../../../store/ducks/tweets/actionCreators";
-import {useGlobalStyles} from "../../../util/globalClasses";
-import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
+import BackButton from "../../../../components/BackButton/BackButton";
+import {fetchNotificationsFromTweetAuthors} from "../../../../store/ducks/notifications/actionCreators";
+import {selectIsTweetsLoading, selectPagesCount, selectTweetsItems} from "../../../../store/ducks/tweets/selectors";
+import TweetComponent from "../../../../components/TweetComponent/TweetComponent";
+import Spinner from "../../../../components/Spinner/Spinner";
+import {resetTweets} from "../../../../store/ducks/tweets/actionCreators";
+import {useGlobalStyles} from "../../../../util/globalClasses";
+import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 
 const NotificationsTimeline: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();

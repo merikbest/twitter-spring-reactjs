@@ -257,7 +257,7 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                         <>
                             <Divider/>
                             <div className={classes.content}>
-                                {(tweetData.retweetsCount) && (
+                                {(tweetData.retweetsCount !== 0) && (
                                     <a
                                         href={"javascript:void(0);"} 
                                         onClick={() => onOpenUsersListModal(UsersListModalAction.RETWEETED)}
@@ -272,7 +272,7 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                                         </div>
                                     </a>
                                 )}
-                                {(tweetData.quotesCount) && (
+                                {(tweetData.quotesCount !== 0) && (
                                     <a href={"javascript:void(0);"} onClick={onClickQuotes}>
                                         <div className={classes.contentItem}>
                                             <Typography variant={"h6"} component={"span"}>
@@ -284,7 +284,7 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                                         </div>
                                     </a>
                                 )}
-                                {(tweetData.likedTweetsCount) && (
+                                {(tweetData.likedTweetsCount !== 0) && (
                                     <a
                                         href={"javascript:void(0);"}
                                         onClick={() => onOpenUsersListModal(UsersListModalAction.LIKED)}

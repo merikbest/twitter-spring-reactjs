@@ -2,12 +2,12 @@ import React from "react";
 import {Avatar} from "@material-ui/core";
 
 import NotificationAuthorItem from "../NotificationAuthorItem";
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
-import {mockTweetAuthors} from "../../../../util/mockData/mockData";
-import PopperUserWindow from "../../../../components/PopperUserWindow/PopperUserWindow";
-import {DEFAULT_PROFILE_IMG} from "../../../../util/url";
-import {NotificationUserResponse} from "../../../../store/types/notification";
+import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
+import {LoadingStatus} from "../../../../../store/types";
+import {mockTweetAuthors} from "../../../../../util/mockData/mockData";
+import PopperUserWindow from "../../../../../components/PopperUserWindow/PopperUserWindow";
+import {DEFAULT_PROFILE_IMG} from "../../../../../util/url";
+import {NotificationUserResponse} from "../../../../../store/types/notification";
 
 describe("NotificationAuthorItem", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

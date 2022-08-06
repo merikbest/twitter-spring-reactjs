@@ -1,12 +1,12 @@
 import React from "react";
 
 import NotificationsTimeline from "../NotificationsTimeline";
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
-import {NotificationsActionsType} from "../../../../store/ducks/notifications/contracts/actionTypes";
-import Spinner from "../../../../components/Spinner/Spinner";
-import TweetComponent from "../../../../components/TweetComponent/TweetComponent";
-import {TweetsActionType} from "../../../../store/ducks/tweets/contracts/actionTypes";
+import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
+import {LoadingStatus} from "../../../../../store/types";
+import {NotificationsActionsType} from "../../../../../store/ducks/notifications/contracts/actionTypes";
+import Spinner from "../../../../../components/Spinner/Spinner";
+import TweetComponent from "../../../../../components/TweetComponent/TweetComponent";
+import {TweetsActionType} from "../../../../../store/ducks/tweets/contracts/actionTypes";
 
 window.scrollTo = jest.fn();
 
