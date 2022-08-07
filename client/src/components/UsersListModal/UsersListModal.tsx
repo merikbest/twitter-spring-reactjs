@@ -33,6 +33,7 @@ interface UsersListModalProps {
 export enum UsersListModalAction {
     LIKED = "LIKED",
     RETWEETED = "RETWEETED",
+    QUOTED = "QUOTED",
 }
 
 const UsersListModal: FC<UsersListModalProps> = (
