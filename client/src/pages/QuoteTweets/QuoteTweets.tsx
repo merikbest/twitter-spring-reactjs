@@ -1,7 +1,6 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
+import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Paper, Typography} from "@material-ui/core";
-import InfiniteScroll from "react-infinite-scroll-component";
 import {useParams} from "react-router-dom";
 
 import {useGlobalStyles} from "../../util/globalClasses";
@@ -11,6 +10,7 @@ import {fetchQuotesByTweetId, resetTweets} from "../../store/ducks/tweets/action
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import Spinner from "../../components/Spinner/Spinner";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
+import InfiniteScrollWrapper from "../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
 
 const QuoteTweets: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -19,30 +19,22 @@ const QuoteTweets: FC = (): ReactElement => {
     const tweets = useSelector(selectTweetsItems);
     const isTweetsLoading = useSelector(selectIsTweetsLoading);
     const pagesCount = useSelector(selectPagesCount);
-    const [page, setPage] = useState<number>(0);
     
     useEffect(() => {
         window.scrollTo(0, 0);
-        loadTweets();
+        loadTweets(0);
 
         return () => {
             dispatch(resetTweets());
         };
     }, [params.tweetId]);
 
-    const loadTweets = (): void => {
+    const loadTweets = (page: number): void => {
         dispatch(fetchQuotesByTweetId({tweetId: parseInt(params.tweetId), pageNumber: page}));
-        setPage(prevState => prevState + 1);
     };
 
     return (
-        <InfiniteScroll
-            style={{overflow: "unset"}}
-            dataLength={tweets.length}
-            next={loadTweets}
-            hasMore={page < pagesCount}
-            loader={null}
-        >
+        <InfiniteScrollWrapper dataLength={tweets.length} pagesCount={pagesCount} loadItems={loadTweets}>
             <Paper className={globalClasses.pageContainer} variant="outlined">
                 <Paper className={globalClasses.pageHeader} variant="outlined">
                     <BackButton/>
@@ -55,8 +47,7 @@ const QuoteTweets: FC = (): ReactElement => {
                     {isTweetsLoading && <Spinner paddingTop={150}/>}
                 </div>
             </Paper>
-        </InfiniteScroll>
-        
+        </InfiniteScrollWrapper>
     );
 };
 

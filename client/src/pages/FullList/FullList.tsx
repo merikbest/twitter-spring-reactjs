@@ -18,7 +18,6 @@ import TopTweetsActionsModal from "./TopTweetsActionsModal/TopTweetsActionsModal
 import Spinner from "../../components/Spinner/Spinner";
 import {LockIcon} from "../../icons";
 import {useGlobalStyles} from "../../util/globalClasses";
-import InfiniteScroll from "react-infinite-scroll-component";
 import {fetchTweetsByListId, resetTweets} from "../../store/ducks/tweets/actionCreators";
 import {
     selectIsTweetsLoaded,
@@ -28,6 +27,7 @@ import {
 } from "../../store/ducks/tweets/selectors";
 import {PROFILE} from "../../util/pathConstants";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
+import InfiniteScrollWrapper from "../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
 
 const FullList: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -47,13 +47,12 @@ const FullList: FC = (): ReactElement => {
     const [visibleEditListModal, setVisibleEditListModal] = useState<boolean>(false);
     const [visibleMembersAndFollowersModal, setVisibleMembersAndFollowersModal] = useState<boolean>(false);
     const [modalWindowTitle, setModalWindowTitle] = useState<string>("");
-    const [page, setPage] = useState<number>(0);
 
     useEffect(() => {
         window.scrollTo(0, 0);
         
         dispatch(fetchListById(parseInt(params.listId)));
-        loadTweets();
+        loadTweets(0);
 
         return () => {
             dispatch(resetTweets());
@@ -74,9 +73,8 @@ const FullList: FC = (): ReactElement => {
         }
     };
 
-    const loadTweets = () => {
+    const loadTweets = (page: number): void => {
         dispatch(fetchTweetsByListId({listId: parseInt(params.listId), pageNumber: page}));
-        setPage(prevState => prevState + 1);
     };
 
     const onOpenEditListModal = (): void => {
@@ -103,13 +101,7 @@ const FullList: FC = (): ReactElement => {
     };
 
     return (
-        <InfiniteScroll
-            style={{overflow: "unset"}}
-            dataLength={tweets.length}
-            next={loadTweets}
-            hasMore={page < pagesCount}
-            loader={null}
-        >
+        <InfiniteScrollWrapper dataLength={tweets.length} pagesCount={pagesCount} loadItems={loadTweets}>
             <Paper className={globalClasses.pageContainer} variant="outlined">
                 <Paper className={globalClasses.pageHeader} variant="outlined">
                     <BackButton/>
@@ -255,7 +247,7 @@ const FullList: FC = (): ReactElement => {
                     onClose={onCloseModalWindow}
                 />
             </Paper>
-        </InfiniteScroll>
+        </InfiniteScrollWrapper>
     );
 };
 

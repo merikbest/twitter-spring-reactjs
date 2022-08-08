@@ -1,6 +1,5 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
+import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import InfiniteScroll from 'react-infinite-scroll-component';
 
 import TweetComponent from "../../../components/TweetComponent/TweetComponent";
 import {selectIsTweetsLoading, selectPagesCount, selectTweetsItems} from "../../../store/ducks/tweets/selectors";
@@ -8,36 +7,29 @@ import Spinner from "../../../components/Spinner/Spinner";
 import {resetTweets} from "../../../store/ducks/tweets/actionCreators";
 import {fetchMentions} from '../../../store/ducks/notifications/actionCreators';
 import EmptyNotifications from "../EmptyNotifications/EmptyNotifications";
+import InfiniteScrollWrapper from "../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
 
 const MentionsPage: FC = (): ReactElement => {
     const dispatch = useDispatch();
     const tweets = useSelector(selectTweetsItems);
     const isLoading = useSelector(selectIsTweetsLoading);
     const pagesCount = useSelector(selectPagesCount);
-    const [page, setPage] = useState<number>(0);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        loadTweets();
+        loadTweets(0);
 
         return () => {
             dispatch(resetTweets());
         };
     }, []);
 
-    const loadTweets = (): void => {
+    const loadTweets = (page: number): void => {
         dispatch(fetchMentions(page));
-        setPage(prevState => prevState + 1);
     };
 
     return (
-        <InfiniteScroll
-            style={{overflow: "unset"}}
-            dataLength={tweets.length}
-            next={loadTweets}
-            hasMore={page < pagesCount}
-            loader={null}
-        >
+        <InfiniteScrollWrapper dataLength={tweets.length} pagesCount={pagesCount} loadItems={loadTweets}>
             {(!tweets.length && !isLoading) ? (
                 <EmptyNotifications isNotification={false}/>
             ) : (
@@ -46,7 +38,7 @@ const MentionsPage: FC = (): ReactElement => {
                     {isLoading && <Spinner/>}
                 </>
             )}
-        </InfiniteScroll>
+        </InfiniteScrollWrapper>
     );
 };
 

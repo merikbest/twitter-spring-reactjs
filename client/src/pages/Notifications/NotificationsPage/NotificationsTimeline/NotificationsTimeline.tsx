@@ -1,7 +1,6 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
+import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Paper, Typography} from "@material-ui/core";
-import InfiniteScroll from "react-infinite-scroll-component";
 
 import BackButton from "../../../../components/BackButton/BackButton";
 import {fetchNotificationsFromTweetAuthors} from "../../../../store/ducks/notifications/actionCreators";
@@ -11,6 +10,7 @@ import Spinner from "../../../../components/Spinner/Spinner";
 import {resetTweets} from "../../../../store/ducks/tweets/actionCreators";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
+import InfiniteScrollWrapper from "../../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
 
 const NotificationsTimeline: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -18,30 +18,22 @@ const NotificationsTimeline: FC = (): ReactElement => {
     const tweets = useSelector(selectTweetsItems);
     const pagesCount = useSelector(selectPagesCount);
     const isLoading = useSelector(selectIsTweetsLoading);
-    const [page, setPage] = useState<number>(0);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        loadNotifications();
+        loadNotifications(0);
 
         return () => {
             dispatch(resetTweets());
         };
     }, []);
 
-    const loadNotifications = () => {
+    const loadNotifications = (page: number) => {
         dispatch(fetchNotificationsFromTweetAuthors(page));
-        setPage(prevState => prevState + 1);
     };
 
     return (
-        <InfiniteScroll
-            style={{overflow: "unset"}}
-            dataLength={tweets.length}
-            next={loadNotifications}
-            hasMore={page < pagesCount}
-            loader={null}
-        >
+        <InfiniteScrollWrapper dataLength={tweets.length} pagesCount={pagesCount} loadItems={loadNotifications}>
             <Paper className={globalClasses.pageContainer} variant="outlined">
                 <Paper className={globalClasses.pageHeader} variant="outlined">
                     <BackButton/>
@@ -60,7 +52,7 @@ const NotificationsTimeline: FC = (): ReactElement => {
                     )}
                 </div>
             </Paper>
-        </InfiniteScroll>
+        </InfiniteScrollWrapper>
     );
 };
 

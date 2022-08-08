@@ -1,6 +1,5 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
+import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import InfiniteScroll from "react-infinite-scroll-component";
 import {Paper, Typography} from "@material-ui/core";
 
 import {selectIsTweetsLoading, selectPagesCount, selectTweetsItems} from "../../store/ducks/tweets/selectors";
@@ -10,6 +9,7 @@ import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import Spinner from "../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
+import InfiniteScrollWrapper from "../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
 
 const Bookmarks: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -18,30 +18,22 @@ const Bookmarks: FC = (): ReactElement => {
     const tweets = useSelector(selectTweetsItems);
     const isLoading = useSelector(selectIsTweetsLoading);
     const pagesCount = useSelector(selectPagesCount);
-    const [page, setPage] = useState<number>(0);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        loadBookmarks();
+        loadBookmarks(0);
 
         return () => {
             dispatch(resetTweets());
         };
     }, []);
 
-    const loadBookmarks = () => {
+    const loadBookmarks = (page: number): void => {
         dispatch(fetchUserBookmarks(page));
-        setPage(prevState => prevState + 1);
     };
 
     return (
-        <InfiniteScroll
-            style={{overflow: "unset"}}
-            dataLength={tweets.length}
-            next={loadBookmarks}
-            hasMore={page < pagesCount}
-            loader={null}
-        >
+        <InfiniteScrollWrapper dataLength={tweets.length} pagesCount={pagesCount} loadItems={loadBookmarks}>
             <Paper className={globalClasses.pageContainer} variant="outlined">
                 <Paper className={globalClasses.pageHeader} variant="outlined">
                     <div className={globalClasses.pageHeaderTitleWrapper}>
@@ -54,10 +46,10 @@ const Bookmarks: FC = (): ReactElement => {
                     </div>
                 </Paper>
                 <div className={globalClasses.contentWrapper}>
-                    {(isLoading && tweets.length === 0) ? (
+                    {(isLoading && !tweets.length) ? (
                         <Spinner/>
                     ) : (
-                        (!isLoading && tweets.length === 0) ? (
+                        (!isLoading && !tweets.length) ? (
                             <div className={globalClasses.infoText}>
                                 <Typography variant={"h4"} component={"div"}>
                                     You haven’t added any Tweets to your Bookmarks yet
@@ -75,7 +67,7 @@ const Bookmarks: FC = (): ReactElement => {
                     )}
                 </div>
             </Paper>
-        </InfiniteScroll>
+        </InfiniteScrollWrapper>
     );
 };
 

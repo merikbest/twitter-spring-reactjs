@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Route, useLocation} from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {Divider, Paper, Typography} from "@material-ui/core";
+import classnames from "classnames";
 
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import {useHomeStyles} from './HomeStyles';
@@ -24,7 +25,6 @@ import {LoadingStatus} from "../../store/types";
 import FullTweet from "../FullTweet/FullTweet";
 import Spinner from "../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../util/globalClasses";
-import classnames from "classnames";
 import TopTweetActions from "./TopTweetActions/TopTweetActions";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
 import {HOME, HOME_CONNECT, HOME_TRENDS, HOME_TWEET, SEARCH} from "../../util/pathConstants";
