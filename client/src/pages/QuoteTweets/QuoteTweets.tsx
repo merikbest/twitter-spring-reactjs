@@ -4,13 +4,13 @@ import {Paper, Typography} from "@material-ui/core";
 import {useParams} from "react-router-dom";
 
 import {useGlobalStyles} from "../../util/globalClasses";
-import BackButton from "../../components/BackButton/BackButton";
 import {selectIsTweetsLoading, selectPagesCount, selectTweetsItems} from "../../store/ducks/tweets/selectors";
 import {fetchQuotesByTweetId, resetTweets} from "../../store/ducks/tweets/actionCreators";
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import Spinner from "../../components/Spinner/Spinner";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
 import InfiniteScrollWrapper from "../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
+import PageHeaderWrapper from "../../components/PageHeaderWrapper/PageHeaderWrapper";
 
 const QuoteTweets: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -36,12 +36,11 @@ const QuoteTweets: FC = (): ReactElement => {
     return (
         <InfiniteScrollWrapper dataLength={tweets.length} pagesCount={pagesCount} loadItems={loadTweets}>
             <Paper className={globalClasses.pageContainer} variant="outlined">
-                <Paper className={globalClasses.pageHeader} variant="outlined">
-                    <BackButton/>
+                <PageHeaderWrapper backButton>
                     <Typography variant={"h5"} component={"div"}>
                         Quote Tweets
                     </Typography>
-                </Paper>
+                </PageHeaderWrapper>
                 <div className={globalClasses.contentWrapper}>
                     {tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}
                     {isTweetsLoading && <Spinner paddingTop={150}/>}

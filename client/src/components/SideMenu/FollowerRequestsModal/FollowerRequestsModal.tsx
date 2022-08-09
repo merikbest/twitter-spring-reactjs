@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Dialog, DialogContent, Typography} from "@material-ui/core";
+import {Dialog, DialogContent} from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 import {useFollowerRequestsModalStyles} from "./FollowerRequestsModalSyles";
@@ -14,6 +14,7 @@ import {
 } from "../../../store/ducks/followerRequests/selectors";
 import Spinner from "../../Spinner/Spinner";
 import FollowerRequestsItem from "./FollowerRequestsItem/FollowerRequestsItem";
+import EmptyPageDescription from "../../EmptyPageDescription/EmptyPageDescription";
 
 interface FollowerRequestsModalProps {
     visible?: boolean;
@@ -47,14 +48,10 @@ const FollowerRequestsModal: FC<FollowerRequestsModalProps> = ({visible, onClose
             <DialogContent className={classes.content}>
                 {(!myProfile?.followerRequestsSize) ? (
                     <div className={globalClasses.contentWrapper}>
-                        <div className={globalClasses.infoText}>
-                            <Typography variant={"h4"} component={"div"}>
-                                You don’t have any follower requests
-                            </Typography>
-                            <Typography variant={"subtitle1"} component={"div"}>
-                                When someone requests to follow you, it’ll show up here.
-                            </Typography>
-                        </div>
+                        <EmptyPageDescription
+                            title={"You don’t have any follower requests"}
+                            subtitle={"When someone requests to follow you, it’ll show up here."}
+                        />
                     </div>
                 ) : (
                     <>

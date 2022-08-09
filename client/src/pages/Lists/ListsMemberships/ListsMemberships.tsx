@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {useHistory, useParams} from "react-router-dom";
 import {Paper, Typography} from "@material-ui/core";
 
-import BackButton from "../../../components/BackButton/BackButton";
 import {fetchUserProfile} from "../../../store/ducks/userProfile/actionCreators";
 import {selectUserProfile} from "../../../store/ducks/userProfile/selectors";
 import {selectUserData} from "../../../store/ducks/user/selectors";
@@ -14,6 +13,8 @@ import ListsItem from "../ListsItem/ListsItem";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {PROFILE} from "../../../util/pathConstants";
 import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
+import PageHeaderWrapper from "../../../components/PageHeaderWrapper/PageHeaderWrapper";
+import EmptyPageDescription from "../../../components/EmptyPageDescription/EmptyPageDescription";
 
 const ListsMemberships: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -47,8 +48,7 @@ const ListsMemberships: FC = (): ReactElement => {
 
     return (
         <Paper className={globalClasses.pageContainer} variant="outlined">
-            <Paper className={globalClasses.pageHeader} variant="outlined">
-                <BackButton/>
+            <PageHeaderWrapper backButton>
                 <div>
                     <Typography variant={"h5"} component={"div"}>
                         Lists {(myProfile?.id === userProfile?.id) && ("you’re on")}
@@ -57,28 +57,24 @@ const ListsMemberships: FC = (): ReactElement => {
                         @{userProfile?.username}
                     </Typography>
                 </div>
-            </Paper>
+            </PageHeaderWrapper>
             <div className={globalClasses.contentWrapper}>
                 {isLoading ? (
                     <Spinner/>
                 ) : (
                     (lists.length === 0 && isLoaded) ? (
-                        <div className={globalClasses.infoText}>
-                            <Typography variant={"h4"} component={"div"}>
-                                {(myProfile?.id === userProfile?.id) ? (
-                                    "You haven’t been added to any Lists yet"
-                                ) : (
-                                    `@${userProfile?.username} hasn’t created any Lists`
-                                )}
-                            </Typography>
-                            <Typography variant={"subtitle1"} component={"div"}>
-                                {(myProfile?.id === userProfile?.id) ? (
-                                    "When someone adds you to a List, it’ll show up here."
-                                ) : (
-                                    "When they do, they’ll show up here."
-                                )}
-                            </Typography>
-                        </div>
+                        <EmptyPageDescription
+                            title={(myProfile?.id === userProfile?.id) ? (
+                                "You haven’t been added to any Lists yet"
+                            ) : (
+                                `@${userProfile?.username} hasn’t created any Lists`
+                            )}
+                            subtitle={(myProfile?.id === userProfile?.id) ? (
+                                "When someone adds you to a List, it’ll show up here."
+                            ) : (
+                                "When they do, they’ll show up here."
+                            )}
+                        />
                     ) : (
                         lists.map((list) => <ListsItem key={list.id} item={list}/>)
                     )

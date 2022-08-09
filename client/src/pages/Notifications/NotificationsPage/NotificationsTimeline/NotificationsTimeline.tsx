@@ -11,6 +11,7 @@ import {resetTweets} from "../../../../store/ducks/tweets/actionCreators";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 import InfiniteScrollWrapper from "../../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
+import PageHeaderWrapper from "../../../../components/PageHeaderWrapper/PageHeaderWrapper";
 
 const NotificationsTimeline: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -35,12 +36,12 @@ const NotificationsTimeline: FC = (): ReactElement => {
     return (
         <InfiniteScrollWrapper dataLength={tweets.length} pagesCount={pagesCount} loadItems={loadNotifications}>
             <Paper className={globalClasses.pageContainer} variant="outlined">
-                <Paper className={globalClasses.pageHeader} variant="outlined">
+                <PageHeaderWrapper backButton>
                     <BackButton/>
                     <Typography variant={"h5"} component="div">
                         Tweets
                     </Typography>
-                </Paper>
+                </PageHeaderWrapper>
                 <div className={globalClasses.contentWrapper}>
                     {(tweets.length === 0 && !isLoading) ? (
                         <Spinner/>

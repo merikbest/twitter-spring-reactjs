@@ -6,7 +6,6 @@ import {Avatar, Button, Paper, Typography} from "@material-ui/core";
 import {useFullListStyles} from "./FullListStyles";
 import {selectIsListLoaded, selectIsListLoading, selectListItem,} from "../../store/ducks/list/selectors";
 import {fetchListById} from "../../store/ducks/list/actionCreators";
-import BackButton from "../../components/BackButton/BackButton";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
@@ -28,6 +27,8 @@ import {
 import {PROFILE} from "../../util/pathConstants";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
 import InfiniteScrollWrapper from "../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
+import PageHeaderWrapper from "../../components/PageHeaderWrapper/PageHeaderWrapper";
+import EmptyPageDescription from "../../components/EmptyPageDescription/EmptyPageDescription";
 
 const FullList: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -103,8 +104,7 @@ const FullList: FC = (): ReactElement => {
     return (
         <InfiniteScrollWrapper dataLength={tweets.length} pagesCount={pagesCount} loadItems={loadTweets}>
             <Paper className={globalClasses.pageContainer} variant="outlined">
-                <Paper className={globalClasses.pageHeader} variant="outlined">
-                    <BackButton/>
+                <PageHeaderWrapper backButton>
                     {!isListLoading && (
                         <div>
                             <div>
@@ -126,7 +126,7 @@ const FullList: FC = (): ReactElement => {
                         <ShareActionsModal/>
                         <TopTweetsActionsModal/>
                     </div>
-                </Paper>
+                </PageHeaderWrapper>
                 <div className={globalClasses.contentWrapper}>
                     {isListLoading ? (
                         <Spinner paddingTop={250}/>
@@ -224,14 +224,10 @@ const FullList: FC = (): ReactElement => {
                         </>
                     )}
                     {(tweets.length === 0 && isTweetsLoaded) ? (
-                        <div className={globalClasses.infoText}>
-                            <Typography variant={"h4"} component={"div"}>
-                                There aren’t any Tweets in this List
-                            </Typography>
-                            <Typography variant={"subtitle1"} component={"div"}>
-                                When anyone in this List Tweets, they’ll show up here.
-                            </Typography>
-                        </div>
+                        <EmptyPageDescription
+                            title={"There aren’t any Tweets in this List"}
+                            subtitle={"When anyone in this List Tweets, they’ll show up here."}
+                        />
                     ) : (
                         <>
                             {tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}

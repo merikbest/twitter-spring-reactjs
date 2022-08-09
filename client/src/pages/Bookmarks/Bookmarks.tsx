@@ -10,6 +10,8 @@ import Spinner from "../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
 import InfiniteScrollWrapper from "../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
+import EmptyPageDescription from "../../components/EmptyPageDescription/EmptyPageDescription";
+import PageHeaderWrapper from "../../components/PageHeaderWrapper/PageHeaderWrapper";
 
 const Bookmarks: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -35,7 +37,7 @@ const Bookmarks: FC = (): ReactElement => {
     return (
         <InfiniteScrollWrapper dataLength={tweets.length} pagesCount={pagesCount} loadItems={loadBookmarks}>
             <Paper className={globalClasses.pageContainer} variant="outlined">
-                <Paper className={globalClasses.pageHeader} variant="outlined">
+                <PageHeaderWrapper>
                     <div className={globalClasses.pageHeaderTitleWrapper}>
                         <Typography variant={"h5"} component={"div"}>
                             Bookmarks
@@ -44,20 +46,16 @@ const Bookmarks: FC = (): ReactElement => {
                             @{myProfile?.username}
                         </Typography>
                     </div>
-                </Paper>
+                </PageHeaderWrapper>
                 <div className={globalClasses.contentWrapper}>
                     {(isLoading && !tweets.length) ? (
                         <Spinner/>
                     ) : (
                         (!isLoading && !tweets.length) ? (
-                            <div className={globalClasses.infoText}>
-                                <Typography variant={"h4"} component={"div"}>
-                                    You haven’t added any Tweets to your Bookmarks yet
-                                </Typography>
-                                <Typography variant={"subtitle1"} component={"div"}>
-                                    When you do, they’ll show up here.
-                                </Typography>
-                            </div>
+                            <EmptyPageDescription 
+                                title={"You haven’t added any Tweets to your Bookmarks yet"} 
+                                subtitle={"When you do, they’ll show up here."} 
+                            />
                         ) : (
                             <>
                                 {tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}

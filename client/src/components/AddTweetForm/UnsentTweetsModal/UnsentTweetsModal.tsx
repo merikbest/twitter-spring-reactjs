@@ -8,9 +8,9 @@ import {TweetApi} from "../../../services/api/tweetApi";
 import AddTweetForm from "../AddTweetForm";
 import CloseButton from "../../CloseButton/CloseButton";
 import Spinner from "../../Spinner/Spinner";
-import {useGlobalStyles} from "../../../util/globalClasses";
 import {TweetResponse} from "../../../store/types/tweet";
 import UnsentTweetItem from "./UnsentTweetItem/UnsentTweetItem";
+import EmptyPageDescription from "../../EmptyPageDescription/EmptyPageDescription";
 
 interface UnsentTweetsModalProps {
     visible?: boolean;
@@ -18,7 +18,6 @@ interface UnsentTweetsModalProps {
 }
 
 const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): ReactElement | null => {
-    const globalClasses = useGlobalStyles();
     const [tweets, setTweets] = useState<TweetResponse[]>([]);
     const [activeTab, setActiveTab] = useState<number>(0);
     const [unsentTweet, setUnsentTweet] = useState<TweetResponse | null>(null);
@@ -152,18 +151,10 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
                         <Spinner/>
                     ) : (
                         (tweets.length === 0) ? (
-                            <div className={globalClasses.infoText}>
-                                <Typography variant={"h4"} component={"div"}>
-                                    {(activeTab === 0) ? (
-                                        "You don’t have any scheduled Tweets"
-                                    ) : (
-                                        "You don’t have any unsent Tweets"
-                                    )}
-                                </Typography>
-                                <Typography variant={"subtitle1"} component={"div"}>
-                                    When you do, you’ll find them here.
-                                </Typography>
-                            </div>
+                            <EmptyPageDescription
+                                title={`You don’t have any ${activeTab === 0 ? "scheduled" : "unsent"} Tweets`}
+                                subtitle={"When you do, you’ll find them here."}
+                            />
                         ) : (
                             tweets.map((tweet) => (
                                 <UnsentTweetItem

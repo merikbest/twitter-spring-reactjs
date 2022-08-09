@@ -23,7 +23,6 @@ import {
     NotificationsAddIcon
 } from "../../icons";
 import {useUserPageStyles} from "./UserPageStyles";
-import BackButton from "../../components/BackButton/BackButton";
 import EditProfileModal from "../../components/EditProfileModal/EditProfileModal";
 import {
     followUser,
@@ -77,6 +76,7 @@ import FollowerGroup from "../../components/FollowerGroup/FollowerGroup";
 import UserNotFound from "./UserNotFound/UserNotFound";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {MESSAGES, PROFILE_HEADER_PHOTO, PROFILE_PHOTO, USER} from "../../util/pathConstants";
+import PageHeaderWrapper from "../../components/PageHeaderWrapper/PageHeaderWrapper";
 
 interface LinkToFollowersProps {
     children: ReactNode;
@@ -313,8 +313,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                 <UserNotFound/>
             ) : (
                 <Paper className={classnames(globalClasses.pageContainer, classes.container)} variant="outlined">
-                    <Paper className={globalClasses.pageHeader} variant="outlined">
-                        <BackButton/>
+                    <PageHeaderWrapper backButton>
                         <div>
                             <Typography variant={"h5"} component={"span"}>
                                 {userProfile?.fullName}
@@ -328,7 +327,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                 {showTweetCount()}
                             </Typography>
                         </div>
-                    </Paper>
+                    </PageHeaderWrapper>
                     <div className={globalClasses.contentWrapper}>
                         <div className={classes.wallpaper}>
                             {userProfile?.wallpaper?.src && (

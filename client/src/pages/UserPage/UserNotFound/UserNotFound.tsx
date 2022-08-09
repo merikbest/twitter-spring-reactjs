@@ -3,8 +3,8 @@ import {Avatar, Paper, Typography} from "@material-ui/core";
 import classnames from "classnames";
 
 import {useUserNotFoundStyles} from "./UserNotFoundStyles";
-import BackButton from "../../../components/BackButton/BackButton";
 import {useGlobalStyles} from "../../../util/globalClasses";
+import PageHeaderWrapper from "../../../components/PageHeaderWrapper/PageHeaderWrapper";
 
 const UserNotFound: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -12,12 +12,11 @@ const UserNotFound: FC = (): ReactElement => {
 
     return (
         <Paper className={classnames(globalClasses.pageContainer, classes.container)} variant="outlined">
-            <Paper className={globalClasses.pageHeader} variant="outlined">
-                <BackButton/>
+            <PageHeaderWrapper backButton>
                 <Typography variant={"h5"} component={"span"}>
                     Profile
                 </Typography>
-            </Paper>
+            </PageHeaderWrapper>
             <div className={classes.wallpaper}/>
             <div className={classes.avatar}>
                 <Avatar>

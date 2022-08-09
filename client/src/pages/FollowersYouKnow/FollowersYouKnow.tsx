@@ -4,7 +4,6 @@ import {useHistory, useParams} from "react-router-dom";
 import {Paper, Typography} from "@material-ui/core";
 
 import {UserApi} from "../../services/api/userApi";
-import BackButton from "../../components/BackButton/BackButton";
 import ConnectToUsers from "../../components/ConnectToUsers/ConnectToUsers";
 import {fetchUserProfile} from "../../store/ducks/userProfile/actionCreators";
 import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
@@ -13,6 +12,8 @@ import Spinner from "../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {UserResponse} from "../../store/types/user";
 import {PROFILE, USER} from "../../util/pathConstants";
+import PageHeaderWrapper from "../../components/PageHeaderWrapper/PageHeaderWrapper";
+import EmptyPageDescription from "../../components/EmptyPageDescription/EmptyPageDescription";
 
 const FollowersYouKnow: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -49,8 +50,7 @@ const FollowersYouKnow: FC = (): ReactElement => {
 
     return (
         <Paper className={globalClasses.pageContainer} variant="outlined">
-            <Paper className={globalClasses.pageHeader} variant="outlined">
-                <BackButton/>
+            <PageHeaderWrapper backButton>
                 {!isLoading && (
                     <div>
                         <Typography variant={"h5"} component={"span"}>
@@ -61,20 +61,16 @@ const FollowersYouKnow: FC = (): ReactElement => {
                         </Typography>
                     </div>
                 )}
-            </Paper>
+            </PageHeaderWrapper>
             {(isLoading && (overallFollowers.length === 0)) ? (
                 <Spinner paddingTop={150}/>
             ) : (
                 (!isLoading && (overallFollowers.length === 0)) ? (
                     <div className={globalClasses.contentWrapper}>
-                        <div className={globalClasses.infoText}>
-                            <Typography variant={"h4"} component={"div"}>
-                                {`@${userProfile?.username} doesn’t have any followers you know yet`}
-                            </Typography>
-                            <Typography variant={"subtitle1"} component={"div"}>
-                                When someone you know follows them, they’ll be listed here.
-                            </Typography>
-                        </div>
+                        <EmptyPageDescription
+                            title={`@${userProfile?.username} doesn’t have any followers you know yet`}
+                            subtitle={"When someone you know follows them, they’ll be listed here."}
+                        />
                     </div>
                 ) : (
                     <ConnectToUsers

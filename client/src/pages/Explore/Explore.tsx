@@ -31,6 +31,7 @@ import Spinner from "../../components/Spinner/Spinner";
 import UsersItem, {UserItemSize} from "../../components/UsersItem/UsersItem";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
+import PageHeaderWrapper from "../../components/PageHeaderWrapper/PageHeaderWrapper";
 
 const Explore: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -148,7 +149,7 @@ const Explore: FC = (): ReactElement => {
             loader={null}
         >
             <Paper className={globalClasses.pageContainer} variant="outlined">
-                <Paper className={globalClasses.pageHeader} variant="outlined">
+                <PageHeaderWrapper>
                     <div>
                         <form style={{display: "block"}} onSubmit={handleSubmitSearch}>
                             <div className={classes.backButtonWrapper}>
@@ -181,7 +182,7 @@ const Explore: FC = (): ReactElement => {
                             </Tabs>
                         </div>
                     </div>
-                </Paper>
+                </PageHeaderWrapper>
                 <div className={classes.contentWrapper}>
                     {(activeTab !== 2) ? (
                         <>

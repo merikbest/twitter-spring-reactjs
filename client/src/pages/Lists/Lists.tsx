@@ -2,10 +2,8 @@ import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {ClickAwayListener, IconButton, Paper, Typography} from "@material-ui/core";
 import {Link} from 'react-router-dom';
-import {compose} from "recompose";
 
 import {useListsStyles} from "./ListsStyles";
-import BackButton from "../../components/BackButton/BackButton";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {AddListsIcon, EditIcon, ListsIcon} from "../../icons";
 import CreateListsModal from "./CreateListsModal/CreateListsModal";
@@ -25,8 +23,8 @@ import HoverAction from "../../components/HoverAction/HoverAction";
 import Spinner from "../../components/Spinner/Spinner";
 import {HoverActionProps, HoverActions, withHoverAction} from "../../hoc/withHoverAction";
 import {useGlobalStyles} from "../../util/globalClasses";
-import {withDocumentTitle} from "../../hoc/withDocumentTitle";
 import {LISTS_MEMBERSHIPS, SUGGESTED} from "../../util/pathConstants";
+import PageHeaderWrapper from "../../components/PageHeaderWrapper/PageHeaderWrapper";
 
 const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, handleLeaveAction}): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -74,8 +72,7 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
 
     return (
         <Paper className={globalClasses.pageContainer} variant="outlined">
-            <Paper className={globalClasses.pageHeader} variant="outlined">
-                <BackButton/>
+            <PageHeaderWrapper backButton>
                 {!isLoading && (
                     <div>
                         <Typography variant="h5" component={"div"}>
@@ -126,7 +123,7 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
                         </ClickAwayListener>
                     </div>
                 </div>
-            </Paper>
+            </PageHeaderWrapper>
             <Paper className={classes.pinnedLists} variant="outlined">
                 <Typography variant="h5" className={globalClasses.itemInfoWrapper}>
                     Pinned Lists

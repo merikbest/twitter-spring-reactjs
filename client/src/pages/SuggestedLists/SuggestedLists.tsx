@@ -3,12 +3,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {Paper, Typography} from "@material-ui/core";
 
 import {useSuggestedListsStyles} from "./SuggestedListsStyles";
-import BackButton from "../../components/BackButton/BackButton";
 import {fetchLists} from "../../store/ducks/lists/actionCreators";
 import {selectIsLoading, selectListsItems} from "../../store/ducks/lists/selectors";
 import ListsItem from "../Lists/ListsItem/ListsItem";
 import Spinner from "../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../util/globalClasses";
+import PageHeaderWrapper from "../../components/PageHeaderWrapper/PageHeaderWrapper";
 
 const SuggestedLists: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -24,12 +24,11 @@ const SuggestedLists: FC = (): ReactElement => {
 
     return (
         <Paper className={globalClasses.pageContainer} variant="outlined">
-            <Paper className={globalClasses.pageHeader} variant="outlined">
-                <BackButton/>
+            <PageHeaderWrapper backButton>
                 <Typography variant="h5" component={"div"}>
                     Suggested Lists
                 </Typography>
-            </Paper>
+            </PageHeaderWrapper>
             <Paper className={classes.content} variant="outlined">
                 <img
                     className={classes.contentImage}

@@ -43,7 +43,7 @@ const EmailNotifications: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         New notifications
                     </Typography>
-                    <Checkbox checked={true}/>
+                    <Checkbox checked/>
                 </div>
             </div>
             <div className={globalClasses.itemInfoWrapper}>
@@ -51,7 +51,7 @@ const EmailNotifications: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         Direct messages
                     </Typography>
-                    <Checkbox checked={true}/>
+                    <Checkbox checked/>
                 </div>
             </div>
             <div className={globalClasses.itemInfoWrapper}>
@@ -59,7 +59,7 @@ const EmailNotifications: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         Tweets emailed to you
                     </Typography>
-                    <Checkbox checked={true}/>
+                    <Checkbox checked/>
                 </div>
             </div>
             <div className={globalClasses.itemInfoWrapper}>
@@ -146,7 +146,7 @@ const EmailNotifications: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         News about Twitter product and feature updates
                     </Typography>
-                    <Checkbox checked={true}/>
+                    <Checkbox checked/>
                 </div>
             </div>
             <div className={globalClasses.itemInfoWrapper}>
@@ -154,7 +154,7 @@ const EmailNotifications: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         Tips on getting more out of Twitter
                     </Typography>
-                    <Checkbox checked={true}/>
+                    <Checkbox checked/>
                 </div>
             </div>
             <div className={globalClasses.itemInfoWrapper}>
@@ -162,7 +162,7 @@ const EmailNotifications: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         Things you missed since you last logged into Twitter
                     </Typography>
-                    <Checkbox checked={true}/>
+                    <Checkbox checked/>
                 </div>
             </div>
             <div className={globalClasses.itemInfoWrapper}>
@@ -170,7 +170,7 @@ const EmailNotifications: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         News about Twitter on partner products and other third party services
                     </Typography>
-                    <Checkbox checked={true}/>
+                    <Checkbox checked/>
                 </div>
             </div>
             <div className={globalClasses.itemInfoWrapper}>
@@ -178,7 +178,7 @@ const EmailNotifications: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         Participation in Twitter research surveys
                     </Typography>
-                    <Checkbox checked={true}/>
+                    <Checkbox checked/>
                 </div>
             </div>
             <div className={globalClasses.itemInfoWrapper}>
@@ -186,7 +186,7 @@ const EmailNotifications: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         Suggestions for recommended accounts
                     </Typography>
-                    <Checkbox checked={true}/>
+                    <Checkbox checked/>
                 </div>
             </div>
             <div className={globalClasses.itemInfoWrapper}>
@@ -194,7 +194,7 @@ const EmailNotifications: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         Suggestions based on your recent follows
                     </Typography>
-                    <Checkbox checked={true}/>
+                    <Checkbox checked/>
                 </div>
             </div>
             <div className={globalClasses.itemInfoWrapper}>
@@ -202,7 +202,7 @@ const EmailNotifications: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         Tips on Twitter business products
                     </Typography>
-                    <Checkbox checked={true}/>
+                    <Checkbox checked/>
                 </div>
             </div>
         </>
