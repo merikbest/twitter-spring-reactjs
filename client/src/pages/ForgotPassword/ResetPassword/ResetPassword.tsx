@@ -121,7 +121,7 @@ const ResetPassword: FC = (): ReactElement => {
                 </Typography>
                 <div className={classes.checkbox}>
                     <Checkbox
-                        checked={true}
+                        checked
                         name="checkedB"
                         color="primary"
                     />

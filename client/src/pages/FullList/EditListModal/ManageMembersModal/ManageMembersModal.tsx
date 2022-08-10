@@ -79,8 +79,8 @@ const ManageMembersModal: FC<ManageMembersModalProps> = ({visible, onClose}): Re
             className={classes.dialog}
             open={visible}
             onClose={onClose}
-            hideBackdrop={true}
             aria-labelledby="form-dialog-title"
+            hideBackdrop
         >
             <DialogTitle id="form-dialog-title">
                 <IconButton onClick={onClose} color="primary" size="small">

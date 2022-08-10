@@ -100,149 +100,147 @@ const RegistrationModal: FC<RegistrationModalProps> = (
     };
 
     return (
-        <>
-            <Dialog
-                transitionDuration={0}
-                open={open}
-                onClose={onClose}
-                aria-labelledby="form-dialog-title"
-            >
-                <DialogContent style={{paddingTop: 0, paddingBottom: 0}} className={classes.container}>
-                    <div className={classes.logoIcon}>
-                        <TwitterIcon/>
-                    </div>
-                    <div>
-                        <Typography variant={"h3"} component={"div"} className={classes.title}>
-                            Create your account
-                        </Typography>
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <FormControl className={classes.inputWrapper} variant="outlined">
-                                <Controller
-                                    name="username"
-                                    control={control}
-                                    defaultValue=""
-                                    render={({field: {onChange, value}}) => (
-                                        <RegistrationInput
-                                            name="username"
-                                            helperText={errors.username?.message}
-                                            error={!!errors.username}
-                                            label={"Name"}
-                                            maxTextLength={50}
-                                            onChange={onChange}
-                                            value={value}
-                                        />
-                                    )}
-                                />
-                                <Controller
-                                    name="email"
-                                    control={control}
-                                    defaultValue=""
-                                    render={({field: {onChange, value}}) => (
-                                        <RegistrationInput
-                                            name="email"
-                                            helperText={errors.email?.message}
-                                            error={!!errors.email}
-                                            label={"Email"}
-                                            maxTextLength={50}
-                                            onChange={onChange}
-                                            value={value}
-                                        />
-                                    )}
-                                />
-                            </FormControl>
-                            <MuiLink className={classes.phoneLink} href="#" variant="body1">
-                                Use phone instead
-                            </MuiLink>
-                            <div className={classes.footer}>
-                                <Typography variant={"h6"} component={"div"}>
-                                    Date of birth
-                                </Typography>
-                                <Typography variant={"subtitle1"} component={"div"}>
-                                    This will not be shown publicly. Confirm your own age, even if this account is for a
-                                    business, a pet, or something else.
-                                </Typography>
-                                <FormControl variant="filled" className={classes.formControl}>
-                                    <InputLabel htmlFor="select-month">
-                                        Month
-                                    </InputLabel>
-                                    <FilledSelect
-                                        variant="filled"
-                                        style={{width: 240, marginRight: 12}}
-                                        labelId="select-month"
-                                        id="select-month"
-                                        native
-                                        value={month}
-                                        onChange={changeMonth}
-                                        label="Month"
-                                    >
-                                        <option aria-label="None"/>
-                                        <option value={"Jan"}>January</option>
-                                        <option value={"Feb"}>February</option>
-                                        <option value={"Mar"}>March</option>
-                                        <option value={"Apr"}>April</option>
-                                        <option value={"May"}>May</option>
-                                        <option value={"Jun"}>June</option>
-                                        <option value={"Jul"}>July</option>
-                                        <option value={"Aug"}>August</option>
-                                        <option value={"Sep"}>September</option>
-                                        <option value={"Oct"}>October</option>
-                                        <option value={"Nov"}>November</option>
-                                        <option value={"Dec"}>December</option>
-                                    </FilledSelect>
-                                </FormControl>
-                                <FormControl style={{margin: "16px 0"}} variant="filled" className={classes.formControl}>
-                                    <InputLabel htmlFor="select-day">
-                                        Day
-                                    </InputLabel>
-                                    <FilledSelect
-                                        variant="filled"
-                                        style={{width: 100, marginRight: 12}}
-                                        labelId="select-day"
-                                        id="select-day"
-                                        native
-                                        value={day}
-                                        onChange={changeDay}
-                                        label="Day"
-                                    >
-                                        <option aria-label="None"/>
-                                        {showDays()}
-                                    </FilledSelect>
-                                </FormControl>
-                                <FormControl style={{margin: "16px 0"}} variant="filled" className={classes.formControl}>
-                                    <InputLabel htmlFor="select-year">
-                                        Year
-                                    </InputLabel>
-                                    <FilledSelect
-                                        variant="filled"
-                                        style={{width: 125,}}
-                                        labelId="select-year"
-                                        id="select-year"
-                                        native
-                                        value={year}
-                                        onChange={changeYear}
-                                        label="Year"
-                                    >
-                                        <option aria-label="None"/>
-                                        {showYears()}
-                                    </FilledSelect>
-                                </FormControl>
-                            </div>
-                            <div className={classes.buttonWrapper}>
-                                <Button
-                                    type="submit"
-                                    variant="contained"
-                                    color="primary"
-                                    size="small"
-                                    fullWidth
+        <Dialog
+            transitionDuration={0}
+            open={open}
+            onClose={onClose}
+            aria-labelledby="form-dialog-title"
+        >
+            <DialogContent style={{paddingTop: 0, paddingBottom: 0}} className={classes.container}>
+                <div className={classes.logoIcon}>
+                    <TwitterIcon/>
+                </div>
+                <div>
+                    <Typography variant={"h3"} component={"div"} className={classes.title}>
+                        Create your account
+                    </Typography>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <FormControl className={classes.inputWrapper} variant="outlined">
+                            <Controller
+                                name="username"
+                                control={control}
+                                defaultValue=""
+                                render={({field: {onChange, value}}) => (
+                                    <RegistrationInput
+                                        name="username"
+                                        helperText={errors.username?.message}
+                                        error={!!errors.username}
+                                        label={"Name"}
+                                        maxTextLength={50}
+                                        onChange={onChange}
+                                        value={value}
+                                    />
+                                )}
+                            />
+                            <Controller
+                                name="email"
+                                control={control}
+                                defaultValue=""
+                                render={({field: {onChange, value}}) => (
+                                    <RegistrationInput
+                                        name="email"
+                                        helperText={errors.email?.message}
+                                        error={!!errors.email}
+                                        label={"Email"}
+                                        maxTextLength={50}
+                                        onChange={onChange}
+                                        value={value}
+                                    />
+                                )}
+                            />
+                        </FormControl>
+                        <MuiLink className={classes.phoneLink} href="#" variant="body1">
+                            Use phone instead
+                        </MuiLink>
+                        <div className={classes.footer}>
+                            <Typography variant={"h6"} component={"div"}>
+                                Date of birth
+                            </Typography>
+                            <Typography variant={"subtitle1"} component={"div"}>
+                                This will not be shown publicly. Confirm your own age, even if this account is for a
+                                business, a pet, or something else.
+                            </Typography>
+                            <FormControl variant="filled" className={classes.formControl}>
+                                <InputLabel htmlFor="select-month">
+                                    Month
+                                </InputLabel>
+                                <FilledSelect
+                                    variant="filled"
+                                    style={{width: 240, marginRight: 12}}
+                                    labelId="select-month"
+                                    id="select-month"
+                                    native
+                                    value={month}
+                                    onChange={changeMonth}
+                                    label="Month"
                                 >
-                                    Next
-                                </Button>
-                            </div>
-                        </form>
-                    </div>
-                </DialogContent>
-            </Dialog>
-        </>
+                                    <option aria-label="None"/>
+                                    <option value={"Jan"}>January</option>
+                                    <option value={"Feb"}>February</option>
+                                    <option value={"Mar"}>March</option>
+                                    <option value={"Apr"}>April</option>
+                                    <option value={"May"}>May</option>
+                                    <option value={"Jun"}>June</option>
+                                    <option value={"Jul"}>July</option>
+                                    <option value={"Aug"}>August</option>
+                                    <option value={"Sep"}>September</option>
+                                    <option value={"Oct"}>October</option>
+                                    <option value={"Nov"}>November</option>
+                                    <option value={"Dec"}>December</option>
+                                </FilledSelect>
+                            </FormControl>
+                            <FormControl style={{margin: "16px 0"}} variant="filled" className={classes.formControl}>
+                                <InputLabel htmlFor="select-day">
+                                    Day
+                                </InputLabel>
+                                <FilledSelect
+                                    variant="filled"
+                                    style={{width: 100, marginRight: 12}}
+                                    labelId="select-day"
+                                    id="select-day"
+                                    native
+                                    value={day}
+                                    onChange={changeDay}
+                                    label="Day"
+                                >
+                                    <option aria-label="None"/>
+                                    {showDays()}
+                                </FilledSelect>
+                            </FormControl>
+                            <FormControl style={{margin: "16px 0"}} variant="filled" className={classes.formControl}>
+                                <InputLabel htmlFor="select-year">
+                                    Year
+                                </InputLabel>
+                                <FilledSelect
+                                    variant="filled"
+                                    style={{width: 125,}}
+                                    labelId="select-year"
+                                    id="select-year"
+                                    native
+                                    value={year}
+                                    onChange={changeYear}
+                                    label="Year"
+                                >
+                                    <option aria-label="None"/>
+                                    {showYears()}
+                                </FilledSelect>
+                            </FormControl>
+                        </div>
+                        <div className={classes.buttonWrapper}>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                size="small"
+                                fullWidth
+                            >
+                                Next
+                            </Button>
+                        </div>
+                    </form>
+                </div>
+            </DialogContent>
+        </Dialog>
     );
 };
 

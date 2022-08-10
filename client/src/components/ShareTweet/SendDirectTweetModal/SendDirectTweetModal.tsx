@@ -166,7 +166,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
                         chats.map((chat) => (
                             <DirectUserItems
                                 key={chat.id}
-                                userFromChat={true}
+                                userFromChat
                                 user={
                                     (chat.participants[0].user.id === myProfile?.id) ? (
                                         chat.participants[1].user as UserResponse

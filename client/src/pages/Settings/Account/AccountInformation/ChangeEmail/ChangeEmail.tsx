@@ -34,12 +34,12 @@ const ChangeEmail: FC = (): ReactElement => {
         <>
             <div className={classes.textFieldWrapper}>
                 <ChangeInfoTextField
-                    disabled={true}
                     label="Current"
                     type="text"
                     variant="filled"
                     value={myProfile?.email}
                     fullWidth
+                    disabled
                 />
             </div>
             <Divider/>

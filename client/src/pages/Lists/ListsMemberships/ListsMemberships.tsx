@@ -1,7 +1,7 @@
 import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory, useParams} from "react-router-dom";
-import {Paper, Typography} from "@material-ui/core";
+import {Paper} from "@material-ui/core";
 
 import {fetchUserProfile} from "../../../store/ducks/userProfile/actionCreators";
 import {selectUserProfile} from "../../../store/ducks/userProfile/selectors";
@@ -15,6 +15,7 @@ import {PROFILE} from "../../../util/pathConstants";
 import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
 import PageHeaderWrapper from "../../../components/PageHeaderWrapper/PageHeaderWrapper";
 import EmptyPageDescription from "../../../components/EmptyPageDescription/EmptyPageDescription";
+import PageHeaderTitle from "../../../components/PageHeaderTitle/PageHeaderTitle";
 
 const ListsMemberships: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -49,14 +50,10 @@ const ListsMemberships: FC = (): ReactElement => {
     return (
         <Paper className={globalClasses.pageContainer} variant="outlined">
             <PageHeaderWrapper backButton>
-                <div>
-                    <Typography variant={"h5"} component={"div"}>
-                        Lists {(myProfile?.id === userProfile?.id) && ("you’re on")}
-                    </Typography>
-                    <Typography variant={"subtitle2"} component={"div"}>
-                        @{userProfile?.username}
-                    </Typography>
-                </div>
+                <PageHeaderTitle 
+                    title={`Lists ${(myProfile?.id === userProfile?.id) ? "you’re on" : ""}`} 
+                    subtitle={`@${userProfile?.username}`}
+                />
             </PageHeaderWrapper>
             <div className={globalClasses.contentWrapper}>
                 {isLoading ? (

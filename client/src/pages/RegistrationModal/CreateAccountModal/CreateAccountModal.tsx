@@ -45,11 +45,11 @@ const CreateAccountModal: FC<CustomizeModalProps> = (
     return (
         <Dialog
             className={globalClasses.modalShadow}
-            hideBackdrop={true}
             transitionDuration={0}
             open={open}
             onClose={onClose}
             aria-labelledby="form-dialog-title"
+            hideBackdrop
         >
             <DialogContent style={{paddingTop: 0, paddingBottom: 0}} className={classes.container}>
                 <Typography component={"div"} className={classes.title}>
@@ -64,25 +64,25 @@ const CreateAccountModal: FC<CustomizeModalProps> = (
                         </Typography>
                         <div className={classes.form}>
                             <RegistrationInputField
-                                disabled={true}
                                 label="Name"
                                 variant="filled"
                                 value={registrationInfo.username}
                                 fullWidth
+                                disabled
                             />
                             <RegistrationInputField
-                                disabled={true}
                                 label="Email"
                                 variant="filled"
                                 value={registrationInfo.email}
                                 fullWidth
+                                disabled
                             />
                             <RegistrationInputField
-                                disabled={true}
                                 label="Birth date"
                                 variant="filled"
                                 value={registrationInfo.birthday}
                                 fullWidth
+                                disabled
                             />
                         </div>
                         <Typography variant={"body1"} component={"div"} className={classes.text}>

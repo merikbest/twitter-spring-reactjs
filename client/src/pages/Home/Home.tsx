@@ -127,22 +127,18 @@ const Home: FC = (): ReactElement => {
                         </div>
                     </Route>
                 </Paper>
-
                 <Route path={HOME} exact>
                     <div className={classes.addForm}>
                         <AddTweetForm title={"What's happening?"} buttonName={"Tweet"}/>
                     </div>
                     <Divider/>
                 </Route>
-
                 <Route path={HOME_CONNECT} exact>
                     <Connect/>
                 </Route>
-
                 <Route path={HOME_TRENDS} exact>
                     <Trends/>
                 </Route>
-
                 <Route path={HOME} exact>
                     {!myProfile?.profileStarted ? (
                         <Welcome/>

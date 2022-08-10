@@ -33,11 +33,11 @@ const ProfileHeaderModal: FC<ProfileHeaderModalProps> = (
 
     return (
         <Dialog
-            hideBackdrop={true}
             transitionDuration={0}
             open={open}
             onClose={onClose}
             aria-labelledby="form-dialog-title"
+            hideBackdrop
         >
             <DialogContent className={classes.container}>
                 <div className={classes.logoIcon}>

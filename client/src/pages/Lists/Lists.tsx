@@ -170,7 +170,7 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
                 {isUserListsLoading ? (
                     <Spinner/>
                 ) : (
-                    userLists.map((list) => (<ListsItem key={list.id} isMyList={true} item={list}/>))
+                    userLists.map((list) => (<ListsItem key={list.id} item={list} isMyList/>))
                 )}
             </Paper>
             <CreateListsModal visible={visibleCreateListModal} onClose={onCloseCreateListModal}/>

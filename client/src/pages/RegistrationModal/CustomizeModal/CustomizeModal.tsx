@@ -19,11 +19,11 @@ const CustomizeModal: FC<CustomizeModalProps> = ({open, onClose, onOpenCreateAcc
     return (
         <Dialog
             className={globalClasses.modalShadow}
-            hideBackdrop={true}
             transitionDuration={0}
             open={open}
             onClose={onClose}
             aria-labelledby="form-dialog-title"
+            hideBackdrop
         >
             <DialogContent style={{paddingTop: 0, paddingBottom: 0}} className={classes.container}>
                 <div className={classes.logoIcon}>
@@ -39,7 +39,7 @@ const CustomizeModal: FC<CustomizeModalProps> = ({open, onClose, onOpenCreateAcc
                     Twitter uses this data to personalize your experience. This web browsing history will never be
                     stored with your name, email, or phone number.
                 </Typography>
-                <Radio className={classes.radio} checked={true} color="primary"/>
+                <Radio className={classes.radio} color="primary" checked/>
                 <Typography variant={"body1"} component={"div"}>
                     {"For more details about these settings, visit the "}
                     <MuiLink href={NEW_ACCOUNT_SETTINGS} variant="body1" target="_blank" rel="noopener">

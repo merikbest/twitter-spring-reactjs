@@ -9,6 +9,7 @@ import usLang from 'date-fns/locale/en-US/index';
 import SockJS from "sockjs-client";
 import {CompatClient, Stomp} from "@stomp/stompjs";
 import {compose} from "redux";
+import classnames from "classnames";
 
 import {
     selectIsRepliesLoading,
@@ -56,7 +57,6 @@ import TweetAnalyticsModal from "../../components/TweetAnalyticsModal/TweetAnaly
 import Spinner from "../../components/Spinner/Spinner";
 import {HoverUserProps, withHoverUser} from "../../hoc/withHoverUser";
 import {useGlobalStyles} from "../../util/globalClasses";
-import classnames from "classnames";
 import TweetActionResult, {TweetActionResults} from "../../components/TweetActionResult/TweetActionResult";
 import {MODAL, PROFILE, QUOTES} from "../../util/pathConstants";
 import {LinkCoverSize, ReplyType} from "../../store/types/common";
@@ -201,11 +201,11 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                         </div>
                         <TweetComponentActions
                             tweet={tweetData}
-                            isFullTweet={true}
                             visibleMoreAction={visibleHoverAction?.visibleMoreAction}
                             handleHoverAction={handleHoverAction}
                             handleLeaveAction={handleLeaveAction}
                             onOpenTweetAnalytics={onOpenTweetAnalyticsModalWindow}
+                            isFullTweet
                         />
                     </div>
                     <Typography variant={"h3"} className={classes.textWrapper}>
@@ -218,13 +218,7 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                             </Link>
                         )}
                         {tweetData.poll && <VoteComponent tweetId={tweetData.id} poll={tweetData.poll}/>}
-                        {tweetData.quoteTweet && (
-                            <Quote
-                                quoteTweet={tweetData.quoteTweet}
-                                isTweetQuoted={true}
-                                isFullTweet={true}
-                            />
-                        )}
+                        {tweetData.quoteTweet && <Quote quoteTweet={tweetData.quoteTweet} isTweetQuoted isFullTweet/>}
                         {tweetData.link ? (
                             isYouTubeLink ? (
                                 openYouTubeVideo ? (
@@ -232,13 +226,13 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                                 ) : (
                                     <SmallLinkPreview
                                         tweet={tweetData}
-                                        isFullTweet={true}
                                         onOpenYouTubeVideo={onOpenYouTubeVideo}
+                                        isFullTweet
                                     />
                                 )
                             ) : (
                                 (tweetData.linkCoverSize === LinkCoverSize.LARGE) ? (
-                                    <LargeLinkPreview tweet={tweetData} isFullTweet={true}/>
+                                    <LargeLinkPreview tweet={tweetData} isFullTweet/>
                                 ) : (
                                     <SmallLinkPreview tweet={tweetData}/>
                                 )
@@ -348,10 +342,10 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                         </div>
                         <ShareTweet
                             tweet={tweetData}
-                            isFullTweet={true}
                             visibleShareAction={visibleHoverAction?.visibleShareAction}
                             handleHoverAction={handleHoverAction}
                             handleLeaveAction={handleLeaveAction}
+                            isFullTweet
                         />
                     </div>
                     <Divider/>

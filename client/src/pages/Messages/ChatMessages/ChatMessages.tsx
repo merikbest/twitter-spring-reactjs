@@ -320,8 +320,8 @@ const ChatMessages: FC<ChatMessagesProps> = (
                                         <span>{MediaIcon}</span>
                                         <HoverAction
                                             visible={visibleHoverAction.visibleMediaAction}
-                                            positionTop={true}
                                             actionText={"Media"}
+                                            positionTop
                                         />
                                     </IconButton>
                                 </div>
@@ -334,8 +334,8 @@ const ChatMessages: FC<ChatMessagesProps> = (
                                         <span>{GifIcon}</span>
                                         <HoverAction
                                             visible={visibleHoverAction.visibleGIFAction}
-                                            positionTop={true}
                                             actionText={"GIF"}
+                                            positionTop
                                         />
                                     </IconButton>
                                 </div>
@@ -359,8 +359,8 @@ const ChatMessages: FC<ChatMessagesProps> = (
                                         <span>{EmojiIcon}</span>
                                         <HoverAction
                                             visible={visibleHoverAction.visibleEmojiAction}
-                                            positionTop={true}
                                             actionText={"Emoji"}
+                                            positionTop
                                         />
                                     </IconButton>
                                 </div>
@@ -375,8 +375,8 @@ const ChatMessages: FC<ChatMessagesProps> = (
                                         <span>{SendMessageIcon}</span>
                                         <HoverAction
                                             visible={visibleHoverAction.visibleSendAction}
-                                            positionTop={true}
                                             actionText={"Send"}
+                                            positionTop
                                         />
                                     </IconButton>
                                 </div>

@@ -35,12 +35,12 @@ const ChangePhone: FC = (): ReactElement => {
         <>
             <div className={classes.textFieldWrapper}>
                 <ChangeInfoTextField
-                    disabled={true}
                     label="Current"
                     type="text"
                     variant="filled"
                     value={`${getPhoneCode(myProfile?.countryCode)}${myProfile?.phone}`}
                     fullWidth
+                    disabled
                 />
             </div>
             <Divider/>

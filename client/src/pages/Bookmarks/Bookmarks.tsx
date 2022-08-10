@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Paper, Typography} from "@material-ui/core";
+import {Paper} from "@material-ui/core";
 
 import {selectIsTweetsLoading, selectPagesCount, selectTweetsItems} from "../../store/ducks/tweets/selectors";
 import {fetchUserBookmarks, resetTweets} from "../../store/ducks/tweets/actionCreators";
@@ -12,6 +12,7 @@ import {withDocumentTitle} from "../../hoc/withDocumentTitle";
 import InfiniteScrollWrapper from "../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
 import EmptyPageDescription from "../../components/EmptyPageDescription/EmptyPageDescription";
 import PageHeaderWrapper from "../../components/PageHeaderWrapper/PageHeaderWrapper";
+import PageHeaderTitle from "../../components/PageHeaderTitle/PageHeaderTitle";
 
 const Bookmarks: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -39,12 +40,7 @@ const Bookmarks: FC = (): ReactElement => {
             <Paper className={globalClasses.pageContainer} variant="outlined">
                 <PageHeaderWrapper>
                     <div className={globalClasses.pageHeaderTitleWrapper}>
-                        <Typography variant={"h5"} component={"div"}>
-                            Bookmarks
-                        </Typography>
-                        <Typography variant={"subtitle2"} component={"div"}>
-                            @{myProfile?.username}
-                        </Typography>
+                        <PageHeaderTitle title={"Bookmarks"} subtitle={`@${myProfile?.username}`}/>
                     </div>
                 </PageHeaderWrapper>
                 <div className={globalClasses.contentWrapper}>

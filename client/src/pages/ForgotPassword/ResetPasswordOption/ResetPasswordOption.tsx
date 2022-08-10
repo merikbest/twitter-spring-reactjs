@@ -37,7 +37,7 @@ const ResetPasswordOption: FC = (): ReactElement => {
             </Typography>
             <form className={classes.formWrapper} onSubmit={sendResetCode}>
                 <div className={classes.emailWrapper}>
-                    <Radio className={classes.radio} checked={true} color="primary"/>
+                    <Radio className={classes.radio} checked color="primary"/>
                     <Typography variant={"body1"} component={"span"}>
                         {"Send an email to "}
                     </Typography>

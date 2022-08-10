@@ -18,6 +18,7 @@ import {fetchFollowers, fetchFollowings, resetUsersState} from "../../store/duck
 import UsersItem, {UserItemSize} from "../../components/UsersItem/UsersItem";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {HOME_CONNECT, PROFILE, USER} from "../../util/pathConstants";
+import PageHeaderTitle from "../../components/PageHeaderTitle/PageHeaderTitle";
 
 const FollowingFollowers: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -79,14 +80,7 @@ const FollowingFollowers: FC = (): ReactElement => {
                 {(userProfile) && (
                     <>
                         <BackButton/>
-                        <div>
-                            <Typography variant={"h5"} component={"div"}>
-                                {userProfile?.fullName}
-                            </Typography>
-                            <Typography variant={"subtitle2"} component={"div"}>
-                                @{userProfile?.username}
-                            </Typography>
-                        </div>
+                        <PageHeaderTitle title={userProfile?.fullName} subtitle={`@${userProfile?.username}`}/>
                     </>
                 )}
             </Paper>

@@ -45,10 +45,10 @@ const ProfilePictureModal: FC<ProfilePictureModalProps> = (
                 </Typography>
                 <div className={classes.avatarWrapper}>
                     <UploadProfileImage
-                        setupProfile={true}
                         name={"avatar"}
                         image={avatar}
                         onChangeImage={onChangeAvatar}
+                        setupProfile
                     />
                     <Avatar
                         key={avatar?.src}
