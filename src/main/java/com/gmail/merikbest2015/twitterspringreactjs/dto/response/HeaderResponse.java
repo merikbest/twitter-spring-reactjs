@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet;
+package com.gmail.merikbest2015.twitterspringreactjs.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class TweetHeaderResponse<T> {
-    private List<T> tweets;
+public class HeaderResponse<T> {
+    private List<T> items;
     private HttpHeaders headers;
 }

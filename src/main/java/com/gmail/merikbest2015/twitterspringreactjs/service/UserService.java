@@ -23,7 +23,7 @@ public interface UserService {
 
     UserProfileProjection getUserById(Long userId);
 
-    List<UserProjection> getUsers();
+    Page<UserProjection> getUsers(Pageable pageable);
 
     List<UserProjection> getRelevantUsers();
 

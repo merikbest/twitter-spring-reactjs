@@ -4,7 +4,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.request.ListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.lists.*;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetHeaderResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.HeaderResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Lists;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Notification;
@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 public class ListsMapper {
 
     private final BasicMapper basicMapper;
-    private final TweetMapper tweetMapper;
     private final ListsService listsService;
 
     public List<ListResponse> getAllTweetLists() {
@@ -106,9 +105,9 @@ public class ListsMapper {
         return notificationResponse;
     }
 
-    public TweetHeaderResponse<TweetResponse> getTweetsByListId(Long listId, Pageable pageable) {
+    public HeaderResponse<TweetResponse> getTweetsByListId(Long listId, Pageable pageable) {
         Page<TweetProjection> tweets = listsService.getTweetsByListId(listId, pageable);
-        return tweetMapper.getTweetHeaderResponse(tweets, TweetResponse.class);
+        return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
     }
 
     public BaseListResponse getListDetails(Long listId) {

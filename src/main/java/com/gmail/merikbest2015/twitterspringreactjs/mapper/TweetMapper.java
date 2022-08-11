@@ -6,7 +6,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.request.VoteRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationReplyResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetHeaderResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.HeaderResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.enums.NotificationType;
 import com.gmail.merikbest2015.twitterspringreactjs.enums.ReplyType;
@@ -30,40 +30,24 @@ public class TweetMapper {
     private final BasicMapper basicMapper;
     private final TweetService tweetService;
 
-    <T, S> TweetHeaderResponse<S> getTweetHeaderResponse(Page<T> pageableTweets, Class<S> type) {
-        List<S> tweetResponses = basicMapper.convertToResponseList(pageableTweets.getContent(), type);
-        return constructTweetHeaderResponse(tweetResponses, pageableTweets.getTotalPages());
-    }
-
-    <T, S> TweetHeaderResponse<S> getTweetHeaderResponse(List<T> tweets, Integer totalPages, Class<S> type) {
-        List<S> tweetResponses = basicMapper.convertToResponseList(tweets, type);
-        return constructTweetHeaderResponse(tweetResponses, totalPages);
-    }
-
-    private <S> TweetHeaderResponse<S> constructTweetHeaderResponse(List<S> tweetResponses, Integer totalPages) {
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.add("page-total-count", String.valueOf(totalPages));
-        return new TweetHeaderResponse<S>(tweetResponses, responseHeaders);
-    }
-
-    public TweetHeaderResponse<TweetResponse> getTweets(Pageable pageable) {
+    public HeaderResponse<TweetResponse> getTweets(Pageable pageable) {
         Page<TweetProjection> tweets = tweetService.getTweets(pageable);
-        return getTweetHeaderResponse(tweets, TweetResponse.class);
+        return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
     }
 
-    public TweetHeaderResponse<TweetResponse> getMediaTweets(Pageable pageable) {
+    public HeaderResponse<TweetResponse> getMediaTweets(Pageable pageable) {
         Page<TweetProjection> tweets = tweetService.getMediaTweets(pageable);
-        return getTweetHeaderResponse(tweets, TweetResponse.class);
+        return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
     }
 
-    public TweetHeaderResponse<TweetResponse> getTweetsWithVideo(Pageable pageable) {
+    public HeaderResponse<TweetResponse> getTweetsWithVideo(Pageable pageable) {
         Page<TweetProjection> tweets = tweetService.getTweetsWithVideo(pageable);
-        return getTweetHeaderResponse(tweets, TweetResponse.class);
+        return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
     }
     
-    public TweetHeaderResponse<TweetResponse> getFollowersTweets(Pageable pageable) {
+    public HeaderResponse<TweetResponse> getFollowersTweets(Pageable pageable) {
         Page<TweetProjection> tweets = tweetService.getFollowersTweets(pageable);
-        return getTweetHeaderResponse(tweets, TweetResponse.class);
+        return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
     }
 
     public List<TweetResponse> getScheduledTweets() {
@@ -81,9 +65,9 @@ public class TweetMapper {
         return basicMapper.convertToResponseList(tweets, TweetResponse.class);
     }
 
-    public TweetHeaderResponse<TweetResponse> getQuotesByTweetId(Pageable pageable, Long tweetId) {
+    public HeaderResponse<TweetResponse> getQuotesByTweetId(Pageable pageable, Long tweetId) {
         Page<TweetProjection> tweets = tweetService.getQuotesByTweetId(pageable, tweetId);
-        return getTweetHeaderResponse(tweets, TweetResponse.class);
+        return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
     }
 
     public List<UserResponse> getLikedUsersByTweetId(Long tweetId) {

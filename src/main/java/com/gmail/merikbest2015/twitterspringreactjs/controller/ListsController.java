@@ -4,7 +4,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.request.ListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.lists.*;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetHeaderResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.HeaderResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.ListsMapper;
 import lombok.RequiredArgsConstructor;
@@ -101,8 +101,8 @@ public class ListsController {
 
     @GetMapping("/{listId}/tweets")
     public ResponseEntity<List<TweetResponse>> getTweetsByListId(@PathVariable Long listId, @PageableDefault(size = 10) Pageable pageable) {
-        TweetHeaderResponse<TweetResponse> response = listsMapper.getTweetsByListId(listId, pageable);
-        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getTweets());
+        HeaderResponse<TweetResponse> response = listsMapper.getTweetsByListId(listId, pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
     @GetMapping("/{listId}/details")

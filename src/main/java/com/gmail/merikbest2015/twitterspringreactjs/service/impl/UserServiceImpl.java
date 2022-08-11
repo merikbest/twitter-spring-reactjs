@@ -58,9 +58,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserProjection> getUsers() {
+    public Page<UserProjection> getUsers(Pageable pageable) {
         Long userId = authenticationService.getAuthenticatedUserId();
-        return userRepository.findByActiveTrueAndIdNot(userId);
+        return userRepository.findByActiveTrueAndIdNot(userId, pageable);
     }
 
     @Override

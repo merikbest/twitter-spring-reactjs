@@ -7,7 +7,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.No
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationsResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetHeaderResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.HeaderResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetImageResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetUserResponse;
@@ -43,7 +43,6 @@ import java.util.stream.Collectors;
 public class UserMapper {
 
     private final BasicMapper basicMapper;
-    private final TweetMapper tweetMapper;
     private final AuthenticationMapper authenticationMapper;
     private final UserService userService;
     private final UserSettingsService userSettingsService;
@@ -53,9 +52,9 @@ public class UserMapper {
         return basicMapper.convertToResponse(user, UserProfileResponse.class);
     }
 
-    public List<UserResponse> getUsers() {
-        List<UserProjection> users = userService.getUsers();
-        return basicMapper.convertToResponseList(users, UserResponse.class);
+    public HeaderResponse<UserResponse> getUsers(Pageable pageable) {
+        Page<UserProjection> users = userService.getUsers(pageable);
+        return basicMapper.getHeaderResponse(users, UserResponse.class);
     }
 
     public ImageResponse uploadImage(MultipartFile multipartFile) {
@@ -77,33 +76,33 @@ public class UserMapper {
         return userService.startUseTwitter();
     }
 
-    public TweetHeaderResponse<TweetUserResponse> getUserTweets(Long userId, Pageable pageable) {
+    public HeaderResponse<TweetUserResponse> getUserTweets(Long userId, Pageable pageable) {
         Page<TweetUserProjection> tweets = userService.getUserTweets(userId, pageable);
-        return tweetMapper.getTweetHeaderResponse(tweets, TweetUserResponse.class);
+        return basicMapper.getHeaderResponse(tweets, TweetUserResponse.class);
     }
 
-    public TweetHeaderResponse<TweetResponse> getUserLikedTweets(Long userId, Pageable pageable) {
+    public HeaderResponse<TweetResponse> getUserLikedTweets(Long userId, Pageable pageable) {
         Page<LikeTweetProjection> userLikedTweets = userService.getUserLikedTweets(userId, pageable);
         List<TweetProjection> tweets = new ArrayList<>();
         userLikedTweets.getContent().forEach(likeTweet -> tweets.add(likeTweet.getTweet()));
-        return tweetMapper.getTweetHeaderResponse(tweets, userLikedTweets.getTotalPages(), TweetResponse.class);
+        return basicMapper.getHeaderResponse(tweets, userLikedTweets.getTotalPages(), TweetResponse.class);
     }
 
-    public TweetHeaderResponse<TweetResponse> getUserMediaTweets(Long userId, Pageable pageable) {
+    public HeaderResponse<TweetResponse> getUserMediaTweets(Long userId, Pageable pageable) {
         Page<TweetProjection> tweets = userService.getUserMediaTweets(userId, pageable);
-        return tweetMapper.getTweetHeaderResponse(tweets, TweetResponse.class);
+        return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
     }
 
-    public TweetHeaderResponse<TweetUserResponse> getUserRetweetsAndReplies(Long userId, Pageable pageable) {
+    public HeaderResponse<TweetUserResponse> getUserRetweetsAndReplies(Long userId, Pageable pageable) {
         Page<TweetUserProjection> tweets = userService.getUserRetweetsAndReplies(userId, pageable);
-        return tweetMapper.getTweetHeaderResponse(tweets, TweetUserResponse.class);
+        return basicMapper.getHeaderResponse(tweets, TweetUserResponse.class);
     }
 
-    public TweetHeaderResponse<TweetResponse> getUserBookmarks(Pageable pageable) {
+    public HeaderResponse<TweetResponse> getUserBookmarks(Pageable pageable) {
         Page<BookmarkProjection> bookmarks = userService.getUserBookmarks(pageable);
         List<TweetProjection> tweets = new ArrayList<>();
         bookmarks.getContent().forEach(bookmark -> tweets.add(bookmark.getTweet()));
-        return tweetMapper.getTweetHeaderResponse(tweets, bookmarks.getTotalPages(), TweetResponse.class);
+        return basicMapper.getHeaderResponse(tweets, bookmarks.getTotalPages(), TweetResponse.class);
     }
 
     public Boolean processUserBookmarks(Long tweetId) {
@@ -204,17 +203,17 @@ public class UserMapper {
         return basicMapper.convertToResponse(notification, NotificationInfoResponse.class);
     }
 
-    public TweetHeaderResponse<TweetResponse> getNotificationsFromTweetAuthors(Pageable pageable) {
+    public HeaderResponse<TweetResponse> getNotificationsFromTweetAuthors(Pageable pageable) {
         Page<TweetsProjection> tweetsProjections = userService.getNotificationsFromTweetAuthors(pageable);
         List<TweetProjection> tweets = tweetsProjections.getContent().stream()
                 .map(TweetsProjection::getTweet)
                 .collect(Collectors.toList());
-        return tweetMapper.getTweetHeaderResponse(tweets, tweetsProjections.getTotalPages(), TweetResponse.class);
+        return basicMapper.getHeaderResponse(tweets, tweetsProjections.getTotalPages(), TweetResponse.class);
     }
     
-    public TweetHeaderResponse<TweetResponse> getUserMentions(Pageable pageable) {
+    public HeaderResponse<TweetResponse> getUserMentions(Pageable pageable) {
         Page<TweetProjection> tweets = userService.getUserMentions(pageable);
-        return tweetMapper.getTweetHeaderResponse(tweets.getContent(), tweets.getTotalPages(), TweetResponse.class);
+        return basicMapper.getHeaderResponse(tweets.getContent(), tweets.getTotalPages(), TweetResponse.class);
     }
 
     public String updateUsername(SettingsRequest request) {

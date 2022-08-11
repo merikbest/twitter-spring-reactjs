@@ -8,6 +8,9 @@ import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.UserPr
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.FollowerUserProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.MutedUserProjection;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -19,7 +22,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    List<UserProjection> findByActiveTrueAndIdNot(Long id);
+    Page<UserProjection> findByActiveTrueAndIdNot(Long id, Pageable pageable);
 
     @Query("SELECT new com.gmail.merikbest2015.twitterspringreactjs.repository.projection.UserPrincipalProjection(user.id, user.email, user.password, user.activationCode) FROM User user WHERE user.email = :email")
     Optional<UserPrincipalProjection> findUserPrincipalByEmail(String email);
