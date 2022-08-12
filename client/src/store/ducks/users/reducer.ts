@@ -6,6 +6,7 @@ import {UsersActions, UsersActionsType} from "./contracts/actionTypes";
 
 export const initialUsersState: UsersState = {
     users: [],
+    pagesCount: 1,
     loadingState: LoadingStatus.LOADING,
 };
 
@@ -13,6 +14,12 @@ export const usersReducer = produce((draft: Draft<UsersState>, action: UsersActi
     switch (action.type) {
         case UsersActionsType.SET_USERS:
             draft.users = action.payload;
+            draft.loadingState = LoadingStatus.SUCCESS;
+            break;
+
+        case UsersActionsType.SET_PAGEABLE_USERS:
+            draft.users = action.payload.items;
+            draft.pagesCount = action.payload.pagesCount
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
@@ -42,6 +49,7 @@ export const usersReducer = produce((draft: Draft<UsersState>, action: UsersActi
 
         case UsersActionsType.RESET_USERS_STATE:
             draft.users = [];
+            draft.pagesCount = 1;
             draft.loadingState = LoadingStatus.LOADING;
             break;
 

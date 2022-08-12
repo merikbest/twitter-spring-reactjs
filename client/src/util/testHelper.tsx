@@ -240,10 +240,12 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
         },
         users: {
             users: mockUsers,
+            pagesCount: 1,
             loadingState: loadingStatus
         },
         usersSearch: {
             users: mockUsers,
+            pagesCount: 1,
             followers: mockUsers,
             loadingState: loadingStatus
         },

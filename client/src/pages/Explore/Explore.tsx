@@ -127,7 +127,7 @@ const Explore: FC = (): ReactElement => {
 
     const showUsers = (): void => {
         window.scrollTo(0, 0);
-        dispatch(fetchUsersSearch());
+        dispatch(fetchUsersSearch(0));
     };
 
     const showMediaTweets = (): void => {

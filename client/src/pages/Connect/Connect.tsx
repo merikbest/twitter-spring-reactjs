@@ -12,7 +12,7 @@ const Connect: FC = (): ReactElement => {
     const isUsersLoading = useSelector(selectUsersIsLoading);
 
     useEffect(() => {
-        dispatch(fetchUsers());
+        dispatch(fetchUsers(0));
         window.scrollTo(0, 0);
     }, []);
 

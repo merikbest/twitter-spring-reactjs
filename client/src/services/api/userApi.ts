@@ -24,9 +24,8 @@ export interface Response<T> {
 }
 
 export const UserApi = {
-    async getUsers(): Promise<UserResponse[]> {
-        const {data} = await axios.get<UserResponse[]>(`${API_URL}/user/all`);
-        return data;
+    async getUsers(payload: number): Promise<AxiosResponse<UserResponse[]>> {
+        return await axios.get<UserResponse[]>(`${API_URL}/user/all`, {params: {page: payload}});
     },
     async getRelevantUsers(): Promise<UserResponse[]> {
         const {data} = await axios.get<UserResponse[]>(`${API_URL}/user/relevant`);

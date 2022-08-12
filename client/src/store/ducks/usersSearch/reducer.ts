@@ -6,6 +6,7 @@ import {UsersSearchActions, UsersSearchActionsType} from "./contracts/actionType
 
 export const initialUsersSearchState: UsersSearchState = {
     users: [],
+    pagesCount: 1,
     followers: [],
     loadingState: LoadingStatus.LOADING,
 };
@@ -14,6 +15,12 @@ export const usersSearchReducer = produce((draft: Draft<UsersSearchState>, actio
     switch (action.type) {
         case UsersSearchActionsType.SET_USERS:
             draft.users = action.payload;
+            draft.loadingState = LoadingStatus.LOADED;
+            break;
+
+        case UsersSearchActionsType.SET_PAGEABLE_USERS:
+            draft.users = action.payload.items;
+            draft.pagesCount = action.payload.pagesCount
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
@@ -48,6 +55,7 @@ export const usersSearchReducer = produce((draft: Draft<UsersSearchState>, actio
 
         case UsersSearchActionsType.RESET_USERS_STATE:
             draft.users = [];
+            draft.pagesCount = 1;
             draft.loadingState = LoadingStatus.LOADING;
             break;
 

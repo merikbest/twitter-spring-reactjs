@@ -1,11 +1,13 @@
 import {Action} from "redux";
 import {LoadingStatus} from "../../../types";
 import {UserResponse} from "../../../types/user";
+import {UsersState} from "./state";
 
 export enum UsersActionsType {
-    FETCH_USERS = 'users/FETCH_USERS',
+    FETCH_USERS = 'users/FETCH_USERS', // TODO DELETE
     FETCH_RELEVANT_USERS = 'users/FETCH_RELEVANT_USERS',
     SET_USERS = 'users/SET_USERS',
+    SET_PAGEABLE_USERS = 'users/SET_PAGEABLE_USERS',
     SET_FOLLOW_TO_USERS_STATE = 'users/SET_FOLLOW_TO_USERS_STATE',
     SET_FOLLOW_REQUEST_TO_USERS_STATE = 'users/SET_FOLLOW_REQUEST_TO_USERS_STATE',
     SET_BLOCKED_USERS_STATE = 'users/SET_BLOCKED_USERS_STATE',
@@ -17,6 +19,7 @@ export enum UsersActionsType {
 
 export interface FetchUsersActionInterface extends Action<UsersActionsType> {
     type: UsersActionsType.FETCH_USERS;
+    payload: number;
 }
 
 export interface FetchRelevantUsersActionInterface extends Action<UsersActionsType> {
@@ -26,6 +29,11 @@ export interface FetchRelevantUsersActionInterface extends Action<UsersActionsTy
 export interface SetUsersActionInterface extends Action<UsersActionsType> {
     type: UsersActionsType.SET_USERS;
     payload: UserResponse[];
+}
+
+export interface SetPageableUsersActionInterface extends Action<UsersActionsType> {
+    type: UsersActionsType.SET_PAGEABLE_USERS;
+    payload: { items: UsersState["users"], pagesCount: UsersState["pagesCount"] };
 }
 
 export interface SetFollowToUsersStateActionInterface extends Action<UsersActionsType> {
@@ -64,6 +72,7 @@ export interface SetUsersLoadingStatusActionInterface extends Action<UsersAction
 
 export type UsersActions =
     | SetUsersActionInterface
+    | SetPageableUsersActionInterface
     | ResetUsersStateActionInterface
     | SetUsersLoadingStatusActionInterface
     | SetFollowToUsersStateActionInterface

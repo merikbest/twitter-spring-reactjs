@@ -4,6 +4,7 @@ import {UsersSearchState} from "./state";
 
 export enum UsersSearchActionsType {
     SET_USERS = 'usersSearch/SET_USERS',
+    SET_PAGEABLE_USERS = 'usersSearch/SET_PAGEABLE_USERS',
     SET_FOLLOWERS = 'usersSearch/SET_FOLLOWERS',
     SET_FOLLOW_TO_USERS_SEARCH_STATE = 'usersSearch/SET_FOLLOW_TO_USERS_SEARCH_STATE',
     SET_FOLLOW_REQUEST_TO_USERS_SEARCH_STATE = 'usersSearch/SET_FOLLOW_REQUEST_TO_USERS_SEARCH_STATE',
@@ -20,6 +21,11 @@ export enum UsersSearchActionsType {
 export interface SetUsersSearchActionInterface extends Action<UsersSearchActionsType> {
     type: UsersSearchActionsType.SET_USERS;
     payload: UsersSearchState["users"];
+}
+
+export interface SetPageableUsersSearchActionInterface extends Action<UsersSearchActionsType> {
+    type: UsersSearchActionsType.SET_PAGEABLE_USERS;
+    payload: { items: UsersSearchState["users"], pagesCount: UsersSearchState["pagesCount"] };
 }
 
 export interface SetFollowersActionInterface extends Action<UsersSearchActionsType> {
@@ -44,6 +50,7 @@ export interface SetBlockUsersSearchStateActionInterface extends Action<UsersSea
 
 export interface FetchUsersSearchActionInterface extends Action<UsersSearchActionsType> {
     type: UsersSearchActionsType.FETCH_USERS;
+    payload: number;
 }
 
 export interface FetchUsersSearchByNameActionInterface extends Action<UsersSearchActionsType> {
@@ -77,6 +84,7 @@ export interface SetUsersSearchLoadingStatusActionInterface extends Action<Users
 
 export type UsersSearchActions =
     | SetUsersSearchActionInterface
+    | SetPageableUsersSearchActionInterface
     | SetFollowersActionInterface
     | SetFollowToUsersSearchStateActionInterface
     | SetFollowRequestToUsersSearchStateActionInterface

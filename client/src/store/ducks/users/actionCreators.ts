@@ -6,6 +6,7 @@ import {
     SetFollowRequestToUsersStateActionInterface,
     SetFollowToUsersStateActionInterface,
     SetMutedUsersStateActionInterface,
+    SetPageableUsersActionInterface,
     SetSubscribedUsersStateActionInterface,
     SetUsersActionInterface,
     SetUsersLoadingStatusActionInterface,
@@ -16,6 +17,11 @@ import {UserResponse} from "../../types/user";
 
 export const setUsers = (payload: UserResponse[]): SetUsersActionInterface => ({
     type: UsersActionsType.SET_USERS,
+    payload
+});
+
+export const setPageableUsers = (payload: { items: UsersState["users"], pagesCount: UsersState["pagesCount"] }): SetPageableUsersActionInterface => ({
+    type: UsersActionsType.SET_PAGEABLE_USERS,
     payload
 });
 
@@ -44,8 +50,9 @@ export const setSubscribedUsersState = (payload: { userId: number; isSubscriber:
     payload
 });
 
-export const fetchUsers = (): FetchUsersActionInterface => ({
-    type: UsersActionsType.FETCH_USERS
+export const fetchUsers = (payload: number): FetchUsersActionInterface => ({
+    type: UsersActionsType.FETCH_USERS,
+    payload,
 });
 
 export const fetchRelevantUsers = (): FetchRelevantUsersActionInterface => ({
