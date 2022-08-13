@@ -7,7 +7,7 @@ import {setPageableUsers, setUsers, setUsersLoadingState} from "./actionCreators
 import {UserApi} from "../../../services/api/userApi";
 import {UserResponse} from "../../types/user";
 
-export function* fetchUsersRequest({payload}: FetchUsersActionInterface) {
+export function* fetchUsersRequest({payload}: FetchUsersActionInterface) {// TODO ADD TESTS
     try {
         yield put(setUsersLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<UserResponse[]> = yield call(UserApi.getUsers, payload);

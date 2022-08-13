@@ -20,7 +20,7 @@ const ConnectToUsers: FC<ConnectToUsersProps> = ({title, isUsersLoading, users})
 
     return (
         <div className={globalClasses.contentWrapper}>
-            {isUsersLoading ? (
+            {(isUsersLoading && !users.length) ? (
                 <Spinner/>
             ) : (
                 <>
@@ -33,6 +33,7 @@ const ConnectToUsers: FC<ConnectToUsersProps> = ({title, isUsersLoading, users})
                         <List>
                             {users.map((user) => <UsersItem key={user.id} item={user} size={UserItemSize.MEDIUM}/>)}
                         </List>
+                        {isUsersLoading && <Spinner/>}
                     </Paper>
                 </>
             )}

@@ -1,7 +1,7 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory, useParams} from "react-router-dom";
-import {Paper, Typography} from "@material-ui/core";
+import {Paper} from "@material-ui/core";
 
 import {UserApi} from "../../services/api/userApi";
 import ConnectToUsers from "../../components/ConnectToUsers/ConnectToUsers";
@@ -14,6 +14,7 @@ import {UserResponse} from "../../store/types/user";
 import {PROFILE, USER} from "../../util/pathConstants";
 import PageHeaderWrapper from "../../components/PageHeaderWrapper/PageHeaderWrapper";
 import EmptyPageDescription from "../../components/EmptyPageDescription/EmptyPageDescription";
+import PageHeaderTitle from "../../components/PageHeaderTitle/PageHeaderTitle";
 
 const FollowersYouKnow: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -52,14 +53,10 @@ const FollowersYouKnow: FC = (): ReactElement => {
         <Paper className={globalClasses.pageContainer} variant="outlined">
             <PageHeaderWrapper backButton>
                 {!isLoading && (
-                    <div>
-                        <Typography variant={"h5"} component={"span"}>
-                            {userProfile?.fullName}
-                        </Typography>
-                        <Typography variant={"subtitle2"} component={"div"}>
-                            @{userProfile?.username}
-                        </Typography>
-                    </div>
+                    <PageHeaderTitle
+                        title={userProfile!.fullName}
+                        subtitle={`@${userProfile?.username}`}
+                    />
                 )}
             </PageHeaderWrapper>
             {(isLoading && (overallFollowers.length === 0)) ? (

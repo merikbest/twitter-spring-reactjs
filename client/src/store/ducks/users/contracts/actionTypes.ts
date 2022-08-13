@@ -4,9 +4,9 @@ import {UserResponse} from "../../../types/user";
 import {UsersState} from "./state";
 
 export enum UsersActionsType {
-    FETCH_USERS = 'users/FETCH_USERS', // TODO DELETE
+    FETCH_USERS = 'users/FETCH_USERS',
     FETCH_RELEVANT_USERS = 'users/FETCH_RELEVANT_USERS',
-    SET_USERS = 'users/SET_USERS',
+    SET_USERS = 'users/SET_USERS', // TODO DELETE
     SET_PAGEABLE_USERS = 'users/SET_PAGEABLE_USERS',
     SET_FOLLOW_TO_USERS_STATE = 'users/SET_FOLLOW_TO_USERS_STATE',
     SET_FOLLOW_REQUEST_TO_USERS_STATE = 'users/SET_FOLLOW_REQUEST_TO_USERS_STATE',

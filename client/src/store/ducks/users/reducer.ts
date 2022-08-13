@@ -18,7 +18,7 @@ export const usersReducer = produce((draft: Draft<UsersState>, action: UsersActi
             break;
 
         case UsersActionsType.SET_PAGEABLE_USERS:
-            draft.users = action.payload.items;
+            draft.users = [...draft.users, ...action.payload.items];
             draft.pagesCount = action.payload.pagesCount
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
