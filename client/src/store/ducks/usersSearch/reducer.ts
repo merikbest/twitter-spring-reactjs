@@ -19,7 +19,7 @@ export const usersSearchReducer = produce((draft: Draft<UsersSearchState>, actio
             break;
 
         case UsersSearchActionsType.SET_PAGEABLE_USERS:
-            draft.users = action.payload.items;
+            draft.users = [...draft.users, ...action.payload.items];
             draft.pagesCount = action.payload.pagesCount
             draft.loadingState = LoadingStatus.LOADED;
             break;

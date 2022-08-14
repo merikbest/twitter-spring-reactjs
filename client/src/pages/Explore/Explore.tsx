@@ -25,8 +25,16 @@ import {
 } from "../../store/ducks/tweets/selectors";
 import {useExploreStyles} from "./ExploreStyles";
 import {EditIcon, SearchIcon} from "../../icons";
-import {fetchUsersSearch, fetchUsersSearchByUsername} from "../../store/ducks/usersSearch/actionCreators";
-import {selectUsersSearch, selectUsersSearchIsLoading} from "../../store/ducks/usersSearch/selectors";
+import {
+    fetchUsersSearch,
+    fetchUsersSearchByUsername,
+    resetUsersState
+} from "../../store/ducks/usersSearch/actionCreators";
+import {
+    selectUsersPagesCount,
+    selectUsersSearch,
+    selectUsersSearchIsLoading
+} from "../../store/ducks/usersSearch/selectors";
 import Spinner from "../../components/Spinner/Spinner";
 import UsersItem, {UserItemSize} from "../../components/UsersItem/UsersItem";
 import {useGlobalStyles} from "../../util/globalClasses";
@@ -42,7 +50,8 @@ const Explore: FC = (): ReactElement => {
     const isUsersLoading = useSelector(selectUsersSearchIsLoading);
     const tweets = useSelector(selectTweetsItems);
     const users = useSelector(selectUsersSearch);
-    const pagesCount = useSelector(selectPagesCount);
+    const tweetsPagesCount = useSelector(selectPagesCount);
+    const usersPagesCount = useSelector(selectUsersPagesCount);
     const location = useLocation<{ tag: string | undefined; text: string | undefined; }>();
     const history = useHistory();
     const [text, setText] = useState<string>("");
@@ -71,15 +80,17 @@ const Explore: FC = (): ReactElement => {
         };
     }, [location.state?.tag, location.state?.text]);
 
-    const loadTweets = () => {
+    const loadTweets = (): void => {
         if (text) {
             if (activeTab !== 2) {
                 dispatch(fetchTweetsByText(encodeURIComponent(text)));
             } else {
-                dispatch(fetchUsersSearchByUsername(encodeURIComponent(text)));
+                dispatch(fetchUsersSearchByUsername(encodeURIComponent(text))); // TODO ADD PAGINATION
             }
         } else {
-            if (activeTab === 3) {
+            if (activeTab === 2) {
+                dispatch(fetchUsersSearch(page));
+            } else if (activeTab === 3) {
                 dispatch(fetchMediaTweets(page));
             } else if (activeTab === 4) {
                 dispatch(fetchTweetsWithVideo(page));
@@ -113,10 +124,11 @@ const Explore: FC = (): ReactElement => {
         }
     };
 
-    const handleShowTweets = (callback: () => void): void => {
+    const handleShowItems = (callback: () => void): void => {
         window.scrollTo(0, 0);
         setPage(0);
         dispatch(resetTweets());
+        dispatch(resetUsersState());
         callback();
     };
 
@@ -126,8 +138,8 @@ const Explore: FC = (): ReactElement => {
     };
 
     const showUsers = (): void => {
-        window.scrollTo(0, 0);
         dispatch(fetchUsersSearch(0));
+        setPage(prevState => prevState + 1);
     };
 
     const showMediaTweets = (): void => {
@@ -145,7 +157,7 @@ const Explore: FC = (): ReactElement => {
             style={{overflow: "unset"}}
             dataLength={tweets.length}
             next={loadTweets}
-            hasMore={page < pagesCount}
+            hasMore={page < (activeTab === 2 ? usersPagesCount : tweetsPagesCount)}
             loader={null}
         >
             <Paper className={globalClasses.pageContainer} variant="outlined">
@@ -174,11 +186,11 @@ const Explore: FC = (): ReactElement => {
                         </form>
                         <div className={classes.tabs}>
                             <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
-                                <Tab onClick={() => handleShowTweets(showTopTweets)} label="Top"/>
-                                <Tab onClick={() => handleShowTweets(showTopTweets)} label="Latest"/>
-                                <Tab onClick={showUsers} label="People"/>
-                                <Tab onClick={() => handleShowTweets(showMediaTweets)} label="Photos"/>
-                                <Tab onClick={() => handleShowTweets(showTweetsWithVideos)} label="Videos"/>
+                                <Tab onClick={() => handleShowItems(showTopTweets)} label="Top"/>
+                                <Tab onClick={() => handleShowItems(showTopTweets)} label="Latest"/>
+                                <Tab onClick={() => handleShowItems(showUsers)} label="People"/>
+                                <Tab onClick={() => handleShowItems(showMediaTweets)} label="Photos"/>
+                                <Tab onClick={() => handleShowItems(showTweetsWithVideos)} label="Videos"/>
                             </Tabs>
                         </div>
                     </div>
@@ -190,15 +202,14 @@ const Explore: FC = (): ReactElement => {
                             <>{isTweetsLoading && <Spinner/>}</>
                         </>
                     ) : (
-                        isUsersLoading ? (
-                            <Spinner/>
-                        ) : (
+                        <>
                             <List>
                                 {users?.map((user) => (
                                     <UsersItem key={user.id} item={user} size={UserItemSize.MEDIUM}/>
                                 ))}
                             </List>
-                        )
+                            {isUsersLoading && <Spinner/>}
+                        </>
                     )}
                 </div>
             </Paper>
