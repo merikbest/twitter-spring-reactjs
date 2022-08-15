@@ -27,7 +27,7 @@ public interface UserService {
 
     List<UserProjection> getRelevantUsers();
 
-    <T> List<T> searchUsersByUsername(String username, Class<T> type);
+    <T> Page<T> searchUsersByUsername(String username, Pageable pageable, Class<T> type);
 
     Boolean startUseTwitter();
 

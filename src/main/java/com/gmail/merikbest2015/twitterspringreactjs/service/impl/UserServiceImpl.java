@@ -69,8 +69,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public <T> List<T> searchUsersByUsername(String text, Class<T> type) {
-        return userRepository.findByFullNameOrUsername(text, type);
+    public <T> Page<T> searchUsersByUsername(String text, Pageable pageable, Class<T> type) {
+        return userRepository.findByFullNameOrUsername(text, pageable, type);
     }
 
     @Override

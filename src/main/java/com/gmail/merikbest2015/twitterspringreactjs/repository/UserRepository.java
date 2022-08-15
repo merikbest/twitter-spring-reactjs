@@ -48,7 +48,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "FROM User u " +
             "WHERE UPPER(u.fullName) LIKE UPPER(CONCAT('%',:name,'%')) AND u.active = true " +
             "OR UPPER(u.username) LIKE UPPER(CONCAT('%',:name,'%')) AND u.active = true")
-    <T> List<T> findByFullNameOrUsername(String name, Class<T> type);
+    <T> Page<T> findByFullNameOrUsername(String name, Pageable pageable, Class<T> type);
 
     @Query("SELECT user FROM User user WHERE user.email = :email")
     Optional<UserCommonProjection> findCommonUserByEmail(String email);

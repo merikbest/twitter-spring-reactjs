@@ -46,8 +46,9 @@ public class UserController {
     }
 
     @GetMapping("/search/{username}")
-    public ResponseEntity<List<UserResponse>> searchUsersByUsername(@PathVariable String username) {
-        return ResponseEntity.ok(userMapper.searchUsersByUsername(username));
+    public ResponseEntity<List<UserResponse>> searchUsersByUsername(@PathVariable String username, @PageableDefault(size = 15) Pageable pageable) {
+        HeaderResponse<UserResponse> response = userMapper.searchUsersByUsername(username, pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
     @GetMapping("/start")

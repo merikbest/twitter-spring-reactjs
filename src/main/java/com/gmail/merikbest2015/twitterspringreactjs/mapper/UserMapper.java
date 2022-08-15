@@ -166,9 +166,9 @@ public class UserMapper {
         return basicMapper.convertToResponseList(users, UserResponse.class);
     }
 
-    public List<UserResponse> searchUsersByUsername(String username) {
-        List<UserProjection> users = userService.searchUsersByUsername(username, UserProjection.class);
-        return basicMapper.convertToResponseList(users, UserResponse.class);
+    public HeaderResponse<UserResponse> searchUsersByUsername(String username, Pageable pageable) {
+        Page<UserProjection> users = userService.searchUsersByUsername(username, pageable, UserProjection.class);
+        return basicMapper.getHeaderResponse(users, UserResponse.class);
     }
 
     public Long processPinTweet(Long tweetId) {
