@@ -85,7 +85,7 @@ const Explore: FC = (): ReactElement => {
             if (activeTab !== 2) {
                 dispatch(fetchTweetsByText(encodeURIComponent(text)));
             } else {
-                dispatch(fetchUsersSearchByUsername(encodeURIComponent(text))); // TODO ADD PAGINATION
+                dispatch(fetchUsersSearchByUsername({ username: encodeURIComponent(text), page })); // TODO check UI
             }
         } else {
             if (activeTab === 2) {
@@ -119,7 +119,7 @@ const Explore: FC = (): ReactElement => {
                 dispatch(fetchTweetsByText(encodeURIComponent(text)));
             } else {
                 dispatch(resetTweets());
-                dispatch(fetchUsersSearchByUsername(encodeURIComponent(text)));
+                dispatch(fetchUsersSearchByUsername({ username: encodeURIComponent(text), page: 0 })); // TODO check UI
             }
         }
     };

@@ -55,12 +55,12 @@ export interface FetchUsersSearchActionInterface extends Action<UsersSearchActio
 
 export interface FetchUsersSearchByNameActionInterface extends Action<UsersSearchActionsType> {
     type: UsersSearchActionsType.FETCH_USERS_BY_NAME;
-    payload: string;
+    payload: { username: string, page: number };
 }
 
 export interface FetchParticipantsSearchByNameActionInterface extends Action<UsersSearchActionsType> {
     type: UsersSearchActionsType.FETCH_PARTICIPANTS_BY_NAME;
-    payload: string;
+    payload: { username: string, page: number };
 }
 
 export interface FetchFollowersActionInterface extends Action<UsersSearchActionsType> {

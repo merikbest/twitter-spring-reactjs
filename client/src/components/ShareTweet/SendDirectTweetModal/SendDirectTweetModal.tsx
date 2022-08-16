@@ -65,7 +65,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
     const onSearch = (text: string): void => {
         if (text) {
             setSearchText(text);
-            dispatch(fetchParticipantsByUsername(encodeURIComponent(text)));
+            dispatch(fetchParticipantsByUsername({ username: encodeURIComponent(text), page: 0 })); // TODO add <InfiniteScroll/>
         } else {
             setSearchText("");
             dispatch(setUsersSearch([]));

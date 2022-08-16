@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 
 import {API_URL} from "../../util/url";
 import {ChatMessageRequest, ChatMessageWithTweetRequest} from "../../store/ducks/chatMessages/contracts/state";
@@ -43,8 +43,7 @@ export const ChatApi = {
         const {data} = await axios.get<Response<string>>(`${API_URL}/chat/leave/${payload.participantId}/${payload.chatId}`);
         return data;
     },
-    async searchParticipantsByUsername(name: string): Promise<UserResponse[]> { // TODO add tests
-        const {data} = await axios.get<UserResponse[]>(`${API_URL}/chat/search/${name}`);
-        return data;
+    async searchParticipantsByUsername(payload: { username: string, page: number }): Promise<AxiosResponse<UserResponse[]>> {
+        return await axios.get<UserResponse[]>(`${API_URL}/chat/search/${payload.username}`, {params: {page: payload.page}});
     },
 };

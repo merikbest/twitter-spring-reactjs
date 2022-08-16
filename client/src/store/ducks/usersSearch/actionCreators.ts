@@ -61,12 +61,12 @@ export const fetchFollowings = (payload: string): FetchFollowingsActionInterface
     payload
 });
 
-export const fetchUsersSearchByUsername = (payload: string): FetchUsersSearchByNameActionInterface => ({
+export const fetchUsersSearchByUsername = (payload: { username: string, page: number }): FetchUsersSearchByNameActionInterface => ({
     type: UsersSearchActionsType.FETCH_USERS_BY_NAME,
     payload
 });
 
-export const fetchParticipantsByUsername = (payload: string): FetchParticipantsSearchByNameActionInterface => ({
+export const fetchParticipantsByUsername = (payload: { username: string, page: number }): FetchParticipantsSearchByNameActionInterface => ({
     type: UsersSearchActionsType.FETCH_PARTICIPANTS_BY_NAME,
     payload
 });

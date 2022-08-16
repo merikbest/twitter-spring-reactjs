@@ -31,13 +31,13 @@ const MessagesModal: FC<MessagesModalProps> = ({visible, onClose}): ReactElement
 
     const handleClickSearch = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-        dispatch(fetchUsersSearchByUsername(encodeURIComponent(text)));
+        dispatch(fetchUsersSearchByUsername({ username: encodeURIComponent(text), page: 0 })); // TODO add <InfiniteScroll/>
     };
 
     const onSearch = (text: string): void => {
         if (text) {
             setText(text);
-            dispatch(fetchUsersSearchByUsername(encodeURIComponent(text)));
+            dispatch(fetchUsersSearchByUsername({ username: encodeURIComponent(text), page: 0 })); // TODO add <InfiniteScroll/>
         } else {
             setText("");
             dispatch(setUsersSearch([]));
