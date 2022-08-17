@@ -17,7 +17,7 @@ const InfiniteScrollWrapper: FC<InfiniteScrollWrapperProps> = (
     }
 ): ReactElement => {
     const [page, setPage] = useState(1);
-    
+
     const loadNextPage = (): void => {
         loadItems(page);
         setPage(prevState => prevState + 1);
@@ -30,6 +30,7 @@ const InfiniteScrollWrapper: FC<InfiniteScrollWrapperProps> = (
             hasMore={page < pagesCount}
             next={loadNextPage}
             loader={null}
+            scrollableTarget="scrollableDiv"
         >
             {children}
         </InfiniteScroll>

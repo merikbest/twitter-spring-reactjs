@@ -8,10 +8,14 @@ import DialogContent from "@material-ui/core/DialogContent";
 
 import {useSendDirectTweetModalStyles} from "./SendDirectTweetModalStyles";
 import {MessagesModalInput} from "../../../pages/Messages/MessagesModal/MessagesModalInput/MessagesModalInput";
-import {selectUsersSearch} from "../../../store/ducks/usersSearch/selectors";
+import {selectUsersPagesCount, selectUsersSearch} from "../../../store/ducks/usersSearch/selectors";
 import {fetchChats} from "../../../store/ducks/chats/actionCreators";
 import {selectChatsItems} from "../../../store/ducks/chats/selectors";
-import {fetchParticipantsByUsername, setUsersSearch} from "../../../store/ducks/usersSearch/actionCreators";
+import {
+    fetchParticipantsByUsername,
+    resetUsersState,
+    setUsersSearch
+} from "../../../store/ducks/usersSearch/actionCreators";
 import {SearchIcon, SendMessageIcon} from "../../../icons";
 import DirectUserItem from "./DirectUserItem/DirectUserItem";
 import {SendDirectMessageInput} from "./SendDirectMessageInput";
@@ -20,6 +24,7 @@ import CloseButton from "../../CloseButton/CloseButton";
 import {selectUserData} from "../../../store/ducks/user/selectors";
 import {TweetResponse} from "../../../store/types/tweet";
 import {UserResponse} from "../../../store/types/user";
+import InfiniteScrollWrapper from '../../InfiniteScrollWrapper/InfiniteScrollWrapper';
 
 interface SendDirectTweetModalProps {
     tweet: TweetResponse;
@@ -51,6 +56,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
     const myProfile = useSelector(selectUserData);
     const users = useSelector(selectUsersSearch);
     const chats = useSelector(selectChatsItems);
+    const usersPagesCount = useSelector(selectUsersPagesCount);
     const [searchText, setSearchText] = useState<string>("");
     const [message, setMessage] = useState<string>("");
     const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
@@ -60,16 +66,26 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
         if (visible) {
             dispatch(fetchChats());
         }
+
+        return () => {
+            dispatch(resetUsersState());
+        };
     }, [visible]);
 
     const onSearch = (text: string): void => {
         if (text) {
             setSearchText(text);
-            dispatch(fetchParticipantsByUsername({ username: encodeURIComponent(text), page: 0 })); // TODO add <InfiniteScroll/>
+            dispatch(resetUsersState());
+            loadParticipants(0);
         } else {
             setSearchText("");
+            dispatch(fetchChats());
             dispatch(setUsersSearch([]));
         }
+    };
+
+    const loadParticipants = (page: number): void => {
+        dispatch(fetchParticipantsByUsername({username: encodeURIComponent(searchText), page}));
     };
 
     const handleDelete = (selectedUser: UserResponse) => (): void => {
@@ -118,92 +134,97 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
                 <CloseButton onClose={onClose}/>
                 Send Tweet
             </DialogTitle>
-            <DialogContent className={classes.content}>
-                <MessagesModalInput
-                    fullWidth
-                    placeholder="Search people"
-                    variant="outlined"
-                    onChange={(event) => onSearch(event.target.value)}
-                    value={searchText}
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                {SearchIcon}
-                            </InputAdornment>
-                        ),
-                    }}
-                />
-                {selectedUsers && (
-                    selectedUsers.map(selectedUser => (
-                        <Chip
-                            key={selectedUser.id}
-                            avatar={
-                                <Avatar
-                                    alt={selectedUser?.fullName}
-                                    src={selectedUser?.avatar?.src}
-                                />
-                            }
-                            label={selectedUser?.fullName}
-                            deleteIcon={<CloseIcon color="primary"/>}
-                            onDelete={handleDelete(selectedUser)}
-                        />
-                    ))
-                )}
-                <div className={classes.divider}/>
-                <List component="nav" aria-label="main mailbox folders">
-                    {searchText ? (
-                        users.map((user) => (
-                            <DirectUserItems
-                                key={user.id}
-                                userFromChat={user.isUserChatParticipant}
-                                user={user}
-                                selectedIndexes={selectedIndexes}
-                                myProfileId={myProfile!.id}
-                                handleListItemClick={handleListItemClick}
-                            />
-                        ))
-                    ) : (
-                        chats.map((chat) => (
-                            <DirectUserItems
-                                key={chat.id}
-                                userFromChat
-                                user={
-                                    (chat.participants[0].user.id === myProfile?.id) ? (
-                                        chat.participants[1].user as UserResponse
-                                    ) : (
-                                        chat.participants[0].user as UserResponse
-                                    )}
-                                selectedIndexes={selectedIndexes}
-                                myProfileId={myProfile!.id}
-                                handleListItemClick={handleListItemClick}
+            <DialogContent id="scrollableDiv" className={classes.content}>
+                <InfiniteScrollWrapper
+                    dataLength={users.length}
+                    pagesCount={usersPagesCount}
+                    loadItems={loadParticipants}
+                >
+                    <MessagesModalInput
+                        fullWidth
+                        placeholder="Search people"
+                        variant="outlined"
+                        onChange={(event) => onSearch(event.target.value)}
+                        value={searchText}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    {SearchIcon}
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+                    {selectedUsers && (
+                        selectedUsers.map(selectedUser => (
+                            <Chip
+                                key={selectedUser.id}
+                                avatar={
+                                    <Avatar
+                                        alt={selectedUser?.fullName}
+                                        src={selectedUser?.avatar?.src}
+                                    />
+                                }
+                                label={selectedUser?.fullName}
+                                deleteIcon={<CloseIcon color="primary"/>}
+                                onDelete={handleDelete(selectedUser)}
                             />
                         ))
                     )}
-                </List>
-                <div className={classes.footer}>
-                    <SendDirectMessageInput
-                        multiline
-                        value={message}
-                        onChange={(event) => setMessage(event.target.value)}
-                        variant="outlined"
-                        placeholder="Add a comment"
-                    />
-                    <div className={classes.chatIcon}>
-                        <IconButton
-                            onClick={handleClickSendMessage}
-                            disabled={selectedUsers.length === 0}
-                            color="primary"
-                            size="small"
-                        >
-                            <>{SendMessageIcon}</>
-                        </IconButton>
+                    <div className={classes.divider}/>
+                    <List component="nav" aria-label="main mailbox folders">
+                        {searchText ? (
+                            users.map((user) => (
+                                <DirectUserItems
+                                    key={user.id}
+                                    userFromChat={user.isUserChatParticipant}
+                                    user={user}
+                                    selectedIndexes={selectedIndexes}
+                                    myProfileId={myProfile!.id}
+                                    handleListItemClick={handleListItemClick}
+                                />
+                            ))
+                        ) : (
+                            chats.map((chat) => (
+                                <DirectUserItems
+                                    key={chat.id}
+                                    userFromChat
+                                    user={
+                                        (chat.participants[0].user.id === myProfile?.id) ? (
+                                            chat.participants[1].user as UserResponse
+                                        ) : (
+                                            chat.participants[0].user as UserResponse
+                                        )}
+                                    selectedIndexes={selectedIndexes}
+                                    myProfileId={myProfile!.id}
+                                    handleListItemClick={handleListItemClick}
+                                />
+                            ))
+                        )}
+                    </List>
+                    <div className={classes.footer}>
+                        <SendDirectMessageInput
+                            multiline
+                            value={message}
+                            onChange={(event) => setMessage(event.target.value)}
+                            variant="outlined"
+                            placeholder="Add a comment"
+                        />
+                        <div className={classes.chatIcon}>
+                            <IconButton
+                                onClick={handleClickSendMessage}
+                                disabled={selectedUsers.length === 0}
+                                color="primary"
+                                size="small"
+                            >
+                                <>{SendMessageIcon}</>
+                            </IconButton>
+                        </div>
                     </div>
-                </div>
+                </InfiniteScrollWrapper>
             </DialogContent>
         </Dialog>
     );
 };
-
 
 export const DirectUserItems: FC<DirectUserItemsProps> = (
     {
