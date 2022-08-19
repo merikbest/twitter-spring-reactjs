@@ -5,7 +5,6 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.response.*;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationInfoResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationUserResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationsResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.HeaderResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetImageResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
@@ -80,9 +79,15 @@ public class UserController {
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping("/notifications")
-    public ResponseEntity<NotificationsResponse> getUserNotifications() {
-        return ResponseEntity.ok(userMapper.getUserNotifications());
+    @GetMapping("/notifications") // TODO fix tests
+    public ResponseEntity<List<NotificationResponse>> getUserNotifications(@PageableDefault(size = 10) Pageable pageable) {
+        HeaderResponse<NotificationResponse> response = userMapper.getUserNotifications(pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
+    }
+
+    @GetMapping("/notifications/subscribes") // TODO add tests
+    public ResponseEntity<List<NotificationUserResponse>> getTweetAuthorsNotifications() {
+        return ResponseEntity.ok(userMapper.getTweetAuthorsNotifications());
     }
 
     @GetMapping("/notifications/{notificationId}")

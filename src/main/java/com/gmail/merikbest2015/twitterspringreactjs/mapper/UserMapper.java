@@ -6,7 +6,6 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.response.*;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationInfoResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationUserResponse;
-import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationsResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.HeaderResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetImageResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
@@ -175,27 +174,24 @@ public class UserMapper {
         return userService.processPinTweet(tweetId);
     }
 
-    @SuppressWarnings("unchecked")
-    public NotificationsResponse getUserNotifications() {
-        Map<String, Object> notificationsDetails = userService.getUserNotifications();
-        NotificationsResponse notificationsResponse = new NotificationsResponse();
-        List<NotificationProjection> userNotifications = (List<NotificationProjection>) notificationsDetails.get("notifications");
-        List<NotificationProjection.Notification> notificationsProjection = userNotifications.contains(null)
+    public HeaderResponse<NotificationResponse> getUserNotifications(Pageable pageable) {
+        Page<NotificationProjection> userNotifications = userService.getUserNotifications(pageable);
+        List<NotificationProjection.Notification> notifications = userNotifications.getContent().contains(null)
                 ? new ArrayList<>()
                 : userNotifications.stream()
                 .map(NotificationProjection::getNotification)
                 .collect(Collectors.toList());
-        List<NotificationResponse> notifications = basicMapper.convertToResponseList(notificationsProjection, NotificationResponse.class);
-        List<TweetAuthorProjection> tweetAuthorsNotifications = (List<TweetAuthorProjection>) notificationsDetails.get("tweetAuthors");
+        return basicMapper.getHeaderResponse(notifications, userNotifications.getTotalPages(), NotificationResponse.class);
+    }
+
+    public List<NotificationUserResponse> getTweetAuthorsNotifications() {
+        List<TweetAuthorProjection> tweetAuthorsNotifications = userService.getTweetAuthorsNotifications();
         List<TweetAuthorProjection.AuthorProjection> tweetAuthorsProjection = tweetAuthorsNotifications.contains(null)
                 ? new ArrayList<>()
                 : tweetAuthorsNotifications.stream()
                 .map(TweetAuthorProjection::getTweetAuthor)
                 .collect(Collectors.toList());
-        List<NotificationUserResponse> tweetAuthors = basicMapper.convertToResponseList(tweetAuthorsProjection, NotificationUserResponse.class);
-        notificationsResponse.setNotifications(notifications);
-        notificationsResponse.setTweetAuthors(tweetAuthors);
-        return notificationsResponse;
+        return basicMapper.convertToResponseList(tweetAuthorsProjection, NotificationUserResponse.class);
     }
 
     public NotificationInfoResponse getUserNotificationById(Long notificationId) {
