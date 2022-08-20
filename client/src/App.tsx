@@ -143,7 +143,7 @@ const App: FC = (): ReactElement => {
                 dispatch(fetchRelevantUsers());
             }
             dispatch(fetchTags());
-            dispatch(fetchNotifications());
+            dispatch(fetchNotifications({page: 0}));
 
             stompClient.connect({}, () => {
                 stompClient?.subscribe("/topic/chat/" + myProfile.id, (response) => {

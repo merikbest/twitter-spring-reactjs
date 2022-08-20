@@ -6,17 +6,13 @@ import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.ImageP
 import java.time.LocalDateTime;
 
 public interface NotificationProjection {
-    Notification getNotification();
-
-    interface Notification {
-        Long getId();
-        LocalDateTime getDate();
-        NotificationType getNotificationType();
-        NotificationUserProjection getUser();
-        NotificationUserProjection getUserToFollow();
-        NotificationTweetProjection getTweet();
-        NotificationListProjection getList();
-    }
+    Long getId();
+    LocalDateTime getDate();
+    NotificationType getNotificationType();
+    NotificationUserProjection getUser();
+    NotificationUserProjection getUserToFollow();
+    NotificationTweetProjection getTweet();
+    NotificationListProjection getList();
 
     interface NotificationUserProjection {
         Long getId();

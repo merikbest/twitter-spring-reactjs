@@ -14,11 +14,10 @@ import java.util.Optional;
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
 
-    @Query("SELECT n as notification FROM User u " +
-            "LEFT JOIN u.notifications n " +
-            "WHERE u.id = :userId " +
-            "AND n.notificationType != 'TWEET' " +
-            "ORDER BY n.date DESC")
+    @Query("SELECT notification FROM Notification notification " +
+            "WHERE notification.notifiedUser.id = :userId " +
+            "AND notification.notificationType != 'TWEET' " +
+            "ORDER BY notification.date DESC")
     Page<NotificationProjection> getNotificationsByUserId(Long userId, Pageable pageable);
 
     @Query("SELECT n.id AS id, n.date AS date, n.notificationType AS notificationType, n.user AS user, n.tweet AS tweet " +

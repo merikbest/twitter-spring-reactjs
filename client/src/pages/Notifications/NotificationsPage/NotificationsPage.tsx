@@ -4,12 +4,17 @@ import {Link, useHistory} from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import {Typography} from "@material-ui/core";
 
-import {fetchNotifications, resetNotificationState} from "../../../store/ducks/notifications/actionCreators";
+import {
+    fetchFetchTweetAuthorsNotifications,
+    fetchNotifications,
+    resetNotificationState
+} from "../../../store/ducks/notifications/actionCreators";
 import {fetchUserData} from "../../../store/ducks/user/actionCreators";
 import {
     selectIsNotificationsLoading,
     selectNotificationsList,
-    selectNotificationsTweetAuthors
+    selectNotificationsTweetAuthors,
+    selectPagesCount
 } from "../../../store/ducks/notifications/selectors";
 import Spinner from "../../../components/Spinner/Spinner";
 import {NOTIFICATIONS_TIMELINE, PROFILE} from "../../../util/pathConstants";
@@ -24,12 +29,14 @@ const NotificationsPage: FC = (): ReactElement => {
     const dispatch = useDispatch();
     const history = useHistory();
     const notifications = useSelector(selectNotificationsList);
+    const pagesCount = useSelector(selectPagesCount);
     const tweetAuthors = useSelector(selectNotificationsTweetAuthors);
     const isNotificationLoading = useSelector(selectIsNotificationsLoading);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        dispatch(fetchNotifications());
+        dispatch(fetchNotifications({page: 0}));
+        dispatch(fetchFetchTweetAuthorsNotifications());
         dispatch(fetchUserData());
 
         return () => {

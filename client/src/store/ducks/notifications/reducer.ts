@@ -8,18 +8,25 @@ import {NotificationReplyResponse, NotificationResponse} from "../../types/notif
 
 export const initialNotificationsState: NotificationsState = {
     notificationsList: [],
+    pagesCount: 0,
     tweetAuthors: [],
     notificationInfo: undefined,
     notificationInfoLoadingState: LoadingStatus.LOADING,
     loadingState: LoadingStatus.LOADING,
+    loadingTweetAuthorsState: LoadingStatus.LOADING,
 };
 
 export const notificationsReducer = produce((draft: Draft<NotificationsState>, action: NotificationsActions) => {
     switch (action.type) {
         case NotificationsActionsType.SET_NOTIFICATIONS:
-            draft.notificationsList = action.payload.notifications ? action.payload.notifications : [];
-            draft.tweetAuthors = action.payload.tweetAuthors ? action.payload.tweetAuthors : [];
+            draft.notificationsList = action.payload.items;
+            draft.pagesCount = action.payload.pagesCount;
             draft.loadingState = LoadingStatus.LOADED;
+            break;
+
+        case NotificationsActionsType.SET_TWEET_AUTHORS_NOTIFICATIONS:
+            draft.tweetAuthors = action.payload;
+            draft.loadingTweetAuthorsState = LoadingStatus.LOADED;
             break;
 
         case NotificationsActionsType.SET_NOTIFICATION:
@@ -76,14 +83,20 @@ export const notificationsReducer = produce((draft: Draft<NotificationsState>, a
 
         case NotificationsActionsType.RESET_NOTIFICATION_STATE:
             draft.notificationsList = [];
+            draft.pagesCount = 0;
             draft.tweetAuthors = [];
             draft.notificationInfo = undefined;
             draft.notificationInfoLoadingState = LoadingStatus.LOADING;
             draft.loadingState = LoadingStatus.LOADING;
+            draft.loadingTweetAuthorsState = LoadingStatus.LOADING;
             break;
 
         case NotificationsActionsType.SET_LOADING_STATE:
             draft.loadingState = action.payload;
+            break;
+
+        case NotificationsActionsType.SET_TWEET_AUTHORS_LOADING_STATE:
+            draft.loadingTweetAuthorsState = action.payload;
             break;
 
         default:

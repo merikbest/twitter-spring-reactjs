@@ -202,10 +202,12 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
         },
         notifications: {
             notificationsList: [],
+            pagesCount: 0,
             tweetAuthors: [],
             notificationInfo: undefined,
             notificationInfoLoadingState: loadingStatus,
-            loadingState: loadingStatus
+            loadingState: loadingStatus,
+            loadingTweetAuthorsState: loadingStatus
         },
         tags: {
             items: [],

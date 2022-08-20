@@ -5,12 +5,15 @@ import {
     NotificationInfoResponse,
     NotificationReplyResponse,
     NotificationResponse,
-    NotificationsResponse
+    NotificationUserResponse
 } from "../../../types/notification";
+import {NotificationsState} from "./state";
 
 export enum NotificationsActionsType {
     SET_NOTIFICATIONS = 'notification/SET_NOTIFICATIONS',
+    SET_TWEET_AUTHORS_NOTIFICATIONS = 'notification/SET_TWEET_AUTHORS_NOTIFICATIONS',
     FETCH_NOTIFICATIONS = 'notification/FETCH_NOTIFICATIONS',
+    FETCH_TWEET_AUTHORS_NOTIFICATIONS = 'notification/FETCH_TWEET_AUTHORS_NOTIFICATIONS',
     FETCH_NOTIFICATIONS_FROM_TWEET_AUTHORS = 'notification/FETCH_NOTIFICATIONS_FROM_TWEET_AUTHORS',
     FETCH_MENTIONS = 'notification/FETCH_MENTIONS',
     SET_NOTIFICATION = 'notification/SET_NOTIFICATION',
@@ -21,16 +24,27 @@ export enum NotificationsActionsType {
     SET_FOLLOW_REQUEST_TO_NOTIFICATION_INFO = 'notification/SET_FOLLOW_REQUEST_TO_NOTIFICATION_INFO',
     UPDATE_NOTIFICATION_INFO_TWEET = 'notification/UPDATE_NOTIFICATION_INFO_TWEET',
     RESET_NOTIFICATION_STATE = 'notification/RESET_NOTIFICATION_STATE',
+    SET_TWEET_AUTHORS_LOADING_STATE = 'notification/SET_TWEET_AUTHORS_LOADING_STATE',
     SET_LOADING_STATE = 'notification/SET_LOADING_STATE',
 }
 
 export interface SetNotificationsActionInterface extends Action<NotificationsActionsType> {
     type: NotificationsActionsType.SET_NOTIFICATIONS;
-    payload: NotificationsResponse;
+    payload: { items: NotificationsState["notificationsList"], pagesCount: NotificationsState["pagesCount"] };
+}
+
+export interface SetTweetAuthorsNotificationsActionInterface extends Action<NotificationsActionsType> {
+    type: NotificationsActionsType.SET_TWEET_AUTHORS_NOTIFICATIONS;
+    payload: NotificationUserResponse[];
 }
 
 export interface FetchNotificationsActionInterface extends Action<NotificationsActionsType> {
     type: NotificationsActionsType.FETCH_NOTIFICATIONS;
+    payload: { page: number };
+}
+
+export interface FetchTweetAuthorsNotificationsActionInterface extends Action<NotificationsActionsType> {
+    type: NotificationsActionsType.FETCH_TWEET_AUTHORS_NOTIFICATIONS;
 }
 
 export interface FetchNotificationsFromTweetAuthorsActionInterface extends Action<NotificationsActionsType> {
@@ -87,8 +101,14 @@ export interface SetNotificationsLoadingStateActionInterface extends Action<Noti
     payload: LoadingStatus;
 }
 
+export interface SetTweetAuthorsLoadingStateActionInterface extends Action<NotificationsActionsType> {
+    type: NotificationsActionsType.SET_TWEET_AUTHORS_LOADING_STATE;
+    payload: LoadingStatus;
+}
+
 export type NotificationsActions =
     | SetNotificationsActionInterface
+    | SetTweetAuthorsNotificationsActionInterface
     | SetNotificationActionInterface
     | SetNotificationInfoActionInterface
     | SetFollowToNotificationInfoActionInterface
@@ -96,4 +116,5 @@ export type NotificationsActions =
     | SetFollowRequestToNotificationInfoActionInterface
     | UpdateNotificationInfoTweetActionInterface
     | ResetNotificationStateActionInterface
-    | SetNotificationsLoadingStateActionInterface;
+    | SetNotificationsLoadingStateActionInterface
+    | SetTweetAuthorsLoadingStateActionInterface;

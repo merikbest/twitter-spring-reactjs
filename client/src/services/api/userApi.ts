@@ -1,4 +1,5 @@
 import {AxiosResponse, CancelTokenSource} from "axios";
+
 import {axios} from "../../core/axios";
 import {API_URL} from "../../util/url";
 import {
@@ -12,7 +13,7 @@ import {
 } from "../../store/types/user";
 import {
     NotificationInfoResponse,
-    NotificationsResponse,
+    NotificationResponse,
     NotificationUserResponse
 } from "../../store/types/notification";
 import {TweetImageResponse, TweetResponse} from "../../store/types/tweet";
@@ -94,8 +95,11 @@ export const UserApi = {
     async getUserRetweetsAndReplies(payload: { userId: string, page: number }): Promise<AxiosResponse<TweetResponse[]>> {
         return await axios.get<TweetResponse[]>(`${API_URL}/user/${payload.userId}/replies`, {params: {page: payload.page}});
     },
-    async getUserNotifications(): Promise<Response<NotificationsResponse>> {
-        const {data} = await axios.get<Response<NotificationsResponse>>(`${API_URL}/user/notifications`);
+    async getUserNotifications(payload: { page: number }): Promise<AxiosResponse<NotificationResponse[]>> {
+        return await axios.get<NotificationResponse[]>(`${API_URL}/user/notifications`, {params: {page: payload.page}});
+    },
+    async getTweetAuthorsNotifications(): Promise<Response<NotificationUserResponse[]>> {
+        const {data} = await axios.get<Response<NotificationUserResponse[]>>(`${API_URL}/user/notifications/subscribes`);
         return data;
     },
     async getUserNotificationById(payload: number): Promise<Response<NotificationInfoResponse>> {

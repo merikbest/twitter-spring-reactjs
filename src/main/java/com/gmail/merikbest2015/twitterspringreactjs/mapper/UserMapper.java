@@ -175,13 +175,8 @@ public class UserMapper {
     }
 
     public HeaderResponse<NotificationResponse> getUserNotifications(Pageable pageable) {
-        Page<NotificationProjection> userNotifications = userService.getUserNotifications(pageable);
-        List<NotificationProjection.Notification> notifications = userNotifications.getContent().contains(null)
-                ? new ArrayList<>()
-                : userNotifications.stream()
-                .map(NotificationProjection::getNotification)
-                .collect(Collectors.toList());
-        return basicMapper.getHeaderResponse(notifications, userNotifications.getTotalPages(), NotificationResponse.class);
+        Page<NotificationProjection> notifications = userService.getUserNotifications(pageable);
+        return basicMapper.getHeaderResponse(notifications, NotificationResponse.class);
     }
 
     public List<NotificationUserResponse> getTweetAuthorsNotifications() {

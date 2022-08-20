@@ -3,6 +3,7 @@ import {
     FetchNotificationInfoActionInterface,
     FetchNotificationsActionInterface,
     FetchNotificationsFromTweetAuthorsActionInterface,
+    FetchTweetAuthorsNotificationsActionInterface,
     NotificationsActionsType,
     ResetNotificationStateActionInterface,
     SetBlockedNotificationInfoActionInterface,
@@ -12,6 +13,8 @@ import {
     SetNotificationInfoActionInterface,
     SetNotificationsActionInterface,
     SetNotificationsLoadingStateActionInterface,
+    SetTweetAuthorsLoadingStateActionInterface,
+    SetTweetAuthorsNotificationsActionInterface,
     UpdateNotificationInfoTweetActionInterface
 } from "./contracts/actionTypes";
 import {LoadingStatus} from "../../types";
@@ -19,16 +22,30 @@ import {
     NotificationInfoResponse,
     NotificationReplyResponse,
     NotificationResponse,
-    NotificationsResponse
+    NotificationUserResponse
 } from "../../types/notification";
+import {NotificationsState} from "./contracts/state";
 
-export const setNotifications = (payload: NotificationsResponse): SetNotificationsActionInterface => ({
+export const setNotifications = (payload: {
+    items: NotificationsState["notificationsList"],
+    pagesCount: NotificationsState["pagesCount"] }
+): SetNotificationsActionInterface => ({
     type: NotificationsActionsType.SET_NOTIFICATIONS,
     payload,
 });
 
-export const fetchNotifications = (): FetchNotificationsActionInterface => ({
+export const setTweetAuthorsNotifications = (payload: NotificationUserResponse[]): SetTweetAuthorsNotificationsActionInterface => ({
+    type: NotificationsActionsType.SET_TWEET_AUTHORS_NOTIFICATIONS,
+    payload,
+});
+
+export const fetchNotifications = (payload: { page: number }): FetchNotificationsActionInterface => ({
     type: NotificationsActionsType.FETCH_NOTIFICATIONS,
+    payload,
+});
+
+export const fetchFetchTweetAuthorsNotifications = (): FetchTweetAuthorsNotificationsActionInterface => ({
+    type: NotificationsActionsType.FETCH_TWEET_AUTHORS_NOTIFICATIONS
 });
 
 export const fetchNotificationsFromTweetAuthors = (payload: number): FetchNotificationsFromTweetAuthorsActionInterface => ({
@@ -82,5 +99,10 @@ export const resetNotificationState = (): ResetNotificationStateActionInterface 
 
 export const setNotificationsLoadingState = (payload: LoadingStatus): SetNotificationsLoadingStateActionInterface => ({
     type: NotificationsActionsType.SET_LOADING_STATE,
+    payload,
+});
+
+export const setTweetAuthorsLoadingState = (payload: LoadingStatus): SetTweetAuthorsLoadingStateActionInterface => ({
+    type: NotificationsActionsType.SET_TWEET_AUTHORS_LOADING_STATE,
     payload,
 });

@@ -92,6 +92,7 @@ create table notifications
     notification_type varchar(255),
     tweet_id          int8,
     user_id           int8,
+    notified_user_id  int8,
     user_to_follow_id int8,
     list_id           int8,
     primary key (id)
