@@ -19,7 +19,7 @@ export const initialNotificationsState: NotificationsState = {
 export const notificationsReducer = produce((draft: Draft<NotificationsState>, action: NotificationsActions) => {
     switch (action.type) {
         case NotificationsActionsType.SET_NOTIFICATIONS:
-            draft.notificationsList = action.payload.items;
+            draft.notificationsList = [...draft.notificationsList, ...action.payload.items];
             draft.pagesCount = action.payload.pagesCount;
             draft.loadingState = LoadingStatus.LOADED;
             break;

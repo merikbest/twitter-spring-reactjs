@@ -39,7 +39,7 @@ export const setTweetAuthorsNotifications = (payload: NotificationUserResponse[]
     payload,
 });
 
-export const fetchNotifications = (payload: { page: number }): FetchNotificationsActionInterface => ({
+export const fetchNotifications = (payload: number): FetchNotificationsActionInterface => ({
     type: NotificationsActionsType.FETCH_NOTIFICATIONS,
     payload,
 });

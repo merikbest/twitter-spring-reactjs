@@ -23,6 +23,7 @@ import NotificationAuthorItem from "./NotificationAuthorItem/NotificationAuthorI
 import NotificationItem from "./NotificationItem/NotificationItem";
 import {useNotificationsPageStyles} from "./NotificationsPageStyles";
 import EmptyNotifications from "../EmptyNotifications/EmptyNotifications";
+import InfiniteScrollWrapper from "../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
 
 const NotificationsPage: FC = (): ReactElement => {
     const classes = useNotificationsPageStyles();
@@ -35,7 +36,7 @@ const NotificationsPage: FC = (): ReactElement => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        dispatch(fetchNotifications({page: 0}));
+        loadNotifications(0);
         dispatch(fetchFetchTweetAuthorsNotifications());
         dispatch(fetchUserData());
 
@@ -43,6 +44,10 @@ const NotificationsPage: FC = (): ReactElement => {
             dispatch(resetNotificationState());
         };
     }, []);
+
+    const loadNotifications = (page: number): void => {
+        dispatch(fetchNotifications(page));
+    };
 
     const handleClickUser = (userId: number, event: React.MouseEvent<HTMLAnchorElement>): void => {
         event.preventDefault();
@@ -52,10 +57,10 @@ const NotificationsPage: FC = (): ReactElement => {
 
     return (
         <>
-            {isNotificationLoading ? (
+            {(isNotificationLoading && !notifications.length) ? (
                 <Spinner/>
             ) : (
-                (!notifications.length) ? (
+                (!isNotificationLoading && !notifications.length) ? (
                     <EmptyNotifications isNotification={true}/>
                 ) : (
                     <>
@@ -103,13 +108,20 @@ const NotificationsPage: FC = (): ReactElement => {
                                 </Paper>
                             </Link>
                         )}
-                        {notifications.map((notification, index) => (
-                            <NotificationItem
-                                key={index}
-                                notification={notification}
-                                handleClickUser={handleClickUser}
-                            />
-                        ))}
+                        <InfiniteScrollWrapper
+                            dataLength={notifications.length}
+                            pagesCount={pagesCount}
+                            loadItems={loadNotifications}
+                        >
+                            {notifications.map((notification) => (
+                                <NotificationItem
+                                    key={notification.id}
+                                    notification={notification}
+                                    handleClickUser={handleClickUser}
+                                />
+                            ))}
+                            {isNotificationLoading && <Spinner/>}
+                        </InfiniteScrollWrapper>
                     </>
                 )
             )}

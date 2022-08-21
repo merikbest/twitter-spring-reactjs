@@ -40,7 +40,7 @@ export interface SetTweetAuthorsNotificationsActionInterface extends Action<Noti
 
 export interface FetchNotificationsActionInterface extends Action<NotificationsActionsType> {
     type: NotificationsActionsType.FETCH_NOTIFICATIONS;
-    payload: { page: number };
+    payload: number;
 }
 
 export interface FetchTweetAuthorsNotificationsActionInterface extends Action<NotificationsActionsType> {

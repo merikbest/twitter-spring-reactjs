@@ -95,8 +95,8 @@ export const UserApi = {
     async getUserRetweetsAndReplies(payload: { userId: string, page: number }): Promise<AxiosResponse<TweetResponse[]>> {
         return await axios.get<TweetResponse[]>(`${API_URL}/user/${payload.userId}/replies`, {params: {page: payload.page}});
     },
-    async getUserNotifications(payload: { page: number }): Promise<AxiosResponse<NotificationResponse[]>> {
-        return await axios.get<NotificationResponse[]>(`${API_URL}/user/notifications`, {params: {page: payload.page}});
+    async getUserNotifications(page: number): Promise<AxiosResponse<NotificationResponse[]>> {
+        return await axios.get<NotificationResponse[]>(`${API_URL}/user/notifications`, {params: {page: page}});
     },
     async getTweetAuthorsNotifications(): Promise<Response<NotificationUserResponse[]>> {
         const {data} = await axios.get<Response<NotificationUserResponse[]>>(`${API_URL}/user/notifications/subscribes`);

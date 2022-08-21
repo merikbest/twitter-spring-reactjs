@@ -27,11 +27,7 @@ import NotificationInfo from "./pages/Notifications/NotificationsPage/Notificati
 import Messages from "./pages/Messages/Messages";
 import {setChatMessage} from "./store/ducks/chatMessages/actionCreators";
 import {WS_URL} from "./util/url";
-import {
-    fetchNotifications,
-    setNotification,
-    updateNotificationInfoTweet
-} from "./store/ducks/notifications/actionCreators";
+import {setNotification, updateNotificationInfoTweet} from "./store/ducks/notifications/actionCreators";
 import {selectNotificationsList} from "./store/ducks/notifications/selectors";
 import {deleteTweet, setScheduledTweets, setTweet, setUpdatedTweet} from "./store/ducks/tweets/actionCreators";
 import Lists from "./pages/Lists/Lists";
@@ -143,7 +139,6 @@ const App: FC = (): ReactElement => {
                 dispatch(fetchRelevantUsers());
             }
             dispatch(fetchTags());
-            dispatch(fetchNotifications({page: 0}));
 
             stompClient.connect({}, () => {
                 stompClient?.subscribe("/topic/chat/" + myProfile.id, (response) => {
