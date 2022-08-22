@@ -286,6 +286,7 @@ public class UserServiceImpl implements UserService {
         notification.setNotificationType(NotificationType.FOLLOW);
         notification.setUser(user);
         notification.setUserToFollow(currentUser);
+        notification.setNotifiedUser(currentUser);
 
         if (!currentUser.getId().equals(user.getId())) {
             Optional<Notification> userNotification = currentUser.getNotifications().stream()

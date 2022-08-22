@@ -7,6 +7,8 @@ import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tag.TagProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.TagService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,8 +27,8 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<TagProjection> getTrends() {
-        return tagRepository.findByOrderByTweetsQuantityDesc();
+    public Page<TagProjection> getTrends(Pageable pageable) {
+        return tagRepository.findByOrderByTweetsQuantityDesc(pageable);
     }
 
     @Override

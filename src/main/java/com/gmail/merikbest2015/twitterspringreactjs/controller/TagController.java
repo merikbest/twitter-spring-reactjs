@@ -1,9 +1,12 @@
 package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.HeaderResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TagResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.TagMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +25,9 @@ public class TagController {
     }
 
     @GetMapping("/trends")
-    public ResponseEntity<List<TagResponse>> getTrends() {
-        return ResponseEntity.ok(tagMapper.getTrends());
+    public ResponseEntity<List<TagResponse>> getTrends(@PageableDefault(size = 20) Pageable pageable) {
+        HeaderResponse<TagResponse> response = tagMapper.getTrends(pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
     @GetMapping("/search")

@@ -398,6 +398,7 @@ public class TweetServiceImpl implements TweetService {
     private Notification notificationHandler(User user, Tweet tweet, NotificationType notificationType) {
         Notification notification = new Notification();
         notification.setNotificationType(notificationType);
+        notification.setNotifiedUser(tweet.getUser());
         notification.setUser(user);
         notification.setTweet(tweet);
 
@@ -447,7 +448,7 @@ public class TweetServiceImpl implements TweetService {
         user.getSubscribers().forEach(subscriber -> {
             subscriber.setNotificationsCount(subscriber.getNotificationsCount() + 1);
             List<Notification> notifications = subscriber.getNotifications();
-//            userRepository.save(subscriber);
+            notification.setNotifiedUser(subscriber);
             notifications.add(notification);
             notificationRepository.save(notification);
         });
