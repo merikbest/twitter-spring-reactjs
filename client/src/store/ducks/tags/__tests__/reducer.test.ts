@@ -26,14 +26,14 @@ describe("tagsReducer:", () => {
         );
 
         testActionDispatch(
-            TagsActionsType.RESET_TAGS_STATE,
+            TagsActionsType.RESET_TRENDS_STATE,
             tagsReducer(
                 {
                     ...initialTagsState,
-                    items: [{id: 1}] as TagResponse[]
+                    tags: [{id: 1}] as TagResponse[]
                 },
                 {
-                    type: TagsActionsType.RESET_TAGS_STATE
+                    type: TagsActionsType.RESET_TRENDS_STATE
                 }),
             {
                 ...initialTagsState,
@@ -43,10 +43,10 @@ describe("tagsReducer:", () => {
         );
 
         testActionDispatch(
-            TagsActionsType.SET_LOADING_STATE,
+            TagsActionsType.SET_TAGS_LOADING_STATE,
             tagsReducer(initialTagsState,
                 {
-                    type: TagsActionsType.SET_LOADING_STATE,
+                    type: TagsActionsType.SET_TAGS_LOADING_STATE,
                     payload: LoadingStatus.SUCCESS
                 }),
             {

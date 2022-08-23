@@ -13,7 +13,7 @@ import {
     SetListSuggestedActionInterface,
     SetLoadingMembersStateActionInterface,
     SetLoadingSuggestedStateActionInterface,
-    SetUserToListMembersActionInterface,
+    SetUserToListActionInterface,
 } from './contracts/actionTypes';
 import {ListsOwnerMemberResponse} from "../../types/lists";
 
@@ -42,13 +42,13 @@ export const fetchListMembersByUsername = (payload: { listId: number; username: 
     payload,
 });
 
-export const processUserToListMembers = (payload: { userId: number; listId: number; }): ProcessUserToListMembersActionInterface => ({
+export const processUserToListMembers = (payload: { userId: number; listId: number; isSuggested?: boolean; }): ProcessUserToListMembersActionInterface => ({
     type: ListMembersActionsType.PROCESS_USER_TO_LIST_MEMBERS,
     payload,
 });
 
-export const setUserToListMembers = (payload: { userId: number; isMember: boolean; }): SetUserToListMembersActionInterface => ({
-    type: ListMembersActionsType.SET_USER_TO_LIST_MEMBERS,
+export const setUserToList = (payload: { userId: number; isUserAdded: boolean; isSuggested?: boolean; }): SetUserToListActionInterface => ({
+    type: ListMembersActionsType.SET_USER_TO_LIST,
     payload,
 });
 

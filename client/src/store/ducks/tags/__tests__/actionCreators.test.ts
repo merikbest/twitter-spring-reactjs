@@ -1,5 +1,5 @@
 import {testAction} from "../../../../util/testHelper";
-import {fetchTags, fetchTrends, resetTagsState, setTags, setTagsLoadingState} from "../actionCreators";
+import {fetchTags, fetchTrends, resetTrendsState, setTags, setTagsLoadingState} from "../actionCreators";
 import {TagsActionsType} from "../contracts/actionTypes";
 import {TagResponse} from "../../../types/tag";
 import {LoadingStatus} from "../../../types";
@@ -11,7 +11,7 @@ describe("tags actions", () => {
     });
 
     testAction(setTagsLoadingState, setTagsLoadingState(LoadingStatus.LOADING), {
-        type: TagsActionsType.SET_LOADING_STATE,
+        type: TagsActionsType.SET_TAGS_LOADING_STATE,
         payload: LoadingStatus.LOADING
     });
 
@@ -23,7 +23,7 @@ describe("tags actions", () => {
         type: TagsActionsType.FETCH_TRENDS
     });
 
-    testAction(resetTagsState, resetTagsState(), {
-        type: TagsActionsType.RESET_TAGS_STATE
+    testAction(resetTrendsState, resetTrendsState(), {
+        type: TagsActionsType.RESET_TRENDS_STATE
     });
 });

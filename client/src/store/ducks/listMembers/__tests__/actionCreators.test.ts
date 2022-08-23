@@ -12,7 +12,7 @@ import {
     setListSuggested,
     setLoadingMembersState,
     setLoadingSuggestedState,
-    setUserToListMembers
+    setUserToList
 } from "../actionCreators";
 import {ListMembersActionsType} from "../contracts/actionTypes";
 import {ListsOwnerMemberResponse} from "../../../types/lists";
@@ -49,8 +49,8 @@ describe("listMembers actions", () => {
         payload: {userId: 1, listId: 1}
     });
 
-    testAction(setUserToListMembers, setUserToListMembers({userId: 1, isMember: true}), {
-        type: ListMembersActionsType.SET_USER_TO_LIST_MEMBERS,
+    testAction(setUserToList, setUserToList({userId: 1, isMember: true}), {
+        type: ListMembersActionsType.SET_USER_TO_LIST,
         payload: {userId: 1, isMember: true}
     });
 

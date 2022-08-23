@@ -2,6 +2,9 @@ import {LoadingStatus} from "../../../types";
 import {TagResponse} from "../../../types/tag";
 
 export interface TagsState {
-    items: TagResponse[];
-    loadingState: LoadingStatus;
+    tags: TagResponse[];
+    loadingTagsState: LoadingStatus;
+    trends: TagResponse[];
+    pagesCount: number;
+    loadingTrendsState: LoadingStatus;
 }

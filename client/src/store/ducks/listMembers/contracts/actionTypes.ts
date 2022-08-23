@@ -9,7 +9,7 @@ export enum ListMembersActionsType {
     FETCH_LIST_FOLLOWERS = 'listMembers/FETCH_LIST_FOLLOWERS',
     FETCH_LIST_MEMBERS_BY_USERNAME = 'listMembers/FETCH_LIST_MEMBERS_BY_USERNAME',
     PROCESS_USER_TO_LIST_MEMBERS = 'listMembers/PROCESS_USER_TO_LIST_MEMBERS',
-    SET_USER_TO_LIST_MEMBERS = 'listMembers/SET_USER_TO_LIST_MEMBERS',
+    SET_USER_TO_LIST = 'listMembers/SET_USER_TO_LIST',
     RESET_LIST_MEMBERS_STATE = 'listMembers/RESET_LIST_MEMBERS_STATE',
     RESET_LIST_SUGGESTED_STATE = 'listMembers/RESET_LIST_SUGGESTED_STATE',
     RESET_LIST_MEMBERS = 'listMembers/RESET_LIST_MEMBERS',
@@ -45,12 +45,12 @@ export interface FetchListMembersByUsernameActionInterface extends Action<ListMe
 
 export interface ProcessUserToListMembersActionInterface extends Action<ListMembersActionsType> {
     type: ListMembersActionsType.PROCESS_USER_TO_LIST_MEMBERS;
-    payload: { userId: number; listId: number; };
+    payload: { userId: number; listId: number; isSuggested?: boolean; };
 }
 
-export interface SetUserToListMembersActionInterface extends Action<ListMembersActionsType> {
-    type: ListMembersActionsType.SET_USER_TO_LIST_MEMBERS;
-    payload: { userId: number; isMember: boolean; };
+export interface SetUserToListActionInterface extends Action<ListMembersActionsType> {
+    type: ListMembersActionsType.SET_USER_TO_LIST;
+    payload: { userId: number; isUserAdded: boolean; isSuggested?: boolean; };
 }
 
 export interface ResetListMembersStateActionInterface extends Action<ListMembersActionsType> {
@@ -86,7 +86,7 @@ export type ListMembersActions =
     | ResetListMembersStateActionInterface
     | ResetListSuggestedStateActionInterface
     | ResetListMembersActionInterface
-    | SetUserToListMembersActionInterface
+    | SetUserToListActionInterface
     | SetListMembersLoadingStateActionInterface
     | SetLoadingMembersStateActionInterface
     | SetLoadingSuggestedStateActionInterface

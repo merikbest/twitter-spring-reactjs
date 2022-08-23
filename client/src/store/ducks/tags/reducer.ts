@@ -1,28 +1,42 @@
 import produce, {Draft} from 'immer';
 
 import {LoadingStatus} from '../../types';
-import { TagsActions, TagsActionsType } from './contracts/actionTypes';
+import {TagsActions, TagsActionsType} from './contracts/actionTypes';
 import {TagsState} from './contracts/state';
 
 export const initialTagsState: TagsState = {
-    items: [],
-    loadingState: LoadingStatus.LOADING,
+    tags: [],
+    loadingTagsState: LoadingStatus.LOADING,
+    trends: [],
+    pagesCount: 0,
+    loadingTrendsState: LoadingStatus.LOADING,
 };
 
 export const tagsReducer = produce((draft: Draft<TagsState>, action: TagsActions) => {
     switch (action.type) {
         case TagsActionsType.SET_TAGS:
-            draft.items = action.payload;
-            draft.loadingState = LoadingStatus.LOADED;
+            draft.tags = action.payload;
+            draft.loadingTagsState = LoadingStatus.LOADED;
             break;
 
-        case TagsActionsType.RESET_TAGS_STATE:
-            draft.items = [];
-            draft.loadingState = LoadingStatus.LOADING;
+        case TagsActionsType.SET_TRENDS:
+            draft.trends = [...draft.trends, ...action.payload.items];
+            draft.pagesCount = action.payload.pagesCount;
+            draft.loadingTrendsState = LoadingStatus.LOADED;
             break;
 
-        case TagsActionsType.SET_LOADING_STATE:
-            draft.loadingState = action.payload;
+        case TagsActionsType.RESET_TRENDS_STATE:
+            draft.trends = [];
+            draft.pagesCount = 0;
+            draft.loadingTrendsState = LoadingStatus.LOADING;
+            break;
+
+        case TagsActionsType.SET_TAGS_LOADING_STATE:
+            draft.loadingTagsState = action.payload;
+            break;
+
+        case TagsActionsType.SET_TRENDS_LOADING_STATE:
+            draft.loadingTrendsState = action.payload;
             break;
 
         default:

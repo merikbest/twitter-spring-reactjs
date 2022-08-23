@@ -210,8 +210,11 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             loadingTweetAuthorsState: loadingStatus
         },
         tags: {
-            items: [],
-            loadingState: loadingStatus
+            tags: [],
+            loadingTagsState: loadingStatus,
+            trends: [],
+            pagesCount: 0,
+            loadingTrendsState: loadingStatus,
         },
         tweet: {
             tweet: mockFullTweet,

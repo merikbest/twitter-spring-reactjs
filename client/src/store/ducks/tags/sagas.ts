@@ -1,9 +1,10 @@
+import {AxiosResponse} from "axios";
 import {call, put, takeLatest} from 'redux-saga/effects';
 
-import {setTags, setTagsLoadingState} from './actionCreators';
+import {setTags, setTagsLoadingState, setTrends, setTrendsLoadingState} from './actionCreators';
 import {TagApi} from '../../../services/api/tagApi'
 import {LoadingStatus} from '../../types';
-import {TagsActionsType} from "./contracts/actionTypes";
+import {FetchTrendsActionInterface, TagsActionsType} from "./contracts/actionTypes";
 import {TagResponse} from "../../types/tag";
 
 export function* fetchTagsRequest() {
@@ -16,13 +17,16 @@ export function* fetchTagsRequest() {
     }
 }
 
-export function* fetchTrendsRequest() {
+export function* fetchTrendsRequest({payload}: FetchTrendsActionInterface) {
     try {
-        yield put(setTagsLoadingState(LoadingStatus.LOADING));
-        const items: TagResponse[] = yield call(TagApi.fetchTrends);
-        yield put(setTags(items));
+        yield put(setTrendsLoadingState(LoadingStatus.LOADING));
+        const response: AxiosResponse<TagResponse[]> = yield call(TagApi.fetchTrends, payload);
+        yield put(setTrends({
+            items: response.data,
+            pagesCount: parseInt(response.headers["page-total-count"])
+        }));
     } catch (error) {
-        yield put(setTagsLoadingState(LoadingStatus.ERROR));
+        yield put(setTrendsLoadingState(LoadingStatus.ERROR));
     }
 }
 

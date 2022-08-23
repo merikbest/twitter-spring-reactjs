@@ -4,7 +4,7 @@ import {
     setListSuggested,
     setLoadingMembersState,
     setLoadingSuggestedState,
-    setUserToListMembers
+    setUserToList
 } from "./actionCreators";
 import {
     FetchListFollowersActionInterface,
@@ -52,7 +52,7 @@ export function* processListMemberRequest({payload}: ProcessUserToListMembersAct
     try {
         yield put(setLoadingSuggestedState(LoadingStatus.LOADING));
         const data: boolean = yield call(ListsApi.addUserToList, payload.userId, payload.listId);
-        yield put(setUserToListMembers({userId: payload.userId, isMember: data}));
+        yield put(setUserToList({userId: payload.userId, isUserAdded: data, isSuggested: payload.isSuggested}));
         yield put(setMembersSize(data));
     } catch (error) {
         yield put(setLoadingSuggestedState(LoadingStatus.ERROR));

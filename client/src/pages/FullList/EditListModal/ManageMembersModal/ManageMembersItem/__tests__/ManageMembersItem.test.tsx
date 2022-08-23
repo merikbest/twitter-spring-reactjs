@@ -21,7 +21,7 @@ describe("ManageMembersItem", () => {
     });
 
     it("should render Manage Members Item correctly", () => {
-        const wrapper = mountWithStore(<ManageMembersItem item={mockFullList} member={mockMember}/>, mockStore);
+        const wrapper = mountWithStore(<ManageMembersItem item={mockFullList} user={mockMember}/>, mockStore);
 
         expect(wrapper.find(Link).prop("to")).toBe(`${PROFILE}/${mockMember.id}`);
         expect(wrapper.find(Avatar).prop("src")).toBe(mockMember.avatar.src);
@@ -32,7 +32,7 @@ describe("ManageMembersItem", () => {
     });
 
     it("should click Add Member to list", () => {
-        const wrapper = mountWithStore(<ManageMembersItem item={mockFullList} member={mockMember}/>, mockStore);
+        const wrapper = mountWithStore(<ManageMembersItem item={mockFullList} user={mockMember}/>, mockStore);
         const buttonAddMember = wrapper.find(Button).at(0);
         buttonAddMember.simulate("click");
 
@@ -44,7 +44,7 @@ describe("ManageMembersItem", () => {
 
     it("should click Remove Member from list", () => {
         const mockMember = mockListsOwnerMember[2];
-        const wrapper = mountWithStore(<ManageMembersItem item={mockFullList} member={mockMember}/>, mockStore);
+        const wrapper = mountWithStore(<ManageMembersItem item={mockFullList} user={mockMember}/>, mockStore);
         const buttonAddMember = wrapper.find(Button).at(0);
         buttonAddMember.simulate("click");
 
@@ -55,7 +55,7 @@ describe("ManageMembersItem", () => {
     });
 
     it("should render Action Snackbar", () => {
-        const wrapper = mountWithStore(<ManageMembersItem item={mockFullList} member={mockMember}/>, {
+        const wrapper = mountWithStore(<ManageMembersItem item={mockFullList} user={mockMember}/>, {
             ...mockStore,
             listMembers: {...mockStore.listMembers, suggestedLoadingState: LoadingStatus.ERROR}
         });
@@ -65,7 +65,7 @@ describe("ManageMembersItem", () => {
     });
 
     it("should hover Member", () => {
-        const wrapper = mountWithStore(<ManageMembersItem item={mockFullList} member={mockMember}/>, mockStore);
+        const wrapper = mountWithStore(<ManageMembersItem item={mockFullList} user={mockMember}/>, mockStore);
         const memberFullName = wrapper.find("#fullName").at(0);
         memberFullName.simulate("mouseenter");
 

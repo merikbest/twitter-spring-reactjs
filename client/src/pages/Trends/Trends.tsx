@@ -3,19 +3,23 @@ import {useDispatch, useSelector} from "react-redux";
 import {List} from "@material-ui/core";
 
 import TrendsItem from "./TrendsItem/TrendsItem";
-import {selectIsTagsLoading, selectTagsItems} from "../../store/ducks/tags/selectors";
-import {fetchTrends} from "../../store/ducks/tags/actionCreators";
+import {selectIsTrendsLoading, selectTrendsItems} from "../../store/ducks/tags/selectors";
+import {fetchTrends, resetTrendsState} from "../../store/ducks/tags/actionCreators";
 import Spinner from "../../components/Spinner/Spinner";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
 
 const Trends: FC = (): ReactElement => {
     const dispatch = useDispatch();
-    const isLoading = useSelector(selectIsTagsLoading);
-    const trends = useSelector(selectTagsItems);
+    const isLoading = useSelector(selectIsTrendsLoading);
+    const trends = useSelector(selectTrendsItems);
 
     useEffect(() => {
-        dispatch(fetchTrends());
         window.scrollTo(0, 0);
+        dispatch(fetchTrends(0));
+
+        return () => {
+            dispatch(resetTrendsState());
+        };
     }, []);
 
     return (
@@ -24,7 +28,7 @@ const Trends: FC = (): ReactElement => {
                 <Spinner paddingTop={80}/>
             ) : (
                 <List style={{paddingTop: 48}}>
-                    {trends.map((tag) => <TrendsItem key={tag.id} tag={tag}/>)}
+                    {trends.map((trend) => <TrendsItem key={trend.id} tag={trend}/>)}
                 </List>
             )}
         </div>

@@ -1,38 +1,53 @@
 import {Action} from "redux";
 import {LoadingStatus} from "../../../types";
-import {TagResponse} from "../../../types/tag";
+import {TagsState} from "./state";
 
 export enum TagsActionsType {
     SET_TAGS = 'tags/SET_TAGS',
     FETCH_TAGS = 'tags/FETCH_TAGS',
+    SET_TRENDS = 'tags/SET_TRENDS',
     FETCH_TRENDS = 'tags/FETCH_TRENDS',
-    RESET_TAGS_STATE = 'tags/RESET_TRENDS_STATE',
-    SET_LOADING_STATE = 'tags/SET_LOADING_STATE',
+    RESET_TRENDS_STATE = 'tags/RESET_TRENDS_STATE',
+    SET_TAGS_LOADING_STATE = 'tags/SET_TAGS_LOADING_STATE',
+    SET_TRENDS_LOADING_STATE = 'tags/SET_TRENDS_LOADING_STATE',
 }
 
 export interface SetTagsActionInterface extends Action<TagsActionsType> {
     type: TagsActionsType.SET_TAGS;
-    payload: TagResponse[];
+    payload: TagsState["tags"];
 }
 
 export interface FetchTagsActionInterface extends Action<TagsActionsType> {
     type: TagsActionsType.FETCH_TAGS;
 }
 
-export interface FetchTrendsActionInterface extends Action<TagsActionsType> {
-    type: TagsActionsType.FETCH_TRENDS;
+export interface SetTrendsActionInterface extends Action<TagsActionsType> {
+    type: TagsActionsType.SET_TRENDS;
+    payload: { items: TagsState["tags"], pagesCount: TagsState["pagesCount"] };
 }
 
-export interface ResetTagsStateActionInterface extends Action<TagsActionsType> {
-    type: TagsActionsType.RESET_TAGS_STATE;
+export interface FetchTrendsActionInterface extends Action<TagsActionsType> {
+    type: TagsActionsType.FETCH_TRENDS;
+    payload: number;
+}
+
+export interface ResetTrendsStateActionInterface extends Action<TagsActionsType> {
+    type: TagsActionsType.RESET_TRENDS_STATE;
 }
 
 export interface SetTagsLoadingStateActionInterface extends Action<TagsActionsType> {
-    type: TagsActionsType.SET_LOADING_STATE;
+    type: TagsActionsType.SET_TAGS_LOADING_STATE;
+    payload: LoadingStatus;
+}
+
+export interface SetTrendsLoadingStateActionInterface extends Action<TagsActionsType> {
+    type: TagsActionsType.SET_TRENDS_LOADING_STATE;
     payload: LoadingStatus;
 }
 
 export type TagsActions =
     | SetTagsActionInterface
-    | ResetTagsStateActionInterface
-    | SetTagsLoadingStateActionInterface;
+    | SetTrendsActionInterface
+    | ResetTrendsStateActionInterface
+    | SetTagsLoadingStateActionInterface
+    | SetTrendsLoadingStateActionInterface;

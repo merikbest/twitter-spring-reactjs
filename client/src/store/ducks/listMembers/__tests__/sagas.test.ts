@@ -14,7 +14,7 @@ import {
     setListSuggested,
     setLoadingMembersState,
     setLoadingSuggestedState,
-    setUserToListMembers
+    setUserToList
 } from "../actionCreators";
 import {LoadingStatus} from "../../../types";
 import {testLoadingStatus, testSetResponse, testWatchSaga} from "../../../../util/testHelper";
@@ -83,7 +83,7 @@ describe("listMembersSaga:", () => {
 
             expect(actualYield).toEqual(expectedYield);
         });
-        testSetResponse(worker, true, setUserToListMembers, {userId: 1, isMember: true}, "ListsOwnerMemberResponse");
+        testSetResponse(worker, true, setUserToList, {userId: 1, isMember: true}, "ListsOwnerMemberResponse");
         testSetResponse(worker, true, setMembersSize, true, "ListsOwnerMemberResponse");
         testLoadingStatus(worker, setLoadingSuggestedState, LoadingStatus.ERROR)
     });

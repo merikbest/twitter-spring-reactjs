@@ -99,7 +99,7 @@ const ManageMembersModal: FC<ManageMembersModalProps> = ({visible, onClose}): Re
                     isMembersLoading ? <Spinner/> : (
                         (members.length !== 0) ? (
                             members.map((member) => (
-                                <ManageMembersItem key={member.id} item={list} member={member}/>
+                                <ManageMembersItem key={member.id} item={list} user={member}/>
                             ))
                         ) : (
                             <EmptyPageDescription
@@ -125,8 +125,8 @@ const ManageMembersModal: FC<ManageMembersModalProps> = ({visible, onClose}): Re
                             }}
                         />
                         {(suggested.length !== 0) ? (
-                            suggested.map((member) => (
-                                <ManageMembersItem key={member.id} item={list} member={member}/>
+                            suggested.map((suggest) => (
+                                <ManageMembersItem key={suggest.id} item={list} user={suggest} isSuggested />
                             ))
                         ) : (
                             <EmptyPageDescription

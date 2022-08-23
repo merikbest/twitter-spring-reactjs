@@ -39,14 +39,14 @@ describe("listMembersReducer:", () => {
         );
 
         testActionDispatch(
-            ListMembersActionsType.SET_USER_TO_LIST_MEMBERS,
+            ListMembersActionsType.SET_USER_TO_LIST,
             listMembersReducer(
                 {
                     ...initialListMembersState,
                     suggested: [{id: 1, isMemberInList: false}] as ListsOwnerMemberResponse[],
                 },
                 {
-                    type: ListMembersActionsType.SET_USER_TO_LIST_MEMBERS,
+                    type: ListMembersActionsType.SET_USER_TO_LIST,
                     payload: {userId: 1, isMember: true}
                 }
             ),

@@ -10,7 +10,7 @@ describe("tags selectors:", () => {
         it("should return TagResponse array", () => {
             expect(selectTagsItems({
                 ...mockState,
-                tags: {...mockState.tags, items: mockTags}
+                tags: {...mockState.tags, tags: mockTags}
             })).toBe(mockTags);
         });
     });

@@ -24,9 +24,14 @@ export const listMembersReducer = produce((draft: Draft<ListMembersState>, actio
             draft.suggestedLoadingState = LoadingStatus.LOADED;
             break;
 
-        case ListMembersActionsType.SET_USER_TO_LIST_MEMBERS:
-            const suggestedIndex = draft.suggested.findIndex((member) => member.id === action.payload.userId);
-            if (suggestedIndex !== -1) draft.suggested[suggestedIndex].isMemberInList = action.payload.isMember;
+        case ListMembersActionsType.SET_USER_TO_LIST:
+            if (action.payload.isSuggested) {
+                const suggestedIndex = draft.suggested.findIndex((suggest) => suggest.id === action.payload.userId);
+                if (suggestedIndex !== -1) draft.suggested[suggestedIndex].isMemberInList = action.payload.isUserAdded;
+            } else {
+                const membersIndex = draft.members.findIndex((member) => member.id === action.payload.userId);
+                if (membersIndex !== -1) draft.members[membersIndex].isMemberInList = action.payload.isUserAdded;
+            }
             draft.membersLoadingState = LoadingStatus.LOADED;
             break;
 

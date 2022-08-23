@@ -71,7 +71,7 @@ const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
             <DialogContent className={classes.content}>
                 {isLoading ? <Spinner/> : (
                     (users.length !== 0) ? (
-                        users.map((user) => <ManageMembersItem key={user.id} item={list} member={user}/>)
+                        users.map((user) => <ManageMembersItem key={user.id} item={list} user={user}/>)
                     ) : (
                         <EmptyPageDescription
                             title={(title === "List members") ? (

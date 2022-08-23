@@ -20,13 +20,15 @@ import {PROFILE} from "../../../../../util/pathConstants";
 
 interface ManageMembersItemProps<T> {
     item?: T;
-    member?: ListsOwnerMemberResponse;
+    user?: ListsOwnerMemberResponse;
+    isSuggested?: boolean;
 }
 
 const ManageMembersItem: FC<ManageMembersItemProps<BaseListResponse> & HoverUserProps & SnackbarProps> = (
     {
         item: list,
-        member,
+        user,
+        isSuggested,
         visiblePopperWindow,
         handleHoverPopper,
         handleLeavePopper,
@@ -49,15 +51,15 @@ const ManageMembersItem: FC<ManageMembersItemProps<BaseListResponse> & HoverUser
 
     const onClickAddUserToList = (event: React.MouseEvent<HTMLButtonElement>): void => {
         event.preventDefault();
-        dispatch(processUserToListMembers({userId: member?.id!, listId: list!.id}));
+        dispatch(processUserToListMembers({userId: user?.id!, listId: list!.id, isSuggested}));
     }
 
     return (
-        <Link to={`${PROFILE}/${member?.id}`} className={globalClasses.link}>
+        <Link to={`${PROFILE}/${user?.id}`} className={globalClasses.link}>
             <Paper className={classes.container} variant="outlined">
                 <Avatar
                     className={classes.listAvatar}
-                    src={member?.avatar?.src ? member?.avatar.src : DEFAULT_PROFILE_IMG}
+                    src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}
                 />
                 <div style={{flex: 1}}>
                     <div className={classes.header}>
@@ -66,27 +68,27 @@ const ManageMembersItem: FC<ManageMembersItemProps<BaseListResponse> & HoverUser
                                 id={"fullName"}
                                 variant={"h6"}
                                 component={"span"}
-                                onMouseEnter={() => handleHoverPopper!(member?.id!)}
+                                onMouseEnter={() => handleHoverPopper!(user?.id!)}
                             >
-                                {member?.fullName}
+                                {user?.fullName}
                             </Typography>
-                            {member?.isPrivateProfile && (
+                            {user?.isPrivateProfile && (
                                 <span className={classes.lockIcon}>
                                     {LockIcon}
                                 </span>
                             )}
                             <PopperUserWindow visible={visiblePopperWindow}/>
                             <Typography variant={"subtitle1"} component={"div"}>
-                                @{member?.username}
+                                @{user?.username}
                             </Typography>
                             <Typography variant={"body1"} component={"div"}>
-                                {member?.about}
+                                {user?.about}
                             </Typography>
                         </div>
                         <div className={classes.buttonWrapper}>
                             {(list?.listOwner.id === myProfile?.id) && (
-                                (member?.id === myProfile?.id) ? null : (
-                                    (!member?.isMemberInList) ? (
+                                (user?.id === myProfile?.id) ? null : (
+                                    (!user?.isMemberInList) ? (
                                         <Button
                                             className={classes.outlinedButton}
                                             onClick={(event) => onClickAddUserToList(event)}
