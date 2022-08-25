@@ -108,9 +108,9 @@ public class UserMapper {
         return userService.processUserBookmarks(tweetId);
     }
 
-    public List<UserResponse> getFollowers(Long userId) {
-        List<UserProjection> users = userService.getFollowers(userId);
-        return basicMapper.convertToResponseList(users, UserResponse.class);
+    public HeaderResponse<UserResponse> getFollowers(Long userId, Pageable pageable) {
+        Page<UserProjection> users = userService.getFollowers(userId, pageable);
+        return basicMapper.getHeaderResponse(users, UserResponse.class);
     }
 
     public List<UserResponse> getFollowing(Long userId) {

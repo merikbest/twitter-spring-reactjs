@@ -60,7 +60,7 @@ public interface UserService {
 
     AuthUserProjection updateUserProfile(User userInfo);
 
-    List<UserProjection> getFollowers(Long userId);
+    Page<UserProjection> getFollowers(Long userId, Pageable pageable);
 
     List<UserProjection> getFollowing(Long userId);
 

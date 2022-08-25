@@ -133,9 +133,10 @@ public class UserController {
         return ResponseEntity.ok(userMapper.getUserTweetImages(userId));
     }
 
-    @GetMapping("/followers/{userId}")
-    public ResponseEntity<List<UserResponse>> getFollowers(@PathVariable Long userId) {
-        return ResponseEntity.ok(userMapper.getFollowers(userId));
+    @GetMapping("/followers/{userId}") // TODO fix tests
+    public ResponseEntity<List<UserResponse>> getFollowers(@PathVariable Long userId, @PageableDefault(size = 15) Pageable pageable) {
+        HeaderResponse<UserResponse> response = userMapper.getFollowers(userId, pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
     @GetMapping("/following/{userId}")
