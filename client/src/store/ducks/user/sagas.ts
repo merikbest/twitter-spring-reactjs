@@ -80,12 +80,13 @@ import {
 } from "../notifications/actionCreators";
 import {setBlockedUser, setMutedUser} from "../blockedAndMutedUsers/actionCreators";
 import {HOME, PROFILE} from '../../../util/pathConstants';
+import {AxiosResponse} from "axios";
 
 export function* updateUserDataRequest({payload}: UpdateUserDataActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const data: AuthUserResponse = yield call(UserApi.updateUserProfile, payload);
-        yield put(setUserData(data));
+        const response: AxiosResponse<AuthUserResponse> = yield call(UserApi.updateUserProfile, payload);
+        yield put(setUserData(response.data));
     } catch (error) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }

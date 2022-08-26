@@ -113,9 +113,9 @@ public class UserMapper {
         return basicMapper.getHeaderResponse(users, UserResponse.class);
     }
 
-    public List<UserResponse> getFollowing(Long userId) {
-        List<UserProjection> users = userService.getFollowing(userId);
-        return basicMapper.convertToResponseList(users, UserResponse.class);
+    public HeaderResponse<UserResponse> getFollowing(Long userId, Pageable pageable) {
+        Page<UserProjection> users = userService.getFollowing(userId, pageable);
+        return basicMapper.getHeaderResponse(users, UserResponse.class);
     }
 
     public List<FollowerUserResponse> getFollowerRequests() {

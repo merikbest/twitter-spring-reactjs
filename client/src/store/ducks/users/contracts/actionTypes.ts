@@ -1,7 +1,7 @@
 import {Action} from "redux";
 import {LoadingStatus} from "../../../types";
-import {UserResponse} from "../../../types/user";
 import {UsersState} from "./state";
+import {PageableResponse} from "../../../types/common";
 
 export enum UsersActionsType {
     FETCH_USERS = 'users/FETCH_USERS',
@@ -28,12 +28,12 @@ export interface FetchRelevantUsersActionInterface extends Action<UsersActionsTy
 
 export interface SetUsersActionInterface extends Action<UsersActionsType> {
     type: UsersActionsType.SET_USERS;
-    payload: UserResponse[];
+    payload: UsersState["users"];
 }
 
 export interface SetPageableUsersActionInterface extends Action<UsersActionsType> {
     type: UsersActionsType.SET_PAGEABLE_USERS;
-    payload: { items: UsersState["users"], pagesCount: UsersState["pagesCount"] };
+    payload: PageableResponse<UsersState["users"]>;
 }
 
 export interface SetFollowToUsersStateActionInterface extends Action<UsersActionsType> {

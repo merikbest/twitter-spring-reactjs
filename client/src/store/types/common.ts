@@ -1,3 +1,8 @@
+export interface PageableResponse<T> {
+    items: T;
+    pagesCount: number;
+}
+
 export enum ColorScheme {
     BLUE = "BLUE",
     YELLOW = "YELLOW",

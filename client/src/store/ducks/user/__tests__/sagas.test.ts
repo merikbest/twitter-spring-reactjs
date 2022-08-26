@@ -1,3 +1,5 @@
+import {AxiosResponse} from "axios";
+
 import {
     fetchPinTweetRequest,
     fetchReadMessagesRequest,
@@ -110,6 +112,7 @@ import {BackgroundTheme, ColorScheme} from "../../../types/common";
 describe("userSaga:", () => {
     const mockAuthUser = {id: 1, email: "test@test.test"} as AuthUserResponse;
     const mockAuthentication = {user: mockAuthUser, token: "test"} as AuthenticationResponse;
+    const mockAxiosAuthentication = {data: {user: mockAuthUser, token: "test"}} as AxiosResponse<AuthenticationResponse>;
 
     describe("updateUserDataRequest:", () => {
         const mockUserRequest = {username: "test", location: "test"} as UserRequest;
@@ -117,7 +120,7 @@ describe("userSaga:", () => {
 
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
         testCall(worker, UserApi.updateUserProfile, mockUserRequest);
-        testSetResponse(worker, mockAuthUser, setUserData, mockAuthUser, "AuthUserResponse");
+        testSetResponse(worker, mockAxiosAuthentication, setUserData, mockAuthentication, "AuthUserResponse");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
 

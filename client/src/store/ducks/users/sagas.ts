@@ -7,7 +7,7 @@ import {setPageableUsers, setUsers, setUsersLoadingState} from "./actionCreators
 import {UserApi} from "../../../services/api/userApi";
 import {UserResponse} from "../../types/user";
 
-export function* fetchUsersRequest({payload}: FetchUsersActionInterface) {// TODO ADD TESTS
+export function* fetchUsersRequest({payload}: FetchUsersActionInterface) {
     try {
         yield put(setUsersLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<UserResponse[]> = yield call(UserApi.getUsers, payload);
@@ -23,8 +23,8 @@ export function* fetchUsersRequest({payload}: FetchUsersActionInterface) {// TOD
 export function* fetchRelevantUsersRequest() {
     try {
         yield put(setUsersLoadingState(LoadingStatus.LOADING));
-        const item: UserResponse[] = yield call(UserApi.getRelevantUsers);
-        yield put(setUsers(item));
+        const response: AxiosResponse<UserResponse[]> = yield call(UserApi.getRelevantUsers);
+        yield put(setUsers(response.data));
     } catch (error) {
         yield put(setUsersLoadingState(LoadingStatus.ERROR));
     }

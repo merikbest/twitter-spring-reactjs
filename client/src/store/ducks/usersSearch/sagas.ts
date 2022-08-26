@@ -14,7 +14,7 @@ import {setFollowers, setPageableUsersSearch, setUsersSearchLoadingState} from "
 import {UserResponse} from "../../types/user";
 import {ChatApi} from "../../../services/api/chatApi";
 
-export function* fetchUsersSearchRequest({payload}: FetchUsersSearchActionInterface) { // TODO ADD PAGINATION / ADD TESTS
+export function* fetchUsersSearchRequest({payload}: FetchUsersSearchActionInterface) {
     try {
         yield put(setUsersSearchLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<UserResponse[]> = yield call(UserApi.getUsers, payload);
@@ -27,7 +27,7 @@ export function* fetchUsersSearchRequest({payload}: FetchUsersSearchActionInterf
     }
 }
 
-export function* fetchUsersSearchByUsernameRequest({payload}: FetchUsersSearchByNameActionInterface) { // TODO CHECK TESTS
+export function* fetchUsersSearchByUsernameRequest({payload}: FetchUsersSearchByNameActionInterface) {
     try {
         yield put(setUsersSearchLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<UserResponse[]> = yield call(UserApi.searchUsersByUsername, payload);

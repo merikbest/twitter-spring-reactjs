@@ -1,3 +1,4 @@
+import {AxiosResponse} from "axios";
 import {call, put, takeLatest} from 'redux-saga/effects';
 
 import {LoadingStatus} from '../../types';
@@ -23,8 +24,8 @@ import {TweetImageResponse} from "../../types/tweet";
 export function* fetchUserRequest({payload}: FetchUserProfileActionInterface) {
     try {
         yield put(setUserProfileLoadingState(LoadingStatus.LOADING));
-        const item: UserProfileResponse = yield call(UserApi.getUserInfo, payload);
-        yield put(setUserProfile(item));
+        const response: AxiosResponse<UserProfileResponse> = yield call(UserApi.getUserInfo, payload);
+        yield put(setUserProfile(response.data));
     } catch (error) {
         yield put(setUserProfileLoadingState(LoadingStatus.ERROR));
     }

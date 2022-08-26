@@ -1,3 +1,5 @@
+import {AxiosResponse} from "axios";
+
 import {
     fetchFollowersRequest,
     fetchFollowingsRequest,
@@ -8,35 +10,47 @@ import {
 import {
     fetchFollowers,
     fetchFollowings,
+    fetchUsersSearch,
     fetchUsersSearchByUsername,
     setFollowers,
+    setPageableUsersSearch,
     setUsersSearch,
     setUsersSearchLoadingState
 } from "../actionCreators";
 import {LoadingStatus} from "../../../types";
-import {testCall, testLoadingStatus, testSetResponse, testWatchSaga} from "../../../../util/testHelper";
+import {
+    mockExpectedResponse,
+    testCall,
+    testLoadingStatus,
+    testSetResponse,
+    testWatchSaga
+} from "../../../../util/testHelper";
 import {UserResponse} from "../../../types/user";
 import {UserApi} from "../../../../services/api/userApi";
 import {UsersSearchActionsType} from "../contracts/actionTypes";
 
 describe("usersSearchSaga:", () => {
     const mockUserResponse = [{id: 1}, {id: 1}] as UserResponse[];
+    const mockAxiosUserResponse = {
+        data: [{id: 1}, {id: 1}],
+        headers: {"page-total-count": 1}
+    } as AxiosResponse<UserResponse[]>;
 
     describe("fetchUsersSearchRequest:", () => {
-        const worker = fetchUsersSearchRequest();
+        const worker = fetchUsersSearchRequest(fetchUsersSearch(1));
 
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.LOADING);
-        testCall(worker, UserApi.getUsers);
-        testSetResponse(worker, mockUserResponse, setUsersSearch, mockUserResponse, "UserResponse");
+        testCall(worker, UserApi.getUsers, 1);
+        testSetResponse(worker, mockAxiosUserResponse, setPageableUsersSearch, mockExpectedResponse(mockAxiosUserResponse), "UserResponse");
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.ERROR)
     });
 
     describe("fetchUsersSearchByUsernameRequest:", () => {
-        const worker = fetchUsersSearchByUsernameRequest(fetchUsersSearchByUsername("test"));
+        const worker = fetchUsersSearchByUsernameRequest(fetchUsersSearchByUsername({username: "test", page: 1}));
 
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.LOADING);
-        testCall(worker, UserApi.searchUsersByUsername, "test");
-        testSetResponse(worker, mockUserResponse, setUsersSearch, mockUserResponse, "UserResponse");
+        testCall(worker, UserApi.searchUsersByUsername, {username: "test", page: 1});
+        testSetResponse(worker, mockAxiosUserResponse, setPageableUsersSearch, mockExpectedResponse(mockAxiosUserResponse), "UserResponse");
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.ERROR)
     });
 

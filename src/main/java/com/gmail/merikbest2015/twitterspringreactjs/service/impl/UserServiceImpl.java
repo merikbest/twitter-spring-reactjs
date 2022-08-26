@@ -251,10 +251,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserProjection> getFollowing(Long userId) {
+    public Page<UserProjection> getFollowing(Long userId, Pageable pageable) {
         checkIsUserExist(userId);
         checkIsUserBlocked(userId);
-        return userRepository.getFollowingById(userId);
+        return userRepository.getFollowingById(userId, pageable);
     }
 
     @Override

@@ -139,9 +139,10 @@ public class UserController {
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping("/following/{userId}")
-    public ResponseEntity<List<UserResponse>> getFollowing(@PathVariable Long userId) {
-        return ResponseEntity.ok(userMapper.getFollowing(userId));
+    @GetMapping("/following/{userId}") // TODO fix tests
+    public ResponseEntity<List<UserResponse>> getFollowing(@PathVariable Long userId, @PageableDefault(size = 15) Pageable pageable) {
+        HeaderResponse<UserResponse> response = userMapper.getFollowing(userId, pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
     @GetMapping("/follower-requests")

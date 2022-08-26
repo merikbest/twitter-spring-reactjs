@@ -2,13 +2,16 @@ import React from "react";
 import Adapter from "enzyme-adapter-react-16";
 import {configure, mount} from "enzyme";
 import {call, put, takeLatest} from "redux-saga/effects";
-import {LoadingStatus} from "../store/types";
-import {RootState} from "../store/store";
 import configureStore from "redux-mock-store";
 import {Link, Router} from "react-router-dom";
 import * as redux from "react-redux";
 import {Provider} from "react-redux";
 import {createMemoryHistory} from "history";
+import routeData from "react-router";
+import {AxiosResponse} from "axios";
+
+import {LoadingStatus} from "../store/types";
+import {RootState} from "../store/store";
 import {
     createMockMyProfile,
     mockFullTweet,
@@ -17,7 +20,7 @@ import {
     mockUser,
     mockUsers
 } from "./mockData/mockData";
-import routeData from "react-router";
+import {PageableResponse} from "../store/types/common";
 
 
 configure({adapter: new Adapter()});
@@ -121,6 +124,13 @@ export const mountWithStore = (component, mockState?, mockHistory?) => {
             </Provider>
         </Router>
     );
+};
+
+export const mockExpectedResponse = <T,>(response: AxiosResponse<T>): PageableResponse<T> => {
+    return {
+        items: response.data,
+        pagesCount: parseInt(response.headers["page-total-count"])
+    }
 };
 
 export const mockDispatch = () => {

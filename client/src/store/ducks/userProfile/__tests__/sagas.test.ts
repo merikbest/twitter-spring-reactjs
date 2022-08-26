@@ -1,3 +1,5 @@
+import {AxiosResponse} from "axios";
+
 import {
     fetchChatParticipantRequest,
     fetchImagesRequest,
@@ -25,14 +27,14 @@ import {TweetImageResponse} from "../../../types/tweet";
 import {UserProfileActionsType} from "../contracts/actionTypes";
 
 describe("userProfileSaga:", () => {
-    const mockUserProfileResponse = {id: 1} as UserProfileResponse;
+    const mockUserProfileResponse = {data : {id: 1}} as AxiosResponse<UserProfileResponse>;
 
     describe("fetchUserRequest:", () => {
         const worker = fetchUserRequest(fetchUserProfile(1));
 
         testLoadingStatus(worker, setUserProfileLoadingState, LoadingStatus.LOADING);
         testCall(worker, UserApi.getUserInfo, 1);
-        testSetResponse(worker, mockUserProfileResponse, setUserProfile, mockUserProfileResponse, "UserProfileResponse");
+        testSetResponse(worker, mockUserProfileResponse, setUserProfile, mockUserProfileResponse.data, "UserProfileResponse");
         testLoadingStatus(worker, setUserProfileLoadingState, LoadingStatus.ERROR)
     });
 

@@ -13,14 +13,14 @@ import {
     UsersActionsType
 } from './contracts/actionTypes';
 import {UsersState} from "./contracts/state";
-import {UserResponse} from "../../types/user";
+import {PageableResponse} from "../../types/common";
 
-export const setUsers = (payload: UserResponse[]): SetUsersActionInterface => ({
+export const setUsers = (payload: UsersState["users"]): SetUsersActionInterface => ({
     type: UsersActionsType.SET_USERS,
     payload
 });
 
-export const setPageableUsers = (payload: { items: UsersState["users"], pagesCount: UsersState["pagesCount"] }): SetPageableUsersActionInterface => ({
+export const setPageableUsers = (payload: PageableResponse<UsersState["users"]>): SetPageableUsersActionInterface => ({
     type: UsersActionsType.SET_PAGEABLE_USERS,
     payload
 });

@@ -1,20 +1,31 @@
+import {AxiosResponse} from "axios";
+
 import {fetchRelevantUsersRequest, fetchUsersRequest, usersSaga} from "../sagas";
-import {setUsers, setUsersLoadingState} from "../actionCreators";
+import {fetchUsers, setPageableUsers, setUsers, setUsersLoadingState} from "../actionCreators";
 import {LoadingStatus} from "../../../types";
-import {testCall, testLoadingStatus, testSetResponse, testWatchSaga} from "../../../../util/testHelper";
+import {
+    mockExpectedResponse,
+    testCall,
+    testLoadingStatus,
+    testSetResponse,
+    testWatchSaga
+} from "../../../../util/testHelper";
 import {UserResponse} from "../../../types/user";
 import {UserApi} from "../../../../services/api/userApi";
 import {UsersActionsType} from "../contracts/actionTypes";
 
 describe("usersSaga:", () => {
-    const mockUserResponse = [{id: 1}, {id: 1}] as UserResponse[];
+    const mockUserResponse = {
+        data: [{id: 1}, {id: 1}],
+        headers: {"page-total-count": 1}
+    } as AxiosResponse<UserResponse[]>;
 
     describe("fetchUsersRequest:", () => {
-        const worker = fetchUsersRequest();
+        const worker = fetchUsersRequest(fetchUsers(1));
 
         testLoadingStatus(worker, setUsersLoadingState, LoadingStatus.LOADING);
-        testCall(worker, UserApi.getUsers);
-        testSetResponse(worker, mockUserResponse, setUsers, mockUserResponse, "UserResponse");
+        testCall(worker, UserApi.getUsers, 1);
+        testSetResponse(worker, mockUserResponse, setPageableUsers, mockExpectedResponse(mockUserResponse), "UserResponse");
         testLoadingStatus(worker, setUsersLoadingState, LoadingStatus.ERROR)
     });
 
@@ -23,7 +34,7 @@ describe("usersSaga:", () => {
 
         testLoadingStatus(worker, setUsersLoadingState, LoadingStatus.LOADING);
         testCall(worker, UserApi.getRelevantUsers);
-        testSetResponse(worker, mockUserResponse, setUsers, mockUserResponse, "UserResponse");
+        testSetResponse(worker, mockUserResponse, setUsers, mockUserResponse.data, "UserResponse");
         testLoadingStatus(worker, setUsersLoadingState, LoadingStatus.ERROR)
     });
 

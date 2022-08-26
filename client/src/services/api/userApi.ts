@@ -25,23 +25,20 @@ export interface Response<T> {
 }
 
 export const UserApi = {
-    async getUsers(payload: number): Promise<AxiosResponse<UserResponse[]>> {
+    async getUsers(payload: number): Promise<AxiosResponse<UserResponse[]>> { // +
         return await axios.get<UserResponse[]>(`${API_URL}/user/all`, {params: {page: payload}});
     },
-    async getRelevantUsers(): Promise<UserResponse[]> {
-        const {data} = await axios.get<UserResponse[]>(`${API_URL}/user/relevant`);
-        return data;
+    async getRelevantUsers(): Promise<AxiosResponse<UserResponse[]>> { // +
+        return await axios.get<UserResponse[]>(`${API_URL}/user/relevant`);
     },
-    async searchUsersByUsername(payload: { username: string, page: number }): Promise<AxiosResponse<UserResponse[]>> {
+    async searchUsersByUsername(payload: { username: string, page: number }): Promise<AxiosResponse<UserResponse[]>> { // +
         return await axios.get<UserResponse[]>(`${API_URL}/user/search/${payload.username}`, {params: {page: payload.page}});
     },
-    async getUserInfo(userId: number): Promise<UserProfileResponse> {
-        const {data} = await axios.get<UserProfileResponse>(`${API_URL}/user/${userId}`);
-        return data;
+    async getUserInfo(userId: number): Promise<AxiosResponse<UserProfileResponse>> { // +
+        return await axios.get<UserProfileResponse>(`${API_URL}/user/${userId}`);
     },
-    async updateUserProfile(userData: UserRequest): Promise<AuthUserResponse> {
-        const {data} = await axios.put<AuthUserResponse>(`${API_URL}/user`, userData);
-        return data;
+    async updateUserProfile(userData: UserRequest): Promise<AxiosResponse<AuthUserResponse>> { // +
+        return await axios.put<AuthUserResponse>(`${API_URL}/user`, userData);
     },
     async getUserTweetImages(userId: number): Promise<TweetImageResponse[]> {
         const {data} = await axios.get<TweetImageResponse[]>(`${API_URL}/user/images/${userId}`);
