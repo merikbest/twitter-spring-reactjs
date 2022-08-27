@@ -24,6 +24,12 @@ export const usersSearchReducer = produce((draft: Draft<UsersSearchState>, actio
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
+        case UsersSearchActionsType.SET_PAGEABLE_FOLLOWERS:
+            draft.followers = [...draft.followers, ...action.payload.items];
+            draft.pagesCount = action.payload.pagesCount
+            draft.loadingState = LoadingStatus.LOADED;
+            break;
+
         case UsersSearchActionsType.SET_FOLLOWERS:
             draft.followers = action.payload;
             draft.loadingState = LoadingStatus.LOADED;
@@ -55,6 +61,7 @@ export const usersSearchReducer = produce((draft: Draft<UsersSearchState>, actio
 
         case UsersSearchActionsType.RESET_USERS_STATE:
             draft.users = [];
+            draft.followers = [];
             draft.pagesCount = 1;
             draft.loadingState = LoadingStatus.LOADING;
             break;

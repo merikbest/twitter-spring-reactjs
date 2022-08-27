@@ -21,7 +21,7 @@ import {setPageableTweets, setTweetsLoadingState} from "../tweets/actionCreators
 import {NotificationInfoResponse, NotificationResponse, NotificationUserResponse} from "../../types/notification";
 import {TweetResponse} from "../../types/tweet";
 
-export function* fetchNotificationsRequest({payload}: FetchNotificationsActionInterface) { // TODO fixe tests
+export function* fetchNotificationsRequest({payload}: FetchNotificationsActionInterface) {
     try {
         yield put(setNotificationsLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<NotificationResponse[]> = yield call(UserApi.getUserNotifications, payload);
@@ -34,11 +34,11 @@ export function* fetchNotificationsRequest({payload}: FetchNotificationsActionIn
     }
 }
 
-export function* fetchFetchTweetAuthorsNotificationsRequest() { // TODO add tests
+export function* fetchFetchTweetAuthorsNotificationsRequest() {
     try {
         yield put(setTweetAuthorsLoadingState(LoadingStatus.LOADING));
-        const items: NotificationUserResponse[] = yield call(UserApi.getTweetAuthorsNotifications);
-        yield put(setTweetAuthorsNotifications(items));
+        const response: AxiosResponse<NotificationUserResponse[]> = yield call(UserApi.getTweetAuthorsNotifications);
+        yield put(setTweetAuthorsNotifications(response.data));
     } catch (error) {
         yield put(setTweetAuthorsLoadingState(LoadingStatus.ERROR));
     }
@@ -72,8 +72,8 @@ export function* fetchMentionsRequest({payload}: FetchMentionsActionInterface) {
 
 export function* fetchNotificationInfoRequest({payload}: FetchNotificationInfoActionInterface) {
     try {
-        const items: NotificationInfoResponse = yield call(UserApi.getUserNotificationById, payload);
-        yield put(setNotificationInfo(items));
+        const response: AxiosResponse<NotificationInfoResponse> = yield call(UserApi.getUserNotificationById, payload);
+        yield put(setNotificationInfo(response.data));
     } catch (error) {
         yield put(setNotificationsLoadingState(LoadingStatus.ERROR));
     }

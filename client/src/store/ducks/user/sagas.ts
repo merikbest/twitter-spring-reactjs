@@ -131,16 +131,16 @@ export function* fetchUserDataRequest() {
 
 export function* processFollowUserRequest({payload}: FollowUserActionInterface) {
     try {
-        const item: NotificationUserResponse = yield call(UserApi.follow, payload.userId);
-        yield put(setFollowToTweetsState({userId: item.id, tweetId: payload.tweetId!, isFollower: item.isFollower}));
-        yield put(setFollowToUsersTweetState({userId: item.id, tweetId: payload.tweetId!, isFollower: item.isFollower}));
-        yield put(setUserFollowing(item.isFollower));
-        yield put(setFollowToUserProfile(item.isFollower));
-        yield put(setFollowToUserDetail(item.isFollower));
-        yield put(setFollowToUsersState({userId: item.id, isFollower: item.isFollower}));
-        yield put(setFollowToUsersSearchState({userId: item.id, isFollower: item.isFollower}));
-        yield put(setFollowToTweetState(item.isFollower));
-        yield put(setFollowToNotificationInfo(item.isFollower));
+        const {data}: AxiosResponse<NotificationUserResponse> = yield call(UserApi.follow, payload.userId);
+        yield put(setFollowToTweetsState({userId: data.id, tweetId: payload.tweetId!, isFollower: data.isFollower}));
+        yield put(setFollowToUsersTweetState({userId: data.id, tweetId: payload.tweetId!, isFollower: data.isFollower}));
+        yield put(setUserFollowing(data.isFollower));
+        yield put(setFollowToUserProfile(data.isFollower));
+        yield put(setFollowToUserDetail(data.isFollower));
+        yield put(setFollowToUsersState({userId: data.id, isFollower: data.isFollower}));
+        yield put(setFollowToUsersSearchState({userId: data.id, isFollower: data.isFollower}));
+        yield put(setFollowToTweetState(data.isFollower));
+        yield put(setFollowToNotificationInfo(data.isFollower));
     } catch (error) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -149,8 +149,8 @@ export function* processFollowUserRequest({payload}: FollowUserActionInterface) 
 export function* startUseTwitterRequest({payload}: StartUseTwitterActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: boolean = yield call(UserApi.startUseTwitter, payload);
-        yield put(setProfileStarted(item));
+        const response: AxiosResponse<boolean> = yield call(UserApi.startUseTwitter, payload);
+        yield put(setProfileStarted(response.data));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -159,8 +159,8 @@ export function* startUseTwitterRequest({payload}: StartUseTwitterActionInterfac
 export function* fetchPinTweetRequest({payload}: FetchPinTweetActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: number = yield call(UserApi.pinTweet, payload);
-        yield put(setPinTweetId(item));
+        const response: AxiosResponse<number> = yield call(UserApi.pinTweet, payload);
+        yield put(setPinTweetId(response.data));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -279,16 +279,16 @@ export function* updateBackgroundColorRequest({payload}: UpdateBackgroundColorAc
 
 export function* processUserToBlocklistRequest({payload}: ProcessUserToBlocklistActionInterface) {
     try {
-        const item: boolean = yield call(UserApi.processBlockList, payload.userId);
-        yield put(setBlockedToTweetsState({userId: payload.userId, tweetId: payload.tweetId!, isUserBlocked: item}));
-        yield put(setBlockedUsersTweetState({userId: payload.userId, tweetId: payload.tweetId!, isUserBlocked: item}));
-        yield put(setBlocked(item));
-        yield put(setBlockUserDetail(item));
-        yield put(setBlockedUser({userId: payload.userId, isUserBlocked: item}));
-        yield put(setBlockedUsersState({userId: payload.userId, isUserBlocked: item}));
-        yield put(setBlockUsersSearchState({userId: payload.userId, isUserBlocked: item}));
-        yield put(setBlockedToTweetState(item));
-        yield put(setBlockedNotificationInfo(item));
+        const {data}: AxiosResponse<boolean> = yield call(UserApi.processBlockList, payload.userId);
+        yield put(setBlockedToTweetsState({userId: payload.userId, tweetId: payload.tweetId!, isUserBlocked: data}));
+        yield put(setBlockedUsersTweetState({userId: payload.userId, tweetId: payload.tweetId!, isUserBlocked: data}));
+        yield put(setBlocked(data));
+        yield put(setBlockUserDetail(data));
+        yield put(setBlockedUser({userId: payload.userId, isUserBlocked: data}));
+        yield put(setBlockedUsersState({userId: payload.userId, isUserBlocked: data}));
+        yield put(setBlockUsersSearchState({userId: payload.userId, isUserBlocked: data}));
+        yield put(setBlockedToTweetState(data));
+        yield put(setBlockedNotificationInfo(data));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -296,13 +296,13 @@ export function* processUserToBlocklistRequest({payload}: ProcessUserToBlocklist
 
 export function* processUserToMuteListRequest({payload}: ProcessUserToMuteListActionInterface) {
     try {
-        const item: boolean = yield call(UserApi.processMutedList, payload.userId);
-        yield put(setMutedToTweetsState({userId: payload.userId, tweetId: payload.tweetId!, isUserMuted: item}));
-        yield put(setMutedUsersTweetState({userId: payload.userId, tweetId: payload.tweetId!, isUserMuted: item}));
-        yield put(setMuted(item));
-        yield put(setMutedUser({userId: payload.userId, isUserMuted: item}));
-        yield put(setMutedUsersState({userId: payload.userId, isUserMuted: item})); // TODO NOT NEEDED ???
-        yield put(setMutedToTweetState(item));
+        const {data}: AxiosResponse<boolean> = yield call(UserApi.processMutedList, payload.userId);
+        yield put(setMutedToTweetsState({userId: payload.userId, tweetId: payload.tweetId!, isUserMuted: data}));
+        yield put(setMutedUsersTweetState({userId: payload.userId, tweetId: payload.tweetId!, isUserMuted: data}));
+        yield put(setMuted(data));
+        yield put(setMutedUser({userId: payload.userId, isUserMuted: data}));
+        yield put(setMutedUsersState({userId: payload.userId, isUserMuted: data})); // TODO NOT NEEDED ???
+        yield put(setMutedToTweetState(data));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -310,12 +310,12 @@ export function* processUserToMuteListRequest({payload}: ProcessUserToMuteListAc
 
 export function* processFollowRequests({payload}: ProcessFollowRequestActionInterface) {
     try {
-        const item: UserProfileResponse = yield call(UserApi.processFollowRequestToPrivateProfile, payload);
-        yield put(setFollowRequestToUserProfile(item.isWaitingForApprove));
-        yield put(setFollowRequestToUserDetail(item.isWaitingForApprove));
-        yield put(setFollowRequestToUsers({userId: item.id, isWaitingForApprove: item.isWaitingForApprove}));
-        yield put(setFollowRequestToUsersSearchState({userId: item.id, isWaitingForApprove: item.isWaitingForApprove}));
-        yield put(setFollowRequestToNotificationInfo(item.isWaitingForApprove));
+        const {data}: AxiosResponse<UserProfileResponse> = yield call(UserApi.processFollowRequestToPrivateProfile, payload);
+        yield put(setFollowRequestToUserProfile(data.isWaitingForApprove));
+        yield put(setFollowRequestToUserDetail(data.isWaitingForApprove));
+        yield put(setFollowRequestToUsers({userId: data.id, isWaitingForApprove: data.isWaitingForApprove}));
+        yield put(setFollowRequestToUsersSearchState({userId: data.id, isWaitingForApprove: data.isWaitingForApprove}));
+        yield put(setFollowRequestToNotificationInfo(data.isWaitingForApprove));
     } catch (error) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }

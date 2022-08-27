@@ -1,3 +1,4 @@
+import {AxiosResponse} from "axios";
 import {call, put, takeLatest} from 'redux-saga/effects';
 
 import {
@@ -14,8 +15,8 @@ import {setFollowersSize, setUserLoadingStatus} from "../user/actionCreators";
 export function* fetchFollowerRequests() {
     try {
         yield put(setFollowerRequestsLoadingState(LoadingStatus.LOADING));
-        const items: FollowerUserResponse[] = yield call(UserApi.getFollowerRequests);
-        yield put(setFollowerRequests(items));
+        const response: AxiosResponse<FollowerUserResponse[]> = yield call(UserApi.getFollowerRequests);
+        yield put(setFollowerRequests(response.data));
     } catch (error) {
         yield put(setFollowerRequestsLoadingState(LoadingStatus.ERROR));
     }

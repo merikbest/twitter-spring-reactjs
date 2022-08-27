@@ -9,25 +9,32 @@ import {
     SetFollowersActionInterface,
     SetFollowRequestToUsersSearchStateActionInterface,
     SetFollowToUsersSearchStateActionInterface,
+    SetPageableFollowersActionInterface,
     SetPageableUsersSearchActionInterface,
     SetUsersSearchActionInterface,
     SetUsersSearchLoadingStatusActionInterface,
     UsersSearchActionsType
 } from './contracts/actionTypes';
 import {UsersSearchState} from "./contracts/state";
+import {PageableResponse} from "../../types/common";
 
 export const setUsersSearch = (payload: UsersSearchState["users"]): SetUsersSearchActionInterface => ({
     type: UsersSearchActionsType.SET_USERS,
     payload
 });
 
-export const setPageableUsersSearch = (payload: { items: UsersSearchState["users"], pagesCount: UsersSearchState["pagesCount"] }): SetPageableUsersSearchActionInterface => ({
+export const setPageableUsersSearch = (payload: PageableResponse<UsersSearchState["users"]>): SetPageableUsersSearchActionInterface => ({
     type: UsersSearchActionsType.SET_PAGEABLE_USERS,
     payload
 });
 
 export const setFollowers = (payload: UsersSearchState["followers"]): SetFollowersActionInterface => ({
     type: UsersSearchActionsType.SET_FOLLOWERS,
+    payload
+});
+
+export const setPageableFollowers = (payload: PageableResponse<UsersSearchState["followers"]>): SetPageableFollowersActionInterface => ({
+    type: UsersSearchActionsType.SET_PAGEABLE_FOLLOWERS,
     payload
 });
 
@@ -51,12 +58,12 @@ export const fetchUsersSearch = (payload: number): FetchUsersSearchActionInterfa
     payload
 });
 
-export const fetchFollowers = (payload: string): FetchFollowersActionInterface => ({
+export const fetchFollowers = (payload: { userId: number | string, page: number }): FetchFollowersActionInterface => ({
     type: UsersSearchActionsType.FETCH_FOLLOWERS,
     payload
 });
 
-export const fetchFollowings = (payload: string): FetchFollowingsActionInterface => ({
+export const fetchFollowings = (payload: { userId: number | string, page: number }): FetchFollowingsActionInterface => ({
     type: UsersSearchActionsType.FETCH_FOLLOWINGS,
     payload
 });

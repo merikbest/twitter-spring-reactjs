@@ -10,7 +10,7 @@ import {
     UsersSearchActionsType
 } from "./contracts/actionTypes";
 import {UserApi} from "../../../services/api/userApi";
-import {setFollowers, setPageableUsersSearch, setUsersSearchLoadingState} from "./actionCreators";
+import {setPageableFollowers, setPageableUsersSearch, setUsersSearchLoadingState} from "./actionCreators";
 import {UserResponse} from "../../types/user";
 import {ChatApi} from "../../../services/api/chatApi";
 
@@ -56,8 +56,11 @@ export function* fetchParticipantsByUsernameRequest({payload}: FetchUsersSearchB
 export function* fetchFollowersRequest({payload}: FetchFollowersActionInterface) {
     try {
         yield put(setUsersSearchLoadingState(LoadingStatus.LOADING));
-        const item: UserResponse[] = yield call(UserApi.getFollowers, payload);
-        yield put(setFollowers(item));
+        const response: AxiosResponse<UserResponse[]> = yield call(UserApi.getFollowers, payload);
+        yield put(setPageableFollowers({
+            items: response.data,
+            pagesCount: parseInt(response.headers["page-total-count"])
+        }));
     } catch (error) {
         yield put(setUsersSearchLoadingState(LoadingStatus.ERROR));
     }
@@ -66,8 +69,11 @@ export function* fetchFollowersRequest({payload}: FetchFollowersActionInterface)
 export function* fetchFollowingsRequest({payload}: FetchFollowingsActionInterface) {
     try {
         yield put(setUsersSearchLoadingState(LoadingStatus.LOADING));
-        const item: UserResponse[] = yield call(UserApi.getFollowing, payload);
-        yield put(setFollowers(item));
+        const response: AxiosResponse<UserResponse[]> = yield call(UserApi.getFollowing, payload);
+        yield put(setPageableFollowers({
+            items: response.data,
+            pagesCount: parseInt(response.headers["page-total-count"])
+        }));
     } catch (error) {
         yield put(setUsersSearchLoadingState(LoadingStatus.ERROR));
     }

@@ -28,6 +28,7 @@ import {UserApi} from "../../../services/api/userApi";
 import {UserResponse} from "../../types/user";
 import {setUpdatedBookmarkedTweetTweetsState} from "../tweets/actionCreators";
 import {setUpdatedBookmarkedTweetUserTweetState} from "../userTweets/actionCreators";
+import {AxiosResponse} from "axios";
 
 export function* fetchTweetDataRequest({payload: tweetId}: FetchTweetDataActionInterface) {
     try {
@@ -41,10 +42,10 @@ export function* fetchTweetDataRequest({payload: tweetId}: FetchTweetDataActionI
 
 export function* addTweetToBookmarksRequest({payload}: AddTweetToBookmarksActionInterface) {
     try {
-        const item: boolean = yield call(UserApi.addTweetToBookmarks, payload);
-        yield put(setBookmarkedTweet(item));
-        yield put(setUpdatedBookmarkedTweetTweetsState({tweetId: payload, isTweetBookmarked: item}));
-        yield put(setUpdatedBookmarkedTweetUserTweetState({tweetId: payload, isTweetBookmarked: item}));
+        const {data}: AxiosResponse<boolean> = yield call(UserApi.addTweetToBookmarks, payload);
+        yield put(setBookmarkedTweet(data));
+        yield put(setUpdatedBookmarkedTweetTweetsState({tweetId: payload, isTweetBookmarked: data}));
+        yield put(setUpdatedBookmarkedTweetUserTweetState({tweetId: payload, isTweetBookmarked: data}));
     } catch (error) {
         yield put(setTweetLoadingState(LoadingStatus.ERROR));
     }

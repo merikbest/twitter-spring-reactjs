@@ -32,7 +32,7 @@ const FollowersYouKnow: FC = (): ReactElement => {
         setIsLoading(true);
         UserApi.overallFollowers(params.id)
             .then(response => {
-                setOverallFollowers(response);
+                setOverallFollowers(response.data);
                 setIsLoading(false);
             });
     }, []);

@@ -1,16 +1,17 @@
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
+import {call} from "redux-saga/effects";
+
 import {fetchUserDetailRequest, userDetailSaga} from "../sagas";
 import {fetchUserDetail, setUserDetail, setUserDetailLoadingState} from "../actionCreators";
 import {LoadingStatus} from "../../../types";
 import {testLoadingStatus, testSetResponse, testWatchSaga} from "../../../../util/testHelper";
 import {UserDetailResponse} from "../../../types/user";
 import {UserApi} from "../../../../services/api/userApi";
-import {call} from "redux-saga/effects";
 import {UserDetailActionsType} from "../contracts/actionTypes";
 
 describe("userDetailSaga:", () => {
     describe("fetchUserDetailRequest:", () => {
-        const mockUserDetailResponse = {id: 1} as UserDetailResponse;
+        const mockUserDetailResponse = {data: {id: 1}} as AxiosResponse<UserDetailResponse>;
         const cancelTokenSource = axios.CancelToken.source();
         const worker = fetchUserDetailRequest(fetchUserDetail({userId: 1, cancelTokenSource: cancelTokenSource}));
         
@@ -22,7 +23,7 @@ describe("userDetailSaga:", () => {
 
             expect(actualYield).toEqual(expectedYield);
         });
-        testSetResponse(worker, mockUserDetailResponse, setUserDetail, mockUserDetailResponse, "UserDetailResponse");
+        testSetResponse(worker, mockUserDetailResponse, setUserDetail, mockUserDetailResponse.data, "UserDetailResponse");
         testLoadingStatus(worker, setUserDetailLoadingState, LoadingStatus.ERROR)
     });
 

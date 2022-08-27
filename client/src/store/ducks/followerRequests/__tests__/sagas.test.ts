@@ -1,3 +1,5 @@
+import {AxiosResponse} from "axios";
+
 import {acceptFollowRequests, declineFollowRequests, fetchFollowerRequests, fetchFollowerSaga} from "../sagas";
 import {
     acceptFollowRequest,
@@ -16,12 +18,12 @@ import {FollowerRequestsActionsType} from "../contracts/actionTypes";
 describe("fetchFollowerSaga:", () => {
     
     describe("fetchFollowerRequests:", () => {
-        const mockFollowerUserResponse = [{id: 1}, {id: 2}] as FollowerUserResponse[];
+        const mockFollowerUserResponse = {data: [{id: 1}, {id: 2}]} as AxiosResponse<FollowerUserResponse[]>;
         const worker = fetchFollowerRequests();
 
         testLoadingStatus(worker, setFollowerRequestsLoadingState, LoadingStatus.LOADING);
         testCall(worker, UserApi.getFollowerRequests);
-        testSetResponse(worker, mockFollowerUserResponse, setFollowerRequests, mockFollowerUserResponse, "FollowerUserResponse");
+        testSetResponse(worker, mockFollowerUserResponse, setFollowerRequests, mockFollowerUserResponse.data, "FollowerUserResponse");
         testLoadingStatus(worker, setFollowerRequestsLoadingState, LoadingStatus.ERROR)
     });
 

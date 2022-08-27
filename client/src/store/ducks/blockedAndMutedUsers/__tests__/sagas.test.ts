@@ -1,3 +1,5 @@
+import {AxiosResponse} from "axios";
+
 import {blockedAndMutedUsersSaga, fetchBlockedUsersRequest, fetchMutedUsersRequest} from "../sagas";
 import {setBlockedAndMutedUsersLoadingState, setBlockedUsers, setMutedUsers} from "../actionCreators";
 import {LoadingStatus} from "../../../types";
@@ -9,22 +11,22 @@ import {BlockedAndMutedUsersActionsType} from "../contracts/actionTypes";
 describe("blockedAndMutedUsersSaga:", () => {
     
     describe("fetchBlockedUsersRequest:", () => {
-        const mockBlockedUserResponse = [{id: 1}, {id: 2}] as BlockedUserResponse[];
+        const mockBlockedUserResponse = {data: [{id: 1}, {id: 2}]} as AxiosResponse<BlockedUserResponse[]>;
         const worker = fetchBlockedUsersRequest();
 
         testLoadingStatus(worker, setBlockedAndMutedUsersLoadingState, LoadingStatus.LOADING);
         testCall(worker, UserApi.getBlockList);
-        testSetResponse(worker, mockBlockedUserResponse, setBlockedUsers, mockBlockedUserResponse, "BlockedUserResponse");
+        testSetResponse(worker, mockBlockedUserResponse, setBlockedUsers, mockBlockedUserResponse.data, "BlockedUserResponse");
         testLoadingStatus(worker, setBlockedAndMutedUsersLoadingState, LoadingStatus.ERROR)
     });
 
     describe("fetchMutedUsersRequest:", () => {
-        const mockMutedUserResponse = [{id: 1}, {id: 2}] as MutedUserResponse[];
+        const mockMutedUserResponse = {data: [{id: 1}, {id: 2}]} as AxiosResponse<MutedUserResponse[]>;
         const worker = fetchMutedUsersRequest();
 
         testLoadingStatus(worker, setBlockedAndMutedUsersLoadingState, LoadingStatus.LOADING);
         testCall(worker, UserApi.getMutedList);
-        testSetResponse(worker, mockMutedUserResponse, setMutedUsers, mockMutedUserResponse, "BlockedUserResponse");
+        testSetResponse(worker, mockMutedUserResponse, setMutedUsers, mockMutedUserResponse.data, "BlockedUserResponse");
         testLoadingStatus(worker, setBlockedAndMutedUsersLoadingState, LoadingStatus.ERROR)
     });
 

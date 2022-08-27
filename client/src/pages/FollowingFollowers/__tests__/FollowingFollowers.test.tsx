@@ -42,7 +42,9 @@ describe("FollowingFollowers", () => {
     });
 
     it("should render loading Spinner", () => {
-        const wrapper = mountWithStore(<FollowingFollowers/>, createMockRootState());
+        const mockStore = createMockRootState();
+        const mockEmptyFollowList = {...mockStore, usersSearch: {...mockStore.usersSearch, followers: []}};
+        const wrapper = mountWithStore(<FollowingFollowers/>, mockEmptyFollowList);
         expect(wrapper.text().includes(mockMyProfile.fullName)).toBe(true);
         expect(wrapper.text().includes(`@${mockMyProfile.username}`)).toBe(true);
         expect(wrapper.find(Spinner).exists()).toBe(true);
@@ -56,8 +58,14 @@ describe("FollowingFollowers", () => {
         expect(wrapper.text().includes(mockMyProfile.fullName)).toBe(true);
         expect(wrapper.text().includes(`@${mockMyProfile.username}`)).toBe(true);
         expect(wrapper.find(UsersItem).length).toEqual(2);
-        expect(mockDispatchFn).nthCalledWith(1, {payload: parseInt(mockMyProfileId), type: UserProfileActionsType.FETCH_USER});
-        expect(mockDispatchFn).nthCalledWith(2, {payload: mockMyProfileId, type: UsersSearchActionsType.FETCH_FOLLOWERS});
+        expect(mockDispatchFn).nthCalledWith(1, {
+            payload: parseInt(mockMyProfileId),
+            type: UserProfileActionsType.FETCH_USER
+        });
+        expect(mockDispatchFn).nthCalledWith(2, {
+            payload: {userId: mockMyProfileId, page: 0},
+            type: UsersSearchActionsType.FETCH_FOLLOWERS
+        });
     });
 
     it("should render list of Followers users by myProfile", () => {
@@ -68,8 +76,14 @@ describe("FollowingFollowers", () => {
         expect(wrapper.text().includes(mockMyProfile.fullName)).toBe(true);
         expect(wrapper.text().includes(`@${mockMyProfile.username}`)).toBe(true);
         expect(wrapper.find(UsersItem).length).toEqual(2);
-        expect(mockDispatchFn).nthCalledWith(1, {payload: parseInt(mockMyProfileId), type: UserProfileActionsType.FETCH_USER});
-        expect(mockDispatchFn).nthCalledWith(2, {payload: mockMyProfileId, type: UsersSearchActionsType.FETCH_FOLLOWINGS});
+        expect(mockDispatchFn).nthCalledWith(1, {
+            payload: parseInt(mockMyProfileId),
+            type: UserProfileActionsType.FETCH_USER
+        });
+        expect(mockDispatchFn).nthCalledWith(2, {
+            payload: {userId: mockMyProfileId, page: 0},
+            type: UsersSearchActionsType.FETCH_FOLLOWINGS
+        });
     });
 
     it("should render empty list of Following users by myProfile", () => {
@@ -83,8 +97,14 @@ describe("FollowingFollowers", () => {
         expect(wrapper.text().includes("When you do, they’ll be listed here and you’ll see their Tweets in your timeline.")).toBe(true);
         expect(wrapper.find(Button).at(0).text()).toEqual("Find people to follow");
         expect(wrapper.find(UsersItem).length).toEqual(0);
-        expect(mockDispatchFn).nthCalledWith(1, {payload: parseInt(mockMyProfileId), type: UserProfileActionsType.FETCH_USER});
-        expect(mockDispatchFn).nthCalledWith(2, {payload: mockMyProfileId, type: UsersSearchActionsType.FETCH_FOLLOWERS});
+        expect(mockDispatchFn).nthCalledWith(1, {
+            payload: parseInt(mockMyProfileId),
+            type: UserProfileActionsType.FETCH_USER
+        });
+        expect(mockDispatchFn).nthCalledWith(2, {
+            payload: {userId: mockMyProfileId, page: 0},
+            type: UsersSearchActionsType.FETCH_FOLLOWERS
+        });
     });
 
     it("should render empty list of Followers users by myProfile", () => {
@@ -97,8 +117,14 @@ describe("FollowingFollowers", () => {
         expect(wrapper.text().includes("You don’t have any followers yet")).toBe(true);
         expect(wrapper.text().includes("When someone follows you, you’ll see them here.")).toBe(true);
         expect(wrapper.find(UsersItem).length).toEqual(0);
-        expect(mockDispatchFn).nthCalledWith(1, {payload: parseInt(mockMyProfileId), type: UserProfileActionsType.FETCH_USER});
-        expect(mockDispatchFn).nthCalledWith(2, {payload: mockMyProfileId, type: UsersSearchActionsType.FETCH_FOLLOWINGS});
+        expect(mockDispatchFn).nthCalledWith(1, {
+            payload: parseInt(mockMyProfileId),
+            type: UserProfileActionsType.FETCH_USER
+        });
+        expect(mockDispatchFn).nthCalledWith(2, {
+            payload: {userId: mockMyProfileId, page: 0},
+            type: UsersSearchActionsType.FETCH_FOLLOWINGS
+        });
     });
 
     it("should render list of Following users by myProfile on Tab click", () => {
@@ -116,9 +142,18 @@ describe("FollowingFollowers", () => {
         expect(wrapper.find(Tab).at(0).prop("selected")).toBe(true);
         expect(wrapper.find(Tab).at(0).text().includes("Following")).toBe(true);
         expect(wrapper.find(UsersItem).length).toEqual(2);
-        expect(mockDispatchFn).nthCalledWith(1, {payload: parseInt(mockMyProfileId), type: UserProfileActionsType.FETCH_USER});
-        expect(mockDispatchFn).nthCalledWith(2, {payload: mockMyProfileId, type: UsersSearchActionsType.FETCH_FOLLOWERS});
-        expect(mockDispatchFn).nthCalledWith(3, {payload: mockMyProfileId, type: UsersSearchActionsType.FETCH_FOLLOWERS});
+        expect(mockDispatchFn).nthCalledWith(1, {
+            payload: parseInt(mockMyProfileId),
+            type: UserProfileActionsType.FETCH_USER
+        });
+        expect(mockDispatchFn).nthCalledWith(2, {
+            payload: {userId: mockMyProfileId, page: 0},
+            type: UsersSearchActionsType.FETCH_FOLLOWERS
+        });
+        expect(mockDispatchFn).nthCalledWith(3, {
+            payload: {userId: mockMyProfileId, page: 0},
+            type: UsersSearchActionsType.FETCH_FOLLOWERS
+        });
     });
 
     it("should render list of Followers users by myProfile on Tab click", () => {
@@ -136,9 +171,18 @@ describe("FollowingFollowers", () => {
         expect(wrapper.find(Tab).at(1).prop("selected")).toBe(true);
         expect(wrapper.find(Tab).at(1).text().includes("Followers")).toBe(true);
         expect(wrapper.find(UsersItem).length).toEqual(2);
-        expect(mockDispatchFn).nthCalledWith(1, {payload: parseInt(mockMyProfileId), type: UserProfileActionsType.FETCH_USER});
-        expect(mockDispatchFn).nthCalledWith(2, {payload: mockMyProfileId, type: UsersSearchActionsType.FETCH_FOLLOWERS});
-        expect(mockDispatchFn).nthCalledWith(3, {payload: mockMyProfileId, type: UsersSearchActionsType.FETCH_FOLLOWINGS});
+        expect(mockDispatchFn).nthCalledWith(1, {
+            payload: parseInt(mockMyProfileId),
+            type: UserProfileActionsType.FETCH_USER
+        });
+        expect(mockDispatchFn).nthCalledWith(2, {
+            payload: {userId: mockMyProfileId, page: 0},
+            type: UsersSearchActionsType.FETCH_FOLLOWERS
+        });
+        expect(mockDispatchFn).nthCalledWith(3, {
+            payload: {userId: mockMyProfileId, page: 0},
+            type: UsersSearchActionsType.FETCH_FOLLOWINGS
+        });
     });
 
     it("should render empty list of Following users by userProfile", () => {
@@ -151,8 +195,14 @@ describe("FollowingFollowers", () => {
         expect(wrapper.text().includes(`@${mockUserProfile.username} isn’t following anyone`)).toBe(true);
         expect(wrapper.text().includes("When they do, they’ll be listed here.")).toBe(true);
         expect(wrapper.find(UsersItem).length).toEqual(0);
-        expect(mockDispatchFn).nthCalledWith(1, {payload: parseInt(mockUserProfileId), type: UserProfileActionsType.FETCH_USER});
-        expect(mockDispatchFn).nthCalledWith(2, {payload: mockUserProfileId, type: UsersSearchActionsType.FETCH_FOLLOWERS});
+        expect(mockDispatchFn).nthCalledWith(1, {
+            payload: parseInt(mockUserProfileId),
+            type: UserProfileActionsType.FETCH_USER
+        });
+        expect(mockDispatchFn).nthCalledWith(2, {
+            payload: {userId: mockUserProfileId, page: 0},
+            type: UsersSearchActionsType.FETCH_FOLLOWERS
+        });
     });
 
     it("should render empty list of Followers users by userProfile", () => {
@@ -165,10 +215,16 @@ describe("FollowingFollowers", () => {
         expect(wrapper.text().includes(`@${mockUserProfile.username} doesn’t have any followers`)).toBe(true);
         expect(wrapper.text().includes("When someone follows them, they’ll be listed here.")).toBe(true);
         expect(wrapper.find(UsersItem).length).toEqual(0);
-        expect(mockDispatchFn).nthCalledWith(1, {payload: parseInt(mockUserProfileId), type: UserProfileActionsType.FETCH_USER});
-        expect(mockDispatchFn).nthCalledWith(2, {payload: mockUserProfileId, type: UsersSearchActionsType.FETCH_FOLLOWINGS});
+        expect(mockDispatchFn).nthCalledWith(1, {
+            payload: parseInt(mockUserProfileId),
+            type: UserProfileActionsType.FETCH_USER
+        });
+        expect(mockDispatchFn).nthCalledWith(2, {
+            payload: {userId: mockUserProfileId, page: 0},
+            type: UsersSearchActionsType.FETCH_FOLLOWINGS
+        });
     });
-    
+
     const documentTitleText = (follow: string, fullName: string, username: string,): string => {
         return `People ${follow} by ${fullName} (@${username}) / Twitter`
     };

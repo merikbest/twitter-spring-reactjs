@@ -37,6 +37,7 @@ import {UserResponse} from "../../../types/user";
 import {testCall, testLoadingStatus, testSetResponse, testWatchSaga} from "../../../../util/testHelper";
 import {TweetActionType} from "../contracts/actionTypes";
 import {takeEvery} from "redux-saga/effects";
+import {AxiosResponse} from "axios";
 
 describe("tweetSaga:", () => {
     const mockTweet = {id: 1} as TweetResponse;
@@ -53,10 +54,11 @@ describe("tweetSaga:", () => {
 
     describe("addTweetToBookmarksRequest:", () => {
         const worker = addTweetToBookmarksRequest(addTweetToBookmarks(1));
+        const mockResponse = {data: true} as AxiosResponse<boolean>;
         const mockPayload = {tweetId: 1, isTweetBookmarked: true};
 
         testCall(worker, UserApi.addTweetToBookmarks, 1, true);
-        testSetResponse(worker, true, setBookmarkedTweet, true, "boolean");
+        testSetResponse(worker, mockResponse, setBookmarkedTweet, mockResponse.data, "boolean");
         testSetResponse(worker, true, setUpdatedBookmarkedTweetTweetsState, mockPayload, "boolean");
         testSetResponse(worker, true, setUpdatedBookmarkedTweetUserTweetState, mockPayload, "boolean");
         testLoadingStatus(worker, setTweetLoadingState, LoadingStatus.ERROR);

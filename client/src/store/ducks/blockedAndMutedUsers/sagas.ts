@@ -1,4 +1,5 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
+import {AxiosResponse} from "axios";
 
 import {setBlockedAndMutedUsersLoadingState, setBlockedUsers, setMutedUsers} from './actionCreators';
 import {LoadingStatus} from '../../types';
@@ -9,8 +10,8 @@ import {BlockedUserResponse, MutedUserResponse} from "../../types/user";
 export function* fetchBlockedUsersRequest() {
     try {
         yield put(setBlockedAndMutedUsersLoadingState(LoadingStatus.LOADING));
-        const items: BlockedUserResponse[] = yield call(UserApi.getBlockList);
-        yield put(setBlockedUsers(items));
+        const response: AxiosResponse<BlockedUserResponse[]> = yield call(UserApi.getBlockList);
+        yield put(setBlockedUsers(response.data));
     } catch (error) {
         yield put(setBlockedAndMutedUsersLoadingState(LoadingStatus.ERROR));
     }
@@ -19,8 +20,8 @@ export function* fetchBlockedUsersRequest() {
 export function* fetchMutedUsersRequest() {
     try {
         yield put(setBlockedAndMutedUsersLoadingState(LoadingStatus.LOADING));
-        const items: MutedUserResponse[] = yield call(UserApi.getMutedList);
-        yield put(setMutedUsers(items));
+        const response: AxiosResponse<MutedUserResponse[]> = yield call(UserApi.getMutedList);
+        yield put(setMutedUsers(response.data));
     } catch (error) {
         yield put(setBlockedAndMutedUsersLoadingState(LoadingStatus.ERROR));
     }

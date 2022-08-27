@@ -54,7 +54,13 @@ import {TagApi} from "../../../../services/api/tagApi";
 import {ListsApi} from "../../../../services/api/listsApi";
 import {AddQuoteTweet, AddTweet, Vote} from "../contracts/state";
 import {UserApi} from "../../../../services/api/userApi";
-import {testCall, testLoadingStatus, testSetResponse, testWatchSaga} from "../../../../util/testHelper";
+import {
+    mockExpectedResponse,
+    testCall,
+    testLoadingStatus,
+    testSetResponse,
+    testWatchSaga
+} from "../../../../util/testHelper";
 import {TweetsActionType} from "../contracts/actionTypes";
 import {ReplyType} from "../../../types/common";
 
@@ -232,10 +238,7 @@ describe("tweetsSaga:", () => {
 
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
         testCall(worker, UserApi.getUserBookmarks, 1);
-        testSetResponse(worker, mockPageableTweets, setPageableTweets, {
-            items: mockPageableTweets.data,
-            pagesCount: parseInt(mockPageableTweets.headers["page-total-count"])
-        }, "TweetResponse");
+        testSetResponse(worker, mockPageableTweets, setPageableTweets, mockExpectedResponse(mockPageableTweets), "TweetResponse");
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
 

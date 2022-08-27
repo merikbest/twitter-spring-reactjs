@@ -20,12 +20,4 @@ export const useFollowingFollowersStyles = makeStyles((theme) => ({
         minWidth: 301,
         textTransform: 'none',
     },
-    content: {
-        margin: "40px 20px",
-        textAlign: "center",
-        "& .MuiTypography-subtitle1": {
-            marginTop: 12,
-            marginBottom: 16,
-        },
-    },
 }));

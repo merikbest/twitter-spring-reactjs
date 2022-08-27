@@ -154,7 +154,7 @@ describe("userSaga:", () => {
     });
 
     describe("processFollowUserRequest:", () => {
-        const mockNotificationUserResponse = {id: 1, isFollower: true} as NotificationUserResponse;
+        const mockNotificationUserResponse = {data: {id: 1, isFollower: true}} as AxiosResponse<NotificationUserResponse>;
         const mockPayload = {userId: 1, tweetId: 1, isFollower: true};
         const worker = processFollowUserRequest(followUser({userId: 1, tweetId: 1}));
 
@@ -181,8 +181,8 @@ describe("userSaga:", () => {
         const worker = startUseTwitterRequest(startUseTwitter(1));
 
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
-        testCall(worker, UserApi.startUseTwitter, 1, true);
-        testSetResponse(worker, 1, setProfileStarted, 1, "boolean");
+        testCall(worker, UserApi.startUseTwitter, 1);
+        testSetResponse(worker, {data: true}, setProfileStarted, true, "boolean");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
 
@@ -191,7 +191,7 @@ describe("userSaga:", () => {
 
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
         testCall(worker, UserApi.pinTweet, 1, 1);
-        testSetResponse(worker, 1, setPinTweetId, 1, "number");
+        testSetResponse(worker, {data: 1}, setPinTweetId, 1, "number");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
 
@@ -300,7 +300,7 @@ describe("userSaga:", () => {
         const worker = processUserToBlocklistRequest(processUserToBlocklist({userId: 1, tweetId: 1}));
 
         testCall(worker, UserApi.processBlockList, 1, true);
-        testSetResponse(worker, true, setBlockedToTweetsState, mockPayload, "boolean");
+        testSetResponse(worker, {data: true}, setBlockedToTweetsState, mockPayload, "boolean");
         testSetResponse(worker, true, setBlockedUsersTweetState, mockPayload, "boolean");
         testSetResponse(worker, true, setBlocked, true, "boolean");
         testSetResponse(worker, true, setBlockUserDetail, true, "boolean");
@@ -317,7 +317,7 @@ describe("userSaga:", () => {
         const worker = processUserToMuteListRequest(processUserToMuteList({userId: 1, tweetId: 1}));
 
         testCall(worker, UserApi.processMutedList, 1, true);
-        testSetResponse(worker, true, setMutedToTweetsState, mockPayload, "boolean");
+        testSetResponse(worker, {data: true}, setMutedToTweetsState, mockPayload, "boolean");
         testSetResponse(worker, true, setMutedUsersTweetState, mockPayload, "boolean");
         testSetResponse(worker, true, setMuted, true, "boolean");
         testSetResponse(worker, true, setMutedUser, {userId: 1, isUserMuted: true}, "boolean");
@@ -327,7 +327,7 @@ describe("userSaga:", () => {
     });
 
     describe("processFollowRequests:", () => {
-        const mockUserProfileResponse = {id: 1, isWaitingForApprove: true} as UserProfileResponse;
+        const mockUserProfileResponse = {data: {id: 1, isWaitingForApprove: true}} as AxiosResponse<UserProfileResponse>;
         const mockPayload = {userId: 1, isWaitingForApprove: true};
         const worker = processFollowRequests(processFollowRequest(1));
 

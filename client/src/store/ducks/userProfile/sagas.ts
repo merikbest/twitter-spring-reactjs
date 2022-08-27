@@ -33,8 +33,8 @@ export function* fetchUserRequest({payload}: FetchUserProfileActionInterface) {
 
 export function* processSubscribeRequest({payload}: ProcessSubscribeActionInterface) {
     try {
-        const item: boolean = yield call(UserApi.processSubscribeToNotifications, payload);
-        yield put(setSubscribeToUserProfile(item));
+        const response: AxiosResponse<boolean> = yield call(UserApi.processSubscribeToNotifications, payload);
+        yield put(setSubscribeToUserProfile(response.data));
     } catch (error) {
         yield put(setUserProfileLoadingState(LoadingStatus.ERROR));
     }
@@ -53,8 +53,8 @@ export function* fetchChatParticipantRequest({payload}: FetchChatParticipantActi
 export function* fetchImagesRequest({payload}: FetchImagesActionInterface) {
     try {
         yield put(setImagesLoadingStatus(LoadingStatus.LOADING));
-        const items: TweetImageResponse[] = yield call(UserApi.getUserTweetImages, payload);
-        yield put(setImages(items));
+        const response: AxiosResponse<TweetImageResponse[]> = yield call(UserApi.getUserTweetImages, payload);
+        yield put(setImages(response.data));
     } catch (error) {
         yield put(setImagesLoadingStatus(LoadingStatus.ERROR));
     }

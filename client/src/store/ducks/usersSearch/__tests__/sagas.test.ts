@@ -3,6 +3,7 @@ import {AxiosResponse} from "axios";
 import {
     fetchFollowersRequest,
     fetchFollowingsRequest,
+    fetchParticipantsByUsernameRequest,
     fetchUsersSearchByUsernameRequest,
     fetchUsersSearchRequest,
     usersSearchSaga
@@ -14,7 +15,6 @@ import {
     fetchUsersSearchByUsername,
     setFollowers,
     setPageableUsersSearch,
-    setUsersSearch,
     setUsersSearchLoadingState
 } from "../actionCreators";
 import {LoadingStatus} from "../../../types";
@@ -30,8 +30,7 @@ import {UserApi} from "../../../../services/api/userApi";
 import {UsersSearchActionsType} from "../contracts/actionTypes";
 
 describe("usersSearchSaga:", () => {
-    const mockUserResponse = [{id: 1}, {id: 1}] as UserResponse[];
-    const mockAxiosUserResponse = {
+    const mockUserResponse = {
         data: [{id: 1}, {id: 1}],
         headers: {"page-total-count": 1}
     } as AxiosResponse<UserResponse[]>;
@@ -41,7 +40,7 @@ describe("usersSearchSaga:", () => {
 
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.LOADING);
         testCall(worker, UserApi.getUsers, 1);
-        testSetResponse(worker, mockAxiosUserResponse, setPageableUsersSearch, mockExpectedResponse(mockAxiosUserResponse), "UserResponse");
+        testSetResponse(worker, mockUserResponse, setPageableUsersSearch, mockExpectedResponse(mockUserResponse), "UserResponse");
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.ERROR)
     });
 
@@ -50,7 +49,7 @@ describe("usersSearchSaga:", () => {
 
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.LOADING);
         testCall(worker, UserApi.searchUsersByUsername, {username: "test", page: 1});
-        testSetResponse(worker, mockAxiosUserResponse, setPageableUsersSearch, mockExpectedResponse(mockAxiosUserResponse), "UserResponse");
+        testSetResponse(worker, mockUserResponse, setPageableUsersSearch, mockExpectedResponse(mockUserResponse), "UserResponse");
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.ERROR)
     });
 
@@ -59,7 +58,7 @@ describe("usersSearchSaga:", () => {
 
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.LOADING);
         testCall(worker, UserApi.getFollowers, "1");
-        testSetResponse(worker, mockUserResponse, setFollowers, mockUserResponse, "UserResponse");
+        testSetResponse(worker, mockUserResponse, setFollowers, mockUserResponse.data, "UserResponse");
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.ERROR)
     });
 
@@ -68,13 +67,14 @@ describe("usersSearchSaga:", () => {
 
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.LOADING);
         testCall(worker, UserApi.getFollowing, "1");
-        testSetResponse(worker, mockUserResponse, setFollowers, mockUserResponse, "UserResponse");
+        testSetResponse(worker, mockUserResponse, setFollowers, mockUserResponse.data, "UserResponse");
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.ERROR)
     });
 
     testWatchSaga(usersSearchSaga, [
         {actionType: UsersSearchActionsType.FETCH_USERS, workSaga: fetchUsersSearchRequest},
         {actionType: UsersSearchActionsType.FETCH_USERS_BY_NAME, workSaga: fetchUsersSearchByUsernameRequest},
+        {actionType: UsersSearchActionsType.FETCH_PARTICIPANTS_BY_NAME, workSaga: fetchParticipantsByUsernameRequest},
         {actionType: UsersSearchActionsType.FETCH_FOLLOWERS, workSaga: fetchFollowersRequest},
         {actionType: UsersSearchActionsType.FETCH_FOLLOWINGS, workSaga: fetchFollowingsRequest},
     ]);
