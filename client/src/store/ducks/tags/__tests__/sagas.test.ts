@@ -1,30 +1,38 @@
 import {fetchTagsRequest, fetchTrendsRequest, tagsSaga} from "../sagas";
 import {TagApi} from "../../../../services/api/tagApi";
-import {setTags, setTagsLoadingState} from "../actionCreators";
+import {fetchTrends, setTags, setTagsLoadingState, setTrends, setTrendsLoadingState} from "../actionCreators";
 import {LoadingStatus} from "../../../types";
 import {TagResponse} from "../../../types/tag";
-import {testCall, testLoadingStatus, testSetResponse, testWatchSaga} from "../../../../util/testHelper";
+import {
+    mockExpectedResponse,
+    testCall,
+    testLoadingStatus,
+    testSetResponse,
+    testWatchSaga
+} from "../../../../util/testHelper";
 import {TagsActionsType} from "../contracts/actionTypes";
+import {AxiosResponse} from "axios";
+import {TweetResponse} from "../../../types/tweet";
 
 describe("tagsSaga:", () => {
-    const mockTags = [{id: 1}, {id: 2}] as TagResponse[];
+    const mockTags = {data: [{id: 1}, {id: 2}], headers: {"page-total-count": 1}} as AxiosResponse<TagResponse[]>;
 
     describe("fetchTagsRequest:", () => {
         const worker = fetchTagsRequest();
 
         testLoadingStatus(worker, setTagsLoadingState, LoadingStatus.LOADING);
         testCall(worker, TagApi.fetchTags);
-        testSetResponse(worker, mockTags, setTags, mockTags, "TagResponse");
+        testSetResponse(worker, mockTags, setTags, mockTags.data, "TagResponse");
         testLoadingStatus(worker, setTagsLoadingState, LoadingStatus.ERROR)
     });
 
     describe("fetchTrendsRequest", () => {
-        const worker = fetchTrendsRequest();
+        const worker = fetchTrendsRequest(fetchTrends(1));
 
-        testLoadingStatus(worker, setTagsLoadingState, LoadingStatus.LOADING);
-        testCall(worker, TagApi.fetchTrends);
-        testSetResponse(worker, mockTags, setTags, mockTags, "TagResponse");
-        testLoadingStatus(worker, setTagsLoadingState, LoadingStatus.ERROR)
+        testLoadingStatus(worker, setTrendsLoadingState, LoadingStatus.LOADING);
+        testCall(worker, TagApi.fetchTrends, 1);
+        testSetResponse(worker, mockTags, setTrends, mockExpectedResponse(mockTags), "TagResponse");
+        testLoadingStatus(worker, setTrendsLoadingState, LoadingStatus.ERROR)
     });
 
     testWatchSaga(tagsSaga, [

@@ -1,4 +1,6 @@
+import {AxiosResponse} from "axios";
 import {call, put, takeLatest} from 'redux-saga/effects';
+
 import {
     setListMembers,
     setListSuggested,
@@ -21,8 +23,8 @@ import {setMembersSize} from "../list/actionCreators";
 export function* fetchListMembersRequest({payload}: FetchListMembersActionInterface) {
     try {
         yield put(setLoadingMembersState(LoadingStatus.LOADING));
-        const items: ListsOwnerMemberResponse[] = yield call(ListsApi.getListMembers, payload.listId, payload.listOwnerId);
-        yield put(setListMembers(items));
+        const response: AxiosResponse<ListsOwnerMemberResponse[]> = yield call(ListsApi.getListMembers, payload.listId, payload.listOwnerId);
+        yield put(setListMembers(response.data));
     } catch (error) {
         yield put(setLoadingMembersState(LoadingStatus.ERROR));
     }
@@ -31,8 +33,8 @@ export function* fetchListMembersRequest({payload}: FetchListMembersActionInterf
 export function* fetchListFollowersRequest({payload}: FetchListFollowersActionInterface) {
     try {
         yield put(setLoadingMembersState(LoadingStatus.LOADING));
-        const items: ListsOwnerMemberResponse[] = yield call(ListsApi.getListFollowers, payload.listId, payload.listOwnerId);
-        yield put(setListMembers(items));
+        const response: AxiosResponse<ListsOwnerMemberResponse[]> = yield call(ListsApi.getListFollowers, payload.listId, payload.listOwnerId);
+        yield put(setListMembers(response.data));
     } catch (error) {
         yield put(setLoadingMembersState(LoadingStatus.ERROR));
     }
@@ -41,8 +43,8 @@ export function* fetchListFollowersRequest({payload}: FetchListFollowersActionIn
 export function* fetchListMembersByUsernameRequest({payload}: FetchListMembersByUsernameActionInterface) {
     try {
         yield put(setLoadingSuggestedState(LoadingStatus.LOADING));
-        const items: ListsOwnerMemberResponse[] = yield call(ListsApi.searchListMembersByUsername, payload.listId, payload.username);
-        yield put(setListSuggested(items));
+        const response: AxiosResponse<ListsOwnerMemberResponse[]> = yield call(ListsApi.searchListMembersByUsername, payload.listId, payload.username);
+        yield put(setListSuggested(response.data));
     } catch (error) {
         yield put(setLoadingSuggestedState(LoadingStatus.ERROR));
     }
@@ -51,7 +53,7 @@ export function* fetchListMembersByUsernameRequest({payload}: FetchListMembersBy
 export function* processListMemberRequest({payload}: ProcessUserToListMembersActionInterface) {
     try {
         yield put(setLoadingSuggestedState(LoadingStatus.LOADING));
-        const data: boolean = yield call(ListsApi.addUserToList, payload.userId, payload.listId);
+        const {data}: AxiosResponse<boolean> = yield call(ListsApi.addUserToList, payload.userId, payload.listId);
         yield put(setUserToList({userId: payload.userId, isUserAdded: data, isSuggested: payload.isSuggested}));
         yield put(setMembersSize(data));
     } catch (error) {

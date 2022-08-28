@@ -1,4 +1,5 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
+import {AxiosResponse} from "axios";
 
 import {
     DeleteListActionInterface,
@@ -14,8 +15,8 @@ import {BaseListResponse} from "../../types/lists";
 export function* fetchListByIdRequest({payload}: FetchListByIdActionInterface) {
     try {
         yield put(setListLoadingState(LoadingStatus.LOADING));
-        const data: BaseListResponse = yield call(ListsApi.getListById, payload);
-        yield put(setList(data));
+        const response: AxiosResponse<BaseListResponse> = yield call(ListsApi.getListById, payload);
+        yield put(setList(response.data));
     } catch (error) {
         yield put(setListLoadingState(LoadingStatus.ERROR));
     }
@@ -32,8 +33,8 @@ export function* deleteListRequest({payload}: DeleteListActionInterface) {
 export function* editListRequest({payload}: EditListActionInterface) {
     try {
         yield put(setListLoadingState(LoadingStatus.LOADING));
-        const data: BaseListResponse = yield call(ListsApi.editList, payload);
-        yield put(setList(data));
+        const response: AxiosResponse<BaseListResponse> = yield call(ListsApi.editList, payload);
+        yield put(setList(response.data));
     } catch (error) {
         yield put(setListLoadingState(LoadingStatus.ERROR));
     }

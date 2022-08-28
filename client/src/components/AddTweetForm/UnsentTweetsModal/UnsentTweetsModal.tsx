@@ -39,7 +39,7 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
         setIsLoading(true);
         TweetApi.fetchScheduledTweets()
             .then((response) => {
-                setTweets(response);
+                setTweets(response.data);
                 setIsLoading(false);
             });
     };

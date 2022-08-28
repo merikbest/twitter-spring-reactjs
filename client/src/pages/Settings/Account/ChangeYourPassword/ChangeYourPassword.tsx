@@ -56,7 +56,7 @@ const ChangeYourPassword: FC<SnackbarProps> = (
             password: data.password,
             password2: data.password2
         }).then((response) => {
-            setSnackBarMessage!(response);
+            setSnackBarMessage!(response.data);
             setOpenSnackBar!(true);
             reset();
         }).catch((error) => {

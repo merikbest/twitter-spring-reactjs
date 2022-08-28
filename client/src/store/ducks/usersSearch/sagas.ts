@@ -5,6 +5,7 @@ import {LoadingStatus} from '../../types';
 import {
     FetchFollowersActionInterface,
     FetchFollowingsActionInterface,
+    FetchParticipantsSearchByNameActionInterface,
     FetchUsersSearchActionInterface,
     FetchUsersSearchByNameActionInterface,
     UsersSearchActionsType
@@ -40,7 +41,7 @@ export function* fetchUsersSearchByUsernameRequest({payload}: FetchUsersSearchBy
     }
 }
 
-export function* fetchParticipantsByUsernameRequest({payload}: FetchUsersSearchByNameActionInterface) { // TODO CHECK TESTS
+export function* fetchParticipantsByUsernameRequest({payload}: FetchParticipantsSearchByNameActionInterface) {
     try {
         yield put(setUsersSearchLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<UserResponse[]> = yield call(ChatApi.searchParticipantsByUsername, payload);

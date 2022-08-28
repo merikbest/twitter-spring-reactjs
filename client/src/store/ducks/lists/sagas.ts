@@ -1,3 +1,4 @@
+import {AxiosResponse} from "axios";
 import {call, put, takeEvery} from 'redux-saga/effects';
 
 import {
@@ -13,7 +14,6 @@ import {
     setCreatedList,
     setFollowList,
     setLists,
-    setListsLoadingState,
     setLoadingState,
     setPinedList,
     setPinedListToUserList,
@@ -35,8 +35,8 @@ import {updateFollowListDetail} from "../listDetail/actionCreators";
 export function* fetchListsRequest() {
     try {
         yield put(setLoadingState(LoadingStatus.LOADING));
-        const data: ListResponse[] = yield call(ListsApi.getAllTweetLists);
-        yield put(setLists(data));
+        const response: AxiosResponse<ListResponse[]> = yield call(ListsApi.getAllTweetLists);
+        yield put(setLists(response.data));
     } catch (error) {
         yield put(setLoadingState(LoadingStatus.ERROR));
     }
@@ -45,8 +45,8 @@ export function* fetchListsRequest() {
 export function* fetchUserListsRequest() {
     try {
         yield put(setUserListsLoadingState(LoadingStatus.LOADING));
-        const data: ListUserResponse[] = yield call(ListsApi.getUserTweetLists);
-        yield put(setUserLists(data));
+        const response: AxiosResponse<ListUserResponse[]> = yield call(ListsApi.getUserTweetLists);
+        yield put(setUserLists(response.data));
     } catch (error) {
         yield put(setUserListsLoadingState(LoadingStatus.ERROR));
     }
@@ -55,9 +55,9 @@ export function* fetchUserListsRequest() {
 export function* fetchUserListsByIdRequest({payload}: FetchUserListsByIdActionInterface) {
     try {
         yield put(setLoadingState(LoadingStatus.LOADING));
-        const data: ListResponse[] = yield call(ListsApi.getUserTweetListsById, payload);
+        const response: AxiosResponse<ListResponse[]> = yield call(ListsApi.getUserTweetListsById, payload);
         // yield put(setUserLists(data)); TODO <---
-        yield put(setLists(data));
+        yield put(setLists(response.data));
     } catch (error) {
         yield put(setLoadingState(LoadingStatus.ERROR));
     }
@@ -66,9 +66,9 @@ export function* fetchUserListsByIdRequest({payload}: FetchUserListsByIdActionIn
 export function* fetchTweetListsWhichUserInRequest() {
     try {
         yield put(setLoadingState(LoadingStatus.LOADING));
-        const data: ListResponse[] = yield call(ListsApi.getTweetListsWhichUserIn);
+        const response: AxiosResponse<ListResponse[]> = yield call(ListsApi.getTweetListsWhichUserIn);
         // yield put(setUserLists(data)); TODO <---
-        yield put(setLists(data));
+        yield put(setLists(response.data));
     } catch (error) {
         yield put(setLoadingState(LoadingStatus.ERROR));
     }
@@ -77,8 +77,8 @@ export function* fetchTweetListsWhichUserInRequest() {
 export function* fetchPinnedListsRequest() {
     try {
         yield put(setPinnedListsLoadingState(LoadingStatus.LOADING));
-        const data: PinnedListResponse[] = yield call(ListsApi.getUserPinnedLists);
-        yield put(setPinnedLists(data));
+        const response: AxiosResponse<PinnedListResponse[]> = yield call(ListsApi.getUserPinnedLists);
+        yield put(setPinnedLists(response.data));
     } catch (error) {
         yield put(setPinnedListsLoadingState(LoadingStatus.ERROR));
     }
@@ -87,8 +87,8 @@ export function* fetchPinnedListsRequest() {
 export function* fetchSimpleListsRequest({payload}: FetchSimpleListsActionInterface) {
     try {
         yield put(setSimpleListsLoadingState(LoadingStatus.LOADING));
-        const data: SimpleListResponse[] = yield call(ListsApi.getListsToAddUser, payload);
-        yield put(setSimpleLists(data));
+        const response: AxiosResponse<SimpleListResponse[]> = yield call(ListsApi.getListsToAddUser, payload);
+        yield put(setSimpleLists(response.data));
     } catch (error) {
         yield put(setSimpleListsLoadingState(LoadingStatus.ERROR));
     }
@@ -97,8 +97,8 @@ export function* fetchSimpleListsRequest({payload}: FetchSimpleListsActionInterf
 export function* createListRequest({payload}: CreateListActionInterface) {
     try {
         yield put(setLoadingState(LoadingStatus.LOADING));
-        const data: ListUserResponse = yield call(ListsApi.createTweetList, payload);
-        yield put(setCreatedList(data));
+        const response: AxiosResponse<ListUserResponse> = yield call(ListsApi.createTweetList, payload);
+        yield put(setCreatedList(response.data));
     } catch (error) {
         yield put(setLoadingState(LoadingStatus.ERROR));
     }
@@ -106,9 +106,9 @@ export function* createListRequest({payload}: CreateListActionInterface) {
 
 export function* pinListRequest({payload}: PinListActionInterface) {
     try {
-        const data: PinnedListResponse = yield call(ListsApi.pinList, payload);
-        yield put(setPinedList(data));
-        yield put(setPinedListToUserList(data));
+        const response: AxiosResponse<PinnedListResponse> = yield call(ListsApi.pinList, payload);
+        yield put(setPinedList(response.data));
+        yield put(setPinedListToUserList(response.data));
     } catch (error) {
         yield put(setLoadingState(LoadingStatus.ERROR));
     }
@@ -116,9 +116,9 @@ export function* pinListRequest({payload}: PinListActionInterface) {
 
 export function* unpinListRequest({payload}: UnpinListActionInterface) {
     try {
-        const data: PinnedListResponse = yield call(ListsApi.pinList, payload);
-        yield put(setUnpinList(data));
-        yield put(setPinedListToUserList(data));
+        const response: AxiosResponse<PinnedListResponse> = yield call(ListsApi.pinList, payload);
+        yield put(setUnpinList(response.data));
+        yield put(setPinedListToUserList(response.data));
     } catch (error) {
         yield put(setLoadingState(LoadingStatus.ERROR));
     }
@@ -126,8 +126,8 @@ export function* unpinListRequest({payload}: UnpinListActionInterface) {
 
 export function* followListRequest({payload}: FollowListActionInterface) {
     try {
-        const data: ListUserResponse = yield call(ListsApi.followList, payload);
-        yield put(setFollowList(data));
+        const response: AxiosResponse<ListUserResponse> = yield call(ListsApi.followList, payload);
+        yield put(setFollowList(response.data));
         yield put(updateFollowToFullList(true));
         yield put(updateFollowListDetail(true));
     } catch (error) {
@@ -137,8 +137,8 @@ export function* followListRequest({payload}: FollowListActionInterface) {
 
 export function* unfollowListRequest({payload}: UnfollowListActionInterface) {
     try {
-        const data: ListUserResponse = yield call(ListsApi.followList, payload);
-        yield put(setUnfollowList(data));
+        const response: AxiosResponse<ListUserResponse> = yield call(ListsApi.followList, payload);
+        yield put(setUnfollowList(response.data));
         yield put(updateFollowToFullList(false));
         yield put(updateFollowListDetail(false));
     } catch (error) {

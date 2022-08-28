@@ -130,7 +130,7 @@ describe("userSaga:", () => {
 
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
         testCall(worker, AuthApi.signIn, mockLoginProps);
-        testSetResponse(worker, mockAuthentication, setUserData, mockAuthUser, "AuthenticationResponse");
+        testSetResponse(worker, mockAxiosAuthentication, setUserData, mockAuthUser, "AuthenticationResponse");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
 
@@ -140,7 +140,7 @@ describe("userSaga:", () => {
 
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
         testCall(worker, AuthApi.endRegistration, mockRegistrationProps);
-        testSetResponse(worker, mockAuthentication, setUserData, mockAuthUser, "AuthenticationResponse");
+        testSetResponse(worker, mockAxiosAuthentication, setUserData, mockAuthUser, "AuthenticationResponse");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
 
@@ -149,7 +149,7 @@ describe("userSaga:", () => {
 
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
         testCall(worker, AuthApi.getMe);
-        testSetResponse(worker, mockAuthentication, setUserData, mockAuthUser, "AuthenticationResponse");
+        testSetResponse(worker, mockAxiosAuthentication, setUserData, mockAuthUser, "AuthenticationResponse");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
 
@@ -206,10 +206,9 @@ describe("userSaga:", () => {
 
     describe("updateUsernameRequest:", () => {
         const worker = updateUsernameRequest(updateUsername({username: "test"}));
-
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
         testCall(worker, UserSettingsApi.updateUsername, {username: "test"}, "test");
-        testSetResponse(worker, "test", setUsername, "test", "string");
+        testSetResponse(worker, {data: "test"}, setUsername, "test", "string");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
 
@@ -224,74 +223,67 @@ describe("userSaga:", () => {
 
     describe("updatePhoneRequest:", () => {
         const mockPhoneSettings = {countryCode: "US", phone: 12345};
+        const mockResponse = {data: mockPhoneSettings} as AxiosResponse<any>;
         const worker = updatePhoneRequest(updatePhone(mockPhoneSettings));
-
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
         testCall(worker, UserSettingsApi.updatePhone, mockPhoneSettings, mockPhoneSettings);
-        testSetResponse(worker, mockPhoneSettings, setPhone, mockPhoneSettings, "string");
+        testSetResponse(worker, mockResponse, setPhone, mockPhoneSettings, "string");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
 
     describe("updateCountryRequest:", () => {
         const worker = updateCountryRequest(updateCountry({country: "test"}));
-
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
         testCall(worker, UserSettingsApi.updateCountry, {country: "test"}, "test");
-        testSetResponse(worker, "test", setCountry, "test", "string");
+        testSetResponse(worker, {data: "test"}, setCountry, "test", "string");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
 
     describe("updateGenderRequest:", () => {
         const worker = updateGenderRequest(updateGender({updateGender: "testGender"} as Settings));
-
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
         testCall(worker, UserSettingsApi.updateGender, {updateGender: "testGender"}, "testGender");
-        testSetResponse(worker, "testGender", setGender, "testGender", "string");
+        testSetResponse(worker, {data: "testGender"}, setGender, "testGender", "string");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
 
     describe("updateLanguageRequest:", () => {
         const worker = updateLanguageRequest(updateLanguage({language: "english"}));
-
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
         testCall(worker, UserSettingsApi.updateLanguage, {language: "english"}, "english");
-        testSetResponse(worker, "english", setLanguage, "english", "string");
+        testSetResponse(worker, {data: "english"}, setLanguage, "english", "string");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
 
     describe("updateDirectRequest:", () => {
         const worker = updateDirectRequest(updateDirect({mutedDirectMessages: true}));
-
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
         testCall(worker, UserSettingsApi.updateDirectMessageRequests, {mutedDirectMessages: true}, true);
-        testSetResponse(worker, true, setDirect, true, "boolean");
+        testSetResponse(worker, {data: true}, setDirect, true, "boolean");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
 
     describe("updatePrivateProfileRequest:", () => {
         const worker = updatePrivateProfileRequest(updatePrivateProfile({privateProfile: true}));
-
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
         testCall(worker, UserSettingsApi.updatePrivateProfile, {privateProfile: true}, true);
-        testSetResponse(worker, true, setPrivateProfile, true, "boolean");
+        testSetResponse(worker, {data: true}, setPrivateProfile, true, "boolean");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
 
     describe("updateColorSchemeRequest:", () => {
         const worker = updateColorSchemeRequest(updateColorScheme({colorScheme: ColorScheme.BLUE}));
-
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
         testCall(worker, UserSettingsApi.updateColorScheme, {colorScheme: ColorScheme.BLUE}, "BLUE");
-        testSetResponse(worker, "BLUE", setColorScheme, "BLUE", "string");
+        testSetResponse(worker, {data: "BLUE"}, setColorScheme, "BLUE", "string");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
 
     describe("updateBackgroundColorRequest:", () => {
         const worker = updateBackgroundColorRequest(updateBackgroundColor({backgroundColor: BackgroundTheme.DIM}));
-
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
         testCall(worker, UserSettingsApi.updateBackgroundColor, {backgroundColor: BackgroundTheme.DIM}, "DIM");
-        testSetResponse(worker, "DIM", setBackgroundColor, "DIM", "string");
+        testSetResponse(worker, {data: "DIM"}, setBackgroundColor, "DIM", "string");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
 

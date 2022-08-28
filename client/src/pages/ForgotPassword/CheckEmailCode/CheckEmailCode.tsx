@@ -21,8 +21,8 @@ const CheckEmailCode: FC = (): ReactElement => {
             setError(true);
         } else {
             AuthApi.getUserByResetCode(resetCode)
-                .then((data) => {
-                    history.push({pathname: ACCOUNT_FORGOT_RESET_PASSWORD, state: {user: data}});
+                .then((response) => {
+                    history.push({pathname: ACCOUNT_FORGOT_RESET_PASSWORD, state: {user: response.data}});
                 })
                 .catch(() => setError(true));
         }

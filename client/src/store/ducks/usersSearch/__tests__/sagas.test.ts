@@ -11,9 +11,10 @@ import {
 import {
     fetchFollowers,
     fetchFollowings,
+    fetchParticipantsByUsername,
     fetchUsersSearch,
     fetchUsersSearchByUsername,
-    setFollowers,
+    setPageableFollowers,
     setPageableUsersSearch,
     setUsersSearchLoadingState
 } from "../actionCreators";
@@ -28,6 +29,7 @@ import {
 import {UserResponse} from "../../../types/user";
 import {UserApi} from "../../../../services/api/userApi";
 import {UsersSearchActionsType} from "../contracts/actionTypes";
+import {ChatApi} from "../../../../services/api/chatApi";
 
 describe("usersSearchSaga:", () => {
     const mockUserResponse = {
@@ -37,7 +39,6 @@ describe("usersSearchSaga:", () => {
 
     describe("fetchUsersSearchRequest:", () => {
         const worker = fetchUsersSearchRequest(fetchUsersSearch(1));
-
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.LOADING);
         testCall(worker, UserApi.getUsers, 1);
         testSetResponse(worker, mockUserResponse, setPageableUsersSearch, mockExpectedResponse(mockUserResponse), "UserResponse");
@@ -46,28 +47,33 @@ describe("usersSearchSaga:", () => {
 
     describe("fetchUsersSearchByUsernameRequest:", () => {
         const worker = fetchUsersSearchByUsernameRequest(fetchUsersSearchByUsername({username: "test", page: 1}));
-
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.LOADING);
         testCall(worker, UserApi.searchUsersByUsername, {username: "test", page: 1});
         testSetResponse(worker, mockUserResponse, setPageableUsersSearch, mockExpectedResponse(mockUserResponse), "UserResponse");
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.ERROR)
     });
 
-    describe("fetchFollowersRequest:", () => {
-        const worker = fetchFollowersRequest(fetchFollowers("1"));
-
+    describe("fetchParticipantsByUsernameRequest:", () => {
+        const worker = fetchParticipantsByUsernameRequest(fetchParticipantsByUsername({username: "test", page: 1}));
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.LOADING);
-        testCall(worker, UserApi.getFollowers, "1");
-        testSetResponse(worker, mockUserResponse, setFollowers, mockUserResponse.data, "UserResponse");
+        testCall(worker, ChatApi.searchParticipantsByUsername, {username: "test", page: 1});
+        testSetResponse(worker, mockUserResponse, setPageableUsersSearch, mockExpectedResponse(mockUserResponse), "UserResponse");
+        testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.ERROR)
+    });
+
+    describe("fetchFollowersRequest:", () => {
+        const worker = fetchFollowersRequest(fetchFollowers({userId: 1, page: 1}));
+        testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.LOADING);
+        testCall(worker, UserApi.getFollowers, {userId: 1, page: 1});
+        testSetResponse(worker, mockUserResponse, setPageableFollowers, mockExpectedResponse(mockUserResponse), "UserResponse");
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.ERROR)
     });
 
     describe("fetchFollowingsRequest:", () => {
-        const worker = fetchFollowingsRequest(fetchFollowings("1"));
-
+        const worker = fetchFollowingsRequest(fetchFollowings({userId: 1, page: 1}));
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.LOADING);
-        testCall(worker, UserApi.getFollowing, "1");
-        testSetResponse(worker, mockUserResponse, setFollowers, mockUserResponse.data, "UserResponse");
+        testCall(worker, UserApi.getFollowing, {userId: 1, page: 1});
+        testSetResponse(worker, mockUserResponse, setPageableFollowers, mockExpectedResponse(mockUserResponse), "UserResponse");
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.ERROR)
     });
 

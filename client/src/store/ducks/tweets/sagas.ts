@@ -87,8 +87,8 @@ export function* fetchFollowersTweetsRequest({payload}: FetchFollowersTweetsActi
 export function* fetchTweetsByTagRequest({payload}: FetchTweetsByTagActionInterface) {
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
-        const item: TweetResponse[] = yield call(TagApi.fetchTweetsByTag, payload);
-        yield put(setTweets(item));
+        const response: AxiosResponse<TweetResponse[]> = yield call(TagApi.fetchTweetsByTag, payload);
+        yield put(setTweets(response.data));
     } catch (e) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }
@@ -97,8 +97,8 @@ export function* fetchTweetsByTagRequest({payload}: FetchTweetsByTagActionInterf
 export function* fetchTweetsByTextRequest({payload}: FetchTweetsByTextActionInterface) {
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
-        const item: TweetResponse[] = yield call(TweetApi.searchTweets, payload);
-        yield put(setTweets(item));
+        const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.searchTweets, payload);
+        yield put(setTweets(response.data));
     } catch (e) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }

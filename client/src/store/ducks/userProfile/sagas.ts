@@ -43,8 +43,8 @@ export function* processSubscribeRequest({payload}: ProcessSubscribeActionInterf
 export function* fetchChatParticipantRequest({payload}: FetchChatParticipantActionInterface) {
     try {
         yield put(setUserProfileLoadingState(LoadingStatus.LOADING));
-        const item: UserProfileResponse = yield call(ChatApi.getParticipant, payload);
-        yield put(setUserProfile(item));
+        const response: AxiosResponse<UserProfileResponse> = yield call(ChatApi.getParticipant, payload);
+        yield put(setUserProfile(response.data));
     } catch (error) {
         yield put(setUserProfileLoadingState(LoadingStatus.ERROR));
     }

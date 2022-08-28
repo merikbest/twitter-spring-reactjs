@@ -22,7 +22,7 @@ const EmailVerificationModal: FC<CustomizeModalProps> = ({email, open, onClose, 
 
     const checkEmailVerificationCode = (): void => {
         AuthApi.checkRegistrationCode(verificationCode)
-            .then((response) => onOpenSetPassword(true))
+            .then(() => onOpenSetPassword(true))
             .catch((error) => setError(error.response.data));
     };
 

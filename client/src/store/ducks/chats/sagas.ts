@@ -1,4 +1,5 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
+import {AxiosResponse} from "axios";
 
 import {LoadingStatus} from '../../types';
 import {
@@ -13,8 +14,8 @@ import {ChatResponse} from "../../types/chat";
 export function* fetchChatsRequest() {
     try {
         yield put(setChatsLoadingState(LoadingStatus.LOADING));
-        const items: ChatResponse[] = yield call(ChatApi.getUserChats);
-        yield put(setChats(items));
+        const response: AxiosResponse<ChatResponse[]> = yield call(ChatApi.getUserChats);
+        yield put(setChats(response.data));
     } catch (error) {
         yield put(setChatsLoadingState(LoadingStatus.ERROR));
     }
@@ -23,8 +24,8 @@ export function* fetchChatsRequest() {
 export function* createChatRequest({payload}: CreateChatActionInterface) {
     try {
         yield put(setChatsLoadingState(LoadingStatus.LOADING));
-        const item: ChatResponse = yield call(ChatApi.createChat, payload);
-        yield put(setChat(item));
+        const response: AxiosResponse<ChatResponse> = yield call(ChatApi.createChat, payload);
+        yield put(setChat(response.data));
     } catch (error) {
         yield put(setChatsLoadingState(LoadingStatus.ERROR));
     }

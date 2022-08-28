@@ -10,12 +10,13 @@ import {
 import {ChatApi} from "../../../services/api/chatApi";
 import {setChatMessages, setChatMessagesLoadingState} from "./actionCreators";
 import {ChatMessageResponse} from "../../types/chat";
+import {AxiosResponse} from "axios";
 
 export function* fetchChatMessagesRequest({payload}: FetchChatMessagesActionInterface) {
     try {
         yield put(setChatMessagesLoadingState(LoadingStatus.LOADING));
-        const items: ChatMessageResponse[] = yield call(ChatApi.getChatMessages, payload);
-        yield put(setChatMessages(items));
+        const response: AxiosResponse<ChatMessageResponse[]> = yield call(ChatApi.getChatMessages, payload);
+        yield put(setChatMessages(response.data));
     } catch (error) {
         yield put(setChatMessagesLoadingState(LoadingStatus.ERROR));
     }

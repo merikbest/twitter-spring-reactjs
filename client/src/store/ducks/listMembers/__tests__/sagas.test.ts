@@ -1,3 +1,6 @@
+import {AxiosResponse} from "axios";
+import {call} from "redux-saga/effects";
+
 import {
     fetchListFollowersRequest,
     fetchListMembersByUsernameRequest,
@@ -20,12 +23,11 @@ import {LoadingStatus} from "../../../types";
 import {testLoadingStatus, testSetResponse, testWatchSaga} from "../../../../util/testHelper";
 import {ListsApi} from "../../../../services/api/listsApi";
 import {ListsOwnerMemberResponse} from "../../../types/lists";
-import {call} from "redux-saga/effects";
 import {setMembersSize} from "../../list/actionCreators";
 import {ListMembersActionsType} from "../contracts/actionTypes";
 
 describe("listMembersSaga:", () => {
-    const mockListsOwnerMemberResponse = [{id: 1}, {id: 2}] as ListsOwnerMemberResponse[];
+    const mockListsOwnerMemberResponse = {data: [{id: 1}, {id: 2}]} as AxiosResponse<ListsOwnerMemberResponse[]>;
     
     describe("fetchListMembersRequest:", () => {
         const worker = fetchListMembersRequest(fetchListMembers({listId: 1, listOwnerId: 1}));
@@ -38,7 +40,7 @@ describe("listMembersSaga:", () => {
 
             expect(actualYield).toEqual(expectedYield);
         });
-        testSetResponse(worker, mockListsOwnerMemberResponse, setListMembers, mockListsOwnerMemberResponse, "ListsOwnerMemberResponse");
+        testSetResponse(worker, mockListsOwnerMemberResponse, setListMembers, mockListsOwnerMemberResponse.data, "ListsOwnerMemberResponse");
         testLoadingStatus(worker, setLoadingMembersState, LoadingStatus.ERROR)
     });
 
@@ -53,7 +55,7 @@ describe("listMembersSaga:", () => {
 
             expect(actualYield).toEqual(expectedYield);
         });
-        testSetResponse(worker, mockListsOwnerMemberResponse, setListMembers, mockListsOwnerMemberResponse, "ListsOwnerMemberResponse");
+        testSetResponse(worker, mockListsOwnerMemberResponse, setListMembers, mockListsOwnerMemberResponse.data, "ListsOwnerMemberResponse");
         testLoadingStatus(worker, setLoadingMembersState, LoadingStatus.ERROR)
     });
 
@@ -68,12 +70,12 @@ describe("listMembersSaga:", () => {
 
             expect(actualYield).toEqual(expectedYield);
         });
-        testSetResponse(worker, mockListsOwnerMemberResponse, setListSuggested, mockListsOwnerMemberResponse, "ListsOwnerMemberResponse");
+        testSetResponse(worker, mockListsOwnerMemberResponse, setListSuggested, mockListsOwnerMemberResponse.data, "ListsOwnerMemberResponse");
         testLoadingStatus(worker, setLoadingSuggestedState, LoadingStatus.ERROR)
     });
 
     describe("processListMemberRequest:", () => {
-        const worker = processListMemberRequest(processUserToListMembers({userId: 1, listId: 1}));
+        const worker = processListMemberRequest(processUserToListMembers({userId: 1, listId: 1, isSuggested: true}));
 
         testLoadingStatus(worker, setLoadingSuggestedState, LoadingStatus.LOADING);
 
@@ -83,8 +85,8 @@ describe("listMembersSaga:", () => {
 
             expect(actualYield).toEqual(expectedYield);
         });
-        testSetResponse(worker, true, setUserToList, {userId: 1, isMember: true}, "ListsOwnerMemberResponse");
-        testSetResponse(worker, true, setMembersSize, true, "ListsOwnerMemberResponse");
+        testSetResponse(worker, {data: true}, setUserToList, {userId: 1, isUserAdded: true, isSuggested: true}, "ListsOwnerMemberResponse");
+        testSetResponse(worker, {data: true}, setMembersSize, true, "ListsOwnerMemberResponse");
         testLoadingStatus(worker, setLoadingSuggestedState, LoadingStatus.ERROR)
     });
 

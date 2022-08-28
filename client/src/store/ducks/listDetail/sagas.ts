@@ -1,3 +1,4 @@
+import {AxiosResponse} from "axios";
 import {call, put, takeLatest} from 'redux-saga/effects';
 
 import {setListDetail, setListDetailLoadingState} from './actionCreators';
@@ -9,8 +10,8 @@ import {BaseListResponse} from "../../types/lists";
 export function* fetchListDetailRequest({payload}: FetchListDetailActionInterface) {
     try {
         yield put(setListDetailLoadingState(LoadingStatus.LOADING));
-        const item: BaseListResponse = yield call(ListsApi.getListDetails, payload.listId, payload.cancelTokenSource);
-        yield put(setListDetail(item));
+        const response: AxiosResponse<BaseListResponse> = yield call(ListsApi.getListDetails, payload.listId, payload.cancelTokenSource);
+        yield put(setListDetail(response.data));
     } catch (error) {
         yield put(setListDetailLoadingState(LoadingStatus.ERROR));
     }

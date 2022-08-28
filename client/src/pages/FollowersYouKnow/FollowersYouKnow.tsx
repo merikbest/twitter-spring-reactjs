@@ -54,7 +54,7 @@ const FollowersYouKnow: FC = (): ReactElement => {
             <PageHeaderWrapper backButton>
                 {!isLoading && (
                     <PageHeaderTitle
-                        title={userProfile!.fullName}
+                        title={userProfile?.fullName!}
                         subtitle={`@${userProfile?.username}`}
                     />
                 )}

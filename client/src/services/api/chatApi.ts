@@ -5,43 +5,30 @@ import {ChatMessageRequest, ChatMessageWithTweetRequest} from "../../store/ducks
 import {ChatMessageResponse, ChatResponse} from "../../store/types/chat";
 import {UserResponse} from "../../store/types/user";
 
-export interface Response<T> {
-    status: string;
-    data: T;
-}
-
 export const ChatApi = {
-    async getUserChats(): Promise<Response<ChatResponse[]>> {
-        const {data} = await axios.get<Response<ChatResponse[]>>(`${API_URL}/chat/users`);
-        return data;
+    async getUserChats(): Promise<AxiosResponse<ChatResponse[]>> {
+        return await axios.get<ChatResponse[]>(`${API_URL}/chat/users`);
     },
-    async createChat(userId: number): Promise<Response<ChatResponse>> {
-        const {data} = await axios.get<Response<ChatResponse>>(`${API_URL}/chat/create/${userId}`);
-        return data;
+    async createChat(userId: number): Promise<AxiosResponse<ChatResponse>> {
+        return await axios.get<ChatResponse>(`${API_URL}/chat/create/${userId}`);
     },
-    async getChatMessages(chatId: number): Promise<Response<ChatMessageResponse[]>> {
-        const {data} = await axios.get<Response<ChatMessageResponse[]>>(`${API_URL}/chat/${chatId}/messages`);
-        return data;
+    async getChatMessages(chatId: number): Promise<AxiosResponse<ChatMessageResponse[]>> {
+        return await axios.get<ChatMessageResponse[]>(`${API_URL}/chat/${chatId}/messages`);
     },
-    async readChatMessages(chatId: number): Promise<Response<number>> {
-        const {data} = await axios.get<Response<number>>(`${API_URL}/chat/${chatId}/read/messages`);
-        return data;
+    async readChatMessages(chatId: number): Promise<AxiosResponse<number>> {
+        return await axios.get<number>(`${API_URL}/chat/${chatId}/read/messages`);
     },
-    async addMessage(chatMessage: ChatMessageRequest): Promise<Response<ChatMessageResponse>> {
-        const {data} = await axios.post<Response<ChatMessageResponse>>(`${API_URL}/chat/add/message`, chatMessage);
-        return data;
+    async addMessage(chatMessage: ChatMessageRequest): Promise<AxiosResponse<ChatMessageResponse>> {
+        return await axios.post<ChatMessageResponse>(`${API_URL}/chat/add/message`, chatMessage);
     },
-    async addMessageWithTweet(chatMessage: ChatMessageWithTweetRequest): Promise<Response<ChatMessageResponse[]>> {
-        const {data} = await axios.post<Response<ChatMessageResponse[]>>(`${API_URL}/chat/add/message/tweet`, chatMessage);
-        return data;
+    async addMessageWithTweet(chatMessage: ChatMessageWithTweetRequest): Promise<AxiosResponse<ChatMessageResponse[]>> {
+        return await axios.post<ChatMessageResponse[]>(`${API_URL}/chat/add/message/tweet`, chatMessage);
     },
-    async getParticipant(payload: { participantId: number, chatId: number }): Promise<Response<UserResponse>> {
-        const {data} = await axios.get<Response<UserResponse>>(`${API_URL}/chat/participant/${payload.participantId}/${payload.chatId}`);
-        return data;
+    async getParticipant(payload: { participantId: number, chatId: number }): Promise<AxiosResponse<UserResponse>> {
+        return await axios.get<UserResponse>(`${API_URL}/chat/participant/${payload.participantId}/${payload.chatId}`);
     },
-    async leaveFromConversation(payload: { participantId: number, chatId: number }): Promise<Response<string>> {
-        const {data} = await axios.get<Response<string>>(`${API_URL}/chat/leave/${payload.participantId}/${payload.chatId}`);
-        return data;
+    async leaveFromConversation(payload: { participantId: number, chatId: number }): Promise<AxiosResponse<string>> {
+        return await axios.get<string>(`${API_URL}/chat/leave/${payload.participantId}/${payload.chatId}`);
     },
     async searchParticipantsByUsername(payload: { username: string, page: number }): Promise<AxiosResponse<UserResponse[]>> {
         return await axios.get<UserResponse[]>(`${API_URL}/chat/search/${payload.username}`, {params: {page: payload.page}});

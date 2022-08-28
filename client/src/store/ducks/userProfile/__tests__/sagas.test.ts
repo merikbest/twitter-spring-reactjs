@@ -53,7 +53,7 @@ describe("userProfileSaga:", () => {
 
         testLoadingStatus(worker, setUserProfileLoadingState, LoadingStatus.LOADING);
         testCall(worker, ChatApi.getParticipant, {participantId: 1, chatId: 1});
-        testSetResponse(worker, mockUserProfileResponse, setUserProfile, mockUserProfileResponse, "UserProfileResponse");
+        testSetResponse(worker, mockUserProfileResponse, setUserProfile, mockUserProfileResponse.data, "UserProfileResponse");
         testLoadingStatus(worker, setUserProfileLoadingState, LoadingStatus.ERROR)
     });
 

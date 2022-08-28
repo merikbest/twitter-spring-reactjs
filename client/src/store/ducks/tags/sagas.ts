@@ -10,8 +10,8 @@ import {TagResponse} from "../../types/tag";
 export function* fetchTagsRequest() {
     try {
         yield put(setTagsLoadingState(LoadingStatus.LOADING));
-        const items: TagResponse[] = yield call(TagApi.fetchTags);
-        yield put(setTags(items));
+        const response: AxiosResponse<TagResponse[]> = yield call(TagApi.fetchTags);
+        yield put(setTags(response.data));
     } catch (error) {
         yield put(setTagsLoadingState(LoadingStatus.ERROR));
     }

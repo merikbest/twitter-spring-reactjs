@@ -1,4 +1,6 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
+import {AxiosResponse} from "axios";
+
 import {
     setBackgroundColor,
     setColorScheme,
@@ -80,7 +82,6 @@ import {
 } from "../notifications/actionCreators";
 import {setBlockedUser, setMutedUser} from "../blockedAndMutedUsers/actionCreators";
 import {HOME, PROFILE} from '../../../util/pathConstants';
-import {AxiosResponse} from "axios";
 
 export function* updateUserDataRequest({payload}: UpdateUserDataActionInterface) {
     try {
@@ -95,9 +96,9 @@ export function* updateUserDataRequest({payload}: UpdateUserDataActionInterface)
 export function* fetchSignInRequest({payload}: FetchSignInActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const data: AuthenticationResponse = yield call(AuthApi.signIn, payload);
-        localStorage.setItem("token", data.token);
-        yield put(setUserData(data.user));
+        const response: AxiosResponse<AuthenticationResponse> = yield call(AuthApi.signIn, payload);
+        localStorage.setItem("token", response.data.token);
+        yield put(setUserData(response.data.user));
         payload.history.push(HOME);
     } catch (error) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
@@ -107,10 +108,10 @@ export function* fetchSignInRequest({payload}: FetchSignInActionInterface) {
 export function* fetchSignUpRequest({payload}: FetchSignUpActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const data: AuthenticationResponse = yield call(AuthApi.endRegistration, payload);
-        localStorage.setItem("token", data.token);
-        yield put(setUserData(data.user));
-        payload.history.push({pathname: `${PROFILE}/${data.user.id}`, state: {isRegistered: true}});
+        const response: AxiosResponse<AuthenticationResponse> = yield call(AuthApi.endRegistration, payload);
+        localStorage.setItem("token", response.data.token);
+        yield put(setUserData(response.data.user));
+        payload.history.push({pathname: `${PROFILE}/${response.data.user.id}`, state: {isRegistered: true}});
     } catch (error) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -119,9 +120,9 @@ export function* fetchSignUpRequest({payload}: FetchSignUpActionInterface) {
 export function* fetchUserDataRequest() {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const data: AuthenticationResponse = yield call(AuthApi.getMe);
-        localStorage.setItem("token", data.token);
-        yield put(setUserData(data.user));
+        const response: AxiosResponse<AuthenticationResponse> = yield call(AuthApi.getMe);
+        localStorage.setItem("token", response.data.token);
+        yield put(setUserData(response.data.user));
     } catch (error) {
         if (localStorage.getItem('token') !== null) {
             yield put(setUserLoadingStatus(LoadingStatus.ERROR));
@@ -179,8 +180,8 @@ export function* fetchReadMessagesRequest({payload}: FetchReadMessagesActionInte
 export function* updateUsernameRequest({payload}: UpdateUsernameActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: string = yield call(UserSettingsApi.updateUsername, payload);
-        yield put(setUsername(item));
+        const response: AxiosResponse<string> = yield call(UserSettingsApi.updateUsername, payload);
+        yield put(setUsername(response.data));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -200,8 +201,8 @@ export function* updateEmailRequest({payload}: UpdateEmailActionInterface) {
 export function* updatePhoneRequest({payload}: UpdatePhoneActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: { countryCode: string; phone: number } = yield call(UserSettingsApi.updatePhone, payload);
-        yield put(setPhone({countryCode: item.countryCode, phone: item.phone}));
+        const {data}: AxiosResponse<{ countryCode: string; phone: number }> = yield call(UserSettingsApi.updatePhone, payload);
+        yield put(setPhone({countryCode: data.countryCode, phone: data.phone}));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -210,8 +211,8 @@ export function* updatePhoneRequest({payload}: UpdatePhoneActionInterface) {
 export function* updateCountryRequest({payload}: UpdateCountryActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: string = yield call(UserSettingsApi.updateCountry, payload);
-        yield put(setCountry(item));
+        const response: AxiosResponse<string> = yield call(UserSettingsApi.updateCountry, payload);
+        yield put(setCountry(response.data));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -220,8 +221,8 @@ export function* updateCountryRequest({payload}: UpdateCountryActionInterface) {
 export function* updateGenderRequest({payload}: UpdateGenderActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: string = yield call(UserSettingsApi.updateGender, payload);
-        yield put(setGender(item));
+        const response: AxiosResponse<string> = yield call(UserSettingsApi.updateGender, payload);
+        yield put(setGender(response.data));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -230,8 +231,8 @@ export function* updateGenderRequest({payload}: UpdateGenderActionInterface) {
 export function* updateLanguageRequest({payload}: UpdateLanguageActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: string = yield call(UserSettingsApi.updateLanguage, payload);
-        yield put(setLanguage(item));
+        const response: AxiosResponse<string> = yield call(UserSettingsApi.updateLanguage, payload);
+        yield put(setLanguage(response.data));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -240,8 +241,8 @@ export function* updateLanguageRequest({payload}: UpdateLanguageActionInterface)
 export function* updateDirectRequest({payload}: UpdateDirectActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: boolean = yield call(UserSettingsApi.updateDirectMessageRequests, payload);
-        yield put(setDirect(item));
+        const response: AxiosResponse<boolean> = yield call(UserSettingsApi.updateDirectMessageRequests, payload);
+        yield put(setDirect(response.data));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -250,8 +251,8 @@ export function* updateDirectRequest({payload}: UpdateDirectActionInterface) {
 export function* updatePrivateProfileRequest({payload}: UpdatePrivateProfileActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: boolean = yield call(UserSettingsApi.updatePrivateProfile, payload);
-        yield put(setPrivateProfile(item));
+        const response: AxiosResponse<boolean> = yield call(UserSettingsApi.updatePrivateProfile, payload);
+        yield put(setPrivateProfile(response.data));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -260,8 +261,8 @@ export function* updatePrivateProfileRequest({payload}: UpdatePrivateProfileActi
 export function* updateColorSchemeRequest({payload}: UpdateColorSchemeActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: string = yield call(UserSettingsApi.updateColorScheme, payload);
-        yield put(setColorScheme(item));
+        const response: AxiosResponse<string> = yield call(UserSettingsApi.updateColorScheme, payload);
+        yield put(setColorScheme(response.data));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -270,8 +271,8 @@ export function* updateColorSchemeRequest({payload}: UpdateColorSchemeActionInte
 export function* updateBackgroundColorRequest({payload}: UpdateBackgroundColorActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: string = yield call(UserSettingsApi.updateBackgroundColor, payload);
-        yield put(setBackgroundColor(item));
+        const response: AxiosResponse<string> = yield call(UserSettingsApi.updateBackgroundColor, payload);
+        yield put(setBackgroundColor(response.data));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }

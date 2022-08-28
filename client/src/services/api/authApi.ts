@@ -8,31 +8,21 @@ import {LoginProps} from "../../pages/Login/Login";
 import {AuthenticationResponse} from "../../store/types/auth";
 import {AuthUserResponse} from "../../store/types/user";
 
-export interface Response<T> {
-    status: string;
-    data: T;
-}
-
 export const AuthApi = {
-    async signIn(postData: LoginProps): Promise<Response<AuthenticationResponse>> {
-        const {data} = await axios.post<Response<AuthenticationResponse>>(`${API_URL}/auth/login`, postData);
-        return data;
+    async signIn(postData: LoginProps): Promise<AxiosResponse<AuthenticationResponse>> {
+        return await axios.post<AuthenticationResponse>(`${API_URL}/auth/login`, postData);
     },
-    async checkEmail(postData: RegistrationInfo): Promise<Response<string>> {
-        const {data} = await axios.post<Response<string>>(`${API_URL}/auth/registration/check`, postData);
-        return data;
+    async checkEmail(postData: RegistrationInfo): Promise<AxiosResponse<string>> {
+        return await axios.post<string>(`${API_URL}/auth/registration/check`, postData);
     },
-    async sendRegistrationCode(postData: RegistrationInfo): Promise<Response<string>> {
-        const {data} = await axios.post<Response<string>>(`${API_URL}/auth/registration/code`, postData);
-        return data;
+    async sendRegistrationCode(postData: RegistrationInfo): Promise<AxiosResponse<string>> {
+        return await axios.post<string>(`${API_URL}/auth/registration/code`, postData);
     },
-    async checkRegistrationCode(registrationCode: string): Promise<Response<string>> {
-        const {data} = await axios.get<Response<string>>(`${API_URL}/auth/registration/activate/${registrationCode}`);
-        return data;
+    async checkRegistrationCode(registrationCode: string): Promise<AxiosResponse<string>> {
+        return await axios.get<string>(`${API_URL}/auth/registration/activate/${registrationCode}`);
     },
-    async endRegistration(postData: RegistrationProps): Promise<Response<AuthenticationResponse>> {
-        const {data} = await axios.post<Response<AuthenticationResponse>>(`${API_URL}/auth/registration/confirm`, postData);
-        return data;
+    async endRegistration(postData: RegistrationProps): Promise<AxiosResponse<AuthenticationResponse>> {
+        return await axios.post<AuthenticationResponse>(`${API_URL}/auth/registration/confirm`, postData);
     },
     async findExistingEmail(postData: { email: string }): Promise<AxiosResponse<string>> {
         return await axios.post<string>(`${API_URL}/auth/forgot/email`, postData);
@@ -40,20 +30,16 @@ export const AuthApi = {
     async sendPasswordResetCode(postData: { email: string }): Promise<AxiosResponse<string>> {
         return await axios.post<string>(`${API_URL}/auth/forgot`, postData);
     },
-    async getUserByResetCode(resetCode: string): Promise<AuthUserResponse> {
-        const {data} = await axios.get<AuthUserResponse>(`${API_URL}/auth/reset/${resetCode}`);
-        return data;
+    async getUserByResetCode(resetCode: string): Promise<AxiosResponse<AuthUserResponse>> {
+        return await axios.get<AuthUserResponse>(`${API_URL}/auth/reset/${resetCode}`);
     },
-    async passwordReset(postData: { email: string; password: string, password2: string }): Promise<string> {
-        const {data} = await axios.post<string>(`${API_URL}/auth/reset`, postData);
-        return data;
+    async passwordReset(postData: { email: string; password: string, password2: string }): Promise<AxiosResponse<string>> {
+        return await axios.post<string>(`${API_URL}/auth/reset`, postData);
     },
-    async currentPasswordReset(postData: { currentPassword: string; password: string, password2: string }): Promise<string> {
-        const {data} = await axios.post<string>(`${API_URL}/auth/reset/current`, postData);
-        return data;
+    async currentPasswordReset(postData: { currentPassword: string; password: string, password2: string }): Promise<AxiosResponse<string>> {
+        return await axios.post<string>(`${API_URL}/auth/reset/current`, postData);
     },
-    async getMe(): Promise<AuthenticationResponse> {
-        const {data} = await axios.get<AuthenticationResponse>(`${API_URL}/auth/user`);
-        return data;
+    async getMe(): Promise<AxiosResponse<AuthenticationResponse>> {
+        return await axios.get<AuthenticationResponse>(`${API_URL}/auth/user`);
     },
 };

@@ -1,3 +1,5 @@
+import {AxiosResponse} from "axios";
+
 import {
     addChatMessageRequest,
     addChatMessageWithTweetRequest,
@@ -21,12 +23,12 @@ import {ChatMessagesActionsType} from "../contracts/actionTypes";
 describe("chatMessagesSaga:", () => {
     
     describe("fetchChatMessagesRequest:", () => {
-        const mockChatMessageResponse = [{id: 1}, {id: 2}] as ChatMessageResponse[];
+        const mockChatMessageResponse = {data: [{id: 1}, {id: 2}]} as AxiosResponse<ChatMessageResponse[]>;
         const worker = fetchChatMessagesRequest(fetchChatMessages(1));
         
         testLoadingStatus(worker, setChatMessagesLoadingState, LoadingStatus.LOADING);
         testCall(worker, ChatApi.getChatMessages, 1);
-        testSetResponse(worker, mockChatMessageResponse, setChatMessages, mockChatMessageResponse, "ChatMessageResponse");
+        testSetResponse(worker, mockChatMessageResponse, setChatMessages, mockChatMessageResponse.data, "ChatMessageResponse");
         testLoadingStatus(worker, setChatMessagesLoadingState, LoadingStatus.ERROR)
     });
 

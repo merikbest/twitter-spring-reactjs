@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 import {call} from "redux-saga/effects";
 
 import {fetchListDetailRequest, listDetailSaga} from "../sagas";
@@ -10,7 +10,7 @@ import {BaseListResponse} from "../../../types/lists";
 import {ListDetailActionsType} from "../contracts/actionTypes";
 
 describe("listDetailSaga:", () => {
-    const mockBaseListResponse = {id: 1} as BaseListResponse;
+    const mockBaseListResponse = {data: {id: 1}} as AxiosResponse<BaseListResponse>;
     
     describe("fetchListDetailRequest:", () => {
         const cancelTokenSource = axios.CancelToken.source();
@@ -24,7 +24,7 @@ describe("listDetailSaga:", () => {
 
             expect(actualYield).toEqual(expectedYield);
         });
-        testSetResponse(worker, mockBaseListResponse, setListDetail, mockBaseListResponse, "BaseListResponse");
+        testSetResponse(worker, mockBaseListResponse, setListDetail, mockBaseListResponse.data, "BaseListResponse");
         testLoadingStatus(worker, setListDetailLoadingState, LoadingStatus.ERROR)
     });
 

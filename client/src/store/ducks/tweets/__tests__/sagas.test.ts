@@ -10,6 +10,7 @@ import {
     fetchDeleteTweetRequest,
     fetchFollowersTweetsRequest,
     fetchMediaTweetsRequest,
+    fetchQuotesByTweetIdRequest,
     fetchTweetsByListIdRequest,
     fetchTweetsByTagRequest,
     fetchTweetsByTextRequest,
@@ -32,6 +33,7 @@ import {
     fetchDeleteTweet,
     fetchFollowersTweets,
     fetchMediaTweets,
+    fetchQuotesByTweetId,
     fetchTweets,
     fetchTweetsByListId,
     fetchTweetsByTag,
@@ -71,7 +73,6 @@ describe("tweetsSaga:", () => {
 
     describe("fetchTweetsRequest:", () => {
         const worker = fetchTweetsRequest(fetchTweets(1));
-
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
         testCall(worker, TweetApi.fetchTweets, 1);
         testSetResponse(worker, mockPageableTweets, setPageableTweets, {
@@ -83,7 +84,6 @@ describe("tweetsSaga:", () => {
 
     describe("fetchMediaTweetsRequest:", () => {
         const worker = fetchMediaTweetsRequest(fetchMediaTweets(1));
-
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
         testCall(worker, TweetApi.fetchMediaTweets, 1);
         testSetResponse(worker, mockPageableTweets, setPageableTweets, {
@@ -95,7 +95,6 @@ describe("tweetsSaga:", () => {
 
     describe("fetchTweetsWithVideoRequest:", () => {
         const worker = fetchTweetsWithVideoRequest(fetchTweetsWithVideo(1));
-
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
         testCall(worker, TweetApi.fetchTweetsWithVideo, 1);
         testSetResponse(worker, mockPageableTweets, setPageableTweets, {
@@ -107,7 +106,6 @@ describe("tweetsSaga:", () => {
 
     describe("fetchFollowersTweetsRequest:", () => {
         const worker = fetchFollowersTweetsRequest(fetchFollowersTweets(1));
-
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
         testCall(worker, TweetApi.fetchFollowersTweets, 1);
         testSetResponse(worker, mockPageableTweets, setPageableTweets, {
@@ -119,66 +117,66 @@ describe("tweetsSaga:", () => {
 
     describe("fetchTweetsByTagRequest:", () => {
         const worker = fetchTweetsByTagRequest(fetchTweetsByTag("test"));
-
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
         testCall(worker, TagApi.fetchTweetsByTag, "test");
-        testSetResponse(worker, mockTweets, setTweets, mockTweets, "TweetResponse");
+        testSetResponse(worker, mockPageableTweets, setTweets, mockPageableTweets.data, "TweetResponse");
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
 
     describe("fetchTweetsByTextRequest:", () => {
         const worker = fetchTweetsByTextRequest(fetchTweetsByText("test"));
-
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
         testCall(worker, TweetApi.searchTweets, "test");
-        testSetResponse(worker, mockTweets, setTweets, mockTweets, "TweetResponse");
+        testSetResponse(worker, mockPageableTweets, setTweets, mockPageableTweets.data, "TweetResponse");
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
 
     describe("fetchTweetsByListIdRequest:", () => {
         const worker = fetchTweetsByListIdRequest(fetchTweetsByListId({listId: 1, pageNumber: 1}));
-
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
-
         it("should call getTweetsByListId", () => {
             const actualYield = worker.next().value;
             const expectedYield = call(ListsApi.getTweetsByListId, 1, 1);
 
             expect(actualYield).toEqual(expectedYield);
         });
+        testSetResponse(worker, mockPageableTweets, setPageableTweets, mockExpectedResponse(mockPageableTweets), "TweetResponse");
+        testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
+    });
 
-        testSetResponse(worker, mockPageableTweets, setPageableTweets, {
-            items: mockPageableTweets.data,
-            pagesCount: parseInt(mockPageableTweets.headers["page-total-count"])
-        }, "TweetResponse");
+    describe("fetchQuotesByTweetIdRequest:", () => {
+        const worker = fetchQuotesByTweetIdRequest(fetchQuotesByTweetId({tweetId: 1, pageNumber: 1}));
+        testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
+        it("should call getQuotesByTweetId", () => {
+            const actualYield = worker.next().value;
+            const expectedYield = call(TweetApi.getQuotesByTweetId, 1, 1);
 
+            expect(actualYield).toEqual(expectedYield);
+        });
+        testSetResponse(worker, mockPageableTweets, setPageableTweets, mockExpectedResponse(mockPageableTweets), "TweetResponse");
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
 
     describe("addTweetRequest:", () => {
         const worker = addTweetRequest(addTweet(mockAddTweet));
-
         testCall(worker, TweetApi.createTweet, mockAddTweet);
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
 
     describe("addPollRequest:", () => {
         const worker = addPollRequest(addPoll(mockAddTweet));
-
         testCall(worker, TweetApi.createPoll, mockAddTweet);
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
 
     describe("addScheduledTweetRequest:", () => {
         const worker = addScheduledTweetRequest(addScheduledTweet(mockAddTweet));
-
         testCall(worker, TweetApi.createScheduledTweet, mockAddTweet);
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
 
     describe("updateScheduledTweetRequest:", () => {
         const worker = updateScheduledTweetRequest(updateScheduledTweet(mockAddTweet));
-
         testCall(worker, TweetApi.updateScheduledTweet, mockAddTweet);
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
@@ -186,7 +184,6 @@ describe("tweetsSaga:", () => {
     describe("addQuoteTweetRequest:", () => {
         const mockAddQuoteTweet = {text: "test", tweetId: 1} as AddQuoteTweet;
         const worker = addQuoteTweetRequest(addQuoteTweet(mockAddQuoteTweet));
-
         testCall(worker, TweetApi.quoteTweet, mockAddQuoteTweet);
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
@@ -194,7 +191,6 @@ describe("tweetsSaga:", () => {
     describe("voteRequest:", () => {
         const mockVote = {tweetId: 1, pollId: 1, pollChoiceId: 1} as Vote;
         const worker = voteRequest(vote(mockVote));
-
         testCall(worker, TweetApi.voteInPoll, mockVote);
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
@@ -202,40 +198,34 @@ describe("tweetsSaga:", () => {
     describe("changeReplyTypeRequest:", () => {
         const mockReplyType = {tweetId: 1, replyType: ReplyType.EVERYONE};
         const worker = changeReplyTypeRequest(changeReplyType(mockReplyType));
-
         testCall(worker, TweetApi.changeTweetReplyType, mockReplyType);
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
 
     describe("fetchDeleteTweetRequest:", () => {
         const worker = fetchDeleteTweetRequest(fetchDeleteTweet(1));
-
         testCall(worker, TweetApi.deleteTweet, 1);
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
 
     describe("deleteScheduledTweetsTweetRequest:", () => {
         const worker = deleteScheduledTweetsTweetRequest(deleteScheduledTweets({tweetsIds: [1, 2, 3]}));
-
         testCall(worker, TweetApi.deleteScheduledTweets, {tweetsIds: [1, 2, 3]});
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
 
     describe("likeTweetRequest:", () => {
         const worker = likeTweetRequest(likeTweet(1));
-
         testCall(worker, TweetApi.likeTweet, 1);
     });
 
     describe("retweetRequest:", () => {
         const worker = retweetRequest(retweet(1));
-
         testCall(worker, TweetApi.retweet, 1);
     });
 
     describe("fetchUserBookmarksRequest:", () => {
         const worker = fetchUserBookmarksRequest(fetchUserBookmarks(1));
-
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
         testCall(worker, UserApi.getUserBookmarks, 1);
         testSetResponse(worker, mockPageableTweets, setPageableTweets, mockExpectedResponse(mockPageableTweets), "TweetResponse");
@@ -261,6 +251,7 @@ describe("tweetsSaga:", () => {
         {actionType: TweetsActionType.FETCH_TWEETS_BY_TAG, workSaga: fetchTweetsByTagRequest},
         {actionType: TweetsActionType.FETCH_TWEETS_BY_TEXT, workSaga: fetchTweetsByTextRequest},
         {actionType: TweetsActionType.FETCH_TWEETS_BY_LIST_ID, workSaga: fetchTweetsByListIdRequest},
+        {actionType: TweetsActionType.FETCH_TWEETS_WITH_QUOTES_BY_ID, workSaga: fetchQuotesByTweetIdRequest},
         {actionType: TweetsActionType.FETCH_BOOKMARKS, workSaga: fetchUserBookmarksRequest},
     ]);
 });
