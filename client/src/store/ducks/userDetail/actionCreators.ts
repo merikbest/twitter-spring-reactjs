@@ -10,7 +10,7 @@ import {
 } from "./contracts/actionTypes";
 import {UserDetailResponse} from "../../types/user";
 import {LoadingStatus} from "../../types";
-import {CancelTokenSource} from "axios";
+import {UserDetailsRequest} from "./contracts/state";
 
 export const setUserDetail = (payload: UserDetailResponse): SetUserDetailActionInterface => ({
     type: UserDetailActionsType.SET_USER_DETAIL,
@@ -32,7 +32,7 @@ export const setFollowRequestToUserDetail = (payload: boolean): SetFollowRequest
     payload,
 });
 
-export const fetchUserDetail = (payload: { userId: number, cancelTokenSource: CancelTokenSource }): FetchUserDetailActionInterface => ({
+export const fetchUserDetail = (payload: UserDetailsRequest): FetchUserDetailActionInterface => ({
     type: UserDetailActionsType.FETCH_USER_DETAIL,
     payload,
 });

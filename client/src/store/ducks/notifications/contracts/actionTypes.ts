@@ -5,9 +5,9 @@ import {
     NotificationInfoResponse,
     NotificationReplyResponse,
     NotificationResponse,
-    NotificationUserResponse
 } from "../../../types/notification";
 import {NotificationsState} from "./state";
+import {PageableResponse} from "../../../types/common";
 
 export enum NotificationsActionsType {
     SET_NOTIFICATIONS = 'notification/SET_NOTIFICATIONS',
@@ -30,12 +30,12 @@ export enum NotificationsActionsType {
 
 export interface SetNotificationsActionInterface extends Action<NotificationsActionsType> {
     type: NotificationsActionsType.SET_NOTIFICATIONS;
-    payload: { items: NotificationsState["notificationsList"], pagesCount: NotificationsState["pagesCount"] };
+    payload: PageableResponse<NotificationsState["notificationsList"]>;
 }
 
 export interface SetTweetAuthorsNotificationsActionInterface extends Action<NotificationsActionsType> {
     type: NotificationsActionsType.SET_TWEET_AUTHORS_NOTIFICATIONS;
-    payload: NotificationUserResponse[];
+    payload: NotificationsState["tweetAuthors"];
 }
 
 export interface FetchNotificationsActionInterface extends Action<NotificationsActionsType> {

@@ -1,6 +1,6 @@
 import {Action} from "redux";
 
-import {ChatMessageRequest, ChatMessageWithTweetRequest} from "./state";
+import {ChatMessageRequest, ChatMessageState, ChatMessageWithTweetRequest} from "./state";
 import {LoadingStatus} from "../../../types";
 import {ChatMessageResponse} from "../../../types/chat";
 
@@ -16,7 +16,7 @@ export enum ChatMessagesActionsType {
 
 export interface SetChatMessagesActionInterface extends Action<ChatMessagesActionsType> {
     type: ChatMessagesActionsType.SET_CHAT_MESSAGES;
-    payload: ChatMessageResponse[];
+    payload: ChatMessageState["items"];
 }
 
 export interface SetChatMessageActionInterface extends Action<ChatMessagesActionsType> {

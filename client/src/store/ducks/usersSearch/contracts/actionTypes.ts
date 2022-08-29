@@ -1,6 +1,13 @@
 import {Action} from "redux";
 import {LoadingStatus} from "../../../types";
-import {UsersSearchState} from "./state";
+import {
+    BlockedUsersPayload,
+    FollowersRequest,
+    FollowRequestUsersPayload,
+    FollowUsersPayload,
+    SearchByNameRequest,
+    UsersSearchState
+} from "./state";
 import {PageableResponse} from "../../../types/common";
 
 export enum UsersSearchActionsType {
@@ -42,17 +49,17 @@ export interface SetPageableFollowersActionInterface extends Action<UsersSearchA
 
 export interface SetFollowToUsersSearchStateActionInterface extends Action<UsersSearchActionsType> {
     type: UsersSearchActionsType.SET_FOLLOW_TO_USERS_SEARCH_STATE;
-    payload: { userId: number; isFollower: boolean; };
+    payload: FollowUsersPayload;
 }
 
 export interface SetFollowRequestToUsersSearchStateActionInterface extends Action<UsersSearchActionsType> {
     type: UsersSearchActionsType.SET_FOLLOW_REQUEST_TO_USERS_SEARCH_STATE;
-    payload: { userId: number; isWaitingForApprove: boolean; };
+    payload: FollowRequestUsersPayload;
 }
 
 export interface SetBlockUsersSearchStateActionInterface extends Action<UsersSearchActionsType> {
     type: UsersSearchActionsType.SET_BLOCK_USERS_SEARCH_STATE;
-    payload: { userId: number; isUserBlocked: boolean; };
+    payload: BlockedUsersPayload;
 }
 
 export interface FetchUsersSearchActionInterface extends Action<UsersSearchActionsType> {
@@ -62,22 +69,22 @@ export interface FetchUsersSearchActionInterface extends Action<UsersSearchActio
 
 export interface FetchUsersSearchByNameActionInterface extends Action<UsersSearchActionsType> {
     type: UsersSearchActionsType.FETCH_USERS_BY_NAME;
-    payload: { username: string, page: number };
+    payload: SearchByNameRequest;
 }
 
 export interface FetchParticipantsSearchByNameActionInterface extends Action<UsersSearchActionsType> {
     type: UsersSearchActionsType.FETCH_PARTICIPANTS_BY_NAME;
-    payload: { username: string, page: number };
+    payload: SearchByNameRequest;
 }
 
 export interface FetchFollowersActionInterface extends Action<UsersSearchActionsType> {
     type: UsersSearchActionsType.FETCH_FOLLOWERS;
-    payload: { userId: number | string, page: number };
+    payload: FollowersRequest;
 }
 
 export interface FetchFollowingsActionInterface extends Action<UsersSearchActionsType> {
     type: UsersSearchActionsType.FETCH_FOLLOWINGS;
-    payload: { userId: number | string, page: number };
+    payload: FollowersRequest;
 }
 
 export interface ResetUsersStateActionInterface extends Action<UsersSearchActionsType> {

@@ -1,7 +1,8 @@
 import {Action} from "redux";
+
 import {LoadingStatus} from "../../../types";
 import {UserDetailResponse} from "../../../types/user";
-import {CancelTokenSource} from "axios";
+import {UserDetailsRequest} from "./state";
 
 export enum UserDetailActionsType {
     SET_USER_DETAIL = 'userDetail/SET_USER_DETAIL',
@@ -35,7 +36,7 @@ export interface SetFollowRequestToUserDetailActionInterface extends Action<User
 
 export interface FetchUserDetailActionInterface extends Action<UserDetailActionsType> {
     type: UserDetailActionsType.FETCH_USER_DETAIL;
-    payload: { userId: number, cancelTokenSource: CancelTokenSource }
+    payload: UserDetailsRequest;
 }
 
 export interface ResetUserDetailStateActionInterface extends Action<UserDetailActionsType> {

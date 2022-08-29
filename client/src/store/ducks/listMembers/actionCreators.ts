@@ -15,39 +15,45 @@ import {
     SetLoadingSuggestedStateActionInterface,
     SetUserToListActionInterface,
 } from './contracts/actionTypes';
-import {ListsOwnerMemberResponse} from "../../types/lists";
+import {
+    ListMembersState,
+    ListUsersRequest,
+    ProcessUserListRequest,
+    SearchListUsersRequest,
+    UserToListPayload
+} from "./contracts/state";
 
-export const setListMembers = (payload: ListsOwnerMemberResponse[]): SetListMembersActionInterface => ({
+export const setListMembers = (payload: ListMembersState["members"]): SetListMembersActionInterface => ({
     type: ListMembersActionsType.SET_LIST_MEMBERS,
     payload,
 });
 
-export const setListSuggested = (payload: ListsOwnerMemberResponse[]): SetListSuggestedActionInterface => ({
+export const setListSuggested = (payload: ListMembersState["suggested"]): SetListSuggestedActionInterface => ({
     type: ListMembersActionsType.SET_LIST_SUGGESTED,
     payload,
 });
 
-export const fetchListMembers = (payload: { listId: number; listOwnerId: number; }): FetchListMembersActionInterface => ({
+export const fetchListMembers = (payload: ListUsersRequest): FetchListMembersActionInterface => ({
     type: ListMembersActionsType.FETCH_LIST_MEMBERS,
     payload,
 });
 
-export const fetchListFollowers = (payload: { listId: number; listOwnerId: number; }): FetchListFollowersActionInterface => ({
+export const fetchListFollowers = (payload: ListUsersRequest): FetchListFollowersActionInterface => ({
     type: ListMembersActionsType.FETCH_LIST_FOLLOWERS,
     payload,
 });
 
-export const fetchListMembersByUsername = (payload: { listId: number; username: string; }): FetchListMembersByUsernameActionInterface => ({
+export const fetchListMembersByUsername = (payload: SearchListUsersRequest): FetchListMembersByUsernameActionInterface => ({
     type: ListMembersActionsType.FETCH_LIST_MEMBERS_BY_USERNAME,
     payload,
 });
 
-export const processUserToListMembers = (payload: { userId: number; listId: number; isSuggested?: boolean; }): ProcessUserToListMembersActionInterface => ({
+export const processUserToListMembers = (payload: ProcessUserListRequest): ProcessUserToListMembersActionInterface => ({
     type: ListMembersActionsType.PROCESS_USER_TO_LIST_MEMBERS,
     payload,
 });
 
-export const setUserToList = (payload: { userId: number; isUserAdded: boolean; isSuggested?: boolean; }): SetUserToListActionInterface => ({
+export const setUserToList = (payload: UserToListPayload): SetUserToListActionInterface => ({
     type: ListMembersActionsType.SET_USER_TO_LIST,
     payload,
 });

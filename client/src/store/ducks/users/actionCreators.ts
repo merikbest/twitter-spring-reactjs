@@ -12,7 +12,14 @@ import {
     SetUsersLoadingStatusActionInterface,
     UsersActionsType
 } from './contracts/actionTypes';
-import {UsersState} from "./contracts/state";
+import {
+    BlockedUsersPayload,
+    FollowRequestUsersPayload,
+    FollowUsersPayload,
+    MutedUsersPayload,
+    SubscribedUsersPayload,
+    UsersState
+} from "./contracts/state";
 import {PageableResponse} from "../../types/common";
 
 export const setUsers = (payload: UsersState["users"]): SetUsersActionInterface => ({
@@ -25,27 +32,27 @@ export const setPageableUsers = (payload: PageableResponse<UsersState["users"]>)
     payload
 });
 
-export const setFollowToUsersState = (payload: { userId: number; isFollower: boolean; }): SetFollowToUsersStateActionInterface => ({
+export const setFollowToUsersState = (payload: FollowUsersPayload): SetFollowToUsersStateActionInterface => ({
     type: UsersActionsType.SET_FOLLOW_TO_USERS_STATE,
     payload
 });
 
-export const setFollowRequestToUsers = (payload: { userId: number; isWaitingForApprove: boolean; }): SetFollowRequestToUsersStateActionInterface => ({
+export const setFollowRequestToUsers = (payload: FollowRequestUsersPayload): SetFollowRequestToUsersStateActionInterface => ({
     type: UsersActionsType.SET_FOLLOW_REQUEST_TO_USERS_STATE,
     payload
 });
 
-export const setBlockedUsersState = (payload: { userId: number; isUserBlocked: boolean; }): SetBlockedUsersStateActionInterface => ({
+export const setBlockedUsersState = (payload: BlockedUsersPayload): SetBlockedUsersStateActionInterface => ({
     type: UsersActionsType.SET_BLOCKED_USERS_STATE,
     payload
 });
 
-export const setMutedUsersState = (payload: { userId: number; isUserMuted: boolean; }): SetMutedUsersStateActionInterface => ({
+export const setMutedUsersState = (payload: MutedUsersPayload): SetMutedUsersStateActionInterface => ({
     type: UsersActionsType.SET_MUTED_USERS_STATE,
     payload
 });
 
-export const setSubscribedUsersState = (payload: { userId: number; isSubscriber: boolean; }): SetSubscribedUsersStateActionInterface => ({
+export const setSubscribedUsersState = (payload: SubscribedUsersPayload): SetSubscribedUsersStateActionInterface => ({
     type: UsersActionsType.SET_SUBSCRIBED_USERS_STATE,
     payload
 });

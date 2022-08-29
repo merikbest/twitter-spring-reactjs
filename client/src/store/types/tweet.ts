@@ -76,3 +76,20 @@ export interface TweetImageResponse {
     imageId: number;
     src: string;
 }
+
+interface TweetsActionsPayload {
+    userId: number;
+    tweetId: number;
+}
+
+export interface FollowToTweetsPayload extends TweetsActionsPayload {
+    isFollower: boolean;
+}
+
+export interface BlockedToTweetsPayload extends TweetsActionsPayload {
+    isUserBlocked: boolean;
+}
+
+export interface MutedToTweetsPayload extends TweetsActionsPayload {
+    isUserMuted: boolean;
+}

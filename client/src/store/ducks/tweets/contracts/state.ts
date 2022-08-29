@@ -2,6 +2,12 @@ import {LoadingStatus} from "../../../types";
 import {TweetResponse} from "../../../types/tweet";
 import {Image, ReplyType} from "../../../types/common";
 
+export interface TweetsState {
+    items: TweetResponse[];
+    pagesCount: number;
+    loadingState: LoadingStatus;
+}
+
 export interface AddTweet {
     id?: number;
     text: string;
@@ -25,8 +31,23 @@ export interface Vote {
     pollChoiceId: number;
 }
 
-export interface TweetsState {
-    items: TweetResponse[];
-    pagesCount: number;
-    loadingState: LoadingStatus;
+
+export interface TweetsByListIdRequest {
+    listId: number,
+    pageNumber: number
+}
+
+export interface TweetsWithQuotesByIdRequest {
+    tweetId: number,
+    pageNumber: number
+}
+
+export interface ChangeReplyTypeRequest {
+    tweetId: number;
+    replyType: ReplyType;
+}
+
+export interface UpdatedBookmarkedTweetPayload {
+    tweetId: number;
+    isTweetBookmarked: boolean;
 }

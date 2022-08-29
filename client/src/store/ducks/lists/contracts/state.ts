@@ -2,6 +2,18 @@ import {LoadingStatus} from "../../../types";
 import {ListResponse, ListUserResponse, PinnedListResponse, SimpleListResponse} from "../../../types/lists";
 import {Image} from "../../../types/common";
 
+export interface ListsState {
+    lists: ListResponse[];
+    listsLoadingState: LoadingStatus;
+    userLists: ListUserResponse[];
+    userListsLoadingState: LoadingStatus;
+    pinnedLists: PinnedListResponse[];
+    pinnedListsLoadingState: LoadingStatus;
+    simpleLists: SimpleListResponse[];
+    simpleListsLoadingState: LoadingStatus;
+    loadingState: LoadingStatus;
+}
+
 export interface AddLists {
     name: string;
     description?: string;
@@ -15,14 +27,7 @@ export interface AddUserToListsRequest {
     lists: { listId: number; isMemberInList: boolean; }[];
 }
 
-export interface ListsState {
-    lists: ListResponse[];
-    listsLoadingState: LoadingStatus;
-    userLists: ListUserResponse[];
-    userListsLoadingState: LoadingStatus;
-    pinnedLists: PinnedListResponse[];
-    pinnedListsLoadingState: LoadingStatus;
-    simpleLists: SimpleListResponse[];
-    simpleListsLoadingState: LoadingStatus;
-    loadingState: LoadingStatus;
+export interface UpdateListsPayload {
+    listId: number;
+    isMember: boolean
 }

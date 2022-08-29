@@ -1,7 +1,7 @@
 import {Action} from "redux";
 
 import {LoadingStatus} from "../../../types";
-import {BlockedUserResponse, MutedUserResponse} from "../../../types/user";
+import {BlockedAndMutedUsersState, BlockedUserPayload, MutedUserPayload} from "./state";
 
 export enum BlockedAndMutedUsersActionsType {
     SET_BLOCKED_USERS = 'blockedAndMutedUsers/SET_BLOCKED_USERS',
@@ -16,22 +16,22 @@ export enum BlockedAndMutedUsersActionsType {
 
 export interface SetBlockedUsersActionInterface extends Action<BlockedAndMutedUsersActionsType> {
     type: BlockedAndMutedUsersActionsType.SET_BLOCKED_USERS;
-    payload: BlockedUserResponse[];
+    payload: BlockedAndMutedUsersState["blockedUsers"];
 }
 
 export interface SetMutedUsersActionInterface extends Action<BlockedAndMutedUsersActionsType> {
     type: BlockedAndMutedUsersActionsType.SET_MUTED_USERS;
-    payload: MutedUserResponse[];
+    payload: BlockedAndMutedUsersState["mutedUsers"];
 }
 
 export interface SetBlockedUserActionInterface extends Action<BlockedAndMutedUsersActionsType> {
     type: BlockedAndMutedUsersActionsType.SET_BLOCKED_USER;
-    payload: { userId: number; isUserBlocked: boolean };
+    payload: BlockedUserPayload;
 }
 
 export interface SetMutedUserActionInterface extends Action<BlockedAndMutedUsersActionsType> {
     type: BlockedAndMutedUsersActionsType.SET_MUTED_USER;
-    payload: { userId: number; isUserMuted: boolean };
+    payload: MutedUserPayload;
 }
 
 export interface FetchBlockedUsersActionInterface extends Action<BlockedAndMutedUsersActionsType> {

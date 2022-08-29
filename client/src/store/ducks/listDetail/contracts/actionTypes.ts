@@ -1,8 +1,8 @@
 import {Action} from "redux";
-import {CancelTokenSource} from "axios";
 
 import {BaseListResponse} from "../../../types/lists";
 import {LoadingStatus} from "../../../types";
+import {ListDetailsRequest} from "./state";
 
 export enum ListDetailActionsType {
     SET_LIST_DETAIL = 'listDetail/SET_LIST_DETAIL',
@@ -19,7 +19,7 @@ export interface SetListDetailActionInterface extends Action<ListDetailActionsTy
 
 export interface FetchListDetailActionInterface extends Action<ListDetailActionsType> {
     type: ListDetailActionsType.FETCH_LIST_DETAIL;
-    payload: { listId: number, cancelTokenSource: CancelTokenSource }
+    payload: ListDetailsRequest;
 }
 
 export interface UpdateFollowListDetailActionInterface extends Action<ListDetailActionsType> {

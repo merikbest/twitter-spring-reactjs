@@ -2,6 +2,11 @@ import {LoadingStatus} from "../../../types";
 import {BackgroundTheme, ColorScheme, Image} from "../../../types/common";
 import {AuthUserResponse} from "../../../types/user";
 
+export interface UserState {
+    data: AuthUserResponse | undefined;
+    status: LoadingStatus;
+}
+
 export interface Settings {
     username?: string;
     email?: string;
@@ -25,8 +30,12 @@ export interface UserRequest {
     about: string;
 }
 
-export interface UserState {
-    data: AuthUserResponse | undefined;
-    status: LoadingStatus;
+export interface UserActionRequest {
+    userId: number;
+    tweetId?: number;
 }
 
+export interface ChangePhoneResponse {
+    countryCode: string;
+    phone: number
+}

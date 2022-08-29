@@ -1,4 +1,4 @@
-import {Settings, UserRequest, UserState} from "./contracts/state";
+import {ChangePhoneResponse, Settings, UserActionRequest, UserRequest, UserState} from "./contracts/state";
 import {
     FetchPinTweetActionInterface,
     FetchReadMessagesActionInterface,
@@ -100,12 +100,12 @@ export const setUserLoadingStatus = (payload: UserState["status"]): SetUserLoadi
     payload
 });
 
-export const followUser = (payload: { userId: number; tweetId?: number; }): FollowUserActionInterface => ({
+export const followUser = (payload: UserActionRequest): FollowUserActionInterface => ({
     type: UserActionsType.FOLLOW_USER,
     payload,
 });
 
-export const unfollowUser = (payload: { userId: number; tweetId?: number; }): UnfollowUserActionInterface => ({
+export const unfollowUser = (payload: UserActionRequest): UnfollowUserActionInterface => ({
     type: UserActionsType.UNFOLLOW_USER,
     payload,
 });
@@ -125,12 +125,12 @@ export const processFollowRequest = (payload: number): ProcessFollowRequestActio
     payload,
 });
 
-export const processUserToBlocklist = (payload: { userId: number; tweetId?: number; }): ProcessUserToBlocklistActionInterface => ({
+export const processUserToBlocklist = (payload: UserActionRequest): ProcessUserToBlocklistActionInterface => ({
     type: UserActionsType.PROCESS_USER_TO_BLOCKLIST,
     payload,
 });
 
-export const processUserToMuteList = (payload: { userId: number; tweetId?: number; }): ProcessUserToMuteListActionInterface => ({
+export const processUserToMuteList = (payload: UserActionRequest): ProcessUserToMuteListActionInterface => ({
     type: UserActionsType.PROCESS_USER_TO_MUTELIST,
     payload,
 });
@@ -214,7 +214,7 @@ export const setEmail = (payload: string): SetEmailActionInterface => ({
     payload,
 });
 
-export const setPhone = (payload: { countryCode: string; phone: number }): SetPhoneActionInterface => ({
+export const setPhone = (payload: ChangePhoneResponse): SetPhoneActionInterface => ({
     type: UserActionsType.SET_PHONE,
     payload,
 });

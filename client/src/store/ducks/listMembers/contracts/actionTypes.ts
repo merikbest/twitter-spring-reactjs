@@ -1,6 +1,13 @@
 import {Action} from "redux";
+
 import {LoadingStatus} from "../../../types";
-import {ListsOwnerMemberResponse} from "../../../types/lists";
+import {
+    ListMembersState,
+    ListUsersRequest,
+    ProcessUserListRequest,
+    SearchListUsersRequest,
+    UserToListPayload
+} from "./state";
 
 export enum ListMembersActionsType {
     SET_LIST_MEMBERS = 'listMembers/SET_LIST_MEMBERS',
@@ -20,37 +27,37 @@ export enum ListMembersActionsType {
 
 export interface SetListMembersActionInterface extends Action<ListMembersActionsType> {
     type: ListMembersActionsType.SET_LIST_MEMBERS;
-    payload: ListsOwnerMemberResponse[];
+    payload: ListMembersState["members"];
 }
 
 export interface SetListSuggestedActionInterface extends Action<ListMembersActionsType> {
     type: ListMembersActionsType.SET_LIST_SUGGESTED;
-    payload: ListsOwnerMemberResponse[];
+    payload: ListMembersState["suggested"];
 }
 
 export interface FetchListMembersActionInterface extends Action<ListMembersActionsType> {
     type: ListMembersActionsType.FETCH_LIST_MEMBERS;
-    payload: { listId: number; listOwnerId: number; };
+    payload: ListUsersRequest;
 }
 
 export interface FetchListFollowersActionInterface extends Action<ListMembersActionsType> {
     type: ListMembersActionsType.FETCH_LIST_FOLLOWERS;
-    payload: { listId: number; listOwnerId: number; };
+    payload: ListUsersRequest;
 }
 
 export interface FetchListMembersByUsernameActionInterface extends Action<ListMembersActionsType> {
     type: ListMembersActionsType.FETCH_LIST_MEMBERS_BY_USERNAME;
-    payload: { listId: number; username: string; };
+    payload: SearchListUsersRequest;
 }
 
 export interface ProcessUserToListMembersActionInterface extends Action<ListMembersActionsType> {
     type: ListMembersActionsType.PROCESS_USER_TO_LIST_MEMBERS;
-    payload: { userId: number; listId: number; isSuggested?: boolean; };
+    payload: ProcessUserListRequest;
 }
 
 export interface SetUserToListActionInterface extends Action<ListMembersActionsType> {
     type: ListMembersActionsType.SET_USER_TO_LIST;
-    payload: { userId: number; isUserAdded: boolean; isSuggested?: boolean; };
+    payload: UserToListPayload;
 }
 
 export interface ResetListMembersStateActionInterface extends Action<ListMembersActionsType> {

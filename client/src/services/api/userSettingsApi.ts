@@ -1,6 +1,6 @@
 import {AxiosResponse} from "axios";
 
-import {Settings} from "../../store/ducks/user/contracts/state";
+import {ChangePhoneResponse, Settings} from "../../store/ducks/user/contracts/state";
 import {axios} from "../../core/axios";
 import {API_URL} from "../../util/url";
 import {AuthenticationResponse} from "../../store/types/auth";
@@ -12,8 +12,8 @@ export const UserSettingsApi = {
     async updateEmail(settings: Settings): Promise<AxiosResponse<AuthenticationResponse>> {
         return await axios.put<AuthenticationResponse>(`${API_URL}/settings/update/email`, settings);
     },
-    async updatePhone(settings: Settings): Promise<AxiosResponse<{ countryCode: string; phone: number }>> {
-        return await axios.put<{ countryCode: string; phone: number }>(`${API_URL}/settings/update/phone`, settings);
+    async updatePhone(settings: Settings): Promise<AxiosResponse<ChangePhoneResponse>> {
+        return await axios.put<ChangePhoneResponse>(`${API_URL}/settings/update/phone`, settings);
     },
     async updateCountry(settings: Settings): Promise<AxiosResponse<string>> {
         return await axios.put<string>(`${API_URL}/settings/update/country`, settings);

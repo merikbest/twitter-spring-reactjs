@@ -1,7 +1,7 @@
 import {Action} from "redux";
 
 import {LoadingStatus} from "../../../types";
-import {Settings, UserRequest, UserState} from "./state";
+import {ChangePhoneResponse, Settings, UserActionRequest, UserRequest, UserState} from "./state";
 import {RegistrationProps} from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
 import {LoginProps} from "../../../../pages/Login/Login";
 import {ChatMessageResponse} from "../../../types/chat";
@@ -106,12 +106,12 @@ export interface SetReadMessageActionInterface extends Action<UserActionsType> {
 
 export interface FollowUserActionInterface extends Action<UserActionsType> {
     type: UserActionsType.FOLLOW_USER;
-    payload: { userId: number; tweetId?: number; };
+    payload: UserActionRequest;
 }
 
 export interface UnfollowUserActionInterface extends Action<UserActionsType> {
     type: UserActionsType.UNFOLLOW_USER;
-    payload: { userId: number; tweetId?: number; };
+    payload: UserActionRequest;
 }
 
 export interface SetUserFollowingActionInterface extends Action<UserActionsType> {
@@ -131,12 +131,12 @@ export interface ProcessFollowRequestActionInterface extends Action<UserActionsT
 
 export interface ProcessUserToBlocklistActionInterface extends Action<UserActionsType> {
     type: UserActionsType.PROCESS_USER_TO_BLOCKLIST;
-    payload: { userId: number; tweetId?: number; };
+    payload: UserActionRequest;
 }
 
 export interface ProcessUserToMuteListActionInterface extends Action<UserActionsType> {
     type: UserActionsType.PROCESS_USER_TO_MUTELIST;
-    payload: { userId: number; tweetId?: number; };
+    payload: UserActionRequest;
 }
 
 export interface UpdateUsernameActionInterface extends Action<UserActionsType> {
@@ -220,7 +220,7 @@ export interface SetEmailActionInterface extends Action<UserActionsType> {
 
 export interface SetPhoneActionInterface extends Action<UserActionsType> {
     type: UserActionsType.SET_PHONE;
-    payload: { countryCode: string; phone: number };
+    payload: ChangePhoneResponse;
 }
 
 export interface SetCountryActionInterface extends Action<UserActionsType> {

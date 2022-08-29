@@ -1,6 +1,7 @@
 import {Action} from "redux";
-import {FollowerUserResponse} from "../../../types/user";
+
 import {LoadingStatus} from "../../../types";
+import {FollowerRequestsState} from "./state";
 
 export enum FollowerRequestsActionsType {
     SET_FOLLOWER_REQUESTS = 'followerRequests/SET_FOLLOWER_REQUESTS',
@@ -14,7 +15,7 @@ export enum FollowerRequestsActionsType {
 
 export interface SetFollowerRequestsActionInterface extends Action<FollowerRequestsActionsType> {
     type: FollowerRequestsActionsType.SET_FOLLOWER_REQUESTS;
-    payload: FollowerUserResponse[];
+    payload: FollowerRequestsState["items"];
 }
 
 export interface FetchFollowerRequestsActionInterface extends Action<FollowerRequestsActionsType> {

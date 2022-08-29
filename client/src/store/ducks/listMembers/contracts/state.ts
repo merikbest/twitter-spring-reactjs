@@ -8,3 +8,26 @@ export interface ListMembersState {
     suggestedLoadingState: LoadingStatus;
     loadingState: LoadingStatus;
 }
+
+
+export interface ListUsersRequest {
+    listId: number;
+    listOwnerId: number;
+}
+
+export interface SearchListUsersRequest {
+    listId: number;
+    username: string;
+}
+
+export interface ProcessUserListRequest {
+    userId: number;
+    listId: number;
+    isSuggested?: boolean;
+}
+
+export interface UserToListPayload {
+    userId: number;
+    isUserAdded: boolean;
+    isSuggested?: boolean;
+}

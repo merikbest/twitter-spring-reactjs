@@ -1,10 +1,19 @@
 import {Action} from "redux";
 
 import {LoadingStatus} from "../../../types";
-import {AddQuoteTweet, AddTweet, TweetsState, Vote} from "./state";
-import {TweetResponse} from "../../../types/tweet";
+import {
+    AddQuoteTweet,
+    AddTweet,
+    ChangeReplyTypeRequest,
+    TweetsByListIdRequest,
+    TweetsState,
+    TweetsWithQuotesByIdRequest,
+    UpdatedBookmarkedTweetPayload,
+    Vote
+} from "./state";
+import {BlockedToTweetsPayload, FollowToTweetsPayload, MutedToTweetsPayload, TweetResponse} from "../../../types/tweet";
 import {NotificationReplyResponse, NotificationResponse} from "../../../types/notification";
-import {ReplyType} from "../../../types/common";
+import {PageableResponse} from "../../../types/common";
 
 export enum TweetsActionType {
     SET_FOLLOW_TO_TWEETS_STATE = 'tweets/SET_FOLLOW_TO_TWEETS_STATE',
@@ -44,17 +53,17 @@ export enum TweetsActionType {
 
 export interface SetFollowToTweetsStateActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.SET_FOLLOW_TO_TWEETS_STATE;
-    payload: { userId: number; tweetId: number; isFollower: boolean; };
+    payload: FollowToTweetsPayload;
 }
 
 export interface SetBlockedToTweetsStateActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.SET_BLOCKED_TO_TWEETS_STATE;
-    payload: { userId: number; tweetId: number; isUserBlocked: boolean; };
+    payload: BlockedToTweetsPayload;
 }
 
 export interface SetMutedToTweetsStateActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.SET_MUTED_TO_TWEETS_STATE;
-    payload: { userId: number; tweetId: number; isUserMuted: boolean; };
+    payload: MutedToTweetsPayload;
 }
 
 export interface SetTweetsActionInterface extends Action<TweetsActionType> {
@@ -69,7 +78,7 @@ export interface FetchTweetsActionInterface extends Action<TweetsActionType> {
 
 export interface SetPageableTweetsActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.SET_PAGEABLE_TWEETS;
-    payload: { items: TweetsState["items"], pagesCount: TweetsState["pagesCount"] };
+    payload: PageableResponse<TweetsState["items"]>;
 }
 
 export interface SetTweetsLoadingStateInterface extends Action<TweetsActionType> {
@@ -98,12 +107,12 @@ export interface FetchFollowersTweetsActionInterface extends Action<TweetsAction
 
 export interface FetchTweetsByListIdActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_TWEETS_BY_LIST_ID;
-    payload: { listId: number, pageNumber: number };
+    payload: TweetsByListIdRequest;
 }
 
 export interface FetchTweetsWithQuotesByIdActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_TWEETS_WITH_QUOTES_BY_ID;
-    payload: { tweetId: number, pageNumber: number };
+    payload: TweetsWithQuotesByIdRequest;
 }
 
 export interface FetchTweetsByTagActionInterface extends Action<TweetsActionType> {
@@ -158,7 +167,7 @@ export interface VoteActionInterface extends Action<TweetsActionType> {
 
 export interface ChangeReplyTypeActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.CHANGE_REPLY_TYPE;
-    payload: { tweetId: number; replyType: ReplyType; };
+    payload: ChangeReplyTypeRequest;
 }
 
 export interface DeleteScheduledTweetsActionInterface extends Action<TweetsActionType> {
@@ -188,7 +197,7 @@ export interface RetweetActionInterface extends Action<TweetsActionType> {
 
 export interface SetUpdatedBookmarkedTweetActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.SET_UPDATED_BOOKMARKED_TWEET;
-    payload: { tweetId: number; isTweetBookmarked: boolean; };
+    payload: UpdatedBookmarkedTweetPayload;
 }
 
 export interface SetUpdatedTweetActionInterface extends Action<TweetsActionType> {

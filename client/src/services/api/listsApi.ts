@@ -32,11 +32,11 @@ export const ListsApi = {
     async getListById(listId: number): Promise<AxiosResponse<BaseListResponse>> {
         return await axios.get<BaseListResponse>(`${API_URL}/lists/${listId}`);
     },
-    async createTweetList(payload: AddLists): Promise<AxiosResponse<ListUserResponse>> {
-        return await axios.post<ListUserResponse>(`${API_URL}/lists`, payload);
+    async createTweetList(request: AddLists): Promise<AxiosResponse<ListUserResponse>> {
+        return await axios.post<ListUserResponse>(`${API_URL}/lists`, request);
     },
-    async editList(payload: EditListsRequest): Promise<AxiosResponse<BaseListResponse>> {
-        return await axios.put<BaseListResponse>(`${API_URL}/lists`, payload);
+    async editList(request: EditListsRequest): Promise<AxiosResponse<BaseListResponse>> {
+        return await axios.put<BaseListResponse>(`${API_URL}/lists`, request);
     },
     async deleteList(listId: number): Promise<AxiosResponse<string>> {
         return await axios.delete<string>(`${API_URL}/lists/${listId}`);
@@ -50,8 +50,8 @@ export const ListsApi = {
     async getListsToAddUser(userId: number): Promise<AxiosResponse<SimpleListResponse[]>> {
         return await axios.get<SimpleListResponse[]>(`${API_URL}/lists/add/user/${userId}`);
     },
-    async addUserToLists(payload: AddUserToListsRequest): Promise<AxiosResponse<number[]>> {
-        return await axios.post<number[]>(`${API_URL}/lists/add/user`, payload);
+    async addUserToLists(request: AddUserToListsRequest): Promise<AxiosResponse<number[]>> {
+        return await axios.post<number[]>(`${API_URL}/lists/add/user`, request);
     },
     async addUserToList(userId: number, listId: number): Promise<AxiosResponse<boolean>> {
         return await axios.get<boolean>(`${API_URL}/lists/add/user/${userId}/${listId}`);

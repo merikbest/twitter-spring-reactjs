@@ -2,6 +2,7 @@ import {Action} from "redux";
 
 import {LoadingStatus} from "../../../types";
 import {ChatResponse} from "../../../types/chat";
+import {ChatsState, LeaveConversationRequest} from "./state";
 
 export enum ChatsActionsType {
     SET_CHATS = 'chats/SET_CHATS',
@@ -15,7 +16,7 @@ export enum ChatsActionsType {
 
 export interface SetChatsActionInterface extends Action<ChatsActionsType> {
     type: ChatsActionsType.SET_CHATS;
-    payload: ChatResponse[];
+    payload: ChatsState["items"];
 }
 
 export interface SetChatActionInterface extends Action<ChatsActionsType> {
@@ -34,7 +35,7 @@ export interface CreateChatActionInterface extends Action<ChatsActionsType> {
 
 export interface LeaveFromConversationActionInterface extends Action<ChatsActionsType> {
     type: ChatsActionsType.LEAVE_FROM_CONVERSATION;
-    payload: { participantId: number, chatId: number };
+    payload: LeaveConversationRequest;
 }
 
 export interface ResetChatsStateActionInterface extends Action<ChatsActionsType> {

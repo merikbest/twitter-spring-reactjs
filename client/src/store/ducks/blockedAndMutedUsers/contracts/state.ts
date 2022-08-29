@@ -6,3 +6,13 @@ export interface BlockedAndMutedUsersState {
     mutedUsers: MutedUserResponse[];
     loadingState: LoadingStatus;
 }
+
+export interface BlockedUserPayload {
+    userId: number;
+    isUserBlocked: boolean
+}
+
+export interface MutedUserPayload {
+    userId: number;
+    isUserMuted: boolean
+}

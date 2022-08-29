@@ -1,4 +1,4 @@
-import {ChatMessageRequest, ChatMessageWithTweetRequest} from "./contracts/state";
+import {ChatMessageRequest, ChatMessageState, ChatMessageWithTweetRequest} from "./contracts/state";
 import {
     AddChatMessageActionInterface,
     AddChatMessageWithTweetActionInterface,
@@ -12,7 +12,7 @@ import {
 import {LoadingStatus} from "../../types";
 import {ChatMessageResponse} from "../../types/chat";
 
-export const setChatMessages = (payload: ChatMessageResponse[]): SetChatMessagesActionInterface => ({
+export const setChatMessages = (payload: ChatMessageState["items"]): SetChatMessagesActionInterface => ({
     type: ChatMessagesActionsType.SET_CHAT_MESSAGES,
     payload,
 });

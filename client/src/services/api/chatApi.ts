@@ -4,6 +4,9 @@ import {API_URL} from "../../util/url";
 import {ChatMessageRequest, ChatMessageWithTweetRequest} from "../../store/ducks/chatMessages/contracts/state";
 import {ChatMessageResponse, ChatResponse} from "../../store/types/chat";
 import {UserResponse} from "../../store/types/user";
+import {ChatParticipantRequest} from "../../store/ducks/userProfile/contracts/state";
+import {LeaveConversationRequest} from "../../store/ducks/chats/contracts/state";
+import {SearchByNameRequest} from "../../store/ducks/usersSearch/contracts/state";
 
 export const ChatApi = {
     async getUserChats(): Promise<AxiosResponse<ChatResponse[]>> {
@@ -24,13 +27,13 @@ export const ChatApi = {
     async addMessageWithTweet(chatMessage: ChatMessageWithTweetRequest): Promise<AxiosResponse<ChatMessageResponse[]>> {
         return await axios.post<ChatMessageResponse[]>(`${API_URL}/chat/add/message/tweet`, chatMessage);
     },
-    async getParticipant(payload: { participantId: number, chatId: number }): Promise<AxiosResponse<UserResponse>> {
-        return await axios.get<UserResponse>(`${API_URL}/chat/participant/${payload.participantId}/${payload.chatId}`);
+    async getParticipant(request: ChatParticipantRequest): Promise<AxiosResponse<UserResponse>> {
+        return await axios.get<UserResponse>(`${API_URL}/chat/participant/${request.participantId}/${request.chatId}`);
     },
-    async leaveFromConversation(payload: { participantId: number, chatId: number }): Promise<AxiosResponse<string>> {
-        return await axios.get<string>(`${API_URL}/chat/leave/${payload.participantId}/${payload.chatId}`);
+    async leaveFromConversation(request: LeaveConversationRequest): Promise<AxiosResponse<string>> {
+        return await axios.get<string>(`${API_URL}/chat/leave/${request.participantId}/${request.chatId}`);
     },
-    async searchParticipantsByUsername(payload: { username: string, page: number }): Promise<AxiosResponse<UserResponse[]>> {
-        return await axios.get<UserResponse[]>(`${API_URL}/chat/search/${payload.username}`, {params: {page: payload.page}});
+    async searchParticipantsByUsername(request: SearchByNameRequest): Promise<AxiosResponse<UserResponse[]>> {
+        return await axios.get<UserResponse[]>(`${API_URL}/chat/search/${request.username}`, {params: {page: request.page}});
     },
 };

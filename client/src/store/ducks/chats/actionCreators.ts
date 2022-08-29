@@ -10,8 +10,9 @@ import {
     SetChatsLoadingStateActionInterface
 } from "./contracts/actionTypes";
 import {ChatResponse} from "../../types/chat";
+import {ChatsState, LeaveConversationRequest} from "./contracts/state";
 
-export const setChats = (payload: ChatResponse[]): SetChatsActionInterface => ({
+export const setChats = (payload: ChatsState["items"]): SetChatsActionInterface => ({
     type: ChatsActionsType.SET_CHATS,
     payload,
 });
@@ -30,7 +31,7 @@ export const createChat = (payload: number): CreateChatActionInterface => ({
     payload,
 });
 
-export const leaveFromConversation = (payload: { participantId: number, chatId: number }): LeaveFromConversationActionInterface => ({
+export const leaveFromConversation = (payload: LeaveConversationRequest): LeaveFromConversationActionInterface => ({
     type: ChatsActionsType.LEAVE_FROM_CONVERSATION,
     payload,
 });

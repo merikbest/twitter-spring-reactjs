@@ -1,6 +1,6 @@
 import {Action} from "redux";
 
-import {AddLists, AddUserToListsRequest, ListsState} from "./state";
+import {AddLists, AddUserToListsRequest, ListsState, UpdateListsPayload} from "./state";
 import {LoadingStatus} from "../../../types";
 import {ListUserResponse, PinnedListResponse} from "../../../types/lists";
 
@@ -63,7 +63,7 @@ export interface SetListActionInterface extends Action<ListsActionType> {
 
 export interface SetUpdatedListActionInterface extends Action<ListsActionType> {
     type: ListsActionType.SET_UPDATED_LISTS;
-    payload: {listId: number; isMember: boolean };
+    payload: UpdateListsPayload;
 }
 
 export interface FollowListActionInterface extends Action<ListsActionType> {

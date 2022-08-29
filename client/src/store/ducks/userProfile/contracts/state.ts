@@ -8,3 +8,8 @@ export interface UserProfileState {
     imagesLoadingState: LoadingStatus;
     loadingState: LoadingStatus;
 }
+
+export interface ChatParticipantRequest {
+    participantId: number;
+    chatId: number;
+}

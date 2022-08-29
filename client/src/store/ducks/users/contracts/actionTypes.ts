@@ -1,6 +1,13 @@
 import {Action} from "redux";
 import {LoadingStatus} from "../../../types";
-import {UsersState} from "./state";
+import {
+    BlockedUsersPayload,
+    FollowRequestUsersPayload,
+    FollowUsersPayload,
+    MutedUsersPayload,
+    SubscribedUsersPayload,
+    UsersState
+} from "./state";
 import {PageableResponse} from "../../../types/common";
 
 export enum UsersActionsType {
@@ -38,27 +45,27 @@ export interface SetPageableUsersActionInterface extends Action<UsersActionsType
 
 export interface SetFollowToUsersStateActionInterface extends Action<UsersActionsType> {
     type: UsersActionsType.SET_FOLLOW_TO_USERS_STATE;
-    payload: { userId: number; isFollower: boolean; };
+    payload: FollowUsersPayload;
 }
 
 export interface SetFollowRequestToUsersStateActionInterface extends Action<UsersActionsType> {
     type: UsersActionsType.SET_FOLLOW_REQUEST_TO_USERS_STATE;
-    payload: { userId: number; isWaitingForApprove: boolean; };
+    payload: FollowRequestUsersPayload;
 }
 
 export interface SetBlockedUsersStateActionInterface extends Action<UsersActionsType> {
     type: UsersActionsType.SET_BLOCKED_USERS_STATE;
-    payload: { userId: number; isUserBlocked: boolean; };
+    payload: BlockedUsersPayload;
 }
 
 export interface SetMutedUsersStateActionInterface extends Action<UsersActionsType> {
     type: UsersActionsType.SET_MUTED_USERS_STATE;
-    payload: { userId: number; isUserMuted: boolean; };
+    payload: MutedUsersPayload;
 }
 
 export interface SetSubscribedUsersStateActionInterface extends Action<UsersActionsType> {
     type: UsersActionsType.SET_SUBSCRIBED_USERS_STATE;
-    payload: { userId: number; isSubscriber: boolean; };
+    payload: SubscribedUsersPayload;
 }
 
 export interface ResetUsersStateActionInterface extends Action<UsersActionsType> {

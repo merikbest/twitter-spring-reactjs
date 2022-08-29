@@ -1,4 +1,13 @@
-import {AddQuoteTweet, AddTweet, TweetsState, Vote} from "./contracts/state";
+import {
+    AddQuoteTweet,
+    AddTweet,
+    ChangeReplyTypeRequest,
+    TweetsByListIdRequest,
+    TweetsState,
+    TweetsWithQuotesByIdRequest,
+    UpdatedBookmarkedTweetPayload,
+    Vote
+} from "./contracts/state";
 import {
     AddPollActionInterface,
     AddQuoteTweetActionInterface,
@@ -36,21 +45,21 @@ import {
     VoteActionInterface,
 } from "./contracts/actionTypes";
 import {LoadingStatus} from "../../types";
-import {TweetResponse} from "../../types/tweet";
+import {BlockedToTweetsPayload, FollowToTweetsPayload, MutedToTweetsPayload, TweetResponse} from "../../types/tweet";
 import {NotificationReplyResponse, NotificationResponse} from "../../types/notification";
-import {ReplyType} from "../../types/common";
+import {PageableResponse} from "../../types/common";
 
-export const setFollowToTweetsState = (payload: { userId: number, tweetId: number; isFollower: boolean; }): SetFollowToTweetsStateActionInterface => ({
+export const setFollowToTweetsState = (payload: FollowToTweetsPayload): SetFollowToTweetsStateActionInterface => ({
     type: TweetsActionType.SET_FOLLOW_TO_TWEETS_STATE,
     payload
 });
 
-export const setBlockedToTweetsState = (payload: { userId: number; tweetId: number; isUserBlocked: boolean; }): SetBlockedToTweetsStateActionInterface => ({
+export const setBlockedToTweetsState = (payload: BlockedToTweetsPayload): SetBlockedToTweetsStateActionInterface => ({
     type: TweetsActionType.SET_BLOCKED_TO_TWEETS_STATE,
     payload
 });
 
-export const setMutedToTweetsState = (payload: { userId: number; tweetId: number; isUserMuted: boolean; }): SetMutedToTweetsStateActionInterface => ({
+export const setMutedToTweetsState = (payload: MutedToTweetsPayload): SetMutedToTweetsStateActionInterface => ({
     type: TweetsActionType.SET_MUTED_TO_TWEETS_STATE,
     payload
 });
@@ -65,7 +74,7 @@ export const setScheduledTweets = (payload: TweetsState["items"]): SetScheduledT
     payload
 });
 
-export const setPageableTweets = (payload: { items: TweetsState["items"], pagesCount: TweetsState["pagesCount"] }): SetPageableTweetsActionInterface => ({
+export const setPageableTweets = (payload: PageableResponse<TweetsState["items"]>): SetPageableTweetsActionInterface => ({
     type: TweetsActionType.SET_PAGEABLE_TWEETS,
     payload
 });
@@ -109,7 +118,7 @@ export const vote = (payload: Vote): VoteActionInterface => ({
     payload
 });
 
-export const changeReplyType = (payload: { tweetId: number; replyType: ReplyType; }): ChangeReplyTypeActionInterface => ({
+export const changeReplyType = (payload: ChangeReplyTypeRequest): ChangeReplyTypeActionInterface => ({
     type: TweetsActionType.CHANGE_REPLY_TYPE,
     payload
 });
@@ -159,7 +168,7 @@ export const retweet = (payload: number): RetweetActionInterface => ({
     payload,
 });
 
-export const setUpdatedBookmarkedTweetTweetsState = (payload: { tweetId: number; isTweetBookmarked: boolean; }): SetUpdatedBookmarkedTweetActionInterface => ({
+export const setUpdatedBookmarkedTweetTweetsState = (payload: UpdatedBookmarkedTweetPayload): SetUpdatedBookmarkedTweetActionInterface => ({
     type: TweetsActionType.SET_UPDATED_BOOKMARKED_TWEET,
     payload,
 });
@@ -184,12 +193,12 @@ export const fetchFollowersTweets = (payload: number): FetchFollowersTweetsActio
     payload
 });
 
-export const fetchTweetsByListId = (payload: { listId: number, pageNumber: number }): FetchTweetsByListIdActionInterface => ({
+export const fetchTweetsByListId = (payload: TweetsByListIdRequest): FetchTweetsByListIdActionInterface => ({
     type: TweetsActionType.FETCH_TWEETS_BY_LIST_ID,
     payload
 });
 
-export const fetchQuotesByTweetId = (payload: { tweetId: number, pageNumber: number }): FetchTweetsWithQuotesByIdActionInterface => ({
+export const fetchQuotesByTweetId = (payload: TweetsWithQuotesByIdRequest): FetchTweetsWithQuotesByIdActionInterface => ({
     type: TweetsActionType.FETCH_TWEETS_WITH_QUOTES_BY_ID,
     payload
 });

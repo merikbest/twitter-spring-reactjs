@@ -1,4 +1,3 @@
-import {CancelTokenSource} from "axios";
 import {LoadingStatus} from "../../types";
 import {
     FetchListDetailActionInterface,
@@ -9,13 +8,14 @@ import {
     UpdateFollowListDetailActionInterface
 } from "./contracts/actionTypes";
 import {BaseListResponse} from "../../types/lists";
+import {ListDetailsRequest} from "./contracts/state";
 
 export const setListDetail = (payload: BaseListResponse): SetListDetailActionInterface => ({
     type: ListDetailActionsType.SET_LIST_DETAIL,
     payload,
 });
 
-export const fetchListDetail = (payload: { listId: number, cancelTokenSource: CancelTokenSource }): FetchListDetailActionInterface => ({
+export const fetchListDetail = (payload: ListDetailsRequest): FetchListDetailActionInterface => ({
     type: ListDetailActionsType.FETCH_LIST_DETAIL,
     payload,
 });

@@ -9,25 +9,25 @@ import {
     SetMutedUserActionInterface,
     SetMutedUsersActionInterface
 } from "./contracts/actionTypes";
-import {BlockedUserResponse, MutedUserResponse} from "../../types/user";
 import {LoadingStatus} from "../../types";
+import {BlockedAndMutedUsersState, BlockedUserPayload, MutedUserPayload} from "./contracts/state";
 
-export const setBlockedUsers = (payload: BlockedUserResponse[]): SetBlockedUsersActionInterface => ({
+export const setBlockedUsers = (payload: BlockedAndMutedUsersState["blockedUsers"]): SetBlockedUsersActionInterface => ({
     type: BlockedAndMutedUsersActionsType.SET_BLOCKED_USERS,
     payload,
 });
 
-export const setMutedUsers = (payload: MutedUserResponse[]): SetMutedUsersActionInterface => ({
+export const setMutedUsers = (payload: BlockedAndMutedUsersState["mutedUsers"]): SetMutedUsersActionInterface => ({
     type: BlockedAndMutedUsersActionsType.SET_MUTED_USERS,
     payload,
 });
 
-export const setBlockedUser = (payload: { userId: number; isUserBlocked: boolean }): SetBlockedUserActionInterface => ({
+export const setBlockedUser = (payload: BlockedUserPayload): SetBlockedUserActionInterface => ({
     type: BlockedAndMutedUsersActionsType.SET_BLOCKED_USER,
     payload,
 });
 
-export const setMutedUser = (payload: { userId: number; isUserMuted: boolean }): SetMutedUserActionInterface => ({
+export const setMutedUser = (payload: MutedUserPayload): SetMutedUserActionInterface => ({
     type: BlockedAndMutedUsersActionsType.SET_MUTED_USER,
     payload,
 });

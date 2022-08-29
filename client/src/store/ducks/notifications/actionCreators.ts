@@ -22,19 +22,16 @@ import {
     NotificationInfoResponse,
     NotificationReplyResponse,
     NotificationResponse,
-    NotificationUserResponse
 } from "../../types/notification";
 import {NotificationsState} from "./contracts/state";
+import {PageableResponse} from "../../types/common";
 
-export const setNotifications = (payload: {
-    items: NotificationsState["notificationsList"],
-    pagesCount: NotificationsState["pagesCount"] }
-): SetNotificationsActionInterface => ({
+export const setNotifications = (payload: PageableResponse<NotificationsState["notificationsList"]>): SetNotificationsActionInterface => ({
     type: NotificationsActionsType.SET_NOTIFICATIONS,
     payload,
 });
 
-export const setTweetAuthorsNotifications = (payload: NotificationUserResponse[]): SetTweetAuthorsNotificationsActionInterface => ({
+export const setTweetAuthorsNotifications = (payload: NotificationsState["tweetAuthors"]): SetTweetAuthorsNotificationsActionInterface => ({
     type: NotificationsActionsType.SET_TWEET_AUTHORS_NOTIFICATIONS,
     payload,
 });

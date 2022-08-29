@@ -30,7 +30,7 @@ import {
     UnfollowListActionInterface,
     UnpinListActionInterface
 } from "./contracts/actionTypes";
-import {AddLists, AddUserToListsRequest, ListsState} from "./contracts/state";
+import {AddLists, AddUserToListsRequest, ListsState, UpdateListsPayload} from "./contracts/state";
 import {LoadingStatus} from "../../types";
 import {ListUserResponse, PinnedListResponse} from "../../types/lists";
 
@@ -59,7 +59,7 @@ export const setCreatedList = (payload: ListUserResponse): SetListActionInterfac
     payload
 });
 
-export const setUpdatedList = (payload: {listId: number; isMember: boolean }): SetUpdatedListActionInterface => ({
+export const setUpdatedList = (payload: UpdateListsPayload): SetUpdatedListActionInterface => ({
     type: ListsActionType.SET_UPDATED_LISTS,
     payload
 });

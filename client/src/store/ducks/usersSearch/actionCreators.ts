@@ -15,7 +15,14 @@ import {
     SetUsersSearchLoadingStatusActionInterface,
     UsersSearchActionsType
 } from './contracts/actionTypes';
-import {UsersSearchState} from "./contracts/state";
+import {
+    BlockedUsersPayload,
+    FollowersRequest,
+    FollowRequestUsersPayload,
+    FollowUsersPayload,
+    SearchByNameRequest,
+    UsersSearchState
+} from "./contracts/state";
 import {PageableResponse} from "../../types/common";
 
 export const setUsersSearch = (payload: UsersSearchState["users"]): SetUsersSearchActionInterface => ({
@@ -38,17 +45,17 @@ export const setPageableFollowers = (payload: PageableResponse<UsersSearchState[
     payload
 });
 
-export const setFollowToUsersSearchState = (payload: { userId: number; isFollower: boolean; }): SetFollowToUsersSearchStateActionInterface => ({
+export const setFollowToUsersSearchState = (payload: FollowUsersPayload): SetFollowToUsersSearchStateActionInterface => ({
     type: UsersSearchActionsType.SET_FOLLOW_TO_USERS_SEARCH_STATE,
     payload
 });
 
-export const setFollowRequestToUsersSearchState = (payload: { userId: number; isWaitingForApprove: boolean; }): SetFollowRequestToUsersSearchStateActionInterface => ({
+export const setFollowRequestToUsersSearchState = (payload: FollowRequestUsersPayload): SetFollowRequestToUsersSearchStateActionInterface => ({
     type: UsersSearchActionsType.SET_FOLLOW_REQUEST_TO_USERS_SEARCH_STATE,
     payload
 });
 
-export const setBlockUsersSearchState = (payload: { userId: number; isUserBlocked: boolean; }): SetBlockUsersSearchStateActionInterface => ({
+export const setBlockUsersSearchState = (payload: BlockedUsersPayload): SetBlockUsersSearchStateActionInterface => ({
     type: UsersSearchActionsType.SET_BLOCK_USERS_SEARCH_STATE,
     payload
 });
@@ -58,22 +65,22 @@ export const fetchUsersSearch = (payload: number): FetchUsersSearchActionInterfa
     payload
 });
 
-export const fetchFollowers = (payload: { userId: number | string, page: number }): FetchFollowersActionInterface => ({
+export const fetchFollowers = (payload: FollowersRequest): FetchFollowersActionInterface => ({
     type: UsersSearchActionsType.FETCH_FOLLOWERS,
     payload
 });
 
-export const fetchFollowings = (payload: { userId: number | string, page: number }): FetchFollowingsActionInterface => ({
+export const fetchFollowings = (payload: FollowersRequest): FetchFollowingsActionInterface => ({
     type: UsersSearchActionsType.FETCH_FOLLOWINGS,
     payload
 });
 
-export const fetchUsersSearchByUsername = (payload: { username: string, page: number }): FetchUsersSearchByNameActionInterface => ({
+export const fetchUsersSearchByUsername = (payload: SearchByNameRequest): FetchUsersSearchByNameActionInterface => ({
     type: UsersSearchActionsType.FETCH_USERS_BY_NAME,
     payload
 });
 
-export const fetchParticipantsByUsername = (payload: { username: string, page: number }): FetchParticipantsSearchByNameActionInterface => ({
+export const fetchParticipantsByUsername = (payload: SearchByNameRequest): FetchParticipantsSearchByNameActionInterface => ({
     type: UsersSearchActionsType.FETCH_PARTICIPANTS_BY_NAME,
     payload
 });

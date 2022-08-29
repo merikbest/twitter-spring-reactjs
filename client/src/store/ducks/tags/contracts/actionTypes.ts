@@ -1,6 +1,8 @@
 import {Action} from "redux";
+
 import {LoadingStatus} from "../../../types";
 import {TagsState} from "./state";
+import {PageableResponse} from "../../../types/common";
 
 export enum TagsActionsType {
     SET_TAGS = 'tags/SET_TAGS',
@@ -23,7 +25,7 @@ export interface FetchTagsActionInterface extends Action<TagsActionsType> {
 
 export interface SetTrendsActionInterface extends Action<TagsActionsType> {
     type: TagsActionsType.SET_TRENDS;
-    payload: { items: TagsState["tags"], pagesCount: TagsState["pagesCount"] };
+    payload: PageableResponse<TagsState["tags"]>;
 }
 
 export interface FetchTrendsActionInterface extends Action<TagsActionsType> {

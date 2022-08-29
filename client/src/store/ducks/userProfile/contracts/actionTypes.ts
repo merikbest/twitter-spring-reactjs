@@ -1,7 +1,7 @@
 import {Action} from "redux";
 import {LoadingStatus} from "../../../types";
 import {UserProfileResponse} from "../../../types/user";
-import {TweetImageResponse, TweetResponse} from "../../../types/tweet";
+import {ChatParticipantRequest, UserProfileState} from "./state";
 
 export enum UserProfileActionsType {
     FETCH_USER = 'userProfile/FETCH_USER',
@@ -64,7 +64,7 @@ export interface SetFollowRequestToUserProfileActionInterface extends Action<Use
 
 export interface FetchChatParticipantActionInterface extends Action<UserProfileActionsType> {
     type: UserProfileActionsType.FETCH_CHAT_PARTICIPANT;
-    payload: { participantId: number, chatId: number };
+    payload: ChatParticipantRequest;
 }
 
 export interface ResetUserProfileStateActionInterface extends Action<UserProfileActionsType> {
@@ -84,7 +84,7 @@ export interface FetchImagesActionInterface extends Action<UserProfileActionsTyp
 
 export interface SetImagesActionInterface extends Action<UserProfileActionsType> {
     type: UserProfileActionsType.SET_IMAGES;
-    payload: TweetImageResponse[];
+    payload: UserProfileState["images"];
 }
 
 export interface ResetImagesStateActionInterface extends Action<UserProfileActionsType> {

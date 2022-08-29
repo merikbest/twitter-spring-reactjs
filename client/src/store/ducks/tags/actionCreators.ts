@@ -10,6 +10,7 @@ import {
     TagsActionsType
 } from './contracts/actionTypes';
 import {TagsState} from "./contracts/state";
+import {PageableResponse} from "../../types/common";
 
 export const setTags = (payload: TagsState["tags"]): SetTagsActionInterface => ({
     type: TagsActionsType.SET_TAGS,
@@ -25,7 +26,7 @@ export const setTagsLoadingState = (payload: LoadingStatus): SetTagsLoadingState
     payload,
 });
 
-export const setTrends = (payload: { items: TagsState["tags"], pagesCount: TagsState["pagesCount"] }): SetTrendsActionInterface => ({
+export const setTrends = (payload: PageableResponse<TagsState["tags"]>): SetTrendsActionInterface => ({
     type: TagsActionsType.SET_TRENDS,
     payload,
 });

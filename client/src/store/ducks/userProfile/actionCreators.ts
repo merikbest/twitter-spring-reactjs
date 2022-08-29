@@ -16,9 +16,8 @@ import {
     SetUserProfileLoadingStatusActionInterface,
     UserProfileActionsType,
 } from './contracts/actionTypes';
-import {UserProfileState} from "./contracts/state";
+import {ChatParticipantRequest, UserProfileState} from "./contracts/state";
 import {UserProfileResponse} from "../../types/user";
-import {TweetImageResponse, TweetResponse} from "../../types/tweet";
 
 export const setBlocked = (payload: boolean): SetBlockedActionInterface => ({
     type: UserProfileActionsType.SET_BLOCKED,
@@ -55,7 +54,7 @@ export const fetchImages = (payload: number): FetchImagesActionInterface => ({
     payload
 });
 
-export const setImages = (payload: TweetImageResponse[]): SetImagesActionInterface => ({
+export const setImages = (payload: UserProfileState["images"]): SetImagesActionInterface => ({
     type: UserProfileActionsType.SET_IMAGES,
     payload
 });
@@ -69,7 +68,7 @@ export const setImagesLoadingStatus = (payload: UserProfileState["loadingState"]
     payload
 });
 
-export const fetchChatParticipant = (payload: { participantId: number, chatId: number }): FetchChatParticipantActionInterface => ({
+export const fetchChatParticipant = (payload: ChatParticipantRequest): FetchChatParticipantActionInterface => ({
     type: UserProfileActionsType.FETCH_CHAT_PARTICIPANT,
     payload
 });

@@ -7,3 +7,29 @@ export interface UsersSearchState {
     followers: UserResponse[];
     loadingState: LoadingStatus;
 }
+
+
+export interface FollowUsersPayload {
+    userId: number;
+    isFollower: boolean;
+}
+
+export interface FollowRequestUsersPayload {
+    userId: number;
+    isWaitingForApprove: boolean;
+}
+
+export interface BlockedUsersPayload {
+    userId: number;
+    isUserBlocked: boolean;
+}
+
+export interface SearchByNameRequest {
+    username: string;
+    page: number;
+}
+
+export interface FollowersRequest {
+    userId: number | string;
+    page: number;
+}
