@@ -88,5 +88,5 @@ public interface UserService {
 
     UserDetailProjection getUserDetails(Long userId);
 
-    List<FollowerUserProjection> getFollowerRequests();
+    Page<FollowerUserProjection> getFollowerRequests(Pageable pageable);
 }
