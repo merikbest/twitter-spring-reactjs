@@ -4,6 +4,7 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 import {
     AcceptFollowerRequestActionInterface,
     DeclineFollowerRequestActionInterface,
+    FetchFollowerRequestsActionInterface,
     FollowerRequestsActionsType
 } from "./contracts/actionTypes";
 import {processFollowRequest, setFollowerRequests, setFollowerRequestsLoadingState} from "./actionCreators";
@@ -12,11 +13,14 @@ import {FollowerUserResponse} from "../../types/user";
 import {UserApi} from "../../../services/api/userApi";
 import {setFollowersSize, setUserLoadingStatus} from "../user/actionCreators";
 
-export function* fetchFollowerRequests() {
+export function* fetchFollowerRequests({payload}: FetchFollowerRequestsActionInterface) {
     try {
         yield put(setFollowerRequestsLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<FollowerUserResponse[]> = yield call(UserApi.getFollowerRequests);
-        yield put(setFollowerRequests(response.data));
+        const response: AxiosResponse<FollowerUserResponse[]> = yield call(UserApi.getFollowerRequests, payload);
+        yield put(setFollowerRequests({
+            items: response.data,
+            pagesCount: parseInt(response.headers["page-total-count"])
+        }));
     } catch (error) {
         yield put(setFollowerRequestsLoadingState(LoadingStatus.ERROR));
     }

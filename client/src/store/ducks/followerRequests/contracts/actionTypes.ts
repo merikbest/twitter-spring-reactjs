@@ -2,6 +2,7 @@ import {Action} from "redux";
 
 import {LoadingStatus} from "../../../types";
 import {FollowerRequestsState} from "./state";
+import {PageableResponse} from "../../../types/common";
 
 export enum FollowerRequestsActionsType {
     SET_FOLLOWER_REQUESTS = 'followerRequests/SET_FOLLOWER_REQUESTS',
@@ -15,11 +16,12 @@ export enum FollowerRequestsActionsType {
 
 export interface SetFollowerRequestsActionInterface extends Action<FollowerRequestsActionsType> {
     type: FollowerRequestsActionsType.SET_FOLLOWER_REQUESTS;
-    payload: FollowerRequestsState["items"];
+    payload: PageableResponse<FollowerRequestsState["items"]>;
 }
 
 export interface FetchFollowerRequestsActionInterface extends Action<FollowerRequestsActionsType> {
     type: FollowerRequestsActionsType.FETCH_FOLLOWER_REQUESTS;
+    payload: number;
 }
 
 export interface AcceptFollowerRequestActionInterface extends Action<FollowerRequestsActionsType> {

@@ -10,14 +10,16 @@ import {
 } from "./contracts/actionTypes";
 import {LoadingStatus} from "../../types";
 import {FollowerRequestsState} from "./contracts/state";
+import {PageableResponse} from "../../types/common";
 
-export const setFollowerRequests = (payload: FollowerRequestsState["items"]): SetFollowerRequestsActionInterface => ({
+export const setFollowerRequests = (payload: PageableResponse<FollowerRequestsState["items"]>): SetFollowerRequestsActionInterface => ({
     type: FollowerRequestsActionsType.SET_FOLLOWER_REQUESTS,
     payload,
 });
 
-export const fetchFollowerRequests = (): FetchFollowerRequestsActionInterface => ({
+export const fetchFollowerRequests = (payload: number): FetchFollowerRequestsActionInterface => ({
     type: FollowerRequestsActionsType.FETCH_FOLLOWER_REQUESTS,
+    payload,
 });
 
 export const acceptFollowRequest = (payload: number): AcceptFollowerRequestActionInterface => ({

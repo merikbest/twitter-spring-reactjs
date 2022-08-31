@@ -42,8 +42,8 @@ export const UserApi = {
     async getFollowing(request: FollowersRequest): Promise<AxiosResponse<UserResponse[]>> {
         return await axios.get<UserResponse[]>(`${API_URL}/user/following/${request.userId}`, {params: {page: request.page}});
     },
-    async getFollowerRequests(): Promise<AxiosResponse<FollowerUserResponse[]>> {
-        return await axios.get<FollowerUserResponse[]>(`${API_URL}/user/follower-requests`);
+    async getFollowerRequests(pageNumber: number): Promise<AxiosResponse<FollowerUserResponse[]>> {
+        return await axios.get<FollowerUserResponse[]>(`${API_URL}/user/follower-requests`, {params: {page: pageNumber}});
     },
     async follow(userId: number): Promise<AxiosResponse<NotificationUserResponse>> {
         return await axios.get<NotificationUserResponse>(`${API_URL}/user/follow/${userId}`);

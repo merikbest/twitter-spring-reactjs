@@ -6,13 +6,15 @@ import {FollowerRequestsActions, FollowerRequestsActionsType} from "./contracts/
 
 export const initialFollowerRequestsState: FollowerRequestsState = {
     items: [],
+    pagesCount: 0,
     loadingState: LoadingStatus.LOADING,
 };
 
 export const followerRequestsReducer = produce((draft: Draft<FollowerRequestsState>, action: FollowerRequestsActions) => {
     switch (action.type) {
         case FollowerRequestsActionsType.SET_FOLLOWER_REQUESTS:
-            draft.items = action.payload;
+            draft.items = [...draft.items, ...action.payload.items];
+            draft.pagesCount = action.payload.pagesCount
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
@@ -23,6 +25,7 @@ export const followerRequestsReducer = produce((draft: Draft<FollowerRequestsSta
 
         case FollowerRequestsActionsType.RESET_FOLLOWER_REQUESTS_STATE:
             draft.items = [];
+            draft.pagesCount = 0;
             draft.loadingState = LoadingStatus.LOADING;
             break;
 

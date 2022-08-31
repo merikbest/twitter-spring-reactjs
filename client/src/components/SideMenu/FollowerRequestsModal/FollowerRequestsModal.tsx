@@ -31,7 +31,7 @@ const FollowerRequestsModal: FC<FollowerRequestsModalProps> = ({visible, onClose
 
     useEffect(() => {
         if (visible) {
-            dispatch(fetchFollowerRequests());
+            dispatch(fetchFollowerRequests(0));
         }
     }, [visible]);
 
