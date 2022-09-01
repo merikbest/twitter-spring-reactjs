@@ -146,7 +146,7 @@ public class UserController {
     }
 
     @GetMapping("/follower-requests")
-    public ResponseEntity<List<FollowerUserResponse>> getFollowerRequests(@PageableDefault(size = 15) Pageable pageable) {
+    public ResponseEntity<List<FollowerUserResponse>> getFollowerRequests(@PageableDefault(size = 10) Pageable pageable) {
         HeaderResponse<FollowerUserResponse> response = userMapper.getFollowerRequests(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }

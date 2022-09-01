@@ -182,6 +182,7 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
         },
         followerRequests: {
             items: [],
+            pagesCount: 0,
             loadingState: loadingStatus
         },
         list: {

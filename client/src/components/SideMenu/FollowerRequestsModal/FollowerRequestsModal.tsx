@@ -7,14 +7,16 @@ import {useFollowerRequestsModalStyles} from "./FollowerRequestsModalSyles";
 import CloseButton from "../../CloseButton/CloseButton";
 import {selectUserData} from "../../../store/ducks/user/selectors";
 import {useGlobalStyles} from "../../../util/globalClasses";
-import {fetchFollowerRequests} from "../../../store/ducks/followerRequests/actionCreators";
+import {fetchFollowerRequests, resetFollowerRequestsState} from "../../../store/ducks/followerRequests/actionCreators";
 import {
     selectFollowerRequestsItems,
+    selectFollowerRequestsPagesCount,
     selectIsFollowerRequestsLoading
 } from "../../../store/ducks/followerRequests/selectors";
 import Spinner from "../../Spinner/Spinner";
 import FollowerRequestsItem from "./FollowerRequestsItem/FollowerRequestsItem";
 import EmptyPageDescription from "../../EmptyPageDescription/EmptyPageDescription";
+import InfiniteScrollWrapper from "../../InfiniteScrollWrapper/InfiniteScrollWrapper";
 
 interface FollowerRequestsModalProps {
     visible?: boolean;
@@ -27,13 +29,21 @@ const FollowerRequestsModal: FC<FollowerRequestsModalProps> = ({visible, onClose
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
     const isFollowerRequestsLoading = useSelector(selectIsFollowerRequestsLoading);
+    const followerRequestsPagesCount = useSelector(selectFollowerRequestsPagesCount);
     const followerRequests = useSelector(selectFollowerRequestsItems);
 
     useEffect(() => {
         if (visible) {
-            dispatch(fetchFollowerRequests(0));
+            loadFollowerRequests(0);
         }
+        return () => {
+            dispatch(resetFollowerRequestsState());
+        };
     }, [visible]);
+
+    const loadFollowerRequests = (page: number): void => {
+        dispatch(fetchFollowerRequests(page));
+    };
 
     if (!visible) {
         return null;
@@ -45,23 +55,32 @@ const FollowerRequestsModal: FC<FollowerRequestsModalProps> = ({visible, onClose
                 <CloseButton onClose={onClose}/>
                 Follower requests
             </DialogTitle>
-            <DialogContent className={classes.content}>
-                {(!myProfile?.followerRequestsSize) ? (
-                    <div className={globalClasses.contentWrapper}>
-                        <EmptyPageDescription
-                            title={"You don’t have any follower requests"}
-                            subtitle={"When someone requests to follow you, it’ll show up here."}
-                        />
-                    </div>
-                ) : (
-                    <>
-                        {isFollowerRequestsLoading ? <Spinner/> : (
-                            followerRequests.map((followers) => (
-                                <FollowerRequestsItem key={followers.id} user={followers} onClose={onClose}/>
-                            ))
-                        )}
-                    </>
-                )}
+            <DialogContent id="scrollableDiv" className={classes.content}>
+                <InfiniteScrollWrapper
+                    dataLength={followerRequests.length}
+                    pagesCount={followerRequestsPagesCount}
+                    loadItems={loadFollowerRequests}
+                >
+                    {(isFollowerRequestsLoading && !followerRequests.length) ? (
+                        <Spinner/>
+                    ) : (
+                        (!isFollowerRequestsLoading && !myProfile?.followerRequestsSize) ? (
+                            <div className={globalClasses.contentWrapper}>
+                                <EmptyPageDescription
+                                    title={"You don’t have any follower requests"}
+                                    subtitle={"When someone requests to follow you, it’ll show up here."}
+                                />
+                            </div>
+                        ) : (
+                            <>
+                                {followerRequests.map((followers) => (
+                                    <FollowerRequestsItem key={followers.id} user={followers} onClose={onClose}/>
+                                ))}
+                                {isFollowerRequestsLoading && <Spinner/>}
+                            </>
+                        )
+                    )}
+                </InfiniteScrollWrapper>
             </DialogContent>
         </Dialog>
     );
