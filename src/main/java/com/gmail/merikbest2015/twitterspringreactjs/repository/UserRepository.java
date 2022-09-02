@@ -93,14 +93,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "FROM User user " +
             "LEFT JOIN user.userBlockedList b " +
             "WHERE user.id = :userId")
-    List<BlockedUserProjection> getUserBlockListById(Long userId);
+    Page<BlockedUserProjection> getUserBlockListById(Long userId, Pageable pageable);
 
     @Query("SELECT m.id as id, m.fullName as fullName, m.username as username, " +
             "m.about as about, m.avatar as avatar, m.privateProfile as isPrivateProfile " +
             "FROM User user " +
             "LEFT JOIN user.userMutedList m " +
             "WHERE user.id = :userId")
-    List<MutedUserProjection> getUserMuteListById(Long userId);
+    Page<MutedUserProjection> getUserMuteListById(Long userId, Pageable pageable);
 
     @Query("SELECT f.id AS id, f.fullName AS fullName, f.username AS username, f.about AS about, f.avatar AS avatar " +
             "FROM User user " +

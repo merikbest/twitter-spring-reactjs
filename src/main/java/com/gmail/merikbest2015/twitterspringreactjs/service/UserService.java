@@ -78,11 +78,11 @@ public interface UserService {
 
     Long processPinTweet(Long tweetId);
 
-    List<BlockedUserProjection> getBlockList();
+    Page<BlockedUserProjection> getBlockList(Pageable pageable);
 
     Boolean processBlockList(Long userId);
 
-    List<MutedUserProjection> getMutedList();
+    Page<MutedUserProjection> getMutedList(Pageable pageable);
 
     Boolean processMutedList(Long userId);
 

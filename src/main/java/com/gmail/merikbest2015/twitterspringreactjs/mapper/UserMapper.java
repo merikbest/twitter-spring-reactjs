@@ -251,18 +251,18 @@ public class UserMapper {
         return userSettingsService.updateBackgroundColor(request.getBackgroundColor());
     }
 
-    public List<BlockedUserResponse> getBlockList() {
-        List<BlockedUserProjection> blockList = userService.getBlockList();
-        return basicMapper.convertToResponseList(blockList, BlockedUserResponse.class);
+    public HeaderResponse<BlockedUserResponse> getBlockList(Pageable pageable) {
+        Page<BlockedUserProjection> blockList = userService.getBlockList(pageable);
+        return basicMapper.getHeaderResponse(blockList, BlockedUserResponse.class);
     }
 
     public Boolean processBlockList(Long userId) {
         return userService.processBlockList(userId);
     }
 
-    public List<MutedUserResponse> getMutedList() {
-        List<MutedUserProjection> mutedList = userService.getMutedList();
-        return basicMapper.convertToResponseList(mutedList, MutedUserResponse.class);
+    public HeaderResponse<MutedUserResponse> getMutedList(Pageable pageable) {
+        Page<MutedUserProjection> mutedList = userService.getMutedList(pageable);
+        return basicMapper.getHeaderResponse(mutedList, MutedUserResponse.class);
     }
 
     public Boolean processMutedList(Long userId) {
