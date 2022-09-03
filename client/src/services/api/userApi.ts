@@ -102,11 +102,11 @@ export const UserApi = {
     async pinTweet(tweetId: number): Promise<AxiosResponse<number>> {
         return await axios.get<number>(`${API_URL}/user/pin/tweet/${tweetId}`);
     },
-    async getBlockList(): Promise<AxiosResponse<BlockedUserResponse[]>> {
-        return await axios.get<BlockedUserResponse[]>(`${API_URL}/user/blocked`);
+    async getBlockList(pageNumber: number): Promise<AxiosResponse<BlockedUserResponse[]>> {
+        return await axios.get<BlockedUserResponse[]>(`${API_URL}/user/blocked`, {params: {page: pageNumber}});
     },
-    async getMutedList(): Promise<AxiosResponse<MutedUserResponse[]>> {
-        return await axios.get<MutedUserResponse[]>(`${API_URL}/user/muted`);
+    async getMutedList(pageNumber: number): Promise<AxiosResponse<MutedUserResponse[]>> {
+        return await axios.get<MutedUserResponse[]>(`${API_URL}/user/muted`, {params: {page: pageNumber}});
     },
     async processBlockList(userId: number): Promise<AxiosResponse<boolean>> {
         return await axios.get<boolean>(`${API_URL}/user/blocked/${userId}`);

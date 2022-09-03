@@ -14,10 +14,12 @@ import {
 import {
     selectBlockedUsersItems,
     selectIsBlockedAndMutedUsersLoaded,
-    selectIsBlockedAndMutedUsersLoading
+    selectIsBlockedAndMutedUsersLoading,
+    selectUsersPagesCount
 } from "../../../../../store/ducks/blockedAndMutedUsers/selectors";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 import {ADVANCED_TWITTER_BLOCK_OPTIONS, BLOCKING_AND_UNBLOCKING_ACCOUNTS} from "../../../../../util/url";
+import InfiniteScrollWrapper from "../../../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
 
 const BlockedAccounts: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -25,10 +27,11 @@ const BlockedAccounts: FC = (): ReactElement => {
     const blockedUsers = useSelector(selectBlockedUsersItems);
     const isBlockedUsersLoading = useSelector(selectIsBlockedAndMutedUsersLoading);
     const isBlockedUsersLoaded = useSelector(selectIsBlockedAndMutedUsersLoaded);
+    const blockedUsersPagesCount = useSelector(selectUsersPagesCount);
     const [activeTab, setActiveTab] = useState<number>(0);
 
     useEffect(() => {
-        dispatch(fetchBlockedUsers());
+        loadBlockedUsers(0);
 
         return () => {
             dispatch(resetBlockedAndMutedUsersState());
@@ -39,8 +42,16 @@ const BlockedAccounts: FC = (): ReactElement => {
         setActiveTab(newValue);
     };
 
+    const loadBlockedUsers = (page: number): void => {
+        dispatch(fetchBlockedUsers(page));
+    };
+
     return (
-        <>
+        <InfiniteScrollWrapper
+            dataLength={blockedUsers.length}
+            pagesCount={blockedUsersPagesCount}
+            loadItems={loadBlockedUsers}
+        >
             <div className={globalClasses.tabs}>
                 <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
                     <Tab className={globalClasses.tab} label="All"/>
@@ -57,10 +68,10 @@ const BlockedAccounts: FC = (): ReactElement => {
                 </Typography>
             </div>
             <Divider/>
-            {isBlockedUsersLoading ? (
+            {isBlockedUsersLoading && !blockedUsers.length ? (
                 <Spinner/>
             ) : (
-                (blockedUsers.length === 0 && isBlockedUsersLoaded) ? (
+                (isBlockedUsersLoaded && !blockedUsers.length) ? (
                     <div className={globalClasses.infoText}>
                         <Typography variant={"h4"} component={"div"}>
                             {(activeTab === 0) ? (
@@ -93,10 +104,15 @@ const BlockedAccounts: FC = (): ReactElement => {
                         </Typography>
                     </div>
                 ) : (
-                    blockedUsers.map((blockedUser) => <BlockedAccountItem key={blockedUser.id} blockedUser={blockedUser}/>)
+                    <>
+                        {blockedUsers.map((blockedUser) => (
+                            <BlockedAccountItem key={blockedUser.id} blockedUser={blockedUser}/>
+                        ))}
+                        {isBlockedUsersLoading && <Spinner/>}
+                    </>
                 )
             )}
-        </>
+        </InfiniteScrollWrapper>
     );
 };
 

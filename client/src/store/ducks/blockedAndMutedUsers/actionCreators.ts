@@ -11,13 +11,14 @@ import {
 } from "./contracts/actionTypes";
 import {LoadingStatus} from "../../types";
 import {BlockedAndMutedUsersState, BlockedUserPayload, MutedUserPayload} from "./contracts/state";
+import {PageableResponse} from "../../types/common";
 
-export const setBlockedUsers = (payload: BlockedAndMutedUsersState["blockedUsers"]): SetBlockedUsersActionInterface => ({
+export const setBlockedUsers = (payload: PageableResponse<BlockedAndMutedUsersState["blockedUsers"]>): SetBlockedUsersActionInterface => ({
     type: BlockedAndMutedUsersActionsType.SET_BLOCKED_USERS,
     payload,
 });
 
-export const setMutedUsers = (payload: BlockedAndMutedUsersState["mutedUsers"]): SetMutedUsersActionInterface => ({
+export const setMutedUsers = (payload: PageableResponse<BlockedAndMutedUsersState["mutedUsers"]>): SetMutedUsersActionInterface => ({
     type: BlockedAndMutedUsersActionsType.SET_MUTED_USERS,
     payload,
 });
@@ -32,12 +33,14 @@ export const setMutedUser = (payload: MutedUserPayload): SetMutedUserActionInter
     payload,
 });
 
-export const fetchBlockedUsers = (): FetchBlockedUsersActionInterface => ({
-    type: BlockedAndMutedUsersActionsType.FETCH_BLOCKED_USERS
+export const fetchBlockedUsers = (payload: number): FetchBlockedUsersActionInterface => ({
+    type: BlockedAndMutedUsersActionsType.FETCH_BLOCKED_USERS,
+    payload
 });
 
-export const fetchMutedUsers = (): FetchMutedUsersActionInterface => ({
-    type: BlockedAndMutedUsersActionsType.FETCH_MUTED_USERS
+export const fetchMutedUsers = (payload: number): FetchMutedUsersActionInterface => ({
+    type: BlockedAndMutedUsersActionsType.FETCH_MUTED_USERS,
+    payload
 });
 
 export const resetBlockedAndMutedUsersState = (): ResetBlockedAndMutedUsersStateActionInterface => ({

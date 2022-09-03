@@ -2,6 +2,7 @@ import {Action} from "redux";
 
 import {LoadingStatus} from "../../../types";
 import {BlockedAndMutedUsersState, BlockedUserPayload, MutedUserPayload} from "./state";
+import {PageableResponse} from "../../../types/common";
 
 export enum BlockedAndMutedUsersActionsType {
     SET_BLOCKED_USERS = 'blockedAndMutedUsers/SET_BLOCKED_USERS',
@@ -16,12 +17,12 @@ export enum BlockedAndMutedUsersActionsType {
 
 export interface SetBlockedUsersActionInterface extends Action<BlockedAndMutedUsersActionsType> {
     type: BlockedAndMutedUsersActionsType.SET_BLOCKED_USERS;
-    payload: BlockedAndMutedUsersState["blockedUsers"];
+    payload: PageableResponse<BlockedAndMutedUsersState["blockedUsers"]>;
 }
 
 export interface SetMutedUsersActionInterface extends Action<BlockedAndMutedUsersActionsType> {
     type: BlockedAndMutedUsersActionsType.SET_MUTED_USERS;
-    payload: BlockedAndMutedUsersState["mutedUsers"];
+    payload: PageableResponse<BlockedAndMutedUsersState["mutedUsers"]>;
 }
 
 export interface SetBlockedUserActionInterface extends Action<BlockedAndMutedUsersActionsType> {
@@ -36,10 +37,12 @@ export interface SetMutedUserActionInterface extends Action<BlockedAndMutedUsers
 
 export interface FetchBlockedUsersActionInterface extends Action<BlockedAndMutedUsersActionsType> {
     type: BlockedAndMutedUsersActionsType.FETCH_BLOCKED_USERS;
+    payload: number;
 }
 
 export interface FetchMutedUsersActionInterface extends Action<BlockedAndMutedUsersActionsType> {
     type: BlockedAndMutedUsersActionsType.FETCH_MUTED_USERS;
+    payload: number;
 }
 
 export interface ResetBlockedAndMutedUsersStateActionInterface extends Action<BlockedAndMutedUsersActionsType> {

@@ -170,6 +170,7 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
         blockedAndMutedUsers: {
             mutedUsers: [],
             blockedUsers: [],
+            pagesCount: 0,
             loadingState: loadingStatus
         },
         chatMessages: {

@@ -7,18 +7,21 @@ import {BlockedAndMutedUsersState} from './contracts/state';
 export const initialBlockedAndMutedUsersState: BlockedAndMutedUsersState = {
     blockedUsers: [],
     mutedUsers: [],
+    pagesCount: 0,
     loadingState: LoadingStatus.LOADING,
 };
 
 export const blockedAndMutedUsersReducer = produce((draft: Draft<BlockedAndMutedUsersState>, action: BlockedAndMutedUsersActions) => {
     switch (action.type) {
         case BlockedAndMutedUsersActionsType.SET_BLOCKED_USERS:
-            draft.blockedUsers = action.payload;
+            draft.blockedUsers = [...draft.blockedUsers, ...action.payload.items];
+            draft.pagesCount = action.payload.pagesCount
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
         case BlockedAndMutedUsersActionsType.SET_MUTED_USERS:
-            draft.mutedUsers = action.payload;
+            draft.mutedUsers = [...draft.mutedUsers, ...action.payload.items];
+            draft.pagesCount = action.payload.pagesCount
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
@@ -37,6 +40,7 @@ export const blockedAndMutedUsersReducer = produce((draft: Draft<BlockedAndMuted
         case BlockedAndMutedUsersActionsType.RESET_TAGS_STATE:
             draft.blockedUsers = [];
             draft.mutedUsers = [];
+            draft.pagesCount = 0;
             draft.loadingState = LoadingStatus.LOADING;
             break;
 
