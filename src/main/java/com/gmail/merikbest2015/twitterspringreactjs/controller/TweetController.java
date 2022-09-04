@@ -51,13 +51,15 @@ public class TweetController {
     }
 
     @GetMapping("/{tweetId}/liked-users")
-    public ResponseEntity<List<UserResponse>> getLikedUsersByTweetId(@PathVariable Long tweetId) {
-        return ResponseEntity.ok(tweetMapper.getLikedUsersByTweetId(tweetId));
+    public ResponseEntity<List<UserResponse>> getLikedUsersByTweetId(@PathVariable Long tweetId, @PageableDefault(size = 15) Pageable pageable) {
+        HeaderResponse<UserResponse> response = tweetMapper.getLikedUsersByTweetId(tweetId, pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
     @GetMapping("/{tweetId}/retweeted-users")
-    public ResponseEntity<List<UserResponse>> getRetweetedUsersByTweetId(@PathVariable Long tweetId) {
-        return ResponseEntity.ok(tweetMapper.getRetweetedUsersByTweetId(tweetId));
+    public ResponseEntity<List<UserResponse>> getRetweetedUsersByTweetId(@PathVariable Long tweetId, @PageableDefault(size = 15) Pageable pageable) {
+        HeaderResponse<UserResponse> response = tweetMapper.getRetweetedUsersByTweetId(tweetId, pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
     @GetMapping("/media")

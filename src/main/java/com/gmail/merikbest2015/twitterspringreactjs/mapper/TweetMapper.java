@@ -70,14 +70,14 @@ public class TweetMapper {
         return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
     }
 
-    public List<UserResponse> getLikedUsersByTweetId(Long tweetId) {
-        List<UserProjection> users = tweetService.getLikedUsersByTweetId(tweetId);
-        return basicMapper.convertToResponseList(users, UserResponse.class);
+    public HeaderResponse<UserResponse> getLikedUsersByTweetId(Long tweetId, Pageable pageable) {
+        Page<UserProjection> users = tweetService.getLikedUsersByTweetId(tweetId, pageable);
+        return basicMapper.getHeaderResponse(users, UserResponse.class);
     }
 
-    public List<UserResponse> getRetweetedUsersByTweetId(Long tweetId) {
-        List<UserProjection> users = tweetService.getRetweetedUsersByTweetId(tweetId);
-        return basicMapper.convertToResponseList(users, UserResponse.class);
+    public HeaderResponse<UserResponse> getRetweetedUsersByTweetId(Long tweetId, Pageable pageable) {
+        Page<UserProjection> users = tweetService.getRetweetedUsersByTweetId(tweetId, pageable);
+        return basicMapper.getHeaderResponse(users, UserResponse.class);
     }
 
     public TweetResponse createTweet(TweetRequest tweetRequest) {

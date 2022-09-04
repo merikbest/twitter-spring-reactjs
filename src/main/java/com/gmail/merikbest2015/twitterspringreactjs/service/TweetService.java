@@ -20,9 +20,9 @@ public interface TweetService {
 
     Page<TweetProjection> getQuotesByTweetId(Pageable pageable, Long tweetId);
 
-    List<UserProjection> getLikedUsersByTweetId(Long tweetId);
+    Page<UserProjection> getLikedUsersByTweetId(Long tweetId, Pageable pageable);
 
-    List<UserProjection> getRetweetedUsersByTweetId(Long tweetId);
+    Page<UserProjection> getRetweetedUsersByTweetId(Long tweetId, Pageable pageable);
 
     Page<TweetProjection> getMediaTweets(Pageable pageable);
 
