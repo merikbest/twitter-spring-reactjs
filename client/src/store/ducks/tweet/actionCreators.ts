@@ -26,8 +26,9 @@ import {
     TweetActionType,
     UpdateTweetDataActionInterface,
 } from "./contracts/actionTypes";
-import {ReplyTweet, TweetState} from "./contracts/state";
+import {FetchTweetUsersPayload, ReplyTweet, TweetState} from "./contracts/state";
 import {NotificationReplyResponse, NotificationResponse} from "../../types/notification";
+import {PageableResponse} from "../../types/common";
 
 export const setFollowToTweetState = (payload: boolean): SetFollowToTweetStateActionInterface => ({
     type: TweetActionType.SET_FOLLOW_TO_TWEET_STATE,
@@ -89,12 +90,12 @@ export const deleteTweetReply = (payload: number): DeleteTweetReplyActionInterfa
 });
 
 // liked and retweeted users
-export const fetchLikedUsers = (payload: number): FetchLikedUsersActionInterface => ({
+export const fetchLikedUsers = (payload: FetchTweetUsersPayload): FetchLikedUsersActionInterface => ({
     type: TweetActionType.FETCH_LIKED_USERS,
     payload
 });
 
-export const setLikedUsers = (payload: TweetState["likedUsers"]): SetLikedUsersActionInterface => ({
+export const setLikedUsers = (payload: PageableResponse<TweetState["likedUsers"]>): SetLikedUsersActionInterface => ({
     type: TweetActionType.SET_LIKED_USERS,
     payload
 });
@@ -108,12 +109,12 @@ export const setLikedUsersLoadingState = (payload: LoadingStatus): SetLikedUsers
     payload
 });
 
-export const fetchRetweetedUsers = (payload: number): FetchRetweetedUsersActionInterface => ({
+export const fetchRetweetedUsers = (payload: FetchTweetUsersPayload): FetchRetweetedUsersActionInterface => ({
     type: TweetActionType.FETCH_RETWEETED_USERS,
     payload
 });
 
-export const setRetweetedUsers = (payload: TweetState["retweetedUsers"]): SetRetweetedUsersActionInterface => ({
+export const setRetweetedUsers = (payload: PageableResponse<TweetState["retweetedUsers"]>): SetRetweetedUsersActionInterface => ({
     type: TweetActionType.SET_RETWEETED_USERS,
     payload
 });

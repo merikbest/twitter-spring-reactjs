@@ -14,6 +14,7 @@ export const initialTweetState: TweetState = {
     likedUsersLoadingState: LoadingStatus.LOADING,
     retweetedUsers: [],
     retweetedUsersLoadingState: LoadingStatus.LOADING,
+    usersPagesCount: 0,
     // replies
     replies: [],
     repliesLoadingState: LoadingStatus.LOADING,
@@ -88,7 +89,8 @@ export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetActi
 
         // liked and retweeted users
         case TweetActionType.SET_LIKED_USERS:
-            draft.likedUsers = action.payload;
+            draft.likedUsers = [...draft.likedUsers, ...action.payload.items];
+            draft.usersPagesCount = action.payload.pagesCount;
             draft.likedUsersLoadingState = LoadingStatus.SUCCESS;
             break;
 
@@ -102,12 +104,14 @@ export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetActi
             break;
 
         case TweetActionType.SET_RETWEETED_USERS:
-            draft.retweetedUsers = action.payload;
+            draft.retweetedUsers = [...draft.retweetedUsers, ...action.payload.items];
+            draft.usersPagesCount = action.payload.pagesCount;
             draft.retweetedUsersLoadingState = LoadingStatus.SUCCESS;
             break;
 
         case TweetActionType.RESET_RETWEETED_USERS_STATE:
             draft.retweetedUsers = [];
+            draft.usersPagesCount = 0;
             draft.retweetedUsersLoadingState = LoadingStatus.LOADING;
             break;
 

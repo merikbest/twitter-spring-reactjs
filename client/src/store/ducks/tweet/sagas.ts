@@ -71,8 +71,11 @@ export function* deleteTweetReplyRequest({payload}: DeleteTweetReplyActionInterf
 export function* fetchLikedUsersRequest({payload}: FetchLikedUsersActionInterface) {
     try {
         yield put(setLikedUsersLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<UserResponse[]> = yield call(TweetApi.getLikedUsersByTweetId, payload);
-        yield put(setLikedUsers(response.data));
+        const response: AxiosResponse<UserResponse[]> = yield call(TweetApi.getLikedUsersByTweetId, payload.tweetId, payload.page);
+        yield put(setLikedUsers({
+            items: response.data,
+            pagesCount: parseInt(response.headers["page-total-count"])
+        }));
     } catch (error) {
         yield put(setLikedUsersLoadingState(LoadingStatus.ERROR));
     }
@@ -81,8 +84,11 @@ export function* fetchLikedUsersRequest({payload}: FetchLikedUsersActionInterfac
 export function* fetchRetweetedUsersRequest({payload}: FetchRetweetedUsersActionInterface) {
     try {
         yield put(setRetweetedUsersLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<UserResponse[]> = yield call(TweetApi.getRetweetedUsersByTweetId, payload);
-        yield put(setRetweetedUsers(response.data));
+        const response: AxiosResponse<UserResponse[]> = yield call(TweetApi.getRetweetedUsersByTweetId, payload.tweetId, payload.page);
+        yield put(setRetweetedUsers({
+            items: response.data,
+            pagesCount: parseInt(response.headers["page-total-count"])
+        }));
     } catch (error) {
         yield put(setRetweetedUsersLoadingState(LoadingStatus.ERROR));
     }

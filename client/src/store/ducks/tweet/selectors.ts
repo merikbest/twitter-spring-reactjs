@@ -10,6 +10,7 @@ export const selectIsTweetLoading = (state: RootState): boolean => selectLoading
 export const selectIsTweetLoadedSuccess = (state: RootState): boolean => selectLoadingState(state) === LoadingStatus.SUCCESS;
 export const selectIsTweetError = (state: RootState): boolean => selectLoadingState(state) === LoadingStatus.ERROR;
 export const selectTweetData = (state: RootState): TweetResponse | undefined => selectTweetState(state).tweet;
+export const selectUsersPagesCount = (state: RootState): number => selectTweetState(state).usersPagesCount;
 
 // liked and retweeted users
 export const selectLikedUsers = (state: RootState): UserResponse[] => selectTweetState(state).likedUsers;

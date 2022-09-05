@@ -232,7 +232,7 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             tweet: mockFullTweet,
             likedUsers: mockUsers,
             retweetedUsers: mockUsers,
-            quotedUsers: mockUsers,
+            usersPagesCount: 0,
             replies: mockTweets,
             loadingState: loadingStatus,
             likedUsersLoadingState: loadingStatus,

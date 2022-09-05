@@ -1,7 +1,8 @@
 import {Action} from "redux";
 import {LoadingStatus} from "../../../types";
-import {ReplyTweet, TweetState} from "./state";
+import {FetchTweetUsersPayload, ReplyTweet, TweetState} from "./state";
 import {NotificationReplyResponse, NotificationResponse} from "../../../types/notification";
+import {PageableResponse} from "../../../types/common";
 
 export enum TweetActionType {
     SET_FOLLOW_TO_TWEET_STATE = 'tweet/SET_FOLLOW_TO_TWEET_STATE',
@@ -94,12 +95,12 @@ export interface DeleteTweetReplyActionInterface extends Action<TweetActionType>
 // liked and retweeted users
 export interface FetchLikedUsersActionInterface extends Action<TweetActionType> {
     type: TweetActionType.FETCH_LIKED_USERS;
-    payload: number;
+    payload: FetchTweetUsersPayload;
 }
 
 export interface SetLikedUsersActionInterface extends Action<TweetActionType> {
     type: TweetActionType.SET_LIKED_USERS;
-    payload: TweetState["likedUsers"];
+    payload: PageableResponse<TweetState["likedUsers"]>;
 }
 
 export interface ResetLikedUsersStateActionInterface extends Action<TweetActionType> {
@@ -113,12 +114,12 @@ export interface SetLikedUsersLoadingStateInterface extends Action<TweetActionTy
 
 export interface FetchRetweetedUsersActionInterface extends Action<TweetActionType> {
     type: TweetActionType.FETCH_RETWEETED_USERS;
-    payload: number;
+    payload: FetchTweetUsersPayload;
 }
 
 export interface SetRetweetedUsersActionInterface extends Action<TweetActionType> {
     type: TweetActionType.SET_RETWEETED_USERS;
-    payload: TweetState["retweetedUsers"];
+    payload: PageableResponse<TweetState["retweetedUsers"]>;
 }
 
 export interface ResetRetweetedUsersStateActionInterface extends Action<TweetActionType> {
