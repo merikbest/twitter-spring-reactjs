@@ -96,6 +96,7 @@ export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetActi
 
         case TweetActionType.RESET_LIKED_USERS_STATE:
             draft.likedUsers = [];
+            draft.usersPagesCount = 0;
             draft.likedUsersLoadingState = LoadingStatus.LOADING;
             break;
 

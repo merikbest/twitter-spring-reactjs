@@ -17,11 +17,12 @@ import {
     selectIsLikedUsersLoading,
     selectIsRetweetedUsersLoading,
     selectLikedUsers,
-    selectRetweetedUsers
+    selectRetweetedUsers,
+    selectUsersPagesCount
 } from "../../store/ducks/tweet/selectors";
 import UsersItem, {UserItemSize} from "../UsersItem/UsersItem";
 import Spinner from "../Spinner/Spinner";
-import {UserResponse} from "../../store/types/user";
+import InfiniteScrollWrapper from "../InfiniteScrollWrapper/InfiniteScrollWrapper";
 
 interface UsersListModalProps {
     tweetId: number;
@@ -46,23 +47,22 @@ const UsersListModal: FC<UsersListModalProps> = (
 ): ReactElement | null => {
     const classes = useUsersListModalStyles();
     const dispatch = useDispatch();
-    const likedUsers = useSelector(selectLikedUsers);
-    const retweetedUsers = useSelector(selectRetweetedUsers);
-    const isLikedUsersLoading = useSelector(selectIsLikedUsersLoading);
-    const isRetweetedUsersLoading = useSelector(selectIsRetweetedUsersLoading);
+    const isLiked = usersListModalAction === UsersListModalAction.LIKED;
+    const isUsersLoading = useSelector(isLiked ? selectIsLikedUsersLoading : selectIsRetweetedUsersLoading);
+    const users = useSelector(isLiked ? selectLikedUsers : selectRetweetedUsers);
+    const usersPagesCount = useSelector(selectUsersPagesCount);
     const [title, setTitle] = useState<string>("");
 
     useEffect(() => {
         if (visible) {
-            if (usersListModalAction === UsersListModalAction.LIKED) {
-                setTitle("Liked by");
-                dispatch(fetchLikedUsers(tweetId));
-            } else if (usersListModalAction === UsersListModalAction.RETWEETED) {
-                setTitle("Retweeted by");
-                dispatch(fetchRetweetedUsers(tweetId));
-            }
+            setTitle(isLiked ? "Liked by" : "Retweeted by");
+            loadUsers(0);
         }
     }, [visible]);
+
+    const loadUsers = (page: number): void => {
+        dispatch(isLiked ? fetchLikedUsers({tweetId, page}) : fetchRetweetedUsers({tweetId, page}));
+    };
 
     const onCloseUsersListModal = (): void => {
         onClose();
@@ -70,47 +70,30 @@ const UsersListModal: FC<UsersListModalProps> = (
         dispatch(resetLikedUsersState());
         dispatch(resetRetweetedUsersState());
     };
-
-    const showLoading = (): boolean => {
-        let isLoading = true;
-
-        if (usersListModalAction === UsersListModalAction.LIKED) {
-            isLoading = isLikedUsersLoading;
-        } else if (usersListModalAction === UsersListModalAction.RETWEETED) {
-            isLoading = isRetweetedUsersLoading;
-        }
-        return isLoading;
-    };
-
-    const showUsersItem = (): JSX.Element[] => {
-        let users: UserResponse[] = [];
-
-        if (usersListModalAction === UsersListModalAction.LIKED) {
-            users = likedUsers;
-        } else if (usersListModalAction === UsersListModalAction.RETWEETED) {
-            users = retweetedUsers;
-        }
-        return users.map((user) => (<UsersItem key={user.id} item={user} size={UserItemSize.MEDIUM}/>));
-    };
     
     if (!visible) {
         return null;
     }
 
     return (
-        <Dialog className={classes.dialog} open={visible} onClose={onCloseUsersListModal} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">
+        <Dialog className={classes.dialog} open={visible} onClose={onCloseUsersListModal}>
+            <DialogTitle>
                 <CloseButton onClose={onCloseUsersListModal}/>
                 {title}
             </DialogTitle>
-            <DialogContent className={classes.content}>
-                {showLoading() ? (
-                    <Spinner paddingTop={250}/>
-                ) : (
-                    <List>
-                        {showUsersItem()}
-                    </List>
-                )}
+            <DialogContent id="scrollableDiv" className={classes.content}>
+                <InfiniteScrollWrapper dataLength={users.length} pagesCount={usersPagesCount} loadItems={loadUsers}>
+                    {isUsersLoading && !users.length ? (
+                        <Spinner paddingTop={250}/>
+                    ) : (
+                        <List>
+                            {users.map((user) => (
+                                <UsersItem key={user.id} item={user} size={UserItemSize.MEDIUM}/>
+                            ))}
+                            {isUsersLoading && <Spinner/>}
+                        </List>
+                    )}
+                </InfiniteScrollWrapper>
             </DialogContent>
         </Dialog>
     );
