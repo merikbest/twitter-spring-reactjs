@@ -50,9 +50,9 @@ public class TweetMapper {
         return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
     }
 
-    public List<TweetResponse> getScheduledTweets() {
-        List<TweetProjection> tweets = tweetService.getScheduledTweets();
-        return basicMapper.convertToResponseList(tweets, TweetResponse.class);
+    public HeaderResponse<TweetResponse> getScheduledTweets(Pageable pageable) {
+        Page<TweetProjection> tweets = tweetService.getScheduledTweets(pageable);
+        return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
     }
 
     public TweetResponse getTweetById(Long tweetId) {

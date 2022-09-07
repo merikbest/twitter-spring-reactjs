@@ -81,8 +81,9 @@ public class TweetController {
     }
 
     @GetMapping("/schedule")
-    public ResponseEntity<List<TweetResponse>> getScheduledTweets() {
-        return ResponseEntity.ok(tweetMapper.getScheduledTweets());
+    public ResponseEntity<List<TweetResponse>> getScheduledTweets(@PageableDefault(size = 15) Pageable pageable) {
+        HeaderResponse<TweetResponse> response = tweetMapper.getScheduledTweets(pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
     @PostMapping

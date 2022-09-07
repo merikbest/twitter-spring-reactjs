@@ -30,7 +30,7 @@ public interface TweetService {
 
     Page<TweetProjection> getFollowersTweets(Pageable pageable);
 
-    List<TweetProjection> getScheduledTweets();
+    Page<TweetProjection> getScheduledTweets(Pageable pageable);
 
     TweetProjection createNewTweet(Tweet tweet);
 

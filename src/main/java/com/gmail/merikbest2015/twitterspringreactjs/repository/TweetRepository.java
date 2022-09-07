@@ -39,7 +39,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "WHERE tweet.user.id = :userId " +
             "AND tweet.scheduledDate IS NOT NULL " +
             "ORDER BY tweet.scheduledDate DESC")
-    List<TweetProjection> findAllScheduledTweetsByUserId(Long userId);
+    Page<TweetProjection> findAllScheduledTweetsByUserId(Long userId, Pageable pageable);
 
     @Query("SELECT t as tweet FROM Tweet t " +
             "LEFT JOIN t.user u " +

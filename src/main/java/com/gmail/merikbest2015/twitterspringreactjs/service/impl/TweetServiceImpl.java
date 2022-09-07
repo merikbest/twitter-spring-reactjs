@@ -113,9 +113,9 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
-    public List<TweetProjection> getScheduledTweets() {
+    public Page<TweetProjection> getScheduledTweets(Pageable pageable) {
         Long userId = authenticationService.getAuthenticatedUserId();
-        return tweetRepository.findAllScheduledTweetsByUserId(userId);
+        return tweetRepository.findAllScheduledTweetsByUserId(userId, pageable);
     }
 
     @Override
