@@ -80,7 +80,6 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
         width: "100%",
         padding: 4,
         bottom: 0,
-        position: "absolute",
         display: "flex",
         justifyContent: "space-between",
         borderTop: `1px solid ${theme.palette.divider}`,

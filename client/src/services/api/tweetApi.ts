@@ -21,8 +21,8 @@ export const TweetApi = {
     async fetchFollowersTweets(pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
         return await axios.get<TweetResponse[]>(`${API_URL}/tweets/follower`, {params: {page: pageNumber}});
     },
-    async fetchScheduledTweets(): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(`${API_URL}/tweets/schedule`);
+    async fetchScheduledTweets(pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
+        return await axios.get<TweetResponse[]>(`${API_URL}/tweets/schedule`, {params: {page: pageNumber}});
     },
     async fetchTweetData(tweetId: number): Promise<AxiosResponse<TweetResponse>> {
         return await axios.get<TweetResponse>(`${API_URL}/tweets/${tweetId}`);
