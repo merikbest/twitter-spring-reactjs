@@ -41,7 +41,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "ORDER BY tweet.scheduledDate DESC")
     Page<TweetProjection> findAllScheduledTweetsByUserId(Long userId, Pageable pageable);
 
-    @Query("SELECT t as tweet FROM Tweet t " +
+    @Query("SELECT t FROM Tweet t " +
             "LEFT JOIN t.user u " +
             "WHERE t.scheduledDate IS NULL " +
             "AND (t.text LIKE CONCAT('%',:text,'%') " +
@@ -51,7 +51,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "OR UPPER(u.fullName) LIKE UPPER(CONCAT('%',:text,'%')) " +
             "OR UPPER(u.username) LIKE UPPER(CONCAT('%',:text,'%'))) " +
             "ORDER BY t.dateTime DESC")
-    List<TweetsProjection> findAllByText(String text);
+    Page<TweetProjection> findAllByText(String text, Pageable pageable);
 
     @Query("SELECT tweet FROM Tweet tweet " +
             "WHERE tweet.scheduledDate IS NULL " +

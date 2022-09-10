@@ -120,9 +120,9 @@ public class TweetMapper {
         return notification;
     }
 
-    public List<TweetResponse> searchTweets(String text) {
-        List<TweetProjection> tweets = tweetService.searchTweets(text);
-        return basicMapper.convertToResponseList(tweets, TweetResponse.class);
+    public HeaderResponse<TweetResponse> searchTweets(String text, Pageable pageable) {
+        Page<TweetProjection> tweets = tweetService.searchTweets(text, pageable);
+        return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
     }
 
     public NotificationReplyResponse replyTweet(Long tweetId, TweetRequest tweetRequest) {

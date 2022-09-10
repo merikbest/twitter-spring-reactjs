@@ -246,10 +246,8 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
-    public List<TweetProjection> searchTweets(String text) {
-        return tweetRepository.findAllByText(text).stream()
-                .map(TweetsProjection::getTweet)
-                .collect(Collectors.toList());
+    public Page<TweetProjection> searchTweets(String text, Pageable pageable) {
+        return tweetRepository.findAllByText(text, pageable);
     }
 
     @Override

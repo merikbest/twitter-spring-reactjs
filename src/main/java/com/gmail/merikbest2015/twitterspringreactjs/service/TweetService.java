@@ -42,7 +42,7 @@ public interface TweetService {
 
     Tweet deleteTweet(Long tweetId);
 
-    List<TweetProjection> searchTweets(String text);
+    Page<TweetProjection> searchTweets(String text, Pageable pageable);
 
     Map<String, Object> likeTweet(Long tweetId);
 

@@ -127,8 +127,9 @@ public class TweetController {
     }
 
     @GetMapping("/search/{text}")
-    public ResponseEntity<List<TweetResponse>> searchTweets(@PathVariable String text) {
-        return ResponseEntity.ok(tweetMapper.searchTweets(text));
+    public ResponseEntity<List<TweetResponse>> searchTweets(@PathVariable String text, @PageableDefault Pageable pageable) {
+        HeaderResponse<TweetResponse> response = tweetMapper.searchTweets(text, pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
     @GetMapping("/like/{tweetId}")
