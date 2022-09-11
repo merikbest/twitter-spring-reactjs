@@ -8,6 +8,7 @@ export interface TweetsState {
     loadingState: LoadingStatus;
 }
 
+
 export interface AddTweet {
     id?: number;
     text: string;
@@ -31,7 +32,6 @@ export interface Vote {
     pollChoiceId: number;
 }
 
-
 export interface TweetsByListIdRequest {
     listId: number,
     pageNumber: number
@@ -50,4 +50,9 @@ export interface ChangeReplyTypeRequest {
 export interface UpdatedBookmarkedTweetPayload {
     tweetId: number;
     isTweetBookmarked: boolean;
+}
+
+export interface FetchTweetsByTextRequest {
+    text: string;
+    pageNumber: number;
 }

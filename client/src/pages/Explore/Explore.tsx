@@ -67,7 +67,7 @@ const Explore: FC = (): ReactElement => {
         }
 
         if (location.state?.text) {
-            dispatch(fetchTweetsByText(location.state?.text));
+            dispatch(fetchTweetsByText({text: location.state?.text, pageNumber: 0}));
             setText(decodeURIComponent(location.state?.text));
         }
 
@@ -83,7 +83,7 @@ const Explore: FC = (): ReactElement => {
     const loadTweets = (): void => {
         if (text) {
             if (activeTab !== 2) {
-                dispatch(fetchTweetsByText(encodeURIComponent(text)));
+                dispatch(fetchTweetsByText({text: encodeURIComponent(text), pageNumber: 0}));
             } else {
                 dispatch(fetchUsersSearchByUsername({ username: encodeURIComponent(text), page }));
             }
@@ -116,7 +116,7 @@ const Explore: FC = (): ReactElement => {
         if (text) {
             if (activeTab !== 2) {
                 dispatch(resetTweets());
-                dispatch(fetchTweetsByText(encodeURIComponent(text)));
+                dispatch(fetchTweetsByText({text: encodeURIComponent(text), pageNumber: 0}));
             } else {
                 dispatch(resetUsersState());
                 dispatch(fetchUsersSearchByUsername({ username: encodeURIComponent(text), page: 0 }));

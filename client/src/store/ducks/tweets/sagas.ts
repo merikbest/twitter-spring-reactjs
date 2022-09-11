@@ -97,8 +97,11 @@ export function* fetchTweetsByTagRequest({payload}: FetchTweetsByTagActionInterf
 export function* fetchTweetsByTextRequest({payload}: FetchTweetsByTextActionInterface) {
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.searchTweets, payload);
-        yield put(setTweets(response.data));
+        const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.searchTweets, payload.text, payload.pageNumber);
+        yield put(setPageableTweets({
+            items: response.data,
+            pagesCount: parseInt(response.headers["page-total-count"])
+        }));
     } catch (e) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }

@@ -57,8 +57,8 @@ export const TweetApi = {
     async deleteTweet(tweetId: number): Promise<AxiosResponse<TweetResponse>> {
         return await axios.delete<TweetResponse>(`${API_URL}/tweets/${tweetId}`);
     },
-    async searchTweets(text: string): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(`${API_URL}/tweets/search/${text}`);
+    async searchTweets(text: string, pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
+        return await axios.get<TweetResponse[]>(`${API_URL}/tweets/search/${text}`, {params: {page: pageNumber}});
     },
     async likeTweet(tweetId: number): Promise<AxiosResponse<NotificationTweetResponse>> {
         return await axios.get<NotificationTweetResponse>(`${API_URL}/tweets/like/${tweetId}`);
