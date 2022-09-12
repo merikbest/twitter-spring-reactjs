@@ -140,9 +140,9 @@ describe("tweets actions", () => {
         payload: "test"
     });
 
-    testAction(fetchTweetsByText, fetchTweetsByText("test"), {
+    testAction(fetchTweetsByText, fetchTweetsByText({text: "test", pageNumber: 1}), {
         type: TweetsActionType.FETCH_TWEETS_BY_TEXT,
-        payload: "test"
+        payload: {text: "test", pageNumber: 1}
     });
 
     testAction(setTweetsLoadingState, setTweetsLoadingState(LoadingStatus.LOADING), {

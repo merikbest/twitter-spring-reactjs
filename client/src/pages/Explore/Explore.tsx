@@ -83,7 +83,7 @@ const Explore: FC = (): ReactElement => {
     const loadTweets = (): void => {
         if (text) {
             if (activeTab !== 2) {
-                dispatch(fetchTweetsByText({text: encodeURIComponent(text), pageNumber: 0}));
+                dispatch(fetchTweetsByText({text: encodeURIComponent(text), pageNumber: page}));
             } else {
                 dispatch(fetchUsersSearchByUsername({ username: encodeURIComponent(text), page }));
             }

@@ -124,10 +124,14 @@ describe("tweetsSaga:", () => {
     });
 
     describe("fetchTweetsByTextRequest:", () => {
-        const worker = fetchTweetsByTextRequest(fetchTweetsByText("test"));
+        const worker = fetchTweetsByTextRequest(fetchTweetsByText({text: "test", pageNumber: 1}));
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
-        testCall(worker, TweetApi.searchTweets, "test");
-        testSetResponse(worker, mockPageableTweets, setTweets, mockPageableTweets.data, "TweetResponse");
+        it("should call searchTweets", () => {
+            const actualYield = worker.next().value;
+            const expectedYield = call(TweetApi.searchTweets, "test", 1);
+            expect(actualYield).toEqual(expectedYield);
+        });
+        testSetResponse(worker, mockPageableTweets, setPageableTweets, mockExpectedResponse(mockPageableTweets), "TweetResponse");
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
 
