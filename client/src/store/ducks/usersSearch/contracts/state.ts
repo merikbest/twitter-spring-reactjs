@@ -26,7 +26,7 @@ export interface BlockedUsersPayload {
 
 export interface SearchByNameRequest {
     username: string;
-    page: number;
+    pageNumber: number;
 }
 
 export interface FollowersRequest {

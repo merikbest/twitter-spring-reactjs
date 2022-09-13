@@ -34,6 +34,6 @@ export const ChatApi = {
         return await axios.get<string>(`${API_URL}/chat/leave/${request.participantId}/${request.chatId}`);
     },
     async searchParticipantsByUsername(request: SearchByNameRequest): Promise<AxiosResponse<UserResponse[]>> {
-        return await axios.get<UserResponse[]>(`${API_URL}/chat/search/${request.username}`, {params: {page: request.page}});
+        return await axios.get<UserResponse[]>(`${API_URL}/chat/search/${request.username}`, {params: {page: request.pageNumber}});
     },
 };

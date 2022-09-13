@@ -5,6 +5,7 @@ import {
     AddQuoteTweet,
     AddTweet,
     ChangeReplyTypeRequest,
+    FetchTweetsByTagRequest,
     FetchTweetsByTextRequest,
     TweetsByListIdRequest,
     TweetsState,
@@ -118,7 +119,7 @@ export interface FetchTweetsWithQuotesByIdActionInterface extends Action<TweetsA
 
 export interface FetchTweetsByTagActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_TWEETS_BY_TAG;
-    payload: string;
+    payload: FetchTweetsByTagRequest;
 }
 
 export interface FetchTweetsByTextActionInterface extends Action<TweetsActionType> {

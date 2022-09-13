@@ -62,7 +62,7 @@ const Explore: FC = (): ReactElement => {
         window.scrollTo(0, 0);
 
         if (location.state?.tag) {
-            dispatch(fetchTweetsByTag(location.state?.tag));
+            dispatch(fetchTweetsByTag({tag: location.state?.tag, pageNumber: 0}));
             setText(decodeURIComponent(location.state?.tag));
         }
 
@@ -85,7 +85,7 @@ const Explore: FC = (): ReactElement => {
             if (activeTab !== 2) {
                 dispatch(fetchTweetsByText({text: encodeURIComponent(text), pageNumber: page}));
             } else {
-                dispatch(fetchUsersSearchByUsername({ username: encodeURIComponent(text), page }));
+                dispatch(fetchUsersSearchByUsername({ username: encodeURIComponent(text), pageNumber: page }));
             }
         } else {
             if (activeTab === 2) {
@@ -119,7 +119,7 @@ const Explore: FC = (): ReactElement => {
                 dispatch(fetchTweetsByText({text: encodeURIComponent(text), pageNumber: 0}));
             } else {
                 dispatch(resetUsersState());
-                dispatch(fetchUsersSearchByUsername({ username: encodeURIComponent(text), page: 0 }));
+                dispatch(fetchUsersSearchByUsername({ username: encodeURIComponent(text), pageNumber: 0 }));
             }
         }
     };

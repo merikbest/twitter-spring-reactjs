@@ -24,8 +24,8 @@ export const UserApi = {
     async getRelevantUsers(): Promise<AxiosResponse<UserResponse[]>> {
         return await axios.get<UserResponse[]>(`${API_URL}/user/relevant`);
     },
-    async searchUsersByUsername(request: SearchByNameRequest): Promise<AxiosResponse<UserResponse[]>> {
-        return await axios.get<UserResponse[]>(`${API_URL}/user/search/${request.username}`, {params: {page: request.page}});
+    async searchUsersByUsername({username, pageNumber}: SearchByNameRequest): Promise<AxiosResponse<UserResponse[]>> {
+        return await axios.get<UserResponse[]>(`${API_URL}/user/search/${username}`, {params: {page: pageNumber}});
     },
     async getUserInfo(userId: number): Promise<AxiosResponse<UserProfileResponse>> {
         return await axios.get<UserProfileResponse>(`${API_URL}/user/${userId}`);
@@ -36,11 +36,11 @@ export const UserApi = {
     async getUserTweetImages(userId: number): Promise<AxiosResponse<TweetImageResponse[]>> {
         return await axios.get<TweetImageResponse[]>(`${API_URL}/user/images/${userId}`);
     },
-    async getFollowers(request: FollowersRequest): Promise<AxiosResponse<UserResponse[]>> {
-        return await axios.get<UserResponse[]>(`${API_URL}/user/followers/${request.userId}`, {params: {page: request.page}});
+    async getFollowers({userId, page}: FollowersRequest): Promise<AxiosResponse<UserResponse[]>> {
+        return await axios.get<UserResponse[]>(`${API_URL}/user/followers/${userId}`, {params: {page: page}});
     },
-    async getFollowing(request: FollowersRequest): Promise<AxiosResponse<UserResponse[]>> {
-        return await axios.get<UserResponse[]>(`${API_URL}/user/following/${request.userId}`, {params: {page: request.page}});
+    async getFollowing({userId, page}: FollowersRequest): Promise<AxiosResponse<UserResponse[]>> {
+        return await axios.get<UserResponse[]>(`${API_URL}/user/following/${userId}`, {params: {page: page}});
     },
     async getFollowerRequests(pageNumber: number): Promise<AxiosResponse<FollowerUserResponse[]>> {
         return await axios.get<FollowerUserResponse[]>(`${API_URL}/user/follower-requests`, {params: {page: pageNumber}});
@@ -63,17 +63,17 @@ export const UserApi = {
     async processSubscribeToNotifications(userId: number): Promise<AxiosResponse<boolean>> {
         return await axios.get<boolean>(`${API_URL}/user/subscribe/${userId}`);
     },
-    async getUserTweets(request: UserTweetRequest): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(`${API_URL}/user/${request.userId}/tweets`, {params: {page: request.page}});
+    async getUserTweets({userId, page}: UserTweetRequest): Promise<AxiosResponse<TweetResponse[]>> {
+        return await axios.get<TweetResponse[]>(`${API_URL}/user/${userId}/tweets`, {params: {page: page}});
     },
-    async getUserLikedTweets(request: UserTweetRequest): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(`${API_URL}/user/${request.userId}/liked`, {params: {page: request.page}});
+    async getUserLikedTweets({userId, page}: UserTweetRequest): Promise<AxiosResponse<TweetResponse[]>> {
+        return await axios.get<TweetResponse[]>(`${API_URL}/user/${userId}/liked`, {params: {page: page}});
     },
-    async getUserMediaTweets(request: UserTweetRequest): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(`${API_URL}/user/${request.userId}/media`, {params: {page: request.page}});
+    async getUserMediaTweets({userId, page}: UserTweetRequest): Promise<AxiosResponse<TweetResponse[]>> {
+        return await axios.get<TweetResponse[]>(`${API_URL}/user/${userId}/media`, {params: {page: page}});
     },
-    async getUserRetweetsAndReplies(request: UserTweetRequest): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(`${API_URL}/user/${request.userId}/replies`, {params: {page: request.page}});
+    async getUserRetweetsAndReplies({userId, page}: UserTweetRequest): Promise<AxiosResponse<TweetResponse[]>> {
+        return await axios.get<TweetResponse[]>(`${API_URL}/user/${userId}/replies`, {params: {page: page}});
     },
     async getUserNotifications(pageNumber: number): Promise<AxiosResponse<NotificationResponse[]>> {
         return await axios.get<NotificationResponse[]>(`${API_URL}/user/notifications`, {params: {page: pageNumber}});

@@ -140,7 +140,7 @@ export const mockDispatch = () => {
     return mockDispatchFn;
 };
 
-export const mockLocation = (mockLocationState: { tag: string } | { text: string }): void => {
+export const mockLocation = (mockLocationState: { tag: string } | { text: string } | { mock: string }): void => {
     jest.spyOn(routeData, "useLocation").mockReturnValue({
         pathname: "/search",
         hash: "",

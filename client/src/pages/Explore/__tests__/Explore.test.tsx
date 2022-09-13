@@ -90,6 +90,7 @@ describe("Explore", () => {
     });
 
     it("should unmount Explore", () => {
+        mockLocation({mock: ""});
         const wrapper = mountWithStore(<Explore/>, mockStore);
         wrapper.unmount();
         expect(mockDispatchFn).nthCalledWith(2, {type: TweetsActionType.RESET_TWEETS});
@@ -103,7 +104,10 @@ describe("Explore", () => {
         input.simulate("submit");
         expect(wrapper.find("input").prop("value")).toBe("test");
         expect(wrapper.find(listItem).length).toEqual(2);
-        expect(mockDispatchFn).toHaveBeenCalledWith({payload: "test", type: actionType});
+        expect(mockDispatchFn).toHaveBeenCalledWith({
+            payload: tabIndex === 0 ? {text: "test", pageNumber: 0} : {username: "test", pageNumber: 0},
+            type: actionType
+        });
     };
 
     const testRenderTweetsByLocation = (location: { tag: string; } | { text: string; }, mockText: string, actionType: TweetsActionType): void => {
@@ -111,7 +115,7 @@ describe("Explore", () => {
         const wrapper = mountWithStore(<Explore/>, mockStore);
         expect(wrapper.find("input").prop("value")).toBe(mockText);
         expect(wrapper.find(TweetComponent).length).toEqual(2);
-        expect(mockDispatchFn).toHaveBeenCalledWith({payload: mockText, type: actionType});
+        expect(mockDispatchFn).toHaveBeenCalledWith({payload: {...location, pageNumber: 0}, type: actionType});
     };
 
     const testRenderItems = (tabIndex: number, tabIndexName: string, listItem: any, actionType: UsersSearchActionsType | TweetsActionType): void => {
@@ -124,6 +128,7 @@ describe("Explore", () => {
     };
 
     const testScrollItemsByInputText = (tabIndex: number, actionType: UsersSearchActionsType | TweetsActionType): void => {
+        mockLocation({mock: ""});
         const wrapper = mountWithStore(<Explore/>, mockStore);
         wrapper.find(Tab).at(tabIndex).simulate("click");
         const input = wrapper.find(MainSearchTextField).find("input").at(0);
@@ -131,10 +136,14 @@ describe("Explore", () => {
         input.simulate("submit");
         wrapper.find(InfiniteScroll).prop("next")();
         expect(wrapper.find("input").prop("value")).toBe("test");
-        expect(mockDispatchFn).toHaveBeenCalledWith({payload: "test", type: actionType});
+        expect(mockDispatchFn).toHaveBeenCalledWith({
+            payload: tabIndex === 0 ? {text: "test", pageNumber: 0} : {username: "test", pageNumber: 0},
+            type: actionType
+        });
     };
 
     const testScrollItems = (tabIndex: number, actionType: UsersSearchActionsType | TweetsActionType): void => {
+        mockLocation({mock: ""});
         const wrapper = mountWithStore(<Explore/>, mockStore);
         wrapper.find(Tab).at(tabIndex).simulate("click");
         wrapper.find(InfiniteScroll).prop("next")();

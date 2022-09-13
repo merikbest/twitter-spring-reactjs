@@ -56,3 +56,8 @@ export interface FetchTweetsByTextRequest {
     text: string;
     pageNumber: number;
 }
+
+export interface FetchTweetsByTagRequest {
+    tag: string;
+    pageNumber: number;
+}
