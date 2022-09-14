@@ -7,6 +7,7 @@ import {
     setFollowRequestToUsers,
     setFollowToUsersState,
     setMutedUsersState,
+    setPageableUsers,
     setSubscribedUsersState,
     setUsers,
     setUsersLoadingState
@@ -16,9 +17,19 @@ import {UserResponse} from "../../../types/user";
 import {LoadingStatus} from "../../../types";
 
 describe("tags actions", () => {
+    const mackPageableUsers = {
+        items: [{id: 1}] as UserResponse[],
+        pagesCount: 0
+    };
+
     testAction(setUsers, setUsers([{id: 1}] as UserResponse[]), {
         type: UsersActionsType.SET_USERS,
         payload: [{id: 1}] as UserResponse[]
+    });
+
+    testAction(setPageableUsers, setPageableUsers(mackPageableUsers), {
+        type: UsersActionsType.SET_PAGEABLE_USERS,
+        payload: mackPageableUsers
     });
 
     testAction(setFollowToUsersState, setFollowToUsersState({userId: 1, isFollower: true}), {
@@ -46,8 +57,9 @@ describe("tags actions", () => {
         payload: {userId: 1, isSubscriber: true}
     });
 
-    testAction(fetchUsers, fetchUsers(), {
+    testAction(fetchUsers, fetchUsers(1), {
         type: UsersActionsType.FETCH_USERS,
+        payload: 1
     });
 
     testAction(fetchRelevantUsers, fetchRelevantUsers(), {

@@ -26,6 +26,23 @@ describe("usersReducer:", () => {
         );
 
         testActionDispatch(
+            UsersActionsType.SET_PAGEABLE_USERS,
+            usersReducer(initialUsersState, {
+                type: UsersActionsType.SET_PAGEABLE_USERS,
+                payload: {
+                    items: [{id: 1}] as UserResponse[],
+                    pagesCount: 1
+                }
+            }),
+            {
+                ...initialUsersState,
+                users: [{id: 1}] as UserResponse[],
+                pagesCount: 1,
+                loadingState: LoadingStatus.SUCCESS
+            }
+        );
+
+        testActionDispatch(
             UsersActionsType.SET_FOLLOW_TO_USERS_STATE,
             usersReducer(
                 {
