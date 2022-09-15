@@ -26,14 +26,29 @@ describe("usersSearchReducer:", () => {
         );
 
         testActionDispatch(
-            UsersSearchActionsType.SET_FOLLOWERS,
+            UsersSearchActionsType.SET_PAGEABLE_USERS,
             usersSearchReducer(initialUsersSearchState, {
-                type: UsersSearchActionsType.SET_FOLLOWERS,
-                payload: [{id: 1}] as UserResponse[]
+                type: UsersSearchActionsType.SET_PAGEABLE_USERS,
+                payload: {items: [{id: 1}] as UserResponse[], pagesCount: 2}
+            }),
+            {
+                ...initialUsersSearchState,
+                users: [{id: 1}] as UserResponse[],
+                pagesCount: 2,
+                loadingState: LoadingStatus.LOADED
+            }
+        );
+
+        testActionDispatch(
+            UsersSearchActionsType.SET_PAGEABLE_FOLLOWERS,
+            usersSearchReducer(initialUsersSearchState, {
+                type: UsersSearchActionsType.SET_PAGEABLE_FOLLOWERS,
+                payload: {items: [{id: 1}] as UserResponse[], pagesCount: 2}
             }),
             {
                 ...initialUsersSearchState,
                 followers: [{id: 1}] as UserResponse[],
+                pagesCount: 2,
                 loadingState: LoadingStatus.LOADED
             }
         );
@@ -106,7 +121,9 @@ describe("usersSearchReducer:", () => {
             usersSearchReducer(
                 {
                     ...initialUsersSearchState,
-                    users: [{id: 1}] as UserResponse[]
+                    users: [{id: 1}] as UserResponse[],
+                    followers: [{id: 1}] as UserResponse[],
+                    pagesCount: 11,
                 },
                 {
                     type: UsersSearchActionsType.RESET_USERS_STATE
@@ -114,6 +131,8 @@ describe("usersSearchReducer:", () => {
             {
                 ...initialUsersSearchState,
                 users: [],
+                followers: [],
+                pagesCount: 1,
                 loadingState: LoadingStatus.LOADING
             }
         );

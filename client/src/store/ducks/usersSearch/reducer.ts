@@ -30,11 +30,6 @@ export const usersSearchReducer = produce((draft: Draft<UsersSearchState>, actio
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
-        case UsersSearchActionsType.SET_FOLLOWERS:
-            draft.followers = action.payload;
-            draft.loadingState = LoadingStatus.LOADED;
-            break;
-
         case UsersSearchActionsType.SET_FOLLOW_TO_USERS_SEARCH_STATE:
             const userIndex = draft.users.findIndex((user) => user.id === action.payload.userId);
             if (userIndex !== -1) draft.users[userIndex].isFollower = action.payload.isFollower;

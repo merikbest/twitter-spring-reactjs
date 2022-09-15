@@ -6,7 +6,6 @@ import {
     FetchUsersSearchByNameActionInterface,
     ResetUsersStateActionInterface,
     SetBlockUsersSearchStateActionInterface,
-    SetFollowersActionInterface,
     SetFollowRequestToUsersSearchStateActionInterface,
     SetFollowToUsersSearchStateActionInterface,
     SetPageableFollowersActionInterface,
@@ -32,11 +31,6 @@ export const setUsersSearch = (payload: UsersSearchState["users"]): SetUsersSear
 
 export const setPageableUsersSearch = (payload: PageableResponse<UsersSearchState["users"]>): SetPageableUsersSearchActionInterface => ({
     type: UsersSearchActionsType.SET_PAGEABLE_USERS,
-    payload
-});
-
-export const setFollowers = (payload: UsersSearchState["followers"]): SetFollowersActionInterface => ({
-    type: UsersSearchActionsType.SET_FOLLOWERS,
     payload
 });
 

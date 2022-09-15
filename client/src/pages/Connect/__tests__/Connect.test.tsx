@@ -17,13 +17,13 @@ describe("Connect", () => {
     it("should render loading Spinner", () => {
         const wrapper = mountWithStore(<Connect/>, createMockRootState());
         expect(wrapper.find(Spinner).exists()).toBe(true);
-        expect(mockDispatchFn).toHaveBeenCalledWith({type: UsersActionsType.FETCH_USERS});
+        expect(mockDispatchFn).toHaveBeenCalledWith({payload: 0, type: UsersActionsType.FETCH_USERS});
     });
 
     it("should render list of UsersItem", () => {
         const wrapper = mountWithStore(<Connect/>, createMockRootState(LoadingStatus.SUCCESS));
         expect(wrapper.text().includes("Suggested for you")).toBe(true);
         expect(wrapper.find(UsersItem).length).toEqual(2);
-        expect(mockDispatchFn).toHaveBeenCalledWith({type: UsersActionsType.FETCH_USERS});
+        expect(mockDispatchFn).toHaveBeenCalledWith({payload: 0, type: UsersActionsType.FETCH_USERS});
     });
 });

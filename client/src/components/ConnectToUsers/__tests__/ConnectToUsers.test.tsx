@@ -15,7 +15,7 @@ describe("ConnectToUsers", () => {
             <ConnectToUsers 
                 title={"Followers you know"} 
                 isUsersLoading={true} 
-                users={mockUsers}
+                users={[]}
             />, mockRootState);
         
         expect(wrapper.find(Spinner).exists()).toBe(true);
@@ -25,11 +25,11 @@ describe("ConnectToUsers", () => {
         const wrapper = mountWithStore(
             <ConnectToUsers
                 title={"Followers you know"}
-                isUsersLoading={false}
+                isUsersLoading={true}
                 users={mockUsers}
             />, mockRootState);
 
-        expect(wrapper.find(Spinner).exists()).toBe(false);
+        expect(wrapper.find(Spinner).exists()).toBe(true);
         expect(wrapper.text().includes("Followers you know")).toBe(true);
         expect(wrapper.find(UsersItem).length).toEqual(2);
     });

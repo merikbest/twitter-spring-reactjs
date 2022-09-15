@@ -2,13 +2,15 @@ import {testAction} from "../../../../util/testHelper";
 import {
     fetchFollowers,
     fetchFollowings,
+    fetchParticipantsByUsername,
     fetchUsersSearch,
     fetchUsersSearchByUsername,
     resetUsersState,
     setBlockUsersSearchState,
-    setFollowers,
     setFollowRequestToUsersSearchState,
     setFollowToUsersSearchState,
+    setPageableFollowers,
+    setPageableUsersSearch,
     setUsersSearch,
     setUsersSearchLoadingState
 } from "../actionCreators";
@@ -22,9 +24,14 @@ describe("usersSearch actions", () => {
         payload: [{id: 1}] as UserResponse[]
     });
 
-    testAction(setFollowers, setFollowers([{id: 1}] as UserResponse[]), {
-        type: UsersSearchActionsType.SET_FOLLOWERS,
-        payload: [{id: 1}] as UserResponse[]
+    testAction(setPageableUsersSearch, setPageableUsersSearch({items: [{id: 1}] as UserResponse[], pagesCount: 1}), {
+        type: UsersSearchActionsType.SET_PAGEABLE_USERS,
+        payload: {items: [{id: 1}] as UserResponse[], pagesCount: 1}
+    });
+
+    testAction(setPageableFollowers, setPageableFollowers({items: [{id: 1}] as UserResponse[], pagesCount: 1}), {
+        type: UsersSearchActionsType.SET_PAGEABLE_FOLLOWERS,
+        payload: {items: [{id: 1}] as UserResponse[], pagesCount: 1}
     });
 
     testAction(setFollowToUsersSearchState, setFollowToUsersSearchState({userId: 1, isFollower: true}), {
@@ -32,7 +39,10 @@ describe("usersSearch actions", () => {
         payload: {userId: 1, isFollower: true}
     });
 
-    testAction(setFollowRequestToUsersSearchState, setFollowRequestToUsersSearchState({userId: 1, isWaitingForApprove: true}), {
+    testAction(setFollowRequestToUsersSearchState, setFollowRequestToUsersSearchState({
+        userId: 1,
+        isWaitingForApprove: true
+    }), {
         type: UsersSearchActionsType.SET_FOLLOW_REQUEST_TO_USERS_SEARCH_STATE,
         payload: {userId: 1, isWaitingForApprove: true}
     });
@@ -42,23 +52,29 @@ describe("usersSearch actions", () => {
         payload: {userId: 1, isUserBlocked: true}
     });
 
-    testAction(fetchUsersSearch, fetchUsersSearch(), {
+    testAction(fetchUsersSearch, fetchUsersSearch(0), {
         type: UsersSearchActionsType.FETCH_USERS,
+        payload: 0
     });
 
-    testAction(fetchFollowers, fetchFollowers("test"), {
+    testAction(fetchFollowers, fetchFollowers({userId: 1, page: 1}), {
         type: UsersSearchActionsType.FETCH_FOLLOWERS,
-        payload: "test"
+        payload: {userId: 1, page: 1}
     });
 
-    testAction(fetchFollowings, fetchFollowings("test"), {
+    testAction(fetchFollowings, fetchFollowings({userId: 1, page: 1}), {
         type: UsersSearchActionsType.FETCH_FOLLOWINGS,
-        payload: "test"
+        payload: {userId: 1, page: 1}
     });
 
-    testAction(fetchUsersSearchByUsername, fetchUsersSearchByUsername("test"), {
+    testAction(fetchUsersSearchByUsername, fetchUsersSearchByUsername({username: "test", pageNumber: 1}), {
         type: UsersSearchActionsType.FETCH_USERS_BY_NAME,
-        payload: "test"
+        payload: {username: "test", pageNumber: 1}
+    });
+
+    testAction(fetchParticipantsByUsername, fetchParticipantsByUsername({username: "test", pageNumber: 1}), {
+        type: UsersSearchActionsType.FETCH_PARTICIPANTS_BY_NAME,
+        payload: {username: "test", pageNumber: 1}
     });
 
     testAction(resetUsersState, resetUsersState(), {

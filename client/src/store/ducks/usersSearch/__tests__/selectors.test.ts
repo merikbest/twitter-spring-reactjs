@@ -1,4 +1,4 @@
-import {selectFollowers, selectUsersSearch, selectUsersSearchIsLoading} from "../selectors";
+import {selectFollowers, selectUsersPagesCount, selectUsersSearch, selectUsersSearchIsLoading} from "../selectors";
 import {LoadingStatus} from "../../../types";
 import {createMockRootState} from "../../../../util/testHelper";
 import {mockUsers} from "../../../../util/mockData/mockData";
@@ -14,6 +14,12 @@ describe("usersSearch selectors:", () => {
     describe("selectFollowers", () => {
         it("should return UserResponse array", () => {
             expect(selectFollowers(createMockRootState())).toBe(mockUsers);
+        });
+    });
+
+    describe("selectUsersPagesCount", () => {
+        it("should return pagesCount number", () => {
+            expect(selectUsersPagesCount(createMockRootState())).toBe(1);
         });
     });
 

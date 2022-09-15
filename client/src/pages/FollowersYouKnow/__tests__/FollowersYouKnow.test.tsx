@@ -94,6 +94,7 @@ describe("FollowersYouKnow", () => {
     });
     
     it("should render loading Spinner", () => {
+        setupTest(mockUserId, mockUsers);
         mockDispatch();
         jest.spyOn(ReactRouter, "useParams").mockReturnValue({id: mockUserId.toString()});
         const wrapper = mountWithStore(<FollowersYouKnow/>, createMockRootState());

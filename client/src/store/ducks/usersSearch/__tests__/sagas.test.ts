@@ -46,17 +46,17 @@ describe("usersSearchSaga:", () => {
     });
 
     describe("fetchUsersSearchByUsernameRequest:", () => {
-        const worker = fetchUsersSearchByUsernameRequest(fetchUsersSearchByUsername({username: "test", page: 1}));
+        const worker = fetchUsersSearchByUsernameRequest(fetchUsersSearchByUsername({username: "test", pageNumber: 1}));
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.LOADING);
-        testCall(worker, UserApi.searchUsersByUsername, {username: "test", page: 1});
+        testCall(worker, UserApi.searchUsersByUsername, {username: "test", pageNumber: 1});
         testSetResponse(worker, mockUserResponse, setPageableUsersSearch, mockExpectedResponse(mockUserResponse), "UserResponse");
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.ERROR)
     });
 
     describe("fetchParticipantsByUsernameRequest:", () => {
-        const worker = fetchParticipantsByUsernameRequest(fetchParticipantsByUsername({username: "test", page: 1}));
+        const worker = fetchParticipantsByUsernameRequest(fetchParticipantsByUsername({username: "test", pageNumber: 1}));
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.LOADING);
-        testCall(worker, ChatApi.searchParticipantsByUsername, {username: "test", page: 1});
+        testCall(worker, ChatApi.searchParticipantsByUsername, {username: "test", pageNumber: 1});
         testSetResponse(worker, mockUserResponse, setPageableUsersSearch, mockExpectedResponse(mockUserResponse), "UserResponse");
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.ERROR)
     });

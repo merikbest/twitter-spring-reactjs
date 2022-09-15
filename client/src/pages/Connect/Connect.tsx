@@ -1,7 +1,7 @@
 import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 
-import {fetchUsers, resetUsersState} from "../../store/ducks/users/actionCreators";
+import {fetchUsers} from "../../store/ducks/users/actionCreators";
 import {selectPagesCount, selectUsers, selectUsersIsLoading} from "../../store/ducks/users/selectors";
 import ConnectToUsers from "../../components/ConnectToUsers/ConnectToUsers";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
