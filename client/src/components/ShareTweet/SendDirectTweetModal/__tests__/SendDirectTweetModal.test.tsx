@@ -2,6 +2,7 @@ import React from "react";
 import {Chip, Dialog, ListItem} from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
 import {LoadingStatus} from "../../../../store/types";
@@ -35,7 +36,11 @@ describe("SendDirectTweetModal", () => {
         wrapper.find(MessagesModalInput).find("input").at(0).simulate("change", {target: {value: mockText}});
         expect(wrapper.find(MessagesModalInput).prop("value")).toBe(mockText);
         expect(wrapper.find(DirectUserItems).length).toEqual(2);
-        expect(mockDispatchFn).nthCalledWith(2, {payload: mockText, type: UsersSearchActionsType.FETCH_USERS_BY_NAME});
+        expect(mockDispatchFn).nthCalledWith(2, {type: UsersSearchActionsType.RESET_USERS_STATE});
+        expect(mockDispatchFn).nthCalledWith(3, {
+            payload: {pageNumber: 0, username: mockText},
+            type: UsersSearchActionsType.FETCH_PARTICIPANTS_BY_NAME
+        });
 
         wrapper.find(MessagesModalInput).find("input").at(0).simulate("change", {target: {value: ""}});
         expect(wrapper.find(MessagesModalInput).prop("value")).toBe("");
@@ -76,7 +81,7 @@ describe("SendDirectTweetModal", () => {
         wrapper.find(ListItem).at(0).simulate("click");
         expect(wrapper.find(IconButton).at(1).prop("disabled")).toBe(false);
         wrapper.find(IconButton).at(1).simulate("click");
-        expect(mockDispatchFn).nthCalledWith(3, {
+        expect(mockDispatchFn).nthCalledWith(4, {
             payload: {
                 text: mockText,
                 tweetId: 9,
@@ -100,9 +105,27 @@ describe("SendDirectTweetModal", () => {
         expect(wrapper.find(DirectUserItems).length).toEqual(1);
     });
 
+    it("should scroll list of Users by input text", () => {
+        const mockState = {...mockRootState, usersSearch: {...mockRootState.usersSearch, pagesCount: 10}}
+        const {wrapper} = createWrapper(mockState);
+        wrapper.find(MessagesModalInput).find("input").at(0).simulate("change", {target: {value: mockText}});
+        wrapper.find(InfiniteScroll).prop("next")();
+
+        expect(mockDispatchFn).nthCalledWith(4, {
+            payload: {username: mockText, pageNumber: 1},
+            type: UsersSearchActionsType.FETCH_PARTICIPANTS_BY_NAME
+        });
+    });
+
     it("should render empty SendDirectTweetModal", () => {
         const {wrapper} = createWrapper(mockRootState, false);
         expect(wrapper.find(Dialog).exists()).toBeFalsy();
+    });
+
+    it("should reset SendDirectTweetModal", () => {
+        const {wrapper} = createWrapper(mockRootState);
+        wrapper.unmount();
+        expect(mockDispatchFn).nthCalledWith(2, {type: UsersSearchActionsType.RESET_USERS_STATE});
     });
 
     const createWrapper = (mockState = mockRootState, visible = true) => {

@@ -1,5 +1,6 @@
 import React from "react";
 import {Button, Dialog, ListItem} from "@material-ui/core";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
 import {LoadingStatus} from "../../../../store/types";
@@ -37,20 +38,25 @@ describe("MessagesModal", () => {
         const input = wrapper.find(MessagesModalInput).find("input").at(0);
         
         input.simulate("change", {target: {value: "test"}});
+
         expect(mockDispatchFn).nthCalledWith(1, {
-            payload: "test",
+            type: UsersSearchActionsType.RESET_USERS_STATE
+        });
+
+        expect(mockDispatchFn).nthCalledWith(2, {
+            payload: {username: "test", pageNumber: 0},
             type: UsersSearchActionsType.FETCH_USERS_BY_NAME
         });
 
         input.simulate("change", {target: {value: ""}});
-        expect(mockDispatchFn).nthCalledWith(2, {
+        expect(mockDispatchFn).nthCalledWith(3, {
             payload: [],
             type: UsersSearchActionsType.SET_USERS
         });
         
         input.simulate("submit");
-        expect(mockDispatchFn).nthCalledWith(3, {
-            payload: "",
+        expect(mockDispatchFn).nthCalledWith(4, {
+            payload: {username: "", pageNumber: 0},
             type: UsersSearchActionsType.FETCH_USERS_BY_NAME
         });
     });
@@ -77,5 +83,19 @@ describe("MessagesModal", () => {
             type: UsersSearchActionsType.SET_USERS
         });
         expect(mockOnClose).toHaveBeenCalled();
+    });
+
+    it("should scroll list of Users by input text", () => {
+        const mockUserSearchStore = {...mockStore, usersSearch: {...mockStore.usersSearch, pagesCount: 10}}
+        const wrapper = mountWithStore(<MessagesModal visible={true} onClose={jest.fn()}/>, mockUserSearchStore);
+        const input = wrapper.find(MessagesModalInput).find("input").at(0);
+        input.simulate("change", {target: {value: "test"}});
+        wrapper.find(InfiniteScroll).prop("next")();
+
+        expect(wrapper.find(MessagesModalUser).length).toEqual(2);
+        expect(mockDispatchFn).nthCalledWith(3, {
+            payload: {username: "test", pageNumber: 1},
+            type: UsersSearchActionsType.FETCH_USERS_BY_NAME
+        });
     });
 });

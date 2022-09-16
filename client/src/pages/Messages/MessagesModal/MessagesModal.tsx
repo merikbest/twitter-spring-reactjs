@@ -44,7 +44,7 @@ const MessagesModal: FC<MessagesModalProps> = ({visible, onClose}): ReactElement
         if (text) {
             setText(text);
             dispatch(resetUsersState());
-            loadParticipants(0);
+            dispatch(fetchUsersSearchByUsername({ username: encodeURIComponent(text), pageNumber: 0 }));
         } else {
             setText("");
             dispatch(setUsersSearch([]));

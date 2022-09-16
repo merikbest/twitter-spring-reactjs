@@ -76,7 +76,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
         if (text) {
             setSearchText(text);
             dispatch(resetUsersState());
-            loadParticipants(0);
+            dispatch(fetchParticipantsByUsername({username: encodeURIComponent(text), pageNumber: 0}));
         } else {
             setSearchText("");
             dispatch(fetchChats());
