@@ -139,4 +139,16 @@ describe("MembersAndFollowersModal", () => {
 
         expect(wrapper.find(Dialog).exists()).toBeTruthy();
     });
+
+    it("should unmount MembersAndFollowersModal", () => {
+        const wrapper = mountWithStore(
+            <MembersAndFollowersModal
+                list={mockFullList}
+                visible={false}
+                title={"List members"}
+                onClose={jest.fn()}
+            />, mockStore);
+        wrapper.unmount();
+        expect(mockDispatchFn).nthCalledWith(1, {type: ListMembersActionsType.RESET_LIST_MEMBERS_STATE});
+    });
 });

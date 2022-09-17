@@ -13,13 +13,14 @@ import {LoadingStatus} from "../../../types";
 import {FollowerUserResponse} from "../../../types/user";
 
 describe("followRequests actions", () => {
-    testAction(setFollowerRequests, setFollowerRequests([{id: 1}] as FollowerUserResponse[]), {
+    testAction(setFollowerRequests, setFollowerRequests({items: [{id: 1}] as FollowerUserResponse[], pagesCount: 1}), {
         type: FollowerRequestsActionsType.SET_FOLLOWER_REQUESTS,
-        payload: [{id: 1}] as FollowerUserResponse[]
+        payload: {items: [{id: 1}] as FollowerUserResponse[], pagesCount: 1}
     });
 
-    testAction(fetchFollowerRequests, fetchFollowerRequests(), {
+    testAction(fetchFollowerRequests, fetchFollowerRequests(1), {
         type: FollowerRequestsActionsType.FETCH_FOLLOWER_REQUESTS,
+        payload: 1
     });
 
     testAction(acceptFollowRequest, acceptFollowRequest(1), {

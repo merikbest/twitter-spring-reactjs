@@ -20,7 +20,6 @@ export enum ListMembersActionsType {
     RESET_LIST_MEMBERS_STATE = 'listMembers/RESET_LIST_MEMBERS_STATE',
     RESET_LIST_SUGGESTED_STATE = 'listMembers/RESET_LIST_SUGGESTED_STATE',
     RESET_LIST_MEMBERS = 'listMembers/RESET_LIST_MEMBERS',
-    SET_LOADING_STATE = 'listMembers/SET_LOADING_STATE',
     SET_LOADING_MEMBERS_STATE = 'listMembers/SET_LOADING_MEMBERS_STATE',
     SET_LOADING_SUGGESTED_STATE = 'listMembers/SET_LOADING_SUGGESTED_STATE',
 }
@@ -72,11 +71,6 @@ export interface ResetListMembersActionInterface extends Action<ListMembersActio
     type: ListMembersActionsType.RESET_LIST_MEMBERS;
 }
 
-export interface SetListMembersLoadingStateActionInterface extends Action<ListMembersActionsType> {
-    type: ListMembersActionsType.SET_LOADING_STATE;
-    payload: LoadingStatus;
-}
-
 export interface SetLoadingMembersStateActionInterface extends Action<ListMembersActionsType> {
     type: ListMembersActionsType.SET_LOADING_MEMBERS_STATE;
     payload: LoadingStatus;
@@ -94,6 +88,5 @@ export type ListMembersActions =
     | ResetListSuggestedStateActionInterface
     | ResetListMembersActionInterface
     | SetUserToListActionInterface
-    | SetListMembersLoadingStateActionInterface
     | SetLoadingMembersStateActionInterface
     | SetLoadingSuggestedStateActionInterface

@@ -16,7 +16,7 @@ import {UsersActionsType} from "../contracts/actionTypes";
 import {UserResponse} from "../../../types/user";
 import {LoadingStatus} from "../../../types";
 
-describe("tags actions", () => {
+describe("users actions", () => {
     const mackPageableUsers = {
         items: [{id: 1}] as UserResponse[],
         pagesCount: 0

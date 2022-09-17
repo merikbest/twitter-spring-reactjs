@@ -70,6 +70,13 @@ describe("ManageMembersModal", () => {
         expect(wrapper.text().includes("When people get added, they’ll show up here.")).toBe(true);
     });
 
+    it("should reset List Members State", () => {
+        const wrapper = mountWithStore(<ManageMembersModal visible={true} onClose={jest.fn()}/>, mockListStore);
+        wrapper.unmount();
+
+        expect(mockDispatchFn).nthCalledWith(2, {type: ListMembersActionsType.RESET_LIST_MEMBERS_STATE});
+    });
+
     it("should render list of suggested ManageMembersItem", () => {
         React.useState = jest.fn().mockReturnValue([1, jest.fn()]);
         const wrapper = mountWithStore(<ManageMembersModal visible={true} onClose={jest.fn()}/>, {
@@ -146,12 +153,5 @@ describe("ManageMembersModal", () => {
 
         expect(wrapper.find(ManageMembersInput).exists()).toBe(true);
         expect(mockDispatchFn).nthCalledWith(2, {type: ListMembersActionsType.RESET_LIST_SUGGESTED_STATE});
-    });
-
-    it("should reset List Members State", () => {
-        const wrapper = mountWithStore(<ManageMembersModal visible={true} onClose={jest.fn()}/>, mockListStore);
-        wrapper.unmount();
-
-        expect(mockDispatchFn).nthCalledWith(2, {type: ListMembersActionsType.RESET_LIST_MEMBERS_STATE});
     });
 });

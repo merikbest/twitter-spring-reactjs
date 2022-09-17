@@ -6,4 +6,3 @@ export const selectUsersState = (state: RootState): UsersState => state.users;
 export const selectUsers = (state: RootState): UsersState["users"] => state.users.users;
 export const selectPagesCount = (state: RootState): UsersState["pagesCount"] => selectUsersState(state).pagesCount;
 export const selectUsersIsLoading = (state: RootState): boolean => selectUsersState(state).loadingState === LoadingStatus.LOADING;
-export const selectUsersLoadedSuccess = (state: RootState): boolean => selectUsersState(state).loadingState === LoadingStatus.SUCCESS;

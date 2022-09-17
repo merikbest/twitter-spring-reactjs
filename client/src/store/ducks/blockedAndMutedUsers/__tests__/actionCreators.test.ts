@@ -14,14 +14,14 @@ import {BlockedUserResponse, MutedUserResponse} from "../../../types/user";
 import {LoadingStatus} from "../../../types";
 
 describe("blockedAndMutedUsers actions", () => {
-    testAction(setBlockedUsers, setBlockedUsers([{id: 1}] as BlockedUserResponse[]), {
+    testAction(setBlockedUsers, setBlockedUsers({items: [{id: 1}] as BlockedUserResponse[], pagesCount: 0}), {
         type: BlockedAndMutedUsersActionsType.SET_BLOCKED_USERS,
-        payload: [{id: 1}] as BlockedUserResponse[]
+        payload: {items: [{id: 1}] as BlockedUserResponse[], pagesCount: 0}
     });
 
-    testAction(setMutedUsers, setMutedUsers([{id: 1}] as MutedUserResponse[]), {
+    testAction(setMutedUsers, setMutedUsers({items: [{id: 1}] as MutedUserResponse[], pagesCount: 0}), {
         type: BlockedAndMutedUsersActionsType.SET_MUTED_USERS,
-        payload: [{id: 1}] as MutedUserResponse[]
+        payload: {items: [{id: 1}] as MutedUserResponse[], pagesCount: 0}
     });
 
     testAction(setBlockedUser, setBlockedUser({userId: 1, isUserBlocked: true}), {
@@ -34,12 +34,14 @@ describe("blockedAndMutedUsers actions", () => {
         payload: {userId: 1, isUserMuted: true}
     });
 
-    testAction(fetchBlockedUsers, fetchBlockedUsers(), {
+    testAction(fetchBlockedUsers, fetchBlockedUsers(1), {
         type: BlockedAndMutedUsersActionsType.FETCH_BLOCKED_USERS,
+        payload: 1
     });
 
-    testAction(fetchMutedUsers, fetchMutedUsers(), {
+    testAction(fetchMutedUsers, fetchMutedUsers(1), {
         type: BlockedAndMutedUsersActionsType.FETCH_MUTED_USERS,
+        payload: 1
     });
 
     testAction(resetBlockedAndMutedUsersState, resetBlockedAndMutedUsersState(), {

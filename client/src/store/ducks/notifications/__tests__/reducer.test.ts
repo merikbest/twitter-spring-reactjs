@@ -5,7 +5,6 @@ import {
     NotificationInfoResponse,
     NotificationReplyResponse,
     NotificationResponse,
-    NotificationsResponse,
     NotificationUserResponse
 } from "../../../types/notification";
 import {LoadingStatus} from "../../../types";
@@ -23,13 +22,26 @@ describe("notificationsReducer:", () => {
             NotificationsActionsType.SET_NOTIFICATIONS,
             notificationsReducer(initialNotificationsState, {
                 type: NotificationsActionsType.SET_NOTIFICATIONS,
-                payload: {notifications: [{id: 1}], tweetAuthors: [{id: 1}, {id: 2}]} as NotificationsResponse
+                payload: {items: [{id: 1}] as NotificationResponse[], pagesCount: 2}
             }),
             {
                 ...initialNotificationsState,
                 notificationsList: [{id: 1}],
-                tweetAuthors: [{id: 1}, {id: 2}],
+                pagesCount: 2,
                 loadingState: LoadingStatus.LOADED
+            }
+        );
+
+        testActionDispatch(
+            NotificationsActionsType.SET_TWEET_AUTHORS_NOTIFICATIONS,
+            notificationsReducer(initialNotificationsState, {
+                type: NotificationsActionsType.SET_TWEET_AUTHORS_NOTIFICATIONS,
+                payload: [{id: 1}] as NotificationUserResponse[]
+            }),
+            {
+                ...initialNotificationsState,
+                tweetAuthors: [{id: 1}] as NotificationUserResponse[],
+                loadingTweetAuthorsState: LoadingStatus.LOADED
             }
         );
 
@@ -203,6 +215,24 @@ describe("notificationsReducer:", () => {
             {
                 ...initialNotificationsState,
                 loadingState: LoadingStatus.SUCCESS
+            }
+        );
+
+        testActionDispatch(
+            NotificationsActionsType.SET_TWEET_AUTHORS_LOADING_STATE,
+            notificationsReducer(
+                {
+                    ...initialNotificationsState,
+                    loadingTweetAuthorsState: LoadingStatus.LOADING
+                },
+                {
+                    type: NotificationsActionsType.SET_TWEET_AUTHORS_LOADING_STATE,
+                    payload: LoadingStatus.SUCCESS
+                }
+            ),
+            {
+                ...initialNotificationsState,
+                loadingTweetAuthorsState: LoadingStatus.SUCCESS
             }
         );
     });

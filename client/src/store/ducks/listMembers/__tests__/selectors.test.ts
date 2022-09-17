@@ -1,9 +1,6 @@
 import {
-    selectIsListMembersLoaded,
     selectIsListMembersLoading,
     selectIsListSuggestedError,
-    selectIsListSuggestedLoaded,
-    selectIsListSuggestedLoading,
     selectListMembersItems,
     selectListSuggestedItems
 } from "../selectors";
@@ -29,30 +26,12 @@ describe("listMembers selectors:", () => {
         });
     });
 
-    describe("selectIsListMembersLoaded", () => {
-        it("should return correct result", () => {
-            expect(selectIsListMembersLoaded(createMockRootState(LoadingStatus.LOADED))).toBe(true);
-        });
-    });
-
     describe("selectListSuggestedItems", () => {
         it("should return ListsOwnerMemberResponse list", () => {
             expect(selectListSuggestedItems({
                 ...mockState,
                 listMembers: {...mockState.listMembers, suggested: mockListsOwnerMember}
             })).toBe(mockListsOwnerMember);
-        });
-    });
-
-    describe("selectIsListSuggestedLoading", () => {
-        it("should return correct result", () => {
-            expect(selectIsListSuggestedLoading(createMockRootState(LoadingStatus.LOADING))).toBe(true);
-        });
-    });
-
-    describe("selectIsListSuggestedLoaded", () => {
-        it("should return correct result", () => {
-            expect(selectIsListSuggestedLoaded(createMockRootState(LoadingStatus.LOADED))).toBe(true);
         });
     });
 

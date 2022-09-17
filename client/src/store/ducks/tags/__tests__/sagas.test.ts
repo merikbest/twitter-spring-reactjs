@@ -1,3 +1,5 @@
+import {AxiosResponse} from "axios";
+
 import {fetchTagsRequest, fetchTrendsRequest, tagsSaga} from "../sagas";
 import {TagApi} from "../../../../services/api/tagApi";
 import {fetchTrends, setTags, setTagsLoadingState, setTrends, setTrendsLoadingState} from "../actionCreators";
@@ -11,8 +13,6 @@ import {
     testWatchSaga
 } from "../../../../util/testHelper";
 import {TagsActionsType} from "../contracts/actionTypes";
-import {AxiosResponse} from "axios";
-import {TweetResponse} from "../../../types/tweet";
 
 describe("tagsSaga:", () => {
     const mockTags = {data: [{id: 1}, {id: 2}], headers: {"page-total-count": 1}} as AxiosResponse<TagResponse[]>;

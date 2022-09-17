@@ -47,7 +47,7 @@ describe("listMembersReducer:", () => {
                 },
                 {
                     type: ListMembersActionsType.SET_USER_TO_LIST,
-                    payload: {userId: 1, isMember: true}
+                    payload: {userId: 1, isUserAdded: true, isSuggested: true}
                 }
             ),
             {
@@ -109,18 +109,6 @@ describe("listMembersReducer:", () => {
             {
                 ...initialListMembersState,
                 members: [],
-            }
-        );
-
-        testActionDispatch(
-            ListMembersActionsType.SET_LOADING_STATE,
-            listMembersReducer(initialListMembersState, {
-                    type: ListMembersActionsType.SET_LOADING_STATE,
-                    payload: LoadingStatus.SUCCESS
-                }),
-            {
-                ...initialListMembersState,
-                loadingState: LoadingStatus.SUCCESS
             }
         );
 

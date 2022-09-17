@@ -1,5 +1,7 @@
 import {testAction} from "../../../../util/testHelper";
 import {
+    fetchFetchTweetAuthorsNotifications,
+    fetchMentions,
     fetchNotificationInfo,
     fetchNotifications,
     fetchNotificationsFromTweetAuthors,
@@ -11,26 +13,34 @@ import {
     setNotificationInfo,
     setNotifications,
     setNotificationsLoadingState,
+    setTweetAuthorsLoadingState,
+    setTweetAuthorsNotifications,
     updateNotificationInfoTweet
 } from "../actionCreators";
 import {NotificationsActionsType} from "../contracts/actionTypes";
-import {NotificationInfoResponse, NotificationResponse, NotificationsResponse} from "../../../types/notification";
+import {NotificationInfoResponse, NotificationResponse, NotificationUserResponse} from "../../../types/notification";
 import {LoadingStatus} from "../../../types";
 
-describe("tags actions", () => {
-    const notification = {id: 1};
-    const notifications = {
-        notifications: [notification],
-        tweetAuthors: [{id: 1}]
-    };
+describe("notifications actions", () => {
+    const notification = {id: 1} as NotificationResponse;
     
-    testAction(setNotifications, setNotifications(notifications as NotificationsResponse), {
+    testAction(setNotifications, setNotifications({items: [{id: 1}] as NotificationResponse[], pagesCount: 1}), {
         type: NotificationsActionsType.SET_NOTIFICATIONS,
-        payload: notifications as NotificationsResponse
+        payload: {items: [{id: 1}] as NotificationResponse[], pagesCount: 1}
     });
 
-    testAction(fetchNotifications, fetchNotifications(), {
+    testAction(setTweetAuthorsNotifications, setTweetAuthorsNotifications([{id: 1}] as NotificationUserResponse[]), {
+        type: NotificationsActionsType.SET_TWEET_AUTHORS_NOTIFICATIONS,
+        payload: [{id: 1}] as NotificationUserResponse[]
+    });
+
+    testAction(fetchNotifications, fetchNotifications(1), {
         type: NotificationsActionsType.FETCH_NOTIFICATIONS,
+        payload: 1
+    });
+
+    testAction(fetchFetchTweetAuthorsNotifications, fetchFetchTweetAuthorsNotifications(), {
+        type: NotificationsActionsType.FETCH_TWEET_AUTHORS_NOTIFICATIONS,
     });
 
     testAction(fetchNotificationsFromTweetAuthors, fetchNotificationsFromTweetAuthors(1), {
@@ -38,9 +48,14 @@ describe("tags actions", () => {
         payload: 1
     });
 
-    testAction(setNotification, setNotification(notification as NotificationResponse), {
+    testAction(fetchMentions, fetchMentions(1), {
+        type: NotificationsActionsType.FETCH_MENTIONS,
+        payload: 1
+    });
+
+    testAction(setNotification, setNotification(notification), {
         type: NotificationsActionsType.SET_NOTIFICATION,
-        payload: notification as NotificationResponse
+        payload: notification
     });
 
     testAction(fetchNotificationInfo, fetchNotificationInfo(1), {
@@ -48,9 +63,9 @@ describe("tags actions", () => {
         payload: 1
     });
 
-    testAction(setNotificationInfo, setNotificationInfo(notification as NotificationInfoResponse), {
+    testAction(setNotificationInfo, setNotificationInfo({id: 1} as NotificationInfoResponse), {
         type: NotificationsActionsType.SET_NOTIFICATION_INFO,
-        payload: notification as NotificationInfoResponse
+        payload: {id: 1} as NotificationInfoResponse
     });
 
     testAction(setFollowToNotificationInfo, setFollowToNotificationInfo(true), {
@@ -68,9 +83,9 @@ describe("tags actions", () => {
         payload: true
     });
 
-    testAction(updateNotificationInfoTweet, updateNotificationInfoTweet(notification as NotificationResponse), {
+    testAction(updateNotificationInfoTweet, updateNotificationInfoTweet(notification), {
         type: NotificationsActionsType.UPDATE_NOTIFICATION_INFO_TWEET,
-        payload: notification as NotificationResponse
+        payload: notification
     });
 
     testAction(resetNotificationState, resetNotificationState(), {
@@ -79,6 +94,11 @@ describe("tags actions", () => {
 
     testAction(setNotificationsLoadingState, setNotificationsLoadingState(LoadingStatus.LOADING), {
         type: NotificationsActionsType.SET_LOADING_STATE,
+        payload: LoadingStatus.LOADING
+    });
+
+    testAction(setTweetAuthorsLoadingState, setTweetAuthorsLoadingState(LoadingStatus.LOADING), {
+        type: NotificationsActionsType.SET_TWEET_AUTHORS_LOADING_STATE,
         payload: LoadingStatus.LOADING
     });
 });

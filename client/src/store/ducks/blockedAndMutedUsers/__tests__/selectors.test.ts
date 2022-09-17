@@ -2,7 +2,8 @@ import {
     selectBlockedUsersItems,
     selectIsBlockedAndMutedUsersLoaded,
     selectIsBlockedAndMutedUsersLoading,
-    selectMutedUsersItems
+    selectMutedUsersItems,
+    selectUsersPagesCount
 } from "../selectors";
 import {LoadingStatus} from "../../../types";
 import {createMockRootState} from "../../../../util/testHelper";
@@ -26,6 +27,12 @@ describe("blockedAndMutedUsers selectors:", () => {
                 ...mockState,
                 blockedAndMutedUsers: {...mockState.blockedAndMutedUsers, blockedUsers: mockBlockedUsers}
             })).toBe(mockBlockedUsers);
+        });
+    });
+
+    describe("selectUsersPagesCount", () => {
+        it("should return pages count number", () => {
+            expect(selectUsersPagesCount(createMockRootState())).toBe(0);
         });
     });
 

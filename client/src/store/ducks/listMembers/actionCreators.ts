@@ -9,7 +9,6 @@ import {
     ResetListMembersStateActionInterface,
     ResetListSuggestedStateActionInterface,
     SetListMembersActionInterface,
-    SetListMembersLoadingStateActionInterface,
     SetListSuggestedActionInterface,
     SetLoadingMembersStateActionInterface,
     SetLoadingSuggestedStateActionInterface,
@@ -68,11 +67,6 @@ export const resetListMembers = (): ResetListMembersActionInterface => ({
 
 export const resetListSuggested = (): ResetListSuggestedStateActionInterface => ({
     type: ListMembersActionsType.RESET_LIST_SUGGESTED_STATE,
-});
-
-export const setListMembersLoadingState = (payload: LoadingStatus): SetListMembersLoadingStateActionInterface => ({
-    type: ListMembersActionsType.SET_LOADING_STATE,
-    payload,
 });
 
 export const setLoadingMembersState = (payload: LoadingStatus): SetLoadingMembersStateActionInterface => ({

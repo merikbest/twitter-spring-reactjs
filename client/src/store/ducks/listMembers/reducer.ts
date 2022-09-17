@@ -9,7 +9,6 @@ export const initialListMembersState: ListMembersState = {
     suggested: [],
     membersLoadingState: LoadingStatus.LOADING,
     suggestedLoadingState: LoadingStatus.LOADING,
-    loadingState: LoadingStatus.LOADING,
 };
 
 export const listMembersReducer = produce((draft: Draft<ListMembersState>, action: ListMembersActions) => {
@@ -47,10 +46,6 @@ export const listMembersReducer = produce((draft: Draft<ListMembersState>, actio
 
         case ListMembersActionsType.RESET_LIST_MEMBERS:
             draft.members = [];
-            break;
-
-        case ListMembersActionsType.SET_LOADING_STATE:
-            draft.loadingState = action.payload;
             break;
 
         case ListMembersActionsType.SET_LOADING_MEMBERS_STATE:

@@ -2,9 +2,12 @@ import {
     selectIsNotificationInfoLoading,
     selectIsNotificationsLoaded,
     selectIsNotificationsLoading,
+    selectIsTweetAuthorsNotificationsLoaded,
+    selectIsTweetAuthorsNotificationsLoading,
     selectNotificationInfo,
     selectNotificationsList,
-    selectNotificationsTweetAuthors
+    selectNotificationsTweetAuthors,
+    selectPagesCount
 } from "../selectors";
 import {LoadingStatus} from "../../../types";
 import {createMockRootState} from "../../../../util/testHelper";
@@ -22,12 +25,9 @@ describe("notifications selectors:", () => {
         });
     });
 
-    describe("selectNotificationsTweetAuthors", () => {
-        it("should return NotificationUserResponse array", () => {
-            expect(selectNotificationsTweetAuthors({
-                ...mockState,
-                notifications: {...mockState.notifications, tweetAuthors: mockTweetAuthors}
-            })).toBe(mockTweetAuthors);
+    describe("selectPagesCount", () => {
+        it("should return pages count number", () => {
+            expect(selectPagesCount(mockState)).toBe(0);
         });
     });
 
@@ -40,6 +40,27 @@ describe("notifications selectors:", () => {
     describe("selectIsNotificationsLoaded", () => {
         it("should return correct result", () => {
             expect(selectIsNotificationsLoaded(createMockRootState(LoadingStatus.LOADED))).toBe(true);
+        });
+    });
+
+    describe("selectNotificationsTweetAuthors", () => {
+        it("should return NotificationUserResponse array", () => {
+            expect(selectNotificationsTweetAuthors({
+                ...mockState,
+                notifications: {...mockState.notifications, tweetAuthors: mockTweetAuthors}
+            })).toBe(mockTweetAuthors);
+        });
+    });
+
+    describe("selectIsTweetAuthorsNotificationsLoading", () => {
+        it("should return correct result", () => {
+            expect(selectIsTweetAuthorsNotificationsLoading(createMockRootState(LoadingStatus.LOADING))).toBe(true);
+        });
+    });
+
+    describe("selectIsTweetAuthorsNotificationsLoaded", () => {
+        it("should return correct result", () => {
+            expect(selectIsTweetAuthorsNotificationsLoaded(createMockRootState(LoadingStatus.LOADED))).toBe(true);
         });
     });
 

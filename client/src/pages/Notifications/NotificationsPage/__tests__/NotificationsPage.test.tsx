@@ -33,8 +33,9 @@ describe("NotificationsPage", () => {
     it("should render loading Spinner", () => {
         const wrapper = mountWithStore(<NotificationsPage/>, createMockRootState());
         expect(wrapper.find(Spinner).exists()).toBe(true);
-        expect(mockDispatchFn).nthCalledWith(1, {type: NotificationsActionsType.FETCH_NOTIFICATIONS});
-        expect(mockDispatchFn).nthCalledWith(2, {type: UserActionsType.FETCH_USER_DATA});
+        expect(mockDispatchFn).nthCalledWith(1, {payload: 0, type: NotificationsActionsType.FETCH_NOTIFICATIONS});
+        expect(mockDispatchFn).nthCalledWith(2, {type: NotificationsActionsType.FETCH_TWEET_AUTHORS_NOTIFICATIONS});
+        expect(mockDispatchFn).nthCalledWith(3, {type: UserActionsType.FETCH_USER_DATA});
     });
 
     it("should render empty All Notifications", () => {
@@ -91,6 +92,6 @@ describe("NotificationsPage", () => {
     it("should reset Notifications State", () => {
         const wrapper = mountWithStore(<NotificationsPage/>, mockNotificationsStore);
         wrapper.unmount();
-        expect(mockDispatchFn).nthCalledWith(3, {type: NotificationsActionsType.RESET_NOTIFICATION_STATE});
+        expect(mockDispatchFn).nthCalledWith(4, {type: NotificationsActionsType.RESET_NOTIFICATION_STATE});
     });
 });

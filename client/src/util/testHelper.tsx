@@ -199,7 +199,6 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             suggested: [],
             membersLoadingState: loadingStatus,
             suggestedLoadingState: loadingStatus,
-            loadingState: loadingStatus
         },
         lists: {
             lists: [],

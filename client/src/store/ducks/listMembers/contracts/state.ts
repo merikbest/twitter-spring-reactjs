@@ -6,7 +6,6 @@ export interface ListMembersState {
     membersLoadingState: LoadingStatus;
     suggested: ListsOwnerMemberResponse[];
     suggestedLoadingState: LoadingStatus;
-    loadingState: LoadingStatus;
 }
 
 

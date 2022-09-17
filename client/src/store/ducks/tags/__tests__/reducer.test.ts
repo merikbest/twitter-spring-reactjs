@@ -20,8 +20,22 @@ describe("tagsReducer:", () => {
             }),
             {
                 ...initialTagsState,
-                items: [{id: 1}] as TagResponse[],
-                loadingState: LoadingStatus.LOADED
+                tags: [{id: 1}] as TagResponse[],
+                loadingTagsState: LoadingStatus.LOADED
+            }
+        );
+
+        testActionDispatch(
+            TagsActionsType.SET_TRENDS,
+            tagsReducer(initialTagsState, {
+                type: TagsActionsType.SET_TRENDS,
+                payload: {items: [{id: 1}] as TagResponse[], pagesCount: 2}
+            }),
+            {
+                ...initialTagsState,
+                trends: [{id: 1}] as TagResponse[],
+                pagesCount: 2,
+                loadingTrendsState: LoadingStatus.LOADED
             }
         );
 
@@ -30,15 +44,17 @@ describe("tagsReducer:", () => {
             tagsReducer(
                 {
                     ...initialTagsState,
-                    tags: [{id: 1}] as TagResponse[]
+                    trends: [{id: 1}] as TagResponse[],
+                    pagesCount: 11
                 },
                 {
                     type: TagsActionsType.RESET_TRENDS_STATE
                 }),
             {
                 ...initialTagsState,
-                items: [],
-                loadingState: LoadingStatus.LOADING
+                trends: [],
+                pagesCount: 0,
+                loadingTrendsState: LoadingStatus.LOADING
             }
         );
 
@@ -51,7 +67,20 @@ describe("tagsReducer:", () => {
                 }),
             {
                 ...initialTagsState,
-                loadingState: LoadingStatus.SUCCESS
+                loadingTagsState: LoadingStatus.SUCCESS
+            }
+        );
+
+        testActionDispatch(
+            TagsActionsType.SET_TRENDS_LOADING_STATE,
+            tagsReducer(initialTagsState,
+                {
+                    type: TagsActionsType.SET_TRENDS_LOADING_STATE,
+                    payload: LoadingStatus.SUCCESS
+                }),
+            {
+                ...initialTagsState,
+                loadingTrendsState: LoadingStatus.SUCCESS
             }
         );
     });

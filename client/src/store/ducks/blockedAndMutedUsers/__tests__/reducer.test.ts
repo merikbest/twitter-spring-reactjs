@@ -16,11 +16,12 @@ describe("blockedAndMutedUsersReducer:", () => {
             BlockedAndMutedUsersActionsType.SET_BLOCKED_USERS,
             blockedAndMutedUsersReducer(initialBlockedAndMutedUsersState, {
                 type: BlockedAndMutedUsersActionsType.SET_BLOCKED_USERS,
-                payload: [{id: 1}] as BlockedUserResponse[]
+                payload: {items: [{id: 1}] as Array<BlockedUserResponse>, pagesCount: 2}
             }),
             {
                 ...initialBlockedAndMutedUsersState,
-                blockedUsers: [{id: 1}] as BlockedUserResponse[],
+                blockedUsers: [{id: 1}] as Array<BlockedUserResponse>,
+                pagesCount: 2,
                 loadingState: LoadingStatus.LOADED
             }
         );
@@ -29,11 +30,12 @@ describe("blockedAndMutedUsersReducer:", () => {
             BlockedAndMutedUsersActionsType.SET_MUTED_USERS,
             blockedAndMutedUsersReducer(initialBlockedAndMutedUsersState, {
                 type: BlockedAndMutedUsersActionsType.SET_MUTED_USERS,
-                payload: [{id: 1}] as MutedUserResponse[]
+                payload: {items: [{id: 1}] as MutedUserResponse[], pagesCount: 2}
             }),
             {
                 ...initialBlockedAndMutedUsersState,
                 mutedUsers: [{id: 1}] as MutedUserResponse[],
+                pagesCount: 2,
                 loadingState: LoadingStatus.LOADED
             }
         );
@@ -92,6 +94,7 @@ describe("blockedAndMutedUsersReducer:", () => {
                 ...initialBlockedAndMutedUsersState,
                 blockedUsers: [],
                 mutedUsers: [],
+                pagesCount: 0,
                 loadingState: LoadingStatus.LOADING
             }
         );

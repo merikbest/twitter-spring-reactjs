@@ -8,7 +8,6 @@ import {
     resetListMembersState,
     resetListSuggested,
     setListMembers,
-    setListMembersLoadingState,
     setListSuggested,
     setLoadingMembersState,
     setLoadingSuggestedState,
@@ -49,9 +48,9 @@ describe("listMembers actions", () => {
         payload: {userId: 1, listId: 1}
     });
 
-    testAction(setUserToList, setUserToList({userId: 1, isMember: true}), {
+    testAction(setUserToList, setUserToList({userId: 1, isUserAdded: true, isSuggested: true}), {
         type: ListMembersActionsType.SET_USER_TO_LIST,
-        payload: {userId: 1, isMember: true}
+        payload: {userId: 1, isUserAdded: true, isSuggested: true}
     });
 
     testAction(resetListMembersState, resetListMembersState(), {
@@ -64,11 +63,6 @@ describe("listMembers actions", () => {
 
     testAction(resetListSuggested, resetListSuggested(), {
         type: ListMembersActionsType.RESET_LIST_SUGGESTED_STATE,
-    });
-
-    testAction(setListMembersLoadingState, setListMembersLoadingState(LoadingStatus.LOADING), {
-        type: ListMembersActionsType.SET_LOADING_STATE,
-        payload: LoadingStatus.LOADING
     });
 
     testAction(setLoadingMembersState, setLoadingMembersState(LoadingStatus.LOADING), {

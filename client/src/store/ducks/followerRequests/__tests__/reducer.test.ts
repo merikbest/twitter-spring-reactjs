@@ -16,11 +16,12 @@ describe("followerRequestsReducer:", () => {
             FollowerRequestsActionsType.SET_FOLLOWER_REQUESTS,
             followerRequestsReducer(initialFollowerRequestsState, {
                 type: FollowerRequestsActionsType.SET_FOLLOWER_REQUESTS,
-                payload: [{id: 1}] as FollowerUserResponse[]
+                payload: {items: [{id: 1}] as FollowerUserResponse[], pagesCount: 2}
             }),
             {
                 ...initialFollowerRequestsState,
                 items: [{id: 1}] as FollowerUserResponse[],
+                pagesCount: 2,
                 loadingState: LoadingStatus.LOADED
             }
         );
@@ -58,6 +59,7 @@ describe("followerRequestsReducer:", () => {
             {
                 ...initialFollowerRequestsState,
                 items: [],
+                pagesCount: 0,
                 loadingState: LoadingStatus.LOADING
             }
         );

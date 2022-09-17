@@ -21,12 +21,18 @@ describe("Trends", () => {
     it("should render loading spinner", () => {
         const wrapper = mountWithStore(<Trends/>, createMockRootState());
         expect(wrapper.find(Spinner).exists()).toBe(true);
-        expect(mockDispatchFn).nthCalledWith(1, {type: TagsActionsType.FETCH_TRENDS});
+        expect(mockDispatchFn).nthCalledWith(1, {payload: 0, type: TagsActionsType.FETCH_TRENDS});
     });
 
     it("should render correctly", () => {
-        const wrapper = mountWithStore(<Trends/>, {...mockRootState, tags: {...mockRootState.tags, items: mockTags}});
+        const wrapper = mountWithStore(<Trends/>, {...mockRootState, tags: {...mockRootState.tags, trends: mockTags}});
         expect(wrapper.find(Spinner).exists()).toBe(false);
         expect(wrapper.find(TrendsItem).length).toEqual(3);
+    });
+
+    it("should unmount Trends", () => {
+        const wrapper = mountWithStore(<Trends/>, createMockRootState());
+        wrapper.unmount();
+        expect(mockDispatchFn).nthCalledWith(2, {type: TagsActionsType.RESET_TRENDS_STATE});
     });
 });
