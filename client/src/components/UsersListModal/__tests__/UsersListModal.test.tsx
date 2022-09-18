@@ -25,27 +25,28 @@ describe("UsersListModal", () => {
     it("should render Liked users", () => {
         const wrapper = mountUsersListModal(UsersListModalAction.LIKED);
         expect(wrapper.text().includes("Liked by")).toBe(true);
-        expect(mockDispatchFn).nthCalledWith(1, {payload: 1, type: TweetActionType.FETCH_LIKED_USERS});
+        expect(mockDispatchFn).nthCalledWith(1, {
+            payload: {tweetId: 1, pageNumber: 0},
+            type: TweetActionType.FETCH_LIKED_USERS
+        });
         expect(wrapper.find(UsersItem).length).toEqual(2);
     });
 
     it("should render Retweeted users", () => {
         const wrapper = mountUsersListModal(UsersListModalAction.RETWEETED);
         expect(wrapper.text().includes("Retweeted by")).toBe(true);
-        expect(mockDispatchFn).nthCalledWith(1, {payload: 1, type: TweetActionType.FETCH_RETWEETED_USERS});
+        expect(mockDispatchFn).nthCalledWith(1, {
+            payload: {tweetId: 1, pageNumber: 0},
+            type: TweetActionType.FETCH_RETWEETED_USERS
+        });
         expect(wrapper.find(UsersItem).length).toEqual(2);
-    });
-
-    it("should render Quoted users", () => {
-        const wrapper = mountUsersListModal(UsersListModalAction.QUOTED);
-        expect(wrapper.text().includes("Quoted by")).toBe(true);
     });
 
     it("should click close UsersListModal", () => {
         const wrapper = mountUsersListModal(UsersListModalAction.QUOTED);
         wrapper.find(CloseButton).find(IconButton).simulate("click");
-        expect(mockDispatchFn).nthCalledWith(1, {type: TweetActionType.RESET_LIKED_USERS_STATE});
-        expect(mockDispatchFn).nthCalledWith(2, {type: TweetActionType.RESET_RETWEETED_USERS_STATE});
+        expect(mockDispatchFn).nthCalledWith(2, {type: TweetActionType.RESET_LIKED_USERS_STATE});
+        expect(mockDispatchFn).nthCalledWith(3, {type: TweetActionType.RESET_RETWEETED_USERS_STATE});
     });
 
     it("should render empty UsersListModal", () => {

@@ -35,7 +35,7 @@ describe("BlockedAccounts", () => {
         expect(wrapper.text().includes("When you block someone, that person won’t be able to follow or message you")).toBe(true);
         expect(wrapper.find(MuiLink).at(0).prop("href")).toBe(BLOCKING_AND_UNBLOCKING_ACCOUNTS);
         expect(wrapper.find(MuiLink).at(1).prop("href")).toBe(BLOCKING_AND_UNBLOCKING_ACCOUNTS);
-        expect(mockDispatchFn).nthCalledWith(1, {type: BlockedAndMutedUsersActionsType.FETCH_BLOCKED_USERS});
+        expect(mockDispatchFn).nthCalledWith(1, {payload: 0, type: BlockedAndMutedUsersActionsType.FETCH_BLOCKED_USERS});
     });
 
     it("should render correctly BlockedAccounts", () => {

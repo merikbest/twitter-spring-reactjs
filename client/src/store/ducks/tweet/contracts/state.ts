@@ -14,7 +14,7 @@ export interface ReplyTweet {
 
 export interface FetchTweetUsersPayload {
     tweetId: number;
-    page: number;
+    pageNumber: number;
 }
 
 

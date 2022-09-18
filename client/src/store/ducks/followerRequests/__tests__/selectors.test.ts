@@ -1,6 +1,6 @@
 import {
     selectFollowerRequestsItems,
-    selectIsFollowerRequestsLoaded,
+    selectFollowerRequestsPagesCount,
     selectIsFollowerRequestsLoading
 } from "../selectors";
 import {LoadingStatus} from "../../../types";
@@ -20,15 +20,15 @@ describe("followerRequests selectors:", () => {
         });
     });
 
-    describe("selectIsFollowerRequestsLoading", () => {
-        it("should return correct result", () => {
-            expect(selectIsFollowerRequestsLoading(createMockRootState(LoadingStatus.LOADING))).toBe(true);
+    describe("selectFollowerRequestsPagesCount", () => {
+        it("should return pages count number", () => {
+            expect(selectFollowerRequestsPagesCount(mockState)).toBe(0);
         });
     });
 
-    describe("selectIsFollowerRequestsLoaded", () => {
+    describe("selectIsFollowerRequestsLoading", () => {
         it("should return correct result", () => {
-            expect(selectIsFollowerRequestsLoaded(createMockRootState(LoadingStatus.LOADED))).toBe(true);
+            expect(selectIsFollowerRequestsLoading(createMockRootState(LoadingStatus.LOADING))).toBe(true);
         });
     });
 });

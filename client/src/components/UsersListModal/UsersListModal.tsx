@@ -61,7 +61,7 @@ const UsersListModal: FC<UsersListModalProps> = (
     }, [visible]);
 
     const loadUsers = (page: number): void => {
-        dispatch(isLiked ? fetchLikedUsers({tweetId, page}) : fetchRetweetedUsers({tweetId, page}));
+        dispatch(isLiked ? fetchLikedUsers({tweetId, pageNumber: page}) : fetchRetweetedUsers({tweetId, pageNumber: page}));
     };
 
     const onCloseUsersListModal = (): void => {
@@ -70,7 +70,7 @@ const UsersListModal: FC<UsersListModalProps> = (
         dispatch(resetLikedUsersState());
         dispatch(resetRetweetedUsersState());
     };
-    
+
     if (!visible) {
         return null;
     }

@@ -5,7 +5,7 @@ import {LoadingStatus} from "../../../types";
 import {NotificationReplyResponse, NotificationResponse} from "../../../types/notification";
 import {NotificationType} from "../../../types/common";
 import {UserResponse} from "../../../types/user";
-import { testActionDispatch } from "../../../../util/testHelper";
+import {testActionDispatch} from "../../../../util/testHelper";
 
 describe("tweetReducer:", () => {
     describe("initial state:", () => {
@@ -37,7 +37,11 @@ describe("tweetReducer:", () => {
                 },
                 {
                     type: TweetActionType.UPDATE_TWEET_DATA,
-                    payload: {id: 1, tweet: {id: 1, notificationCondition: true}, notificationType: NotificationType.LIKE} as NotificationResponse
+                    payload: {
+                        id: 1,
+                        tweet: {id: 1, notificationCondition: true},
+                        notificationType: NotificationType.LIKE
+                    } as NotificationResponse
                 }),
             {
                 ...initialTweetState,
@@ -55,7 +59,11 @@ describe("tweetReducer:", () => {
                 },
                 {
                     type: TweetActionType.UPDATE_TWEET_DATA,
-                    payload: {id: 1, tweet: {id: 1, notificationCondition: true}, notificationType: NotificationType.RETWEET} as NotificationResponse
+                    payload: {
+                        id: 1,
+                        tweet: {id: 1, notificationCondition: true},
+                        notificationType: NotificationType.RETWEET
+                    } as NotificationResponse
                 }),
             {
                 ...initialTweetState,
@@ -72,7 +80,11 @@ describe("tweetReducer:", () => {
                 },
                 {
                     type: TweetActionType.UPDATE_TWEET_DATA,
-                    payload: {tweetId: 1, tweet: {id: 1}, notificationType: NotificationType.REPLY} as NotificationReplyResponse
+                    payload: {
+                        tweetId: 1,
+                        tweet: {id: 1},
+                        notificationType: NotificationType.REPLY
+                    } as NotificationReplyResponse
                 }),
             {
                 ...initialTweetState,
@@ -172,12 +184,13 @@ describe("tweetReducer:", () => {
             tweetReducer(initialTweetState,
                 {
                     type: TweetActionType.SET_LIKED_USERS,
-                    payload: [{id: 1}] as UserResponse[]
+                    payload: {items: [{id: 1}] as UserResponse[], pagesCount: 2}
                 }
             ),
             {
                 ...initialTweetState,
                 likedUsers: [{id: 1}],
+                usersPagesCount: 2,
                 likedUsersLoadingState: LoadingStatus.SUCCESS
             }
         );
@@ -222,12 +235,13 @@ describe("tweetReducer:", () => {
             tweetReducer(initialTweetState,
                 {
                     type: TweetActionType.SET_RETWEETED_USERS,
-                    payload: [{id: 1}] as UserResponse[]
+                    payload: {items: [{id: 1}] as UserResponse[], pagesCount: 2}
                 }
             ),
             {
                 ...initialTweetState,
                 retweetedUsers: [{id: 1}],
+                usersPagesCount: 2,
                 retweetedUsersLoadingState: LoadingStatus.SUCCESS
             }
         );

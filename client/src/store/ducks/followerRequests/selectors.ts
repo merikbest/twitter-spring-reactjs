@@ -7,4 +7,3 @@ export const selectFollowerRequestsItems = (state: RootState) => selectFollowerR
 export const selectFollowerRequestsPagesCount = (state: RootState) => selectFollowerRequests(state).pagesCount;
 export const selectLoadingState = (state: RootState): LoadingStatus => selectFollowerRequests(state).loadingState;
 export const selectIsFollowerRequestsLoading = (state: RootState): boolean => selectLoadingState(state) === LoadingStatus.LOADING;
-export const selectIsFollowerRequestsLoaded = (state: RootState): boolean => selectLoadingState(state) === LoadingStatus.LOADED;

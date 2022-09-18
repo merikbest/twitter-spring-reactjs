@@ -23,7 +23,7 @@ describe("FollowerRequestsModal", () => {
         expect(wrapper.text().includes("Follower requests")).toBe(true);
         expect(wrapper.text().includes("You don’t have any follower requests")).toBe(true);
         expect(wrapper.text().includes("When someone requests to follow you, it’ll show up here.")).toBe(true);
-        expect(mockDispatchFn).nthCalledWith(1, {type: FollowerRequestsActionsType.FETCH_FOLLOWER_REQUESTS});
+        expect(mockDispatchFn).nthCalledWith(1, {payload: 0, type: FollowerRequestsActionsType.FETCH_FOLLOWER_REQUESTS});
     });
 
     it("should render loading Spinner", () => {
@@ -51,5 +51,11 @@ describe("FollowerRequestsModal", () => {
     it("should render empty FollowerRequestsModal", () => {
         const wrapper = mountWithStore(<FollowerRequestsModal visible={false} onClose={jest.fn()}/>, mockRootState);
         expect(wrapper.find(Dialog).exists()).toBeFalsy();
+    });
+
+    it("should unmount FollowerRequestsModal", () => {
+        const wrapper = mountWithStore(<FollowerRequestsModal visible onClose={jest.fn()}/>, mockRootState);
+        wrapper.unmount();
+        expect(mockDispatchFn).nthCalledWith(2, {type: FollowerRequestsActionsType.RESET_FOLLOWER_REQUESTS_STATE});
     });
 });

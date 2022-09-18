@@ -1,9 +1,6 @@
 import {
-    selectIsLikedUsersLoadedSuccess,
     selectIsLikedUsersLoading,
-    selectIsRepliesLoadedSuccess,
     selectIsRepliesLoading,
-    selectIsRetweetedUsersLoadedSuccess,
     selectIsRetweetedUsersLoading,
     selectIsTweetError,
     selectIsTweetLoadedSuccess,
@@ -11,7 +8,8 @@ import {
     selectLikedUsers,
     selectReplies,
     selectRetweetedUsers,
-    selectTweetData
+    selectTweetData,
+    selectUsersPagesCount
 } from "../selectors";
 import {LoadingStatus} from "../../../types";
 import {createMockRootState} from "../../../../util/testHelper";
@@ -26,6 +24,12 @@ describe("tweet selectors:", () => {
                 ...mockState,
                 tweet: {...mockState.tweet, tweet: mockFullTweet}
             })).toBe(mockFullTweet);
+        });
+    });
+
+    describe("selectUsersPagesCount", () => {
+        it("should return Pages Count number", () => {
+            expect(selectUsersPagesCount(mockState)).toBe(0);
         });
     });
 
@@ -62,12 +66,6 @@ describe("tweet selectors:", () => {
         });
     });
 
-    describe("selectIsLikedUsersLoadedSuccess", () => {
-        it("should return correct result", () => {
-            expect(selectIsLikedUsersLoadedSuccess(createMockRootState(LoadingStatus.SUCCESS))).toBe(true);
-        });
-    });
-
     describe("selectRetweetedUsers", () => {
         it("should return UserResponse array", () => {
             expect(selectRetweetedUsers({
@@ -83,12 +81,6 @@ describe("tweet selectors:", () => {
         });
     });
 
-    describe("selectIsRetweetedUsersLoadedSuccess", () => {
-        it("should return correct result", () => {
-            expect(selectIsRetweetedUsersLoadedSuccess(createMockRootState(LoadingStatus.SUCCESS))).toBe(true);
-        });
-    });
-
     describe("selectReplies", () => {
         it("should return TweetResponse array", () => {
             expect(selectReplies({
@@ -101,12 +93,6 @@ describe("tweet selectors:", () => {
     describe("selectIsRepliesLoading", () => {
         it("should return correct result", () => {
             expect(selectIsRepliesLoading(createMockRootState(LoadingStatus.LOADING))).toBe(true);
-        });
-    });
-
-    describe("selectIsRepliesLoadedSuccess", () => {
-        it("should return correct result", () => {
-            expect(selectIsRepliesLoadedSuccess(createMockRootState(LoadingStatus.SUCCESS))).toBe(true);
         });
     });
 });

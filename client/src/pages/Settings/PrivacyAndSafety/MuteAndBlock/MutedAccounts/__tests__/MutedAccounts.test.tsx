@@ -35,7 +35,7 @@ describe("MutedAccounts", () => {
         expect(wrapper.text().includes("When you mute accounts, you won’t see their Tweets in your timeline.")).toBe(true);
         expect(wrapper.find(MuiLink).at(0).prop("href")).toBe(TWITTER_MUTE);
         expect(wrapper.find(MuiLink).at(1).prop("href")).toBe(TWITTER_MUTE);
-        expect(mockDispatchFn).nthCalledWith(1, {type: BlockedAndMutedUsersActionsType.FETCH_MUTED_USERS});
+        expect(mockDispatchFn).nthCalledWith(1, {payload: 0, type: BlockedAndMutedUsersActionsType.FETCH_MUTED_USERS});
     });
 
     it("should render correctly MutedAccounts", () => {

@@ -3,7 +3,7 @@ import {AxiosResponse} from "axios";
 import {axios} from "../../core/axios";
 import {AddQuoteTweet, AddTweet, ChangeReplyTypeRequest, Vote} from "../../store/ducks/tweets/contracts/state";
 import {API_URL} from "../../util/url";
-import {ReplyTweet} from "../../store/ducks/tweet/contracts/state";
+import {FetchTweetUsersPayload, ReplyTweet} from "../../store/ducks/tweet/contracts/state";
 import {TweetResponse} from "../../store/types/tweet";
 import {NotificationTweetResponse} from "../../store/types/notification";
 import {UserResponse} from "../../store/types/user";
@@ -33,10 +33,10 @@ export const TweetApi = {
     async getQuotesByTweetId(tweetId: number, pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
         return await axios.get<TweetResponse[]>(`${API_URL}/tweets/${tweetId}/quotes`, {params: {page: pageNumber}});
     },
-    async getLikedUsersByTweetId(tweetId: number, pageNumber: number): Promise<AxiosResponse<UserResponse[]>> {
+    async getLikedUsersByTweetId({tweetId, pageNumber}: FetchTweetUsersPayload): Promise<AxiosResponse<UserResponse[]>> {
         return await axios.get<UserResponse[]>(`${API_URL}/tweets/${tweetId}/liked-users`, {params: {page: pageNumber}});
     },
-    async getRetweetedUsersByTweetId(tweetId: number, pageNumber: number): Promise<AxiosResponse<UserResponse[]>> {
+    async getRetweetedUsersByTweetId({tweetId, pageNumber}: FetchTweetUsersPayload): Promise<AxiosResponse<UserResponse[]>> {
         return await axios.get<UserResponse[]>(`${API_URL}/tweets/${tweetId}/retweeted-users`, {params: {page: pageNumber}});
     },
     async createTweet(request: AddTweet): Promise<AxiosResponse<TweetResponse>> {

@@ -37,12 +37,18 @@ import {setUpdatedBookmarkedTweetTweetsState} from "../../tweets/actionCreators"
 import {setUpdatedBookmarkedTweetUserTweetState} from "../../userTweets/actionCreators";
 import {ReplyTweet} from "../contracts/state";
 import {UserResponse} from "../../../types/user";
-import {testCall, testLoadingStatus, testSetResponse, testWatchSaga} from "../../../../util/testHelper";
+import {
+    mockExpectedResponse,
+    testCall,
+    testLoadingStatus,
+    testSetResponse,
+    testWatchSaga
+} from "../../../../util/testHelper";
 import {TweetActionType} from "../contracts/actionTypes";
 
 describe("tweetSaga:", () => {
     const mockTweet = {data: {id: 1}} as AxiosResponse<TweetResponse>;
-    const usersMock = {data: [{id: 1}, {id: 2}]} as AxiosResponse<UserResponse[]>;
+    const usersMock = {data: [{id: 1}, {id: 2}], headers: {"page-total-count": 1}} as AxiosResponse<UserResponse[]>;
 
     describe("fetchTweetDataRequest:", () => {
         const worker = fetchTweetDataRequest(fetchTweetData(1));
@@ -78,18 +84,18 @@ describe("tweetSaga:", () => {
     });
 
     describe("fetchLikedUsersRequest:", () => {
-        const worker = fetchLikedUsersRequest(fetchLikedUsers(1));
+        const worker = fetchLikedUsersRequest(fetchLikedUsers({tweetId: 1, pageNumber: 2}));
         testLoadingStatus(worker, setLikedUsersLoadingState, LoadingStatus.LOADING);
-        testCall(worker, TweetApi.getLikedUsersByTweetId, 1, usersMock);
-        testSetResponse(worker, usersMock, setLikedUsers, usersMock.data, "UserResponse");
+        testCall(worker, TweetApi.getLikedUsersByTweetId, {tweetId: 1, pageNumber: 2}, usersMock);
+        testSetResponse(worker, usersMock, setLikedUsers, mockExpectedResponse(usersMock), "UserResponse");
         testLoadingStatus(worker, setLikedUsersLoadingState, LoadingStatus.ERROR);
     });
 
     describe("fetchRetweetedUsersRequest:", () => {
-        const worker = fetchRetweetedUsersRequest(fetchRetweetedUsers(1));
+        const worker = fetchRetweetedUsersRequest(fetchRetweetedUsers({tweetId: 1, pageNumber: 2}));
         testLoadingStatus(worker, setRetweetedUsersLoadingState, LoadingStatus.LOADING);
-        testCall(worker, TweetApi.getRetweetedUsersByTweetId, 1, usersMock);
-        testSetResponse(worker, usersMock, setRetweetedUsers, usersMock.data, "UserResponse");
+        testCall(worker, TweetApi.getRetweetedUsersByTweetId, {tweetId: 1, pageNumber: 2}, usersMock);
+        testSetResponse(worker, usersMock, setRetweetedUsers, mockExpectedResponse(usersMock), "UserResponse");
         testLoadingStatus(worker, setRetweetedUsersLoadingState, LoadingStatus.ERROR);
     });
 

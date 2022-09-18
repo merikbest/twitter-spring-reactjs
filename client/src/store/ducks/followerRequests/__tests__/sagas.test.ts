@@ -1,15 +1,22 @@
 import {AxiosResponse} from "axios";
 
-import {acceptFollowRequests, declineFollowRequests, fetchFollowerRequests, fetchFollowerSaga} from "../sagas";
+import {acceptFollowRequests, declineFollowRequests, fetchFollowerSaga, fetchFollowRequests} from "../sagas";
 import {
     acceptFollowRequest,
     declineFollowRequest,
+    fetchFollowerRequests,
     processFollowRequest,
     setFollowerRequests,
     setFollowerRequestsLoadingState
 } from "../actionCreators";
 import {LoadingStatus} from "../../../types";
-import {testCall, testLoadingStatus, testSetResponse, testWatchSaga} from "../../../../util/testHelper";
+import {
+    mockExpectedResponse,
+    testCall,
+    testLoadingStatus,
+    testSetResponse,
+    testWatchSaga
+} from "../../../../util/testHelper";
 import {UserApi} from "../../../../services/api/userApi";
 import {FollowerUserResponse} from "../../../types/user";
 import {setFollowersSize, setUserLoadingStatus} from "../../user/actionCreators";
@@ -18,12 +25,15 @@ import {FollowerRequestsActionsType} from "../contracts/actionTypes";
 describe("fetchFollowerSaga:", () => {
     
     describe("fetchFollowerRequests:", () => {
-        const mockFollowerUserResponse = {data: [{id: 1}, {id: 2}]} as AxiosResponse<FollowerUserResponse[]>;
-        const worker = fetchFollowerRequests();
+        const mockFollowerUserResponse = {
+            data: [{id: 1}, {id: 2}],
+            headers: {"page-total-count": 1}
+        } as AxiosResponse<FollowerUserResponse[]>;
+        const worker = fetchFollowRequests(fetchFollowerRequests(1));
 
         testLoadingStatus(worker, setFollowerRequestsLoadingState, LoadingStatus.LOADING);
-        testCall(worker, UserApi.getFollowerRequests);
-        testSetResponse(worker, mockFollowerUserResponse, setFollowerRequests, mockFollowerUserResponse.data, "FollowerUserResponse");
+        testCall(worker, UserApi.getFollowerRequests, 1);
+        testSetResponse(worker, mockFollowerUserResponse, setFollowerRequests,mockExpectedResponse(mockFollowerUserResponse), "FollowerUserResponse");
         testLoadingStatus(worker, setFollowerRequestsLoadingState, LoadingStatus.ERROR)
     });
 
@@ -47,7 +57,7 @@ describe("fetchFollowerSaga:", () => {
     });
 
     testWatchSaga(fetchFollowerSaga, [
-        {actionType: FollowerRequestsActionsType.FETCH_FOLLOWER_REQUESTS, workSaga: fetchFollowerRequests},
+        {actionType: FollowerRequestsActionsType.FETCH_FOLLOWER_REQUESTS, workSaga: fetchFollowRequests},
         {actionType: FollowerRequestsActionsType.ACCEPT_FOLLOW_REQUEST, workSaga: acceptFollowRequests},
         {actionType: FollowerRequestsActionsType.DECLINE_FOLLOW_REQUEST, workSaga: declineFollowRequests},
     ]);

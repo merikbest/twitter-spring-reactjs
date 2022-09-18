@@ -13,7 +13,7 @@ import {FollowerUserResponse} from "../../types/user";
 import {UserApi} from "../../../services/api/userApi";
 import {setFollowersSize, setUserLoadingStatus} from "../user/actionCreators";
 
-export function* fetchFollowerRequests({payload}: FetchFollowerRequestsActionInterface) {
+export function* fetchFollowRequests({payload}: FetchFollowerRequestsActionInterface) {
     try {
         yield put(setFollowerRequestsLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<FollowerUserResponse[]> = yield call(UserApi.getFollowerRequests, payload);
@@ -48,7 +48,7 @@ export function* declineFollowRequests({payload}: DeclineFollowerRequestActionIn
 }
 
 export function* fetchFollowerSaga() {
-    yield takeLatest(FollowerRequestsActionsType.FETCH_FOLLOWER_REQUESTS, fetchFollowerRequests);
+    yield takeLatest(FollowerRequestsActionsType.FETCH_FOLLOWER_REQUESTS, fetchFollowRequests);
     yield takeLatest(FollowerRequestsActionsType.ACCEPT_FOLLOW_REQUEST, acceptFollowRequests);
     yield takeLatest(FollowerRequestsActionsType.DECLINE_FOLLOW_REQUEST, declineFollowRequests);
 }

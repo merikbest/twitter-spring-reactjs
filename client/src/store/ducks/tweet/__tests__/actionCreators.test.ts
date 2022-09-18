@@ -97,14 +97,14 @@ describe("tweet actions", () => {
         payload: 1,
     });
 
-    testAction(fetchLikedUsers, fetchLikedUsers(1), {
+    testAction(fetchLikedUsers, fetchLikedUsers({tweetId: 1, pageNumber: 2}), {
         type: TweetActionType.FETCH_LIKED_USERS,
-        payload: 1,
+        payload: {tweetId: 1, pageNumber: 2},
     });
 
-    testAction(setLikedUsers, setLikedUsers([{id: 1}] as UserResponse[]), {
+    testAction(setLikedUsers, setLikedUsers({items: [{id: 1}] as UserResponse[], pagesCount: 2}), {
         type: TweetActionType.SET_LIKED_USERS,
-        payload: [{id: 1}] as UserResponse[],
+        payload: {items: [{id: 1}] as UserResponse[], pagesCount: 2}
     });
 
     testAction(resetLikedUsersState, resetLikedUsersState(), {
@@ -116,14 +116,14 @@ describe("tweet actions", () => {
         payload: LoadingStatus.LOADING
     });
 
-    testAction(fetchRetweetedUsers, fetchRetweetedUsers(1), {
+    testAction(fetchRetweetedUsers, fetchRetweetedUsers({tweetId: 1, pageNumber: 2}), {
         type: TweetActionType.FETCH_RETWEETED_USERS,
-        payload: 1
+        payload: {tweetId: 1, pageNumber: 2}
     });
 
-    testAction(setRetweetedUsers, setRetweetedUsers([{id: 1}] as UserResponse[]), {
+    testAction(setRetweetedUsers, setRetweetedUsers({items: [{id: 1}] as UserResponse[], pagesCount: 2}), {
         type: TweetActionType.SET_RETWEETED_USERS,
-        payload: [{id: 1}] as UserResponse[]
+        payload: {items: [{id: 1}] as UserResponse[], pagesCount: 2}
     });
 
     testAction(resetRetweetedUsersState, resetRetweetedUsersState(), {
