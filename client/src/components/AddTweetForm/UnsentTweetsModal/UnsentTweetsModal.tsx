@@ -157,7 +157,7 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
                             {isUnsentTweetsLoading && !unsentTweets.length ? (
                                 <Spinner/>
                             ) : (
-                                (isUnsentTweetsLoading && !unsentTweets.length) ? (
+                                (!isUnsentTweetsLoading && !unsentTweets.length) ? (
                                     <EmptyPageDescription
                                         title={`You don’t have any ${activeTab === 0 ? "scheduled" : "unsent"} Tweets`}
                                         subtitle={"When you do, you’ll find them here."}
