@@ -7,16 +7,17 @@ import {RegistrationProps} from "../../pages/RegistrationModal/SetPasswordModal/
 import {LoginProps} from "../../pages/Login/Login";
 import {AuthenticationResponse} from "../../store/types/auth";
 import {AuthUserResponse} from "../../store/types/user";
+import {API_LOGIN, API_REGISTRATION_CHECK, API_REGISTRATION_CODE} from "../../util/endpoints";
 
 export const AuthApi = {
     async signIn(postData: LoginProps): Promise<AxiosResponse<AuthenticationResponse>> {
-        return await axios.post<AuthenticationResponse>(`${API_URL}/auth/login`, postData);
+        return await axios.post<AuthenticationResponse>(API_LOGIN, postData);
     },
     async checkEmail(postData: RegistrationInfo): Promise<AxiosResponse<string>> {
-        return await axios.post<string>(`${API_URL}/auth/registration/check`, postData);
+        return await axios.post<string>(API_REGISTRATION_CHECK, postData);
     },
     async sendRegistrationCode(postData: RegistrationInfo): Promise<AxiosResponse<string>> {
-        return await axios.post<string>(`${API_URL}/auth/registration/code`, postData);
+        return await axios.post<string>(API_REGISTRATION_CODE, postData);
     },
     async checkRegistrationCode(registrationCode: string): Promise<AxiosResponse<string>> {
         return await axios.get<string>(`${API_URL}/auth/registration/activate/${registrationCode}`);
