@@ -7,7 +7,14 @@ import {RegistrationProps} from "../../pages/RegistrationModal/SetPasswordModal/
 import {LoginProps} from "../../pages/Login/Login";
 import {AuthenticationResponse} from "../../store/types/auth";
 import {AuthUserResponse} from "../../store/types/user";
-import {API_LOGIN, API_REGISTRATION_CHECK, API_REGISTRATION_CODE} from "../../util/endpoints";
+import {
+    API_FORGOT_EMAIL,
+    API_LOGIN,
+    API_REGISTRATION_ACTIVATE,
+    API_REGISTRATION_CHECK,
+    API_REGISTRATION_CODE,
+    API_REGISTRATION_CONFIRM
+} from "../../util/endpoints";
 
 export const AuthApi = {
     async signIn(postData: LoginProps): Promise<AxiosResponse<AuthenticationResponse>> {
@@ -20,13 +27,13 @@ export const AuthApi = {
         return await axios.post<string>(API_REGISTRATION_CODE, postData);
     },
     async checkRegistrationCode(registrationCode: string): Promise<AxiosResponse<string>> {
-        return await axios.get<string>(`${API_URL}/auth/registration/activate/${registrationCode}`);
+        return await axios.get<string>(`${API_REGISTRATION_ACTIVATE}/${registrationCode}`);
     },
     async endRegistration(postData: RegistrationProps): Promise<AxiosResponse<AuthenticationResponse>> {
-        return await axios.post<AuthenticationResponse>(`${API_URL}/auth/registration/confirm`, postData);
+        return await axios.post<AuthenticationResponse>(API_REGISTRATION_CONFIRM, postData);
     },
     async findExistingEmail(postData: { email: string }): Promise<AxiosResponse<string>> {
-        return await axios.post<string>(`${API_URL}/auth/forgot/email`, postData);
+        return await axios.post<string>(API_FORGOT_EMAIL, postData);
     },
     async sendPasswordResetCode(postData: { email: string }): Promise<AxiosResponse<string>> {
         return await axios.post<string>(`${API_URL}/auth/forgot`, postData);
