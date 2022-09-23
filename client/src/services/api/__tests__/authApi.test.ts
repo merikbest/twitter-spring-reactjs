@@ -1,4 +1,4 @@
-import axios, {AxiosResponse} from "axios";
+import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 
 import {AuthUserResponse} from "../../../store/types/user";
@@ -18,11 +18,13 @@ import {
     API_AUTH_USER
 } from "../../../util/endpoints";
 import {RegistrationProps} from "../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
+import {testApiCall} from "../../../util/testHelper";
+import {mockUser} from "../../../util/mockData/mockData";
 
 describe("AuthApi", () => {
     const mockAdapter = new MockAdapter(axios);
     const mockUserErrorResponse = "User not found";
-    const mockAuthUserResponse = {user: {id: 1} as AuthUserResponse, token: "test_token"};
+    const mockAuthUserResponse = {user: mockUser, token: "test_token"};
 
     beforeEach(() => mockAdapter.reset());
 
@@ -279,10 +281,4 @@ describe("AuthApi", () => {
                 });
         });
     });
-
-    const testApiCall = (statusCode: number, response: AxiosResponse, expectedUrl: string, expectedData: any): void => {
-        expect(response.status).toEqual(statusCode);
-        expect(response.config.url).toEqual(expectedUrl);
-        expect(response.data).toEqual(expectedData);
-    };
 });

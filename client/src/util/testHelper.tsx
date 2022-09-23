@@ -161,6 +161,12 @@ export const testClickOnLink = (component: any, path: string, linkIndex: number)
     expect(pushSpy).toHaveBeenCalledWith(path);
 };
 
+export const testApiCall = (statusCode: number, response: AxiosResponse, expectedUrl: string, expectedData: any): void => {
+    expect(response.status).toEqual(statusCode);
+    expect(response.config.url).toEqual(expectedUrl);
+    expect(response.data).toEqual(expectedData);
+};
+
 export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): RootState => {
     return {
         user: {
