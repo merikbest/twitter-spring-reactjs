@@ -1,7 +1,6 @@
 import {AxiosResponse, CancelTokenSource} from "axios";
 
 import {axios} from "../../core/axios";
-import {API_URL} from "../../util/url";
 import {
     AuthUserResponse,
     BlockedUserResponse,
@@ -16,105 +15,135 @@ import {TweetImageResponse, TweetResponse} from "../../store/types/tweet";
 import {UserRequest} from "../../store/ducks/user/contracts/state";
 import {FollowersRequest, SearchByNameRequest} from "../../store/ducks/usersSearch/contracts/state";
 import {UserTweetRequest} from "../../store/ducks/userTweets/contracts/state";
+import {
+    API_USER,
+    API_USER_ALL,
+    API_USER_BLOCKED,
+    API_USER_BOOKMARKS,
+    API_USER_DETAILS,
+    API_USER_FOLLOW,
+    API_USER_FOLLOW_ACCEPT,
+    API_USER_FOLLOW_DECLINE,
+    API_USER_FOLLOW_OVERALL,
+    API_USER_FOLLOW_PRIVATE,
+    API_USER_FOLLOWER_REQUESTS,
+    API_USER_FOLLOWERS,
+    API_USER_FOLLOWING,
+    API_USER_IMAGES,
+    API_USER_LIKED,
+    API_USER_MEDIA,
+    API_USER_MENTIONS,
+    API_USER_MUTED,
+    API_USER_NOTIFICATIONS,
+    API_USER_NOTIFICATIONS_SUBSCRIBES,
+    API_USER_NOTIFICATIONS_TIMELINE,
+    API_USER_PIN_TWEET,
+    API_USER_RELEVANT,
+    API_USER_REPLIES,
+    API_USER_SEARCH,
+    API_USER_START,
+    API_USER_SUBSCRIBE,
+    API_USER_TWEETS
+} from "../../util/endpoints";
 
 export const UserApi = {
     async getUsers(pageNumber: number): Promise<AxiosResponse<UserResponse[]>> {
-        return await axios.get<UserResponse[]>(`${API_URL}/user/all`, {params: {page: pageNumber}});
+        return await axios.get<UserResponse[]>(API_USER_ALL, {params: {page: pageNumber}});
     },
     async getRelevantUsers(): Promise<AxiosResponse<UserResponse[]>> {
-        return await axios.get<UserResponse[]>(`${API_URL}/user/relevant`);
+        return await axios.get<UserResponse[]>(API_USER_RELEVANT);
     },
     async searchUsersByUsername({username, pageNumber}: SearchByNameRequest): Promise<AxiosResponse<UserResponse[]>> {
-        return await axios.get<UserResponse[]>(`${API_URL}/user/search/${username}`, {params: {page: pageNumber}});
+        return await axios.get<UserResponse[]>(`${API_USER_SEARCH}/${username}`, {params: {page: pageNumber}});
     },
     async getUserInfo(userId: number): Promise<AxiosResponse<UserProfileResponse>> {
-        return await axios.get<UserProfileResponse>(`${API_URL}/user/${userId}`);
+        return await axios.get<UserProfileResponse>(`${API_USER}/${userId}`);
     },
     async updateUserProfile(request: UserRequest): Promise<AxiosResponse<AuthUserResponse>> {
-        return await axios.put<AuthUserResponse>(`${API_URL}/user`, request);
+        return await axios.put<AuthUserResponse>(API_USER, request);
     },
     async getUserTweetImages(userId: number): Promise<AxiosResponse<TweetImageResponse[]>> {
-        return await axios.get<TweetImageResponse[]>(`${API_URL}/user/images/${userId}`);
+        return await axios.get<TweetImageResponse[]>(`${API_USER_IMAGES}/${userId}`);
     },
     async getFollowers({userId, page}: FollowersRequest): Promise<AxiosResponse<UserResponse[]>> {
-        return await axios.get<UserResponse[]>(`${API_URL}/user/followers/${userId}`, {params: {page: page}});
+        return await axios.get<UserResponse[]>(`${API_USER_FOLLOWERS}/${userId}`, {params: {page: page}});
     },
     async getFollowing({userId, page}: FollowersRequest): Promise<AxiosResponse<UserResponse[]>> {
-        return await axios.get<UserResponse[]>(`${API_URL}/user/following/${userId}`, {params: {page: page}});
+        return await axios.get<UserResponse[]>(`${API_USER_FOLLOWING}/${userId}`, {params: {page: page}});
     },
     async getFollowerRequests(pageNumber: number): Promise<AxiosResponse<FollowerUserResponse[]>> {
-        return await axios.get<FollowerUserResponse[]>(`${API_URL}/user/follower-requests`, {params: {page: pageNumber}});
+        return await axios.get<FollowerUserResponse[]>(API_USER_FOLLOWER_REQUESTS, {params: {page: pageNumber}});
     },
     async follow(userId: number): Promise<AxiosResponse<NotificationUserResponse>> {
-        return await axios.get<NotificationUserResponse>(`${API_URL}/user/follow/${userId}`);
+        return await axios.get<NotificationUserResponse>(`${API_USER_FOLLOW}/${userId}`);
     },
     async overallFollowers(userId: string): Promise<AxiosResponse<UserResponse[]>> {
-        return await axios.get<UserResponse[]>(`${API_URL}/user/follow/overall/${userId}`);
+        return await axios.get<UserResponse[]>(`${API_USER_FOLLOW_OVERALL}/${userId}`);
     },
     async processFollowRequestToPrivateProfile(userId: number): Promise<AxiosResponse<UserProfileResponse>> {
-        return await axios.get<UserProfileResponse>(`${API_URL}/user/follow/private/${userId}`);
+        return await axios.get<UserProfileResponse>(`${API_USER_FOLLOW_PRIVATE}/${userId}`);
     },
     async acceptFollowRequest(userId: number): Promise<AxiosResponse<string>> {
-        return await axios.get<string>(`${API_URL}/user/follow/accept/${userId}`);
+        return await axios.get<string>(`${API_USER_FOLLOW_ACCEPT}/${userId}`);
     },
     async declineFollowRequest(userId: number): Promise<AxiosResponse<string>> {
-        return await axios.get<string>(`${API_URL}/user/follow/decline/${userId}`);
+        return await axios.get<string>(`${API_USER_FOLLOW_DECLINE}/${userId}`);
     },
     async processSubscribeToNotifications(userId: number): Promise<AxiosResponse<boolean>> {
-        return await axios.get<boolean>(`${API_URL}/user/subscribe/${userId}`);
+        return await axios.get<boolean>(`${API_USER_SUBSCRIBE}/${userId}`);
     },
     async getUserTweets({userId, page}: UserTweetRequest): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(`${API_URL}/user/${userId}/tweets`, {params: {page: page}});
+        return await axios.get<TweetResponse[]>(API_USER_TWEETS(userId), {params: {page: page}});
     },
     async getUserLikedTweets({userId, page}: UserTweetRequest): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(`${API_URL}/user/${userId}/liked`, {params: {page: page}});
+        return await axios.get<TweetResponse[]>(API_USER_LIKED(userId), {params: {page: page}});
     },
     async getUserMediaTweets({userId, page}: UserTweetRequest): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(`${API_URL}/user/${userId}/media`, {params: {page: page}});
+        return await axios.get<TweetResponse[]>(API_USER_MEDIA(userId), {params: {page: page}});
     },
     async getUserRetweetsAndReplies({userId, page}: UserTweetRequest): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(`${API_URL}/user/${userId}/replies`, {params: {page: page}});
+        return await axios.get<TweetResponse[]>(API_USER_REPLIES(userId), {params: {page: page}});
     },
     async getUserNotifications(pageNumber: number): Promise<AxiosResponse<NotificationResponse[]>> {
-        return await axios.get<NotificationResponse[]>(`${API_URL}/user/notifications`, {params: {page: pageNumber}});
+        return await axios.get<NotificationResponse[]>(API_USER_NOTIFICATIONS, {params: {page: pageNumber}});
     },
     async getTweetAuthorsNotifications(): Promise<AxiosResponse<NotificationUserResponse[]>> {
-        return await axios.get<NotificationUserResponse[]>(`${API_URL}/user/notifications/subscribes`);
+        return await axios.get<NotificationUserResponse[]>(API_USER_NOTIFICATIONS_SUBSCRIBES);
     },
     async getUserNotificationById(notificationId: number): Promise<AxiosResponse<NotificationInfoResponse>> {
-        return await axios.get<NotificationInfoResponse>(`${API_URL}/user/notifications/${notificationId}`);
+        return await axios.get<NotificationInfoResponse>(`${API_USER_NOTIFICATIONS}/${notificationId}`);
     },
     async getNotificationsFromTweetAuthors(pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(`${API_URL}/user/notifications/timeline`, {params: {page: pageNumber}});
+        return await axios.get<TweetResponse[]>(API_USER_NOTIFICATIONS_TIMELINE, {params: {page: pageNumber}});
     },
     async getUserMentions(pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(`${API_URL}/user/mentions`, {params: {page: pageNumber}});
+        return await axios.get<TweetResponse[]>(API_USER_MENTIONS, {params: {page: pageNumber}});
     },
     async getUserBookmarks(pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(`${API_URL}/user/bookmarks`, {params: {page: pageNumber}});
+        return await axios.get<TweetResponse[]>(API_USER_BOOKMARKS, {params: {page: pageNumber}});
     },
     async addTweetToBookmarks(tweetId: number): Promise<AxiosResponse<boolean>> {
-        return await axios.get<boolean>(`${API_URL}/user/bookmarks/${tweetId}`);
+        return await axios.get<boolean>(`${API_USER_BOOKMARKS}/${tweetId}`);
     },
     async startUseTwitter(userId: number): Promise<AxiosResponse<boolean>> {
-        return await axios.get<boolean>(`${API_URL}/user/${userId}/start`);
+        return await axios.get<boolean>(API_USER_START(userId));
     },
     async pinTweet(tweetId: number): Promise<AxiosResponse<number>> {
-        return await axios.get<number>(`${API_URL}/user/pin/tweet/${tweetId}`);
+        return await axios.get<number>(`${API_USER_PIN_TWEET}/${tweetId}`);
     },
     async getBlockList(pageNumber: number): Promise<AxiosResponse<BlockedUserResponse[]>> {
-        return await axios.get<BlockedUserResponse[]>(`${API_URL}/user/blocked`, {params: {page: pageNumber}});
+        return await axios.get<BlockedUserResponse[]>(API_USER_BLOCKED, {params: {page: pageNumber}});
     },
     async getMutedList(pageNumber: number): Promise<AxiosResponse<MutedUserResponse[]>> {
-        return await axios.get<MutedUserResponse[]>(`${API_URL}/user/muted`, {params: {page: pageNumber}});
+        return await axios.get<MutedUserResponse[]>(API_USER_MUTED, {params: {page: pageNumber}});
     },
     async processBlockList(userId: number): Promise<AxiosResponse<boolean>> {
-        return await axios.get<boolean>(`${API_URL}/user/blocked/${userId}`);
+        return await axios.get<boolean>(`${API_USER_BLOCKED}/${userId}`);
     },
     async processMutedList(userId: number): Promise<AxiosResponse<boolean>> {
-        return await axios.get<boolean>(`${API_URL}/user/muted/${userId}`);
+        return await axios.get<boolean>(`${API_USER_MUTED}/${userId}`);
     },
     async getUserDetails(userId: number, cancelTokenSource: CancelTokenSource): Promise<AxiosResponse<UserDetailResponse>> {
-        return await axios.get<UserDetailResponse>(`${API_URL}/user/details/${userId}`, {cancelToken: cancelTokenSource.token});
+        return await axios.get<UserDetailResponse>(`${API_USER_DETAILS}/${userId}`, {cancelToken: cancelTokenSource.token});
     },
 };
