@@ -5,7 +5,7 @@ export const testApiCall = (
     mockAdapter: MockAdapter,
     method: "get" | "post" | "put" | "delete",
     expectedUrl: string,
-    statusCode: number,
+    statusCode: 200 | 400 | 403 | 404,
     expectedData: any,
     apiCall: (request?: any) => Promise<AxiosResponse<any>>,
     requestArgs?: any
