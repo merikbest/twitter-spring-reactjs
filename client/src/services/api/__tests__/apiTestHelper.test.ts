@@ -3,21 +3,14 @@ import MockAdapter from "axios-mock-adapter";
 
 export const testApiCall = (
     mockAdapter: MockAdapter,
-    method: "get" | "post" | "put" | "delete",
+    method: "onGet" | "onPost" | "onPut" | "onDelete",
     expectedUrl: string,
     statusCode: 200 | 400 | 403 | 404,
     expectedData: any,
     apiCall: (request?: any) => Promise<AxiosResponse<any>>,
     requestArgs?: any
 ): void => {
-    let requestHandler;
-
-    if (method === "get") {
-        requestHandler = mockAdapter.onGet(expectedUrl);
-    } else {
-        requestHandler = mockAdapter.onPost(expectedUrl, requestArgs);
-    }
-    requestHandler.reply(statusCode, expectedData);
+    mockAdapter[method](expectedUrl, requestArgs).reply(statusCode, expectedData);
 
     if (statusCode > 200) {
         apiCall(requestArgs).then((response) => response)
