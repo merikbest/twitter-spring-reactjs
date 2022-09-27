@@ -2,8 +2,16 @@ import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
 import {testApiCall} from "./apiTestHelper.test";
-import {API_LISTS, API_LISTS_PINNED, API_LISTS_USER, API_LISTS_USER_CONSIST} from "../../../util/endpoints";
-import {mockFullList, mockLists, mockPinnedLists, mockUserLists} from "../../../util/mockData/mockData";
+import {
+    API_LISTS,
+    API_LISTS_ADD_USER,
+    API_LISTS_FOLLOW,
+    API_LISTS_PIN,
+    API_LISTS_PINNED,
+    API_LISTS_USER,
+    API_LISTS_USER_CONSIST
+} from "../../../util/endpoints";
+import {mockFullList, mockLists, mockPinnedLists, mockSimpleList, mockUserLists} from "../../../util/mockData/mockData";
 import {ListsApi} from "../listsApi";
 
 describe("ListsApi", () => {
@@ -82,7 +90,6 @@ describe("ListsApi", () => {
     });
 
     describe("should fetch ListsApi.deleteList", () => {
-
         it("[200] should delete list Success", () => {
             testApiCall(mockAdapter, "onDelete", `${API_LISTS}/1`, 200, "List id:1 deleted.", ListsApi.deleteList, 1);
         });
@@ -96,4 +103,45 @@ describe("ListsApi", () => {
         });
     });
 
+    describe("should fetch ListsApi.followList", () => {
+        it("[200] should follow List Success", () => {
+            testApiCall(mockAdapter, "onGet", `${API_LISTS_FOLLOW}/1`, 200, mockUserLists[0], ListsApi.followList, 1);
+        });
+
+        it("[404] should follow list not found", () => {
+            testApiCall(mockAdapter, "onGet", `${API_LISTS_FOLLOW}/1`, 404, mockListNotFound, ListsApi.followList, 1);
+        });
+    });
+
+    describe("should fetch ListsApi.pinList", () => {
+        it("[200] should pin List Success", () => {
+            testApiCall(mockAdapter, "onGet", `${API_LISTS_PIN}/1`, 200, mockPinnedLists[0], ListsApi.pinList, 1);
+        });
+
+        it("[404] should pin List not found", () => {
+            testApiCall(mockAdapter, "onGet", `${API_LISTS_PIN}/1`, 404, mockListNotFound, ListsApi.pinList, 1);
+        });
+    });
+
+    describe("should fetch ListsApi.getListsToAddUser", () => {
+        it("[200] should get lists to add user Success", () => {
+            testApiCall(mockAdapter, "onGet", `${API_LISTS_ADD_USER}/1`, 200, mockSimpleList[0], ListsApi.getListsToAddUser, 1);
+        });
+    });
+
+    describe("should fetch ListsApi.addUserToLists", () => {
+        const mockAddUserRequest = {userId: 1, lists: [{listId: 1, isMemberInList: true}]};
+
+        it("[200] should add user to lists Success", () => {
+            testApiCall(mockAdapter, "onPost", API_LISTS_ADD_USER, 200, "User added to lists success.", ListsApi.addUserToLists, mockAddUserRequest);
+        });
+
+        it("[404] should user not found", () => {
+            testApiCall(mockAdapter, "onPost", API_LISTS_ADD_USER, 404, mockListNotFound, ListsApi.addUserToLists, mockAddUserRequest);
+        });
+
+        it("[400] should user is blocked", () => {
+            testApiCall(mockAdapter, "onPost", API_LISTS_ADD_USER, 400, "User with ID:1 is blocked", ListsApi.addUserToLists, mockAddUserRequest);
+        });
+    });
 });
