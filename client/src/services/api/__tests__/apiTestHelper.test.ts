@@ -7,20 +7,22 @@ export const testApiCall = (
     expectedUrl: string,
     statusCode: 200 | 400 | 403 | 404,
     expectedData: any,
-    apiCall: (request?: any) => Promise<AxiosResponse<any>>,
-    requestArgs?: any
+    apiCall: (...request: any) => Promise<AxiosResponse<any>>,
+    ...requestArgs: any[]
 ): void => {
-    mockAdapter[method](expectedUrl, requestArgs).reply(statusCode, expectedData);
+    mockAdapter[method](expectedUrl, requestArgs instanceof Object ? requestArgs[0] : requestArgs).reply(statusCode, expectedData);
 
     if (statusCode > 200) {
-        apiCall(requestArgs).then((response) => response)
+        apiCall(...requestArgs)
+            .then((response) => response)
             .catch((error) => {
                 testExpectResponse(error.response, statusCode, expectedUrl, expectedData);
             });
     } else {
-        apiCall(requestArgs).then((response) => {
-            testExpectResponse(response, statusCode, expectedUrl, expectedData);
-        });
+        apiCall(...requestArgs)
+            .then((response) => {
+                testExpectResponse(response, statusCode, expectedUrl, expectedData);
+            });
     }
 };
 

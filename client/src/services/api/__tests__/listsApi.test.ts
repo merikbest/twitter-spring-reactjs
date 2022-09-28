@@ -6,18 +6,29 @@ import {
     API_LISTS,
     API_LISTS_ADD_USER,
     API_LISTS_FOLLOW,
+    API_LISTS_FOLLOWERS,
+    API_LISTS_MEMBERS,
     API_LISTS_PIN,
     API_LISTS_PINNED,
+    API_LISTS_SEARCH,
     API_LISTS_USER,
     API_LISTS_USER_CONSIST
 } from "../../../util/endpoints";
-import {mockFullList, mockLists, mockPinnedLists, mockSimpleList, mockUserLists} from "../../../util/mockData/mockData";
+import {
+    mockFullList,
+    mockLists,
+    mockListsOwnerMember,
+    mockPinnedLists,
+    mockSimpleList,
+    mockUserLists
+} from "../../../util/mockData/mockData";
 import {ListsApi} from "../listsApi";
 
 describe("ListsApi", () => {
     const mockAdapter = new MockAdapter(axios);
     const mockListNotFound = "List not found";
     const mockListError = "Incorrect list name length";
+    const mockUserBLocked = "User with ID:1 is blocked";
 
     beforeEach(() => mockAdapter.reset());
 
@@ -136,12 +147,60 @@ describe("ListsApi", () => {
             testApiCall(mockAdapter, "onPost", API_LISTS_ADD_USER, 200, "User added to lists success.", ListsApi.addUserToLists, mockAddUserRequest);
         });
 
-        it("[404] should user not found", () => {
+        it("[404] should list not found", () => {
             testApiCall(mockAdapter, "onPost", API_LISTS_ADD_USER, 404, mockListNotFound, ListsApi.addUserToLists, mockAddUserRequest);
         });
 
         it("[400] should user is blocked", () => {
-            testApiCall(mockAdapter, "onPost", API_LISTS_ADD_USER, 400, "User with ID:1 is blocked", ListsApi.addUserToLists, mockAddUserRequest);
+            testApiCall(mockAdapter, "onPost", API_LISTS_ADD_USER, 400, mockUserBLocked, ListsApi.addUserToLists, mockAddUserRequest);
+        });
+    });
+
+    describe("should fetch ListsApi.addUserToList", () => {
+        it("[200] should add user to list Success", () => {
+            testApiCall(mockAdapter, "onGet", `${API_LISTS_ADD_USER}/1/1`, 200, true, ListsApi.addUserToList, 1, 1);
+        });
+
+        it("[404] should list not found", () => {
+            testApiCall(mockAdapter, "onGet", `${API_LISTS_ADD_USER}/1/1`, 404, mockListNotFound, ListsApi.addUserToList, 1, 1);
+        });
+
+        it("[400] should user is blocked", () => {
+            testApiCall(mockAdapter, "onGet", `${API_LISTS_ADD_USER}/1/1`, 400, mockUserBLocked, ListsApi.addUserToList, 1, 1);
+        });
+    });
+
+    describe("should fetch ListsApi.getListFollowers", () => {
+        it("[200] should get list followers Success", () => {
+            testApiCall(mockAdapter, "onGet", API_LISTS_FOLLOWERS(1, 1), 200, mockListsOwnerMember, ListsApi.getListFollowers, 1, 1);
+        });
+
+        it("[404] should list not found", () => {
+            testApiCall(mockAdapter, "onGet", API_LISTS_FOLLOWERS(1, 1), 404, mockListNotFound, ListsApi.getListFollowers, 1, 1);
+        });
+
+        it("[400] should user is blocked", () => {
+            testApiCall(mockAdapter, "onGet", API_LISTS_FOLLOWERS(1, 1), 400, mockUserBLocked, ListsApi.getListFollowers, 1, 1);
+        });
+    });
+
+    describe("should fetch ListsApi.getListMembers", () => {
+        it("[200] should get list members Success", () => {
+            testApiCall(mockAdapter, "onGet", API_LISTS_MEMBERS(1, 1), 200, mockListsOwnerMember, ListsApi.getListMembers, 1, 1);
+        });
+
+        it("[404] should list not found", () => {
+            testApiCall(mockAdapter, "onGet", API_LISTS_MEMBERS(1, 1), 404, mockListNotFound, ListsApi.getListMembers, 1, 1);
+        });
+
+        it("[400] should user is blocked", () => {
+            testApiCall(mockAdapter, "onGet", API_LISTS_MEMBERS(1, 1), 400, mockUserBLocked, ListsApi.getListMembers, 1, 1);
+        });
+    });
+
+    describe("should fetch ListsApi.searchListMembersByUsername", () => {
+        it("[200] should search list members by username Success", () => {
+            testApiCall(mockAdapter, "onGet", `${API_LISTS_SEARCH}/1/test`, 200, mockListsOwnerMember, ListsApi.searchListMembersByUsername, 1, "test");
         });
     });
 });
