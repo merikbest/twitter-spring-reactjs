@@ -135,9 +135,9 @@ describe("tweets actions", () => {
         payload: {id: 1} as TweetResponse
     });
 
-    testAction(fetchTweetsByTag, fetchTweetsByTag("test"), {
+    testAction(fetchTweetsByTag, fetchTweetsByTag({tag: "test", pageNumber: 1}), {
         type: TweetsActionType.FETCH_TWEETS_BY_TAG,
-        payload: "test"
+        payload: {tag: "test", pageNumber: 1}
     });
 
     testAction(fetchTweetsByText, fetchTweetsByText({text: "test", pageNumber: 1}), {
