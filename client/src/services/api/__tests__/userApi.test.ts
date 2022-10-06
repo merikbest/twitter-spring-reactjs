@@ -5,12 +5,17 @@ import {testApiCall} from "./apiTestHelper.test";
 import {
     API_USER,
     API_USER_ALL,
+    API_USER_FOLLOW,
+    API_USER_FOLLOW_ACCEPT,
+    API_USER_FOLLOW_DECLINE,
+    API_USER_FOLLOW_PRIVATE,
     API_USER_FOLLOWER_REQUESTS,
     API_USER_FOLLOWERS,
     API_USER_FOLLOWING,
     API_USER_IMAGES,
     API_USER_RELEVANT,
-    API_USER_SEARCH
+    API_USER_SEARCH,
+    API_USER_SUBSCRIBE
 } from "../../../util/endpoints";
 import {mockMyProfile, mockUsers} from "../../../util/mockData/mockData";
 import {UserApi} from "../userApi";
@@ -108,4 +113,55 @@ describe("UserApi", () => {
             testApiCall(mockAdapter, "onGet", API_USER_FOLLOWER_REQUESTS, 200, [{id: 1}], UserApi.getFollowerRequests, 1);
         });
     });
+
+    describe("should fetch UserApi.follow", () => {
+        it("[200] should follow Success", () => {
+            testApiCall(mockAdapter, "onGet", `${API_USER_FOLLOW}/1`, 200, [{id: 1}], UserApi.follow, 1);
+        });
+
+        it("[404] should user nor found", () => {
+            testApiCall(mockAdapter, "onGet", `${API_USER_FOLLOW}/1`, 404, mockUserNotFound, UserApi.follow, 1);
+        });
+    });
+
+    describe("should fetch UserApi.processFollowRequestToPrivateProfile", () => {
+        it("[200] should process follow request to private profile Success", () => {
+            testApiCall(mockAdapter, "onGet", `${API_USER_FOLLOW_PRIVATE}/1`, 200, mockMyProfile, UserApi.processFollowRequestToPrivateProfile, 1);
+        });
+
+        it("[404] should user nor found", () => {
+            testApiCall(mockAdapter, "onGet", `${API_USER_FOLLOW_PRIVATE}/1`, 404, mockUserNotFound, UserApi.processFollowRequestToPrivateProfile, 1);
+        });
+    });
+
+    describe("should fetch UserApi.acceptFollowRequest", () => {
+        it("[200] should accept followRequest Success", () => {
+            testApiCall(mockAdapter, "onGet", `${API_USER_FOLLOW_ACCEPT}/1`, 200, "User (id:1) accepted.", UserApi.acceptFollowRequest, 1);
+        });
+
+        it("[404] should user nor found", () => {
+            testApiCall(mockAdapter, "onGet", `${API_USER_FOLLOW_ACCEPT}/1`, 404, mockUserNotFound, UserApi.acceptFollowRequest, 1);
+        });
+    });
+
+    describe("should fetch UserApi.declineFollowRequest", () => {
+        it("[200] should decline followRequest Success", () => {
+            testApiCall(mockAdapter, "onGet", `${API_USER_FOLLOW_DECLINE}/1`, 200, "User (id:1) declined.", UserApi.declineFollowRequest, 1);
+        });
+
+        it("[404] should user nor found", () => {
+            testApiCall(mockAdapter, "onGet", `${API_USER_FOLLOW_DECLINE}/1`, 404, mockUserNotFound, UserApi.declineFollowRequest, 1);
+        });
+    });
+
+    describe("should fetch UserApi.processSubscribeToNotifications", () => {
+        it("[200] should process subscribe to notifications Success", () => {
+            testApiCall(mockAdapter, "onGet", `${API_USER_SUBSCRIBE}/1`, 200, true, UserApi.processSubscribeToNotifications, 1);
+        });
+
+        it("[404] should user nor found", () => {
+            testApiCall(mockAdapter, "onGet", `${API_USER_SUBSCRIBE}/1`, 404, mockUserNotFound, UserApi.processSubscribeToNotifications, 1);
+        });
+    });
+
 });
