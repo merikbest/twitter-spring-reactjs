@@ -13,11 +13,17 @@ import {
     API_USER_FOLLOWERS,
     API_USER_FOLLOWING,
     API_USER_IMAGES,
+    API_USER_LIKED,
+    API_USER_MEDIA,
+    API_USER_NOTIFICATIONS,
+    API_USER_NOTIFICATIONS_SUBSCRIBES,
     API_USER_RELEVANT,
+    API_USER_REPLIES,
     API_USER_SEARCH,
-    API_USER_SUBSCRIBE
+    API_USER_SUBSCRIBE,
+    API_USER_TWEETS
 } from "../../../util/endpoints";
-import {mockMyProfile, mockUsers} from "../../../util/mockData/mockData";
+import {mockMyProfile, mockTweets, mockUsers} from "../../../util/mockData/mockData";
 import {UserApi} from "../userApi";
 
 describe("UserApi", () => {
@@ -164,4 +170,65 @@ describe("UserApi", () => {
         });
     });
 
+    describe("should fetch UserApi.getUserTweets", () => {
+        it("[200] should get user tweets Success", () => {
+            testApiCall(mockAdapter, "onGet", API_USER_TWEETS(1), 200, mockTweets, UserApi.getUserTweets, mockPageable);
+        });
+
+        it("[404] should user nor found", () => {
+            testApiCall(mockAdapter, "onGet", API_USER_TWEETS(1), 404, mockUserNotFound, UserApi.getUserTweets, mockPageable);
+        });
+    });
+
+    describe("should fetch UserApi.getUserLikedTweets", () => {
+        it("[200] should get user liked tweets Success", () => {
+            testApiCall(mockAdapter, "onGet", API_USER_LIKED(1), 200, mockTweets, UserApi.getUserLikedTweets, mockPageable);
+        });
+
+        it("[404] should user nor found", () => {
+            testApiCall(mockAdapter, "onGet", API_USER_LIKED(1), 404, mockUserNotFound, UserApi.getUserLikedTweets, mockPageable);
+        });
+    });
+
+    describe("should fetch UserApi.getUserMediaTweets", () => {
+        it("[200] should get user media tweets Success", () => {
+            testApiCall(mockAdapter, "onGet", API_USER_MEDIA(1), 200, mockTweets, UserApi.getUserMediaTweets, mockPageable);
+        });
+
+        it("[404] should user nor found", () => {
+            testApiCall(mockAdapter, "onGet", API_USER_MEDIA(1), 404, mockUserNotFound, UserApi.getUserMediaTweets, mockPageable);
+        });
+    });
+
+    describe("should fetch UserApi.getUserRetweetsAndReplies", () => {
+        it("[200] should get user retweets and replies Success", () => {
+            testApiCall(mockAdapter, "onGet", API_USER_REPLIES(1), 200, mockTweets, UserApi.getUserRetweetsAndReplies, mockPageable);
+        });
+
+        it("[404] should user nor found", () => {
+            testApiCall(mockAdapter, "onGet", API_USER_REPLIES(1), 404, mockUserNotFound, UserApi.getUserRetweetsAndReplies, mockPageable);
+        });
+    });
+
+    describe("should fetch UserApi.getUserNotifications", () => {
+        it("[200] should get user notifications Success", () => {
+            testApiCall(mockAdapter, "onGet", API_USER_NOTIFICATIONS, 200, [{id: 1}], UserApi.getUserNotifications, 1);
+        });
+    });
+
+    describe("should fetch UserApi.getTweetAuthorsNotifications", () => {
+        it("[200] should get tweet authors notifications Success", () => {
+            testApiCall(mockAdapter, "onGet", API_USER_NOTIFICATIONS_SUBSCRIBES, 200, [{id: 1}], UserApi.getTweetAuthorsNotifications);
+        });
+    });
+
+    describe("should fetch UserApi.getUserNotificationById", () => {
+        it("[200] should get user notification by id Success", () => {
+            testApiCall(mockAdapter, "onGet", `${API_USER_NOTIFICATIONS}/1`, 200, [{id: 1}], UserApi.getUserNotificationById, 1);
+        });
+
+        it("[404] should user nor found", () => {
+            testApiCall(mockAdapter, "onGet", `${API_USER_NOTIFICATIONS}/1`, 404, "Notification not found", UserApi.getUserNotificationById, 1);
+        });
+    });
 });
