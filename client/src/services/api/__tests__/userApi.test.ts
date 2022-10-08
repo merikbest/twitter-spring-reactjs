@@ -5,6 +5,7 @@ import {testApiCall} from "./apiTestHelper.test";
 import {
     API_USER,
     API_USER_ALL,
+    API_USER_BOOKMARKS,
     API_USER_FOLLOW,
     API_USER_FOLLOW_ACCEPT,
     API_USER_FOLLOW_DECLINE,
@@ -15,11 +16,15 @@ import {
     API_USER_IMAGES,
     API_USER_LIKED,
     API_USER_MEDIA,
+    API_USER_MENTIONS,
     API_USER_NOTIFICATIONS,
     API_USER_NOTIFICATIONS_SUBSCRIBES,
+    API_USER_NOTIFICATIONS_TIMELINE,
+    API_USER_PIN_TWEET,
     API_USER_RELEVANT,
     API_USER_REPLIES,
     API_USER_SEARCH,
+    API_USER_START,
     API_USER_SUBSCRIBE,
     API_USER_TWEETS
 } from "../../../util/endpoints";
@@ -29,6 +34,7 @@ import {UserApi} from "../userApi";
 describe("UserApi", () => {
     const mockAdapter = new MockAdapter(axios);
     const mockUserErrorResponse = "User not found";
+    const mockTweetErrorResponse = "Tweet not found";
     const mockUserNotFound = "User (id:1) not found";
     const mockUserBlocked = "User (id:1) is blocked";
     const mockPageable = {userId: 1, page: 1};
@@ -95,7 +101,7 @@ describe("UserApi", () => {
             testApiCall(mockAdapter, "onGet", `${API_USER_FOLLOWERS}/1`, 400, mockUserBlocked, UserApi.getFollowers, mockPageable);
         });
 
-        it("[404] should user nor found", () => {
+        it("[404] should user not found", () => {
             testApiCall(mockAdapter, "onGet", `${API_USER_FOLLOWERS}/1`, 404, mockUserNotFound, UserApi.getFollowers, mockPageable);
         });
     });
@@ -109,7 +115,7 @@ describe("UserApi", () => {
             testApiCall(mockAdapter, "onGet", `${API_USER_FOLLOWING}/1`, 400, mockUserBlocked, UserApi.getFollowing, mockPageable);
         });
 
-        it("[404] should user nor found", () => {
+        it("[404] should user not found", () => {
             testApiCall(mockAdapter, "onGet", `${API_USER_FOLLOWING}/1`, 404, mockUserNotFound, UserApi.getFollowing, mockPageable);
         });
     });
@@ -125,7 +131,7 @@ describe("UserApi", () => {
             testApiCall(mockAdapter, "onGet", `${API_USER_FOLLOW}/1`, 200, [{id: 1}], UserApi.follow, 1);
         });
 
-        it("[404] should user nor found", () => {
+        it("[404] should user not found", () => {
             testApiCall(mockAdapter, "onGet", `${API_USER_FOLLOW}/1`, 404, mockUserNotFound, UserApi.follow, 1);
         });
     });
@@ -135,7 +141,7 @@ describe("UserApi", () => {
             testApiCall(mockAdapter, "onGet", `${API_USER_FOLLOW_PRIVATE}/1`, 200, mockMyProfile, UserApi.processFollowRequestToPrivateProfile, 1);
         });
 
-        it("[404] should user nor found", () => {
+        it("[404] should user not found", () => {
             testApiCall(mockAdapter, "onGet", `${API_USER_FOLLOW_PRIVATE}/1`, 404, mockUserNotFound, UserApi.processFollowRequestToPrivateProfile, 1);
         });
     });
@@ -145,7 +151,7 @@ describe("UserApi", () => {
             testApiCall(mockAdapter, "onGet", `${API_USER_FOLLOW_ACCEPT}/1`, 200, "User (id:1) accepted.", UserApi.acceptFollowRequest, 1);
         });
 
-        it("[404] should user nor found", () => {
+        it("[404] should user not found", () => {
             testApiCall(mockAdapter, "onGet", `${API_USER_FOLLOW_ACCEPT}/1`, 404, mockUserNotFound, UserApi.acceptFollowRequest, 1);
         });
     });
@@ -155,7 +161,7 @@ describe("UserApi", () => {
             testApiCall(mockAdapter, "onGet", `${API_USER_FOLLOW_DECLINE}/1`, 200, "User (id:1) declined.", UserApi.declineFollowRequest, 1);
         });
 
-        it("[404] should user nor found", () => {
+        it("[404] should user not found", () => {
             testApiCall(mockAdapter, "onGet", `${API_USER_FOLLOW_DECLINE}/1`, 404, mockUserNotFound, UserApi.declineFollowRequest, 1);
         });
     });
@@ -165,7 +171,7 @@ describe("UserApi", () => {
             testApiCall(mockAdapter, "onGet", `${API_USER_SUBSCRIBE}/1`, 200, true, UserApi.processSubscribeToNotifications, 1);
         });
 
-        it("[404] should user nor found", () => {
+        it("[404] should user not found", () => {
             testApiCall(mockAdapter, "onGet", `${API_USER_SUBSCRIBE}/1`, 404, mockUserNotFound, UserApi.processSubscribeToNotifications, 1);
         });
     });
@@ -175,7 +181,7 @@ describe("UserApi", () => {
             testApiCall(mockAdapter, "onGet", API_USER_TWEETS(1), 200, mockTweets, UserApi.getUserTweets, mockPageable);
         });
 
-        it("[404] should user nor found", () => {
+        it("[404] should user not found", () => {
             testApiCall(mockAdapter, "onGet", API_USER_TWEETS(1), 404, mockUserNotFound, UserApi.getUserTweets, mockPageable);
         });
     });
@@ -185,7 +191,7 @@ describe("UserApi", () => {
             testApiCall(mockAdapter, "onGet", API_USER_LIKED(1), 200, mockTweets, UserApi.getUserLikedTweets, mockPageable);
         });
 
-        it("[404] should user nor found", () => {
+        it("[404] should user not found", () => {
             testApiCall(mockAdapter, "onGet", API_USER_LIKED(1), 404, mockUserNotFound, UserApi.getUserLikedTweets, mockPageable);
         });
     });
@@ -195,7 +201,7 @@ describe("UserApi", () => {
             testApiCall(mockAdapter, "onGet", API_USER_MEDIA(1), 200, mockTweets, UserApi.getUserMediaTweets, mockPageable);
         });
 
-        it("[404] should user nor found", () => {
+        it("[404] should user not found", () => {
             testApiCall(mockAdapter, "onGet", API_USER_MEDIA(1), 404, mockUserNotFound, UserApi.getUserMediaTweets, mockPageable);
         });
     });
@@ -205,7 +211,7 @@ describe("UserApi", () => {
             testApiCall(mockAdapter, "onGet", API_USER_REPLIES(1), 200, mockTweets, UserApi.getUserRetweetsAndReplies, mockPageable);
         });
 
-        it("[404] should user nor found", () => {
+        it("[404] should user not found", () => {
             testApiCall(mockAdapter, "onGet", API_USER_REPLIES(1), 404, mockUserNotFound, UserApi.getUserRetweetsAndReplies, mockPageable);
         });
     });
@@ -227,8 +233,52 @@ describe("UserApi", () => {
             testApiCall(mockAdapter, "onGet", `${API_USER_NOTIFICATIONS}/1`, 200, [{id: 1}], UserApi.getUserNotificationById, 1);
         });
 
-        it("[404] should user nor found", () => {
+        it("[404] should user not found", () => {
             testApiCall(mockAdapter, "onGet", `${API_USER_NOTIFICATIONS}/1`, 404, "Notification not found", UserApi.getUserNotificationById, 1);
+        });
+    });
+
+    describe("should fetch UserApi.getNotificationsFromTweetAuthors", () => {
+        it("[200] should get notifications from tweet authors Success", () => {
+            testApiCall(mockAdapter, "onGet", API_USER_NOTIFICATIONS_TIMELINE, 200, mockTweets, UserApi.getNotificationsFromTweetAuthors, 1);
+        });
+    });
+
+    describe("should fetch UserApi.getUserMentions", () => {
+        it("[200] should get user mentions Success", () => {
+            testApiCall(mockAdapter, "onGet", API_USER_MENTIONS, 200, mockTweets, UserApi.getUserMentions, 1);
+        });
+    });
+
+    describe("should fetch UserApi.getUserBookmarks", () => {
+        it("[200] should get user bookmarks Success", () => {
+            testApiCall(mockAdapter, "onGet", API_USER_BOOKMARKS, 200, mockTweets, UserApi.getUserBookmarks, 1);
+        });
+    });
+
+    describe("should fetch UserApi.addTweetToBookmarks", () => {
+        it("[200] should add tweet to bookmarks Success", () => {
+            testApiCall(mockAdapter, "onGet", `${API_USER_BOOKMARKS}/1`, 200, true, UserApi.addTweetToBookmarks, 1);
+        });
+
+        it("[404] should tweet not found", () => {
+            testApiCall(mockAdapter, "onGet", `${API_USER_BOOKMARKS}/1`, 404, mockTweetErrorResponse, UserApi.addTweetToBookmarks, 1);
+        });
+    });
+
+    describe("should fetch UserApi.startUseTwitter", () => {
+        it("[200] should start use twitter Success", () => {
+            testApiCall(mockAdapter, "onGet", API_USER_START(1), 200, true, UserApi.startUseTwitter, 1);
+        });
+    });
+
+    describe("should fetch UserApi.pinTweet", () => {
+        it("[200] should pin tweet Success", () => {
+            testApiCall(mockAdapter, "onGet", `${API_USER_PIN_TWEET}/1`, 200, 1, UserApi.pinTweet, 1);
+        });
+
+        it("[404] should tweet not found", () => {
+            testApiCall(mockAdapter, "onGet", `${API_USER_PIN_TWEET}/1`, 404, mockTweetErrorResponse, UserApi.pinTweet, 1);
         });
     });
 });
