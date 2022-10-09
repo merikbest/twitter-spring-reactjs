@@ -5,12 +5,14 @@ import {testApiCall} from "./apiTestHelper.test";
 import {
     API_LISTS,
     API_LISTS_ADD_USER,
+    API_LISTS_DETAILS,
     API_LISTS_FOLLOW,
     API_LISTS_FOLLOWERS,
     API_LISTS_MEMBERS,
     API_LISTS_PIN,
     API_LISTS_PINNED,
     API_LISTS_SEARCH,
+    API_LISTS_TWEETS,
     API_LISTS_USER,
     API_LISTS_USER_CONSIST
 } from "../../../util/endpoints";
@@ -20,6 +22,7 @@ import {
     mockListsOwnerMember,
     mockPinnedLists,
     mockSimpleList,
+    mockTweets,
     mockUserLists
 } from "../../../util/mockData/mockData";
 import {ListsApi} from "../listsApi";
@@ -167,6 +170,28 @@ describe("ListsApi", () => {
 
         it("[400] should user is blocked", () => {
             testApiCall(mockAdapter, "onGet", `${API_LISTS_ADD_USER}/1/1`, 400, mockUserBLocked, ListsApi.addUserToList, 1, 1);
+        });
+    });
+
+    describe("should fetch ListsApi.getTweetsByListId", () => {
+        it("[200] should get tweets by list id Success", () => {
+            testApiCall(mockAdapter, "onGet", API_LISTS_TWEETS(1), 200, mockTweets, ListsApi.getTweetsByListId, 1, 1);
+        });
+
+        it("[404] should list not found", () => {
+            testApiCall(mockAdapter, "onGet", API_LISTS_TWEETS(1), 404, mockListNotFound, ListsApi.getTweetsByListId, 1, 1);
+        });
+    });
+
+    describe("should fetch ListsApi.getListDetails", () => {
+        const cancelTokenSource = axios.CancelToken.source();
+
+        it("[200] should get list details Success", () => {
+            testApiCall(mockAdapter, "onGet", API_LISTS_DETAILS(1), 200, mockTweets, ListsApi.getListDetails, 1, cancelTokenSource);
+        });
+
+        it("[404] should list not found", () => {
+            testApiCall(mockAdapter, "onGet", API_LISTS_DETAILS(1), 404, mockListNotFound, ListsApi.getListDetails, 1, cancelTokenSource);
         });
     });
 

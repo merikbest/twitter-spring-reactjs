@@ -5,7 +5,9 @@ import {testApiCall} from "./apiTestHelper.test";
 import {
     API_USER,
     API_USER_ALL,
+    API_USER_BLOCKED,
     API_USER_BOOKMARKS,
+    API_USER_DETAILS,
     API_USER_FOLLOW,
     API_USER_FOLLOW_ACCEPT,
     API_USER_FOLLOW_DECLINE,
@@ -17,6 +19,7 @@ import {
     API_USER_LIKED,
     API_USER_MEDIA,
     API_USER_MENTIONS,
+    API_USER_MUTED,
     API_USER_NOTIFICATIONS,
     API_USER_NOTIFICATIONS_SUBSCRIBES,
     API_USER_NOTIFICATIONS_TIMELINE,
@@ -28,7 +31,14 @@ import {
     API_USER_SUBSCRIBE,
     API_USER_TWEETS
 } from "../../../util/endpoints";
-import {mockMyProfile, mockTweets, mockUsers} from "../../../util/mockData/mockData";
+import {
+    mockBlockedUsers,
+    mockMutedUsers,
+    mockMyProfile,
+    mockTweets,
+    mockUserDetailResponse,
+    mockUsers
+} from "../../../util/mockData/mockData";
 import {UserApi} from "../userApi";
 
 describe("UserApi", () => {
@@ -279,6 +289,50 @@ describe("UserApi", () => {
 
         it("[404] should tweet not found", () => {
             testApiCall(mockAdapter, "onGet", `${API_USER_PIN_TWEET}/1`, 404, mockTweetErrorResponse, UserApi.pinTweet, 1);
+        });
+    });
+
+    describe("should fetch UserApi.getBlockList", () => {
+        it("[200] should get block list Success", () => {
+            testApiCall(mockAdapter, "onGet", API_USER_BLOCKED, 200, mockBlockedUsers, UserApi.getBlockList, 1);
+        });
+    });
+
+    describe("should fetch UserApi.getMutedList", () => {
+        it("[200] should get muted list Success", () => {
+            testApiCall(mockAdapter, "onGet", API_USER_MUTED, 200, mockMutedUsers, UserApi.getMutedList, 1);
+        });
+    });
+
+    describe("should fetch UserApi.processBlockList", () => {
+        it("[200] should process block list Success", () => {
+            testApiCall(mockAdapter, "onGet", `${API_USER_BLOCKED}/1`, 200, true, UserApi.processBlockList, 1);
+        });
+
+        it("[404] should user not found", () => {
+            testApiCall(mockAdapter, "onGet", `${API_USER_BLOCKED}/1`, 404, mockUserErrorResponse, UserApi.processBlockList, 1);
+        });
+    });
+
+    describe("should fetch UserApi.processMutedList", () => {
+        it("[200] should process muted list Success", () => {
+            testApiCall(mockAdapter, "onGet", `${API_USER_MUTED}/1`, 200, true, UserApi.processMutedList, 1);
+        });
+
+        it("[404] should user not found", () => {
+            testApiCall(mockAdapter, "onGet", `${API_USER_MUTED}/1`, 404, mockUserErrorResponse, UserApi.processMutedList, 1);
+        });
+    });
+
+    describe("should fetch UserApi.getUserDetails", () => {
+        const cancelTokenSource = axios.CancelToken.source();
+
+        it("[200] should get user details Success", () => {
+            testApiCall(mockAdapter, "onGet", `${API_USER_DETAILS}/1`, 200, mockUserDetailResponse, UserApi.getUserDetails, 1, cancelTokenSource);
+        });
+
+        it("[404] should user not found", () => {
+            testApiCall(mockAdapter, "onGet", `${API_USER_DETAILS}/1`, 404, mockUserErrorResponse, UserApi.getUserDetails, 1, cancelTokenSource);
         });
     });
 });
