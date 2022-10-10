@@ -26,6 +26,7 @@ public interface TweetProjection {
     List<ImageProjection> getImages();
     QuoteTweetProjection getQuoteTweet();
     PollProjection getPoll();
+    boolean isDeleted();
 
     @Value("#{@tweetServiceImpl.isUserLikedTweet(target.id)}")
     boolean getIsTweetLiked();

@@ -99,11 +99,8 @@ public class TweetMapper {
         return tweetService.deleteScheduledTweets(tweetRequest.getTweetsIds());
     }
 
-    public TweetResponse deleteTweet(Long tweetId) {
-        Tweet tweet = tweetService.deleteTweet(tweetId);
-        TweetResponse tweetResponse = basicMapper.convertToResponse(tweet, TweetResponse.class);
-        tweetResponse.setTweetDeleted(true);
-        return tweetResponse;
+    public String deleteTweet(Long tweetId) {
+        return tweetService.deleteTweet(tweetId);
     }
 
     public NotificationResponse likeTweet(Long tweetId) {

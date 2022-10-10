@@ -35,6 +35,9 @@ public class TweetResponse {
     private Integer repliesCount;
     private Integer quotesCount;
 
+    @JsonProperty("isDeleted")
+    private boolean isDeleted;
+
     @JsonProperty("isTweetLiked")
     private boolean isTweetLiked;
 

@@ -114,7 +114,7 @@ public class UserSettingsControllerTest {
                 .andExpect(jsonPath("$.user.pinnedTweetId").value(PINNED_TWEET_ID))
                 .andExpect(jsonPath("$.user.followersSize").value(2L))
                 .andExpect(jsonPath("$.user.followingSize").value(1L))
-                .andExpect(jsonPath("$.user.followerRequestsSize").isEmpty())
+                .andExpect(jsonPath("$.user.followerRequestsSize").value(1L))
                 .andExpect(jsonPath("$.user.unreadMessagesSize").value(1L))
                 .andExpect(jsonPath("$.user.isMutedDirectMessages").value(true))
                 .andExpect(jsonPath("$.user.isPrivateProfile").value(false));

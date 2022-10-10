@@ -262,7 +262,7 @@ public class ListsServiceImpl implements ListsService {
     @Override
     public Page<TweetProjection> getTweetsByListId(Long listId, Pageable pageable) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
-        List<Long> listMembersIds = listsRepository.getListMembersIds(listId, authUserId);
+        List<Long> listMembersIds = listsRepository.getListMembersIds(listId, authUserId); // TODO check if list exist
         return tweetRepository.findTweetsByUserIds(listMembersIds, pageable);
     }
 

@@ -40,7 +40,7 @@ public interface TweetService {
 
     String deleteScheduledTweets(List<Long> tweetsIds);
 
-    Tweet deleteTweet(Long tweetId);
+    String deleteTweet(Long tweetId);
 
     Page<TweetProjection> searchTweets(String text, Pageable pageable);
 

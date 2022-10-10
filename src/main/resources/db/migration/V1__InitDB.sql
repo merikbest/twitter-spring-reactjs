@@ -176,6 +176,7 @@ create table tweets
     reply_type         varchar(255),
     scheduled_date     timestamp,
     text               varchar(2048),
+    deleted            boolean default false,
     users_id           int8,
     primary key (id)
 );

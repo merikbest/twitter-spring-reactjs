@@ -6,6 +6,6 @@ import java.time.LocalDateTime;
 
 public interface LikeTweetProjection {
     Long getId();
-    LocalDateTime getBookmarkDate();
+    LocalDateTime getLikeTweetDate();
     TweetProjection getTweet();
 }

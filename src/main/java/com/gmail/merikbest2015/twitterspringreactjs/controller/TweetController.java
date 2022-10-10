@@ -118,12 +118,8 @@ public class TweetController {
     }
 
     @DeleteMapping("/{tweetId}")
-    public ResponseEntity<TweetResponse> deleteTweet(@PathVariable Long tweetId) {
-        TweetResponse tweet = tweetMapper.deleteTweet(tweetId);
-        messagingTemplate.convertAndSend("/topic/feed", tweet);
-        messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
-        messagingTemplate.convertAndSend("/topic/user/update/tweet/" + tweet.getUser().getId(), tweet);
-        return ResponseEntity.ok(tweet);
+    public ResponseEntity<String> deleteTweet(@PathVariable Long tweetId) {
+        return ResponseEntity.ok(tweetMapper.deleteTweet(tweetId));
     }
 
     @GetMapping("/search/{text}")
