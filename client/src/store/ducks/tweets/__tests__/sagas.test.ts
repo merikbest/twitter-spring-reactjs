@@ -116,9 +116,9 @@ describe("tweetsSaga:", () => {
     });
 
     describe("fetchTweetsByTagRequest:", () => {
-        const worker = fetchTweetsByTagRequest(fetchTweetsByTag("test"));
+        const worker = fetchTweetsByTagRequest(fetchTweetsByTag({tag: "test", pageNumber: 1}));
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
-        testCall(worker, TagApi.fetchTweetsByTag, "test");
+        testCall(worker, TagApi.fetchTweetsByTag, {tag: "test", pageNumber: 1});
         testSetResponse(worker, mockPageableTweets, setTweets, mockPageableTweets.data, "TweetResponse");
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });

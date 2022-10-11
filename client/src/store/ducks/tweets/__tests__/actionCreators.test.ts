@@ -130,9 +130,9 @@ describe("tweets actions", () => {
         payload: {tweetsIds: [1, 2]}
     });
 
-    testAction(deleteTweet, deleteTweet({id: 1} as TweetResponse), {
+    testAction(deleteTweet, deleteTweet(1), {
         type: TweetsActionType.DELETE_TWEET,
-        payload: {id: 1} as TweetResponse
+        payload: 1
     });
 
     testAction(fetchTweetsByTag, fetchTweetsByTag({tag: "test", pageNumber: 1}), {

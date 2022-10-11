@@ -7,7 +7,7 @@ import {createMemoryHistory} from "history";
 
 import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
 import ResetPasswordOption from "../ResetPasswordOption";
-import {API_URL} from "../../../../util/url";
+import {API_AUTH_FORGOT} from "../../../../util/endpoints";
 import {ACCOUNT_FORGOT_CONFIRM_PIN_RESET, ACCOUNT_FORGOT_SEND_PASSWORD_RESET } from "../../../../util/pathConstants";
 
 describe("ResetPasswordOption", () => {
@@ -31,7 +31,7 @@ describe("ResetPasswordOption", () => {
 
     it("should redirect to CheckEmailCode on submit", (done) => {
         const mock = new MockAdapter(axios);
-        mock.onPost(`${API_URL}/auth/forgot`, {email: mockUser?.email}).reply(200);
+        mock.onPost(API_AUTH_FORGOT, {email: mockUser?.email}).reply(200);
         const history = createMemoryHistory();
         const pushSpy = jest.spyOn(history, "push");
         const wrapper = mountWithStore(<ResetPasswordOption/>, mockStore, history);

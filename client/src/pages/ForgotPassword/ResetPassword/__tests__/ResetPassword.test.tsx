@@ -8,7 +8,7 @@ import routeData from "react-router";
 import ResetPassword from "../ResetPassword";
 import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
 import {ForgotPasswordTextField} from "../../ForgotPasswordTextField/ForgotPasswordTextField";
-import {API_URL} from "../../../../util/url";
+import {API_AUTH_RESET} from "../../../../util/endpoints";
 import {ACCOUNT_FORGOT_PASSWORD_RESET_COMPLETE, ACCOUNT_FORGOT_RESET_PASSWORD} from "../../../../util/pathConstants";
 
 describe("ResetPassword", () => {
@@ -53,7 +53,7 @@ describe("ResetPassword", () => {
 
     it("should submit password reset", (done) => {
         const mock = new MockAdapter(axios);
-        mock.onPost(`${API_URL}/auth/reset`, {
+        mock.onPost(API_AUTH_RESET, {
             email: mockUser?.email,
             password: mockPassword,
             password2: mockPassword

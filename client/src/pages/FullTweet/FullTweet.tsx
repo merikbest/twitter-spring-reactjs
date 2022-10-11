@@ -32,7 +32,8 @@ import UsersListModal, {UsersListModalAction} from "../../components/UsersListMo
 import AddTweetForm from "../../components/AddTweetForm/AddTweetForm";
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import {useFullTweetStyles} from "./FullTweetStyles";
-import {DEFAULT_PROFILE_IMG, WS_URL} from "../../util/url";
+import {DEFAULT_PROFILE_IMG} from "../../util/url";
+import {WS_URL} from "../../util/endpoints";
 import {
     FollowReplyIcon,
     LikeIcon,

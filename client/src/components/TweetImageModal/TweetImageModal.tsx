@@ -40,7 +40,8 @@ import {
     selectReplies,
     selectTweetData
 } from "../../store/ducks/tweet/selectors";
-import {DEFAULT_PROFILE_IMG, WS_URL} from "../../util/url";
+import {DEFAULT_PROFILE_IMG} from "../../util/url";
+import {WS_URL} from "../../util/endpoints";
 import {textFormatter} from "../../util/textFormatter";
 import {HoverActionProps, HoverActions, withHoverAction} from "../../hoc/withHoverAction";
 import HoverAction from "../HoverAction/HoverAction";

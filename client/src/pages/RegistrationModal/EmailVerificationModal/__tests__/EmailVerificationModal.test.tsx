@@ -7,7 +7,7 @@ import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
 import {LoadingStatus} from "../../../../store/types";
 import EmailVerificationModal from "../EmailVerificationModal";
 import {RegistrationInputField} from "../../RegistrationInput/RegistrationInputField";
-import {API_URL} from "../../../../util/url";
+import {API_AUTH_REGISTRATION_ACTIVATE} from "../../../../util/endpoints";
 
 describe("EmailVerificationModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -30,7 +30,7 @@ describe("EmailVerificationModal", () => {
 
         wrapper.find(RegistrationInputField).find("input").simulate("change", {target: {value: "test"}});
         wrapper.find(Button).simulate("click");
-        mockAdapter.onGet(`${API_URL}/auth/registration/activate/test`).reply(200);
+        mockAdapter.onGet(`${API_AUTH_REGISTRATION_ACTIVATE}/test`).reply(200);
 
         setImmediate(() => {
             wrapper.update();
@@ -52,7 +52,7 @@ describe("EmailVerificationModal", () => {
 
         wrapper.find(RegistrationInputField).find("input").simulate("change", {target: {value: "test"}});
         wrapper.find(Button).simulate("click");
-        mockAdapter.onGet(`${API_URL}/auth/registration/activate/test`).reply(400, "Test error");
+        mockAdapter.onGet(`${API_AUTH_REGISTRATION_ACTIVATE}/test`).reply(400, "Test error");
 
         setImmediate(() => {
             wrapper.update();

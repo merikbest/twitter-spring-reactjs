@@ -8,7 +8,7 @@ import {LoadingStatus} from "../../../../store/types";
 import CreateAccountModal from "../CreateAccountModal";
 import {RegistrationInputField} from "../../RegistrationInput/RegistrationInputField";
 import Spinner from "../../../../components/Spinner/Spinner";
-import {API_URL} from "../../../../util/url";
+import {API_AUTH_REGISTRATION_CODE} from "../../../../util/endpoints";
 
 describe("CreateAccountModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -57,7 +57,7 @@ describe("CreateAccountModal", () => {
 
         wrapper.find(Button).at(0).simulate("click");
         expect(wrapper.find(Spinner).exists()).toBe(true);
-        mock.onPost(`${API_URL}/auth/registration/code`, mockRegistrationData).reply(200);
+        mock.onPost(API_AUTH_REGISTRATION_CODE, mockRegistrationData).reply(200);
         
         setImmediate(() => {
             wrapper.update();
@@ -80,7 +80,7 @@ describe("CreateAccountModal", () => {
 
         wrapper.find(Button).at(0).simulate("click");
         expect(wrapper.find(Spinner).exists()).toBe(true);
-        mock.onPost(`${API_URL}/auth/registration/code`, mockRegistrationData).reply(400);
+        mock.onPost(API_AUTH_REGISTRATION_CODE, mockRegistrationData).reply(400);
 
         setImmediate(() => {
             wrapper.update();

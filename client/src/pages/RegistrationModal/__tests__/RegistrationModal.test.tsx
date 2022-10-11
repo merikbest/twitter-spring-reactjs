@@ -8,7 +8,7 @@ import {createMockRootState, mountWithStore} from "../../../util/testHelper";
 import {LoadingStatus} from "../../../store/types";
 import RegistrationInput from "../RegistrationInput/RegistrationInput";
 import {FilledSelect} from "../../../components/FilledSelect/FilledSelect";
-import {API_URL} from "../../../util/url";
+import {API_AUTH_REGISTRATION_CHECK} from "../../../util/endpoints";
 
 describe("RegistrationModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -54,7 +54,7 @@ describe("RegistrationModal", () => {
         } = initializeTest();
 
         wrapper.find(Button).at(0).simulate("submit");
-        mock.onPost(`${API_URL}/auth/registration/check`, mockRegistrationData).reply(200);
+        mock.onPost(API_AUTH_REGISTRATION_CHECK, mockRegistrationData).reply(200);
 
         setImmediate(() => {
             wrapper.update();
@@ -74,7 +74,7 @@ describe("RegistrationModal", () => {
         const {mockRegistrationData, mock, wrapper} = initializeTest();
 
         wrapper.find(Button).at(0).simulate("submit");
-        mock.onPost(`${API_URL}/auth/registration/check`, mockRegistrationData).reply(400, mockError);
+        mock.onPost(API_AUTH_REGISTRATION_CHECK, mockRegistrationData).reply(400, mockError);
 
         setImmediate(() => {
             wrapper.update();

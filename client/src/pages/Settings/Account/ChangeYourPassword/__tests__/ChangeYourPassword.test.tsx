@@ -8,7 +8,7 @@ import ChangeYourPassword from "../ChangeYourPassword";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
 import {LoadingStatus} from "../../../../../store/types";
 import {ChangeInfoTextField} from "../../../ChangeInfoTextField/ChangeInfoTextField";
-import {API_URL} from "../../../../../util/url";
+import {API_AUTH_RESET_CURRENT} from "../../../../../util/endpoints";
 import ActionSnackbar from "../../../../../components/ActionSnackbar/ActionSnackbar";
 
 describe("ChangeYourPassword", () => {
@@ -38,7 +38,7 @@ describe("ChangeYourPassword", () => {
         expect(wrapper.find(ChangeInfoTextField).at(1).prop("value")).toBe(mockNewPassword);
         expect(wrapper.find(ChangeInfoTextField).at(2).prop("value")).toBe(mockNewPassword);
 
-        mockAdapter.onPost(`${API_URL}/auth/reset/current`, mockChangePasswordRequest).reply(200, mockSuccessMessage);
+        mockAdapter.onPost(API_AUTH_RESET_CURRENT, mockChangePasswordRequest).reply(200, mockSuccessMessage);
 
         setImmediate(() => {
             wrapper.update();
@@ -58,7 +58,7 @@ describe("ChangeYourPassword", () => {
 
         submitChangePasswordForm(wrapper);
 
-        mockAdapter.onPost(`${API_URL}/auth/reset/current`, mockChangePasswordRequest).reply(404, {currentPassword: mockErrorMessage});
+        mockAdapter.onPost(API_AUTH_RESET_CURRENT, mockChangePasswordRequest).reply(404, {currentPassword: mockErrorMessage});
 
         setImmediate(() => {
             wrapper.update();
@@ -75,7 +75,7 @@ describe("ChangeYourPassword", () => {
 
         submitChangePasswordForm(wrapper);
 
-        mockAdapter.onPost(`${API_URL}/auth/reset/current`, mockChangePasswordRequest).reply(400, {password: mockErrorMessage});
+        mockAdapter.onPost(API_AUTH_RESET_CURRENT, mockChangePasswordRequest).reply(400, {password: mockErrorMessage});
 
         setImmediate(() => {
             wrapper.update();
@@ -92,7 +92,7 @@ describe("ChangeYourPassword", () => {
 
         submitChangePasswordForm(wrapper);
 
-        mockAdapter.onPost(`${API_URL}/auth/reset/current`, mockChangePasswordRequest).reply(400, {password2: mockErrorMessage});
+        mockAdapter.onPost(API_AUTH_RESET_CURRENT, mockChangePasswordRequest).reply(400, {password2: mockErrorMessage});
 
         setImmediate(() => {
             wrapper.update();

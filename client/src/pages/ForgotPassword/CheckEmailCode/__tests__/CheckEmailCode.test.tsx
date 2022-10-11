@@ -7,7 +7,7 @@ import {Button, Link as MuiLink} from "@material-ui/core";
 import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
 import CheckEmailCode from "../CheckEmailCode";
 import {ForgotPasswordTextField} from "../../ForgotPasswordTextField/ForgotPasswordTextField";
-import {API_URL} from "../../../../util/url";
+import {API_AUTH_RESET} from "../../../../util/endpoints";
 import {mockUser} from "../../../../util/mockData/mockData";
 import { ACCOUNT_FORGOT_RESET_PASSWORD } from "../../../../util/pathConstants";
 
@@ -27,7 +27,7 @@ describe("CheckEmailCode", () => {
 
     it("should verify reset code", (done) => {
         const mock = new MockAdapter(axios);
-        mock.onGet(`${API_URL}/auth/reset/${mockResetCode}`).reply(200, mockUser);
+        mock.onGet(`${API_AUTH_RESET}/${mockResetCode}`).reply(200, mockUser);
         const history = createMemoryHistory();
         const pushSpy = jest.spyOn(history, "push");
         const wrapper = mountWithStore(<CheckEmailCode/>, createMockRootState(), history);
@@ -46,7 +46,7 @@ describe("CheckEmailCode", () => {
     
     it("should return error on verify code", (done) => {
         const mock = new MockAdapter(axios);
-        mock.onGet(`${API_URL}/auth/reset/${mockResetCode}`).reply(400, mockUser);
+        mock.onGet(`${API_AUTH_RESET}/${mockResetCode}`).reply(400, mockUser);
         const wrapper = mountWithStore(<CheckEmailCode/>, mockStore);
         const input = wrapper.find(ForgotPasswordTextField).find("input").at(0);
 

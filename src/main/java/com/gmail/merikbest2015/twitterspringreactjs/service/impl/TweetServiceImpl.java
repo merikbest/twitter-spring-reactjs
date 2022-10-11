@@ -181,7 +181,7 @@ public class TweetServiceImpl implements TweetService {
                 .filter(t -> t.getId().equals(tweetId))
                 .findFirst()
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-        if (user.getPinnedTweet().getId().equals(tweetId)) {
+        if (user.getPinnedTweet() != null && user.getPinnedTweet().getId().equals(tweetId)) {
             user.setPinnedTweet(null);
         }
         List<Tag> tags = tagRepository.findByTweets_Id(tweetId);

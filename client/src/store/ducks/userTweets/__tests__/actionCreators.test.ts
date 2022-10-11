@@ -63,9 +63,9 @@ describe("userTweets actions", () => {
         payload: {tweetId: 1, isTweetBookmarked: true}
     });
 
-    testAction(deleteUserTweet, deleteUserTweet({id: 1} as TweetResponse), {
+    testAction(deleteUserTweet, deleteUserTweet(1), {
         type: UserTweetsActionType.DELETE_TWEET,
-        payload: {id: 1} as TweetResponse
+        payload: 1
     });
 
     testAction(fetchUserTweets, fetchUserTweets({userId: "1", page: 1}), {

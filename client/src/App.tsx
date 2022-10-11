@@ -26,10 +26,10 @@ import Notifications from "./pages/Notifications/Notifications";
 import NotificationInfo from "./pages/Notifications/NotificationsPage/NotificationInfo/NotificationInfo";
 import Messages from "./pages/Messages/Messages";
 import {setChatMessage} from "./store/ducks/chatMessages/actionCreators";
-import {WS_URL} from "./util/url";
+import {WS_URL} from "./util/endpoints";
 import {setNotification, updateNotificationInfoTweet} from "./store/ducks/notifications/actionCreators";
 import {selectNotificationsList} from "./store/ducks/notifications/selectors";
-import {deleteTweet, setScheduledTweets, setTweet, setUpdatedTweet} from "./store/ducks/tweets/actionCreators";
+import {setScheduledTweets, setTweet, setUpdatedTweet} from "./store/ducks/tweets/actionCreators";
 import Lists from "./pages/Lists/Lists";
 import FullList from "./pages/FullList/FullList";
 import SuggestedLists from "./pages/SuggestedLists/SuggestedLists";
@@ -108,12 +108,8 @@ const App: FC = (): ReactElement => {
 
         stompClient.connect({}, () => {
             stompClient?.subscribe("/topic/feed", (response) => {
-                if (JSON.parse(response.body).tweetDeleted) {
-                    dispatch(deleteTweet(JSON.parse(response.body)));
-                } else {
-                    dispatch(setUpdatedTweet(JSON.parse(response.body)));
-                    dispatch(updateNotificationInfoTweet(JSON.parse(response.body)));
-                }
+                dispatch(setUpdatedTweet(JSON.parse(response.body)));
+                dispatch(updateNotificationInfoTweet(JSON.parse(response.body)));
             });
 
             stompClient?.subscribe("/topic/feed/add", (response) => {

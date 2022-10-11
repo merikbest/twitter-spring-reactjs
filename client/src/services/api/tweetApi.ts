@@ -72,8 +72,8 @@ export const TweetApi = {
     async deleteScheduledTweets(request: { tweetsIds: number[] }): Promise<AxiosResponse<string>> {
         return await axios.delete<string>(API_TWEETS_SCHEDULE, {data: request});
     },
-    async deleteTweet(tweetId: number): Promise<AxiosResponse<TweetResponse>> {
-        return await axios.delete<TweetResponse>(`${API_TWEETS}/${tweetId}`);
+    async deleteTweet(tweetId: number): Promise<AxiosResponse<string>> {
+        return await axios.delete<string>(`${API_TWEETS}/${tweetId}`);
     },
     async searchTweets(text: string, pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
         return await axios.get<TweetResponse[]>(`${API_TWEETS_SEARCH}/${text}`, {params: {page: pageNumber}});

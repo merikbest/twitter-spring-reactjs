@@ -204,7 +204,7 @@ describe("tweetsReducer:", () => {
                 },
                 {
                     type: TweetsActionType.DELETE_TWEET,
-                    payload: {id: 1} as TweetResponse
+                    payload: 1
                 }
             ),
             {

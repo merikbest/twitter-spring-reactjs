@@ -140,7 +140,7 @@ export const deleteScheduledTweets = (payload: { tweetsIds: number[] }): DeleteS
     payload
 });
 
-export const deleteTweet = (payload: TweetResponse): DeleteTweetActionInterface => ({
+export const deleteTweet = (payload: number): DeleteTweetActionInterface => ({
     type: TweetsActionType.DELETE_TWEET,
     payload
 });

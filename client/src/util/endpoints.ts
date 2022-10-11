@@ -1,5 +1,6 @@
 export const HOST = "http://localhost:8080";
 export const API_ENDPOINT = HOST + "/api/v1";
+export const WS_URL = HOST + "/websocket";
 
 // AuthApi
 export const API_AUTH_LOGIN = `${API_ENDPOINT}/auth/login`;
@@ -68,6 +69,7 @@ export const API_USER_ALL = `${API_ENDPOINT}/user/all`;
 export const API_USER_RELEVANT = `${API_ENDPOINT}/user/relevant`;
 export const API_USER_SEARCH = `${API_ENDPOINT}/user/search`;
 export const API_USER_IMAGES = `${API_ENDPOINT}/user/images`;
+export const API_USER_UPLOAD_IMAGE = `${API_ENDPOINT}/user/upload`;
 export const API_USER_FOLLOWERS = `${API_ENDPOINT}/user/followers`;
 export const API_USER_FOLLOWING = `${API_ENDPOINT}/user/following`;
 export const API_USER_FOLLOWER_REQUESTS = `${API_ENDPOINT}/user/follower-requests`;

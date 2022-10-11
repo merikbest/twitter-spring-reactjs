@@ -27,8 +27,8 @@ import {LoadingStatus} from '../../types';
 import {TweetResponse} from "../../types/tweet";
 import {UserApi} from "../../../services/api/userApi";
 import {UserResponse} from "../../types/user";
-import {setUpdatedBookmarkedTweetTweetsState} from "../tweets/actionCreators";
-import {setUpdatedBookmarkedTweetUserTweetState} from "../userTweets/actionCreators";
+import {deleteTweet, setUpdatedBookmarkedTweetTweetsState} from "../tweets/actionCreators";
+import {deleteUserTweet, setUpdatedBookmarkedTweetUserTweetState} from "../userTweets/actionCreators";
 
 export function* fetchTweetDataRequest({payload: tweetId}: FetchTweetDataActionInterface) {
     try {
@@ -62,6 +62,8 @@ export function* fetchReplyTweetRequest({payload}: FetchReplyTweetActionInterfac
 export function* deleteTweetReplyRequest({payload}: DeleteTweetReplyActionInterface) {
     try {
         yield call(TweetApi.deleteTweet, payload);
+        yield put(deleteUserTweet(payload));
+        yield put(deleteTweet(payload));
     } catch (error) {
         yield put(setTweetLoadingState(LoadingStatus.ERROR));
     }

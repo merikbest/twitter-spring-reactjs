@@ -3,6 +3,7 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import {Link} from "react-router-dom";
 import {Avatar, Button, IconButton, Popover, TextareaAutosize} from "@material-ui/core";
+import {createMemoryHistory} from "history";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
 import AddTweetForm from "../AddTweetForm";
@@ -18,8 +19,7 @@ import {TweetActionType} from "../../../store/ducks/tweet/contracts/actionTypes"
 import ActionSnackbar from "../../ActionSnackbar/ActionSnackbar";
 import CloseButton from "../../CloseButton/CloseButton";
 import UnsentTweetsModal from "../UnsentTweetsModal/UnsentTweetsModal";
-import {API_URL} from "../../../util/url";
-import {createMemoryHistory} from "history";
+import {API_USER_UPLOAD_IMAGE} from "../../../util/endpoints";
 import {ReplyType} from "../../../store/types/common";
 
 describe("AddTweetForm", () => {
@@ -56,7 +56,7 @@ describe("AddTweetForm", () => {
         expect(wrapper.find(IconButton).at(3).prop("disabled")).toBe(true);
         expect(wrapper.find(HoverAction).at(3).prop("actionText")).toBe("Poll");
 
-        mock.onPost(`${API_URL}/user/upload`).reply(200, mockFullTweet.images[0]);
+        mock.onPost(API_USER_UPLOAD_IMAGE).reply(200, mockFullTweet.images[0]);
 
         wrapper.find(Button).at(1).simulate("click");
 
@@ -183,7 +183,7 @@ describe("AddTweetForm", () => {
         expect(wrapper.find(IconButton).at(5).prop("disabled")).toBe(true);
 
         wrapper.find(TextareaAutosize).find("textarea").at(0).simulate("change", {target: {value: mockTestMessage}});
-        mock.onPost(`${API_URL}/user/upload`).reply(200, mockFullTweet.images[0]);
+        mock.onPost(API_USER_UPLOAD_IMAGE).reply(200, mockFullTweet.images[0]);
         wrapper.find(Button).at(1).simulate("click");
 
         setImmediate(() => {
@@ -220,7 +220,7 @@ describe("AddTweetForm", () => {
         expect(wrapper.find(Button).at(1).text()).toBe("Reply");
 
         wrapper.find(TextareaAutosize).find("textarea").at(0).simulate("change", {target: {value: mockTestMessage}});
-        mock.onPost(`${API_URL}/user/upload`).reply(200, mockFullTweet.images[0]);
+        mock.onPost(API_USER_UPLOAD_IMAGE).reply(200, mockFullTweet.images[0]);
         wrapper.find(Button).at(1).simulate("click");
 
         setImmediate(() => {

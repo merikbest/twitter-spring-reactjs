@@ -8,7 +8,7 @@ import {LoadingStatus} from "../../../store/types";
 import EditProfileModal from "../EditProfileModal";
 import {mockFullTweet, mockUser} from "../../../util/mockData/mockData";
 import TweeterInput from "../TweetInput/TweeterInput";
-import {API_URL} from "../../../util/url";
+import {API_USER_UPLOAD_IMAGE} from "../../../util/endpoints";
 import {UserActionsType} from "../../../store/ducks/user/contracts/actionTypes";
 
 describe("EditProfileModal", () => {
@@ -34,8 +34,8 @@ describe("EditProfileModal", () => {
 
     it("should submit Edit Profile Modal form", (done) => {
         const wrapper = mountWithStore(<EditProfileModal visible={true} onClose={jest.fn()}/>, mockRootState);
-        mock.onPost(`${API_URL}/user/upload`).reply(200, mockFullTweet.images[0]);
-        mock.onPost(`${API_URL}/user/upload`).reply(200, mockFullTweet.images[0]);
+        mock.onPost(API_USER_UPLOAD_IMAGE).reply(200, mockFullTweet.images[0]);
+        mock.onPost(API_USER_UPLOAD_IMAGE).reply(200, mockFullTweet.images[0]);
         
         wrapper.find(Button).at(0).simulate("submit");
 

@@ -8,7 +8,7 @@ import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/t
 import Spinner from "../../../components/Spinner/Spinner";
 import FollowersYouKnow from "../FollowersYouKnow";
 import {mockMyProfile, mockUserPrivateProfile, mockUsers} from "../../../util/mockData/mockData";
-import {API_URL} from "../../../util/url";
+import {API_USER_FOLLOW_OVERALL} from "../../../util/endpoints";
 import UsersItem from "../../../components/UsersItem/UsersItem";
 import {LoadingStatus} from "../../../store/types";
 import {UserProfileActionsType} from "../../../store/ducks/userProfile/contracts/actionTypes";
@@ -25,7 +25,7 @@ describe("FollowersYouKnow", () => {
     const setupTest = (userId: number, mockUsers: UserResponse[]) => {
         jest.spyOn(ReactRouter, "useParams").mockReturnValue({id: userId.toString()});
         const mock = new MockAdapter(axios);
-        mock.onGet(`${API_URL}/user/follow/overall/${userId}`).reply(200, mockUsers);
+        mock.onGet(`${API_USER_FOLLOW_OVERALL}/${userId}`).reply(200, mockUsers);
     };
 
     it("should fetch user profile and overall Followers list", (done) => {

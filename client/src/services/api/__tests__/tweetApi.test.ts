@@ -138,10 +138,8 @@ describe("TweetApi", () => {
     });
 
     describe("should fetch TweetApi.deleteTweet", () => {
-        const mockTweetsIds = {tweetsIds: [1, 2, 3]};
-
         it("[200] should delete tweet Success", () => {
-            testApiCall(mockAdapter, "onDelete", `${API_TWEETS}/1`, 200, mockFullTweet, TweetApi.deleteTweet, 1);
+            testApiCall(mockAdapter, "onDelete", `${API_TWEETS}/1`, 200, "Your Tweet was deleted", TweetApi.deleteTweet, 1);
         });
 
         it("[404] should return tweet Not Found", () => {

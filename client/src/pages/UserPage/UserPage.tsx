@@ -39,7 +39,6 @@ import {
     selectUserTweetsItems
 } from "../../store/ducks/userTweets/selectors";
 import {
-    deleteUserTweet,
     fetchUserLikedTweets,
     fetchUserMediaTweets,
     fetchUserRetweetsAndReplies,
@@ -62,7 +61,8 @@ import {
     resetUserProfileState
 } from "../../store/ducks/userProfile/actionCreators";
 import UserPageTweets from "./UserPageTweets";
-import {DEFAULT_PROFILE_IMG, PUBLIC_AND_PROTECTED_TWEETS, SOMEONE_BLOCKED_ME_ON_TWITTER, WS_URL} from "../../util/url";
+import {DEFAULT_PROFILE_IMG, PUBLIC_AND_PROTECTED_TWEETS, SOMEONE_BLOCKED_ME_ON_TWITTER} from "../../util/url";
+import {WS_URL} from "../../util/endpoints";
 import SetupProfileModal from "../SetupProfileModal/SetupProfileModal";
 import UserPageActions from "./UserPageActions/UserPageActions";
 import {createChat} from "../../store/ducks/chats/actionCreators";
@@ -136,11 +136,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                 dispatch(setAddedUserTweet(JSON.parse(response.body)));
             });
             stompClient?.subscribe("/topic/user/update/tweet/" + params.id, (response) => {
-                if (JSON.parse(response.body).tweetDeleted) {
-                    dispatch(deleteUserTweet(JSON.parse(response.body)));
-                } else {
-                    dispatch(setUpdatedUserTweet(JSON.parse(response.body)));
-                }
+                dispatch(setUpdatedUserTweet(JSON.parse(response.body)));
             });
         });
 

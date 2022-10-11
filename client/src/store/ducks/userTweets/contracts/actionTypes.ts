@@ -64,7 +64,7 @@ export interface SetUpdatedBookmarkedTweetActionInterface extends Action<UserTwe
 
 export interface DeleteUserTweetActionInterface extends Action<UserTweetsActionType> {
     type: UserTweetsActionType.DELETE_TWEET;
-    payload: TweetResponse;
+    payload: number;
 }
 
 export interface FetchUserTweetsActionInterface extends Action<UserTweetsActionType> {

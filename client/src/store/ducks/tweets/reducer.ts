@@ -37,7 +37,7 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
         case TweetsActionType.RESET_TWEETS:
             draft.items = [];
             draft.pagesCount = 1;
-            draft.loadingState = LoadingStatus.LOADING
+            draft.loadingState = LoadingStatus.LOADING;
             break;
 
         case TweetsActionType.SET_UPDATED_TWEET:
@@ -81,7 +81,7 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
             break;
 
         case TweetsActionType.DELETE_TWEET:
-            draft.items = draft.items.filter((tweet) => tweet.id !== action.payload.id);
+            draft.items = draft.items.filter((tweet) => tweet.id !== action.payload);
             break;
 
         case TweetsActionType.SET_FOLLOW_TO_TWEETS_STATE:

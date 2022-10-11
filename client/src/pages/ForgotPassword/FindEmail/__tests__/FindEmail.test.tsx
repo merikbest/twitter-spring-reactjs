@@ -6,7 +6,7 @@ import {Button} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
 import FindEmail from "../FindEmail";
-import {API_URL} from "../../../../util/url";
+import {API_AUTH_FORGOT_EMAIL} from "../../../../util/endpoints";
 import {ForgotPasswordTextField} from "../../ForgotPasswordTextField/ForgotPasswordTextField";
 import { ACCOUNT_FORGOT_SEND_PASSWORD_RESET } from "../../../../util/pathConstants";
 
@@ -24,7 +24,7 @@ describe("FindEmail", () => {
 
     it("should email exist", (done) => {
         const mock = new MockAdapter(axios);
-        mock.onPost(`${API_URL}/auth/forgot/email`, {email: mockEmail}).reply(200);
+        mock.onPost(API_AUTH_FORGOT_EMAIL, {email: mockEmail}).reply(200);
         const history = createMemoryHistory();
         const pushSpy = jest.spyOn(history, "push");
         const wrapper = mountWithStore(<FindEmail/>, createMockRootState(), history);
@@ -43,7 +43,7 @@ describe("FindEmail", () => {
 
     it("should email not exist", (done) => {
         const mock = new MockAdapter(axios);
-        mock.onPost(`${API_URL}/auth/forgot/email`, {email: mockEmail}).reply(400);
+        mock.onPost(API_AUTH_FORGOT_EMAIL, {email: mockEmail}).reply(400);
         const wrapper = mountWithStore(<FindEmail/>, createMockRootState());
         const input = wrapper.find(ForgotPasswordTextField).find("input").at(0);
 

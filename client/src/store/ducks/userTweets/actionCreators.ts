@@ -60,7 +60,7 @@ export const setUpdatedBookmarkedTweetUserTweetState = (payload: BookmarkedTweet
     payload
 });
 
-export const deleteUserTweet = (payload: TweetResponse): DeleteUserTweetActionInterface => ({
+export const deleteUserTweet = (payload: number): DeleteUserTweetActionInterface => ({
     type: UserTweetsActionType.DELETE_TWEET,
     payload
 });

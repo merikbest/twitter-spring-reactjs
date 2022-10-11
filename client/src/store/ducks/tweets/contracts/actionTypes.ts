@@ -214,7 +214,7 @@ export interface FetchDeleteTweetActionInterface extends Action<TweetsActionType
 
 export interface DeleteTweetActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.DELETE_TWEET;
-    payload: TweetResponse;
+    payload: number;
 }
 
 export type TweetsActions =
