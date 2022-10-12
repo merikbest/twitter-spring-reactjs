@@ -11,7 +11,12 @@ import java.util.List;
 @Repository
 public interface RetweetRepository extends JpaRepository<Retweet, Long> {
 
-    @Query("SELECT r AS retweet FROM Retweet r WHERE r.user.id = :userId ORDER BY r.retweetDate DESC")
+    @Query("SELECT r AS retweet FROM Retweet r " +
+            "LEFT JOIN r.user u " +
+            "LEFT JOIN r.tweet t " +
+            "WHERE u.id = :userId " +
+            "AND t.deleted = false " +
+            "ORDER BY r.retweetDate DESC")
     List<RetweetsProjection> findRetweetsByUserId(Long userId);
 
     @Query("SELECT COUNT(retweet) FROM Tweet tweet LEFT JOIN tweet.retweets retweet WHERE tweet.id = :tweetId")
