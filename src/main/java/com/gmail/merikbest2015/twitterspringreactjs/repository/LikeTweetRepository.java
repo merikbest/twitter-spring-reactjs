@@ -11,9 +11,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LikeTweetRepository extends JpaRepository<LikeTweet, Long> {
 
-    @Query("SELECT likeTweet FROM LikeTweet likeTweet WHERE likeTweet.user.id = :userId ORDER BY likeTweet.likeTweetDate DESC")
-    Page<LikeTweetProjection> findByUserId(Long userId, Pageable pageable);
-
-    @Query("SELECT COUNT(likedTweet) FROM Tweet tweet LEFT JOIN tweet.likedTweets likedTweet WHERE tweet.id = :tweetId")
-    Integer getLikedTweetsCount(Long tweetId);
+    @Query("SELECT likeTweet FROM LikeTweet likeTweet " +
+            "LEFT JOIN likeTweet.user user " +
+            "LEFT JOIN likeTweet.tweet tweet " +
+            "WHERE likeTweet.user.id = :userId " +
+            "AND tweet.deleted = false " +
+            "ORDER BY likeTweet.likeTweetDate DESC")
+    Page<LikeTweetProjection> getUserLikedTweets(Long userId, Pageable pageable);
 }

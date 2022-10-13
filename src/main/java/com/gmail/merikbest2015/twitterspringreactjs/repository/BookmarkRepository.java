@@ -11,6 +11,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 
-    @Query("SELECT bookmark FROM Bookmark bookmark WHERE bookmark.user.id = :userId ORDER BY bookmark.bookmarkDate DESC")
-    Page<BookmarkProjection> findByUser(Long userId, Pageable pageable);
+    @Query("SELECT bookmark FROM Bookmark bookmark " +
+            "LEFT JOIN bookmark.user user " +
+            "LEFT JOIN bookmark.tweet tweet " +
+            "WHERE user.id = :userId " +
+            "AND tweet.deleted = false " +
+            "ORDER BY bookmark.bookmarkDate DESC")
+    Page<BookmarkProjection> getUserBookmarks(Long userId, Pageable pageable);
 }

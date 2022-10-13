@@ -155,7 +155,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<BookmarkProjection> getUserBookmarks(Pageable pageable) {
         Long userId = authenticationService.getAuthenticatedUserId();
-        return bookmarkRepository.findByUser(userId, pageable);
+        return bookmarkRepository.getUserBookmarks(userId, pageable);
     }
 
     @Override
@@ -186,7 +186,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<LikeTweetProjection> getUserLikedTweets(Long userId, Pageable pageable) {
         checkIsUserExist(userId);
-        return likeTweetRepository.findByUserId(userId, pageable);
+        return likeTweetRepository.getUserLikedTweets(userId, pageable);
     }
 
     @Override

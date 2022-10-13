@@ -72,9 +72,10 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("SELECT tweet FROM Tweet tweet " +
             "LEFT JOIN tweet.images image " +
-            "WHERE tweet.scheduledDate IS NULL " +
+            "WHERE tweet.scheduledDate IS NULL AND tweet.deleted = false " +
             "AND (tweet.user.id = :userId AND image.id IS NOT NULL) " +
-            "OR (tweet.user.id = :userId AND tweet.text LIKE CONCAT('%','youtu','%')) " +
+            "OR tweet.scheduledDate IS NULL AND tweet.deleted = false " +
+            "AND (tweet.user.id = :userId AND tweet.text LIKE CONCAT('%','youtu','%')) " +
             "ORDER BY tweet.dateTime DESC")
     Page<TweetProjection> findAllUserMediaTweets(Long userId, Pageable pageable);
 
@@ -83,6 +84,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "WHERE tweet.scheduledDate IS NULL " +
             "AND tweet.user.id = :userId " +
             "AND image.id IS NOT NULL " +
+            "AND tweet.deleted = false " +
             "ORDER BY tweet.dateTime DESC")
     List<TweetImageProjection> findUserTweetImages(Long userId, Pageable pageable);
 
@@ -101,6 +103,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "WHERE t.user.id = :userId " +
             "AND t.addressedUsername IS NOT NULL " +
             "AND t.scheduledDate IS NULL " +
+            "AND t.deleted = false " +
             "ORDER BY t.dateTime DESC")
     List<TweetsUserProjection> findRepliesByUserId(Long userId);
 
@@ -113,6 +116,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "LEFT JOIN notification.tweet notificationTweet " +
             "WHERE user.id = :userId " +
             "AND notification.notificationType = 'TWEET' " +
+            "AND notificationTweet.deleted = false " +
             "ORDER BY notificationTweet.dateTime DESC")
     List<TweetsProjection> getNotificationsFromTweetAuthors(Long userId);
 
@@ -187,6 +191,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("SELECT tweet FROM Tweet tweet " +
             "WHERE tweet.addressedId = :userId " +
+            "AND tweet.deleted = false " +
             "ORDER BY tweet.dateTime DESC")
     Page<TweetProjection> getUserMentions(Pageable pageable, Long userId);
 }

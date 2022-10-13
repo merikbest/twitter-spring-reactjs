@@ -18,7 +18,4 @@ public interface RetweetRepository extends JpaRepository<Retweet, Long> {
             "AND t.deleted = false " +
             "ORDER BY r.retweetDate DESC")
     List<RetweetsProjection> findRetweetsByUserId(Long userId);
-
-    @Query("SELECT COUNT(retweet) FROM Tweet tweet LEFT JOIN tweet.retweets retweet WHERE tweet.id = :tweetId")
-    Integer getRetweetsCount(Long tweetId);
 }
