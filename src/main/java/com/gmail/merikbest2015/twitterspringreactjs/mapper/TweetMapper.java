@@ -17,7 +17,6 @@ import com.gmail.merikbest2015.twitterspringreactjs.service.TweetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -32,7 +31,7 @@ public class TweetMapper {
 
     public HeaderResponse<TweetResponse> getTweets(Pageable pageable) {
         Page<TweetProjection> tweets = tweetService.getTweets(pageable);
-        return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
+        return basicMapper.getTweetHeaderResponse(tweets);
     }
 
     public HeaderResponse<TweetResponse> getMediaTweets(Pageable pageable) {

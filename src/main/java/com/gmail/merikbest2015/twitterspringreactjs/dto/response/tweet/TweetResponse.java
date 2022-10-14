@@ -55,20 +55,6 @@ public class TweetResponse {
 
     @Getter
     @Setter
-    static class QuoteTweetResponse {
-        private Long id;
-        private String text;
-        private LocalDateTime dateTime;
-        private String link;
-        private String linkTitle;
-        private String linkDescription;
-        private String linkCover;
-        private LinkCoverSize linkCoverSize;
-        private UserTweetResponse user;
-    }
-
-    @Getter
-    @Setter
     static class PollResponse {
         private Long id;
         private LocalDateTime dateTime;

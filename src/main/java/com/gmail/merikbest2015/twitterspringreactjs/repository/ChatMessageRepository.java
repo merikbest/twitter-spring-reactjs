@@ -24,6 +24,4 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
 
     @Query("SELECT cm FROM ChatMessage cm WHERE cm.id = :messageId")
     ChatMessageProjection getChatMessageById(Long messageId);
-
-    List<ChatMessage> findByTweet(Tweet tweet);
 }

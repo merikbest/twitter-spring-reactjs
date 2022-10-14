@@ -124,6 +124,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "FROM Tag tag " +
             "LEFT JOIN tag.tweets tagTweet " +
             "WHERE tag.tagName = :tagName " +
+            "AND tagTweet.deleted = false " +
             "ORDER BY tagTweet.dateTime DESC")
     List<TweetsProjection> getTweetsByTagName(String tagName);
 

@@ -85,6 +85,7 @@ public interface TweetProjection {
         String getLinkCover();
         LinkCoverSize getLinkCoverSize();
         UserProjection getUser();
+        boolean isDeleted();
     }
 
     interface PollProjection {
