@@ -1,4 +1,5 @@
 import {
+    selectErrorMessage,
     selectIsLikedUsersLoading,
     selectIsRepliesLoading,
     selectIsRetweetedUsersLoading,
@@ -48,6 +49,15 @@ describe("tweet selectors:", () => {
     describe("selectIsTweetError", () => {
         it("should return correct result", () => {
             expect(selectIsTweetError(createMockRootState(LoadingStatus.ERROR))).toBe(true);
+        });
+    });
+
+    describe("selectErrorMessage", () => {
+        it("should return correct result", () => {
+            expect(selectErrorMessage({
+                ...mockState,
+                tweet: {...mockState.tweet, errorMessage: "Tweet not found"}
+            })).toBe("Tweet not found");
         });
     });
 

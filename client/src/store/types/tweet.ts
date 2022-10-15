@@ -53,6 +53,7 @@ export interface QuoteTweetResponse {
     linkDescription: string;
     linkCover: string;
     linkCoverSize: string;
+    isDeleted: boolean;
     user: UserTweetResponse;
 }
 

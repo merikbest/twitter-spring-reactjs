@@ -20,6 +20,7 @@ export interface FetchTweetUsersPayload {
 
 export interface TweetState {
     tweet?: TweetResponse;
+    errorMessage: string;
     likedUsers: UserResponse[];
     retweetedUsers: UserResponse[];
     usersPagesCount: number;

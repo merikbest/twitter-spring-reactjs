@@ -31,7 +31,7 @@ public class TweetMapper {
 
     public HeaderResponse<TweetResponse> getTweets(Pageable pageable) {
         Page<TweetProjection> tweets = tweetService.getTweets(pageable);
-        return basicMapper.getTweetHeaderResponse(tweets);
+        return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
     }
 
     public HeaderResponse<TweetResponse> getMediaTweets(Pageable pageable) {

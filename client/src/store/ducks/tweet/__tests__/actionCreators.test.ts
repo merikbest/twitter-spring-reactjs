@@ -13,6 +13,7 @@ import {
     resetTweetState,
     setBlockedToTweetState,
     setBookmarkedTweet,
+    setErrorMessage,
     setFollowToTweetState,
     setLikedUsers,
     setLikedUsersLoadingState,
@@ -75,6 +76,11 @@ describe("tweet actions", () => {
     testAction(setTweetLoadingState, setTweetLoadingState(LoadingStatus.LOADING), {
         type: TweetActionType.SET_LOADING_STATE,
         payload: LoadingStatus.LOADING
+    });
+
+    testAction(setErrorMessage, setErrorMessage("Tweet not found"), {
+        type: TweetActionType.SET_ERROR_MESSAGE,
+        payload: "Tweet not found"
     });
 
     testAction(addTweetToBookmarks, addTweetToBookmarks(1), {

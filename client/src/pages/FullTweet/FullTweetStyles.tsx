@@ -130,8 +130,7 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
     },
     replyInfo: {
         height: 72,
-        // backgroundColor: "rgb(215, 246, 255)",
-        backgroundColor: theme.palette.info.dark,
+        backgroundColor: theme.palette.action.hover,
         margin: "16px 0px",
         borderRadius: 16,
         display: "flex",
@@ -172,12 +171,5 @@ export const useFullTweetStyles = makeStyles<Theme, FullTweetStyles>((theme) => 
     divider: {
         height: 12,
         backgroundColor: theme.palette.divider,
-    },
-    error: {
-        width: 350,
-        margin: "0 auto",
-        paddingTop: 200,
-        fontWeight: 700,
-        textAlign: "center",
     },
 }));

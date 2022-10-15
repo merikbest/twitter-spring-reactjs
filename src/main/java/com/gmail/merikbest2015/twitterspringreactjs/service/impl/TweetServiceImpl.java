@@ -46,12 +46,9 @@ public class TweetServiceImpl implements TweetService {
     private final RetweetRepository retweetRepository;
     private final LikeTweetRepository likeTweetRepository;
     private final NotificationRepository notificationRepository;
-    private final ImageRepository imageRepository;
     private final TagRepository tagRepository;
     private final PollRepository pollRepository;
     private final PollChoiceRepository pollChoiceRepository;
-    private final BookmarkRepository bookmarkRepository;
-    private final ChatMessageRepository chatMessageRepository;
     private final RestTemplate restTemplate;
 
     @Value("${google.api.url}")
@@ -67,8 +64,13 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public TweetProjection getTweetById(Long tweetId) {
-        return tweetRepository.findTweetById(tweetId)
+        TweetProjection tweet = tweetRepository.findTweetById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+
+        if (tweet.isDeleted()) { // TODO add test
+            throw new ApiRequestException("Sorry, that Tweet has been deleted.", HttpStatus.BAD_REQUEST);
+        }
+        return tweet;
     }
 
     @Override

@@ -180,6 +180,21 @@ describe("tweetReducer:", () => {
         );
 
         testActionDispatch(
+            TweetActionType.SET_ERROR_MESSAGE,
+            tweetReducer(initialTweetState,
+                {
+                    type: TweetActionType.SET_ERROR_MESSAGE,
+                    payload: "Tweet not found"
+                }
+            ),
+            {
+                ...initialTweetState,
+                loadingState: LoadingStatus.ERROR,
+                errorMessage: "Tweet not found",
+            }
+        );
+
+        testActionDispatch(
             TweetActionType.SET_LIKED_USERS,
             tweetReducer(initialTweetState,
                 {

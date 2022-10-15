@@ -2,13 +2,13 @@ package com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gmail.merikbest2015.twitterspringreactjs.enums.LinkCoverSize;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class QuoteTweetResponse {
     private Long id;
     private String text;
@@ -21,8 +21,4 @@ public class QuoteTweetResponse {
     private UserTweetResponse user;
     @JsonProperty("isDeleted")
     private boolean isDeleted;
-
-    public QuoteTweetResponse(boolean isDeleted) {
-        this.isDeleted = isDeleted;
-    }
 }

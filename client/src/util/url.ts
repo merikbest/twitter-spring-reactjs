@@ -49,6 +49,7 @@ export const DIRECT_MESSAGES_RECEIPTS = DIRECT_MESSAGES + "#receipts";
 export const RULES_AND_POLICIES = HELP_TWITTER + "/rules-and-policies";
 export const MEDIA_POLICY = RULES_AND_POLICIES + "/media-policy";
 export const TWITTER_COOKIES = RULES_AND_POLICIES + "/twitter-cookies";
+export const TWITTER_NOTICES = RULES_AND_POLICIES + "/notices-on-twitter";
 
 export const DEVELOPER_TWITTER = "https://developer.twitter.com" ;
 export const DEVELOPER_ACCOUNT = "https://developer.twitter.com/support/twitter-api/developer-account";

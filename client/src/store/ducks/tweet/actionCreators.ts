@@ -13,6 +13,7 @@ import {
     ResetTweetStateActionInterface,
     SetBlockedToTweetStateActionInterface,
     SetBookmarkedTweetActionInterface,
+    SetErrorMessageActionInterface,
     SetFollowToTweetStateActionInterface,
     SetLikedUsersActionInterface,
     SetLikedUsersLoadingStateInterface,
@@ -66,6 +67,11 @@ export const resetTweetState = (): ResetTweetStateActionInterface => ({
 
 export const setTweetLoadingState = (payload: LoadingStatus): SetTweetDataLoadingStateInterface => ({
     type: TweetActionType.SET_LOADING_STATE,
+    payload
+});
+
+export const setErrorMessage = (payload: string): SetErrorMessageActionInterface => ({
+    type: TweetActionType.SET_ERROR_MESSAGE,
     payload
 });
 

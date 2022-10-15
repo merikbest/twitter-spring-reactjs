@@ -4,14 +4,7 @@ import {Link, useHistory, useLocation} from 'react-router-dom';
 import {Avatar, IconButton, Link as MuiLink, Paper, Typography} from '@material-ui/core';
 import {compose} from "recompose";
 
-import {
-    AnalyticsIcon,
-    FollowReplyIcon,
-    LikeIcon,
-    LikeOutlinedIcon,
-    LockIcon,
-    ReplyIcon
-} from "../../icons";
+import {AnalyticsIcon, FollowReplyIcon, LikeIcon, LikeOutlinedIcon, LockIcon, ReplyIcon} from "../../icons";
 import {useTweetComponentStyles} from "./TweetComponentStyles";
 import {formatDate} from '../../util/formatDate';
 import {likeTweet, retweet} from "../../store/ducks/tweets/actionCreators";
@@ -38,6 +31,7 @@ import TweetActionResult, {TweetActionResults} from "../TweetActionResult/TweetA
 import {TweetResponse} from "../../store/types/tweet";
 import {HOME_TWEET, MODAL, PROFILE} from "../../util/pathConstants";
 import {LinkCoverSize, ReplyType} from "../../store/types/common";
+import TweetDeleted from "../TweetDeleted/TweetDeleted";
 
 export interface TweetComponentProps<T> {
     item?: T;
@@ -74,8 +68,8 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
     const isYouTubeLink = tweet?.link && tweet?.link.includes("youtu");
     const isModal = location.pathname.includes(MODAL);
     const classes = useTweetComponentStyles({
-        isTweetImageModal: isTweetImageModal, 
-        isTweetLiked: tweet!.isTweetLiked, 
+        isTweetImageModal: isTweetImageModal,
+        isTweetLiked: tweet!.isTweetLiked,
         isUserCanReply: isUserCanReply
     });
     const image = tweet?.images?.[0];
@@ -211,7 +205,13 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
                                 </Typography>
                             </>
                         )}
-                        {tweet?.quoteTweet && (<Quote quoteTweet={tweet?.quoteTweet} isTweetQuoted={true}/>)}
+                        {tweet?.quoteTweet && (
+                            tweet?.quoteTweet.isDeleted ? (
+                                <TweetDeleted/>
+                            ) : (
+                                <Quote quoteTweet={tweet?.quoteTweet} isTweetQuoted={true}/>
+                            ))
+                        }
                         {tweet?.link ? (
                             isYouTubeLink ? (
                                 openYouTubeVideo ? (

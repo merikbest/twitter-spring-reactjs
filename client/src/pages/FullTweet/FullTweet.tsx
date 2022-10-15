@@ -61,6 +61,8 @@ import {useGlobalStyles} from "../../util/globalClasses";
 import TweetActionResult, {TweetActionResults} from "../../components/TweetActionResult/TweetActionResult";
 import {MODAL, PROFILE, QUOTES} from "../../util/pathConstants";
 import {LinkCoverSize, ReplyType} from "../../store/types/common";
+import TweetDeleted from "../../components/TweetDeleted/TweetDeleted";
+import TweetErrorPage from "./TweetErrorPage/TweetErrorPage";
 
 let stompClient: CompatClient | null = null;
 
@@ -219,7 +221,13 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                             </Link>
                         )}
                         {tweetData.poll && <VoteComponent tweetId={tweetData.id} poll={tweetData.poll}/>}
-                        {tweetData.quoteTweet && <Quote quoteTweet={tweetData.quoteTweet} isTweetQuoted isFullTweet/>}
+                        {tweetData.quoteTweet && (
+                            tweetData.quoteTweet.isDeleted ? (
+                                <TweetDeleted/>
+                            ) : (
+                                <Quote quoteTweet={tweetData.quoteTweet} isTweetQuoted isFullTweet/>
+                            ))
+                        }
                         {tweetData.link ? (
                             isYouTubeLink ? (
                                 openYouTubeVideo ? (
@@ -413,12 +421,7 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
             </div>
         );
     } else if (tweetData === undefined && isError) {
-        return (
-            <Typography variant={"h5"} component={"div"} className={classes.error}>
-                Hmm...this page doesn’t exist. <br/>
-                Try searching for something else.
-            </Typography>
-        );
+        return <TweetErrorPage/>;
     } else {
         return null;
     }

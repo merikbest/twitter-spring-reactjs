@@ -55,7 +55,6 @@ describe("tweetSaga:", () => {
         testLoadingStatus(worker, setTweetLoadingState, LoadingStatus.LOADING);
         testCall(worker, TweetApi.fetchTweetData, 1);
         testSetResponse(worker, mockTweet, setTweetData, mockTweet.data, "TweetResponse");
-        testLoadingStatus(worker, setTweetLoadingState, LoadingStatus.ERROR);
     });
 
     describe("addTweetToBookmarksRequest:", () => {

@@ -9,6 +9,7 @@ import {NotificationReplyResponse, NotificationResponse} from "../../types/notif
 export const initialTweetState: TweetState = {
     tweet: undefined,
     loadingState: LoadingStatus.LOADING,
+    errorMessage: "",
     // liked and retweeted users
     likedUsers: [],
     likedUsersLoadingState: LoadingStatus.LOADING,
@@ -81,10 +82,16 @@ export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetActi
         case TweetActionType.RESET_TWEET_STATE:
             draft.tweet = undefined;
             draft.loadingState = LoadingStatus.LOADING;
+            draft.errorMessage = "";
             break;
 
         case TweetActionType.SET_LOADING_STATE:
             draft.loadingState = action.payload;
+            break;
+
+        case TweetActionType.SET_ERROR_MESSAGE:
+            draft.loadingState = LoadingStatus.ERROR;
+            draft.errorMessage = action.payload;
             break;
 
         // liked and retweeted users

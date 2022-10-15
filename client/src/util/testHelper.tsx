@@ -229,6 +229,7 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
         },
         tweet: {
             tweet: mockFullTweet,
+            errorMessage: "",
             likedUsers: mockUsers,
             retweetedUsers: mockUsers,
             usersPagesCount: 0,
