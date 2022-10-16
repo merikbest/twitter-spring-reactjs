@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.twitterspringreactjs.dto.response.chats;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.ImageProjection;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,6 +35,8 @@ public class ChatMessageResponse {
         private String text;
         private LocalDateTime dateTime;
         private TweetUserResponse user;
+        @JsonProperty("isDeleted")
+        private boolean isDeleted;
 
         @Getter
         @Setter

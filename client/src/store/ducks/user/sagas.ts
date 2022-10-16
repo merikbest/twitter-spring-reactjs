@@ -171,8 +171,8 @@ export function* fetchPinTweetRequest({payload}: FetchPinTweetActionInterface) {
 export function* fetchReadMessagesRequest({payload}: FetchReadMessagesActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: number = yield call(ChatApi.readChatMessages, payload);
-        yield put(setReadMessage(item));
+        const item: AxiosResponse<number> = yield call(ChatApi.readChatMessages, payload);
+        yield put(setReadMessage(item.data));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }

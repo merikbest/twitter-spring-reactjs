@@ -6,38 +6,6 @@ export const useChatMessagesStyles = makeStyles((theme: Theme) => ({
         padding: 0,
         borderLeft: 0,
     },
-    chatInfoWrapper: {
-        width: 320,
-        margin: "0px auto",
-        paddingTop: 300,
-    },
-    chatInfoButton: {
-        marginTop: 27,
-        height: 52,
-    },
-    chatHeader: {
-        width: 598,
-    },
-    chatAvatar: {
-        width: theme.spacing(4),
-        height: theme.spacing(4),
-        margin: "0px 15px",
-    },
-    iconGroup: {
-        marginLeft: "auto",
-        marginRight: 10,
-    },
-    icon: {
-        display: "inline-block",
-        "& .MuiIconButton-root": {
-            padding: 7,
-            "& svg": {
-                color: theme.palette.primary.main,
-                verticalAlign: "bottom",
-                height: "0.90em",
-            },
-        },
-    },
     chat: {
         padding: "53px 15px",
         height: 900,
@@ -115,6 +83,7 @@ export const useChatMessagesStyles = makeStyles((theme: Theme) => ({
         height: theme.spacing(5),
         marginRight: 10,
     },
+    // ---
     participantTweetContainer: {
         marginTop: 10,
         display: "flex",

@@ -159,11 +159,11 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                         <div>
                             <Hidden smDown>
                                 <>
-                                    {(myProfile?.notificationsCount !== 0) ? (
+                                    {(myProfile?.notificationsCount !== 0) && (
                                         <span id={"notificationsCount"} className={classes.count}>
                                             {myProfile?.notificationsCount}
                                         </span>
-                                    ) : null}
+                                    )}
                                     {(location.pathname.includes(NOTIFICATIONS)) ? (
                                         <span>{NotificationsIconFilled}</span>
                                     ) : (
@@ -182,11 +182,11 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                         <div>
                             <Hidden smDown>
                                 <>
-                                    {(myProfile?.unreadMessagesSize !== 0) ? (
+                                    {(myProfile?.unreadMessagesSize !== 0) && (
                                         <span className={classes.count}>
                                             {myProfile?.unreadMessagesSize}
                                         </span>
-                                    ) : null}
+                                    )}
                                     {(location.pathname.includes(MESSAGES)) ? (
                                         <span>{MessagesIconFilled}</span>
                                     ) : (
@@ -288,7 +288,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     >
                         <div className={classnames(classes.listItemWrapper, globalClasses.svg)}>
                             <List>
-                                {(myProfile?.isPrivateProfile) ? (
+                                {(myProfile?.isPrivateProfile) && (
                                     <ListItem id={"openFollowerRequestsModal"} onClick={onOpenFollowerRequestsModal}>
                                         {FollowerRequestIcon}
                                         <Typography variant={"body1"} component={"span"}>
@@ -298,7 +298,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                             </span>
                                         </Typography>
                                     </ListItem>
-                                ) : null}
+                                )}
                                 <ListItem>
                                     {NewslettersIcon}
                                     <Typography variant={"body1"} component={"span"}>

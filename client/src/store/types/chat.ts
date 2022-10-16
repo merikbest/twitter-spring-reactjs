@@ -30,6 +30,7 @@ export interface ChatMessageResponse {
         id: number;
         text: string;
         dateTime: string;
+        isDeleted: boolean;
         user: {
             id: number;
             fullName: string;
