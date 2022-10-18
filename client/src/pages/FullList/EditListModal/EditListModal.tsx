@@ -8,7 +8,7 @@ import * as yup from "yup";
 
 import {useEditListModalStyles} from "./EditListModalStyles";
 import UploadProfileImage from "../../../components/EditProfileModal/UploadProfileImage";
-import CreateListsModalInput from "../../Lists/CreateListsModal/CreateListsModalInput/CreateListsModalInput";
+import CreateListsModalInput from "../../Lists/ListsHeader/CreateListsModal/CreateListsModalInput/CreateListsModalInput";
 import {ImageObj} from "../../../components/AddTweetForm/AddTweetForm";
 import {ForwardArrowIcon} from "../../../icons";
 import ManageMembersModal from "./ManageMembersModal/ManageMembersModal";

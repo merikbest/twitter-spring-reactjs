@@ -1,16 +1,16 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
-export const useChatFooterStyles = makeStyles((theme: Theme) => ({
-    chatFooter: {
-        display: 'flex',
-        alignItems: "center",
-        position: 'fixed',
-        bottom: 3,
-        width: 598,
-        padding: 4,
-        borderRight: 0,
-        borderLeft: 0,
-        borderBottom: 0,
+export const useActionIconStyles = makeStyles((theme: Theme) => ({
+    icon: {
+        display: "inline-block",
+        "& .MuiIconButton-root": {
+            padding: 7,
+            "& svg": {
+                color: theme.palette.primary.main,
+                verticalAlign: "bottom",
+                height: "0.90em",
+            },
+        },
     },
     chatIcon: {
         "& .MuiIconButton-root": {

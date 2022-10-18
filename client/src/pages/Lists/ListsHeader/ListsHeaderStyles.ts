@@ -1,6 +1,6 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
-export const useListsStyles = makeStyles((theme: Theme) => ({
+export const useListsHeaderStyles = makeStyles((theme: Theme) => ({
     iconGroup: {
         marginLeft: "auto",
         marginRight: 10,
@@ -35,40 +35,5 @@ export const useListsStyles = makeStyles((theme: Theme) => ({
             fill: theme.palette.text.secondary,
             height: "1.30em",
         },
-    },
-    pinnedLists: {
-        paddingTop: 52,
-        minHeight: 220,
-        borderTop: 0,
-        borderLeft: 0,
-        borderRight: 0,
-        borderRadius: 0,
-    },
-    pinnedListsText: {
-        marginTop: 32,
-        marginLeft: 32,
-    },
-    pinnedListsWrapper: {
-        padding: 4,
-    },
-    newLists: {
-        maxHeight: 345,
-        borderTop: 0,
-        borderLeft: 0,
-        borderRight: 0,
-        borderRadius: 0,
-    },
-    showMore: {
-        padding: 16,
-        color: theme.palette.primary.main,
-        '&:hover': {
-            cursor: "pointer",
-            backgroundColor: theme.palette.secondary.main,
-        },
-    },
-    myLists: {
-        height: 316,
-        border: 0,
-        borderRadius: 0,
     },
 }));

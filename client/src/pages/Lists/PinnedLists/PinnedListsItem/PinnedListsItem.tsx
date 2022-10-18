@@ -3,12 +3,12 @@ import {Link} from 'react-router-dom';
 import {Avatar, Typography} from "@material-ui/core";
 
 import {usePinnedListsItemStyles} from "./PinnedListsItemStyles";
-import {LockIcon} from "../../../icons";
-import {useGlobalStyles} from "../../../util/globalClasses";
-import {PinnedListResponse} from "../../../store/types/lists";
-import {HoverListProps, withHoverList} from "../../../hoc/withHoverList";
-import PopperListWindow from "../PopperListWindow/PopperListWindow";
-import {LISTS} from "../../../util/pathConstants";
+import {LockIcon} from "../../../../icons";
+import {useGlobalStyles} from "../../../../util/globalClasses";
+import {PinnedListResponse} from "../../../../store/types/lists";
+import {HoverListProps, withHoverList} from "../../../../hoc/withHoverList";
+import PopperListWindow from "../../PopperListWindow/PopperListWindow";
+import {LISTS} from "../../../../util/pathConstants";
 
 interface PinnedListsItemProps {
     pinnedList?: PinnedListResponse;

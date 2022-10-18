@@ -3,6 +3,7 @@ import TextField from "@material-ui/core/TextField/TextField";
 
 export const PeopleSearchInput = withStyles((theme: Theme) => ({
     root: {
+        paddingTop: 60,
         '& .MuiOutlinedInput-root': {
             borderRadius: 30,
             border: `1px solid ${theme.palette.divider}`,

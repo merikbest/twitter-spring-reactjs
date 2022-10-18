@@ -1,46 +1,17 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {ClickAwayListener, IconButton, Paper, Typography} from "@material-ui/core";
-import {Link} from 'react-router-dom';
+import React, {ReactElement, useEffect} from "react";
+import {useDispatch} from "react-redux";
+import {Paper} from "@material-ui/core";
 
-import {useListsStyles} from "./ListsStyles";
-import {selectUserData} from "../../store/ducks/user/selectors";
-import {AddListsIcon, EditIcon, ListsIcon} from "../../icons";
-import CreateListsModal from "./CreateListsModal/CreateListsModal";
 import {fetchLists, fetchPinnedLists, fetchUserLists, resetListsState} from "../../store/ducks/lists/actionCreators";
-import {
-    selectIsListsLoading,
-    selectIsLoading, selectIsPinnedListsLoaded,
-    selectIsPinnedListsLoading,
-    selectIsUserListsLoading,
-    selectListsItems,
-    selectPinnedListsItems,
-    selectUserListsItems
-} from "../../store/ducks/lists/selectors";
-import ListsItem from "./ListsItem/ListsItem";
-import PinnedListsItem from "./PinnedListsItem/PinnedListsItem";
-import HoverAction from "../../components/HoverAction/HoverAction";
-import Spinner from "../../components/Spinner/Spinner";
-import {HoverActionProps, HoverActions, withHoverAction} from "../../hoc/withHoverAction";
 import {useGlobalStyles} from "../../util/globalClasses";
-import {LISTS_MEMBERSHIPS, SUGGESTED} from "../../util/pathConstants";
-import PageHeaderWrapper from "../../components/PageHeaderWrapper/PageHeaderWrapper";
+import ListsHeader from "./ListsHeader/ListsHeader";
+import PinnedLists from "./PinnedLists/PinnedLists";
+import DiscoverLists from "./DiscoverLists/DiscoverLists";
+import UserLists from "./UserLists/UserLists";
 
-const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, handleLeaveAction}): ReactElement => {
+const Lists = (): ReactElement => {
     const globalClasses = useGlobalStyles();
-    const classes = useListsStyles();
     const dispatch = useDispatch();
-    const myProfile = useSelector(selectUserData);
-    const lists = useSelector(selectListsItems);
-    const userLists = useSelector(selectUserListsItems);
-    const pinnedLists = useSelector(selectPinnedListsItems);
-    const isLoading = useSelector(selectIsLoading);
-    const isPinnedListsLoading = useSelector(selectIsPinnedListsLoading);
-    const isPinnedListsLoaded = useSelector(selectIsPinnedListsLoaded);
-    const isListsLoading = useSelector(selectIsListsLoading);
-    const isUserListsLoading = useSelector(selectIsUserListsLoading);
-    const [visibleCreateListModal, setVisibleCreateListModal] = useState<boolean>(false);
-    const [openPopover, setOpenPopover] = useState<boolean>(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -54,128 +25,14 @@ const Lists: FC<HoverActionProps> = ({visibleHoverAction, handleHoverAction, han
         };
     }, []);
 
-    const onOpenCreateListModal = (): void => {
-        setVisibleCreateListModal(true);
-    };
-
-    const onCloseCreateListModal = (): void => {
-        setVisibleCreateListModal(false);
-    };
-
-    const handleClick = (): void => {
-        setOpenPopover((prev) => !prev);
-    };
-
-    const handleClickAway = (): void => {
-        setOpenPopover(false);
-    };
-
     return (
         <Paper className={globalClasses.pageContainer} variant="outlined">
-            <PageHeaderWrapper backButton>
-                {!isLoading && (
-                    <div>
-                        <Typography variant="h5" component={"div"}>
-                            Lists
-                        </Typography>
-                        <Typography variant="subtitle2" component={"div"}>
-                            @{myProfile?.username}
-                        </Typography>
-                    </div>
-                )}
-                <div className={classes.iconGroup}>
-                    <div className={classes.icon}>
-                        <IconButton
-                            onClick={onOpenCreateListModal}
-                            onMouseEnter={() => handleHoverAction?.(HoverActions.CREATE_LIST)}
-                            onMouseLeave={handleLeaveAction}
-                            color="primary"
-                        >
-                            <>{AddListsIcon}</>
-                            <HoverAction visible={visibleHoverAction?.visibleCreateListAction} actionText={"Create"}/>
-                        </IconButton>
-                    </div>
-                    <div className={classes.icon}>
-                        <ClickAwayListener onClickAway={handleClickAway}>
-                            <div>
-                                <IconButton
-                                    onClick={handleClick}
-                                    onMouseEnter={() => handleHoverAction?.(HoverActions.MORE)}
-                                    onMouseLeave={handleLeaveAction}
-                                    color="primary"
-                                >
-                                    <>{EditIcon}</>
-                                    <HoverAction visible={visibleHoverAction?.visibleMoreAction} actionText={"More"}/>
-                                </IconButton>
-                                {openPopover ? (
-                                    <Link to={`${LISTS_MEMBERSHIPS}/${myProfile?.id}`} className={classes.dropdownLink}>
-                                        <div className={classes.dropdown}>
-                                            <span className={classes.textIcon}>
-                                                {ListsIcon}
-                                            </span>
-                                            <Typography variant={"body1"} component={"span"}>
-                                                Lists you’re on
-                                            </Typography>
-                                        </div>
-                                    </Link>
-                                ) : null}
-                            </div>
-                        </ClickAwayListener>
-                    </div>
-                </div>
-            </PageHeaderWrapper>
-            <Paper className={classes.pinnedLists} variant="outlined">
-                <Typography variant="h5" className={globalClasses.itemInfoWrapper}>
-                    Pinned Lists
-                </Typography>
-                <Typography component={"div"} className={classes.pinnedListsWrapper}>
-                    {isPinnedListsLoading ? (
-                        <Spinner paddingTop={34} />
-                    ) : (
-                        (pinnedLists.length === 0 && isPinnedListsLoaded) ? (
-                            <Typography variant={"subtitle1"} component={"div"} className={classes.pinnedListsText}>
-                                Nothing to see here yet — pin your favorite Lists to access them quickly.
-                            </Typography>
-                        ) : (
-                            pinnedLists.map((pinnedList) => (
-                                <PinnedListsItem key={pinnedList.id} pinnedList={pinnedList}/>
-                            ))
-                        )
-                    )}
-                </Typography>
-            </Paper>
-            <Paper id={"list"} className={classes.newLists} variant="outlined">
-                <Typography variant="h5" className={globalClasses.itemInfoWrapper}>
-                    Discover new Lists
-                </Typography>
-                {isListsLoading ? (
-                    <div style={{padding: "59px 0px"}}>
-                        <Spinner/>
-                    </div>
-                ) : (
-                    lists.slice(0, 3).map((list, index) => (
-                        <ListsItem key={list.id} item={list} listIndex={index}/>
-                    ))
-                )}
-                <Link to={SUGGESTED} className={globalClasses.link}>
-                    <Typography variant={"body1"} component={"div"} className={classes.showMore}>
-                        Show more
-                    </Typography>
-                </Link>
-            </Paper>
-            <Paper id={"userLists"} className={classes.myLists} variant="outlined">
-                <Typography variant="h5" className={globalClasses.itemInfoWrapper}>
-                    Your Lists
-                </Typography>
-                {isUserListsLoading ? (
-                    <Spinner/>
-                ) : (
-                    userLists.map((list) => (<ListsItem key={list.id} item={list} isMyList/>))
-                )}
-            </Paper>
-            <CreateListsModal visible={visibleCreateListModal} onClose={onCloseCreateListModal}/>
+            <ListsHeader/>
+            <PinnedLists/>
+            <DiscoverLists/>
+            <UserLists/>
         </Paper>
     );
 };
 
-export default withHoverAction(Lists);
+export default Lists;

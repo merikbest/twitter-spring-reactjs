@@ -3,14 +3,14 @@ import {useDispatch} from "react-redux";
 import {Button, Checkbox, Dialog, DialogContent, DialogTitle, Typography} from "@material-ui/core";
 
 import {useCreateListsModalStyles} from "./CreateListsModalStyles";
-import UploadProfileImage from "../../../components/EditProfileModal/UploadProfileImage";
-import {ImageObj} from "../../../components/AddTweetForm/AddTweetForm";
-import {uploadImage} from "../../../util/uploadImage";
-import {Image} from "../../../store/types/common";
+import UploadProfileImage from "../../../../components/EditProfileModal/UploadProfileImage";
+import {ImageObj} from "../../../../components/AddTweetForm/AddTweetForm";
+import {uploadImage} from "../../../../util/uploadImage";
+import {Image} from "../../../../store/types/common";
 import CreateListsModalInput from "./CreateListsModalInput/CreateListsModalInput";
-import {createList} from "../../../store/ducks/lists/actionCreators";
-import {wallpapers} from "../../../util/wallpapers";
-import CloseButton from "../../../components/CloseButton/CloseButton";
+import {createList} from "../../../../store/ducks/lists/actionCreators";
+import {wallpapers} from "../../../../util/wallpapers";
+import CloseButton from "../../../../components/CloseButton/CloseButton";
 
 interface CreateListsModalProps {
     visible?: boolean;

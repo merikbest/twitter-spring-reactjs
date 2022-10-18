@@ -1,12 +1,12 @@
 import React from "react";
 import {Button, Checkbox, Dialog} from "@material-ui/core";
 
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
+import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
+import {LoadingStatus} from "../../../../../store/types";
 import CreateListsModal from "../CreateListsModal";
 import CreateListsModalInput from "../CreateListsModalInput/CreateListsModalInput";
-import {ListsActionType} from "../../../../store/ducks/lists/contracts/actionTypes";
-import {wallpapers} from "../../../../util/wallpapers";
+import {ListsActionType} from "../../../../../store/ducks/lists/contracts/actionTypes";
+import {wallpapers} from "../../../../../util/wallpapers";
 
 describe("CreateListsModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

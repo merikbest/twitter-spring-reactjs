@@ -1,8 +1,7 @@
 import React, {FC, ReactElement, useEffect, useRef, useState} from 'react';
-import {Link, Route, useHistory, useLocation} from "react-router-dom";
+import {Route, useHistory, useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {Avatar, Button, Grid, IconButton, InputAdornment, List, ListItem, Paper, Typography} from "@material-ui/core";
-import classnames from "classnames";
+import {Grid, InputAdornment, List, Paper} from "@material-ui/core";
 
 import {useMessagesStyles} from "./MessagesStyles";
 import MessagesModal from "./MessagesModal/MessagesModal";
@@ -10,14 +9,10 @@ import {fetchChats, resetChatsState} from "../../store/ducks/chats/actionCreator
 import {selectUserData} from "../../store/ducks/user/selectors";
 import {selectChatsItems, selectIsChatsLoading} from "../../store/ducks/chats/selectors";
 import {PeopleSearchInput} from "./PeopleSearchInput/PeopleSearchInput";
-import {DEFAULT_PROFILE_IMG} from "../../util/url";
-import {NewMessageIcon, SearchIcon, SettingsIcon} from "../../icons";
+import {SearchIcon} from "../../icons";
 import {fetchChatMessages, resetChatMessages} from "../../store/ducks/chatMessages/actionCreators";
 import {selectChatMessagesItems} from "../../store/ducks/chatMessages/selectors";
 import {fetchReadMessages} from "../../store/ducks/user/actionCreators";
-import HoverAction from "../../components/HoverAction/HoverAction";
-import BackButton from "../../components/BackButton/BackButton";
-import DirectMessages from "../Settings/PrivacyAndSafety/DirectMessages/DirectMessages";
 import ConversationInfo from "./ConversationInfo/ConversationInfo";
 import Spinner from "../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../util/globalClasses";
@@ -25,36 +20,10 @@ import {ChatResponse, ParticipantResponse} from "../../store/types/chat";
 import ChatMessages from "./ChatMessages/ChatMessages";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
 import {MESSAGES, MESSAGES_SETTINGS} from "../../util/pathConstants";
-
-export enum MessagesAction {
-    SETTINGS = "SETTINGS",
-    MEDIA = "MEDIA",
-    GIF = "GIF",
-    EMOJI = "EMOJI",
-    SEND = "SEND",
-    NEW_MESSAGE = "NEW_MESSAGE",
-    DETAILS = "DETAILS",
-}
-
-export interface VisibleActions {
-    visibleSettingsAction: boolean;
-    visibleMediaAction: boolean;
-    visibleGIFAction: boolean;
-    visibleEmojiAction: boolean;
-    visibleSendAction: boolean;
-    visibleNewMessageAction: boolean;
-    visibleDetailsAction: boolean;
-}
-
-export const actionsInitialState = {
-    visibleSettingsAction: false,
-    visibleMediaAction: false,
-    visibleGIFAction: false,
-    visibleEmojiAction: false,
-    visibleSendAction: false,
-    visibleNewMessageAction: false,
-    visibleDetailsAction: false,
-}
+import MessagesHeader from "./MessagesHeader/MessagesHeader";
+import StartConversation from "./StartConversation/StartConversation";
+import ChatParticipant from "./ChatParticipant/ChatParticipant";
+import MessageSettings from "./MessageSettings/MessageSettings";
 
 const Messages: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -72,8 +41,6 @@ const Messages: FC = (): ReactElement => {
     const [text, setText] = useState<string>("");
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
     const [chat, setChat] = useState<ChatResponse>();
-    const [delayHandler, setDelayHandler] = useState<any>(null);
-    const [visibleHoverAction, setVisibleHoverAction] = useState<VisibleActions>({...actionsInitialState});
 
     useEffect(() => {
         dispatch(fetchChats());
@@ -98,7 +65,6 @@ const Messages: FC = (): ReactElement => {
     useEffect(() => {
         if (location.pathname === MESSAGES) {
             if (participant !== undefined) {
-                handleLeaveAction();
                 dispatch(fetchChatMessages(chat?.id!));
                 dispatch(fetchReadMessages(chat?.id!));
             }
@@ -139,154 +105,39 @@ const Messages: FC = (): ReactElement => {
         setChat(chat);
     };
 
-    const handleHoverAction = (action: MessagesAction): void => {
-        if (action === MessagesAction.SETTINGS) {
-            setHoverAction({...actionsInitialState, visibleSettingsAction: true});
-        } else if (action === MessagesAction.MEDIA) {
-            setHoverAction({...actionsInitialState, visibleMediaAction: true});
-        } else if (action === MessagesAction.GIF) {
-            setHoverAction({...actionsInitialState, visibleGIFAction: true});
-        } else if (action === MessagesAction.EMOJI) {
-            setHoverAction({...actionsInitialState, visibleEmojiAction: true});
-        } else if (action === MessagesAction.SEND) {
-            setHoverAction({...actionsInitialState, visibleSendAction: true});
-        } else if (action === MessagesAction.NEW_MESSAGE) {
-            setHoverAction({...actionsInitialState, visibleNewMessageAction: true});
-        } else if (action === MessagesAction.DETAILS) {
-            setHoverAction({...actionsInitialState, visibleDetailsAction: true});
-        }
-    };
-
-    const setHoverAction = (name: VisibleActions): void => {
-        setDelayHandler(setTimeout(() => setVisibleHoverAction(name), 500));
-    };
-
-    const handleLeaveAction = (): void => {
-        clearTimeout(delayHandler);
-        setVisibleHoverAction({...actionsInitialState})
-    };
-
     return (
         <>
             <Grid className={classes.grid} md={4} item>
                 <Paper className={globalClasses.pageContainer} variant="outlined">
-                    <Paper className={classnames(globalClasses.pageHeader, classes.header)} variant="outlined">
-                        <Typography variant="h5" className={globalClasses.pageHeaderTitleWrapper}>
-                            Messages
-                        </Typography>
-                        <div className={classes.iconGroup}>
-                            <div className={classes.icon}>
-                                <Link to={MESSAGES_SETTINGS}>
-                                    <IconButton
-                                        onMouseEnter={() => handleHoverAction(MessagesAction.SETTINGS)}
-                                        onMouseLeave={handleLeaveAction}
-                                        color="primary"
-                                    >
-                                        <>{SettingsIcon}</>
-                                        <HoverAction
-                                            visible={visibleHoverAction.visibleSettingsAction}
-                                            actionText={"Settings"}
-                                        />
-                                    </IconButton>
-                                </Link>
-                            </div>
-                            <div className={classes.icon}>
-                                <IconButton
-                                    onClick={onOpenModalWindow}
-                                    onMouseEnter={() => handleHoverAction(MessagesAction.NEW_MESSAGE)}
-                                    onMouseLeave={handleLeaveAction}
-                                    color="primary"
-                                >
-                                    <>{NewMessageIcon}</>
-                                    <HoverAction
-                                        visible={visibleHoverAction.visibleNewMessageAction}
-                                        actionText={"New message"}
-                                    />
-                                </IconButton>
-                            </div>
-                        </div>
-                    </Paper>
-                    {isChatsLoading ? <Spinner paddingTop={150}/> : (
+                    <MessagesHeader onOpenModalWindow={onOpenModalWindow}/>
+                    {isChatsLoading ? (
+                        <Spinner paddingTop={150}/>
+                    ) : (
                         (chats.length === 0) ? (
-                            <>
-                                <Typography variant={"h4"} component={"div"} className={classes.messagesTitle}>
-                                    Send a message, get a message
-                                </Typography>
-                                <Typography variant={"subtitle1"} component={"div"} className={classes.messagesText}>
-                                    Direct Messages are private conversations between you and other people on Twitter.
-                                    Share Tweets, media, and more!
-                                </Typography>
-                                <Button
-                                    onClick={onOpenModalWindow}
-                                    className={classes.messagesButton}
-                                    variant="contained"
-                                    color="primary"
-                                    size="large"
-                                >
-                                    Start a conversation
-                                </Button>
-                            </>
+                            <StartConversation onOpenModalWindow={onOpenModalWindow}/>
                         ) : (
                             <>
-                                <div className={classes.searchWrapper}>
-                                    <PeopleSearchInput
-                                        placeholder="Explore for people and groups"
-                                        variant="outlined"
-                                        onChange={(event) => setText(event.target.value)}
-                                        value={text}
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    {SearchIcon}
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                    />
-                                </div>
-                                <List component="nav" className={classes.list} aria-label="main mailbox folders">
+                                <PeopleSearchInput
+                                    placeholder="Explore for people and groups"
+                                    variant="outlined"
+                                    onChange={(event) => setText(event.target.value)}
+                                    value={text}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                {SearchIcon}
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                                <List component="nav" className={classes.list}>
                                     {chats.map((chat) => (
-                                        <ListItem
+                                        <ChatParticipant
                                             key={chat.id}
-                                            button
-                                            className={classes.listItem}
-                                            id={(participant?.user.id === chat.participants[0].user.id!) ? ("selected") : ("")}
-                                            selected={participant?.user.id === chat.participants[0].user.id!}
-                                            onClick={() => handleListItemClick(chat)}
-                                        >
-                                            <div className={classes.userWrapper}>
-                                                <Avatar
-                                                    className={classes.userAvatar}
-                                                    src={(myProfile?.id === chat.participants[1].user.id!) ? (
-                                                        (chat.participants[0].user.avatar?.src) ? (
-                                                            chat.participants[0].user.avatar.src
-                                                        ) : (
-                                                            DEFAULT_PROFILE_IMG
-                                                        )
-                                                    ) : ((chat.participants[1].user.avatar?.src) ? (
-                                                            chat.participants[1].user.avatar?.src
-                                                        ) : (
-                                                            DEFAULT_PROFILE_IMG
-                                                        )
-                                                    )}
-                                                />
-                                                <div>
-                                                    <Typography variant={"h6"} component={"span"}>
-                                                        {(myProfile?.id === chat.participants[1].user.id!) ? (
-                                                            chat.participants[0].user.fullName
-                                                        ) : (
-                                                            chat.participants[1].user.fullName
-                                                        )}
-                                                    </Typography>
-                                                    <Typography variant={"subtitle1"} component={"span"} className={classes.username}>
-                                                        {(myProfile?.id === chat.participants[1].user.id!) ? (
-                                                            `@${chat.participants[0].user.username}`
-                                                        ) : (
-                                                            `@${chat.participants[1].user.username}`
-                                                        )}
-                                                    </Typography>
-                                                </div>
-                                            </div>
-                                        </ListItem>
+                                            chat={chat}
+                                            participant={participant}
+                                            handleListItemClick={handleListItemClick}
+                                        />
                                     ))}
                                 </List>
                             </>
@@ -296,17 +147,7 @@ const Messages: FC = (): ReactElement => {
             </Grid>
             <Grid className={classes.grid} md={5} item>
                 <Route exact path={MESSAGES_SETTINGS}>
-                    <Paper className={classnames(globalClasses.pageContainer, classes.chatContainer)} variant="outlined">
-                        <Paper className={classnames(globalClasses.pageHeader, classes.chatHeader)} variant="outlined">
-                            <BackButton/>
-                            <Typography variant="h5">
-                                Direct Messages
-                            </Typography>
-                        </Paper>
-                        <div className={globalClasses.contentWrapper}>
-                            <DirectMessages/>
-                        </div>
-                    </Paper>
+                    <MessageSettings/>
                 </Route>
                 <Route exact path={MESSAGES + "/:id/info"}>
                     <ConversationInfo
@@ -318,9 +159,6 @@ const Messages: FC = (): ReactElement => {
                 <Route exact path={MESSAGES}>
                     <ChatMessages
                         onOpenModalWindow={onOpenModalWindow}
-                        visibleHoverAction={visibleHoverAction}
-                        handleHoverAction={handleHoverAction}
-                        handleLeaveAction={handleLeaveAction}
                         participant={participant}
                         chat={chat}
                         chatEndRef={chatEndRef}

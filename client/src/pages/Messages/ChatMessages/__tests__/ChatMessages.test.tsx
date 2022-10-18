@@ -5,12 +5,10 @@ import {Picker} from "emoji-mart";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
 import {LoadingStatus} from "../../../../store/types";
 import {mockChats, mockMessages} from "../../../../util/mockData/mockData";
-import {actionsInitialState} from "../../Messages";
 import Spinner from "../../../../components/Spinner/Spinner";
 import ChatMessages from "../ChatMessages";
 import {MessageInput} from "../../MessageInput/MessageInput";
 import {ChatMessagesActionsType} from "../../../../store/ducks/chatMessages/contracts/actionTypes";
-import HoverAction from "../../../../components/HoverAction/HoverAction";
 
 describe("ChatMessages", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -28,13 +26,7 @@ describe("ChatMessages", () => {
 
     it("should render correctly no messages selected", () => {
         const wrapper = mountWithStore(
-            <ChatMessages
-                onOpenModalWindow={jest.fn()}
-                handleHoverAction={jest.fn()}
-                handleLeaveAction={jest.fn()}
-                visibleHoverAction={actionsInitialState}
-                chatEndRef={null}
-            />,
+            <ChatMessages onOpenModalWindow={jest.fn()} chatEndRef={null}/>,
             mockChatMessagesStore);
 
         expect(wrapper.text().includes("You don’t have a message selected")).toBe(true);
@@ -50,14 +42,7 @@ describe("ChatMessages", () => {
             chatMessages: {...mockStore.chatMessages, items: mockMessages},
         };
         const wrapper = mountWithStore(
-            <ChatMessages
-                onOpenModalWindow={jest.fn()}
-                handleHoverAction={jest.fn()}
-                handleLeaveAction={jest.fn()}
-                visibleHoverAction={actionsInitialState}
-                chatEndRef={null}
-                participant={mockParticipant}
-            />,
+            <ChatMessages onOpenModalWindow={jest.fn()} chatEndRef={null} participant={mockParticipant}/>,
             mockChatMessagesStore);
 
         expect(wrapper.find(Spinner).exists()).toBe(true);
@@ -65,14 +50,7 @@ describe("ChatMessages", () => {
 
     it("should open/close Popup", (done) => {
         const wrapper = mountWithStore(
-            <ChatMessages
-                onOpenModalWindow={jest.fn()}
-                handleHoverAction={jest.fn()}
-                handleLeaveAction={jest.fn()}
-                visibleHoverAction={actionsInitialState}
-                chatEndRef={null}
-                participant={mockParticipant}
-            />,
+            <ChatMessages onOpenModalWindow={jest.fn()} chatEndRef={null} participant={mockParticipant}/>,
             mockChatMessagesStore);
         expect(wrapper.find(Popover).prop("open")).toBe(false);
         expect(wrapper.find(Popover).prop("id")).toBe(undefined);
@@ -95,9 +73,6 @@ describe("ChatMessages", () => {
         const wrapper = mountWithStore(
             <ChatMessages
                 onOpenModalWindow={jest.fn()}
-                handleHoverAction={jest.fn()}
-                handleLeaveAction={jest.fn()}
-                visibleHoverAction={actionsInitialState}
                 chatEndRef={null}
                 participant={mockParticipant}
                 chat={mockChats[0]}
