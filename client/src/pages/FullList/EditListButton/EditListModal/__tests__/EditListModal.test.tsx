@@ -1,14 +1,14 @@
 import React from "react";
 import {Button, Checkbox, Dialog} from "@material-ui/core";
 
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
+import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
+import {LoadingStatus} from "../../../../../store/types";
 import EditListModal from "../EditListModal";
 import ManageMembersModal from "../ManageMembersModal/ManageMembersModal";
-import {mockFullList} from "../../../../util/mockData/mockData";
+import {mockFullList} from "../../../../../util/mockData/mockData";
 import DeleteListModal from "../DeleteListModal/DeleteListModal";
-import CreateListsModalInput from "../../../Lists/ListsHeader/CreateListsModal/CreateListsModalInput/CreateListsModalInput";
-import {ListActionType} from "../../../../store/ducks/list/contracts/actionTypes";
+import CreateListsModalInput from "../../../../Lists/ListsHeader/CreateListsModal/CreateListsModalInput/CreateListsModalInput";
+import {ListActionType} from "../../../../../store/ducks/list/contracts/actionTypes";
 
 describe("EditListModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

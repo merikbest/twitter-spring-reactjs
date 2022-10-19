@@ -3,7 +3,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {Dialog, DialogContent, DialogTitle} from "@material-ui/core";
 
 import {useMembersAndFollowersModalStyles} from "./MembersAndFollowersModalStyles";
-import ManageMembersItem from "../ManageMembersModal/ManageMembersItem/ManageMembersItem";
+import ManageMembersItem
+    from "../../EditListButton/EditListModal/ManageMembersModal/ManageMembersItem/ManageMembersItem";
 import CloseButton from "../../../../components/CloseButton/CloseButton";
 import {
     fetchListFollowers,
@@ -48,19 +49,19 @@ const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
         };
     }, [visible]);
 
-    if (!visible) {
-        return null;
-    }
-
     const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
         event.stopPropagation();
     };
+
+    if (!visible) {
+        return null;
+    }
 
     return (
         <Dialog
             open={visible}
             onClose={onClose}
-            onClick={(event) => handleClick(event)}
+            onClick={handleClick}
             className={classes.dialog}
             aria-labelledby="form-dialog-title"
         >
@@ -69,9 +70,18 @@ const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
                 {title}
             </DialogTitle>
             <DialogContent className={classes.content}>
-                {isLoading ? <Spinner/> : (
+                {isLoading ? (
+                    <Spinner/>
+                ) : (
                     (users.length !== 0) ? (
-                        users.map((user) => <ManageMembersItem key={user.id} item={list} user={user}/>)
+                        users.map((user) => (
+                            <ManageMembersItem
+                                key={user.id}
+                                listId={list.id}
+                                listOwnerId={list.listOwner.id}
+                                user={user}
+                            />
+                        ))
                     ) : (
                         <EmptyPageDescription
                             title={(title === "List members") ? (

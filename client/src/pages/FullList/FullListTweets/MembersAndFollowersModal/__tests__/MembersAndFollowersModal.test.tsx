@@ -7,7 +7,7 @@ import MembersAndFollowersModal from "../MembersAndFollowersModal";
 import {mockFullList, mockListsOwnerMember} from "../../../../../util/mockData/mockData";
 import Spinner from "../../../../../components/Spinner/Spinner";
 import {ListMembersActionsType} from "../../../../../store/ducks/listMembers/contracts/actionTypes";
-import ManageMembersItem from "../../ManageMembersModal/ManageMembersItem/ManageMembersItem";
+import ManageMembersItem from "../../../EditListButton/EditListModal/ManageMembersModal/ManageMembersItem/ManageMembersItem";
 
 describe("MembersAndFollowersModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

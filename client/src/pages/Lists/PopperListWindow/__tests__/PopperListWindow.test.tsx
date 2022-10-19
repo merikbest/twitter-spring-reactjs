@@ -6,7 +6,7 @@ import {LoadingStatus} from "../../../../store/types";
 import PopperListWindow from "../PopperListWindow";
 import {mockUserFullList} from "../../../../util/mockData/mockData";
 import MembersAndFollowersModal
-    from "../../../FullList/EditListModal/MembersAndFollowersModal/MembersAndFollowersModal";
+    from "../../../FullList/FullListTweets/MembersAndFollowersModal/MembersAndFollowersModal";
 import CloseButton from "../../../../components/CloseButton/CloseButton";
 import {ListsActionType} from "../../../../store/ducks/lists/contracts/actionTypes";
 import {DEFAULT_PROFILE_IMG} from "../../../../util/url";

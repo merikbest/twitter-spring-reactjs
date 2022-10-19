@@ -1,18 +1,11 @@
-import React, {FC, ReactElement, useState} from 'react';
-import {ClickAwayListener, IconButton, List, ListItem, Typography} from "@material-ui/core";
+import React, {ReactElement, useState} from "react";
+import {ClickAwayListener, List, ListItem, Typography} from "@material-ui/core";
 
 import {useShareActionsModalStyles} from "./ShareActionsModalStyles";
 import {LinkIcon, MessagesIcon, ShareIcon, TweetThisIcon} from "../../../icons";
-import HoverAction from "../../../components/HoverAction/HoverAction";
-import {HoverActionProps, HoverActions, withHoverAction} from "../../../hoc/withHoverAction";
+import ActionIconButton from "../../../components/ActionIconButton/ActionIconButton";
 
-const ShareActionsModal: FC<HoverActionProps> = (
-    {
-        visibleHoverAction,
-        handleHoverAction,
-        handleLeaveAction
-    }
-): ReactElement => {
+const ShareActionsModal = (): ReactElement => {
     const classes = useShareActionsModalStyles();
     const [open, setOpen] = useState<boolean>(false);
 
@@ -28,16 +21,8 @@ const ShareActionsModal: FC<HoverActionProps> = (
         <>
             <ClickAwayListener onClickAway={handleClickAway}>
                 <div className={classes.root}>
-                    <IconButton
-                        onClick={handleClick}
-                        onMouseEnter={() => handleHoverAction?.(HoverActions.SHARE)}
-                        onMouseLeave={handleLeaveAction}
-                        color="primary"
-                    >
-                        <>{ShareIcon}</>
-                        <HoverAction visible={visibleHoverAction?.visibleShareAction} actionText={"Share"}/>
-                    </IconButton>
-                    {open ? (
+                    <ActionIconButton onClick={handleClick} actionText={"Share"} icon={ShareIcon}/>
+                    {open && (
                         <div className={classes.dropdown}>
                             <List>
                                 <ListItem>
@@ -66,11 +51,11 @@ const ShareActionsModal: FC<HoverActionProps> = (
                                 </ListItem>
                             </List>
                         </div>
-                    ) : null}
+                    )}
                 </div>
             </ClickAwayListener>
         </>
     );
 };
 
-export default withHoverAction(ShareActionsModal);
+export default ShareActionsModal;

@@ -48,7 +48,6 @@ export const useFullListStyles = makeStyles((theme: Theme) => ({
             verticalAlign: "top",
         },
     },
-
     listOwnerWrapper: {
         display: "inline-block",
     },
@@ -57,31 +56,8 @@ export const useFullListStyles = makeStyles((theme: Theme) => ({
         width: "20px !important",
         height: "20px !important",
     },
-    listMembers: {
-        marginLeft: 20,
-        "&:hover": {
-           cursor: "pointer",
-            textDecoration: "underline",
-        },
-    },
     buttonWrapper: {
         marginTop: 20,
         marginBottom: 12,
-    },
-    listOutlinedButton: {
-        '&:hover': {
-            backgroundColor: theme.palette.secondary.light,
-        },
-    },
-    outlinedButton: {
-        '&:hover': {
-            backgroundColor: theme.palette.secondary.light,
-        },
-    },
-    primaryButton: {
-        width: 105,
-        '&:hover': {
-            backgroundColor: theme.palette.error.dark,
-        },
     },
 }));

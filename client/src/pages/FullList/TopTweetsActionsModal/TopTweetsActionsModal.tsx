@@ -1,18 +1,11 @@
-import React, {FC, ReactElement, useState} from 'react';
-import {ClickAwayListener, IconButton, List, ListItem, Typography} from "@material-ui/core";
+import React, {ReactElement, useState} from "react";
+import {ClickAwayListener, List, ListItem, Typography} from "@material-ui/core";
 
 import {useTopTweetsActionsModalStyles} from "./TopTweetsActionsModalStyles";
 import {EditIcon, NotShowIcon, SeeLatestIcon} from "../../../icons";
-import {HoverActionProps, HoverActions, withHoverAction} from "../../../hoc/withHoverAction";
-import HoverAction from "../../../components/HoverAction/HoverAction";
+import ActionIconButton from "../../../components/ActionIconButton/ActionIconButton";
 
-const TopTweetsActionsModal: FC<HoverActionProps> = (
-    {
-        visibleHoverAction,
-        handleHoverAction,
-        handleLeaveAction
-    }
-): ReactElement => {
+const TopTweetsActionsModal = (): ReactElement => {
     const classes = useTopTweetsActionsModalStyles();
     const [open, setOpen] = useState<boolean>(false);
 
@@ -28,16 +21,8 @@ const TopTweetsActionsModal: FC<HoverActionProps> = (
         <>
             <ClickAwayListener onClickAway={handleClickAway}>
                 <div className={classes.root}>
-                    <IconButton
-                        onClick={handleClick}
-                        onMouseEnter={() => handleHoverAction?.(HoverActions.MORE)}
-                        onMouseLeave={handleLeaveAction}
-                        color="primary"
-                    >
-                        <>{EditIcon}</>
-                        <HoverAction visible={visibleHoverAction?.visibleMoreAction} actionText={"More"}/>
-                    </IconButton>
-                    {open ? (
+                    <ActionIconButton onClick={handleClick} actionText={"More"} icon={EditIcon}/>
+                    {open && (
                         <div className={classes.dropdown}>
                             <List>
                                 <ListItem>
@@ -73,11 +58,11 @@ const TopTweetsActionsModal: FC<HoverActionProps> = (
                                 </ListItem>
                             </List>
                         </div>
-                    ) : null}
+                    )}
                 </div>
             </ClickAwayListener>
         </>
     );
 };
 
-export default withHoverAction(TopTweetsActionsModal);
+export default TopTweetsActionsModal;

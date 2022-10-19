@@ -10,8 +10,8 @@ import {mockFullList, mockUserFullList} from "../../../util/mockData/mockData";
 import TweetComponent from "../../../components/TweetComponent/TweetComponent";
 import {TweetsActionType} from "../../../store/ducks/tweets/contracts/actionTypes";
 import {ListActionType} from "../../../store/ducks/list/contracts/actionTypes";
-import MembersAndFollowersModal from "../EditListModal/MembersAndFollowersModal/MembersAndFollowersModal";
-import EditListModal from "../EditListModal/EditListModal";
+import MembersAndFollowersModal from "../FullListTweets/MembersAndFollowersModal/MembersAndFollowersModal";
+import EditListModal from "../EditListButton/EditListModal/EditListModal";
 import {ListsActionType} from "../../../store/ducks/lists/contracts/actionTypes";
 
 window.scrollTo = jest.fn();

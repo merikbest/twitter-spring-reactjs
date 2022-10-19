@@ -14,7 +14,7 @@ import {HoverListProps, withHoverList} from "../../../hoc/withHoverList";
 import PopperListWindow from "../PopperListWindow/PopperListWindow";
 import {LISTS} from "../../../util/pathConstants";
 import ActionIconButton from "../../../components/ActionIconButton/ActionIconButton";
-import FollowListButton from "./FollowListButton/FollowListButton";
+import FollowListButton from "../../../components/FollowListButton/FollowListButton";
 
 interface ListsItemProps<T> {
     item?: T;
@@ -100,7 +100,10 @@ const ListsItem: FC<ListsItemProps<ListResponse | ListUserResponse> & HoverListP
                         />
                     )}
                     {(myProfile?.id === list?.listOwner.id || isMyList) ? null : (
-                        <FollowListButton list={list as ListResponse} />
+                        <FollowListButton
+                            listId={list!.id}
+                            isFollower={(list as ListResponse).isFollower}
+                        />
                     )}
                 </div>
             </Paper>

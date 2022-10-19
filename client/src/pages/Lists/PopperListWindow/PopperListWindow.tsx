@@ -7,7 +7,7 @@ import {usePopperListWindowStyles} from "./PopperListWindowStyles";
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
 import {selectUserData} from "../../../store/ducks/user/selectors";
 import {followList, unfollowList} from "../../../store/ducks/lists/actionCreators";
-import MembersAndFollowersModal from "../../FullList/EditListModal/MembersAndFollowersModal/MembersAndFollowersModal";
+import MembersAndFollowersModal from "../../FullList/FullListTweets/MembersAndFollowersModal/MembersAndFollowersModal";
 import {BaseListResponse} from "../../../store/types/lists";
 import {selectListDetailItem} from "../../../store/ducks/listDetail/selectors";
 import {PROFILE} from "../../../util/pathConstants";

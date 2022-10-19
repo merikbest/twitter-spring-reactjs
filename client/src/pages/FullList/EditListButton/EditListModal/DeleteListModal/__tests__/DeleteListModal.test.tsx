@@ -1,7 +1,7 @@
 import React from "react";
 import {Button, Dialog} from "@material-ui/core";
 
-import {mountWithStore} from "../../../../../util/testHelper";
+import { mountWithStore } from "../../../../../../util/testHelper";
 import DeleteListModal from "../DeleteListModal";
 
 describe("DeleteListModal", () => {

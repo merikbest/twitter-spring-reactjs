@@ -7,22 +7,22 @@ import Tab from "@material-ui/core/Tab";
 
 import {useManageMembersModalStyles} from "./ManageMembersModalStyles";
 import ManageMembersItem from "./ManageMembersItem/ManageMembersItem";
-import {ArrowIcon, SearchIcon} from "../../../../icons";
-import {selectListItem} from "../../../../store/ducks/list/selectors";
+import {ArrowIcon, SearchIcon} from "../../../../../icons";
+import {selectListItem} from "../../../../../store/ducks/list/selectors";
 import {
     selectIsListMembersLoading,
     selectListMembersItems,
     selectListSuggestedItems
-} from "../../../../store/ducks/listMembers/selectors";
+} from "../../../../../store/ducks/listMembers/selectors";
 import {
     fetchListMembers,
     fetchListMembersByUsername,
     resetListMembersState,
     resetListSuggested
-} from "../../../../store/ducks/listMembers/actionCreators";
-import Spinner from "../../../../components/Spinner/Spinner";
+} from "../../../../../store/ducks/listMembers/actionCreators";
+import Spinner from "../../../../../components/Spinner/Spinner";
 import {ManageMembersInput} from "./ManageMembersInput/ManageMembersInput";
-import EmptyPageDescription from "../../../../components/EmptyPageDescription/EmptyPageDescription";
+import EmptyPageDescription from "../../../../../components/EmptyPageDescription/EmptyPageDescription";
 
 interface ManageMembersModalProps {
     visible?: boolean;
@@ -96,10 +96,17 @@ const ManageMembersModal: FC<ManageMembersModalProps> = ({visible, onClose}): Re
                     </Tabs>
                 </div>
                 {(activeTab === 0) ? (
-                    isMembersLoading ? <Spinner/> : (
+                    isMembersLoading ? (
+                        <Spinner/>
+                    ) : (
                         (members.length !== 0) ? (
                             members.map((member) => (
-                                <ManageMembersItem key={member.id} item={list} user={member}/>
+                                <ManageMembersItem
+                                    key={member.id}
+                                    listId={list?.id}
+                                    listOwnerId={list?.listOwner.id}
+                                    user={member}
+                                />
                             ))
                         ) : (
                             <EmptyPageDescription
@@ -126,7 +133,13 @@ const ManageMembersModal: FC<ManageMembersModalProps> = ({visible, onClose}): Re
                         />
                         {(suggested.length !== 0) ? (
                             suggested.map((suggest) => (
-                                <ManageMembersItem key={suggest.id} item={list} user={suggest} isSuggested />
+                                <ManageMembersItem
+                                    key={suggest.id}
+                                    listId={list?.id}
+                                    listOwnerId={list?.listOwner.id}
+                                    user={suggest}
+                                    isSuggested
+                                />
                             ))
                         ) : (
                             <EmptyPageDescription
