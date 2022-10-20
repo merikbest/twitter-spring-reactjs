@@ -42,29 +42,4 @@ export const useEditListModalStyles = makeStyles((theme: Theme) => ({
         display: "flex",
         justifyContent: "space-between",
     },
-    manageMembers: {
-        display: "flex",
-        justifyContent: "space-between",
-        borderTop: `1px solid ${theme.palette.divider}`,
-        padding: "12px 16px",
-        "&:hover": {
-            cursor: "pointer",
-            backgroundColor: theme.palette.secondary.main,
-        },
-        "& svg": {
-            fill: theme.palette.text.secondary,
-            height: "1.20em",
-        },
-    },
-    deleteList: {
-        padding: "12px 16px",
-        color: theme.palette.error.main,
-        border: 0,
-        borderRadius: "0px 0px 16px 16px",
-        textAlign: "center",
-        "&:hover": {
-            cursor: "pointer",
-            backgroundColor: "rgba(244, 33, 46, 0.1)",
-        },
-    },
 }));

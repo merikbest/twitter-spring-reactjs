@@ -35,4 +35,18 @@ export const useManageMembersModalStyles = makeStyles((theme: Theme) => ({
         minWidth: 299,
         textTransform: 'none',
     },
+    manageMembers: {
+        display: "flex",
+        justifyContent: "space-between",
+        borderTop: `1px solid ${theme.palette.divider}`,
+        padding: "12px 16px",
+        "&:hover": {
+            cursor: "pointer",
+            backgroundColor: theme.palette.secondary.main,
+        },
+        "& svg": {
+            fill: theme.palette.text.secondary,
+            height: "1.20em",
+        },
+    },
 }));

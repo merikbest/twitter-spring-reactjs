@@ -21,7 +21,7 @@ describe("ListsItem", () => {
     });
 
     it("should render ListsItem correctly", () => {
-        const wrapper = mountWithStore(<ListsItem item={mockList} listIndex={2} isMyList={false}/>, mockStore);
+        const wrapper = mountWithStore(<ListsItem list={mockList} listIndex={2} isMyList={false}/>, mockStore);
         
         expect(wrapper.find(Avatar).at(0).prop("src")).toEqual(mockList.altWallpaper);
         expect(wrapper.text().includes(mockList.name)).toBe(true);
@@ -33,7 +33,7 @@ describe("ListsItem", () => {
     });
 
     it("should click follow ListsItem", () => {
-        const wrapper = mountWithStore(<ListsItem item={mockList} listIndex={2} isMyList={false}/>, mockStore);
+        const wrapper = mountWithStore(<ListsItem list={mockList} listIndex={2} isMyList={false}/>, mockStore);
         wrapper.find(Button).at(0).simulate("click");
         
         expect(mockDispatchFn).nthCalledWith(1, {payload: 2, type: ListsActionType.FOLLOW_LIST});
@@ -41,7 +41,7 @@ describe("ListsItem", () => {
 
     it("should click unfollow ListsItem", () => {
         const mockFollowList = {...mockList, isFollower: true};
-        const wrapper = mountWithStore(<ListsItem item={mockFollowList} listIndex={2} isMyList={false}/>, mockStore);
+        const wrapper = mountWithStore(<ListsItem list={mockFollowList} listIndex={2} isMyList={false}/>, mockStore);
         const mockButton = wrapper.find(Button).at(0);
         
         mockButton.simulate("mouseover");
@@ -55,7 +55,7 @@ describe("ListsItem", () => {
     });
 
     it("should click unpin ListsItem", () => {
-        const wrapper = mountWithStore(<ListsItem item={mockMyList} listIndex={2} isMyList={true}/>, mockStore);
+        const wrapper = mountWithStore(<ListsItem list={mockMyList} listIndex={2} isMyList={true}/>, mockStore);
         wrapper.find(IconButton).at(0).simulate("click");
 
         expect(mockDispatchFn).nthCalledWith(1, {payload: 3, type: ListsActionType.UNPIN_LIST});
@@ -63,7 +63,7 @@ describe("ListsItem", () => {
 
     it("should click pin ListsItem", () => {
         const mockPinList = {...mockMyList, pinnedDate: null} as unknown as ListResponse;
-        const wrapper = mountWithStore(<ListsItem item={mockPinList} listIndex={2} isMyList={true}/>, mockStore);
+        const wrapper = mountWithStore(<ListsItem list={mockPinList} listIndex={2} isMyList={true}/>, mockStore);
         wrapper.find(IconButton).at(0).simulate("click");
 
         expect(mockDispatchFn).nthCalledWith(1, {payload: 3, type: ListsActionType.PIN_LIST});
@@ -72,7 +72,7 @@ describe("ListsItem", () => {
     it("should hover list info and render Popper List Window", () => {
         const mockListsStore = {...mockStore, listDetail: {...mockStore.listDetail, item: mockUserFullList}}
         jest.useFakeTimers();
-        const wrapper = mountWithStore(<ListsItem item={mockList} listIndex={2} isMyList={false}/>, mockListsStore);
+        const wrapper = mountWithStore(<ListsItem list={mockList} listIndex={2} isMyList={false}/>, mockListsStore);
         wrapper.find("#listInfoWrapper").at(0).simulate("mouseenter");
         jest.runAllTimers();
         wrapper.update();
@@ -83,7 +83,7 @@ describe("ListsItem", () => {
 
     it("should hover pin icon and render Hover Action", () => {
         jest.useFakeTimers();
-        const wrapper = mountWithStore(<ListsItem item={mockList} listIndex={2} isMyList={true}/>, mockStore);
+        const wrapper = mountWithStore(<ListsItem list={mockList} listIndex={2} isMyList={true}/>, mockStore);
         wrapper.find(IconButton).at(0).simulate("mouseenter");
         jest.runAllTimers();
         wrapper.update();

@@ -6,38 +6,29 @@ import {usePinnedListsItemStyles} from "./PinnedListsItemStyles";
 import {LockIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {PinnedListResponse} from "../../../../store/types/lists";
-import {HoverListProps, withHoverList} from "../../../../hoc/withHoverList";
 import PopperListWindow from "../../PopperListWindow/PopperListWindow";
 import {LISTS} from "../../../../util/pathConstants";
+import {useHoverList} from "../../../../hook/useHoverList";
 
 interface PinnedListsItemProps {
     pinnedList?: PinnedListResponse;
 }
 
-const PinnedListsItem: FC<PinnedListsItemProps & HoverListProps> = (
-    {
-        pinnedList,
-        visiblePopperWindow,
-        handleHoverPopper,
-        handleLeavePopper
-    }
-): ReactElement => {
+const PinnedListsItem: FC<PinnedListsItemProps> = ({pinnedList}): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = usePinnedListsItemStyles();
+    const {visiblePopperWindow, handleHoverPopper, handleLeavePopper} = useHoverList();
+    const pinnedListWallpaper = pinnedList?.wallpaper?.src ? pinnedList?.wallpaper?.src : pinnedList?.altWallpaper;
 
     return (
         <Link to={`${LISTS}/${pinnedList?.id}`} className={globalClasses.link}>
             <div
                 id={"pinnedListWrapper"}
                 className={classes.pinnedListWrapper}
-                onMouseEnter={() => handleHoverPopper!(pinnedList?.id!)}
+                onMouseEnter={() => handleHoverPopper(pinnedList?.id!)}
                 onMouseLeave={handleLeavePopper}
             >
-                <Avatar
-                    variant="square"
-                    className={classes.listAvatar}
-                    src={pinnedList?.wallpaper?.src ? pinnedList?.wallpaper?.src : pinnedList?.altWallpaper}
-                />
+                <Avatar variant="square" className={classes.listAvatar} src={pinnedListWallpaper}/>
                 <Typography component={"div"} className={classes.pinnedListName}>
                     {pinnedList?.name}
                 </Typography>
@@ -52,4 +43,4 @@ const PinnedListsItem: FC<PinnedListsItemProps & HoverListProps> = (
     );
 };
 
-export default withHoverList(PinnedListsItem);
+export default PinnedListsItem;

@@ -27,7 +27,7 @@ const DiscoverLists = (): ReactElement => {
                 </div>
             ) : (
                 lists.slice(0, 3).map((list, index) => (
-                    <ListsItem key={list.id} item={list} listIndex={index}/>
+                    <ListsItem key={list.id} list={list} listIndex={index}/>
                 ))
             )}
             <Link to={SUGGESTED} className={globalClasses.link}>

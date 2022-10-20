@@ -1,6 +1,5 @@
 import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {useHistory} from "react-router-dom";
 import {Button, Checkbox, Dialog, DialogContent, DialogTitle, Typography} from "@material-ui/core";
 import {Controller, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
@@ -8,17 +7,16 @@ import * as yup from "yup";
 
 import {useEditListModalStyles} from "./EditListModalStyles";
 import UploadProfileImage from "../../../../components/EditProfileModal/UploadProfileImage";
-import CreateListsModalInput from "../../../Lists/ListsHeader/CreateListsModal/CreateListsModalInput/CreateListsModalInput";
+import CreateListsModalInput
+    from "../../../Lists/ListsHeader/CreateListsModal/CreateListsModalInput/CreateListsModalInput";
 import {ImageObj} from "../../../../components/AddTweetForm/AddTweetForm";
-import {ForwardArrowIcon} from "../../../../icons";
 import ManageMembersModal from "./ManageMembersModal/ManageMembersModal";
 import DeleteListModal from "./DeleteListModal/DeleteListModal";
-import {deleteList, editList} from "../../../../store/ducks/list/actionCreators";
+import {editList} from "../../../../store/ducks/list/actionCreators";
 import {uploadImage} from "../../../../util/uploadImage";
 import CloseButton from "../../../../components/CloseButton/CloseButton";
 import {selectListItem} from "../../../../store/ducks/list/selectors";
 import {Image} from "../../../../store/types/common";
-import {LISTS} from "../../../../util/pathConstants";
 
 interface EditListModalProps {
     visible?: boolean;
@@ -40,15 +38,13 @@ export const EditListModalFormSchema = yup.object().shape({
 const EditListModal: FC<EditListModalProps> = ({visible, onClose}): ReactElement | null => {
     const classes = useEditListModalStyles();
     const dispatch = useDispatch();
-    const history = useHistory();
     const list = useSelector(selectListItem);
 
     const [wallpaper, setWallpaper] = useState<ImageObj>();
     const [isListPrivate, setIsListPrivate] = useState<boolean>(false);
-    const [visibleManageMembersModal, setVisibleManageMembersModal] = useState<boolean>(false);
-    const [visibleDeleteListModal, setVisibleDeleteListModal] = useState<boolean>(false);
+    const listWrapperSrc = list?.wallpaper?.src ? list?.wallpaper?.src : list?.altWallpaper;
 
-    const {control, register, handleSubmit, formState: {errors}} = useForm<EditListModalFormProps>({
+    const {control, handleSubmit, formState: {errors}} = useForm<EditListModalFormProps>({
         defaultValues: {
             id: list?.id,
             name: list?.name,
@@ -78,28 +74,6 @@ const EditListModal: FC<EditListModalProps> = ({visible, onClose}): ReactElement
         setIsListPrivate(event.target.checked);
     };
 
-    const onOpenManageMembersModal = (): void => {
-        setVisibleManageMembersModal(true);
-    };
-
-    const onCloseManageMembersModal = (): void => {
-        setVisibleManageMembersModal(false);
-    };
-
-    const onOpenDeleteListModal = (): void => {
-        setVisibleDeleteListModal(true);
-    };
-
-    const onCloseDeleteListModal = (): void => {
-        setVisibleDeleteListModal(false);
-    };
-
-    const onDeleteList = (): void => {
-        setVisibleDeleteListModal(false);
-        dispatch(deleteList(list?.id!));
-        history.push(LISTS);
-    };
-
     if (!visible) {
         return null;
     }
@@ -125,9 +99,9 @@ const EditListModal: FC<EditListModalProps> = ({visible, onClose}): ReactElement
                         <div className={classes.wallpaperWrapper}>
                             <img
                                 className={classes.wallpaperImg}
-                                key={list?.wallpaper?.src ? list?.wallpaper?.src : list?.altWallpaper}
-                                src={list?.wallpaper?.src ? list?.wallpaper?.src : list?.altWallpaper}
-                                alt={list?.wallpaper?.src ? list?.wallpaper?.src : list?.altWallpaper}
+                                key={listWrapperSrc}
+                                src={listWrapperSrc}
+                                alt={listWrapperSrc}
                             />
                             <div className={classes.wallpaperEditImg}>
                                 <UploadProfileImage name={"wallpaper"} image={wallpaper} onChangeImage={setWallpaper}/>
@@ -179,37 +153,11 @@ const EditListModal: FC<EditListModalProps> = ({visible, onClose}): ReactElement
                                 When you make a List private, only you can see it.
                             </Typography>
                         </div>
-                        <Typography
-                            id={"onOpenManageMembersModal"}
-                            className={classes.manageMembers}
-                            onClick={onOpenManageMembersModal}
-                            variant={"body1"}
-                            component={"div"} 
-                        >
-                            Manage members
-                            <>{ForwardArrowIcon}</>
-                        </Typography>
-                        <Typography
-                            id={"onOpenDeleteListModal"}
-                            className={classes.deleteList}
-                            onClick={onOpenDeleteListModal}
-                            variant={"body1"}
-                            component={"div"} 
-                        >
-                            Delete List
-                        </Typography>
+                        <ManageMembersModal/>
+                        <DeleteListModal/>
                     </div>
                 </DialogContent>
             </form>
-            <ManageMembersModal
-                visible={visibleManageMembersModal}
-                onClose={onCloseManageMembersModal}
-            />
-            <DeleteListModal
-                visible={visibleDeleteListModal}
-                onClose={onCloseDeleteListModal}
-                onDeleteList={onDeleteList}
-            />
         </Dialog>
     );
 };

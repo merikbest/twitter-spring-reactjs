@@ -1,16 +1,16 @@
-import React, {ComponentType, useState} from "react";
 import {useDispatch} from "react-redux";
+import {useState} from "react";
 import axios from "axios";
 
 import {fetchListDetail} from "../store/ducks/listDetail/actionCreators";
 
-export interface HoverListProps {
-    visiblePopperWindow?: boolean;
-    handleHoverPopper?: (listId: number) => void;
-    handleLeavePopper?: () => void;
+interface UseHoverList {
+    visiblePopperWindow: boolean;
+    handleHoverPopper: (listId: number) => void;
+    handleLeavePopper: () => void;
 }
 
-export const withHoverList = <T extends HoverListProps>(Component: ComponentType<T>) => (props: T) => {
+export const useHoverList = (): UseHoverList => {
     const dispatch = useDispatch();
     const [visiblePopperWindow, setVisiblePopperWindow] = useState<boolean>(false);
     const [delayHandler, setDelayHandler] = useState<any>(null);
@@ -32,12 +32,5 @@ export const withHoverList = <T extends HoverListProps>(Component: ComponentType
         setVisiblePopperWindow(false);
     };
 
-    return (
-        <Component
-            {...props as T}
-            visiblePopperWindow={visiblePopperWindow}
-            handleHoverPopper={handleHoverPopper}
-            handleLeavePopper={handleLeavePopper}
-        />
-    );
+    return {visiblePopperWindow, handleHoverPopper, handleLeavePopper};
 };

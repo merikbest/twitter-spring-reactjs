@@ -1,4 +1,4 @@
-import React, {ComponentType, FC, ReactElement, useEffect, useState} from 'react';
+import React, {ComponentType, FC, memo, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar/ListItemAvatar";
@@ -29,6 +29,8 @@ import ActionSnackbar from "../ActionSnackbar/ActionSnackbar";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {UserResponse} from "../../store/types/user";
 import {PROFILE} from "../../util/pathConstants";
+import {useSnackbar} from "../../hook/useSnackbar";
+import {useHoverUser} from "../../hook/useHoverUser";
 
 export interface UsersItemProps<T> {
     item?: T,
@@ -41,24 +43,13 @@ export enum UserItemSize {
     LARGE = "LARGE",
 }
 
-const UsersItem: FC<UsersItemProps<UserResponse> & SnackbarProps & HoverUserProps> = (
-    {
-        item: user,
-        size,
-        visiblePopperWindow,
-        handleHoverPopper,
-        handleLeavePopper,
-        snackBarMessage,
-        openSnackBar,
-        setSnackBarMessage,
-        setOpenSnackBar,
-        onCloseSnackBar
-    }
-): ReactElement => {
+const UsersItem: FC<UsersItemProps<UserResponse>> = memo(({item: user, size,}): ReactElement => {
     const classes = useUsersItemStyles({size});
     const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
+    const {snackBarMessage, openSnackBar, setSnackBarMessage, setOpenSnackBar, onCloseSnackBar} = useSnackbar();
+    const {visiblePopperWindow, handleHoverPopper, handleLeavePopper} = useHoverUser();
     const [btnText, setBtnText] = useState<string>("Following");
     const [visibleUnfollowModal, setVisibleUnfollowModal] = useState<boolean>(false);
     const [visibleBlockUserModal, setVisibleBlockUserModal] = useState<boolean>(false);
@@ -81,7 +72,7 @@ const UsersItem: FC<UsersItemProps<UserResponse> & SnackbarProps & HoverUserProp
         handleProcessFollowRequest(user!);
     };
 
-    const handleFollow = (event: React.MouseEvent<HTMLButtonElement>, user: UserResponse): void => {
+    const handleFollow = (event: React.MouseEvent<HTMLButtonElement>): void => {
         event.preventDefault();
 
         if (user?.isPrivateProfile) {
@@ -167,7 +158,7 @@ const UsersItem: FC<UsersItemProps<UserResponse> & SnackbarProps & HoverUserProp
                                     (user?.isUserBlocked) ? (
                                         <Button
                                             className={classNames(classes.containedButton, classes.blockButton)}
-                                            onClick={(event) => onOpenBlockUserModal(event)}
+                                            onClick={onOpenBlockUserModal}
                                             onMouseOver={() => setBtnText("Unblock")}
                                             onMouseLeave={() => setBtnText("Blocked")}
                                             color="primary"
@@ -180,7 +171,7 @@ const UsersItem: FC<UsersItemProps<UserResponse> & SnackbarProps & HoverUserProp
                                         (user?.isWaitingForApprove) ? (
                                             <Button
                                                 className={classes.outlinedButton}
-                                                onClick={(event) => cancelFollow(event)}
+                                                onClick={cancelFollow}
                                                 onMouseOver={() => setBtnText("Cancel")}
                                                 onMouseLeave={() => setBtnText("Pending")}
                                                 color="primary"
@@ -192,7 +183,7 @@ const UsersItem: FC<UsersItemProps<UserResponse> & SnackbarProps & HoverUserProp
                                         ) : (
                                             <Button
                                                 className={classes.outlinedButton}
-                                                onClick={(event) => handleFollow(event, user!)}
+                                                onClick={handleFollow}
                                                 color="primary"
                                                 variant="outlined"
                                                 size="small"
@@ -204,7 +195,7 @@ const UsersItem: FC<UsersItemProps<UserResponse> & SnackbarProps & HoverUserProp
                                 ) : (
                                     <Button
                                         className={classes.containedButton}
-                                        onClick={(event) => handleClickOpenUnfollowModal(event)}
+                                        onClick={handleClickOpenUnfollowModal}
                                         onMouseOver={() => setBtnText("Unfollow")}
                                         onMouseLeave={() => setBtnText("Following")}
                                         color="primary"
@@ -239,6 +230,6 @@ const UsersItem: FC<UsersItemProps<UserResponse> & SnackbarProps & HoverUserProp
             />
         </>
     );
-};
+});
 
-export default compose(withSnackbar, withHoverUser)(UsersItem) as ComponentType<UsersItemProps<UserResponse> & SnackbarProps & HoverActionProps>;
+export default UsersItem;

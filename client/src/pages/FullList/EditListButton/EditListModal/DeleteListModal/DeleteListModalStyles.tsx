@@ -1,6 +1,17 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 export const useDeleteListModalStyles = makeStyles((theme: Theme) => ({
+    deleteList: {
+        padding: "12px 16px",
+        color: theme.palette.error.main,
+        border: 0,
+        borderRadius: "0px 0px 16px 16px",
+        textAlign: "center",
+        "&:hover": {
+            cursor: "pointer",
+            backgroundColor: "rgba(244, 33, 46, 0.1)",
+        },
+    },
     modalWrapper: {
         width: 280,
         height: "100%",

@@ -73,7 +73,7 @@ const ListsMemberships: FC = (): ReactElement => {
                             )}
                         />
                     ) : (
-                        lists.map((list) => <ListsItem key={list.id} item={list}/>)
+                        lists.map((list) => <ListsItem key={list.id} list={list}/>)
                     )
                 )}
             </div>

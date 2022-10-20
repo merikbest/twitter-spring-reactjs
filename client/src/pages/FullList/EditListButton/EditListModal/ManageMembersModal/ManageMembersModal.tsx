@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
+import React, {ChangeEvent, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Dialog, DialogContent, DialogTitle, InputAdornment, Typography} from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
@@ -7,7 +7,7 @@ import Tab from "@material-ui/core/Tab";
 
 import {useManageMembersModalStyles} from "./ManageMembersModalStyles";
 import ManageMembersItem from "./ManageMembersItem/ManageMembersItem";
-import {ArrowIcon, SearchIcon} from "../../../../../icons";
+import {ArrowIcon, ForwardArrowIcon, SearchIcon} from "../../../../../icons";
 import {selectListItem} from "../../../../../store/ducks/list/selectors";
 import {
     selectIsListMembersLoading,
@@ -24,12 +24,7 @@ import Spinner from "../../../../../components/Spinner/Spinner";
 import {ManageMembersInput} from "./ManageMembersInput/ManageMembersInput";
 import EmptyPageDescription from "../../../../../components/EmptyPageDescription/EmptyPageDescription";
 
-interface ManageMembersModalProps {
-    visible?: boolean;
-    onClose: () => void;
-}
-
-const ManageMembersModal: FC<ManageMembersModalProps> = ({visible, onClose}): ReactElement | null => {
+const ManageMembersModal = (): ReactElement => {
     const classes = useManageMembersModalStyles();
     const dispatch = useDispatch();
     const list = useSelector(selectListItem);
@@ -38,9 +33,10 @@ const ManageMembersModal: FC<ManageMembersModalProps> = ({visible, onClose}): Re
     const isMembersLoading = useSelector(selectIsListMembersLoading);
     const [activeTab, setActiveTab] = React.useState<number>(0);
     const [searchText, setSearchText] = React.useState<string>("");
+    const [visibleManageMembersModal, setVisibleManageMembersModal] = useState<boolean>(false);
 
     useEffect(() => {
-        if (visible) {
+        if (visibleManageMembersModal) {
             dispatch(fetchListMembers({listId: list?.id!, listOwnerId: list?.listOwner.id!}));
         }
 
@@ -48,7 +44,7 @@ const ManageMembersModal: FC<ManageMembersModalProps> = ({visible, onClose}): Re
             dispatch(resetListMembersState());
             dispatch(resetListSuggested());
         };
-    }, [visible]);
+    }, [visibleManageMembersModal]);
 
     const handleChangeTab = (event: ChangeEvent<{}>, newValue: number): void => {
         setActiveTab(newValue);
@@ -70,87 +66,104 @@ const ManageMembersModal: FC<ManageMembersModalProps> = ({visible, onClose}): Re
         }
     };
 
-    if (!visible) {
-        return null;
-    }
+    const onOpenManageMembersModal = (): void => {
+        setVisibleManageMembersModal(true);
+    };
+
+    const onCloseManageMembersModal = (): void => {
+        setVisibleManageMembersModal(false);
+    };
 
     return (
-        <Dialog
-            className={classes.dialog}
-            open={visible}
-            onClose={onClose}
-            aria-labelledby="form-dialog-title"
-            hideBackdrop
-        >
-            <DialogTitle id="form-dialog-title">
-                <IconButton onClick={onClose} color="primary" size="small">
-                    <>{ArrowIcon}</>
-                </IconButton>
+        <>
+            <Typography
+                id={"onOpenManageMembersModal"}
+                className={classes.manageMembers}
+                onClick={onOpenManageMembersModal}
+                variant={"body1"}
+                component={"div"}
+            >
                 Manage members
-            </DialogTitle>
-            <DialogContent className={classes.content}>
-                <div className={classes.tabs}>
-                    <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
-                        <Tab className={classes.tab} label={`Members (${list?.membersSize})`}/>
-                        <Tab className={classes.tab} label="Suggested"/>
-                    </Tabs>
-                </div>
-                {(activeTab === 0) ? (
-                    isMembersLoading ? (
-                        <Spinner/>
-                    ) : (
-                        (members.length !== 0) ? (
-                            members.map((member) => (
-                                <ManageMembersItem
-                                    key={member.id}
-                                    listId={list?.id}
-                                    listOwnerId={list?.listOwner.id}
-                                    user={member}
-                                />
-                            ))
-                        ) : (
-                            <EmptyPageDescription
-                                title={"There isn’t anyone in this List"}
-                                subtitle={"When people get added, they’ll show up here."}
-                            />
-                        )
-                    )
-                ) : (
-                    <div className={classes.container}>
-                        <ManageMembersInput
-                            fullWidth
-                            placeholder="Search people"
-                            variant="outlined"
-                            onChange={(event) => onSearch(event.target.value)}
-                            value={searchText}
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        {SearchIcon}
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                        {(suggested.length !== 0) ? (
-                            suggested.map((suggest) => (
-                                <ManageMembersItem
-                                    key={suggest.id}
-                                    listId={list?.id}
-                                    listOwnerId={list?.listOwner.id}
-                                    user={suggest}
-                                    isSuggested
-                                />
-                            ))
-                        ) : (
-                            <EmptyPageDescription
-                                title={"There aren’t any suggested members"}
-                                subtitle={"To see suggestions to add to this List, try searching for accounts."}
-                            />
-                        )}
+                <>{ForwardArrowIcon}</>
+            </Typography>
+
+            <Dialog
+                className={classes.dialog}
+                open={visibleManageMembersModal}
+                onClose={onCloseManageMembersModal}
+                aria-labelledby="form-dialog-title"
+                hideBackdrop
+            >
+                <DialogTitle id="form-dialog-title">
+                    <IconButton onClick={onCloseManageMembersModal} color="primary" size="small">
+                        <>{ArrowIcon}</>
+                    </IconButton>
+                    Manage members
+                </DialogTitle>
+                <DialogContent className={classes.content}>
+                    <div className={classes.tabs}>
+                        <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
+                            <Tab className={classes.tab} label={`Members (${list?.membersSize})`}/>
+                            <Tab className={classes.tab} label="Suggested"/>
+                        </Tabs>
                     </div>
-                )}
-            </DialogContent>
-        </Dialog>
+                    {(activeTab === 0) ? (
+                        isMembersLoading ? (
+                            <Spinner/>
+                        ) : (
+                            (members.length !== 0) ? (
+                                members.map((member) => (
+                                    <ManageMembersItem
+                                        key={member.id}
+                                        listId={list?.id}
+                                        listOwnerId={list?.listOwner.id}
+                                        user={member}
+                                    />
+                                ))
+                            ) : (
+                                <EmptyPageDescription
+                                    title={"There isn’t anyone in this List"}
+                                    subtitle={"When people get added, they’ll show up here."}
+                                />
+                            )
+                        )
+                    ) : (
+                        <div className={classes.container}>
+                            <ManageMembersInput
+                                fullWidth
+                                placeholder="Search people"
+                                variant="outlined"
+                                onChange={(event) => onSearch(event.target.value)}
+                                value={searchText}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            {SearchIcon}
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                            {(suggested.length !== 0) ? (
+                                suggested.map((suggest) => (
+                                    <ManageMembersItem
+                                        key={suggest.id}
+                                        listId={list?.id}
+                                        listOwnerId={list?.listOwner.id}
+                                        user={suggest}
+                                        isSuggested
+                                    />
+                                ))
+                            ) : (
+                                <EmptyPageDescription
+                                    title={"There aren’t any suggested members"}
+                                    subtitle={"To see suggestions to add to this List, try searching for accounts."}
+                                />
+                            )}
+                        </div>
+                    )}
+                </DialogContent>
+            </Dialog>
+        </>
     );
 };
 

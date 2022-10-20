@@ -51,7 +51,7 @@ const SuggestedLists: FC = (): ReactElement => {
             {isLoading ? (
                 <Spinner/>
             ) : (
-                lists.map((list) => <ListsItem key={list.id} item={list}/>)
+                lists.map((list) => <ListsItem key={list.id} list={list}/>)
             )}
         </Paper>
     );
