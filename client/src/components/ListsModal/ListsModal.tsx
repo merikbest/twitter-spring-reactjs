@@ -14,7 +14,8 @@ import {TweetResponse, UserTweetResponse} from "../../store/types/tweet";
 import {SimpleListResponse} from "../../store/types/lists";
 import Spinner from "../Spinner/Spinner";
 import {UserProfileResponse} from "../../store/types/user";
-import {CheckIcon, LockIcon} from "../../icons";
+import {CheckIcon} from "../../icons";
+import LockIcon from "../LockIcon/LockIcon";
 
 interface ListsModalProps {
     tweet?: TweetResponse;
@@ -103,16 +104,8 @@ const ListsModal: FC<ListsModalProps> = ({tweet, user, visible, onClose}): React
                                         <Typography component={"span"}>
                                             {list.name}
                                         </Typography>
-                                        {!list?.isPrivate && (
-                                            <span className={classes.lockIcon}>
-                                                {LockIcon}
-                                            </span>
-                                        )}
-                                        {list.isMemberInList && (
-                                            <span id={"check"}>
-                                                {CheckIcon}
-                                            </span>
-                                        )}
+                                        {list?.isPrivate && <LockIcon/>}
+                                        {list.isMemberInList && <span id={"check"}>{CheckIcon}</span>}
                                     </ListItem>
                                 ))}
                             </List>

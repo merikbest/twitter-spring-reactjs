@@ -29,32 +29,10 @@ export const useUsersItemStyles = makeStyles<Theme , UsersItemStylesProps>((them
             overflow: "hidden",
         },
     },
-    lockIcon: {
-        "& svg": {
-            marginLeft: 3,
-            marginBottom: -3,
-            height: "1.2em",
-        },
-    },
     buttonWrapper: {
         flex: 1,
         "& .MuiButton-root": {
             float: 'right',
         },
-    },
-    outlinedButton: {
-        width: 79,
-        '&:hover': {
-            backgroundColor: theme.palette.secondary.light,
-        },
-    },
-    containedButton: {
-        width: 105,
-        '&:hover': {
-            backgroundColor: theme.palette.error.dark,
-        },
-    },
-    blockButton: {
-        backgroundColor: theme.palette.error.main,
     },
 }));

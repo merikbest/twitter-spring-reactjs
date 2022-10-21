@@ -10,12 +10,12 @@ import {useGlobalStyles} from "../../../../../../util/globalClasses";
 import {ListsOwnerMemberResponse} from "../../../../../../store/types/lists";
 import {processUserToListMembers} from "../../../../../../store/ducks/listMembers/actionCreators";
 import PopperUserWindow from "../../../../../../components/PopperUserWindow/PopperUserWindow";
-import {LockIcon} from "../../../../../../icons";
 import ActionSnackbar from "../../../../../../components/ActionSnackbar/ActionSnackbar";
 import {selectIsListSuggestedError} from "../../../../../../store/ducks/listMembers/selectors";
 import {PROFILE} from "../../../../../../util/pathConstants";
 import {useHoverUser} from "../../../../../../hook/useHoverUser";
 import {useSnackbar} from "../../../../../../hook/useSnackbar";
+import LockIcon from "../../../../../../components/LockIcon/LockIcon";
 
 interface ManageMembersItemProps {
     listId?: number
@@ -69,11 +69,7 @@ const ManageMembersItem: FC<ManageMembersItemProps> = memo((
                             >
                                 {user?.fullName}
                             </Typography>
-                            {user?.isPrivateProfile && (
-                                <span className={classes.lockIcon}>
-                                    {LockIcon}
-                                </span>
-                            )}
+                            {user?.isPrivateProfile && <LockIcon/>}
                             <PopperUserWindow visible={visiblePopperWindow}/>
                             <Typography variant={"subtitle1"} component={"div"}>
                                 @{user?.username}

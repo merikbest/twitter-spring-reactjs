@@ -21,13 +21,6 @@ export const useDirectUserItemStyles = makeStyles((theme: Theme) => ({
     headerInfo: {
         width: 350
     },
-    lockIcon: {
-        "& svg": {
-            marginLeft: 3,
-            marginBottom: -3,
-            height: "1.2em",
-        },
-    },
     checkIcon: {
         float: "right",
         "& svg": {

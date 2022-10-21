@@ -13,7 +13,7 @@ import Authentication from './pages/Authentication/Authentication';
 import Home from "./pages/Home/Home";
 import {Layout} from './pages/Layout';
 import UserPage from "./pages/UserPage/UserPage";
-import {selectIsAuth, selectUserData, selectUserStatus} from "./store/ducks/user/selectors";
+import {selectIsAuth, selectUserDataId, selectUserStatus} from "./store/ducks/user/selectors";
 import {LoadingStatus} from './store/types';
 import {fetchUserData, setNewNotification, setUnreadMessage} from './store/ducks/user/actionCreators';
 import Explore from './pages/Explore/Explore';
@@ -81,7 +81,7 @@ import {BackgroundTheme, ColorScheme} from "./store/types/common";
 const App: FC = (): ReactElement => {
     const history = useHistory();
     const dispatch = useDispatch();
-    const myProfile = useSelector(selectUserData);
+    const myProfileId = useSelector(selectUserDataId);
     const notifications = useSelector(selectNotificationsList);
     const isAuth = useSelector(selectIsAuth);
     const loadingStatus = useSelector(selectUserStatus);
@@ -130,22 +130,22 @@ const App: FC = (): ReactElement => {
     useEffect(() => {
         let stompClient = Stomp.over(new SockJS(WS_URL));
 
-        if (myProfile) {
+        if (myProfileId) {
             if (location.pathname !== HOME_CONNECT) {
                 dispatch(fetchRelevantUsers());
             }
             dispatch(fetchTags());
 
             stompClient.connect({}, () => {
-                stompClient?.subscribe("/topic/chat/" + myProfile.id, (response) => {
+                stompClient?.subscribe(`/topic/chat/${myProfileId}`, (response) => {
                     dispatch(setChatMessage(JSON.parse(response.body)));
 
-                    if (myProfile.id !== JSON.parse(response.body).author.id) {
+                    if (myProfileId !== JSON.parse(response.body).author.id) {
                         dispatch(setUnreadMessage(JSON.parse(response.body)));
                     }
                 });
 
-                stompClient?.subscribe("/topic/notifications/" + myProfile.id, (response) => {
+                stompClient?.subscribe(`/topic/notifications/${myProfileId}`, (response) => {
                     const isNotificationExist = notifications.find(notification => notification.id === JSON.parse(response.body).id);
 
                     if (!isNotificationExist) {
@@ -155,7 +155,7 @@ const App: FC = (): ReactElement => {
                 });
             });
         }
-    }, [myProfile?.id]);
+    }, [myProfileId]);
 
     const changeBackgroundColor = (background: BackgroundTheme): void => {
         processBackgroundColor(background);

@@ -22,11 +22,4 @@ export const usePinnedListsItemStyles = makeStyles((theme: Theme) => ({
         overflow: "hidden",
         textAlign: "center"
     },
-    lockIcon: {
-        "& svg": {
-            marginLeft: 3,
-            marginBottom: -3,
-            height: "1.2em",
-        },
-    },
 }));

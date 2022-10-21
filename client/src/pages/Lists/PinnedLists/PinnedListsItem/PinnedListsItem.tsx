@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {Avatar, Typography} from "@material-ui/core";
 
 import {usePinnedListsItemStyles} from "./PinnedListsItemStyles";
-import {LockIcon} from "../../../../icons";
+import LockIcon from "../../../../components/LockIcon/LockIcon";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {PinnedListResponse} from "../../../../store/types/lists";
 import PopperListWindow from "../../PopperListWindow/PopperListWindow";
@@ -30,13 +30,9 @@ const PinnedListsItem: FC<PinnedListsItemProps> = ({pinnedList}): ReactElement =
             >
                 <Avatar variant="square" className={classes.listAvatar} src={pinnedListWallpaper}/>
                 <Typography component={"div"} className={classes.pinnedListName}>
-                    {pinnedList?.name}
+                    {pinnedList?.isPrivate && <LockIcon/>}
+                    {" "}{pinnedList?.name}
                 </Typography>
-                {pinnedList?.isPrivate && (
-                    <span id={"lockIcon"} className={classes.lockIcon}>
-                        {LockIcon}
-                    </span>
-                )}
                 <PopperListWindow visible={visiblePopperWindow}/>
             </div>
         </Link>

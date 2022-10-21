@@ -30,13 +30,6 @@ export const useConversationInfoStyles = makeStyles((theme: Theme) => ({
         height: "48px !important",
         marginRight: 15,
     },
-    lockIcon: {
-        "& svg": {
-            marginLeft: 3,
-            marginBottom: -3,
-            height: "1.2em",
-        },
-    },
     buttonWrapper: {
         float: 'right',
         marginRight: 15,

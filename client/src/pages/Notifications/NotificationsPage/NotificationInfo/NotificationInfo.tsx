@@ -48,7 +48,7 @@ const NotificationInfo: FC = (): ReactElement => {
                     <div className={globalClasses.contentWrapper}>
                         <TweetComponent item={notification?.tweet}/>
                     </div>
-                    <UsersItem item={notification?.user} size={UserItemSize.MEDIUM}/>
+                    <UsersItem user={notification?.user} size={UserItemSize.MEDIUM}/>
                 </>
             )}
         </Paper>

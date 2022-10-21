@@ -88,7 +88,7 @@ const UsersListModal: FC<UsersListModalProps> = (
                     ) : (
                         <List>
                             {users.map((user) => (
-                                <UsersItem key={user.id} item={user} size={UserItemSize.MEDIUM}/>
+                                <UsersItem key={user.id} user={user} size={UserItemSize.MEDIUM}/>
                             ))}
                             {isUsersLoading && <Spinner/>}
                         </List>

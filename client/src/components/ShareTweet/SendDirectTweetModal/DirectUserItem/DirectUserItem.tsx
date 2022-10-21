@@ -3,8 +3,9 @@ import {Avatar, Typography} from "@material-ui/core";
 
 import {useDirectUserItemStyles} from "./DirectUserItemStyles";
 import {DEFAULT_PROFILE_IMG} from "../../../../util/url";
-import {CheckIcon, LockIcon} from "../../../../icons";
+import {CheckIcon} from "../../../../icons";
 import {UserResponse} from "../../../../store/types/user";
+import LockIcon from "../../../LockIcon/LockIcon";
 
 interface DirectUserItemProps {
     user: UserResponse;
@@ -27,11 +28,7 @@ const DirectUserItem: FC<DirectUserItemProps> = ({user, selected}): ReactElement
                             <Typography variant={"h6"} component={"span"}>
                                 {user?.fullName}
                             </Typography>
-                            {user?.isPrivateProfile && (
-                                <span className={classes.lockIcon}>
-                                    {LockIcon}
-                                </span>
-                            )}
+                            {user?.isPrivateProfile && <LockIcon/>}
                         </div>
                         <Typography variant={"subtitle1"} component={"div"}>
                             @{user?.username}

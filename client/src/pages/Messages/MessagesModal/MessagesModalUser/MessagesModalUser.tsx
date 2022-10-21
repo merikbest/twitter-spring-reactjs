@@ -3,7 +3,7 @@ import {Avatar, Typography} from "@material-ui/core";
 
 import {useMessagesModalUserStyles} from "./MessagesModalUserStyles";
 import {DEFAULT_PROFILE_IMG} from "../../../../util/url";
-import {LockIcon} from "../../../../icons";
+import LockIcon from "../../../../components/LockIcon/LockIcon";
 import {UserResponse} from "../../../../store/types/user";
 
 interface MessagesModalUser {
@@ -23,11 +23,7 @@ const MessagesModalUser: FC<MessagesModalUser> = ({user}): ReactElement => {
                             <Typography variant={"h6"} component={"span"}>
                                 {user?.fullName}
                             </Typography>
-                            {user?.isPrivateProfile && (
-                                <span id={"privateProfile"} className={classes.lockIcon}>
-                                    {LockIcon}
-                                </span>
-                            )}
+                            {user?.isPrivateProfile && <LockIcon/>}
                         </div>
                         <Typography variant={"subtitle1"} component={"div"}>
                             @{user?.username}

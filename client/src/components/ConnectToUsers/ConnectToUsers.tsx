@@ -31,7 +31,7 @@ const ConnectToUsers: FC<ConnectToUsersProps> = ({title, isUsersLoading, users})
                     </Paper>
                     <Paper className={globalClasses.pageContainer} variant="outlined">
                         <List>
-                            {users.map((user) => <UsersItem key={user.id} item={user} size={UserItemSize.MEDIUM}/>)}
+                            {users.map((user) => <UsersItem key={user.id} user={user} size={UserItemSize.MEDIUM}/>)}
                         </List>
                         {isUsersLoading && <Spinner/>}
                     </Paper>

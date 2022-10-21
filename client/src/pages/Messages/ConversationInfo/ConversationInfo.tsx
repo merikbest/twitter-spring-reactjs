@@ -7,7 +7,6 @@ import classnames from "classnames";
 import {useConversationInfoStyles} from "./ConversationInfoStyles";
 import BackButton from "../../../components/BackButton/BackButton";
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
-import {LockIcon} from "../../../icons";
 import {selectUserData} from "../../../store/ducks/user/selectors";
 import {
     followUser,
@@ -27,6 +26,7 @@ import {selectUserProfile, selectUsersIsLoading} from "../../../store/ducks/user
 import Spinner from "../../../components/Spinner/Spinner";
 import {UserResponse} from "../../../store/types/user";
 import {MESSAGES, PROFILE} from "../../../util/pathConstants";
+import LockIcon from "../../../components/LockIcon/LockIcon";
 
 interface ConversationInfoProps {
     participantId?: number;
@@ -159,11 +159,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                                             <Typography variant={"h6"} component={"span"}>
                                                 {chatParticipant?.fullName}
                                             </Typography>
-                                            {chatParticipant?.isPrivateProfile && (
-                                                <span className={classes.lockIcon}>
-                                                    {LockIcon}
-                                                </span>
-                                            )}
+                                            {chatParticipant?.isPrivateProfile && <LockIcon/>}
                                             <Typography variant={"subtitle1"} component={"div"}>
                                                 @{chatParticipant?.username}
                                             </Typography>

@@ -32,7 +32,13 @@ import {
     TwitterAdsIcon
 } from "../../icons";
 import UserSideProfile from "../UserSideProfile/UserSideProfile";
-import {selectUserData} from "../../store/ducks/user/selectors";
+import {
+    selectUserDataFollowerRequestsSize,
+    selectUserDataId,
+    selectUserDataIsPrivateProfile,
+    selectUserDataNotificationsCount,
+    selectUserDataUnreadMessagesSize
+} from "../../store/ducks/user/selectors";
 import {useSideMenuStyles} from "./SideMenuStyles";
 import AddTweetModal from "../AddTweetModal/AddTweetModal";
 import {selectLoadingState} from "../../store/ducks/tweets/selectors";
@@ -50,10 +56,12 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
     const classes = useSideMenuStyles();
     const dispatch = useDispatch();
     const location = useLocation();
-    const myProfile = useSelector(selectUserData);
-    const userData = useSelector(selectUserData);
+    const myProfileId = useSelector(selectUserDataId);
+    const notificationsCount = useSelector(selectUserDataNotificationsCount);
+    const unreadMessagesSize = useSelector(selectUserDataUnreadMessagesSize);
+    const followerRequestsSize = useSelector(selectUserDataFollowerRequestsSize);
+    const isPrivateProfile = useSelector(selectUserDataIsPrivateProfile);
     const loadingStatus = useSelector(selectLoadingState);
-
     const [visibleAddTweet, setVisibleAddTweet] = useState<boolean>(false);
     const [visibleHomeNotification, setVisibleHomeNotification] = useState<boolean>(false);
     const [visibleDisplayModal, setVisibleDisplayModal] = useState<boolean>(false);
@@ -122,7 +130,8 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                         <div>
                             <Hidden smDown>
                                 <>
-                                    {visibleHomeNotification && <span id={"homeNotification"} className={classes.homeNotification}/>}
+                                    {visibleHomeNotification &&
+                                        <span id={"homeNotification"} className={classes.homeNotification}/>}
                                     {(location.pathname.includes(HOME)) ? (
                                         <span>{HomeIconFilled}</span>
                                     ) : (
@@ -159,9 +168,9 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                         <div>
                             <Hidden smDown>
                                 <>
-                                    {(myProfile?.notificationsCount !== 0) && (
+                                    {(notificationsCount !== 0) && (
                                         <span id={"notificationsCount"} className={classes.count}>
-                                            {myProfile?.notificationsCount}
+                                            {notificationsCount}
                                         </span>
                                     )}
                                     {(location.pathname.includes(NOTIFICATIONS)) ? (
@@ -182,9 +191,9 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                         <div>
                             <Hidden smDown>
                                 <>
-                                    {(myProfile?.unreadMessagesSize !== 0) && (
+                                    {(unreadMessagesSize !== 0) && (
                                         <span className={classes.count}>
-                                            {myProfile?.unreadMessagesSize}
+                                            {unreadMessagesSize}
                                         </span>
                                     )}
                                     {(location.pathname.includes(MESSAGES)) ? (
@@ -237,11 +246,11 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     </NavLink>
                 </li>
                 <li className={classes.itemWrapper}>
-                    <NavLink to={`${PROFILE}/${userData?.id}`} activeClassName={"selected"}>
+                    <NavLink to={`${PROFILE}/${myProfileId}`} activeClassName={"selected"}>
                         <div>
                             <Hidden smDown>
                                 <>
-                                    {(location.pathname.includes(`${PROFILE}/${myProfile?.id}`)) ? (
+                                    {(location.pathname.includes(`${PROFILE}/${myProfileId}`)) ? (
                                         <span>{ProfileIconFilled}</span>
                                     ) : (
                                         <span>{ProfileIcon}</span>
@@ -288,13 +297,13 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     >
                         <div className={classnames(classes.listItemWrapper, globalClasses.svg)}>
                             <List>
-                                {(myProfile?.isPrivateProfile) && (
+                                {(isPrivateProfile) && (
                                     <ListItem id={"openFollowerRequestsModal"} onClick={onOpenFollowerRequestsModal}>
                                         {FollowerRequestIcon}
                                         <Typography variant={"body1"} component={"span"}>
                                             Follower requests
                                             <span className={classes.followerRequestsCount}>
-                                                {myProfile.followerRequestsSize}
+                                                {followerRequestsSize}
                                             </span>
                                         </Typography>
                                     </ListItem>

@@ -28,11 +28,4 @@ export const useMessagesModalUserStyles = makeStyles<Theme, MessagesModalUserSty
     headerInfo: {
         width: 350
     },
-    lockIcon: {
-        "& svg": {
-            marginLeft: 3,
-            marginBottom: -3,
-            height: "1.2em",
-        },
-    },
 }));

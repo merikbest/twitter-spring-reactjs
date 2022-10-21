@@ -16,6 +16,11 @@ const Connect: FC = (): ReactElement => {
     useEffect(() => {
        loadUsers(0);
         window.scrollTo(0, 0);
+
+        // TODO reset state after history.goBack()
+        // return () => {
+        //     dispatch(resetUsersState());
+        // };
     }, []);
 
     const loadUsers = (page: number): void => {
@@ -24,11 +29,7 @@ const Connect: FC = (): ReactElement => {
 
     return (
         <InfiniteScrollWrapper dataLength={users.length} pagesCount={pagesCount} loadItems={loadUsers}>
-            <ConnectToUsers
-                title={"Suggested for you"}
-                isUsersLoading={isUsersLoading}
-                users={users}
-            />
+            <ConnectToUsers title={"Suggested for you"} isUsersLoading={isUsersLoading} users={users}/>
         </InfiniteScrollWrapper>
     );
 };

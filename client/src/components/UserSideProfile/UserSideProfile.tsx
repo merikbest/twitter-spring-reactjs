@@ -6,19 +6,29 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 
-import {selectUserData} from "../../store/ducks/user/selectors";
+import {
+    selectUserDataId,
+    selectUserDataIsPrivateProfile,
+    selectUserProfileAvatar,
+    selectUserProfileFullName,
+    selectUserProfileUsername
+} from "../../store/ducks/user/selectors";
 import {signOut} from "../../store/ducks/user/actionCreators";
 import {useUserSideProfileStyles} from "./UserSideProfileStyles";
-import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {CheckIcon, EditIcon} from "../../icons";
 import LogoutModal from "./LogoutModal/LogoutModal";
 import {ACCOUNT_SIGNIN} from "../../util/pathConstants";
+import LockIcon from "../LockIcon/LockIcon";
 
 const UserSideProfile: FC = (): ReactElement | null => {
     const classes = useUserSideProfileStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const myProfile = useSelector(selectUserData);
+    const myProfileId = useSelector(selectUserDataId);
+    const avatar = useSelector(selectUserProfileAvatar);
+    const fullName = useSelector(selectUserProfileFullName);
+    const username = useSelector(selectUserProfileUsername);
+    const isPrivateProfile = useSelector(selectUserDataIsPrivateProfile);
     const [visibleLogoutModal, setVisibleLogoutModal] = useState<boolean>(false);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const openPopover = Boolean(anchorEl);
@@ -46,23 +56,21 @@ const UserSideProfile: FC = (): ReactElement | null => {
         history.push(ACCOUNT_SIGNIN);
     };
 
-    if (!myProfile) {
+    if (!myProfileId) {
         return null;
     }
 
     return (
         <>
             <div aria-describedby={popoverId} onClick={handleOpenPopup} className={classes.container}>
-                <Avatar
-                    alt={`avatar ${myProfile?.id}`}
-                    src={myProfile?.avatar?.src ? myProfile?.avatar?.src : DEFAULT_PROFILE_IMG}
-                />
+                <Avatar alt={`avatar ${myProfileId}`} src={avatar}/>
                 <div className={classes.info}>
                     <Typography variant={"h6"}>
-                        {myProfile.fullName}
+                        {fullName}
+                        {isPrivateProfile && <LockIcon/>}
                     </Typography>
                     <Typography variant={"subtitle1"}>
-                        @{myProfile.username}
+                        @{username}
                     </Typography>
                 </div>
                 <div className={classes.icon}>
@@ -89,17 +97,17 @@ const UserSideProfile: FC = (): ReactElement | null => {
                 <List>
                     <ListItem>
                         <ListItemAvatar>
-                            <Avatar alt={`${myProfile?.id}`} src={myProfile?.avatar?.src}/>
+                            <Avatar alt={`${myProfileId}`} src={avatar}/>
                         </ListItemAvatar>
                         <ListItemText
                             primary={
                                 <Typography variant={"h6"} component="div">
-                                    {myProfile?.fullName}
+                                    {fullName}
                                 </Typography>
                             }
                             secondary={
                                 <Typography variant="subtitle1" component="div">
-                                    @{myProfile?.username}
+                                    @{username}
                                 </Typography>
                             }
                         />
@@ -115,7 +123,7 @@ const UserSideProfile: FC = (): ReactElement | null => {
                         <Divider component="li"/>
                         <ListItem id={"onOpenLogoutModal"} onClick={onOpenLogoutModal}>
                             <Typography variant="body1" component="div">
-                                Log out @{myProfile?.username}
+                                Log out @{username}
                             </Typography>
                         </ListItem>
                     </div>

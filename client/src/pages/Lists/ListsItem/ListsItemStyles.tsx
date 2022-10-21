@@ -32,13 +32,6 @@ export const useListsItemStyles = makeStyles((theme: Theme) => ({
     listTitle: {
         fontWeight: 700,
     },
-    lockIcon: {
-        "& svg": {
-            marginLeft: 3,
-            marginBottom: -3,
-            height: "1.2em",
-        },
-    },
     listOwnerWrapper: {
         display: "inline-block",
         verticalAlign: "middle",

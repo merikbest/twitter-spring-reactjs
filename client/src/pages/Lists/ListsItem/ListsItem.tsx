@@ -6,7 +6,7 @@ import {Avatar, Paper, Typography} from "@material-ui/core";
 import {useListsItemStyles} from "./ListsItemStyles";
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
 import {selectUserData} from "../../../store/ducks/user/selectors";
-import {LockIcon, PinIcon, PinIconFilled} from "../../../icons";
+import {PinIcon, PinIconFilled} from "../../../icons";
 import {pinList, unpinList} from "../../../store/ducks/lists/actionCreators";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {ListResponse, ListUserResponse} from "../../../store/types/lists";
@@ -15,6 +15,7 @@ import {LISTS} from "../../../util/pathConstants";
 import ActionIconButton from "../../../components/ActionIconButton/ActionIconButton";
 import FollowListButton from "../../../components/FollowListButton/FollowListButton";
 import {useHoverList} from "../../../hook/useHoverList";
+import LockIcon from "../../../components/LockIcon/LockIcon";
 
 interface ListsItemProps {
     list?: ListResponse | ListUserResponse;
@@ -57,11 +58,7 @@ const ListsItem: FC<ListsItemProps> = memo(({list, listIndex, isMyList}): ReactE
                             <Typography variant={"h6"} component={"span"} className={classes.listTitle}>
                                 {list?.name}
                             </Typography>
-                            {"isPrivate" in list! && list?.isPrivate && (
-                                <span className={classes.lockIcon}>
-                                    {LockIcon}
-                                </span>
-                            )}
+                            {"isPrivate" in list! && list?.isPrivate && <LockIcon/>}
                         </div>
                         <Typography variant={"subtitle2"} component={"div"}>
                             {list?.description}

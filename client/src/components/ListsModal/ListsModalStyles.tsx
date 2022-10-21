@@ -58,11 +58,4 @@ export const useListsModalStyles = makeStyles<Theme>((theme) => ({
             backgroundColor: theme.palette.action.hover,
         },
     },
-    lockIcon: {
-        "& svg": {
-            marginLeft: 3,
-            marginBottom: -3,
-            height: "1.2em",
-        },
-    },
 }));
