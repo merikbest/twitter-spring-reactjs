@@ -1,6 +1,5 @@
-import React, {FC, ReactElement, useState,} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {useHistory} from "react-router-dom";
+import React, {FC, ReactElement,} from 'react';
+import {useSelector} from "react-redux";
 import {Divider, List, ListItem, ListItemAvatar, Popover} from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
@@ -13,23 +12,18 @@ import {
     selectUserProfileFullName,
     selectUserProfileUsername
 } from "../../store/ducks/user/selectors";
-import {signOut} from "../../store/ducks/user/actionCreators";
 import {useUserSideProfileStyles} from "./UserSideProfileStyles";
 import {CheckIcon, EditIcon} from "../../icons";
 import LogoutModal from "./LogoutModal/LogoutModal";
-import {ACCOUNT_SIGNIN} from "../../util/pathConstants";
 import LockIcon from "../LockIcon/LockIcon";
 
 const UserSideProfile: FC = (): ReactElement | null => {
     const classes = useUserSideProfileStyles();
-    const dispatch = useDispatch();
-    const history = useHistory();
     const myProfileId = useSelector(selectUserDataId);
     const avatar = useSelector(selectUserProfileAvatar);
     const fullName = useSelector(selectUserProfileFullName);
     const username = useSelector(selectUserProfileUsername);
     const isPrivateProfile = useSelector(selectUserDataIsPrivateProfile);
-    const [visibleLogoutModal, setVisibleLogoutModal] = useState<boolean>(false);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const openPopover = Boolean(anchorEl);
     const popoverId = openPopover ? "simple-popover" : undefined;
@@ -40,20 +34,6 @@ const UserSideProfile: FC = (): ReactElement | null => {
 
     const handleClosePopup = (): void => {
         setAnchorEl(null);
-    };
-
-    const onOpenLogoutModal = (): void => {
-        setVisibleLogoutModal(true);
-    };
-
-    const onCloseLogoutModal = (): void => {
-        setVisibleLogoutModal(false);
-    };
-
-    const handleSignOut = (): void => {
-        window.localStorage.removeItem('token');
-        dispatch(signOut());
-        history.push(ACCOUNT_SIGNIN);
     };
 
     if (!myProfileId) {
@@ -121,19 +101,11 @@ const UserSideProfile: FC = (): ReactElement | null => {
                             </Typography>
                         </ListItem>
                         <Divider component="li"/>
-                        <ListItem id={"onOpenLogoutModal"} onClick={onOpenLogoutModal}>
-                            <Typography variant="body1" component="div">
-                                Log out @{username}
-                            </Typography>
-                        </ListItem>
+                        <LogoutModal/>
                     </div>
                 </List>
             </Popover>
-            <LogoutModal
-                visible={visibleLogoutModal}
-                onClose={onCloseLogoutModal}
-                handleSignOut={handleSignOut}
-            />
+
         </>
     );
 };

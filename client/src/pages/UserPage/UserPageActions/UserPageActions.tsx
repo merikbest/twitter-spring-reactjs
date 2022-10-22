@@ -174,7 +174,7 @@ const UserPageActions: FC<UserPageActionsProps & SnackbarProps> = (
                         </List>
                     </div>
                 ) : null}
-                <ListsModal user={user} visible={visibleListsModal} onClose={onCloseListsModal}/>
+                <ListsModal userId={user.id} visible={visibleListsModal} onClose={onCloseListsModal}/>
                 <ActionSnackbar
                     snackBarMessage={"Copied to clipboard"}
                     openSnackBar={openSnackBar!}

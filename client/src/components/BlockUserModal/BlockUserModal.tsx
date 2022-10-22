@@ -24,7 +24,7 @@ const BlockUserModal: FC<BlockUserModalProps> = (
     const classes = useBlockUserModalStyles();
 
     const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
-        event.stopPropagation();
+        event.preventDefault();
     };
 
     if (!visible) {
@@ -35,7 +35,7 @@ const BlockUserModal: FC<BlockUserModalProps> = (
         <Dialog
             className={classes.dialog}
             open={visible}
-            onClick={(event) => handleClick(event)}
+            onClick={handleClick}
             onClose={onClose}
         >
             <DialogContent>

@@ -9,12 +9,7 @@ describe("LogoutModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);
 
     it("should render correctly", () => {
-        const wrapper = mountWithStore(
-            <LogoutModal
-                visible={true}
-                onClose={jest.fn()}
-                handleSignOut={jest.fn()}
-            />, mockRootState);
+        const wrapper = mountWithStore(<LogoutModal/>, mockRootState);
         expect(wrapper.text().includes("Log out of Twitter?")).toBe(true);
         expect(wrapper.text().includes("You can always log back in at any time.")).toBe(true);
         expect(wrapper.find(Button).at(0).text().includes("Cancel")).toBe(true);
@@ -22,12 +17,7 @@ describe("LogoutModal", () => {
     });
 
     it("should render empty LogoutModal", () => {
-        const wrapper = mountWithStore(
-            <LogoutModal
-                visible={false}
-                onClose={jest.fn()}
-                handleSignOut={jest.fn()}
-            />, mockRootState);
+        const wrapper = mountWithStore(<LogoutModal/>, mockRootState);
         expect(wrapper.find(Dialog).exists()).toBeFalsy();
     });
 });

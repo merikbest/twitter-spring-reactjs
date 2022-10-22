@@ -13,6 +13,14 @@ export const selectTweetData = (state: RootState): TweetResponse | undefined => 
 export const selectUsersPagesCount = (state: RootState): number => selectTweetState(state).usersPagesCount;
 export const selectErrorMessage = (state: RootState): string => selectTweetState(state).errorMessage;
 
+export const selectTweetId = (state: RootState): number | undefined => selectTweetState(state).tweet?.id;
+export const selectIsTweetLiked = (state: RootState): boolean | undefined => selectTweetState(state).tweet?.isTweetLiked;
+export const selectIsTweetRetweeted = (state: RootState): boolean | undefined => selectTweetState(state).tweet?.isTweetRetweeted;
+export const selectRetweetsCount = (state: RootState): number | undefined => selectTweetState(state).tweet?.retweetsCount;
+export const selectQuotesCount = (state: RootState): number | undefined => selectTweetState(state).tweet?.quotesCount;
+export const selectLikedTweetsCount = (state: RootState): number | undefined => selectTweetState(state).tweet?.likedTweetsCount;
+export const selectTweetDateTime = (state: RootState): string | undefined => selectTweetState(state).tweet?.dateTime;
+
 // liked and retweeted users
 export const selectLikedUsers = (state: RootState): UserResponse[] => selectTweetState(state).likedUsers;
 const selectLikedUsersLoadingState = (state: RootState): LoadingStatus => selectTweetState(state).likedUsersLoadingState;

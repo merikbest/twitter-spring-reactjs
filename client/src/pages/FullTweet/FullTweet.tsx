@@ -13,10 +13,10 @@ import classnames from "classnames";
 
 import {
     selectIsRepliesLoading,
-    selectIsTweetError,
+    selectIsTweetError, selectIsTweetLiked,
     selectIsTweetLoadedSuccess,
-    selectIsTweetLoading,
-    selectReplies,
+    selectIsTweetLoading, selectLikedTweetsCount,
+    selectReplies, selectRetweetsCount,
     selectTweetData
 } from '../../store/ducks/tweet/selectors';
 import {
@@ -63,6 +63,14 @@ import {MODAL, PROFILE, QUOTES} from "../../util/pathConstants";
 import {LinkCoverSize, ReplyType} from "../../store/types/common";
 import TweetDeleted from "../../components/TweetDeleted/TweetDeleted";
 import TweetErrorPage from "./TweetErrorPage/TweetErrorPage";
+import LikeIconButton from "./LikeIconButton/LikeIconButton";
+import RetweetIconButton from "./RetweetIconButton/RetweetIconButton";
+import ReplyIconButton from "./ReplyIconButton/ReplyIconButton";
+import RetweetsCount from "./RetweetsCount/RetweetsCount";
+import QuotesCount from "./QuotesCount/QuotesCount";
+import LikesCount from "./LikesCount/LikesCount";
+import {RootState} from "../../store/store";
+import TweetDateTime from "./TweetDateTime/TweetDateTime";
 
 let stompClient: CompatClient | null = null;
 
@@ -83,10 +91,18 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
     }
 ): ReactElement | null => {
     const globalClasses = useGlobalStyles();
+    const classes = useFullTweetStyles();
     const dispatch = useDispatch();
     const location = useLocation();
-    const history = useHistory();
+    // const history = useHistory();
     const tweetData = useSelector(selectTweetData);
+    // const fullName = useSelector((state: RootState) => state.tweet.tweet?.user.fullName);
+    // const username = useSelector((state: RootState) => state.tweet.tweet?.user.username);
+    const likedTweetsCount = useSelector(selectLikedTweetsCount);
+    const retweetsCount = useSelector(selectRetweetsCount);
+
+
+
     const replies = useSelector(selectReplies);
     const myProfile = useSelector(selectUserData);
     const isTweetLoading = useSelector(selectIsTweetLoading);
@@ -95,12 +111,10 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
     const isError = useSelector(selectIsTweetError);
     const params = useParams<{ id: string }>();
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
-    const [visibleAnalyticsModalWindow, setVisibleAnalyticsModalWindow] = useState<boolean>(false);
     const [usersListModalAction, setUsersListModalAction] = useState<UsersListModalAction>(UsersListModalAction.LIKED);
     const [openYouTubeVideo, setOpenYouTubeVideo] = useState<boolean>(false);
     const isYouTubeLink = tweetData?.link && tweetData?.link.includes("youtu");
     const image = tweetData?.images?.[0];
-    const classes = useFullTweetStyles({isTweetRetweeted: tweetData?.isTweetRetweeted!, isTweetLiked: tweetData?.isTweetLiked!});
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -131,17 +145,17 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
         };
     }, [isTweetLoadedSuccess]);
 
-    const handleLike = (): void => {
-        dispatch(likeTweet(parseInt(params.id)));
-    };
+    // const handleLike = (): void => {
+    //     dispatch(likeTweet(parseInt(params.id)));
+    // };
 
-    const handleRetweet = (): void => {
-        dispatch(retweet(parseInt(params.id)));
-    };
+    // const handleRetweet = (): void => {
+    //     dispatch(retweet(parseInt(params.id)));
+    // };
 
-    const onClickQuotes = (): void => {
-        history.push(`${QUOTES}/${params.id}`);
-    };
+    // const onClickQuotes = (): void => {
+    //     history.push(`${QUOTES}/${params.id}`);
+    // };
     
     const onOpenUsersListModal = (modalAction: UsersListModalAction): void => {
         setVisibleModalWindow(true);
@@ -154,14 +168,6 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
 
     const onOpenYouTubeVideo = (): void => {
         setOpenYouTubeVideo(true);
-    };
-
-    const onOpenTweetAnalyticsModalWindow = (): void => {
-        setVisibleAnalyticsModalWindow(true);
-    };
-
-    const onCloseTweetAnalyticsModalWindow = (): void => {
-        setVisibleAnalyticsModalWindow(false);
     };
 
     if (isTweetLoading) {
@@ -202,14 +208,7 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                                 <PopperUserWindow visible={visiblePopperWindow}/>
                             </div>
                         </div>
-                        <TweetComponentActions
-                            tweet={tweetData}
-                            visibleMoreAction={visibleHoverAction?.visibleMoreAction}
-                            handleHoverAction={handleHoverAction}
-                            handleLeaveAction={handleLeaveAction}
-                            onOpenTweetAnalytics={onOpenTweetAnalyticsModalWindow}
-                            isFullTweet
-                        />
+                        <TweetComponentActions tweet={tweetData} isFullTweet/>
                     </div>
                     <Typography variant={"h3"} className={classes.textWrapper}>
                         {textFormatter(tweetData.text)}
@@ -248,114 +247,22 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                             )
                         ) : null}
                     </Typography>
-                    <div className={classes.dateWrapper}>
-                        <Typography variant={"subtitle1"} component={"span"}>
-                            {format(new Date(tweetData.dateTime), 'hh:mm a', {locale: usLang})} ·
-                        </Typography>
-                        <Typography variant={"subtitle1"} component={"span"}>
-                            {format(new Date(tweetData.dateTime), ' MMM dd, yyyy')} · Twitter Web App
-                        </Typography>
-                    </div>
-                    {(tweetData.retweetsCount !== 0 || tweetData.likedTweetsCount !== 0) && (
+                    <TweetDateTime/>
+                    {(retweetsCount !== 0 || likedTweetsCount !== 0) && (
                         <>
                             <Divider/>
                             <div className={classes.content}>
-                                {(tweetData.retweetsCount !== 0) && (
-                                    <a
-                                        href={"javascript:void(0);"} 
-                                        onClick={() => onOpenUsersListModal(UsersListModalAction.RETWEETED)}
-                                    >
-                                        <div className={classes.contentItem}>
-                                            <Typography variant={"h6"} component={"span"}>
-                                                {tweetData.retweetsCount}
-                                            </Typography>
-                                            <Typography variant={"subtitle1"} component={"span"}>
-                                                Retweets
-                                            </Typography>
-                                        </div>
-                                    </a>
-                                )}
-                                {(tweetData.quotesCount !== 0) && (
-                                    <a href={"javascript:void(0);"} onClick={onClickQuotes}>
-                                        <div className={classes.contentItem}>
-                                            <Typography variant={"h6"} component={"span"}>
-                                                {tweetData.quotesCount}
-                                            </Typography>
-                                            <Typography variant={"subtitle1"} component={"span"}>
-                                                Quote Tweets
-                                            </Typography>
-                                        </div>
-                                    </a>
-                                )}
-                                {(tweetData.likedTweetsCount !== 0) && (
-                                    <a
-                                        href={"javascript:void(0);"}
-                                        onClick={() => onOpenUsersListModal(UsersListModalAction.LIKED)}
-                                    >
-                                        <div className={classes.contentItem}>
-                                            <Typography variant={"h6"} component={"span"}>
-                                                {tweetData.likedTweetsCount}
-                                            </Typography>
-                                            <Typography variant={"subtitle1"} component={"span"}>
-                                                Likes
-                                            </Typography>
-                                        </div>
-                                    </a>
-                                )}
+                                <RetweetsCount/>
+                                <QuotesCount/>
+                                <LikesCount/>
                             </div>
                         </>
                     )}
                     <div className={classes.info}>
-                        <div className={classes.infoIcon}>
-                            <IconButton
-                                onMouseEnter={() => handleHoverAction?.(HoverActions.REPLY)}
-                                onMouseLeave={handleLeaveAction}
-                            >
-                                <>{ReplyIcon}</>
-                                <HoverAction visible={visibleHoverAction?.visibleReplyAction} actionText={"Reply"}/>
-                            </IconButton>
-                        </div>
-                        <div className={classnames(globalClasses.svgLarge, classes.retweetIcon)}>
-                            <IconButton
-                                onClick={handleRetweet}
-                                onMouseEnter={() => handleHoverAction?.(HoverActions.RETWEET)}
-                                onMouseLeave={handleLeaveAction}
-                            >
-                                {tweetData.isTweetRetweeted ? (
-                                    <>{RetweetIcon}</>
-                                ) : (
-                                    <>{RetweetOutlinedIcon}</>
-                                )}
-                                <HoverAction
-                                    visible={visibleHoverAction?.visibleRetweetAction}
-                                    actionText={tweetData.isTweetRetweeted ? "Undo Retweet" : "Retweet"}
-                                />
-                            </IconButton>
-                        </div>
-                        <div className={classes.likeIcon}>
-                            <IconButton
-                                onClick={handleLike}
-                                onMouseEnter={() => handleHoverAction?.(HoverActions.LIKE)}
-                                onMouseLeave={handleLeaveAction}
-                            >
-                                {tweetData.isTweetLiked ? (
-                                    <>{LikeIcon}</>
-                                ) : (
-                                    <>{LikeOutlinedIcon}</>
-                                )}
-                                <HoverAction
-                                    visible={visibleHoverAction?.visibleLikeAction}
-                                    actionText={tweetData.isTweetLiked ? "Unlike" : "Like"}
-                                />
-                            </IconButton>
-                        </div>
-                        <ShareTweet
-                            tweet={tweetData}
-                            visibleShareAction={visibleHoverAction?.visibleShareAction}
-                            handleHoverAction={handleHoverAction}
-                            handleLeaveAction={handleLeaveAction}
-                            isFullTweet
-                        />
+                        <ReplyIconButton/>
+                        <RetweetIconButton/>
+                        <LikeIconButton/>
+                        <ShareTweet tweetId={tweetData.id} isTweetBookmarked={tweetData.isTweetBookmarked} isFullTweet/>
                     </div>
                     <Divider/>
                     {(tweetData.replyType === ReplyType.FOLLOW || tweetData.replyType === ReplyType.MENTION) && (
@@ -407,11 +314,6 @@ const FullTweet: FC<HoverUserProps & FullTweetProps & HoverActionProps> = (
                         usersListModalAction={usersListModalAction}
                         visible={visibleModalWindow}
                         onClose={onCloseModalWindow}
-                    />
-                    <TweetAnalyticsModal
-                        tweet={tweetData}
-                        visible={visibleAnalyticsModalWindow}
-                        onClose={onCloseTweetAnalyticsModalWindow}
                     />
                 </Paper>
                 <div className={classes.divider}/>

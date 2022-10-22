@@ -56,10 +56,11 @@ const Reply: FC<ReplyProps> = ({replyType, setReplyType, isUnsentTweet}): ReactE
                 anchorEl={anchorEl}
                 onClose={handleClosePopup}
             >
-                <ChangeReplyWindow
-                    replyType={replyType}
-                    onChangeTweetReplyType={handleListItemClick}
-                />
+                {/* TODO fix (see TweetComponentActions) */}
+                {/*<ChangeReplyWindow*/}
+                {/*    replyType={replyType}*/}
+                {/*    onChangeTweetReplyType={handleListItemClick}*/}
+                {/*/>*/}
             </Popover>
         </>
     );

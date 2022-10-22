@@ -1,58 +1,78 @@
-import React, {FC, ReactElement} from 'react';
+import React, {ReactElement, useState} from 'react';
 import DialogContent from "@material-ui/core/DialogContent";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import Typography from "@material-ui/core/Typography";
-import {Button} from "@material-ui/core";
+import {Button, ListItem} from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
+import {useHistory} from "react-router-dom";
 
 import {useLogoutModalStyles} from "./LogoutModalStyles";
+import {useDispatch, useSelector} from "react-redux";
+import {selectUserProfileUsername} from "../../../store/ducks/user/selectors";
+import {signOut} from "../../../store/ducks/user/actionCreators";
+import {ACCOUNT_SIGNIN} from "../../../util/pathConstants";
 
-interface LogoutModalProps {
-    visible?: boolean;
-    onClose: () => void;
-    handleSignOut: () => void;
-}
-
-const LogoutModal: FC<LogoutModalProps> = ({visible, onClose, handleSignOut}): ReactElement | null => {
+const LogoutModal = (): ReactElement => {
     const classes = useLogoutModalStyles();
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const username = useSelector(selectUserProfileUsername);
+    const [visibleLogoutModal, setVisibleLogoutModal] = useState<boolean>(false);
 
-    if (!visible) {
-        return null;
-    }
+    const handleSignOut = (): void => {
+        window.localStorage.removeItem("token");
+        dispatch(signOut());
+        history.push(ACCOUNT_SIGNIN);
+    };
+
+    const onOpenLogoutModal = (): void => {
+        setVisibleLogoutModal(true);
+    };
+
+    const onCloseLogoutModal = (): void => {
+        setVisibleLogoutModal(false);
+    };
 
     return (
-        <Dialog open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
-            <DialogContent style={{padding: 0}}>
-                <div className={classes.modalWrapper}>
-                    <TwitterIcon />
-                    <Typography variant={"h5"} component={"div"}>
-                        Log out of Twitter?
-                    </Typography>
-                    <Typography variant={"subtitle1"} component={"div"}>
-                        You can always log back in at any time. If you just want to switch accounts,
-                        you can do that by adding an existing account.
-                    </Typography>
-                    <div className={classes.modalButtonWrapper}>
-                        <Button
-                            className={classes.modalCancelButton}
-                            onClick={onClose}
-                            variant="contained"
-                            size="large"
-                        >
-                            Cancel
-                        </Button>
-                        <Button
-                            onClick={handleSignOut}
-                            variant="contained"
-                            color="primary"
-                            size="large"
-                        >
-                            Log out
-                        </Button>
+        <>
+            <ListItem id={"onOpenLogoutModal"} onClick={onOpenLogoutModal}>
+                <Typography variant="body1" component="div">
+                    Log out @{username}
+                </Typography>
+            </ListItem>
+            <Dialog open={visibleLogoutModal} onClose={onCloseLogoutModal}>
+                <DialogContent style={{padding: 0}}>
+                    <div className={classes.modalWrapper}>
+                        <TwitterIcon/>
+                        <Typography variant={"h5"} component={"div"}>
+                            Log out of Twitter?
+                        </Typography>
+                        <Typography variant={"subtitle1"} component={"div"}>
+                            You can always log back in at any time. If you just want to switch accounts,
+                            you can do that by adding an existing account.
+                        </Typography>
+                        <div className={classes.modalButtonWrapper}>
+                            <Button
+                                className={classes.modalCancelButton}
+                                onClick={onCloseLogoutModal}
+                                variant="contained"
+                                size="large"
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                onClick={handleSignOut}
+                                variant="contained"
+                                color="primary"
+                                size="large"
+                            >
+                                Log out
+                            </Button>
+                        </div>
                     </div>
-                </div>
-            </DialogContent>
-        </Dialog>
+                </DialogContent>
+            </Dialog>
+        </>
     );
 };
 

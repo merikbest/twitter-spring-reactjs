@@ -8,11 +8,10 @@ import {useTweetComponentActionsModalStyles} from "./TweetComponentActionsModalS
 
 interface TweetComponentActionsModalProps {
     modalTitle: string;
-    isTweetPinned: boolean;
+    isTweetPinned?: boolean;
     visibleTweetComponentActionsModal: boolean;
     onCloseTweetComponentActionsModal: () => void;
-    onPinUserTweet: () => void;
-    onDeleteUserTweet: () => void;
+    onClick: () => void;
 }
 
 const TweetComponentActionsModal: FC<TweetComponentActionsModalProps> = (
@@ -21,18 +20,13 @@ const TweetComponentActionsModal: FC<TweetComponentActionsModalProps> = (
         isTweetPinned,
         visibleTweetComponentActionsModal,
         onCloseTweetComponentActionsModal,
-        onPinUserTweet,
-        onDeleteUserTweet
+        onClick,
     }
 ): ReactElement => {
     const classes = useTweetComponentActionsModalStyles({modalTitle});
 
     return (
-        <Dialog
-            open={visibleTweetComponentActionsModal}
-            onClose={onCloseTweetComponentActionsModal}
-            aria-labelledby="form-dialog-title"
-        >
+        <Dialog open={visibleTweetComponentActionsModal} onClose={onCloseTweetComponentActionsModal}>
             <DialogContent style={{padding: 0}}>
                 <div className={classes.modalWrapper}>
                     <Typography variant={"h5"}>
@@ -73,7 +67,7 @@ const TweetComponentActionsModal: FC<TweetComponentActionsModalProps> = (
                             ) : (
                                 classes.modalPrimaryButton
                             )}
-                            onClick={(modalTitle === "Delete") ? onDeleteUserTweet : onPinUserTweet}
+                            onClick={onClick}
                             variant="contained"
                             size="large"
                         >

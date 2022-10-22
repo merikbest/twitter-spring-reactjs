@@ -298,11 +298,9 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                                 </IconButton>
                             </div>
                             <ShareTweet
-                                tweet={tweetData}
+                                tweetId={tweetData.id}
+                                isTweetBookmarked={tweetData.isTweetBookmarked}
                                 isFullTweet={false}
-                                visibleShareAction={visibleHoverAction?.visibleShareAction}
-                                handleHoverAction={handleHoverAction}
-                                handleLeaveAction={handleLeaveAction}
                             />
                         </div>
                         <Divider/>

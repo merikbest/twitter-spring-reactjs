@@ -3,6 +3,7 @@ import {LoadingStatus} from "../../../types";
 import {FetchTweetUsersPayload, ReplyTweet, TweetState} from "./state";
 import {NotificationReplyResponse, NotificationResponse} from "../../../types/notification";
 import {PageableResponse} from "../../../types/common";
+import {TweetResponse} from "../../../types/tweet";
 
 export enum TweetActionType {
     SET_FOLLOW_TO_TWEET_STATE = 'tweet/SET_FOLLOW_TO_TWEET_STATE',
@@ -56,7 +57,7 @@ export interface SetTweetDataActionInterface extends Action<TweetActionType> {
 
 export interface UpdateTweetDataActionInterface extends Action<TweetActionType> {
     type: TweetActionType.UPDATE_TWEET_DATA;
-    payload: NotificationResponse | NotificationReplyResponse;
+    payload: NotificationResponse | NotificationReplyResponse | TweetResponse;
 }
 
 export interface FetchTweetDataActionInterface extends Action<TweetActionType> {

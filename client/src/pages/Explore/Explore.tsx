@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import {IconButton, InputAdornment, List, Paper} from "@material-ui/core";
+import {IconButton, InputAdornment, Paper} from "@material-ui/core";
 
 import {MainSearchTextField} from "../../components/SearchTextField/MainSearchTextField";
 import {
@@ -16,13 +16,7 @@ import {
     resetTweets
 } from "../../store/ducks/tweets/actionCreators";
 import BackButton from "../../components/BackButton/BackButton";
-import TweetComponent from "../../components/TweetComponent/TweetComponent";
-import {
-    selectIsTweetsLoaded,
-    selectIsTweetsLoading,
-    selectPagesCount,
-    selectTweetsItems
-} from "../../store/ducks/tweets/selectors";
+import {selectIsTweetsLoaded, selectPagesCount, selectTweetsItemsSize} from "../../store/ducks/tweets/selectors";
 import {useExploreStyles} from "./ExploreStyles";
 import {EditIcon, SearchIcon} from "../../icons";
 import {
@@ -30,26 +24,19 @@ import {
     fetchUsersSearchByUsername,
     resetUsersState
 } from "../../store/ducks/usersSearch/actionCreators";
-import {
-    selectUsersPagesCount,
-    selectUsersSearch,
-    selectUsersSearchIsLoading
-} from "../../store/ducks/usersSearch/selectors";
-import Spinner from "../../components/Spinner/Spinner";
-import UsersItem, {UserItemSize} from "../../components/UsersItem/UsersItem";
+import {selectUsersPagesCount} from "../../store/ducks/usersSearch/selectors";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
 import PageHeaderWrapper from "../../components/PageHeaderWrapper/PageHeaderWrapper";
+import UsersList from "./UsersList/UsersList";
+import TweetsList from "./TweetsList/TweetsList";
 
 const Explore: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useExploreStyles();
     const dispatch = useDispatch();
-    const isTweetsLoading = useSelector(selectIsTweetsLoading);
     const isTweetsLoaded = useSelector(selectIsTweetsLoaded);
-    const isUsersLoading = useSelector(selectUsersSearchIsLoading);
-    const tweets = useSelector(selectTweetsItems);
-    const users = useSelector(selectUsersSearch);
+    const tweetsSize = useSelector(selectTweetsItemsSize);
     const tweetsPagesCount = useSelector(selectPagesCount);
     const usersPagesCount = useSelector(selectUsersPagesCount);
     const location = useLocation<{ tag: string | undefined; text: string | undefined; }>();
@@ -85,7 +72,7 @@ const Explore: FC = (): ReactElement => {
             if (activeTab !== 2) {
                 dispatch(fetchTweetsByText({text: encodeURIComponent(text), pageNumber: page}));
             } else {
-                dispatch(fetchUsersSearchByUsername({ username: encodeURIComponent(text), pageNumber: page }));
+                dispatch(fetchUsersSearchByUsername({username: encodeURIComponent(text), pageNumber: page}));
             }
         } else {
             if (activeTab === 2) {
@@ -119,7 +106,7 @@ const Explore: FC = (): ReactElement => {
                 dispatch(fetchTweetsByText({text: encodeURIComponent(text), pageNumber: 0}));
             } else {
                 dispatch(resetUsersState());
-                dispatch(fetchUsersSearchByUsername({ username: encodeURIComponent(text), pageNumber: 0 }));
+                dispatch(fetchUsersSearchByUsername({username: encodeURIComponent(text), pageNumber: 0}));
             }
         }
     };
@@ -153,67 +140,57 @@ const Explore: FC = (): ReactElement => {
     };
 
     return (
-        <InfiniteScroll
-            style={{overflow: "unset"}}
-            dataLength={tweets.length}
-            next={loadTweets}
-            hasMore={page < (activeTab === 2 ? usersPagesCount : tweetsPagesCount)}
-            loader={null}
-        >
-            <Paper className={globalClasses.pageContainer} variant="outlined">
-                <PageHeaderWrapper>
-                    <div>
-                        <form style={{display: "block"}} onSubmit={handleSubmitSearch}>
-                            <div className={classes.backButtonWrapper}>
-                                <BackButton/>
-                            </div>
-                            <MainSearchTextField
-                                variant="outlined"
-                                placeholder="Explore Twitter"
-                                onChange={(event) => setText(event.target.value)}
-                                value={text}
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            {SearchIcon}
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                            <IconButton className={classes.editButton} color="primary" size="small">
-                                <>{EditIcon}</>
-                            </IconButton>
-                        </form>
-                        <div className={classes.tabs}>
-                            <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
-                                <Tab onClick={() => handleShowItems(showTopTweets)} label="Top"/>
-                                <Tab onClick={() => handleShowItems(showTopTweets)} label="Latest"/>
-                                <Tab onClick={() => handleShowItems(showUsers)} label="People"/>
-                                <Tab onClick={() => handleShowItems(showMediaTweets)} label="Photos"/>
-                                <Tab onClick={() => handleShowItems(showTweetsWithVideos)} label="Videos"/>
-                            </Tabs>
+        <Paper className={globalClasses.pageContainer} variant="outlined">
+            <PageHeaderWrapper>
+                <div>
+                    <form style={{display: "block"}} onSubmit={handleSubmitSearch}>
+                        <div className={classes.backButtonWrapper}>
+                            <BackButton/>
                         </div>
+                        <MainSearchTextField
+                            variant="outlined"
+                            placeholder="Explore Twitter"
+                            onChange={(event) => setText(event.target.value)}
+                            value={text}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        {SearchIcon}
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        <IconButton className={classes.editButton} color="primary" size="small">
+                            <>{EditIcon}</>
+                        </IconButton>
+                    </form>
+                    <div className={classes.tabs}>
+                        <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
+                            <Tab onClick={() => handleShowItems(showTopTweets)} label="Top"/>
+                            <Tab onClick={() => handleShowItems(showTopTweets)} label="Latest"/>
+                            <Tab onClick={() => handleShowItems(showUsers)} label="People"/>
+                            <Tab onClick={() => handleShowItems(showMediaTweets)} label="Photos"/>
+                            <Tab onClick={() => handleShowItems(showTweetsWithVideos)} label="Videos"/>
+                        </Tabs>
                     </div>
-                </PageHeaderWrapper>
-                <div className={classes.contentWrapper}>
-                    {(activeTab !== 2) ? (
-                        <>
-                            <>{tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}</>
-                            <>{isTweetsLoading && <Spinner/>}</>
-                        </>
-                    ) : (
-                        <>
-                            <List>
-                                {users?.map((user) => (
-                                    <UsersItem key={user.id} user={user} size={UserItemSize.MEDIUM}/>
-                                ))}
-                            </List>
-                            {isUsersLoading && <Spinner/>}
-                        </>
-                    )}
                 </div>
-            </Paper>
-        </InfiniteScroll>
+            </PageHeaderWrapper>
+            <div className={classes.contentWrapper}>
+                <InfiniteScroll
+                    style={{overflow: "unset"}}
+                    dataLength={tweetsSize}
+                    next={loadTweets}
+                    hasMore={page < (activeTab === 2 ? usersPagesCount : tweetsPagesCount)}
+                    loader={null}
+                >
+                    {(activeTab !== 2) ? (
+                        <TweetsList/>
+                    ) : (
+                        <UsersList/>
+                    )}
+                </InfiniteScroll>
+            </div>
+        </Paper>
     );
 };
 

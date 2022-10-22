@@ -27,7 +27,7 @@ import {UserResponse} from "../../../store/types/user";
 import InfiniteScrollWrapper from '../../InfiniteScrollWrapper/InfiniteScrollWrapper';
 
 interface SendDirectTweetModalProps {
-    tweet: TweetResponse;
+    tweetId: number;
     visible?: boolean;
     onSendDirectTweet: () => void;
     closeShareTweet: () => void;
@@ -44,7 +44,7 @@ interface DirectUserItemsProps {
 
 const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
     {
-        tweet,
+        tweetId,
         visible,
         onSendDirectTweet,
         closeShareTweet,
@@ -112,7 +112,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
     const handleClickSendMessage = (): void => {
         dispatch(addChatMessageWithTweet({
             text: message,
-            tweetId: tweet.id,
+            tweetId: tweetId,
             usersIds: selectedUsers.map(user => user.id!)
         }));
         onSendDirectTweet();

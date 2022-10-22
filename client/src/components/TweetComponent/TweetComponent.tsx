@@ -160,10 +160,6 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
                         <TweetComponentActions
                             tweet={tweet!}
                             isFullTweet={false}
-                            activeTab={activeTab}
-                            visibleMoreAction={visibleHoverAction?.visibleMoreAction}
-                            handleHoverAction={handleHoverAction}
-                            handleLeaveAction={handleLeaveAction}
                             onOpenTweetAnalytics={onOpenTweetAnalyticsModalWindow}
                         />
                     </div>
@@ -271,11 +267,9 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
                             {(tweet?.likedTweetsCount !== 0) && (<span id={"likedTweetsCount"}>{tweet?.likedTweetsCount}</span>)}
                         </div>
                         <ShareTweet
-                            tweet={tweet!}
+                            tweetId={tweet!.id}
+                            isTweetBookmarked={tweet!.isTweetBookmarked}
                             isFullTweet={false}
-                            visibleShareAction={visibleHoverAction?.visibleShareAction}
-                            handleHoverAction={handleHoverAction}
-                            handleLeaveAction={handleLeaveAction}
                         />
                         {(myProfile?.id === tweet?.user.id) && (
                             <div id={"analytics"} className={classes.replyIcon}>
@@ -303,7 +297,9 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
                     onClose={onCloseReplyModalWindow}
                 />
                 <TweetAnalyticsModal
-                    tweet={tweet!}
+                    fullName={tweet!.user.fullName}
+                    username={tweet!.user.username}
+                    text={tweet!.text}
                     visible={visibleAnalyticsModalWindow}
                     onClose={onCloseTweetAnalyticsModalWindow}
                 />

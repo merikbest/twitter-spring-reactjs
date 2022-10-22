@@ -18,6 +18,8 @@ export const selectUserProfileAvatar = (state: RootState) =>
     selectUserData(state)?.avatar.src ? selectUserData(state)?.avatar.src : DEFAULT_PROFILE_IMG;
 export const selectUserProfileFullName = (state: RootState) => selectUserData(state)?.fullName;
 export const selectUserProfileUsername = (state: RootState) => selectUserData(state)?.username;
+export const selectUserPinnedTweetId = (state: RootState) => selectUserData(state)?.pinnedTweetId;
+
 export const selectIsAuth = (state: RootState): boolean => !!selectUserState(state).data;
 export const selectUserStatus = (state: RootState): UserState['status'] => selectUserState(state).status;
 export const selectUserIsSuccess = (state: RootState): boolean => selectUserState(state).status === LoadingStatus.SUCCESS;

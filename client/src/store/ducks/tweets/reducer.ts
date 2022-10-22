@@ -98,7 +98,6 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
                     }
                 });
             }
-            draft.loadingState = LoadingStatus.LOADED
             break;
 
         case TweetsActionType.SET_BLOCKED_TO_TWEETS_STATE:

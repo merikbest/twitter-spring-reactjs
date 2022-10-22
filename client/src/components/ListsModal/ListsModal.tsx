@@ -18,13 +18,12 @@ import {CheckIcon} from "../../icons";
 import LockIcon from "../LockIcon/LockIcon";
 
 interface ListsModalProps {
-    tweet?: TweetResponse;
-    user?: UserTweetResponse | UserProfileResponse;
+    userId: number;
     visible?: boolean;
     onClose: () => void;
 }
 
-const ListsModal: FC<ListsModalProps> = ({tweet, user, visible, onClose}): ReactElement | null => {
+const ListsModal: FC<ListsModalProps> = ({userId, visible, onClose}): ReactElement | null => {
     const classes = useListsModalStyles();
     const dispatch = useDispatch();
     const simpleLists = useSelector(selectSimpleListsItems);
@@ -34,7 +33,7 @@ const ListsModal: FC<ListsModalProps> = ({tweet, user, visible, onClose}): React
 
     useEffect(() => {
         if (visible) {
-            dispatch(fetchSimpleLists(user?.id!));
+            dispatch(fetchSimpleLists(userId));
         }
     }, [visible]);
 
@@ -50,7 +49,7 @@ const ListsModal: FC<ListsModalProps> = ({tweet, user, visible, onClose}): React
                 isMemberInList: list.isMemberInList,
             }
         });
-        dispatch(processUserToLists({userId: user?.id!, lists: listsRequest}));
+        dispatch(processUserToLists({userId, lists: listsRequest}));
         dispatch(resetListsState());
         setLists([]);
         onClose();

@@ -31,22 +31,27 @@ export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetActi
 
         case TweetActionType.UPDATE_TWEET_DATA:
             if (draft.tweet !== undefined) {
-                if (action.payload.notificationType === NotificationType.LIKE) {
-                    const payload = action.payload as NotificationResponse;
-                    draft.tweet.isTweetLiked = payload.tweet.notificationCondition;
-                    draft.tweet.likedTweetsCount = payload.tweet.notificationCondition
-                        ? draft.tweet.likedTweetsCount + 1
-                        : draft.tweet.likedTweetsCount - 1;
-                } else if (action.payload.notificationType === NotificationType.RETWEET) {
-                    const payload = action.payload as NotificationResponse;
-                    draft.tweet.isTweetRetweeted = payload.tweet.notificationCondition;
-                    draft.tweet.retweetsCount = payload.tweet.notificationCondition
-                        ? draft.tweet.retweetsCount + 1
-                        : draft.tweet.retweetsCount - 1;
-                } else if (action.payload.notificationType === NotificationType.REPLY) {
-                    const payload = action.payload as NotificationReplyResponse;
-                    draft.replies = [...draft.replies, payload.tweet];
-                    draft.repliesLoadingState = LoadingStatus.SUCCESS;
+                if ("notificationType" in action.payload) {
+                    if (action.payload.notificationType === NotificationType.LIKE) {
+                        const payload = action.payload as NotificationResponse;
+                        draft.tweet.isTweetLiked = payload.tweet.notificationCondition;
+                        draft.tweet.likedTweetsCount = payload.tweet.notificationCondition
+                            ? draft.tweet.likedTweetsCount + 1
+                            : draft.tweet.likedTweetsCount - 1;
+                    } else if (action.payload.notificationType === NotificationType.RETWEET) {
+                        const payload = action.payload as NotificationResponse;
+                        draft.tweet.isTweetRetweeted = payload.tweet.notificationCondition;
+                        draft.tweet.retweetsCount = payload.tweet.notificationCondition
+                            ? draft.tweet.retweetsCount + 1
+                            : draft.tweet.retweetsCount - 1;
+                    } else if (action.payload.notificationType === NotificationType.REPLY) {
+                        const payload = action.payload as NotificationReplyResponse;
+                        draft.replies = [...draft.replies, payload.tweet];
+                        draft.repliesLoadingState = LoadingStatus.SUCCESS;
+                    }
+                } else {
+                    draft.tweet = action.payload;
+                    // TODO add Quote and Vote (look websocket on backend)
                 }
             }
             break;

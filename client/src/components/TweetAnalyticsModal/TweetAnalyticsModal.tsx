@@ -6,15 +6,24 @@ import DialogContent from "@material-ui/core/DialogContent";
 import {useTweetAnalyticsModalStyles} from "./TweetAnalyticsModalStyles";
 import {textFormatter} from "../../util/textFormatter";
 import CloseButton from "../CloseButton/CloseButton";
-import {TweetResponse} from "../../store/types/tweet";
 
 interface TweetAnalyticsModalStyles {
-    tweet: TweetResponse;
+    fullName: string;
+    username: string;
+    text: string;
     visible?: boolean;
     onClose: () => void;
 }
 
-const TweetAnalyticsModal: FC<TweetAnalyticsModalStyles> = ({tweet, visible, onClose}): ReactElement | null => {
+const TweetAnalyticsModal: FC<TweetAnalyticsModalStyles> = (
+    {
+        fullName,
+        username,
+        text,
+        visible,
+        onClose
+    }
+): ReactElement | null => {
     const classes = useTweetAnalyticsModalStyles();
 
     if (!visible) {
@@ -31,13 +40,13 @@ const TweetAnalyticsModal: FC<TweetAnalyticsModalStyles> = ({tweet, visible, onC
                 <div className={classes.tweetInfoContainer}>
                     <div className={classes.tweetInfoWrapper}>
                         <Typography variant={"h6"} className={classes.tweetInfoFullName} component={"span"}>
-                            {tweet.user.fullName}
+                            {fullName}
                         </Typography>
                         <Typography variant={"subtitle1"} component={"span"}>
-                            @{tweet.user.username}
+                            @{username}
                         </Typography>
                         <Typography className={classes.tweetInfoText} component={"div"}>
-                            {textFormatter(tweet.text)}
+                            {textFormatter(text)}
                         </Typography>
                     </div>
                     <div className={classes.analyticsInfoWrapper}>
