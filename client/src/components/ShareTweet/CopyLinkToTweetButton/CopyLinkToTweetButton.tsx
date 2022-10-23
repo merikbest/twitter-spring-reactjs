@@ -2,23 +2,22 @@ import React, {FC, ReactElement} from "react";
 import {ListItem, Typography} from "@material-ui/core";
 import CopyToClipboard from "react-copy-to-clipboard";
 import {useLocation} from "react-router-dom";
+import {useDispatch} from "react-redux";
 
 import {CLIENT_URL} from "../../../util/url";
 import {LinkIcon} from "../../../icons";
-import {useSnackbar} from "../../../hook/useSnackbar";
-import ActionSnackbar from "../../ActionSnackbar/ActionSnackbar";
+import {setOpenSnackBar} from "../../../store/ducks/actionSnackbar/actionCreators";
 
 interface CopyLinkToTweetButtonProps {
     closeShareTweet: () => void;
 }
 
 const CopyLinkToTweetButton: FC<CopyLinkToTweetButtonProps> = ({closeShareTweet}): ReactElement => {
+    const dispatch = useDispatch();
     const location = useLocation();
-    const {snackBarMessage, openSnackBar, setSnackBarMessage, setOpenSnackBar, onCloseSnackBar} = useSnackbar();
 
     const onCopyLinkToTweet = (): void => {
-        setOpenSnackBar!(true);
-        setSnackBarMessage!("Copied to clipboard");
+        dispatch(setOpenSnackBar("Copied to clipboard"));
         closeShareTweet();
     };
 
@@ -32,11 +31,6 @@ const CopyLinkToTweetButton: FC<CopyLinkToTweetButtonProps> = ({closeShareTweet}
                     </Typography>
                 </ListItem>
             </CopyToClipboard>
-            <ActionSnackbar
-                snackBarMessage={snackBarMessage!}
-                openSnackBar={openSnackBar!}
-                onCloseSnackBar={onCloseSnackBar!}
-            />
         </>
     );
 };

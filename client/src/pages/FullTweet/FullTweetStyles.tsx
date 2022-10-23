@@ -1,13 +1,20 @@
 import {makeStyles} from "@material-ui/core";
 
 export const useFullTweetStyles = makeStyles((theme) => ({
+    header: {
+        justifyContent: "space-between",
+        '& .MuiTypography-h5': {
+            display: "inline-block",
+            verticalAlign: "middle",
+        },
+    },
     container: {
         borderTop: '0',
         borderLeft: '0',
         borderRight: '0',
         padding: "10px 22px 0px 22px",
     },
-    header: {
+    tweetHeader: {
         display: 'flex',
         justifyContent: "space-between",
         alignItems: 'center',

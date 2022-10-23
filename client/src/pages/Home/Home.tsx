@@ -22,12 +22,11 @@ import Trends from "../Trends/Trends";
 import {selectUserData} from "../../store/ducks/user/selectors";
 import Welcome from "../../components/Welcome/Welcome";
 import {LoadingStatus} from "../../store/types";
-import FullTweet from "../FullTweet/FullTweet";
 import Spinner from "../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../util/globalClasses";
 import TopTweetActions from "./TopTweetActions/TopTweetActions";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
-import {HOME, HOME_CONNECT, HOME_TRENDS, HOME_TWEET, SEARCH} from "../../util/pathConstants";
+import {HOME, HOME_CONNECT, HOME_TRENDS, SEARCH} from "../../util/pathConstants";
 
 const Home: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -102,14 +101,6 @@ const Home: FC = (): ReactElement => {
                             handleTopTweets={handleTopTweets}
                         />
                     </Route>
-                    <Route path={HOME_TWEET}>
-                        <div>
-                            <BackButton/>
-                            <Typography variant="h5">
-                                Tweet
-                            </Typography>
-                        </div>
-                    </Route>
                     <Route path={HOME_CONNECT}>
                         <div>
                             <BackButton/>
@@ -148,9 +139,6 @@ const Home: FC = (): ReactElement => {
                             {isLoading && <Spinner/>}
                         </>
                     )}
-                </Route>
-                <Route path={HOME_TWEET + "/:id"} exact>
-                    <FullTweet/>
                 </Route>
             </Paper>
         </InfiniteScroll>

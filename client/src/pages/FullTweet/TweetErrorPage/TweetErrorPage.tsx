@@ -1,23 +1,23 @@
-import React, {FC, ReactElement, useEffect} from "react";
-import {useSelector} from "react-redux";
+import React, {ReactElement, useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button/Button";
 import {Link} from "react-router-dom";
 
 import {useTweetErrorPageStyles} from "./TweetErrorPageStyles";
 import {selectErrorMessage} from "../../../store/ducks/tweet/selectors";
-import {SnackbarProps, withSnackbar} from "../../../hoc/withSnackbar";
-import ActionSnackbar from "../../../components/ActionSnackbar/ActionSnackbar";
 import {SEARCH} from "../../../util/pathConstants";
 import {useGlobalStyles} from "../../../util/globalClasses";
+import {setOpenSnackBar} from "../../../store/ducks/actionSnackbar/actionCreators";
 
-const TweetErrorPage: FC<SnackbarProps> = ({onCloseSnackBar, setOpenSnackBar, openSnackBar}): ReactElement => {
+const TweetErrorPage = (): ReactElement => {
     const classes = useTweetErrorPageStyles();
     const globalClasses = useGlobalStyles();
+    const dispatch = useDispatch();
     const errorMessage = useSelector(selectErrorMessage);
 
     useEffect(() => {
-        setOpenSnackBar!(true);
+        dispatch(setOpenSnackBar(errorMessage));
     }, []);
 
     return (
@@ -36,13 +36,8 @@ const TweetErrorPage: FC<SnackbarProps> = ({onCloseSnackBar, setOpenSnackBar, op
                     Search
                 </Button>
             </Link>
-            <ActionSnackbar
-                onCloseSnackBar={onCloseSnackBar!}
-                openSnackBar={openSnackBar!}
-                snackBarMessage={errorMessage}
-            />
         </>
     );
 };
 
-export default withSnackbar(TweetErrorPage);
+export default TweetErrorPage;

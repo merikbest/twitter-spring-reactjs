@@ -158,7 +158,17 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
                             <PopperUserWindow visible={visiblePopperWindow} isTweetComponent={true}/>
                         </a>
                         <TweetComponentActions
-                            tweet={tweet!}
+                            tweetId={tweet!.id}
+                            tweetText={tweet!.text}
+                            tweetReplyType={tweet!.replyType}
+                            addressedTweetId={tweet!.addressedTweetId}
+                            tweetUserId={tweet!.user.id}
+                            tweetUserFullName={tweet!.user.fullName}
+                            tweetUserUsername={tweet!.user.username}
+                            tweetUserIsFollower={tweet!.user.isFollower}
+                            tweetUserIsUserMuted={tweet!.user.isUserMuted}
+                            tweetUserIsUserBlocked={tweet!.user.isUserBlocked}
+                            tweetUserIsMyProfileBlocked={tweet!.user.isMyProfileBlocked}
                             isFullTweet={false}
                             onOpenTweetAnalytics={onOpenTweetAnalyticsModalWindow}
                         />
@@ -211,15 +221,35 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
                         {tweet?.link ? (
                             isYouTubeLink ? (
                                 openYouTubeVideo ? (
-                                    <YouTubeVideo tweet={tweet!}/>
+                                    <YouTubeVideo
+                                        link={tweet.link}
+                                        linkTitle={tweet.linkTitle}
+                                        linkDescription={tweet.linkDescription}
+                                    />
                                 ) : (
-                                    <SmallLinkPreview tweet={tweet!} onOpenYouTubeVideo={onOpenYouTubeVideo}/>
+                                    <SmallLinkPreview
+                                        link={tweet.link}
+                                        linkTitle={tweet.linkTitle}
+                                        linkDescription={tweet.linkDescription}
+                                        linkCover={tweet.linkCover}
+                                        onOpenYouTubeVideo={onOpenYouTubeVideo}
+                                    />
                                 )
                             ) : (
                                 (tweet?.linkCoverSize === LinkCoverSize.LARGE) ? (
-                                    <LargeLinkPreview tweet={tweet!}/>
+                                    <LargeLinkPreview
+                                        link={tweet.link}
+                                        linkTitle={tweet.linkTitle}
+                                        linkDescription={tweet.linkDescription}
+                                        linkCover={tweet.linkCover}
+                                    />
                                 ) : (
-                                    <SmallLinkPreview tweet={tweet!}/>
+                                    <SmallLinkPreview
+                                        link={tweet.link}
+                                        linkTitle={tweet.linkTitle}
+                                        linkDescription={tweet.linkDescription}
+                                        linkCover={tweet.linkCover}
+                                    />
                                 )
                             )
                         ) : null}

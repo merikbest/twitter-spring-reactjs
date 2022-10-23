@@ -3,32 +3,38 @@ import {Typography} from "@material-ui/core";
 
 import {useLargeLinkPreviewStyles} from "./LargeLinkPreviewStyles";
 import {LinkIcon} from "../../icons";
-import {TweetResponse} from "../../store/types/tweet";
 
 interface LargeLinkPreviewProps {
-    tweet: TweetResponse;
+    link: string;
+    linkTitle: string;
+    linkDescription: string;
+    linkCover: string;
     isFullTweet?: boolean;
 }
 
-const LargeLinkPreview: FC<LargeLinkPreviewProps> = ({tweet, isFullTweet}): ReactElement => {
+const LargeLinkPreview: FC<LargeLinkPreviewProps> = (
+    {
+        link,
+        linkTitle,
+        linkDescription,
+        linkCover,
+        isFullTweet
+    }
+): ReactElement => {
     const classes = useLargeLinkPreviewStyles({isFullTweet: isFullTweet});
-    const matches = tweet.link.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
+    const matches = link.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
     const domain = matches && matches[1];
 
     return (
-        <a className={classes.siteLink} target="_blank" href={tweet.link}>
+        <a className={classes.siteLink} target="_blank" href={link}>
             <div className={classes.container}>
-                <img
-                    className={classes.linkCover}
-                    src={tweet.linkCover}
-                    alt={tweet.linkCover}
-                />
+                <img className={classes.linkCover} src={linkCover} alt={linkCover}/>
                 <div className={classes.siteInfoWrapper}>
                     <Typography variant={"body1"} component={"div"}>
-                        {tweet.linkTitle}
+                        {linkTitle}
                     </Typography>
                     <Typography variant={"subtitle1"} component={"div"}>
-                        {tweet.linkDescription}
+                        {linkDescription}
                     </Typography>
                     <Typography variant={"subtitle1"} component={"div"}>
                         {LinkIcon}{domain}

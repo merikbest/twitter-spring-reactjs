@@ -57,7 +57,7 @@ import {
     ACCOUNT_SIGNIN,
     BOOKMARKS,
     HOME,
-    HOME_CONNECT,
+    HOME_CONNECT, HOME_TWEET,
     LISTS,
     LISTS_MEMBERSHIPS,
     MESSAGES,
@@ -77,6 +77,8 @@ import {
 } from "./util/pathConstants";
 import QuoteTweets from "./pages/QuoteTweets/QuoteTweets";
 import {BackgroundTheme, ColorScheme} from "./store/types/common";
+import ActionSnackbar from "./components/ActionSnackbar/ActionSnackbar";
+import FullTweet from "./pages/FullTweet/FullTweet";
 
 const App: FC = (): ReactElement => {
     const history = useHistory();
@@ -204,7 +206,8 @@ const App: FC = (): ReactElement => {
                         <Route path={ACCOUNT_SIGNIN} component={Authentication} exact/>
                         <Route path={ACCOUNT_LOGIN} component={Login} exact/>
                         <Route path={ACCOUNT_FORGOT} component={ForgotPassword}/>
-                        <Route path={HOME} component={Home}/>
+                        <Route path={HOME} component={Home} exact/>
+                        <Route path={`${HOME_TWEET}/:id`} component={FullTweet} exact/>
                         <Route path={SEARCH} component={Explore}/>
                         <Route path={NOTIFICATIONS} component={Notifications}/>
                         <Route path={NOTIFICATIONS_TIMELINE} component={NotificationsTimeline} exact/>
@@ -229,6 +232,7 @@ const App: FC = (): ReactElement => {
                     {background && <Route path={`${PROFILE_PHOTO}/:id`} children={<UserImageModal/>}/>}
                     {background && <Route path={`${PROFILE_HEADER_PHOTO}/:id`} children={<UserImageModal/>}/>}
                 </Layout>
+                <ActionSnackbar/>
             </div>
         </MuiThemeProvider>
     );

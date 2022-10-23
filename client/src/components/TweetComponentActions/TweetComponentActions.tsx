@@ -18,14 +18,40 @@ import PinTweetButton from "./PinTweetButton/PinTweetButton";
 import DeleteTweetButton from "./DeleteTweetButton/DeleteTweetButton";
 import FollowUserButton from "./FollowUserButton/FollowUserButton";
 import ChangeReplyButton from "./ChangeReplyButton/ChangeReplyButton";
+import {ReplyType} from "../../store/types/common";
 
 interface TweetComponentActionsProps {
-    tweet: TweetResponse;
+    tweetId: number;
+    tweetText: string;
+    tweetReplyType: ReplyType;
+    addressedTweetId: number;
+    tweetUserId: number;
+    tweetUserFullName: string;
+    tweetUserUsername: string;
+    tweetUserIsFollower: boolean;
+    tweetUserIsUserMuted: boolean;
+    tweetUserIsUserBlocked: boolean;
+    tweetUserIsMyProfileBlocked: boolean;
     isFullTweet: boolean;
     onOpenTweetAnalytics?: () => void;
 }
 
-const TweetComponentActions: FC<TweetComponentActionsProps> = ({tweet, isFullTweet}): ReactElement => {
+const TweetComponentActions: FC<TweetComponentActionsProps> = (
+    {
+        tweetId,
+        tweetText,
+        tweetReplyType,
+        addressedTweetId,
+        tweetUserId,
+        tweetUserFullName,
+        tweetUserUsername,
+        tweetUserIsFollower,
+        tweetUserIsUserMuted,
+        tweetUserIsUserBlocked,
+        tweetUserIsMyProfileBlocked,
+        isFullTweet
+    }
+): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useTweetComponentMoreStyles({isFullTweet});
     const myProfileId = useSelector(selectUserDataId);
@@ -65,18 +91,18 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = ({tweet, isFullTwe
                     {openActionsDropdown && (
                         <div className={classnames(classes.dropdown, globalClasses.svg)}>
                             <List>
-                                {(myProfileId === tweet.user.id) ? (
+                                {(myProfileId === tweetUserId) ? (
                                     <>
                                         <DeleteTweetButton
-                                            tweetId={tweet.id}
-                                            addressedTweetId={tweet.addressedTweetId}
+                                            tweetId={tweetId}
+                                            addressedTweetId={addressedTweetId}
                                             onCloseActionsDropdown={handleClickAwayActionsDropdown}
                                         />
                                         <PinTweetButton
-                                            tweetId={tweet.id}
+                                            tweetId={tweetId}
                                             onCloseActionsDropdown={handleClickAwayActionsDropdown}
                                         />
-                                        <AddToListButton userId={tweet.user.id} username={tweet.user.username}/>
+                                        <AddToListButton userId={tweetUserId} username={tweetUserUsername}/>
                                         <ChangeReplyButton handleClickReplyDropdown={handleClickReplyDropdown}/>
                                         <ListItem>
                                             <>{EmbedTweetIcon}</>
@@ -85,38 +111,38 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = ({tweet, isFullTwe
                                             </Typography>
                                         </ListItem>
                                         <TweetActivityButton
-                                            fullName={tweet.user.fullName}
-                                            username={tweet.user.username}
-                                            text={tweet.text}
+                                            fullName={tweetUserFullName}
+                                            username={tweetUserUsername}
+                                            text={tweetText}
                                         />
                                     </>
                                 ) : (
                                     <>
-                                        {!tweet.user.isMyProfileBlocked && (
+                                        {!tweetUserIsMyProfileBlocked && (
                                             <>
                                                 <FollowUserButton
-                                                    tweetId={tweet.id}
-                                                    userId={tweet.user.id}
-                                                    username={tweet.user.username}
-                                                    isFollower={tweet.user.isFollower}
+                                                    tweetId={tweetId}
+                                                    userId={tweetUserId}
+                                                    username={tweetUserUsername}
+                                                    isFollower={tweetUserIsFollower}
                                                 />
                                                 <AddToListButton
-                                                    userId={tweet.user.id}
-                                                    username={tweet.user.username}
+                                                    userId={tweetUserId}
+                                                    username={tweetUserUsername}
                                                 />
                                             </>
                                         )}
                                         <MuteUserButton
-                                            tweetId={tweet.id}
-                                            userId={tweet.user.id}
-                                            username={tweet.user.username}
-                                            isUserMuted={tweet.user.isUserMuted}
+                                            tweetId={tweetId}
+                                            userId={tweetUserId}
+                                            username={tweetUserUsername}
+                                            isUserMuted={tweetUserIsUserMuted}
                                         />
                                         <BlockUserButton
-                                            tweetId={tweet.id}
-                                            userId={tweet.user.id}
-                                            username={tweet.user.username}
-                                            isUserBlocked={tweet.user.isUserBlocked}
+                                            tweetId={tweetId}
+                                            userId={tweetUserId}
+                                            username={tweetUserUsername}
+                                            isUserBlocked={tweetUserIsUserBlocked}
                                         />
                                         <ListItem>
                                             <>{EmbedTweetIcon}</>
@@ -138,8 +164,8 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = ({tweet, isFullTwe
                     {openChangeReplyDropdown && (
                         <div className={classes.replyWindowWrapper}>
                             <ChangeReplyWindow
-                                tweetId={tweet.id}
-                                replyType={tweet.replyType}
+                                tweetId={tweetId}
+                                replyType={tweetReplyType}
                                 handleClickReplyDropdown={handleClickReplyDropdown}
                                 onCloseActionsDropdown={handleClickAwayActionsDropdown}
                             />

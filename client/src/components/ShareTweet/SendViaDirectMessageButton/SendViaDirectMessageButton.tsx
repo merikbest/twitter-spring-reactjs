@@ -1,11 +1,10 @@
 import React, {FC, ReactElement, useState} from "react";
 import {ListItem, Typography} from "@material-ui/core";
+import {useDispatch} from "react-redux";
 
 import {MessagesIcon} from "../../../icons";
 import SendDirectTweetModal from "../SendDirectTweetModal/SendDirectTweetModal";
-import {TweetResponse} from "../../../store/types/tweet";
-import ActionSnackbar from "../../ActionSnackbar/ActionSnackbar";
-import {useSnackbar} from "../../../hook/useSnackbar";
+import {setOpenSnackBar} from "../../../store/ducks/actionSnackbar/actionCreators";
 
 interface SendViaDirectMessageButtonProps {
     tweetId: number;
@@ -13,7 +12,7 @@ interface SendViaDirectMessageButtonProps {
 }
 
 const SendViaDirectMessageButton: FC<SendViaDirectMessageButtonProps> = ({tweetId, closeShareTweet}): ReactElement => {
-    const {snackBarMessage, openSnackBar, setSnackBarMessage, setOpenSnackBar, onCloseSnackBar} = useSnackbar();
+    const dispatch = useDispatch();
     const [visibleSendDirectTweetModal, setVisibleSendDirectTweetModal] = useState<boolean>(false);
 
     const onClickSendViaDirectMessage = (): void => {
@@ -25,8 +24,7 @@ const SendViaDirectMessageButton: FC<SendViaDirectMessageButtonProps> = ({tweetI
     };
 
     const onSendDirectTweet = (): void => {
-        setOpenSnackBar(true);
-        setSnackBarMessage("Your Tweet was sent");
+        dispatch(setOpenSnackBar("Your Tweet was sent"));
         closeShareTweet();
     };
 
@@ -44,11 +42,6 @@ const SendViaDirectMessageButton: FC<SendViaDirectMessageButtonProps> = ({tweetI
                 onSendDirectTweet={onSendDirectTweet}
                 closeShareTweet={closeShareTweet}
                 onClose={onCloseSendViaDirectMessage}
-            />
-            <ActionSnackbar
-                snackBarMessage={snackBarMessage}
-                openSnackBar={openSnackBar}
-                onCloseSnackBar={onCloseSnackBar}
             />
         </>
     );

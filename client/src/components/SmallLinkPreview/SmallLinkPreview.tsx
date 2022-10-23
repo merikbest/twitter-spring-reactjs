@@ -6,14 +6,26 @@ import {LinkIcon, PlayVideoIcon} from "../../icons";
 import {TweetResponse} from "../../store/types/tweet";
 
 interface SmallLinkPreviewProps {
-    tweet: TweetResponse;
+    link: string;
+    linkTitle: string;
+    linkDescription: string;
+    linkCover: string;
     onOpenYouTubeVideo?: () => void;
     isFullTweet?: boolean;
 }
 
-const SmallLinkPreview: FC<SmallLinkPreviewProps> = ({tweet, onOpenYouTubeVideo, isFullTweet}): ReactElement => {
-    const classes = useSmallLinkPreviewStyles({linkCover: tweet.linkCover, isFullTweet: isFullTweet});
-    const matches = tweet.link.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
+const SmallLinkPreview: FC<SmallLinkPreviewProps> = (
+    {
+        link,
+        linkTitle,
+        linkDescription,
+        linkCover,
+        onOpenYouTubeVideo,
+        isFullTweet
+    }
+): ReactElement => {
+    const classes = useSmallLinkPreviewStyles({linkCover: linkCover, isFullTweet: isFullTweet});
+    const matches = link.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
     const domain = matches && matches[1];
 
     const LinkPreview = (): JSX.Element => {
@@ -30,7 +42,7 @@ const SmallLinkPreview: FC<SmallLinkPreviewProps> = ({tweet, onOpenYouTubeVideo,
             );
         } else {
             return (
-                <a className={classes.siteLink} target="_blank" href={tweet.link}>
+                <a className={classes.siteLink} target="_blank" href={link}>
                     <div className={classes.container}>
                         <div className={classes.linkPreviewImage}/>
                         <LinkPreviewInfo/>
@@ -44,10 +56,10 @@ const SmallLinkPreview: FC<SmallLinkPreviewProps> = ({tweet, onOpenYouTubeVideo,
         return (
             <div className={classes.linkPreviewTitle}>
                 <Typography variant={"body1"} component={"div"}>
-                    {tweet.linkTitle}
+                    {linkTitle}
                 </Typography>
                 <Typography variant={"subtitle1"} component={"div"}>
-                    {tweet.linkDescription}
+                    {linkDescription}
                 </Typography>
                 <Typography variant={"subtitle1"} component={"div"}>
                     {LinkIcon}{domain}

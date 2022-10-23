@@ -2,9 +2,9 @@ import React, {memo, ReactElement, useState} from "react";
 import {useSelector} from "react-redux";
 import Typography from "@material-ui/core/Typography";
 
-import UsersListModal, {UsersListModalAction} from "../../../components/UsersListModal/UsersListModal";
-import {selectLikedTweetsCount, selectTweetId} from "../../../store/ducks/tweet/selectors";
-import {useFullTweetStyles} from "../FullTweetStyles";
+import UsersListModal, {UsersListModalAction} from "../../../../components/UsersListModal/UsersListModal";
+import {selectLikedTweetsCount, selectTweetId} from "../../../../store/ducks/tweet/selectors";
+import {useFullTweetStyles} from "../../FullTweetStyles";
 
 const LikesCount = memo((): ReactElement => {
     const classes = useFullTweetStyles();

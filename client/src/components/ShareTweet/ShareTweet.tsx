@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useState} from 'react';
+import React, {FC, memo, ReactElement, useState} from 'react';
 import {ClickAwayListener, List, ListItem, Typography} from "@material-ui/core";
 import classnames from "classnames";
 
@@ -16,7 +16,7 @@ interface ShareTweetProps {
     isFullTweet: boolean;
 }
 
-const ShareTweet: FC<ShareTweetProps> = ({tweetId, isTweetBookmarked, isFullTweet}): ReactElement => {
+const ShareTweet: FC<ShareTweetProps> = memo(({tweetId, isTweetBookmarked, isFullTweet}): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useShareTweetModalStyles({isFullTweet});
     const [shareTweetOpen, setShareTweetOpen] = useState<boolean>(false);
@@ -63,6 +63,6 @@ const ShareTweet: FC<ShareTweetProps> = ({tweetId, isTweetBookmarked, isFullTwee
             </div>
         </ClickAwayListener>
     );
-};
+});
 
 export default ShareTweet;

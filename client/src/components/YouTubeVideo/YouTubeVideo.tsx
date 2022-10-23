@@ -6,10 +6,12 @@ import {LinkIcon} from "../../icons";
 import {TweetResponse} from "../../store/types/tweet";
 
 interface YouTubeVideoProps {
-    tweet: TweetResponse;
+    link: string;
+    linkTitle: string;
+    linkDescription: string;
 }
 
-const YouTubeVideo: FC<YouTubeVideoProps> = ({tweet}): ReactElement => {
+const YouTubeVideo: FC<YouTubeVideoProps> = ({link, linkTitle, linkDescription}): ReactElement => {
     const classes = useYouTubeVideoStyles();
 
     const getYouTubeVideoId = (url: string): string | null => {
@@ -20,19 +22,19 @@ const YouTubeVideo: FC<YouTubeVideoProps> = ({tweet}): ReactElement => {
     return (
         <div className={classes.container}>
             <iframe
-                src={`https://www.youtube.com/embed/${getYouTubeVideoId(tweet.link)}`}
+                src={`https://www.youtube.com/embed/${getYouTubeVideoId(link)}`}
                 title="YouTube video player" frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
             >
             </iframe>
-            <a className={classes.youtubeLink} target="_blank" href={tweet.link}>
+            <a className={classes.youtubeLink} target="_blank" href={link}>
                 <div className={classes.videoInfoWrapper}>
                     <Typography variant={"body1"}  component={"div"}>
-                        {tweet.linkTitle}
+                        {linkTitle}
                     </Typography>
                     <Typography variant={"subtitle1"} component={"div"}>
-                        {tweet.linkDescription}
+                        {linkDescription}
                     </Typography>
                     <Typography variant={"subtitle1"} component={"div"}>
                         {LinkIcon}youtube.com

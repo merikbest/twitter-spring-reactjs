@@ -163,6 +163,10 @@ export const testClickOnLink = (component: any, path: string, linkIndex: number)
 
 export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): RootState => {
     return {
+        actionSnackbar: {
+            snackBarMessage: "",
+            openSnackBar: false,
+        },
         user: {
             data: mockUser,
             status: loadingStatus,

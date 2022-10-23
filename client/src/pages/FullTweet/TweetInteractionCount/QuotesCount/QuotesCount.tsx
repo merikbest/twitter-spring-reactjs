@@ -3,9 +3,9 @@ import {useSelector} from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import {useHistory, useParams} from "react-router-dom";
 
-import {useFullTweetStyles} from "../FullTweetStyles";
-import {selectQuotesCount} from "../../../store/ducks/tweet/selectors";
-import {QUOTES} from "../../../util/pathConstants";
+import {useFullTweetStyles} from "../../FullTweetStyles";
+import {selectQuotesCount} from "../../../../store/ducks/tweet/selectors";
+import {QUOTES} from "../../../../util/pathConstants";
 
 const QuotesCount = memo((): ReactElement => {
     const classes = useFullTweetStyles();
