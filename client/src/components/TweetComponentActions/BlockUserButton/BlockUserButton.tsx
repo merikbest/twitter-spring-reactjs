@@ -5,8 +5,7 @@ import {ListItem, Typography} from "@material-ui/core";
 import {BlockIcon, UnblockIcon} from "../../../icons";
 import BlockUserModal from "../../BlockUserModal/BlockUserModal";
 import {processUserToBlocklist} from "../../../store/ducks/user/actionCreators";
-import {useSnackbar} from "../../../hook/useSnackbar";
-import ActionSnackbar from "../../ActionSnackbar/ActionSnackbar";
+import {setOpenSnackBar} from "../../../store/ducks/actionSnackbar/actionCreators";
 
 interface BlockUserButtonProps {
     tweetId: number;
@@ -25,13 +24,11 @@ const BlockUserButton: FC<BlockUserButtonProps> = memo((
 ): ReactElement => {
     const dispatch = useDispatch();
     const [visibleBlockUserModal, setVisibleBlockUserModal] = useState<boolean>(false);
-    const {snackBarMessage, openSnackBar, setSnackBarMessage, setOpenSnackBar, onCloseSnackBar} = useSnackbar();
 
     const onBlockUser = (): void => {
         dispatch(processUserToBlocklist({userId, tweetId}));
+        dispatch(setOpenSnackBar(`@${username} has been ${isUserBlocked ? "unblocked" : "blocked"}.`));
         setVisibleBlockUserModal(false);
-        setSnackBarMessage(`@${username} has been ${isUserBlocked ? "unblocked" : "blocked"}.`);
-        setOpenSnackBar(true);
     };
 
     const onOpenBlockUserModal = (): void => {
@@ -56,11 +53,6 @@ const BlockUserButton: FC<BlockUserButtonProps> = memo((
                 visible={visibleBlockUserModal}
                 onClose={onCloseBlockUserModal}
                 onBlockUser={onBlockUser}
-            />
-            <ActionSnackbar
-                snackBarMessage={snackBarMessage}
-                openSnackBar={openSnackBar}
-                onCloseSnackBar={onCloseSnackBar}
             />
         </>
     );

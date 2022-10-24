@@ -27,6 +27,7 @@ INSERT INTO tweets (id, addressed_id, addressed_tweet_id, addressed_username, da
 INSERT INTO tweets (id, addressed_id, addressed_tweet_id, addressed_username, date_time, reply_type, text, users_id, link, link_cover, link_description, link_title, link_cover_size, scheduled_date, deleted) VALUES (46, null, null, null, '2021-10-03 20:38:51.000000', 'EVERYONE', 'hello world1', 2, null, null, null, null, null, null, false);
 INSERT INTO tweets (id, addressed_id, addressed_tweet_id, addressed_username, date_time, reply_type, text, users_id, link, link_cover, link_description, link_title, link_cover_size, scheduled_date, deleted) VALUES (47, null, null, null, '2021-10-03 20:39:51.000000', 'EVERYONE', 'hello world2', 2, null, null, null, null, null, null, false);
 INSERT INTO tweets (id, addressed_id, addressed_tweet_id, addressed_username, date_time, reply_type, text, users_id, link, link_cover, link_description, link_title, link_cover_size, scheduled_date, deleted) VALUES (48, null, null, null, '2021-10-03 20:40:51.000000', 'EVERYONE', 'hello world3', 2, null, null, null, null, null, null, false);
+INSERT INTO tweets (id, addressed_id, addressed_tweet_id, addressed_username, date_time, reply_type, text, users_id, link, link_cover, link_description, link_title, link_cover_size, scheduled_date, deleted) VALUES (49, null, null, null, '2021-10-03 20:40:51.000000', 'EVERYONE', 'hello world3', 2, null, null, null, null, null, null, true);
 
 -- users_tweets
 INSERT INTO users_tweets (user_id, tweets_id) VALUES (2, 43);

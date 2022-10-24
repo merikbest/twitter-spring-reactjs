@@ -4,8 +4,7 @@ import {ListItem, Typography} from "@material-ui/core";
 
 import {MuteIcon, UnmuteIcon} from "../../../icons";
 import {processUserToMuteList} from "../../../store/ducks/user/actionCreators";
-import {useSnackbar} from "../../../hook/useSnackbar";
-import ActionSnackbar from "../../ActionSnackbar/ActionSnackbar";
+import {setOpenSnackBar} from "../../../store/ducks/actionSnackbar/actionCreators";
 
 interface MuteUserButtonProps {
     tweetId: number;
@@ -23,28 +22,19 @@ const MuteUserButton: FC<MuteUserButtonProps> = memo((
     }
 ): ReactElement => {
     const dispatch = useDispatch();
-    const {snackBarMessage, openSnackBar, setSnackBarMessage, setOpenSnackBar, onCloseSnackBar} = useSnackbar();
 
     const onMuteUser = (): void => {
         dispatch(processUserToMuteList({userId, tweetId}));
-        setSnackBarMessage(`@${username} has been ${isUserMuted ? "unmuted" : "muted"}.`);
-        setOpenSnackBar(true);
+        dispatch(setOpenSnackBar(`@${username} has been ${isUserMuted ? "unmuted" : "muted"}.`));
     };
 
     return (
-        <>
-            <ListItem id={"onMuteUser"} onClick={onMuteUser}>
-                <>{isUserMuted ? UnmuteIcon : MuteIcon}</>
-                <Typography variant={"body1"} component={"span"}>
-                    {isUserMuted ? "Unmute" : "Mute"} @{username}
-                </Typography>
-            </ListItem>
-            <ActionSnackbar
-                snackBarMessage={snackBarMessage}
-                openSnackBar={openSnackBar}
-                onCloseSnackBar={onCloseSnackBar}
-            />
-        </>
+        <ListItem id={"onMuteUser"} onClick={onMuteUser}>
+            <>{isUserMuted ? UnmuteIcon : MuteIcon}</>
+            <Typography variant={"body1"} component={"span"}>
+                {isUserMuted ? "Unmute" : "Mute"} @{username}
+            </Typography>
+        </ListItem>
     );
 });
 

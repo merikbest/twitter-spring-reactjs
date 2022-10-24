@@ -163,6 +163,11 @@ export const testClickOnLink = (component: any, path: string, linkIndex: number)
 
 export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): RootState => {
     return {
+        tweetAdditionalInfo: {
+            tweetAdditionalInfo: undefined,
+            isTweetBookmarked: false,
+            loadingState: loadingStatus,
+        },
         actionSnackbar: {
             snackBarMessage: "",
             openSnackBar: false,

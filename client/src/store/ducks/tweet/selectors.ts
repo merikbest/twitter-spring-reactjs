@@ -31,20 +31,6 @@ export const selectTweetDateTime = (state: RootState) => selectTweetState(state)
 export const selectTweetImages = (state: RootState) => selectTweetState(state).tweet?.images;
 export const selectTweetPoll = (state: RootState) => selectTweetState(state).tweet?.poll;
 export const selectTweetQuote = (state: RootState) => selectTweetState(state).tweet?.quoteTweet;
-// tweet.user.id -
-// tweet.id -
-// tweet.addressedTweetId -
-// tweet.user.username -
-// tweet.user.fullName -
-// tweet.text -
-// tweet.user.isMyProfileBlocked -
-// tweet.user.isFollower -
-// tweet.user.isUserMuted -
-// tweet.user.isUserBlocked -
-// tweet.replyType -
-//
-//
-
 
 // user
 export const selectTweetUserId = (state: RootState) => selectTweetState(state).tweet?.user.id;

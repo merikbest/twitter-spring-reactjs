@@ -23,6 +23,7 @@ import {UserDetailState} from "./ducks/userDetail/contracts/state";
 import {ListDetailState} from "./ducks/listDetail/contracts/state";
 import {UnsentTweetsState} from "./ducks/unsentTweets/contracts/state";
 import {ActionSnackbarState} from "./ducks/actionSnackbar/contracts/state";
+import {TweetAdditionalInfoState} from "./ducks/tweetAdditionalInfo/contracts/state";
 
 export interface RootState {
     tweets: TweetsState;
@@ -45,6 +46,7 @@ export interface RootState {
     listDetail: ListDetailState;
     unsentTweets: UnsentTweetsState;
     actionSnackbar: ActionSnackbarState;
+    tweetAdditionalInfo: TweetAdditionalInfoState;
 }
 
 const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;

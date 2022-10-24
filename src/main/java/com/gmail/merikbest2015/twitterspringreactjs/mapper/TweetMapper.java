@@ -7,10 +7,12 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.response.UserResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationReplyResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.HeaderResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetAdditionalInfoResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.enums.NotificationType;
 import com.gmail.merikbest2015.twitterspringreactjs.enums.ReplyType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetAdditionalInfoProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.UserProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.TweetService;
@@ -57,6 +59,11 @@ public class TweetMapper {
     public TweetResponse getTweetById(Long tweetId) {
         TweetProjection tweet = tweetService.getTweetById(tweetId);
         return basicMapper.convertToResponse(tweet, TweetResponse.class);
+    }
+
+    public TweetAdditionalInfoResponse getTweetAdditionalInfoById(Long tweetId) {
+        TweetAdditionalInfoProjection additionalInfo = tweetService.getTweetAdditionalInfoById(tweetId);
+        return basicMapper.convertToResponse(additionalInfo, TweetAdditionalInfoResponse.class);
     }
 
     public List<TweetResponse> getRepliesByTweetId(Long tweetId) {
@@ -144,5 +151,9 @@ public class TweetMapper {
     public TweetResponse voteInPoll(VoteRequest voteRequest) {
         TweetProjection tweet = tweetService.voteInPoll(voteRequest.getTweetId(), voteRequest.getPollId(), voteRequest.getPollChoiceId());
         return basicMapper.convertToResponse(tweet, TweetResponse.class);
+    }
+
+    public Boolean getIsTweetBookmarked(Long tweetId) {
+        return tweetService.getIsTweetBookmarked(tweetId);
     }
 }

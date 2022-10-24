@@ -3,13 +3,15 @@ import {AxiosResponse} from "axios";
 import {axios} from "../../core/axios";
 import {AddQuoteTweet, AddTweet, ChangeReplyTypeRequest, Vote} from "../../store/ducks/tweets/contracts/state";
 import {FetchTweetUsersPayload, ReplyTweet} from "../../store/ducks/tweet/contracts/state";
-import {TweetResponse} from "../../store/types/tweet";
+import {TweetAdditionalInfoResponse, TweetResponse} from "../../store/types/tweet";
 import {NotificationTweetResponse} from "../../store/types/notification";
 import {UserResponse} from "../../store/types/user";
 import {
     API_TWEETS,
+    API_TWEETS_BOOKMARKED,
     API_TWEETS_CHANGE_REPLY,
     API_TWEETS_FOLLOWER,
+    API_TWEETS_INFO,
     API_TWEETS_LIKE,
     API_TWEETS_LIKED_USERS,
     API_TWEETS_MEDIA,
@@ -44,6 +46,9 @@ export const TweetApi = {
     },
     async fetchTweetData(tweetId: number): Promise<AxiosResponse<TweetResponse>> {
         return await axios.get<TweetResponse>(`${API_TWEETS}/${tweetId}`);
+    },
+    async getTweetAdditionalInfoById(tweetId: number): Promise<AxiosResponse<TweetAdditionalInfoResponse>> {
+        return await axios.get<TweetAdditionalInfoResponse>(API_TWEETS_INFO(tweetId)); // TODO add tests
     },
     async getRepliesByTweetId(tweetId: number): Promise<AxiosResponse<TweetResponse[]>> {
         return await axios.get<TweetResponse[]>(API_TWEETS_REPLIES(tweetId));
@@ -96,5 +101,8 @@ export const TweetApi = {
     },
     async voteInPoll(payload: Vote): Promise<AxiosResponse<TweetResponse>> {
         return await axios.post<TweetResponse>(API_TWEETS_VOTE, payload);
+    },
+    async getIsTweetBookmarked(tweetId: number): Promise<AxiosResponse<boolean>> {
+        return await axios.get<boolean>(API_TWEETS_BOOKMARKED(tweetId)); // TODO add tests
     },
 };

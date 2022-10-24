@@ -159,16 +159,6 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
                         </a>
                         <TweetComponentActions
                             tweetId={tweet!.id}
-                            tweetText={tweet!.text}
-                            tweetReplyType={tweet!.replyType}
-                            addressedTweetId={tweet!.addressedTweetId}
-                            tweetUserId={tweet!.user.id}
-                            tweetUserFullName={tweet!.user.fullName}
-                            tweetUserUsername={tweet!.user.username}
-                            tweetUserIsFollower={tweet!.user.isFollower}
-                            tweetUserIsUserMuted={tweet!.user.isUserMuted}
-                            tweetUserIsUserBlocked={tweet!.user.isUserBlocked}
-                            tweetUserIsMyProfileBlocked={tweet!.user.isMyProfileBlocked}
                             isFullTweet={false}
                             onOpenTweetAnalytics={onOpenTweetAnalyticsModalWindow}
                         />
@@ -296,11 +286,7 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse> & H
                             </IconButton>
                             {(tweet?.likedTweetsCount !== 0) && (<span id={"likedTweetsCount"}>{tweet?.likedTweetsCount}</span>)}
                         </div>
-                        <ShareTweet
-                            tweetId={tweet!.id}
-                            isTweetBookmarked={tweet!.isTweetBookmarked}
-                            isFullTweet={false}
-                        />
+                        <ShareTweet tweetId={tweet!.id} isFullTweet={false}/>
                         {(myProfile?.id === tweet?.user.id) && (
                             <div id={"analytics"} className={classes.replyIcon}>
                                 <IconButton

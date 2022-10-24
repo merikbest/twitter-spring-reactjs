@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.twitterspringreactjs.service;
 
 import com.gmail.merikbest2015.twitterspringreactjs.enums.ReplyType;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Tweet;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetAdditionalInfoProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.UserProjection;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,8 @@ public interface TweetService {
     Page<TweetProjection> getTweets(Pageable pageable);
 
     TweetProjection getTweetById(Long tweetId);
+
+    TweetAdditionalInfoProjection getTweetAdditionalInfoById(Long tweetId);
 
     List<TweetProjection> getRepliesByTweetId(Long tweetId);
 
@@ -55,4 +58,6 @@ public interface TweetService {
     TweetProjection changeTweetReplyType(Long tweetId, ReplyType replyType);
 
     TweetProjection voteInPoll(Long tweetId, Long pollId, Long pollChoiceId);
+
+    Boolean getIsTweetBookmarked(Long tweetId);
 }

@@ -297,11 +297,7 @@ const TweetImageModal: FC<HoverUserProps & HoverActionProps> = (
                                     />
                                 </IconButton>
                             </div>
-                            <ShareTweet
-                                tweetId={tweetData.id}
-                                isTweetBookmarked={tweetData.isTweetBookmarked}
-                                isFullTweet={false}
-                            />
+                            <ShareTweet tweetId={tweetData.id} isFullTweet={false}/>
                         </div>
                         <Divider/>
                         <Typography variant={"subtitle1"} component={"div"} className={classes.replyWrapper}>

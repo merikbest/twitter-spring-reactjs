@@ -31,6 +31,21 @@ export interface TweetResponse {
     retweetsUserIds?: number[];
 }
 
+export interface TweetAdditionalInfoResponse {
+    text: string;
+    replyType: ReplyType;
+    addressedTweetId: number;
+    user: {
+        id: number;
+        fullName: string;
+        username: string;
+        isFollower: boolean;
+        isMyProfileBlocked: boolean;
+        isUserBlocked: boolean;
+        isUserMuted: boolean;
+    }
+}
+
 export interface UserTweetResponse {
     id: number;
     email: string;

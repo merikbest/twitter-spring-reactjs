@@ -6,6 +6,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.enums.ReplyType;
 import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
 import com.gmail.merikbest2015.twitterspringreactjs.model.*;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.*;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetAdditionalInfoProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.tweet.TweetsProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.user.UserProjection;
@@ -67,10 +68,21 @@ public class TweetServiceImpl implements TweetService {
         TweetProjection tweet = tweetRepository.findTweetById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
 
-        if (tweet.isDeleted()) { // TODO add test
+        if (tweet.isDeleted()) {
             throw new ApiRequestException("Sorry, that Tweet has been deleted.", HttpStatus.BAD_REQUEST);
         }
         return tweet;
+    }
+
+    @Override
+    public TweetAdditionalInfoProjection getTweetAdditionalInfoById(Long tweetId) {
+        TweetAdditionalInfoProjection additionalInfo = tweetRepository.getTweetAdditionalInfoById(tweetId)
+                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+
+        if (additionalInfo.isDeleted()) {
+            throw new ApiRequestException("Sorry, that Tweet has been deleted.", HttpStatus.BAD_REQUEST);
+        }
+        return additionalInfo;
     }
 
     @Override
@@ -326,6 +338,11 @@ public class TweetServiceImpl implements TweetService {
                 .collect(Collectors.toList());
         tweet.getPoll().setPollChoices(pollChoices);
         return getTweetById(tweet.getId());
+    }
+
+    @Override
+    public Boolean getIsTweetBookmarked(Long tweetId) {
+        return isUserBookmarkedTweet(tweetId);
     }
 
     public List<Long> getRetweetsUserIds(Long tweetId) {

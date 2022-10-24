@@ -22,7 +22,6 @@ import {SendDirectMessageInput} from "./SendDirectMessageInput";
 import {addChatMessageWithTweet} from "../../../store/ducks/chatMessages/actionCreators";
 import CloseButton from "../../CloseButton/CloseButton";
 import {selectUserData} from "../../../store/ducks/user/selectors";
-import {TweetResponse} from "../../../store/types/tweet";
 import {UserResponse} from "../../../store/types/user";
 import InfiniteScrollWrapper from '../../InfiniteScrollWrapper/InfiniteScrollWrapper';
 

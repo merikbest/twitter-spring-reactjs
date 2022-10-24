@@ -118,6 +118,50 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] GET /api/v1/tweets/49 - Should tweet deleted")
+    public void getTweetById_ShouldTweetDeleted() throws Exception {
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/49"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("Sorry, that Tweet has been deleted.")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/tweets/43/info - Get tweet additional info by id")
+    public void getTweetAdditionalInfoById() throws Exception {
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/43/info"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.text").value(TWEET_TEXT))
+                .andExpect(jsonPath("$.replyType").value(ReplyType.EVERYONE.toString()))
+                .andExpect(jsonPath("$.user.id").value(2L))
+                .andExpect(jsonPath("$.user.fullName").value(FULL_NAME))
+                .andExpect(jsonPath("$.user.username").value(FULL_NAME))
+                .andExpect(jsonPath("$.user.isFollower").value(false))
+                .andExpect(jsonPath("$.user.isMyProfileBlocked").value(false))
+                .andExpect(jsonPath("$.user.isUserBlocked").value(false))
+                .andExpect(jsonPath("$.user.isUserMuted").value(false));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] GET /api/v1/tweets/99/info - Should Not Found tweet by id")
+    public void getTweetAdditionalInfoById_ShouldNotFound() throws Exception {
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/99/info"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("Tweet not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] GET /api/v1/tweets/49/info - Should tweet deleted")
+    public void getTweetAdditionalInfoById_ShouldTweetDeleted() throws Exception {
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/49/info"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("Sorry, that Tweet has been deleted.")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
     @DisplayName("[200] GET /api/v1/tweets/40/replies - Get Replies By Tweet Id")
     public void getRepliesByTweetId() throws Exception {
         mockMvc.perform(get(URL_TWEETS_BASIC + "/40/replies"))
@@ -1144,5 +1188,14 @@ public class TweetControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is("Poll in tweet not exist")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/tweets/43/bookmarked - Get is tweet bookmarked")
+    public void getIsTweetBookmarked() throws Exception {
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/43/bookmarked"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value(false));
     }
 }

@@ -30,6 +30,7 @@ import {UserApi} from "../../../services/api/userApi";
 import {UserResponse} from "../../types/user";
 import {deleteTweet, setUpdatedBookmarkedTweetTweetsState} from "../tweets/actionCreators";
 import {deleteUserTweet, setUpdatedBookmarkedTweetUserTweetState} from "../userTweets/actionCreators";
+import {setIsTweetBookmarkedAdditionalInfo} from "../tweetAdditionalInfo/actionCreators";
 
 export function* fetchTweetDataRequest({payload: tweetId}: FetchTweetDataActionInterface) {
     try {
@@ -47,6 +48,7 @@ export function* addTweetToBookmarksRequest({payload}: AddTweetToBookmarksAction
         yield put(setBookmarkedTweet(data));
         yield put(setUpdatedBookmarkedTweetTweetsState({tweetId: payload, isTweetBookmarked: data}));
         yield put(setUpdatedBookmarkedTweetUserTweetState({tweetId: payload, isTweetBookmarked: data}));
+        yield put(setIsTweetBookmarkedAdditionalInfo(data));
     } catch (error) {
         yield put(setTweetLoadingState(LoadingStatus.ERROR));
     }

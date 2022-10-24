@@ -83,6 +83,11 @@ import {
 import {setBlockedUser, setMutedUser} from "../blockedAndMutedUsers/actionCreators";
 import {HOME, PROFILE} from '../../../util/pathConstants';
 import {ChangePhoneResponse} from "./contracts/state";
+import {
+    setBlockedTweetAdditionalInfo,
+    setFollowedTweetAdditionalInfo,
+    setMutedTweetAdditionalInfo
+} from "../tweetAdditionalInfo/actionCreators";
 
 export function* updateUserDataRequest({payload}: UpdateUserDataActionInterface) {
     try {
@@ -143,6 +148,7 @@ export function* processFollowUserRequest({payload}: FollowUserActionInterface) 
         yield put(setFollowToUsersSearchState({userId: data.id, isFollower: data.isFollower}));
         yield put(setFollowToTweetState(data.isFollower));
         yield put(setFollowToNotificationInfo(data.isFollower));
+        yield put(setFollowedTweetAdditionalInfo(data.isFollower));
     } catch (error) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -291,6 +297,7 @@ export function* processUserToBlocklistRequest({payload}: ProcessUserToBlocklist
         yield put(setBlockUsersSearchState({userId: payload.userId, isUserBlocked: data}));
         yield put(setBlockedToTweetState(data));
         yield put(setBlockedNotificationInfo(data));
+        yield put(setBlockedTweetAdditionalInfo(data));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -305,6 +312,7 @@ export function* processUserToMuteListRequest({payload}: ProcessUserToMuteListAc
         yield put(setMutedUser({userId: payload.userId, isUserMuted: data}));
         yield put(setMutedUsersState({userId: payload.userId, isUserMuted: data})); // TODO NOT NEEDED ???
         yield put(setMutedToTweetState(data));
+        yield put(setMutedTweetAdditionalInfo(data));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }

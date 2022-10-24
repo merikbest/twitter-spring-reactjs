@@ -8,6 +8,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.No
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.notification.NotificationTweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.HeaderResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetAdditionalInfoResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.TweetMapper;
 import com.gmail.merikbest2015.twitterspringreactjs.enums.ReplyType;
@@ -37,6 +38,11 @@ public class TweetController {
     @GetMapping("/{tweetId}")
     public ResponseEntity<TweetResponse> getTweetById(@PathVariable Long tweetId) {
         return ResponseEntity.ok(tweetMapper.getTweetById(tweetId));
+    }
+
+    @GetMapping("/{tweetId}/info")
+    public ResponseEntity<TweetAdditionalInfoResponse> getTweetAdditionalInfoById(@PathVariable Long tweetId) {
+        return ResponseEntity.ok(tweetMapper.getTweetAdditionalInfoById(tweetId));
     }
 
     @GetMapping("/{tweetId}/replies") // TODO add pagination
@@ -188,5 +194,10 @@ public class TweetController {
         messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
         messagingTemplate.convertAndSend("/topic/user/update/tweet/" + tweet.getUser().getId(), tweet);
         return ResponseEntity.ok(tweet);
+    }
+
+    @GetMapping("/{tweetId}/bookmarked")
+    public ResponseEntity<Boolean> getIsTweetBookmarked(@PathVariable Long tweetId) {
+        return ResponseEntity.ok(tweetMapper.getIsTweetBookmarked(tweetId));
     }
 }

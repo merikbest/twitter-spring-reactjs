@@ -8,23 +8,14 @@ import SockJS from "sockjs-client";
 import {CompatClient, Stomp} from "@stomp/stompjs";
 
 import {
-    selectAddressedTweetId,
     selectIsRepliesLoading,
-    selectIsTweetBookmarked,
     selectIsTweetError,
     selectIsTweetLoadedSuccess,
     selectIsTweetLoading,
     selectReplies,
     selectTweetId,
-    selectTweetReplyType,
     selectTweetText,
-    selectTweetUserFullName,
-    selectTweetUserId,
-    selectTweetUserIsBlocked,
-    selectTweetUserIsFollower,
-    selectTweetUserIsMuted,
-    selectTweetUserIsProfileBlocked,
-    selectTweetUserUsername
+    selectTweetUserFullName
 } from '../../store/ducks/tweet/selectors';
 import {
     fetchReplies,
@@ -67,19 +58,10 @@ const FullTweet = (): ReactElement | null => {
     const params = useParams<{ id: string }>();
     const tweetId = useSelector(selectTweetId);
     const tweetText = useSelector(selectTweetText);
-    const replyType = useSelector(selectTweetReplyType);
-    const addressedTweetId = useSelector(selectAddressedTweetId);
-    const isTweetBookmarked = useSelector(selectIsTweetBookmarked);
     const isTweetLoading = useSelector(selectIsTweetLoading);
     const isTweetLoadedSuccess = useSelector(selectIsTweetLoadedSuccess);
     const isError = useSelector(selectIsTweetError);
-    const tweetUserId = useSelector(selectTweetUserId);
     const tweetUserFullName = useSelector(selectTweetUserFullName);
-    const tweetUserUsername = useSelector(selectTweetUserUsername);
-    const tweetUserIsFollower = useSelector(selectTweetUserIsFollower);
-    const tweetUserIsUserMuted = useSelector(selectTweetUserIsMuted);
-    const tweetUserIsUserBlocked = useSelector(selectTweetUserIsBlocked);
-    const tweetUserIsMyProfileBlocked = useSelector(selectTweetUserIsProfileBlocked);
     const replies = useSelector(selectReplies);
     const isRepliesLoading = useSelector(selectIsRepliesLoading);
 
@@ -130,20 +112,7 @@ const FullTweet = (): ReactElement | null => {
                         <TweetActions/>
                         <div className={classes.tweetHeader}>
                             <TweetHeader/>
-                            <TweetComponentActions
-                                tweetId={tweetId}
-                                tweetText={tweetText!}
-                                tweetReplyType={replyType!}
-                                addressedTweetId={addressedTweetId!}
-                                tweetUserId={tweetUserId!}
-                                tweetUserFullName={tweetUserFullName!}
-                                tweetUserUsername={tweetUserUsername!}
-                                tweetUserIsFollower={tweetUserIsFollower!}
-                                tweetUserIsUserMuted={tweetUserIsUserMuted!}
-                                tweetUserIsUserBlocked={tweetUserIsUserBlocked!}
-                                tweetUserIsMyProfileBlocked={tweetUserIsMyProfileBlocked!}
-                                isFullTweet
-                            />
+                            <TweetComponentActions tweetId={tweetId} isFullTweet/>
                         </div>
                         <Typography variant={"h3"} className={classes.textWrapper}>
                             {textFormatter(tweetText!)}
@@ -158,7 +127,7 @@ const FullTweet = (): ReactElement | null => {
                             <ReplyIconButton/>
                             <RetweetIconButton/>
                             <LikeIconButton/>
-                            <ShareTweet tweetId={tweetId!} isTweetBookmarked={isTweetBookmarked!} isFullTweet/>
+                            <ShareTweet tweetId={tweetId!} isFullTweet/>
                         </div>
                         <Divider/>
                         <TweetReplyInfo/>

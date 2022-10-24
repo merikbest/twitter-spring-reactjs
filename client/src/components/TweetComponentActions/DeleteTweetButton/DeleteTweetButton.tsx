@@ -6,8 +6,7 @@ import {DeleteIcon} from "../../../icons";
 import TweetComponentActionsModal from "../TweetComponentActionsModal/TweetComponentActionsModal";
 import {deleteTweetReply} from "../../../store/ducks/tweet/actionCreators";
 import {fetchDeleteTweet} from "../../../store/ducks/tweets/actionCreators";
-import {useSnackbar} from "../../../hook/useSnackbar";
-import ActionSnackbar from "../../ActionSnackbar/ActionSnackbar";
+import {setOpenSnackBar} from "../../../store/ducks/actionSnackbar/actionCreators";
 
 interface DeleteTweetButtonProps {
     tweetId: number;
@@ -23,7 +22,6 @@ const DeleteTweetButton: FC<DeleteTweetButtonProps> = memo((
     }
 ): ReactElement => {
     const dispatch = useDispatch();
-    const {snackBarMessage, openSnackBar, setSnackBarMessage, setOpenSnackBar, onCloseSnackBar} = useSnackbar();
     const [visibleDeleteTweetModal, setVisibleDeleteTweetModal] = useState<boolean>(false);
 
     const onDeleteUserTweet = (): void => {
@@ -32,8 +30,7 @@ const DeleteTweetButton: FC<DeleteTweetButtonProps> = memo((
         } else {
             dispatch(fetchDeleteTweet(tweetId));
         }
-        setSnackBarMessage("Your Tweet was deleted");
-        setOpenSnackBar(true);
+        dispatch(setOpenSnackBar("Your Tweet was deleted"));
         setVisibleDeleteTweetModal(false);
         onCloseActionsDropdown();
     };
@@ -59,11 +56,6 @@ const DeleteTweetButton: FC<DeleteTweetButtonProps> = memo((
                 visibleTweetComponentActionsModal={visibleDeleteTweetModal}
                 onCloseTweetComponentActionsModal={onCloseTweetComponentActionsModal}
                 onClick={onDeleteUserTweet}
-            />
-            <ActionSnackbar
-                snackBarMessage={snackBarMessage}
-                openSnackBar={openSnackBar}
-                onCloseSnackBar={onCloseSnackBar}
             />
         </>
     );

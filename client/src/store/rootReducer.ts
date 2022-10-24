@@ -20,6 +20,7 @@ import {userDetailReducer} from "./ducks/userDetail/reducer";
 import {listDetailReducer} from "./ducks/listDetail/reducer";
 import {unsentTweetsReducer} from "./ducks/unsentTweets/reducer";
 import {actionSnackbarReducer} from "./ducks/actionSnackbar/reducer";
+import {tweetAdditionalInfoReducer} from "./ducks/tweetAdditionalInfo/reducer";
 
 export const rootReducer = combineReducers({
     tweets: tweetsReducer,
@@ -41,5 +42,6 @@ export const rootReducer = combineReducers({
     userDetail: userDetailReducer,
     listDetail: listDetailReducer,
     unsentTweets: unsentTweetsReducer,
-    actionSnackbar: actionSnackbarReducer
+    actionSnackbar: actionSnackbarReducer,
+    tweetAdditionalInfo: tweetAdditionalInfoReducer,
 });
