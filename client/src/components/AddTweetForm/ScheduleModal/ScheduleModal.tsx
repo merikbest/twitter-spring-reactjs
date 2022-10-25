@@ -1,13 +1,14 @@
 import React, {ChangeEvent, FC, ReactElement, ReactNode, useEffect, useState} from 'react';
 import {addDays, getDate, getDaysInMonth, getMonth, getYear, isBefore} from "date-fns";
-import {Button, Dialog, DialogContent, FormControl, InputLabel, Typography} from "@material-ui/core";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import {Dialog, DialogContent, FormControl, InputLabel, Typography} from "@material-ui/core";
 
 import {useScheduleModalStyles} from "./ScheduleModalStyles";
 import {ScheduleIcon} from "../../../icons";
 import {FilledSelect} from "../../FilledSelect/FilledSelect";
 import {formatScheduleDate} from "../../../util/formatDate";
-import CloseButton from "../../CloseButton/CloseButton";
+import ScheduleTitle from "./ScheduleTitle/ScheduleTitle";
+import ScheduleTimeZone from "./ScheduleTimeZone/ScheduleTimeZone";
+import ScheduleFooter from "./ScheduleFooter/ScheduleFooter";
 
 interface ScheduleModalProps {
     visible?: boolean;
@@ -38,7 +39,7 @@ const ScheduleModal: FC<ScheduleModalProps> = (
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [dateFormat, setDateFormat] = useState<string>("");
     const [isValidSelectedDate, setIsValidSelectedDate] = useState<boolean>(false);
-    
+
     useEffect(() => {
         if (visible) {
             let dateNow = new Date();
@@ -51,7 +52,7 @@ const ScheduleModal: FC<ScheduleModalProps> = (
             }
 
             const formatYear = String(getYear(dateNow));
-            const formatMonth = (getMonth(dateNow) < 10) ? ("0" + String(getMonth(dateNow) + 1)) : (String(getMonth(dateNow) + 1));
+            const formatMonth = (getMonth(dateNow) + 1 < 10) ? ("0" + String(getMonth(dateNow) + 1)) : (String(getMonth(dateNow) + 1));
             const formatDay = (parseInt(scheduledDay) < 10) ? ("0" + String(scheduledDay)) : (String(scheduledDay));
             setYear(formatYear);
             handleDaysCount(formatMonth);
@@ -167,36 +168,14 @@ const ScheduleModal: FC<ScheduleModalProps> = (
             open={visible}
             onClose={onClose}
             className={classes.dialog}
-            aria-labelledby="form-dialog-title"
         >
-            <DialogTitle id="form-dialog-title">
-                <CloseButton onClose={onClose}/>
-                Schedule
-                <div className={classes.buttonWrapper}>
-                    {selectedScheduleDate && (
-                        <Button
-                            onClick={onSubmitClearScheduleDate}
-                            type="submit"
-                            variant="text"
-                            color="primary"
-                            size="small"
-                            disabled={isValidSelectedDate}
-                        >
-                            Clear
-                        </Button>
-                    )}
-                    <Button
-                        onClick={onSubmitScheduleDate}
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        size="small"
-                        disabled={isValidSelectedDate}
-                    >
-                        {selectedScheduleDate ? "Update" : "Confirm"}
-                    </Button>
-                </div>
-            </DialogTitle>
+            <ScheduleTitle
+                onClose={onClose}
+                selectedScheduleDate={selectedScheduleDate}
+                isValidSelectedDate={isValidSelectedDate}
+                onSubmitScheduleDate={onSubmitScheduleDate}
+                onSubmitClearScheduleDate={onSubmitClearScheduleDate}
+            />
             <DialogContent className={classes.content}>
                 <div className={classes.contentWrapper}>
                     {!isValidSelectedDate && (
@@ -339,24 +318,9 @@ const ScheduleModal: FC<ScheduleModalProps> = (
                             </FilledSelect>
                         </FormControl>
                     </div>
-                    <div className={classes.dateWrapper}>
-                        <Typography variant={"subtitle1"} component={"div"} className={classes.subtitle}>
-                            Time zone
-                        </Typography>
-                        <Typography variant={"h5"} component={"div"} className={classes.title}>
-                            {Intl.DateTimeFormat().resolvedOptions().timeZone + " Standard Time"}
-                        </Typography>
-                    </div>
+                    <ScheduleTimeZone/>
                 </div>
-                <div className={classes.footer}>
-                    <Button
-                        onClick={onOpenUnsentTweetsModal}
-                        variant="text"
-                        color="primary"
-                    >
-                        Scheduled Tweets
-                    </Button>
-                </div>
+                <ScheduleFooter onOpenUnsentTweetsModal={onOpenUnsentTweetsModal}/>
             </DialogContent>
         </Dialog>
     );

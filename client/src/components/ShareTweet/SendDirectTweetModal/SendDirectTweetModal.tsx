@@ -1,8 +1,7 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Avatar, Chip, Dialog, InputAdornment, List, ListItem} from "@material-ui/core";
+import {Avatar, Chip, Dialog, InputAdornment, List} from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import DialogContent from "@material-ui/core/DialogContent";
 
@@ -16,48 +15,36 @@ import {
     resetUsersState,
     setUsersSearch
 } from "../../../store/ducks/usersSearch/actionCreators";
-import {SearchIcon, SendMessageIcon} from "../../../icons";
+import {SearchIcon} from "../../../icons";
 import DirectUserItem from "./DirectUserItem/DirectUserItem";
-import {SendDirectMessageInput} from "./SendDirectMessageInput";
-import {addChatMessageWithTweet} from "../../../store/ducks/chatMessages/actionCreators";
 import CloseButton from "../../CloseButton/CloseButton";
-import {selectUserData} from "../../../store/ducks/user/selectors";
+import {selectUserDataId} from "../../../store/ducks/user/selectors";
 import {UserResponse} from "../../../store/types/user";
 import InfiniteScrollWrapper from '../../InfiniteScrollWrapper/InfiniteScrollWrapper';
+import SendDirectMessageFooter from "./SendDirectMessageFooter/SendDirectMessageFooter";
+import {ChatResponse} from "../../../store/types/chat";
+import {setOpenSnackBar} from "../../../store/ducks/actionSnackbar/actionCreators";
 
 interface SendDirectTweetModalProps {
     tweetId: number;
     visible?: boolean;
-    onSendDirectTweet: () => void;
-    closeShareTweet: () => void;
     onClose: () => void;
-}
-
-interface DirectUserItemsProps {
-    userFromChat?: boolean;
-    user: UserResponse;
-    selectedIndexes: number[];
-    myProfileId: number;
-    handleListItemClick: (user: UserResponse) => void;
 }
 
 const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
     {
         tweetId,
         visible,
-        onSendDirectTweet,
-        closeShareTweet,
         onClose
     }
 ): ReactElement | null => {
     const classes = useSendDirectTweetModalStyles();
     const dispatch = useDispatch();
-    const myProfile = useSelector(selectUserData);
+    const myProfileId = useSelector(selectUserDataId);
     const users = useSelector(selectUsersSearch);
     const chats = useSelector(selectChatsItems);
     const usersPagesCount = useSelector(selectUsersPagesCount);
     const [searchText, setSearchText] = useState<string>("");
-    const [message, setMessage] = useState<string>("");
     const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
     const [selectedUsers, setSelectedUsers] = useState<UserResponse[]>([]);
 
@@ -108,19 +95,20 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
         setSelectedUsers(newSelectedUsers);
     };
 
-    const handleClickSendMessage = (): void => {
-        dispatch(addChatMessageWithTweet({
-            text: message,
-            tweetId: tweetId,
-            usersIds: selectedUsers.map(user => user.id!)
-        }));
-        onSendDirectTweet();
+    const onSendMessageFinish = (): void => {
+        dispatch(setOpenSnackBar("Your Tweet was sent"));
         setSearchText("");
-        setMessage("");
         setSelectedIndexes([]);
         setSelectedUsers([]);
         onClose();
-        closeShareTweet();
+    };
+
+    const selectUserFromChat = (chat: ChatResponse): UserResponse => {
+        if (chat.participants[0].user.id === myProfileId) {
+            return chat.participants[1].user as UserResponse;
+        } else {
+            return chat.participants[0].user as UserResponse;
+        }
     };
 
     if (!visible) {
@@ -128,129 +116,72 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
     }
 
     return (
-        <Dialog open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title" className={classes.header}>
+        <Dialog open={visible}>
+            <DialogTitle className={classes.header}>
                 <CloseButton onClose={onClose}/>
                 Send Tweet
             </DialogTitle>
             <DialogContent id="scrollableDiv" className={classes.content}>
+                <MessagesModalInput
+                    fullWidth
+                    placeholder="Search people"
+                    variant="outlined"
+                    onChange={(event) => onSearch(event.target.value)}
+                    value={searchText}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                {SearchIcon}
+                            </InputAdornment>
+                        ),
+                    }}
+                />
+                {selectedUsers && (
+                    selectedUsers.map(selectedUser => (
+                        <Chip
+                            key={selectedUser.id}
+                            avatar={
+                                <Avatar
+                                    alt={selectedUser?.fullName}
+                                    src={selectedUser?.avatar?.src}
+                                />
+                            }
+                            label={selectedUser?.fullName}
+                            deleteIcon={<CloseIcon color="primary"/>}
+                            onDelete={handleDelete(selectedUser)}
+                        />
+                    ))
+                )}
+                <div className={classes.divider}/>
                 <InfiniteScrollWrapper
                     dataLength={users.length}
                     pagesCount={usersPagesCount}
                     loadItems={loadParticipants}
                 >
-                    <MessagesModalInput
-                        fullWidth
-                        placeholder="Search people"
-                        variant="outlined"
-                        onChange={(event) => onSearch(event.target.value)}
-                        value={searchText}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    {SearchIcon}
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                    {selectedUsers && (
-                        selectedUsers.map(selectedUser => (
-                            <Chip
-                                key={selectedUser.id}
-                                avatar={
-                                    <Avatar
-                                        alt={selectedUser?.fullName}
-                                        src={selectedUser?.avatar?.src}
-                                    />
-                                }
-                                label={selectedUser?.fullName}
-                                deleteIcon={<CloseIcon color="primary"/>}
-                                onDelete={handleDelete(selectedUser)}
-                            />
-                        ))
-                    )}
-                    <div className={classes.divider}/>
-                    <List component="nav" aria-label="main mailbox folders">
-                        {searchText ? (
-                            users.map((user) => (
-                                <DirectUserItems
-                                    key={user.id}
-                                    userFromChat={user.isUserChatParticipant}
+                    <List component="nav">
+                        {(searchText ? users : chats).map((item) => {
+                            const user = searchText ? item as UserResponse : selectUserFromChat(item as ChatResponse);
+
+                            return (
+                                <DirectUserItem
+                                    key={item.id}
                                     user={user}
-                                    selectedIndexes={selectedIndexes}
-                                    myProfileId={myProfile!.id}
+                                    userFromChat={searchText ? user.isUserChatParticipant : true}
+                                    myProfileId={myProfileId!}
+                                    selected={selectedIndexes.indexOf(user?.id!) !== -1}
                                     handleListItemClick={handleListItemClick}
                                 />
-                            ))
-                        ) : (
-                            chats.map((chat) => (
-                                <DirectUserItems
-                                    key={chat.id}
-                                    userFromChat
-                                    user={
-                                        (chat.participants[0].user.id === myProfile?.id) ? (
-                                            chat.participants[1].user as UserResponse
-                                        ) : (
-                                            chat.participants[0].user as UserResponse
-                                        )}
-                                    selectedIndexes={selectedIndexes}
-                                    myProfileId={myProfile!.id}
-                                    handleListItemClick={handleListItemClick}
-                                />
-                            ))
-                        )}
+                            );
+                        })}
                     </List>
-                    <div className={classes.footer}>
-                        <SendDirectMessageInput
-                            multiline
-                            value={message}
-                            onChange={(event) => setMessage(event.target.value)}
-                            variant="outlined"
-                            placeholder="Add a comment"
-                        />
-                        <div className={classes.chatIcon}>
-                            <IconButton
-                                onClick={handleClickSendMessage}
-                                disabled={selectedUsers.length === 0}
-                                color="primary"
-                                size="small"
-                            >
-                                <>{SendMessageIcon}</>
-                            </IconButton>
-                        </div>
-                    </div>
                 </InfiniteScrollWrapper>
+                <SendDirectMessageFooter
+                    tweetId={tweetId}
+                    selectedUsers={selectedUsers}
+                    onSendMessageFinish={onSendMessageFinish}
+                />
             </DialogContent>
         </Dialog>
-    );
-};
-
-export const DirectUserItems: FC<DirectUserItemsProps> = (
-    {
-        userFromChat,
-        user,
-        selectedIndexes,
-        myProfileId,
-        handleListItemClick
-    }
-): JSX.Element => {
-    return (
-        <ListItem
-            button
-            disabled={
-                (user.isMutedDirectMessages && !userFromChat) ||
-                user.isUserBlocked ||
-                user.isMyProfileBlocked ||
-                user.id === myProfileId
-            }
-            selected={selectedIndexes.indexOf(user?.id!) !== -1}
-            onClick={() => handleListItemClick(user)}
-        >
-            <DirectUserItem
-                user={user}
-                selected={selectedIndexes.indexOf(user?.id!) !== -1}
-            />
-        </ListItem>
     );
 };
 

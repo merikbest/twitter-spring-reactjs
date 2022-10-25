@@ -19,6 +19,7 @@ import {
     selectIsTweetBookmarkedAdditionalInfo,
 } from "../../store/ducks/tweetAdditionalInfo/selectors";
 import Spinner from "../Spinner/Spinner";
+import SendDirectTweetModal from "./SendDirectTweetModal/SendDirectTweetModal";
 
 interface ShareTweetProps {
     tweetId: number;
@@ -32,6 +33,7 @@ const ShareTweet: FC<ShareTweetProps> = memo(({tweetId, isFullTweet}): ReactElem
     const isTweetAdditionalInfoLoading = useSelector(selectIsTweetAdditionalInfoLoading);
     const isTweetBookmarked = useSelector(selectIsTweetBookmarkedAdditionalInfo);
     const [shareTweetOpen, setShareTweetOpen] = useState<boolean>(false);
+    const [visibleSendDirectTweetModal, setVisibleSendDirectTweetModal] = useState<boolean>(false);
 
     useEffect(() => {
         if (shareTweetOpen) {
@@ -50,6 +52,14 @@ const ShareTweet: FC<ShareTweetProps> = memo(({tweetId, isFullTweet}): ReactElem
         setShareTweetOpen(false);
     };
 
+    const onClickSendViaDirectMessage = (): void => {
+        setVisibleSendDirectTweetModal(true);
+    };
+
+    const onCloseSendViaDirectMessage = (): void => {
+        setVisibleSendDirectTweetModal(false);
+    };
+
     return (
         <ClickAwayListener onClickAway={handleClickAway}>
             <div className={classes.root}>
@@ -65,10 +75,7 @@ const ShareTweet: FC<ShareTweetProps> = memo(({tweetId, isFullTweet}): ReactElem
                             <Spinner paddingTop={90}/>
                         ) : (
                             <List>
-                                <SendViaDirectMessageButton
-                                    tweetId={tweetId}
-                                    closeShareTweet={handleClickAway}
-                                />
+                                <SendViaDirectMessageButton onClickSendViaDirectMessage={onClickSendViaDirectMessage}/>
                                 <AddTweetToBookmarksButton
                                     tweetId={tweetId}
                                     isTweetBookmarked={isTweetBookmarked}
@@ -85,6 +92,11 @@ const ShareTweet: FC<ShareTweetProps> = memo(({tweetId, isFullTweet}): ReactElem
                         )}
                     </div>
                 )}
+                <SendDirectTweetModal
+                    tweetId={tweetId}
+                    visible={visibleSendDirectTweetModal}
+                    onClose={onCloseSendViaDirectMessage}
+                />
             </div>
         </ClickAwayListener>
     );

@@ -60,19 +60,19 @@ export const useAddTweetFormStyles = makeStyles<Theme, AddTweetFormStyles>((them
         },
     },
     imageRemove: {
-        padding: 6,
-        top: 15,
-        left: 65,
-        position: 'absolute',
-        backgroundColor: theme.palette.common.black,
-        opacity: 0.75,
-        "& svg": {
-            verticalAlign: "top",
-            fill: theme.palette.common.white,
-            width: 18,
-            height: 18,
-        },
-        "&.MuiIconButton-root": {
+        "& .MuiIconButton-root": {
+            padding: 6,
+            top: 15,
+            left: 65,
+            position: 'absolute',
+            backgroundColor: theme.palette.common.black,
+            opacity: 0.75,
+            "& svg": {
+                verticalAlign: "top",
+                fill: theme.palette.common.white,
+                width: 18,
+                height: 18,
+            },
             "&:hover": {
                 backgroundColor: "rgba(39, 44, 48, 0.75) !important"
             },

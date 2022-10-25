@@ -7,13 +7,24 @@ import {useActionIconButtonStyles} from "./ActionIconButtonStyles";
 const HOVER_DELAY = 500;
 
 interface ActionIconButtonProps {
+    id?: string;
     onClick?: any;
     actionText: string;
     icon: JSX.Element;
     size?: "medium" | "small";
+    disabled?: boolean;
 }
 
-const ActionIconButton: FC<ActionIconButtonProps> = ({onClick, actionText, icon, size = "small"}): ReactElement => {
+const ActionIconButton: FC<ActionIconButtonProps> = (
+    {
+        id,
+        onClick,
+        actionText,
+        icon,
+        size = "small",
+        disabled
+    }
+): ReactElement => {
     const classes = useActionIconButtonStyles();
     const [delayHandler, setDelayHandler] = useState<any>(null);
     const [visibleHoverAction, setVisibleHoverAction] = useState(false);
@@ -28,11 +39,12 @@ const ActionIconButton: FC<ActionIconButtonProps> = ({onClick, actionText, icon,
     };
 
     return (
-        <div className={classes.icon}>
+        <div id={id} className={classes.icon}>
             <IconButton
                 onClick={onClick}
                 onMouseEnter={handleHoverAction}
                 onMouseLeave={handleLeaveAction}
+                disabled={disabled}
                 color="primary"
                 size={size}
             >
