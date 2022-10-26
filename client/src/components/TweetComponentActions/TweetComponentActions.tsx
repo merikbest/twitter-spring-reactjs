@@ -32,6 +32,9 @@ import {
     selectTweetInfoUserUsername
 } from "../../store/ducks/tweetAdditionalInfo/selectors";
 import Spinner from "../Spinner/Spinner";
+import {ReplyType} from "../../store/types/common";
+import {changeReplyType} from "../../store/ducks/tweets/actionCreators";
+import {setOpenSnackBar} from "../../store/ducks/actionSnackbar/actionCreators";
 
 interface TweetComponentActionsProps {
     tweetId: number;
@@ -90,6 +93,22 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = ({tweetId, isFullT
     const handleClickAwayActionsDropdown = useCallback((): void => {
         setOpenActionsDropdown(false);
     }, []);
+
+    const onChangeTweetReplyType = (replyType: ReplyType): void => {
+        dispatch(changeReplyType({tweetId, replyType}));
+        let snackBarMessage;
+
+        if (replyType === ReplyType.EVERYONE) {
+            snackBarMessage = "Everyone can reply now";
+        } else if (replyType === ReplyType.FOLLOW) {
+            snackBarMessage = "People you follow can reply now";
+        } else {
+            snackBarMessage = "Only you can reply now";
+        }
+        dispatch(setOpenSnackBar(snackBarMessage));
+        handleClickReplyDropdown();
+        setOpenActionsDropdown(false);
+    };
 
     return (
         <div ref={ref}>
@@ -176,10 +195,8 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = ({tweetId, isFullT
                     {openChangeReplyDropdown && (
                         <div className={classes.replyWindowWrapper}>
                             <ChangeReplyWindow
-                                tweetId={tweetId}
                                 replyType={tweetReplyType!}
-                                handleClickReplyDropdown={handleClickReplyDropdown}
-                                onCloseActionsDropdown={handleClickAwayActionsDropdown}
+                                onChangeTweetReplyType={onChangeTweetReplyType}
                             />
                         </div>
                     )}

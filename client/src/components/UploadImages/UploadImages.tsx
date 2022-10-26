@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useCallback, useEffect, useRef} from 'react';
+import React, {FC, memo, ReactElement, useCallback, useEffect, useRef} from 'react';
 
 import {ImageObj} from "../AddTweetForm/AddTweetForm";
 import {MediaIcon} from "../../icons";
@@ -8,7 +8,7 @@ interface UploadImageProps {
     onChangeImages: (callback: (prev: ImageObj[]) => ImageObj[]) => void;
 }
 
-const UploadImages: FC<UploadImageProps> = ({onChangeImages}): ReactElement => {
+const UploadImages: FC<UploadImageProps> = memo(({onChangeImages}): ReactElement => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleClickImage = () => {
@@ -55,6 +55,6 @@ const UploadImages: FC<UploadImageProps> = ({onChangeImages}): ReactElement => {
             <input ref={inputRef} type="file" id="upload-input" hidden/>
         </>
     );
-};
+});
 
 export default UploadImages;

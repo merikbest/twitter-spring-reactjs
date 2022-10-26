@@ -13,12 +13,20 @@ export const usePollStyles = makeStyles((theme: Theme) => ({
     },
     addPollInputWrapper: {
         position: "relative",
+        "& .MuiIconButton-root": {
+            position: "absolute",
+            bottom: 0,
+            marginLeft: 6,
+            padding: 5,
+        },
     },
     addPollInputButton: {
-        position: "absolute",
-        bottom: 0,
-        marginLeft: 6,
-        padding: 5,
+        "& .MuiIconButton-root": {
+            position: "absolute",
+            bottom: 0,
+            marginLeft: 6,
+            padding: 5,
+        },
     },
     pollLength: {
         padding: 11,

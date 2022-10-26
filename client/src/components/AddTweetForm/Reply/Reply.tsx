@@ -1,4 +1,4 @@
-import React, {FC, MouseEvent, ReactElement, useState} from 'react';
+import React, {FC, memo, MouseEvent, ReactElement, useState} from 'react';
 import {Divider, Popover} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 
@@ -13,7 +13,7 @@ interface ReplyProps {
     isUnsentTweet: boolean;
 }
 
-const Reply: FC<ReplyProps> = ({replyType, setReplyType, isUnsentTweet}): ReactElement => {
+const Reply: FC<ReplyProps> = memo(({replyType, setReplyType, isUnsentTweet}): ReactElement => {
     const classes = useReplyStyles();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const openPopover = Boolean(anchorEl);
@@ -56,14 +56,10 @@ const Reply: FC<ReplyProps> = ({replyType, setReplyType, isUnsentTweet}): ReactE
                 anchorEl={anchorEl}
                 onClose={handleClosePopup}
             >
-                {/* TODO fix (see TweetComponentActions) */}
-                {/*<ChangeReplyWindow*/}
-                {/*    replyType={replyType}*/}
-                {/*    onChangeTweetReplyType={handleListItemClick}*/}
-                {/*/>*/}
+                <ChangeReplyWindow replyType={replyType} onChangeTweetReplyType={handleListItemClick}/>
             </Popover>
         </>
     );
-};
+});
 
 export default Reply;

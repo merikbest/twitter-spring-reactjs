@@ -1,47 +1,17 @@
 import React, {FC, memo, ReactElement} from 'react';
 import {List, ListItem, Typography} from "@material-ui/core";
-import {useDispatch} from "react-redux";
 
 import {useChangeReplyWindowStyles} from "./ChangeReplyWindowStyles";
 import {CheckIcon, EveryoneReplyOutlinedIcon, FollowReplyOutlinedIcon, MentionReplyOutlinedIcon} from "../../icons";
 import {ReplyType} from "../../store/types/common";
-import {useSnackbar} from "../../hook/useSnackbar";
-import {changeReplyType} from "../../store/ducks/tweets/actionCreators";
-import ActionSnackbar from "../ActionSnackbar/ActionSnackbar";
 
 interface ChangeReplyWindowProps {
-    tweetId: number;
     replyType: ReplyType;
-    handleClickReplyDropdown: () => void;
-    onCloseActionsDropdown: () => void;
+    onChangeTweetReplyType: (replyType: ReplyType) => void;
 }
 
-const ChangeReplyWindow: FC<ChangeReplyWindowProps> = memo((
-    {
-        tweetId,
-        replyType,
-        handleClickReplyDropdown,
-        onCloseActionsDropdown
-    }
-): ReactElement => {
+const ChangeReplyWindow: FC<ChangeReplyWindowProps> = memo(({replyType, onChangeTweetReplyType}): ReactElement => {
     const classes = useChangeReplyWindowStyles();
-    const dispatch = useDispatch();
-    const {snackBarMessage, openSnackBar, setSnackBarMessage, setOpenSnackBar, onCloseSnackBar} = useSnackbar();
-
-    const onChangeTweetReplyType = (replyType: ReplyType): void => {
-        dispatch(changeReplyType({tweetId, replyType}));
-
-        if (replyType === ReplyType.EVERYONE) {
-            setSnackBarMessage("Everyone can reply now");
-        } else if (replyType === ReplyType.FOLLOW) {
-            setSnackBarMessage("People you follow can reply now");
-        } else {
-            setSnackBarMessage("Only you can reply now");
-        }
-        setOpenSnackBar(true);
-        handleClickReplyDropdown();
-        onCloseActionsDropdown();
-    };
 
     return (
         <div className={classes.dropdown}>
@@ -114,11 +84,6 @@ const ChangeReplyWindow: FC<ChangeReplyWindowProps> = memo((
                     )}
                 </ListItem>
             </List>
-            <ActionSnackbar
-                snackBarMessage={snackBarMessage}
-                openSnackBar={openSnackBar}
-                onCloseSnackBar={onCloseSnackBar}
-            />
         </div>
     );
 });
