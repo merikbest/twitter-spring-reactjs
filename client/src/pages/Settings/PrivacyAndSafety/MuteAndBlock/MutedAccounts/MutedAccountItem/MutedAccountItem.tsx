@@ -1,56 +1,38 @@
-import React, {ComponentType, FC, ReactElement} from 'react';
+import React, {FC, ReactElement} from 'react';
 import {useDispatch} from "react-redux";
-import {compose} from "recompose";
 import {Link} from "react-router-dom";
-import {Avatar, IconButton, Paper, Typography} from "@material-ui/core";
+import {Avatar, Paper, Typography} from "@material-ui/core";
 import classnames from "classnames";
 
 import {useMutedAccountItemStyles} from "./MutedAccountItemStyles";
 import {DEFAULT_PROFILE_IMG} from "../../../../../../util/url";
 import {MuteIcon, UnmuteIcon} from "../../../../../../icons";
 import {processUserToMuteList} from "../../../../../../store/ducks/user/actionCreators";
-import HoverAction from "../../../../../../components/HoverAction/HoverAction";
-import ActionSnackbar from "../../../../../../components/ActionSnackbar/ActionSnackbar";
-import {SnackbarProps, withSnackbar} from "../../../../../../hoc/withSnackbar";
-import {HoverActionProps, HoverActions, withHoverAction} from "../../../../../../hoc/withHoverAction";
 import {useGlobalStyles} from "../../../../../../util/globalClasses";
 import {MutedUserResponse} from "../../../../../../store/types/user";
 import {PROFILE} from "../../../../../../util/pathConstants";
+import {setOpenSnackBar} from "../../../../../../store/ducks/actionSnackbar/actionCreators";
+import ActionIconButton from "../../../../../../components/ActionIconButton/ActionIconButton";
 
 interface MutedAccountItemProps {
     mutedUser?: MutedUserResponse;
 }
 
-const MutedAccountItem: FC<MutedAccountItemProps & SnackbarProps & HoverActionProps> = (
-    {
-        mutedUser,
-        snackBarMessage,
-        openSnackBar,
-        setSnackBarMessage,
-        setOpenSnackBar,
-        onCloseSnackBar,
-        visibleHoverAction,
-        handleHoverAction,
-        handleLeaveAction
-    }
-): ReactElement => {
+const MutedAccountItem: FC<MutedAccountItemProps> = ({mutedUser}): ReactElement => {
     const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
     const classes = useMutedAccountItemStyles({isUserMuted: mutedUser?.isUserMuted!});
+    const avatar = mutedUser?.avatar?.src ? mutedUser?.avatar.src : DEFAULT_PROFILE_IMG;
 
     const unmuteUser = (): void => {
         dispatch(processUserToMuteList({userId: mutedUser?.id!}));
-        setSnackBarMessage!(`@${mutedUser?.username} has been ${mutedUser?.isUserMuted ? "unmuted" : "muted"}.`);
-        setOpenSnackBar!(true);
+        dispatch(setOpenSnackBar(`@${mutedUser?.username} has been ${mutedUser?.isUserMuted ? "unmuted" : "muted"}.`))
     };
 
     return (
         <Paper className={classes.container}>
             <Link to={`${PROFILE}/${mutedUser?.id}`}>
-                <Avatar
-                    className={classnames(classes.listAvatar, globalClasses.avatar)}
-                    src={mutedUser?.avatar?.src ? mutedUser?.avatar.src : DEFAULT_PROFILE_IMG}
-                />
+                <Avatar className={classnames(classes.listAvatar, globalClasses.avatar)} src={avatar} alt={avatar}/>
             </Link>
             <div style={{flex: 1}}>
                 <div className={classes.userInfoWrapper}>
@@ -67,28 +49,19 @@ const MutedAccountItem: FC<MutedAccountItemProps & SnackbarProps & HoverActionPr
                         </div>
                     </Link>
                     <div className={classes.muteButton}>
-                        <IconButton
+                        <ActionIconButton
                             onClick={unmuteUser}
-                            onMouseEnter={() => handleHoverAction?.(HoverActions.OTHER)}
-                            onMouseLeave={handleLeaveAction}
-                            color="primary"
-                        >
-                            {mutedUser?.isUserMuted ? MuteIcon : UnmuteIcon}
-                            <HoverAction visible={visibleHoverAction?.visibleOtherAction} actionText={mutedUser?.isUserMuted ? "Unmute" : "Mute"}/>
-                        </IconButton>
+                            actionText={mutedUser?.isUserMuted ? "Unmute" : "Mute"}
+                            icon={mutedUser?.isUserMuted ? MuteIcon : UnmuteIcon}
+                        />
                     </div>
                 </div>
                 <Typography variant={"body1"} component={"div"}>
                     {mutedUser?.about}
                 </Typography>
             </div>
-            <ActionSnackbar
-                snackBarMessage={snackBarMessage!}
-                openSnackBar={openSnackBar!}
-                onCloseSnackBar={onCloseSnackBar!}
-            />
         </Paper>
     );
 };
 
-export default compose(withSnackbar, withHoverAction)(MutedAccountItem) as ComponentType<SnackbarProps & HoverActionProps & MutedAccountItemProps>;
+export default MutedAccountItem;

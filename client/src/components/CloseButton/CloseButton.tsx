@@ -1,39 +1,21 @@
 import React, {FC, ReactElement} from 'react';
-import IconButton from "@material-ui/core/IconButton";
 
 import {useCloseButtonStyles} from "./CloseButtonStyles";
-import HoverAction from "../HoverAction/HoverAction";
-import {HoverActionProps, HoverActions, withHoverAction} from "../../hoc/withHoverAction";
 import {CloseIcon} from "../../icons";
+import ActionIconButton from "../ActionIconButton/ActionIconButton";
 
 interface CloseButtonProps {
     onClose: () => void;
 }
 
-const CloseButton: FC<CloseButtonProps & HoverActionProps> = (
-    {
-        onClose,
-        visibleHoverAction,
-        handleHoverAction,
-        handleLeaveAction
-    }
-): ReactElement => {
+const CloseButton: FC<CloseButtonProps> = ({onClose}): ReactElement => {
     const classes = useCloseButtonStyles();
 
     return (
         <div className={classes.close}>
-            <IconButton
-                onClick={onClose}
-                onMouseEnter={() => handleHoverAction?.(HoverActions.OTHER)}
-                onMouseLeave={handleLeaveAction}
-                color="primary"
-                aria-label="close"
-            >
-                <>{CloseIcon}</>
-                <HoverAction visible={visibleHoverAction?.visibleOtherAction} actionText={"Close"}/>
-            </IconButton>
+            <ActionIconButton actionText={"Close"} onClick={onClose} icon={CloseIcon}/>
         </div>
     );
 };
 
-export default withHoverAction(CloseButton);
+export default CloseButton;

@@ -1,14 +1,13 @@
 import React, {FC, ReactElement, useState} from 'react';
-import {ClickAwayListener, IconButton, List, ListItem, Typography} from "@material-ui/core";
+import {ClickAwayListener, List, ListItem, Typography} from "@material-ui/core";
 import classnames from "classnames";
 
 import {useQuoteTweetStyles} from "./QuoteTweetSyles";
 import {QuoteTweetIcon, RetweetIcon, RetweetOutlinedIcon} from "../../icons";
 import QuoteTweetModal from "./QuoteTweetModal/QuoteTweetModal";
-import HoverAction from "../HoverAction/HoverAction";
-import {HoverActions} from "../../hoc/withHoverAction";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {QuoteTweetResponse} from "../../store/types/tweet";
+import ActionIconButton from "../ActionIconButton/ActionIconButton";
 
 export interface QuoteTweetProps {
     quoteTweet: QuoteTweetResponse;
@@ -16,9 +15,6 @@ export interface QuoteTweetProps {
     isTweetRetweetedByMe: boolean;
     handleRetweet: () => void;
     visibleActionWindow?: boolean;
-    visibleRetweetAction?: boolean;
-    handleHoverAction?: (action: HoverActions) => void;
-    handleLeaveAction?: () => void;
 }
 
 const QuoteTweet: FC<QuoteTweetProps> = (
@@ -27,14 +23,10 @@ const QuoteTweet: FC<QuoteTweetProps> = (
         retweetsCount,
         isTweetRetweetedByMe,
         handleRetweet,
-        visibleRetweetAction,
-        handleHoverAction,
-        handleLeaveAction
     }
 ): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useQuoteTweetStyles({isTweetRetweetedByMe});
-
     const [open, setOpen] = useState<boolean>(false);
     const [visibleAddTweet, setVisibleAddTweet] = useState<boolean>(false);
 
@@ -63,22 +55,11 @@ const QuoteTweet: FC<QuoteTweetProps> = (
     return (
         <ClickAwayListener onClickAway={handleClickAway}>
             <div className={classes.footerIcon}>
-                <IconButton
+                <ActionIconButton
+                    actionText={isTweetRetweetedByMe ? "Undo Retweet" : "Retweet"}
+                    icon={isTweetRetweetedByMe ? RetweetIcon : RetweetOutlinedIcon}
                     onClick={handleClick}
-                    onMouseEnter={() => handleHoverAction?.(HoverActions.RETWEET)}
-                    onMouseLeave={handleLeaveAction}
-                    size="small"
-                >
-                    {isTweetRetweetedByMe ? (
-                        <>{RetweetIcon}</>
-                    ) : (
-                        <>{RetweetOutlinedIcon}</>)
-                    }
-                    <HoverAction
-                        visible={visibleRetweetAction}
-                        actionText={isTweetRetweetedByMe ? "Undo Retweet" : "Retweet"}
-                    />
-                </IconButton>
+                />
                 {(retweetsCount !== 0) && (<span id={"retweets"}>{retweetsCount}</span>)}
                 {open && (
                     <div className={classnames(classes.dropdown, globalClasses.svg)}>

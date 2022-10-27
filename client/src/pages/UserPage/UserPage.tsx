@@ -1,9 +1,9 @@
-import React, {ChangeEvent, ComponentType, FC, ReactElement, ReactNode, useEffect, useState} from 'react';
+import React, {ChangeEvent, ReactElement, ReactNode, useEffect, useState} from 'react';
 import {Link, useHistory, useLocation, useParams, withRouter} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Paper from '@material-ui/core/Paper';
-import {Avatar, Button, Divider, IconButton, Link as MuiLink, List, ListItem, Typography} from '@material-ui/core';
+import {Avatar, Button, Divider, Link as MuiLink, List, ListItem, Typography} from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Skeleton from '@material-ui/lab/Skeleton';
@@ -11,7 +11,6 @@ import format from 'date-fns/format';
 import {CompatClient, Stomp} from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import classnames from "classnames";
-import {compose} from "recompose";
 
 import {
     CalendarIcon,
@@ -67,16 +66,14 @@ import SetupProfileModal from "../SetupProfileModal/SetupProfileModal";
 import UserPageActions from "./UserPageActions/UserPageActions";
 import {createChat} from "../../store/ducks/chats/actionCreators";
 import BlockUserModal from "../../components/BlockUserModal/BlockUserModal";
-import ActionSnackbar from "../../components/ActionSnackbar/ActionSnackbar";
-import {SnackbarProps, withSnackbar} from "../../hoc/withSnackbar";
 import Spinner from "../../components/Spinner/Spinner";
-import {HoverActionProps, HoverActions, withHoverAction} from "../../hoc/withHoverAction";
-import HoverAction from "../../components/HoverAction/HoverAction";
 import FollowerGroup from "../../components/FollowerGroup/FollowerGroup";
 import UserNotFound from "./UserNotFound/UserNotFound";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {MESSAGES, PROFILE_HEADER_PHOTO, PROFILE_PHOTO, USER} from "../../util/pathConstants";
 import PageHeaderWrapper from "../../components/PageHeaderWrapper/PageHeaderWrapper";
+import {setOpenSnackBar} from '../../store/ducks/actionSnackbar/actionCreators';
+import ActionIconButton from "../../components/ActionIconButton/ActionIconButton";
 
 interface LinkToFollowersProps {
     children: ReactNode;
@@ -85,18 +82,7 @@ interface LinkToFollowersProps {
 
 let stompClient: CompatClient | null = null;
 
-const UserPage: FC<SnackbarProps & HoverActionProps> = (
-    {
-        snackBarMessage,
-        openSnackBar,
-        setSnackBarMessage,
-        setOpenSnackBar,
-        onCloseSnackBar,
-        visibleHoverAction,
-        handleHoverAction,
-        handleLeaveAction
-    }
-): ReactElement => {
+const UserPage = (): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useUserPageStyles();
     const dispatch = useDispatch();
@@ -273,16 +259,14 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
 
     const onMuteUser = (): void => {
         dispatch(processUserToMuteList({userId: userProfile?.id!}));
-        setSnackBarMessage!(`@${userProfile?.username} has been ${userProfile?.isUserMuted ? "unmuted" : "muted"}.`);
-        setOpenSnackBar!(true);
+        dispatch(setOpenSnackBar(`@${userProfile?.username} has been ${userProfile?.isUserMuted ? "unmuted" : "muted"}.`));
     };
 
     const onBlockUser = (): void => {
         dispatch(processUserToBlocklist({userId: userProfile?.id!}));
         setVisibleBlockUserModal(false);
         setBtnText(userProfile?.isUserBlocked ? "Following" : "Blocked");
-        setSnackBarMessage!(`@${userProfile?.username} has been ${userProfile?.isUserBlocked ? "unblocked" : "blocked"}.`);
-        setOpenSnackBar!(true);
+        dispatch(setOpenSnackBar(`@${userProfile?.username} has been ${userProfile?.isUserBlocked ? "unblocked" : "blocked"}.`));
     };
 
     const handleSubscribeToNotifications = (): void => {
@@ -374,28 +358,19 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                                 isUserBlocked={userProfile?.isUserBlocked!}
                                                 onMuteUser={onMuteUser}
                                                 onOpenBlockUserModal={onOpenBlockUserModal}
-                                                visibleMoreAction={visibleHoverAction?.visibleMoreAction}
-                                                handleHoverAction={handleHoverAction}
-                                                handleLeaveAction={handleLeaveAction}
                                             />
                                             {(
                                                 (!userProfile?.isPrivateProfile || userProfile?.isFollower) &&
                                                 !userProfile?.isMutedDirectMessages &&
                                                 !userProfile?.isUserBlocked
                                             ) && (
-                                                <IconButton
-                                                    className={globalClasses.userPageIconButton}
-                                                    onClick={handleClickAddUserToChat}
-                                                    onMouseEnter={() => handleHoverAction?.(HoverActions.MESSAGE)}
-                                                    onMouseLeave={handleLeaveAction}
-                                                    color="primary"
-                                                >
-                                                    {MessagesIcon}
-                                                    <HoverAction
-                                                        visible={visibleHoverAction?.visibleMessageAction}
+                                                <span className={globalClasses.userPageIconButton}>
+                                                    <ActionIconButton
                                                         actionText={"Message"}
+                                                        icon={MessagesIcon}
+                                                        onClick={handleClickAddUserToChat}
                                                     />
-                                                </IconButton>
+                                                </span>
                                             )}
                                             {userProfile?.isUserBlocked ? (
                                                 <Button
@@ -412,19 +387,13 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                             ) : (
                                                 userProfile?.isFollower ? (
                                                     <>
-                                                        <IconButton
-                                                            onClick={handleSubscribeToNotifications}
-                                                            onMouseEnter={() => handleHoverAction?.(HoverActions.OTHER)}
-                                                            onMouseLeave={handleLeaveAction}
-                                                            className={globalClasses.userPageIconButton}
-                                                            color="primary"
-                                                        >
-                                                            {userProfile?.isSubscriber ? NotificationsAddFilledIcon : NotificationsAddIcon}
-                                                            <HoverAction
-                                                                visible={visibleHoverAction?.visibleOtherAction}
+                                                        <span className={globalClasses.userPageIconButton}>
+                                                            <ActionIconButton
                                                                 actionText={userProfile?.isSubscriber ? "Turn off notifications" : "Notify"}
+                                                                icon={userProfile?.isSubscriber ? NotificationsAddFilledIcon : NotificationsAddIcon}
+                                                                onClick={handleSubscribeToNotifications}
                                                             />
-                                                        </IconButton>
+                                                        </span>
                                                         <Button
                                                             className={classes.primaryButton}
                                                             onClick={handleFollow}
@@ -599,7 +568,7 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                 )
                             )}
                             {userProfile && !userProfile.isMyProfileBlocked && !userProfile.isPrivateProfile && (
-                                <FollowerGroup user={userProfile} sameFollowers={userProfile.sameFollowers}/>
+                                <FollowerGroup userId={userProfile.id} sameFollowers={userProfile.sameFollowers}/>
                             )}
                         </div>
                         {isUserProfileLoading ? (
@@ -613,7 +582,8 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                         </Typography>
                                         <Typography variant={"subtitle1"} component={"div"}>
                                             {`You can’t follow or see @${userProfile?.username}’s Tweets.`}
-                                            <MuiLink href={SOMEONE_BLOCKED_ME_ON_TWITTER} variant="subtitle1" target="_blank" rel="noopener">
+                                            <MuiLink href={SOMEONE_BLOCKED_ME_ON_TWITTER} variant="subtitle1"
+                                                     target="_blank" rel="noopener">
                                                 Learn more
                                             </MuiLink>
                                         </Typography>
@@ -627,7 +597,8 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                             <Typography variant={"subtitle1"} component={"div"}>
                                                 {`Only approved followers can see @${userProfile?.username}’s Tweets. To 
                                                 request access, click Follow. `}
-                                                <MuiLink href={PUBLIC_AND_PROTECTED_TWEETS} variant="subtitle1" target="_blank" rel="noopener">
+                                                <MuiLink href={PUBLIC_AND_PROTECTED_TWEETS} variant="subtitle1"
+                                                         target="_blank" rel="noopener">
                                                     Learn more
                                                 </MuiLink>
                                             </Typography>
@@ -635,11 +606,17 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                                     ) : (
                                         <>
                                             <div className={classes.tabs}>
-                                                <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChange}>
-                                                    <Tab onClick={() => handleShowTweets(handleShowUserTweets)} label="Tweets"/>
-                                                    <Tab onClick={() => handleShowTweets(handleShowUserRetweetsAndReplies)} label="Tweets & replies"/>
-                                                    <Tab onClick={() => handleShowTweets(handleShowMediaTweets)} label="Media"/>
-                                                    <Tab onClick={() => handleShowTweets(handleShowLikedTweets)} label="Likes"/>
+                                                <Tabs value={activeTab} indicatorColor="primary" textColor="primary"
+                                                      onChange={handleChange}>
+                                                    <Tab onClick={() => handleShowTweets(handleShowUserTweets)}
+                                                         label="Tweets"/>
+                                                    <Tab
+                                                        onClick={() => handleShowTweets(handleShowUserRetweetsAndReplies)}
+                                                        label="Tweets & replies"/>
+                                                    <Tab onClick={() => handleShowTweets(handleShowMediaTweets)}
+                                                         label="Media"/>
+                                                    <Tab onClick={() => handleShowTweets(handleShowLikedTweets)}
+                                                         label="Likes"/>
                                                 </Tabs>
                                             </div>
                                             <Divider/>
@@ -668,15 +645,10 @@ const UserPage: FC<SnackbarProps & HoverActionProps> = (
                         onClose={onCloseBlockUserModal}
                         onBlockUser={onBlockUser}
                     />
-                    <ActionSnackbar
-                        snackBarMessage={snackBarMessage!}
-                        openSnackBar={openSnackBar!}
-                        onCloseSnackBar={onCloseSnackBar!}
-                    />
                 </Paper>
             )}
         </InfiniteScroll>
     );
 };
 
-export default compose(withSnackbar, withHoverAction, withRouter)(UserPage) as ComponentType<SnackbarProps & HoverActionProps>;
+export default withRouter(UserPage);

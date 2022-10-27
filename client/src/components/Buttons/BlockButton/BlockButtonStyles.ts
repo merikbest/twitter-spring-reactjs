@@ -1,11 +1,13 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
-export const useUnfollowButtonStyles = makeStyles((theme: Theme) => ({
+export const useBlockButtonStyles = makeStyles((theme: Theme) => ({
     containedButton: {
-        float: "right",
-        width: 101,
+        width: 105,
         '&:hover': {
             backgroundColor: theme.palette.error.dark,
         },
+    },
+    blockButton: {
+        backgroundColor: theme.palette.error.main,
     },
 }));

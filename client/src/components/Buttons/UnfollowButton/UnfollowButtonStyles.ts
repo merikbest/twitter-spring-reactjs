@@ -4,7 +4,7 @@ export const useUnfollowButtonStyles = makeStyles((theme: Theme) => ({
     containedButton: {
         float: "right",
         width: 101,
-        '&:hover': {
+        "&:hover": {
             backgroundColor: theme.palette.error.dark,
         },
     },

@@ -9,7 +9,7 @@ describe("SettingsModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);
 
     it("should render correctly", () => {
-        const wrapper = mountWithStore(<SettingsModal visible={true} onClose={jest.fn()}/>, mockRootState);
+        const wrapper = mountWithStore(<SettingsModal/>, mockRootState);
         
         expect(wrapper.text().includes("Trends")).toBe(true);
         expect(wrapper.text().includes("Location")).toBe(true);
@@ -21,7 +21,7 @@ describe("SettingsModal", () => {
     });
 
     it("should click Checkboxes", () => {
-        const wrapper = mountWithStore(<SettingsModal visible={true} onClose={jest.fn()}/>, mockRootState);
+        const wrapper = mountWithStore(<SettingsModal/>, mockRootState);
         
         expect(wrapper.find(Checkbox).at(0).prop("checked")).toBe(true);
         expect(wrapper.find(Checkbox).at(1).prop("checked")).toBe(true);
@@ -34,7 +34,7 @@ describe("SettingsModal", () => {
     });
 
     it("should render empty SettingsModal correctly", () => {
-        const wrapper = mountWithStore(<SettingsModal visible={false} onClose={jest.fn()}/>, mockRootState);
+        const wrapper = mountWithStore(<SettingsModal/>, mockRootState);
         expect(wrapper.find(Dialog).exists()).toBeFalsy();
     });
 });

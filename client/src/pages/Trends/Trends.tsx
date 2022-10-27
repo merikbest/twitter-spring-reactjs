@@ -8,6 +8,7 @@ import {fetchTrends, resetTrendsState} from "../../store/ducks/tags/actionCreato
 import Spinner from "../../components/Spinner/Spinner";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
 import InfiniteScrollWrapper from '../../components/InfiniteScrollWrapper/InfiniteScrollWrapper';
+import PageWrapper from "../../components/PageWrapper/PageWrapper";
 
 const Trends: FC = (): ReactElement => {
     const dispatch = useDispatch();
@@ -29,16 +30,18 @@ const Trends: FC = (): ReactElement => {
     };
 
     return (
-        <InfiniteScrollWrapper dataLength={trends.length} pagesCount={pagesCount} loadItems={loadTrends}>
-            {isLoading && !trends.length ? (
-                <Spinner paddingTop={80}/>
-            ) : (
-                <List style={{paddingTop: 48}}>
-                    {trends.map((trend) => <TrendsItem key={trend.id} tag={trend}/>)}
-                    {isLoading && <Spinner/>}
-                </List>
-            )}
-        </InfiniteScrollWrapper>
+        <PageWrapper title={"Trends"}>
+            <InfiniteScrollWrapper dataLength={trends.length} pagesCount={pagesCount} loadItems={loadTrends}>
+                {isLoading && !trends.length ? (
+                    <Spinner paddingTop={80}/>
+                ) : (
+                    <List style={{paddingTop: 48}}>
+                        {trends.map((trend) => <TrendsItem key={trend.id} tag={trend}/>)}
+                        {isLoading && <Spinner/>}
+                    </List>
+                )}
+            </InfiniteScrollWrapper>
+        </PageWrapper>
     );
 };
 

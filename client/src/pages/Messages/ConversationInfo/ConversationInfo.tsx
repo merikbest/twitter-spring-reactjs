@@ -17,8 +17,6 @@ import {
 import LeaveFromConversationModal from "./LeaveFromConversationModal/LeaveFromConversationModal";
 import {leaveFromConversation} from "../../../store/ducks/chats/actionCreators";
 import BlockUserModal from "../../../components/BlockUserModal/BlockUserModal";
-import {SnackbarProps, withSnackbar} from "../../../hoc/withSnackbar";
-import ActionSnackbar from "../../../components/ActionSnackbar/ActionSnackbar";
 import UnfollowModal from "../../../components/UnfollowModal/UnfollowModal";
 import {fetchChatParticipant, resetUserProfileState} from "../../../store/ducks/userProfile/actionCreators";
 import {useGlobalStyles} from "../../../util/globalClasses";
@@ -27,6 +25,7 @@ import Spinner from "../../../components/Spinner/Spinner";
 import {UserResponse} from "../../../store/types/user";
 import {MESSAGES, PROFILE} from "../../../util/pathConstants";
 import LockIcon from "../../../components/LockIcon/LockIcon";
+import {setOpenSnackBar} from "../../../store/ducks/actionSnackbar/actionCreators";
 
 interface ConversationInfoProps {
     participantId?: number;
@@ -34,18 +33,7 @@ interface ConversationInfoProps {
     onBlockParticipant: () => void;
 }
 
-const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
-    {
-        participantId,
-        chatId,
-        onBlockParticipant,
-        snackBarMessage,
-        openSnackBar,
-        setSnackBarMessage,
-        setOpenSnackBar,
-        onCloseSnackBar
-    }
-): ReactElement => {
+const ConversationInfo: FC<ConversationInfoProps> = ({participantId, chatId, onBlockParticipant}): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useConversationInfoStyles();
     const dispatch = useDispatch();
@@ -122,8 +110,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
         dispatch(processUserToBlocklist({userId: chatParticipant?.id!}));
         onBlockParticipant();
         setVisibleBlockUserModal(false);
-        setSnackBarMessage!(`@${chatParticipant?.username!} has been ${chatParticipant?.isUserBlocked ? "unblocked" : "blocked"}.`);
-        setOpenSnackBar!(true);
+        dispatch(setOpenSnackBar(`@${chatParticipant?.username!} has been ${chatParticipant?.isUserBlocked ? "unblocked" : "blocked"}.`));
     };
 
     const onOpenBlockUserModal = (): void => {
@@ -264,7 +251,7 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                 onClose={onCloseLeaveFromConversationModal}
             />
             <UnfollowModal
-                user={chatParticipant! as unknown as UserResponse}
+                fullName={chatParticipant?.fullName!}
                 visible={visibleUnfollowModal}
                 onClose={onCloseUnfollowModal}
                 handleUnfollow={handleUnfollow}
@@ -276,13 +263,8 @@ const ConversationInfo: FC<ConversationInfoProps & SnackbarProps> = (
                 onClose={onCloseBlockUserModal}
                 onBlockUser={onBlockUser}
             />
-            <ActionSnackbar
-                snackBarMessage={snackBarMessage!}
-                openSnackBar={openSnackBar!}
-                onCloseSnackBar={onCloseSnackBar!}
-            />
         </div>
     );
 };
 
-export default withSnackbar(ConversationInfo);
+export default ConversationInfo;

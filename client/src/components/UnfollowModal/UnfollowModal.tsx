@@ -4,16 +4,15 @@ import {Button, Typography} from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 
 import {useUnfollowModalStyles} from "./UnfollowModalStyles";
-import {UserResponse} from "../../store/types/user";
 
 interface UnfollowModalProps {
-    user: UserResponse;
+    fullName: string;
     visible?: boolean;
     onClose: () => void;
-    handleUnfollow: (user: UserResponse) => void;
+    handleUnfollow: () => void;
 }
 
-const UnfollowModal: FC<UnfollowModalProps> = ({user, visible, onClose, handleUnfollow}): ReactElement | null => {
+const UnfollowModal: FC<UnfollowModalProps> = ({fullName, visible, onClose, handleUnfollow}): ReactElement | null => {
     const classes = useUnfollowModalStyles();
 
     const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
@@ -34,7 +33,7 @@ const UnfollowModal: FC<UnfollowModalProps> = ({user, visible, onClose, handleUn
             <DialogContent style={{padding: 0}}>
                 <div className={classes.modalWrapper}>
                     <Typography variant={"h5"} component={"div"}>
-                        Unfollow {user?.fullName}?
+                        Unfollow {fullName}?
                     </Typography>
                     <Typography variant={"subtitle1"} component={"div"}>
                         Their Tweets will no longer show up in your home timeline. You can still view their
@@ -50,7 +49,7 @@ const UnfollowModal: FC<UnfollowModalProps> = ({user, visible, onClose, handleUn
                             Cancel
                         </Button>
                         <Button
-                            onClick={() => handleUnfollow(user!)}
+                            onClick={handleUnfollow}
                             variant="contained"
                             color="primary"
                             size="large"

@@ -6,6 +6,7 @@ import {selectPagesCount, selectUsers, selectUsersIsLoading} from "../../store/d
 import ConnectToUsers from "../../components/ConnectToUsers/ConnectToUsers";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
 import InfiniteScrollWrapper from "../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
+import PageWrapper from "../../components/PageWrapper/PageWrapper";
 
 const Connect: FC = (): ReactElement => {
     const dispatch = useDispatch();
@@ -28,9 +29,11 @@ const Connect: FC = (): ReactElement => {
     };
 
     return (
-        <InfiniteScrollWrapper dataLength={users.length} pagesCount={pagesCount} loadItems={loadUsers}>
-            <ConnectToUsers title={"Suggested for you"} isUsersLoading={isUsersLoading} users={users}/>
-        </InfiniteScrollWrapper>
+        <PageWrapper title={"Connect"}>
+            <InfiniteScrollWrapper dataLength={users.length} pagesCount={pagesCount} loadItems={loadUsers}>
+                <ConnectToUsers title={"Suggested for you"} isUsersLoading={isUsersLoading} users={users}/>
+            </InfiniteScrollWrapper>
+        </PageWrapper>
     );
 };
 

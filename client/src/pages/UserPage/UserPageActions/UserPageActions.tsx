@@ -1,6 +1,8 @@
 import React, {FC, ReactElement, useState} from 'react';
 import {Link, useLocation} from 'react-router-dom';
-import {ClickAwayListener, IconButton, List, ListItem, Typography} from "@material-ui/core";
+import {ClickAwayListener, List, ListItem, Typography} from "@material-ui/core";
+import {useDispatch} from "react-redux";
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 import {useUserPageActionsStyles} from "./UserPageActionsStyles";
 import {
@@ -18,15 +20,12 @@ import {
     UnmuteIcon
 } from "../../../icons";
 import ListsModal from "../../../components/ListsModal/ListsModal";
-import CopyToClipboard from 'react-copy-to-clipboard';
 import {CLIENT_URL} from "../../../util/url";
-import ActionSnackbar from "../../../components/ActionSnackbar/ActionSnackbar";
-import {SnackbarProps, withSnackbar} from "../../../hoc/withSnackbar";
-import HoverAction from "../../../components/HoverAction/HoverAction";
-import {HoverActions} from "../../../hoc/withHoverAction";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {UserProfileResponse} from "../../../store/types/user";
 import {LISTS_MEMBERSHIPS} from "../../../util/pathConstants";
+import {setOpenSnackBar} from "../../../store/ducks/actionSnackbar/actionCreators";
+import ActionIconButton from "../../../components/ActionIconButton/ActionIconButton";
 
 interface UserPageActionsProps {
     user: UserProfileResponse;
@@ -34,30 +33,21 @@ interface UserPageActionsProps {
     isUserBlocked: boolean;
     onMuteUser: () => void;
     onOpenBlockUserModal: () => void;
-    visibleMoreAction?: boolean;
-    handleHoverAction?: (action: HoverActions) => void;
-    handleLeaveAction?: () => void;
 }
 
-const UserPageActions: FC<UserPageActionsProps & SnackbarProps> = (
+const UserPageActions: FC<UserPageActionsProps> = (
     {
         user,
         isUserMuted,
         isUserBlocked,
         onMuteUser,
-        onOpenBlockUserModal,
-        visibleMoreAction,
-        handleHoverAction,
-        handleLeaveAction,
-        openSnackBar,
-        setOpenSnackBar,
-        onCloseSnackBar
+        onOpenBlockUserModal
     }
 ): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useUserPageActionsStyles();
+    const dispatch = useDispatch();
     const location = useLocation();
-
     const [open, setOpen] = useState<boolean>(false);
     const [visibleListsModal, setVisibleListsModal] = useState<boolean>(false);
 
@@ -78,11 +68,11 @@ const UserPageActions: FC<UserPageActionsProps & SnackbarProps> = (
     };
 
     const onCopyLinkToProfile = (): void => {
-        setOpenSnackBar!(true);
+        dispatch(setOpenSnackBar("Copied to clipboard"));
         setOpen(false);
     };
 
-    const handleMuteUser = () => {
+    const handleMuteUser = (): void => {
         onMuteUser();
         setOpen(false);
     };
@@ -90,16 +80,9 @@ const UserPageActions: FC<UserPageActionsProps & SnackbarProps> = (
     return (
         <ClickAwayListener onClickAway={handleClickAway}>
             <div className={classes.container}>
-                <IconButton
-                    onClick={handleClick}
-                    onMouseEnter={() => handleHoverAction?.(HoverActions.MORE)}
-                    onMouseLeave={handleLeaveAction}
-                    className={globalClasses.userPageIconButton}
-                    color="primary"
-                >
-                    {EditIcon}
-                    <HoverAction visible={visibleMoreAction} actionText={"More"}/>
-                </IconButton>
+                <span className={globalClasses.userPageIconButton}>
+                    <ActionIconButton actionText={"More"} onClick={handleClick} icon={EditIcon}/>
+                </span>
                 {open ? (
                     <div className={classes.dropdown}>
                         <List>
@@ -175,14 +158,9 @@ const UserPageActions: FC<UserPageActionsProps & SnackbarProps> = (
                     </div>
                 ) : null}
                 <ListsModal userId={user.id} visible={visibleListsModal} onClose={onCloseListsModal}/>
-                <ActionSnackbar
-                    snackBarMessage={"Copied to clipboard"}
-                    openSnackBar={openSnackBar!}
-                    onCloseSnackBar={onCloseSnackBar!}
-                />
             </div>
         </ClickAwayListener>
     );
 };
 
-export default withSnackbar(UserPageActions);
+export default UserPageActions;

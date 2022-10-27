@@ -1,16 +1,16 @@
-import React, {FC, ReactElement, useEffect} from 'react';
+import React, {ReactElement, useEffect} from 'react';
 import {Button, Divider, Link as MuiLink} from "@material-ui/core";
 import classnames from "classnames";
 import * as yup from "yup";
 import {Controller, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
+import {useDispatch} from "react-redux";
 
 import {useChangeYourPasswordStyles} from "./ChangeYourPasswordStyles";
 import {ChangeInfoTextField} from "../../ChangeInfoTextField/ChangeInfoTextField";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {AuthApi} from "../../../../services/api/authApi";
-import {SnackbarProps, withSnackbar} from "../../../../hoc/withSnackbar";
-import ActionSnackbar from "../../../../components/ActionSnackbar/ActionSnackbar";
+import {setOpenSnackBar} from "../../../../store/ducks/actionSnackbar/actionCreators";
 
 interface ChangeYourPasswordFormProps {
     currentPassword: string;
@@ -23,29 +23,14 @@ const ChangeYourPasswordFormSchema = yup.object().shape({
     password2: yup.string().oneOf([yup.ref("password")], "Passwords do not match."),
 });
 
-const ChangeYourPassword: FC<SnackbarProps> = (
-    {
-        snackBarMessage,
-        openSnackBar,
-        setSnackBarMessage,
-        setOpenSnackBar,
-        onCloseSnackBar
-    }
-): ReactElement => {
+const ChangeYourPassword = (): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useChangeYourPasswordStyles();
-    const {
-        control,
-        register,
-        handleSubmit,
-        setError,
-        formState: {errors},
-        getValues,
-        reset
-    } = useForm<ChangeYourPasswordFormProps>({
+    const dispatch = useDispatch();
+    const {control, handleSubmit, setError, formState: {errors}, reset} = useForm<ChangeYourPasswordFormProps>({
         resolver: yupResolver(ChangeYourPasswordFormSchema),
     });
-    
+
     useEffect(() => {
         document.title = "Change your password / Twitter";
     }, []);
@@ -55,23 +40,24 @@ const ChangeYourPassword: FC<SnackbarProps> = (
             currentPassword: data.currentPassword,
             password: data.password,
             password2: data.password2
-        }).then((response) => {
-            setSnackBarMessage!(response.data);
-            setOpenSnackBar!(true);
-            reset();
-        }).catch((error) => {
-            const errors = error.response.data;
+        })
+            .then((response) => {
+                dispatch(setOpenSnackBar(response.data));
+                reset();
+            })
+            .catch((error) => {
+                const errors = error.response.data;
 
-            if (errors.currentPassword) {
-                setError("currentPassword", {type: "server", message: errors.currentPassword});
-            }
-            if (errors.password) {
-                setError("password", {type: "server", message: errors.password});
-            }
-            if (errors.password2) {
-                setError("password2", {type: "server", message: errors.password2});
-            }
-        });
+                if (errors.currentPassword) {
+                    setError("currentPassword", {type: "server", message: errors.currentPassword});
+                }
+                if (errors.password) {
+                    setError("password", {type: "server", message: errors.password});
+                }
+                if (errors.password2) {
+                    setError("password2", {type: "server", message: errors.password2});
+                }
+            });
     };
 
     return (
@@ -155,14 +141,9 @@ const ChangeYourPassword: FC<SnackbarProps> = (
                         Save
                     </Button>
                 </div>
-                <ActionSnackbar
-                    snackBarMessage={snackBarMessage!}
-                    openSnackBar={openSnackBar!}
-                    onCloseSnackBar={onCloseSnackBar!}
-                />
             </form>
         </>
     );
 };
 
-export default withSnackbar(ChangeYourPassword);
+export default ChangeYourPassword;

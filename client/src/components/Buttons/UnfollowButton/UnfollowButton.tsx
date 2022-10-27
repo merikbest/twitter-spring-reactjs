@@ -3,15 +3,26 @@ import {useDispatch} from "react-redux";
 import Button from "@material-ui/core/Button/Button";
 
 import {useUnfollowButtonStyles} from "./UnfollowButtonStyles";
-import {UserResponse} from "../../../store/types/user";
-import {processFollowRequest, unfollowUser} from "../../../store/ducks/user/actionCreators";
 import UnfollowModal from "../../UnfollowModal/UnfollowModal";
+import {processFollowRequest, unfollowUser} from "../../../store/ducks/user/actionCreators";
 
 interface UnfollowButtonProps {
-    user?: UserResponse
+    userId: number;
+    isPrivateProfile: boolean;
+    fullName: string;
+    size?: "medium" | "large" | "small";
+    isOpenUnfollowModal?: boolean;
 }
 
-const UnfollowButton: FC<UnfollowButtonProps> = ({user}): ReactElement => {
+const UnfollowButton: FC<UnfollowButtonProps> = (
+    {
+        userId,
+        isPrivateProfile,
+        fullName,
+        size,
+        isOpenUnfollowModal
+    }
+): ReactElement => {
     const classes = useUnfollowButtonStyles();
     const dispatch = useDispatch();
     const [btnText, setBtnText] = useState<string>("Following");
@@ -27,10 +38,10 @@ const UnfollowButton: FC<UnfollowButtonProps> = ({user}): ReactElement => {
     };
 
     const handleUnfollow = (): void => {
-        if (user?.isPrivateProfile) {
-            dispatch(processFollowRequest(user.id!));
+        if (isPrivateProfile) {
+            dispatch(processFollowRequest(userId));
         } else {
-            dispatch(unfollowUser({userId: user?.id!}));
+            dispatch(unfollowUser({userId}));
             setVisibleUnfollowModal(false);
         }
     };
@@ -39,17 +50,17 @@ const UnfollowButton: FC<UnfollowButtonProps> = ({user}): ReactElement => {
         <>
             <Button
                 className={classes.containedButton}
-                onClick={handleClickOpenUnfollowModal}
+                onClick={isOpenUnfollowModal ? handleClickOpenUnfollowModal : handleUnfollow}
                 onMouseOver={() => setBtnText("Unfollow")}
                 onMouseLeave={() => setBtnText("Following")}
                 color="primary"
                 variant="contained"
-                size="small"
+                size={size}
             >
                 {btnText}
             </Button>
             <UnfollowModal
-                fullName={user?.fullName!}
+                fullName={fullName}
                 visible={visibleUnfollowModal}
                 onClose={onCloseUnfollowModal}
                 handleUnfollow={handleUnfollow}

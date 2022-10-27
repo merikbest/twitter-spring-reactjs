@@ -40,7 +40,7 @@ export const useTagsStyles = makeStyles((theme) => ({
         },
     },
     footer: {
-        padding: 16,
+        padding: "16px !important",
         borderRadius: "0px 0px 16px 16px",
         cursor: 'pointer',
         '& .MuiTypography-body1': {

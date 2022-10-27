@@ -10,12 +10,11 @@ import {useGlobalStyles} from "../../../../../../util/globalClasses";
 import {ListsOwnerMemberResponse} from "../../../../../../store/types/lists";
 import {processUserToListMembers} from "../../../../../../store/ducks/listMembers/actionCreators";
 import PopperUserWindow from "../../../../../../components/PopperUserWindow/PopperUserWindow";
-import ActionSnackbar from "../../../../../../components/ActionSnackbar/ActionSnackbar";
 import {selectIsListSuggestedError} from "../../../../../../store/ducks/listMembers/selectors";
 import {PROFILE} from "../../../../../../util/pathConstants";
 import {useHoverUser} from "../../../../../../hook/useHoverUser";
-import {useSnackbar} from "../../../../../../hook/useSnackbar";
 import LockIcon from "../../../../../../components/LockIcon/LockIcon";
+import {setOpenSnackBar} from "../../../../../../store/ducks/actionSnackbar/actionCreators";
 
 interface ManageMembersItemProps {
     listId?: number
@@ -38,11 +37,10 @@ const ManageMembersItem: FC<ManageMembersItemProps> = memo((
     const myProfile = useSelector(selectUserData);
     const isSuggestedError = useSelector(selectIsListSuggestedError);
     const {visiblePopperWindow, handleHoverPopper, handleLeavePopper} = useHoverUser();
-    const {openSnackBar, setOpenSnackBar, onCloseSnackBar} = useSnackbar();
 
     useEffect(() => {
         if (isSuggestedError) {
-            setOpenSnackBar(true);
+            dispatch(setOpenSnackBar("You aren’t allowed to add this member to this List."));
         }
     }, [isSuggestedError]);
 
@@ -95,11 +93,6 @@ const ManageMembersItem: FC<ManageMembersItemProps> = memo((
                         </div>
                     </div>
                 </div>
-                <ActionSnackbar
-                    snackBarMessage={"You aren’t allowed to add this member to this List."}
-                    openSnackBar={openSnackBar}
-                    onCloseSnackBar={onCloseSnackBar}
-                />
             </Paper>
         </Link>
     );

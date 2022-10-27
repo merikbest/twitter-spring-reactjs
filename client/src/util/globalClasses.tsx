@@ -144,15 +144,17 @@ export const useGlobalStyles = makeStyles((theme: Theme) => ({
         textAlign: "center",
     },
     userPageIconButton: {
-        marginTop: 84,
-        marginRight: 9,
-        border: '1px solid',
-        borderRadius: '50%',
-        padding: 8,
-        "& svg": {
-            color: theme.palette.primary.main,
-            height: 23,
-            width: 23,
+        "& .MuiIconButton-root": {
+            marginTop: 84,
+            marginRight: 9,
+            border: '1px solid',
+            borderRadius: '50%',
+            padding: 8,
+            "& svg": {
+                color: theme.palette.primary.main,
+                height: 23,
+                width: 23,
+            },
         },
     },
     modalShadow: {

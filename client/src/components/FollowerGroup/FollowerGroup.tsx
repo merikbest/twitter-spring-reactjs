@@ -6,26 +6,25 @@ import {Avatar, Typography} from "@material-ui/core";
 
 import {useFollowerGroupStyles} from "./FollowerGroupStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
-import {selectUserData} from "../../store/ducks/user/selectors";
+import {selectUserDataId} from "../../store/ducks/user/selectors";
 import {SameFollowerResponse} from "../../store/types/common";
-import {UserDetailResponse, UserProfileResponse} from "../../store/types/user";
 import {USER_FOLLOWERS_YOU_FOLLOW} from "../../util/pathConstants";
 
 interface FollowerGroupProps {
-    user?: UserProfileResponse | UserDetailResponse,
+    userId: number,
     sameFollowers?: SameFollowerResponse[],
 }
 
-const FollowerGroup: FC<FollowerGroupProps> = ({user, sameFollowers}): ReactElement => {
+const FollowerGroup: FC<FollowerGroupProps> = ({userId, sameFollowers}): ReactElement => {
     const classes = useFollowerGroupStyles();
-    const myProfile = useSelector(selectUserData);
+    const myProfileId = useSelector(selectUserDataId);
 
     return (
         <>
-            {(user?.id !== myProfile?.id) && (
+            {(userId !== myProfileId) && (
                 (sameFollowers?.length !== 0) ? (
                     <div className={classes.followedTextInfoWrapper}>
-                        <Link to={`${USER_FOLLOWERS_YOU_FOLLOW}/${user?.id}`}>
+                        <Link to={`${USER_FOLLOWERS_YOU_FOLLOW}/${userId}`}>
                             <AvatarGroup>
                                 {sameFollowers?.slice(0, 3).map(follower => (
                                     <Avatar
@@ -45,7 +44,7 @@ const FollowerGroup: FC<FollowerGroupProps> = ({user, sameFollowers}): ReactElem
                         </Link>
                     </div>
                 ) : (
-                    (user?.id !== myProfile?.id) && (
+                    (userId !== myProfileId) && (
                         <Typography variant={"subtitle2"} component={"div"} className={classes.noFollowedTextInfo}>
                             Not followed by anyone you’re following
                         </Typography>
