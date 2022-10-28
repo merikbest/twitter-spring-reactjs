@@ -7,8 +7,8 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import classnames from "classnames";
 
-import {selectUserData, selectUserIsLoaded} from "../../store/ducks/user/selectors";
-import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
+import {selectUserData} from "../../store/ducks/user/selectors";
+import {selectUserProfile, selectUsersIsSuccessLoaded} from "../../store/ducks/userProfile/selectors";
 import {fetchUserProfile, resetUserProfileState} from "../../store/ducks/userProfile/actionCreators";
 import {useFollowingFollowersStyles} from "./FollowingFollowersStyles";
 import BackButton from "../../components/BackButton/BackButton";
@@ -30,7 +30,7 @@ const FollowingFollowers: FC = (): ReactElement => {
     const myProfile = useSelector(selectUserData);
     const userProfile = useSelector(selectUserProfile);
     const isUsersLoading = useSelector(selectUsersSearchIsLoading);
-    const isUserProfileLoaded = useSelector(selectUserIsLoaded);
+    const isUserProfileLoaded = useSelector(selectUsersIsSuccessLoaded);
     const users = useSelector(selectFollowers);
     const [activeTab, setActiveTab] = useState<number>(0);
 
@@ -41,7 +41,7 @@ const FollowingFollowers: FC = (): ReactElement => {
             dispatch(resetUsersState());
             dispatch(resetUserProfileState());
         };
-    }, []);
+    }, [params]);
 
     useEffect(() => {
         if (isUserProfileLoaded && userProfile) {

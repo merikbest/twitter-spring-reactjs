@@ -17,7 +17,7 @@ import {
     selectPagesCount
 } from "../../../store/ducks/notifications/selectors";
 import Spinner from "../../../components/Spinner/Spinner";
-import {NOTIFICATIONS_TIMELINE, PROFILE} from "../../../util/pathConstants";
+import {NOTIFICATIONS_TIMELINE} from "../../../util/pathConstants";
 import {NotificationsIconFilled} from "../../../icons";
 import NotificationAuthorItem from "./NotificationAuthorItem/NotificationAuthorItem";
 import NotificationItem from "./NotificationItem/NotificationItem";
@@ -28,7 +28,6 @@ import InfiniteScrollWrapper from "../../../components/InfiniteScrollWrapper/Inf
 const NotificationsPage: FC = (): ReactElement => {
     const classes = useNotificationsPageStyles();
     const dispatch = useDispatch();
-    const history = useHistory();
     const notifications = useSelector(selectNotificationsList);
     const pagesCount = useSelector(selectPagesCount);
     const tweetAuthors = useSelector(selectNotificationsTweetAuthors);
@@ -47,12 +46,6 @@ const NotificationsPage: FC = (): ReactElement => {
 
     const loadNotifications = (page: number): void => {
         dispatch(fetchNotifications(page));
-    };
-
-    const handleClickUser = (userId: number, event: React.MouseEvent<HTMLAnchorElement>): void => {
-        event.preventDefault();
-        event.stopPropagation();
-        history.push(`${PROFILE}/${userId}`);
     };
 
     return (
@@ -114,11 +107,7 @@ const NotificationsPage: FC = (): ReactElement => {
                             loadItems={loadNotifications}
                         >
                             {notifications.map((notification) => (
-                                <NotificationItem
-                                    key={notification.id}
-                                    notification={notification}
-                                    handleClickUser={handleClickUser}
-                                />
+                                <NotificationItem key={notification.id} notification={notification}/>
                             ))}
                             {isNotificationLoading && <Spinner/>}
                         </InfiniteScrollWrapper>

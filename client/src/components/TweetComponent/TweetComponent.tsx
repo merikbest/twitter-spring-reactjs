@@ -30,6 +30,7 @@ import {HOME_TWEET, MODAL, PROFILE} from "../../util/pathConstants";
 import {LinkCoverSize, ReplyType} from "../../store/types/common";
 import TweetDeleted from "../TweetDeleted/TweetDeleted";
 import ActionIconButton from "../ActionIconButton/ActionIconButton";
+import LinkWrapper from "../LinkWrapper/LinkWrapper";
 
 export interface TweetComponentProps<T> {
     item?: T;
@@ -75,11 +76,6 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse>> = 
         history.push(`${HOME_TWEET}/${tweet?.id}`);
     };
 
-    const handleClickUser = (event: React.MouseEvent<HTMLAnchorElement>): void => {
-        event.stopPropagation();
-        history.push(`${PROFILE}/${tweet?.user.id}`);
-    };
-
     const onOpenReplyModalWindow = (): void => {
         setVisibleReplyModalWindow(true);
     };
@@ -122,36 +118,37 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse>> = 
                 <TweetActionResult action={TweetActionResults.PIN} text={"Pinned Tweet"}/>
             )}
             <div className={classes.tweetWrapper}>
-                <a onClick={handleClickUser}>
+                <Link to={`${PROFILE}/${tweet?.user.id}`}>
                     <Avatar
                         className={globalClasses.avatar}
                         alt={`avatar ${tweet?.user.id}`}
                         src={tweet?.user.avatar?.src ? tweet?.user.avatar?.src : DEFAULT_PROFILE_IMG}
                     />
-                </a>
+                </Link>
                 <div className={classes.tweetContainer}>
                     <div className={classes.header}>
-                        <a
-                            onClick={handleClickUser}
-                            onMouseEnter={() => handleHoverPopper!(tweet?.user.id!)}
-                            onMouseLeave={handleLeavePopper}
-                        >
-                            <Typography variant={"h6"} component={"span"}>
-                                {tweet?.user.fullName}
-                            </Typography>
-                            {tweet?.user.isPrivateProfile && (
-                                <span className={classes.lockIcon}>
-                                    {LockIcon}
-                                </span>
-                            )}&nbsp;
-                            <Typography variant={"subtitle1"} component={"span"}>
-                                @{tweet?.user.username}{" · "}
-                            </Typography>
-                            <Typography variant={"subtitle1"} component={"span"}>
-                                {formatDate(new Date(tweet!.dateTime))}
-                            </Typography>
-                            <PopperUserWindow visible={visiblePopperWindow} isTweetComponent={true}/>
-                        </a>
+                        <LinkWrapper path={`${PROFILE}/${tweet?.user.id}`} visiblePopperWindow={visiblePopperWindow}>
+                            <span
+                                onMouseEnter={() => handleHoverPopper!(tweet?.user.id!)}
+                                onMouseLeave={handleLeavePopper}
+                            >
+                                <Typography variant={"h6"} component={"span"}>
+                                    {tweet?.user.fullName}
+                                </Typography>
+                                {tweet?.user.isPrivateProfile && (
+                                    <span className={classes.lockIcon}>
+                                        {LockIcon}
+                                    </span>
+                                )}&nbsp;
+                                <Typography variant={"subtitle1"} component={"span"}>
+                                    @{tweet?.user.username}{" · "}
+                                </Typography>
+                                <Typography variant={"subtitle1"} component={"span"}>
+                                    {formatDate(new Date(tweet!.dateTime))}
+                                </Typography>
+                                <PopperUserWindow visible={visiblePopperWindow} isTweetComponent={true}/>
+                            </span>
+                        </LinkWrapper>
                         <TweetComponentActions
                             tweetId={tweet!.id}
                             isFullTweet={false}
@@ -163,7 +160,8 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse>> = 
                             <object>
                                 <Typography variant={"subtitle1"} component={"div"}>
                                     {"Replying to "}
-                                    <MuiLink variant="subtitle1" to={`${PROFILE}/${tweet?.addressedId}`} component={Link}>
+                                    <MuiLink variant="subtitle1" to={`${PROFILE}/${tweet?.addressedId}`}
+                                             component={Link}>
                                         @{tweet?.addressedUsername}
                                     </MuiLink>
                                 </Typography>
@@ -261,7 +259,8 @@ const TweetComponent: FC<HoverUserProps & TweetComponentProps<TweetResponse>> = 
                                 icon={tweet?.isTweetLiked ? LikeIcon : LikeOutlinedIcon}
                                 onClick={handleLike}
                             />
-                            {(tweet?.likedTweetsCount !== 0) && (<span id={"likedTweetsCount"}>{tweet?.likedTweetsCount}</span>)}
+                            {(tweet?.likedTweetsCount !== 0) && (
+                                <span id={"likedTweetsCount"}>{tweet?.likedTweetsCount}</span>)}
                         </div>
                         <ShareTweet tweetId={tweet!.id} isFullTweet={false}/>
                         {(myProfile?.id === tweet?.user.id) && (

@@ -50,6 +50,7 @@ import Spinner from "../Spinner/Spinner";
 import {PROFILE} from "../../util/pathConstants";
 import {ReplyType} from "../../store/types/common";
 import ActionIconButton from "../ActionIconButton/ActionIconButton";
+import LinkWrapper from "../LinkWrapper/LinkWrapper";
 
 let stompClient: CompatClient | null = null;
 
@@ -178,7 +179,7 @@ const TweetImageModal: FC<HoverUserProps> = (
                                     src={tweetData.user.avatar?.src ? tweetData.user.avatar?.src : DEFAULT_PROFILE_IMG}
                                 />
                             </Link>
-                            <Link to={`${PROFILE}/${tweetData?.user.id}`}>
+                            <LinkWrapper path={`${PROFILE}/${tweetData?.user.id}`} visiblePopperWindow={visiblePopperWindow}>
                                 <div
                                     id={"userInfo"}
                                     onMouseEnter={() => handleHoverPopper!(tweetData.user.id)}
@@ -192,7 +193,7 @@ const TweetImageModal: FC<HoverUserProps> = (
                                     </Typography>
                                     <PopperUserWindow visible={visiblePopperWindow} isTweetImageModal={true}/>
                                 </div>
-                            </Link>
+                            </LinkWrapper>
                         </div>
                         <Typography variant={"h3"} className={classes.text}>
                             {textFormatter(tweetData.text)}

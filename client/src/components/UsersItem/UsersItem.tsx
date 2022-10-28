@@ -1,6 +1,5 @@
 import React, {FC, memo, ReactElement} from 'react';
 import {useSelector} from "react-redux";
-import {Link} from "react-router-dom";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar/Avatar";
 import {Typography} from "@material-ui/core";
@@ -12,13 +11,14 @@ import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {UserResponse} from "../../store/types/user";
-import {PROFILE} from "../../util/pathConstants";
 import {useHoverUser} from "../../hook/useHoverUser";
 import BlockButton from "./BlockButton/BlockButton";
 import PendingButton from "./PendingButton/PendingButton";
 import FollowButton from "./FollowButton/FollowButton";
 import UnfollowButton from "./UnfollowButton/UnfollowButton";
 import LockIcon from "../LockIcon/LockIcon";
+import LinkWrapper from "../LinkWrapper/LinkWrapper";
+import {PROFILE} from "../../util/pathConstants";
 
 export interface UsersItemProps {
     user?: UserResponse,
@@ -39,7 +39,7 @@ const UsersItem: FC<UsersItemProps> = memo(({user, size}): ReactElement => {
     const avatar = user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG;
 
     return (
-        <Link to={`${PROFILE}/${user?.id}`} className={globalClasses.link}>
+        <LinkWrapper path={`${PROFILE}/${user?.id}`} visiblePopperWindow={visiblePopperWindow}>
             <ListItem className={classes.container}>
                 <ListItemAvatar>
                     <Avatar className={globalClasses.avatar} alt={"avatar"} src={avatar}/>
@@ -86,7 +86,7 @@ const UsersItem: FC<UsersItemProps> = memo(({user, size}): ReactElement => {
                     )}
                 </div>
             </ListItem>
-        </Link>
+        </LinkWrapper>
     );
 });
 
