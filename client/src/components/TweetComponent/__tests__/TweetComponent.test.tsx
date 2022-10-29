@@ -21,7 +21,7 @@ import TweetComponentActions from "../../TweetComponentActions/TweetComponentAct
 import CloseButton from "../../CloseButton/CloseButton";
 import ReplyModal from "../../ReplyModal/ReplyModal";
 import {TweetsActionType} from "../../../store/ducks/tweets/contracts/actionTypes";
-import QuoteTweet from "../../QuoteTweet/QuoteTweet";
+import QuoteIconButton from "../../QuoteIconButton/QuoteIconButton";
 import PopperUserWindow from "../../PopperUserWindow/PopperUserWindow";
 import HoverAction from "../../HoverAction/HoverAction";
 import {LinkCoverSize, ReplyType} from "../../../store/types/common";
@@ -265,8 +265,8 @@ describe("TweetComponent", () => {
 
     it("should click retweet Tweet", () => {
         const {wrapper} = createTweetComponentWrapper();
-        wrapper.find(QuoteTweet).find(IconButton).at(0).simulate("click");
-        wrapper.find(QuoteTweet).find("#clickRetweet").at(0).simulate("click");
+        wrapper.find(QuoteIconButton).find(IconButton).at(0).simulate("click");
+        wrapper.find(QuoteIconButton).find("#clickRetweet").at(0).simulate("click");
         expect(mockDispatchFn).nthCalledWith(1, {payload: 9, type: TweetsActionType.RETWEET});
     });
 
@@ -308,7 +308,7 @@ describe("TweetComponent", () => {
 
     it("should change tweet styles", () => {
         const mockTweet = {...mockFullTweet, replyType: ReplyType.MENTION};
-        mountWithStore(<TweetComponent item={mockTweet} isTweetImageModal={false}/>, mockRootState);
+        mountWithStore(<TweetComponent tweet={mockTweet} isTweetImageModal={false}/>, mockRootState);
     });
     
     const testHoverIconButton = (itemId: number, hoverActionText: string, mockTweet = mockFullTweet): void => {
@@ -332,7 +332,7 @@ describe("TweetComponent", () => {
         const pushSpy = jest.spyOn(history, "push");
         const wrapper =  mountWithStore(
             <TweetComponent
-                item={mockTweet}
+                tweet={mockTweet}
                 activeTab={activeTab}
                 isTweetImageModal={isTweetImageModal}
             />, mockState, history);

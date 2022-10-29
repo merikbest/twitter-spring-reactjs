@@ -140,12 +140,7 @@ const UserPageTweets: FC<UserPageTweetsProps> = (
             return (
                 <>
                     {tweets?.map((tweet) => (
-                        <TweetComponent
-                            item={tweet}
-                            key={tweet.id}
-                            userProfileId={userProfileId}
-                            activeTab={activeTab}
-                        />
+                        <TweetComponent key={tweet.id} tweet={tweet} activeTab={activeTab}/>
                     ))}
                     {isTweetsLoading && <Spinner/>}
                 </>

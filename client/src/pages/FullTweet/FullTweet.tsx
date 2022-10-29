@@ -28,7 +28,7 @@ import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import {useFullTweetStyles} from "./FullTweetStyles";
 import {WS_URL} from "../../util/endpoints";
 import {textFormatter} from "../../util/textFormatter";
-import ShareTweet from "../../components/ShareTweet/ShareTweet";
+import ShareTweetIconButton from "../../components/ShareTweetIconButton/ShareTweetIconButton";
 import TweetComponentActions from "../../components/TweetComponentActions/TweetComponentActions";
 import Spinner from "../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../util/globalClasses";
@@ -37,7 +37,7 @@ import RetweetIconButton from "./RetweetIconButton/RetweetIconButton";
 import ReplyIconButton from "./ReplyIconButton/ReplyIconButton";
 import TweetDateTime from "./TweetDateTime/TweetDateTime";
 import TweetHeader from "./TweetHeader/TweetHeader";
-import TweetLink from "./TweetLink/TweetLink";
+import TweetMedia from "./TweetMedia/TweetMedia";
 import TweetInteractionCount from "./TweetInteractionCount/TweetInteractionCount";
 import TweetActions from "./TweetActions/TweetActions";
 import TweetReplyInfo from "./TweetReplyInfo/TweetReplyInfo";
@@ -107,7 +107,7 @@ const FullTweet = (): ReactElement | null => {
                         </div>
                         <Typography variant={"h3"} className={classes.textWrapper}>
                             {textFormatter(tweetText!)}
-                            <TweetLink/>
+                            <TweetMedia/>
                             <TweetImage/>
                             <TweetPoll/>
                             <TweetQuote/>
@@ -118,7 +118,7 @@ const FullTweet = (): ReactElement | null => {
                             <ReplyIconButton/>
                             <RetweetIconButton/>
                             <LikeIconButton/>
-                            <ShareTweet tweetId={tweetId!} isFullTweet/>
+                            <ShareTweetIconButton tweetId={tweetId!} isFullTweet/>
                         </div>
                         <Divider/>
                         <TweetReplyInfo/>
@@ -128,7 +128,7 @@ const FullTweet = (): ReactElement | null => {
                     {isRepliesLoading ? (
                         <Spinner/>
                     ) : (
-                        replies.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)
+                        replies.map((tweet) => <TweetComponent key={tweet.id} tweet={tweet}/>)
                     )}
                 </div>
             </PageWrapper>

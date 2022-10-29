@@ -13,7 +13,7 @@ import {
     selectTweetLink
 } from "../../../store/ducks/tweet/selectors";
 
-const TweetLink = memo((): ReactElement => {
+const TweetMedia = memo((): ReactElement => {
     const link = useSelector(selectTweetLink);
     const linkCover = useSelector(selectLinkCover);
     const linkCoverSize = useSelector(selectLinkCoverSize);
@@ -69,4 +69,4 @@ const TweetLink = memo((): ReactElement => {
     );
 });
 
-export default TweetLink;
+export default TweetMedia;

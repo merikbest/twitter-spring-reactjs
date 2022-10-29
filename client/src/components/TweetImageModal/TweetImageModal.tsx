@@ -42,7 +42,7 @@ import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {WS_URL} from "../../util/endpoints";
 import {textFormatter} from "../../util/textFormatter";
 import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
-import ShareTweet from "../ShareTweet/ShareTweet";
+import ShareTweetIconButton from "../ShareTweetIconButton/ShareTweetIconButton";
 import ReplyModal from "../ReplyModal/ReplyModal";
 import {HoverUserProps, withHoverUser} from "../../hoc/withHoverUser";
 import {useGlobalStyles} from "../../util/globalClasses";
@@ -265,7 +265,7 @@ const TweetImageModal: FC<HoverUserProps> = (
                                     onClick={handleLike}
                                 />
                             </div>
-                            <ShareTweet tweetId={tweetData.id} isFullTweet={false}/>
+                            <ShareTweetIconButton tweetId={tweetData.id} isFullTweet={false}/>
                         </div>
                         <Divider/>
                         <Typography variant={"subtitle1"} component={"div"} className={classes.replyWrapper}>
@@ -290,7 +290,7 @@ const TweetImageModal: FC<HoverUserProps> = (
                         onClose={onCloseUsersListModalWindow}
                     />
                     {isRepliesLoading ? <Spinner/> : (
-                        replies.map((tweet) => <TweetComponent isTweetImageModal={true} key={tweet.id} item={tweet}/>)
+                        replies.map((tweet) => <TweetComponent isTweetImageModal={true} key={tweet.id} tweet={tweet}/>)
                     )}
                     <ReplyModal
                         user={tweetData.user}

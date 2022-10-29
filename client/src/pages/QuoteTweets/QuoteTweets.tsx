@@ -42,7 +42,7 @@ const QuoteTweets: FC = (): ReactElement => {
                     </Typography>
                 </PageHeaderWrapper>
                 <div className={globalClasses.contentWrapper}>
-                    {tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}
+                    {tweets.map((tweet) => <TweetComponent key={tweet.id} tweet={tweet}/>)}
                     {isTweetsLoading && <Spinner paddingTop={150}/>}
                 </div>
             </Paper>

@@ -6,8 +6,8 @@ export const useShareTweetModalStyles = makeStyles((theme: Theme) => ({
         "& .MuiIconButton-root": {
             "& svg": {
                 color: theme.palette.text.secondary,
-                width: (props: { isFullTweet: boolean }) => props.isFullTweet && "1.406rem",
-                height: (props: { isFullTweet: boolean }) => props.isFullTweet && "1.406rem",
+                width: (props: { isFullTweet?: boolean }) => props.isFullTweet && "1.406rem",
+                height: (props: { isFullTweet?: boolean }) => props.isFullTweet && "1.406rem",
             },
         },
     },

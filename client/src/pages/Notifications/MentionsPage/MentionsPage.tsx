@@ -34,7 +34,7 @@ const MentionsPage: FC = (): ReactElement => {
                 <EmptyNotifications isNotification={false}/>
             ) : (
                 <>
-                    {tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}
+                    {tweets.map((tweet) => <TweetComponent key={tweet.id} tweet={tweet}/>)}
                     {isLoading && <Spinner/>}
                 </>
             )}

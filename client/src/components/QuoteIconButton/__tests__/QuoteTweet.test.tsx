@@ -3,8 +3,8 @@ import {ClickAwayListener, IconButton} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
 import {LoadingStatus} from "../../../store/types";
-import {mockQuoteTweet} from "../../../util/mockData/mockData";
-import QuoteTweet from "../QuoteTweet";
+import {mockFullTweet} from "../../../util/mockData/mockData";
+import QuoteIconButton from "../QuoteIconButton";
 import QuoteTweetModal from "../QuoteTweetModal/QuoteTweetModal";
 import CloseButton from "../../CloseButton/CloseButton";
 
@@ -70,13 +70,7 @@ describe("QuoteTweet", () => {
 
     const createQuoteTweetWrapper = (isTweetRetweetedByMe = true, retweetsCount = 0) => {
         const mockHandleRetweet = jest.fn();
-        const wrapper = mountWithStore(
-            <QuoteTweet
-                quoteTweet={mockQuoteTweet}
-                isTweetRetweetedByMe={isTweetRetweetedByMe}
-                retweetsCount={retweetsCount}
-                handleRetweet={mockHandleRetweet}
-            />, mockRootState);
+        const wrapper = mountWithStore(<QuoteIconButton tweet={mockFullTweet}/>, mockRootState);
 
         return {wrapper, mockHandleRetweet}
     };

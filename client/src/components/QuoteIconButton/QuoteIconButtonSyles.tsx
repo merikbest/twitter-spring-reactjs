@@ -1,10 +1,10 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 interface QuoteTweetStyles {
-    isTweetRetweetedByMe: boolean;
+    isTweetRetweetedByMe?: boolean;
 }
 
-export const useQuoteTweetStyles = makeStyles<Theme, QuoteTweetStyles>((theme) => ({
+export const useIconButtonStyles = makeStyles<Theme, QuoteTweetStyles>((theme) => ({
     footerIcon: {
         "& .MuiIconButton-root": {
             "& svg" : {

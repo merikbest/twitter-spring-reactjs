@@ -1,10 +1,10 @@
-import React, {ReactElement} from "react";
+import React, {memo, ReactElement} from "react";
 import {Link as MuiLink} from "@material-ui/core";
 
 import {useTweetDeletedStyles} from "./TweetDeletedStyles";
 import {TWITTER_NOTICES} from "../../util/url";
 
-const TweetDeleted = (): ReactElement => {
+const TweetDeleted = memo((): ReactElement => {
     const classes = useTweetDeletedStyles();
 
     return (
@@ -15,6 +15,6 @@ const TweetDeleted = (): ReactElement => {
             </MuiLink>
         </div>
     );
-};
+});
 
 export default TweetDeleted;

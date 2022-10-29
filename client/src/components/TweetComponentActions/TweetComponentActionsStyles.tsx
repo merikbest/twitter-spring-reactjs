@@ -4,7 +4,7 @@ export const useTweetComponentMoreStyles = makeStyles((theme: Theme) => createSt
     root: {
         position: 'relative',
         "& .MuiIconButton-root": {
-            marginRight: (props: { isFullTweet: boolean }) => props.isFullTweet ? 0 : 8,
+            marginRight: (props: { isFullTweet?: boolean }) => props.isFullTweet ? 0 : 8,
             color: theme.palette.text.secondary,
         },
     },

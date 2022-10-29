@@ -46,7 +46,7 @@ const NotificationInfo: FC = (): ReactElement => {
             {isLoading ? <Spinner paddingTop={150}/> : (
                 <>
                     <div className={globalClasses.contentWrapper}>
-                        <TweetComponent item={notification?.tweet}/>
+                        <TweetComponent tweet={notification?.tweet}/>
                     </div>
                     <UsersItem user={notification?.user} size={UserItemSize.MEDIUM}/>
                 </>

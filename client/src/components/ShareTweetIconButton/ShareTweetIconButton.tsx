@@ -23,10 +23,10 @@ import SendDirectTweetModal from "./SendDirectTweetModal/SendDirectTweetModal";
 
 interface ShareTweetProps {
     tweetId: number;
-    isFullTweet: boolean;
+    isFullTweet?: boolean;
 }
 
-const ShareTweet: FC<ShareTweetProps> = memo(({tweetId, isFullTweet}): ReactElement => {
+const ShareTweetIconButton: FC<ShareTweetProps> = memo(({tweetId, isFullTweet}): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useShareTweetModalStyles({isFullTweet});
     const dispatch = useDispatch();
@@ -102,4 +102,4 @@ const ShareTweet: FC<ShareTweetProps> = memo(({tweetId, isFullTweet}): ReactElem
     );
 });
 
-export default ShareTweet;
+export default ShareTweetIconButton;

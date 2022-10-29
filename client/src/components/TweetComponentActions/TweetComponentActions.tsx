@@ -38,12 +38,12 @@ import {setOpenSnackBar} from "../../store/ducks/actionSnackbar/actionCreators";
 
 interface TweetComponentActionsProps {
     tweetId: number;
-    isFullTweet: boolean;
+    isFullTweet?: boolean;
     onOpenTweetAnalytics?: () => void;
 }
 const TweetComponentActions: FC<TweetComponentActionsProps> = ({tweetId, isFullTweet}): ReactElement => {
     const globalClasses = useGlobalStyles();
-    const classes = useTweetComponentMoreStyles({isFullTweet});
+    const classes = useTweetComponentMoreStyles({isFullTweet: isFullTweet});
     const dispatch = useDispatch();
     const myProfileId = useSelector(selectUserDataId);
     const isTweetAdditionalInfoLoading = useSelector(selectIsTweetAdditionalInfoLoading);

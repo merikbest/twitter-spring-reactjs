@@ -1,6 +1,6 @@
 import React, {FC, ReactElement, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Route, useLocation} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {Divider, Paper, Typography} from "@material-ui/core";
 import classnames from "classnames";
@@ -23,7 +23,7 @@ import Spinner from "../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../util/globalClasses";
 import TopTweetActions from "./TopTweetActions/TopTweetActions";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
-import {HOME, SEARCH} from "../../util/pathConstants";
+import {SEARCH} from "../../util/pathConstants";
 
 const Home: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -51,7 +51,7 @@ const Home: FC = (): ReactElement => {
             dispatch(resetTweets());
         };
     }, []);
-    
+
     const loadTweets = (): void => {
         if (switchTweets) {
             dispatch(fetchFollowersTweets(page));
@@ -60,13 +60,13 @@ const Home: FC = (): ReactElement => {
         }
         setPage(prevState => prevState + 1);
     };
-    
+
     const handleLatestTweets = (): void => {
         dispatch(resetTweets());
         dispatch(fetchFollowersTweets(0));
         handleSwitchTweets(true);
     };
-    
+
     const handleTopTweets = (): void => {
         dispatch(resetTweets());
         dispatch(fetchTweets(0));
@@ -101,16 +101,14 @@ const Home: FC = (): ReactElement => {
                     <AddTweetForm title={"What's happening?"} buttonName={"Tweet"}/>
                 </div>
                 <Divider/>
-                <Route path={HOME} exact>
-                    {!myProfile?.profileStarted ? (
-                        <Welcome/>
-                    ) : (
-                        <>
-                            {tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}
-                            {isLoading && <Spinner/>}
-                        </>
-                    )}
-                </Route>
+                {!myProfile?.profileStarted ? (
+                    <Welcome/>
+                ) : (
+                    <>
+                        {tweets.map((tweet) => <TweetComponent key={tweet.id} tweet={tweet}/>)}
+                        {isLoading && <Spinner/>}
+                    </>
+                )}
             </Paper>
         </InfiniteScroll>
     );

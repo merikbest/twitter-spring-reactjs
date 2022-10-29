@@ -54,7 +54,7 @@ const Bookmarks: FC = (): ReactElement => {
                             />
                         ) : (
                             <>
-                                {tweets.map((tweet) => <TweetComponent key={tweet.id} item={tweet}/>)}
+                                {tweets.map((tweet) => <TweetComponent key={tweet.id} tweet={tweet}/>)}
                                 {isLoading && <Spinner/>}
                             </>
                         )
