@@ -1,25 +1,41 @@
 import React, {FC, memo, ReactElement, useState} from 'react';
 import {ClickAwayListener, List, ListItem, Typography} from "@material-ui/core";
+import {useParams} from "react-router-dom";
 import classnames from "classnames";
 
 import {useIconButtonStyles} from "./QuoteIconButtonSyles";
 import {QuoteTweetIcon, RetweetIcon, RetweetOutlinedIcon} from "../../icons";
 import QuoteTweetModal from "./QuoteTweetModal/QuoteTweetModal";
 import {useGlobalStyles} from "../../util/globalClasses";
-import {QuoteTweetResponse, TweetResponse} from "../../store/types/tweet";
+import {QuoteTweetResponse, UserTweetResponse} from "../../store/types/tweet";
 import ActionIconButton from "../ActionIconButton/ActionIconButton";
 import {retweet} from "../../store/ducks/tweets/actionCreators";
 import {useDispatch, useSelector} from "react-redux";
 import {selectUserDataId} from "../../store/ducks/user/selectors";
 
 export interface QuoteTweetProps {
-    tweet?: TweetResponse;
+    tweetId?: number;
+    dateTime?: string;
+    text?: string;
+    user?: UserTweetResponse;
+    isTweetRetweeted?: boolean;
+    retweetsCount?: number;
 }
 
-const QuoteIconButton: FC<QuoteTweetProps> = memo(({tweet}): ReactElement => {
+const QuoteIconButton: FC<QuoteTweetProps> = memo((
+    {
+        tweetId,
+        dateTime,
+        text,
+        user,
+        isTweetRetweeted,
+        retweetsCount
+    }
+): ReactElement => {
     const globalClasses = useGlobalStyles();
-    const classes = useIconButtonStyles({isTweetRetweetedByMe: tweet?.isTweetRetweeted});
+    const classes = useIconButtonStyles({isTweetRetweetedByMe: isTweetRetweeted});
     const dispatch = useDispatch();
+    const params = useParams<{ userId: string }>();
     const myProfileId = useSelector(selectUserDataId);
     const [open, setOpen] = useState<boolean>(false);
     const [visibleAddTweet, setVisibleAddTweet] = useState<boolean>(false);
@@ -33,8 +49,8 @@ const QuoteIconButton: FC<QuoteTweetProps> = memo(({tweet}): ReactElement => {
     };
 
     const onClickRetweet = (): void => {
-        if (tweet?.user.id !== myProfileId) {
-            dispatch(retweet(tweet!.id));
+        if (user?.id !== myProfileId) {
+            dispatch(retweet({tweetId: tweetId!, userId: params.userId}));
         }
         setOpen(false);
     };
@@ -52,18 +68,18 @@ const QuoteIconButton: FC<QuoteTweetProps> = memo(({tweet}): ReactElement => {
         <ClickAwayListener onClickAway={handleClickAway}>
             <div className={classes.footerIcon}>
                 <ActionIconButton
-                    actionText={tweet?.isTweetRetweeted ? "Undo Retweet" : "Retweet"}
-                    icon={tweet?.isTweetRetweeted ? RetweetIcon : RetweetOutlinedIcon}
+                    actionText={isTweetRetweeted ? "Undo Retweet" : "Retweet"}
+                    icon={isTweetRetweeted ? RetweetIcon : RetweetOutlinedIcon}
                     onClick={handleClick}
                 />
-                {(tweet?.retweetsCount !== 0) && (<span id={"retweets"}>{tweet?.retweetsCount}</span>)}
+                {(retweetsCount !== 0) && (<span id={"retweets"}>{retweetsCount}</span>)}
                 {open && (
                     <div className={classnames(classes.dropdown, globalClasses.svg)}>
                         <List>
                             <ListItem id={"clickRetweet"} onClick={onClickRetweet}>
                                 <>{RetweetOutlinedIcon}</>
                                 <Typography variant={"body1"} component={"span"}>
-                                    {tweet?.isTweetRetweeted ? ("Undo Retweet") : ("Retweet")}
+                                    {isTweetRetweeted ? ("Undo Retweet") : ("Retweet")}
                                 </Typography>
                             </ListItem>
                             <ListItem id={"clickOpenAddTweet"} onClick={handleClickOpenAddTweet}>
@@ -76,7 +92,7 @@ const QuoteIconButton: FC<QuoteTweetProps> = memo(({tweet}): ReactElement => {
                     </div>
                 )}
                 <QuoteTweetModal
-                    quoteTweet={tweet as QuoteTweetResponse}
+                    quoteTweet={{id: tweetId, dateTime, text, user} as QuoteTweetResponse}
                     onClose={onCloseAddTweet}
                     visible={visibleAddTweet}
                 />

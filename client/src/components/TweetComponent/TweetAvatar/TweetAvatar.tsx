@@ -4,7 +4,6 @@ import {Avatar} from "@material-ui/core";
 
 import {PROFILE} from "../../../util/pathConstants";
 import {useGlobalStyles} from "../../../util/globalClasses";
-import {DEFAULT_PROFILE_IMG} from "../../../util/url";
 
 interface TweetAvatarProps {
     src?: string;
@@ -13,11 +12,10 @@ interface TweetAvatarProps {
 
 const TweetAvatar: FC<TweetAvatarProps> = memo(({src, userId}): ReactElement => {
     const globalClasses = useGlobalStyles();
-    const avatar = src ? src : DEFAULT_PROFILE_IMG;
 
     return (
         <Link to={`${PROFILE}/${userId}`}>
-            <Avatar className={globalClasses.avatar} src={avatar} alt={`avatar ${userId}`}/>
+            <Avatar className={globalClasses.avatar} src={src} alt={`avatar ${userId}`}/>
         </Link>
     );
 });

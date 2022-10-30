@@ -27,6 +27,7 @@ describe("TweetApi", () => {
     const tweetNotFoundError = "Tweet not found";
     const mockAddTweetRequest = {text: "test", images: [], replyType: ReplyType.EVERYONE};
     const mockNotificationTweet = {id: 1, text: "test", user: {id: 1}, notificationCondition: true};
+    const tweetActionRequest = {tweetId: 1, userId: 1};
 
     beforeEach(() => mockAdapter.reset());
 
@@ -155,57 +156,57 @@ describe("TweetApi", () => {
 
     describe("should fetch TweetApi.likeTweet", () => {
         it("[200] should like tweet Success", () => {
-            testApiCall(mockAdapter, "onGet", `${API_TWEETS_LIKE}/1`, 200, mockNotificationTweet, TweetApi.likeTweet, 1);
+            testApiCall(mockAdapter, "onGet", `${API_TWEETS_LIKE}/1/1`, 200, mockNotificationTweet, TweetApi.likeTweet, tweetActionRequest);
         });
 
         it("[404] should return tweet Not Found", () => {
-            testApiCall(mockAdapter, "onGet", `${API_TWEETS_LIKE}/1`, 404, tweetNotFoundError, TweetApi.likeTweet, 1);
+            testApiCall(mockAdapter, "onGet", `${API_TWEETS_LIKE}/1/1`, 404, tweetNotFoundError, TweetApi.likeTweet, tweetActionRequest);
         });
     });
 
     describe("should fetch TweetApi.retweet", () => {
         it("[200] should retweet Success", () => {
-            testApiCall(mockAdapter, "onGet", `${API_TWEETS_RETWEET}/1`, 200, mockNotificationTweet, TweetApi.retweet, 1);
+            testApiCall(mockAdapter, "onGet", `${API_TWEETS_RETWEET}/1/1`, 200, mockNotificationTweet, TweetApi.retweet, tweetActionRequest);
         });
 
         it("[404] should return tweet Not Found", () => {
-            testApiCall(mockAdapter, "onGet", `${API_TWEETS_RETWEET}/1`, 404, tweetNotFoundError, TweetApi.retweet, 1);
+            testApiCall(mockAdapter, "onGet", `${API_TWEETS_RETWEET}/1/1`, 404, tweetNotFoundError, TweetApi.retweet, tweetActionRequest);
         });
     });
 
     describe("should fetch TweetApi.replyTweet", () => {
-        const mockReplyTweet = {tweetId: 1};
+        const mockReplyTweet = {text: "test", addressedId: 1, addressedUsername: "test", replyType: ReplyType.MENTION, images: [], tweetId: 1, userId: 1};
 
         it("[200] should reply tweet Success", () => {
-            testApiCall(mockAdapter, "onPost", `${API_TWEETS_REPLY}/1`, 200, mockFullTweet, TweetApi.replyTweet, mockReplyTweet);
+            testApiCall(mockAdapter, "onPost", `${API_TWEETS_REPLY}/1/1`, 200, mockFullTweet, TweetApi.replyTweet, mockReplyTweet);
         });
 
         it("[404] should return tweet Not Found", () => {
-            testApiCall(mockAdapter, "onPost", `${API_TWEETS_REPLY}/1`, 404, tweetNotFoundError, TweetApi.replyTweet, mockReplyTweet);
+            testApiCall(mockAdapter, "onPost", `${API_TWEETS_REPLY}/1/1`, 404, tweetNotFoundError, TweetApi.replyTweet, mockReplyTweet);
         });
     });
 
     describe("should fetch TweetApi.quoteTweet", () => {
-        const mockQuoteTweet = {tweetId: 1, text: "test"};
+        const mockQuoteTweet = {tweetId: 1, userId: 1, text: "test", images:[], replyType: ReplyType.MENTION};
 
         it("[200] should quote tweet Success", () => {
-            testApiCall(mockAdapter, "onPost", `${API_TWEETS_QUOTE}/1`, 200, mockFullTweet, TweetApi.quoteTweet, mockQuoteTweet);
+            testApiCall(mockAdapter, "onPost", `${API_TWEETS_QUOTE}/1/1`, 200, mockFullTweet, TweetApi.quoteTweet, mockQuoteTweet);
         });
 
         it("[404] should return tweet Not Found", () => {
-            testApiCall(mockAdapter, "onPost", `${API_TWEETS_QUOTE}/1`, 404, tweetNotFoundError, TweetApi.quoteTweet, mockQuoteTweet);
+            testApiCall(mockAdapter, "onPost", `${API_TWEETS_QUOTE}/1/1`, 404, tweetNotFoundError, TweetApi.quoteTweet, mockQuoteTweet);
         });
     });
 
     describe("should fetch TweetApi.changeTweetReplyType", () => {
-        const mockChangeReplyType = {tweetId: 1, replyType: ReplyType.MENTION};
+        const mockChangeReplyType = {tweetId: 1, userId: 1, replyType: ReplyType.MENTION};
 
         it("[200] should change tweet reply type Success", () => {
-            testApiCall(mockAdapter, "onGet", `${API_TWEETS_CHANGE_REPLY}/1`, 200, mockFullTweet, TweetApi.changeTweetReplyType, mockChangeReplyType);
+            testApiCall(mockAdapter, "onGet", `${API_TWEETS_CHANGE_REPLY}/1/1`, 200, mockFullTweet, TweetApi.changeTweetReplyType, mockChangeReplyType);
         });
 
         it("[404] should return tweet Not Found", () => {
-            testApiCall(mockAdapter, "onGet", `${API_TWEETS_CHANGE_REPLY}/1`, 404, tweetNotFoundError, TweetApi.changeTweetReplyType, mockChangeReplyType);
+            testApiCall(mockAdapter, "onGet", `${API_TWEETS_CHANGE_REPLY}/1/1`, 404, tweetNotFoundError, TweetApi.changeTweetReplyType, mockChangeReplyType);
         });
     });
 

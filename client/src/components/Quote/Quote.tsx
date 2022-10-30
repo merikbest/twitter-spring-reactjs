@@ -1,4 +1,4 @@
-import React, {FC, ReactElement} from 'react';
+import React, {FC, memo, ReactElement} from 'react';
 import {Link} from 'react-router-dom';
 import Avatar from "@material-ui/core/Avatar";
 import {Typography} from "@material-ui/core";
@@ -16,7 +16,7 @@ interface QuoteProps {
     isFullTweet?: boolean;
 }
 
-const Quote: FC<QuoteProps> = ({quoteTweet, isTweetQuoted, isFullTweet}): ReactElement => {
+const Quote: FC<QuoteProps> = memo(({quoteTweet, isTweetQuoted, isFullTweet}): ReactElement => {
     const classes = useQuoteStyles({isTweetQuoted, isFullTweet});
 
     return (
@@ -26,7 +26,7 @@ const Quote: FC<QuoteProps> = ({quoteTweet, isTweetQuoted, isFullTweet}): ReactE
                     <Avatar
                         className={classes.quoteTweetAvatar}
                         alt={`avatar ${quoteTweet.user.avatar?.id}`}
-                        src={quoteTweet.user.avatar?.src ? quoteTweet.user.avatar?.src : DEFAULT_PROFILE_IMG}
+                        src={quoteTweet.user.avatar?.src ?? DEFAULT_PROFILE_IMG}
                     />
                     <Typography component={"span"} className={classes.quoteTweetFullName}>
                         {quoteTweet.user.fullName}
@@ -45,6 +45,6 @@ const Quote: FC<QuoteProps> = ({quoteTweet, isTweetQuoted, isFullTweet}): ReactE
             </div>
         </Link>
     );
-};
+});
 
 export default Quote;

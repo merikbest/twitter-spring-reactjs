@@ -15,7 +15,7 @@ const LikeIconButton = memo((): ReactElement => {
     const params = useParams<{ id: string }>();
 
     const handleLike = (): void => {
-        dispatch(likeTweet(parseInt(params.id)));
+        dispatch(likeTweet({tweetId: parseInt(params.id)}));
     };
 
     return (

@@ -134,8 +134,8 @@ public class TweetController {
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping("/like/{tweetId}")
-    public ResponseEntity<NotificationTweetResponse> likeTweet(@PathVariable Long tweetId) {
+    @GetMapping("/like/{userId}/{tweetId}")
+    public ResponseEntity<NotificationTweetResponse> likeTweet(@PathVariable Long userId, @PathVariable Long tweetId) {
         NotificationResponse notification = tweetMapper.likeTweet(tweetId);
 
         if (notification.getId() != null) {
@@ -143,12 +143,12 @@ public class TweetController {
         }
         messagingTemplate.convertAndSend("/topic/feed", notification);
         messagingTemplate.convertAndSend("/topic/tweet/" + notification.getTweet().getId(), notification);
-        messagingTemplate.convertAndSend("/topic/user/update/tweet/" + notification.getTweet().getUser().getId(), notification);
+        messagingTemplate.convertAndSend("/topic/user/update/tweet/" + userId, notification);
         return ResponseEntity.ok(notification.getTweet());
     }
 
-    @GetMapping("/retweet/{tweetId}")
-    public ResponseEntity<NotificationTweetResponse> retweet(@PathVariable Long tweetId) {
+    @GetMapping("/retweet/{userId}/{tweetId}")
+    public ResponseEntity<NotificationTweetResponse> retweet(@PathVariable Long userId, @PathVariable Long tweetId) {
         NotificationResponse notification = tweetMapper.retweet(tweetId);
 
         if (notification.getId() != null) {
@@ -156,38 +156,50 @@ public class TweetController {
         }
         messagingTemplate.convertAndSend("/topic/feed", notification);
         messagingTemplate.convertAndSend("/topic/tweet/" + notification.getTweet().getId(), notification);
-        messagingTemplate.convertAndSend("/topic/user/update/tweet/" + notification.getTweet().getUser().getId(), notification);
+        messagingTemplate.convertAndSend("/topic/user/update/tweet/" + userId, notification);
         return ResponseEntity.ok(notification.getTweet());
     }
 
-    @PostMapping("/reply/{tweetId}")
-    public ResponseEntity<NotificationReplyResponse> replyTweet(@PathVariable Long tweetId, @RequestBody TweetRequest tweetRequest) {
+    @PostMapping("/reply/{userId}/{tweetId}")
+    public ResponseEntity<NotificationReplyResponse> replyTweet(
+            @PathVariable Long userId,
+            @PathVariable Long tweetId,
+            @RequestBody TweetRequest tweetRequest
+    ) {
         NotificationReplyResponse notification = tweetMapper.replyTweet(tweetId, tweetRequest);
         messagingTemplate.convertAndSend("/topic/feed", notification);
         messagingTemplate.convertAndSend("/topic/tweet/" + notification.getTweetId(), notification);
-        messagingTemplate.convertAndSend("/topic/user/update/tweet/" + notification.getTweet().getUser().getId(), notification);
+        messagingTemplate.convertAndSend("/topic/user/update/tweet/" + userId, notification);
         return ResponseEntity.ok(notification);
     }
 
-    @PostMapping("/quote/{tweetId}")
-    public ResponseEntity<TweetResponse> quoteTweet(@PathVariable Long tweetId, @RequestBody TweetRequest tweetRequest) {
+    @PostMapping("/quote/{userId}/{tweetId}")
+    public ResponseEntity<TweetResponse> quoteTweet(
+            @PathVariable Long userId,
+            @PathVariable Long tweetId,
+            @RequestBody TweetRequest tweetRequest
+    ) {
         TweetResponse tweet = tweetMapper.quoteTweet(tweetId, tweetRequest);
         messagingTemplate.convertAndSend("/topic/feed/add", tweet);
         messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
-        messagingTemplate.convertAndSend("/topic/user/add/tweet/" + tweet.getUser().getId(), tweet);
+        messagingTemplate.convertAndSend("/topic/user/add/tweet/" + userId, tweet);
         return ResponseEntity.ok(tweet);
     }
 
-    @GetMapping("/reply/change/{tweetId}")
-    public ResponseEntity<TweetResponse> changeTweetReplyType(@PathVariable Long tweetId, @RequestParam ReplyType replyType) {
+    @GetMapping("/reply/change/{userId}/{tweetId}")
+    public ResponseEntity<TweetResponse> changeTweetReplyType(
+            @PathVariable Long userId,
+            @PathVariable Long tweetId,
+            @RequestParam ReplyType replyType
+    ) {
         TweetResponse tweet = tweetMapper.changeTweetReplyType(tweetId, replyType);
         messagingTemplate.convertAndSend("/topic/feed", tweet);
         messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
-        messagingTemplate.convertAndSend("/topic/user/update/tweet/" + tweet.getUser().getId(), tweet);
+        messagingTemplate.convertAndSend("/topic/user/update/tweet/" + userId, tweet);
         return ResponseEntity.ok(tweet);
     }
 
-    @PostMapping("/vote")
+    @PostMapping("/vote") // TODO validate and fix
     public ResponseEntity<TweetResponse> voteInPoll(@RequestBody VoteRequest voteRequest) {
         TweetResponse tweet = tweetMapper.voteInPoll(voteRequest);
         messagingTemplate.convertAndSend("/topic/feed", tweet);

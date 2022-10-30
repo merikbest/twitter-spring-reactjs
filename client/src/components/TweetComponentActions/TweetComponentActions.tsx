@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useCallback, useEffect, useRef, useState} from 'react';
+import React, {FC, memo, ReactElement, useCallback, useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {ClickAwayListener, List, ListItem, Typography} from "@material-ui/core";
 import classnames from "classnames";
@@ -35,16 +35,18 @@ import Spinner from "../Spinner/Spinner";
 import {ReplyType} from "../../store/types/common";
 import {changeReplyType} from "../../store/ducks/tweets/actionCreators";
 import {setOpenSnackBar} from "../../store/ducks/actionSnackbar/actionCreators";
+import {useParams} from "react-router-dom";
 
 interface TweetComponentActionsProps {
     tweetId: number;
     isFullTweet?: boolean;
     onOpenTweetAnalytics?: () => void;
 }
-const TweetComponentActions: FC<TweetComponentActionsProps> = ({tweetId, isFullTweet}): ReactElement => {
+const TweetComponentActions: FC<TweetComponentActionsProps> = memo(({tweetId, isFullTweet}): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useTweetComponentMoreStyles({isFullTweet: isFullTweet});
     const dispatch = useDispatch();
+    const params = useParams<{ userId: string }>();
     const myProfileId = useSelector(selectUserDataId);
     const isTweetAdditionalInfoLoading = useSelector(selectIsTweetAdditionalInfoLoading);
     const tweetText = useSelector(selectTweetInfoText);
@@ -95,7 +97,7 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = ({tweetId, isFullT
     }, []);
 
     const onChangeTweetReplyType = (replyType: ReplyType): void => {
-        dispatch(changeReplyType({tweetId, replyType}));
+        dispatch(changeReplyType({tweetId, userId: params.userId, replyType}));
         let snackBarMessage;
 
         if (replyType === ReplyType.EVERYONE) {
@@ -204,6 +206,6 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = ({tweetId, isFullT
             </ClickAwayListener>
         </div>
     );
-};
+});
 
 export default TweetComponentActions;

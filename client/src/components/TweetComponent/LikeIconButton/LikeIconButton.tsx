@@ -1,32 +1,41 @@
 import React, {FC, memo, ReactElement} from "react";
 import {useDispatch} from "react-redux";
-import {ClassNameMap} from "@material-ui/core/styles/withStyles";
+import {useParams} from "react-router-dom";
 
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
 import {LikeIcon, LikeOutlinedIcon} from "../../../icons";
-import {TweetResponse} from "../../../store/types/tweet";
 import {likeTweet} from "../../../store/ducks/tweets/actionCreators";
+import {useLikeIconButtonStyles} from "./LikeIconButtonStyles";
 
 interface TweetLikeIconButtonProps {
-    classes: ClassNameMap<string>;
-    tweet?: TweetResponse;
+    tweetId?: number;
+    isTweetLiked?: boolean;
+    likedTweetsCount?: number;
 }
 
-const LikeIconButton: FC<TweetLikeIconButtonProps> = memo(({classes, tweet}): ReactElement => {
+const LikeIconButton: FC<TweetLikeIconButtonProps> = memo((
+    {
+        tweetId,
+        isTweetLiked,
+        likedTweetsCount
+    }
+): ReactElement => {
+    const classes = useLikeIconButtonStyles({isTweetLiked: isTweetLiked});
     const dispatch = useDispatch();
+    const params = useParams<{ userId: string }>();
 
     const handleLike = (): void => {
-        dispatch(likeTweet(tweet!.id));
+        dispatch(likeTweet({tweetId: tweetId!, userId: params.userId}));
     };
 
     return (
         <div className={classes.likeIcon}>
             <ActionIconButton
-                actionText={tweet?.isTweetLiked ? "Unlike" : "Like"}
-                icon={tweet?.isTweetLiked ? LikeIcon : LikeOutlinedIcon}
+                actionText={isTweetLiked ? "Unlike" : "Like"}
+                icon={isTweetLiked ? LikeIcon : LikeOutlinedIcon}
                 onClick={handleLike}
             />
-            {(tweet?.likedTweetsCount !== 0) && <span id={"likedTweetsCount"}>{tweet?.likedTweetsCount}</span>}
+            {(likedTweetsCount !== 0) && <span id={"likedTweetsCount"}>{likedTweetsCount}</span>}
         </div>
     );
 });

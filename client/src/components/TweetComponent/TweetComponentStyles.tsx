@@ -2,27 +2,25 @@ import {makeStyles, Theme} from "@material-ui/core";
 
 interface TweetComponentStylesProps {
     isTweetImageModal?: boolean;
-    isTweetLiked: boolean;
-    isUserCanReply: boolean;
 }
 
 export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesProps>((theme) => ({
     container: {
         position: "relative",
-        cursor: 'pointer',
+        cursor: "pointer",
         paddingTop: 12,
         paddingLeft: 20,
-        borderTop: '0',
-        borderLeft: '0',
-        borderRight: '0',
+        borderTop: 0,
+        borderLeft: 0,
+        borderRight: 0,
         borderRadius: 0,
-        '&:hover': {
+        "&:hover": {
             backgroundColor: theme.palette.secondary.main,
         },
     },
     tweetWrapper: {
-        display: 'flex',
-        alignItems: 'flex-start',
+        display: "flex",
+        alignItems: "flex-start",
         flex: 1,
     },
     tweetContainer: {
@@ -31,17 +29,17 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
         width: props => props.isTweetImageModal ? 263 : 0,
     },
     headerWrapper: {
-        color: 'inherit',
-        textDecoration: 'none',
-        '& #hashtag': {
+        color: "inherit",
+        textDecoration: "none",
+        "& #hashtag": {
             color: theme.palette.primary.main,
         },
     },
     header: {
         position: "relative",
-        display: 'flex',
+        display: "flex",
         height: 20,
-        justifyContent: 'space-between',
+        justifyContent: "space-between",
         "& .MuiTypography-h6": {
             fontWeight: 700,
         },
@@ -69,10 +67,10 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
         "& a": {
             display: "block",
             width: 490,
-            color: 'inherit',
-            textDecoration: 'none',
+            color: "inherit",
+            textDecoration: "none",
         },
-        '& #hashtag': {
+        "& #hashtag": {
             color: theme.palette.primary.main,
         },
         "& #link": {
@@ -100,9 +98,9 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
     },
     iconCircle: {
         marginRight: 5,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         width: 20,
         height: 20,
         borderRadius: "50%",
@@ -115,41 +113,13 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
         },
     },
     footer: {
-        display: 'flex',
-        position: 'relative',
+        display: "flex",
+        position: "relative",
         paddingTop: 5,
         paddingBottom: 5,
         left: -8,
-        justifyContent: 'space-between',
+        justifyContent: "space-between",
         maxWidth: 450,
-    },
-    replyIcon: {
-        "& .MuiIconButton-root": {
-            "& svg" : {
-                color: props => props.isUserCanReply ? "rgb(185, 192, 197)" : theme.palette.text.secondary,
-            },
-        },
-        "& span": {
-            verticalAlign: "middle",
-            color: props => props.isUserCanReply ? "rgb(185, 192, 197)" : theme.palette.text.secondary,
-        },
-    },
-    likeIcon: {
-        "& .MuiIconButton-root": {
-            "& svg" : {
-                color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : theme.palette.text.secondary,
-            },
-            "&:hover": {
-                backgroundColor: "rgba(249, 24, 128, 0.1) !important",
-                "& svg": {
-                    color: "rgb(224, 36, 94) !important",
-                },
-            },
-        },
-        "& span": {
-            verticalAlign: "middle",
-            color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : theme.palette.text.secondary,
-        },
     },
     popperUserWindow: {
         position: "absolute",

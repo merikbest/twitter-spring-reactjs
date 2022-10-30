@@ -6,7 +6,7 @@ import {
     AddTweet,
     ChangeReplyTypeRequest,
     FetchTweetsByTagRequest,
-    FetchTweetsByTextRequest,
+    FetchTweetsByTextRequest, TweetActionPayload,
     TweetsByListIdRequest,
     TweetsState,
     TweetsWithQuotesByIdRequest,
@@ -189,12 +189,12 @@ export interface SetScheduledTweetsActionInterface extends Action<TweetsActionTy
 
 export interface LikeTweetActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.LIKE_TWEET;
-    payload: number;
+    payload: TweetActionPayload;
 }
 
 export interface RetweetActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.RETWEET;
-    payload: number;
+    payload: TweetActionPayload;
 }
 
 export interface SetUpdatedBookmarkedTweetActionInterface extends Action<TweetsActionType> {

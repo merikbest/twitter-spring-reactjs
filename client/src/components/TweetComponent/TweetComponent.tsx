@@ -23,6 +23,7 @@ import TweetText from "./TweetText/TweetText";
 import TweetImage from "./TweetImage/TweetImage";
 import TweetReplyConversation from "./TweetReplyConversation/TweetReplyConversation";
 import TweetActions from "./TweetActions/TweetActions";
+import {DEFAULT_PROFILE_IMG} from "../../util/url";
 
 export interface TweetComponentProps {
     tweet?: TweetResponse;
@@ -33,13 +34,13 @@ export interface TweetComponentProps {
 const TweetComponent: FC<TweetComponentProps> = memo(({tweet, activeTab, isTweetImageModal}): ReactElement => {
     const myProfileId = useSelector(selectUserDataId);
     const isUserCanReply = (tweet?.replyType === ReplyType.MENTION) && (myProfileId !== tweet?.user.id);
-    const classes = useTweetComponentStyles({isTweetImageModal, isTweetLiked: tweet!.isTweetLiked, isUserCanReply});
+    const classes = useTweetComponentStyles({isTweetImageModal});
 
     return (
         <Paper className={classes.container} variant="outlined">
-            <TweetActions tweetId={tweet?.id} retweetsUserIds={tweet?.retweetsUserIds} activeTab={activeTab} />
+            <TweetActions tweetId={tweet?.id} retweetsUserIds={tweet?.retweetsUserIds} activeTab={activeTab}/>
             <div className={classes.tweetWrapper}>
-                <TweetAvatar userId={tweet?.user.id} src={tweet?.user.avatar?.src}/>
+                <TweetAvatar userId={tweet?.user.id} src={tweet?.user.avatar?.src ?? DEFAULT_PROFILE_IMG}/>
                 <div className={classes.tweetContainer}>
                     <div className={classes.header}>
                         <TweetHeader
@@ -74,15 +75,45 @@ const TweetComponent: FC<TweetComponentProps> = memo(({tweet, activeTab, isTweet
                                 <Quote quoteTweet={tweet?.quoteTweet} isTweetQuoted/>
                             ))
                         }
-                        <TweetMedia tweet={tweet}/>
+                        <TweetMedia
+                            link={tweet?.link}
+                            linkTitle={tweet?.linkTitle}
+                            linkDescription={tweet?.linkDescription}
+                            linkCover={tweet?.linkCover}
+                            linkCoverSize={tweet?.linkCoverSize}
+                        />
                     </div>
                     <div className={classes.footer}>
-                        <ReplyIconButton classes={classes} tweet={tweet} isUserCanReply={isUserCanReply}/>
-                        <QuoteIconButton tweet={tweet}/>
-                        <LikeIconButton classes={classes} tweet={tweet}/>
+                        <ReplyIconButton
+                            tweetId={tweet?.id}
+                            text={tweet?.text}
+                            image={tweet?.images?.[0]}
+                            dateTime={tweet?.dateTime}
+                            tweetUser={tweet?.user}
+                            repliesCount={tweet?.repliesCount}
+                            isUserCanReply={isUserCanReply}
+                        />
+                        <QuoteIconButton
+                            tweetId={tweet?.id}
+                            dateTime={tweet?.dateTime}
+                            text={tweet?.text}
+                            user={tweet?.user}
+                            isTweetRetweeted={tweet?.isTweetRetweeted}
+                            retweetsCount={tweet?.retweetsCount}
+                        />
+                        <LikeIconButton
+                            tweetId={tweet?.id}
+                            isTweetLiked={tweet?.isTweetLiked}
+                            likedTweetsCount={tweet?.likedTweetsCount}
+                        />
                         <ShareTweetIconButton tweetId={tweet!.id}/>
                         {(myProfileId === tweet?.user.id) && (
-                            <AnalyticsIconButton classes={classes} tweet={tweet} isUserCanReply={isUserCanReply}/>
+                            <AnalyticsIconButton
+                                tweetUserFullName={tweet?.user.fullName}
+                                tweetUserName={tweet?.user.username}
+                                tweetText={tweet?.text}
+                                isUserCanReply={isUserCanReply}
+                            />
                         )}
                     </div>
                 </div>

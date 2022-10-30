@@ -32,6 +32,7 @@ import ScheduleIconButton from "./ScheduleIconButton/ScheduleIconButton";
 import ProfileAvatar from "./ProfileAvatar/ProfileAvatar";
 import ScheduleDateInfo from "./ScheduleDateInfo/ScheduleDateInfo";
 import AddTweetImage from "./AddTweetImage/AddTweetImage";
+import {useParams} from "react-router-dom";
 
 export interface AddTweetFormProps {
     unsentTweet?: TweetResponse;
@@ -68,6 +69,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
     }
 ): ReactElement => {
     const dispatch = useDispatch();
+    const params = useParams<{ userId: string }>();
     const [text, setText] = useState<string>("");
     const [images, setImages] = useState<ImageObj[]>([]);
     const [replyType, setReplyType] = useState<ReplyType>(ReplyType.EVERYONE);
@@ -170,6 +172,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
             images: result,
             replyType: replyType,
             tweetId: quoteTweet!.id,
+            userId: params.userId,
         }));
 
         dispatch(setOpenSnackBar("Your tweet was sent."));
@@ -190,6 +193,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
 
         dispatch(fetchReplyTweet({
             tweetId: tweetId!,
+            userId: params.userId,
             text: textConverter(),
             addressedUsername: addressedUsername!,
             addressedId: addressedId!,

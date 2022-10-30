@@ -24,6 +24,7 @@ export interface AddQuoteTweet {
     images: Image[];
     replyType: ReplyType;
     tweetId: number;
+    userId?: string;
 }
 
 export interface Vote {
@@ -44,6 +45,7 @@ export interface TweetsWithQuotesByIdRequest {
 
 export interface ChangeReplyTypeRequest {
     tweetId: number;
+    userId?: string;
     replyType: ReplyType;
 }
 
@@ -60,4 +62,9 @@ export interface FetchTweetsByTextRequest {
 export interface FetchTweetsByTagRequest {
     tag: string;
     pageNumber: number;
+}
+
+export interface TweetActionPayload {
+    userId?: string;
+    tweetId: number;
 }

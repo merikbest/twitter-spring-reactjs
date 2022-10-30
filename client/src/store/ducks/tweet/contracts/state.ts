@@ -5,6 +5,7 @@ import {UserResponse} from "../../../types/user";
 
 export interface ReplyTweet {
     tweetId: number;
+    userId?: string;
     text: string;
     addressedUsername: string;
     addressedId: number;

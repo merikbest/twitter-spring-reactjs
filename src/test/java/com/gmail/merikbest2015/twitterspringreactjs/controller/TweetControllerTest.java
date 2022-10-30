@@ -843,7 +843,7 @@ public class TweetControllerTest {
     public void searchTweets() throws Exception {
         mockMvc.perform(get(URL_TWEETS_BASIC + "/search/test"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(5)))
+                .andExpect(jsonPath("$[*]", hasSize(4)))
                 .andExpect(jsonPath("$[0].id").value(45L))
                 .andExpect(jsonPath("$[0].text").value("media tweet test"))
                 .andExpect(jsonPath("$[0].dateTime").value("2021-10-03T20:38:51"))
@@ -860,7 +860,7 @@ public class TweetControllerTest {
                 .andExpect(jsonPath("$[0].quoteTweet.id").value(40L))
                 .andExpect(jsonPath("$[0].user.id").value(1L))
                 .andExpect(jsonPath("$[0].poll").isEmpty())
-                .andExpect(jsonPath("$[*].images", hasSize(5)))
+                .andExpect(jsonPath("$[*].images", hasSize(4)))
                 .andExpect(jsonPath("$[0].retweetsCount").value(1L))
                 .andExpect(jsonPath("$[0].likedTweetsCount").value(1L))
                 .andExpect(jsonPath("$[0].repliesCount").value(0L))
@@ -873,9 +873,9 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("[200] GET /api/v1/tweets/like/43 - Like tweet by id")
+    @DisplayName("[200] GET /api/v1/tweets/like/2/43 - Like tweet by id")
     public void likeTweet() throws Exception {
-        mockMvc.perform(get(URL_TWEETS_BASIC + "/like/43"))
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/like/2/43"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(43))
                 .andExpect(jsonPath("$.text").value(TWEET_TEXT))
@@ -885,18 +885,18 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("[404] GET /api/v1/tweets/like/99 - Should Tweet Not Found by id")
+    @DisplayName("[404] GET /api/v1/tweets/like/2/99 - Should Tweet Not Found by id")
     public void likeTweet_ShouldTweetNotFoundById() throws Exception {
-        mockMvc.perform(get(URL_TWEETS_BASIC + "/like/99"))
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/like/2/99"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is("Tweet not found")));
     }
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("[200] GET /api/v1/tweets/like/45 - Unlike tweet by id")
+    @DisplayName("[200] GET /api/v1/tweets/like/2/45 - Unlike tweet by id")
     public void unlikeTweet() throws Exception {
-        mockMvc.perform(get(URL_TWEETS_BASIC + "/like/45"))
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/like/2/45"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(45))
                 .andExpect(jsonPath("$.text").value("media tweet test"))
@@ -906,9 +906,9 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("[200] GET /api/v1/tweets/retweet/43 - Retweet tweet by id")
+    @DisplayName("[200] GET /api/v1/tweets/retweet/2/43 - Retweet tweet by id")
     public void retweet() throws Exception {
-        mockMvc.perform(get(URL_TWEETS_BASIC + "/retweet/43"))
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/retweet/2/43"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(43))
                 .andExpect(jsonPath("$.text").value(TWEET_TEXT))
@@ -918,18 +918,18 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("[404] GET /api/v1/tweets/retweet/99 - Should Tweet Not Found by id")
+    @DisplayName("[404] GET /api/v1/tweets/retweet/2/99 - Should Tweet Not Found by id")
     public void retweet_ShouldTweetNotFound() throws Exception {
-        mockMvc.perform(get(URL_TWEETS_BASIC + "/retweet/99"))
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/retweet/2/99"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is("Tweet not found")));
     }
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("[200] GET /api/v1/tweets/retweet/45 - UnRetweet tweet by id")
+    @DisplayName("[200] GET /api/v1/tweets/retweet/2/45 - UnRetweet tweet by id")
     public void unretweet() throws Exception {
-        mockMvc.perform(get(URL_TWEETS_BASIC + "/retweet/45"))
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/retweet/2/45"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(45))
                 .andExpect(jsonPath("$.text").value("media tweet test"))
@@ -939,13 +939,13 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("[200] POST /api/v1/tweets/reply/43 - Reply tweet by id")
+    @DisplayName("[200] POST /api/v1/tweets/reply/2/43 - Reply tweet by id")
     public void replyTweet() throws Exception {
         TweetRequest tweetRequest = new TweetRequest();
         tweetRequest.setText("test reply");
         tweetRequest.setReplyType(ReplyType.EVERYONE);
 
-        mockMvc.perform(post(URL_TWEETS_BASIC + "/reply/43")
+        mockMvc.perform(post(URL_TWEETS_BASIC + "/reply/2/43")
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
@@ -959,13 +959,13 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("[404] POST /api/v1/tweets/reply/99 - Should tweet Not Found by id")
+    @DisplayName("[404] POST /api/v1/tweets/reply/2/99 - Should tweet Not Found by id")
     public void replyTweet_ShouldTweetNotFound() throws Exception {
         TweetRequest tweetRequest = new TweetRequest();
         tweetRequest.setText("test reply");
         tweetRequest.setReplyType(ReplyType.EVERYONE);
 
-        mockMvc.perform(post(URL_TWEETS_BASIC + "/reply/99")
+        mockMvc.perform(post(URL_TWEETS_BASIC + "/reply/2/99")
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
@@ -974,13 +974,13 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("[200] POST /api/v1/tweets/quote/43 - Quote tweet by id")
+    @DisplayName("[200] POST /api/v1/tweets/quote/2/43 - Quote tweet by id")
     public void quoteTweet() throws Exception {
         TweetRequest tweetRequest = new TweetRequest();
         tweetRequest.setText("test quote");
         tweetRequest.setReplyType(ReplyType.EVERYONE);
 
-        mockMvc.perform(post(URL_TWEETS_BASIC + "/quote/43")
+        mockMvc.perform(post(URL_TWEETS_BASIC + "/quote/2/43")
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
@@ -1016,13 +1016,13 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("[404] POST /api/v1/tweets/quote/99 - Should Tweet Not Found by id")
+    @DisplayName("[404] POST /api/v1/tweets/quote/2/99 - Should Tweet Not Found by id")
     public void quoteTweet_ShouldTweetNotFound() throws Exception {
         TweetRequest tweetRequest = new TweetRequest();
         tweetRequest.setText("test quote");
         tweetRequest.setReplyType(ReplyType.EVERYONE);
 
-        mockMvc.perform(post(URL_TWEETS_BASIC + "/quote/99")
+        mockMvc.perform(post(URL_TWEETS_BASIC + "/quote/2/99")
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
@@ -1031,9 +1031,9 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("[200] GET /api/v1/tweets/reply/change/43 - Change Tweet reply type by id")
+    @DisplayName("[200] GET /api/v1/tweets/reply/change/2/43 - Change Tweet reply type by id")
     public void changeTweetReplyType() throws Exception {
-        mockMvc.perform(get(URL_TWEETS_BASIC + "/reply/change/43")
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/reply/change/2/43")
                         .param("replyType", String.valueOf(ReplyType.FOLLOW)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(43L))
@@ -1065,9 +1065,9 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("[404] GET /api/v1/tweets/reply/change/99 - Should Tweet Not Found by id")
+    @DisplayName("[404] GET /api/v1/tweets/reply/change/2/99 - Should Tweet Not Found by id")
     public void changeTweetReplyType_ShouldTweetNotFound() throws Exception {
-        mockMvc.perform(get(URL_TWEETS_BASIC + "/reply/change/99")
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/reply/change/2/99")
                         .param("replyType", String.valueOf(ReplyType.FOLLOW)))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is("Tweet not found")));
@@ -1075,9 +1075,9 @@ public class TweetControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
-    @DisplayName("[404] GET /api/v1/tweets/reply/change/41 - Should Tweet Not Found by user")
+    @DisplayName("[404] GET /api/v1/tweets/reply/change/2/41 - Should Tweet Not Found by user")
     public void changeTweetReplyType_ShouldTweetNotFoundByUser() throws Exception {
-        mockMvc.perform(get(URL_TWEETS_BASIC + "/reply/change/41")
+        mockMvc.perform(get(URL_TWEETS_BASIC + "/reply/change/2/41")
                         .param("replyType", String.valueOf(ReplyType.FOLLOW)))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is("Tweet not found")));

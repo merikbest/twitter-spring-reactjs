@@ -18,7 +18,7 @@ const RetweetIconButton = memo((): ReactElement => {
     const classes = useRetweetIconButtonStyles({isTweetRetweeted: isTweetRetweeted!});
 
     const handleRetweet = (): void => {
-        dispatch(retweet(parseInt(params.id)));
+        dispatch(retweet({tweetId: parseInt(params.id)}));
     };
 
     return (

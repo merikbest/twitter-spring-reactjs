@@ -4,15 +4,24 @@ import {ClassNameMap} from "@material-ui/core/styles/withStyles";
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
 import {AnalyticsIcon} from "../../../icons";
 import TweetAnalyticsModal from "../../TweetAnalyticsModal/TweetAnalyticsModal";
-import {TweetResponse} from "../../../store/types/tweet";
+import {useAnalyticsIconButtonStyles} from "./AnalyticsIconButtonStyles";
 
 interface AnalyticsIconButtonProps {
-    classes: ClassNameMap<string>;
-    tweet?: TweetResponse;
+    tweetUserFullName?: string;
+    tweetUserName?: string;
+    tweetText?: string;
     isUserCanReply: boolean;
 }
 
-const AnalyticsIconButton: FC<AnalyticsIconButtonProps> = memo(({classes, tweet, isUserCanReply}): ReactElement => {
+const AnalyticsIconButton: FC<AnalyticsIconButtonProps> = memo((
+    {
+        tweetUserFullName,
+        tweetUserName,
+        tweetText,
+        isUserCanReply
+    }
+): ReactElement => {
+    const classes = useAnalyticsIconButtonStyles();
     const [visibleAnalyticsModalWindow, setVisibleAnalyticsModalWindow] = useState<boolean>(false);
 
     const onOpenTweetAnalyticsModalWindow = (): void => {
@@ -32,9 +41,9 @@ const AnalyticsIconButton: FC<AnalyticsIconButtonProps> = memo(({classes, tweet,
                 disabled={isUserCanReply}
             />
             <TweetAnalyticsModal
-                fullName={tweet!.user.fullName}
-                username={tweet!.user.username}
-                text={tweet!.text}
+                fullName={tweetUserFullName!}
+                username={tweetUserName!}
+                text={tweetText!}
                 visible={visibleAnalyticsModalWindow}
                 onClose={onCloseTweetAnalyticsModalWindow}
             />

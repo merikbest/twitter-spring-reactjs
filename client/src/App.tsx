@@ -230,7 +230,7 @@ const App: FC = (): ReactElement => {
                         <Route path={LISTS} component={Lists} exact/>
                         <Route path={`${LISTS_MEMBERSHIPS}/:id`} component={ListsMemberships} exact/>
                         <Route path={`${LISTS}/:listId`} component={FullList} exact/>
-                        <Route path={`${PROFILE}/:id`} component={UserPage} exact/>
+                        <Route path={`${PROFILE}/:userId`} component={UserPage} exact/>
                         <Route path={`${USER_FOLLOWERS_YOU_FOLLOW}/:id`} component={FollowersYouKnow} exact/>
                         <Route path={`${USER}/:id/:follow`} component={FollowingFollowers} exact/>
                     </Switch>

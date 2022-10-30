@@ -79,13 +79,13 @@ public class UserController {
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping("/notifications") // TODO fix tests
+    @GetMapping("/notifications")
     public ResponseEntity<List<NotificationResponse>> getUserNotifications(@PageableDefault(size = 10) Pageable pageable) {
         HeaderResponse<NotificationResponse> response = userMapper.getUserNotifications(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping("/notifications/subscribes") // TODO add tests
+    @GetMapping("/notifications/subscribes")
     public ResponseEntity<List<NotificationUserResponse>> getTweetAuthorsNotifications() {
         return ResponseEntity.ok(userMapper.getTweetAuthorsNotifications());
     }
@@ -133,13 +133,13 @@ public class UserController {
         return ResponseEntity.ok(userMapper.getUserTweetImages(userId));
     }
 
-    @GetMapping("/followers/{userId}") // TODO fix tests
+    @GetMapping("/followers/{userId}")
     public ResponseEntity<List<UserResponse>> getFollowers(@PathVariable Long userId, @PageableDefault(size = 15) Pageable pageable) {
         HeaderResponse<UserResponse> response = userMapper.getFollowers(userId, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping("/following/{userId}") // TODO fix tests
+    @GetMapping("/following/{userId}")
     public ResponseEntity<List<UserResponse>> getFollowing(@PathVariable Long userId, @PageableDefault(size = 15) Pageable pageable) {
         HeaderResponse<UserResponse> response = userMapper.getFollowing(userId, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());

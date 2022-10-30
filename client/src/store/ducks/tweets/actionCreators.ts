@@ -3,7 +3,7 @@ import {
     AddTweet,
     ChangeReplyTypeRequest,
     FetchTweetsByTagRequest,
-    FetchTweetsByTextRequest,
+    FetchTweetsByTextRequest, TweetActionPayload,
     TweetsByListIdRequest,
     TweetsState,
     TweetsWithQuotesByIdRequest,
@@ -160,12 +160,12 @@ export const setTweetsLoadingState = (payload: LoadingStatus): SetTweetsLoadingS
     payload
 });
 
-export const likeTweet = (payload: number): LikeTweetActionInterface => ({
+export const likeTweet = (payload: TweetActionPayload): LikeTweetActionInterface => ({
     type: TweetsActionType.LIKE_TWEET,
     payload,
 });
 
-export const retweet = (payload: number): RetweetActionInterface => ({
+export const retweet = (payload: TweetActionPayload): RetweetActionInterface => ({
     type: TweetsActionType.RETWEET,
     payload,
 });

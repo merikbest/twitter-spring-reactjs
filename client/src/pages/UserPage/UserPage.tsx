@@ -97,7 +97,7 @@ const UserPage = (): ReactElement => {
     const isTweetsLoaded = useSelector(selectIsUserTweetsLoaded);
     const location = useLocation<{ isRegistered: boolean; }>();
     const history = useHistory();
-    const params = useParams<{ id: string }>();
+    const params = useParams<{ userId: string }>();
 
     const [btnText, setBtnText] = useState<string>("");
     const [activeTab, setActiveTab] = useState<number>(0);
@@ -110,18 +110,18 @@ const UserPage = (): ReactElement => {
     useEffect(() => {
         window.scrollTo(0, 0);
 
-        if (params.id) {
-            dispatch(fetchUserProfile(parseInt(params.id)));
-            dispatch(fetchImages(parseInt(params.id)));
+        if (params.userId) {
+            dispatch(fetchUserProfile(parseInt(params.userId)));
+            dispatch(fetchImages(parseInt(params.userId)));
         }
         document.body.style.overflow = 'unset';
 
         stompClient = Stomp.over(() => new SockJS(WS_URL));
         stompClient.connect({}, () => {
-            stompClient?.subscribe("/topic/user/add/tweet/" + params.id, (response) => {
+            stompClient?.subscribe("/topic/user/add/tweet/" + params.userId, (response) => {
                 dispatch(setAddedUserTweet(JSON.parse(response.body)));
             });
-            stompClient?.subscribe("/topic/user/update/tweet/" + params.id, (response) => {
+            stompClient?.subscribe("/topic/user/update/tweet/" + params.userId, (response) => {
                 dispatch(setUpdatedUserTweet(JSON.parse(response.body)));
             });
         });
@@ -132,14 +132,14 @@ const UserPage = (): ReactElement => {
             dispatch(resetImagesState());
             stompClient?.disconnect();
         };
-    }, [params.id]);
+    }, [params.userId]);
 
     useEffect(() => {
         setBtnText(userProfile?.isWaitingForApprove ? ("Pending") : (userProfile?.isUserBlocked ? "Blocked" : "Following"));
 
         if (isUserProfileSuccessLoaded) {
             document.title = `${userProfile?.fullName} (@${userProfile?.username}) / Twitter`;
-            dispatch(fetchUserTweets({userId: params.id, page: 0}));
+            dispatch(fetchUserTweets({userId: params.userId, page: 0}));
             setPage(prevState => prevState + 1);
         }
 
@@ -158,13 +158,13 @@ const UserPage = (): ReactElement => {
 
     const loadUserTweets = (): void => {
         if (activeTab === 1) {
-            dispatch(fetchUserRetweetsAndReplies({userId: params.id, page: page}));
+            dispatch(fetchUserRetweetsAndReplies({userId: params.userId, page: page}));
         } else if (activeTab === 2) {
-            dispatch(fetchUserMediaTweets({userId: params.id, page: page}));
+            dispatch(fetchUserMediaTweets({userId: params.userId, page: page}));
         } else if (activeTab === 3) {
-            dispatch(fetchUserLikedTweets({userId: params.id, page: page}));
+            dispatch(fetchUserLikedTweets({userId: params.userId, page: page}));
         } else {
-            dispatch(fetchUserTweets({userId: params.id, page: page}));
+            dispatch(fetchUserTweets({userId: params.userId, page: page}));
         }
 
         if (isTweetsLoaded) {
@@ -233,22 +233,22 @@ const UserPage = (): ReactElement => {
     };
 
     const handleShowUserTweets = (): void => {
-        dispatch(fetchUserTweets({userId: params.id, page: 0}));
+        dispatch(fetchUserTweets({userId: params.userId, page: 0}));
         setPage(prevState => prevState + 1);
     };
 
     const handleShowUserRetweetsAndReplies = (): void => {
-        dispatch(fetchUserRetweetsAndReplies({userId: params.id, page: 0}));
+        dispatch(fetchUserRetweetsAndReplies({userId: params.userId, page: 0}));
         setPage(prevState => prevState + 1);
     };
 
     const handleShowMediaTweets = (): void => {
-        dispatch(fetchUserMediaTweets({userId: params.id, page: 0}));
+        dispatch(fetchUserMediaTweets({userId: params.userId, page: 0}));
         setPage(prevState => prevState + 1);
     };
 
     const handleShowLikedTweets = (): void => {
-        dispatch(fetchUserLikedTweets({userId: params.id, page: 0}));
+        dispatch(fetchUserLikedTweets({userId: params.userId, page: 0}));
         setPage(prevState => prevState + 1);
     };
 

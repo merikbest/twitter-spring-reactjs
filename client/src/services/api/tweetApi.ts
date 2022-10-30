@@ -1,7 +1,13 @@
 import {AxiosResponse} from "axios";
 
 import {axios} from "../../core/axios";
-import {AddQuoteTweet, AddTweet, ChangeReplyTypeRequest, Vote} from "../../store/ducks/tweets/contracts/state";
+import {
+    AddQuoteTweet,
+    AddTweet,
+    ChangeReplyTypeRequest,
+    TweetActionPayload,
+    Vote
+} from "../../store/ducks/tweets/contracts/state";
 import {FetchTweetUsersPayload, ReplyTweet} from "../../store/ducks/tweet/contracts/state";
 import {TweetAdditionalInfoResponse, TweetResponse} from "../../store/types/tweet";
 import {NotificationTweetResponse} from "../../store/types/notification";
@@ -83,20 +89,20 @@ export const TweetApi = {
     async searchTweets(text: string, pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
         return await axios.get<TweetResponse[]>(`${API_TWEETS_SEARCH}/${text}`, {params: {page: pageNumber}});
     },
-    async likeTweet(tweetId: number): Promise<AxiosResponse<NotificationTweetResponse>> {
-        return await axios.get<NotificationTweetResponse>(`${API_TWEETS_LIKE}/${tweetId}`);
+    async likeTweet({userId, tweetId}: TweetActionPayload): Promise<AxiosResponse<NotificationTweetResponse>> {
+        return await axios.get<NotificationTweetResponse>(`${API_TWEETS_LIKE}/${userId ?? 0}/${tweetId}`);
     },
-    async retweet(tweetId: number): Promise<AxiosResponse<NotificationTweetResponse>> {
-        return await axios.get<NotificationTweetResponse>(`${API_TWEETS_RETWEET}/${tweetId}`);
+    async retweet({userId, tweetId}: TweetActionPayload): Promise<AxiosResponse<NotificationTweetResponse>> {
+        return await axios.get<NotificationTweetResponse>(`${API_TWEETS_RETWEET}/${userId ?? 0}/${tweetId}`);
     },
     async replyTweet(request: ReplyTweet): Promise<AxiosResponse<TweetResponse>> {
-        return await axios.post<TweetResponse>(`${API_TWEETS_REPLY}/${request.tweetId}`, request);
+        return await axios.post<TweetResponse>(`${API_TWEETS_REPLY}/${request.userId ?? 0}/${request.tweetId}`, request);
     },
     async quoteTweet(request: AddQuoteTweet): Promise<AxiosResponse<TweetResponse>> {
-        return await axios.post<TweetResponse>(`${API_TWEETS_QUOTE}/${request.tweetId}`, request);
+        return await axios.post<TweetResponse>(`${API_TWEETS_QUOTE}/${request.userId ?? 0}/${request.tweetId}`, request);
     },
     async changeTweetReplyType(request: ChangeReplyTypeRequest): Promise<AxiosResponse<TweetResponse>> {
-        return await axios.get<TweetResponse>(`${API_TWEETS_CHANGE_REPLY}/${request.tweetId}`,
+        return await axios.get<TweetResponse>(`${API_TWEETS_CHANGE_REPLY}/${request.userId ?? 0}/${request.tweetId}`,
             {params: {replyType: request.replyType}});
     },
     async voteInPoll(payload: Vote): Promise<AxiosResponse<TweetResponse>> {

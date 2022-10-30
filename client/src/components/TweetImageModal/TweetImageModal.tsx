@@ -150,11 +150,11 @@ const TweetImageModal: FC<HoverUserProps> = (
     };
 
     const handleLike = (): void => {
-        dispatch(likeTweet(parseInt(params.id)));
+        dispatch(likeTweet({tweetId: parseInt(params.id)}));
     };
 
     const handleRetweet = (): void => {
-        dispatch(retweet(parseInt(params.id)));
+        dispatch(retweet({tweetId: parseInt(params.id)}));
     };
 
     if (!visibleTweetImageModalWindow) {
