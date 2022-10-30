@@ -24,6 +24,7 @@ export const selectAddressedTweetId = (state: RootState) => selectTweetState(sta
 export const selectIsTweetLiked = (state: RootState) => selectTweetState(state).tweet?.isTweetLiked;
 export const selectIsTweetRetweeted = (state: RootState) => selectTweetState(state).tweet?.isTweetRetweeted;
 export const selectIsTweetBookmarked = (state: RootState) => selectTweetState(state).tweet?.isTweetBookmarked;
+export const selectRepliesCount = (state: RootState) => selectTweetState(state).tweet?.repliesCount;
 export const selectRetweetsCount = (state: RootState) => selectTweetState(state).tweet?.retweetsCount;
 export const selectQuotesCount = (state: RootState) => selectTweetState(state).tweet?.quotesCount;
 export const selectLikedTweetsCount = (state: RootState) => selectTweetState(state).tweet?.likedTweetsCount;
@@ -33,9 +34,10 @@ export const selectTweetPoll = (state: RootState) => selectTweetState(state).twe
 export const selectTweetQuote = (state: RootState) => selectTweetState(state).tweet?.quoteTweet;
 
 // user
+export const selectTweetUser = (state: RootState) => selectTweetState(state).tweet?.user;
 export const selectTweetUserId = (state: RootState) => selectTweetState(state).tweet?.user.id;
 export const selectTweetUserAvatar = (state: RootState) => (
-    selectTweetState(state).tweet?.user.avatar.src ? selectTweetState(state).tweet?.user.avatar.src : DEFAULT_PROFILE_IMG
+    selectTweetState(state).tweet?.user.avatar.src ?? DEFAULT_PROFILE_IMG
 );
 export const selectTweetUserUsername = (state: RootState) => selectTweetState(state).tweet?.user.username;
 export const selectTweetUserFullName = (state: RootState) => selectTweetState(state).tweet?.user.fullName;

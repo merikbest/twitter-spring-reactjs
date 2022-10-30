@@ -1,29 +1,13 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
+import React, {ReactElement, useCallback, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {Link, useHistory, useParams} from "react-router-dom";
-import {Avatar, Divider, IconButton} from '@material-ui/core';
+import {useHistory, useParams} from "react-router-dom";
+import {Divider} from "@material-ui/core";
 import classNames from "classnames";
-import classnames from "classnames";
-import Typography from "@material-ui/core/Typography";
-import format from "date-fns/format";
-import usLang from "date-fns/locale/en-US/index";
 import {CompatClient, Stomp} from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 
-import {
-    CloseIcon,
-    LikeIcon,
-    LikeOutlinedIcon,
-    ReplyIcon,
-    RetweetIcon,
-    RetweetOutlinedIcon,
-    ShareIcon
-} from "../../icons";
-import {selectUserData} from "../../store/ducks/user/selectors";
-import AddTweetForm from "../AddTweetForm/AddTweetForm";
-import UsersListModal, {UsersListModalAction} from "../UsersListModal/UsersListModal";
-import TweetComponent from '../TweetComponent/TweetComponent';
-import {likeTweet, retweet} from "../../store/ducks/tweets/actionCreators";
+import {selectUserDataId} from "../../store/ducks/user/selectors";
+import TweetComponent from "../TweetComponent/TweetComponent";
 import {useTweetImageStyles} from "./TweetImageModalStyles";
 import {
     fetchReplies,
@@ -36,60 +20,57 @@ import {
     selectIsRepliesLoading,
     selectIsTweetLoadedSuccess,
     selectReplies,
-    selectTweetData
+    selectTweetId,
+    selectTweetImages,
+    selectTweetReplyType,
+    selectTweetUserId
 } from "../../store/ducks/tweet/selectors";
-import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import {WS_URL} from "../../util/endpoints";
-import {textFormatter} from "../../util/textFormatter";
-import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
 import ShareTweetIconButton from "../ShareTweetIconButton/ShareTweetIconButton";
-import ReplyModal from "../ReplyModal/ReplyModal";
-import {HoverUserProps, withHoverUser} from "../../hoc/withHoverUser";
-import {useGlobalStyles} from "../../util/globalClasses";
 import Spinner from "../Spinner/Spinner";
-import {PROFILE} from "../../util/pathConstants";
 import {ReplyType} from "../../store/types/common";
-import ActionIconButton from "../ActionIconButton/ActionIconButton";
-import LinkWrapper from "../LinkWrapper/LinkWrapper";
+import TweetHeader from "./TweetHeader/TweetHeader";
+import TweetText from "./TweetText/TweetText";
+import TweetDate from "./TweetDate/TweetDate";
+import TweetInteractionCount from "./TweetInteractionCount/TweetInteractionCount";
+import TweetReplyIconButton from "./TweetReplyIconButton/TweetReplyIconButton";
+import TweetRetweetedIconButton from "./TweetRetweetedIconButton/TweetRetweetedIconButton";
+import TweetLikeIconButton from "./TweetLikeIconButton/TweetLikeIconButton";
+import AddReplyToTweet from "./AddReplyToTweet/AddReplyToTweet";
+import ImageFooterReplyIconButton from "./ImageFooterReplyIconButton/ImageFooterReplyIconButton";
+import ImageFooterRetweetButton from "./ImageFooterRetweetButton/ImageFooterRetweetButton";
+import ImageFooterLikeButton from "./ImageFooterLikeButton/ImageFooterLikeButton";
+import ImageFooterShareButton from "./ImageFooterShareButton/ImageFooterShareButton";
+import ImageCloseButton from "./ImageCloseButton/ImageCloseButton";
 
 let stompClient: CompatClient | null = null;
 
-const TweetImageModal: FC<HoverUserProps> = (
-    {
-        visiblePopperWindow,
-        handleHoverPopper,
-        handleLeavePopper
-    }
-): ReactElement | null => {
-    const globalClasses = useGlobalStyles();
+const TweetImageModal = (): ReactElement | null => {
     const dispatch = useDispatch();
-    const tweetData = useSelector(selectTweetData);
+    const tweetId = useSelector(selectTweetId);
+    const images = useSelector(selectTweetImages);
+    const tweetUserId = useSelector(selectTweetUserId);
+    const tweetReplyType = useSelector(selectTweetReplyType);
     const replies = useSelector(selectReplies);
-    const myProfile = useSelector(selectUserData);
+    const myProfileId = useSelector(selectUserDataId);
     const isTweetLoadedSuccess = useSelector(selectIsTweetLoadedSuccess);
     const isRepliesLoading = useSelector(selectIsRepliesLoading);
-    const params: { id: string } = useParams();
+    const params = useParams<{ id: string }>();
     const history = useHistory();
     const [visibleTweetImageModalWindow, setVisibleTweetImageModalWindow] = useState<boolean>(false);
-    const [visibleUsersListModalWindow, setVisibleUsersListModalWindow] = useState<boolean>(false);
-    const [visibleReplyModalWindow, setVisibleReplyModalWindow] = useState<boolean>(false);
-    const [usersListModalAction, setUsersListModalAction] = useState<UsersListModalAction>(UsersListModalAction.LIKED);
-    const isUserCanReply = (tweetData?.replyType === ReplyType.MENTION) && (myProfile?.id !== tweetData?.user.id);
-    const classes = useTweetImageStyles({
-        isUserCanReply: isUserCanReply,
-        isTweetRetweeted: tweetData?.isTweetRetweeted!,
-        isTweetLiked: tweetData?.isTweetLiked!
-    });
+    const isUserCanReply = (tweetReplyType === ReplyType.MENTION) && (myProfileId !== tweetUserId);
+    const image = images?.[0].src;
+    const classes = useTweetImageStyles({isUserCanReply});
 
     useEffect(() => {
         dispatch(fetchTweetData(parseInt(params.id)));
         setVisibleTweetImageModalWindow(true);
         document.body.style.marginRight = "15px";
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = "hidden";
 
         stompClient = Stomp.over(new SockJS(WS_URL));
         stompClient.connect({}, () => {
-            stompClient?.subscribe("/topic/tweet/" + params.id, (response) => {
+            stompClient?.subscribe(`/topic/tweet/${params.id}`, (response) => {
                 dispatch(updateTweetData(JSON.parse(response.body)));
             });
         });
@@ -110,258 +91,69 @@ const TweetImageModal: FC<HoverUserProps> = (
 
     const onCloseImageModalWindow = (event: any): void => {
         if (event.target.classList[0]) {
-            if (event.target.classList[0].includes('container')) {
+            if (event.target.classList[0].includes("container")) {
                 onClose();
             }
         }
     };
 
-    const onCloseModalWindow = (): void => {
+    const onCloseModalWindow = useCallback((): void => {
         onClose();
-    };
+    }, []);
 
     const onClose = (): void => {
         setVisibleTweetImageModalWindow(false);
         document.body.style.marginRight = "0px";
-        document.body.style.overflow = 'unset';
+        document.body.style.overflow = "unset";
         history.goBack();
-    };
-
-    const onOpenLikesModalWindow = (): void => {
-        setVisibleUsersListModalWindow(true);
-        setUsersListModalAction(UsersListModalAction.LIKED);
-    };
-
-    const onOpenRetweetsModalWindow = (): void => {
-        setVisibleUsersListModalWindow(true);
-        setUsersListModalAction(UsersListModalAction.RETWEETED);
-    };
-
-    const onCloseUsersListModalWindow = (): void => {
-        setVisibleUsersListModalWindow(false);
-    };
-
-    const onOpenReplyModalWindow = (): void => {
-        setVisibleReplyModalWindow(true);
-    };
-
-    const onCloseReplyModalWindow = (): void => {
-        setVisibleReplyModalWindow(false);
-    };
-
-    const handleLike = (): void => {
-        dispatch(likeTweet({tweetId: parseInt(params.id)}));
-    };
-
-    const handleRetweet = (): void => {
-        dispatch(retweet({tweetId: parseInt(params.id)}));
     };
 
     if (!visibleTweetImageModalWindow) {
         return null;
     }
 
-    if (tweetData) {
+    if (tweetId) {
         return (
             <div className={classes.container} onClick={onCloseImageModalWindow}>
                 <div className={classes.modalWrapper}>
-                    <img
-                        className={classes.imageModal}
-                        alt={tweetData?.images?.[0]?.src}
-                        src={tweetData?.images?.[0]?.src}
-                    />
+                    <img className={classes.imageModal} src={image} alt={image}/>
                     <div className={classes.tweetInfo}>
-                        <div className={classes.header}>
-                            <Link to={`${PROFILE}/${tweetData?.user.id}`}>
-                                <Avatar
-                                    className={classnames(globalClasses.avatar, classes.avatar)}
-                                    alt={`avatar ${tweetData.user.id}`}
-                                    src={tweetData.user.avatar?.src ? tweetData.user.avatar?.src : DEFAULT_PROFILE_IMG}
-                                />
-                            </Link>
-                            <LinkWrapper path={`${PROFILE}/${tweetData?.user.id}`} visiblePopperWindow={visiblePopperWindow}>
-                                <div
-                                    id={"userInfo"}
-                                    onMouseEnter={() => handleHoverPopper!(tweetData.user.id)}
-                                    onMouseLeave={handleLeavePopper}
-                                >
-                                    <Typography variant={"h6"} component={"div"} id={"link"}>
-                                        {tweetData.user.fullName}
-                                    </Typography>
-                                    <Typography variant={"subtitle1"} component={"div"}>
-                                        @{tweetData.user.username}
-                                    </Typography>
-                                    <PopperUserWindow visible={visiblePopperWindow} isTweetImageModal={true}/>
-                                </div>
-                            </LinkWrapper>
-                        </div>
-                        <Typography variant={"h3"} className={classes.text}>
-                            {textFormatter(tweetData.text)}
-                        </Typography>
-                        <Typography style={{marginBottom: 16}}>
-                            <Typography variant={"subtitle1"} component={"span"}>
-                                {format(new Date(tweetData.dateTime), 'hh:mm a', {locale: usLang})} ·
-                            </Typography>
-                            <Typography variant={"subtitle1"} component={"span"}>
-                                {format(new Date(tweetData.dateTime), ' MMM dd, yyyy')} · Twitter Web App
-                            </Typography>
-                        </Typography>
+                        <TweetHeader classes={classes}/>
+                        <TweetText classes={classes}/>
+                        <TweetDate/>
                         <Divider/>
-                        {(tweetData.retweetsCount !== 0 || tweetData.likedTweetsCount !== 0) && (
-                            <div id={"content"} className={classes.content}>
-                                {(tweetData.retweetsCount !== 0) && (
-                                    <a
-                                        id={"onOpenRetweetsModalWindow"}
-                                        href={"javascript:void(0);"}
-                                        onClick={onOpenRetweetsModalWindow}
-                                    >
-                                        <span style={{marginRight: 20}}>
-                                            <Typography variant={"h6"} component={"span"}>
-                                                {tweetData.retweetsCount}
-                                            </Typography>
-                                            <Typography variant={"subtitle1"} component={"span"}>
-                                                Retweets
-                                            </Typography>
-                                        </span>
-                                    </a>
-                                )}
-                                {(tweetData.likedTweetsCount !== 0) && (
-                                    <a
-                                        id={"onOpenLikesModalWindow"}
-                                        href={"javascript:void(0);"}
-                                        onClick={onOpenLikesModalWindow}
-                                    >
-                                        <span style={{marginRight: 20}}>
-                                            <Typography variant={"h6"} component={"span"}>
-                                                {tweetData.likedTweetsCount}
-                                            </Typography>
-                                            <Typography variant={"subtitle1"} component={"span"}>
-                                                Likes
-                                            </Typography>
-                                        </span>
-                                    </a>
-                                )}
-                            </div>
-                        )}
+                        <TweetInteractionCount classes={classes}/>
                         <div id={"tweetFooter"} className={classes.tweetFooter}>
-                            <div className={classes.tweetIcon}>
-                                <ActionIconButton
-                                    actionText={"Reply"}
-                                    icon={ReplyIcon}
-                                    onClick={onOpenReplyModalWindow}
-                                />
-                            </div>
-                            <div className={classes.retweetIcon}>
-                                <ActionIconButton
-                                    actionText={tweetData.isTweetRetweeted ? "Undo Retweet" : "Retweet"}
-                                    icon={tweetData.isTweetRetweeted ? RetweetIcon : RetweetOutlinedIcon}
-                                    onClick={handleRetweet}
-                                />
-                            </div>
-                            <div className={classes.likeIcon}>
-                                <ActionIconButton
-                                    actionText={tweetData.isTweetLiked ? "Unlike" : "Like"}
-                                    icon={tweetData.isTweetLiked ? LikeIcon : LikeOutlinedIcon}
-                                    onClick={handleLike}
-                                />
-                            </div>
-                            <ShareTweetIconButton tweetId={tweetData.id} isFullTweet={false}/>
+                            <TweetReplyIconButton classes={classes}/>
+                            <TweetRetweetedIconButton/>
+                            <TweetLikeIconButton/>
+                            <ShareTweetIconButton tweetId={tweetId} isFullTweet={false}/>
                         </div>
                         <Divider/>
-                        <Typography variant={"subtitle1"} component={"div"} className={classes.replyWrapper}>
-                            {"Replying to "}
-                            <Link to={`${PROFILE}/${tweetData.user.id}`}>
-                                @{tweetData.user.username}
-                            </Link>
-                        </Typography>
-                        <AddTweetForm
-                            tweetId={tweetData.id}
-                            addressedUsername={tweetData.user.username}
-                            maxRows={15}
-                            title={"Tweet your reply"}
-                            buttonName={"Reply"}
-                        />
+                        <AddReplyToTweet classes={classes}/>
                     </div>
                     <Divider/>
-                    <UsersListModal
-                        tweetId={tweetData.id}
-                        usersListModalAction={usersListModalAction}
-                        visible={visibleUsersListModalWindow}
-                        onClose={onCloseUsersListModalWindow}
-                    />
-                    {isRepliesLoading ? <Spinner/> : (
-                        replies.map((tweet) => <TweetComponent isTweetImageModal={true} key={tweet.id} tweet={tweet}/>)
+                    {isRepliesLoading ? (
+                        <Spinner/>
+                    ) : (
+                        replies.map((tweet) => (
+                            <TweetComponent key={tweet.id} tweet={tweet} isTweetImageModal/>
+                        ))
                     )}
-                    <ReplyModal
-                        user={tweetData.user}
-                        tweetId={tweetData.id}
-                        text={tweetData.text}
-                        image={tweetData?.images?.[0]}
-                        dateTime={tweetData.dateTime}
-                        visible={visibleReplyModalWindow}
-                        onClose={onCloseReplyModalWindow}
-                    />
                 </div>
                 <div id={"imageFooter"} className={classes.imageFooterContainer}>
                     <div className={classNames(classes.imageFooterWrapper)}>
-                        <div className={classes.imageFooterIcon}>
-                            <IconButton size="small">
-                                <>{ReplyIcon}</>
-                            </IconButton>
-                            {(tweetData.repliesCount === 0 || tweetData.repliesCount === null) ? null : (
-                                <Typography id={"repliesCount"} variant={"body1"} component={"span"}>
-                                    {tweetData.repliesCount}
-                                </Typography>
-                            )}
-                        </div>
-                        <div className={classes.imageFooterIcon}>
-                            <IconButton onClick={handleRetweet} size="small">
-                                {tweetData.isTweetRetweeted ? (
-                                    <>{RetweetIcon}</>
-                                ) : (
-                                    <>{RetweetOutlinedIcon}</>
-                                )}
-                            </IconButton>
-                            {(tweetData.retweetsCount === 0 || tweetData.retweetsCount === null) ? null : (
-                                tweetData.isTweetRetweeted && (
-                                    <Typography id={"retweetsCount"} variant={"body1"} component={"span"}>
-                                        {tweetData.retweetsCount}
-                                    </Typography>
-                                )
-                            )}
-                        </div>
-                        <div className={classes.imageFooterIcon}>
-                            <IconButton onClick={handleLike} size="small">
-                                {tweetData.isTweetLiked ? (
-                                    <>{LikeIcon}</>
-                                ) : (
-                                    <>{LikeOutlinedIcon}</>
-                                )}
-                            </IconButton>
-                            {(tweetData.likedTweetsCount === 0 || tweetData.likedTweetsCount === null) ? null : (
-                                tweetData.isTweetLiked && (
-                                    <Typography id={"likedTweetsCount"} variant={"body1"} component={"span"}>
-                                        {tweetData.likedTweetsCount}
-                                    </Typography>
-                                )
-                            )}
-                        </div>
-                        <div className={classes.imageFooterIcon}>
-                            <IconButton size="small">
-                                <>{ShareIcon}</>
-                            </IconButton>
-                        </div>
+                        <ImageFooterReplyIconButton classes={classes}/>
+                        <ImageFooterRetweetButton classes={classes}/>
+                        <ImageFooterLikeButton classes={classes}/>
+                        <ImageFooterShareButton classes={classes}/>
                     </div>
                 </div>
-                <div className={classes.imageModalClose}>
-                    <IconButton id={"closeModalWindow"} onClick={onCloseModalWindow} size="small">
-                        {CloseIcon}
-                    </IconButton>
-                </div>
+                <ImageCloseButton classes={classes} onCloseModalWindow={onCloseModalWindow}/>
             </div>
         );
     }
     return null;
 };
 
-export default withHoverUser(TweetImageModal);
+export default TweetImageModal;
