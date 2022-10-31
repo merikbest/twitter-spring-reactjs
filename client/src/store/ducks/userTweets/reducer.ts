@@ -35,7 +35,6 @@ export const userTweetsReducer = produce((draft: Draft<UserTweetsState>, action:
                     }
                 });
             }
-            draft.loadingState = LoadingStatus.LOADED
             break;
 
         case UserTweetsActionType.SET_BLOCKED_USERS_TWEETS_STATE:

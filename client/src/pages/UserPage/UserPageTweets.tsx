@@ -1,32 +1,34 @@
-import React, {FC, ReactElement, useState} from 'react';
+import React, {FC, memo, ReactElement, useState} from "react";
+import {useSelector} from "react-redux";
+import InfiniteScroll from "react-infinite-scroll-component";
 import {Button, Typography} from "@material-ui/core";
 
-import TweetComponent from '../../components/TweetComponent/TweetComponent';
+import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import {useUserPageStyles} from "./UserPageStyles";
 import AddTweetModal from "../../components/AddTweetModal/AddTweetModal";
 import Spinner from "../../components/Spinner/Spinner";
-import {TweetResponse} from "../../store/types/tweet";
+import {
+    selectIsUserTweetsLoading,
+    selectPagesCount,
+    selectUserTweetsItems
+} from "../../store/ducks/userTweets/selectors";
+import {selectUserDataId} from "../../store/ducks/user/selectors";
+import {selectUserProfileId, selectUserProfileUsername} from "../../store/ducks/userProfile/selectors";
 
 interface UserPageTweetsProps {
-    tweets?: TweetResponse[];
-    isTweetsLoading: boolean;
     activeTab: number;
-    userProfileId?: number;
-    myProfileId?: number;
-    username?: string;
+    page: number;
+    loadUserTweets: () => void;
 }
 
-const UserPageTweets: FC<UserPageTweetsProps> = (
-    {
-        tweets,
-        isTweetsLoading,
-        activeTab,
-        userProfileId,
-        myProfileId,
-        username
-    }
-): ReactElement => {
+const UserPageTweets: FC<UserPageTweetsProps> = memo(({activeTab, page, loadUserTweets}): ReactElement => {
     const classes = useUserPageStyles();
+    const myProfileId = useSelector(selectUserDataId);
+    const userProfileId = useSelector(selectUserProfileId);
+    const username = useSelector(selectUserProfileUsername);
+    const tweets = useSelector(selectUserTweetsItems);
+    const isTweetsLoading = useSelector(selectIsUserTweetsLoading);
+    const pagesCount = useSelector(selectPagesCount);
     const [visibleAddTweet, setSetVisibleAddTweet] = useState<boolean>(false);
 
     const handleClickOpenAddTweet = (): void => {
@@ -149,11 +151,17 @@ const UserPageTweets: FC<UserPageTweetsProps> = (
     };
 
     return (
-        <>
+        <InfiniteScroll
+            style={{overflow: "unset"}}
+            dataLength={tweets.length}
+            next={loadUserTweets}
+            hasMore={page < pagesCount}
+            loader={null}
+        >
             {renderTweets()}
             <AddTweetModal onClose={onCloseAddTweet} visible={visibleAddTweet}/>
-        </>
+        </InfiniteScroll>
     );
-};
+});
 
 export default UserPageTweets;
