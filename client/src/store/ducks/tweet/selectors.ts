@@ -37,7 +37,7 @@ export const selectTweetQuote = (state: RootState) => selectTweetState(state).tw
 export const selectTweetUser = (state: RootState) => selectTweetState(state).tweet?.user;
 export const selectTweetUserId = (state: RootState) => selectTweetState(state).tweet?.user.id;
 export const selectTweetUserAvatar = (state: RootState) => (
-    selectTweetState(state).tweet?.user.avatar.src ?? DEFAULT_PROFILE_IMG
+    selectTweetState(state).tweet?.user.avatar ? selectTweetState(state).tweet?.user.avatar.src : DEFAULT_PROFILE_IMG
 );
 export const selectTweetUserUsername = (state: RootState) => selectTweetState(state).tweet?.user.username;
 export const selectTweetUserFullName = (state: RootState) => selectTweetState(state).tweet?.user.fullName;

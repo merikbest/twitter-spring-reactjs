@@ -25,6 +25,8 @@ const PopperListWindow: FC<PopperListWindowProps> = ({visible}): ReactElement | 
     const [btnText, setBtnText] = useState<string>("Following");
     const [visibleMembersAndFollowersModal, setVisibleMembersAndFollowersModal] = useState<boolean>(false);
     const [modalWindowTitle, setModalWindowTitle] = useState<string>("");
+    const wallpaper = list?.wallpaper ? list?.wallpaper?.src : list?.altWallpaper;
+    const listOwnerAvatar = list?.listOwner.avatar ? list?.listOwner.avatar?.src : DEFAULT_PROFILE_IMG;
 
     const handleFollow = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
         event.preventDefault();
@@ -62,12 +64,7 @@ const PopperListWindow: FC<PopperListWindowProps> = ({visible}): ReactElement | 
 
     return (
         <div id={"popperListWindow"} className={classes.popperListWindow}>
-            <img
-                className={classes.wallpaperListImg}
-                key={list?.wallpaper?.src ? list?.wallpaper?.src : list?.altWallpaper}
-                src={list?.wallpaper?.src ? list?.wallpaper?.src : list?.altWallpaper}
-                alt={list?.wallpaper?.src ? list?.wallpaper?.src : list?.altWallpaper}
-            />
+            <img className={classes.wallpaperListImg} key={wallpaper} src={wallpaper} alt={wallpaper}/>
             <div className={classes.popperListInfo}>
                 <Typography variant={"h5"} component={"div"} className={classes.popperListTitle}>
                     {list?.name}
@@ -77,10 +74,7 @@ const PopperListWindow: FC<PopperListWindowProps> = ({visible}): ReactElement | 
                 </Typography>
                 <Link to={`${PROFILE}/${list?.listOwner.id}`} className={classes.popperListOwnerLink}>
                     <div className={classes.popperListOwnerWrapper}>
-                        <Avatar
-                            className={classes.popperListOwnerAvatar}
-                            src={list?.listOwner.avatar?.src ? list?.listOwner.avatar?.src : DEFAULT_PROFILE_IMG}
-                        />
+                        <Avatar className={classes.popperListOwnerAvatar} src={listOwnerAvatar}/>
                     </div>
                     <Typography variant={"h6"} component={"span"} className={classes.popperListOwnerFullName}>
                         {list?.listOwner.fullName}

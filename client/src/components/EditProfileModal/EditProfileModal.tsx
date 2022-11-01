@@ -13,7 +13,6 @@ import FormGroup from "@material-ui/core/FormGroup";
 import TweeterInput from "./TweetInput/TweeterInput";
 import {ImageObj} from "../AddTweetForm/AddTweetForm";
 import {selectUserData} from "../../store/ducks/user/selectors";
-
 import {uploadImage} from "../../util/uploadImage";
 import UploadProfileImage from "./UploadProfileImage";
 import {useEditProfileModalStyles} from "./EditProfileModalStyles";
@@ -93,9 +92,10 @@ const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}): ReactE
                             <img
                                 className={classes.wallpaperImg}
                                 key={wallpaper?.src}
-                                src={(userData?.wallpaper?.src && wallpaper?.src === undefined) ?
+                                alt={"wallpaper"}
+                                src={(userData?.wallpaper?.src && !wallpaper?.src) ?
                                     userData?.wallpaper?.src : wallpaper?.src}
-                            />
+                             />
                             <div className={classes.wallpaperEditImg}>
                                 <UploadProfileImage name={"wallpaper"} image={wallpaper} onChangeImage={setWallpaper}/>
                             </div>
@@ -104,7 +104,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}): ReactE
                             <UploadProfileImage name={"avatar"} image={avatar} onChangeImage={setAvatar}/>
                             <Avatar
                                 key={avatar?.src}
-                                src={userData?.avatar?.src && avatar?.src === undefined ? userData?.avatar?.src : avatar?.src}
+                                src={(userData?.avatar?.src && !avatar?.src) ? userData?.avatar?.src : avatar?.src}
                             >
                                 <img alt="default-img" src={DEFAULT_PROFILE_IMG}/>
                             </Avatar>

@@ -12,7 +12,7 @@ export const selectUserDetailAbout = (state: RootState) => selectUserDetailItem(
 export const selectUserDetailFollowersSize = (state: RootState) => selectUserDetailItem(state)?.followersSize;
 export const selectUserDetailFollowingSize = (state: RootState) => selectUserDetailItem(state)?.followingSize;
 export const selectUserDetailAvatar = (state: RootState) => {
-    return selectUserDetailItem(state)!.avatar.src ? selectUserDetailItem(state)!.avatar.src : DEFAULT_PROFILE_IMG
+    return selectUserDetailItem(state)!.avatar ? selectUserDetailItem(state)!.avatar.src : DEFAULT_PROFILE_IMG
 };
 export const selectUserDetailIsMyProfileBlocked = (state: RootState) => selectUserDetailItem(state)?.isMyProfileBlocked;
 export const selectUserDetailIsFollower = (state: RootState) => selectUserDetailItem(state)?.isFollower;

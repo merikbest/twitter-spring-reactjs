@@ -32,13 +32,7 @@ const ProfileHeaderModal: FC<ProfileHeaderModalProps> = (
     const myProfile = useSelector(selectUserData);
 
     return (
-        <Dialog
-            transitionDuration={0}
-            open={open}
-            onClose={onClose}
-            aria-labelledby="form-dialog-title"
-            hideBackdrop
-        >
+        <Dialog transitionDuration={0} open={open} onClose={onClose} hideBackdrop>
             <DialogContent className={classes.container}>
                 <div className={classes.logoIcon}>
                     <TwitterIcon/>
@@ -53,17 +47,15 @@ const ProfileHeaderModal: FC<ProfileHeaderModalProps> = (
                     <img
                         className={classes.wallpaperImg}
                         key={wallpaper?.src}
-                        src={(wallpaper?.src === undefined) ? "" : wallpaper?.src}
+                        alt={"wallpaper"}
+                        src={!wallpaper?.src ? "" : wallpaper?.src}
                     />
                     <div className={classes.wallpaperEditImg}>
                         <UploadProfileImage name={"wallpaper"} image={wallpaper} onChangeImage={onChangeWallpaper}/>
                     </div>
                 </div>
                 <div className={classes.avatarWrapper}>
-                    <Avatar
-                        key={avatar?.src}
-                        src={(avatar?.src === undefined) ? DEFAULT_PROFILE_IMG : avatar?.src}
-                    >
+                    <Avatar key={avatar?.src} src={avatar?.src ?? DEFAULT_PROFILE_IMG}>
                         <img alt="default-img" src={DEFAULT_PROFILE_IMG}/>
                     </Avatar>
                 </div>
@@ -76,12 +68,12 @@ const ProfileHeaderModal: FC<ProfileHeaderModalProps> = (
                 <Button
                     className={classes.button}
                     onClick={() => onOpenProfileDescriptionModal(true)}
-                    variant={(wallpaper?.src !== undefined) ? "contained" : "text"}
+                    variant={wallpaper?.src ? "contained" : "text"}
                     color="primary"
                     size="medium"
                     fullWidth
                 >
-                    {wallpaper?.src !== undefined ? "Next" : "Skip for now"}
+                    {wallpaper?.src ? "Next" : "Skip for now"}
                 </Button>
             </DialogContent>
         </Dialog>

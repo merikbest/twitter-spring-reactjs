@@ -25,13 +25,7 @@ const ProfileDescriptionModal: FC<ProfileDescriptionModalProps> = (
     const classes = useProfileDescriptionModalStyles();
 
     return (
-        <Dialog
-            transitionDuration={0}
-            open={open}
-            onClose={onClose}
-            aria-labelledby="form-dialog-title"
-            hideBackdrop
-        >
+        <Dialog transitionDuration={0} open={open} onClose={onClose} hideBackdrop>
             <DialogContent className={classes.container}>
                 <div className={classes.logoIcon}>
                     <TwitterIcon/>

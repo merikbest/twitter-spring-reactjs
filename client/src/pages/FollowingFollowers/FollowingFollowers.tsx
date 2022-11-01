@@ -2,24 +2,30 @@ import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
 import {useHistory, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import Paper from '@material-ui/core/Paper';
-import {List} from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import classnames from "classnames";
+import {List} from "@material-ui/core";
 
-import {selectUserData} from "../../store/ducks/user/selectors";
-import {selectUserProfile, selectUsersIsSuccessLoaded} from "../../store/ducks/userProfile/selectors";
+import {selectUserDataId} from "../../store/ducks/user/selectors";
+import {
+    selectUserProfileFullName,
+    selectUserProfileId,
+    selectUserProfileIsFollower,
+    selectUserProfileIsMyProfileBlocked,
+    selectUserProfileIsPrivateProfile,
+    selectUserProfileUsername,
+    selectUsersIsSuccessLoaded
+} from "../../store/ducks/userProfile/selectors";
 import {fetchUserProfile, resetUserProfileState} from "../../store/ducks/userProfile/actionCreators";
 import {useFollowingFollowersStyles} from "./FollowingFollowersStyles";
-import BackButton from "../../components/BackButton/BackButton";
-import Spinner from "../../components/Spinner/Spinner";
-import {selectFollowers, selectUsersSearchIsLoading} from "../../store/ducks/usersSearch/selectors";
 import {fetchFollowers, fetchFollowings, resetUsersState} from "../../store/ducks/usersSearch/actionCreators";
-import UsersItem, {UserItemSize} from "../../components/UsersItem/UsersItem";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {PROFILE, USER} from "../../util/pathConstants";
-import PageHeaderTitle from "../../components/PageHeaderTitle/PageHeaderTitle";
+import FollowingFollowersHeader from "./FollowingFollowersHeader/FollowingFollowersHeader";
+import {selectFollowers, selectUsersSearchIsLoading} from "../../store/ducks/usersSearch/selectors";
+import Spinner from "../../components/Spinner/Spinner";
 import EmptyFollowersDescription from "./EmptyFollowersDescription/EmptyFollowersDescription";
+import UsersItem, {UserItemSize} from "../../components/UsersItem/UsersItem";
 
 const FollowingFollowers: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -27,10 +33,15 @@ const FollowingFollowers: FC = (): ReactElement => {
     const dispatch = useDispatch();
     const history = useHistory();
     const params = useParams<{ id: string, follow: string }>();
-    const myProfile = useSelector(selectUserData);
-    const userProfile = useSelector(selectUserProfile);
-    const isUsersLoading = useSelector(selectUsersSearchIsLoading);
+    const myProfileId = useSelector(selectUserDataId);
+    const userProfileId = useSelector(selectUserProfileId);
+    const username = useSelector(selectUserProfileUsername);
+    const fullName = useSelector(selectUserProfileFullName);
+    const isPrivateProfile = useSelector(selectUserProfileIsPrivateProfile);
+    const isFollower = useSelector(selectUserProfileIsFollower);
+    const isMyProfileBlocked = useSelector(selectUserProfileIsMyProfileBlocked);
     const isUserProfileLoaded = useSelector(selectUsersIsSuccessLoaded);
+    const isUsersLoading = useSelector(selectUsersSearchIsLoading);
     const users = useSelector(selectFollowers);
     const [activeTab, setActiveTab] = useState<number>(0);
 
@@ -44,9 +55,9 @@ const FollowingFollowers: FC = (): ReactElement => {
     }, [params]);
 
     useEffect(() => {
-        if (isUserProfileLoaded && userProfile) {
-            if ((userProfile.isPrivateProfile && !userProfile.isFollower && userProfile?.id !== myProfile?.id) || userProfile.isMyProfileBlocked) {
-                history.push(`${PROFILE}/${userProfile.id}`);
+        if (isUserProfileLoaded && userProfileId) {
+            if ((isPrivateProfile && !isFollower && userProfileId !== myProfileId) || isMyProfileBlocked) {
+                history.push(`${PROFILE}/${userProfileId}`);
             } else {
                 if (params.follow === "following") {
                     fetchUsers(0);
@@ -59,16 +70,16 @@ const FollowingFollowers: FC = (): ReactElement => {
 
     const handleChangeTab = (event: ChangeEvent<{}>, newValue: number): void => {
         if (newValue) {
-            history.push(`${USER}/${userProfile?.id}/followers`);
+            history.push(`${USER}/${userProfileId}/followers`);
             fetchUsers(1);
         } else {
-            history.push(`${USER}/${userProfile?.id}/following`);
+            history.push(`${USER}/${userProfileId}/following`);
             fetchUsers(0);
         }
     };
 
     const fetchUsers = (activeTabIndex: number): void => {
-        document.title = `People ${activeTabIndex ? "following" : "followed"} by ${userProfile?.fullName} (@${userProfile?.username}) / Twitter`;
+        document.title = `People ${activeTabIndex ? "following" : "followed"} by ${fullName} (@${username}) / Twitter`;
         setActiveTab(activeTabIndex);
         const user = {userId: params.id, page: 0};
         dispatch(resetUsersState());
@@ -77,14 +88,7 @@ const FollowingFollowers: FC = (): ReactElement => {
 
     return (
         <Paper className={globalClasses.pageContainer} variant="outlined">
-            <Paper className={classnames(globalClasses.pageHeader, classes.header)} variant="outlined">
-                {(userProfile) && (
-                    <>
-                        <BackButton/>
-                        <PageHeaderTitle title={userProfile?.fullName} subtitle={`@${userProfile?.username}`}/>
-                    </>
-                )}
-            </Paper>
+            <FollowingFollowersHeader/>
             <div className={globalClasses.contentWrapper}>
                 <div className={classes.tabs}>
                     <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
@@ -96,11 +100,7 @@ const FollowingFollowers: FC = (): ReactElement => {
                     <Spinner/>
                 ) : (
                     (!isUsersLoading && !users.length) ? (
-                        <EmptyFollowersDescription
-                            activeTab={activeTab}
-                            isMyProfile={userProfile?.id === myProfile?.id}
-                            username={userProfile?.username}
-                        />
+                        <EmptyFollowersDescription activeTab={activeTab}/>
                     ) : (
                         <List>
                             {users.map((user) => (

@@ -13,13 +13,7 @@ const ProfileUpdatedModal: FC<ProfileUpdatedModalProps> = ({open, onClose, onSub
     const classes = useProfileUpdatedModalStyles();
 
     return (
-        <Dialog
-            transitionDuration={0}
-            open={open}
-            onClose={onClose}
-            aria-labelledby="form-dialog-title"
-            hideBackdrop
-        >
+        <Dialog transitionDuration={0} open={open} onClose={onClose} hideBackdrop>
             <DialogContent className={classes.container}>
                 <div className={classes.logoIcon}>
                     <TwitterIcon/>

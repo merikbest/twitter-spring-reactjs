@@ -50,7 +50,6 @@ const EditProfileButton = memo((): ReactElement => {
             >
                 {myProfileCustomized ? "Edit profile" : "Setup profile"}
             </Button>
-            {/* TODO refactor EditProfileModal and SetupProfileModal */}
             <EditProfileModal visible={visibleEditProfile} onClose={onCloseEditProfile}/>
             <SetupProfileModal visible={visibleSetupProfile} onClose={onCloseSetupProfile}/>
         </>

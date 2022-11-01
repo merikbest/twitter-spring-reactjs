@@ -27,12 +27,7 @@ const ProfilePictureModal: FC<ProfilePictureModalProps> = (
     const classes = useProfilePictureModalStyles();
 
     return (
-        <Dialog
-            transitionDuration={0}
-            open={open}
-            onClose={onClose}
-            aria-labelledby="form-dialog-title"
-        >
+        <Dialog transitionDuration={0} open={open} onClose={onClose}>
             <DialogContent className={classes.container}>
                 <div className={classes.logoIcon}>
                     <TwitterIcon/>
@@ -50,20 +45,17 @@ const ProfilePictureModal: FC<ProfilePictureModalProps> = (
                         onChangeImage={onChangeAvatar}
                         setupProfile
                     />
-                    <Avatar
-                        key={avatar?.src}
-                        src={(avatar?.src === undefined) ? DEFAULT_PROFILE_IMG : avatar?.src}
-                    />
+                    <Avatar key={avatar?.src} src={avatar?.src ?? DEFAULT_PROFILE_IMG}/>
                 </div>
                 <Button
                     className={classes.button}
                     onClick={() => onOpenProfileHeaderModal(true)}
-                    variant={(avatar?.src !== undefined) ? "contained" : "text"}
+                    variant={avatar?.src ? "contained" : "text"}
                     color="primary"
                     size="medium"
                     fullWidth
                 >
-                    {(avatar?.src !== undefined) ? "Next" : "Skip for now"}
+                    {avatar?.src ? "Next" : "Skip for now"}
                 </Button>
             </DialogContent>
         </Dialog>

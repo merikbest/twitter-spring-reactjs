@@ -1,4 +1,4 @@
-import React, {ReactElement, useState} from "react";
+import React, {memo, ReactElement, useState} from "react";
 import {Typography} from "@material-ui/core";
 import {useSelector} from "react-redux";
 
@@ -6,7 +6,7 @@ import {useMembersAndFollowersStyles} from "./MembersAndFollowersStyles";
 import MembersAndFollowersModal from "../FullListTweets/MembersAndFollowersModal/MembersAndFollowersModal";
 import {selectListItem} from "../../../store/ducks/list/selectors";
 
-const MembersAndFollowers = (): ReactElement => {
+const MembersAndFollowers = memo((): ReactElement => {
     const classes = useMembersAndFollowersStyles();
     const list = useSelector(selectListItem);
     const [visibleMembersAndFollowersModal, setVisibleMembersAndFollowersModal] = useState<boolean>(false);
@@ -53,6 +53,6 @@ const MembersAndFollowers = (): ReactElement => {
             />
         </div>
     );
-};
+});
 
 export default MembersAndFollowers;

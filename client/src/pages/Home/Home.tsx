@@ -16,7 +16,7 @@ import {
 } from "../../store/ducks/tweets/actionCreators";
 import {selectIsTweetsLoading, selectPagesCount, selectTweetsItems} from "../../store/ducks/tweets/selectors";
 import {fetchUserData} from "../../store/ducks/user/actionCreators";
-import {selectUserData} from "../../store/ducks/user/selectors";
+import {selectUserDataIsProfileStarted} from "../../store/ducks/user/selectors";
 import Welcome from "../../components/Welcome/Welcome";
 import {LoadingStatus} from "../../store/types";
 import Spinner from "../../components/Spinner/Spinner";
@@ -30,7 +30,7 @@ const Home: FC = (): ReactElement => {
     const classes = useHomeStyles();
     const dispatch = useDispatch();
     const location = useLocation<{ background: Location }>();
-    const myProfile = useSelector(selectUserData);
+    const isProfileStarted = useSelector(selectUserDataIsProfileStarted);
     const tweets = useSelector(selectTweetsItems);
     const isLoading = useSelector(selectIsTweetsLoading);
     const pagesCount = useSelector(selectPagesCount);
@@ -44,7 +44,7 @@ const Home: FC = (): ReactElement => {
         if (location.pathname !== SEARCH) {
             loadTweets();
         }
-        document.body.style.overflow = 'unset';
+        document.body.style.overflow = "unset";
         window.scrollTo(0, 0);
 
         return () => {
@@ -101,7 +101,7 @@ const Home: FC = (): ReactElement => {
                     <AddTweetForm title={"What's happening?"} buttonName={"Tweet"}/>
                 </div>
                 <Divider/>
-                {!myProfile?.profileStarted ? (
+                {!isProfileStarted ? (
                     <Welcome/>
                 ) : (
                     <>
