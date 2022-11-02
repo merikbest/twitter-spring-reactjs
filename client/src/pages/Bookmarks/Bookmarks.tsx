@@ -4,20 +4,17 @@ import {Paper} from "@material-ui/core";
 
 import {selectIsTweetsLoading, selectPagesCount, selectTweetsItems} from "../../store/ducks/tweets/selectors";
 import {fetchUserBookmarks, resetTweets} from "../../store/ducks/tweets/actionCreators";
-import {selectUserData} from "../../store/ducks/user/selectors";
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import Spinner from "../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
 import InfiniteScrollWrapper from "../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
 import EmptyPageDescription from "../../components/EmptyPageDescription/EmptyPageDescription";
-import PageHeaderWrapper from "../../components/PageHeaderWrapper/PageHeaderWrapper";
-import PageHeaderTitle from "../../components/PageHeaderTitle/PageHeaderTitle";
+import BookmarksHeader from "./BookmarksHeader/BookmarksHeader";
 
 const Bookmarks: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
-    const myProfile = useSelector(selectUserData);
     const tweets = useSelector(selectTweetsItems);
     const isLoading = useSelector(selectIsTweetsLoading);
     const pagesCount = useSelector(selectPagesCount);
@@ -38,11 +35,7 @@ const Bookmarks: FC = (): ReactElement => {
     return (
         <InfiniteScrollWrapper dataLength={tweets.length} pagesCount={pagesCount} loadItems={loadBookmarks}>
             <Paper className={globalClasses.pageContainer} variant="outlined">
-                <PageHeaderWrapper>
-                    <div className={globalClasses.pageHeaderTitleWrapper}>
-                        <PageHeaderTitle title={"Bookmarks"} subtitle={`@${myProfile?.username}`}/>
-                    </div>
-                </PageHeaderWrapper>
+                <BookmarksHeader/>
                 <div className={globalClasses.contentWrapper}>
                     {(isLoading && !tweets.length) ? (
                         <Spinner/>

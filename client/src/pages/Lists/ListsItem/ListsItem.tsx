@@ -29,8 +29,8 @@ const ListsItem: FC<ListsItemProps> = memo(({list, listIndex, isMyList}): ReactE
     const dispatch = useDispatch();
     const myProfile = useSelector(selectUserData);
     const {visiblePopperWindow, handleHoverPopper, handleLeavePopper} = useHoverList();
-    const listWallpaper = list?.wallpaper?.src ? list?.wallpaper?.src : list?.altWallpaper;
-    const listOwnerAvatar = list?.listOwner.avatar?.src ? list?.listOwner.avatar?.src : DEFAULT_PROFILE_IMG;
+    const listWallpaper = list?.wallpaper ? list?.wallpaper?.src : list?.altWallpaper;
+    const listOwnerAvatar = list?.listOwner.avatar ? list?.listOwner.avatar?.src : DEFAULT_PROFILE_IMG;
 
     const onClickPinList = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
         event.preventDefault();

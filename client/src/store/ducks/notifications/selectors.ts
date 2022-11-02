@@ -16,5 +16,10 @@ export const selectIsTweetAuthorsNotificationsLoading = (state: RootState): bool
 export const selectIsTweetAuthorsNotificationsLoaded = (state: RootState): boolean => selectTweetAuthorsNotificationsLoadingState(state) === LoadingStatus.LOADED;
 
 export const selectNotificationInfo = (state: RootState) => selectNotifications(state).notificationInfo;
+export const selectNotificationInfoType = (state: RootState) => selectNotificationInfo(state)?.notificationType;
+export const selectNotificationInfoUser = (state: RootState) => selectNotificationInfo(state)?.user;
+export const selectNotificationInfoUserFullName = (state: RootState) => selectNotificationInfo(state)?.user.fullName;
+export const selectNotificationInfoTweet = (state: RootState) => selectNotificationInfo(state)?.tweet;
+
 export const selectNotificationInfoLoadingState = (state: RootState): LoadingStatus => selectNotifications(state).notificationInfoLoadingState;
 export const selectIsNotificationInfoLoading = (state: RootState): boolean => selectNotificationInfoLoadingState(state) === LoadingStatus.LOADING;

@@ -1,4 +1,4 @@
-import React, {FC, ReactElement} from 'react';
+import React, {FC, memo, ReactElement} from 'react';
 import {Link} from 'react-router-dom';
 import {Avatar, Typography} from "@material-ui/core";
 
@@ -14,11 +14,11 @@ interface PinnedListsItemProps {
     pinnedList?: PinnedListResponse;
 }
 
-const PinnedListsItem: FC<PinnedListsItemProps> = ({pinnedList}): ReactElement => {
+const PinnedListsItem: FC<PinnedListsItemProps> = memo(({pinnedList}): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = usePinnedListsItemStyles();
     const {visiblePopperWindow, handleHoverPopper, handleLeavePopper} = useHoverList();
-    const pinnedListWallpaper = pinnedList?.wallpaper?.src ? pinnedList?.wallpaper?.src : pinnedList?.altWallpaper;
+    const pinnedListWallpaper = pinnedList?.wallpaper ? pinnedList?.wallpaper?.src : pinnedList?.altWallpaper;
 
     return (
         <Link to={`${LISTS}/${pinnedList?.id}`} className={globalClasses.link}>
@@ -37,6 +37,6 @@ const PinnedListsItem: FC<PinnedListsItemProps> = ({pinnedList}): ReactElement =
             </div>
         </Link>
     );
-};
+});
 
 export default PinnedListsItem;

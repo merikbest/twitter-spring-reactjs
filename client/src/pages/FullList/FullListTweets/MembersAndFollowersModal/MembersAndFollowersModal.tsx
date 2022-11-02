@@ -13,11 +13,11 @@ import {
 } from "../../../../store/ducks/listMembers/actionCreators";
 import {selectIsListMembersLoading, selectListMembersItems} from "../../../../store/ducks/listMembers/selectors";
 import Spinner from "../../../../components/Spinner/Spinner";
-import {BaseListResponse} from "../../../../store/types/lists";
 import EmptyPageDescription from "../../../../components/EmptyPageDescription/EmptyPageDescription";
 
 interface MembersAndFollowersModalProps {
-    list: BaseListResponse;
+    listId: number;
+    listOwnerId: number;
     visible: boolean;
     title: string;
     onClose: () => void;
@@ -25,7 +25,8 @@ interface MembersAndFollowersModalProps {
 
 const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
     {
-        list,
+        listId,
+        listOwnerId,
         visible,
         title,
         onClose
@@ -39,9 +40,9 @@ const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
     useEffect(() => {
         if (visible) {
             if (title === "List members") {
-                dispatch(fetchListMembers({listId: list?.id!, listOwnerId: list?.listOwner.id!}));
+                dispatch(fetchListMembers({listId, listOwnerId}));
             } else {
-                dispatch(fetchListFollowers({listId: list?.id!, listOwnerId: list?.listOwner.id!}));
+                dispatch(fetchListFollowers({listId, listOwnerId}));
             }
         }
         return () => {
@@ -58,14 +59,8 @@ const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
     }
 
     return (
-        <Dialog
-            open={visible}
-            onClose={onClose}
-            onClick={handleClick}
-            className={classes.dialog}
-            aria-labelledby="form-dialog-title"
-        >
-            <DialogTitle id="form-dialog-title">
+        <Dialog open={visible} onClose={onClose} onClick={handleClick} className={classes.dialog}>
+            <DialogTitle>
                 <CloseButton onClose={onClose}/>
                 {title}
             </DialogTitle>
@@ -75,12 +70,7 @@ const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
                 ) : (
                     (users.length !== 0) ? (
                         users.map((user) => (
-                            <ManageMembersItem
-                                key={user.id}
-                                listId={list.id}
-                                listOwnerId={list.listOwner.id}
-                                user={user}
-                            />
+                            <ManageMembersItem key={user.id} listId={listId} listOwnerId={listOwnerId} user={user}/>
                         ))
                     ) : (
                         <EmptyPageDescription

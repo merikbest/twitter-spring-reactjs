@@ -1,4 +1,4 @@
-import React, {FC, ReactElement} from 'react';
+import React, {FC, memo, ReactElement} from 'react';
 import {Avatar, Typography} from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 
@@ -9,7 +9,7 @@ import {LikeIcon, ListsIconFilled, ProfileIconFilled, RetweetIcon} from "../../.
 import {DEFAULT_PROFILE_IMG} from "../../../../util/url";
 import PopperUserWindow from "../../../../components/PopperUserWindow/PopperUserWindow";
 import {textFormatter} from "../../../../util/textFormatter";
-import {HoverUserProps, withHoverUser} from "../../../../hoc/withHoverUser";
+import {useHoverUser} from "../../../../hook/useHoverUser";
 import {LISTS, NOTIFICATION, PROFILE} from "../../../../util/pathConstants";
 import LinkWrapper from "../../../../components/LinkWrapper/LinkWrapper";
 
@@ -17,15 +17,9 @@ export interface NotificationItemProps {
     notification: NotificationResponse;
 }
 
-const NotificationItem: FC<NotificationItemProps & HoverUserProps> = (
-    {
-        notification,
-        visiblePopperWindow,
-        handleHoverPopper,
-        handleLeavePopper
-    }
-): ReactElement => {
+const NotificationItem: FC<NotificationItemProps> = memo(({notification}): ReactElement => {
     const classes = useNotificationItemStyles();
+    const {visiblePopperWindow, handleHoverPopper, handleLeavePopper} = useHoverUser();
     const avatar = notification.user.avatar?.src ? notification.user.avatar?.src : DEFAULT_PROFILE_IMG;
 
     return (
@@ -62,14 +56,10 @@ const NotificationItem: FC<NotificationItemProps & HoverUserProps> = (
                 <div style={{flex: 1}}>
                     <LinkWrapper path={`${PROFILE}/${notification.user.id!}`} visiblePopperWindow={visiblePopperWindow}>
                         <div
-                            onMouseEnter={() => handleHoverPopper!(notification.user.id!)}
+                            onMouseEnter={() => handleHoverPopper(notification.user.id!)}
                             onMouseLeave={handleLeavePopper}
                         >
-                            <Avatar
-                                className={classes.notificationAvatar}
-                                alt={`avatar ${notification.id}`}
-                                src={avatar}
-                            />
+                            <Avatar className={classes.notificationAvatar} src={avatar} alt={avatar}/>
                             <PopperUserWindow visible={visiblePopperWindow}/>
                         </div>
                     </LinkWrapper>
@@ -100,13 +90,13 @@ const NotificationItem: FC<NotificationItemProps & HoverUserProps> = (
                             )}
                         </Typography>
                     </div>
-                    <Typography id={"asd"} variant={"body1"} component={"div"} className={classes.notificationText}>
+                    <Typography variant={"body1"} component={"div"} className={classes.notificationText}>
                         {notification.tweet && textFormatter(notification.tweet.text)}
                     </Typography>
                 </div>
             </Paper>
         </LinkWrapper>
     );
-};
+});
 
-export default withHoverUser(NotificationItem);
+export default NotificationItem;
