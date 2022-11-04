@@ -9,7 +9,7 @@ interface BlockUserModalProps {
     isUserBlocked: boolean;
     visible?: boolean;
     onClose: () => void;
-    onBlockUser: () => void;
+    onBlockUser: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const BlockUserModal: FC<BlockUserModalProps> = (

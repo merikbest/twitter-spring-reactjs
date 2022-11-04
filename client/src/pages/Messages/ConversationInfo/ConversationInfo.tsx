@@ -1,31 +1,29 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
-import {Link, useHistory} from "react-router-dom";
+import React, {FC, ReactElement, useCallback, useEffect, useState} from "react";
+import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {Avatar, Button, Divider, Paper, Switch, Typography} from "@material-ui/core";
+import {Divider, Paper} from "@material-ui/core";
 import classnames from "classnames";
 
 import {useConversationInfoStyles} from "./ConversationInfoStyles";
-import BackButton from "../../../components/BackButton/BackButton";
-import {DEFAULT_PROFILE_IMG} from "../../../util/url";
-import {selectUserData} from "../../../store/ducks/user/selectors";
-import {
-    followUser,
-    processFollowRequest,
-    processUserToBlocklist,
-    unfollowUser
-} from "../../../store/ducks/user/actionCreators";
-import LeaveFromConversationModal from "./LeaveFromConversationModal/LeaveFromConversationModal";
-import {leaveFromConversation} from "../../../store/ducks/chats/actionCreators";
+import {processUserToBlocklist} from "../../../store/ducks/user/actionCreators";
 import BlockUserModal from "../../../components/BlockUserModal/BlockUserModal";
-import UnfollowModal from "../../../components/UnfollowModal/UnfollowModal";
 import {fetchChatParticipant, resetUserProfileState} from "../../../store/ducks/userProfile/actionCreators";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {selectUserProfile, selectUsersIsLoading} from "../../../store/ducks/userProfile/selectors";
 import Spinner from "../../../components/Spinner/Spinner";
-import {UserResponse} from "../../../store/types/user";
-import {MESSAGES, PROFILE} from "../../../util/pathConstants";
-import LockIcon from "../../../components/LockIcon/LockIcon";
+import {PROFILE} from "../../../util/pathConstants";
 import {setOpenSnackBar} from "../../../store/ducks/actionSnackbar/actionCreators";
+import ConversationHeader from "./ConversationHeader/ConversationHeader";
+import SnoozeNotifications from "./SnoozeNotifications/SnoozeNotifications";
+import BlockUserComponent from "./BlockUserComponent/BlockUserComponent";
+import ReportUserComponent from "./ReportUserComponent/ReportUserComponent";
+import LeaveConversationComponent from "./LeaveConversationComponent/LeaveConversationComponent";
+import FollowButton from "../../../components/Buttons/FollowButton/FollowButton";
+import PendingButton from "../../../components/Buttons/PendingButton/PendingButton";
+import UnfollowButton from "../../../components/Buttons/UnfollowButton/UnfollowButton";
+import BlockButton from "./BlockButton/BlockButton";
+import ConversationUserAvatar from "./ConversationUserAvatar/ConversationUserAvatar";
+import ConversationUserInfo from "./ConversationUserInfo/ConversationUserInfo";
 
 interface ConversationInfoProps {
     participantId?: number;
@@ -37,14 +35,9 @@ const ConversationInfo: FC<ConversationInfoProps> = ({participantId, chatId, onB
     const globalClasses = useGlobalStyles();
     const classes = useConversationInfoStyles();
     const dispatch = useDispatch();
-    const history = useHistory();
-    const myProfile = useSelector(selectUserData);
     const chatParticipant = useSelector(selectUserProfile);
     const isChatParticipantLoading = useSelector(selectUsersIsLoading);
-    const [btnText, setBtnText] = useState<string>("Following");
-    const [visibleUnfollowModal, setVisibleUnfollowModal] = useState<boolean>(false);
     const [visibleBlockUserModal, setVisibleBlockUserModal] = useState<boolean>(false);
-    const [visibleLeaveFromConversationModal, setVisibleLeaveFromConversationModal] = useState<boolean>(false);
 
     useEffect(() => {
         dispatch(fetchChatParticipant({participantId: participantId!, chatId: chatId!}));
@@ -54,152 +47,61 @@ const ConversationInfo: FC<ConversationInfoProps> = ({participantId, chatId, onB
         };
     }, []);
 
-    useEffect(() => {
-        setBtnText(chatParticipant?.isWaitingForApprove ? ("Pending") : (chatParticipant?.isUserBlocked ? "Blocked" : "Following"));
-    }, [chatParticipant, myProfile]);
-
-    const handleClickButton = (event: React.MouseEvent<HTMLButtonElement>, callback: () => void): void => {
+    const onBlockUser = useCallback((event: React.MouseEvent<HTMLButtonElement>): void => {
         event.preventDefault();
-        callback();
-    };
-
-    const handleFollow = (): void => {
-        if (chatParticipant?.isPrivateProfile) {
-            handleProcessFollowRequest();
-        } else {
-            dispatch(followUser({userId: chatParticipant?.id!}));
-        }
-    };
-
-    const handleUnfollow = (): void => {
-        if (chatParticipant?.isPrivateProfile) {
-            handleProcessFollowRequest();
-        } else {
-            dispatch(unfollowUser({userId: chatParticipant?.id!}));
-            setVisibleUnfollowModal(false);
-        }
-    };
-
-    const handleProcessFollowRequest = (): void => {
-        dispatch(processFollowRequest(chatParticipant?.id!));
-    };
-
-    const handleClickOpenUnfollowModal = (): void => {
-        setVisibleUnfollowModal(true);
-    };
-
-    const onCloseUnfollowModal = (): void => {
-        setVisibleUnfollowModal(false);
-    };
-
-    const handleLeaveFromConversation = (): void => {
-        dispatch(leaveFromConversation({participantId: participantId!, chatId: chatId!}));
-        history.push({pathname: MESSAGES, state: {removeParticipant: true}});
-        setVisibleLeaveFromConversationModal(false);
-    };
-
-    const handleClickOpenLeaveFromConversationModal = (): void => {
-        setVisibleLeaveFromConversationModal(true);
-    };
-
-    const onCloseLeaveFromConversationModal = (): void => {
-        setVisibleLeaveFromConversationModal(false);
-    };
-
-    const onBlockUser = (): void => {
         dispatch(processUserToBlocklist({userId: chatParticipant?.id!}));
         onBlockParticipant();
         setVisibleBlockUserModal(false);
         dispatch(setOpenSnackBar(`@${chatParticipant?.username!} has been ${chatParticipant?.isUserBlocked ? "unblocked" : "blocked"}.`));
-    };
+    }, [chatParticipant?.id]);
 
-    const onOpenBlockUserModal = (): void => {
+    const onOpenBlockUserModal = useCallback((): void => {
         setVisibleBlockUserModal(true);
-    };
+    }, []);
 
-    const onCloseBlockUserModal = (): void => {
+    const onCloseBlockUserModal = useCallback((): void => {
         setVisibleBlockUserModal(false);
-    };
+    }, []);
 
     return (
         <div>
             <Paper className={classnames(globalClasses.pageContainer, classes.container)} variant="outlined">
-                <Paper className={classnames(globalClasses.pageHeader, classes.header)} variant="outlined">
-                    <BackButton/>
-                    <Typography variant="h5">
-                        Conversation info
-                    </Typography>
-                </Paper>
+                <ConversationHeader/>
                 {isChatParticipantLoading ? (
                     <Spinner paddingTop={200}/>
                 ) : (
                     <>
                         <Link to={`${PROFILE}/${chatParticipant?.id}`} className={globalClasses.link}>
                             <div className={classes.pageInfoWrapper}>
-                                <Avatar
-                                    className={classes.participantAvatar}
-                                    src={chatParticipant?.avatar?.src ? chatParticipant?.avatar.src : DEFAULT_PROFILE_IMG}
-                                />
+                                <ConversationUserAvatar avatar={chatParticipant?.avatar}/>
                                 <div style={{flex: 1}}>
                                     <div className={classes.participantInfoWrapper}>
-                                        <div>
-                                            <Typography variant={"h6"} component={"span"}>
-                                                {chatParticipant?.fullName}
-                                            </Typography>
-                                            {chatParticipant?.isPrivateProfile && <LockIcon/>}
-                                            <Typography variant={"subtitle1"} component={"div"}>
-                                                @{chatParticipant?.username}
-                                            </Typography>
-                                        </div>
+                                        <ConversationUserInfo
+                                            username={chatParticipant?.username}
+                                            fullName={chatParticipant?.fullName}
+                                            isPrivateProfile={chatParticipant?.isPrivateProfile}
+                                        />
                                         <div className={classes.buttonWrapper}>
                                             {(!chatParticipant?.isFollower) ? (
                                                 (chatParticipant?.isUserBlocked) ? (
-                                                    <Button
-                                                        onClick={(event) => handleClickButton(event, onOpenBlockUserModal)}
-                                                        className={classnames(classes.containedButton, classes.blockButton)}
-                                                        onMouseOver={() => setBtnText("Unblock")}
-                                                        onMouseLeave={() => setBtnText("Blocked")}
-                                                        variant="contained"
-                                                        color="primary"
-                                                        size="small"
-                                                    >
-                                                        {btnText}
-                                                    </Button>
+                                                    <BlockButton onBlockUser={onBlockUser}/>
                                                 ) : (
                                                     (chatParticipant?.isWaitingForApprove) ? (
-                                                        <Button
-                                                            onClick={(event) => handleClickButton(event, handleProcessFollowRequest)}
-                                                            className={classes.outlinedButton}
-                                                            onMouseOver={() => setBtnText("Cancel")}
-                                                            onMouseLeave={() => setBtnText("Pending")}
-                                                            variant="outlined"
-                                                            color="primary"
-                                                            size="small"
-                                                        >
-                                                            {btnText}
-                                                        </Button>
+                                                        <PendingButton userId={chatParticipant?.id!}/>
                                                     ) : (
-                                                        <Button
-                                                            className={classes.outlinedButton}
-                                                            onClick={(event) => handleClickButton(event, handleFollow)}
-                                                            color="primary"
-                                                            variant="outlined"
-                                                        >
-                                                            Follow
-                                                        </Button>
+                                                        <FollowButton
+                                                            isPrivateProfile={chatParticipant?.isPrivateProfile!}
+                                                            userId={chatParticipant?.id!}
+                                                        />
                                                     )
                                                 )
                                             ) : (
-                                                <Button
-                                                    className={classes.containedButton}
-                                                    onMouseOver={() => setBtnText("Unfollow")}
-                                                    onMouseLeave={() => setBtnText("Following")}
-                                                    onClick={(event) => handleClickButton(event, handleClickOpenUnfollowModal)}
-                                                    color="primary"
-                                                    variant="contained"
-                                                >
-                                                    {btnText}
-                                                </Button>
+                                                <UnfollowButton
+                                                    userId={chatParticipant?.id!}
+                                                    isPrivateProfile={chatParticipant?.isPrivateProfile!}
+                                                    fullName={chatParticipant?.fullName!}
+                                                    isOpenUnfollowModal
+                                                />
                                             )}
                                         </div>
                                     </div>
@@ -207,55 +109,18 @@ const ConversationInfo: FC<ConversationInfoProps> = ({participantId, chatId, onB
                             </div>
                         </Link>
                         <Divider/>
-                        <div className={globalClasses.itemInfoWrapper}>
-                            <Typography variant={"h5"} component={"div"}>
-                                Notifications
-                            </Typography>
-                            <div className={classes.switchWrapper}>
-                                <Typography variant={"body1"} component={"span"}>
-                                    {`Snooze notifications from ${chatParticipant?.fullName}`}
-                                </Typography>
-                                <Switch checked={false}/>
-                            </div>
-                        </div>
+                        <SnoozeNotifications fullName={chatParticipant?.fullName}/>
                         <Divider/>
-                        <div
-                            id={"onOpenBlockUserModal"}
-                            className={classnames(classes.conversationInfoButton, classes.blockUser)}
-                            onClick={onOpenBlockUserModal}
-                        >
-                            <Typography variant={"body1"} component={"span"}>
-                                {chatParticipant?.isUserBlocked ? "Unblock " : "Block "} @{chatParticipant?.username}
-                            </Typography>
-                        </div>
-                        <div className={classnames(classes.conversationInfoButton, classes.blockUser)}>
-                            <Typography variant={"body1"} component={"span"}>
-                                Report @{chatParticipant?.username}
-                            </Typography>
-                        </div>
-                        <div
-                            id={"leaveFromConversation"}
-                            className={classnames(classes.conversationInfoButton, classes.leaveConversation)}
-                            onClick={handleClickOpenLeaveFromConversationModal}
-                        >
-                            <Typography variant={"body1"} component={"span"}>
-                                Leave conversation
-                            </Typography>
-                        </div>
+                        <BlockUserComponent
+                            onOpenBlockUserModal={onOpenBlockUserModal}
+                            isUserBlocked={chatParticipant?.isUserBlocked}
+                            username={chatParticipant?.username}
+                        />
+                        <ReportUserComponent username={chatParticipant?.username}/>
+                        <LeaveConversationComponent participantId={participantId} chatId={participantId}/>
                     </>
                 )}
             </Paper>
-            <LeaveFromConversationModal
-                handleLeaveFromConversation={handleLeaveFromConversation}
-                visible={visibleLeaveFromConversationModal}
-                onClose={onCloseLeaveFromConversationModal}
-            />
-            <UnfollowModal
-                fullName={chatParticipant?.fullName!}
-                visible={visibleUnfollowModal}
-                onClose={onCloseUnfollowModal}
-                handleUnfollow={handleUnfollow}
-            />
             <BlockUserModal
                 username={chatParticipant?.username!}
                 isUserBlocked={chatParticipant?.isUserBlocked!}
