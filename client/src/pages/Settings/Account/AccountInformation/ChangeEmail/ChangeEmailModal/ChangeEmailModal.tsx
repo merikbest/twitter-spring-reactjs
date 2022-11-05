@@ -7,7 +7,11 @@ import * as yup from "yup";
 
 import {useChangeEmailModalStyles} from "./ChangeEmailModalStyles";
 import {TweetIcon} from "../../../../../../icons";
-import {selectUserData, selectUserIsError, selectUserIsLoading} from "../../../../../../store/ducks/user/selectors";
+import {
+    selectUserIsError,
+    selectUserIsLoading,
+    selectUserProfileEmail
+} from "../../../../../../store/ducks/user/selectors";
 import {ChangeInfoTextField} from "../../../../ChangeInfoTextField/ChangeInfoTextField";
 import {updateEmail} from "../../../../../../store/ducks/user/actionCreators";
 import {EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS} from "../../../../../../util/url";
@@ -29,10 +33,10 @@ const SetEmailFormSchema = yup.object().shape({
 const ChangeEmailModal: FC<ChangeEmailModalProps> = ({visible, onClose}): ReactElement | null => {
     const classes = useChangeEmailModalStyles();
     const dispatch = useDispatch();
-    const myProfile = useSelector(selectUserData);
+    const myProfileEmail = useSelector(selectUserProfileEmail);
     const isLoading = useSelector(selectUserIsLoading);
     const isError = useSelector(selectUserIsError);
-    const {control, register, handleSubmit, watch, formState: {errors}, getValues} = useForm<EmailFormProps>({
+    const {control, handleSubmit, formState: {errors}, getValues} = useForm<EmailFormProps>({
         resolver: yupResolver(SetEmailFormSchema),
         mode: "onChange",
     });
@@ -62,7 +66,7 @@ const ChangeEmailModal: FC<ChangeEmailModalProps> = ({visible, onClose}): ReactE
                         Change email
                     </Typography>
                     <Typography variant={"subtitle1"} component={"div"}>
-                        {`Your current email is ${myProfile?.email}. What would you like to update it to? Your email
+                        {`Your current email is ${myProfileEmail}. What would you like to update it to? Your email
                         is not displayed in your public profile on Twitter.`}
                     </Typography>
                 </div>

@@ -1,4 +1,4 @@
-import React, {FC, FormEvent, ReactElement, useState} from 'react';
+import React, {FC, FormEvent, ReactElement, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Button, Dialog, Divider, InputAdornment, List, ListItem} from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -16,7 +16,7 @@ import MessagesModalUser from './MessagesModalUser/MessagesModalUser';
 import {createChat} from "../../../store/ducks/chats/actionCreators";
 import {SearchIcon} from "../../../icons";
 import CloseButton from "../../../components/CloseButton/CloseButton";
-import {selectUserData} from "../../../store/ducks/user/selectors";
+import {selectUserDataId} from "../../../store/ducks/user/selectors";
 import {UserResponse} from "../../../store/types/user";
 import InfiniteScrollWrapper from '../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper';
 
@@ -29,7 +29,7 @@ const MessagesModal: FC<MessagesModalProps> = ({visible, onClose}): ReactElement
     const classes = useMessagesModalStyles();
     const dispatch = useDispatch();
     const users = useSelector(selectUsersSearch);
-    const myProfile = useSelector(selectUserData);
+    const myProfileId = useSelector(selectUserDataId);
     const usersPagesCount = useSelector(selectUsersPagesCount);
     const [text, setText] = useState<string>("");
     const [selectedIndex, setSelectedIndex] = useState<number>();
@@ -78,8 +78,8 @@ const MessagesModal: FC<MessagesModalProps> = ({visible, onClose}): ReactElement
     }
 
     return (
-        <Dialog open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title" className={classes.header}>
+        <Dialog open={visible} onClose={onClose}>
+            <DialogTitle className={classes.header}>
                 <CloseButton onClose={onClose}/>
                 New message
                 <Button
@@ -89,7 +89,7 @@ const MessagesModal: FC<MessagesModalProps> = ({visible, onClose}): ReactElement
                     variant="contained"
                     color="primary"
                     size="small"
-                    disabled={selectedIndex === undefined}
+                    disabled={!selectedIndex}
                 >
                     Next
                 </Button>
@@ -117,14 +117,14 @@ const MessagesModal: FC<MessagesModalProps> = ({visible, onClose}): ReactElement
                         />
                     </form>
                     <Divider/>
-                    <List component="nav" aria-label="main mailbox folders">
+                    <List component="nav">
                         {users.map((user) => (
                             <ListItem
                                 key={user.id}
-                                button
                                 selected={selectedIndex === user.id!}
-                                disabled={user.isMutedDirectMessages || user.id === myProfile?.id}
+                                disabled={user.isMutedDirectMessages || user.id === myProfileId}
                                 onClick={() => handleListItemClick(user)}
+                                button
                             >
                                 <MessagesModalUser user={user}/>
                             </ListItem>

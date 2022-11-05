@@ -46,12 +46,12 @@ const ProfileDescriptionModal: FC<ProfileDescriptionModalProps> = (
                 <Button
                     className={classes.button}
                     onClick={() => onOpenProfileUpdatedModal(true)}
-                    variant={(text !== "") ? "contained" : "text"}
+                    variant={text ? "contained" : "text"}
                     color="primary"
                     size="medium"
                     fullWidth
                 >
-                    {text !== "" ? "Next" : "Skip for now"}
+                    {text ? "Next" : "Skip for now"}
                 </Button>
             </DialogContent>
         </Dialog>

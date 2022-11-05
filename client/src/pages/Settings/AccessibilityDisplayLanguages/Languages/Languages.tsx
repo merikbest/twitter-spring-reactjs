@@ -5,7 +5,7 @@ import {Divider, Typography} from "@material-ui/core";
 
 import {useLanguagesStyles} from "./LanguagesStyles";
 import {ArrowRightIcon} from "../../../../icons";
-import {selectUserData} from "../../../../store/ducks/user/selectors";
+import {selectUserProfileLanguage} from "../../../../store/ducks/user/selectors";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import classnames from "classnames";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
@@ -14,7 +14,7 @@ import {SETTINGS_INFO_LANGUAGES} from "../../../../util/pathConstants";
 const Languages: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useLanguagesStyles();
-    const myProfile = useSelector(selectUserData);
+    const myProfileLanguage = useSelector(selectUserProfileLanguage);
 
     return (
         <>
@@ -40,7 +40,7 @@ const Languages: FC = (): ReactElement => {
                             Display language
                         </Typography>
                         <Typography variant={"subtitle1"} component={"div"}>
-                            {myProfile?.language}
+                            {myProfileLanguage}
                         </Typography>
                     </div>
                     {ArrowRightIcon}

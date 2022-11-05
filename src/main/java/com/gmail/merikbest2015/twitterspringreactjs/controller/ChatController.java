@@ -25,6 +25,11 @@ public class ChatController {
     private final ChatMapper chatMapper;
     private final SimpMessagingTemplate messagingTemplate;
 
+    @GetMapping("/{chatId}")
+    public ResponseEntity<ChatResponse> getChatById(@PathVariable Long chatId) {
+        return ResponseEntity.ok(chatMapper.getChatById(chatId));
+    }
+
     @GetMapping("/users")
     public ResponseEntity<List<ChatResponse>> getUserChats() {
         return ResponseEntity.ok(chatMapper.getUserChats());

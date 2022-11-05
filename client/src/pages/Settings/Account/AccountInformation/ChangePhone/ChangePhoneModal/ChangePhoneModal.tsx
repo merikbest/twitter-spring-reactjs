@@ -18,7 +18,11 @@ import {useChangePhoneModalStyles} from "./ChangePhoneModalStyles";
 import {TweetIcon} from "../../../../../../icons";
 import {ChangeInfoTextField} from "../../../../ChangeInfoTextField/ChangeInfoTextField";
 import {FilledSelect} from "../../../../../../components/FilledSelect/FilledSelect";
-import {selectUserData, selectUserIsLoading} from "../../../../../../store/ducks/user/selectors";
+import {
+    selectUserIsLoading,
+    selectUserProfileCountryCode,
+    selectUserProfilePhone
+} from "../../../../../../store/ducks/user/selectors";
 import {updatePhone} from "../../../../../../store/ducks/user/actionCreators";
 import {getCountryCode, getPhoneCode} from "../../../../../../util/countryCodes";
 import {EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS} from "../../../../../../util/url";
@@ -39,18 +43,19 @@ const SetPhoneFormSchema = yup.object().shape({
 const ChangePhoneModal: FC<ChangePhoneModalProps> = ({visible, onClose}): ReactElement | null => {
     const classes = useChangePhoneModalStyles();
     const dispatch = useDispatch();
-    const myProfile = useSelector(selectUserData);
+    const myProfilePhone = useSelector(selectUserProfilePhone);
+    const myProfileCountryCode = useSelector(selectUserProfileCountryCode);
     const isLoading = useSelector(selectUserIsLoading);
     const [countryCode, setCountryCode] = useState<string>("");
-    const {control, register, handleSubmit, watch, formState: {errors}, getValues} = useForm<PhoneFormProps>({
+    const {control, handleSubmit, formState: {errors}, getValues} = useForm<PhoneFormProps>({
         resolver: yupResolver(SetPhoneFormSchema),
         mode: "onChange",
     });
-    const phoneCode = getPhoneCode(myProfile?.countryCode);
+    const phoneCode = getPhoneCode(myProfileCountryCode);
 
     useEffect(() => {
-        if (myProfile) {
-            setCountryCode(getCountryCode(myProfile.countryCode));
+        if (myProfileCountryCode) {
+            setCountryCode(getCountryCode(myProfileCountryCode));
         }
     }, []);
 
@@ -83,7 +88,7 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = ({visible, onClose}): ReactE
                         Change phone
                     </Typography>
                     <Typography variant={"subtitle1"} component={"div"}>
-                        {`Your current phone number is ${phoneCode !== "" ? phoneCode : "none"}${myProfile?.phone}. What would you like to update it to?`}
+                        {`Your current phone number is ${phoneCode !== "" ? phoneCode : "none"}${myProfilePhone}. What would you like to update it to?`}
                     </Typography>
                 </div>
                 <form onSubmit={(!getValues("phone") || !!errors.phone) ? onClose : handleSubmit(onSubmit)}>

@@ -8,7 +8,11 @@ import ProfileDescriptionModal from "./ProfileDescriptionModal/ProfileDescriptio
 import ProfileUpdatedModal from "./ProfileUpdatedModal/ProfileUpdatedModal";
 import {Image} from "../../store/types/common";
 import {uploadImage} from "../../util/uploadImage";
-import {selectUserData} from "../../store/ducks/user/selectors";
+import {
+    selectUserProfileLocation,
+    selectUserProfileUsername,
+    selectUserProfileWebsite
+} from "../../store/ducks/user/selectors";
 import {updatedUserData} from "../../store/ducks/user/actionCreators";
 import {useSetupProfileModalStyles} from "./SetupProfileModalStyles";
 
@@ -20,7 +24,9 @@ interface SetupProfileModalProps {
 const SetupProfileModal: FC<SetupProfileModalProps> = ({visible, onClose}): ReactElement => {
     const classes = useSetupProfileModalStyles();
     const dispatch = useDispatch();
-    const myProfile = useSelector(selectUserData);
+    const username = useSelector(selectUserProfileUsername);
+    const location = useSelector(selectUserProfileLocation);
+    const website = useSelector(selectUserProfileWebsite);
     const [visibleProfileHeaderModal, setVisibleProfileHeaderModal] = React.useState<boolean>(false);
     const [visibleProfileDescriptionModal, setVisibleProfileDescriptionModal] = React.useState<boolean>(false);
     const [visibleProfileUpdatedModal, setVisibleProfileUpdatedModal] = React.useState<boolean>(false);
@@ -47,9 +53,9 @@ const SetupProfileModal: FC<SetupProfileModalProps> = ({visible, onClose}): Reac
         }
 
         dispatch(updatedUserData({
-            username: myProfile?.username!,
-            location: myProfile?.location!,
-            website: myProfile?.website!,
+            username: username!,
+            location: location!,
+            website: website!,
             avatar: avatarResponse!,
             wallpaper: wallpaperResponse!,
             about: bio

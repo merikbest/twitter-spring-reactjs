@@ -6,7 +6,7 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import {useProfileHeaderModalStyles} from "./ProfileHeaderModalStyles";
 import UploadProfileImage from "../../../components/EditProfileModal/UploadProfileImage";
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
-import {selectUserData} from "../../../store/ducks/user/selectors";
+import {selectUserProfileFullName, selectUserProfileUsername} from "../../../store/ducks/user/selectors";
 import {ImageObj} from "../../../components/AddTweetForm/AddTweetForm";
 
 interface ProfileHeaderModalProps {
@@ -29,7 +29,8 @@ const ProfileHeaderModal: FC<ProfileHeaderModalProps> = (
     }
 ): ReactElement => {
     const classes = useProfileHeaderModalStyles();
-    const myProfile = useSelector(selectUserData);
+    const myProfileFullName = useSelector(selectUserProfileFullName);
+    const myProfileUsername = useSelector(selectUserProfileUsername);
 
     return (
         <Dialog transitionDuration={0} open={open} onClose={onClose} hideBackdrop>
@@ -60,10 +61,10 @@ const ProfileHeaderModal: FC<ProfileHeaderModalProps> = (
                     </Avatar>
                 </div>
                 <Typography variant={"h3"} component={"div"}>
-                    {myProfile?.fullName}
+                    {myProfileFullName}
                 </Typography>
                 <Typography variant={"subtitle1"} component={"div"}>
-                    @{myProfile?.username}
+                    @{myProfileUsername}
                 </Typography>
                 <Button
                     className={classes.button}

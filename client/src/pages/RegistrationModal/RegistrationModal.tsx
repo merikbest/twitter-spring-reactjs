@@ -41,7 +41,7 @@ const RegistrationModal: FC<RegistrationModalProps> = (
     const [month, setMonth] = useState<string>("");
     const [day, setDay] = useState<number>(0);
     const [year, setYear] = useState<number>(0);
-    const {control, register, handleSubmit, setError, formState: {errors}} = useForm<RegistrationFormProps>({
+    const {control, handleSubmit, setError, formState: {errors}} = useForm<RegistrationFormProps>({
         resolver: yupResolver(RegistrationFormSchema)
     });
 
@@ -53,7 +53,7 @@ const RegistrationModal: FC<RegistrationModalProps> = (
         }
         const registrationData: RegistrationInfo = {username: data.username, email: data.email, birthday: birthday};
         AuthApi.checkEmail(registrationData)
-            .then((response) => {
+            .then(() => {
                 onChangeRegistrationInfo(registrationData);
                 onOpenCustomize(true);
             })

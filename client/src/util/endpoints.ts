@@ -15,6 +15,7 @@ export const API_AUTH_RESET_CURRENT = `${API_ENDPOINT}/auth/reset/current`;
 export const API_AUTH_USER = `${API_ENDPOINT}/auth/user`;
 
 // ChatApi
+export const API_CHAT = `${API_ENDPOINT}/chat`;
 export const API_CHAT_USERS = `${API_ENDPOINT}/chat/users`;
 export const API_CHAT_CREATE = `${API_ENDPOINT}/chat/create`;
 export const API_CHAT_MESSAGES = (chatId: number) => `${API_ENDPOINT}/chat/${chatId}/messages`;

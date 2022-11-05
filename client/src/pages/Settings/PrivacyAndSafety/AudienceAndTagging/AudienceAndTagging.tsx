@@ -6,7 +6,7 @@ import classnames from "classnames";
 
 import {useAudienceAndTaggingStyles} from "./AudienceAndTaggingStyles";
 import {ArrowRightIcon} from "../../../../icons";
-import {selectUserData} from "../../../../store/ducks/user/selectors";
+import {selectUserDataIsPrivateProfile} from "../../../../store/ducks/user/selectors";
 import {setUserLoadingStatus, updatePrivateProfile} from "../../../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../../../store/types";
 import {useGlobalStyles} from "../../../../util/globalClasses";
@@ -18,12 +18,12 @@ const AudienceAndTagging: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useAudienceAndTaggingStyles();
     const dispatch = useDispatch();
-    const myProfile = useSelector(selectUserData);
+    const isPrivateProfile = useSelector(selectUserDataIsPrivateProfile);
     const [checked, setChecked] = useState<boolean>(false);
 
     useEffect(() => {
-        if (myProfile) {
-            setChecked(myProfile?.isPrivateProfile ? myProfile.isPrivateProfile : false);
+        if (isPrivateProfile) {
+            setChecked(isPrivateProfile);
         }
 
         return () => {

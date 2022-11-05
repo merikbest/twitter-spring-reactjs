@@ -4,7 +4,7 @@ import {Divider, Typography} from "@material-ui/core";
 
 import {useChangeEmailStyles} from "./ChangeEmailStyles";
 import {ChangeInfoTextField} from "../../../ChangeInfoTextField/ChangeInfoTextField";
-import {selectUserData, selectUserIsSuccess} from "../../../../../store/ducks/user/selectors";
+import {selectUserIsSuccess, selectUserProfileEmail} from "../../../../../store/ducks/user/selectors";
 import ChangeEmailModal from "./ChangeEmailModal/ChangeEmailModal";
 import {setUserLoadingStatus} from "../../../../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../../../../store/types";
@@ -13,7 +13,7 @@ import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 const ChangeEmail: FC = (): ReactElement => {
     const classes = useChangeEmailStyles();
     const dispatch = useDispatch();
-    const myProfile = useSelector(selectUserData);
+    const myProfileEmail = useSelector(selectUserProfileEmail);
     const isUpdatedSuccess = useSelector(selectUserIsSuccess);
     const [visibleChangeEmailModal, setVisibleChangeEmailModal] = useState<boolean>(false);
 
@@ -37,7 +37,7 @@ const ChangeEmail: FC = (): ReactElement => {
                     label="Current"
                     type="text"
                     variant="filled"
-                    value={myProfile?.email}
+                    value={myProfileEmail}
                     fullWidth
                     disabled
                 />

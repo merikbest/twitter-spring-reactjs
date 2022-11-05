@@ -5,7 +5,7 @@ import classnames from "classnames";
 
 import {useChangeUsernameStyles} from "./ChangeUsernameStyles";
 import {ChangeInfoTextField} from "../../../ChangeInfoTextField/ChangeInfoTextField";
-import {selectUserData, selectUserIsLoading} from "../../../../../store/ducks/user/selectors";
+import {selectUserIsLoading, selectUserProfileUsername} from "../../../../../store/ducks/user/selectors";
 import {updateUsername} from "../../../../../store/ducks/user/actionCreators";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
@@ -14,13 +14,13 @@ const ChangeUsername: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useChangeUsernameStyles();
     const dispatch = useDispatch();
-    const myProfile = useSelector(selectUserData);
+    const myProfileUsername = useSelector(selectUserProfileUsername);
     const isLoading = useSelector(selectUserIsLoading);
     const [username, setUsername] = useState<string>("");
 
     useEffect(() => {
-        if (myProfile) {
-            setUsername(myProfile.username);
+        if (myProfileUsername) {
+            setUsername(myProfileUsername);
         }
     }, []);
 
@@ -33,7 +33,7 @@ const ChangeUsername: FC = (): ReactElement => {
     };
 
     const setSuggestedUsername = (): void => {
-        setUsername(`${myProfile?.username}123`);
+        setUsername(`${myProfileUsername}123`);
     };
 
     return (
@@ -60,7 +60,7 @@ const ChangeUsername: FC = (): ReactElement => {
                         variant={"body1"}
                         component={"span"}
                     >
-                        {`${myProfile?.username}123`}
+                        {`${myProfileUsername}123`}
                     </Typography>
                 </div>
                 <Divider/>

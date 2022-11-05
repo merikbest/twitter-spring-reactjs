@@ -2,6 +2,7 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 
 import {
+    API_CHAT,
     API_CHAT_ADD_MESSAGE,
     API_CHAT_ADD_MESSAGE_TWEET,
     API_CHAT_CREATE,
@@ -23,6 +24,18 @@ describe("ChatApi", () => {
     const mockChatErrorResponse = "Chat not found";
 
     beforeEach(() => mockAdapter.reset());
+
+    describe("should fetch ChatApi.getChatById", () => {
+        const mockURL = `${API_CHAT}/1`;
+
+        it("[200] should get chat by id Success", () => {
+            testApiCall(mockAdapter, "onGet", mockURL, 200, mockChats[0], ChatApi.getChatById, 1);
+        });
+
+        it("[404] should chat not found", () => {
+            testApiCall(mockAdapter, "onGet", mockURL, 404, mockUserErrorResponse, ChatApi.getChatById, 1);
+        });
+    });
 
     describe("should fetch ChatApi.getUserChats", () => {
         it("[200] should get user chats Success", () => {

@@ -4,7 +4,16 @@ import {Divider, Link as MuiLink, List, ListItem, Typography} from "@material-ui
 import {Link} from 'react-router-dom';
 
 import {ArrowRightIcon} from "../../../../icons";
-import {selectUserData} from "../../../../store/ducks/user/selectors";
+import {
+    selectUserDataIsPrivateProfile,
+    selectUserProfileCountryCode,
+    selectUserProfileEmail,
+    selectUserProfileGender,
+    selectUserProfileLanguage,
+    selectUserProfilePhone,
+    selectUserProfileRegistrationDate,
+    selectUserProfileUsername
+} from "../../../../store/ducks/user/selectors";
 import {formatScheduleDate} from "../../../../util/formatDate";
 import {getCountry, getPhoneCode} from "../../../../util/countryCodes";
 import {fetchUserData} from "../../../../store/ducks/user/actionCreators";
@@ -24,7 +33,14 @@ import {
 const AccountInformation: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
-    const myProfile = useSelector(selectUserData);
+    const username = useSelector(selectUserProfileUsername);
+    const countryCode = useSelector(selectUserProfileCountryCode);
+    const phone = useSelector(selectUserProfilePhone);
+    const email = useSelector(selectUserProfileEmail);
+    const isPrivateProfile = useSelector(selectUserDataIsPrivateProfile);
+    const registrationDate = useSelector(selectUserProfileRegistrationDate);
+    const language = useSelector(selectUserProfileLanguage);
+    const gender = useSelector(selectUserProfileGender);
 
     useEffect(() => {
         dispatch(fetchUserData());
@@ -40,7 +56,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 Username
                             </Typography>
                             <Typography variant={"subtitle2"} component={"div"}>
-                                @{myProfile?.username}
+                                @{username}
                             </Typography>
                         </div>
                         <div className={globalClasses.arrowIcon}>
@@ -55,7 +71,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 Phone
                             </Typography>
                             <Typography variant={"subtitle2"} component={"div"}>
-                                {`${getPhoneCode(myProfile?.countryCode)}${myProfile?.phone}`}
+                                {`${getPhoneCode(countryCode)}${phone}`}
                             </Typography>
                         </div>
                         <div className={globalClasses.arrowIcon}>
@@ -70,7 +86,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 Email
                             </Typography>
                             <Typography variant={"subtitle2"} component={"div"}>
-                                {myProfile?.email}
+                                {email}
                             </Typography>
                         </div>
                         <div className={globalClasses.arrowIcon}>
@@ -97,7 +113,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 Protected Tweets
                             </Typography>
                             <Typography variant={"subtitle2"} component={"div"}>
-                                {myProfile?.isPrivateProfile ? "Yes" : "No"}
+                                {isPrivateProfile ? "Yes" : "No"}
                             </Typography>
                         </div>
                         <div className={globalClasses.arrowIcon}>
@@ -110,7 +126,7 @@ const AccountInformation: FC = (): ReactElement => {
                         Account creation
                     </Typography>
                     <Typography variant={"subtitle2"} component={"div"}>
-                        {formatScheduleDate(new Date(myProfile?.registrationDate!))}
+                        {formatScheduleDate(new Date(registrationDate!))}
                     </Typography>
                 </div>
                 <Divider/>
@@ -121,7 +137,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 Country
                             </Typography>
                             <Typography variant={"subtitle2"} component={"div"}>
-                                {getCountry(myProfile?.countryCode)}
+                                {getCountry(countryCode)}
                             </Typography>
                         </div>
                         <div className={globalClasses.arrowIcon}>
@@ -136,7 +152,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 Languages
                             </Typography>
                             <Typography variant={"subtitle2"} component={"div"}>
-                                {myProfile?.language}
+                                {language}
                             </Typography>
                         </div>
                         <div className={globalClasses.arrowIcon}>
@@ -151,7 +167,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 Gender
                             </Typography>
                             <Typography variant={"subtitle2"} component={"div"}>
-                                {myProfile?.gender}
+                                {gender}
                             </Typography>
                         </div>
                         <div className={globalClasses.arrowIcon}>

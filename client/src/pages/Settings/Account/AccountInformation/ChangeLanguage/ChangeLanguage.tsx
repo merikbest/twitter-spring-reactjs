@@ -4,7 +4,7 @@ import {Button, Divider, FormControl, InputLabel, Typography} from "@material-ui
 
 import {useChangeLanguageStyles} from "./ChangeLanguageStyles";
 import {FilledSelect} from "../../../../../components/FilledSelect/FilledSelect";
-import {selectUserData, selectUserIsLoading} from "../../../../../store/ducks/user/selectors";
+import {selectUserIsLoading, selectUserProfileLanguage} from "../../../../../store/ducks/user/selectors";
 import {setUserLoadingStatus, updateLanguage} from "../../../../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../../../../store/types";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
@@ -12,13 +12,13 @@ import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 const ChangeLanguage: FC = (): ReactElement => {
     const classes = useChangeLanguageStyles();
     const dispatch = useDispatch();
-    const myProfile = useSelector(selectUserData);
+    const myProfileLanguage = useSelector(selectUserProfileLanguage);
     const isLoading = useSelector(selectUserIsLoading);
     const [language, setLanguage] = useState<string>("");
 
     useEffect(() => {
-        if (myProfile) {
-            setLanguage(myProfile?.language!);
+        if (myProfileLanguage) {
+            setLanguage(myProfileLanguage);
         }
 
         return () => {

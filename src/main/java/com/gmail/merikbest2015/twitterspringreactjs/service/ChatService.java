@@ -10,6 +10,8 @@ import java.util.Map;
 
 public interface ChatService {
 
+    ChatProjection getChatById(Long chatId);
+
     List<ChatProjection> getUserChats();
 
     ChatProjection createChat(Long userId);

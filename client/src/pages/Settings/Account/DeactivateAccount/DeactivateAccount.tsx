@@ -4,8 +4,13 @@ import {useSelector} from "react-redux";
 import {Avatar, Divider, Link as MuiLink, Typography} from "@material-ui/core";
 
 import {useDeactivateAccountStyles} from "./DeactivateAccountStyles";
-import {selectUserData} from "../../../../store/ducks/user/selectors";
-import {DEFAULT_PROFILE_IMG, REMOVE_TWITTER_PROFILE_FROM_GOOGLE_SEARCH} from "../../../../util/url";
+import {
+    selectUserDataId,
+    selectUserProfileAvatar,
+    selectUserProfileFullName,
+    selectUserProfileUsername
+} from "../../../../store/ducks/user/selectors";
+import {REMOVE_TWITTER_PROFILE_FROM_GOOGLE_SEARCH} from "../../../../util/url";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 import {PROFILE, SETTINGS_INFO} from "../../../../util/pathConstants";
@@ -13,23 +18,22 @@ import {PROFILE, SETTINGS_INFO} from "../../../../util/pathConstants";
 const DeactivateAccount: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useDeactivateAccountStyles();
-    const myProfile = useSelector(selectUserData);
+    const myProfileId = useSelector(selectUserDataId);
+    const myProfileAvatar = useSelector(selectUserProfileAvatar);
+    const myProfileFullName = useSelector(selectUserProfileFullName);
+    const myProfileUsername = useSelector(selectUserProfileUsername);
 
     return (
         <div>
-            <Link to={`${PROFILE}/${myProfile?.id}`} className={globalClasses.linkWrapper}>
+            <Link to={`${PROFILE}/${myProfileId}`} className={globalClasses.linkWrapper}>
                 <div className={classes.userInfoWrapper}>
-                    <Avatar
-                        className={globalClasses.avatar}
-                        alt={`avatar ${myProfile?.id}`}
-                        src={myProfile?.avatar?.src ? myProfile?.avatar?.src : DEFAULT_PROFILE_IMG}
-                    />
+                    <Avatar className={globalClasses.avatar} src={myProfileAvatar} alt={`avatar ${myProfileId}`}/>
                     <div className={classes.usernameWrapper}>
                         <Typography variant={"h6"} component={"div"}>
-                            {myProfile?.fullName}
+                            {myProfileFullName}
                         </Typography>
                         <Typography variant={"subtitle1"} component={"div"}>
-                            @{myProfile?.username}
+                            @{myProfileUsername}
                         </Typography>
                     </div>
                 </div>

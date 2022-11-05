@@ -1,6 +1,6 @@
-import React, {FC, FormEvent, ReactElement, useEffect, useState} from 'react';
+import React, {FC, FormEvent, ReactElement, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {Avatar, Button, Dialog, DialogContent, DialogTitle, List, ListItem, Typography} from "@material-ui/core";
+import {Button, Dialog, DialogContent, DialogTitle, List, ListItem, Typography} from "@material-ui/core";
 
 import {useListsModalStyles} from "./ListsModalStyles";
 import {
@@ -10,12 +10,9 @@ import {
 } from "../../store/ducks/lists/selectors";
 import {fetchSimpleLists, processUserToLists, resetListsState} from "../../store/ducks/lists/actionCreators";
 import CloseButton from "../CloseButton/CloseButton";
-import {TweetResponse, UserTweetResponse} from "../../store/types/tweet";
 import {SimpleListResponse} from "../../store/types/lists";
 import Spinner from "../Spinner/Spinner";
-import {UserProfileResponse} from "../../store/types/user";
-import {CheckIcon} from "../../icons";
-import LockIcon from "../LockIcon/LockIcon";
+import ListsModalItem from "./ListsModalItem/ListsModalItem";
 
 interface ListsModalProps {
     userId: number;
@@ -67,17 +64,12 @@ const ListsModal: FC<ListsModalProps> = ({userId, visible, onClose}): ReactEleme
     }
 
     return (
-        <Dialog open={visible} onClose={onClose} className={classes.dialog} aria-labelledby="form-dialog-title">
+        <Dialog open={visible} onClose={onClose} className={classes.dialog}>
             <form onSubmit={onSubmit}>
-                <DialogTitle id="form-dialog-title">
+                <DialogTitle>
                     <CloseButton onClose={onClose}/>
                     Pick a List
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        size="small"
-                    >
+                    <Button type="submit" variant="contained" color="primary" size="small">
                         Save
                     </Button>
                 </DialogTitle>
@@ -86,25 +78,19 @@ const ListsModal: FC<ListsModalProps> = ({userId, visible, onClose}): ReactEleme
                         Create a new List
                     </Typography>
                     <div className={classes.list}>
-                        {isSimpleListsLoading ? <Spinner/> : (
+                        {isSimpleListsLoading ? (
+                            <Spinner/>
+                        ) : (
                             <List>
                                 {lists.map((list) => (
                                     <ListItem
                                         key={list.id}
                                         onClick={() => onSelect(list.id)}
                                         selected={list.isMemberInList}
-                                        dense button
+                                        dense
+                                        button
                                     >
-                                        <Avatar
-                                            variant="square"
-                                            className={classes.listAvatar}
-                                            src={list?.wallpaper?.src ? list?.wallpaper?.src : list?.altWallpaper}
-                                        />
-                                        <Typography component={"span"}>
-                                            {list.name}
-                                        </Typography>
-                                        {list?.isPrivate && <LockIcon/>}
-                                        {list.isMemberInList && <span id={"check"}>{CheckIcon}</span>}
+                                        <ListsModalItem list={list}/>
                                     </ListItem>
                                 ))}
                             </List>

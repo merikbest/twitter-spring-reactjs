@@ -45,7 +45,7 @@ const ProfilePictureModal: FC<ProfilePictureModalProps> = (
                         onChangeImage={onChangeAvatar}
                         setupProfile
                     />
-                    <Avatar key={avatar?.src} src={avatar?.src ?? DEFAULT_PROFILE_IMG}/>
+                    <Avatar key={avatar?.src} src={avatar ? avatar.src : DEFAULT_PROFILE_IMG}/>
                 </div>
                 <Button
                     className={classes.button}

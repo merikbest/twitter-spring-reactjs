@@ -28,10 +28,9 @@ import ConversationUserInfo from "./ConversationUserInfo/ConversationUserInfo";
 interface ConversationInfoProps {
     participantId?: number;
     chatId?: number;
-    onBlockParticipant: () => void;
 }
 
-const ConversationInfo: FC<ConversationInfoProps> = ({participantId, chatId, onBlockParticipant}): ReactElement => {
+const ConversationInfo: FC<ConversationInfoProps> = ({participantId, chatId}): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useConversationInfoStyles();
     const dispatch = useDispatch();
@@ -50,7 +49,6 @@ const ConversationInfo: FC<ConversationInfoProps> = ({participantId, chatId, onB
     const onBlockUser = useCallback((event: React.MouseEvent<HTMLButtonElement>): void => {
         event.preventDefault();
         dispatch(processUserToBlocklist({userId: chatParticipant?.id!}));
-        onBlockParticipant();
         setVisibleBlockUserModal(false);
         dispatch(setOpenSnackBar(`@${chatParticipant?.username!} has been ${chatParticipant?.isUserBlocked ? "unblocked" : "blocked"}.`));
     }, [chatParticipant?.id]);

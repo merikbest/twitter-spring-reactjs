@@ -1,4 +1,4 @@
-import React, {ReactElement} from "react";
+import React, {memo, ReactElement} from "react";
 import {Paper, Typography} from "@material-ui/core";
 import classnames from "classnames";
 
@@ -7,7 +7,7 @@ import BackButton from "../../../components/BackButton/BackButton";
 import DirectMessages from "../../Settings/PrivacyAndSafety/DirectMessages/DirectMessages";
 import {useGlobalStyles} from "../../../util/globalClasses";
 
-const MessageSettings = (): ReactElement => {
+const MessageSettings = memo((): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useMessageSettingsStyles();
 
@@ -24,6 +24,6 @@ const MessageSettings = (): ReactElement => {
             </div>
         </Paper>
     );
-};
+});
 
 export default MessageSettings;

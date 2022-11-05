@@ -54,7 +54,7 @@ const NotificationsPage: FC = (): ReactElement => {
                 <Spinner/>
             ) : (
                 (!isNotificationLoading && !notifications.length) ? (
-                    <EmptyNotifications isNotification={true}/>
+                    <EmptyNotifications isNotification/>
                 ) : (
                     <>
                         {(tweetAuthors.length !== 0) && (

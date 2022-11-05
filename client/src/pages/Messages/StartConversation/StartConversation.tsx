@@ -1,14 +1,13 @@
-import React, {FC, ReactElement} from "react";
+import React, {memo, ReactElement} from "react";
 import {Button, Typography} from "@material-ui/core";
 
 import {useStartConversationStyles} from "./StartConversationStyles";
+import MessagesModal from "../MessagesModal/MessagesModal";
+import {useMessagesModal} from "../MessagesModal/useMessagesModal";
 
-interface StartConversationProps {
-    onOpenModalWindow: () => void;
-}
-
-const StartConversation: FC<StartConversationProps> = ({onOpenModalWindow}): ReactElement => {
+const StartConversation = memo((): ReactElement => {
     const classes = useStartConversationStyles();
+    const {visibleModalWindow, onOpenModalWindow, onCloseModalWindow} = useMessagesModal();
 
     return (
         <>
@@ -28,8 +27,9 @@ const StartConversation: FC<StartConversationProps> = ({onOpenModalWindow}): Rea
             >
                 Start a conversation
             </Button>
+            <MessagesModal visible={visibleModalWindow} onClose={onCloseModalWindow}/>
         </>
     );
-};
+});
 
 export default StartConversation;

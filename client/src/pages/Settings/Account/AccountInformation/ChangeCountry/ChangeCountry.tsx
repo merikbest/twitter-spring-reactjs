@@ -5,7 +5,7 @@ import classnames from "classnames";
 
 import {useChangeCountryStyles} from "./ChangeCountryStyles";
 import {FilledSelect} from "../../../../../components/FilledSelect/FilledSelect";
-import {selectUserData} from "../../../../../store/ducks/user/selectors";
+import {selectUserDataId, selectUserProfileCountry} from "../../../../../store/ducks/user/selectors";
 import {setUserLoadingStatus, updateCountry} from "../../../../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../../../../store/types";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
@@ -16,12 +16,13 @@ const ChangeCountry: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useChangeCountryStyles();
     const dispatch = useDispatch();
-    const myProfile = useSelector(selectUserData);
+    const myProfileId = useSelector(selectUserDataId);
+    const myProfileCountry = useSelector(selectUserProfileCountry);
     const [country, setCountry] = useState<string>("")
 
     useEffect(() => {
-        if (myProfile) {
-            setCountry(myProfile?.country!);
+        if (myProfileId) {
+            setCountry(myProfileCountry!);
         }
 
         return () => {

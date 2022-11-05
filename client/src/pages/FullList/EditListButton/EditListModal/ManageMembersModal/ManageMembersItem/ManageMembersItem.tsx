@@ -4,7 +4,7 @@ import {Avatar, Button, Paper, Typography} from "@material-ui/core";
 
 import {useManageMembersItemStyles} from "./ManageMembersItemStyles";
 import {DEFAULT_PROFILE_IMG} from "../../../../../../util/url";
-import {selectUserData} from "../../../../../../store/ducks/user/selectors";
+import {selectUserDataId} from "../../../../../../store/ducks/user/selectors";
 import {ListsOwnerMemberResponse} from "../../../../../../store/types/lists";
 import {processUserToListMembers} from "../../../../../../store/ducks/listMembers/actionCreators";
 import PopperUserWindow from "../../../../../../components/PopperUserWindow/PopperUserWindow";
@@ -32,7 +32,7 @@ const ManageMembersItem: FC<ManageMembersItemProps> = memo((
 ): ReactElement => {
     const classes = useManageMembersItemStyles();
     const dispatch = useDispatch();
-    const myProfile = useSelector(selectUserData);
+    const myProfileId = useSelector(selectUserDataId);
     const isSuggestedError = useSelector(selectIsListSuggestedError);
     const {visiblePopperWindow, handleHoverPopper, handleLeavePopper} = useHoverUser();
 
@@ -75,8 +75,8 @@ const ManageMembersItem: FC<ManageMembersItemProps> = memo((
                             </Typography>
                         </div>
                         <div className={classes.buttonWrapper}>
-                            {(listOwnerId === myProfile?.id) && (
-                                (user?.id === myProfile?.id) ? null : (
+                            {(listOwnerId === myProfileId) && (
+                                (user?.id === myProfileId) ? null : (
                                     <Button
                                         className={classes[user?.isMemberInList ? "containedButton" : "outlinedButton"]}
                                         onClick={onClickAddUserToList}

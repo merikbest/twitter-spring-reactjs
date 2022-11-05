@@ -9,13 +9,14 @@ import {AddListsIcon, EditIcon, ListsIcon} from "../../../icons";
 import {LISTS_MEMBERSHIPS} from "../../../util/pathConstants";
 import PageHeaderWrapper from "../../../components/PageHeaderWrapper/PageHeaderWrapper";
 import {selectIsLoading} from "../../../store/ducks/lists/selectors";
-import {selectUserData} from "../../../store/ducks/user/selectors";
+import {selectUserDataId, selectUserProfileUsername} from "../../../store/ducks/user/selectors";
 import CreateListsModal from "./CreateListsModal/CreateListsModal";
 
 const ListsHeader = (): ReactElement => {
     const classes = useListsHeaderStyles();
     const isLoading = useSelector(selectIsLoading);
-    const myProfile = useSelector(selectUserData);
+    const myProfileUsername = useSelector(selectUserProfileUsername);
+    const myProfileId = useSelector(selectUserDataId);
     const [visibleCreateListModal, setVisibleCreateListModal] = useState<boolean>(false);
     const [openPopover, setOpenPopover] = useState<boolean>(false);
 
@@ -43,7 +44,7 @@ const ListsHeader = (): ReactElement => {
                         Lists
                     </Typography>
                     <Typography variant="subtitle2" component={"div"}>
-                        @{myProfile?.username}
+                        @{myProfileUsername}
                     </Typography>
                 </div>
             )}
@@ -54,7 +55,7 @@ const ListsHeader = (): ReactElement => {
                         <div>
                             <ActionIconButton onClick={handleClick} actionText={"More"} icon={EditIcon}/>
                             {openPopover && (
-                                <Link to={`${LISTS_MEMBERSHIPS}/${myProfile?.id}`} className={classes.dropdownLink}>
+                                <Link to={`${LISTS_MEMBERSHIPS}/${myProfileId}`} className={classes.dropdownLink}>
                                     <div className={classes.dropdown}>
                                         <span className={classes.textIcon}>
                                             {ListsIcon}

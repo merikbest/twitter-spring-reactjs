@@ -1,4 +1,4 @@
-import React, {FC, ReactElement} from "react";
+import React, {memo, ReactElement} from "react";
 import classnames from "classnames";
 import {Paper, Typography} from "@material-ui/core";
 
@@ -8,14 +8,13 @@ import {NewMessageIcon, SettingsIcon} from "../../../icons";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {useMessagesHeaderStyles} from "./MessagesHeaderStyles";
 import ActionIcon from "../ActionIcon/ActionIcon";
+import MessagesModal from "../MessagesModal/MessagesModal";
+import {useMessagesModal} from "../MessagesModal/useMessagesModal";
 
-interface MessagesHeaderProps {
-    onOpenModalWindow: () => void;
-}
-
-const MessagesHeader: FC<MessagesHeaderProps> = ({onOpenModalWindow}): ReactElement => {
+const MessagesHeader = memo((): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useMessagesHeaderStyles();
+    const {visibleModalWindow, onOpenModalWindow, onCloseModalWindow} = useMessagesModal();
 
     return (
         <Paper className={classnames(globalClasses.pageHeader, classes.header)} variant="outlined">
@@ -40,8 +39,9 @@ const MessagesHeader: FC<MessagesHeaderProps> = ({onOpenModalWindow}): ReactElem
                     icon={NewMessageIcon}
                 />
             </div>
+            <MessagesModal visible={visibleModalWindow} onClose={onCloseModalWindow}/>
         </Paper>
     );
-};
+});
 
 export default MessagesHeader;

@@ -1,4 +1,5 @@
-import React, {FC, ReactElement} from 'react';
+import React, {FC, memo, ReactElement} from "react";
+import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {Avatar, Typography} from "@material-ui/core";
 import classNames from "classnames";
@@ -9,17 +10,25 @@ import {DEFAULT_PROFILE_IMG} from "../../../../util/url";
 import {formatChatMessageDate, formatDate} from "../../../../util/formatDate";
 import {textFormatter} from "../../../../util/textFormatter";
 import {CheckIcon} from "../../../../icons";
-import {ChatMessageResponse, ChatResponse} from "../../../../store/types/chat";
+import {ChatMessageResponse} from "../../../../store/types/chat";
+import {selectUserDataId} from "../../../../store/ducks/user/selectors";
+import {
+    selectChatFirstParticipantAvatar,
+    selectChatSecondParticipantAvatar,
+    selectChatSecondParticipantId
+} from "../../../../store/ducks/chat/selectors";
 
 interface ChatMessageProps {
     message: ChatMessageResponse;
     isParticipantMessage: boolean;
-    chat?: ChatResponse;
-    myProfileId?: number;
 }
 
-const ChatMessage: FC<ChatMessageProps> = ({message, chat, isParticipantMessage, myProfileId}): ReactElement => {
+const ChatMessage: FC<ChatMessageProps> = memo(({message, isParticipantMessage}): ReactElement => {
     const classes = useChatMessageStyles({isParticipantMessage});
+    const myProfileId = useSelector(selectUserDataId);
+    const chatSecondParticipantId = useSelector(selectChatSecondParticipantId);
+    const chatFirstParticipantAvatar = useSelector(selectChatFirstParticipantAvatar);
+    const chatSecondParticipantAvatar = useSelector(selectChatSecondParticipantAvatar);
 
     return (
         <>
@@ -27,17 +36,10 @@ const ChatMessage: FC<ChatMessageProps> = ({message, chat, isParticipantMessage,
                 {isParticipantMessage && (
                     <Avatar
                         className={classes.participantAvatar}
-                        src={(myProfileId === chat?.participants[1].user.id!) ? (
-                            (chat?.participants[0].user.avatar?.src) ? (
-                                chat.participants[0].user.avatar.src
-                            ) : (
-                                DEFAULT_PROFILE_IMG
-                            )
-                        ) : ((chat?.participants[1].user.avatar?.src) ? (
-                                chat.participants[1].user.avatar.src
-                            ) : (
-                                DEFAULT_PROFILE_IMG
-                            )
+                        src={(myProfileId === chatSecondParticipantId) ? (
+                            chatFirstParticipantAvatar
+                        ) : (
+                            chatSecondParticipantAvatar
                         )}
                     />
                 )}
@@ -111,6 +113,6 @@ const ChatMessage: FC<ChatMessageProps> = ({message, chat, isParticipantMessage,
             </div>
         </>
     );
-};
+});
 
 export default ChatMessage;

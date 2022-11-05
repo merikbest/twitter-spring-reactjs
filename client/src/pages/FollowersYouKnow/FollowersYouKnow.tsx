@@ -7,7 +7,7 @@ import {UserApi} from "../../services/api/userApi";
 import ConnectToUsers from "../../components/ConnectToUsers/ConnectToUsers";
 import {fetchUserProfile} from "../../store/ducks/userProfile/actionCreators";
 import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
-import {selectUserData} from "../../store/ducks/user/selectors";
+import {selectUserDataId} from "../../store/ducks/user/selectors";
 import Spinner from "../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {UserResponse} from "../../store/types/user";
@@ -22,7 +22,7 @@ const FollowersYouKnow: FC = (): ReactElement => {
     const params = useParams<{ id: string }>();
     const history = useHistory();
     const userProfile = useSelector(selectUserProfile);
-    const myProfile = useSelector(selectUserData);
+    const myProfileId = useSelector(selectUserDataId);
     const [overallFollowers, setOverallFollowers] = useState<UserResponse[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -44,10 +44,10 @@ const FollowersYouKnow: FC = (): ReactElement => {
     }, [userProfile]);
 
     useEffect(() => {
-        if (parseInt(params.id) === myProfile?.id) {
-            history.push(`${USER}/${myProfile?.id}/followers`);
+        if (parseInt(params.id) === myProfileId) {
+            history.push(`${USER}/${myProfileId}/followers`);
         }
-    }, [myProfile]);
+    }, [myProfileId]);
 
     return (
         <Paper className={globalClasses.pageContainer} variant="outlined">

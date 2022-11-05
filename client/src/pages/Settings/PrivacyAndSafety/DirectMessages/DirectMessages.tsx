@@ -1,23 +1,28 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
+import React, {FC, memo, ReactElement, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
 
-import {selectUserData} from "../../../../store/ducks/user/selectors";
+import {
+    selectUserData,
+    selectUserDataId,
+    selectUserDataIsMutedDirectMessages
+} from "../../../../store/ducks/user/selectors";
 import {setUserLoadingStatus, updateDirect} from "../../../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../../../store/types";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 import {DIRECT_MESSAGES, DIRECT_MESSAGES_RECEIPTS, DIRECT_MESSAGES_RECEIVE} from "../../../../util/url";
 
-const DirectMessages: FC = (): ReactElement => {
+const DirectMessages: FC = memo((): ReactElement => {
     const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
-    const myProfile = useSelector(selectUserData);
+    const myProfileId = useSelector(selectUserDataId);
+    const isMutedDirectMessages = useSelector(selectUserDataIsMutedDirectMessages);
     const [checked, setChecked] = useState<boolean>(false);
 
     useEffect(() => {
-        if (myProfile) {
-            setChecked(myProfile?.mutedDirectMessages ? myProfile.mutedDirectMessages : false);
+        if (myProfileId) {
+            setChecked(isMutedDirectMessages!);
         }
 
         return () => {
@@ -85,6 +90,6 @@ const DirectMessages: FC = (): ReactElement => {
             </div>
         </>
     );
-};
+});
 
 export default withDocumentTitle(DirectMessages)("Direct Messages");

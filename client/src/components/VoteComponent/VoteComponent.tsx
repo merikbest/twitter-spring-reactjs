@@ -4,7 +4,7 @@ import {Button, Typography} from "@material-ui/core";
 import isAfter from "date-fns/isAfter";
 
 import {useVoteComponentStyles} from "./VoteComponentStyles";
-import {selectUserData} from "../../store/ducks/user/selectors";
+import {selectUserDataId} from "../../store/ducks/user/selectors";
 import {vote} from "../../store/ducks/tweets/actionCreators";
 import {voteFormatDate} from "../../util/formatDate";
 import {PollResponse} from "../../store/types/tweet";
@@ -17,11 +17,11 @@ interface VoteComponentProps {
 const VoteComponent: FC<VoteComponentProps> = ({tweetId, poll}): ReactElement => {
     const classes = useVoteComponentStyles();
     const dispatch = useDispatch();
-    const myProfile = useSelector(selectUserData);
+    const myProfileId = useSelector(selectUserDataId);
 
     const userVoteSum = poll?.pollChoices.reduce((a, b) => a + b.votedUser.length, 0);
     const isUserVoted = poll?.pollChoices.map((pollChoice) =>
-        pollChoice.votedUser.findIndex((user) => user.id === myProfile?.id)).filter(value => value !== -1);
+        pollChoice.votedUser.findIndex((user) => user.id === myProfileId)).filter(value => value !== -1);
     const isPollEnded = isAfter(Date.now(), new Date(poll?.dateTime!));
 
     const onClickVote = (pollChoiceId: number): void => {

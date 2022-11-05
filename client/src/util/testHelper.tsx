@@ -163,6 +163,10 @@ export const testClickOnLink = (component: any, path: string, linkIndex: number)
 
 export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): RootState => {
     return {
+        chat: {
+            item: undefined,
+            loadingState: loadingStatus,
+        },
         tweetAdditionalInfo: {
             tweetAdditionalInfo: undefined,
             isTweetBookmarked: false,

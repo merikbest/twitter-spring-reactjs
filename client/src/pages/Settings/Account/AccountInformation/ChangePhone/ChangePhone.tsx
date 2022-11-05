@@ -5,7 +5,11 @@ import {Divider, Typography} from "@material-ui/core";
 import {useChangePhoneStyles} from "./ChangePhoneStyles";
 import {ChangeInfoTextField} from "../../../ChangeInfoTextField/ChangeInfoTextField";
 import ChangePhoneModal from "./ChangePhoneModal/ChangePhoneModal";
-import {selectUserData, selectUserIsSuccess} from "../../../../../store/ducks/user/selectors";
+import {
+    selectUserIsSuccess,
+    selectUserProfileCountryCode,
+    selectUserProfilePhone
+} from "../../../../../store/ducks/user/selectors";
 import {getPhoneCode} from "../../../../../util/countryCodes";
 import {setUserLoadingStatus} from "../../../../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../../../../store/types";
@@ -14,7 +18,8 @@ import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 const ChangePhone: FC = (): ReactElement => {
     const classes = useChangePhoneStyles();
     const dispatch = useDispatch();
-    const myProfile = useSelector(selectUserData);
+    const countryCode = useSelector(selectUserProfileCountryCode);
+    const phone = useSelector(selectUserProfilePhone);
     const isUpdatedSuccess = useSelector(selectUserIsSuccess);
     const [visibleChangePhoneModal, setVisibleChangePhoneModal] = useState<boolean>(false);
 
@@ -38,7 +43,7 @@ const ChangePhone: FC = (): ReactElement => {
                     label="Current"
                     type="text"
                     variant="filled"
-                    value={`${getPhoneCode(myProfile?.countryCode)}${myProfile?.phone}`}
+                    value={`${getPhoneCode(countryCode)}${phone}`}
                     fullWidth
                     disabled
                 />

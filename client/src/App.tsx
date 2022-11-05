@@ -215,7 +215,7 @@ const App: FC = (): ReactElement => {
                         <Route path={HOME_TRENDS} component={Trends} exact/>
                         <Route path={`${HOME_TWEET}/:id`} component={FullTweet} exact/>
                         <Route path={SEARCH} component={Explore}/>
-                        <Route path={NOTIFICATIONS} component={Notifications}/>
+                        <Route path={NOTIFICATIONS} component={Notifications} exact/>
                         <Route path={NOTIFICATIONS_TIMELINE} component={NotificationsTimeline} exact/>
                         <Route path={`${NOTIFICATION}/:id`} component={NotificationInfo} exact/>
                         <Route path={MESSAGES} component={Messages}/>

@@ -37,7 +37,6 @@ const NotificationsTimeline: FC = (): ReactElement => {
         <InfiniteScrollWrapper dataLength={tweets.length} pagesCount={pagesCount} loadItems={loadNotifications}>
             <Paper className={globalClasses.pageContainer} variant="outlined">
                 <PageHeaderWrapper backButton>
-                    <BackButton/>
                     <Typography variant={"h5"} component="div">
                         Tweets
                     </Typography>

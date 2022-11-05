@@ -7,6 +7,7 @@ import {ChatParticipantRequest} from "../../store/ducks/userProfile/contracts/st
 import {LeaveConversationRequest} from "../../store/ducks/chats/contracts/state";
 import {SearchByNameRequest} from "../../store/ducks/usersSearch/contracts/state";
 import {
+    API_CHAT,
     API_CHAT_ADD_MESSAGE,
     API_CHAT_ADD_MESSAGE_TWEET,
     API_CHAT_CREATE,
@@ -19,6 +20,9 @@ import {
 } from "../../util/endpoints";
 
 export const ChatApi = {
+    async getChatById(chatId: number): Promise<AxiosResponse<ChatResponse>> {
+        return await axios.get<ChatResponse>(`${API_CHAT}/${chatId}`);
+    },
     async getUserChats(): Promise<AxiosResponse<ChatResponse[]>> {
         return await axios.get<ChatResponse[]>(API_CHAT_USERS);
     },

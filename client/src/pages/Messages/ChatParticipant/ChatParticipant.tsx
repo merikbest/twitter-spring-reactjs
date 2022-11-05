@@ -1,35 +1,42 @@
-import React, {FC, ReactElement} from "react";
+import React, {FC, memo, ReactElement} from "react";
 import {useSelector} from "react-redux";
 
 import {useChatParticipantStyles} from "./ChatParticipantStyles";
 import {Avatar, ListItem, Typography} from "@material-ui/core";
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
-import {ChatResponse, ParticipantResponse} from "../../../store/types/chat";
-import {selectUserData} from "../../../store/ducks/user/selectors";
+import {ChatResponse} from "../../../store/types/chat";
+import {selectUserDataId} from "../../../store/ducks/user/selectors";
 
 interface ChatParticipantProps {
     chat: ChatResponse;
-    participant?: ParticipantResponse;
+    participantUserId?: number;
     handleListItemClick: (chat: ChatResponse) => void;
 }
 
-const ChatParticipant: FC<ChatParticipantProps> = ({chat, participant, handleListItemClick}): ReactElement => {
+const ChatParticipant: FC<ChatParticipantProps> = memo((
+    {
+        chat,
+        participantUserId,
+        handleListItemClick
+    }
+): ReactElement => {
     const classes = useChatParticipantStyles();
-    const myProfile = useSelector(selectUserData);
+    const myProfileId = useSelector(selectUserDataId);
+    const isParticipantSelected = chat.participants.findIndex((participant) => participant.id === participantUserId);
+    const isMyProfile = myProfileId === chat.participants[1].user.id;
 
     return (
         <ListItem
-            key={chat.id}
-            button
             className={classes.listItem}
-            id={(participant?.user.id === chat.participants[0].user.id!) ? ("selected") : ("")}
-            selected={participant?.user.id === chat.participants[0].user.id!}
+            id={isParticipantSelected ? "selected" : ""}
+            selected={isParticipantSelected !== -1}
             onClick={() => handleListItemClick(chat)}
+            button
         >
             <div className={classes.userWrapper}>
                 <Avatar
                     className={classes.userAvatar}
-                    src={(myProfile?.id === chat.participants[1].user.id!) ? (
+                    src={(isMyProfile) ? (
                         (chat.participants[0].user.avatar?.src) ? (
                             chat.participants[0].user.avatar.src
                         ) : (
@@ -44,14 +51,14 @@ const ChatParticipant: FC<ChatParticipantProps> = ({chat, participant, handleLis
                 />
                 <div>
                     <Typography variant={"h6"} component={"span"}>
-                        {(myProfile?.id === chat.participants[1].user.id!) ? (
+                        {(isMyProfile) ? (
                             chat.participants[0].user.fullName
                         ) : (
                             chat.participants[1].user.fullName
                         )}
                     </Typography>
                     <Typography variant={"subtitle1"} component={"span"} className={classes.username}>
-                        {(myProfile?.id === chat.participants[1].user.id!) ? (
+                        {(isMyProfile) ? (
                             `@${chat.participants[0].user.username}`
                         ) : (
                             `@${chat.participants[1].user.username}`
@@ -61,6 +68,6 @@ const ChatParticipant: FC<ChatParticipantProps> = ({chat, participant, handleLis
             </div>
         </ListItem>
     );
-};
+});
 
 export default ChatParticipant;

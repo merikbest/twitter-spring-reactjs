@@ -39,6 +39,29 @@ public class ChatControllerTest {
 
     @Test
     @WithUserDetails(USER_EMAIL)
+    @DisplayName("[200] GET /api/v1/chat/1 - Get user chat")
+    public void getChatById() throws Exception {
+        mockMvc.perform(get(URL_CHAT_BASIC + "/8"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").isNotEmpty())
+                .andExpect(jsonPath("$.creationDate").isNotEmpty())
+                .andExpect(jsonPath("$.participants").isNotEmpty())
+                .andExpect(jsonPath("$.participants[*]", hasSize(2)))
+                .andExpect(jsonPath("$.participants[0].user.id").value(2L))
+                .andExpect(jsonPath("$.participants[1].user.id").value(1L));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
+    @DisplayName("[404] GET /api/v1/chat/1 - Should chat Not Found")
+    public void getChatById_ShouldChatNotFound() throws Exception {
+        mockMvc.perform(get(URL_CHAT_BASIC + "/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("Chat not found")));
+    }
+
+    @Test
+    @WithUserDetails(USER_EMAIL)
     @DisplayName("[200] GET /api/v1/chat/users - Get user chats")
     public void getUserChats() throws Exception {
         mockMvc.perform(get(URL_CHAT_BASIC + "/users"))

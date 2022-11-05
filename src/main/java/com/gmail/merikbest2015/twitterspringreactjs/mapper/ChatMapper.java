@@ -38,6 +38,11 @@ public class ChatMapper {
         return message;
     }
 
+    public ChatResponse getChatById(Long chatId) {
+        ChatProjection chat = chatService.getChatById(chatId);
+        return basicMapper.convertToResponse(chat, ChatResponse.class);
+    }
+
     public List<ChatResponse> getUserChats() {
         List<ChatProjection> chats = chatService.getUserChats();
         return basicMapper.convertToResponseList(chats, ChatResponse.class);

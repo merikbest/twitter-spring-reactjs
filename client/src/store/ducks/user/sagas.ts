@@ -247,7 +247,6 @@ export function* updateLanguageRequest({payload}: UpdateLanguageActionInterface)
 
 export function* updateDirectRequest({payload}: UpdateDirectActionInterface) {
     try {
-        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const response: AxiosResponse<boolean> = yield call(UserSettingsApi.updateDirectMessageRequests, payload);
         yield put(setDirect(response.data));
     } catch (e) {

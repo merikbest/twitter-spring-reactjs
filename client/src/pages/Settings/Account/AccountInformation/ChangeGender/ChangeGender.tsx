@@ -7,7 +7,7 @@ import {useChangeGenderStyles} from "./ChangeGenderStyles";
 import {ChangeInfoTextField} from "../../../ChangeInfoTextField/ChangeInfoTextField";
 import {setUserLoadingStatus, updateGender} from "../../../../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../../../../store/types";
-import {selectUserData, selectUserIsLoading} from "../../../../../store/ducks/user/selectors";
+import {selectUserIsLoading, selectUserProfileGender} from "../../../../../store/ducks/user/selectors";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 
@@ -15,17 +15,17 @@ const ChangeGender: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useChangeGenderStyles();
     const dispatch = useDispatch();
-    const myProfile = useSelector(selectUserData);
+    const gender = useSelector(selectUserProfileGender);
     const isLoading = useSelector(selectUserIsLoading);
     const [selectedGender, setSelectedGender] = useState<string>("Female");
     const [otherGender, setOtherGender] = useState<string>("");
 
     useEffect(() => {
-        if (myProfile) {
-            if (myProfile.gender === "Female" || myProfile.gender === "Male") {
-                setSelectedGender(myProfile.gender);
+        if (gender) {
+            if (gender === "Female" || gender === "Male") {
+                setSelectedGender(gender);
             } else {
-                setOtherGender(myProfile?.gender ? myProfile.gender : "");
+                setOtherGender(gender ?? "");
             }
         }
 

@@ -21,7 +21,7 @@ describe("ListsModal", () => {
     });
 
     it("should render loading Spinner", () => {
-        const wrapper = mountWithStore(<ListsModal user={mockUserProfile} visible={true}
+        const wrapper = mountWithStore(<ListsModal userId={1} visible={true}
                                                    onClose={jest.fn()}/>, createMockRootState(LoadingStatus.LOADING));
 
         expect(mockDispatchFn).toHaveBeenCalledWith({payload: 1, type: ListsActionType.FETCH_SIMPLE_LISTS});
@@ -33,7 +33,7 @@ describe("ListsModal", () => {
     });
 
     it("should render correctly", () => {
-        const wrapper = mountWithStore(<ListsModal user={mockUserProfile} visible={true}
+        const wrapper = mountWithStore(<ListsModal userId={1} visible={true}
                                                    onClose={jest.fn()}/>, mockListsState);
 
         expect(wrapper.find(ListItem).length).toEqual(1);
@@ -44,7 +44,7 @@ describe("ListsModal", () => {
     });
 
     it("should click on select", () => {
-        const wrapper = mountWithStore(<ListsModal user={mockUserProfile} visible={true}
+        const wrapper = mountWithStore(<ListsModal userId={1} visible={true}
                                                    onClose={jest.fn()}/>, mockListsState);
 
         expect(wrapper.find(ListItem).at(0).prop("selected")).toBe(true);
@@ -54,7 +54,7 @@ describe("ListsModal", () => {
 
     it("should click submit", () => {
         const mockOnClose = jest.fn();
-        const wrapper = mountWithStore(<ListsModal user={mockUserProfile} visible={true}
+        const wrapper = mountWithStore(<ListsModal userId={1} visible={true}
                                                    onClose={mockOnClose}/>, mockListsState);
 
         wrapper.find(Button).at(0).simulate("submit");
@@ -68,7 +68,7 @@ describe("ListsModal", () => {
     });
 
     it("should render empty ListsModal", () => {
-        const wrapper = mountWithStore(<ListsModal user={mockUserProfile} visible={false}
+        const wrapper = mountWithStore(<ListsModal userId={1} visible={false}
                                                    onClose={jest.fn()}/>, mockListsState);
 
         expect(wrapper.find(Dialog).exists()).toBeFalsy();

@@ -1,4 +1,4 @@
-import React, {FC, ReactElement} from 'react';
+import React, {FC, memo, ReactElement} from "react";
 import {Avatar, Typography} from "@material-ui/core";
 
 import {useMessagesModalUserStyles} from "./MessagesModalUserStyles";
@@ -10,12 +10,12 @@ interface MessagesModalUser {
     user: UserResponse;
 }
 
-const MessagesModalUser: FC<MessagesModalUser> = ({user}): ReactElement => {
+const MessagesModalUser: FC<MessagesModalUser> = memo(({user}): ReactElement => {
     const classes = useMessagesModalUserStyles({mutedDirectMessages: user?.isMutedDirectMessages});
 
     return (
         <div className={classes.container}>
-            <Avatar className={classes.listAvatar} src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}/>
+            <Avatar className={classes.listAvatar} src={user?.avatar ? user?.avatar.src : DEFAULT_PROFILE_IMG}/>
             <div style={{flex: 1}}>
                 <div className={classes.header}>
                     <div className={classes.headerInfo}>
@@ -33,6 +33,6 @@ const MessagesModalUser: FC<MessagesModalUser> = ({user}): ReactElement => {
             </div>
         </div>
     );
-};
+});
 
 export default MessagesModalUser;

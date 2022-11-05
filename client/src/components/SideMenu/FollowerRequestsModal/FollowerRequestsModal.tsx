@@ -27,7 +27,7 @@ const FollowerRequestsModal: FC<FollowerRequestsModalProps> = ({visible, onClose
     const globalClasses = useGlobalStyles();
     const classes = useFollowerRequestsModalStyles();
     const dispatch = useDispatch();
-    const myProfile = useSelector(selectUserData);
+    const followerRequestsSize = useSelector(selectUserData);
     const isFollowerRequestsLoading = useSelector(selectIsFollowerRequestsLoading);
     const followerRequestsPagesCount = useSelector(selectFollowerRequestsPagesCount);
     const followerRequests = useSelector(selectFollowerRequestsItems);
@@ -64,7 +64,7 @@ const FollowerRequestsModal: FC<FollowerRequestsModalProps> = ({visible, onClose
                     {(isFollowerRequestsLoading && !followerRequests.length) ? (
                         <Spinner/>
                     ) : (
-                        (!isFollowerRequestsLoading && !myProfile?.followerRequestsSize) ? (
+                        (!isFollowerRequestsLoading && !followerRequestsSize) ? (
                             <div className={globalClasses.contentWrapper}>
                                 <EmptyPageDescription
                                     title={"You don’t have any follower requests"}

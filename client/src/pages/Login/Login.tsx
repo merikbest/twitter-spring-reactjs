@@ -7,7 +7,7 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 
 import {LoginTextField} from "./LoginInputField";
 import {useLoginStyles} from "./LoginStyles";
-import {selectUserStatus} from "../../store/ducks/user/selectors";
+import {selectUserIsError, selectUserStatus} from "../../store/ducks/user/selectors";
 import {fetchSignIn, setUserLoadingStatus} from "../../store/ducks/user/actionCreators";
 import {LoadingStatus} from "../../store/types";
 import {ACCOUNT_FORGOT, ACCOUNT_SIGNIN} from "../../util/pathConstants";
@@ -22,7 +22,7 @@ const Login: FC = (): ReactElement => {
     const classes = useLoginStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const errorStatus = useSelector(selectUserStatus);
+    const errorStatus = useSelector(selectUserIsError);
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
@@ -53,7 +53,7 @@ const Login: FC = (): ReactElement => {
             <Typography variant={"h4"} component={"div"}>
                 Log in to Twitter
             </Typography>
-            {(errorStatus === LoadingStatus.ERROR) && (
+            {(errorStatus) && (
                 <Typography variant={"body1"} component={"div"} className={classes.error}>
                     The username and password you entered did not match our records.
                     Please double-check and try again.

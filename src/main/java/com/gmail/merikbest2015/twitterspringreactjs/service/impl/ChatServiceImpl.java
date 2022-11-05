@@ -28,6 +28,13 @@ public class ChatServiceImpl implements ChatService {
     private final UserServiceImpl userService;
 
     @Override
+    public ChatProjection getChatById(Long chatId) {
+        Long userId = authenticationService.getAuthenticatedUserId();
+        return chatRepository.getChatById(chatId, userId)
+                .orElseThrow(() -> new ApiRequestException("Chat not found", HttpStatus.NOT_FOUND));
+    }
+
+    @Override
     public List<ChatProjection> getUserChats() {
         Long userId = authenticationService.getAuthenticatedUserId();
         List<ChatParticipantProjection> chatParticipants = chatParticipantRepository.getChatParticipants(userId);

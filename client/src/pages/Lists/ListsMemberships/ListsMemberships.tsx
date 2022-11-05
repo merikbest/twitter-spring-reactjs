@@ -5,7 +5,7 @@ import {Paper} from "@material-ui/core";
 
 import {fetchUserProfile} from "../../../store/ducks/userProfile/actionCreators";
 import {selectUserProfile} from "../../../store/ducks/userProfile/selectors";
-import {selectUserData} from "../../../store/ducks/user/selectors";
+import {selectUserDataId} from "../../../store/ducks/user/selectors";
 import {fetchUserListsById, resetListsState} from "../../../store/ducks/lists/actionCreators";
 import {selectIsLoaded, selectIsLoading, selectUserListsItems} from "../../../store/ducks/lists/selectors";
 import Spinner from "../../../components/Spinner/Spinner";
@@ -22,7 +22,7 @@ const ListsMemberships: FC = (): ReactElement => {
     const dispatch = useDispatch();
     const history = useHistory();
     const params = useParams<{ id: string }>();
-    const myProfile = useSelector(selectUserData);
+    const myProfileId = useSelector(selectUserDataId);
     const userProfile = useSelector(selectUserProfile);
     const lists = useSelector(selectUserListsItems);
     const isLoading = useSelector(selectIsLoading);
@@ -51,7 +51,7 @@ const ListsMemberships: FC = (): ReactElement => {
         <Paper className={globalClasses.pageContainer} variant="outlined">
             <PageHeaderWrapper backButton>
                 <PageHeaderTitle 
-                    title={`Lists ${(myProfile?.id === userProfile?.id) ? "you’re on" : ""}`} 
+                    title={`Lists ${(myProfileId === userProfile?.id) ? "you’re on" : ""}`}
                     subtitle={`@${userProfile?.username}`}
                 />
             </PageHeaderWrapper>
@@ -61,12 +61,12 @@ const ListsMemberships: FC = (): ReactElement => {
                 ) : (
                     (lists.length === 0 && isLoaded) ? (
                         <EmptyPageDescription
-                            title={(myProfile?.id === userProfile?.id) ? (
+                            title={(myProfileId === userProfile?.id) ? (
                                 "You haven’t been added to any Lists yet"
                             ) : (
                                 `@${userProfile?.username} hasn’t created any Lists`
                             )}
-                            subtitle={(myProfile?.id === userProfile?.id) ? (
+                            subtitle={(myProfileId === userProfile?.id) ? (
                                 "When someone adds you to a List, it’ll show up here."
                             ) : (
                                 "When they do, they’ll show up here."
