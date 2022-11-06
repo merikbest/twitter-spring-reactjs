@@ -1,12 +1,9 @@
-import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
-import {Button, Dialog, DialogContent, DialogTitle} from "@material-ui/core";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
+import React, {ChangeEvent, FC, ReactElement, useCallback, useEffect, useState} from 'react';
+import {Button, Dialog, DialogContent} from "@material-ui/core";
 
 import {useUnsentTweetsModalStyles} from "./UnsentTweetsModalStyles";
 import {TweetApi} from "../../../services/api/tweetApi";
 import AddTweetForm from "../AddTweetForm";
-import CloseButton from "../../CloseButton/CloseButton";
 import Spinner from "../../Spinner/Spinner";
 import {TweetResponse} from "../../../store/types/tweet";
 import UnsentTweetItem from "./UnsentTweetItem/UnsentTweetItem";
@@ -19,6 +16,8 @@ import {
     selectUnsentTweetsPagesCount
 } from "../../../store/ducks/unsentTweets/selectors";
 import InfiniteScrollWrapper from "../../InfiniteScrollWrapper/InfiniteScrollWrapper";
+import UnsentTweetsHeader from "./UnsentTweetItem/UnsentTweetsHeader/UnsentTweetsHeader";
+import UnsentTweetsTab from "./UnsentTweetItem/UnsentTweetsTab/UnsentTweetsTab";
 
 interface UnsentTweetsModalProps {
     visible?: boolean;
@@ -47,9 +46,9 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
         };
     }, [visible, visibleEditTweetModal]);
 
-    const handleChangeTab = (event: ChangeEvent<{}>, newValue: number): void => {
+    const handleChangeTab = useCallback((event: ChangeEvent<{}>, newValue: number): void => {
         setActiveTab(newValue);
-    };
+    }, []);
 
     const loadUnsentTweets = (page: number): void => {
         dispatch(fetchUnsentTweets(page));
@@ -64,10 +63,10 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
         }
     };
 
-    const onCloseEditTweetModal = (): void => {
+    const onCloseEditTweetModal = useCallback((): void => {
         setUnsentTweet(null);
         setVisibleEditTweetModal(false);
-    };
+    }, []);
 
     const onToggleCheckTweet = (tweetId: number): void => {
         const currentIndex = checkboxIndexes.findIndex((checkboxIndex) => checkboxIndex === tweetId) !== -1;
@@ -83,14 +82,14 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
         return checkboxIndexes.findIndex((checkboxIndex) => checkboxIndex === tweetId) !== -1;
     };
 
-    const onOpenEditTweetList = (): void => {
+    const onOpenEditTweetList = useCallback((): void => {
         setVisibleEditListFooter(true);
-    };
+    }, []);
 
-    const onCloseEditTweetList = (): void => {
+    const onCloseEditTweetList = useCallback((): void => {
         setVisibleEditListFooter(false);
         setCheckboxIndexes([]);
-    };
+    }, []);
 
     const onSelectAllTweets = (): void => {
         setCheckboxIndexes([...unsentTweets.map(tweet => tweet.id)]);
@@ -115,40 +114,19 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
 
     return (
         <Dialog className={classes.dialog} transitionDuration={0} open={visible} onClose={onClose}>
-            <DialogTitle>
-                <CloseButton onClose={!visibleEditTweetModal ? onClose : onCloseEditTweetModal}/>
-                {!visibleEditTweetModal && "Unsent Tweets"}
-                {visibleEditTweetModal ? (
-                    <Button
-                        className={classes.outlinedButton}
-                        onClick={onCloseEditTweetModal}
-                        type="submit"
-                        variant="text"
-                        color="primary"
-                    >
-                        Unsent Tweets
-                    </Button>
-                ) : (
-                    <Button
-                        onClick={visibleEditListFooter ? onCloseEditTweetList : onOpenEditTweetList}
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        size="small"
-                    >
-                        {visibleEditListFooter ? "Done" : "Edit"}
-                    </Button>
-                )}
-            </DialogTitle>
+            <UnsentTweetsHeader
+                classes={classes}
+                visibleEditTweetModal={visibleEditTweetModal}
+                visibleEditListFooter={visibleEditListFooter}
+                onOpenEditTweetList={onOpenEditTweetList}
+                onCloseEditTweetList={onCloseEditTweetList}
+                onCloseEditTweetModal={onCloseEditTweetModal}
+                onClose={onClose}
+            />
             {(!visibleEditTweetModal) ? (
                 <>
                     <DialogContent id="scrollableDiv" className={classes.content}>
-                        <div className={classes.tabs}>
-                            <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
-                                <Tab className={classes.tab} label="Scheduled"/>
-                                <Tab className={classes.tab} label="Drafts"/>
-                            </Tabs>
-                        </div>
+                        <UnsentTweetsTab classes={classes} activeTab={activeTab} handleChangeTab={handleChangeTab}/>
                         <InfiniteScrollWrapper
                             dataLength={unsentTweets.length}
                             pagesCount={pagesCount}
@@ -170,7 +148,7 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
                                                 tweet={tweet}
                                                 onOpenEditTweetModal={onOpenEditTweetModal}
                                                 onToggleCheckTweet={onToggleCheckTweet}
-                                                isTweetSelected={isTweetSelected}
+                                                isTweetSelected={isTweetSelected(tweet.id)}
                                                 visibleEditListFooter={visibleEditListFooter}
                                             />
                                         ))}

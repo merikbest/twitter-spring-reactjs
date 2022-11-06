@@ -26,7 +26,7 @@ const Quote: FC<QuoteProps> = memo(({quoteTweet, isTweetQuoted, isFullTweet}): R
                     <Avatar
                         className={classes.quoteTweetAvatar}
                         alt={`avatar ${quoteTweet.user.avatar?.id}`}
-                        src={quoteTweet.user.avatar?.src ?? DEFAULT_PROFILE_IMG}
+                        src={quoteTweet.user.avatar ? quoteTweet.user.avatar.src : DEFAULT_PROFILE_IMG}
                     />
                     <Typography component={"span"} className={classes.quoteTweetFullName}>
                         {quoteTweet.user.fullName}

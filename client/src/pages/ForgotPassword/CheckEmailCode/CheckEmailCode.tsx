@@ -17,7 +17,7 @@ const CheckEmailCode: FC = (): ReactElement => {
     const verifyResetCode = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
 
-        if (resetCode === "") {
+        if (!resetCode) {
             setError(true);
         } else {
             AuthApi.getUserByResetCode(resetCode)

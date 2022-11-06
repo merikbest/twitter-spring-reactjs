@@ -1,4 +1,4 @@
-import React, {FC, ReactElement} from 'react';
+import React, {FC, memo, ReactElement} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Button, Typography} from "@material-ui/core";
 import isAfter from "date-fns/isAfter";
@@ -14,7 +14,7 @@ interface VoteComponentProps {
     poll?: PollResponse;
 }
 
-const VoteComponent: FC<VoteComponentProps> = ({tweetId, poll}): ReactElement => {
+const VoteComponent: FC<VoteComponentProps> = memo(({tweetId, poll}): ReactElement => {
     const classes = useVoteComponentStyles();
     const dispatch = useDispatch();
     const myProfileId = useSelector(selectUserDataId);
@@ -79,6 +79,6 @@ const VoteComponent: FC<VoteComponentProps> = ({tweetId, poll}): ReactElement =>
             )}
         </>
     );
-};
+});
 
 export default VoteComponent;

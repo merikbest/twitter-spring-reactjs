@@ -17,7 +17,7 @@ export const listDetailReducer = produce((draft: Draft<ListDetailState>, action:
             break;
 
         case ListDetailActionsType.UPDATE_FOLLOW_LIST_DETAIL:
-            if (draft.item !== undefined) {
+            if (draft.item) {
                 draft.item.isFollower = action.payload;
                 draft.item.followersSize = action.payload ? draft.item.followersSize + 1 : draft.item.followersSize - 1;
                 draft.loadingState = LoadingStatus.LOADING;

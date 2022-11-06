@@ -1,6 +1,6 @@
-import React, {FC, memo, ReactElement} from 'react';
+import React, {FC, memo, ReactElement} from "react";
 import {useSelector} from "react-redux";
-import {Paper} from '@material-ui/core';
+import {Paper} from "@material-ui/core";
 
 import {useTweetComponentStyles} from "./TweetComponentStyles";
 import {selectUserDataId} from "../../store/ducks/user/selectors";
@@ -35,12 +35,13 @@ const TweetComponent: FC<TweetComponentProps> = memo(({tweet, activeTab, isTweet
     const myProfileId = useSelector(selectUserDataId);
     const isUserCanReply = (tweet?.replyType === ReplyType.MENTION) && (myProfileId !== tweet?.user.id);
     const classes = useTweetComponentStyles({isTweetImageModal});
+    const avatar = tweet?.user.avatar ? tweet?.user.avatar.src : DEFAULT_PROFILE_IMG;
 
     return (
         <Paper className={classes.container} variant="outlined">
             <TweetActions tweetId={tweet?.id} retweetsUserIds={tweet?.retweetsUserIds} activeTab={activeTab}/>
             <div className={classes.tweetWrapper}>
-                <TweetAvatar userId={tweet?.user.id} src={tweet?.user.avatar?.src ?? DEFAULT_PROFILE_IMG}/>
+                <TweetAvatar userId={tweet?.user.id} src={avatar}/>
                 <div className={classes.tweetContainer}>
                     <div className={classes.header}>
                         <TweetHeader

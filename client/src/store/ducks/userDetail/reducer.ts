@@ -17,7 +17,7 @@ export const userDetailReducer = produce((draft: Draft<UserDetailState>, action:
             break;
 
         case UserDetailActionsType.SET_FOLLOW_TO_USER_DETAIL:
-            if (draft.item !== undefined) {
+            if (draft.item) {
                 draft.item.isFollower = action.payload;
                 draft.item.followingSize = action.payload ? draft.item.followingSize + 1 : draft.item.followingSize - 1;
                 draft.loadingState = LoadingStatus.LOADED;
@@ -25,14 +25,14 @@ export const userDetailReducer = produce((draft: Draft<UserDetailState>, action:
             break;
 
         case UserDetailActionsType.SET_BLOCK_USER_DETAIL:
-            if (draft.item !== undefined) {
+            if (draft.item) {
                 draft.item.isUserBlocked = action.payload;
                 draft.loadingState = LoadingStatus.LOADED;
             }
             break;
 
         case UserDetailActionsType.SET_FOLLOW_REQUEST_TO_USER_DETAIL:
-            if (draft.item !== undefined) {
+            if (draft.item) {
                 draft.item.isWaitingForApprove = action.payload;
                 draft.loadingState = LoadingStatus.LOADED;
             }

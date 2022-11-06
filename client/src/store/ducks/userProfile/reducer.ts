@@ -23,7 +23,7 @@ export const userProfileReducer = produce((draft: Draft<UserProfileState>, actio
             break;
 
         case UserProfileActionsType.SET_FOLLOW_TO_USER_PROFILE:
-            if (draft.user !== undefined) {
+            if (draft.user) {
                 draft.user.isFollower = action.payload;
                 draft.user.followingSize = action.payload ? draft.user.followingSize + 1 : draft.user.followingSize - 1;
                 draft.loadingState = LoadingStatus.SUCCESS;
@@ -31,28 +31,28 @@ export const userProfileReducer = produce((draft: Draft<UserProfileState>, actio
             break;
 
         case UserProfileActionsType.SET_SUBSCRIBE_TO_USER_PROFILE:
-            if (draft.user !== undefined) {
+            if (draft.user) {
                 draft.user.isSubscriber = action.payload;
                 draft.loadingState = LoadingStatus.SUCCESS;
             }
             break;
 
         case UserProfileActionsType.SET_FOLLOW_REQUEST_TO_USER_PROFILE:
-            if (draft.user !== undefined) {
+            if (draft.user) {
                 draft.user.isWaitingForApprove = action.payload;
                 draft.loadingState = LoadingStatus.SUCCESS;
             }
             break;
 
         case UserProfileActionsType.SET_BLOCKED:
-            if (draft.user !== undefined) {
+            if (draft.user) {
                 draft.user.isUserBlocked = action.payload;
                 draft.loadingState = LoadingStatus.SUCCESS;
             }
             break;
 
         case UserProfileActionsType.SET_MUTED:
-            if (draft.user !== undefined) {
+            if (draft.user) {
                 draft.user.isUserMuted = action.payload;
                 draft.loadingState = LoadingStatus.SUCCESS;
             }

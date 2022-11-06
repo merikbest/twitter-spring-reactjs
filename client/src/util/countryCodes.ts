@@ -1,19 +1,19 @@
 export const getPhoneCode = (userCountryCode?: string): string => {
     const countryCode = countryCodes.find((value) => (value.countryCode === userCountryCode));
 
-    return (countryCode !== undefined) ? countryCode.phoneCode : "";
+    return countryCode ? countryCode.phoneCode : "";
 };
 
 export const getCountryCode = (userCountryCode?: string): string => {
     const countryCode = countryCodes.find((value) => (value.countryCode === userCountryCode));
 
-    return (countryCode !== undefined) ? countryCode.countryCode : "";
+    return countryCode ? countryCode.countryCode : "";
 };
 
 export const getCountry = (userCountryCode?: string): string => {
     const countryCode = countryCodes.find((value) => (value.countryCode === userCountryCode));
 
-    return (countryCode !== undefined) ? countryCode.country : "";
+    return countryCode ? countryCode.country : "";
 };
 
 export const countryCodes = [

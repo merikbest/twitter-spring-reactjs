@@ -40,28 +40,28 @@ export const notificationsReducer = produce((draft: Draft<NotificationsState>, a
             break;
 
         case NotificationsActionsType.SET_FOLLOW_TO_NOTIFICATION_INFO:
-            if (draft.notificationInfo !== undefined) {
+            if (draft.notificationInfo) {
                 draft.notificationInfo.user.isFollower = action.payload;
                 draft.notificationInfoLoadingState = LoadingStatus.LOADED;
             }
             break;
 
         case NotificationsActionsType.SET_BLOCKED_NOTIFICATION_INFO:
-            if (draft.notificationInfo !== undefined) {
+            if (draft.notificationInfo) {
                 draft.notificationInfo.user.isUserBlocked = action.payload;
                 draft.notificationInfoLoadingState = LoadingStatus.LOADED;
             }
             break;
 
         case NotificationsActionsType.SET_FOLLOW_REQUEST_TO_NOTIFICATION_INFO:
-            if (draft.notificationInfo !== undefined) {
+            if (draft.notificationInfo) {
                 draft.notificationInfo.user.isWaitingForApprove = action.payload;
                 draft.notificationInfoLoadingState = LoadingStatus.LOADED;
             }
             break;
 
         case NotificationsActionsType.UPDATE_NOTIFICATION_INFO_TWEET:
-            if (draft.notificationInfo !== undefined) {
+            if (draft.notificationInfo) {
                 if (action.payload.notificationType === NotificationType.LIKE) {
                     const payload = action.payload as NotificationResponse;
                     draft.notificationInfo.tweet.isTweetLiked = payload.tweet.notificationCondition;

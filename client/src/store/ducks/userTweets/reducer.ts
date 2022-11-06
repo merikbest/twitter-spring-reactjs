@@ -22,7 +22,7 @@ export const userTweetsReducer = produce((draft: Draft<UserTweetsState>, action:
             break;
 
         case UserTweetsActionType.SET_FOLLOW_TO_USERS_TWEETS_STATE:
-            if (action.payload.tweetId !== undefined) {
+            if (action.payload.tweetId) {
                 const followUserTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.tweetId);
                 if (followUserTweetIndex !== -1) draft.items[followUserTweetIndex].user.isFollower = action.payload.isFollower;
             } else {
@@ -38,7 +38,7 @@ export const userTweetsReducer = produce((draft: Draft<UserTweetsState>, action:
             break;
 
         case UserTweetsActionType.SET_BLOCKED_USERS_TWEETS_STATE:
-            if (action.payload.tweetId !== undefined) {
+            if (action.payload.tweetId) {
                 const blockedUserTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.tweetId);
                 if (blockedUserTweetIndex !== -1) draft.items[blockedUserTweetIndex].user.isUserBlocked = action.payload.isUserBlocked;
             } else {
@@ -55,7 +55,7 @@ export const userTweetsReducer = produce((draft: Draft<UserTweetsState>, action:
             break;
 
         case UserTweetsActionType.SET_MUTED_USERS_TWEETS_STATE:
-            if (action.payload.tweetId !== undefined) {
+            if (action.payload.tweetId) {
                 const mutedUserTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.tweetId);
                 if (mutedUserTweetIndex !== -1) draft.items[mutedUserTweetIndex].user.isUserMuted = action.payload.isUserMuted;
             } else {

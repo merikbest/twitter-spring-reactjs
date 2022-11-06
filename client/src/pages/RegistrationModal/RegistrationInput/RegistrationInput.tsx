@@ -37,7 +37,7 @@ const RegistrationInput: FC<RegistrationInputProps> = (
                 {focused && (
                     <div className={classes.inputCount}>
                         <InputLabel style={{marginTop: -5, fontSize: 12}}>
-                            {value?.length === undefined ? 0 : value.length} / {maxTextLength}
+                            {!value?.length ? 0 : value.length} / {maxTextLength}
                         </InputLabel>
                     </div>
                 )}

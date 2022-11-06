@@ -1,31 +1,22 @@
-import React, {FC, MouseEvent, ReactElement} from 'react';
+import React, {FC, memo, MouseEvent, ReactElement} from "react";
 import {useDispatch} from "react-redux";
 import {useHistory} from "react-router-dom";
-import {Avatar, Button, Paper, Typography} from "@material-ui/core";
+import {Button, Paper} from "@material-ui/core";
 import classNames from "classnames";
 
 import {useFollowerRequestsItemStyles} from "./FollowerRequestsItemStyles";
-import {DEFAULT_PROFILE_IMG} from "../../../../util/url";
-import {HoverUserProps, withHoverUser} from "../../../../hoc/withHoverUser";
-import PopperUserWindow from "../../../PopperUserWindow/PopperUserWindow";
 import {FollowerUserResponse} from "../../../../store/types/user";
 import {acceptFollowRequest, declineFollowRequest} from "../../../../store/ducks/followerRequests/actionCreators";
 import {PROFILE} from "../../../../util/pathConstants";
+import UserRequestsInfo from "./UserRequestsInfo/UserRequestsInfo";
+import UserRequestsAvatar from "./UserRequestsAvatar/UserRequestsAvatar";
 
 interface FollowerRequestsItemProps {
     user: FollowerUserResponse,
     onClose: () => void;
 }
 
-const FollowerRequestsItem: FC<FollowerRequestsItemProps & HoverUserProps> = (
-    {
-        user,
-        onClose,
-        visiblePopperWindow,
-        handleHoverPopper,
-        handleLeavePopper
-    }
-): ReactElement => {
+const FollowerRequestsItem: FC<FollowerRequestsItemProps> = memo(({user, onClose}): ReactElement => {
     const classes = useFollowerRequestsItemStyles();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -49,29 +40,13 @@ const FollowerRequestsItem: FC<FollowerRequestsItemProps & HoverUserProps> = (
 
     return (
         <Paper onClick={onClickUser} className={classes.container} variant="outlined">
-            <Avatar
-                className={classes.listAvatar}
-                src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}
-            />
+            <UserRequestsAvatar avatar={user.avatar}/>
             <div style={{flex: 1}}>
-                <div className={classes.header}>
-                    <div id={"handleLeavePopper"} onMouseLeave={handleLeavePopper} className={classes.headerUserInfo}>
-                        <Typography id={"handleHoverPopper"} variant={"h6"} onMouseEnter={() => handleHoverPopper!(user.id!)}>
-                            {user?.fullName}
-                        </Typography>
-                        <PopperUserWindow visible={visiblePopperWindow}/>
-                        <Typography variant={"subtitle1"}>
-                            @{user?.username}
-                        </Typography>
-                        <Typography variant={"body1"}>
-                            {user?.about}
-                        </Typography>
-                    </div>
-                </div>
+                <UserRequestsInfo user={user}/>
                 <div className={classes.buttonWrapper}>
                     <div className={classNames(classes.buttonItemWrapper, classes.declineButton)}>
                         <Button
-                            onClick={(event) => handleDeclineFollowerRequest(event)}
+                            onClick={handleDeclineFollowerRequest}
                             color="primary"
                             variant="outlined"
                             size="small"
@@ -82,7 +57,7 @@ const FollowerRequestsItem: FC<FollowerRequestsItemProps & HoverUserProps> = (
                     </div>
                     <div className={classNames(classes.buttonItemWrapper, classes.acceptButton)}>
                         <Button
-                            onClick={(event) => handleAcceptFollowerRequest(event)}
+                            onClick={handleAcceptFollowerRequest}
                             color="primary"
                             variant="outlined"
                             size="small"
@@ -95,6 +70,6 @@ const FollowerRequestsItem: FC<FollowerRequestsItemProps & HoverUserProps> = (
             </div>
         </Paper>
     );
-};
+});
 
-export default withHoverUser(FollowerRequestsItem);
+export default FollowerRequestsItem;

@@ -91,7 +91,7 @@ const SetPasswordModal: FC<SetPasswordProps> = ({email, open, onClose}): ReactEl
                     </div>
                     <Button
                         className={classes.button}
-                        disabled={watch("password") === ""}
+                        disabled={!watch("password")}
                         type="submit"
                         variant="contained"
                         color="primary"

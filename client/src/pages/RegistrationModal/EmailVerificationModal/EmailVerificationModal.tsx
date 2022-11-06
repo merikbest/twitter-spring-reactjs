@@ -61,7 +61,7 @@ const EmailVerificationModal: FC<CustomizeModalProps> = ({email, open, onClose, 
                 </MuiLink>
                 <div className={classes.buttonWrapper}>
                     <Button
-                        disabled={verificationCode === ""}
+                        disabled={!verificationCode}
                         onClick={checkEmailVerificationCode}
                         variant="contained"
                         color="primary"

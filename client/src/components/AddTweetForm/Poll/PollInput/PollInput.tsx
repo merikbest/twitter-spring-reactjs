@@ -23,7 +23,7 @@ const PollInput: FC<PollInputProps> = memo(({id, onChange, value, label}): React
             <div className={classes.content}>
                 {focused && (
                     <InputLabel style={{fontSize: 12}}>
-                        {value?.length === undefined ? 0 : value.length} / {25}
+                        {!value?.length ? 0 : value.length} / {25}
                     </InputLabel>
                 )}
             </div>

@@ -42,7 +42,7 @@ const TweeterInput: FC<TweeterInputProps> = (
                 {focused && (
                     <div className={classes.inputCount}>
                         <InputLabel style={{fontSize: 13}}>
-                            {value?.length === undefined ? 0 : value.length} / {maxTextLength}
+                            {!value?.length ? 0 : value.length} / {maxTextLength}
                         </InputLabel>
                     </div>
                 )}

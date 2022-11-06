@@ -23,28 +23,28 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
             break;
 
         case UserActionsType.SET_UNREAD_MESSAGE:
-            if (draft.data !== undefined) {
+            if (draft.data) {
                 draft.data.unreadMessagesSize = draft.data.unreadMessagesSize + 1;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
         case UserActionsType.SET_USERNAME:
-            if (draft.data !== undefined) {
+            if (draft.data) {
                 draft.data.username = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
         case UserActionsType.SET_EMAIL:
-            if (draft.data !== undefined) {
+            if (draft.data) {
                 draft.data.email = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
         case UserActionsType.SET_PHONE:
-            if (draft.data !== undefined) {
+            if (draft.data) {
                 draft.data.countryCode = action.payload.countryCode;
                 draft.data.phone = action.payload.phone;
                 draft.status = LoadingStatus.LOADED;
@@ -52,91 +52,91 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
             break;
 
         case UserActionsType.SET_COUNTRY:
-            if (draft.data !== undefined) {
+            if (draft.data) {
                 draft.data.country = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
         case UserActionsType.SET_GENDER:
-            if (draft.data !== undefined) {
+            if (draft.data) {
                 draft.data.gender = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
         case UserActionsType.SET_LANGUAGE:
-            if (draft.data !== undefined) {
+            if (draft.data) {
                 draft.data.language = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
         case UserActionsType.SET_DIRECT:
-            if (draft.data !== undefined) {
+            if (draft.data) {
                 draft.data.mutedDirectMessages = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
         case UserActionsType.SET_PRIVATE_PROFILE:
-            if (draft.data !== undefined) {
+            if (draft.data) {
                 draft.data.isPrivateProfile = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
         case UserActionsType.SET_COLOR_SCHEME:
-            if (draft.data !== undefined) {
+            if (draft.data) {
                 draft.data.colorScheme = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
         case UserActionsType.SET_BACKGROUND_COLOR:
-            if (draft.data !== undefined) {
+            if (draft.data) {
                 draft.data.backgroundColor = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
         case UserActionsType.SET_NEW_NOTIFICATION:
-            if (draft.data !== undefined) {
+            if (draft.data) {
                 draft.data.notificationsCount = draft.data.notificationsCount + 1;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
         case UserActionsType.SET_FOLLOWERS_SIZE:
-            if (draft.data !== undefined) {
+            if (draft.data) {
                 draft.data.followersSize = draft.data.followersSize + 1;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
         case UserActionsType.SET_PROFILE_STARTED:
-            if (draft.data !== undefined) {
+            if (draft.data) {
                 draft.data.profileStarted = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
         case UserActionsType.SET_PIN_TWEET_ID:
-            if (draft.data !== undefined) {
+            if (draft.data) {
                 draft.data.pinnedTweetId = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
         case UserActionsType.SET_READ_MESSAGE:
-            if (draft.data !== undefined) {
+            if (draft.data) {
                 draft.data.unreadMessagesSize = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
 
         case UserActionsType.SET_USER_FOLLOWING:
-            if (draft.data !== undefined) {
+            if (draft.data) {
                 draft.data.followersSize = action.payload ? draft.data.followersSize + 1 : draft.data.followersSize - 1;
                 draft.status = LoadingStatus.LOADED;
             }

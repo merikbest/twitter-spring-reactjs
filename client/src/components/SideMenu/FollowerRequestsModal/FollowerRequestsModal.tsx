@@ -1,11 +1,10 @@
-import React, {FC, ReactElement, useEffect} from 'react';
+import React, {FC, ReactElement, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Dialog, DialogContent} from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 import {useFollowerRequestsModalStyles} from "./FollowerRequestsModalSyles";
 import CloseButton from "../../CloseButton/CloseButton";
-import {selectUserData} from "../../../store/ducks/user/selectors";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {fetchFollowerRequests, resetFollowerRequestsState} from "../../../store/ducks/followerRequests/actionCreators";
 import {
@@ -27,7 +26,6 @@ const FollowerRequestsModal: FC<FollowerRequestsModalProps> = ({visible, onClose
     const globalClasses = useGlobalStyles();
     const classes = useFollowerRequestsModalStyles();
     const dispatch = useDispatch();
-    const followerRequestsSize = useSelector(selectUserData);
     const isFollowerRequestsLoading = useSelector(selectIsFollowerRequestsLoading);
     const followerRequestsPagesCount = useSelector(selectFollowerRequestsPagesCount);
     const followerRequests = useSelector(selectFollowerRequestsItems);
@@ -51,7 +49,7 @@ const FollowerRequestsModal: FC<FollowerRequestsModalProps> = ({visible, onClose
 
     return (
         <Dialog open={visible} onClose={onClose} className={classes.dialog}>
-            <DialogTitle id="form-dialog-title">
+            <DialogTitle>
                 <CloseButton onClose={onClose}/>
                 Follower requests
             </DialogTitle>
@@ -64,7 +62,7 @@ const FollowerRequestsModal: FC<FollowerRequestsModalProps> = ({visible, onClose
                     {(isFollowerRequestsLoading && !followerRequests.length) ? (
                         <Spinner/>
                     ) : (
-                        (!isFollowerRequestsLoading && !followerRequestsSize) ? (
+                        (!isFollowerRequestsLoading && !followerRequests.length) ? (
                             <div className={globalClasses.contentWrapper}>
                                 <EmptyPageDescription
                                     title={"You don’t have any follower requests"}

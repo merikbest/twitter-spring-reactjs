@@ -72,7 +72,7 @@ const ChangeUsername: FC = (): ReactElement => {
                     variant="contained"
                     color="primary"
                     size="small"
-                    disabled={username === "" || isLoading}
+                    disabled={!username || isLoading}
                 >
                     Save
                 </Button>

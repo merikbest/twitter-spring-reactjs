@@ -30,7 +30,7 @@ export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetActi
             break;
 
         case TweetActionType.UPDATE_TWEET_DATA:
-            if (draft.tweet !== undefined) {
+            if (draft.tweet) {
                 if ("notificationType" in action.payload) {
                     if (action.payload.notificationType === NotificationType.LIKE) {
                         const payload = action.payload as NotificationResponse;
@@ -57,28 +57,28 @@ export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetActi
             break;
 
         case TweetActionType.SET_FOLLOW_TO_TWEET_STATE:
-            if (draft.tweet !== undefined) {
+            if (draft.tweet) {
                 draft.tweet.user.isFollower = action.payload;
             }
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
         case TweetActionType.SET_BLOCKED_TO_TWEET_STATE:
-            if (draft.tweet !== undefined) {
+            if (draft.tweet) {
                 draft.tweet.user.isUserBlocked = action.payload;
             }
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
         case TweetActionType.SET_MUTED_TO_TWEET_STATE:
-            if (draft.tweet !== undefined) {
+            if (draft.tweet) {
                 draft.tweet.user.isUserMuted = action.payload;
             }
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
         case TweetActionType.SET_BOOKMARKED_TWEET:
-            if (draft.tweet !== undefined) {
+            if (draft.tweet) {
                 draft.tweet.isTweetBookmarked = action.payload;
             }
             draft.loadingState = LoadingStatus.SUCCESS;

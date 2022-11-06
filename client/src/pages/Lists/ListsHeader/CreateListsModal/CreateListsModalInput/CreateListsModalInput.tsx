@@ -36,7 +36,7 @@ const CreateListsModalInput: FC<CreateListsModalInputProps> = (
             <div className={classes.content}>
                 {focused && (
                     <InputLabel style={{fontSize: 12}}>
-                        {value?.length === undefined ? 0 : value.length} / {maxTextLength}
+                        {!value?.length ? 0 : value.length} / {maxTextLength}
                     </InputLabel>
                 )}
             </div>
