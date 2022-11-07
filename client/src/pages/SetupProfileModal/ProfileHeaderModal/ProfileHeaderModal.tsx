@@ -48,8 +48,8 @@ const ProfileHeaderModal: FC<ProfileHeaderModalProps> = (
                     <img
                         className={classes.wallpaperImg}
                         key={wallpaper?.src}
-                        alt={"wallpaper"}
-                        src={!wallpaper?.src ? "" : wallpaper?.src}
+                        alt={""}
+                        src={wallpaper ? wallpaper?.src : ""}
                     />
                     <div className={classes.wallpaperEditImg}>
                         <UploadProfileImage name={"wallpaper"} image={wallpaper} onChangeImage={onChangeWallpaper}/>

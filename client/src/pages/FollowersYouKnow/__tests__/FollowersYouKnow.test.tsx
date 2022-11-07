@@ -10,10 +10,10 @@ import FollowersYouKnow from "../FollowersYouKnow";
 import {mockMyProfile, mockUserPrivateProfile, mockUsers} from "../../../util/mockData/mockData";
 import {API_USER_FOLLOW_OVERALL} from "../../../util/endpoints";
 import UsersItem from "../../../components/UsersItem/UsersItem";
-import {LoadingStatus} from "../../../store/types";
 import {UserProfileActionsType} from "../../../store/ducks/userProfile/contracts/actionTypes";
 import {UserResponse} from "../../../store/types/user";
 import {PROFILE, USER} from "../../../util/pathConstants";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("FollowersYouKnow", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

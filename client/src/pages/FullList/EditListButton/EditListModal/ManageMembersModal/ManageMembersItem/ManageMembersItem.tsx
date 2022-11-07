@@ -1,19 +1,19 @@
 import React, {FC, memo, ReactElement, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {Avatar, Button, Paper, Typography} from "@material-ui/core";
+import {Paper} from "@material-ui/core";
 
 import {useManageMembersItemStyles} from "./ManageMembersItemStyles";
-import {DEFAULT_PROFILE_IMG} from "../../../../../../util/url";
 import {selectUserDataId} from "../../../../../../store/ducks/user/selectors";
 import {ListsOwnerMemberResponse} from "../../../../../../store/types/lists";
-import {processUserToListMembers} from "../../../../../../store/ducks/listMembers/actionCreators";
 import PopperUserWindow from "../../../../../../components/PopperUserWindow/PopperUserWindow";
 import {selectIsListSuggestedError} from "../../../../../../store/ducks/listMembers/selectors";
 import {useHoverUser} from "../../../../../../hook/useHoverUser";
-import LockIcon from "../../../../../../components/LockIcon/LockIcon";
 import {setOpenSnackBar} from "../../../../../../store/ducks/actionSnackbar/actionCreators";
 import LinkWrapper from "../../../../../../components/LinkWrapper/LinkWrapper";
 import {PROFILE} from "../../../../../../util/pathConstants";
+import ManageMemberButton from "./ManageMemberButton/ManageMemberButton";
+import MemberItemInfo from "./MemberItemInfo/MemberItemInfo";
+import MemberItemAvatar from "./MemberItemAvatar/MemberItemAvatar";
 
 interface ManageMembersItemProps {
     listId?: number
@@ -42,50 +42,35 @@ const ManageMembersItem: FC<ManageMembersItemProps> = memo((
         }
     }, [isSuggestedError]);
 
-    const onClickAddUserToList = (event: React.MouseEvent<HTMLButtonElement>): void => {
-        event.preventDefault();
-        dispatch(processUserToListMembers({userId: user?.id!, listId: listId!, isSuggested}));
-    }
-
     return (
         <LinkWrapper path={`${PROFILE}/${user?.id}`} visiblePopperWindow={visiblePopperWindow}>
             <Paper className={classes.container} variant="outlined">
-                <Avatar
-                    className={classes.listAvatar}
-                    src={user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG}
-                />
+                <MemberItemAvatar avatar={user?.avatar}/>
                 <div style={{flex: 1}}>
                     <div className={classes.header}>
-                        <div onMouseLeave={handleLeavePopper} className={classes.headerUserInfo}>
-                            <Typography
-                                id={"fullName"}
-                                variant={"h6"}
-                                component={"span"}
-                                onMouseEnter={() => handleHoverPopper(user?.id!)}
-                            >
-                                {user?.fullName}
-                            </Typography>
-                            {user?.isPrivateProfile && <LockIcon/>}
+                        <div
+                            id={"fullName"}
+                            onMouseLeave={handleLeavePopper}
+                            onMouseEnter={() => handleHoverPopper(user?.id!)}
+                            className={classes.headerUserInfo}
+                        >
+                            <MemberItemInfo
+                                fullName={user?.fullName}
+                                username={user?.username}
+                                isPrivateProfile={user?.isPrivateProfile}
+                                about={user?.about}
+                            />
                             <PopperUserWindow visible={visiblePopperWindow}/>
-                            <Typography variant={"subtitle1"} component={"div"}>
-                                @{user?.username}
-                            </Typography>
-                            <Typography variant={"body1"} component={"div"}>
-                                {user?.about}
-                            </Typography>
                         </div>
                         <div className={classes.buttonWrapper}>
                             {(listOwnerId === myProfileId) && (
                                 (user?.id === myProfileId) ? null : (
-                                    <Button
-                                        className={classes[user?.isMemberInList ? "containedButton" : "outlinedButton"]}
-                                        onClick={onClickAddUserToList}
-                                        variant={user?.isMemberInList ? "contained" : "outlined"}
-                                        color="primary"
-                                        size="small"
-                                    >
-                                        {user?.isMemberInList ? "Remove" : "Add"}
-                                    </Button>
+                                    <ManageMemberButton
+                                        userId={user?.id!}
+                                        listId={listId!}
+                                        isMemberInList={user?.isMemberInList!}
+                                        isSuggested={isSuggested}
+                                    />
                                 )
                             )}
                         </div>

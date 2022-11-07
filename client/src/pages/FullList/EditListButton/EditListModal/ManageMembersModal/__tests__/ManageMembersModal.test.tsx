@@ -4,12 +4,12 @@ import Tab from "@material-ui/core/Tab";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../../util/testHelper";
 import ManageMembersModal from "../ManageMembersModal";
-import {LoadingStatus} from "../../../../../../store/types";
 import {mockFullList, mockListsOwnerMember} from "../../../../../../util/mockData/mockData";
 import {ListMembersActionsType} from "../../../../../../store/ducks/listMembers/contracts/actionTypes";
 import Spinner from "../../../../../../components/Spinner/Spinner";
 import ManageMembersItem from "../ManageMembersItem/ManageMembersItem";
 import {ManageMembersInput} from "../ManageMembersInput/ManageMembersInput";
+import {LoadingStatus} from "../../../../../../store/types/common";
 
 describe("ManageMembersModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

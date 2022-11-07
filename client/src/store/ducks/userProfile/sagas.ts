@@ -1,7 +1,6 @@
 import {AxiosResponse} from "axios";
 import {call, put, takeLatest} from 'redux-saga/effects';
 
-import {LoadingStatus} from '../../types';
 import {
     FetchChatParticipantActionInterface,
     FetchImagesActionInterface,
@@ -20,6 +19,7 @@ import {
 import {ChatApi} from "../../../services/api/chatApi";
 import {UserProfileResponse} from "../../types/user";
 import {TweetImageResponse} from "../../types/tweet";
+import {LoadingStatus} from "../../types/common";
 
 export function* fetchUserRequest({payload}: FetchUserProfileActionInterface) {
     try {

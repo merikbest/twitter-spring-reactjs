@@ -1,5 +1,5 @@
-import {LoadingStatus} from "../../../types";
 import {TagResponse} from "../../../types/tag";
+import {LoadingStatus} from "../../../types/common";
 
 export interface TagsState {
     tags: TagResponse[];

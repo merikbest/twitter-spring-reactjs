@@ -1,7 +1,7 @@
 import {Action} from "redux";
-import {LoadingStatus} from "../../../types";
 import {UserProfileResponse} from "../../../types/user";
 import {ChatParticipantRequest, UserProfileState} from "./state";
+import {LoadingStatus} from "../../../types/common";
 
 export enum UserProfileActionsType {
     FETCH_USER = 'userProfile/FETCH_USER',

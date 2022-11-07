@@ -3,9 +3,9 @@ import {Button} from "@material-ui/core";
 
 import ChangeLanguage from "../ChangeLanguage";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../../store/types";
 import {FilledSelect} from "../../../../../../components/FilledSelect/FilledSelect";
 import {UserActionsType} from "../../../../../../store/ducks/user/contracts/actionTypes";
+import {LoadingStatus} from "../../../../../../store/types/common";
 
 describe("ChangeLanguage", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

@@ -1,8 +1,8 @@
 import {Action} from "redux";
 
-import {LoadingStatus} from "../../../types";
 import {UserDetailResponse} from "../../../types/user";
 import {UserDetailsRequest} from "./state";
+import {LoadingStatus} from "../../../types/common";
 
 export enum UserDetailActionsType {
     SET_USER_DETAIL = 'userDetail/SET_USER_DETAIL',

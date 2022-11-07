@@ -2,7 +2,7 @@ import produce, {Draft} from "immer";
 
 import {ChatState} from "./contracts/state";
 import {ChatActions, ChatActionsType} from "./contracts/actionTypes";
-import {LoadingStatus} from "../../types";
+import {LoadingStatus} from "../../types/common";
 
 export const initialChatState: ChatState = {
     item: undefined,

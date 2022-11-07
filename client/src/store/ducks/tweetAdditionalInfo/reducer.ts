@@ -2,7 +2,7 @@ import produce, {Draft} from "immer";
 
 import {TweetAdditionalInfoState} from "./contracts/state";
 import {TweetAdditionalInfoActions, TweetAdditionalInfoType} from "./contracts/actionTypes";
-import {LoadingStatus} from "../../types";
+import {LoadingStatus} from "../../types/common";
 
 export const initialTweetAdditionalInfoState: TweetAdditionalInfoState = {
     tweetAdditionalInfo: undefined,

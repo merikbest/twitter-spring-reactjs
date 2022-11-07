@@ -2,7 +2,7 @@ import produce, {Draft} from "immer";
 
 import {UnsentTweetActionType, UnsentTweetsActions} from "./contracts/actionTypes";
 import {UnsentTweetsState} from "./contracts/state";
-import {LoadingStatus} from "../../types";
+import {LoadingStatus} from "../../types/common";
 
 export const initialUnsentTweetsState: UnsentTweetsState = {
     items: [],

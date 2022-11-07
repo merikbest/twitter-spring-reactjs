@@ -2,7 +2,6 @@ import React from "react";
 import {Button, ClickAwayListener, IconButton, List, ListItem} from "@material-ui/core";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {mockFullTweet} from "../../../util/mockData/mockData";
 import TweetComponentActionsModal from "../TweetComponentActionsModal/TweetComponentActionsModal";
 import ChangeReplyWindow from "../../ChangeReplyWindow/ChangeReplyWindow";
@@ -16,6 +15,7 @@ import {TweetResponse} from "../../../store/types/tweet";
 import ListsModal from "../../ListsModal/ListsModal";
 import CloseButton from "../../CloseButton/CloseButton";
 import BlockUserModal from "../../BlockUserModal/BlockUserModal";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("TweetComponentActions", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

@@ -5,7 +5,6 @@ import IconButton from "@material-ui/core/IconButton";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import {mockChats, mockFullTweet, mockUsers} from "../../../../util/mockData/mockData";
 import {ChatsActionsType} from "../../../../store/ducks/chats/contracts/actionTypes";
 import {MessagesModalInput} from "../../../../pages/Messages/MessagesModal/MessagesModalInput/MessagesModalInput";
@@ -13,6 +12,7 @@ import {UsersSearchActionsType} from "../../../../store/ducks/usersSearch/contra
 import SendDirectTweetModal, {DirectUserItems} from "../SendDirectTweetModal";
 import {ChatMessagesActionsType} from "../../../../store/ducks/chatMessages/contracts/actionTypes";
 import {SendDirectMessageInput} from "../SendDirectMessageInput";
+import {LoadingStatus} from "../../../../store/types/common";
 
 describe("SendDirectTweetModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);

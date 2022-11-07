@@ -1,8 +1,8 @@
 import produce, {Draft} from 'immer';
 
-import {LoadingStatus} from '../../types';
 import {ListDetailActionsType, UserDetailActions} from "./contracts/actionTypes";
 import {ListDetailState} from "./contracts/state";
+import {LoadingStatus} from "../../types/common";
 
 export const initialListDetailState: ListDetailState = {
     item: undefined,

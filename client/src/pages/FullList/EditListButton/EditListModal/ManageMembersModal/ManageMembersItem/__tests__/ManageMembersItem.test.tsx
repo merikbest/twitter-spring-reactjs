@@ -5,11 +5,11 @@ import {Avatar, Button} from "@material-ui/core";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../../../util/testHelper";
 import ManageMembersItem from "../ManageMembersItem";
 import {mockFullList, mockListsOwnerMember} from "../../../../../../../util/mockData/mockData";
-import {LoadingStatus} from "../../../../../../../store/types";
 import {ListMembersActionsType} from "../../../../../../../store/ducks/listMembers/contracts/actionTypes";
 import ActionSnackbar from "../../../../../../../components/ActionSnackbar/ActionSnackbar";
 import PopperUserWindow from "../../../../../../../components/PopperUserWindow/PopperUserWindow";
 import {PROFILE} from "../../../../../../../util/pathConstants";
+import {LoadingStatus} from "../../../../../../../store/types/common";
 
 describe("ManageMembersItem", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

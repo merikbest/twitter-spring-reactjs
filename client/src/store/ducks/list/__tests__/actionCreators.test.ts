@@ -11,7 +11,7 @@ import {
 import {ListActionType} from "../contracts/actionTypes";
 import {BaseListResponse} from "../../../types/lists";
 import {EditListsRequest} from "../contracts/state";
-import {LoadingStatus} from "../../../types";
+import {LoadingStatus} from "../../../types/common";
 
 describe("list actions", () => {
     testAction(setList, setList({id: 1} as BaseListResponse), {

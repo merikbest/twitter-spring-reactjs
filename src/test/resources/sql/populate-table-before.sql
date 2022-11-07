@@ -152,10 +152,10 @@ INSERT INTO lists_members (lists_id, members_id) VALUES (5, 1);
 INSERT INTO lists_members (lists_id, members_id) VALUES (7, 2);
 INSERT INTO lists_members (lists_id, members_id) VALUES (9, 1);
 
--- users_user_lists
-INSERT INTO users_user_lists (user_id, user_lists_id) VALUES (2, 4);
-INSERT INTO users_user_lists (user_id, user_lists_id) VALUES (2, 6);
-INSERT INTO users_user_lists (user_id, user_lists_id) VALUES (1, 4);
+-- users_lists
+INSERT INTO users_lists (user_id, lists_id) VALUES (2, 4);
+INSERT INTO users_lists (user_id, lists_id) VALUES (2, 6);
+INSERT INTO users_lists (user_id, lists_id) VALUES (1, 4);
 
 -- notifications
 INSERT INTO notifications (id, date, notification_type, tweet_id, user_id, user_to_follow_id, list_id, notified_user_id) VALUES (37, '2021-10-03 20:31:44.000000', 'LIKE', 40, 1, null, null, 2);

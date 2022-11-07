@@ -2,11 +2,11 @@ import React from "react";
 import {IconButton, Paper} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import Poll from "../Poll";
 import PollInput from "../PollInput/PollInput";
 import {FilledSelect} from "../../../FilledSelect/FilledSelect";
 import HoverAction from "../../../HoverAction/HoverAction";
+import {LoadingStatus} from "../../../../store/types/common";
 
 describe("Poll", () => {
 

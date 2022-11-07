@@ -37,8 +37,7 @@ import {TweetsActionType} from "../contracts/actionTypes";
 import {TweetResponse} from "../../../types/tweet";
 import {AddQuoteTweet, AddTweet, Vote} from "../contracts/state";
 import {NotificationResponse} from "../../../types/notification";
-import {LoadingStatus} from "../../../types";
-import {ReplyType} from "../../../types/common";
+import {LoadingStatus, ReplyType} from "../../../types/common";
 
 describe("tweets actions", () => {
     testAction(setFollowToTweetsState, setFollowToTweetsState({userId: 1, tweetId: 1, isFollower: true}), {

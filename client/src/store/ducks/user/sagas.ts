@@ -44,7 +44,6 @@ import {
 } from "./contracts/actionTypes";
 import {AuthApi} from "../../../services/api/authApi";
 import {UserApi} from "../../../services/api/userApi";
-import {LoadingStatus} from "../../types";
 import {ChatApi} from "../../../services/api/chatApi";
 import {UserSettingsApi} from "../../../services/api/userSettingsApi";
 import {AuthenticationResponse} from "../../types/auth";
@@ -88,6 +87,7 @@ import {
     setFollowedTweetAdditionalInfo,
     setMutedTweetAdditionalInfo
 } from "../tweetAdditionalInfo/actionCreators";
+import {LoadingStatus} from "../../types/common";
 
 export function* updateUserDataRequest({payload}: UpdateUserDataActionInterface) {
     try {

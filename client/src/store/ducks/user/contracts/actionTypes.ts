@@ -1,10 +1,10 @@
 import {Action} from "redux";
 
-import {LoadingStatus} from "../../../types";
 import {ChangePhoneResponse, Settings, UserActionRequest, UserRequest, UserState} from "./state";
 import {RegistrationProps} from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
 import {LoginProps} from "../../../../pages/Login/Login";
 import {ChatMessageResponse} from "../../../types/chat";
+import {LoadingStatus} from "../../../types/common";
 
 export enum UserActionsType {
     // followersSize

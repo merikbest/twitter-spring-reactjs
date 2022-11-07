@@ -11,7 +11,7 @@ import {
     TweetAdditionalInfoType
 } from "./contracts/actionTypes";
 import {TweetAdditionalInfoState} from "./contracts/state";
-import {LoadingStatus} from "../../types";
+import {LoadingStatus} from "../../types/common";
 
 export const setTweetAdditionalInfo = (payload: TweetAdditionalInfoState["tweetAdditionalInfo"]): SetTweetAdditionalInfoActionInterface => ({
     type: TweetAdditionalInfoType.SET_TWEET_ADDITIONAL_INFO,

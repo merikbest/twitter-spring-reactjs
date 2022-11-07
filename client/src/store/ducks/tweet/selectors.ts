@@ -1,11 +1,11 @@
 import {RootState} from "../../store";
-import {LoadingStatus} from "../../types";
 import {TweetState} from "./contracts/state";
 import {TweetResponse} from "../../types/tweet";
 import {UserResponse} from "../../types/user";
 
 import {createSelector} from 'reselect';
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
+import {LoadingStatus} from "../../types/common";
 
 const selectTweetState = (state: RootState): TweetState => state.tweet;
 const selectLoadingState = (state: RootState): LoadingStatus => selectTweetState(state).loadingState;

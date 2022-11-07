@@ -1,9 +1,9 @@
 import React from "react";
 
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {mockFullTweet} from "../../../util/mockData/mockData";
 import YouTubeVideo from "../YouTubeVideo";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("YouTubeVideo", () => {
     it("should render correctly", () => {

@@ -2,8 +2,8 @@ import React from "react";
 import {Checkbox, Dialog} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import SettingsModal from "../SettingsModal";
+import {LoadingStatus} from "../../../../store/types/common";
 
 describe("SettingsModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

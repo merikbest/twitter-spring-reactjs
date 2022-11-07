@@ -2,8 +2,8 @@ import React from "react";
 import {Button} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import TweetComponentActionsModal from "../TweetComponentActionsModal";
+import {LoadingStatus} from "../../../../store/types/common";
 
 describe("TweetComponentActionsModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

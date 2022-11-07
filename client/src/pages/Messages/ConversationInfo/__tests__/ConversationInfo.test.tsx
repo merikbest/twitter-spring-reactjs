@@ -3,7 +3,6 @@ import {Avatar, Button} from "@material-ui/core";
 import {createMemoryHistory} from "history";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import {mockUserProfile} from "../../../../util/mockData/mockData";
 import ConversationInfo from "../ConversationInfo";
 import Spinner from "../../../../components/Spinner/Spinner";
@@ -15,6 +14,7 @@ import UnfollowModal from "../../../../components/UnfollowModal/UnfollowModal";
 import LeaveFromConversationModal from "../LeaveFromConversationModal/LeaveFromConversationModal";
 import {ChatsActionsType} from "../../../../store/ducks/chats/contracts/actionTypes";
 import {MESSAGES} from "../../../../util/pathConstants";
+import {LoadingStatus} from "../../../../store/types/common";
 
 describe("ConversationInfo", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

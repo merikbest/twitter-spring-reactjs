@@ -8,10 +8,10 @@ import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../
 import {
     BlockedAndMutedUsersActionsType
 } from "../../../../../../store/ducks/blockedAndMutedUsers/contracts/actionTypes";
-import {LoadingStatus} from "../../../../../../store/types";
 import Spinner from "../../../../../../components/Spinner/Spinner";
 import {ADVANCED_TWITTER_BLOCK_OPTIONS, BLOCKING_AND_UNBLOCKING_ACCOUNTS} from "../../../../../../util/url";
 import {mockBlockedUsers} from "../../../../../../util/mockData/mockData";
+import {LoadingStatus} from "../../../../../../store/types/common";
 
 describe("BlockedAccounts", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

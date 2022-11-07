@@ -8,9 +8,8 @@ import {
     SetFollowerRequestsActionInterface,
     SetFollowerRequestsLoadingStateActionInterface
 } from "./contracts/actionTypes";
-import {LoadingStatus} from "../../types";
 import {FollowerRequestsState} from "./contracts/state";
-import {PageableResponse} from "../../types/common";
+import {LoadingStatus, PageableResponse} from "../../types/common";
 
 export const setFollowerRequests = (payload: PageableResponse<FollowerRequestsState["items"]>): SetFollowerRequestsActionInterface => ({
     type: FollowerRequestsActionsType.SET_FOLLOWER_REQUESTS,

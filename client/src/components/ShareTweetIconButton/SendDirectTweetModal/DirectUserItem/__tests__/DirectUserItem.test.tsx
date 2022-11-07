@@ -2,10 +2,10 @@ import React from "react";
 import {Avatar} from "@material-ui/core";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../store/types";
 import {mockUsers} from "../../../../../util/mockData/mockData";
 import {DEFAULT_PROFILE_IMG} from "../../../../../util/url";
 import DirectUserItem from "../DirectUserItem";
+import {LoadingStatus} from "../../../../../store/types/common";
 
 describe("DirectUserItem", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);

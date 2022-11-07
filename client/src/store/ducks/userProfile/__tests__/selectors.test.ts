@@ -7,9 +7,9 @@ import {
     selectUsersIsLoading,
     selectUsersIsSuccessLoaded
 } from "../selectors";
-import {LoadingStatus} from "../../../types";
 import {createMockRootState} from "../../../../util/testHelper";
 import {mockMyProfile, mockProfileImages} from "../../../../util/mockData/mockData";
+import {LoadingStatus} from "../../../types/common";
 
 describe("userProfile selectors:", () => {
     const mockState = createMockRootState();

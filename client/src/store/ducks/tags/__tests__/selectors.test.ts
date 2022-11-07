@@ -5,9 +5,9 @@ import {
     selectTrendsItems,
     selectTrendsPagesCount
 } from "../selectors";
-import {LoadingStatus} from "../../../types";
 import {createMockRootState} from "../../../../util/testHelper";
 import {mockTags} from "../../../../util/mockData/mockData";
+import {LoadingStatus} from "../../../types/common";
 
 describe("tags selectors:", () => {
     const mockState = createMockRootState();

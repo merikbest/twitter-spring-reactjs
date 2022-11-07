@@ -16,7 +16,7 @@ import {
 } from "../actionCreators";
 import {UsersSearchActionsType} from "../contracts/actionTypes";
 import {UserResponse} from "../../../types/user";
-import {LoadingStatus} from "../../../types";
+import {LoadingStatus} from "../../../types/common";
 
 describe("usersSearch actions", () => {
     testAction(setUsersSearch, setUsersSearch([{id: 1}] as UserResponse[]), {

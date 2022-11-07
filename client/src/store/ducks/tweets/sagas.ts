@@ -26,12 +26,12 @@ import {
     UpdateScheduledTweetActionInterface,
     VoteActionInterface
 } from "./contracts/actionTypes";
-import {LoadingStatus} from '../../types';
 import {TagApi} from "../../../services/api/tagApi";
 import {UserApi} from "../../../services/api/userApi";
 import {TweetResponse} from "../../types/tweet";
 import {ListsApi} from "../../../services/api/listsApi";
 import {deleteUserTweet} from "../userTweets/actionCreators";
+import {LoadingStatus} from "../../types/common";
 
 export function* fetchTweetsRequest({payload}: FetchTweetsActionInterface) {
     try {

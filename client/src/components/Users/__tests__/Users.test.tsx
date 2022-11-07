@@ -2,12 +2,12 @@ import React from "react";
 import {createMemoryHistory} from "history";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import UsersItem from "../../UsersItem/UsersItem";
 import Spinner from "../../Spinner/Spinner";
 import {UsersActionsType} from "../../../store/ducks/users/contracts/actionTypes";
 import {HOME_CONNECT} from "../../../util/pathConstants";
 import Users from "../Users";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("Users", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

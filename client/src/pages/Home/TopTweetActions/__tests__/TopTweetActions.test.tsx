@@ -2,9 +2,9 @@ import React from "react";
 import {ClickAwayListener, IconButton} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import TopTweetActions from "../TopTweetActions";
 import HoverAction from "../../../../components/HoverAction/HoverAction";
+import {LoadingStatus} from "../../../../store/types/common";
 
 describe("TopTweetActions", () => {
     const mockStore = createMockRootState(LoadingStatus.SUCCESS);

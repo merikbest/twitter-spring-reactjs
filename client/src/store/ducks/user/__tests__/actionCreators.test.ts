@@ -47,8 +47,8 @@ import {Settings, UserRequest} from "../contracts/state";
 import {AuthUserResponse} from "../../../types/user";
 import {LoginProps} from "../../../../pages/Login/Login";
 import {RegistrationProps} from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
-import {LoadingStatus} from "../../../types";
 import {ChatMessageResponse} from "../../../types/chat";
+import {LoadingStatus} from "../../../types/common";
 
 describe("user actions", () => {
     testAction(updatedUserData, updatedUserData({username: "text"} as UserRequest), {

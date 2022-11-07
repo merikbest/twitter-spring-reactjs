@@ -3,11 +3,11 @@ import {call} from "redux-saga/effects";
 
 import {fetchListDetailRequest, listDetailSaga} from "../sagas";
 import {fetchListDetail, setListDetail, setListDetailLoadingState} from "../actionCreators";
-import {LoadingStatus} from "../../../types";
 import {testLoadingStatus, testSetResponse, testWatchSaga} from "../../../../util/testHelper";
 import {ListsApi} from "../../../../services/api/listsApi";
 import {BaseListResponse} from "../../../types/lists";
 import {ListDetailActionsType} from "../contracts/actionTypes";
+import {LoadingStatus} from "../../../types/common";
 
 describe("listDetailSaga:", () => {
     const mockBaseListResponse = {data: {id: 1}} as AxiosResponse<BaseListResponse>;

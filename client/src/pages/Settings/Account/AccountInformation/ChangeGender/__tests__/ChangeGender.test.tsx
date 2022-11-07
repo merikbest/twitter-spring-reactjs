@@ -3,9 +3,9 @@ import {Button, Radio} from "@material-ui/core";
 
 import ChangeGender from "../ChangeGender";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../../store/types";
 import {UserActionsType} from "../../../../../../store/ducks/user/contracts/actionTypes";
 import {ChangeInfoTextField} from "../../../../ChangeInfoTextField/ChangeInfoTextField";
+import {LoadingStatus} from "../../../../../../store/types/common";
 
 describe("ChangeGender", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

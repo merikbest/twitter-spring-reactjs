@@ -3,9 +3,9 @@ import React from "react";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
 import Spinner from "../../../components/Spinner/Spinner";
 import Connect from "../Connect";
-import {LoadingStatus} from "../../../store/types";
 import UsersItem from "../../../components/UsersItem/UsersItem";
 import {UsersActionsType} from "../../../store/ducks/users/contracts/actionTypes";
+import {LoadingStatus} from "../../../store/types/common";
 
 window.scrollTo = jest.fn();
 

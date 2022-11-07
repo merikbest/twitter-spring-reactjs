@@ -1,4 +1,3 @@
-import {LoadingStatus} from '../../types';
 import {
     FetchTagsActionInterface,
     FetchTrendsActionInterface,
@@ -10,7 +9,7 @@ import {
     TagsActionsType
 } from './contracts/actionTypes';
 import {TagsState} from "./contracts/state";
-import {PageableResponse} from "../../types/common";
+import {LoadingStatus, PageableResponse} from "../../types/common";
 
 export const setTags = (payload: TagsState["tags"]): SetTagsActionInterface => ({
     type: TagsActionsType.SET_TAGS,

@@ -15,7 +15,7 @@ import {
 } from "../actionCreators";
 import {ListMembersActionsType} from "../contracts/actionTypes";
 import {ListsOwnerMemberResponse} from "../../../types/lists";
-import {LoadingStatus} from "../../../types";
+import {LoadingStatus} from "../../../types/common";
 
 describe("listMembers actions", () => {
     testAction(setListMembers, setListMembers([{id: 1}] as ListsOwnerMemberResponse[]), {

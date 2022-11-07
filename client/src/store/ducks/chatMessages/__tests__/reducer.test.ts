@@ -1,8 +1,8 @@
 import {chatMessagesReducer, initialChatMessagesState} from "../reducer";
 import {testActionDispatch} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../types";
 import {ChatMessageActions, ChatMessagesActionsType} from "../contracts/actionTypes";
 import {ChatMessageResponse} from "../../../types/chat";
+import {LoadingStatus} from "../../../types/common";
 
 describe("chatMessagesReducer:", () => {
     describe("initial state:", () => {

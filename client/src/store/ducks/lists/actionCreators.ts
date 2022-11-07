@@ -31,8 +31,8 @@ import {
     UnpinListActionInterface
 } from "./contracts/actionTypes";
 import {AddLists, AddUserToListsRequest, ListsState, UpdateListsPayload} from "./contracts/state";
-import {LoadingStatus} from "../../types";
 import {ListUserResponse, PinnedListResponse} from "../../types/lists";
+import {LoadingStatus} from "../../types/common";
 
 export const setLists = (payload: ListsState["lists"]): SetListsActionInterface => ({
     type: ListsActionType.SET_LISTS,

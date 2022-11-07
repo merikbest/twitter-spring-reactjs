@@ -9,9 +9,8 @@ import {
     SetMutedUserActionInterface,
     SetMutedUsersActionInterface
 } from "./contracts/actionTypes";
-import {LoadingStatus} from "../../types";
 import {BlockedAndMutedUsersState, BlockedUserPayload, MutedUserPayload} from "./contracts/state";
-import {PageableResponse} from "../../types/common";
+import {LoadingStatus, PageableResponse} from "../../types/common";
 
 export const setBlockedUsers = (payload: PageableResponse<BlockedAndMutedUsersState["blockedUsers"]>): SetBlockedUsersActionInterface => ({
     type: BlockedAndMutedUsersActionsType.SET_BLOCKED_USERS,

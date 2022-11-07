@@ -3,9 +3,9 @@ import {Button} from "@material-ui/core";
 
 import ChangeUsername from "../ChangeUsername";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../../store/types";
 import {ChangeInfoTextField} from "../../../../ChangeInfoTextField/ChangeInfoTextField";
 import {UserActionsType} from "../../../../../../store/ducks/user/contracts/actionTypes";
+import {LoadingStatus} from "../../../../../../store/types/common";
 
 describe("ChangeUsername", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

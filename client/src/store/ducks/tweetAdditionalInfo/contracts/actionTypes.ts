@@ -1,7 +1,7 @@
 import {Action} from "redux";
 
-import {LoadingStatus} from "../../../types";
 import {TweetAdditionalInfoState} from "./state";
+import {LoadingStatus} from "../../../types/common";
 
 export enum TweetAdditionalInfoType {
     SET_TWEET_ADDITIONAL_INFO = "tweetAdditionalInfo/SET_TWEET_ADDITIONAL_INFO",

@@ -2,8 +2,7 @@ import React from "react";
 import {Dialog, Radio} from "@material-ui/core";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
-import {BackgroundTheme, ColorScheme} from "../../../../store/types/common";
+import {BackgroundTheme, ColorScheme, LoadingStatus} from "../../../../store/types/common";
 import DisplayModal from "../DisplayModal";
 
 describe("DisplayModal", () => {

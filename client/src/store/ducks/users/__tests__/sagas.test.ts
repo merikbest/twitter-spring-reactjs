@@ -2,7 +2,6 @@ import {AxiosResponse} from "axios";
 
 import {fetchRelevantUsersRequest, fetchUsersRequest, usersSaga} from "../sagas";
 import {fetchUsers, setPageableUsers, setUsers, setUsersLoadingState} from "../actionCreators";
-import {LoadingStatus} from "../../../types";
 import {
     mockExpectedResponse,
     testCall,
@@ -13,6 +12,7 @@ import {
 import {UserResponse} from "../../../types/user";
 import {UserApi} from "../../../../services/api/userApi";
 import {UsersActionsType} from "../contracts/actionTypes";
+import {LoadingStatus} from "../../../types/common";
 
 describe("usersSaga:", () => {
     const mockUserResponse = {

@@ -1,7 +1,6 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 import {AxiosResponse} from "axios";
 
-import {LoadingStatus} from '../../types';
 import {
     ChatsActionsType,
     CreateChatActionInterface,
@@ -10,6 +9,7 @@ import {
 import {setChat, setChats, setChatsLoadingState} from "./actionCreators";
 import {ChatApi} from "../../../services/api/chatApi";
 import {ChatResponse} from "../../types/chat";
+import {LoadingStatus} from "../../types/common";
 
 export function* fetchChatsRequest() {
     try {

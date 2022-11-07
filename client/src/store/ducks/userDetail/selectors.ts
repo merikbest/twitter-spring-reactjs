@@ -1,7 +1,7 @@
 import {RootState} from '../../store';
 import {UserDetailState} from './contracts/state';
-import {LoadingStatus} from "../../types";
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
+import {LoadingStatus} from "../../types/common";
 
 export const selectUserDetail = (state: RootState): UserDetailState => state.userDetail;
 export const selectUserDetailItem = (state: RootState) => selectUserDetail(state).item;

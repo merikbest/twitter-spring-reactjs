@@ -1,8 +1,8 @@
 import {Action} from "redux";
 
 import {ChatMessageRequest, ChatMessageState, ChatMessageWithTweetRequest} from "./state";
-import {LoadingStatus} from "../../../types";
 import {ChatMessageResponse} from "../../../types/chat";
+import {LoadingStatus} from "../../../types/common";
 
 export enum ChatMessagesActionsType {
     SET_CHAT_MESSAGES = 'chatMessages/SET_CHAT_MESSAGES',

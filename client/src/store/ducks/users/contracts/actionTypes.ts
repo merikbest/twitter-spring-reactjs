@@ -1,5 +1,4 @@
 import {Action} from "redux";
-import {LoadingStatus} from "../../../types";
 import {
     BlockedUsersPayload,
     FollowRequestUsersPayload,
@@ -8,7 +7,7 @@ import {
     SubscribedUsersPayload,
     UsersState
 } from "./state";
-import {PageableResponse} from "../../../types/common";
+import {LoadingStatus, PageableResponse} from "../../../types/common";
 
 export enum UsersActionsType {
     FETCH_USERS = 'users/FETCH_USERS',

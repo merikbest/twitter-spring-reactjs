@@ -9,7 +9,6 @@ import {createTheme} from "@material-ui/core/styles";
 import {NavLink, Router} from "react-router-dom";
 
 import {createMockRootState, mockDispatch} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {BOOKMARKS, HOME, LISTS, MESSAGES, NOTIFICATIONS, PROFILE, SEARCH} from "../../../util/pathConstants";
 import {mockUser} from "../../../util/mockData/mockData";
 import AddTweetModal from "../../AddTweetModal/AddTweetModal";
@@ -17,6 +16,7 @@ import CloseButton from "../../CloseButton/CloseButton";
 import DisplayModal from "../DisplayModal/DisplayModal";
 import FollowerRequestsModal from "../FollowerRequestsModal/FollowerRequestsModal";
 import SideMenu from "../SideMenu";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("SideMenu", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

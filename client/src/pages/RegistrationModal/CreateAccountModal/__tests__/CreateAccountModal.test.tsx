@@ -4,11 +4,11 @@ import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
 import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import CreateAccountModal from "../CreateAccountModal";
 import {RegistrationInputField} from "../../RegistrationInput/RegistrationInputField";
 import Spinner from "../../../../components/Spinner/Spinner";
 import {API_AUTH_REGISTRATION_CODE} from "../../../../util/endpoints";
+import {LoadingStatus} from "../../../../store/types/common";
 
 describe("CreateAccountModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

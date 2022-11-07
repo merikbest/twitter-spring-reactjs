@@ -1,8 +1,8 @@
 import produce, {Draft} from 'immer';
 
-import {LoadingStatus} from '../../types';
 import {ListMembersActions, ListMembersActionsType} from './contracts/actionTypes';
 import {ListMembersState} from './contracts/state';
+import {LoadingStatus} from "../../types/common";
 
 export const initialListMembersState: ListMembersState = {
     members: [],

@@ -33,7 +33,7 @@ import {ListResponse, ListUserResponse, PinnedListResponse, SimpleListResponse} 
 import {ListsActionType} from "../contracts/actionTypes";
 import {testAction} from "../../../../util/testHelper";
 import {AddLists, AddUserToListsRequest} from "../contracts/state";
-import {LoadingStatus} from "../../../types";
+import {LoadingStatus} from "../../../types/common";
 
 describe("lists actions", () => {
     testAction(setLists, setLists([{id: 1}] as ListResponse[]), {

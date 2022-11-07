@@ -1,12 +1,12 @@
 import {AxiosResponse} from "axios";
 
 import {testCall, testLoadingStatus, testSetResponse, testWatchSaga} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../types";
 import {TweetApi} from "../../../../services/api/tweetApi";
 import {fetchUnsentTweetsRequest, unsentTweetsSaga} from "../sagas";
 import {fetchUnsentTweets, setUnsentTweets, setUnsentTweetsLoadingState} from "../actionCreators";
 import {TweetResponse} from "../../../types/tweet";
 import {UnsentTweetActionType} from "../contracts/actionTypes";
+import {LoadingStatus} from "../../../types/common";
 
 describe("unsentTweetsSaga:", () => {
 

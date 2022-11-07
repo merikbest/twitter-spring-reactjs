@@ -24,13 +24,13 @@ import {
     setTweetData,
     setTweetLoadingState
 } from './actionCreators';
-import {LoadingStatus} from '../../types';
 import {TweetResponse} from "../../types/tweet";
 import {UserApi} from "../../../services/api/userApi";
 import {UserResponse} from "../../types/user";
 import {deleteTweet, setUpdatedBookmarkedTweetTweetsState} from "../tweets/actionCreators";
 import {deleteUserTweet, setUpdatedBookmarkedTweetUserTweetState} from "../userTweets/actionCreators";
 import {setIsTweetBookmarkedAdditionalInfo} from "../tweetAdditionalInfo/actionCreators";
+import {LoadingStatus} from "../../types/common";
 
 export function* fetchTweetDataRequest({payload: tweetId}: FetchTweetDataActionInterface) {
     try {

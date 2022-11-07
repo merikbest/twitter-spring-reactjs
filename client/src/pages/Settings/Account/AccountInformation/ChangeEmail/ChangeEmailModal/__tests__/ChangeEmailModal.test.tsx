@@ -3,8 +3,8 @@ import {Button, Dialog} from "@material-ui/core";
 
 import ChangeEmailModal from "../ChangeEmailModal";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../../../store/types";
 import {ChangeInfoTextField} from "../../../../../ChangeInfoTextField/ChangeInfoTextField";
+import {LoadingStatus} from "../../../../../../../store/types/common";
 
 describe("ChangeEmailModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

@@ -1,7 +1,7 @@
 import {Action} from "redux";
 
 import {ChatState} from "./state";
-import {LoadingStatus} from "../../../types";
+import {LoadingStatus} from "../../../types/common";
 
 export enum ChatActionsType {
     SET_CHAT = "chat/SET_CHAT",

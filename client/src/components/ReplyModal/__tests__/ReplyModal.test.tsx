@@ -2,9 +2,8 @@ import React from "react";
 import {Avatar, Dialog} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {mockMyFullTweet} from "../../../util/mockData/mockData";
-import {Image} from "../../../store/types/common";
+import {Image, LoadingStatus} from "../../../store/types/common";
 import ReplyModal from "../ReplyModal";
 
 describe("ReplyModal", () => {

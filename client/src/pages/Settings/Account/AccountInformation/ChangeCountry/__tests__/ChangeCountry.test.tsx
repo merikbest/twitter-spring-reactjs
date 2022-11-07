@@ -2,9 +2,9 @@ import React from "react";
 
 import ChangeCountry from "../ChangeCountry";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../../store/types";
 import {FilledSelect} from "../../../../../../components/FilledSelect/FilledSelect";
 import {UserActionsType} from "../../../../../../store/ducks/user/contracts/actionTypes";
+import {LoadingStatus} from "../../../../../../store/types/common";
 
 describe("ChangeCountry", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

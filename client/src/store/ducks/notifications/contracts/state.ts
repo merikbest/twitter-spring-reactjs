@@ -1,5 +1,5 @@
-import {LoadingStatus} from "../../../types";
 import {NotificationInfoResponse, NotificationResponse, NotificationUserResponse} from "../../../types/notification";
+import {LoadingStatus} from "../../../types/common";
 
 export interface NotificationsState {
     notificationsList: NotificationResponse[];

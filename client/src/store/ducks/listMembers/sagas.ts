@@ -15,10 +15,10 @@ import {
     ListMembersActionsType,
     ProcessUserToListMembersActionInterface
 } from "./contracts/actionTypes";
-import {LoadingStatus} from "../../types";
 import {ListsApi} from "../../../services/api/listsApi";
 import {ListsOwnerMemberResponse} from "../../types/lists";
 import {setMembersSize} from "../list/actionCreators";
+import {LoadingStatus} from "../../types/common";
 
 export function* fetchListMembersRequest({payload}: FetchListMembersActionInterface) {
     try {

@@ -2,11 +2,11 @@ import React from "react";
 import {Dialog} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import {mockQuoteTweet} from "../../../../util/mockData/mockData";
 import QuoteTweetModal from "../QuoteTweetModal";
 import CloseButton from "../../../CloseButton/CloseButton";
 import AddTweetForm from "../../../AddTweetForm/AddTweetForm";
+import {LoadingStatus} from "../../../../store/types/common";
 
 describe("QuoteTweetModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);

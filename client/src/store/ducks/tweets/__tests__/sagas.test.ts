@@ -48,7 +48,6 @@ import {
     updateScheduledTweet,
     vote
 } from "../actionCreators";
-import {LoadingStatus} from "../../../types";
 import {TweetApi} from "../../../../services/api/tweetApi";
 import {TweetResponse} from "../../../types/tweet";
 import {AxiosResponse} from "axios";
@@ -64,7 +63,7 @@ import {
     testWatchSaga
 } from "../../../../util/testHelper";
 import {TweetsActionType} from "../contracts/actionTypes";
-import {ReplyType} from "../../../types/common";
+import {LoadingStatus, ReplyType} from "../../../types/common";
 
 describe("tweetsSaga:", () => {
     const mockTweets = [{id: 1}, {id: 2}] as TweetResponse[];

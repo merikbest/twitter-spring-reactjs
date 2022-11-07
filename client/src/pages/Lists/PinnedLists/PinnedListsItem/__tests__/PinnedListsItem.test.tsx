@@ -5,11 +5,11 @@ import {createMemoryHistory} from "history";
 import {Link} from "react-router-dom";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../store/types";
 import {mockPinnedLists, mockUserFullList} from "../../../../../util/mockData/mockData";
 import PinnedListsItem from "../PinnedListsItem";
 import PopperListWindow from "../../../PopperListWindow/PopperListWindow";
 import {LISTS} from "../../../../../util/pathConstants";
+import {LoadingStatus} from "../../../../../store/types/common";
 
 describe("PinnedListsItem", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

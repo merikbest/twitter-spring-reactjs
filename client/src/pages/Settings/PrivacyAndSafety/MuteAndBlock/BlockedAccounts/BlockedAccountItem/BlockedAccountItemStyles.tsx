@@ -1,10 +1,6 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core";
 
-interface BlockedAccountItemStylesProps {
-    isUserBlocked: boolean;
-}
-
-export const useBlockedAccountItemStyles = makeStyles<Theme, BlockedAccountItemStylesProps>((theme) => ({
+export const useBlockedAccountItemStyles = makeStyles((theme) => ({
     container: {
         borderTop: 0,
         borderLeft: 0,
@@ -34,17 +30,5 @@ export const useBlockedAccountItemStyles = makeStyles<Theme, BlockedAccountItemS
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between"
-    },
-    blockButton: {
-        marginRight: 16,
-        "& .MuiButtonBase-root": {
-            color: props => props.isUserBlocked ? theme.palette.common.white : theme.palette.error.main,
-            backgroundColor: props => props.isUserBlocked ? theme.palette.error.main : theme.palette.common.white,
-            border: "1px solid",
-            borderColor: props => props.isUserBlocked ? theme.palette.error.main : theme.palette.error.light,
-            "&:hover": {
-                backgroundColor: props => props.isUserBlocked ? "rgb(220, 30, 41)" : theme.palette.error.light,
-            },
-        },
     },
 }));

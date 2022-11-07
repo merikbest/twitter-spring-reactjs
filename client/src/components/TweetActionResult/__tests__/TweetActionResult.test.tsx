@@ -1,8 +1,8 @@
 import React from "react";
 
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import TweetActionResult, {TweetActionResults} from "../TweetActionResult";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("TweetActionResult", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

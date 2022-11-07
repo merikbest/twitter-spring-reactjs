@@ -5,7 +5,6 @@ import {ClickAwayListener, IconButton} from "@material-ui/core";
 
 import Lists from "../Lists";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {ListsActionType} from "../../../store/ducks/lists/contracts/actionTypes";
 import Spinner from "../../../components/Spinner/Spinner";
 import {mockLists, mockPinnedLists, mockSimpleList, mockUser, mockUserLists} from "../../../util/mockData/mockData";
@@ -15,6 +14,7 @@ import CreateListsModal from "../ListsHeader/CreateListsModal/CreateListsModal";
 import CloseButton from "../../../components/CloseButton/CloseButton";
 import HoverAction from "../../../components/HoverAction/HoverAction";
 import {LISTS, LISTS_MEMBERSHIPS} from "../../../util/pathConstants";
+import {LoadingStatus} from "../../../store/types/common";
 
 window.scrollTo = jest.fn();
 

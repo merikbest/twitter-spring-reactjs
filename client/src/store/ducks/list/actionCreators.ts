@@ -9,9 +9,9 @@ import {
     SetMembersSizeActionInterface,
     UpdateFollowToFullListActionInterface,
 } from "./contracts/actionTypes";
-import {LoadingStatus} from "../../types";
 import {BaseListResponse} from "../../types/lists";
 import {EditListsRequest} from "./contracts/state";
+import {LoadingStatus} from "../../types/common";
 
 export const setList = (payload: BaseListResponse): SetListActionInterface => ({
     type: ListActionType.SET_LIST,

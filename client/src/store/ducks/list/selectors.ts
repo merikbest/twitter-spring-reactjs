@@ -1,7 +1,7 @@
 import {RootState} from "../../store";
-import {LoadingStatus} from "../../types";
 import {ListState} from "./contracts/state";
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
+import {LoadingStatus} from "../../types/common";
 
 export const selectList = (state: RootState): ListState => state.list;
 export const selectListItem = (state: RootState): ListState["list"] => selectList(state).list;
@@ -10,6 +10,8 @@ export const selectListItemName = (state: RootState) => selectListItem(state)?.n
 export const selectListItemDescription = (state: RootState) => selectListItem(state)?.description;
 export const selectListItemIsPrivate = (state: RootState) => selectListItem(state)?.isPrivate;
 export const selectListItemIsFollower = (state: RootState) => selectListItem(state)?.isFollower;
+export const selectListItemMembersSize = (state: RootState) => selectListItem(state)?.membersSize;
+export const selectListItemFollowersSize = (state: RootState) => selectListItem(state)?.followersSize;
 export const selectListItemOwnerId = (state: RootState) => selectListItem(state)?.listOwner.id;
 export const selectListItemOwnerAvatar = (state: RootState) =>
     selectListItem(state)?.listOwner.avatar ? selectListItem(state)?.listOwner.avatar.src : DEFAULT_PROFILE_IMG;

@@ -9,7 +9,6 @@ import {
     setFollowerRequests,
     setFollowerRequestsLoadingState
 } from "../actionCreators";
-import {LoadingStatus} from "../../../types";
 import {
     mockExpectedResponse,
     testCall,
@@ -21,6 +20,7 @@ import {UserApi} from "../../../../services/api/userApi";
 import {FollowerUserResponse} from "../../../types/user";
 import {setFollowersSize, setUserLoadingStatus} from "../../user/actionCreators";
 import {FollowerRequestsActionsType} from "../contracts/actionTypes";
+import {LoadingStatus} from "../../../types/common";
 
 describe("fetchFollowerSaga:", () => {
     

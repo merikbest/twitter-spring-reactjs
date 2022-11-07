@@ -5,8 +5,8 @@ import {createMemoryHistory} from "history";
 
 import DeactivateAccount from "../DeactivateAccount";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../store/types";
 import {PROFILE, SETTINGS_INFO} from "../../../../../util/pathConstants";
+import {LoadingStatus} from "../../../../../store/types/common";
 
 describe("DeactivateAccount", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

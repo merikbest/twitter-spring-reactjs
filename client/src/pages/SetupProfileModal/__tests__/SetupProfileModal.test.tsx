@@ -3,12 +3,12 @@ import {Button} from "@material-ui/core";
 
 import SetupProfileModal from "../SetupProfileModal";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import ProfilePictureModal from "../ProfilePictureModal/ProfilePictureModal";
 import ProfileDescriptionModal from "../ProfileDescriptionModal/ProfileDescriptionModal";
 import ProfileUpdatedModal from "../ProfileUpdatedModal/ProfileUpdatedModal";
 import ProfileHeaderModal from "../ProfileHeaderModal/ProfileHeaderModal";
 import {UserActionsType} from "../../../store/ducks/user/contracts/actionTypes";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("SetupProfileModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);

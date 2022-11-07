@@ -5,7 +5,6 @@ import ReactRouter from "react-router";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
 import Spinner from "../../../components/Spinner/Spinner";
 import FullList from "../FullList";
-import {LoadingStatus} from "../../../store/types";
 import {mockFullList, mockUserFullList} from "../../../util/mockData/mockData";
 import TweetComponent from "../../../components/TweetComponent/TweetComponent";
 import {TweetsActionType} from "../../../store/ducks/tweets/contracts/actionTypes";
@@ -13,6 +12,7 @@ import {ListActionType} from "../../../store/ducks/list/contracts/actionTypes";
 import MembersAndFollowersModal from "../FullListTweets/MembersAndFollowersModal/MembersAndFollowersModal";
 import EditListModal from "../EditListButton/EditListModal/EditListModal";
 import {ListsActionType} from "../../../store/ducks/lists/contracts/actionTypes";
+import {LoadingStatus} from "../../../store/types/common";
 
 window.scrollTo = jest.fn();
 

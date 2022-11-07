@@ -3,7 +3,6 @@ import {Button} from "@material-ui/core";
 
 import ContentPreferences from "../ContentPreferences";
 import {createMockRootState, mountWithStore, testClickOnLink} from "../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../store/types";
 import {
     SETTINGS_PERSONALIZATION,
     SETTINGS_PRIVACY_AND_SAFETY_BLOCKED,
@@ -11,6 +10,7 @@ import {
 } from "../../../../../util/pathConstants";
 import ExploreModal from "../ExploreModal/ExploreModal";
 import RecommendationsModal from "../RecommendationsModal/RecommendationsModal";
+import {LoadingStatus} from "../../../../../store/types/common";
 
 describe("ContentPreferences", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

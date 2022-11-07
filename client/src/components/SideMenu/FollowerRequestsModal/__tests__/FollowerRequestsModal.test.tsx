@@ -2,12 +2,12 @@ import React from "react";
 import {Dialog} from "@material-ui/core";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import {mockFollowerUserResponse, mockUser} from "../../../../util/mockData/mockData";
 import Spinner from "../../../Spinner/Spinner";
 import FollowerRequestsItem from "../FollowerRequestsItem/FollowerRequestsItem";
 import {FollowerRequestsActionsType} from "../../../../store/ducks/followerRequests/contracts/actionTypes";
 import FollowerRequestsModal from "../FollowerRequestsModal";
+import {LoadingStatus} from "../../../../store/types/common";
 
 describe("FollowerRequestsModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

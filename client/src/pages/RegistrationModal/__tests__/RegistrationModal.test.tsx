@@ -5,10 +5,10 @@ import axios from "axios";
 
 import RegistrationModal from "../RegistrationModal";
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import RegistrationInput from "../RegistrationInput/RegistrationInput";
 import {FilledSelect} from "../../../components/FilledSelect/FilledSelect";
 import {API_AUTH_REGISTRATION_CHECK} from "../../../util/endpoints";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("RegistrationModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

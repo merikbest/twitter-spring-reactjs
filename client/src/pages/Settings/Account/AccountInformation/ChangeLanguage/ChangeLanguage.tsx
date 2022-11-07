@@ -6,8 +6,8 @@ import {useChangeLanguageStyles} from "./ChangeLanguageStyles";
 import {FilledSelect} from "../../../../../components/FilledSelect/FilledSelect";
 import {selectUserIsLoading, selectUserProfileLanguage} from "../../../../../store/ducks/user/selectors";
 import {setUserLoadingStatus, updateLanguage} from "../../../../../store/ducks/user/actionCreators";
-import {LoadingStatus} from "../../../../../store/types";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
+import {LoadingStatus} from "../../../../../store/types/common";
 
 const ChangeLanguage: FC = (): ReactElement => {
     const classes = useChangeLanguageStyles();

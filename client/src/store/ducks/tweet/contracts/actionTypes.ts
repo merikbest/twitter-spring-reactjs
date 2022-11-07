@@ -1,8 +1,7 @@
 import {Action} from "redux";
-import {LoadingStatus} from "../../../types";
 import {FetchTweetUsersPayload, ReplyTweet, TweetState} from "./state";
 import {NotificationReplyResponse, NotificationResponse} from "../../../types/notification";
-import {PageableResponse} from "../../../types/common";
+import {LoadingStatus, PageableResponse} from "../../../types/common";
 import {TweetResponse} from "../../../types/tweet";
 
 export enum TweetActionType {

@@ -2,10 +2,10 @@ import {AxiosResponse} from "axios";
 import {call, put, takeLatest} from 'redux-saga/effects';
 
 import {setListDetail, setListDetailLoadingState} from './actionCreators';
-import {LoadingStatus} from '../../types';
 import {FetchListDetailActionInterface, ListDetailActionsType} from "./contracts/actionTypes";
 import {ListsApi} from "../../../services/api/listsApi";
 import {BaseListResponse} from "../../types/lists";
+import {LoadingStatus} from "../../types/common";
 
 export function* fetchListDetailRequest({payload}: FetchListDetailActionInterface) {
     try {

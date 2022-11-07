@@ -3,13 +3,13 @@ import {Link} from "react-router-dom";
 import {Avatar, Button} from "@material-ui/core";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {mockUserDetailResponse} from "../../../util/mockData/mockData";
 import PopperUserWindow from "../PopperUserWindow";
 import {PROFILE} from "../../../util/pathConstants";
 import {UserActionsType} from "../../../store/ducks/user/contracts/actionTypes";
 import FollowerGroup from "../../FollowerGroup/FollowerGroup";
 import ActionSnackbar from "../../ActionSnackbar/ActionSnackbar";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("PopperUserWindow", () => {
     const mockState = createMockRootState(LoadingStatus.LOADED);

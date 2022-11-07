@@ -1,8 +1,8 @@
 import {initialUsersSearchState, usersSearchReducer} from "../reducer";
 import {UsersSearchActions, UsersSearchActionsType} from "../contracts/actionTypes";
 import {testActionDispatch} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../types";
 import {UserResponse} from "../../../types/user";
+import {LoadingStatus} from "../../../types/common";
 
 describe("usersSearchReducer:", () => {
     describe("initial state:", () => {

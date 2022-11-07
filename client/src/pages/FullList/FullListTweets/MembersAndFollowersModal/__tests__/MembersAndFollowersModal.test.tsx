@@ -2,12 +2,12 @@ import React from "react";
 import {Dialog} from "@material-ui/core";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../store/types";
 import MembersAndFollowersModal from "../MembersAndFollowersModal";
 import {mockFullList, mockListsOwnerMember} from "../../../../../util/mockData/mockData";
 import Spinner from "../../../../../components/Spinner/Spinner";
 import {ListMembersActionsType} from "../../../../../store/ducks/listMembers/contracts/actionTypes";
 import ManageMembersItem from "../../../EditListButton/EditListModal/ManageMembersModal/ManageMembersItem/ManageMembersItem";
+import {LoadingStatus} from "../../../../../store/types/common";
 
 describe("MembersAndFollowersModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

@@ -2,9 +2,9 @@ import React from "react";
 import {createMemoryHistory} from "history";
 
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {SideSearchTextField} from "../../SearchTextField/SideSearchTextField";
 import SideSearch from "../SideSearch";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("SideSearch", () => {
     it("should change input and submit", () => {

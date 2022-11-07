@@ -2,13 +2,13 @@ import React from "react";
 import ReactRouter from "react-router";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import {mockUser, mockUserLists, mockUserProfile} from "../../../../util/mockData/mockData";
 import ListsItem from "../../ListsItem/ListsItem";
 import ListsMemberships from "../ListsMemberships";
 import Spinner from "../../../../components/Spinner/Spinner";
 import {ListsActionType} from "../../../../store/ducks/lists/contracts/actionTypes";
 import {UserProfileActionsType} from "../../../../store/ducks/userProfile/contracts/actionTypes";
+import {LoadingStatus} from "../../../../store/types/common";
 
 window.scrollTo = jest.fn();
 

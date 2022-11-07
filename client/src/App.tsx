@@ -14,7 +14,6 @@ import Home from "./pages/Home/Home";
 import {Layout} from './pages/Layout';
 import UserPage from "./pages/UserPage/UserPage";
 import {selectIsAuth, selectUserDataId, selectUserStatus} from "./store/ducks/user/selectors";
-import {LoadingStatus} from './store/types';
 import {fetchUserData, setNewNotification, setUnreadMessage} from './store/ducks/user/actionCreators';
 import Explore from './pages/Explore/Explore';
 import FollowingFollowers from "./pages/FollowingFollowers/FollowingFollowers";
@@ -78,7 +77,7 @@ import {
     USER_FOLLOWERS_YOU_FOLLOW
 } from "./util/pathConstants";
 import QuoteTweets from "./pages/QuoteTweets/QuoteTweets";
-import {BackgroundTheme, ColorScheme} from "./store/types/common";
+import {BackgroundTheme, ColorScheme, LoadingStatus} from "./store/types/common";
 import ActionSnackbar from "./components/ActionSnackbar/ActionSnackbar";
 import FullTweet from "./pages/FullTweet/FullTweet";
 import Connect from "./pages/Connect/Connect";

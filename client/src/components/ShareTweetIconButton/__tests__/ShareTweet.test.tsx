@@ -3,7 +3,6 @@ import routeData from "react-router";
 import {ClickAwayListener, IconButton} from "@material-ui/core";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {mockFullTweet} from "../../../util/mockData/mockData";
 import SendDirectTweetModal from "../SendDirectTweetModal/SendDirectTweetModal";
 import CloseButton from "../../CloseButton/CloseButton";
@@ -12,6 +11,7 @@ import ActionSnackbar from "../../ActionSnackbar/ActionSnackbar";
 import {TweetsActionType} from "../../../store/ducks/tweets/contracts/actionTypes";
 import {BOOKMARKS} from "../../../util/pathConstants";
 import ShareTweetIconButton from "../ShareTweetIconButton";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("ShareTweet", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);

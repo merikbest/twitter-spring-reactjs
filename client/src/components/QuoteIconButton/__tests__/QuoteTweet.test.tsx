@@ -2,11 +2,11 @@ import React from "react";
 import {ClickAwayListener, IconButton} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {mockFullTweet} from "../../../util/mockData/mockData";
 import QuoteIconButton from "../QuoteIconButton";
 import QuoteTweetModal from "../QuoteTweetModal/QuoteTweetModal";
 import CloseButton from "../../CloseButton/CloseButton";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("QuoteTweet", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);

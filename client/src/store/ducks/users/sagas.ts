@@ -1,11 +1,11 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 import {AxiosResponse} from "axios";
 
-import {LoadingStatus} from '../../types';
 import {FetchUsersActionInterface, UsersActionsType} from "./contracts/actionTypes";
 import {setPageableUsers, setUsers, setUsersLoadingState} from "./actionCreators";
 import {UserApi} from "../../../services/api/userApi";
 import {UserResponse} from "../../types/user";
+import {LoadingStatus} from "../../types/common";
 
 export function* fetchUsersRequest({payload}: FetchUsersActionInterface) {
     try {

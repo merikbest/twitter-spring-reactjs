@@ -4,13 +4,13 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import {createMockRootState, mockDispatch, mockLocation, mountWithStore} from "../../../util/testHelper";
 import Spinner from "../../../components/Spinner/Spinner";
-import {LoadingStatus} from "../../../store/types";
 import TweetComponent from "../../../components/TweetComponent/TweetComponent";
 import UsersItem from "../../../components/UsersItem/UsersItem";
 import {MainSearchTextField} from "../../../components/SearchTextField/MainSearchTextField";
 import {TweetsActionType} from "../../../store/ducks/tweets/contracts/actionTypes";
 import {UsersSearchActionsType} from "../../../store/ducks/usersSearch/contracts/actionTypes";
 import Explore from "../Explore";
+import {LoadingStatus} from "../../../store/types/common";
 
 window.scrollTo = jest.fn();
 

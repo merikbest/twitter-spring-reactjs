@@ -2,9 +2,9 @@ import React from "react";
 import {Dialog} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {mockFullTweet} from "../../../util/mockData/mockData";
 import TweetAnalyticsModal from "../TweetAnalyticsModal";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("TweetAnalyticsModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

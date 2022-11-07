@@ -3,8 +3,8 @@ import {Checkbox, Dialog, IconButton} from "@material-ui/core";
 
 import ExploreModal from "../ExploreModal";
 import {createMockRootState, mountWithStore} from "../../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../../store/types";
 import CloseButton from "../../../../../../components/CloseButton/CloseButton";
+import {LoadingStatus} from "../../../../../../store/types/common";
 
 describe("ExploreModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

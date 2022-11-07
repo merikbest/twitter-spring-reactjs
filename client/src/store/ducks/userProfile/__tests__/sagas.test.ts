@@ -18,7 +18,6 @@ import {
     setUserProfile,
     setUserProfileLoadingState
 } from "../actionCreators";
-import {LoadingStatus} from "../../../types";
 import {testCall, testLoadingStatus, testSetResponse, testWatchSaga} from "../../../../util/testHelper";
 import {UserProfileResponse} from "../../../types/user";
 import {UserApi} from "../../../../services/api/userApi";
@@ -26,6 +25,7 @@ import {ChatApi} from "../../../../services/api/chatApi";
 import {TweetImageResponse} from "../../../types/tweet";
 import {UserProfileActionsType} from "../contracts/actionTypes";
 import {boolean} from "yup";
+import {LoadingStatus} from "../../../types/common";
 
 describe("userProfileSaga:", () => {
     const mockUserProfileResponse = {data: {id: 1}} as AxiosResponse<UserProfileResponse>;

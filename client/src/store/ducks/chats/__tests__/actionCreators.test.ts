@@ -10,7 +10,7 @@ import {
 } from "../actionCreators";
 import {ChatsActionsType} from "../contracts/actionTypes";
 import {ChatResponse} from "../../../types/chat";
-import {LoadingStatus} from "../../../types";
+import {LoadingStatus} from "../../../types/common";
 
 describe("chats actions", () => {
     testAction(setChats, setChats([{id: 1}] as ChatResponse[]), {

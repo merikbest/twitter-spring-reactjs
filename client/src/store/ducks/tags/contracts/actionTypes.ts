@@ -1,8 +1,7 @@
 import {Action} from "redux";
 
-import {LoadingStatus} from "../../../types";
 import {TagsState} from "./state";
-import {PageableResponse} from "../../../types/common";
+import {LoadingStatus, PageableResponse} from "../../../types/common";
 
 export enum TagsActionsType {
     SET_TAGS = 'tags/SET_TAGS',

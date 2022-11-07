@@ -19,7 +19,7 @@ import {
 import {UserProfileActionsType} from "../contracts/actionTypes";
 import {UserProfileResponse} from "../../../types/user";
 import {TweetImageResponse} from "../../../types/tweet";
-import {LoadingStatus} from "../../../types";
+import {LoadingStatus} from "../../../types/common";
 
 describe("userProfile actions", () => {
     testAction(setBlocked, setBlocked(true), {

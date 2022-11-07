@@ -7,8 +7,7 @@ import {
     NotificationResponse,
     NotificationUserResponse
 } from "../../../types/notification";
-import {LoadingStatus} from "../../../types";
-import {NotificationType} from "../../../types/common";
+import {LoadingStatus, NotificationType} from "../../../types/common";
 
 describe("notificationsReducer:", () => {
     describe("initial state:", () => {

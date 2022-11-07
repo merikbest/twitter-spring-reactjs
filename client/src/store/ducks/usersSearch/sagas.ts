@@ -1,7 +1,6 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 import {AxiosResponse} from "axios";
 
-import {LoadingStatus} from '../../types';
 import {
     FetchFollowersActionInterface,
     FetchFollowingsActionInterface,
@@ -14,6 +13,7 @@ import {UserApi} from "../../../services/api/userApi";
 import {setPageableFollowers, setPageableUsersSearch, setUsersSearchLoadingState} from "./actionCreators";
 import {UserResponse} from "../../types/user";
 import {ChatApi} from "../../../services/api/chatApi";
+import {LoadingStatus} from "../../types/common";
 
 export function* fetchUsersSearchRequest({payload}: FetchUsersSearchActionInterface) {
     try {

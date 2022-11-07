@@ -3,12 +3,12 @@ import {createMemoryHistory} from "history";
 import {Avatar, Button, Popover} from "@material-ui/core";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import UserSideProfile from "../UserSideProfile";
 import {mockUser} from "../../../util/mockData/mockData";
 import LogoutModal from "../LogoutModal/LogoutModal";
 import {UserActionsType} from "../../../store/ducks/user/contracts/actionTypes";
 import {ACCOUNT_SIGNIN} from "../../../util/pathConstants";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("UserSideProfile", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

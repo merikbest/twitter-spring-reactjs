@@ -3,7 +3,6 @@ import {AxiosResponse} from "axios";
 import {fetchTagsRequest, fetchTrendsRequest, tagsSaga} from "../sagas";
 import {TagApi} from "../../../../services/api/tagApi";
 import {fetchTrends, setTags, setTagsLoadingState, setTrends, setTrendsLoadingState} from "../actionCreators";
-import {LoadingStatus} from "../../../types";
 import {TagResponse} from "../../../types/tag";
 import {
     mockExpectedResponse,
@@ -13,6 +12,7 @@ import {
     testWatchSaga
 } from "../../../../util/testHelper";
 import {TagsActionsType} from "../contracts/actionTypes";
+import {LoadingStatus} from "../../../types/common";
 
 describe("tagsSaga:", () => {
     const mockTags = {data: [{id: 1}, {id: 2}], headers: {"page-total-count": 1}} as AxiosResponse<TagResponse[]>;

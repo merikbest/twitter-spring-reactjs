@@ -3,7 +3,6 @@ import {Avatar, IconButton} from "@material-ui/core";
 
 import MutedAccountItem from "../MutedAccountItem";
 import {createMockRootState, mockDispatch, mountWithStore, testClickOnLink} from "../../../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../../../store/types";
 import {mockMutedUsers} from "../../../../../../../util/mockData/mockData";
 import {MutedUserResponse} from "../../../../../../../store/types/user";
 import {DEFAULT_PROFILE_IMG} from "../../../../../../../util/url";
@@ -11,6 +10,7 @@ import ActionSnackbar from "../../../../../../../components/ActionSnackbar/Actio
 import {UserActionsType} from "../../../../../../../store/ducks/user/contracts/actionTypes";
 import {PROFILE} from "../../../../../../../util/pathConstants";
 import HoverAction from "../../../../../../../components/HoverAction/HoverAction";
+import {LoadingStatus} from "../../../../../../../store/types/common";
 
 describe("MutedAccountItem", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

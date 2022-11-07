@@ -1,9 +1,9 @@
 import {initialUserState, userReducer} from "../reducer";
 import {UserActions, UserActionsType} from "../contracts/actionTypes";
 import {testActionDispatch} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../types";
 import {AuthUserResponse} from "../../../types/user";
 import {ChatMessageResponse} from "../../../types/chat";
+import {LoadingStatus} from "../../../types/common";
 
 describe("userReducer:", () => {
     describe("initial state:", () => {

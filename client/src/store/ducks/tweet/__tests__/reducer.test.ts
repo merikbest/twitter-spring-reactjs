@@ -1,9 +1,8 @@
 import {initialTweetState, tweetReducer} from "../reducer";
 import {TweetActions, TweetActionType} from "../contracts/actionTypes";
 import {TweetResponse} from "../../../types/tweet";
-import {LoadingStatus} from "../../../types";
 import {NotificationReplyResponse, NotificationResponse} from "../../../types/notification";
-import {NotificationType} from "../../../types/common";
+import {LoadingStatus, NotificationType} from "../../../types/common";
 import {UserResponse} from "../../../types/user";
 import {testActionDispatch} from "../../../../util/testHelper";
 

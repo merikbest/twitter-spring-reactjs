@@ -19,7 +19,7 @@ import {
 } from "../actionCreators";
 import {NotificationsActionsType} from "../contracts/actionTypes";
 import {NotificationInfoResponse, NotificationResponse, NotificationUserResponse} from "../../../types/notification";
-import {LoadingStatus} from "../../../types";
+import {LoadingStatus} from "../../../types/common";
 
 describe("notifications actions", () => {
     const notification = {id: 1} as NotificationResponse;

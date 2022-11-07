@@ -4,12 +4,12 @@ import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import EditProfileModal from "../EditProfileModal";
 import {mockFullTweet, mockUser} from "../../../util/mockData/mockData";
 import TweeterInput from "../TweetInput/TweeterInput";
 import {API_USER_UPLOAD_IMAGE} from "../../../util/endpoints";
 import {UserActionsType} from "../../../store/ducks/user/contracts/actionTypes";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("EditProfileModal", () => {
     const mock = new MockAdapter(axios);

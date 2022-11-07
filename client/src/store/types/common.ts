@@ -3,6 +3,14 @@ export interface PageableResponse<T> {
     pagesCount: number;
 }
 
+export enum LoadingStatus {
+    LOADED = "LOADED",
+    LOADING = "LOADING",
+    ERROR = "ERROR",
+    NEVER = "NEVER",
+    SUCCESS = "SUCCESS"
+}
+
 export enum ColorScheme {
     BLUE = "BLUE",
     YELLOW = "YELLOW",

@@ -1,8 +1,8 @@
 import produce, {Draft} from 'immer';
 
-import {LoadingStatus} from '../../types';
 import {ChatMessageActions, ChatMessagesActionsType} from './contracts/actionTypes';
 import {ChatMessageState} from './contracts/state';
+import {LoadingStatus} from "../../types/common";
 
 export const initialChatMessagesState: ChatMessageState = {
     items: [],

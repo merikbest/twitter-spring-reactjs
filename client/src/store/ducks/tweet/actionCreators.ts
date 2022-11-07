@@ -1,4 +1,3 @@
-import {LoadingStatus} from "../../types";
 import {
     AddTweetToBookmarksActionInterface,
     DeleteTweetReplyActionInterface,
@@ -29,7 +28,7 @@ import {
 } from "./contracts/actionTypes";
 import {FetchTweetUsersPayload, ReplyTweet, TweetState} from "./contracts/state";
 import {NotificationReplyResponse, NotificationResponse} from "../../types/notification";
-import {PageableResponse} from "../../types/common";
+import {LoadingStatus, PageableResponse} from "../../types/common";
 import {TweetResponse} from "../../types/tweet";
 
 export const setFollowToTweetState = (payload: boolean): SetFollowToTweetStateActionInterface => ({

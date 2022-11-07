@@ -14,9 +14,9 @@ import {
     selectSimpleListsItems,
     selectUserListsItems
 } from "../selectors";
-import {LoadingStatus} from "../../../types";
 import {createMockRootState} from "../../../../util/testHelper";
 import {mockLists, mockPinnedLists, mockSimpleList, mockUserLists} from "../../../../util/mockData/mockData";
+import {LoadingStatus} from "../../../types/common";
 
 describe("lists selectors:", () => {
     const mockState = createMockRootState();

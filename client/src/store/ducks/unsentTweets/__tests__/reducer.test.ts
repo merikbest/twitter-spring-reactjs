@@ -2,7 +2,7 @@ import {initialUnsentTweetsState, unsentTweetsReducer} from "../reducer";
 import {UnsentTweetActionType, UnsentTweetsActions} from "../contracts/actionTypes";
 import {testActionDispatch} from "../../../../util/testHelper";
 import {TweetResponse} from "../../../types/tweet";
-import {LoadingStatus} from "../../../types";
+import {LoadingStatus} from "../../../types/common";
 
 describe("unsentTweetsReducer:", () => {
 

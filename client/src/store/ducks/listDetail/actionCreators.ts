@@ -1,4 +1,3 @@
-import {LoadingStatus} from "../../types";
 import {
     FetchListDetailActionInterface,
     ListDetailActionsType,
@@ -9,6 +8,7 @@ import {
 } from "./contracts/actionTypes";
 import {BaseListResponse} from "../../types/lists";
 import {ListDetailsRequest} from "./contracts/state";
+import {LoadingStatus} from "../../types/common";
 
 export const setListDetail = (payload: BaseListResponse): SetListDetailActionInterface => ({
     type: ListDetailActionsType.SET_LIST_DETAIL,

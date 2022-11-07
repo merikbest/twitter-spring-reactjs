@@ -13,12 +13,12 @@ import {
     setChatMessages,
     setChatMessagesLoadingState
 } from "../actionCreators";
-import {LoadingStatus} from "../../../types";
 import {testCall, testLoadingStatus, testSetResponse, testWatchSaga} from "../../../../util/testHelper";
 import {ChatApi} from "../../../../services/api/chatApi";
 import {ChatMessageResponse} from "../../../types/chat";
 import {ChatMessageRequest, ChatMessageWithTweetRequest} from "../contracts/state";
 import {ChatMessagesActionsType} from "../contracts/actionTypes";
+import {LoadingStatus} from "../../../types/common";
 
 describe("chatMessagesSaga:", () => {
     

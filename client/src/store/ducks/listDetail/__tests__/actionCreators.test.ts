@@ -9,7 +9,7 @@ import {
 } from "../actionCreators";
 import {ListDetailActionsType} from "../contracts/actionTypes";
 import {BaseListResponse} from "../../../types/lists";
-import {LoadingStatus} from "../../../types";
+import {LoadingStatus} from "../../../types/common";
 
 describe("listDetail actions", () => {
     const cancelTokenSource = axios.CancelToken.source();

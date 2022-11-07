@@ -1,5 +1,5 @@
-import {LoadingStatus} from "../../../types";
 import {BlockedUserResponse, MutedUserResponse} from "../../../types/user";
+import {LoadingStatus} from "../../../types/common";
 
 export interface BlockedAndMutedUsersState {
     blockedUsers: Array<BlockedUserResponse>;

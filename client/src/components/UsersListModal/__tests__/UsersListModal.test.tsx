@@ -2,12 +2,12 @@ import React from "react";
 import {IconButton} from "@material-ui/core";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import Spinner from "../../Spinner/Spinner";
 import {TweetActionType} from "../../../store/ducks/tweet/contracts/actionTypes";
 import UsersItem from "../../UsersItem/UsersItem";
 import CloseButton from "../../CloseButton/CloseButton";
 import UsersListModal, {UsersListModalAction} from "../UsersListModal";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("UsersListModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

@@ -1,8 +1,7 @@
 import {Action} from "redux";
 
-import {LoadingStatus} from "../../../types";
 import {FollowerRequestsState} from "./state";
-import {PageableResponse} from "../../../types/common";
+import {LoadingStatus, PageableResponse} from "../../../types/common";
 
 export enum FollowerRequestsActionsType {
     SET_FOLLOWER_REQUESTS = 'followerRequests/SET_FOLLOWER_REQUESTS',

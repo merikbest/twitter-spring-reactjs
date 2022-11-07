@@ -1,8 +1,8 @@
 import {Action} from "redux";
 
 import {BaseListResponse} from "../../../types/lists";
-import {LoadingStatus} from "../../../types";
 import {ListDetailsRequest} from "./state";
+import {LoadingStatus} from "../../../types/common";
 
 export enum ListDetailActionsType {
     SET_LIST_DETAIL = 'listDetail/SET_LIST_DETAIL',

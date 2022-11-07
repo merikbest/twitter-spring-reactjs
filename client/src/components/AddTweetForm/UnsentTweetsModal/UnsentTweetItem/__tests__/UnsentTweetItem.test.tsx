@@ -2,9 +2,9 @@ import React from "react";
 import {Checkbox} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../store/types";
 import {mockFullTweet} from "../../../../../util/mockData/mockData";
 import UnsentTweetItem from "../UnsentTweetItem";
+import {LoadingStatus} from "../../../../../store/types/common";
 
 describe("UnsentTweetItem", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);

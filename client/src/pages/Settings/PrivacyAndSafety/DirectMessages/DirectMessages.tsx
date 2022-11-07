@@ -8,10 +8,10 @@ import {
     selectUserDataIsMutedDirectMessages
 } from "../../../../store/ducks/user/selectors";
 import {setUserLoadingStatus, updateDirect} from "../../../../store/ducks/user/actionCreators";
-import {LoadingStatus} from "../../../../store/types";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 import {DIRECT_MESSAGES, DIRECT_MESSAGES_RECEIPTS, DIRECT_MESSAGES_RECEIVE} from "../../../../util/url";
+import {LoadingStatus} from "../../../../store/types/common";
 
 const DirectMessages: FC = memo((): ReactElement => {
     const globalClasses = useGlobalStyles();

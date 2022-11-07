@@ -11,7 +11,7 @@ import {
 } from "../actionCreators";
 import {BlockedAndMutedUsersActionsType} from "../contracts/actionTypes";
 import {BlockedUserResponse, MutedUserResponse} from "../../../types/user";
-import {LoadingStatus} from "../../../types";
+import {LoadingStatus} from "../../../types/common";
 
 describe("blockedAndMutedUsers actions", () => {
     testAction(setBlockedUsers, setBlockedUsers({items: [{id: 1}] as BlockedUserResponse[], pagesCount: 0}), {

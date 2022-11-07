@@ -29,7 +29,6 @@ import {
     setTweetData,
     setTweetLoadingState
 } from "../actionCreators";
-import {LoadingStatus} from "../../../types";
 import {TweetResponse} from "../../../types/tweet";
 import {TweetApi} from "../../../../services/api/tweetApi";
 import {UserApi} from "../../../../services/api/userApi";
@@ -45,6 +44,7 @@ import {
     testWatchSaga
 } from "../../../../util/testHelper";
 import {TweetActionType} from "../contracts/actionTypes";
+import {LoadingStatus} from "../../../types/common";
 
 describe("tweetSaga:", () => {
     const mockTweet = {data: {id: 1}} as AxiosResponse<TweetResponse>;

@@ -7,10 +7,10 @@ import {useChangeCountryStyles} from "./ChangeCountryStyles";
 import {FilledSelect} from "../../../../../components/FilledSelect/FilledSelect";
 import {selectUserDataId, selectUserProfileCountry} from "../../../../../store/ducks/user/selectors";
 import {setUserLoadingStatus, updateCountry} from "../../../../../store/ducks/user/actionCreators";
-import {LoadingStatus} from "../../../../../store/types";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
 import {HOW_TO_CHANGE_COUNTRY_SETTINGS} from "../../../../../util/url";
+import {LoadingStatus} from "../../../../../store/types/common";
 
 const ChangeCountry: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();

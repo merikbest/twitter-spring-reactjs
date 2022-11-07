@@ -2,9 +2,9 @@ import React from "react";
 import {IconButton} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import HoverAction from "../../HoverAction/HoverAction";
 import CloseButton from "../CloseButton";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("CloseButton", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);

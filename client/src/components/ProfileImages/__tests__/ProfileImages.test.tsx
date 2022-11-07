@@ -4,9 +4,9 @@ import {createMemoryHistory} from "history";
 import {ImageList, ImageListItem} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {MODAL} from "../../../util/pathConstants";
 import ProfileImages from "../ProfileImages";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("ProfileImages", () => {
     const mockState = createMockRootState(LoadingStatus.LOADED);

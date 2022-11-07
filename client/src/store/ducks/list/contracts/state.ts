@@ -1,6 +1,5 @@
-import {LoadingStatus} from "../../../types";
 import {BaseListResponse, ListOwnerResponse} from "../../../types/lists";
-import {Image} from "../../../types/common";
+import {Image, LoadingStatus} from "../../../types/common";
 
 export interface ListState {
     list?: BaseListResponse;

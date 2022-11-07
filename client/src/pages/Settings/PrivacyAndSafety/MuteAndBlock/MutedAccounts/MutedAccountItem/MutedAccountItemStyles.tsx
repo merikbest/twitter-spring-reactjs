@@ -1,10 +1,6 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core";
 
-interface MutedAccountItemStylesProps {
-    isUserMuted: boolean;
-}
-
-export const useMutedAccountItemStyles = makeStyles<Theme, MutedAccountItemStylesProps>((theme) => ({
+export const useMutedAccountItemStyles = makeStyles((theme) => ({
     container: {
         borderTop: 0,
         borderLeft: 0,
@@ -34,21 +30,5 @@ export const useMutedAccountItemStyles = makeStyles<Theme, MutedAccountItemStyle
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between"
-    },
-    muteButton: {
-        marginRight: 16,
-        "& .MuiIconButton-root": {
-            padding: 7,
-            borderColor: props => props.isUserMuted ? theme.palette.error.light : "rgb(207, 217, 222)",
-            border: "1px solid",
-            borderRadius: "50%",
-            "& svg": {
-                color: props => props.isUserMuted ? theme.palette.error.main : theme.palette.primary.main,
-                height: "0.85em",
-            },
-            "&:hover": {
-                backgroundColor: props => props.isUserMuted ? "rgba(244, 33, 46, 0.1)" : "rgba(29, 155, 240, 0.1)",
-            },
-        },
     },
 }));

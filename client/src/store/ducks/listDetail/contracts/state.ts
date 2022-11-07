@@ -1,6 +1,6 @@
 import {CancelTokenSource} from "axios";
-import {LoadingStatus} from "../../../types";
 import {BaseListResponse} from "../../../types/lists";
+import {LoadingStatus} from "../../../types/common";
 
 export interface ListDetailState {
     item?: BaseListResponse;

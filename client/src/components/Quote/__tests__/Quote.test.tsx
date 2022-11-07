@@ -4,10 +4,10 @@ import {Link} from "react-router-dom";
 import {createMemoryHistory} from "history";
 
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {mockQuoteTweet} from "../../../util/mockData/mockData";
 import {HOME_TWEET} from "../../../util/pathConstants";
 import Quote from "../Quote";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("Quote", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);

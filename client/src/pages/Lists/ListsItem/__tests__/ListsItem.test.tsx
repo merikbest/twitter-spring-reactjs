@@ -3,12 +3,12 @@ import {Avatar, Button, IconButton} from "@material-ui/core";
 
 import ListsItem from "../ListsItem";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import {mockLists, mockUserFullList} from "../../../../util/mockData/mockData";
 import {ListsActionType} from "../../../../store/ducks/lists/contracts/actionTypes";
 import {ListResponse} from "../../../../store/types/lists";
 import HoverAction from "../../../../components/HoverAction/HoverAction";
 import PopperListWindow from "../../PopperListWindow/PopperListWindow";
+import {LoadingStatus} from "../../../../store/types/common";
 
 describe("ListsItem", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

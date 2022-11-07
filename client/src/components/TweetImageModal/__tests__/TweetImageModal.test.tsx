@@ -4,7 +4,6 @@ import {Avatar, IconButton} from "@material-ui/core";
 import {createMemoryHistory} from "history";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {TweetActionType} from "../../../store/ducks/tweet/contracts/actionTypes";
 import {mockFullTweet} from "../../../util/mockData/mockData";
 import TweetImageModal from "../TweetImageModal";
@@ -16,6 +15,7 @@ import ReplyModal from "../../ReplyModal/ReplyModal";
 import {TweetsActionType} from "../../../store/ducks/tweets/contracts/actionTypes";
 import PopperUserWindow from "../../PopperUserWindow/PopperUserWindow";
 import HoverAction from "../../HoverAction/HoverAction";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("TweetImageModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

@@ -1,7 +1,7 @@
 import {createMockRootState} from "../../../../util/testHelper";
 import {mockTweets} from "../../../../util/mockData/mockData";
 import {selectIstUnsentTweetsLoading, selectUnsentTweets, selectUnsentTweetsPagesCount} from "../selectors";
-import {LoadingStatus} from "../../../types";
+import {LoadingStatus} from "../../../types/common";
 
 describe("unsentTweets selectors:", () => {
     const mockState = createMockRootState();

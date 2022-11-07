@@ -1,7 +1,6 @@
 import {AxiosResponse} from "axios";
 import {call, put, takeLatest} from "redux-saga/effects";
 
-import {LoadingStatus} from "../../types";
 import {
     setIsTweetBookmarkedAdditionalInfo,
     setTweetAdditionalInfo,
@@ -14,6 +13,7 @@ import {
 } from "./contracts/actionTypes";
 import {TweetAdditionalInfoResponse} from "../../types/tweet";
 import {TweetApi} from "../../../services/api/tweetApi";
+import {LoadingStatus} from "../../types/common";
 
 export function* fetchTweetAdditionalInfoRequest({payload}: FetchTweetAdditionalInfoActionInterface) {
     try {

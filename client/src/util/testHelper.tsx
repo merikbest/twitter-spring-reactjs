@@ -10,7 +10,6 @@ import {createMemoryHistory} from "history";
 import routeData from "react-router";
 import {AxiosResponse} from "axios";
 
-import {LoadingStatus} from "../store/types";
 import {RootState} from "../store/store";
 import {
     createMockMyProfile,
@@ -20,7 +19,7 @@ import {
     mockUser,
     mockUsers
 } from "./mockData/mockData";
-import {PageableResponse} from "../store/types/common";
+import {LoadingStatus, PageableResponse} from "../store/types/common";
 
 
 configure({adapter: new Adapter()});

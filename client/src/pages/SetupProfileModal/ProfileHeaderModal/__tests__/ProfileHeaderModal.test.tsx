@@ -3,9 +3,9 @@ import {Avatar, Button, Dialog} from "@material-ui/core";
 
 import ProfileHeaderModal from "../ProfileHeaderModal";
 import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import {DEFAULT_PROFILE_IMG} from "../../../../util/url";
 import {wallpapers} from "../../../../util/wallpapers";
+import {LoadingStatus} from "../../../../store/types/common";
 
 describe("ProfileHeaderModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);

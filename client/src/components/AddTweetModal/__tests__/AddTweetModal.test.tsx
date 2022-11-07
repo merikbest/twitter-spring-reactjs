@@ -4,7 +4,7 @@ import {Dialog} from "@material-ui/core";
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
 import AddTweetForm from "../../AddTweetForm/AddTweetForm";
 import AddTweetModal from "../AddTweetModal";
-import {LoadingStatus} from "../../../store/types";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("AddTweetModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);

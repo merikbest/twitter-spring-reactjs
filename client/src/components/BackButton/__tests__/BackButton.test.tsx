@@ -3,9 +3,9 @@ import {createMemoryHistory} from "history";
 import {IconButton} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import HoverAction from "../../HoverAction/HoverAction";
 import BackButton from "../BackButton";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("BackButton", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);

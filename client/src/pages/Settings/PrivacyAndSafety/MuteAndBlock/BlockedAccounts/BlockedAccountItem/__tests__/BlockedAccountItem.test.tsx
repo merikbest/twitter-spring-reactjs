@@ -3,13 +3,13 @@ import {Avatar, Button} from "@material-ui/core";
 
 import BlockedAccountItem from "../BlockedAccountItem";
 import {createMockRootState, mockDispatch, mountWithStore, testClickOnLink} from "../../../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../../../store/types";
 import {mockBlockedUsers} from "../../../../../../../util/mockData/mockData";
 import {UserActionsType} from "../../../../../../../store/ducks/user/contracts/actionTypes";
 import ActionSnackbar from "../../../../../../../components/ActionSnackbar/ActionSnackbar";
 import {PROFILE} from "../../../../../../../util/pathConstants";
 import {DEFAULT_PROFILE_IMG} from "../../../../../../../util/url";
 import {BlockedUserResponse} from "../../../../../../../store/types/user";
+import {LoadingStatus} from "../../../../../../../store/types/common";
 
 describe("BlockedAccountItem", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

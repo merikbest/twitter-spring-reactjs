@@ -1,13 +1,12 @@
 import {Action} from "redux";
 
-import {LoadingStatus} from "../../../types";
 import {
     NotificationInfoResponse,
     NotificationReplyResponse,
     NotificationResponse,
 } from "../../../types/notification";
 import {NotificationsState} from "./state";
-import {PageableResponse} from "../../../types/common";
+import {LoadingStatus, PageableResponse} from "../../../types/common";
 
 export enum NotificationsActionsType {
     SET_NOTIFICATIONS = 'notification/SET_NOTIFICATIONS',

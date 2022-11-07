@@ -1,5 +1,4 @@
 import {Action} from "redux";
-import {LoadingStatus} from "../../../types";
 import {
     BlockedUsersPayload,
     FollowersRequest,
@@ -8,7 +7,7 @@ import {
     SearchByNameRequest,
     UsersSearchState
 } from "./state";
-import {PageableResponse} from "../../../types/common";
+import {LoadingStatus, PageableResponse} from "../../../types/common";
 
 export enum UsersSearchActionsType {
     SET_USERS = 'usersSearch/SET_USERS',

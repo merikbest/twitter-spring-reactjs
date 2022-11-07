@@ -2,7 +2,7 @@ import produce, {Draft} from 'immer';
 
 import {ListsState} from "./contracts/state";
 import {ListsActions, ListsActionType} from './contracts/actionTypes';
-import {LoadingStatus} from '../../types';
+import {LoadingStatus} from "../../types/common";
 
 export const initialListsState: ListsState = {
     lists: [],

@@ -8,7 +8,6 @@ import {
     setBlockedUsers,
     setMutedUsers
 } from "../actionCreators";
-import {LoadingStatus} from "../../../types";
 import {
     mockExpectedResponse,
     testCall,
@@ -19,6 +18,7 @@ import {
 import {UserApi} from "../../../../services/api/userApi";
 import {BlockedUserResponse, MutedUserResponse} from "../../../types/user";
 import {BlockedAndMutedUsersActionsType} from "../contracts/actionTypes";
+import {LoadingStatus} from "../../../types/common";
 
 describe("blockedAndMutedUsersSaga:", () => {
 

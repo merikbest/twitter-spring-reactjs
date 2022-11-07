@@ -6,10 +6,10 @@ import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
 import {useChangeGenderStyles} from "./ChangeGenderStyles";
 import {ChangeInfoTextField} from "../../../ChangeInfoTextField/ChangeInfoTextField";
 import {setUserLoadingStatus, updateGender} from "../../../../../store/ducks/user/actionCreators";
-import {LoadingStatus} from "../../../../../store/types";
 import {selectUserIsLoading, selectUserProfileGender} from "../../../../../store/ducks/user/selectors";
 import {useGlobalStyles} from "../../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
+import {LoadingStatus} from "../../../../../store/types/common";
 
 const ChangeGender: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();

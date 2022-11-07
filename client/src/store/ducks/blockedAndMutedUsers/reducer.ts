@@ -1,8 +1,8 @@
 import produce, {Draft} from 'immer';
 
-import {LoadingStatus} from '../../types';
 import {BlockedAndMutedUsersActions, BlockedAndMutedUsersActionsType} from './contracts/actionTypes';
 import {BlockedAndMutedUsersState} from './contracts/state';
+import {LoadingStatus} from "../../types/common";
 
 export const initialBlockedAndMutedUsersState: BlockedAndMutedUsersState = {
     blockedUsers: [],

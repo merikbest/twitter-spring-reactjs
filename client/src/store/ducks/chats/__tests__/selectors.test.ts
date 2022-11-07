@@ -1,7 +1,7 @@
 import {selectChatsItems, selectIsChatsLoaded, selectIsChatsLoading} from "../selectors";
-import {LoadingStatus} from "../../../types";
 import {createMockRootState} from "../../../../util/testHelper";
 import {mockChats} from "../../../../util/mockData/mockData";
+import {LoadingStatus} from "../../../types/common";
 
 describe("chats selectors:", () => {
     const mockState = createMockRootState();

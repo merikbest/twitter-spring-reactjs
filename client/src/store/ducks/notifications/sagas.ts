@@ -15,11 +15,11 @@ import {
     setTweetAuthorsLoadingState,
     setTweetAuthorsNotifications
 } from "./actionCreators";
-import {LoadingStatus} from "../../types";
 import {UserApi} from "../../../services/api/userApi";
 import {setPageableTweets, setTweetsLoadingState} from "../tweets/actionCreators";
 import {NotificationInfoResponse, NotificationResponse, NotificationUserResponse} from "../../types/notification";
 import {TweetResponse} from "../../types/tweet";
+import {LoadingStatus} from "../../types/common";
 
 export function* fetchNotificationsRequest({payload}: FetchNotificationsActionInterface) {
     try {

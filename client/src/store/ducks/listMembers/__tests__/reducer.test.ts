@@ -1,8 +1,8 @@
 import {initialListMembersState, listMembersReducer} from "../reducer";
 import {ListMembersActions, ListMembersActionsType} from "../contracts/actionTypes";
 import {testActionDispatch} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../types";
 import {ListsOwnerMemberResponse} from "../../../types/lists";
+import {LoadingStatus} from "../../../types/common";
 
 describe("listMembersReducer:", () => {
     describe("initial state:", () => {

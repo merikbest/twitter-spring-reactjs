@@ -1,7 +1,7 @@
 import {selectFollowers, selectUsersPagesCount, selectUsersSearch, selectUsersSearchIsLoading} from "../selectors";
-import {LoadingStatus} from "../../../types";
 import {createMockRootState} from "../../../../util/testHelper";
 import {mockUsers} from "../../../../util/mockData/mockData";
+import {LoadingStatus} from "../../../types/common";
 
 describe("usersSearch selectors:", () => {
     

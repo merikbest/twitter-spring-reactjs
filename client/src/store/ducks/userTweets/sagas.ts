@@ -9,9 +9,9 @@ import {
     FetchUserTweetsActionInterface,
     UserTweetsActionType
 } from "./contracts/actionTypes";
-import {LoadingStatus} from '../../types';
 import {UserApi} from "../../../services/api/userApi";
 import {TweetResponse} from "../../types/tweet";
+import {LoadingStatus} from "../../types/common";
 
 export function* fetchUserTweetsRequest({payload}: FetchUserTweetsActionInterface) {
     try {

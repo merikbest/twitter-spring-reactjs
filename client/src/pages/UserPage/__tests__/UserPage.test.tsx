@@ -9,7 +9,6 @@ import {Link} from "react-router-dom";
 
 import UserPage from "../UserPage";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {UserProfileActionsType} from "../../../store/ducks/userProfile/contracts/actionTypes";
 import {mockTweets, mockUser, mockUserProfile} from "../../../util/mockData/mockData";
 import Spinner from "../../../components/Spinner/Spinner";
@@ -26,6 +25,7 @@ import {ChatsActionsType} from "../../../store/ducks/chats/contracts/actionTypes
 import ActionSnackbar from "../../../components/ActionSnackbar/ActionSnackbar";
 import BlockUserModal from "../../../components/BlockUserModal/BlockUserModal";
 import {RootState} from "../../../store/store";
+import {LoadingStatus} from "../../../store/types/common";
 
 window.scrollTo = jest.fn();
 

@@ -3,9 +3,9 @@ import {Checkbox, Link as MuiLink} from "@material-ui/core";
 
 import DirectMessages from "../DirectMessages";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../store/types";
 import {DIRECT_MESSAGES, DIRECT_MESSAGES_RECEIPTS, DIRECT_MESSAGES_RECEIVE} from "../../../../../util/url";
 import {UserActionsType} from "../../../../../store/ducks/user/contracts/actionTypes";
+import {LoadingStatus} from "../../../../../store/types/common";
 
 describe("DirectMessages", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

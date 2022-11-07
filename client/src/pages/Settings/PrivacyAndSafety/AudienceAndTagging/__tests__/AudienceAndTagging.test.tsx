@@ -4,8 +4,8 @@ import {Checkbox} from "@material-ui/core";
 import AudienceAndTagging from "../AudienceAndTagging";
 import {createMockRootState, mockDispatch, mountWithStore, testClickOnLink} from "../../../../../util/testHelper";
 import {SETTINGS_PRIVACY_AND_SAFETY_TAGGING} from "../../../../../util/pathConstants";
-import {LoadingStatus} from "../../../../../store/types";
 import {UserActionsType} from "../../../../../store/ducks/user/contracts/actionTypes";
+import {LoadingStatus} from "../../../../../store/types/common";
 
 describe("AudienceAndTagging", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

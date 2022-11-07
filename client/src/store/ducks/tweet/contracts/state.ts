@@ -1,5 +1,4 @@
-import {LoadingStatus} from "../../../types";
-import {Image, ReplyType} from "../../../types/common";
+import {Image, LoadingStatus, ReplyType} from "../../../types/common";
 import {TweetResponse} from "../../../types/tweet";
 import {UserResponse} from "../../../types/user";
 

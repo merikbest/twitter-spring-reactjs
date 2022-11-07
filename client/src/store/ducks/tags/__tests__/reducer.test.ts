@@ -1,8 +1,8 @@
 import {initialTagsState, tagsReducer} from "../reducer";
 import {TagsActions, TagsActionsType} from "../contracts/actionTypes";
 import {testActionDispatch} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../types";
 import {TagResponse} from "../../../types/tag";
+import {LoadingStatus} from "../../../types/common";
 
 describe("tagsReducer:", () => {
     describe("initial state:", () => {

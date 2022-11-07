@@ -1,6 +1,6 @@
 import {selectIsUserDetailLoaded, selectIsUserDetailLoading, selectUserDetailItem} from "../selectors";
-import {LoadingStatus} from "../../../types";
 import {createMockRootState, mockUserDetailResponse} from "../../../../util/testHelper";
+import {LoadingStatus} from "../../../types/common";
 
 describe("userDetail selectors:", () => {
     

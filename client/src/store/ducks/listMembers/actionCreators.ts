@@ -1,4 +1,3 @@
-import {LoadingStatus} from '../../types';
 import {
     FetchListFollowersActionInterface,
     FetchListMembersActionInterface,
@@ -21,6 +20,7 @@ import {
     SearchListUsersRequest,
     UserToListPayload
 } from "./contracts/state";
+import {LoadingStatus} from "../../types/common";
 
 export const setListMembers = (payload: ListMembersState["members"]): SetListMembersActionInterface => ({
     type: ListMembersActionsType.SET_LIST_MEMBERS,

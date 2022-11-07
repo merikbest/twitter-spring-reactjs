@@ -3,9 +3,9 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 
 import {setTags, setTagsLoadingState, setTrends, setTrendsLoadingState} from './actionCreators';
 import {TagApi} from '../../../services/api/tagApi'
-import {LoadingStatus} from '../../types';
 import {FetchTrendsActionInterface, TagsActionsType} from "./contracts/actionTypes";
 import {TagResponse} from "../../types/tag";
+import {LoadingStatus} from "../../types/common";
 
 export function* fetchTagsRequest() {
     try {

@@ -2,9 +2,9 @@ import React from "react";
 import {Button, Dialog} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {mockUsers} from "../../../util/mockData/mockData";
 import UnfollowModal from "../UnfollowModal";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("UnfollowModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

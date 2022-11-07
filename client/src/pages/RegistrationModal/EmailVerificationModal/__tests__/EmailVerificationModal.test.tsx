@@ -4,10 +4,10 @@ import MockAdapter from "axios-mock-adapter";
 import {Button, Dialog} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import EmailVerificationModal from "../EmailVerificationModal";
 import {RegistrationInputField} from "../../RegistrationInput/RegistrationInputField";
 import {API_AUTH_REGISTRATION_ACTIVATE} from "../../../../util/endpoints";
+import {LoadingStatus} from "../../../../store/types/common";
 
 describe("EmailVerificationModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

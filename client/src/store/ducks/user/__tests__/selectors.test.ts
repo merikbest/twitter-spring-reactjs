@@ -7,9 +7,9 @@ import {
     selectUserIsSuccess,
     selectUserStatus
 } from "../selectors";
-import {LoadingStatus} from "../../../types";
 import {createMockRootState} from "../../../../util/testHelper";
 import {mockUser} from "../../../../util/mockData/mockData";
+import {LoadingStatus} from "../../../types/common";
 
 describe("user selectors:", () => {
 

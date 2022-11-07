@@ -1,6 +1,6 @@
 import {RootState} from '../../store';
 import {ListMembersState} from './contracts/state';
-import {LoadingStatus} from "../../types";
+import {LoadingStatus} from "../../types/common";
 
 const selectListMembers = (state: RootState): ListMembersState => state.listMembers;
 

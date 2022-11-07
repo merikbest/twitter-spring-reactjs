@@ -7,7 +7,6 @@ import {createMemoryHistory} from "history";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
 import AddTweetForm from "../AddTweetForm";
-import {LoadingStatus} from "../../../store/types";
 import {mockFullTweet, mockMyProfile, mockQuoteTweet, mockUser} from "../../../util/mockData/mockData";
 import {PROFILE} from "../../../util/pathConstants";
 import HoverAction from "../../HoverAction/HoverAction";
@@ -20,7 +19,7 @@ import ActionSnackbar from "../../ActionSnackbar/ActionSnackbar";
 import CloseButton from "../../CloseButton/CloseButton";
 import UnsentTweetsModal from "../UnsentTweetsModal/UnsentTweetsModal";
 import {API_USER_UPLOAD_IMAGE} from "../../../util/endpoints";
-import {ReplyType} from "../../../store/types/common";
+import {LoadingStatus, ReplyType} from "../../../store/types/common";
 
 describe("AddTweetForm", () => {
     const mock = new MockAdapter(axios);

@@ -2,7 +2,6 @@ import React from "react";
 import {Avatar, Button, IconButton} from "@material-ui/core";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import PopperListWindow from "../PopperListWindow";
 import {mockUserFullList} from "../../../../util/mockData/mockData";
 import MembersAndFollowersModal
@@ -10,6 +9,7 @@ import MembersAndFollowersModal
 import CloseButton from "../../../../components/CloseButton/CloseButton";
 import {ListsActionType} from "../../../../store/ducks/lists/contracts/actionTypes";
 import {DEFAULT_PROFILE_IMG} from "../../../../util/url";
+import {LoadingStatus} from "../../../../store/types/common";
 
 describe("PopperListWindow", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

@@ -1,8 +1,8 @@
 import {initialListsState, listsReducer} from "../reducer";
 import {ListsActions, ListsActionType} from "../contracts/actionTypes";
 import {testActionDispatch} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../types";
 import {ListResponse, ListUserResponse, PinnedListResponse, SimpleListResponse} from "../../../types/lists";
+import {LoadingStatus} from "../../../types/common";
 
 describe("listsReducer:", () => {
     describe("initial state:", () => {

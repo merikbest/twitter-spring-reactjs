@@ -2,9 +2,8 @@ import React from "react";
 import {ListItem} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import ChangeReplyWindow from "../ChangeReplyWindow";
-import {ReplyType} from "../../../store/types/common";
+import {LoadingStatus, ReplyType} from "../../../store/types/common";
 
 describe("ChangeReplyWindow", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);

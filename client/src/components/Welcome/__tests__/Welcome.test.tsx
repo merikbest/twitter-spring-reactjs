@@ -2,9 +2,9 @@ import React from "react";
 import {Button} from "@material-ui/core";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {UserActionsType} from "../../../store/ducks/user/contracts/actionTypes";
 import Welcome from "../Welcome";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("Welcome", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

@@ -3,9 +3,9 @@ import {
     selectFollowerRequestsPagesCount,
     selectIsFollowerRequestsLoading
 } from "../selectors";
-import {LoadingStatus} from "../../../types";
 import {createMockRootState} from "../../../../util/testHelper";
 import {FollowerUserResponse} from "../../../types/user";
+import {LoadingStatus} from "../../../types/common";
 
 describe("followerRequests selectors:", () => {
     const mockState = createMockRootState();

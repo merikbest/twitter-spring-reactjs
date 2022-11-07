@@ -2,8 +2,8 @@ import React from "react";
 import {IconButton} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import ImageList from "../ImageList";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("ImageList", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);

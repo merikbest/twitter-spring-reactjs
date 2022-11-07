@@ -1,9 +1,8 @@
 import {initialTweetsState, tweetsReducer} from "../reducer";
 import {TweetsActions, TweetsActionType} from "../contracts/actionTypes";
 import {TweetResponse} from "../../../types/tweet";
-import {LoadingStatus} from "../../../types";
 import {testActionDispatch} from "../../../../util/testHelper";
-import {NotificationType} from "../../../types/common";
+import {LoadingStatus, NotificationType} from "../../../types/common";
 import {NotificationReplyResponse, NotificationResponse} from "../../../types/notification";
 
 describe("tweetsReducer:", () => {

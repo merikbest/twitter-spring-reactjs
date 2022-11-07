@@ -6,7 +6,6 @@ import {Avatar, Button, IconButton, ListItem} from "@material-ui/core";
 
 import Messages from "../Messages";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import Spinner from "../../../components/Spinner/Spinner";
 import {ChatsActionsType} from "../../../store/ducks/chats/contracts/actionTypes";
 import {mockChats} from "../../../util/mockData/mockData";
@@ -21,6 +20,7 @@ import HoverAction from "../../../components/HoverAction/HoverAction";
 import {MessageInput} from "../MessageInput/MessageInput";
 import {PeopleSearchInput} from "../PeopleSearchInput/PeopleSearchInput";
 import {HOME, MESSAGES} from "../../../util/pathConstants";
+import {LoadingStatus} from "../../../store/types/common";
 
 window.scrollTo = jest.fn();
 

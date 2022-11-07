@@ -18,12 +18,12 @@ import {selectIsTweetsLoading, selectPagesCount, selectTweetsItems} from "../../
 import {fetchUserData} from "../../store/ducks/user/actionCreators";
 import {selectUserDataIsProfileStarted} from "../../store/ducks/user/selectors";
 import Welcome from "../../components/Welcome/Welcome";
-import {LoadingStatus} from "../../store/types";
 import Spinner from "../../components/Spinner/Spinner";
 import {useGlobalStyles} from "../../util/globalClasses";
 import TopTweetActions from "./TopTweetActions/TopTweetActions";
 import {withDocumentTitle} from "../../hoc/withDocumentTitle";
 import {SEARCH} from "../../util/pathConstants";
+import {LoadingStatus} from "../../store/types/common";
 
 const Home: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();

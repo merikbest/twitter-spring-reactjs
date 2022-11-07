@@ -3,7 +3,6 @@ import {Link as MuiLink} from "@material-ui/core";
 
 import MutedAccounts from "../MutedAccounts";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../../store/types";
 import Spinner from "../../../../../../components/Spinner/Spinner";
 import {TWITTER_MUTE} from "../../../../../../util/url";
 import {
@@ -11,6 +10,7 @@ import {
 } from "../../../../../../store/ducks/blockedAndMutedUsers/contracts/actionTypes";
 import {mockMutedUsers} from "../../../../../../util/mockData/mockData";
 import MutedAccountItem from "../MutedAccountItem/MutedAccountItem";
+import {LoadingStatus} from "../../../../../../store/types/common";
 
 describe("MutedAccounts", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

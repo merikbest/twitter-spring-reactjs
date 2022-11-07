@@ -1,8 +1,8 @@
 import {initialListDetailState, listDetailReducer} from "../reducer";
 import {ListDetailActionsType, UserDetailActions} from "../contracts/actionTypes";
 import {testActionDispatch} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../types";
 import {BaseListResponse} from "../../../types/lists";
+import {LoadingStatus} from "../../../types/common";
 
 describe("listDetailReducer:", () => {
     describe("initial state:", () => {

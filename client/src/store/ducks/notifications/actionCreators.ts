@@ -17,14 +17,13 @@ import {
     SetTweetAuthorsNotificationsActionInterface,
     UpdateNotificationInfoTweetActionInterface
 } from "./contracts/actionTypes";
-import {LoadingStatus} from "../../types";
 import {
     NotificationInfoResponse,
     NotificationReplyResponse,
     NotificationResponse,
 } from "../../types/notification";
 import {NotificationsState} from "./contracts/state";
-import {PageableResponse} from "../../types/common";
+import {LoadingStatus, PageableResponse} from "../../types/common";
 
 export const setNotifications = (payload: PageableResponse<NotificationsState["notificationsList"]>): SetNotificationsActionInterface => ({
     type: NotificationsActionsType.SET_NOTIFICATIONS,

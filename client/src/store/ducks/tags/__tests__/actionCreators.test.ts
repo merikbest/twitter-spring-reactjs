@@ -10,7 +10,7 @@ import {
 } from "../actionCreators";
 import {TagsActionsType} from "../contracts/actionTypes";
 import {TagResponse} from "../../../types/tag";
-import {LoadingStatus} from "../../../types";
+import {LoadingStatus} from "../../../types/common";
 
 describe("tags actions", () => {
     testAction(setTags, setTags([{id: 1}] as TagResponse[]), {

@@ -28,10 +28,10 @@ import {
 } from "../actionCreators";
 import {TweetResponse} from "../../../types/tweet";
 import {NotificationReplyResponse, NotificationResponse} from "../../../types/notification";
-import {LoadingStatus} from "../../../types";
 import {ReplyTweet} from "../contracts/state";
 import {UserResponse} from "../../../types/user";
 import {testAction} from "../../../../util/testHelper";
+import {LoadingStatus} from "../../../types/common";
 
 describe("tweet actions", () => {
     testAction(setFollowToTweetState, setFollowToTweetState(true), {

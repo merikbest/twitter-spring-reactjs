@@ -1,8 +1,8 @@
 import produce, {Draft} from 'immer';
 
-import {LoadingStatus} from '../../types';
 import {FollowerRequestsState} from './contracts/state';
 import {FollowerRequestsActions, FollowerRequestsActionsType} from "./contracts/actionTypes";
+import {LoadingStatus} from "../../types/common";
 
 export const initialFollowerRequestsState: FollowerRequestsState = {
     items: [],

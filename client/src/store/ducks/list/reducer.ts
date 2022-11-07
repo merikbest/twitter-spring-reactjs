@@ -2,7 +2,7 @@ import produce, {Draft} from 'immer';
 
 import {ListState} from "./contracts/state";
 import {ListActions, ListActionType} from './contracts/actionTypes';
-import {LoadingStatus} from '../../types';
+import {LoadingStatus} from "../../types/common";
 
 export const initialListState: ListState = {
     list: undefined,

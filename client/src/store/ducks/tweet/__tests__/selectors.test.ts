@@ -12,9 +12,9 @@ import {
     selectTweetData,
     selectUsersPagesCount
 } from "../selectors";
-import {LoadingStatus} from "../../../types";
 import {createMockRootState} from "../../../../util/testHelper";
 import {mockFullTweet, mockTweets, mockUsers} from "../../../../util/mockData/mockData";
+import {LoadingStatus} from "../../../types/common";
 
 describe("tweet selectors:", () => {
     const mockState = createMockRootState();

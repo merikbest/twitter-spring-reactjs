@@ -11,7 +11,7 @@ import {
 import {ChatMessagesActionsType} from "../contracts/actionTypes";
 import {ChatMessageResponse} from "../../../types/chat";
 import {ChatMessageRequest, ChatMessageWithTweetRequest} from "../contracts/state";
-import {LoadingStatus} from "../../../types";
+import {LoadingStatus} from "../../../types/common";
 
 describe("chatMessages actions", () => {
     testAction(setChatMessages, setChatMessages([{id: 1}] as ChatMessageResponse[]), {

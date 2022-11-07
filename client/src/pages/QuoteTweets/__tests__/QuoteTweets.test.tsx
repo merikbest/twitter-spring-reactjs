@@ -2,11 +2,11 @@ import React from "react";
 import ReactRouter from "react-router";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import Spinner from "../../../components/Spinner/Spinner";
 import TweetComponent from "../../../components/TweetComponent/TweetComponent";
 import {TweetsActionType} from "../../../store/ducks/tweets/contracts/actionTypes";
 import QuoteTweets from "../QuoteTweets";
+import {LoadingStatus} from "../../../store/types/common";
 
 window.scrollTo = jest.fn();
 

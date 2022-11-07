@@ -6,7 +6,6 @@ import routeData from "react-router";
 import {createMemoryHistory} from "history";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import Spinner from "../../../components/Spinner/Spinner";
 import FullTweet from "../FullTweet";
 import {TweetActionType} from "../../../store/ducks/tweet/contracts/actionTypes";
@@ -26,6 +25,7 @@ import HoverAction from "../../../components/HoverAction/HoverAction";
 import YouTubeVideo from "../../../components/YouTubeVideo/YouTubeVideo";
 import TweetActionResult, {TweetActionResults} from "../../../components/TweetActionResult/TweetActionResult";
 import {MODAL, PROFILE, QUOTES} from "../../../util/pathConstants";
+import {LoadingStatus} from "../../../store/types/common";
 
 window.scrollTo = jest.fn();
 

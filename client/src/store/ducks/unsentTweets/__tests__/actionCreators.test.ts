@@ -2,7 +2,7 @@ import {testAction} from "../../../../util/testHelper";
 import {fetchUnsentTweets, resetUnsentTweets, setUnsentTweets, setUnsentTweetsLoadingState} from "../actionCreators";
 import {TweetResponse} from "../../../types/tweet";
 import {UnsentTweetActionType} from "../contracts/actionTypes";
-import {LoadingStatus} from "../../../types";
+import {LoadingStatus} from "../../../types/common";
 
 describe("unsentTweets actions", () => {
     testAction(setUnsentTweets, setUnsentTweets({items: [{id: 1}] as TweetResponse[], pagesCount: 1}), {

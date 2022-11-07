@@ -2,11 +2,11 @@ import React from "react";
 import {Avatar} from "@material-ui/core";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../store/types";
 import MessagesModalUser from "../MessagesModalUser";
 import {mockUsers} from "../../../../../util/mockData/mockData";
 import {UserResponse} from "../../../../../store/types/user";
 import {DEFAULT_PROFILE_IMG} from "../../../../../util/url";
+import {LoadingStatus} from "../../../../../store/types/common";
 
 describe("MessagesModalUser", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

@@ -9,8 +9,8 @@ import {LoginTextField} from "./LoginInputField";
 import {useLoginStyles} from "./LoginStyles";
 import {selectUserIsError, selectUserStatus} from "../../store/ducks/user/selectors";
 import {fetchSignIn, setUserLoadingStatus} from "../../store/ducks/user/actionCreators";
-import {LoadingStatus} from "../../store/types";
 import {ACCOUNT_FORGOT, ACCOUNT_SIGNIN} from "../../util/pathConstants";
+import {LoadingStatus} from "../../store/types/common";
 
 export interface LoginProps {
     email: string;

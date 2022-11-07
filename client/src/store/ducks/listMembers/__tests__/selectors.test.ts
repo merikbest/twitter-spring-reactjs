@@ -4,9 +4,9 @@ import {
     selectListMembersItems,
     selectListSuggestedItems
 } from "../selectors";
-import {LoadingStatus} from "../../../types";
 import {createMockRootState} from "../../../../util/testHelper";
 import {mockListsOwnerMember} from "../../../../util/mockData/mockData";
+import {LoadingStatus} from "../../../types/common";
 
 describe("listMembers selectors:", () => {
     const mockState = createMockRootState();

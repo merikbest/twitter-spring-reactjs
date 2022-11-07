@@ -19,12 +19,12 @@ import {
     setLoadingSuggestedState,
     setUserToList
 } from "../actionCreators";
-import {LoadingStatus} from "../../../types";
 import {testLoadingStatus, testSetResponse, testWatchSaga} from "../../../../util/testHelper";
 import {ListsApi} from "../../../../services/api/listsApi";
 import {ListsOwnerMemberResponse} from "../../../types/lists";
 import {setMembersSize} from "../../list/actionCreators";
 import {ListMembersActionsType} from "../contracts/actionTypes";
+import {LoadingStatus} from "../../../types/common";
 
 describe("listMembersSaga:", () => {
     const mockListsOwnerMemberResponse = {data: [{id: 1}, {id: 2}]} as AxiosResponse<ListsOwnerMemberResponse[]>;

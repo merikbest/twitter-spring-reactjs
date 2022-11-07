@@ -3,12 +3,12 @@ import {Avatar, Button, Paper} from "@material-ui/core";
 import {createMemoryHistory} from "history";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../store/types";
 import {mockFollowerUserResponse} from "../../../../../util/mockData/mockData";
 import {FollowerRequestsActionsType} from "../../../../../store/ducks/followerRequests/contracts/actionTypes";
 import {PROFILE} from "../../../../../util/pathConstants";
 import PopperUserWindow from "../../../../PopperUserWindow/PopperUserWindow";
 import FollowerRequestsItem from "../FollowerRequestsItem";
+import {LoadingStatus} from "../../../../../store/types/common";
 
 describe("FollowerRequestsItem", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

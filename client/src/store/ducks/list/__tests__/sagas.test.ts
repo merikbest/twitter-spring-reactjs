@@ -3,12 +3,12 @@ import {takeEvery} from "redux-saga/effects";
 
 import {deleteListRequest, editListRequest, fetchListByIdRequest, listSaga} from "../sagas";
 import {deleteList, editList, fetchListById, setList, setListLoadingState} from "../actionCreators";
-import {LoadingStatus} from "../../../types";
 import {testCall, testLoadingStatus, testSetResponse, testWatchSaga} from "../../../../util/testHelper";
 import {ListsApi} from "../../../../services/api/listsApi";
 import {BaseListResponse} from "../../../types/lists";
 import {EditListsRequest} from "../contracts/state";
 import {ListActionType} from "../contracts/actionTypes";
+import {LoadingStatus} from "../../../types/common";
 
 describe("listSaga:", () => {
     const mockBaseListResponse = {data: {id: 1}} as AxiosResponse<BaseListResponse>;

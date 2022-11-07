@@ -8,10 +8,10 @@ import {
     FollowerRequestsActionsType
 } from "./contracts/actionTypes";
 import {processFollowRequest, setFollowerRequests, setFollowerRequestsLoadingState} from "./actionCreators";
-import {LoadingStatus} from "../../types";
 import {FollowerUserResponse} from "../../types/user";
 import {UserApi} from "../../../services/api/userApi";
 import {setFollowersSize, setUserLoadingStatus} from "../user/actionCreators";
+import {LoadingStatus} from "../../types/common";
 
 export function* fetchFollowRequests({payload}: FetchFollowerRequestsActionInterface) {
     try {

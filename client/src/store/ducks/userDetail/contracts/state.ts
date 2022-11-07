@@ -1,6 +1,6 @@
 import {CancelTokenSource} from "axios";
-import {LoadingStatus} from "../../../types";
 import {UserDetailResponse} from "../../../types/user";
+import {LoadingStatus} from "../../../types/common";
 
 export interface UserDetailState {
     item?: UserDetailResponse;

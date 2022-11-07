@@ -63,7 +63,7 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
 
     @Query("SELECT t FROM Tweet t " +
             "JOIN t.user u " +
-            "JOIN u.userLists l " +
+            "JOIN u.lists l " +
             "WHERE l.id = :listId " +
             "AND t.addressedUsername IS NULL " +
             "ORDER BY t.dateTime DESC")
@@ -93,7 +93,7 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
     boolean isMyProfileFollowList(Long listId, Long userId);
 
     @Query("SELECT CASE WHEN count(meber) > 0 THEN true ELSE false END FROM User user " +
-            "LEFT JOIN user.userLists userList " +
+            "LEFT JOIN user.lists userList " +
             "LEFT JOIN userList.members meber " +
             "WHERE user.id = :authUserId " +
             "AND userList.id = :listId " +

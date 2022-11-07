@@ -1,7 +1,7 @@
 import {RootState} from "../../store";
 import {ChatState} from "./contracts/state";
-import {LoadingStatus} from "../../types";
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
+import {LoadingStatus} from "../../types/common";
 
 export const selectChat = (state: RootState): ChatState => state.chat;
 export const selectChatItem = (state: RootState) => selectChat(state).item;

@@ -2,7 +2,6 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 import {AxiosResponse} from "axios";
 
 import {setBlockedAndMutedUsersLoadingState, setBlockedUsers, setMutedUsers} from './actionCreators';
-import {LoadingStatus} from '../../types';
 import {
     BlockedAndMutedUsersActionsType,
     FetchBlockedUsersActionInterface,
@@ -10,6 +9,7 @@ import {
 } from "./contracts/actionTypes";
 import {UserApi} from "../../../services/api/userApi";
 import {BlockedUserResponse, MutedUserResponse} from "../../types/user";
+import {LoadingStatus} from "../../types/common";
 
 export function* fetchBlockedUsersRequest({payload}: FetchBlockedUsersActionInterface) {
     try {

@@ -132,13 +132,13 @@ INSERT INTO lists (id, alt_wallpaper, description, private, name, pinned_date, u
 -- lists_members
 INSERT INTO lists_members (lists_id, members_id) VALUES (1, 4);
 INSERT INTO lists_members (lists_id, members_id) VALUES (1, 2);
--- users_user_lists
-INSERT INTO users_user_lists (user_id, user_lists_id) VALUES (1, 1);
-INSERT INTO users_user_lists (user_id, user_lists_id) VALUES (1, 2);
-INSERT INTO users_user_lists (user_id, user_lists_id) VALUES (2, 1);
-INSERT INTO users_user_lists (user_id, user_lists_id) VALUES (2, 3);
-INSERT INTO users_user_lists (user_id, user_lists_id) VALUES (2, 1);
-INSERT INTO users_user_lists (user_id, user_lists_id) VALUES (2, 2);
+-- users_lists
+INSERT INTO users_lists (user_id, lists_id) VALUES (1, 1);
+INSERT INTO users_lists (user_id, lists_id) VALUES (1, 2);
+INSERT INTO users_lists (user_id, lists_id) VALUES (2, 1);
+INSERT INTO users_lists (user_id, lists_id) VALUES (2, 3);
+INSERT INTO users_lists (user_id, lists_id) VALUES (2, 1);
+INSERT INTO users_lists (user_id, lists_id) VALUES (2, 2);
 -- notifications
 INSERT INTO notifications (id, date, notification_type, tweet_id, user_id, user_to_follow_id, list_id, notified_user_id) VALUES (1, '2021-10-15 21:36:52.000000', 'LIKE', 1, 2, null, null, 1);
 INSERT INTO notifications (id, date, notification_type, tweet_id, user_id, user_to_follow_id, list_id, notified_user_id) VALUES (2, '2021-10-15 21:37:01.000000', 'LIKE', 2, 2, null, null, 1);

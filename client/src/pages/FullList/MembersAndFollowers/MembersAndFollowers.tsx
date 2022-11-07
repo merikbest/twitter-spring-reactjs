@@ -5,18 +5,18 @@ import {useSelector} from "react-redux";
 import {useMembersAndFollowersStyles} from "./MembersAndFollowersStyles";
 import MembersAndFollowersModal from "../FullListTweets/MembersAndFollowersModal/MembersAndFollowersModal";
 import {
-    selectListDetailItemFollowersSize,
-    selectListDetailItemId,
-    selectListDetailItemMembersSize,
-    selectListDetailItemOwnerId
-} from "../../../store/ducks/listDetail/selectors";
+    selectListItemFollowersSize,
+    selectListItemId,
+    selectListItemMembersSize,
+    selectListItemOwnerId
+} from "../../../store/ducks/list/selectors";
 
 const MembersAndFollowers = memo((): ReactElement => {
     const classes = useMembersAndFollowersStyles();
-    const listId = useSelector(selectListDetailItemId);
-    const listOwnerId = useSelector(selectListDetailItemOwnerId);
-    const membersSize = useSelector(selectListDetailItemMembersSize);
-    const followersSize = useSelector(selectListDetailItemFollowersSize);
+    const listId = useSelector(selectListItemId);
+    const listOwnerId = useSelector(selectListItemOwnerId);
+    const membersSize = useSelector(selectListItemMembersSize);
+    const followersSize = useSelector(selectListItemFollowersSize);
     const [visibleMembersAndFollowersModal, setVisibleMembersAndFollowersModal] = useState<boolean>(false);
     const [modalWindowTitle, setModalWindowTitle] = useState<string>("");
 

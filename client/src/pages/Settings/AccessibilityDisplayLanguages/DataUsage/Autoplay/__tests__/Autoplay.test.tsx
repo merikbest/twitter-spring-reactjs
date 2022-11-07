@@ -3,7 +3,7 @@ import {Radio} from "@material-ui/core";
 
 import Autoplay from "../Autoplay";
 import {createMockRootState, mountWithStore} from "../../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../../store/types";
+import {LoadingStatus} from "../../../../../../store/types/common";
 
 describe("Autoplay", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

@@ -2,11 +2,11 @@ import React from "react";
 
 import ChangePhone from "../ChangePhone";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../../store/types";
 import {UserActionsType} from "../../../../../../store/ducks/user/contracts/actionTypes";
 import {ChangeInfoTextField} from "../../../../ChangeInfoTextField/ChangeInfoTextField";
 import {getPhoneCode} from "../../../../../../util/countryCodes";
 import ChangePhoneModal from "../ChangePhoneModal/ChangePhoneModal";
+import {LoadingStatus} from "../../../../../../store/types/common";
 
 describe("ChangePhone", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

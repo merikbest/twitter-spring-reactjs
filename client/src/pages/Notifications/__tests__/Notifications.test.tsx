@@ -4,9 +4,9 @@ import Tab from "@material-ui/core/Tab";
 import routeData from "react-router";
 
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {NOTIFICATIONS, NOTIFICATIONS_MENTIONS} from "../../../util/pathConstants";
 import Notifications from "../Notifications";
+import {LoadingStatus} from "../../../store/types/common";
 
 window.scrollTo = jest.fn();
 

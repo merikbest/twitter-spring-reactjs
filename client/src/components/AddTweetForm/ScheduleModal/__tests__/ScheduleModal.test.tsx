@@ -2,9 +2,9 @@ import React from "react";
 import {Button, Dialog} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import {FilledSelect} from "../../../FilledSelect/FilledSelect";
 import ScheduleModal from "../ScheduleModal";
+import {LoadingStatus} from "../../../../store/types/common";
 
 describe("ScheduleModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);

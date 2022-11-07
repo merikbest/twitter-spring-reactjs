@@ -1,9 +1,9 @@
 import React from "react";
 
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {mockFullTweet} from "../../../util/mockData/mockData";
 import SmallLinkPreview from "../SmallLinkPreview";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("SmallLinkPreview", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

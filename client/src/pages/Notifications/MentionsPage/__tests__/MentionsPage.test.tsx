@@ -1,12 +1,12 @@
 import React from "react";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import Spinner from "../../../../components/Spinner/Spinner";
 import TweetComponent from "../../../../components/TweetComponent/TweetComponent";
 import {NotificationsActionsType} from "../../../../store/ducks/notifications/contracts/actionTypes";
 import {TweetsActionType} from "../../../../store/ducks/tweets/contracts/actionTypes";
 import MentionsPage from "../MentionsPage";
+import {LoadingStatus} from "../../../../store/types/common";
 
 window.scrollTo = jest.fn();
 

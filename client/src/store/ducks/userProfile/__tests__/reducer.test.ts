@@ -1,9 +1,9 @@
 import {initialUserProfileState, userProfileReducer} from "../reducer";
 import {UserProfileActions, UserProfileActionsType} from "../contracts/actionTypes";
 import {testActionDispatch} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../types";
 import {UserProfileResponse} from "../../../types/user";
 import {TweetImageResponse} from "../../../types/tweet";
+import {LoadingStatus} from "../../../types/common";
 
 describe("userProfileReducer:", () => {
     describe("initial state:", () => {

@@ -3,10 +3,10 @@ import {Link} from "react-router-dom";
 import {createMemoryHistory} from "history";
 
 import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import {mockTags} from "../../../../util/mockData/mockData";
 import {SEARCH} from "../../../../util/pathConstants";
 import TagItem from "../TagItem";
+import {LoadingStatus} from "../../../../store/types/common";
 
 describe("TagItem", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

@@ -4,10 +4,10 @@ import {createMemoryHistory} from "history";
 import {Avatar} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {mockMyProfile, mockSameFollowers, mockUserProfile} from "../../../util/mockData/mockData";
 import {USER_FOLLOWERS_YOU_FOLLOW} from "../../../util/pathConstants";
 import FollowerGroup from "../FollowerGroup";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("FollowerGroup", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);

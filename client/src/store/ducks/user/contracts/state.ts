@@ -1,5 +1,4 @@
-import {LoadingStatus} from "../../../types";
-import {BackgroundTheme, ColorScheme, Image} from "../../../types/common";
+import {BackgroundTheme, ColorScheme, Image, LoadingStatus} from "../../../types/common";
 import {AuthUserResponse} from "../../../types/user";
 
 export interface UserState {

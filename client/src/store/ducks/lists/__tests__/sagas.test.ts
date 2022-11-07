@@ -40,7 +40,6 @@ import {
     unfollowList,
     unpinList
 } from "../actionCreators";
-import {LoadingStatus} from "../../../types";
 import {testCall, testLoadingStatus, testSetResponse, testWatchSaga} from "../../../../util/testHelper";
 import {ListsApi} from "../../../../services/api/listsApi";
 import {ListResponse, ListUserResponse, PinnedListResponse, SimpleListResponse} from "../../../types/lists";
@@ -48,6 +47,7 @@ import {AddLists, AddUserToListsRequest} from "../contracts/state";
 import {updateFollowToFullList} from "../../list/actionCreators";
 import {updateFollowListDetail} from "../../listDetail/actionCreators";
 import {ListsActionType} from "../contracts/actionTypes";
+import {LoadingStatus} from "../../../types/common";
 
 describe("listsSaga:", () => {
     const mockListResponse = {data: [{id: 1}, {id: 2}]} as AxiosResponse<ListResponse[]>;

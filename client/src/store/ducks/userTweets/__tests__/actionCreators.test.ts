@@ -18,7 +18,7 @@ import {
 import {UserTweetsActionType} from "../contracts/actionTypes";
 import {TweetResponse} from "../../../types/tweet";
 import {NotificationResponse} from "../../../types/notification";
-import {LoadingStatus} from "../../../types";
+import {LoadingStatus} from "../../../types/common";
 
 describe("userTweets actions", () => {
     testAction(setUserTweets, setUserTweets({items: [{id: 1}] as TweetResponse[], pagesCount: 1}), {

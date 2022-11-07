@@ -2,9 +2,9 @@ import React from "react";
 import {ClickAwayListener, IconButton} from "@material-ui/core";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import ShareActionsModal from "../ShareActionsModal";
 import HoverAction from "../../../../components/HoverAction/HoverAction";
+import {LoadingStatus} from "../../../../store/types/common";
 
 describe("ShareActionsModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

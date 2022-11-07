@@ -6,10 +6,10 @@ import {ReactWrapper} from "enzyme";
 
 import ChangeYourPassword from "../ChangeYourPassword";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../store/types";
 import {ChangeInfoTextField} from "../../../ChangeInfoTextField/ChangeInfoTextField";
 import {API_AUTH_RESET_CURRENT} from "../../../../../util/endpoints";
 import ActionSnackbar from "../../../../../components/ActionSnackbar/ActionSnackbar";
+import {LoadingStatus} from "../../../../../store/types/common";
 
 describe("ChangeYourPassword", () => {
     const mockPassword = "test_password";

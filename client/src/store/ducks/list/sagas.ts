@@ -8,9 +8,9 @@ import {
     ListActionType
 } from "./contracts/actionTypes";
 import {setList, setListLoadingState} from './actionCreators';
-import {LoadingStatus} from '../../types';
 import {ListsApi} from "../../../services/api/listsApi";
 import {BaseListResponse} from "../../types/lists";
+import {LoadingStatus} from "../../types/common";
 
 export function* fetchListByIdRequest({payload}: FetchListByIdActionInterface) {
     try {

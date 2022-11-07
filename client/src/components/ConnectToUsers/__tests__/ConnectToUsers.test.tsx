@@ -1,11 +1,11 @@
 import React from "react";
 
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import ConnectToUsers from "../ConnectToUsers";
 import {mockUsers} from "../../../util/mockData/mockData";
 import Spinner from "../../Spinner/Spinner";
 import UsersItem from "../../UsersItem/UsersItem";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("ConnectToUsers", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);

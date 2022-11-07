@@ -19,7 +19,6 @@ import {
     setTweetAuthorsLoadingState,
     setTweetAuthorsNotifications
 } from "../actionCreators";
-import {LoadingStatus} from "../../../types";
 import {
     mockExpectedResponse,
     testCall,
@@ -37,6 +36,7 @@ import {UserApi} from "../../../../services/api/userApi";
 import {setPageableTweets, setTweetsLoadingState} from "../../tweets/actionCreators";
 import {TweetResponse} from "../../../types/tweet";
 import {NotificationsActionsType} from "../contracts/actionTypes";
+import {LoadingStatus} from "../../../types/common";
 
 describe("notificationsSaga:", () => {
 

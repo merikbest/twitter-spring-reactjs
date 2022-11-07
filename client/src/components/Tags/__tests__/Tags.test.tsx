@@ -2,7 +2,6 @@ import React from "react";
 import {Link} from "react-router-dom";
 
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import Spinner from "../../Spinner/Spinner";
 import {mockTags} from "../../../util/mockData/mockData";
 import {IconButton} from "@material-ui/core";
@@ -13,6 +12,7 @@ import {HOME_TRENDS} from "../../../util/pathConstants";
 import HoverAction from "../../HoverAction/HoverAction";
 import TagItem from "../TagItem/TagItem";
 import Tags from "../Tags";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("Tags", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

@@ -3,7 +3,7 @@ import {Button, Dialog} from "@material-ui/core";
 
 import RecommendationsModal from "../RecommendationsModal";
 import {createMockRootState, mountWithStore} from "../../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../../store/types";
+import {LoadingStatus} from "../../../../../../store/types/common";
 
 describe("RecommendationsModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

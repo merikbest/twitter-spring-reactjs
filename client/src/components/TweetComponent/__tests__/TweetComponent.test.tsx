@@ -5,7 +5,6 @@ import {IconButton, Link as MuiLink} from '@material-ui/core';
 import routeData from "react-router";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {mockFullTweet, mockUser, mockUserProfile} from "../../../util/mockData/mockData";
 import TweetActionResult, {TweetActionResults} from "../../TweetActionResult/TweetActionResult";
 import {HOME_TWEET, MODAL, PROFILE} from "../../../util/pathConstants";
@@ -24,7 +23,7 @@ import {TweetsActionType} from "../../../store/ducks/tweets/contracts/actionType
 import QuoteIconButton from "../../QuoteIconButton/QuoteIconButton";
 import PopperUserWindow from "../../PopperUserWindow/PopperUserWindow";
 import HoverAction from "../../HoverAction/HoverAction";
-import {LinkCoverSize, ReplyType} from "../../../store/types/common";
+import {LinkCoverSize, LoadingStatus, ReplyType} from "../../../store/types/common";
 
 describe("TweetComponent", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

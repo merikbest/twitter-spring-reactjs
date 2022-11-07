@@ -4,9 +4,9 @@ import {Button} from "@material-ui/core";
 
 import Login from "../Login";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {LoginTextField} from "../LoginInputField";
 import {UserActionsType} from "../../../store/ducks/user/contracts/actionTypes";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("Login", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

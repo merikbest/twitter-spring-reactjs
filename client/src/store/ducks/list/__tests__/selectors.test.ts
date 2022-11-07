@@ -1,6 +1,6 @@
 import {selectIsListLoaded, selectIsListLoading, selectListItem} from "../selectors";
-import {LoadingStatus} from "../../../types";
 import {createMockRootState, mockBaseListResponse} from "../../../../util/testHelper";
+import {LoadingStatus} from "../../../types/common";
 
 describe("list selectors:", () => {
     

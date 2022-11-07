@@ -2,11 +2,11 @@ import React from "react";
 import {Avatar, Button, Dialog, ListItem} from "@material-ui/core";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {mockSimpleList, mockUserProfile} from "../../../util/mockData/mockData";
 import {ListsActionType} from "../../../store/ducks/lists/contracts/actionTypes";
 import Spinner from "../../Spinner/Spinner";
 import ListsModal from "../ListsModal";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("ListsModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);

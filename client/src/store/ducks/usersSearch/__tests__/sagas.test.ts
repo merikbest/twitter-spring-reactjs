@@ -18,7 +18,6 @@ import {
     setPageableUsersSearch,
     setUsersSearchLoadingState
 } from "../actionCreators";
-import {LoadingStatus} from "../../../types";
 import {
     mockExpectedResponse,
     testCall,
@@ -30,6 +29,7 @@ import {UserResponse} from "../../../types/user";
 import {UserApi} from "../../../../services/api/userApi";
 import {UsersSearchActionsType} from "../contracts/actionTypes";
 import {ChatApi} from "../../../../services/api/chatApi";
+import {LoadingStatus} from "../../../types/common";
 
 describe("usersSearchSaga:", () => {
     const mockUserResponse = {

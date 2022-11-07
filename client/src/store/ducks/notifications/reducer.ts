@@ -1,9 +1,8 @@
 import produce, {Draft} from 'immer';
 
-import {LoadingStatus} from '../../types';
 import {NotificationsState} from "./contracts/state";
 import {NotificationsActions, NotificationsActionsType} from "./contracts/actionTypes";
-import {NotificationType} from "../../types/common";
+import {LoadingStatus, NotificationType} from "../../types/common";
 import {NotificationReplyResponse, NotificationResponse} from "../../types/notification";
 
 export const initialNotificationsState: NotificationsState = {

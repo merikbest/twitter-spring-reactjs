@@ -3,13 +3,13 @@ import {Button, Checkbox, Dialog} from "@material-ui/core";
 import Tab from "@material-ui/core/Tab";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import UnsentTweetsModal from "../UnsentTweetsModal";
 import Spinner from "../../../Spinner/Spinner";
 import {mockTweets} from "../../../../util/mockData/mockData";
 import UnsentTweetItem from "../UnsentTweetItem/UnsentTweetItem";
 import AddTweetForm from "../../AddTweetForm";
 import {UnsentTweetActionType} from "../../../../store/ducks/unsentTweets/contracts/actionTypes";
+import {LoadingStatus} from "../../../../store/types/common";
 
 describe("UnsentTweetsModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);

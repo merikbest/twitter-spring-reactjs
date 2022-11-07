@@ -1,8 +1,8 @@
 import {followerRequestsReducer, initialFollowerRequestsState} from "../reducer";
 import {testActionDispatch} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../types";
 import {FollowerRequestsActions, FollowerRequestsActionsType} from "../contracts/actionTypes";
 import {FollowerUserResponse} from "../../../types/user";
+import {LoadingStatus} from "../../../types/common";
 
 describe("followerRequestsReducer:", () => {
     describe("initial state:", () => {

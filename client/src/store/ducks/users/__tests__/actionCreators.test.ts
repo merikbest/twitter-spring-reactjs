@@ -14,7 +14,7 @@ import {
 } from "../actionCreators";
 import {UsersActionsType} from "../contracts/actionTypes";
 import {UserResponse} from "../../../types/user";
-import {LoadingStatus} from "../../../types";
+import {LoadingStatus} from "../../../types/common";
 
 describe("users actions", () => {
     const mackPageableUsers = {

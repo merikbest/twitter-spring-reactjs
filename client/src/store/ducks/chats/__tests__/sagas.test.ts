@@ -6,7 +6,7 @@ import {testCall, testLoadingStatus, testSetResponse, testWatchSaga} from "../..
 import {ChatApi} from "../../../../services/api/chatApi";
 import {ChatResponse} from "../../../types/chat";
 import {ChatsActionsType} from "../contracts/actionTypes";
-import {LoadingStatus} from "../../../types";
+import {LoadingStatus} from "../../../types/common";
 
 describe("chatsSaga:", () => {
 

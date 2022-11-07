@@ -2,10 +2,10 @@ import React from "react";
 import {Button} from "@material-ui/core";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {mockFullTweet} from "../../../util/mockData/mockData";
 import {TweetsActionType} from "../../../store/ducks/tweets/contracts/actionTypes";
 import VoteComponent from "../VoteComponent";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("VoteComponent", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

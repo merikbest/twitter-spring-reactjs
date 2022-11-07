@@ -2,10 +2,10 @@ import {AxiosResponse} from "axios";
 import {call, put, takeLatest} from "redux-saga/effects";
 
 import {FetchUnsentTweetsActionInterface, UnsentTweetActionType} from "./contracts/actionTypes";
-import {LoadingStatus} from "../../types";
 import {TweetResponse} from "../../types/tweet";
 import {TweetApi} from "../../../services/api/tweetApi";
 import {setUnsentTweets, setUnsentTweetsLoadingState} from "./actionCreators";
+import {LoadingStatus} from "../../types/common";
 
 export function* fetchUnsentTweetsRequest({payload}: FetchUnsentTweetsActionInterface) {
     try {

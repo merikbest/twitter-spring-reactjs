@@ -1,5 +1,4 @@
 import {BookmarkedTweetPayload, UserTweetRequest, UserTweetsState} from "./contracts/state";
-import {LoadingStatus} from "../../types";
 import {
     DeleteUserTweetActionInterface,
     FetchUserLikedTweetsActionInterface,
@@ -19,7 +18,7 @@ import {
 } from "./contracts/actionTypes";
 import {BlockedToTweetsPayload, FollowToTweetsPayload, MutedToTweetsPayload, TweetResponse} from "../../types/tweet";
 import {NotificationReplyResponse, NotificationResponse} from "../../types/notification";
-import {PageableResponse} from "../../types/common";
+import {LoadingStatus, PageableResponse} from "../../types/common";
 
 export const setUserTweets = (payload: PageableResponse<UserTweetsState["items"]>): SetUserTweetsActionInterface => ({
     type: UserTweetsActionType.SET_TWEETS,

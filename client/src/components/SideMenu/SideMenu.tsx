@@ -42,7 +42,6 @@ import {
 import {useSideMenuStyles} from "./SideMenuStyles";
 import AddTweetModal from "../AddTweetModal/AddTweetModal";
 import {selectLoadingState} from "../../store/ducks/tweets/selectors";
-import {LoadingStatus} from "../../store/types";
 import DisplayModal from "./DisplayModal/DisplayModal";
 import {DisplayProps} from "../../pages/Settings/AccessibilityDisplayLanguages/Display/Display";
 import FollowerRequestsModal from "./FollowerRequestsModal/FollowerRequestsModal";
@@ -50,6 +49,7 @@ import {useGlobalStyles} from "../../util/globalClasses";
 import {resetFollowerRequestsState} from "../../store/ducks/followerRequests/actionCreators";
 import {BOOKMARKS, HOME, LISTS, MESSAGES, NOTIFICATIONS, PROFILE, SEARCH, SETTINGS} from "../../util/pathConstants";
 import {HELP_TWITTER, TWITTER_ABOUT, TWITTER_LOGIN} from "../../util/url";
+import {LoadingStatus} from "../../store/types/common";
 
 const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): ReactElement => {
     const globalClasses = useGlobalStyles();

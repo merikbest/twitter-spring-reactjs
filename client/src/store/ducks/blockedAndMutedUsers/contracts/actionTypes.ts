@@ -1,8 +1,7 @@
 import {Action} from "redux";
 
-import {LoadingStatus} from "../../../types";
 import {BlockedAndMutedUsersState, BlockedUserPayload, MutedUserPayload} from "./state";
-import {PageableResponse} from "../../../types/common";
+import {LoadingStatus, PageableResponse} from "../../../types/common";
 
 export enum BlockedAndMutedUsersActionsType {
     SET_BLOCKED_USERS = 'blockedAndMutedUsers/SET_BLOCKED_USERS',

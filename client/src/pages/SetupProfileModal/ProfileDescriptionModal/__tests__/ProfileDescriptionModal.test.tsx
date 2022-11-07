@@ -3,8 +3,8 @@ import {Button, Dialog} from "@material-ui/core";
 
 import ProfileDescriptionModal from "../ProfileDescriptionModal";
 import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import ProfileDescriptionInput from "../ProfileDescriptionInput/ProfileDescriptionInput";
+import {LoadingStatus} from "../../../../store/types/common";
 
 describe("ProfileDescriptionModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);

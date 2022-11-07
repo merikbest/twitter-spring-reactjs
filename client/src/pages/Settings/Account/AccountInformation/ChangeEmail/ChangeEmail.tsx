@@ -7,8 +7,8 @@ import {ChangeInfoTextField} from "../../../ChangeInfoTextField/ChangeInfoTextFi
 import {selectUserIsSuccess, selectUserProfileEmail} from "../../../../../store/ducks/user/selectors";
 import ChangeEmailModal from "./ChangeEmailModal/ChangeEmailModal";
 import {setUserLoadingStatus} from "../../../../../store/ducks/user/actionCreators";
-import {LoadingStatus} from "../../../../../store/types";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
+import {LoadingStatus} from "../../../../../store/types/common";
 
 const ChangeEmail: FC = (): ReactElement => {
     const classes = useChangeEmailStyles();

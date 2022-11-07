@@ -12,8 +12,8 @@ import {
 } from "../../../../../store/ducks/user/selectors";
 import {getPhoneCode} from "../../../../../util/countryCodes";
 import {setUserLoadingStatus} from "../../../../../store/ducks/user/actionCreators";
-import {LoadingStatus} from "../../../../../store/types";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
+import {LoadingStatus} from "../../../../../store/types/common";
 
 const ChangePhone: FC = (): ReactElement => {
     const classes = useChangePhoneStyles();

@@ -1,8 +1,8 @@
 import React from "react";
 
 import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import EmptyNotifications from "../EmptyNotifications";
+import {LoadingStatus} from "../../../../store/types/common";
 
 describe("EmptyNotifications", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

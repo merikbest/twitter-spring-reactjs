@@ -9,8 +9,8 @@ import {
     SetChatMessagesActionInterface,
     SetChatMessagesLoadingStateActionInterface
 } from "./contracts/actionTypes";
-import {LoadingStatus} from "../../types";
 import {ChatMessageResponse} from "../../types/chat";
+import {LoadingStatus} from "../../types/common";
 
 export const setChatMessages = (payload: ChatMessageState["items"]): SetChatMessagesActionInterface => ({
     type: ChatMessagesActionsType.SET_CHAT_MESSAGES,

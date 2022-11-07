@@ -1,4 +1,3 @@
-import {LoadingStatus} from '../../types';
 import {
     ChatsActionsType,
     CreateChatActionInterface,
@@ -11,6 +10,7 @@ import {
 } from "./contracts/actionTypes";
 import {ChatResponse} from "../../types/chat";
 import {ChatsState, LeaveConversationRequest} from "./contracts/state";
+import {LoadingStatus} from "../../types/common";
 
 export const setChats = (payload: ChatsState["items"]): SetChatsActionInterface => ({
     type: ChatsActionsType.SET_CHATS,

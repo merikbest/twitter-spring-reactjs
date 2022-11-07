@@ -46,10 +46,9 @@ import {
     UpdateScheduledTweetActionInterface,
     VoteActionInterface,
 } from "./contracts/actionTypes";
-import {LoadingStatus} from "../../types";
 import {BlockedToTweetsPayload, FollowToTweetsPayload, MutedToTweetsPayload, TweetResponse} from "../../types/tweet";
 import {NotificationReplyResponse, NotificationResponse} from "../../types/notification";
-import {PageableResponse} from "../../types/common";
+import {LoadingStatus, PageableResponse} from "../../types/common";
 
 export const setFollowToTweetsState = (payload: FollowToTweetsPayload): SetFollowToTweetsStateActionInterface => ({
     type: TweetsActionType.SET_FOLLOW_TO_TWEETS_STATE,

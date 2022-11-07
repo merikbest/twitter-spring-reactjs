@@ -13,12 +13,12 @@ import {
     setUserTweets,
     setUserTweetsLoadingStatus
 } from "../actionCreators";
-import {LoadingStatus} from "../../../types";
 import {testCall, testLoadingStatus, testSetResponse, testWatchSaga} from "../../../../util/testHelper";
 import {UserApi} from "../../../../services/api/userApi";
 import {AxiosResponse} from "axios";
 import {TweetResponse} from "../../../types/tweet";
 import {UserTweetsActionType} from "../contracts/actionTypes";
+import {LoadingStatus} from "../../../types/common";
 
 describe("userTweetsSaga:", () => {
     const mockTweets = [{id: 1}, {id: 2}] as TweetResponse[];

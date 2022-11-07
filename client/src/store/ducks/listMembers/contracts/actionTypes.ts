@@ -1,6 +1,5 @@
 import {Action} from "redux";
 
-import {LoadingStatus} from "../../../types";
 import {
     ListMembersState,
     ListUsersRequest,
@@ -8,6 +7,7 @@ import {
     SearchListUsersRequest,
     UserToListPayload
 } from "./state";
+import {LoadingStatus} from "../../../types/common";
 
 export enum ListMembersActionsType {
     SET_LIST_MEMBERS = 'listMembers/SET_LIST_MEMBERS',

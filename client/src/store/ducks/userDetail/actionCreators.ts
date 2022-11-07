@@ -9,8 +9,8 @@ import {
     UserDetailActionsType
 } from "./contracts/actionTypes";
 import {UserDetailResponse} from "../../types/user";
-import {LoadingStatus} from "../../types";
 import {UserDetailsRequest} from "./contracts/state";
+import {LoadingStatus} from "../../types/common";
 
 export const setUserDetail = (payload: UserDetailResponse): SetUserDetailActionInterface => ({
     type: UserDetailActionsType.SET_USER_DETAIL,

@@ -14,9 +14,9 @@ import {
     SETTINGS_INFO_USERNAME,
     SETTINGS_PRIVACY_AND_SAFETY_AUDIENCE
 } from "../../../../../util/pathConstants";
-import {LoadingStatus} from "../../../../../store/types";
 import {AuthUserResponse} from "../../../../../store/types/user";
 import {UserActionsType} from "../../../../../store/ducks/user/contracts/actionTypes";
+import {LoadingStatus} from "../../../../../store/types/common";
 
 describe("AccountInformation", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

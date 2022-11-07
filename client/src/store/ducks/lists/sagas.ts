@@ -26,11 +26,11 @@ import {
     setUserLists,
     setUserListsLoadingState
 } from './actionCreators';
-import {LoadingStatus} from '../../types';
 import {ListsApi} from "../../../services/api/listsApi";
 import {updateFollowToFullList} from '../list/actionCreators';
 import {ListResponse, ListUserResponse, PinnedListResponse, SimpleListResponse} from "../../types/lists";
 import {updateFollowListDetail} from "../listDetail/actionCreators";
+import {LoadingStatus} from "../../types/common";
 
 export function* fetchListsRequest() {
     try {

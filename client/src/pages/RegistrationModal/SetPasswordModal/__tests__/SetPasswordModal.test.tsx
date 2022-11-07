@@ -4,9 +4,9 @@ import {Button, Dialog} from "@material-ui/core";
 
 import SetPasswordModal from "../SetPasswordModal";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import {RegistrationInputField} from "../../RegistrationInput/RegistrationInputField";
 import {UserActionsType} from "../../../../store/ducks/user/contracts/actionTypes";
+import {LoadingStatus} from "../../../../store/types/common";
 
 describe("SetPasswordModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

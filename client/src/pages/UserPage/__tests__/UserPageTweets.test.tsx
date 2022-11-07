@@ -2,13 +2,13 @@ import React from "react";
 import {Button, IconButton, Typography} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import UserPageTweets from "../UserPageTweets";
 import {mockTweets} from "../../../util/mockData/mockData";
 import Spinner from "../../../components/Spinner/Spinner";
 import TweetComponent from "../../../components/TweetComponent/TweetComponent";
 import AddTweetModal from "../../../components/AddTweetModal/AddTweetModal";
 import CloseButton from "../../../components/CloseButton/CloseButton";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("UserPageTweets", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

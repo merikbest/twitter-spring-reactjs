@@ -6,7 +6,6 @@ import {ListItem} from "@material-ui/core";
 
 import Settings from "../Settings";
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {
     SETTINGS,
     SETTINGS_ABOUT,
@@ -121,6 +120,7 @@ import Autoplay from "../AccessibilityDisplayLanguages/DataUsage/Autoplay/Autopl
 import AdditionalResources from "../AdditionalResources/AdditionalResources";
 import ContentPreferences from "../Notifications/ContentPreferences/ContentPreferences";
 import PersonalizationAndData from "../Notifications/PersonalizationAndData/PersonalizationAndData";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("Settings", () => {
 

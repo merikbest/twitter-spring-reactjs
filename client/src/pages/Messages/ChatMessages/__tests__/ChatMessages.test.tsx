@@ -3,12 +3,12 @@ import {Button, IconButton, Popover} from "@material-ui/core";
 import {Picker} from "emoji-mart";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import {mockChats, mockMessages} from "../../../../util/mockData/mockData";
 import Spinner from "../../../../components/Spinner/Spinner";
 import ChatMessages from "../ChatMessages";
 import {MessageInput} from "../../MessageInput/MessageInput";
 import {ChatMessagesActionsType} from "../../../../store/ducks/chatMessages/contracts/actionTypes";
+import {LoadingStatus} from "../../../../store/types/common";
 
 describe("ChatMessages", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

@@ -401,7 +401,7 @@ public class UserServiceImpl implements UserService {
             userBlockedList.add(currentUser);
             user.getFollowers().removeIf(follower -> follower.getId().equals(currentUser.getId()));
             user.getFollowing().removeIf(following -> following.getId().equals(currentUser.getId()));
-            user.getUserLists().removeIf(list -> list.getMembers().stream()
+            user.getLists().removeIf(list -> list.getMembers().stream()
                     .anyMatch(member -> member.getId().equals(currentUser.getId())));
             return true;
         }

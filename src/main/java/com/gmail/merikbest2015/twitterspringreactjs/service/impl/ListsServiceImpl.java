@@ -69,7 +69,7 @@ public class ListsServiceImpl implements ListsService {
         User user = authenticationService.getAuthenticatedUser();
         lists.setListOwner(user);
         Lists userTweetList = listsRepository.save(lists);
-        List<Lists> userLists = user.getUserLists();
+        List<Lists> userLists = user.getLists();
         userLists.add(userTweetList);
         return listsRepository.getUserTweetListById(userTweetList.getId());
     }
@@ -115,10 +115,10 @@ public class ListsServiceImpl implements ListsService {
         if (!list.getListOwner().getId().equals(user.getId())) {
             throw new ApiRequestException("List owner not found", HttpStatus.BAD_REQUEST);
         }
-        user.getUserLists().remove(list);
+        user.getLists().remove(list);
         list.getTweets().removeAll(list.getTweets());
         list.getMembers().removeAll(list.getMembers());
-        list.getFollowers().forEach(follower -> follower.getUserLists().remove(list));
+        list.getFollowers().forEach(follower -> follower.getLists().remove(list));
         list.getFollowers().removeAll(list.getFollowers());
 
         if (list.getWallpaper() != null) {
@@ -145,10 +145,10 @@ public class ListsServiceImpl implements ListsService {
             if (list.getPinnedDate() != null) {
                 list.setPinnedDate(null);
             }
-            user.getUserLists().remove(list);
+            user.getLists().remove(list);
         } else {
             listFollowers.add(user);
-            user.getUserLists().add(list);
+            user.getLists().add(list);
         }
         return listsRepository.getUserTweetListById(list.getId());
     }

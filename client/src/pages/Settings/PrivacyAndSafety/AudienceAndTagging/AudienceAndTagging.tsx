@@ -8,11 +8,11 @@ import {useAudienceAndTaggingStyles} from "./AudienceAndTaggingStyles";
 import {ArrowRightIcon} from "../../../../icons";
 import {selectUserDataIsPrivateProfile} from "../../../../store/ducks/user/selectors";
 import {setUserLoadingStatus, updatePrivateProfile} from "../../../../store/ducks/user/actionCreators";
-import {LoadingStatus} from "../../../../store/types";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
 import {SETTINGS_PRIVACY_AND_SAFETY_TAGGING} from "../../../../util/pathConstants";
 import {PUBLIC_AND_PROTECTED_TWEETS} from "../../../../util/url";
+import {LoadingStatus} from "../../../../store/types/common";
 
 const AudienceAndTagging: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();

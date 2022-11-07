@@ -1,8 +1,8 @@
 import React from "react";
 
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import Spinner from "../Spinner";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("Spinner", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

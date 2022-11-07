@@ -1,8 +1,8 @@
 import {blockedAndMutedUsersReducer, initialBlockedAndMutedUsersState} from "../reducer";
 import {testActionDispatch} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../types";
 import {BlockedAndMutedUsersActions, BlockedAndMutedUsersActionsType} from "../contracts/actionTypes";
 import {BlockedUserResponse, MutedUserResponse} from "../../../types/user";
+import {LoadingStatus} from "../../../types/common";
 
 describe("blockedAndMutedUsersReducer:", () => {
     describe("initial state:", () => {

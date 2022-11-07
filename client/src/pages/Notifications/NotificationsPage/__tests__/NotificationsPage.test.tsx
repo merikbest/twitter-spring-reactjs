@@ -2,7 +2,6 @@ import React from "react";
 import {createMemoryHistory} from "history";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import Spinner from "../../../../components/Spinner/Spinner";
 import {NotificationsActionsType} from "../../../../store/ducks/notifications/contracts/actionTypes";
 import {UserActionsType} from "../../../../store/ducks/user/contracts/actionTypes";
@@ -11,6 +10,7 @@ import NotificationAuthorItem from "../NotificationAuthorItem/NotificationAuthor
 import NotificationItem from "../NotificationItem/NotificationItem";
 import {PROFILE} from "../../../../util/pathConstants";
 import NotificationsPage from "../NotificationsPage";
+import {LoadingStatus} from "../../../../store/types/common";
 
 window.scrollTo = jest.fn();
 

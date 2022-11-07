@@ -3,10 +3,10 @@ import {Button, Dialog} from "@material-ui/core";
 
 import ChangePhoneModal from "../ChangePhoneModal";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../../../store/types";
 import {getCountryCode, getPhoneCode} from "../../../../../../../util/countryCodes";
 import {FilledSelect} from "../../../../../../../components/FilledSelect/FilledSelect";
 import {ChangeInfoTextField} from "../../../../../ChangeInfoTextField/ChangeInfoTextField";
+import {LoadingStatus} from "../../../../../../../store/types/common";
 
 describe("ChangePhoneModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

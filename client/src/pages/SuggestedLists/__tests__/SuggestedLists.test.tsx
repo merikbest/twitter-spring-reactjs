@@ -2,11 +2,11 @@ import React from "react";
 
 import SuggestedLists from "../SuggestedLists";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import Spinner from "../../../components/Spinner/Spinner";
 import {ListsActionType} from "../../../store/ducks/lists/contracts/actionTypes";
 import ListsItem from "../../Lists/ListsItem/ListsItem";
 import {mockLists} from "../../../util/mockData/mockData";
+import {LoadingStatus} from "../../../store/types/common";
 
 window.scrollTo = jest.fn();
 

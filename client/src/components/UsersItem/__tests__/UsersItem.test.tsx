@@ -2,7 +2,6 @@ import React from "react";
 import {Avatar, Button} from "@material-ui/core";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import {mockUsers} from "../../../util/mockData/mockData";
 import UsersItem, {UserItemSize} from "../UsersItem";
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
@@ -12,6 +11,7 @@ import UnfollowModal from "../../UnfollowModal/UnfollowModal";
 import BlockUserModal from "../../BlockUserModal/BlockUserModal";
 import ActionSnackbar from "../../ActionSnackbar/ActionSnackbar";
 import PopperUserWindow from "../../PopperUserWindow/PopperUserWindow";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("UsersItem", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

@@ -2,11 +2,11 @@ import React from "react";
 
 import Trends from "../Trends";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import Spinner from "../../../components/Spinner/Spinner";
 import {TagsActionsType} from "../../../store/ducks/tags/contracts/actionTypes";
 import {mockTags} from "../../../util/mockData/mockData";
 import TrendsItem from "../TrendsItem/TrendsItem";
+import {LoadingStatus} from "../../../store/types/common";
 
 window.scrollTo = jest.fn();
 

@@ -63,7 +63,6 @@ import {
     updateUsername
 } from "../actionCreators";
 
-import {LoadingStatus} from "../../../types";
 import {testCall, testLoadingStatus, testSetResponse, testWatchSaga} from "../../../../util/testHelper";
 import {UserApi} from "../../../../services/api/userApi";
 import {AuthUserResponse, UserProfileResponse} from "../../../types/user";
@@ -107,7 +106,7 @@ import {ChatApi} from "../../../../services/api/chatApi";
 import {UserSettingsApi} from "../../../../services/api/userSettingsApi";
 import {setBlockedUser, setMutedUser} from "../../blockedAndMutedUsers/actionCreators";
 import {UserActionsType} from "../contracts/actionTypes";
-import {BackgroundTheme, ColorScheme} from "../../../types/common";
+import {BackgroundTheme, ColorScheme, LoadingStatus} from "../../../types/common";
 
 describe("userSaga:", () => {
     const mockAuthUser = {id: 1, email: "test@test.test"} as AuthUserResponse;

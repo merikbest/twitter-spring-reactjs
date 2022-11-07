@@ -2,8 +2,7 @@ import produce, {Draft} from 'immer';
 
 import {TweetsState} from "./contracts/state";
 import {TweetsActions, TweetsActionType} from './contracts/actionTypes';
-import {LoadingStatus} from '../../types';
-import {NotificationType} from "../../types/common";
+import {LoadingStatus, NotificationType} from "../../types/common";
 import {NotificationReplyResponse, NotificationResponse} from "../../types/notification";
 
 export const initialTweetsState: TweetsState = {

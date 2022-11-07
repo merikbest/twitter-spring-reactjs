@@ -11,7 +11,7 @@ import {
 import {UserDetailActionsType} from "../contracts/actionTypes";
 import {UserDetailResponse} from "../../../types/user";
 import axios from "axios";
-import {LoadingStatus} from "../../../types";
+import {LoadingStatus} from "../../../types/common";
 
 describe("userDetail actions", () => {
     const cancelTokenSource = axios.CancelToken.source();

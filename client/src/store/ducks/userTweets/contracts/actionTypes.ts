@@ -1,10 +1,9 @@
 import {Action} from "redux";
 
-import {LoadingStatus} from "../../../types";
 import {BookmarkedTweetPayload, UserTweetRequest, UserTweetsState} from "./state";
 import {BlockedToTweetsPayload, FollowToTweetsPayload, MutedToTweetsPayload, TweetResponse} from "../../../types/tweet";
 import {NotificationReplyResponse, NotificationResponse} from "../../../types/notification";
-import {PageableResponse} from "../../../types/common";
+import {LoadingStatus, PageableResponse} from "../../../types/common";
 
 export enum UserTweetsActionType {
     SET_TWEETS = "userTweets/SET_TWEETS",

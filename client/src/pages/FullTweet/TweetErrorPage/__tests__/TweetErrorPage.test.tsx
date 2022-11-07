@@ -4,9 +4,9 @@ import {Link} from "react-router-dom";
 
 import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
 import TweetErrorPage from "../TweetErrorPage";
-import {LoadingStatus} from "../../../../store/types";
 import ActionSnackbar from "../../../../components/ActionSnackbar/ActionSnackbar";
 import {SEARCH} from "../../../../util/pathConstants";
+import {LoadingStatus} from "../../../../store/types/common";
 
 describe("TweetErrorPage", () => {
     const mockStore = createMockRootState(LoadingStatus.SUCCESS);

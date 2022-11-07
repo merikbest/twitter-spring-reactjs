@@ -13,12 +13,12 @@ import {
     mockMyProfile,
     mockUserProfile
 } from "../../../util/mockData/mockData";
-import {LoadingStatus} from "../../../store/types";
 import UsersItem from "../../../components/UsersItem/UsersItem";
 import {RootState} from "../../../store/store";
 import {UserProfileActionsType} from "../../../store/ducks/userProfile/contracts/actionTypes";
 import {UsersSearchActionsType} from "../../../store/ducks/usersSearch/contracts/actionTypes";
 import {USER} from "../../../util/pathConstants";
+import {LoadingStatus} from "../../../store/types/common";
 
 describe("FollowingFollowers", () => {
     const mockStore: RootState = createMockRootState(LoadingStatus.LOADED);

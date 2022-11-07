@@ -3,11 +3,11 @@ import {call} from "redux-saga/effects";
 
 import {fetchUserDetailRequest, userDetailSaga} from "../sagas";
 import {fetchUserDetail, setUserDetail, setUserDetailLoadingState} from "../actionCreators";
-import {LoadingStatus} from "../../../types";
 import {testLoadingStatus, testSetResponse, testWatchSaga} from "../../../../util/testHelper";
 import {UserDetailResponse} from "../../../types/user";
 import {UserApi} from "../../../../services/api/userApi";
 import {UserDetailActionsType} from "../contracts/actionTypes";
+import {LoadingStatus} from "../../../types/common";
 
 describe("userDetailSaga:", () => {
     describe("fetchUserDetailRequest:", () => {

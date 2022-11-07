@@ -3,12 +3,12 @@ import {Button, Dialog, ListItem} from "@material-ui/core";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import MessagesModal from "../MessagesModal";
 import MessagesModalUser from "../MessagesModalUser/MessagesModalUser";
 import {UsersSearchActionsType} from "../../../../store/ducks/usersSearch/contracts/actionTypes";
 import {MessagesModalInput} from "../MessagesModalInput/MessagesModalInput";
 import {ChatsActionsType} from "../../../../store/ducks/chats/contracts/actionTypes";
+import {LoadingStatus} from "../../../../store/types/common";
 
 describe("MessagesModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

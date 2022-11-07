@@ -2,8 +2,8 @@ import React from "react";
 import {Button, Dialog} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types";
 import CustomizeModal from "../CustomizeModal";
+import {LoadingStatus} from "../../../../store/types/common";
 
 describe("CustomizeModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

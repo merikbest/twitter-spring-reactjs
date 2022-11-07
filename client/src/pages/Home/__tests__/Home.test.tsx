@@ -5,7 +5,6 @@ import {Button, IconButton} from "@material-ui/core";
 
 import Home from "../Home";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types";
 import TweetComponent from "../../../components/TweetComponent/TweetComponent";
 import {UserActionsType} from "../../../store/ducks/user/contracts/actionTypes";
 import {TweetsActionType} from "../../../store/ducks/tweets/contracts/actionTypes";
@@ -14,6 +13,7 @@ import TopTweetActions from "../TopTweetActions/TopTweetActions";
 import {mockUser} from "../../../util/mockData/mockData";
 import Welcome from "../../../components/Welcome/Welcome";
 import {HOME} from "../../../util/pathConstants";
+import {LoadingStatus} from "../../../store/types/common";
 
 window.scrollTo = jest.fn();
 
