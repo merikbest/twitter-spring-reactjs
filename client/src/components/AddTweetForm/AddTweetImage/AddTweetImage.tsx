@@ -1,19 +1,19 @@
 import React, {FC, memo, ReactElement} from "react";
 import {useLocation} from "react-router-dom";
-import {ClassNameMap} from "@material-ui/core/styles/withStyles";
 
 import {MODAL} from "../../../util/pathConstants";
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
 import {CloseIcon} from "../../../icons";
 import {ImageObj} from "../AddTweetForm";
+import {useAddTweetImageStyles} from "./AddTweetImageStyles";
 
 interface AddTweetImageProps {
-    classes: ClassNameMap<string>;
     images: ImageObj[]
     removeImage: () => void;
 }
 
-const AddTweetImage: FC<AddTweetImageProps> = memo(({classes, images, removeImage}): ReactElement | null => {
+const AddTweetImage: FC<AddTweetImageProps> = memo(({images, removeImage}): ReactElement | null => {
+    const classes = useAddTweetImageStyles();
     const location = useLocation();
 
     if (images.length === 0) {

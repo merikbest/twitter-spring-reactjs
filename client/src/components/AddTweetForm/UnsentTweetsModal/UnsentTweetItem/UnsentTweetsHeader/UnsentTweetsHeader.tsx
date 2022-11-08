@@ -1,11 +1,10 @@
 import React, {FC, memo, ReactElement} from "react";
 import {Button, DialogTitle} from "@material-ui/core";
-import {ClassNameMap} from "@material-ui/core/styles/withStyles";
 
 import CloseButton from "../../../../CloseButton/CloseButton";
+import {useUnsentTweetsHeaderStyles} from "./UnsentTweetsHeaderStyles";
 
 interface UnsentTweetsHeaderProps {
-    classes: ClassNameMap<string>
     visibleEditTweetModal: boolean;
     visibleEditListFooter: boolean;
     onCloseEditTweetList: () => void;
@@ -16,7 +15,6 @@ interface UnsentTweetsHeaderProps {
 
 const UnsentTweetsHeader: FC<UnsentTweetsHeaderProps> = memo((
     {
-        classes,
         visibleEditTweetModal,
         visibleEditListFooter,
         onCloseEditTweetList,
@@ -25,6 +23,8 @@ const UnsentTweetsHeader: FC<UnsentTweetsHeaderProps> = memo((
         onClose
     }
 ): ReactElement => {
+    const classes = useUnsentTweetsHeaderStyles();
+
     return (
         <DialogTitle>
             <CloseButton onClose={!visibleEditTweetModal ? onClose : onCloseEditTweetModal}/>

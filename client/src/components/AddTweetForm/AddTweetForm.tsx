@@ -103,7 +103,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
         emojiConvertor.replace_mode = 'unified';
         const convertedEmoji = emojiConvertor.replace_colons(emoji.colons!);
         setText(text + " " + convertedEmoji);
-    }, []);
+    }, [text]);
 
     const handleClickAddTweet = async (): Promise<void> => {
         const {day, hour, minute, choice1, choice2, choice3, choice4} = pollData;
@@ -241,7 +241,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
             <div className={classes.content}>
                 <ProfileAvatar/>
                 <div className={classes.textareaWrapper}>
-                    <ScheduleDateInfo selectedScheduleDate={selectedScheduleDate} classes={classes}/>
+                    <ScheduleDateInfo selectedScheduleDate={selectedScheduleDate}/>
                     <TextareaAutosize
                         onChange={handleChangeTextarea}
                         className={classes.contentTextarea}
@@ -252,7 +252,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
                     />
                 </div>
             </div>
-            <AddTweetImage classes={classes} images={images} removeImage={removeImage}/>
+            <AddTweetImage images={images} removeImage={removeImage}/>
             {quoteTweet && <Quote quoteTweet={quoteTweet}/>}
             <Poll pollData={pollData} setPollData={setPollData} visiblePoll={visiblePoll} onClose={onClosePoll}/>
             <Reply replyType={replyType} setReplyType={setReplyType} isUnsentTweet={!!unsentTweet}/>

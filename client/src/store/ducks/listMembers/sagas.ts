@@ -19,6 +19,7 @@ import {ListsApi} from "../../../services/api/listsApi";
 import {ListsOwnerMemberResponse} from "../../types/lists";
 import {setMembersSize} from "../list/actionCreators";
 import {LoadingStatus} from "../../types/common";
+import {setOpenSnackBar} from "../actionSnackbar/actionCreators";
 
 export function* fetchListMembersRequest({payload}: FetchListMembersActionInterface) {
     try {
@@ -57,6 +58,7 @@ export function* processListMemberRequest({payload}: ProcessUserToListMembersAct
         yield put(setUserToList({userId: payload.userId, isUserAdded: data, isSuggested: payload.isSuggested}));
         yield put(setMembersSize(data));
     } catch (error) {
+        yield put(setOpenSnackBar("You aren’t allowed to add this member to this List."));
         yield put(setLoadingSuggestedState(LoadingStatus.ERROR));
     }
 }

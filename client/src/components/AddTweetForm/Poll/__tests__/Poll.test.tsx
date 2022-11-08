@@ -2,7 +2,7 @@ import React from "react";
 import {IconButton, Paper} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import Poll from "../Poll";
+import Poll, {pollInitialState} from "../Poll";
 import PollInput from "../PollInput/PollInput";
 import {FilledSelect} from "../../../FilledSelect/FilledSelect";
 import HoverAction from "../../../HoverAction/HoverAction";
@@ -36,17 +36,7 @@ describe("Poll", () => {
     });
 
     it("should change poll input and select date", () => {
-        const {
-            wrapper,
-            mockSetDay,
-            mockSetHour,
-            mockSetMinute,
-            mockSetChoice1,
-            mockSetChoice2,
-            mockSetChoice3,
-            mockSetChoice4,
-            mockOnClose
-        } = createPollWrapper();
+        const {wrapper, mockOnClose, mockSetPollData} = createPollWrapper();
 
         wrapper.find("#addPollChoiceButton").at(0).find(IconButton).simulate("click");
         wrapper.find("#addPollChoiceButton").at(0).find(IconButton).simulate("click");
@@ -58,20 +48,8 @@ describe("Poll", () => {
         wrapper.find(FilledSelect).at(1).find("select").simulate("change", {target: {value: 23}});
         wrapper.find(FilledSelect).at(2).find("select").simulate("change", {target: {value: 59}});
 
-        expect(mockSetChoice1).toHaveBeenCalled();
-        expect(mockSetChoice1).toHaveBeenCalledWith("test poll 1");
-        expect(mockSetChoice2).toHaveBeenCalled();
-        expect(mockSetChoice2).toHaveBeenCalledWith("test poll 2");
-        expect(mockSetChoice3).toHaveBeenCalled();
-        expect(mockSetChoice3).toHaveBeenCalledWith("test poll 3");
-        expect(mockSetChoice4).toHaveBeenCalled();
-        expect(mockSetChoice4).toHaveBeenCalledWith("test poll 4");
-        expect(mockSetDay).toHaveBeenCalled();
-        expect(mockSetDay).toHaveBeenCalledWith(7);
-        expect(mockSetHour).toHaveBeenCalled();
-        expect(mockSetHour).toHaveBeenCalledWith(23);
-        expect(mockSetMinute).toHaveBeenCalled();
-        expect(mockSetMinute).toHaveBeenCalledWith(59);
+        expect(mockSetPollData).toHaveBeenCalled();
+        expect(mockSetPollData).toHaveBeenCalledTimes(7);
 
         wrapper.find("#removePoll").at(0).simulate("click");
 
@@ -98,45 +76,17 @@ describe("Poll", () => {
     });
 
     const createPollWrapper = (visiblePoll = true) => {
-        const mockSetDay = jest.fn();
-        const mockSetHour = jest.fn();
-        const mockSetMinute = jest.fn();
-        const mockSetChoice1 = jest.fn();
-        const mockSetChoice2 = jest.fn();
-        const mockSetChoice3 = jest.fn();
-        const mockSetChoice4 = jest.fn();
+        const mockSetPollData = jest.fn();
         const mockOnClose = jest.fn();
 
         const wrapper = mountWithStore(
             <Poll
-                choice1={""}
-                choice2={""}
-                choice3={""}
-                choice4={""}
-                setChoice1={mockSetChoice1}
-                setChoice2={mockSetChoice2}
-                setChoice3={mockSetChoice3}
-                setChoice4={mockSetChoice4}
-                day={1}
-                hour={0}
-                minute={0}
-                setDay={mockSetDay}
-                setHour={mockSetHour}
-                setMinute={mockSetMinute}
+                pollData={pollInitialState}
+                setPollData={mockSetPollData}
                 visiblePoll={visiblePoll}
                 onClose={mockOnClose}
             />, createMockRootState(LoadingStatus.LOADED));
 
-        return {
-            wrapper,
-            mockSetDay,
-            mockSetHour,
-            mockSetMinute,
-            mockSetChoice1,
-            mockSetChoice2,
-            mockSetChoice3,
-            mockSetChoice4,
-            mockOnClose
-        };
+        return {wrapper, mockOnClose, mockSetPollData};
     };
 });

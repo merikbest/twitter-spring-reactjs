@@ -115,7 +115,6 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
     return (
         <Dialog className={classes.dialog} transitionDuration={0} open={visible} onClose={onClose}>
             <UnsentTweetsHeader
-                classes={classes}
                 visibleEditTweetModal={visibleEditTweetModal}
                 visibleEditListFooter={visibleEditListFooter}
                 onOpenEditTweetList={onOpenEditTweetList}
@@ -126,7 +125,7 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
             {(!visibleEditTweetModal) ? (
                 <>
                     <DialogContent id="scrollableDiv" className={classes.content}>
-                        <UnsentTweetsTab classes={classes} activeTab={activeTab} handleChangeTab={handleChangeTab}/>
+                        <UnsentTweetsTab activeTab={activeTab} handleChangeTab={handleChangeTab}/>
                         <InfiniteScrollWrapper
                             dataLength={unsentTweets.length}
                             pagesCount={pagesCount}

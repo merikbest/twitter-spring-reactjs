@@ -39,12 +39,7 @@ const EmojiIconButton: FC<EmojiIconButtonProps> = memo(({addEmoji}): ReactElemen
                 anchorOrigin={{vertical: "bottom", horizontal: "center"}}
                 transformOrigin={{vertical: "top", horizontal: "center"}}
             >
-                <Picker
-                    title=""
-                    emoji="wave"
-                    onSelect={emojiTag => addEmoji(emojiTag)}
-                    set={"twitter"}
-                />
+                <Picker title="" emoji="wave" onSelect={addEmoji} set="twitter"/>
             </Popover>
         </>
     );

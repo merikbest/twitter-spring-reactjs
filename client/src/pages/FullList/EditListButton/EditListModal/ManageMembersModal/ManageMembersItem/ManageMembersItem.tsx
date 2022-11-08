@@ -1,14 +1,12 @@
-import React, {FC, memo, ReactElement, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import React, {FC, memo, ReactElement} from "react";
+import {useSelector} from "react-redux";
 import {Paper} from "@material-ui/core";
 
 import {useManageMembersItemStyles} from "./ManageMembersItemStyles";
 import {selectUserDataId} from "../../../../../../store/ducks/user/selectors";
 import {ListsOwnerMemberResponse} from "../../../../../../store/types/lists";
 import PopperUserWindow from "../../../../../../components/PopperUserWindow/PopperUserWindow";
-import {selectIsListSuggestedError} from "../../../../../../store/ducks/listMembers/selectors";
 import {useHoverUser} from "../../../../../../hook/useHoverUser";
-import {setOpenSnackBar} from "../../../../../../store/ducks/actionSnackbar/actionCreators";
 import LinkWrapper from "../../../../../../components/LinkWrapper/LinkWrapper";
 import {PROFILE} from "../../../../../../util/pathConstants";
 import ManageMemberButton from "./ManageMemberButton/ManageMemberButton";
@@ -31,16 +29,8 @@ const ManageMembersItem: FC<ManageMembersItemProps> = memo((
     }
 ): ReactElement => {
     const classes = useManageMembersItemStyles();
-    const dispatch = useDispatch();
     const myProfileId = useSelector(selectUserDataId);
-    const isSuggestedError = useSelector(selectIsListSuggestedError);
     const {visiblePopperWindow, handleHoverPopper, handleLeavePopper} = useHoverUser();
-
-    useEffect(() => {
-        if (isSuggestedError) {
-            dispatch(setOpenSnackBar("You aren’t allowed to add this member to this List."));
-        }
-    }, [isSuggestedError]);
 
     return (
         <LinkWrapper path={`${PROFILE}/${user?.id}`} visiblePopperWindow={visiblePopperWindow}>

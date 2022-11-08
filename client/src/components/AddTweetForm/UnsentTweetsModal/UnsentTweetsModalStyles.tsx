@@ -14,31 +14,11 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
             },
         },
     },
-    outlinedButton: {
-        height: 24,
-        padding: '0px 12px',
-    },
     content: {
         width: 598,
         overflowX: "hidden",
         padding: 0,
         minHeight: props => props.visibleEditTweetModal ? 220 : 600,
-    },
-    tabs: {
-        borderBottom: `1px solid ${theme.palette.divider}`,
-        "& .MuiTabs-indicator": {
-            marginLeft: 105,
-            maxWidth: 90,
-            height: 4,
-            backgroundColor: theme.palette.primary.main,
-        },
-        "& .MuiTab-root": {
-            fontWeight: 700,
-        },
-    },
-    tab: {
-        minWidth: 299,
-        textTransform: 'none',
     },
     tweetContainer: {
         padding: "12px 16px",

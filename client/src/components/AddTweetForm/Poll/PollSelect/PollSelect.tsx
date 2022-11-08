@@ -42,7 +42,7 @@ const PollSelect: FC<PollDaySelectProps> = memo((
                 style={{width, marginRight}}
                 native
             >
-                {showOptions!(id === "day" && 7 || id === "hour" && 24 || 60)}
+                {showOptions(id === "day" && 7 || id === "hour" && 24 || 60)}
             </FilledSelect>
         </FormControl>
     );
