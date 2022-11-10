@@ -1,5 +1,4 @@
 import React, {FC, memo, ReactElement} from "react";
-import {ClassNameMap} from "@material-ui/core/styles/withStyles";
 import {Typography} from "@material-ui/core";
 
 import {PROFILE} from "../../../util/pathConstants";
@@ -8,9 +7,9 @@ import {formatDate} from "../../../util/formatDate";
 import PopperUserWindow from "../../PopperUserWindow/PopperUserWindow";
 import LinkWrapper from "../../LinkWrapper/LinkWrapper";
 import {useHoverUser} from "../../../hook/useHoverUser";
+import {useTweetHeaderStyles} from "./TweetHeaderStyles";
 
 interface TweetHeaderProps {
-    classes: ClassNameMap<string>;
     dateTime?: string;
     userId?: number;
     fullName?: string;
@@ -20,7 +19,6 @@ interface TweetHeaderProps {
 
 const TweetHeader: FC<TweetHeaderProps> = memo((
     {
-        classes,
         userId,
         fullName,
         username,
@@ -28,6 +26,7 @@ const TweetHeader: FC<TweetHeaderProps> = memo((
         dateTime,
     }
 ): ReactElement => {
+    const classes = useTweetHeaderStyles();
     const {visiblePopperWindow, handleHoverPopper, handleLeavePopper} = useHoverUser();
 
     return (

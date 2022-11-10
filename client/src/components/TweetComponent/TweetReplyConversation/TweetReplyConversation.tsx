@@ -1,14 +1,12 @@
-import React, {FC, memo, ReactElement} from "react";
-import {FollowReplyIcon} from "../../../icons";
-
+import React, {memo, ReactElement} from "react";
 import {Typography} from "@material-ui/core";
-import {ClassNameMap} from "@material-ui/core/styles/withStyles";
 
-interface TweetReplyConversationProps {
-    classes: ClassNameMap<string>;
-}
+import {FollowReplyIcon} from "../../../icons";
+import {useTweetReplyConversationStyles} from "./TweetReplyConversationStyles";
 
-const TweetReplyConversation: FC<TweetReplyConversationProps> = memo(({classes}): ReactElement => {
+const TweetReplyConversation = memo((): ReactElement => {
+    const classes = useTweetReplyConversationStyles();
+
     return (
         <>
             <div className={classes.iconWrapper}>

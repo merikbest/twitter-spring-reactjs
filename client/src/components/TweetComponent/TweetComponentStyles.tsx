@@ -44,14 +44,6 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
             fontWeight: 700,
         },
     },
-    lockIcon: {
-        "& svg": {
-            marginLeft: 3,
-            marginBottom: -3,
-            width: 16,
-            height: 16,
-        },
-    },
     headerIcon: {
         padding: 0,
         marginRight: 12,
@@ -62,20 +54,6 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
     },
     tweetContent: {
         width: 500,
-    },
-    text: {
-        "& a": {
-            display: "block",
-            width: 490,
-            color: "inherit",
-            textDecoration: "none",
-        },
-        "& #hashtag": {
-            color: theme.palette.primary.main,
-        },
-        "& #link": {
-            color: theme.palette.primary.main,
-        }
     },
     image: {
         position: "relative",
@@ -89,27 +67,6 @@ export const useTweetComponentStyles = makeStyles<Theme, TweetComponentStylesPro
         },
         "& .small": {
             width: 260,
-        },
-    },
-    iconWrapper: {
-        display: "inline-block",
-        marginTop: 8,
-        marginBottom: 4,
-    },
-    iconCircle: {
-        marginRight: 5,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: 20,
-        height: 20,
-        borderRadius: "50%",
-        backgroundColor: theme.palette.primary.main,
-    },
-    icon: {
-        "& svg": {
-            height: "0.75em",
-            fill: theme.palette.common.white,
         },
     },
     footer: {

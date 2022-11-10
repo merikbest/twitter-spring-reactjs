@@ -1,18 +1,19 @@
 import React, {FC, memo, ReactElement} from "react";
 import {Link} from "react-router-dom";
 import {Typography} from "@material-ui/core";
-import {ClassNameMap} from "@material-ui/core/styles/withStyles";
 
 import {HOME_TWEET} from "../../../util/pathConstants";
 import {textFormatter} from "../../../util/textFormatter";
+import {useTweetTextStyles} from "./TweetTextStyles";
 
 interface TweetTextProps {
-    classes: ClassNameMap<string>;
     text?: string;
     tweetId?: number;
 }
 
-const TweetText: FC<TweetTextProps> = memo(({classes, text, tweetId}): ReactElement => {
+const TweetText: FC<TweetTextProps> = memo(({text, tweetId}): ReactElement => {
+    const classes = useTweetTextStyles();
+
     return (
         <Typography variant={"body1"} className={classes.text}>
             <Link id={"handleClickTweet"} to={`${HOME_TWEET}/${tweetId}`}>

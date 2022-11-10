@@ -26,10 +26,10 @@ const AddTweetToBookmarksButton: FC<AddTweetToBookmarksButtonProps> = (
     const location = useLocation();
 
     const onClickAddTweetToBookmarks = (): void => {
-        dispatch(addTweetToBookmarks(tweetId));
-
         if (location.pathname.includes(BOOKMARKS)) {
             dispatch(removeTweetFromBookmarks(tweetId));
+        } else {
+            dispatch(addTweetToBookmarks(tweetId));
         }
         dispatch(setOpenSnackBar(isTweetBookmarked ? "Tweet removed to your Bookmarks" : "Tweet added to your Bookmarks"));
         closeShareTweet();

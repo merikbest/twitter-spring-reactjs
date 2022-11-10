@@ -1,18 +1,26 @@
 import React from "react";
+import ReactRouter from "react-router";
 import {ClickAwayListener, IconButton} from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../util/testHelper";
+import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
 import {mockFullTweet} from "../../../util/mockData/mockData";
 import QuoteIconButton from "../QuoteIconButton";
 import QuoteTweetModal from "../QuoteTweetModal/QuoteTweetModal";
 import CloseButton from "../../CloseButton/CloseButton";
 import {LoadingStatus} from "../../../store/types/common";
+import {TweetsActionType} from "../../../store/ducks/tweets/contracts/actionTypes";
 
-describe("QuoteTweet", () => {
+describe("QuoteIconButton", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);
+    let mockDispatchFn: jest.Mock;
+
+    beforeEach(() => {
+        mockDispatchFn = mockDispatch();
+        jest.spyOn(ReactRouter, "useParams").mockReturnValue({userId: "3"});
+    });
 
     it("should render is tweet retweeted by owner", () => {
-        const {wrapper} = createQuoteTweetWrapper();
+        const wrapper = createQuoteTweetWrapper();
 
         expect(wrapper.find("#retweetIcon").exists()).toBeTruthy();
         expect(wrapper.find("#retweets").exists()).toBeFalsy();
@@ -26,7 +34,7 @@ describe("QuoteTweet", () => {
     });
 
     it("should render is tweet retweeted by user", () => {
-        const {wrapper} = createQuoteTweetWrapper(false, 10);
+        const wrapper = createQuoteTweetWrapper(false, 10);
 
         expect(wrapper.find("#retweetOutlinedIcon").exists()).toBeTruthy();
         expect(wrapper.find("#retweets").text().includes("10")).toBe(true);
@@ -37,7 +45,7 @@ describe("QuoteTweet", () => {
     });
 
     it("should open and close QuoteTweetModal", () => {
-        const {wrapper} = createQuoteTweetWrapper();
+        const wrapper = createQuoteTweetWrapper();
 
         expect(wrapper.find(QuoteTweetModal).prop("visible")).toBe(false);
 
@@ -52,16 +60,19 @@ describe("QuoteTweet", () => {
     });
 
     it("should click Retweet", () => {
-        const {wrapper, mockHandleRetweet} = createQuoteTweetWrapper();
+        const wrapper = createQuoteTweetWrapper();
 
         wrapper.find(IconButton).simulate("click");
         wrapper.find("#clickRetweet").at(0).simulate("click");
 
-        expect(mockHandleRetweet).toHaveBeenCalled();
+        expect(mockDispatchFn).toHaveBeenCalledWith({
+            payload: {tweetId: mockFullTweet.id, userId: "3"},
+            type: TweetsActionType.RETWEET
+        });
     });
 
     it("should click away QuoteTweet", () => {
-        const {wrapper} = createQuoteTweetWrapper();
+        const wrapper = createQuoteTweetWrapper();
         // @ts-ignore
         wrapper.find(ClickAwayListener).prop("onClickAway")(jest.fn());
 
@@ -69,9 +80,14 @@ describe("QuoteTweet", () => {
     });
 
     const createQuoteTweetWrapper = (isTweetRetweetedByMe = true, retweetsCount = 0) => {
-        const mockHandleRetweet = jest.fn();
-        const wrapper = mountWithStore(<QuoteIconButton tweet={mockFullTweet}/>, mockRootState);
-
-        return {wrapper, mockHandleRetweet}
+        return mountWithStore(
+            <QuoteIconButton
+                tweetId={mockFullTweet.id}
+                dateTime={mockFullTweet.dateTime}
+                text={mockFullTweet.text}
+                user={mockFullTweet.user}
+                isTweetRetweeted={isTweetRetweetedByMe}
+                retweetsCount={retweetsCount}
+            />, mockRootState)
     };
 });

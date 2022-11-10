@@ -3,7 +3,7 @@ import {Avatar, Button, Paper} from "@material-ui/core";
 import {createMemoryHistory} from "history";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
-import {mockFollowerUserResponse} from "../../../../../util/mockData/mockData";
+import {mockFollowerUserResponse, mockUserDetailResponse} from "../../../../../util/mockData/mockData";
 import {FollowerRequestsActionsType} from "../../../../../store/ducks/followerRequests/contracts/actionTypes";
 import {PROFILE} from "../../../../../util/pathConstants";
 import PopperUserWindow from "../../../../PopperUserWindow/PopperUserWindow";
@@ -68,8 +68,9 @@ describe("FollowerRequestsItem", () => {
     });
 
     it("should hover and leave Member", () => {
+        const mockState = {...mockRootState, userDetail: {...mockRootState.userDetail, item: mockUserDetailResponse}}
         jest.useFakeTimers();
-        const wrapper = mountWithStore(<FollowerRequestsItem user={mockUser} onClose={jest.fn()}/>, mockRootState);
+        const wrapper = mountWithStore(<FollowerRequestsItem user={mockUser} onClose={jest.fn()}/>, mockState);
         expect(wrapper.find(PopperUserWindow).prop("visible")).toBe(false);
         wrapper.find("#handleHoverPopper").at(0).simulate("mouseenter");
         jest.runAllTimers();

@@ -5,7 +5,7 @@ import {IconButton, Link as MuiLink} from '@material-ui/core';
 import routeData from "react-router";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {mockFullTweet, mockUser, mockUserProfile} from "../../../util/mockData/mockData";
+import {mockFullTweet, mockMyTweetAdditionalInfo, mockUser, mockUserProfile} from "../../../util/mockData/mockData";
 import TweetActionResult, {TweetActionResults} from "../../TweetActionResult/TweetActionResult";
 import {HOME_TWEET, MODAL, PROFILE} from "../../../util/pathConstants";
 import TweetComponent from "../TweetComponent";
@@ -24,6 +24,7 @@ import QuoteIconButton from "../../QuoteIconButton/QuoteIconButton";
 import PopperUserWindow from "../../PopperUserWindow/PopperUserWindow";
 import HoverAction from "../../HoverAction/HoverAction";
 import {LinkCoverSize, LoadingStatus, ReplyType} from "../../../store/types/common";
+import TweetHeader from "../TweetHeader/TweetHeader";
 
 describe("TweetComponent", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);
@@ -32,7 +33,7 @@ describe("TweetComponent", () => {
     beforeEach(() => {
         mockDispatchFn = mockDispatch();
     });
-    
+
     it("should render retweeted by My profile", () => {
         const {wrapper} = createTweetComponentWrapper();
         expect(wrapper.find(TweetActionResult).exists()).toBeTruthy();
@@ -89,7 +90,7 @@ describe("TweetComponent", () => {
 
     it("should click on tweet text", () => {
         const {wrapper, pushSpy} = createTweetComponentWrapper();
-        wrapper.find("#handleClickTweet").simulate("click");
+        wrapper.find("#handleClickTweet").at(0).simulate("click", {button: 0});
         expect(wrapper.text().includes("#FirstTweet")).toBe(true);
         expect(pushSpy).toHaveBeenCalled();
         expect(pushSpy).toHaveBeenCalledWith(`${HOME_TWEET}/${mockFullTweet.id}`);
@@ -108,7 +109,7 @@ describe("TweetComponent", () => {
 
     it("should click on tweet image", () => {
         const {wrapper, pushSpy} = createTweetComponentWrapper();
-        wrapper.find(Link).at(0).simulate("click", {button: 0});
+        wrapper.find(Link).at(3).simulate("click", {button: 0});
         expect(pushSpy).toHaveBeenCalled();
         expect(pushSpy).toHaveBeenCalledWith({
             pathname: `${MODAL}/${mockFullTweet.id}`,
@@ -130,7 +131,11 @@ describe("TweetComponent", () => {
     });
 
     it("should render Follow Reply", () => {
-        const mockTweet = {...mockFullTweet, replyType: ReplyType.FOLLOW, user: {...mockFullTweet.user, isFollower: true}};
+        const mockTweet = {
+            ...mockFullTweet,
+            replyType: ReplyType.FOLLOW,
+            user: {...mockFullTweet.user, isFollower: true}
+        };
         const {wrapper} = createTweetComponentWrapper(mockRootState, mockTweet);
         expect(wrapper.find("#followReplyIcon").exists()).toBeTruthy();
         expect(wrapper.text().includes("You can reply to this conversation")).toBe(true);
@@ -184,7 +189,11 @@ describe("TweetComponent", () => {
     });
 
     it("should render large site Link preview", () => {
-        const mockTweet = {...mockFullTweet, link: "https://teamsesh.bigcartel.com/products", linkCoverSize: LinkCoverSize.LARGE};
+        const mockTweet = {
+            ...mockFullTweet,
+            link: "https://teamsesh.bigcartel.com/products",
+            linkCoverSize: LinkCoverSize.LARGE
+        };
         const {wrapper} = createTweetComponentWrapper(mockRootState, mockTweet);
         expect(wrapper.find(LargeLinkPreview).exists()).toBeTruthy();
     });
@@ -223,7 +232,7 @@ describe("TweetComponent", () => {
         const {wrapper} = createTweetComponentWrapper(mockRootState, mockTweet);
         expect(wrapper.find("#likeOutlinedIcon").exists()).toBeTruthy();
     });
-    
+
     it("should render analytics IconButton", () => {
         const mockTweet = {...mockFullTweet, user: {...mockFullTweet.user, id: 2}};
         const {wrapper} = createTweetComponentWrapper(mockRootState, mockTweet);
@@ -237,20 +246,24 @@ describe("TweetComponent", () => {
 
     it("should click User profile", () => {
         const {wrapper, pushSpy} = createTweetComponentWrapper();
-        wrapper.find("a").at(0).simulate("click");
+        wrapper.find(Link).at(0).simulate("click", {button: 0});
         expect(pushSpy).toHaveBeenCalled();
         expect(pushSpy).toHaveBeenCalledWith(`${PROFILE}/${mockFullTweet.user.id}`);
     });
 
     it("should open and close TweetAnalyticsModal", () => {
-        const mockTweet = {...mockFullTweet, user: {...mockFullTweet.user, id: 2}};
-        const {wrapper} = createTweetComponentWrapper(mockRootState, mockTweet);
+        const {wrapper} = createTweetComponentWrapper(
+            {
+                ...mockRootState, tweetAdditionalInfo:
+                    {...mockRootState.tweetAdditionalInfo, tweetAdditionalInfo: mockMyTweetAdditionalInfo}
+            },
+            {...mockFullTweet, user: {...mockFullTweet.user, id: 2}});
         expect(wrapper.find(TweetAnalyticsModal).prop("visible")).toBe(false);
         wrapper.find(TweetComponentActions).find(IconButton).at(0).simulate("click");
         wrapper.find(TweetComponentActions).find("#tweetAnalytics").at(0).simulate("click");
-        expect(wrapper.find(TweetAnalyticsModal).prop("visible")).toBe(true);
+        expect(wrapper.find(TweetAnalyticsModal).at(0).prop("visible")).toBe(true);
         wrapper.find(TweetAnalyticsModal).find(CloseButton).find(IconButton).simulate("click");
-        expect(wrapper.find(TweetAnalyticsModal).prop("visible")).toBe(false);
+        expect(wrapper.find(TweetAnalyticsModal).at(0).prop("visible")).toBe(false);
     });
 
     it("should open and close ReplyModal", () => {
@@ -266,36 +279,39 @@ describe("TweetComponent", () => {
         const {wrapper} = createTweetComponentWrapper();
         wrapper.find(QuoteIconButton).find(IconButton).at(0).simulate("click");
         wrapper.find(QuoteIconButton).find("#clickRetweet").at(0).simulate("click");
-        expect(mockDispatchFn).nthCalledWith(1, {payload: 9, type: TweetsActionType.RETWEET});
+        expect(mockDispatchFn).nthCalledWith(1, {
+            payload: {tweetId: 9},
+            type: TweetsActionType.RETWEET
+        });
     });
 
     it("should click like Tweet", () => {
         const {wrapper} = createTweetComponentWrapper();
         wrapper.find(IconButton).at(3).simulate("click");
-        expect(mockDispatchFn).nthCalledWith(1, {payload: 9, type: TweetsActionType.LIKE_TWEET});
+        expect(mockDispatchFn).nthCalledWith(1, {payload: {tweetId: 9}, type: TweetsActionType.LIKE_TWEET});
     });
 
     it("should hover and leave User profile", () => {
         jest.useFakeTimers();
         const {wrapper} = createTweetComponentWrapper();
         expect(wrapper.find(PopperUserWindow).prop("visible")).toBe(false);
-        wrapper.find("a").at(1).simulate("mouseenter");
+        wrapper.find(TweetHeader).find("span").at(0).simulate("mouseenter");
         jest.runAllTimers();
         wrapper.update();
         expect(wrapper.find(PopperUserWindow).prop("visible")).toBe(true);
-        wrapper.find("a").at(1).simulate("mouseleave");
+        wrapper.find(TweetHeader).find("span").at(1).simulate("mouseleave");
         expect(wrapper.find(PopperUserWindow).prop("visible")).toBe(false);
     });
 
     it("should hover and leave reply IconButton", () => {
         testHoverIconButton(1, "Reply");
     });
-    
+
     it("should hover and leave like IconButton", () => {
         const mockTweet = {...mockFullTweet, isTweetLiked: false};
         testHoverIconButton(3, "Like", mockTweet);
     });
-    
+
     it("should hover and leave unlike IconButton", () => {
         testHoverIconButton(3, "Unlike");
     });
@@ -306,10 +322,13 @@ describe("TweetComponent", () => {
     });
 
     it("should change tweet styles", () => {
+        jest.spyOn(routeData, "useLocation").mockReturnValue({
+            pathname: MODAL, hash: "", search: "", state: undefined
+        });
         const mockTweet = {...mockFullTweet, replyType: ReplyType.MENTION};
         mountWithStore(<TweetComponent tweet={mockTweet} isTweetImageModal={false}/>, mockRootState);
     });
-    
+
     const testHoverIconButton = (itemId: number, hoverActionText: string, mockTweet = mockFullTweet): void => {
         jest.useFakeTimers();
         const {wrapper} = createTweetComponentWrapper(mockRootState, mockTweet);
@@ -322,20 +341,20 @@ describe("TweetComponent", () => {
         wrapper.find(IconButton).at(itemId).simulate("mouseleave");
         expect(wrapper.find(HoverAction).at(itemId).prop("visible")).toBe(false);
     };
-    
+
     const createTweetComponentWrapper = (mockState = mockRootState, mockTweet = mockFullTweet, activeTab = 111, isTweetImageModal = true) => {
         jest.spyOn(routeData, "useLocation").mockReturnValue({
             pathname: MODAL, hash: "", search: "", state: undefined
         });
         const history = createMemoryHistory();
         const pushSpy = jest.spyOn(history, "push");
-        const wrapper =  mountWithStore(
+        const wrapper = mountWithStore(
             <TweetComponent
                 tweet={mockTweet}
                 activeTab={activeTab}
                 isTweetImageModal={isTweetImageModal}
             />, mockState, history);
-        
+
         return {wrapper, pushSpy};
     };
 });

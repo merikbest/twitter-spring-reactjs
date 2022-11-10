@@ -45,7 +45,6 @@ const TweetComponent: FC<TweetComponentProps> = memo(({tweet, activeTab, isTweet
                 <div className={classes.tweetContainer}>
                     <div className={classes.header}>
                         <TweetHeader
-                            classes={classes}
                             userId={tweet?.user.id}
                             fullName={tweet?.user.fullName}
                             username={tweet?.user.username}
@@ -61,13 +60,13 @@ const TweetComponent: FC<TweetComponentProps> = memo(({tweet, activeTab, isTweet
                                 addressedUsername={tweet.addressedUsername}
                             />
                         )}
-                        <TweetText classes={classes} text={tweet?.text} tweetId={tweet?.id}/>
+                        <TweetText text={tweet?.text} tweetId={tweet?.id}/>
                         {(tweet?.images?.length !== 0) && (
-                            <TweetImage classes={classes} tweetId={tweet?.id} imageSrc={tweet?.images?.[0].src}/>
+                            <TweetImage tweetId={tweet?.id} imageSrc={tweet?.images?.[0].src}/>
                         )}
                         {tweet?.poll && <VoteComponent tweetId={tweet?.id} poll={tweet?.poll}/>}
                         {(tweet?.user.isFollower && tweet?.replyType === ReplyType.FOLLOW) && (
-                            <TweetReplyConversation classes={classes}/>
+                            <TweetReplyConversation/>
                         )}
                         {tweet?.quoteTweet && (
                             tweet?.quoteTweet.isDeleted ? (

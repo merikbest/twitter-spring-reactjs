@@ -1,8 +1,15 @@
-import {QuoteTweetResponse, TweetImageResponse, TweetResponse} from "../../store/types/tweet";
+import {
+    QuoteTweetResponse,
+    TweetAdditionalInfoResponse,
+    TweetImageResponse,
+    TweetResponse
+} from "../../store/types/tweet";
 import {
     AuthUserResponse,
-    BlockedUserResponse, FollowerUserResponse,
-    MutedUserResponse, UserDetailResponse,
+    BlockedUserResponse,
+    FollowerUserResponse,
+    MutedUserResponse,
+    UserDetailResponse,
     UserProfileResponse,
     UserResponse
 } from "../../store/types/user";
@@ -942,6 +949,36 @@ export const mockFullTweet = {
     "isTweetDeleted": false,
     "isTweetBookmarked": false
 } as unknown as TweetResponse;
+
+export const mockUserTweetAdditionalInfo = {
+    "text": "Feels Good Man  :sunglasses:",
+    "replyType": "MENTION",
+    "addressedTweetId": null,
+    "user": {
+        "id": 1,
+        "fullName": "Random",
+        "username": "Random",
+        "isFollower": false,
+        "isMyProfileBlocked": false,
+        "isUserBlocked": false,
+        "isUserMuted": false
+    }
+} as unknown as TweetAdditionalInfoResponse;
+
+export const mockMyTweetAdditionalInfo = {
+    "text": "Another #FirstTweet",
+    "replyType": "EVERYONE",
+    "addressedTweetId": null,
+    "user": {
+        "id": 2,
+        "fullName": "MrCat",
+        "username": "Cat",
+        "isFollower": false,
+        "isMyProfileBlocked": false,
+        "isUserBlocked": false,
+        "isUserMuted": false
+    }
+} as unknown as TweetAdditionalInfoResponse;
 
 export const mockMyFullTweet = {
     "id": 102,

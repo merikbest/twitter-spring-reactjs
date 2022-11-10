@@ -1,16 +1,16 @@
 import React, {FC, memo, ReactElement} from "react";
 import {Link, useLocation} from "react-router-dom";
-import {ClassNameMap} from "@material-ui/core/styles/withStyles";
 
 import {MODAL} from "../../../util/pathConstants";
+import {useTweetImageStyles} from "./TweetImageStyles";
 
 interface TweetImageProps {
-    classes: ClassNameMap<string>;
     tweetId?: number;
     imageSrc?: string;
 }
 
-const TweetImage: FC<TweetImageProps> = memo(({classes, tweetId, imageSrc}): ReactElement => {
+const TweetImage: FC<TweetImageProps> = memo(({tweetId, imageSrc}): ReactElement => {
+    const classes = useTweetImageStyles();
     const location = useLocation();
     const isModal = location.pathname.includes(MODAL);
 

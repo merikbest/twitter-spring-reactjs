@@ -6,7 +6,7 @@ import {useFollowerRequestsItemStyles} from "../FollowerRequestsItemStyles";
 import {Image} from "../../../../../store/types/common";
 
 interface UserRequestsAvatarProps {
-    avatar: Image;
+    avatar?: Image;
 }
 
 const UserRequestsAvatar: FC<UserRequestsAvatarProps> = memo(({avatar}): ReactElement => {

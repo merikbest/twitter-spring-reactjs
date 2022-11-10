@@ -16,7 +16,7 @@ import {
     mockFullTweet,
     mockProfileImages,
     mockTweets,
-    mockUser,
+    mockUser, mockUserDetailResponse,
     mockUsers
 } from "./mockData/mockData";
 import {LoadingStatus, PageableResponse} from "../store/types/common";
@@ -258,7 +258,7 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             loadingState: loadingStatus
         },
         userDetail: {
-            item: undefined,
+            item: mockUserDetailResponse,
             loadingState: loadingStatus
         },
         userProfile: {

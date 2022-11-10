@@ -17,7 +17,14 @@ describe("DirectUserItem", () => {
     });
 
     it("should render correctly", () => {
-        const wrapper = mountWithStore(<DirectUserItem user={mockUser} selected={false}/>, mockRootState);
+        const wrapper = mountWithStore(
+            <DirectUserItem
+                user={mockUser}
+                userFromChat
+                myProfileId={2}
+                selected={false}
+                handleListItemClick={jest.fn()}
+            />, mockRootState);
 
         expect(wrapper.find(Avatar).prop("src")).toBe(mockUser.avatar.src);
         expect(wrapper.text().includes(mockUser.fullName)).toBe(true);
@@ -33,8 +40,11 @@ describe("DirectUserItem", () => {
                     ...mockUser,
                     avatar: {id: 1, src: ""},
                     isPrivateProfile: true
-            }}
-                selected={true}
+                }}
+                userFromChat
+                myProfileId={2}
+                selected
+                handleListItemClick={jest.fn()}
             />, mockRootState);
 
         expect(wrapper.find(Avatar).prop("src")).toBe(DEFAULT_PROFILE_IMG);

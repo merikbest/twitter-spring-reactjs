@@ -5,14 +5,16 @@ import IconButton from "@material-ui/core/IconButton";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {mockChats, mockFullTweet, mockUsers} from "../../../../util/mockData/mockData";
+import {mockChats, mockUsers} from "../../../../util/mockData/mockData";
 import {ChatsActionsType} from "../../../../store/ducks/chats/contracts/actionTypes";
 import {MessagesModalInput} from "../../../../pages/Messages/MessagesModal/MessagesModalInput/MessagesModalInput";
 import {UsersSearchActionsType} from "../../../../store/ducks/usersSearch/contracts/actionTypes";
-import SendDirectTweetModal, {DirectUserItems} from "../SendDirectTweetModal";
+import SendDirectTweetModal from "../SendDirectTweetModal";
 import {ChatMessagesActionsType} from "../../../../store/ducks/chatMessages/contracts/actionTypes";
 import {SendDirectMessageInput} from "../SendDirectMessageInput";
 import {LoadingStatus} from "../../../../store/types/common";
+import DirectUserItem from "../DirectUserItem/DirectUserItem";
+import {ActionSnackbarTypes} from "../../../../store/ducks/actionSnackbar/contracts/actionTypes";
 
 describe("SendDirectTweetModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);
@@ -35,7 +37,7 @@ describe("SendDirectTweetModal", () => {
 
         wrapper.find(MessagesModalInput).find("input").at(0).simulate("change", {target: {value: mockText}});
         expect(wrapper.find(MessagesModalInput).prop("value")).toBe(mockText);
-        expect(wrapper.find(DirectUserItems).length).toEqual(2);
+        expect(wrapper.find(DirectUserItem).length).toEqual(2);
         expect(mockDispatchFn).nthCalledWith(2, {type: UsersSearchActionsType.RESET_USERS_STATE});
         expect(mockDispatchFn).nthCalledWith(3, {
             payload: {pageNumber: 0, username: mockText},
@@ -72,7 +74,7 @@ describe("SendDirectTweetModal", () => {
     });
 
     it("should click Send Message", () => {
-        const {wrapper, mockOnSendDirectTweet, mockCloseShareTweet, mockOnClose} = createWrapper();
+        const {wrapper, mockOnClose} = createWrapper();
 
         expect(wrapper.find(IconButton).at(1).prop("disabled")).toBe(true);
 
@@ -89,8 +91,10 @@ describe("SendDirectTweetModal", () => {
             },
             type: ChatMessagesActionsType.ADD_CHAT_MESSAGE_WITH_TWEET
         });
-        expect(mockOnSendDirectTweet).toHaveBeenCalled();
-        expect(mockCloseShareTweet).toHaveBeenCalled();
+        expect(mockDispatchFn).nthCalledWith(5, {
+            payload: "Your Tweet was sent",
+            type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
+        });
         expect(mockOnClose).toHaveBeenCalled();
     });
 
@@ -102,7 +106,7 @@ describe("SendDirectTweetModal", () => {
         };
         const {wrapper} = createWrapper(mockState);
 
-        expect(wrapper.find(DirectUserItems).length).toEqual(1);
+        expect(wrapper.find(DirectUserItem).length).toEqual(1);
     });
 
     it("should scroll list of Users by input text", () => {
@@ -129,18 +133,14 @@ describe("SendDirectTweetModal", () => {
     });
 
     const createWrapper = (mockState = mockRootState, visible = true) => {
-        const mockOnSendDirectTweet = jest.fn();
-        const mockCloseShareTweet = jest.fn();
         const mockOnClose = jest.fn();
         const wrapper = mountWithStore(
             <SendDirectTweetModal
-                tweet={mockFullTweet}
+                tweetId={9}
                 visible={visible}
-                onSendDirectTweet={mockOnSendDirectTweet}
-                closeShareTweet={mockCloseShareTweet}
                 onClose={mockOnClose}
             />, mockState);
 
-        return {wrapper, mockOnSendDirectTweet, mockCloseShareTweet, mockOnClose};
+        return {wrapper, mockOnClose};
     };
 });

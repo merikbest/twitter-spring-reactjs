@@ -3,7 +3,6 @@ import {Typography} from "@material-ui/core";
 
 import {useSmallLinkPreviewStyles} from "./SmallLinkPreviewStyles";
 import {LinkIcon, PlayVideoIcon} from "../../icons";
-import {TweetResponse} from "../../store/types/tweet";
 
 interface SmallLinkPreviewProps {
     link: string;

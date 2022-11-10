@@ -12,11 +12,12 @@ describe("TweetAnalyticsModal", () => {
     it("should render correctly", () => {
         const wrapper = mountWithStore(
             <TweetAnalyticsModal
-                tweet={mockFullTweet}
-                visible={true}
+                fullName={mockFullTweet.user.fullName}
+                username={mockFullTweet.user.username}
+                text={mockFullTweet.text}
+                visible
                 onClose={jest.fn()}
             />, mockRootState);
-
         expect(wrapper.text().includes("Tweet Analytics")).toBe(true);
         expect(wrapper.text().includes(mockFullTweet.user.fullName)).toBe(true);
         expect(wrapper.text().includes(mockFullTweet.user.username)).toBe(true);
@@ -29,7 +30,9 @@ describe("TweetAnalyticsModal", () => {
     it("should render empty TweetAnalyticsModal", () => {
         const wrapper = mountWithStore(
             <TweetAnalyticsModal
-                tweet={mockFullTweet}
+                fullName={mockFullTweet.user.fullName}
+                username={mockFullTweet.user.username}
+                text={mockFullTweet.text}
                 visible={false}
                 onClose={jest.fn()}
             />, mockRootState);

@@ -12,11 +12,13 @@ describe("SmallLinkPreview", () => {
         const mockOnOpenYouTubeVideo = jest.fn();
         const wrapper = mountWithStore(
             <SmallLinkPreview
-                tweet={mockFullTweet}
+                link={mockFullTweet.link}
+                linkTitle={mockFullTweet.linkTitle}
+                linkDescription={mockFullTweet.linkDescription}
+                linkCover={mockFullTweet.linkCover}
                 onOpenYouTubeVideo={mockOnOpenYouTubeVideo}
-                isFullTweet={true}
+                isFullTweet
             />, mockRootState);
-        
         wrapper.find("#openYouTubeVideo").simulate("click");
         expect(mockOnOpenYouTubeVideo).toHaveBeenCalled();
         expect(wrapper.text().includes(mockFullTweet.linkTitle)).toBe(true);
@@ -24,8 +26,14 @@ describe("SmallLinkPreview", () => {
     });
 
     it("should render site link", () => {
-        const wrapper = mountWithStore(<SmallLinkPreview tweet={mockFullTweet} isFullTweet={false}/>, mockRootState);
-        
+        const wrapper = mountWithStore(
+            <SmallLinkPreview
+                link={mockFullTweet.link}
+                linkTitle={mockFullTweet.linkTitle}
+                linkDescription={mockFullTweet.linkDescription}
+                linkCover={mockFullTweet.linkCover}
+                isFullTweet={false}
+            />, mockRootState);
         expect(wrapper.find("#openYouTubeVideo").exists()).toBeFalsy();
         expect(wrapper.find("a").prop("href")).toBe(mockFullTweet.link);
     });

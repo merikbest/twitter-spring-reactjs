@@ -1,16 +1,18 @@
 import React from "react";
-import {Checkbox, Dialog} from "@material-ui/core";
+import {Checkbox, Dialog, IconButton} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import SettingsModal from "../SettingsModal";
 import {LoadingStatus} from "../../../../store/types/common";
+import ActionIconButton from "../../../ActionIconButton/ActionIconButton";
+import SettingsModal from "../SettingsModal";
+import CloseButton from "../../../CloseButton/CloseButton";
 
 describe("SettingsModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);
 
     it("should render correctly", () => {
         const wrapper = mountWithStore(<SettingsModal/>, mockRootState);
-        
+        wrapper.find(ActionIconButton).find(IconButton).simulate("click");
         expect(wrapper.text().includes("Trends")).toBe(true);
         expect(wrapper.text().includes("Location")).toBe(true);
         expect(wrapper.text().includes("Show content in this location")).toBe(true);
@@ -22,19 +24,25 @@ describe("SettingsModal", () => {
 
     it("should click Checkboxes", () => {
         const wrapper = mountWithStore(<SettingsModal/>, mockRootState);
-        
+        wrapper.find(ActionIconButton).find(IconButton).simulate("click");
         expect(wrapper.find(Checkbox).at(0).prop("checked")).toBe(true);
         expect(wrapper.find(Checkbox).at(1).prop("checked")).toBe(true);
-        
         wrapper.find(Checkbox).find("input").at(0).simulate("change", {target: {checked: false}});
         wrapper.find(Checkbox).find("input").at(1).simulate("change", {target: {checked: false}});
-
         expect(wrapper.find(Checkbox).at(0).prop("checked")).toBe(false);
         expect(wrapper.find(Checkbox).at(1).prop("checked")).toBe(false);
     });
 
-    it("should render empty SettingsModal correctly", () => {
+    it("should click Checkboxes", () => {
         const wrapper = mountWithStore(<SettingsModal/>, mockRootState);
-        expect(wrapper.find(Dialog).exists()).toBeFalsy();
+        wrapper.find(ActionIconButton).find(IconButton).simulate("click");
+        expect(wrapper.find(Dialog).prop("open")).toBe(true);
+        wrapper.find(CloseButton).find(ActionIconButton).find(IconButton).simulate("click");
+        expect(wrapper.find(Dialog).prop("open")).toBe(false);
+    });
+
+        it("should render empty SettingsModal correctly", () => {
+        const wrapper = mountWithStore(<SettingsModal/>, mockRootState);
+        expect(wrapper.find(Dialog).prop("open")).toBe(false);
     });
 });

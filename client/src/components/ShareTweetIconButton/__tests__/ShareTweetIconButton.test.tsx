@@ -3,17 +3,17 @@ import routeData from "react-router";
 import {ClickAwayListener, IconButton} from "@material-ui/core";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {mockFullTweet} from "../../../util/mockData/mockData";
 import SendDirectTweetModal from "../SendDirectTweetModal/SendDirectTweetModal";
 import CloseButton from "../../CloseButton/CloseButton";
 import {TweetActionType} from "../../../store/ducks/tweet/contracts/actionTypes";
-import ActionSnackbar from "../../ActionSnackbar/ActionSnackbar";
 import {TweetsActionType} from "../../../store/ducks/tweets/contracts/actionTypes";
 import {BOOKMARKS} from "../../../util/pathConstants";
 import ShareTweetIconButton from "../ShareTweetIconButton";
 import {LoadingStatus} from "../../../store/types/common";
+import {ActionSnackbarTypes} from "../../../store/ducks/actionSnackbar/contracts/actionTypes";
+import HoverAction from "../../HoverAction/HoverAction";
 
-describe("ShareTweet", () => {
+describe("ShareTweetIconButton", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);
     let mockDispatchFn: jest.Mock;
 
@@ -51,74 +51,58 @@ describe("ShareTweet", () => {
     it("should click Copy Link To Tweet", () => {
         const wrapper = mountWithStore(<ShareTweetIconButton tweetId={1} isFullTweet={false}/>, mockRootState);
 
-        expect(wrapper.find(ActionSnackbar).prop("openSnackBar")).toBe(false);
-
         wrapper.find(IconButton).simulate("click");
         wrapper.find("#copyLinkToTweet").at(0).simulate("click");
-
-        expect(wrapper.find(ActionSnackbar).prop("openSnackBar")).toBe(true);
-        expect(wrapper.find(ActionSnackbar).prop("snackBarMessage")).toBe("Copied to clipboard");
+        expect(mockDispatchFn).nthCalledWith(3, {
+            payload: "Copied to clipboard",
+            type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
+        });
     });
 
     it("should click add tweet to Bookmarks", () => {
         const wrapper = mountWithStore(<ShareTweetIconButton tweetId={1} isFullTweet={false}/>, mockRootState);
 
-        expect(wrapper.find(ActionSnackbar).prop("openSnackBar")).toBe(false);
-
         wrapper.find(IconButton).simulate("click");
         wrapper.find("#clickAddTweetToBookmarks").at(0).simulate("click");
-
-        expect(wrapper.find(ActionSnackbar).prop("openSnackBar")).toBe(true);
-        expect(wrapper.find(ActionSnackbar).prop("snackBarMessage")).toBe("Tweet added to your Bookmarks");
-        expect(mockDispatchFn).nthCalledWith(1, {
-            payload: 9,
+        expect(mockDispatchFn).nthCalledWith(3, {
+            payload: 1,
             type: TweetActionType.ADD_TWEET_TO_BOOKMARKS
+        });
+        expect(mockDispatchFn).nthCalledWith(4, {
+            payload: "Tweet added to your Bookmarks",
+            type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
         });
     });
 
     it("should click remove tweet from Bookmarks", () => {
         jest.spyOn(routeData, "useLocation").mockReturnValue({
-            pathname: BOOKMARKS,
-            hash: "",
-            search: "",
-            state: undefined
-        });
+            pathname: BOOKMARKS, hash: "", search: "", state: undefined});
         const wrapper = mountWithStore(<ShareTweetIconButton tweetId={1} isFullTweet={false}/>, mockRootState);
-
-        expect(wrapper.find(ActionSnackbar).prop("openSnackBar")).toBe(false);
 
         wrapper.find(IconButton).simulate("click");
         wrapper.find("#clickAddTweetToBookmarks").at(0).simulate("click");
-
-        expect(wrapper.find(ActionSnackbar).prop("openSnackBar")).toBe(true);
-        expect(wrapper.find(ActionSnackbar).prop("snackBarMessage")).toBe("Tweet removed to your Bookmarks");
-        expect(mockDispatchFn).nthCalledWith(1, {
-            payload: 9,
-            type: TweetActionType.ADD_TWEET_TO_BOOKMARKS
-        });
-        expect(mockDispatchFn).nthCalledWith(2, {
-            payload: 9,
+        expect(mockDispatchFn).nthCalledWith(3, {
+            payload: 1,
             type: TweetsActionType.REMOVE_TWEET_FROM_BOOKMARKS
+        });
+        expect(mockDispatchFn).nthCalledWith(4, {
+            payload: "Tweet added to your Bookmarks",
+            type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
         });
     });
 
     it("should onMouseEnter and onMouseLeave IconButton", () => {
-        const mockHandleHoverAction = jest.fn();
-        const mockHandleLeaveAction = jest.fn();
-
         jest.useFakeTimers();
         const wrapper = mountWithStore(<ShareTweetIconButton tweetId={1} isFullTweet={false}/>, mockRootState);
 
         wrapper.find(IconButton).simulate("mouseenter");
         jest.runAllTimers();
         wrapper.update();
-
-        expect(mockHandleHoverAction).toHaveBeenCalled();
-        // expect(mockHandleHoverAction).toHaveBeenCalledWith(HoverActions.SHARE);
+        expect(wrapper.find(HoverAction).prop("visible")).toBe(true);
+        expect(wrapper.find(HoverAction).prop("actionText")).toBe("Share");
 
         wrapper.find(IconButton).simulate("mouseleave");
-
-        expect(mockHandleLeaveAction).toHaveBeenCalled();
+        expect(wrapper.find(HoverAction).prop("visible")).toBe(false);
     });
 
     it("should render medium size IconButton", () => {

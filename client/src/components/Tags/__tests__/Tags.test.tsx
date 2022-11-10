@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
 import Spinner from "../../Spinner/Spinner";
 import {mockTags} from "../../../util/mockData/mockData";
-import {IconButton} from "@material-ui/core";
+import {Dialog, IconButton} from "@material-ui/core";
 import SettingsModal from "../SettingsModal/SettingsModal";
 import CloseButton from "../../CloseButton/CloseButton";
 import {createMemoryHistory} from "history";
@@ -16,7 +16,7 @@ import {LoadingStatus} from "../../../store/types/common";
 
 describe("Tags", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);
-    const mockState = {...mockRootState, tags: {...mockRootState.tags, items: mockTags}}
+    const mockState = {...mockRootState, tags: {...mockRootState.tags, tags: mockTags}}
 
     it("should render loading Spinner", () => {
         const wrapper = mountWithStore(<Tags/>, createMockRootState(LoadingStatus.LOADING));
@@ -33,13 +33,13 @@ describe("Tags", () => {
     it("should click open and close SettingsModal", () => {
         const wrapper = mountWithStore(<Tags/>, mockState);
         
-        expect(wrapper.find(SettingsModal).prop("visible")).toBe(false);
+        expect(wrapper.find(SettingsModal).find(Dialog).prop("open")).toBe(false);
         
         wrapper.find(IconButton).simulate("click");
-        expect(wrapper.find(SettingsModal).prop("visible")).toBe(true);
+        expect(wrapper.find(SettingsModal).find(Dialog).prop("open")).toBe(true);
 
         wrapper.find(SettingsModal).find(CloseButton).find(IconButton).simulate("click");
-        expect(wrapper.find(SettingsModal).prop("visible")).toBe(false);
+        expect(wrapper.find(SettingsModal).find(Dialog).prop("open")).toBe(false);
     });
 
     it("should click trends link", () => {
