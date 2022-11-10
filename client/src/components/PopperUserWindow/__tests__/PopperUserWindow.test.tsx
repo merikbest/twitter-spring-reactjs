@@ -8,7 +8,6 @@ import PopperUserWindow from "../PopperUserWindow";
 import {PROFILE} from "../../../util/pathConstants";
 import {UserActionsType} from "../../../store/ducks/user/contracts/actionTypes";
 import FollowerGroup from "../../FollowerGroup/FollowerGroup";
-import ActionSnackbar from "../../ActionSnackbar/ActionSnackbar";
 import {LoadingStatus} from "../../../store/types/common";
 
 describe("PopperUserWindow", () => {
@@ -106,12 +105,10 @@ describe("PopperUserWindow", () => {
             }
         });
 
-        expect(wrapper.find(ActionSnackbar).prop("openSnackBar")).toBe(false);
         expect(wrapper.find(Button).at(0).text().includes("Blocked")).toBe(true);
 
         wrapper.find(Button).at(0).simulate("click");
 
-        expect(wrapper.find(ActionSnackbar).prop("openSnackBar")).toBe(true);
         expect(mockDispatchFn).nthCalledWith(1, {
             payload: {userId: 1},
             type: UserActionsType.PROCESS_USER_TO_BLOCKLIST

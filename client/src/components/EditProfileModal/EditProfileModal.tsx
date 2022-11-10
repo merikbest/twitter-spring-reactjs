@@ -44,7 +44,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}): ReactE
     const [avatar, setAvatar] = useState<ImageObj>();
     const [wallpaper, setWallpaper] = useState<ImageObj>();
 
-    const {control, register, handleSubmit, formState: {errors}} = useForm<EditProfileFormProps>({
+    const {control, handleSubmit, formState: {errors}} = useForm<EditProfileFormProps>({
         defaultValues: {
             username: userData?.username,
             about: userData?.about,

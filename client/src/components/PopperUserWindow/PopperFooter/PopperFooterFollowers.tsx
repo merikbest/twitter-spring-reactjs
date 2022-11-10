@@ -1,17 +1,14 @@
-import React, {FC, memo, ReactElement} from "react";
+import React, {memo, ReactElement} from "react";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
-import {ClassNameMap} from "@material-ui/core/styles/withStyles";
 import {Typography} from "@material-ui/core";
 
 import {USER} from "../../../util/pathConstants";
 import {selectUserDetailFollowingSize, selectUserDetailId} from "../../../store/ducks/userDetail/selectors";
+import {usePopperFooterStyles} from "./PopperFooterStyles";
 
-interface PopperFooterFollowingProps {
-    classes: ClassNameMap<string>
-}
-
-const PopperFooterFollowers: FC<PopperFooterFollowingProps> = memo(({classes}): ReactElement => {
+const PopperFooterFollowers = memo((): ReactElement => {
+    const classes = usePopperFooterStyles();
     const userId = useSelector(selectUserDetailId);
     const followingSize = useSelector(selectUserDetailFollowingSize);
 

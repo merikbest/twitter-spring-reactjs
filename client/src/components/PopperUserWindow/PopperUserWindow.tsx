@@ -1,4 +1,4 @@
-import React, {FC, ReactElement} from 'react';
+import React, {FC, ReactElement} from "react";
 import {useSelector} from "react-redux";
 import classNames from "classnames";
 
@@ -36,9 +36,9 @@ const PopperUserWindow: FC<PopperUserWindowProps> = (
                 isTweetImageModal && classes.tweetImageModal
             )}
         >
-            <PopperHeader classes={classes}/>
-            <PopperInfo classes={classes}/>
-            {!isMyProfileBlocked && <PopperFooter classes={classes}/>}
+            <PopperHeader/>
+            <PopperInfo/>
+            {!isMyProfileBlocked && <PopperFooter/>}
         </div>
     );
 };

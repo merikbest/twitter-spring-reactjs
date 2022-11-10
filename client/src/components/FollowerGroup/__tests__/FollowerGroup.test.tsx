@@ -4,7 +4,7 @@ import {createMemoryHistory} from "history";
 import {Avatar} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {mockMyProfile, mockSameFollowers, mockUserProfile} from "../../../util/mockData/mockData";
+import {mockSameFollowers, mockUserProfile} from "../../../util/mockData/mockData";
 import {USER_FOLLOWERS_YOU_FOLLOW} from "../../../util/pathConstants";
 import FollowerGroup from "../FollowerGroup";
 import {LoadingStatus} from "../../../store/types/common";
@@ -13,7 +13,7 @@ describe("FollowerGroup", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);
 
     it("should render 2 Followers", () => {
-        const wrapper = mountWithStore(<FollowerGroup user={mockUserProfile} sameFollowers={mockSameFollowers} />, mockRootState);
+        const wrapper = mountWithStore(<FollowerGroup userId={1} sameFollowers={mockSameFollowers} />, mockRootState);
         
         expect(wrapper.find(Avatar).at(0).prop("src")).toBe(mockSameFollowers[0].avatar.src);
         expect(wrapper.find(Avatar).at(1).prop("src")).toBe(mockSameFollowers[1].avatar.src);
@@ -30,7 +30,7 @@ describe("FollowerGroup", () => {
                 "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
             }
         }];
-        const wrapper = mountWithStore(<FollowerGroup user={mockUserProfile} sameFollowers={mockFollowers} />, mockRootState);
+        const wrapper = mountWithStore(<FollowerGroup userId={1} sameFollowers={mockFollowers} />, mockRootState);
 
         expect(wrapper.find(Avatar).at(0).prop("src")).toBe(mockFollowers[0].avatar.src);
         expect(wrapper.find(Avatar).at(1).prop("src")).toBe(mockFollowers[1].avatar.src);
@@ -39,13 +39,13 @@ describe("FollowerGroup", () => {
     });
 
     it("should render empty Followers", () => {
-        const wrapper = mountWithStore(<FollowerGroup user={mockUserProfile} sameFollowers={[]} />, mockRootState);
+        const wrapper = mountWithStore(<FollowerGroup userId={1} sameFollowers={[]} />, mockRootState);
         
         expect(wrapper.text().includes("Not followed by anyone you’re following")).toBe(true);
     });
 
     it("should render empty FollowerGroup", () => {
-        const wrapper = mountWithStore(<FollowerGroup user={mockMyProfile} sameFollowers={[]} />, mockRootState);
+        const wrapper = mountWithStore(<FollowerGroup userId={1} sameFollowers={[]} />, mockRootState);
         
         expect(wrapper.find(Link).exists()).toBeFalsy();
     });
@@ -53,7 +53,7 @@ describe("FollowerGroup", () => {
     it("should redirect to Same followers page", () => {
         const history = createMemoryHistory();
         const pushSpy = jest.spyOn(history, "push");
-        const wrapper = mountWithStore(<FollowerGroup user={mockUserProfile} sameFollowers={mockSameFollowers} />, mockRootState, history);
+        const wrapper = mountWithStore(<FollowerGroup userId={1} sameFollowers={mockSameFollowers} />, mockRootState, history);
         
         wrapper.find(Link).at(0).simulate("click", {button: 0});
         

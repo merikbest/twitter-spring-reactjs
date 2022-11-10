@@ -1,4 +1,4 @@
-import React, {FC, memo, ReactElement} from "react";
+import React, {memo, ReactElement} from "react";
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {Typography} from "@material-ui/core";
@@ -11,13 +11,10 @@ import {
     selectUserDetailIsPrivateProfile,
     selectUserDetailUsername
 } from "../../../store/ducks/userDetail/selectors";
-import {ClassNameMap} from "@material-ui/core/styles/withStyles";
+import {usePopperInfoStyles} from "./PopperInfoStyles";
 
-interface PopperInfoProps {
-    classes: ClassNameMap<string>
-}
-
-const PopperInfo: FC<PopperInfoProps> = memo(({classes}): ReactElement => {
+const PopperInfo = memo((): ReactElement => {
+    const classes = usePopperInfoStyles();
     const userId = useSelector(selectUserDetailId);
     const fullName = useSelector(selectUserDetailFullName);
     const username = useSelector(selectUserDetailUsername);

@@ -421,7 +421,7 @@ export const mockUserDetailResponse = {
     isWaitingForApprove: false,
     sameFollowers: [],
     username: "Random",
-    about: null,
+    about: "About",
     avatar: {
         id: 11,
         src: "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"

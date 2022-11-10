@@ -1,7 +1,6 @@
-import React, {FC, memo, ReactElement} from "react";
+import React, {memo, ReactElement} from "react";
 import {Link} from "react-router-dom";
 import {Avatar} from "@material-ui/core";
-import {ClassNameMap} from "@material-ui/core/styles/withStyles";
 import {useSelector} from "react-redux";
 
 import {PROFILE} from "../../../util/pathConstants";
@@ -21,12 +20,10 @@ import {
     selectUserDetailUsername
 } from "../../../store/ducks/userDetail/selectors";
 import {selectUserDataId} from "../../../store/ducks/user/selectors";
+import {usePopperHeaderStyles} from "./PopperHeaderStyles";
 
-interface PopperHeaderProps {
-    classes: ClassNameMap<string>
-}
-
-const PopperHeader: FC<PopperHeaderProps> = memo(({classes}): ReactElement => {
+const PopperHeader = memo((): ReactElement => {
+    const classes = usePopperHeaderStyles();
     const myProfileId = useSelector(selectUserDataId);
     const userId = useSelector(selectUserDetailId);
     const username = useSelector(selectUserDetailUsername);

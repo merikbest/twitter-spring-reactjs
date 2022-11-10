@@ -1,5 +1,4 @@
-import React, {FC, memo, ReactElement} from "react";
-import {ClassNameMap} from "@material-ui/core/styles/withStyles";
+import React, {memo, ReactElement} from "react";
 import {Typography} from "@material-ui/core";
 import {useSelector} from "react-redux";
 
@@ -12,12 +11,10 @@ import {
 import FollowerGroup from "../../FollowerGroup/FollowerGroup";
 import PopperFooterFollowing from "./PopperFooterFollowing";
 import PopperFooterFollowers from "./PopperFooterFollowers";
+import {usePopperFooterStyles} from "./PopperFooterStyles";
 
-interface PopperFooterProps {
-    classes: ClassNameMap<string>
-}
-
-const PopperFooter: FC<PopperFooterProps> = memo(({classes}): ReactElement => {
+const PopperFooter = memo((): ReactElement => {
+    const classes = usePopperFooterStyles();
     const userId = useSelector(selectUserDetailId);
     const about = useSelector(selectUserDetailAbout);
     const sameFollowers = useSelector(selectUserDetailSameFollowers);
@@ -27,8 +24,8 @@ const PopperFooter: FC<PopperFooterProps> = memo(({classes}): ReactElement => {
         <>
             <Typography variant={"body1"} component={"div"} className={classes.userInfo}>{about}</Typography>
             <div className={classes.userFollowersWrapper}>
-                <PopperFooterFollowing classes={classes}/>
-                <PopperFooterFollowers classes={classes}/>
+                <PopperFooterFollowing/>
+                <PopperFooterFollowers/>
             </div>
             {!isPrivateProfile && <FollowerGroup userId={userId!} sameFollowers={sameFollowers}/>}
         </>
