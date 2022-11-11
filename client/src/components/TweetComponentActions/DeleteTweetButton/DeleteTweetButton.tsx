@@ -10,7 +10,7 @@ import {setOpenSnackBar} from "../../../store/ducks/actionSnackbar/actionCreator
 
 interface DeleteTweetButtonProps {
     tweetId: number;
-    addressedTweetId: number;
+    addressedTweetId?: number;
     onCloseActionsDropdown: () => void;
 }
 
@@ -25,7 +25,7 @@ const DeleteTweetButton: FC<DeleteTweetButtonProps> = memo((
     const [visibleDeleteTweetModal, setVisibleDeleteTweetModal] = useState<boolean>(false);
 
     const onDeleteUserTweet = (): void => {
-        if (addressedTweetId !== null) {
+        if (addressedTweetId) {
             dispatch(deleteTweetReply(tweetId));
         } else {
             dispatch(fetchDeleteTweet(tweetId));

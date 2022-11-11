@@ -6,8 +6,6 @@ import TweetComponentActionsModal from "../TweetComponentActionsModal";
 import {LoadingStatus} from "../../../../store/types/common";
 
 describe("TweetComponentActionsModal", () => {
-    const mockRootState = createMockRootState(LoadingStatus.SUCCESS);
-
     it("should render Delete Tweet Action Modal", () => {
         const wrapper = createTweetComponentActionsModalWrapper("Delete", true);
         expect(wrapper.text().includes("Delete Tweet?")).toBe(true);
@@ -30,14 +28,15 @@ describe("TweetComponentActionsModal", () => {
     });
 
     const createTweetComponentActionsModalWrapper = (modalTitle: string, isTweetPinned: boolean) => {
+        const mockRootState = createMockRootState(LoadingStatus.SUCCESS);
+
         return mountWithStore(
             <TweetComponentActionsModal
                 modalTitle={modalTitle}
                 isTweetPinned={isTweetPinned}
                 visibleTweetComponentActionsModal={true}
                 onCloseTweetComponentActionsModal={jest.fn()}
-                onPinUserTweet={jest.fn()}
-                onDeleteUserTweet={jest.fn()}
+                onClick={jest.fn()}
             />, mockRootState);
     };
 });

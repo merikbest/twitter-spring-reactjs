@@ -20,11 +20,10 @@ const PinTweetButton: FC<PinTweetButtonProps> = memo(({tweetId, onCloseActionsDr
     const isTweetPinned = pinnedTweetId === tweetId;
 
     const onPinUserTweet = (): void => {
+        dispatch(fetchPinTweet(tweetId));
         if (isTweetPinned) {
-            dispatch(fetchPinTweet(tweetId));
-            dispatch(setOpenSnackBar("Your Tweet was unpinned from your profile"));
+            dispatch(setOpenSnackBar("Your Tweet was unpinned from your profile."));
         } else {
-            dispatch(fetchPinTweet(tweetId));
             dispatch(setOpenSnackBar("Your Tweet was pinned to your profile."));
         }
         setVisibleTweetPinModal(false);
