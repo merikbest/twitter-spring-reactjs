@@ -1,9 +1,8 @@
-import React, {FC, memo, ReactElement} from "react";
+import React, {memo, ReactElement} from "react";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {Avatar} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import {ClassNameMap} from "@material-ui/core/styles/withStyles";
 import classnames from "classnames";
 
 import {PROFILE} from "../../../util/pathConstants";
@@ -17,13 +16,11 @@ import {
 } from "../../../store/ducks/tweet/selectors";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {useHoverUser} from "../../../hook/useHoverUser";
+import {useTweetHeaderStyles} from "./TweetHeaderStyles";
 
-interface TweetHeaderProps {
-    classes: ClassNameMap<string>
-}
-
-const TweetHeader: FC<TweetHeaderProps> = memo(({classes}): ReactElement => {
+const TweetHeader = memo((): ReactElement => {
     const globalClasses = useGlobalStyles();
+    const classes = useTweetHeaderStyles();
     const {visiblePopperWindow, handleHoverPopper, handleLeavePopper} = useHoverUser();
     const tweetUserId = useSelector(selectTweetUserId);
     const avatar = useSelector(selectTweetUserAvatar);
@@ -33,11 +30,7 @@ const TweetHeader: FC<TweetHeaderProps> = memo(({classes}): ReactElement => {
     return (
         <div className={classes.header}>
             <Link to={`${PROFILE}/${tweetUserId}`}>
-                <Avatar
-                    className={classnames(globalClasses.avatar, classes.avatar)}
-                    alt={`avatar ${tweetUserId}`}
-                    src={avatar}
-                />
+                <Avatar className={classnames(globalClasses.avatar, classes.avatar)} src={avatar} alt={avatar}/>
             </Link>
             <LinkWrapper path={`${PROFILE}/${tweetUserId}`} visiblePopperWindow={visiblePopperWindow}>
                 <div
@@ -51,7 +44,7 @@ const TweetHeader: FC<TweetHeaderProps> = memo(({classes}): ReactElement => {
                     <Typography variant={"subtitle1"} component={"div"}>
                         @{userUsername}
                     </Typography>
-                    <PopperUserWindow visible={visiblePopperWindow} isTweetImageModal={true}/>
+                    <PopperUserWindow visible={visiblePopperWindow} isTweetImageModal/>
                 </div>
             </LinkWrapper>
         </div>

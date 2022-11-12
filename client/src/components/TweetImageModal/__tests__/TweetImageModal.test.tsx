@@ -92,37 +92,37 @@ describe("TweetImageModal", () => {
     it("should click and close ReplyModal", () => {
         const wrapper = mountWithStore(<TweetImageModal/>, mockRootState);
 
-        expect(wrapper.find(ReplyModal).at(2).prop("visible")).toBe(false);
+        expect(wrapper.find(ReplyModal).at(0).prop("visible")).toBe(false);
         wrapper.find(IconButton).at(0).simulate("click");
 
-        expect(wrapper.find(ReplyModal).at(2).prop("visible")).toBe(true);
+        expect(wrapper.find(ReplyModal).at(0).prop("visible")).toBe(true);
         wrapper.find(ReplyModal).find(CloseButton).find(IconButton).simulate("click");
 
-        expect(wrapper.find(ReplyModal).at(2).prop("visible")).toBe(false);
+        expect(wrapper.find(ReplyModal).at(0).prop("visible")).toBe(false);
     });
 
     it("should handle Retweet", () => {
         const wrapper = mountWithStore(<TweetImageModal/>, mockRootState);
         wrapper.find(IconButton).at(1).simulate("click");
-        expect(mockDispatchFn).nthCalledWith(3, {payload: 2, type: TweetsActionType.RETWEET});
+        expect(mockDispatchFn).nthCalledWith(3, {payload: {tweetId: 2}, type: TweetsActionType.RETWEET});
     });
 
     it("should handle Like", () => {
         const wrapper = mountWithStore(<TweetImageModal/>, mockRootState);
         wrapper.find(IconButton).at(2).simulate("click");
-        expect(mockDispatchFn).nthCalledWith(3, {payload: 2, type: TweetsActionType.LIKE_TWEET});
+        expect(mockDispatchFn).nthCalledWith(3, {payload: {tweetId: 2}, type: TweetsActionType.LIKE_TWEET});
     });
-    
+
     it("should hover User", () => {
         jest.useFakeTimers();
         const wrapper = mountWithStore(<TweetImageModal/>, mockRootState);
         wrapper.find("#userInfo").at(0).simulate("mouseenter");
         jest.runAllTimers();
         wrapper.update();
-        
+
         expect(wrapper.find(PopperUserWindow).at(0).prop("visible")).toBe(true);
         wrapper.find("#userInfo").at(0).simulate("mouseleave");
-        
+
         expect(wrapper.find(PopperUserWindow).at(0).prop("visible")).toBe(false);
     });
 
@@ -145,7 +145,7 @@ describe("TweetImageModal", () => {
     it("should hover Like icon and render Hover Action", () => {
         testHoverIcon(2, "Like", mockState);
     });
-    
+
     it("should unmount TweetImageModal", () => {
         const wrapper = mountWithStore(<TweetImageModal/>, mockRootState);
         wrapper.unmount();
@@ -158,7 +158,7 @@ describe("TweetImageModal", () => {
         const wrapper = mountWithStore(<TweetImageModal/>, mockState);
         expect(wrapper.find("div").at(0).exists()).toBeFalsy();
     });
-    
+
     const testOnCloseModal = (component: string): void => {
         const history = createMemoryHistory();
         const pushSpy = jest.spyOn(history, "goBack");
@@ -183,7 +183,7 @@ describe("TweetImageModal", () => {
 
         expect(wrapper.find(UsersListModal).prop("visible")).toBe(false);
     };
-    
+
     const testHoverIcon = (itemIndex: number, actionText: string, mockState = mockRootState): void => {
         jest.useFakeTimers();
         const wrapper = mountWithStore(<TweetImageModal/>, mockState);

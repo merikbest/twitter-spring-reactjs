@@ -105,7 +105,6 @@ const UserSideProfile: FC = (): ReactElement | null => {
                     </div>
                 </List>
             </Popover>
-
         </>
     );
 };

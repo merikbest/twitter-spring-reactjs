@@ -5,8 +5,6 @@ import {Divider} from "@material-ui/core";
 import classNames from "classnames";
 import {CompatClient, Stomp} from "@stomp/stompjs";
 import SockJS from "sockjs-client";
-
-import {selectUserDataId} from "../../store/ducks/user/selectors";
 import TweetComponent from "../TweetComponent/TweetComponent";
 import {useTweetImageStyles} from "./TweetImageModalStyles";
 import {
@@ -21,14 +19,11 @@ import {
     selectIsTweetLoadedSuccess,
     selectReplies,
     selectTweetId,
-    selectTweetImages,
-    selectTweetReplyType,
-    selectTweetUserId
+    selectTweetImages
 } from "../../store/ducks/tweet/selectors";
 import {WS_URL} from "../../util/endpoints";
 import ShareTweetIconButton from "../ShareTweetIconButton/ShareTweetIconButton";
 import Spinner from "../Spinner/Spinner";
-import {ReplyType} from "../../store/types/common";
 import TweetHeader from "./TweetHeader/TweetHeader";
 import TweetText from "./TweetText/TweetText";
 import TweetDate from "./TweetDate/TweetDate";
@@ -46,21 +41,17 @@ import ImageCloseButton from "./ImageCloseButton/ImageCloseButton";
 let stompClient: CompatClient | null = null;
 
 const TweetImageModal = (): ReactElement | null => {
+    const classes = useTweetImageStyles();
     const dispatch = useDispatch();
     const tweetId = useSelector(selectTweetId);
     const images = useSelector(selectTweetImages);
-    const tweetUserId = useSelector(selectTweetUserId);
-    const tweetReplyType = useSelector(selectTweetReplyType);
     const replies = useSelector(selectReplies);
-    const myProfileId = useSelector(selectUserDataId);
     const isTweetLoadedSuccess = useSelector(selectIsTweetLoadedSuccess);
     const isRepliesLoading = useSelector(selectIsRepliesLoading);
     const params = useParams<{ id: string }>();
     const history = useHistory();
     const [visibleTweetImageModalWindow, setVisibleTweetImageModalWindow] = useState<boolean>(false);
-    const isUserCanReply = (tweetReplyType === ReplyType.MENTION) && (myProfileId !== tweetUserId);
     const image = images?.[0].src;
-    const classes = useTweetImageStyles({isUserCanReply});
 
     useEffect(() => {
         dispatch(fetchTweetData(parseInt(params.id)));
@@ -118,19 +109,19 @@ const TweetImageModal = (): ReactElement | null => {
                 <div className={classes.modalWrapper}>
                     <img className={classes.imageModal} src={image} alt={image}/>
                     <div className={classes.tweetInfo}>
-                        <TweetHeader classes={classes}/>
-                        <TweetText classes={classes}/>
+                        <TweetHeader/>
+                        <TweetText/>
                         <TweetDate/>
                         <Divider/>
-                        <TweetInteractionCount classes={classes}/>
+                        <TweetInteractionCount/>
                         <div id={"tweetFooter"} className={classes.tweetFooter}>
-                            <TweetReplyIconButton classes={classes}/>
+                            <TweetReplyIconButton/>
                             <TweetRetweetedIconButton/>
                             <TweetLikeIconButton/>
                             <ShareTweetIconButton tweetId={tweetId} isFullTweet={false}/>
                         </div>
                         <Divider/>
-                        <AddReplyToTweet classes={classes}/>
+                        <AddReplyToTweet/>
                     </div>
                     <Divider/>
                     {isRepliesLoading ? (
@@ -143,13 +134,13 @@ const TweetImageModal = (): ReactElement | null => {
                 </div>
                 <div id={"imageFooter"} className={classes.imageFooterContainer}>
                     <div className={classNames(classes.imageFooterWrapper)}>
-                        <ImageFooterReplyIconButton classes={classes}/>
-                        <ImageFooterRetweetButton classes={classes}/>
-                        <ImageFooterLikeButton classes={classes}/>
-                        <ImageFooterShareButton classes={classes}/>
+                        <ImageFooterReplyIconButton/>
+                        <ImageFooterRetweetButton/>
+                        <ImageFooterLikeButton/>
+                        <ImageFooterShareButton/>
                     </div>
                 </div>
-                <ImageCloseButton classes={classes} onCloseModalWindow={onCloseModalWindow}/>
+                <ImageCloseButton onCloseModalWindow={onCloseModalWindow}/>
             </div>
         );
     }

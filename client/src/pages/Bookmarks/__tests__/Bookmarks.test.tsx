@@ -47,4 +47,10 @@ describe("Bookmarks", () => {
         expect(wrapper.find(TweetComponent).length).toEqual(0);
         expect(mockDispatchFn).toHaveBeenCalledWith({payload: 0, type: TweetsActionType.FETCH_BOOKMARKS});
     });
+
+    it("should unmount Bookmarks", () => {
+        const wrapper = mountWithStore(<Bookmarks/>, createMockRootState());
+        wrapper.unmount();
+        expect(mockDispatchFn).nthCalledWith(2, {type: TweetsActionType.RESET_TWEETS});
+    });
 });

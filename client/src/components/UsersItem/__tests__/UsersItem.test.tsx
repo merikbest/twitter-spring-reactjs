@@ -9,9 +9,9 @@ import {UserResponse} from "../../../store/types/user";
 import {UserActionsType} from "../../../store/ducks/user/contracts/actionTypes";
 import UnfollowModal from "../../UnfollowModal/UnfollowModal";
 import BlockUserModal from "../../BlockUserModal/BlockUserModal";
-import ActionSnackbar from "../../ActionSnackbar/ActionSnackbar";
 import PopperUserWindow from "../../PopperUserWindow/PopperUserWindow";
 import {LoadingStatus} from "../../../store/types/common";
+import {ActionSnackbarTypes} from "../../../store/ducks/actionSnackbar/contracts/actionTypes";
 
 describe("UsersItem", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);
@@ -32,7 +32,7 @@ describe("UsersItem", () => {
     });
 
     it("should render default profile image", () => {
-        const mockUserItem = {...mockUser, avatar: {...mockUser.avatar, src: undefined}} as unknown as UserResponse;
+        const mockUserItem = {...mockUser, avatar: undefined} as unknown as UserResponse;
         const wrapper = mountWithStore(<UsersItem user={mockUserItem} size={UserItemSize.MEDIUM}/>, mockRootState);
         expect(wrapper.find(Avatar).at(0).prop("src")).toBe(DEFAULT_PROFILE_IMG);
     });
@@ -106,7 +106,6 @@ describe("UsersItem", () => {
     it("should click open BlockUserModal and click onBlockUser", () => {
         const mockUserItem = {...mockUser, isUserBlocked: true} as unknown as UserResponse;
         const wrapper = mountWithStore(<UsersItem user={mockUserItem} size={UserItemSize.LARGE}/>, mockRootState);
-        expect(wrapper.find(ActionSnackbar).prop("openSnackBar")).toBe(false);
         expect(wrapper.find(BlockUserModal).at(0).prop("visible")).toBe(false);
         wrapper.find(Button).simulate("click");
         expect(wrapper.find(BlockUserModal).at(0).prop("visible")).toBe(true);
@@ -115,8 +114,10 @@ describe("UsersItem", () => {
             payload: {userId: 4},
             type: UserActionsType.PROCESS_USER_TO_BLOCKLIST
         });
-        expect(wrapper.find(ActionSnackbar).prop("openSnackBar")).toBe(true);
-        expect(wrapper.find(ActionSnackbar).prop("snackBarMessage")).toBe(`@${mockUserItem.username} has been unblocked.`);
+        expect(mockDispatchFn).nthCalledWith(2, {
+            payload: `@${mockUserItem.username} has been unblocked.`,
+            type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
+        });
     });
 
     it("should click open and close BlockUserModal", () => {

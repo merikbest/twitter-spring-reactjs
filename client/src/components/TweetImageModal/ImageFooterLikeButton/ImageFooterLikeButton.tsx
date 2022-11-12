@@ -1,19 +1,16 @@
-import React, {FC, ReactElement} from "react";
+import React, {memo, ReactElement} from "react";
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import Typography from "@material-ui/core/Typography";
-import {ClassNameMap} from "@material-ui/core/styles/withStyles";
 import {IconButton} from "@material-ui/core";
 
 import {LikeIcon, LikeOutlinedIcon} from "../../../icons";
 import {likeTweet} from "../../../store/ducks/tweets/actionCreators";
 import {selectIsTweetLiked, selectLikedTweetsCount} from "../../../store/ducks/tweet/selectors";
+import {useImageFooterButtonStyles} from "../ImageFooterButtonStyles";
 
-interface ImageFooterLikeButtonProps {
-    classes: ClassNameMap<string>
-}
-
-const ImageFooterLikeButton: FC<ImageFooterLikeButtonProps> = ({classes}): ReactElement => {
+const ImageFooterLikeButton = memo((): ReactElement => {
+    const classes = useImageFooterButtonStyles()
     const dispatch = useDispatch();
     const params = useParams<{ id: string }>();
     const isTweetLiked = useSelector(selectIsTweetLiked);
@@ -35,6 +32,6 @@ const ImageFooterLikeButton: FC<ImageFooterLikeButtonProps> = ({classes}): React
             )}
         </div>
     );
-};
+});
 
 export default ImageFooterLikeButton;

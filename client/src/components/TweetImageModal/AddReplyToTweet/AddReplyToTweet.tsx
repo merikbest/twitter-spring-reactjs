@@ -1,18 +1,15 @@
-import React, {FC, ReactElement} from "react";
+import React, {ReactElement} from "react";
 import Typography from "@material-ui/core/Typography";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
-import {ClassNameMap} from "@material-ui/core/styles/withStyles";
 
 import {PROFILE} from "../../../util/pathConstants";
 import AddTweetForm from "../../AddTweetForm/AddTweetForm";
 import {selectTweetId, selectTweetUserId, selectTweetUserUsername} from "../../../store/ducks/tweet/selectors";
+import {useAddReplyToTweetStyles} from "./AddReplyToTweetStyles";
 
-interface AddReplyToTweetProps {
-    classes: ClassNameMap<string>
-}
-
-const AddReplyToTweet: FC<AddReplyToTweetProps> = ({classes}): ReactElement => {
+const AddReplyToTweet = (): ReactElement => {
+    const classes = useAddReplyToTweetStyles();
     const tweetId = useSelector(selectTweetId);
     const tweetUserId = useSelector(selectTweetUserId);
     const username = useSelector(selectTweetUserUsername);

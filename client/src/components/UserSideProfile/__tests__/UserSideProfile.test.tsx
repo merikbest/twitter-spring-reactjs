@@ -1,6 +1,6 @@
 import React from "react";
 import {createMemoryHistory} from "history";
-import {Avatar, Button, Popover} from "@material-ui/core";
+import {Avatar, Button, Dialog, Popover} from "@material-ui/core";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
 import UserSideProfile from "../UserSideProfile";
@@ -39,12 +39,11 @@ describe("UserSideProfile", () => {
 
     it("should click open and close LogoutModal", () => {
         const wrapper = mountWithStore(<UserSideProfile/>, mockRootState);
-        expect(wrapper.find(LogoutModal).at(0).prop("visible")).toBe(false);
         wrapper.find("div").at(0).simulate("click");
-        wrapper.find("#onOpenLogoutModal").at(0).simulate("click");
-        expect(wrapper.find(LogoutModal).at(0).prop("visible")).toBe(true);
+        wrapper.find(LogoutModal).find("#onOpenLogoutModal").at(0).simulate("click");
+        expect(wrapper.find(LogoutModal).find(Dialog).prop("open")).toBe(true);
         wrapper.find(LogoutModal).find(Button).at(0).simulate("click");
-        expect(wrapper.find(LogoutModal).at(0).prop("visible")).toBe(false);
+        expect(wrapper.find(LogoutModal).find(Dialog).prop("open")).toBe(false);
     });
 
     it("should click handleSignOut", () => {

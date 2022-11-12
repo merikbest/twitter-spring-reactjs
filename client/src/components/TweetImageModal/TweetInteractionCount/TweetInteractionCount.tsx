@@ -1,16 +1,13 @@
-import React, {FC, memo, ReactElement, useState} from "react";
+import React, {memo, ReactElement, useState} from "react";
 import Typography from "@material-ui/core/Typography";
 import {useSelector} from "react-redux";
-import {ClassNameMap} from "@material-ui/core/styles/withStyles";
 
 import {selectLikedTweetsCount, selectRetweetsCount, selectTweetId} from "../../../store/ducks/tweet/selectors";
 import UsersListModal, {UsersListModalAction} from "../../UsersListModal/UsersListModal";
+import {useTweetInteractionCountStyles} from "./TweetInteractionCountStyles";
 
-interface TweetInteractionCountProps {
-    classes: ClassNameMap<string>
-}
-
-const TweetInteractionCount: FC<TweetInteractionCountProps> = memo(({classes}): ReactElement => {
+const TweetInteractionCount = memo((): ReactElement => {
+    const classes = useTweetInteractionCountStyles();
     const tweetId = useSelector(selectTweetId);
     const retweetsCount = useSelector(selectRetweetsCount);
     const likedTweetsCount = useSelector(selectLikedTweetsCount);

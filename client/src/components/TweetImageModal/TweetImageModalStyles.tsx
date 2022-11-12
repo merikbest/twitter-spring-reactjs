@@ -1,7 +1,7 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
 interface TweetImageStylesProps {
-    isUserCanReply: boolean;
+    // isUserCanReply: boolean;
 }
 
 export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((theme) => ({
@@ -19,7 +19,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         backgroundColor: theme.palette.background.paper,
         width: 359,
         height: "100%",
-        float: 'right',
+        float: "right",
         overflowY: "scroll",
         overflowX: "hidden",
     },
@@ -34,90 +34,25 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
     tweetInfo: {
         padding: "0 16px",
     },
-    header: {
-        display: 'flex',
-        alignItems: 'center',
-        "& a": {
-            cursor: "pointer",
-            textDecoration: "none",
-            color: theme.palette.text.primary,
-            "&:hover": {
-                "& #link": {
-                    textDecoration: "underline",
-                },
-            },
-        },
-    },
-    avatar: {
-        marginRight: 15,
-        margin: "12px 12px 16px 5px",
-    },
-    text: {
-        fontWeight: 400,
-        marginTop: 16,
-        marginBottom: 16,
-        wordBreak: 'break-word',
-        '& #hashtag': {
-            color: theme.palette.primary.main,
-        },
-    },
-    content: {
-        display: 'flex',
-        alignItems: 'center',
-        margin: "16px 0",
-        '& a': {
-            color: theme.palette.text.primary,
-            textDecoration: 'none'
-        },
-        "& .MuiTypography-subtitle1": {
-            marginLeft: 5,
-        },
-    },
     tweetFooter: {
-        display: 'flex',
-        position: 'relative',
+        display: "flex",
+        position: "relative",
         paddingTop: 5,
         paddingBottom: 5,
-        margin: '0 auto',
+        margin: "0 auto",
         borderTop: `1px solid ${theme.palette.divider}`,
         left: 0,
-        maxWidth: '100%',
-        justifyContent: 'space-around',
-        padding: '2px 0',
+        maxWidth: "100%",
+        justifyContent: "space-around",
+        padding: "2px 0",
     },
-    tweetIcon: {
-        "& .MuiIconButton-root": {
-            "& svg" : {
-                color: props => props.isUserCanReply ? "rgb(185, 192, 197)" : theme.palette.text.secondary,
-            },
-        },
-    },
-    imageFooterIcon: {
-        "& .MuiTypography-body1": {
-            verticalAlign: "text-top",
-        },
-        "& .MuiIconButton-root": {
-            "& svg": {
-                color: theme.palette.common.white,
-            },
-            "&:hover": {
-                backgroundColor: "rgba(255, 255, 255, 0.1) !important",
-                "& svg": {
-                    color: "rgb(255, 255, 255) !important",
-                },
-            },
-        },
-        "& span": {
-            color: theme.palette.common.white,
-        },
-    },
-    replyWrapper: {
-        margin: "16px 68px",
-        "& a": {
-            textDecoration: "none",
-            color: theme.palette.primary.main,
-        },
-    },
+    // tweetIcon: {
+    //     "& .MuiIconButton-root": {
+    //         "& svg" : {
+    //             color: props => props.isUserCanReply ? "rgb(185, 192, 197)" : theme.palette.text.secondary,
+    //         },
+    //     },
+    // },
     divider: {
         height: 12,
         backgroundColor: theme.palette.divider,
@@ -133,19 +68,12 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         },
     },
     imageFooterWrapper: {
-        display: 'flex',
-        position: 'relative',
+        display: "flex",
+        position: "relative",
         paddingTop: 5,
         paddingBottom: 5,
         left: -13,
-        justifyContent: 'space-between',
+        justifyContent: "space-between",
         maxWidth: 450,
-    },
-    imageModalClose: {
-        margin: 10,
-        "& svg": {
-            height: "0.9em",
-            color: theme.palette.common.white
-        },
     },
 }));
