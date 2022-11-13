@@ -21,15 +21,13 @@ describe("EditListModal", () => {
 
     it("should render empty Edit List Modal window correctly", () => {
         const wrapper = mountWithStore(<EditListModal visible={false} onClose={jest.fn()}/>, mockListStore);
-
         expect(wrapper.find(Dialog).exists()).toBeFalsy();
     });
 
     it("should render Edit List Modal window correctly", () => {
         const wrapper = mountWithStore(<EditListModal visible={true} onClose={jest.fn()}/>, mockListStore);
-
-        expect(wrapper.find(Dialog).exists()).toBeTruthy();
-        expect(wrapper.find(Dialog).prop("open")).toBe(true);
+        expect(wrapper.find(Dialog).at(0).exists()).toBeTruthy();
+        expect(wrapper.find(Dialog).at(0).prop("open")).toBe(true);
         expect(wrapper.text().includes("Edit List")).toBe(true);
         expect(wrapper.find(Button).at(0).text().includes("Done")).toBe(true);
         expect(wrapper.text().includes("Make private")).toBe(true);
@@ -40,18 +38,14 @@ describe("EditListModal", () => {
 
     it("should open Manage Members Modal window", () => {
         const wrapper = mountWithStore(<EditListModal visible={true} onClose={jest.fn()}/>, mockListStore);
-        const membersModalButton = wrapper.find("#onOpenManageMembersModal").at(0);
-        membersModalButton.simulate("click");
-
-        expect(wrapper.find(ManageMembersModal).prop("visible")).toBe(true);
+        wrapper.find(ManageMembersModal).find("#onOpenManageMembersModal").at(0).simulate("click");
+        expect(wrapper.find(ManageMembersModal).find(Dialog).at(0).prop("open")).toBe(true);
     });
 
     it("should open Delete List Modal window", () => {
         const wrapper = mountWithStore(<EditListModal visible={true} onClose={jest.fn()}/>, mockListStore);
-        const deleteModalButton = wrapper.find("#onOpenDeleteListModal").at(0);
-        deleteModalButton.simulate("click");
-
-        expect(wrapper.find(DeleteListModal).prop("visible")).toBe(true);
+        wrapper.find(DeleteListModal).find("#onOpenDeleteListModal").at(0).simulate("click");
+        expect(wrapper.find(DeleteListModal).find(Dialog).at(0).prop("open")).toBe(true);
     });
 
     it("should submit edit list form", (done) => {

@@ -28,7 +28,7 @@ const ResetPassword: FC = (): ReactElement => {
     const classes = useResetPasswordStyles();
     const history = useHistory();
     const location = useLocation<{ user: AuthUserResponse }>();
-    const {control, register, handleSubmit, formState: {errors}} = useForm<ResetPasswordFormProps>({
+    const {control, handleSubmit, formState: {errors}} = useForm<ResetPasswordFormProps>({
         resolver: yupResolver(ResetPasswordFormSchema)
     });
 

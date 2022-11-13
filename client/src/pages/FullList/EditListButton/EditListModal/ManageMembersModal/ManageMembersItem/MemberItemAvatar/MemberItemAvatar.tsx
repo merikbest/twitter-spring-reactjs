@@ -12,7 +12,7 @@ interface MemberItemAvatarProps {
 const MemberItemAvatar: FC<MemberItemAvatarProps> = memo(({avatar}): ReactElement => {
     const classes = useManageMembersItemStyles();
 
-    return<Avatar className={classes.listAvatar} src={avatar ? avatar.src : DEFAULT_PROFILE_IMG}/>;
+    return <Avatar className={classes.listAvatar} src={avatar ? avatar.src : DEFAULT_PROFILE_IMG}/>;
 });
 
 export default MemberItemAvatar;

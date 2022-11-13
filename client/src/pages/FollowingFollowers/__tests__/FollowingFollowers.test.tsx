@@ -14,28 +14,27 @@ import {
     mockUserProfile
 } from "../../../util/mockData/mockData";
 import UsersItem from "../../../components/UsersItem/UsersItem";
-import {RootState} from "../../../store/store";
 import {UserProfileActionsType} from "../../../store/ducks/userProfile/contracts/actionTypes";
 import {UsersSearchActionsType} from "../../../store/ducks/usersSearch/contracts/actionTypes";
 import {USER} from "../../../util/pathConstants";
 import {LoadingStatus} from "../../../store/types/common";
 
 describe("FollowingFollowers", () => {
-    const mockStore: RootState = createMockRootState(LoadingStatus.LOADED);
-    const mockEmptyMyProfileFollowList: RootState = {
+    const mockStore = createMockRootState(LoadingStatus.SUCCESS);
+    const mockEmptyMyProfileFollowList = {
         ...mockStore,
         userProfile: {...mockStore.userProfile, user: createMockMyProfile(0, 0)},
         usersSearch: {...mockStore.usersSearch, followers: []}
     };
-    const mockEmptyUserFollowList: RootState = {
+    const mockEmptyUserFollowList = {
         ...mockStore,
         userProfile: {...mockStore.userProfile, user: createMockUserProfile(0, 0)},
         usersSearch: {...mockStore.usersSearch, followers: []}
     };
     let mockDispatchFn: jest.Mock;
-    const mockUserProfileId: string = "1";
-    const mockMyProfileId: string = "2";
-    const mockFollow: string = "following";
+    const mockUserProfileId = "1";
+    const mockMyProfileId = "2";
+    const mockFollow = "following";
 
     beforeEach(() => {
         mockDispatchFn = mockDispatch();
@@ -63,6 +62,9 @@ describe("FollowingFollowers", () => {
             type: UserProfileActionsType.FETCH_USER
         });
         expect(mockDispatchFn).nthCalledWith(2, {
+            type: UsersSearchActionsType.RESET_USERS_STATE
+        });
+        expect(mockDispatchFn).nthCalledWith(3, {
             payload: {userId: mockMyProfileId, page: 0},
             type: UsersSearchActionsType.FETCH_FOLLOWERS
         });
@@ -81,6 +83,9 @@ describe("FollowingFollowers", () => {
             type: UserProfileActionsType.FETCH_USER
         });
         expect(mockDispatchFn).nthCalledWith(2, {
+            type: UsersSearchActionsType.RESET_USERS_STATE
+        });
+        expect(mockDispatchFn).nthCalledWith(3, {
             payload: {userId: mockMyProfileId, page: 0},
             type: UsersSearchActionsType.FETCH_FOLLOWINGS
         });
@@ -102,6 +107,9 @@ describe("FollowingFollowers", () => {
             type: UserProfileActionsType.FETCH_USER
         });
         expect(mockDispatchFn).nthCalledWith(2, {
+            type: UsersSearchActionsType.RESET_USERS_STATE
+        });
+        expect(mockDispatchFn).nthCalledWith(3, {
             payload: {userId: mockMyProfileId, page: 0},
             type: UsersSearchActionsType.FETCH_FOLLOWERS
         });
@@ -122,6 +130,9 @@ describe("FollowingFollowers", () => {
             type: UserProfileActionsType.FETCH_USER
         });
         expect(mockDispatchFn).nthCalledWith(2, {
+            type: UsersSearchActionsType.RESET_USERS_STATE
+        });
+        expect(mockDispatchFn).nthCalledWith(3, {
             payload: {userId: mockMyProfileId, page: 0},
             type: UsersSearchActionsType.FETCH_FOLLOWINGS
         });
@@ -147,10 +158,16 @@ describe("FollowingFollowers", () => {
             type: UserProfileActionsType.FETCH_USER
         });
         expect(mockDispatchFn).nthCalledWith(2, {
+            type: UsersSearchActionsType.RESET_USERS_STATE
+        });
+        expect(mockDispatchFn).nthCalledWith(3, {
             payload: {userId: mockMyProfileId, page: 0},
             type: UsersSearchActionsType.FETCH_FOLLOWERS
         });
-        expect(mockDispatchFn).nthCalledWith(3, {
+        expect(mockDispatchFn).nthCalledWith(4, {
+            type: UsersSearchActionsType.RESET_USERS_STATE
+        });
+        expect(mockDispatchFn).nthCalledWith(5, {
             payload: {userId: mockMyProfileId, page: 0},
             type: UsersSearchActionsType.FETCH_FOLLOWERS
         });
@@ -176,10 +193,16 @@ describe("FollowingFollowers", () => {
             type: UserProfileActionsType.FETCH_USER
         });
         expect(mockDispatchFn).nthCalledWith(2, {
+            type: UsersSearchActionsType.RESET_USERS_STATE
+        });
+        expect(mockDispatchFn).nthCalledWith(3, {
             payload: {userId: mockMyProfileId, page: 0},
             type: UsersSearchActionsType.FETCH_FOLLOWERS
         });
-        expect(mockDispatchFn).nthCalledWith(3, {
+        expect(mockDispatchFn).nthCalledWith(4, {
+            type: UsersSearchActionsType.RESET_USERS_STATE
+        });
+        expect(mockDispatchFn).nthCalledWith(5, {
             payload: {userId: mockMyProfileId, page: 0},
             type: UsersSearchActionsType.FETCH_FOLLOWINGS
         });
@@ -200,6 +223,9 @@ describe("FollowingFollowers", () => {
             type: UserProfileActionsType.FETCH_USER
         });
         expect(mockDispatchFn).nthCalledWith(2, {
+            type: UsersSearchActionsType.RESET_USERS_STATE
+        });
+        expect(mockDispatchFn).nthCalledWith(3, {
             payload: {userId: mockUserProfileId, page: 0},
             type: UsersSearchActionsType.FETCH_FOLLOWERS
         });
@@ -220,6 +246,9 @@ describe("FollowingFollowers", () => {
             type: UserProfileActionsType.FETCH_USER
         });
         expect(mockDispatchFn).nthCalledWith(2, {
+            type: UsersSearchActionsType.RESET_USERS_STATE
+        });
+        expect(mockDispatchFn).nthCalledWith(3, {
             payload: {userId: mockUserProfileId, page: 0},
             type: UsersSearchActionsType.FETCH_FOLLOWINGS
         });

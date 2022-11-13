@@ -20,7 +20,8 @@ describe("MembersAndFollowersModal", () => {
     it("should render empty Members And Followers Modal Window correctly", () => {
         const wrapper = mountWithStore(
             <MembersAndFollowersModal
-                list={mockFullList}
+                listId={mockFullList.id}
+                listOwnerId={mockFullList.listOwner.id}
                 visible={false}
                 title={"List members"}
                 onClose={jest.fn()}
@@ -32,7 +33,8 @@ describe("MembersAndFollowersModal", () => {
     it("should render loading Spinner and fetch members", () => {
         const wrapper = mountWithStore(
             <MembersAndFollowersModal
-                list={mockFullList}
+                listId={mockFullList.id}
+                listOwnerId={mockFullList.listOwner.id}
                 visible={true}
                 title={"List members"}
                 onClose={jest.fn()}
@@ -50,7 +52,8 @@ describe("MembersAndFollowersModal", () => {
     it("should render loading Spinner and fetch followers", () => {
         const wrapper = mountWithStore(
             <MembersAndFollowersModal
-                list={mockFullList}
+                listId={mockFullList.id}
+                listOwnerId={mockFullList.listOwner.id}
                 visible={true}
                 title={"List followers"}
                 onClose={jest.fn()}
@@ -68,7 +71,8 @@ describe("MembersAndFollowersModal", () => {
     it("should render list ManageMembersItem", () => {
         const wrapper = mountWithStore(
             <MembersAndFollowersModal
-                list={mockFullList}
+                listId={mockFullList.id}
+                listOwnerId={mockFullList.listOwner.id}
                 visible={true}
                 title={"List followers"}
                 onClose={jest.fn()}
@@ -88,7 +92,8 @@ describe("MembersAndFollowersModal", () => {
     it("should render empty list members message", () => {
         const wrapper = mountWithStore(
             <MembersAndFollowersModal
-                list={mockFullList}
+                listId={mockFullList.id}
+                listOwnerId={mockFullList.listOwner.id}
                 visible={true}
                 title={"List members"}
                 onClose={jest.fn()}
@@ -109,7 +114,8 @@ describe("MembersAndFollowersModal", () => {
     it("should render empty list followers message", () => {
         const wrapper = mountWithStore(
             <MembersAndFollowersModal
-                list={mockFullList}
+                listId={mockFullList.id}
+                listOwnerId={mockFullList.listOwner.id}
                 visible={true}
                 title={"List followers"}
                 onClose={jest.fn()}
@@ -130,7 +136,8 @@ describe("MembersAndFollowersModal", () => {
     it("should click on Dialog window", () => {
         const wrapper = mountWithStore(
             <MembersAndFollowersModal
-                list={mockFullList}
+                listId={mockFullList.id}
+                listOwnerId={mockFullList.listOwner.id}
                 visible={true}
                 title={"List followers"}
                 onClose={jest.fn()}
@@ -143,7 +150,8 @@ describe("MembersAndFollowersModal", () => {
     it("should unmount MembersAndFollowersModal", () => {
         const wrapper = mountWithStore(
             <MembersAndFollowersModal
-                list={mockFullList}
+                listId={mockFullList.id}
+                listOwnerId={mockFullList.listOwner.id}
                 visible={false}
                 title={"List members"}
                 onClose={jest.fn()}

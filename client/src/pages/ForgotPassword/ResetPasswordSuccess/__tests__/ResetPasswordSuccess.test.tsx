@@ -3,11 +3,10 @@ import {createMemoryHistory} from "history";
 import {Link as MuiLink} from "@material-ui/core";
 
 import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import ResetPasswordOption from "../../ResetPasswordOption/ResetPasswordOption";
 import ResetPasswordSuccess from "../ResetPasswordSuccess";
 import {ACCOUNT_LOGIN} from "../../../../util/pathConstants";
 
-describe("ResetPasswordOption", () => {
+describe("ResetPasswordSuccess", () => {
     const mockStore = createMockRootState();
     
     it("should render correctly", (done) => {

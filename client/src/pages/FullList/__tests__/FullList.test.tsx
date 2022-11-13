@@ -34,11 +34,11 @@ describe("FullList", () => {
         });
 
         expect(wrapper.find(Spinner).exists()).toBe(true);
-        expect(mockDispatchFn).nthCalledWith(1, {payload: 3, type: ListActionType.FETCH_LIST_BY_ID});
-        expect(mockDispatchFn).nthCalledWith(2, {
+        expect(mockDispatchFn).nthCalledWith(1, {
             payload: {listId: 3, pageNumber: 0},
             type: TweetsActionType.FETCH_TWEETS_BY_LIST_ID
         });
+        expect(mockDispatchFn).nthCalledWith(2, {payload: 3, type: ListActionType.FETCH_LIST_BY_ID});
     });
 
     it("should render FullList correctly", () => {

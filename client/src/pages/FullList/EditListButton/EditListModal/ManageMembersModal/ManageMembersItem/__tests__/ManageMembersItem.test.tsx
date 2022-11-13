@@ -6,7 +6,6 @@ import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../
 import ManageMembersItem from "../ManageMembersItem";
 import {mockFullList, mockListsOwnerMember} from "../../../../../../../util/mockData/mockData";
 import {ListMembersActionsType} from "../../../../../../../store/ducks/listMembers/contracts/actionTypes";
-import ActionSnackbar from "../../../../../../../components/ActionSnackbar/ActionSnackbar";
 import PopperUserWindow from "../../../../../../../components/PopperUserWindow/PopperUserWindow";
 import {PROFILE} from "../../../../../../../util/pathConstants";
 import {LoadingStatus} from "../../../../../../../store/types/common";
@@ -61,18 +60,6 @@ describe("ManageMembersItem", () => {
             payload: {userId: 5, listId: 3},
             type: ListMembersActionsType.PROCESS_USER_TO_LIST_MEMBERS
         });
-    });
-
-    it("should render Action Snackbar", () => {
-        const wrapper = mountWithStore(
-            <ManageMembersItem listId={mockFullList.id} listOwnerId={mockFullList.listOwner.id} user={mockMember}/>,
-            {
-                ...mockStore,
-                listMembers: {...mockStore.listMembers, suggestedLoadingState: LoadingStatus.ERROR}
-            });
-
-        expect(wrapper.find(ActionSnackbar).prop("openSnackBar")).toBe(true);
-        expect(wrapper.text().includes("You aren’t allowed to add this member to this List.")).toBe(true);
     });
 
     it("should hover Member", () => {

@@ -8,12 +8,16 @@ import ResetPasswordOption from "../ResetPasswordOption/ResetPasswordOption";
 import CheckEmailCode from "../CheckEmailCode/CheckEmailCode";
 import ResetPassword from "../ResetPassword/ResetPassword";
 import ResetPasswordSuccess from "../ResetPasswordSuccess/ResetPasswordSuccess";
-import {ACCOUNT_FORGOT, ACCOUNT_FORGOT_CONFIRM_PIN_RESET,
+import {
+    ACCOUNT_FORGOT,
+    ACCOUNT_FORGOT_CONFIRM_PIN_RESET,
     ACCOUNT_FORGOT_PASSWORD_RESET_COMPLETE,
-    ACCOUNT_FORGOT_RESET_PASSWORD, ACCOUNT_FORGOT_SEND_PASSWORD_RESET} from "../../../util/pathConstants";
+    ACCOUNT_FORGOT_RESET_PASSWORD,
+    ACCOUNT_FORGOT_SEND_PASSWORD_RESET
+} from "../../../util/pathConstants";
 
 describe("ForgotPassword", () => {
-    
+
     it("should route correctly", () => {
         const wrapper = mountWithStore(<ForgotPassword/>, createMockRootState());
         const pathMap = wrapper.find(Route).reduce((pathMap: any, route) => {
@@ -21,7 +25,7 @@ describe("ForgotPassword", () => {
             pathMap[routeProps.path] = routeProps.component;
             return pathMap;
         }, {});
-        
+
         expect(wrapper.text().includes("Password Reset")).toBe(true);
         expect(pathMap[ACCOUNT_FORGOT]).toBe(FindEmail);
         expect(pathMap[ACCOUNT_FORGOT_SEND_PASSWORD_RESET]).toBe(ResetPasswordOption);

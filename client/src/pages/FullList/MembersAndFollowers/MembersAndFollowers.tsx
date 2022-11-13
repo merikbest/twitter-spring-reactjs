@@ -45,7 +45,7 @@ const MembersAndFollowers = memo((): ReactElement => {
                     {" Members"}
                 </Typography>
             </span>
-            <span id={"listMembers"} onClick={onOpenFollowersModalWindow} className={classes.listMembers}>
+            <span id={"listFollowers"} onClick={onOpenFollowersModalWindow} className={classes.listMembers}>
                 <Typography variant={"h6"} component={"span"}>
                     {followersSize}
                 </Typography>

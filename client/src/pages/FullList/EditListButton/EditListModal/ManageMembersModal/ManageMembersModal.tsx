@@ -86,15 +86,13 @@ const ManageMembersModal = (): ReactElement => {
                 Manage members
                 <>{ForwardArrowIcon}</>
             </Typography>
-
             <Dialog
                 className={classes.dialog}
                 open={visibleManageMembersModal}
                 onClose={onCloseManageMembersModal}
-                aria-labelledby="form-dialog-title"
                 hideBackdrop
             >
-                <DialogTitle id="form-dialog-title">
+                <DialogTitle>
                     <IconButton onClick={onCloseManageMembersModal} color="primary" size="small">
                         <>{ArrowIcon}</>
                     </IconButton>
