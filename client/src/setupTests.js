@@ -1,11 +1,7 @@
 import React from "react";
-import { TextEncoder, TextDecoder } from "util"
 import Adapter from "enzyme-adapter-react-16";
 import {configure} from "enzyme";
 configure({ adapter: new Adapter() });
-
-global.TextEncoder = TextEncoder
-global.TextDecoder = TextDecoder
 
 window.matchMedia = (query) => ({
     matches: false,

@@ -9,6 +9,7 @@ import {Provider} from "react-redux";
 import {createMemoryHistory} from "history";
 import routeData from "react-router";
 import {AxiosResponse} from "axios";
+import {TextDecoder, TextEncoder} from "util";
 
 import {RootState} from "../store/store";
 import {
@@ -21,7 +22,8 @@ import {
 } from "./mockData/mockData";
 import {LoadingStatus, PageableResponse} from "../store/types/common";
 
-
+(global as any).TextEncoder = TextEncoder;
+(global as any).TextDecoder = TextDecoder;
 configure({adapter: new Adapter()});
 
 // @ts-ignore

@@ -2,14 +2,19 @@ import React from "react";
 import {createMemoryHistory} from "history";
 import {Link} from "react-router-dom";
 
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
+import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
 import TweetErrorPage from "../TweetErrorPage";
-import ActionSnackbar from "../../../../components/ActionSnackbar/ActionSnackbar";
 import {SEARCH} from "../../../../util/pathConstants";
 import {LoadingStatus} from "../../../../store/types/common";
+import {ActionSnackbarTypes} from "../../../../store/ducks/actionSnackbar/contracts/actionTypes";
 
 describe("TweetErrorPage", () => {
     const mockStore = createMockRootState(LoadingStatus.SUCCESS);
+    let mockDispatchFn: jest.Mock;
+
+    beforeEach(() => {
+        mockDispatchFn = mockDispatch();
+    });
 
     it("should render correctly", () => {
         const wrapper = mountWithStore(<TweetErrorPage/>, {
@@ -17,8 +22,10 @@ describe("TweetErrorPage", () => {
             tweet: {...mockStore.tweet, errorMessage: "Tweet not found"}
         });
         expect(wrapper.text().includes("Hmm...this page doesn’t exist.")).toBe(true);
-        expect(wrapper.find(ActionSnackbar).prop("openSnackBar")).toBe(true);
-        expect(wrapper.find(ActionSnackbar).prop("snackBarMessage")).toBe("Tweet not found");
+        expect(mockDispatchFn).nthCalledWith(1, {
+            payload: "Tweet not found",
+            type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
+        });
     });
 
     it("should click link", () => {

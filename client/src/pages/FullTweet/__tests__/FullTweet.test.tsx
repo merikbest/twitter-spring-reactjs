@@ -1,8 +1,8 @@
 import React from "react";
 import ReactRouter from "react-router";
+import routeData from "react-router";
 import {Link} from "react-router-dom";
 import {Avatar, IconButton} from "@material-ui/core";
-import routeData from "react-router";
 import {createMemoryHistory} from "history";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
@@ -18,14 +18,20 @@ import TweetComponent from "../../../components/TweetComponent/TweetComponent";
 import {TweetsActionType} from "../../../store/ducks/tweets/contracts/actionTypes";
 import UsersListModal, {UsersListModalAction} from "../../../components/UsersListModal/UsersListModal";
 import CloseButton from "../../../components/CloseButton/CloseButton";
-import TweetComponentActions from "../../../components/TweetComponentActions/TweetComponentActions";
-import TweetAnalyticsModal from "../../../components/TweetAnalyticsModal/TweetAnalyticsModal";
 import PopperUserWindow from "../../../components/PopperUserWindow/PopperUserWindow";
 import HoverAction from "../../../components/HoverAction/HoverAction";
 import YouTubeVideo from "../../../components/YouTubeVideo/YouTubeVideo";
 import TweetActionResult, {TweetActionResults} from "../../../components/TweetActionResult/TweetActionResult";
 import {MODAL, PROFILE, QUOTES} from "../../../util/pathConstants";
 import {LoadingStatus} from "../../../store/types/common";
+import RetweetIconButton from "../RetweetIconButton/RetweetIconButton";
+import LikeIconButton from "../LikeIconButton/LikeIconButton";
+import TweetInteractionCount from "../TweetInteractionCount/TweetInteractionCount";
+import RetweetsCount from "../TweetInteractionCount/RetweetsCount/RetweetsCount";
+import QuotesCount from "../TweetInteractionCount/QuotesCount/QuotesCount";
+import LikesCount from "../TweetInteractionCount/LikesCount/LikesCount";
+import TweetHeader from "../TweetHeader/TweetHeader";
+import ReplyIconButton from "../ReplyIconButton/ReplyIconButton";
 
 window.scrollTo = jest.fn();
 
@@ -36,7 +42,6 @@ describe("FullTweet", () => {
     beforeEach(() => {
         mockDispatchFn = mockDispatch();
         jest.spyOn(ReactRouter, "useParams").mockReturnValue({id: "9"});
-        jest.spyOn(routeData, "useLocation");
         jest.spyOn(routeData, "useLocation").mockReturnValue({
             pathname: MODAL,
             hash: "",
@@ -51,10 +56,10 @@ describe("FullTweet", () => {
         expect(wrapper.find(Spinner).exists()).toBe(true);
         expect(mockDispatchFn).nthCalledWith(1, {payload: 9, type: TweetActionType.FETCH_TWEET_DATA});
     });
-    
+
     it("should render FullTweet loaded success and replies loading", () => {
         const wrapper = mountWithStore(<FullTweet/>, {
-            ...mockStore, 
+            ...mockStore,
             tweet: {...mockStore.tweet, repliesLoadingState: LoadingStatus.LOADING}
         });
 
@@ -73,7 +78,7 @@ describe("FullTweet", () => {
         expect(wrapper.find(Quote).prop("quoteTweet")).toBe(mockFullTweet.quoteTweet);
         expect(wrapper.find(Quote).prop("isTweetQuoted")).toBe(true);
         expect(wrapper.find(Quote).prop("isFullTweet")).toBe(true);
-        expect(wrapper.find(SmallLinkPreview).prop("tweet")).toBe(mockFullTweet);
+        expect(wrapper.find(SmallLinkPreview).prop("link")).toBe(mockFullTweet.link);
         expect(wrapper.find(SmallLinkPreview).prop("isFullTweet")).toBe(true);
         expect(wrapper.text().includes(`${mockFullTweet.retweetsCount}`)).toBe(true);
         expect(wrapper.text().includes(`${mockFullTweet.likedTweetsCount}`)).toBe(true);
@@ -103,93 +108,58 @@ describe("FullTweet", () => {
 
     it("should click retweet on FullTweet", () => {
         const wrapper = mountWithStore(<FullTweet/>, mockStore);
-        const retweetIconButton = wrapper.find(IconButton).at(2);
-        retweetIconButton.simulate("click");
-
-        expect(mockDispatchFn).nthCalledWith(3, {payload: 9, type: TweetsActionType.RETWEET});
+        wrapper.find(RetweetIconButton).find(IconButton).simulate("click");
+        expect(mockDispatchFn).nthCalledWith(3, {payload: {tweetId: 9}, type: TweetsActionType.RETWEET});
     });
 
     it("should click like tweet on FullTweet", () => {
         const wrapper = mountWithStore(<FullTweet/>, mockStore);
-        const likeIconButton = wrapper.find(IconButton).at(3);
-        likeIconButton.simulate("click");
-        
-        expect(mockDispatchFn).nthCalledWith(3, {payload: 9, type: TweetsActionType.LIKE_TWEET});
+        wrapper.find(LikeIconButton).find(IconButton).simulate("click");
+        expect(mockDispatchFn).nthCalledWith(3, {payload: {tweetId: 9}, type: TweetsActionType.LIKE_TWEET});
     });
 
     it("should click open Retweets Modal Window on FullTweet", () => {
         const wrapper = mountWithStore(<FullTweet/>, mockStore);
-        const retweetsModalButton = wrapper.find("a").at(3);
-        retweetsModalButton.simulate("click");
+        wrapper.find(TweetInteractionCount).find(RetweetsCount).find("a").simulate("click");
 
-        expect(wrapper.find(UsersListModal).prop("tweetId")).toBe(9);
-        expect(wrapper.find(UsersListModal).prop("usersListModalAction")).toBe(UsersListModalAction.RETWEETED);
-        expect(wrapper.find(UsersListModal).prop("visible")).toBe(true);
+        expect(wrapper.find(UsersListModal).at(0).prop("tweetId")).toBe(9);
+        expect(wrapper.find(UsersListModal).at(0).prop("usersListModalAction")).toBe(UsersListModalAction.RETWEETED);
+        expect(wrapper.find(UsersListModal).at(0).prop("visible")).toBe(true);
     });
 
     it("should click Quote Tweets", () => {
         const history = createMemoryHistory();
         const pushSpy = jest.spyOn(history, "push");
         const wrapper = mountWithStore(<FullTweet/>, mockStore, history);
-        wrapper.find("a").at(4).simulate("click");
-        
+        wrapper.find(TweetInteractionCount).find(QuotesCount).find("a").simulate("click");
+
         expect(pushSpy).toHaveBeenCalled();
         expect(pushSpy).toHaveBeenCalledWith(`${QUOTES}/9`);
     });
 
     it("should click open Liked Modal Window on FullTweet", () => {
         const wrapper = mountWithStore(<FullTweet/>, mockStore);
-        const likedModalButton = wrapper.find("a").at(5);
-        likedModalButton.simulate("click");
+        wrapper.find(TweetInteractionCount).find(LikesCount).find("a").simulate("click");
 
-        expect(wrapper.find(UsersListModal).prop("tweetId")).toBe(9);
-        expect(wrapper.find(UsersListModal).prop("usersListModalAction")).toBe(UsersListModalAction.LIKED);
-        expect(wrapper.find(UsersListModal).prop("visible")).toBe(true);
+        expect(wrapper.find(UsersListModal).at(1).prop("tweetId")).toBe(9);
+        expect(wrapper.find(UsersListModal).at(1).prop("usersListModalAction")).toBe(UsersListModalAction.LIKED);
+        expect(wrapper.find(UsersListModal).at(1).prop("visible")).toBe(true);
     });
 
     it("should click open Liked Modal Window on FullTweet and close", () => {
         const wrapper = mountWithStore(<FullTweet/>, mockStore);
-        const likedModalButton = wrapper.find("a").at(5);
-        likedModalButton.simulate("click");
-        wrapper.find(UsersListModal).find(CloseButton).find(IconButton).simulate("click");
-        
-        expect(wrapper.find(UsersListModal).prop("tweetId")).toBe(9);
-        expect(wrapper.find(UsersListModal).prop("usersListModalAction")).toBe(UsersListModalAction.LIKED);
-        expect(wrapper.find(UsersListModal).prop("visible")).toBe(false);
-    });
+        wrapper.find(TweetInteractionCount).find(LikesCount).find("a").simulate("click");
+        wrapper.find(UsersListModal).at(1).find(CloseButton).find(IconButton).simulate("click");
 
-    it("should click open Tweet Analytics Modal Window", () => {
-        const wrapper = mountWithStore(<FullTweet/>, {
-            ...mockStore,
-            tweet: {...mockStore.tweet, tweet: mockMyFullTweet}
-        });
-        wrapper.find(TweetComponentActions).find(IconButton).at(0).simulate("click");
-        wrapper.find(TweetComponentActions).find("#tweetAnalytics").at(0).simulate("click");
-
-        expect(wrapper.find(TweetAnalyticsModal).at(0).prop("tweet")).toBe(mockMyFullTweet);
-        expect(wrapper.find(TweetAnalyticsModal).at(0).prop("visible")).toBe(true);
-        expect(wrapper.find(TweetAnalyticsModal).at(0).text().includes("Tweet Analytics")).toBe(true);
-    });
-
-    it("should click close Tweet Analytics Modal Window", () => {
-        const wrapper = mountWithStore(<FullTweet/>, {
-            ...mockStore,
-            tweet: {...mockStore.tweet, tweet: mockMyFullTweet}
-        });
-        wrapper.find(TweetComponentActions).find(IconButton).at(0).simulate("click");
-        wrapper.find(TweetComponentActions).find("#tweetAnalytics").at(0).simulate("click");
-        wrapper.find(TweetAnalyticsModal).find(CloseButton).find(IconButton).simulate("click");
-
-        expect(wrapper.find(TweetAnalyticsModal).at(0).prop("tweet")).toBe(mockMyFullTweet);
-        expect(wrapper.find(TweetAnalyticsModal).at(0).prop("visible")).toBe(false);
-        expect(wrapper.find(TweetAnalyticsModal).at(0).text().includes("Tweet Analytics")).toBe(false);
+        expect(wrapper.find(UsersListModal).at(1).prop("tweetId")).toBe(9);
+        expect(wrapper.find(UsersListModal).at(1).prop("usersListModalAction")).toBe(UsersListModalAction.LIKED);
+        expect(wrapper.find(UsersListModal).at(1).prop("visible")).toBe(false);
     });
 
     it("should hover username and render Popper User Window", () => {
         jest.useFakeTimers();
         const wrapper = mountWithStore(<FullTweet/>, mockStore);
-        const userFullName = wrapper.find("#userInfo").at(0);
-        userFullName.simulate("mouseenter");
+        wrapper.find(TweetHeader).find("#userInfo").at(0).simulate("mouseenter");
         jest.runAllTimers();
         wrapper.update();
 
@@ -200,37 +170,37 @@ describe("FullTweet", () => {
     it("should hover reply icon and render Hover Action", () => {
         jest.useFakeTimers();
         const wrapper = mountWithStore(<FullTweet/>, mockStore);
-        wrapper.find(IconButton).at(1).simulate("mouseenter");
-        jest.runAllTimers();
-        wrapper.update();
-        
-        expect(wrapper.find(HoverAction).exists()).toBeTruthy();
-        expect(wrapper.find(HoverAction).at(1).prop("visible")).toBe(true);
-        expect(wrapper.find(HoverAction).at(1).prop("actionText")).toBe("Reply");
-    });
-
-    it("should hover retweet icon and render Hover Action", () => {
-        jest.useFakeTimers();
-        const wrapper = mountWithStore(<FullTweet/>, mockStore);
-        wrapper.find(IconButton).at(2).simulate("mouseenter");
+        wrapper.find(ReplyIconButton).find(IconButton).simulate("mouseenter");
         jest.runAllTimers();
         wrapper.update();
 
         expect(wrapper.find(HoverAction).exists()).toBeTruthy();
         expect(wrapper.find(HoverAction).at(2).prop("visible")).toBe(true);
-        expect(wrapper.find(HoverAction).at(2).prop("actionText")).toBe("Undo Retweet");
+        expect(wrapper.find(HoverAction).at(2).prop("actionText")).toBe("Reply");
     });
 
-    it("should hover like icon and render Hover Action", () => {
+    it("should hover retweet icon and render Hover Action", () => {
         jest.useFakeTimers();
         const wrapper = mountWithStore(<FullTweet/>, mockStore);
-        wrapper.find(IconButton).at(3).simulate("mouseenter");
+        wrapper.find(RetweetIconButton).find(IconButton).simulate("mouseenter");
         jest.runAllTimers();
         wrapper.update();
 
         expect(wrapper.find(HoverAction).exists()).toBeTruthy();
         expect(wrapper.find(HoverAction).at(3).prop("visible")).toBe(true);
-        expect(wrapper.find(HoverAction).at(3).prop("actionText")).toBe("Unlike");
+        expect(wrapper.find(HoverAction).at(3).prop("actionText")).toBe("Undo Retweet");
+    });
+
+    it("should hover like icon and render Hover Action", () => {
+        jest.useFakeTimers();
+        const wrapper = mountWithStore(<FullTweet/>, mockStore);
+        wrapper.find(LikeIconButton).find(IconButton).simulate("mouseenter");
+        jest.runAllTimers();
+        wrapper.update();
+
+        expect(wrapper.find(HoverAction).exists()).toBeTruthy();
+        expect(wrapper.find(HoverAction).at(4).prop("visible")).toBe(true);
+        expect(wrapper.find(HoverAction).at(4).prop("actionText")).toBe("Unlike");
     });
 
     it("should reset FullTweet State", () => {
@@ -243,9 +213,9 @@ describe("FullTweet", () => {
     it("should open YouTubeVideo", () => {
         const wrapper = mountWithStore(<FullTweet/>, mockStore);
         expect(wrapper.find(YouTubeVideo).exists()).toBeFalsy();
-        
+
         wrapper.find(SmallLinkPreview).find("#openYouTubeVideo").simulate("click");
-        
+
         expect(wrapper.find(YouTubeVideo).exists()).toBeTruthy();
     });
 

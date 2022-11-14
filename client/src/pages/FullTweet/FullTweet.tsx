@@ -69,7 +69,7 @@ const FullTweet = (): ReactElement | null => {
         if (params.id) {
             dispatch(fetchTweetData(parseInt(params.id)));
 
-            stompClient = Stomp.over(new SockJS(WS_URL));
+            stompClient = Stomp.over(() => new SockJS(WS_URL));
             stompClient.connect({}, () => {
                 stompClient?.subscribe(`/topic/tweet/${params.id}`, (response) => {
                     dispatch(updateTweetData(JSON.parse(response.body)));
