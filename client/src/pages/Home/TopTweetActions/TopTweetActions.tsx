@@ -43,7 +43,7 @@ const TopTweetActions: FC<TopTweetActionsProps> = (
                         onClick={handleClickTopTweetActions}
                     />
                 </div>
-                {!openTopTweetActions ? null : (
+                {openTopTweetActions && (
                     <div className={classes.dropdown}>
                         <div className={classes.dropdownHeader}>
                             <div className={classes.dropdownHeaderImage}>

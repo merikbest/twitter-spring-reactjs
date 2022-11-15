@@ -14,6 +14,7 @@ import {mockUser} from "../../../util/mockData/mockData";
 import Welcome from "../../../components/Welcome/Welcome";
 import {HOME} from "../../../util/pathConstants";
 import {LoadingStatus} from "../../../store/types/common";
+import ActionIconButton from "../../../components/ActionIconButton/ActionIconButton";
 
 window.scrollTo = jest.fn();
 
@@ -50,30 +51,21 @@ describe("Home", () => {
         expect(wrapper.find(TweetComponent).length).toEqual(2);
     });
 
-    it("should fetch followers tweets", () => {
-        // @ts-ignore
-        jest.spyOn(React, "useState").mockImplementationOnce(() => useState([true, jest.fn()]));
-        mountWithStore(<Home/>, createMockRootState(), history);
-
-        expect(mockDispatchFn).nthCalledWith(3, {payload: 0, type: TweetsActionType.FETCH_FOLLOWERS_TWEETS});
-    });
-
     it("should fetch Latest Tweets", () => {
         const wrapper = mountWithStore(<Home/>, mockStore, history);
-        wrapper.find(TopTweetActions).find(IconButton).simulate("click");
+        wrapper.find(TopTweetActions).find(ActionIconButton).find(IconButton).simulate("click");
         wrapper.find(TopTweetActions).find("#switchTweets").at(0).simulate("click");
 
         expect(mockDispatchFn).nthCalledWith(5, {payload: 0, type: TweetsActionType.FETCH_FOLLOWERS_TWEETS});
     });
 
     it("should fetch Top Tweets", () => {
-        // @ts-ignore
-        jest.spyOn(React, "useState").mockImplementationOnce(() => useState([true, jest.fn()]));
         const wrapper = mountWithStore(<Home/>, mockStore, history);
-        wrapper.find(TopTweetActions).find(IconButton).simulate("click");
+        wrapper.find(TopTweetActions).find(ActionIconButton).find(IconButton).simulate("click");
+        wrapper.find(TopTweetActions).find("#switchTweets").at(0).simulate("click");
         wrapper.find(TopTweetActions).find("#switchTweets").at(0).simulate("click");
 
-        expect(mockDispatchFn).nthCalledWith(5, {payload: 0, type: TweetsActionType.FETCH_TWEETS});
+        expect(mockDispatchFn).nthCalledWith(7, {payload: 0, type: TweetsActionType.FETCH_TWEETS});
     });
 
     it("should reset Home State", () => {

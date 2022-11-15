@@ -95,10 +95,7 @@ describe("PopperListWindow", () => {
                     wallpaper: {src: "testwallpaper"},
                     listOwner: {
                         ...mockUserFullList.listOwner,
-                        avatar: {
-                            ...mockUserFullList.listOwner.avatar,
-                            src: null
-                        },
+                        avatar: undefined,
                     }
                 }
             }
@@ -108,5 +105,4 @@ describe("PopperListWindow", () => {
         expect(wrapper.find(Avatar).at(0).prop("src")).toBe(DEFAULT_PROFILE_IMG);
         expect(wrapper.find("img").at(0).prop("src")).toBe("testwallpaper");
     });
-    // |     100 |    79.02 |     100 |     100 | 32-35,66-119
 });
