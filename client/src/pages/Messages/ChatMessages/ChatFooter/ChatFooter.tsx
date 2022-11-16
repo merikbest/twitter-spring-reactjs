@@ -8,7 +8,6 @@ import {EmojiIcon, GifIcon, MediaIcon, SendMessageIcon} from "../../../../icons"
 import {MessageInput} from "../../MessageInput/MessageInput";
 import {useChatFooterStyles} from "./ChatFooterStyles";
 import {addChatMessage} from "../../../../store/ducks/chatMessages/actionCreators";
-import {MessagesAction} from "../../ActionIcon/useMessageHoverAction";
 import ActionIcon from "../../ActionIcon/ActionIcon";
 
 interface ChatFooterProps {
@@ -55,17 +54,13 @@ const ChatFooter: FC<ChatFooterProps> = ({chatId}): ReactElement => {
     return (
         <Paper className={classes.chatFooter}>
             <ActionIcon
-                messageAction={MessagesAction.MEDIA}
                 actionText={"Media"}
-                visibleAction={"visibleMediaAction"}
                 className={"chatIcon"}
                 icon={MediaIcon}
                 positionTop
             />
             <ActionIcon
-                messageAction={MessagesAction.GIF}
                 actionText={"GIF"}
-                visibleAction={"visibleGIFAction"}
                 className={"chatIcon"}
                 icon={GifIcon}
                 positionTop
@@ -79,9 +74,7 @@ const ChatFooter: FC<ChatFooterProps> = ({chatId}): ReactElement => {
             />
             <div id={"handleOpenPopup"} onClick={handleOpenPopup}>
                 <ActionIcon
-                    messageAction={MessagesAction.EMOJI}
                     actionText={"Emoji"}
-                    visibleAction={"visibleEmojiAction"}
                     className={"emojiIcon"}
                     icon={EmojiIcon}
                     positionTop
@@ -90,9 +83,7 @@ const ChatFooter: FC<ChatFooterProps> = ({chatId}): ReactElement => {
             <div style={{marginLeft: 8}}>
                 <ActionIcon
                     onClick={onSendMessage}
-                    messageAction={MessagesAction.SEND}
                     actionText={"Send"}
-                    visibleAction={"visibleSendAction"}
                     className={"chatIcon"}
                     icon={SendMessageIcon}
                     disabled={message.length === 0}
@@ -107,12 +98,7 @@ const ChatFooter: FC<ChatFooterProps> = ({chatId}): ReactElement => {
                 anchorOrigin={{vertical: "bottom", horizontal: "center"}}
                 transformOrigin={{vertical: "top", horizontal: "center"}}
             >
-                <Picker
-                    title=""
-                    emoji="wave"
-                    onSelect={(emojiTag) => addEmoji(emojiTag)}
-                    set="twitter"
-                />
+                <Picker title="" emoji="wave" onSelect={addEmoji} set="twitter"/>
             </Popover>
         </Paper>
     );

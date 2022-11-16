@@ -10,8 +10,11 @@ import {MessageInput} from "../../MessageInput/MessageInput";
 import {ChatMessagesActionsType} from "../../../../store/ducks/chatMessages/contracts/actionTypes";
 import {LoadingStatus} from "../../../../store/types/common";
 
+window.HTMLElement.prototype.scrollIntoView = () => {};
+
 describe("ChatMessages", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
+    const mockChat = mockChats[0];
     const mockParticipant = mockChats[0].participants[0];
     const mockChatMessagesStore = {
         ...mockStore,
@@ -26,7 +29,7 @@ describe("ChatMessages", () => {
 
     it("should render correctly no messages selected", () => {
         const wrapper = mountWithStore(
-            <ChatMessages onOpenModalWindow={jest.fn()} chatEndRef={null}/>,
+            <ChatMessages chatId={mockChat.id}/>,
             mockChatMessagesStore);
 
         expect(wrapper.text().includes("You don’t have a message selected")).toBe(true);
@@ -42,7 +45,7 @@ describe("ChatMessages", () => {
             chatMessages: {...mockStore.chatMessages, items: mockMessages},
         };
         const wrapper = mountWithStore(
-            <ChatMessages onOpenModalWindow={jest.fn()} chatEndRef={null} participant={mockParticipant}/>,
+            <ChatMessages participantId={mockParticipant.id} chatId={mockChat.id}/>,
             mockChatMessagesStore);
 
         expect(wrapper.find(Spinner).exists()).toBe(true);
@@ -50,7 +53,7 @@ describe("ChatMessages", () => {
 
     it("should open/close Popup", (done) => {
         const wrapper = mountWithStore(
-            <ChatMessages onOpenModalWindow={jest.fn()} chatEndRef={null} participant={mockParticipant}/>,
+            <ChatMessages participantId={mockParticipant.id} chatId={mockChat.id}/>,
             mockChatMessagesStore);
         expect(wrapper.find(Popover).prop("open")).toBe(false);
         expect(wrapper.find(Popover).prop("id")).toBe(undefined);
@@ -71,12 +74,7 @@ describe("ChatMessages", () => {
 
     it("should add Emoji and send message", () => {
         const wrapper = mountWithStore(
-            <ChatMessages
-                onOpenModalWindow={jest.fn()}
-                chatEndRef={null}
-                participant={mockParticipant}
-                chat={mockChats[0]}
-            />,
+            <ChatMessages participantId={mockParticipant.id} chatId={mockChat.id}/>,
             mockChatMessagesStore);
 
         wrapper.find("#handleOpenPopup").simulate("click");
@@ -84,10 +82,17 @@ describe("ChatMessages", () => {
         expect(wrapper.find(MessageInput).prop("value")).toBe(" 👍");
         
         wrapper.find(IconButton).at(4).simulate("click");
-        expect(mockDispatchFn).nthCalledWith(1, {
+        expect(mockDispatchFn).nthCalledWith(5, {
             payload: {chatId: 1, text: " :+1:"},
             type: ChatMessagesActionsType.ADD_CHAT_MESSAGE
         });
     });
-    // |   91.54 |    54.95 |   57.14 |   91.04 | 133,320-374
+
+    it("should unmount ChatMessages", () => {
+        const wrapper = mountWithStore(
+            <ChatMessages participantId={mockParticipant.id} chatId={mockChat.id}/>,
+            mockChatMessagesStore);
+        wrapper.unmount();
+        expect(mockDispatchFn).nthCalledWith(5, {type: ChatMessagesActionsType.RESET_CHAT_MESSAGES});
+    });
 });

@@ -8,7 +8,6 @@ import {MESSAGES} from "../../../../util/pathConstants";
 import {DetailsIcon} from "../../../../icons";
 import {useGlobalStyles} from "../../../../util/globalClasses";
 import {useChatHeaderStyles} from "./ChatHeaderStyles";
-import {MessagesAction} from "../../ActionIcon/useMessageHoverAction";
 import ActionIcon from "../../ActionIcon/ActionIcon";
 import {selectUserProfile} from "../../../../store/ducks/userProfile/selectors";
 
@@ -34,9 +33,7 @@ const ChatHeader = memo((): ReactElement => {
             <div className={classes.iconGroup}>
                 <ActionIcon
                     path={`${MESSAGES}/${chatParticipant?.id}/info`}
-                    messageAction={MessagesAction.DETAILS}
                     actionText={"Details"}
-                    visibleAction={"visibleDetailsAction"}
                     className={"icon"}
                     icon={DetailsIcon}
                 />

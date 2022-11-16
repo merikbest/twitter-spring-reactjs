@@ -21,6 +21,10 @@ import {MessageInput} from "../MessageInput/MessageInput";
 import {PeopleSearchInput} from "../PeopleSearchInput/PeopleSearchInput";
 import {HOME, MESSAGES} from "../../../util/pathConstants";
 import {LoadingStatus} from "../../../store/types/common";
+import ChatParticipant from "../ChatParticipant/ChatParticipant";
+import {ChatActionsType} from "../../../store/ducks/chat/contracts/actionTypes";
+import {UserProfileActionsType} from "../../../store/ducks/userProfile/contracts/actionTypes";
+import EmptyChatMessages from "../ChatMessages/EmptyChatMessages/EmptyChatMesseges";
 
 window.scrollTo = jest.fn();
 
@@ -65,18 +69,20 @@ describe("Messages", () => {
     });
 
     it("should fetch chat messages", () => {
-        const history = createMemoryHistory();
-        const pushSpy = jest.spyOn(history, "push");
+        const history = createMemoryHistory({
+            initialEntries: [{pathname: MESSAGES, search: "", hash: "", state: undefined}]
+        });
         const wrapper = mountWithStore(<Messages/>, mockChatsStore, history);
-        wrapper.find(ListItem).at(0).simulate("click");
-
-        expect(pushSpy).toHaveBeenCalled();
-        expect(pushSpy).toHaveBeenCalledWith(MESSAGES);
-        expect(wrapper.find(ListItem).at(0).prop("id")).toBe("selected");
+        expect(wrapper.find(ChatParticipant).find(ListItem).prop("selected")).toBe(false);
+        wrapper.find(ChatParticipant).find(ListItem).simulate("click");
+        expect(wrapper.find(ChatParticipant).find(ListItem).prop("selected")).toBe(true);
         expect(mockDispatchFn).nthCalledWith(1, {type: ChatsActionsType.FETCH_CHATS});
         expect(mockDispatchFn).nthCalledWith(2, {type: ChatMessagesActionsType.RESET_CHAT_MESSAGES});
-        expect(mockDispatchFn).nthCalledWith(3, {payload: 1, type: ChatMessagesActionsType.FETCH_CHAT_MESSAGES});
-        expect(mockDispatchFn).nthCalledWith(4, {payload: 1, type: UserActionsType.FETCH_READ_MESSAGES});
+        expect(mockDispatchFn).nthCalledWith(3, {payload: 1, type: ChatActionsType.FETCH_CHAT});
+        expect(mockDispatchFn).nthCalledWith(4, {
+            payload: {participantId: 1, chatId: 1},
+            type: UserProfileActionsType.FETCH_CHAT_PARTICIPANT
+        });
         expect(mockDispatchFn).nthCalledWith(5, {payload: 1, type: ChatMessagesActionsType.FETCH_CHAT_MESSAGES});
         expect(mockDispatchFn).nthCalledWith(6, {payload: 1, type: UserActionsType.FETCH_READ_MESSAGES});
     });
@@ -103,12 +109,11 @@ describe("Messages", () => {
             }]
         });
         const wrapper = mountWithStore(<Messages/>, mockChatsStore, history);
-
-        wrapper.find(ChatMessages).find(Button).at(0).simulate("click");
-        expect(wrapper.find(MessagesModal).prop("visible")).toBe(true);
-
+        expect(wrapper.find(EmptyChatMessages).find(MessagesModal).prop("visible")).toBe(false);
+        wrapper.find(ChatMessages).find(EmptyChatMessages).find(Button).at(0).simulate("click");
+        expect(wrapper.find(EmptyChatMessages).find(MessagesModal).prop("visible")).toBe(true);
         wrapper.find(MessagesModal).find(CloseButton).find(IconButton).simulate("click");
-        expect(wrapper.find(MessagesModal).prop("visible")).toBe(false);
+        expect(wrapper.find(EmptyChatMessages).find(MessagesModal).prop("visible")).toBe(false);
     });
 
     it("should click block participant", () => {
@@ -124,12 +129,12 @@ describe("Messages", () => {
             }]
         });
         const wrapper = mountWithStore(<Messages/>, mockChatsStore, history);
-        wrapper.find(ListItem).at(0).simulate("click");
+        wrapper.find(ChatParticipant).find(ListItem).simulate("click");
         wrapper.find(ChatMessages).find(Link).at(0).simulate("click", {button: 0});
         wrapper.find(ConversationInfo).find("#onOpenBlockUserModal").simulate("click");
         wrapper.find(ConversationInfo).find(BlockUserModal).find(Button).at(0).simulate("click");
 
-        expect(mockDispatchFn).nthCalledWith(6, {
+        expect(mockDispatchFn).nthCalledWith(11, {
             payload: {userId: 2},
             type: UserActionsType.PROCESS_USER_TO_BLOCKLIST
         });
@@ -186,12 +191,16 @@ describe("Messages", () => {
     });
 
     it("should reset Messages State", () => {
+        jest.spyOn(routeData, "useLocation").mockReturnValue({
+            pathname: MESSAGES, hash: "", search: "", state: {removeParticipant: false}
+        });
         const wrapper = mountWithStore(<Messages/>, mockChatsStore);
         wrapper.unmount();
 
-        expect(mockDispatchFn).nthCalledWith(3, {type: ChatsActionsType.RESET_CHATS_STATE});
+        expect(mockDispatchFn).nthCalledWith(2, {type: ChatsActionsType.RESET_CHATS_STATE});
+        expect(mockDispatchFn).nthCalledWith(3, {type: ChatActionsType.RESET_CHAT_STATE});
     });
-    
+
     const processHoverAction = (actionIndex: number, actionText: string): void => {
         jest.useFakeTimers();
         jest.spyOn(routeData, "useLocation").mockReturnValue({

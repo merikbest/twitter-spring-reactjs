@@ -23,7 +23,7 @@ describe("MessagesModalUser", () => {
         expect(wrapper.find(Avatar).prop("src")).toBe(mockUser.avatar.src);
         expect(wrapper.text().includes(mockUser.fullName)).toBe(true);
         expect(wrapper.text().includes(`@${mockUser.username}`)).toBe(true);
-        expect(wrapper.find("#privateProfile").at(0).exists()).toBeFalsy();
+        expect(wrapper.find("#lockIcon").at(0).exists()).toBeFalsy();
     });
 
     it("should render private user profile", () => {
@@ -31,13 +31,11 @@ describe("MessagesModalUser", () => {
             ...mockStore, 
             isPrivateProfile: true,
             isMutedDirectMessages: true,
-            avatar: {
-                src: undefined
-            }
+            avatar: undefined
         } as unknown as UserResponse;
         const wrapper = mountWithStore(<MessagesModalUser user={mockPrivateUserStore}/>, mockStore);
 
         expect(wrapper.find(Avatar).prop("src")).toBe(DEFAULT_PROFILE_IMG);
-        expect(wrapper.find("#privateProfile").at(0).exists()).toBeTruthy();
+        expect(wrapper.find("#lockIcon").at(0).exists()).toBeTruthy();
     });
 });

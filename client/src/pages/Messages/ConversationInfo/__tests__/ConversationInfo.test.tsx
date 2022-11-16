@@ -9,12 +9,12 @@ import Spinner from "../../../../components/Spinner/Spinner";
 import {UserProfileActionsType} from "../../../../store/ducks/userProfile/contracts/actionTypes";
 import BlockUserModal from "../../../../components/BlockUserModal/BlockUserModal";
 import {UserActionsType} from "../../../../store/ducks/user/contracts/actionTypes";
-import ActionSnackbar from "../../../../components/ActionSnackbar/ActionSnackbar";
 import UnfollowModal from "../../../../components/UnfollowModal/UnfollowModal";
 import LeaveFromConversationModal from "../LeaveFromConversationModal/LeaveFromConversationModal";
 import {ChatsActionsType} from "../../../../store/ducks/chats/contracts/actionTypes";
 import {MESSAGES} from "../../../../util/pathConstants";
 import {LoadingStatus} from "../../../../store/types/common";
+import {ActionSnackbarTypes} from "../../../../store/ducks/actionSnackbar/contracts/actionTypes";
 
 describe("ConversationInfo", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -29,12 +29,7 @@ describe("ConversationInfo", () => {
     });
 
     it("should render loading Spinner", () => {
-        const wrapper = mountWithStore(
-            <ConversationInfo
-                participantId={1}
-                chatId={1}
-                onBlockParticipant={jest.fn()}
-            />, createMockRootState());
+        const wrapper = mountWithStore(<ConversationInfo participantId={1} chatId={1}/>, createMockRootState());
 
         expect(wrapper.find(Spinner).exists()).toBe(true);
         expect(wrapper.text().includes("Conversation info")).toBe(true);
@@ -45,12 +40,7 @@ describe("ConversationInfo", () => {
     });
 
     it("should render ConversationInfo correctly", () => {
-        const wrapper = mountWithStore(
-            <ConversationInfo
-                participantId={1}
-                chatId={1}
-                onBlockParticipant={jest.fn()}
-            />, mockUserProfileStore);
+        const wrapper = mountWithStore(<ConversationInfo participantId={1} chatId={1}/>, mockUserProfileStore);
 
         expect(wrapper.find(Avatar).prop("src")).toBe(mockUserProfile.avatar.src);
         expect(wrapper.text().includes(mockUserProfile.fullName)).toBe(true);
@@ -64,15 +54,9 @@ describe("ConversationInfo", () => {
     });
 
     it("should block participant", () => {
-        const wrapper = mountWithStore(
-            <ConversationInfo
-                participantId={1}
-                chatId={1}
-                onBlockParticipant={jest.fn()}
-            />, mockUserProfileStore);
+        const wrapper = mountWithStore(<ConversationInfo participantId={1} chatId={1}/>, mockUserProfileStore);
 
         expect(wrapper.find(BlockUserModal).prop("visible")).toBe(false);
-        expect(wrapper.find(ActionSnackbar).prop("openSnackBar")).toBe(false);
 
         wrapper.find("#onOpenBlockUserModal").simulate("click");
 
@@ -84,17 +68,14 @@ describe("ConversationInfo", () => {
             payload: {userId: 1},
             type: UserActionsType.PROCESS_USER_TO_BLOCKLIST
         });
-        expect(wrapper.find(ActionSnackbar).prop("openSnackBar")).toBe(true);
-        expect(wrapper.find(ActionSnackbar).prop("snackBarMessage")).toBe(`@${mockUserProfile?.username!} has been blocked.`);
+        expect(mockDispatchFn).nthCalledWith(3, {
+            payload: `@${mockUserProfile?.username!} has been blocked.`,
+            type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
+        });
     });
 
     it("should close block modal window", () => {
-        const wrapper = mountWithStore(
-            <ConversationInfo
-                participantId={1}
-                chatId={1}
-                onBlockParticipant={jest.fn()}
-            />, mockUserProfileStore);
+        const wrapper = mountWithStore(<ConversationInfo participantId={1} chatId={1}/>, mockUserProfileStore);
 
         expect(wrapper.find(BlockUserModal).prop("visible")).toBe(false);
 
@@ -108,12 +89,7 @@ describe("ConversationInfo", () => {
     });
 
     it("should open unfollow modal and unfollow participant", () => {
-        const wrapper = mountWithStore(
-            <ConversationInfo
-                participantId={1}
-                chatId={1}
-                onBlockParticipant={jest.fn()}
-            />, mockUserProfileStore);
+        const wrapper = mountWithStore(<ConversationInfo participantId={1} chatId={1}/>, mockUserProfileStore);
 
         expect(wrapper.find(Button).text().includes("Following")).toBe(true);
         expect(wrapper.find(UnfollowModal).prop("visible")).toBe(false);
@@ -142,12 +118,7 @@ describe("ConversationInfo", () => {
             ...mockStore,
             userProfile: {...mockStore.userProfile, user: {...mockUserProfile, isPrivateProfile: true}},
         };
-        const wrapper = mountWithStore(
-            <ConversationInfo
-                participantId={1}
-                chatId={1}
-                onBlockParticipant={jest.fn()}
-            />, mockUserProfileStore);
+        const wrapper = mountWithStore(<ConversationInfo participantId={1} chatId={1}/>, mockUserProfileStore);
 
         expect(wrapper.find(Button).text().includes("Following")).toBe(true);
         expect(wrapper.find(UnfollowModal).prop("visible")).toBe(false);
@@ -166,12 +137,7 @@ describe("ConversationInfo", () => {
     });
 
     it("should open unfollow modal and close", () => {
-        const wrapper = mountWithStore(
-            <ConversationInfo
-                participantId={1}
-                chatId={1}
-                onBlockParticipant={jest.fn()}
-            />, mockUserProfileStore);
+        const wrapper = mountWithStore(<ConversationInfo participantId={1} chatId={1}/>, mockUserProfileStore);
 
         expect(wrapper.find(Button).text().includes("Following")).toBe(true);
         expect(wrapper.find(UnfollowModal).prop("visible")).toBe(false);
@@ -189,12 +155,7 @@ describe("ConversationInfo", () => {
     it("should open leave conversation modal and leave", () => {
         const history = createMemoryHistory();
         const pushSpy = jest.spyOn(history, "push");
-        const wrapper = mountWithStore(
-            <ConversationInfo
-                participantId={1}
-                chatId={1}
-                onBlockParticipant={jest.fn()}
-            />, mockUserProfileStore, history);
+        const wrapper = mountWithStore(<ConversationInfo participantId={1} chatId={1}/>, mockUserProfileStore, history);
 
         expect(wrapper.find("#leaveFromConversation").text().includes("Leave conversation")).toBe(true);
         expect(wrapper.find(LeaveFromConversationModal).prop("visible")).toBe(false);
@@ -215,12 +176,7 @@ describe("ConversationInfo", () => {
     });
 
     it("should open leave conversation modal and close", () => {
-        const wrapper = mountWithStore(
-            <ConversationInfo
-                participantId={1}
-                chatId={1}
-                onBlockParticipant={jest.fn()}
-            />, mockUserProfileStore);
+        const wrapper = mountWithStore(<ConversationInfo participantId={1} chatId={1}/>, mockUserProfileStore);
 
         expect(wrapper.find("#leaveFromConversation").text().includes("Leave conversation")).toBe(true);
         expect(wrapper.find(LeaveFromConversationModal).prop("visible")).toBe(false);
@@ -240,12 +196,7 @@ describe("ConversationInfo", () => {
             ...mockStore,
             userProfile: {...mockStore.userProfile, user: {...mockUserProfile, isFollower: false}},
         };
-        const wrapper = mountWithStore(
-            <ConversationInfo
-                participantId={1}
-                chatId={1}
-                onBlockParticipant={jest.fn()}
-            />, mockUserProfileStore);
+        const wrapper = mountWithStore(<ConversationInfo participantId={1} chatId={1}/>, mockUserProfileStore);
 
         expect(wrapper.find(Button).text().includes("Follow")).toBe(true);
 
@@ -265,12 +216,7 @@ describe("ConversationInfo", () => {
                 user: {...mockUserProfile, isPrivateProfile: true, isFollower: false}
             },
         };
-        const wrapper = mountWithStore(
-            <ConversationInfo
-                participantId={1}
-                chatId={1}
-                onBlockParticipant={jest.fn()}
-            />, mockUserProfileStore);
+        const wrapper = mountWithStore(<ConversationInfo participantId={1} chatId={1}/>, mockUserProfileStore);
 
         expect(wrapper.find(Button).text().includes("Follow")).toBe(true);
 
@@ -283,12 +229,7 @@ describe("ConversationInfo", () => {
     });
 
     it("should unmount ConversationInfo", () => {
-        const wrapper = mountWithStore(
-            <ConversationInfo
-                participantId={1}
-                chatId={1}
-                onBlockParticipant={jest.fn()}
-            />, mockUserProfileStore);
+        const wrapper = mountWithStore(<ConversationInfo participantId={1} chatId={1}/>, mockUserProfileStore);
 
         wrapper.unmount();
 
@@ -303,12 +244,7 @@ describe("ConversationInfo", () => {
                 user: {...mockUserProfile, isFollower: false, isUserBlocked: true}
             },
         };
-        const wrapper = mountWithStore(
-            <ConversationInfo
-                participantId={1}
-                chatId={1}
-                onBlockParticipant={jest.fn()}
-            />, mockUserProfileStore);
+        const wrapper = mountWithStore(<ConversationInfo participantId={1} chatId={1}/>, mockUserProfileStore);
 
         expect(wrapper.find(Button).text().includes("Blocked")).toBe(true);
 
@@ -319,7 +255,7 @@ describe("ConversationInfo", () => {
         expect(wrapper.find(Button).text().includes("Blocked")).toBe(true);
         
         wrapper.find(Button).simulate("click");
-        expect(wrapper.find(BlockUserModal).prop("visible")).toBe(true);
+        expect(wrapper.find(BlockUserModal).prop("visible")).toBe(false);
     });
 
     it("should hover approve button", () => {
@@ -330,12 +266,7 @@ describe("ConversationInfo", () => {
                 user: {...mockUserProfile, isFollower: false, isWaitingForApprove: true}
             },
         };
-        const wrapper = mountWithStore(
-            <ConversationInfo
-                participantId={1}
-                chatId={1}
-                onBlockParticipant={jest.fn()}
-            />, mockUserProfileStore);
+        const wrapper = mountWithStore(<ConversationInfo participantId={1} chatId={1}/>, mockUserProfileStore);
 
         expect(wrapper.find(Button).text().includes("Pending")).toBe(true);
 

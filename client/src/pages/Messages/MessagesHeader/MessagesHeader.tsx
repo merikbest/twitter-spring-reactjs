@@ -3,7 +3,6 @@ import classnames from "classnames";
 import {Paper, Typography} from "@material-ui/core";
 
 import {MESSAGES_SETTINGS} from "../../../util/pathConstants";
-import {MessagesAction} from "../ActionIcon/useMessageHoverAction";
 import {NewMessageIcon, SettingsIcon} from "../../../icons";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {useMessagesHeaderStyles} from "./MessagesHeaderStyles";
@@ -24,17 +23,13 @@ const MessagesHeader = memo((): ReactElement => {
             <div className={classes.iconGroup}>
                 <ActionIcon
                     path={MESSAGES_SETTINGS}
-                    messageAction={MessagesAction.SETTINGS}
                     actionText={"Settings"}
-                    visibleAction={"visibleSettingsAction"}
                     className={"icon"}
                     icon={SettingsIcon}
                 />
                 <ActionIcon
                     onClick={onOpenModalWindow}
-                    messageAction={MessagesAction.NEW_MESSAGE}
                     actionText={"New message"}
-                    visibleAction={"visibleNewMessageAction"}
                     className={"icon"}
                     icon={NewMessageIcon}
                 />
