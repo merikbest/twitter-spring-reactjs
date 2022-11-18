@@ -1,5 +1,6 @@
 import React from "react";
 import {createMemoryHistory} from "history";
+import {Link} from "react-router-dom";
 
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
 import Spinner from "../../../../components/Spinner/Spinner";
@@ -11,6 +12,7 @@ import NotificationItem from "../NotificationItem/NotificationItem";
 import {PROFILE} from "../../../../util/pathConstants";
 import NotificationsPage from "../NotificationsPage";
 import {LoadingStatus} from "../../../../store/types/common";
+import LinkWrapper from "../../../../components/LinkWrapper/LinkWrapper";
 
 window.scrollTo = jest.fn();
 
@@ -84,7 +86,7 @@ describe("NotificationsPage", () => {
         const history = createMemoryHistory();
         const pushSpy = jest.spyOn(history, "push");
         const wrapper = mountWithStore(<NotificationsPage/>, mockNotificationsStore, history);
-        wrapper.find(NotificationItem).at(0).find("#clickUser").simulate("click");
+        wrapper.find(NotificationItem).at(0).find(LinkWrapper).at(1).find(Link).simulate("click", {button: 0});
         expect(pushSpy).toHaveBeenCalled();
         expect(pushSpy).toHaveBeenCalledWith(`${PROFILE}/${mockNotifications[0].user.id}`);
     });

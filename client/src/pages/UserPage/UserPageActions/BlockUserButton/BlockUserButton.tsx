@@ -1,4 +1,4 @@
-import React, {FC, memo, ReactElement, useState} from "react";
+import React, {memo, ReactElement, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {ListItem, Typography} from "@material-ui/core";
 
@@ -12,11 +12,7 @@ import {processUserToBlocklist} from "../../../../store/ducks/user/actionCreator
 import {setOpenSnackBar} from "../../../../store/ducks/actionSnackbar/actionCreators";
 import BlockUserModal from "../../../../components/BlockUserModal/BlockUserModal";
 
-interface BlockUserButtonProps {
-
-}
-
-const BlockUserButton: FC<BlockUserButtonProps> = memo(({}): ReactElement => {
+const BlockUserButton = memo((): ReactElement => {
     const dispatch = useDispatch();
     const userProfileId = useSelector(selectUserProfileId);
     const isUserBlocked = useSelector(selectUserProfileIsUserBlocked);

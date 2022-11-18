@@ -18,7 +18,6 @@ describe("UserImageModal", () => {
 
     it("should render image", () => {
         const wrapper = mountWithStore(<UserImageModal/>, createMockRootState());
-
         expect(wrapper.find("img").prop("src")).toBe(mockUser.avatar.src);
     });
 
@@ -34,11 +33,8 @@ describe("UserImageModal", () => {
         const history = createMemoryHistory();
         const pushSpy = jest.spyOn(history, "goBack");
         const wrapper = mountWithStore(<UserImageModal/>, createMockRootState(), history);
-
         expect(wrapper.find("img").exists()).toBeTruthy();
-
         wrapper.find(component).at(0).simulate("click");
-
         expect(pushSpy).toHaveBeenCalled();
         expect(wrapper.find("img").exists()).toBeFalsy();
     };

@@ -177,6 +177,9 @@ describe("Settings", () => {
     });
 
     it("should route correctly", () => {
+        jest.spyOn(routeData, "useLocation").mockReturnValue({
+            pathname: "", hash: "", search: "", state: ""
+        });
         const wrapper = createWrapper();
         const pathMap = wrapper.find(Route).reduce((pathMap: any, route) => {
             const routeProps = route.props();
@@ -250,6 +253,9 @@ describe("Settings", () => {
     };
 
     const testClickNavigation = (mockText: string, itemIndex: number): void => {
+        jest.spyOn(routeData, "useLocation").mockReturnValue({
+            pathname: "", hash: "", search: "", state: ""
+        });
         const wrapper = createWrapper();
         wrapper.find(ListItem).at(itemIndex).simulate("click");
         testListItems(wrapper, mockText, itemIndex);

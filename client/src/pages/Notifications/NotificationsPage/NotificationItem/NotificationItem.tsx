@@ -56,6 +56,7 @@ const NotificationItem: FC<NotificationItemProps> = memo(({notification}): React
                 <div style={{flex: 1}}>
                     <LinkWrapper path={`${PROFILE}/${notification.user.id!}`} visiblePopperWindow={visiblePopperWindow}>
                         <div
+                            id={"userInfo"}
                             onMouseEnter={() => handleHoverPopper(notification.user.id!)}
                             onMouseLeave={handleLeavePopper}
                         >

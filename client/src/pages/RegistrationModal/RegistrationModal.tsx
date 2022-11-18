@@ -85,7 +85,7 @@ const RegistrationModal: FC<RegistrationModalProps> = (
         let days = [];
 
         for (let i = 1; i <= 31; i++) {
-            days.push(<option value={i}>{i}</option>);
+            days.push(<option key={i} value={i}>{i}</option>);
         }
         return days;
     };
@@ -94,7 +94,7 @@ const RegistrationModal: FC<RegistrationModalProps> = (
         let years = [];
 
         for (let i = 2021; i >= 1901; i--) {
-            years.push(<option value={i}>{i}</option>);
+            years.push(<option key={i} value={i}>{i}</option>);
         }
         return years;
     };

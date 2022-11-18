@@ -12,6 +12,7 @@ import {DEFAULT_PROFILE_IMG} from "../../../../../util/url";
 import PopperUserWindow from "../../../../../components/PopperUserWindow/PopperUserWindow";
 import {NOTIFICATION, PROFILE} from "../../../../../util/pathConstants";
 import {LoadingStatus} from "../../../../../store/types/common";
+import LinkWrapper from "../../../../../components/LinkWrapper/LinkWrapper";
 
 describe("NotificationItem", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -24,28 +25,20 @@ describe("NotificationItem", () => {
     });
 
     it("should render follow NotificationItem", () => {
-        const wrapper = mountWithStore(
-            <NotificationItem
-                notification={mockNotificationFollow}
-                handleClickUser={jest.fn()}
-            />, mockStore);
+        const wrapper = mountWithStore(<NotificationItem notification={mockNotificationFollow}/>, mockStore);
 
-        expect(wrapper.find(Link).prop("to")).toBe(`${PROFILE}/${mockNotificationFollow.user.id}`);
+        expect(wrapper.find(LinkWrapper).at(1).find(Link).prop("to")).toBe(`${PROFILE}/${mockNotificationFollow.user.id}`);
         expect(wrapper.find("#follow").exists()).toBe(true);
-        expect(wrapper.find(Avatar).prop("alt")).toBe(`avatar ${mockNotificationFollow.id}`);
+        expect(wrapper.find(Avatar).prop("alt")).toBe(mockNotificationFollow.user.avatar.src);
         expect(wrapper.find(Avatar).prop("src")).toBe(mockNotificationFollow.user.avatar.src);
         expect(wrapper.text().includes(`${mockNotificationFollow.user.username} followed you`)).toBe(true);
     });
 
     it("should render like NotificationItem", () => {
         const mockNotificationLike = mockNotifications[1];
-        const wrapper = mountWithStore(
-            <NotificationItem
-                notification={mockNotificationLike}
-                handleClickUser={jest.fn()}
-            />, mockStore);
+        const wrapper = mountWithStore(<NotificationItem notification={mockNotificationLike}/>, mockStore);
 
-        expect(wrapper.find(Link).prop("to")).toBe(`${NOTIFICATION}/${mockNotificationLike.id}`);
+        expect(wrapper.find(LinkWrapper).at(0).find(Link).at(0).prop("to")).toBe(`${NOTIFICATION}/${mockNotificationLike.id}`);
         expect(wrapper.find("#like").exists()).toBe(true);
         expect(wrapper.text().includes(`${mockNotificationLike.user.username} liked your Tweet`)).toBe(true);
         expect(wrapper.text().includes("#myCat")).toBe(true);
@@ -59,11 +52,7 @@ describe("NotificationItem", () => {
             user: {...mockNotificationRetweet.user, avatar: {src: undefined}}
         } as unknown as NotificationResponse;
 
-        const wrapper = mountWithStore(
-            <NotificationItem
-                notification={mockRetweetUser}
-                handleClickUser={jest.fn()}
-            />, mockStore);
+        const wrapper = mountWithStore(<NotificationItem notification={mockRetweetUser}/>, mockStore);
 
         expect(wrapper.find("#retweet").exists()).toBe(true);
         expect(wrapper.find(Avatar).prop("src")).toBe(DEFAULT_PROFILE_IMG);
@@ -72,25 +61,19 @@ describe("NotificationItem", () => {
 
     it("should hover user link and click", () => {
         jest.useFakeTimers();
-        const mockHandleClickUser = jest.fn();
-        const wrapper = mountWithStore(
-            <NotificationItem
-                notification={mockNotificationFollow}
-                handleClickUser={mockHandleClickUser}
-            />, mockStore);
+        const wrapper = mountWithStore(<NotificationItem notification={mockNotificationFollow}/>, mockStore);
         
         expect(wrapper.find(PopperUserWindow).prop("visible")).toBe(false);
 
-        wrapper.find("#clickUser").simulate("mouseenter");
+        wrapper.find("#userInfo").simulate("mouseenter");
         jest.runAllTimers();
         wrapper.update();
 
         expect(wrapper.find(PopperUserWindow).prop("visible")).toBe(true);
 
-        wrapper.find("#clickUser").simulate("mouseleave");
+        wrapper.find("#userInfo").simulate("mouseleave");
         expect(wrapper.find(PopperUserWindow).prop("visible")).toBe(false);
 
-        wrapper.find("#clickUser").simulate("click");
-        expect(mockHandleClickUser).toHaveBeenCalled();
+        wrapper.find("#userInfo").simulate("click");
     });
 });

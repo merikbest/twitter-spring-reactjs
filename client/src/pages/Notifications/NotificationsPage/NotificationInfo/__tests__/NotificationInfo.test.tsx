@@ -41,9 +41,9 @@ describe("NotificationInfo", () => {
         expect(wrapper.text().includes("Liked")).toBe(true);
         expect(wrapper.text().includes(`by ${mockNotificationInfo.user.fullName}`)).toBe(true);
         expect(wrapper.find(TweetComponent).exists()).toBeTruthy();
-        expect(wrapper.find(TweetComponent).prop("item")).toBe(mockNotificationInfo.tweet);
+        expect(wrapper.find(TweetComponent).prop("tweet")).toBe(mockNotificationInfo.tweet);
         expect(wrapper.find(UsersItem).exists()).toBeTruthy();
-        expect(wrapper.find(UsersItem).prop("item")).toBe(mockNotificationInfo.user);
+        expect(wrapper.find(UsersItem).prop("user")).toBe(mockNotificationInfo.user);
         expect(wrapper.find(UsersItem).prop("size")).toBe(UserItemSize.MEDIUM);
     });
 

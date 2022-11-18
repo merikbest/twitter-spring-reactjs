@@ -38,7 +38,7 @@ describe("NotificationAuthorItem", () => {
     });
 
     it("should render default avatar image", () => {
-        const mockAuthor = {...mockTweetAuthor, avatar: {src: undefined}} as unknown as NotificationUserResponse;
+        const mockAuthor = {...mockTweetAuthor, avatar: undefined} as unknown as NotificationUserResponse;
         const wrapper = mountWithStore(<NotificationAuthorItem tweetAuthor={mockAuthor}/>, mockStore);
 
         expect(wrapper.find(Avatar).prop("src")).toBe(DEFAULT_PROFILE_IMG);

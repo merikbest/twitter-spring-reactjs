@@ -22,10 +22,10 @@ import CloseButton from "../../../components/CloseButton/CloseButton";
 import {UserActionsType} from "../../../store/ducks/user/contracts/actionTypes";
 import HoverAction from "../../../components/HoverAction/HoverAction";
 import {ChatsActionsType} from "../../../store/ducks/chats/contracts/actionTypes";
-import ActionSnackbar from "../../../components/ActionSnackbar/ActionSnackbar";
 import BlockUserModal from "../../../components/BlockUserModal/BlockUserModal";
 import {RootState} from "../../../store/store";
 import {LoadingStatus} from "../../../store/types/common";
+import {ActionSnackbarTypes} from "../../../store/ducks/actionSnackbar/contracts/actionTypes";
 
 window.scrollTo = jest.fn();
 
@@ -49,7 +49,7 @@ describe("UserPage", () => {
 
     beforeEach(() => {
         mockDispatchFn = mockDispatch();
-        jest.spyOn(ReactRouter, "useParams").mockReturnValue({id: "2"});
+        jest.spyOn(ReactRouter, "useParams").mockReturnValue({userId: "2"});
         jest.spyOn(routeData, "useLocation").mockReturnValue({
             pathname: `${PROFILE}/2`, hash: "", search: "", state: {isRegistered: false}
         });
@@ -93,7 +93,10 @@ describe("UserPage", () => {
         jest.spyOn(routeData, "useLocation").mockReturnValue({
             pathname: PROFILE + "/2", hash: "", search: "", state: {isRegistered: true}
         });
-        const wrapper = mountWithStore(<UserPage/>, createMockRootState());
+        const wrapper = mountWithStore(<UserPage/>, {
+            ...mockRootState,
+            user: {...mockRootState.user, status: LoadingStatus.LOADED}
+        });
         expect(wrapper.find(SetupProfileModal).exists()).toBe(true);
         expect(wrapper.find(SetupProfileModal).prop("visible")).toBe(true);
     });
@@ -262,7 +265,7 @@ describe("UserPage", () => {
 
         wrapper.find(Button).at(0).simulate("click");
 
-        expect(mockDispatchFn).nthCalledWith(4, {payload: {userId: 1}, type: UserActionsType.FOLLOW_USER});
+        expect(mockDispatchFn).nthCalledWith(4, {payload: 1, type: UserActionsType.PROCESS_FOLLOW_REQUEST});
     });
 
     it("should click Add User To Chat", () => {
@@ -283,9 +286,6 @@ describe("UserPage", () => {
 
     it("should click mute user", () => {
         const wrapper = mountWithStore(<UserPage/>, mockUserProfileState);
-
-        expect(wrapper.find(ActionSnackbar).at(1).prop("openSnackBar")).toBe(false);
-
         wrapper.find(IconButton).at(1).simulate("click");
         wrapper.find("#handleMuteUser").at(0).simulate("click");
 
@@ -293,8 +293,10 @@ describe("UserPage", () => {
             payload: {userId: 1},
             type: UserActionsType.PROCESS_USER_TO_MUTELIST
         });
-        expect(wrapper.find(ActionSnackbar).at(1).prop("openSnackBar")).toBe(true);
-        expect(wrapper.find(ActionSnackbar).at(1).prop("snackBarMessage")).toBe(`@${mockUserProfile.username} has been muted.`);
+        expect(mockDispatchFn).nthCalledWith(5, {
+            payload: `@${mockUserProfile.username} has been muted.`,
+            type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
+        });
     });
 
     it("should click unmute user", () => {
@@ -306,7 +308,6 @@ describe("UserPage", () => {
             }
         });
 
-        expect(wrapper.find(ActionSnackbar).at(1).prop("openSnackBar")).toBe(false);
         expect(wrapper.text().includes("You have muted Tweets from this account.")).toBe(true);
 
         wrapper.find("#unmuteUser").at(0).simulate("click");
@@ -315,15 +316,14 @@ describe("UserPage", () => {
             payload: {userId: 1},
             type: UserActionsType.PROCESS_USER_TO_MUTELIST
         });
-        expect(wrapper.find(ActionSnackbar).at(1).prop("openSnackBar")).toBe(true);
-        expect(wrapper.find(ActionSnackbar).at(1).prop("snackBarMessage")).toBe(`@${mockUserProfile.username} has been unmuted.`);
+        expect(mockDispatchFn).nthCalledWith(5, {
+            payload: `@${mockUserProfile.username} has been unmuted.`,
+            type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
+        });
     });
 
     it("should click block user", () => {
         const wrapper = mountWithStore(<UserPage/>, mockUserProfileState);
-
-        expect(wrapper.find(ActionSnackbar).at(1).prop("openSnackBar")).toBe(false);
-        expect(wrapper.find(BlockUserModal).prop("visible")).toBe(false);
 
         wrapper.find(IconButton).at(1).simulate("click");
         wrapper.find("#openBlockUserModal").at(0).simulate("click");
@@ -336,8 +336,10 @@ describe("UserPage", () => {
             payload: {userId: 1},
             type: UserActionsType.PROCESS_USER_TO_BLOCKLIST
         });
-        expect(wrapper.find(ActionSnackbar).at(1).prop("openSnackBar")).toBe(true);
-        expect(wrapper.find(ActionSnackbar).at(1).prop("snackBarMessage")).toBe(`@${mockUserProfile.username} has been blocked.`);
+        expect(mockDispatchFn).nthCalledWith(5, {
+            payload: `@${mockUserProfile.username} has been blocked.`,
+            type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
+        });
     });
 
     it("should click unblock user", () => {
@@ -349,7 +351,6 @@ describe("UserPage", () => {
             }
         });
 
-        expect(wrapper.find(ActionSnackbar).at(1).prop("openSnackBar")).toBe(false);
         expect(wrapper.find(BlockUserModal).prop("visible")).toBe(false);
 
         wrapper.find(Button).at(0).simulate("mouseover");
@@ -368,8 +369,10 @@ describe("UserPage", () => {
             payload: {userId: 1},
             type: UserActionsType.PROCESS_USER_TO_BLOCKLIST
         });
-        expect(wrapper.find(ActionSnackbar).at(1).prop("openSnackBar")).toBe(true);
-        expect(wrapper.find(ActionSnackbar).at(1).prop("snackBarMessage")).toBe(`@${mockUserProfile.username} has been unblocked.`);
+        expect(mockDispatchFn).nthCalledWith(5, {
+            payload: `@${mockUserProfile.username} has been unblocked.`,
+            type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
+        });
     });
 
     it("should open block user modal window and close", () => {
