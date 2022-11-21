@@ -20,8 +20,6 @@ export const selectListItemOwnerWallpaper = (state: RootState) =>
 export const selectListItemOwnerUsername = (state: RootState) => selectListItem(state)?.listOwner.username;
 export const selectListItemOwnerFullName = (state: RootState) => selectListItem(state)?.listOwner.fullName;
 
-
-
 export const selectLoadingState = (state: RootState): LoadingStatus => selectList(state).loadingState;
 export const selectIsListLoading = (state: RootState): boolean => selectLoadingState(state) === LoadingStatus.LOADING;
 export const selectIsListLoaded = (state: RootState): boolean => selectLoadingState(state) === LoadingStatus.LOADED;

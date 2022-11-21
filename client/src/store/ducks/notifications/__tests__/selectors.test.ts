@@ -5,6 +5,10 @@ import {
     selectIsTweetAuthorsNotificationsLoaded,
     selectIsTweetAuthorsNotificationsLoading,
     selectNotificationInfo,
+    selectNotificationInfoTweet,
+    selectNotificationInfoType,
+    selectNotificationInfoUser,
+    selectNotificationInfoUserFullName,
     selectNotificationsList,
     selectNotificationsTweetAuthors,
     selectPagesCount
@@ -15,13 +19,19 @@ import {LoadingStatus} from "../../../types/common";
 
 describe("notifications selectors:", () => {
     const mockState = createMockRootState();
+    const mockNotificationsState = {
+        ...mockState,
+        notifications: {
+            ...mockState.notifications,
+            notificationsList: mockNotifications,
+            tweetAuthors: mockTweetAuthors,
+            notificationInfo: mockNotificationInfo
+        }
+    };
 
     describe("selectNotificationsList", () => {
         it("should return NotificationResponse array", () => {
-            expect(selectNotificationsList({
-                ...mockState,
-                notifications: {...mockState.notifications, notificationsList: mockNotifications}
-            })).toBe(mockNotifications);
+            expect(selectNotificationsList(mockNotificationsState)).toBe(mockNotifications);
         });
     });
 
@@ -45,10 +55,7 @@ describe("notifications selectors:", () => {
 
     describe("selectNotificationsTweetAuthors", () => {
         it("should return NotificationUserResponse array", () => {
-            expect(selectNotificationsTweetAuthors({
-                ...mockState,
-                notifications: {...mockState.notifications, tweetAuthors: mockTweetAuthors}
-            })).toBe(mockTweetAuthors);
+            expect(selectNotificationsTweetAuthors(mockNotificationsState)).toBe(mockTweetAuthors);
         });
     });
 
@@ -66,10 +73,31 @@ describe("notifications selectors:", () => {
 
     describe("selectNotificationInfo", () => {
         it("should return NotificationInfoResponse", () => {
-            expect(selectNotificationInfo({
-                ...mockState,
-                notifications: {...mockState.notifications, notificationInfo: mockNotificationInfo}
-            })).toBe(mockNotificationInfo);
+            expect(selectNotificationInfo(mockNotificationsState)).toBe(mockNotificationInfo);
+        });
+    });
+
+    describe("selectNotificationInfoType", () => {
+        it("should return NotificationInfoType", () => {
+            expect(selectNotificationInfoType(mockNotificationsState)).toBe("LIKE");
+        });
+    });
+
+    describe("selectNotificationInfoUser", () => {
+        it("should return NotificationInfoUser", () => {
+            expect(selectNotificationInfoUser(mockNotificationsState)).toBe(mockNotificationInfo.user);
+        });
+    });
+
+    describe("selectNotificationInfoUserFullName", () => {
+        it("should return NotificationInfoUserFullName string", () => {
+            expect(selectNotificationInfoUserFullName(mockNotificationsState)).toBe(mockNotificationInfo.user.fullName);
+        });
+    });
+
+    describe("selectNotificationInfoTweet", () => {
+        it("should return NotificationInfoTweet", () => {
+            expect(selectNotificationInfoTweet(mockNotificationsState)).toBe(mockNotificationInfo.tweet);
         });
     });
 

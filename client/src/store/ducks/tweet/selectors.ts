@@ -3,7 +3,6 @@ import {TweetState} from "./contracts/state";
 import {TweetResponse} from "../../types/tweet";
 import {UserResponse} from "../../types/user";
 
-import {createSelector} from 'reselect';
 import {DEFAULT_PROFILE_IMG} from "../../../util/url";
 import {LoadingStatus} from "../../types/common";
 
@@ -19,11 +18,9 @@ export const selectErrorMessage = (state: RootState): string => selectTweetState
 export const selectTweetId = (state: RootState) => selectTweetState(state).tweet?.id;
 export const selectTweetText = (state: RootState) => selectTweetState(state).tweet?.text;
 export const selectTweetReplyType = (state: RootState) => selectTweetState(state).tweet?.replyType;
-export const selectAddressedTweetId = (state: RootState) => selectTweetState(state).tweet?.addressedTweetId;
 
 export const selectIsTweetLiked = (state: RootState) => selectTweetState(state).tweet?.isTweetLiked;
 export const selectIsTweetRetweeted = (state: RootState) => selectTweetState(state).tweet?.isTweetRetweeted;
-export const selectIsTweetBookmarked = (state: RootState) => selectTweetState(state).tweet?.isTweetBookmarked;
 export const selectRepliesCount = (state: RootState) => selectTweetState(state).tweet?.repliesCount;
 export const selectRetweetsCount = (state: RootState) => selectTweetState(state).tweet?.retweetsCount;
 export const selectQuotesCount = (state: RootState) => selectTweetState(state).tweet?.quotesCount;
@@ -42,16 +39,12 @@ export const selectTweetUserAvatar = (state: RootState) => (
 export const selectTweetUserUsername = (state: RootState) => selectTweetState(state).tweet?.user.username;
 export const selectTweetUserFullName = (state: RootState) => selectTweetState(state).tweet?.user.fullName;
 export const selectTweetUserIsFollower = (state: RootState) => selectTweetState(state).tweet?.user.isFollower;
-export const selectTweetUserIsMuted = (state: RootState) => selectTweetState(state).tweet?.user.isUserMuted;
-export const selectTweetUserIsBlocked = (state: RootState) => selectTweetState(state).tweet?.user.isUserBlocked;
-export const selectTweetUserIsProfileBlocked = (state: RootState) => selectTweetState(state).tweet?.user.isMyProfileBlocked;
 
 export const selectTweetLink = (state: RootState) => selectTweetState(state).tweet?.link;
 export const selectLinkCover = (state: RootState) => selectTweetState(state).tweet?.linkCover;
 export const selectLinkCoverSize = (state: RootState) => selectTweetState(state).tweet?.linkCoverSize;
 export const selectLinkTitle = (state: RootState) => selectTweetState(state).tweet?.linkTitle;
 export const selectLinkDescription = (state: RootState) => selectTweetState(state).tweet?.linkDescription;
-
 
 // liked and retweeted users
 export const selectLikedUsers = (state: RootState): UserResponse[] => selectTweetState(state).likedUsers;

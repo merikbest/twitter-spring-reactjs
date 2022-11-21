@@ -4,12 +4,36 @@ import {
     selectIsRepliesLoading,
     selectIsRetweetedUsersLoading,
     selectIsTweetError,
+    selectIsTweetLiked,
     selectIsTweetLoadedSuccess,
     selectIsTweetLoading,
+    selectIsTweetRetweeted,
+    selectLikedTweetsCount,
     selectLikedUsers,
+    selectLinkCover,
+    selectLinkCoverSize,
+    selectLinkDescription,
+    selectLinkTitle,
+    selectQuotesCount,
     selectReplies,
+    selectRepliesCount,
     selectRetweetedUsers,
+    selectRetweetsCount,
     selectTweetData,
+    selectTweetDateTime,
+    selectTweetId,
+    selectTweetImages,
+    selectTweetLink,
+    selectTweetPoll,
+    selectTweetQuote,
+    selectTweetReplyType,
+    selectTweetText,
+    selectTweetUser,
+    selectTweetUserAvatar,
+    selectTweetUserFullName,
+    selectTweetUserId,
+    selectTweetUserIsFollower,
+    selectTweetUserUsername,
     selectUsersPagesCount
 } from "../selectors";
 import {createMockRootState} from "../../../../util/testHelper";
@@ -18,13 +42,21 @@ import {LoadingStatus} from "../../../types/common";
 
 describe("tweet selectors:", () => {
     const mockState = createMockRootState();
+    const mockTweetState = {
+        ...mockState,
+        tweet: {
+            ...mockState.tweet,
+            tweet: mockFullTweet,
+            likedUsers: mockUsers,
+            retweetedUsers: mockUsers,
+            replies: mockTweets,
+            errorMessage: "Tweet not found",
+        }
+    };
 
     describe("selectTweetData", () => {
         it("should return TweetResponse", () => {
-            expect(selectTweetData({
-                ...mockState,
-                tweet: {...mockState.tweet, tweet: mockFullTweet}
-            })).toBe(mockFullTweet);
+            expect(selectTweetData(mockTweetState)).toBe(mockFullTweet);
         });
     });
 
@@ -54,19 +86,157 @@ describe("tweet selectors:", () => {
 
     describe("selectErrorMessage", () => {
         it("should return correct result", () => {
-            expect(selectErrorMessage({
-                ...mockState,
-                tweet: {...mockState.tweet, errorMessage: "Tweet not found"}
-            })).toBe("Tweet not found");
+            expect(selectErrorMessage(mockTweetState)).toBe("Tweet not found");
+        });
+    });
+
+    describe("selectTweetId", () => {
+        it("should return TweetId number", () => {
+            expect(selectTweetId(mockState)).toBe(9);
+        });
+    });
+
+    describe("selectTweetText", () => {
+        it("should return TweetText string", () => {
+            expect(selectTweetText(mockState)).toBe("#FirstTweet");
+        });
+    });
+
+    describe("selectTweetReplyType", () => {
+        it("should return TweetReplyType", () => {
+            expect(selectTweetReplyType(mockState)).toBe("EVERYONE");
+        });
+    });
+
+    describe("selectIsTweetLiked", () => {
+        it("should return IsTweetLiked boolean", () => {
+            expect(selectIsTweetLiked(mockState)).toBe(true);
+        });
+    });
+
+    describe("selectIsTweetRetweeted", () => {
+        it("should return IsTweetRetweeted boolean", () => {
+            expect(selectIsTweetRetweeted(mockState)).toBe(true);
+        });
+    });
+
+    describe("selectRepliesCount", () => {
+        it("should return RepliesCount number", () => {
+            expect(selectRepliesCount(mockState)).toBe(2);
+        });
+    });
+
+    describe("selectRetweetsCount", () => {
+        it("should return RetweetsCount number", () => {
+            expect(selectRetweetsCount(mockState)).toBe(2);
+        });
+    });
+
+    describe("selectQuotesCount", () => {
+        it("should return QuotesCount number", () => {
+            expect(selectQuotesCount(mockState)).toBe(2);
+        });
+    });
+
+    describe("selectLikedTweetsCount", () => {
+        it("should return LikedTweetsCount number", () => {
+            expect(selectLikedTweetsCount(mockState)).toBe(2);
+        });
+    });
+
+    describe("selectTweetDateTime", () => {
+        it("should return TweetDateTime", () => {
+            expect(selectTweetDateTime(mockState)).toBe("2021-10-15T21:20:33");
+        });
+    });
+
+    describe("selectTweetImages", () => {
+        it("should return TweetImages", () => {
+            expect(selectTweetImages(mockState)).toBe(mockFullTweet.images);
+        });
+    });
+
+    describe("selectTweetPoll", () => {
+        it("should return TweetPoll", () => {
+            expect(selectTweetPoll(mockState)).toBe(mockFullTweet.poll);
+        });
+    });
+
+    describe("selectTweetQuote", () => {
+        it("should return TweetQuote", () => {
+            expect(selectTweetQuote(mockState)).toBe(mockFullTweet.quoteTweet);
+        });
+    });
+
+    describe("selectTweetUser", () => {
+        it("should return TweetUser", () => {
+            expect(selectTweetUser(mockState)).toBe(mockFullTweet.user);
+        });
+    });
+
+    describe("selectTweetUserId", () => {
+        it("should return TweetUserId number", () => {
+            expect(selectTweetUserId(mockState)).toBe(mockFullTweet.user.id);
+        });
+    });
+
+    describe("selectTweetUserAvatar", () => {
+        it("should return TweetUserAvatar", () => {
+            expect(selectTweetUserAvatar(mockState)).toBe(mockFullTweet.user.avatar.src);
+        });
+    });
+
+    describe("selectTweetUserUsername", () => {
+        it("should return TweetUserUsername string", () => {
+            expect(selectTweetUserUsername(mockState)).toBe("JavaCat");
+        });
+    });
+
+    describe("selectTweetUserFullName", () => {
+        it("should return TweetUserFullName string", () => {
+            expect(selectTweetUserFullName(mockState)).toBe("JavaCat");
+        });
+    });
+
+    describe("selectTweetUserIsFollower", () => {
+        it("should return TweetUserIsFollower boolean", () => {
+            expect(selectTweetUserIsFollower(mockState)).toBe(false);
+        });
+    });
+
+    describe("selectTweetLink", () => {
+        it("should return TweetLink string", () => {
+            expect(selectTweetLink(mockState)).toBe(mockFullTweet.link);
+        });
+    });
+
+    describe("selectLinkCover", () => {
+        it("should return LinkCover string", () => {
+            expect(selectLinkCover(mockState)).toBe(mockFullTweet.linkCover);
+        });
+    });
+
+    describe("selectLinkCoverSize", () => {
+        it("should return LinkCoverSize string", () => {
+            expect(selectLinkCoverSize(mockState)).toBe(null);
+        });
+    });
+
+    describe("selectLinkTitle", () => {
+        it("should return LinkTitle string", () => {
+            expect(selectLinkTitle(mockState)).toBe(mockFullTweet.linkTitle);
+        });
+    });
+
+    describe("selectLinkDescription", () => {
+        it("should return LinkDescription string", () => {
+            expect(selectLinkDescription(mockState)).toBe(null);
         });
     });
 
     describe("selectLikedUsers", () => {
         it("should return UserResponse array", () => {
-            expect(selectLikedUsers({
-                ...mockState,
-                tweet: {...mockState.tweet, likedUsers: mockUsers}
-            })).toBe(mockUsers);
+            expect(selectLikedUsers(mockTweetState)).toBe(mockUsers);
         });
     });
 
@@ -78,10 +248,7 @@ describe("tweet selectors:", () => {
 
     describe("selectRetweetedUsers", () => {
         it("should return UserResponse array", () => {
-            expect(selectRetweetedUsers({
-                ...mockState,
-                tweet: {...mockState.tweet, retweetedUsers: mockUsers}
-            })).toBe(mockUsers);
+            expect(selectRetweetedUsers(mockTweetState)).toBe(mockUsers);
         });
     });
 
@@ -93,10 +260,7 @@ describe("tweet selectors:", () => {
 
     describe("selectReplies", () => {
         it("should return TweetResponse array", () => {
-            expect(selectReplies({
-                ...mockState,
-                tweet: {...mockState.tweet, replies: mockTweets}
-            })).toBe(mockTweets);
+            expect(selectReplies(mockTweetState)).toBe(mockTweets);
         });
     });
 
