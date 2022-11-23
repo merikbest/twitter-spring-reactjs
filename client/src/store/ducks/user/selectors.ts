@@ -11,7 +11,7 @@ export const selectUserDataUnreadMessagesSize = (state: RootState) => selectUser
 export const selectUserDataFollowerRequestsSize = (state: RootState) => selectUserData(state)?.followerRequestsSize;
 export const selectUserDataIsPrivateProfile = (state: RootState) => selectUserData(state)?.isPrivateProfile;
 export const selectUserDataIsProfileStarted = (state: RootState) => selectUserData(state)?.profileStarted;
-export const selectUserDataIsMutedDirectMessages = (state: RootState) => selectUserData(state)?.mutedDirectMessages;
+export const selectUserDataIsMutedDirectMessages = (state: RootState) => selectUserData(state)?.isMutedDirectMessages;
 export const selectUserProfileAvatar = (state: RootState) =>
     selectUserData(state)?.avatar ? selectUserData(state)?.avatar.src : DEFAULT_PROFILE_IMG;
 export const selectUserProfileFullName = (state: RootState) => selectUserData(state)?.fullName;

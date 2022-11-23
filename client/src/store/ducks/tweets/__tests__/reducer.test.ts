@@ -227,7 +227,6 @@ describe("tweetsReducer:", () => {
             {
                 ...initialTweetsState,
                 items: [{id: 1, user: {id: 1, isFollower: true}}] as TweetResponse[],
-                loadingState: LoadingStatus.LOADED
             }
         );
 

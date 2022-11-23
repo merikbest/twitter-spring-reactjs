@@ -195,11 +195,12 @@ describe("userSaga:", () => {
     });
 
     describe("fetchReadMessagesRequest:", () => {
+        const mockResponse = {data:1} as AxiosResponse<number>;
         const worker = fetchReadMessagesRequest(fetchReadMessages(1));
 
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
         testCall(worker, ChatApi.readChatMessages, 1, 1);
-        testSetResponse(worker, 1, setReadMessage, 1, "number");
+        testSetResponse(worker, mockResponse, setReadMessage, mockResponse.data, "number");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
 
@@ -256,7 +257,6 @@ describe("userSaga:", () => {
 
     describe("updateDirectRequest:", () => {
         const worker = updateDirectRequest(updateDirect({mutedDirectMessages: true}));
-        testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
         testCall(worker, UserSettingsApi.updateDirectMessageRequests, {mutedDirectMessages: true}, true);
         testSetResponse(worker, {data: true}, setDirect, true, "boolean");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);

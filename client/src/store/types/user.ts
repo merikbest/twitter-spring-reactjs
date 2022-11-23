@@ -67,7 +67,7 @@ export interface AuthUserResponse {
     active: boolean;
     profileCustomized: boolean;
     profileStarted: boolean;
-    mutedDirectMessages: boolean;
+    isMutedDirectMessages: boolean;
     isPrivateProfile: boolean;
     backgroundColor: string;
     colorScheme: string;

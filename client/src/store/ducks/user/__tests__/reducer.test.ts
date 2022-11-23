@@ -4,6 +4,7 @@ import {testActionDispatch} from "../../../../util/testHelper";
 import {AuthUserResponse} from "../../../types/user";
 import {ChatMessageResponse} from "../../../types/chat";
 import {LoadingStatus} from "../../../types/common";
+import {mockUser} from "../../../../util/mockData/mockData";
 
 describe("userReducer:", () => {
     describe("initial state:", () => {
@@ -176,7 +177,7 @@ describe("userReducer:", () => {
             userReducer(
                 {
                     ...initialUserState,
-                    data: {id: 1, mutedDirectMessages: false} as AuthUserResponse
+                    data: {...mockUser, isMutedDirectMessages: false}
                 },
                 {
                     type: UserActionsType.SET_DIRECT,
@@ -185,7 +186,7 @@ describe("userReducer:", () => {
             ),
             {
                 ...initialUserState,
-                data: {id: 1, mutedDirectMessages: true} as AuthUserResponse,
+                data: {...mockUser, isMutedDirectMessages: true},
                 status: LoadingStatus.LOADED
             }
         );

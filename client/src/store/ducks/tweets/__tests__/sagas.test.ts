@@ -218,13 +218,13 @@ describe("tweetsSaga:", () => {
     });
 
     describe("likeTweetRequest:", () => {
-        const worker = likeTweetRequest(likeTweet(1));
-        testCall(worker, TweetApi.likeTweet, 1);
+        const worker = likeTweetRequest(likeTweet({tweetId: 1}));
+        testCall(worker, TweetApi.likeTweet, {tweetId: 1});
     });
 
     describe("retweetRequest:", () => {
-        const worker = retweetRequest(retweet(1));
-        testCall(worker, TweetApi.retweet, 1);
+        const worker = retweetRequest(retweet({tweetId: 1}));
+        testCall(worker, TweetApi.retweet, {tweetId: 1});
     });
 
     describe("fetchUserBookmarksRequest:", () => {

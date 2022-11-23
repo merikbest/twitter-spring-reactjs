@@ -74,7 +74,7 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
 
         case UserActionsType.SET_DIRECT:
             if (draft.data) {
-                draft.data.mutedDirectMessages = action.payload;
+                draft.data.isMutedDirectMessages = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;

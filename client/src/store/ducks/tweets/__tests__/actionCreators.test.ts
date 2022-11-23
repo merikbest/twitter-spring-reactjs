@@ -149,14 +149,14 @@ describe("tweets actions", () => {
         payload: LoadingStatus.LOADING
     });
 
-    testAction(likeTweet, likeTweet(1), {
+    testAction(likeTweet, likeTweet({tweetId: 1}), {
         type: TweetsActionType.LIKE_TWEET,
-        payload: 1
+        payload: {tweetId: 1}
     });
 
-    testAction(retweet, retweet(1), {
+    testAction(retweet, retweet({tweetId: 1}), {
         type: TweetsActionType.RETWEET,
-        payload: 1
+        payload: {tweetId: 1}
     });
 
     testAction(setUpdatedBookmarkedTweetTweetsState, setUpdatedBookmarkedTweetTweetsState({tweetId: 1, isTweetBookmarked: true}), {
