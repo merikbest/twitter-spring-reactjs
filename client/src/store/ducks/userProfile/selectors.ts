@@ -36,8 +36,6 @@ export const selectUserProfileMediaTweetCount = (state: RootState) => selectUser
 export const selectUserProfileLikeCount = (state: RootState) => selectUserProfileState(state).user?.likeCount;
 export const selectUserProfileTweetCount = (state: RootState) => selectUserProfileState(state).user?.tweetCount;
 
-
-
 // images
 export const selectImages = (state: RootState): UserProfileState['images'] => selectUserProfileState(state).images;
 export const selectImagesIsLoading = (state: RootState): boolean => selectUserProfileState(state).imagesLoadingState === LoadingStatus.LOADING;
