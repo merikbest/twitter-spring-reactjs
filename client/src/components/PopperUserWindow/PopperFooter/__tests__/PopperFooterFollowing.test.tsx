@@ -13,7 +13,7 @@ describe("PopperFooterFollowing", () => {
             ...mockState,
             userDetail: {...mockState.userDetail, item: {...mockUserDetailResponse}}
         });
-        expect(wrapper.text().includes("4")).toBe(true);
+        expect(wrapper.text().includes("2")).toBe(true);
         expect(wrapper.text().includes("Following")).toBe(true);
     });
 });

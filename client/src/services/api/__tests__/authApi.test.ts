@@ -16,7 +16,7 @@ import {
     API_AUTH_USER
 } from "../../../util/endpoints";
 import {mockUser} from "../../../util/mockData/mockData";
-import {testApiCall} from "./apiTestHelper.test";
+import {testApiCall} from "../../../util/apiTestHelper";
 
 describe("AuthApi", () => {
     const mockAdapter = new MockAdapter(axios);

@@ -72,13 +72,7 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = ({visible, onClose}): ReactE
     }
 
     return (
-        <Dialog
-            transitionDuration={0}
-            open={visible}
-            onClose={onClose}
-            className={classes.dialog}
-            aria-labelledby="form-dialog-title"
-        >
+        <Dialog transitionDuration={0} open={visible} onClose={onClose} className={classes.dialog}>
             <DialogContent className={classes.content}>
                 <div className={classes.logoIcon}>
                     {TweetIcon}
@@ -144,12 +138,12 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = ({visible, onClose}): ReactE
                     <div className={classes.footer}>
                         <Button
                             color="primary"
-                            variant={(!getValues("phone") || !!errors.phone) ? "outlined" : "contained"}
+                            variant={(!getValues("phone") || errors.phone) ? "outlined" : "contained"}
                             type="submit"
                             size="small"
                             fullWidth
                         >
-                            {(!getValues("phone") || !!errors.phone) ? "Cancel" : "Next"}
+                            {(!getValues("phone") || errors.phone) ? "Cancel" : "Next"}
                         </Button>
                     </div>
                 </form>

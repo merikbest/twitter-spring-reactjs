@@ -1,7 +1,7 @@
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
-import {testApiCall} from "./apiTestHelper.test";
+import {testApiCall} from "../../../util/apiTestHelper";
 import {
     API_LISTS,
     API_LISTS_ADD_USER,

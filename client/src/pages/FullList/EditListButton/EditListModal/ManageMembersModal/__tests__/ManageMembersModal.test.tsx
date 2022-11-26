@@ -91,7 +91,7 @@ describe("ManageMembersModal", () => {
     });
 
     it("should render list of suggested ManageMembersItem", () => {
-        React.useState = jest.fn().mockReturnValue([1, jest.fn()]);
+        // React.useState = jest.fn().mockReturnValue([1, jest.fn()]);
         const wrapper = mountWithStore(<ManageMembersModal/>, {
             ...mockListStore,
             listMembers: {
@@ -101,18 +101,20 @@ describe("ManageMembersModal", () => {
             }
         });
         wrapper.find("#onOpenManageMembersModal").at(0).simulate("click");
+        wrapper.find(Tab).at(1).simulate("click");
         expect(wrapper.find(Spinner).exists()).toBe(false);
         expect(wrapper.find(ManageMembersInput).exists()).toBe(true);
         expect(wrapper.find(ManageMembersItem).length).toEqual(3);
     });
 
     it("should render empty list of suggested Members", () => {
-        React.useState = jest.fn().mockReturnValue([1, jest.fn()]);
+        // React.useState = jest.fn().mockReturnValue([1, jest.fn()]);
         const wrapper = mountWithStore(<ManageMembersModal/>, {
             ...mockListStore,
             listMembers: {...mockStore.listMembers, suggested: [], suggestedLoadingState: LoadingStatus.LOADED}
         });
         wrapper.find("#onOpenManageMembersModal").at(0).simulate("click");
+        wrapper.find(Tab).at(1).simulate("click");
         expect(wrapper.find(Spinner).exists()).toBe(false);
         expect(wrapper.find(ManageMembersInput).exists()).toBe(true);
         expect(wrapper.find(ManageMembersItem).length).toEqual(0);
@@ -121,6 +123,7 @@ describe("ManageMembersModal", () => {
     });
 
     it("should click on Members tab", () => {
+        // React.useState = jest.fn().mockReturnValue([1, jest.fn()]);
         const wrapper = mountWithStore(<ManageMembersModal/>, {
             ...mockListStore,
             listMembers: {
@@ -138,27 +141,29 @@ describe("ManageMembersModal", () => {
     });
 
     it("should search members by username", () => {
-        React.useState = jest.fn().mockReturnValue([1, jest.fn()]);
+        // React.useState = jest.fn().mockReturnValue([1, jest.fn()]);
         const wrapper = mountWithStore(<ManageMembersModal/>, {
             ...mockListStore,
             listMembers: {...mockStore.listMembers, suggested: [], suggestedLoadingState: LoadingStatus.LOADED}
         });
         wrapper.find("#onOpenManageMembersModal").at(0).simulate("click");
+        wrapper.find(Tab).at(1).simulate("click");
         wrapper.find(ManageMembersInput).find("input").at(0).simulate("change", {target: {value: "test"}});
         expect(wrapper.find(ManageMembersInput).exists()).toBe(true);
-        expect(mockDispatchFn).nthCalledWith(2, {
+        expect(mockDispatchFn).nthCalledWith(4, {
             payload: {listId: 3, username: "test"},
             type: ListMembersActionsType.FETCH_LIST_MEMBERS_BY_USERNAME
         });
     });
 
     it("should clear text input", () => {
-        React.useState = jest.fn().mockReturnValue([1, jest.fn()]);
+        // React.useState = jest.fn().mockReturnValue([1, jest.fn()]);
         const wrapper = mountWithStore(<ManageMembersModal/>, {
             ...mockListStore,
             listMembers: {...mockStore.listMembers, suggested: [], suggestedLoadingState: LoadingStatus.LOADED}
         });
         wrapper.find("#onOpenManageMembersModal").at(0).simulate("click");
+        wrapper.find(Tab).at(1).simulate("click");
         wrapper.find(ManageMembersInput).find("input").at(0).simulate("change", {target: {value: undefined}});
         expect(wrapper.find(ManageMembersInput).exists()).toBe(true);
         expect(mockDispatchFn).nthCalledWith(2, {type: ListMembersActionsType.RESET_LIST_SUGGESTED_STATE});

@@ -1,7 +1,7 @@
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
-import {testApiCall} from "./apiTestHelper.test";
+import {testApiCall} from "../../../util/apiTestHelper";
 import {API_TAGS, API_TAGS_SEARCH, API_TAGS_TRENDS} from "../../../util/endpoints";
 import {mockTags, mockTweets} from "../../../util/mockData/mockData";
 import {TagApi} from "../tagApi";

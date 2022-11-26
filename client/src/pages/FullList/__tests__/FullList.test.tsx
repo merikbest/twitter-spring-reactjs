@@ -70,8 +70,7 @@ describe("FullList", () => {
 
     it("should render Members Modal Window", () => {
         const wrapper = mountWithStore(<FullList/>, {...mockStore, list: {...mockStore.list, list: mockFullList}});
-        const membersModalButton = wrapper.find("#listMembers").at(0);
-        membersModalButton.simulate("click");
+        wrapper.find("#listMembers").at(0).simulate("click");
         
         expect(wrapper.find(MembersAndFollowersModal).prop("visible")).toBe(true);
         expect(wrapper.find(MembersAndFollowersModal).prop("title")).toBe("List members");
@@ -79,8 +78,7 @@ describe("FullList", () => {
 
     it("should render Followers Modal Window", () => {
         const wrapper = mountWithStore(<FullList/>, {...mockStore, list: {...mockStore.list, list: mockFullList}});
-        const followersModalButton = wrapper.find("#listMembers").at(1);
-        followersModalButton.simulate("click");
+        wrapper.find("#listFollowers").at(0).simulate("click");
 
         expect(wrapper.find(MembersAndFollowersModal).prop("visible")).toBe(true);
         expect(wrapper.find(MembersAndFollowersModal).prop("title")).toBe("List followers");
@@ -88,16 +86,14 @@ describe("FullList", () => {
 
     it("should render Edit List Modal Window", () => {
         const wrapper = mountWithStore(<FullList/>, {...mockStore, list: {...mockStore.list, list: mockFullList}});
-        const editModalButton = wrapper.find(Button).at(0);
-        editModalButton.simulate("click");
+        wrapper.find(Button).at(0).simulate("click");
 
         expect(wrapper.find(EditListModal).prop("visible")).toBe(true);
     });
 
     it("should click follow to list", () => {
         const wrapper = mountWithStore(<FullList/>, {...mockStore, list: {...mockStore.list, list: mockUserFullList}});
-        const followButton = wrapper.find(Button).at(0);
-        followButton.simulate("click");
+        wrapper.find(Button).at(0).simulate("click");
 
         expect(mockDispatchFn).nthCalledWith(3, {payload: 1, type: ListsActionType.FOLLOW_LIST});
     });

@@ -8,8 +8,8 @@ import ChangeYourPassword from "../ChangeYourPassword";
 import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
 import {ChangeInfoTextField} from "../../../ChangeInfoTextField/ChangeInfoTextField";
 import {API_AUTH_RESET_CURRENT} from "../../../../../util/endpoints";
-import ActionSnackbar from "../../../../../components/ActionSnackbar/ActionSnackbar";
 import {LoadingStatus} from "../../../../../store/types/common";
+import {ActionSnackbarTypes} from "../../../../../store/ducks/actionSnackbar/contracts/actionTypes";
 
 describe("ChangeYourPassword", () => {
     const mockPassword = "test_password";
@@ -33,7 +33,6 @@ describe("ChangeYourPassword", () => {
 
         submitChangePasswordForm(wrapper);
 
-        expect(wrapper.find(ActionSnackbar).prop("openSnackBar")).toBe(false);
         expect(wrapper.find(ChangeInfoTextField).at(0).prop("value")).toBe(mockPassword);
         expect(wrapper.find(ChangeInfoTextField).at(1).prop("value")).toBe(mockNewPassword);
         expect(wrapper.find(ChangeInfoTextField).at(2).prop("value")).toBe(mockNewPassword);
@@ -43,11 +42,13 @@ describe("ChangeYourPassword", () => {
         setImmediate(() => {
             wrapper.update();
             done();
-            expect(wrapper.find(ActionSnackbar).prop("openSnackBar")).toBe(true);
-            expect(wrapper.find(ActionSnackbar).prop("snackBarMessage")).toBe(mockSuccessMessage);
             expect(wrapper.find(ChangeInfoTextField).at(0).prop("value")).toBe("");
             expect(wrapper.find(ChangeInfoTextField).at(1).prop("value")).toBe("");
             expect(wrapper.find(ChangeInfoTextField).at(2).prop("value")).toBe("");
+            expect(mockDispatchFn).nthCalledWith(1, {
+                payload: mockSuccessMessage,
+                type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
+            });
         });
     });
     

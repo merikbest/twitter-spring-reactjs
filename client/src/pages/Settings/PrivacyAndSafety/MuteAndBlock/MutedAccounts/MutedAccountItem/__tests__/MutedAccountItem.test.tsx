@@ -6,11 +6,11 @@ import {createMockRootState, mockDispatch, mountWithStore, testClickOnLink} from
 import {mockMutedUsers} from "../../../../../../../util/mockData/mockData";
 import {MutedUserResponse} from "../../../../../../../store/types/user";
 import {DEFAULT_PROFILE_IMG} from "../../../../../../../util/url";
-import ActionSnackbar from "../../../../../../../components/ActionSnackbar/ActionSnackbar";
 import {UserActionsType} from "../../../../../../../store/ducks/user/contracts/actionTypes";
 import {PROFILE} from "../../../../../../../util/pathConstants";
 import HoverAction from "../../../../../../../components/HoverAction/HoverAction";
 import {LoadingStatus} from "../../../../../../../store/types/common";
+import {ActionSnackbarTypes} from "../../../../../../../store/ducks/actionSnackbar/contracts/actionTypes";
 
 describe("MutedAccountItem", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -18,7 +18,7 @@ describe("MutedAccountItem", () => {
     const mockUnmutedUser = {
         ...mockMutedUser,
         isUserMuted: false,
-        avatar: {src: null}
+        avatar: null
     } as unknown as MutedUserResponse;
     let mockDispatchFn: jest.Mock;
 
@@ -33,7 +33,7 @@ describe("MutedAccountItem", () => {
         expect(wrapper.text().includes(mockMutedUser.fullName)).toBe(true);
         expect(wrapper.text().includes(mockMutedUser.username)).toBe(true);
         expect(wrapper.text().includes(mockMutedUser.about)).toBe(true);
-        expect(wrapper.find("svg").prop("id")).toEqual("unmuteIcon");
+        expect(wrapper.find("svg").prop("id")).toEqual("muteIcon");
     });
 
     it("should render unmuted user", () => {
@@ -43,29 +43,28 @@ describe("MutedAccountItem", () => {
         expect(wrapper.text().includes(mockMutedUser.fullName)).toBe(true);
         expect(wrapper.text().includes(mockMutedUser.username)).toBe(true);
         expect(wrapper.text().includes(mockMutedUser.about)).toBe(true);
-        expect(wrapper.find("svg").prop("id")).toEqual("muteIcon");
+        expect(wrapper.find("svg").prop("id")).toEqual("unmuteIcon");
     });
 
     it("should click unmuted user", () => {
         const wrapper = mountWithStore(<MutedAccountItem mutedUser={mockMutedUser}/>, mockStore);
 
-        expect(wrapper.find(ActionSnackbar).prop("openSnackBar")).toBe(false);
-
         wrapper.find(IconButton).simulate("click");
 
         expect(mockDispatchFn).nthCalledWith(1, {
             payload: {userId: 1},
             type: UserActionsType.PROCESS_USER_TO_MUTELIST
         });
-        expect(wrapper.find(ActionSnackbar).prop("openSnackBar")).toBe(true);
-        expect(wrapper.find(ActionSnackbar).prop("snackBarMessage")).toBe(`@${mockMutedUser.username} has been unmuted.`);
+        expect(mockDispatchFn).nthCalledWith(2, {
+            payload: `@${mockMutedUser.username} has been unmuted.`,
+            type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
+        });
     });
 
     it("should click mute user", () => {
         const wrapper = mountWithStore(<MutedAccountItem mutedUser={mockUnmutedUser}/>, mockStore);
 
-        expect(wrapper.find("svg").prop("id")).toEqual("muteIcon");
-        expect(wrapper.find(ActionSnackbar).prop("openSnackBar")).toBe(false);
+        expect(wrapper.find("svg").prop("id")).toEqual("unmuteIcon");
 
         wrapper.find(IconButton).simulate("click");
 
@@ -73,8 +72,10 @@ describe("MutedAccountItem", () => {
             payload: {userId: 1},
             type: UserActionsType.PROCESS_USER_TO_MUTELIST
         });
-        expect(wrapper.find(ActionSnackbar).prop("openSnackBar")).toBe(true);
-        expect(wrapper.find(ActionSnackbar).prop("snackBarMessage")).toBe(`@${mockUnmutedUser.username} has been muted.`);
+        expect(mockDispatchFn).nthCalledWith(2, {
+            payload: `@${mockMutedUser.username} has been muted.`,
+            type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
+        });
     });
 
     it("should hover Mute icon and render Unmute Hover Action", () => {

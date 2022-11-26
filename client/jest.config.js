@@ -5,10 +5,7 @@ module.exports = {
     transform: {
         "^.+\\.ts?$": "ts-jest",
     },
-    // testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.ts?$",
-    // moduleFileExtensions: ["ts", "js", "json", "node"],
     moduleFileExtensions: ["ts", "tsx", "js", "json"],
-    // setupFilesAfterEnv: ["<rootDir>/src/setupTests.js"],
     coverageThreshold: {
         global: {
             branches: 80,

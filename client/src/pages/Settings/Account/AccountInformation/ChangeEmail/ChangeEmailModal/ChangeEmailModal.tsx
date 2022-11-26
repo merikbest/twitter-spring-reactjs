@@ -50,13 +50,7 @@ const ChangeEmailModal: FC<ChangeEmailModalProps> = ({visible, onClose}): ReactE
     }
 
     return (
-        <Dialog
-            transitionDuration={0}
-            open={visible}
-            onClose={onClose}
-            className={classes.dialog}
-            aria-labelledby="form-dialog-title"
-        >
+        <Dialog transitionDuration={0} open={visible} onClose={onClose} className={classes.dialog}>
             <DialogContent className={classes.content}>
                 <div className={classes.logoIcon}>
                     {TweetIcon}
@@ -70,7 +64,7 @@ const ChangeEmailModal: FC<ChangeEmailModalProps> = ({visible, onClose}): ReactE
                         is not displayed in your public profile on Twitter.`}
                     </Typography>
                 </div>
-                <form onSubmit={(!getValues("email") || !!errors.email) ? onClose : handleSubmit(onSubmit)}>
+                <form onSubmit={(!getValues("email") || errors.email) ? onClose : handleSubmit(onSubmit)}>
                     <Controller
                         name="email"
                         control={control}
@@ -102,13 +96,13 @@ const ChangeEmailModal: FC<ChangeEmailModalProps> = ({visible, onClose}): ReactE
                     </div>
                     <div className={classes.footer}>
                         <Button
-                            variant={(!getValues("email") || !!errors.email) ? "outlined" : "contained"}
+                            variant={(!getValues("email") || errors.email) ? "outlined" : "contained"}
                             type="submit"
                             color="primary"
                             size="small"
                             fullWidth
                         >
-                            {(!getValues("email") || !!errors.email) ? "Cancel" : "Next"}
+                            {(!getValues("email") || errors.email) ? "Cancel" : "Next"}
                         </Button>
                     </div>
                 </form>

@@ -33,7 +33,7 @@ describe("ChangeEmailModal", () => {
             wrapper.update();
             done();
             wrapper.find(Button).simulate("submit");
-            expect(wrapper.find(Button).text().includes("Next")).toBe(true);
+            expect(wrapper.find(Button).text().includes("Cancel")).toBe(true);
         });
     });
 

@@ -17,7 +17,8 @@ import {
     mockFullTweet,
     mockProfileImages,
     mockTweets,
-    mockUser, mockUserDetailResponse,
+    mockUser,
+    mockUserDetailResponse,
     mockUsers
 } from "./mockData/mockData";
 import {LoadingStatus, PageableResponse} from "../store/types/common";

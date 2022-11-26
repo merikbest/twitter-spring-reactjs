@@ -44,7 +44,7 @@ describe("DirectMessages", () => {
     it("should render checked Checkbox", () => {
         const wrapper = mountWithStore(<DirectMessages/>, {
             ...mockStore,
-            user: {...mockStore.user, data: {...mockStore.user.data, mutedDirectMessages: true}}
+            user: {...mockStore.user, data: {...mockStore.user.data, isMutedDirectMessages: true}}
         });
         expect(wrapper.find(Checkbox).at(0).prop("checked")).toBe(true);
     });

@@ -25,6 +25,7 @@ import {ListsOwnerMemberResponse} from "../../../types/lists";
 import {setMembersSize} from "../../list/actionCreators";
 import {ListMembersActionsType} from "../contracts/actionTypes";
 import {LoadingStatus} from "../../../types/common";
+import {setOpenSnackBar} from "../../actionSnackbar/actionCreators";
 
 describe("listMembersSaga:", () => {
     const mockListsOwnerMemberResponse = {data: [{id: 1}, {id: 2}]} as AxiosResponse<ListsOwnerMemberResponse[]>;
@@ -87,7 +88,6 @@ describe("listMembersSaga:", () => {
         });
         testSetResponse(worker, {data: true}, setUserToList, {userId: 1, isUserAdded: true, isSuggested: true}, "ListsOwnerMemberResponse");
         testSetResponse(worker, {data: true}, setMembersSize, true, "ListsOwnerMemberResponse");
-        testLoadingStatus(worker, setLoadingSuggestedState, LoadingStatus.ERROR)
     });
 
     testWatchSaga(listMembersSaga, [

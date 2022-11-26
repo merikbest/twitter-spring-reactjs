@@ -15,7 +15,7 @@ import {
 } from "../../../util/endpoints";
 import {ChatApi} from "../chatApi";
 import {mockChats, mockMessages, mockUsers} from "../../../util/mockData/mockData";
-import {testApiCall} from "./apiTestHelper.test";
+import {testApiCall} from "../../../util/apiTestHelper";
 
 describe("ChatApi", () => {
     const mockAdapter = new MockAdapter(axios);
