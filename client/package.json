@@ -55,7 +55,7 @@
     "react-infinite-scroll-component": "^6.1.0",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.3",
+    "react-scripts": "5.0.1",
     "react-string-replace": "^0.4.4",
     "react-test-renderer": "^16.14.0",
     "recompose": "^0.30.0",

@@ -22,6 +22,7 @@ export const MESSAGES_SETTINGS = MESSAGES + "/settings";
 
 export const BOOKMARKS = "/bookmarks";
 export const SUGGESTED = "/suggested";
+export const TOPICS = "/topics";
 export const LISTS = "/lists";
 export const LISTS_MEMBERSHIPS = LISTS + "/memberships";
 export const PROFILE = "/profile";

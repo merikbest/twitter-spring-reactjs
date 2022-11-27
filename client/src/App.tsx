@@ -73,6 +73,7 @@ import {
     SEARCH,
     SETTINGS,
     SUGGESTED,
+    TOPICS,
     USER,
     USER_FOLLOWERS_YOU_FOLLOW
 } from "./util/pathConstants";
@@ -82,6 +83,7 @@ import ActionSnackbar from "./components/ActionSnackbar/ActionSnackbar";
 import FullTweet from "./pages/FullTweet/FullTweet";
 import Connect from "./pages/Connect/Connect";
 import Trends from './pages/Trends/Trends';
+import Topics from "./pages/Topics/Topics";
 
 const App: FC = (): ReactElement => {
     const history = useHistory();
@@ -224,6 +226,7 @@ const App: FC = (): ReactElement => {
                                    changeColorScheme={changeColorScheme}/>
                                }/>
                         <Route path={BOOKMARKS} component={Bookmarks}/>
+                        <Route path={TOPICS} component={Topics}/>
                         <Route path={`${QUOTES}/:tweetId`} component={QuoteTweets}/>
                         <Route path={SUGGESTED} component={SuggestedLists}/>
                         <Route path={LISTS} component={Lists} exact/>
