@@ -16,34 +16,35 @@ export const useTopicsStyles = makeStyles((theme: Theme) => ({
             backgroundColor: theme.palette.primary.main,
         },
     },
-    topicItem: {
-        "& .MuiButton-outlined": {
-            // borderColor: theme.palette.divider,
-            border: `1px solid ${theme.palette.divider} !important`,
-            // padding: "5px 12px 5px 16px"
-        },
-        "& .MuiTypography-h6": {
-            fontWeight: 700,
-            marginRight: 12,
-        },
-        "& svg": {
-            width: "1.172rem",
-            height: "1.172rem",
-            fill: theme.palette.primary.main,
+    topicsBlock: {
+        marginRight: 4,
+        display: "inline-flex",
+        flexDirection: "row",
+        justifyContent: "center",
+    },
+    topicsContainer: {
+        display: "flex",
+        flexDirection: "column",
+    },
+    topicsInfo: {
+        width: 1000,
+    },
+    topicsItems: {
+        "& .MuiIconButton-root": {
+            "&:hover": {
+                backgroundColor: "black !important",
+                "& svg": {
+                    color: "white !important",
+                },
+            },
         },
     },
-    topicItemTextInfo: {
-        padding: "5px 12px 5px 16px"
-    },
-    topicItemCloseButton: {
-        borderLeftStyle: "unset",
-        padding: "0px 12px 0px 0px",
-        minWidth: 1,
-        "& hr": {
-            marginRight: 12,
-        },
-        "& svg": {
-            fill: theme.palette.text.secondary,
+    moreTopics: {
+        padding: 16,
+        color: theme.palette.primary.main,
+        "&:hover": {
+            cursor: "pointer",
+            backgroundColor: theme.palette.secondary.main,
         },
     },
 }));
