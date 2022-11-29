@@ -226,7 +226,7 @@ const App: FC = (): ReactElement => {
                                    changeColorScheme={changeColorScheme}/>
                                }/>
                         <Route path={BOOKMARKS} component={Bookmarks}/>
-                        <Route path={TOPICS} component={Topics}/>
+                        <Route path={`${TOPICS}/:topics`} component={Topics}/>
                         <Route path={`${QUOTES}/:tweetId`} component={QuoteTweets}/>
                         <Route path={SUGGESTED} component={SuggestedLists}/>
                         <Route path={LISTS} component={Lists} exact/>
