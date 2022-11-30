@@ -1,5 +1,7 @@
 import React, {FC, ReactElement} from "react";
 
+import NotInterestedTopic from "./NotInterestedTopic/NotInterestedTopic";
+
 interface NotInterestedProps {
 
 }
@@ -7,7 +9,9 @@ interface NotInterestedProps {
 const NotInterested: FC<NotInterestedProps> = ({}): ReactElement => {
     return (
         <div>
-            NotInterested
+            <NotInterestedTopic topicName={"Funny Tweets"} category={"Only on Twitter"}/>
+            <NotInterestedTopic topicName={"Cyberpunk 2077"} category={"Gaming"}/>
+            <NotInterestedTopic topicName={"Cheese"} category={"Food"}/>
         </div>
     );
 };

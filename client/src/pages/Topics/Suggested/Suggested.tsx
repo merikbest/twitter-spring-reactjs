@@ -1,14 +1,13 @@
 import React, {ReactElement, useState} from "react";
 import {Divider, Typography} from "@material-ui/core";
-import Carousel from "react-material-ui-carousel";
 import classnames from "classnames";
 
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {useSuggestedStyles} from "./SuggestedStyles";
 import SuggestedButton from "./SuggestedButton";
 import {useTopicsStyles} from "../TopicsStyles";
-import {ArrowIcon, ArrowNextIcon} from "../../../icons";
 import TopicItem from "../TopicItem/TopicItem";
+import TopicsCarousel from "../TopicsCarousel/TopicsCarousel";
 
 const Suggested = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -62,13 +61,7 @@ const Suggested = (): ReactElement => {
                 </Typography>
             </div>
             <div className={topicClasses.topicsItems}>
-                <Carousel
-                    NextIcon={ArrowNextIcon}
-                    PrevIcon={ArrowIcon}
-                    indicators={false}
-                    autoPlay={false}
-                    duration={0}
-                >
+                <TopicsCarousel>
                     <div className={classnames(globalClasses.itemInfoWrapper, topicClasses.topicsInfo)}>
                         <div className={topicClasses.topicsBlock}>
                             <div className={topicClasses.topicsContainer}>
@@ -108,7 +101,7 @@ const Suggested = (): ReactElement => {
                             </div>
                         </div>
                     </div>
-                </Carousel>
+                </TopicsCarousel>
             </div>
             <Divider/>
             <div className={globalClasses.itemInfoWrapper}>
@@ -117,13 +110,7 @@ const Suggested = (): ReactElement => {
                 </Typography>
             </div>
             <div className={topicClasses.topicsItems}>
-                <Carousel
-                    NextIcon={ArrowNextIcon}
-                    PrevIcon={ArrowIcon}
-                    indicators={false}
-                    autoPlay={false}
-                    duration={0}
-                >
+                <TopicsCarousel>
                     <div className={classnames(globalClasses.itemInfoWrapper, topicClasses.topicsInfo)}>
                         <div className={topicClasses.topicsBlock}>
                             <div className={topicClasses.topicsContainer}>
@@ -158,7 +145,7 @@ const Suggested = (): ReactElement => {
                             </div>
                         </div>
                     </div>
-                </Carousel>
+                </TopicsCarousel>
             </div>
             <Typography variant={"body1"} component={"div"} className={topicClasses.moreTopics}>
                 View all
@@ -170,13 +157,7 @@ const Suggested = (): ReactElement => {
                 </Typography>
             </div>
             <div className={topicClasses.topicsItems}>
-                <Carousel
-                    NextIcon={ArrowNextIcon}
-                    PrevIcon={ArrowIcon}
-                    indicators={false}
-                    autoPlay={false}
-                    duration={0}
-                >
+                <TopicsCarousel>
                     <div className={classnames(globalClasses.itemInfoWrapper, topicClasses.topicsInfo)}>
                         <div className={topicClasses.topicsBlock}>
                             <div className={topicClasses.topicsContainer}>
@@ -211,7 +192,7 @@ const Suggested = (): ReactElement => {
                             </div>
                         </div>
                     </div>
-                </Carousel>
+                </TopicsCarousel>
             </div>
             <Divider/>
         </>

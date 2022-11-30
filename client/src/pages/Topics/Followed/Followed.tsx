@@ -1,14 +1,13 @@
 import React, {ReactElement} from "react";
 import {Divider, Link as MuiLink, Typography} from "@material-ui/core";
-import Carousel from "react-material-ui-carousel";
 import classnames from "classnames";
 
-import {ArrowIcon, ArrowNextIcon} from "../../../icons";
 import TopicItem from "../TopicItem/TopicItem";
 import {ACCESSING_YOUR_TWITTER_DATA} from "../../../util/url";
 import {FOLLOW_AND_UNFOLLOW_TOPICS} from "../../../util/pathConstants";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {useTopicsStyles} from "../TopicsStyles";
+import TopicsCarousel from "../TopicsCarousel/TopicsCarousel";
 
 const Followed = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -30,13 +29,7 @@ const Followed = (): ReactElement => {
                 </Typography>
             </div>
             <div className={topicClasses.topicsItems}>
-                <Carousel
-                    NextIcon={ArrowNextIcon}
-                    PrevIcon={ArrowIcon}
-                    indicators={false}
-                    autoPlay={false}
-                    duration={0}
-                >
+                <TopicsCarousel>
                     <div className={classnames(globalClasses.itemInfoWrapper, topicClasses.topicsInfo)}>
                         <div className={topicClasses.topicsBlock}>
                             <div className={topicClasses.topicsContainer}>
@@ -86,7 +79,7 @@ const Followed = (): ReactElement => {
                             </div>
                         </div>
                     </div>
-                </Carousel>
+                </TopicsCarousel>
             </div>
             <Typography variant={"body1"} component={"div"} className={topicClasses.moreTopics}>
                 More Topics
