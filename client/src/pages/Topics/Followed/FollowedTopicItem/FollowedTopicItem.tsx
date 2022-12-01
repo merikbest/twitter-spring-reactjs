@@ -1,15 +1,15 @@
 import React, {FC, ReactElement} from "react";
 import {Button, ButtonGroup, Divider, Typography} from "@material-ui/core";
 
-import {CloseIcon, PlusIcon} from "../../../icons";
-import {useTopicItemStyles} from "./TopicItemStyles";
+import {CloseIcon, PlusIcon} from "../../../../icons";
+import {useFollowedTopicItemStyles} from "./FollowedTopicItemStyles";
 
 interface TopicItemProps {
     topicName: string;
 }
 
-const TopicItem: FC<TopicItemProps> = ({topicName}): ReactElement => {
-    const classes = useTopicItemStyles();
+const FollowedTopicItem: FC<TopicItemProps> = ({topicName}): ReactElement => {
+    const classes = useFollowedTopicItemStyles();
 
     return (
         <div className={classes.topicItem}>
@@ -29,4 +29,4 @@ const TopicItem: FC<TopicItemProps> = ({topicName}): ReactElement => {
     );
 };
 
-export default TopicItem;
+export default FollowedTopicItem;

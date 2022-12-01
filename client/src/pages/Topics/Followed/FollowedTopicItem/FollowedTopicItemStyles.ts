@@ -1,6 +1,6 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
-export const useTopicItemStyles = makeStyles((theme: Theme) => ({
+export const useFollowedTopicItemStyles = makeStyles((theme: Theme) => ({
     topicItem: {
         "& .MuiButtonGroup-root": {
             padding: "4px 0px",
@@ -39,7 +39,6 @@ export const useTopicItemStyles = makeStyles((theme: Theme) => ({
         height: 40,
         borderTop: `1px solid rgb(185, 202, 211)`,
         borderBottom: `1px solid rgb(185, 202, 211)`,
-        // borderRight: `1px solid ${theme.palette.grey["700"]}`,
         borderRight: `1px solid rgb(185, 202, 211)`,
         borderLeftStyle: "unset",
         padding: "0px 12px 0px 0px",

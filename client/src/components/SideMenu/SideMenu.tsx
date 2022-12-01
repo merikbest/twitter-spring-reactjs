@@ -28,6 +28,7 @@ import {
     ProfileIcon,
     ProfileIconFilled,
     SettingsIcon,
+    TopicIcon,
     TweetIcon,
     TwitterAdsIcon
 } from "../../icons";
@@ -47,7 +48,17 @@ import {DisplayProps} from "../../pages/Settings/AccessibilityDisplayLanguages/D
 import FollowerRequestsModal from "./FollowerRequestsModal/FollowerRequestsModal";
 import {useGlobalStyles} from "../../util/globalClasses";
 import {resetFollowerRequestsState} from "../../store/ducks/followerRequests/actionCreators";
-import {BOOKMARKS, HOME, LISTS, MESSAGES, NOTIFICATIONS, PROFILE, SEARCH, SETTINGS} from "../../util/pathConstants";
+import {
+    BOOKMARKS,
+    HOME,
+    LISTS,
+    MESSAGES,
+    NOTIFICATIONS,
+    PROFILE,
+    SEARCH,
+    SETTINGS,
+    TOPICS_FOLLOWED
+} from "../../util/pathConstants";
 import {HELP_TWITTER, TWITTER_ABOUT, TWITTER_LOGIN} from "../../util/url";
 import {LoadingStatus} from "../../store/types/common";
 
@@ -308,6 +319,14 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                         </Typography>
                                     </ListItem>
                                 )}
+                                <Link to={TOPICS_FOLLOWED}>
+                                    <ListItem id={"closePopup"} onClick={handleClosePopup}>
+                                        {TopicIcon}
+                                        <Typography variant={"body1"} component={"span"}>
+                                            Topics
+                                        </Typography>
+                                    </ListItem>
+                                </Link>
                                 <ListItem>
                                     {NewslettersIcon}
                                     <Typography variant={"body1"} component={"span"}>
