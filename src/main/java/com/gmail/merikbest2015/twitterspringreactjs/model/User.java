@@ -146,6 +146,9 @@ public class User {
     @ManyToMany
     private List<Lists> lists;
 
+    @ManyToMany
+    private List<Topic> topics;
+
     @OneToMany(mappedBy = "user")
     private List<ChatParticipant> chats;
 
