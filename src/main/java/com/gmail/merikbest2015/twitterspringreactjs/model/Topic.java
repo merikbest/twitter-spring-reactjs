@@ -23,7 +23,7 @@ public class Topic {
     private String topicName;
 
     @ManyToMany
-    @JoinTable(name = "topi56555555555556666_followers",
+    @JoinTable(name = "topic_followers",
             joinColumns = @JoinColumn(name = "topics_id"),
             inverseJoinColumns = @JoinColumn(name = "users_id"))
     private List<User> topicFollowers;
