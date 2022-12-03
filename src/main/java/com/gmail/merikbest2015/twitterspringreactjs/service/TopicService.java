@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface TopicService {
     List<Topic> getTopics();
+
+    List<Topic> getTopicsByCategory(String topicCategory);
 }

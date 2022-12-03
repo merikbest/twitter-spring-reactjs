@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.twitterspringreactjs.model;
 
+import com.gmail.merikbest2015.twitterspringreactjs.enums.TopicCategory;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,10 @@ public class Topic {
 
     @Column(name = "topic_name")
     private String topicName;
+
+    @Column(name = "topic_category")
+    @Enumerated(EnumType.STRING)
+    private TopicCategory topicCategory;
 
     @ManyToMany
     @JoinTable(name = "topic_followers",

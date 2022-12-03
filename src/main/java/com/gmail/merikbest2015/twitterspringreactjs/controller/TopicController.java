@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.twitterspringreactjs.mapper.TopicMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,4 +22,10 @@ public class TopicController {
     public ResponseEntity<List<TopicResponse>> getTopics() {
         return ResponseEntity.ok(topicMapper.getTopics());
     }
+
+    @GetMapping("/{topicCategory}")
+    public ResponseEntity<List<TopicResponse>> getTopicsByCategory(@PathVariable String topicCategory) {
+        return ResponseEntity.ok(topicMapper.getTopicsByCategory(topicCategory));
+    }
+    // TODO follow, unfollow, not interested
 }

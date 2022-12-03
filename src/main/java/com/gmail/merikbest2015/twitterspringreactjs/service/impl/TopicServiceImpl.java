@@ -18,4 +18,9 @@ public class TopicServiceImpl implements TopicService {
     public List<Topic> getTopics() {
         return topicRepository.findAll();
     }
+
+    @Override
+    public List<Topic> getTopicsByCategory(String topicCategory) {
+        return topicRepository.getTopicsByCategory(topicCategory);
+    }
 }

@@ -143,6 +143,9 @@ public class User {
     @OneToMany
     private List<Notification> notifications;
 
+    @OneToMany
+    private List<Topic> notInterestedTopics;
+
     @ManyToMany
     private List<Lists> lists;
 

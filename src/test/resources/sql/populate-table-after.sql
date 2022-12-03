@@ -13,6 +13,7 @@ delete from user_subscriptions;
 delete from unread_messages;
 delete from chats_participants;
 delete from users_notifications;
+delete from users_not_interested_topics;
 delete from users_lists;
 delete from users_topics;
 delete from topic_followers;

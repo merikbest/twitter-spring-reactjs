@@ -19,4 +19,9 @@ public class TopicMapper {
         List<Topic> topics = topicService.getTopics();
         return basicMapper.convertToResponseList(topics, TopicResponse.class);
     }
+
+    public List<TopicResponse> getTopicsByCategory(String topicCategory) {
+        List<Topic> topics = topicService.getTopicsByCategory(topicCategory);
+        return basicMapper.convertToResponseList(topics, TopicResponse.class);
+    }
 }
