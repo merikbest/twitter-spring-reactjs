@@ -24,4 +24,13 @@ public class TopicMapper {
         List<Topic> topics = topicService.getTopicsByCategory(topicCategory);
         return basicMapper.convertToResponseList(topics, TopicResponse.class);
     }
+
+    public List<TopicResponse> getNotInterestedTopics() {
+        List<Topic> topics = topicService.getNotInterestedTopics();
+        return basicMapper.convertToResponseList(topics, TopicResponse.class);
+    }
+
+    public Boolean addNotInterestedTopic(Long topicId) {
+        return topicService.addNotInterestedTopic(topicId);
+    }
 }

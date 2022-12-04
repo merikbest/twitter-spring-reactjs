@@ -27,5 +27,15 @@ public class TopicController {
     public ResponseEntity<List<TopicResponse>> getTopicsByCategory(@PathVariable String topicCategory) {
         return ResponseEntity.ok(topicMapper.getTopicsByCategory(topicCategory));
     }
-    // TODO follow, unfollow, not interested
+
+    @GetMapping("/not_interested")
+    public ResponseEntity<List<TopicResponse>> getNotInterestedTopics() {
+        return ResponseEntity.ok(topicMapper.getNotInterestedTopics());
+    }
+
+    @GetMapping("/not_interested/{topicId}")
+    public ResponseEntity<Boolean> addNotInterestedTopic(@PathVariable Long topicId) {
+        return ResponseEntity.ok(topicMapper.addNotInterestedTopic(topicId));
+    }
+    // TODO follow, unfollow
 }
