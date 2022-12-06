@@ -37,5 +37,9 @@ public class TopicController {
     public ResponseEntity<Boolean> addNotInterestedTopic(@PathVariable Long topicId) {
         return ResponseEntity.ok(topicMapper.addNotInterestedTopic(topicId));
     }
-    // TODO follow, unfollow
+
+    @GetMapping("/follow/{topicId}")
+    public ResponseEntity<Boolean> processFollowTopic(@PathVariable Long topicId) {
+        return ResponseEntity.ok(topicMapper.processFollowTopic(topicId));
+    }
 }

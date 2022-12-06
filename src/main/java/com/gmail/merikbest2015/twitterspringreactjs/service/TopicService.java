@@ -12,4 +12,6 @@ public interface TopicService {
     List<Topic> getNotInterestedTopics();
 
     Boolean addNotInterestedTopic(Long topicId);
+
+    Boolean processFollowTopic(Long topicId);
 }

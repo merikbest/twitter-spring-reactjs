@@ -33,4 +33,8 @@ public class TopicMapper {
     public Boolean addNotInterestedTopic(Long topicId) {
         return topicService.addNotInterestedTopic(topicId);
     }
+
+    public Boolean processFollowTopic(Long topicId) {
+        return topicService.processFollowTopic(topicId);
+    }
 }
