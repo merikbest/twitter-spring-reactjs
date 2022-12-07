@@ -45,6 +45,11 @@ export const API_TAGS = `${API_ENDPOINT}/tags`;
 export const API_TAGS_TRENDS = `${API_ENDPOINT}/tags/trends`;
 export const API_TAGS_SEARCH = `${API_ENDPOINT}/tags/search`;
 
+// TopicApi
+export const API_TOPICS = `${API_ENDPOINT}/topics`;
+export const API_TOPICS_NOT_INTERESTED = `${API_ENDPOINT}/topics/not_interested`;
+export const API_TOPICS_FOLLOW = `${API_ENDPOINT}/topics/follow`;
+
 // TweetApi
 export const API_TWEETS = `${API_ENDPOINT}/tweets`;
 export const API_TWEETS_MEDIA = `${API_ENDPOINT}/tweets/media`;
