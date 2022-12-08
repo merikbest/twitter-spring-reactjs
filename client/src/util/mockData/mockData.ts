@@ -25,6 +25,7 @@ import {ChatMessageResponse, ChatResponse} from "../../store/types/chat";
 import {NotificationInfoResponse, NotificationResponse, NotificationUserResponse} from "../../store/types/notification";
 import {TagResponse} from "../../store/types/tag";
 import {SameFollowerResponse} from "../../store/types/common";
+import {TopicCategory, TopicResponse} from "../../store/types/topic";
 
 export const mockTweets = [
     {
@@ -1319,3 +1320,22 @@ export const mockTags = [
         "tweetsQuantity": 1
     }
 ] as unknown as TagResponse[];
+
+// topic
+export const mockTopics = [
+    {
+        "id": 1,
+        "topicName": "Elon Musk",
+        "topicCategory": TopicCategory.ENTERTAINMENT
+    },
+    {
+        "id": 2,
+        "topicName": "PewDiePie",
+        "topicCategory": TopicCategory.GAMING
+    },
+    {
+        "id": 3,
+        "topicName": "Funny Tweets",
+        "topicCategory": TopicCategory.ONLY_ON_TWITTER
+    }
+] as unknown as TopicResponse[];
