@@ -25,11 +25,13 @@ import {UnsentTweetsState} from "./ducks/unsentTweets/contracts/state";
 import {ActionSnackbarState} from "./ducks/actionSnackbar/contracts/state";
 import {TweetAdditionalInfoState} from "./ducks/tweetAdditionalInfo/contracts/state";
 import {ChatState} from "./ducks/chat/contracts/state";
+import {TopicsState} from "./ducks/topics/contracts/state";
 
 export interface RootState {
     tweets: TweetsState;
     tweet: TweetState;
     tags: TagsState;
+    topics: TopicsState;
     users: UsersState;
     user: UserState;
     userProfile: UserProfileState;

@@ -242,6 +242,10 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             pagesCount: 0,
             loadingTrendsState: loadingStatus,
         },
+        topics: {
+            topics: [],
+            loadingState: loadingStatus,
+        },
         tweet: {
             tweet: mockFullTweet,
             errorMessage: "",

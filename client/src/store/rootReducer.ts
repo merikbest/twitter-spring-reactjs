@@ -22,11 +22,13 @@ import {unsentTweetsReducer} from "./ducks/unsentTweets/reducer";
 import {actionSnackbarReducer} from "./ducks/actionSnackbar/reducer";
 import {tweetAdditionalInfoReducer} from "./ducks/tweetAdditionalInfo/reducer";
 import {chatReducer} from "./ducks/chat/reducer";
+import {topicsReducer} from "./ducks/topics/reducer";
 
 export const rootReducer = combineReducers({
     tweets: tweetsReducer,
     tweet: tweetReducer,
     tags: tagsReducer,
+    topics: topicsReducer,
     user: userReducer,
     users: usersReducer,
     userProfile: userProfileReducer,

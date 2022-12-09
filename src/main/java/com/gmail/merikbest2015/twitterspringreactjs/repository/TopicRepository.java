@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface TopicRepository extends JpaRepository<Topic, Long> {
 
-    @Query("SELECT topic FROM Topic topic WHERE topic.topicCategory = :topicCategory")
+    @Query("SELECT topic FROM Topic topic WHERE topic.topicCategory = :topicCategory ORDER BY topic.id DESC")
     List<Topic> getTopicsByCategory(String topicCategory);
 }
