@@ -1,9 +1,12 @@
 package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TopicsByCategoriesResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.TopicCategory;
 import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Topic;
 import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.TopicRepository;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TopicByCategoryProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.TopicService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,8 +31,20 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public List<Topic> getTopicsByCategory(String topicCategory) {
-        return topicRepository.getTopicsByCategory(topicCategory);
+    public List<TopicByCategoryProjection> getTopicsByIds(List<Long> topicsIds) {
+        return topicRepository.getTopicsByIds(topicsIds);
+    }
+
+    @Override
+    public List<TopicsByCategoriesResponse> getTopicsByCategories(List<TopicCategory> categories) {
+        List<TopicsByCategoriesResponse> topicsByCategories = new ArrayList<>();
+        categories.forEach(topicCategory -> {
+            TopicsByCategoriesResponse response = new TopicsByCategoriesResponse();
+            response.setTopicCategory(topicCategory.toString());
+            response.setTopicsByCategories(topicRepository.getTopicsByCategory(topicCategory));
+            topicsByCategories.add(response);
+        });
+        return topicsByCategories;
     }
 
     @Override

@@ -1,7 +1,10 @@
 package com.gmail.merikbest2015.twitterspringreactjs.mapper;
 
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TopicResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TopicsByCategoriesResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.enums.TopicCategory;
 import com.gmail.merikbest2015.twitterspringreactjs.model.Topic;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TopicByCategoryProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.TopicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -20,9 +23,13 @@ public class TopicMapper {
         return basicMapper.convertToResponseList(topics, TopicResponse.class);
     }
 
-    public List<TopicResponse> getTopicsByCategory(String topicCategory) {
-        List<Topic> topics = topicService.getTopicsByCategory(topicCategory);
+    public List<TopicResponse> getTopicsByIds(List<Long> topicsIds) {
+        List<TopicByCategoryProjection> topics = topicService.getTopicsByIds(topicsIds);
         return basicMapper.convertToResponseList(topics, TopicResponse.class);
+    }
+
+    public List<TopicsByCategoriesResponse> getTopicsByCategories(List<TopicCategory> categories) {
+        return topicService.getTopicsByCategories(categories);
     }
 
     public List<TopicResponse> getNotInterestedTopics() {

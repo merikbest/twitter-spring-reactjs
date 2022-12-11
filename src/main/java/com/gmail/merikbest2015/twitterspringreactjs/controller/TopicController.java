@@ -1,13 +1,13 @@
 package com.gmail.merikbest2015.twitterspringreactjs.controller;
 
+import com.gmail.merikbest2015.twitterspringreactjs.dto.request.SuggestedTopicsRequest;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.request.TopicsCategoriesRequest;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TopicResponse;
+import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TopicsByCategoriesResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.mapper.TopicMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,9 +23,14 @@ public class TopicController {
         return ResponseEntity.ok(topicMapper.getTopics());
     }
 
-    @GetMapping("/{topicCategory}")
-    public ResponseEntity<List<TopicResponse>> getTopicsByCategory(@PathVariable String topicCategory) {
-        return ResponseEntity.ok(topicMapper.getTopicsByCategory(topicCategory));
+    @PostMapping("/suggested")
+    public ResponseEntity<List<TopicResponse>> getTopicsByIds(@RequestBody SuggestedTopicsRequest request) {
+        return ResponseEntity.ok(topicMapper.getTopicsByIds(request.getTopicsIds()));
+    }
+
+    @PostMapping("/category")
+    public ResponseEntity<List<TopicsByCategoriesResponse>> getTopicsByCategories(@RequestBody TopicsCategoriesRequest request) {
+        return ResponseEntity.ok(topicMapper.getTopicsByCategories(request.getCategories()));
     }
 
     @GetMapping("/not_interested")
