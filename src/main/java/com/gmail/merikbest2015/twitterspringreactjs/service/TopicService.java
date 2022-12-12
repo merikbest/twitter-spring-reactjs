@@ -8,7 +8,6 @@ import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TopicB
 import java.util.List;
 
 public interface TopicService {
-    List<Topic> getTopics();
 
     List<TopicByCategoryProjection> getTopicsByIds(List<Long> topicsIds);
 
@@ -16,7 +15,7 @@ public interface TopicService {
 
     List<Topic> getNotInterestedTopics();
 
-    Boolean addNotInterestedTopic(Long topicId);
+    Boolean processNotInterestedTopic(Long topicId);
 
     Boolean processFollowTopic(Long topicId);
 }

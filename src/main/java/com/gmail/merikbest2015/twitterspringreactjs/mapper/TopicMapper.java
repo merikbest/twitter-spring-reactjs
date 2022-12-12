@@ -18,11 +18,6 @@ public class TopicMapper {
     private final BasicMapper basicMapper;
     private final TopicService topicService;
 
-    public List<TopicResponse> getTopics() {
-        List<Topic> topics = topicService.getTopics();
-        return basicMapper.convertToResponseList(topics, TopicResponse.class);
-    }
-
     public List<TopicResponse> getTopicsByIds(List<Long> topicsIds) {
         List<TopicByCategoryProjection> topics = topicService.getTopicsByIds(topicsIds);
         return basicMapper.convertToResponseList(topics, TopicResponse.class);
@@ -37,8 +32,8 @@ public class TopicMapper {
         return basicMapper.convertToResponseList(topics, TopicResponse.class);
     }
 
-    public Boolean addNotInterestedTopic(Long topicId) {
-        return topicService.addNotInterestedTopic(topicId);
+    public Boolean processNotInterestedTopic(Long topicId) {
+        return topicService.processNotInterestedTopic(topicId);
     }
 
     public Boolean processFollowTopic(Long topicId) {

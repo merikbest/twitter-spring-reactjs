@@ -18,11 +18,6 @@ public class TopicController {
 
     private final TopicMapper topicMapper;
 
-    @GetMapping
-    public ResponseEntity<List<TopicResponse>> getTopics() {
-        return ResponseEntity.ok(topicMapper.getTopics());
-    }
-
     @PostMapping("/suggested")
     public ResponseEntity<List<TopicResponse>> getTopicsByIds(@RequestBody SuggestedTopicsRequest request) {
         return ResponseEntity.ok(topicMapper.getTopicsByIds(request.getTopicsIds()));
@@ -39,8 +34,8 @@ public class TopicController {
     }
 
     @GetMapping("/not_interested/{topicId}")
-    public ResponseEntity<Boolean> addNotInterestedTopic(@PathVariable Long topicId) {
-        return ResponseEntity.ok(topicMapper.addNotInterestedTopic(topicId));
+    public ResponseEntity<Boolean> processNotInterestedTopic(@PathVariable Long topicId) {
+        return ResponseEntity.ok(topicMapper.processNotInterestedTopic(topicId));
     }
 
     @GetMapping("/follow/{topicId}")

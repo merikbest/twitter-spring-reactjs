@@ -146,11 +146,11 @@ public class User {
     @OneToMany
     private List<Topic> notInterestedTopics;
 
-    @ManyToMany
-    private List<Lists> lists;
+    @OneToMany
+    private List<Topic> followedTopics;
 
     @ManyToMany
-    private List<Topic> topics;
+    private List<Lists> lists;
 
     @OneToMany(mappedBy = "user")
     private List<ChatParticipant> chats;

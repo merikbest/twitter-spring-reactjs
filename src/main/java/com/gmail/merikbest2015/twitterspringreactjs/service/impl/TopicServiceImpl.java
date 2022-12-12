@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,11 +23,6 @@ public class TopicServiceImpl implements TopicService {
 
     private final AuthenticationService authenticationService;
     private final TopicRepository topicRepository;
-
-    @Override
-    public List<Topic> getTopics() {
-        return topicRepository.findAll();
-    }
 
     @Override
     public List<TopicByCategoryProjection> getTopicsByIds(List<Long> topicsIds) {
@@ -55,32 +49,41 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     @Transactional
-    public Boolean addNotInterestedTopic(Long topicId) {
-        User user = authenticationService.getAuthenticatedUser();
-        Topic topic = topicRepository.findById(topicId)
-                .orElseThrow(() -> new ApiRequestException("Topic not found", HttpStatus.NOT_FOUND));
-        List<Topic> notInterestedTopics = user.getNotInterestedTopics();
-        notInterestedTopics.add(topic);
-        return true;
+    public Boolean processNotInterestedTopic(Long topicId) {
+        checkIsTopicExist(topicId);
+        Long userId = authenticationService.getAuthenticatedUserId();
+        boolean isNotInterestedTopicExist = topicRepository.isNotInterestedTopicExist(userId, topicId);
+
+        if (isNotInterestedTopicExist) {
+            topicRepository.removeNotInterestedTopic(userId);
+            return false;
+        } else {
+            topicRepository.addNotInterestedTopic(userId, topicId);
+            return true;
+        }
     }
 
     @Override
     @Transactional
     public Boolean processFollowTopic(Long topicId) {
-        User user = authenticationService.getAuthenticatedUser();
-        Topic topic = topicRepository.findById(topicId)
-                .orElseThrow(() -> new ApiRequestException("Topic not found", HttpStatus.NOT_FOUND));
-        List<Topic> notInterestedTopics = user.getNotInterestedTopics();
-        Optional<Topic> topicFromList = notInterestedTopics.stream()
-                .filter(notInterestedTopic -> notInterestedTopic.getId().equals(topic.getId()))
-                .findFirst();
+        checkIsTopicExist(topicId);
+        Long userId = authenticationService.getAuthenticatedUserId();
+        boolean isFollowedTopicExist = topicRepository.isFollowedTopicExist(userId, topicId);
 
-        if (topicFromList.isPresent()) {
-            notInterestedTopics.remove(topicFromList.get());
+        if (isFollowedTopicExist) {
+            topicRepository.removeFollowedTopic(userId);
             return false;
         } else {
-            notInterestedTopics.add(topic);
+            topicRepository.addFollowedTopic(userId, topicId);
             return true;
+        }
+    }
+
+    private void checkIsTopicExist(Long topicId) {
+        boolean isTopicExist = topicRepository.isTopicExist(topicId);
+
+        if (!isTopicExist) {
+            throw new ApiRequestException("Topic not found", HttpStatus.NOT_FOUND);
         }
     }
 }

@@ -294,10 +294,10 @@ create table users_lists
     user_id  int8 not null,
     lists_id int8 not null
 );
-create table users_topics
+create table users_followed_topics
 (
-    user_id   int8 not null,
-    topics_id int8 not null
+    user_id            int8 not null,
+    followed_topics_id int8 not null
 );
 create table users_not_interested_topics
 (
@@ -310,6 +310,8 @@ alter table if exists quotes
     add constraint UK_iuv1sbh2mxfhdvwpemnnhveyp unique (quote_id);
 alter table if exists tweets_images
     add constraint UK_r0mdr0mxkjw13pm37pqs86vl unique (images_id);
+alter table if exists users_followed_topics
+    add constraint UK_gltkihoetrs95tbwb89p1mk11 unique (followed_topics_id);
 alter table if exists users_notifications
     add constraint UK_fqai0p0e0nsyh9pp2j0h32ggq unique (notifications_id);
 alter table if exists users_not_interested_topics
@@ -436,6 +438,10 @@ alter table if exists user_wallpaper
     add constraint FKj5r6vfnl1ng92trfw95nuj8ck foreign key (wallpaper_id) references images;
 alter table if exists user_wallpaper
     add constraint FKl6rrb8qu4wyp9g6eyd1gqs2c6 foreign key (user_id) references users;
+alter table if exists users_followed_topics
+    add constraint FKif00cy7ah28fyyai9ahukpfxo foreign key (followed_topics_id) references topics;
+alter table if exists users_followed_topics
+    add constraint FKmh3iosn2uoru1jjusl7m3g8e8 foreign key (user_id) references users;
 alter table if exists users_lists
     add constraint FKcswqmdei3nib5x5gq25weuftw foreign key (lists_id) references lists;
 alter table if exists users_lists
@@ -444,10 +450,6 @@ alter table if exists users_notifications
     add constraint FK17pt2krtfgoof65xdvtbpf5aw foreign key (notifications_id) references notifications;
 alter table if exists users_notifications
     add constraint FKil3tssmpyic5ruavb9jbbw2bb foreign key (user_id) references users;
-alter table if exists users_topics
-    add constraint FKeucnheo87qy2s60q2g65e4p2 foreign key (topics_id) references topics;
-alter table if exists users_topics
-    add constraint FKfb7stlmwc1ple1kkx4sn7y7uo foreign key (user_id) references users;
 alter table if exists users_not_interested_topics
     add constraint FKaojft315g3wws5hiamw5k62xx foreign key (not_interested_topics_id) references topics;
 alter table if exists users_not_interested_topics
