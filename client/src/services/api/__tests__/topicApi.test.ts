@@ -2,7 +2,13 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 
 import {testApiCall} from "../../../util/apiTestHelper";
-import {API_TOPICS, API_TOPICS_FOLLOW, API_TOPICS_NOT_INTERESTED} from "../../../util/endpoints";
+import {
+    API_TOPICS,
+    API_TOPICS_CATEGORY,
+    API_TOPICS_FOLLOW,
+    API_TOPICS_NOT_INTERESTED,
+    API_TOPICS_SUGGESTED
+} from "../../../util/endpoints";
 import {mockTopics} from "../../../util/mockData/mockData";
 import {TopicApi} from "../topicApi";
 
@@ -17,9 +23,15 @@ describe("TopicApi", () => {
         });
     });
 
-    describe("should fetch TopicApi.getTopicsByCategory", () => {
-        it("[200] should get topics by category Success", () => {
-            testApiCall(mockAdapter, "onGet", `${API_TOPICS}/entertainment`, 200, mockTopics, TopicApi.getTopicsByCategory, "entertainment");
+    describe("should fetch TopicApi.getTopicsByIds", () => {
+        it("[200] should get topics by ids Success", () => {
+            testApiCall(mockAdapter, "onPost", API_TOPICS_SUGGESTED, 200, mockTopics, TopicApi.getTopicsByIds, {topicIds: [1, 2, 3]});
+        });
+    });
+
+    describe("should fetch TopicApi.getTopicsByCategories", () => {
+        it("[200] should get topics by categories Success", () => {
+            testApiCall(mockAdapter, "onPost", API_TOPICS_CATEGORY, 200, mockTopics, TopicApi.getTopicsByCategories, {categories: ["GAMING"]});
         });
     });
 

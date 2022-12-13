@@ -244,7 +244,9 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
         },
         topics: {
             topics: [],
-            loadingState: loadingStatus,
+            topicsByCategories: [],
+            topicsLoadingState: loadingStatus,
+            topicsByCategoriesLoadingState: loadingStatus,
         },
         tweet: {
             tweet: mockFullTweet,

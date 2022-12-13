@@ -47,6 +47,8 @@ export const API_TAGS_SEARCH = `${API_ENDPOINT}/tags/search`;
 
 // TopicApi
 export const API_TOPICS = `${API_ENDPOINT}/topics`;
+export const API_TOPICS_SUGGESTED = `${API_ENDPOINT}/topics/suggested`;
+export const API_TOPICS_CATEGORY = `${API_ENDPOINT}/topics/category`;
 export const API_TOPICS_NOT_INTERESTED = `${API_ENDPOINT}/topics/not_interested`;
 export const API_TOPICS_FOLLOW = `${API_ENDPOINT}/topics/follow`;
 
