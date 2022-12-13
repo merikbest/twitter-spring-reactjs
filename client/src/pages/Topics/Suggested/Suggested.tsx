@@ -1,4 +1,5 @@
-import React, {ReactElement, useState} from "react";
+import React, {ReactElement, useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {Divider, Typography} from "@material-ui/core";
 import classnames from "classnames";
 
@@ -7,13 +8,36 @@ import {useSuggestedStyles} from "./SuggestedStyles";
 import SuggestedButton from "./SuggestedButton";
 import {useTopicsStyles} from "../TopicsStyles";
 import TopicsCarousel from "../TopicsCarousel/TopicsCarousel";
-import TopicsItem from "./TopicsItem/TopicsItem";
+import {fetchTopicsByCategories, fetchTopicsByIds, resetTopicsState} from "../../../store/ducks/topics/actionCreators";
+import {topicsIds} from "../Followed/Followed";
+import {
+    selectIsTopicsByCategoriesLoading,
+    selectIsTopicsLoading,
+    selectTopicsByCategories,
+    selectTopicsItems
+} from "../../../store/ducks/topics/selectors";
+import TopicBlock from "../TopicBlock/TopicBlock";
+import Spinner from "../../../components/Spinner/Spinner";
 
 const Suggested = (): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useSuggestedStyles();
     const topicClasses = useTopicsStyles();
+    const dispatch = useDispatch();
+    const topics = useSelector(selectTopicsItems);
+    const topicsByCategories = useSelector(selectTopicsByCategories);
+    const isTopicsLoading = useSelector(selectIsTopicsLoading);
+    const isTopicsByCategoriesLoading = useSelector(selectIsTopicsByCategoriesLoading);
     const [showMoreCategories, setShowMoreCategories] = useState(false);
+
+    useEffect(() => {
+        dispatch(fetchTopicsByIds({topicsIds}));
+        dispatch(fetchTopicsByCategories({categories: ["GAMING", "ONLY_ON_TWITTER"]}));
+
+        return () => {
+            dispatch(resetTopicsState());
+        };
+    }, []);
 
     const onClickShowMoreCategories = () => {
         setShowMoreCategories(true);
@@ -61,47 +85,23 @@ const Suggested = (): ReactElement => {
                 </Typography>
             </div>
             <div className={topicClasses.topicsItems}>
-                <TopicsCarousel>
-                    <div className={classnames(globalClasses.itemInfoWrapper, topicClasses.topicsInfo)}>
-                        <div className={topicClasses.topicsBlock}>
-                            <div className={topicClasses.topicsContainer}>
-                                <TopicsItem topicName={"Elon Musk"}/>
-                                <TopicsItem topicName={"Technology"}/>
-                                <TopicsItem topicName={"Web development"}/>
-                            </div>
+                {isTopicsLoading ? (
+                    <Spinner/>
+                ) : (
+                    <TopicsCarousel>
+                        <div className={classnames(globalClasses.itemInfoWrapper, topicClasses.topicsInfo)}>
+                            <TopicBlock topics={topics} startTopicValue={0} endTopicValue={3}/>
+                            <TopicBlock topics={topics} startTopicValue={3} endTopicValue={6}/>
+                            <TopicBlock topics={topics} startTopicValue={6} endTopicValue={9}/>
+                            <TopicBlock topics={topics} startTopicValue={9} endTopicValue={12}/>
+                            <TopicBlock topics={topics} startTopicValue={12} endTopicValue={15}/>
                         </div>
-                        <div className={topicClasses.topicsBlock}>
-                            <div className={topicClasses.topicsContainer}>
-                                <TopicsItem topicName={"Entertainment"}/>
-                                <TopicsItem topicName={"Digital creators"}/>
-                                <TopicsItem topicName={"Funny Tweets"}/>
-                            </div>
+                        <div className={classnames(globalClasses.itemInfoWrapper, topicClasses.topicsInfo)}>
+                            <TopicBlock topics={topics} startTopicValue={12} endTopicValue={15}/>
+                            <TopicBlock topics={topics} startTopicValue={15} endTopicValue={18}/>
                         </div>
-                        <div className={topicClasses.topicsBlock}>
-                            <div className={topicClasses.topicsContainer}>
-                                <TopicsItem topicName={"Animal Crossing"}/>
-                                <TopicsItem topicName={"Minecraft"}/>
-                                <TopicsItem topicName={"MrBeast"}/>
-                            </div>
-                        </div>
-                        <div className={topicClasses.topicsBlock}>
-                            <div className={topicClasses.topicsContainer}>
-                                <TopicsItem topicName={"PewDiePie"}/>
-                                <TopicsItem topicName={"Science"}/>
-                                <TopicsItem topicName={"Cats"}/>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={classnames(globalClasses.itemInfoWrapper, topicClasses.topicsInfo)}>
-                        <div className={topicClasses.topicsBlock}>
-                            <div className={topicClasses.topicsContainer}>
-                                <TopicsItem topicName={"PewDiePie"}/>
-                                <TopicsItem topicName={"Science"}/>
-                                <TopicsItem topicName={"Cats"}/>
-                            </div>
-                        </div>
-                    </div>
-                </TopicsCarousel>
+                    </TopicsCarousel>
+                )}
             </div>
             <Divider/>
             <div className={globalClasses.itemInfoWrapper}>
@@ -110,42 +110,21 @@ const Suggested = (): ReactElement => {
                 </Typography>
             </div>
             <div className={topicClasses.topicsItems}>
-                <TopicsCarousel>
-                    <div className={classnames(globalClasses.itemInfoWrapper, topicClasses.topicsInfo)}>
-                        <div className={topicClasses.topicsBlock}>
-                            <div className={topicClasses.topicsContainer}>
-                                <TopicsItem topicName={"Animal Crossing"}/>
-                                <TopicsItem topicName={"Minecraft"}/>
-                            </div>
+                {isTopicsByCategoriesLoading ? (
+                    <Spinner/>
+                ) : (
+                    <TopicsCarousel>
+                        <div className={classnames(globalClasses.itemInfoWrapper, topicClasses.topicsInfo)}>
+                            <TopicBlock topics={topicsByCategories[0].topicsByCategories} startTopicValue={0} endTopicValue={2}/>
+                            <TopicBlock topics={topicsByCategories[0].topicsByCategories} startTopicValue={2} endTopicValue={4}/>
+                            <TopicBlock topics={topicsByCategories[0].topicsByCategories} startTopicValue={4} endTopicValue={6}/>
+                            <TopicBlock topics={topicsByCategories[0].topicsByCategories} startTopicValue={6} endTopicValue={8}/>
                         </div>
-                        <div className={topicClasses.topicsBlock}>
-                            <div className={topicClasses.topicsContainer}>
-                                <TopicsItem topicName={"PewDiePie"}/>
-                                <TopicsItem topicName={"PlayStation 5"}/>
-                            </div>
+                        <div className={classnames(globalClasses.itemInfoWrapper, topicClasses.topicsInfo)}>
+                            <TopicBlock topics={topicsByCategories[0].topicsByCategories} startTopicValue={6} endTopicValue={8}/>
                         </div>
-                        <div className={topicClasses.topicsBlock}>
-                            <div className={topicClasses.topicsContainer}>
-                                <TopicsItem topicName={"Cyberpunk 2077"}/>
-                                <TopicsItem topicName={"The Sims"}/>
-                            </div>
-                        </div>
-                        <div className={topicClasses.topicsBlock}>
-                            <div className={topicClasses.topicsContainer}>
-                                <TopicsItem topicName={"Game development"}/>
-                                <TopicsItem topicName={"Among Us"}/>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={classnames(globalClasses.itemInfoWrapper, topicClasses.topicsInfo)}>
-                        <div className={topicClasses.topicsBlock}>
-                            <div className={topicClasses.topicsContainer}>
-                                <TopicsItem topicName={"Game development"}/>
-                                <TopicsItem topicName={"Among Us"}/>
-                            </div>
-                        </div>
-                    </div>
-                </TopicsCarousel>
+                    </TopicsCarousel>
+                )}
             </div>
             <Typography variant={"body1"} component={"div"} className={topicClasses.moreTopics}>
                 View all
@@ -157,42 +136,22 @@ const Suggested = (): ReactElement => {
                 </Typography>
             </div>
             <div className={topicClasses.topicsItems}>
-                <TopicsCarousel>
-                    <div className={classnames(globalClasses.itemInfoWrapper, topicClasses.topicsInfo)}>
-                        <div className={topicClasses.topicsBlock}>
-                            <div className={topicClasses.topicsContainer}>
-                                <TopicsItem topicName={"Funny Tweets"}/>
-                                <TopicsItem topicName={"Viral Tweets"}/>
-                            </div>
+                {isTopicsByCategoriesLoading ? (
+                    <Spinner/>
+                ) : (
+                    <TopicsCarousel>
+                        <div className={classnames(globalClasses.itemInfoWrapper, topicClasses.topicsInfo)}>
+                            <TopicBlock topics={topicsByCategories[1].topicsByCategories} startTopicValue={0} endTopicValue={2}/>
+                            <TopicBlock topics={topicsByCategories[1].topicsByCategories} startTopicValue={2} endTopicValue={4}/>
+                            <TopicBlock topics={topicsByCategories[1].topicsByCategories} startTopicValue={4} endTopicValue={6}/>
+                            <TopicBlock topics={topicsByCategories[1].topicsByCategories} startTopicValue={6} endTopicValue={8}/>
                         </div>
-                        <div className={topicClasses.topicsBlock}>
-                            <div className={topicClasses.topicsContainer}>
-                                <TopicsItem topicName={"Based on your searches"}/>
-                                <TopicsItem topicName={"Spaces You Might Like"}/>
-                            </div>
+                        <div className={classnames(globalClasses.itemInfoWrapper, topicClasses.topicsInfo)}>
+                            <TopicBlock topics={topicsByCategories[1].topicsByCategories} startTopicValue={4} endTopicValue={6}/>
+                            <TopicBlock topics={topicsByCategories[1].topicsByCategories} startTopicValue={6} endTopicValue={8}/>
                         </div>
-                        <div className={topicClasses.topicsBlock}>
-                            <div className={topicClasses.topicsContainer}>
-                                <TopicsItem topicName={"Popular images"}/>
-                                <TopicsItem topicName={"Popular videos"}/>
-                            </div>
-                        </div>
-                        <div className={topicClasses.topicsBlock}>
-                            <div className={topicClasses.topicsContainer}>
-                                <TopicsItem topicName={"Days of celebration"}/>
-                                <TopicsItem topicName={"On this day"}/>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={classnames(globalClasses.itemInfoWrapper, topicClasses.topicsInfo)}>
-                        <div className={topicClasses.topicsBlock}>
-                            <div className={topicClasses.topicsContainer}>
-                                <TopicsItem topicName={"Days of celebration"}/>
-                                <TopicsItem topicName={"On this day"}/>
-                            </div>
-                        </div>
-                    </div>
-                </TopicsCarousel>
+                    </TopicsCarousel>
+                )}
             </div>
             <Divider/>
         </>

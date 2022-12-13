@@ -8,19 +8,22 @@ import {FOLLOW_AND_UNFOLLOW_TOPICS} from "../../../util/pathConstants";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {useTopicsStyles} from "../TopicsStyles";
 import TopicsCarousel from "../TopicsCarousel/TopicsCarousel";
-import {selectIsTopicsLoading} from "../../../store/ducks/topics/selectors";
-import {fetchTopics, resetTopicsState} from "../../../store/ducks/topics/actionCreators";
-import FollowedTopicBlock from "./FollowedTopicBlock/FollowedTopicBlock";
+import {selectIsTopicsLoading, selectTopicsItems} from "../../../store/ducks/topics/selectors";
+import {fetchTopicsByIds, resetTopicsState} from "../../../store/ducks/topics/actionCreators";
+import TopicBlock from "../TopicBlock/TopicBlock";
 import Spinner from "../../../components/Spinner/Spinner";
+
+export const topicsIds = [1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020];
 
 const Followed = (): ReactElement => {
     const globalClasses = useGlobalStyles();
     const topicClasses = useTopicsStyles();
     const dispatch = useDispatch();
+    const topics = useSelector(selectTopicsItems);
     const isTopicsLoading = useSelector(selectIsTopicsLoading);
 
     useEffect(() => {
-        dispatch(fetchTopics());
+        dispatch(fetchTopicsByIds({topicsIds}));
 
         return () => {
             dispatch(resetTopicsState());
@@ -48,13 +51,13 @@ const Followed = (): ReactElement => {
                 ) : (
                     <TopicsCarousel>
                         <div className={classnames(globalClasses.itemInfoWrapper, topicClasses.topicsInfo)}>
-                            <FollowedTopicBlock startTopicValue={0} endTopicValue={5}/>
-                            <FollowedTopicBlock startTopicValue={5} endTopicValue={10}/>
-                            <FollowedTopicBlock startTopicValue={10} endTopicValue={15}/>
+                            <TopicBlock topics={topics} startTopicValue={0} endTopicValue={5} isFollowedTopic/>
+                            <TopicBlock topics={topics} startTopicValue={5} endTopicValue={10} isFollowedTopic/>
+                            <TopicBlock topics={topics} startTopicValue={10} endTopicValue={15} isFollowedTopic/>
                         </div>
                         <div className={classnames(globalClasses.itemInfoWrapper, topicClasses.topicsInfo)}>
-                            <FollowedTopicBlock startTopicValue={10} endTopicValue={15}/>
-                            <FollowedTopicBlock startTopicValue={15} endTopicValue={20}/>
+                            <TopicBlock topics={topics} startTopicValue={10} endTopicValue={15} isFollowedTopic/>
+                            <TopicBlock topics={topics} startTopicValue={15} endTopicValue={20} isFollowedTopic/>
                         </div>
                     </TopicsCarousel>
                 )}

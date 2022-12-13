@@ -1,6 +1,5 @@
 import {
     FetchNotInterestedTopicsActionInterface,
-    FetchTopicsActionInterface,
     FetchTopicsByCategoriesActionInterface,
     FetchTopicsByIdsActionInterface,
     ResetTopicsStateActionInterface,
@@ -16,10 +15,6 @@ import {LoadingStatus} from "../../types/common";
 export const setTopics = (payload: TopicsState["topics"]): SetTopicsActionInterface => ({
     type: TopicsActionsType.SET_TOPICS,
     payload,
-});
-
-export const fetchTopics = (): FetchTopicsActionInterface => ({
-    type: TopicsActionsType.FETCH_TOPICS,
 });
 
 export const fetchTopicsByIds = (payload: SuggestedTopicsRequest): FetchTopicsByIdsActionInterface => ({

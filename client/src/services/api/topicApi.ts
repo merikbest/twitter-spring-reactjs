@@ -15,9 +15,6 @@ import {
 } from "../../store/ducks/topics/contracts/state";
 
 export const TopicApi = {
-    async getTopics(): Promise<AxiosResponse<TopicResponse[]>> {
-        return await axios.get<TopicResponse[]>(API_TOPICS);
-    },
     async getTopicsByIds(request: SuggestedTopicsRequest): Promise<AxiosResponse<TopicResponse[]>> {
         return await axios.post<TopicResponse[]>(API_TOPICS_SUGGESTED, request);
     },
@@ -27,7 +24,7 @@ export const TopicApi = {
     async getNotInterestedTopics(): Promise<AxiosResponse<TopicResponse[]>> {
         return await axios.get<TopicResponse[]>(API_TOPICS_NOT_INTERESTED);
     },
-    async addNotInterestedTopic(topicId: number): Promise<AxiosResponse<boolean>> {
+    async processNotInterestedTopic(topicId: number): Promise<AxiosResponse<boolean>> {
         return await axios.get<boolean>(`${API_TOPICS_NOT_INTERESTED}/${topicId}`);
     },
     async processFollowTopic(topicId: number): Promise<AxiosResponse<boolean>> {

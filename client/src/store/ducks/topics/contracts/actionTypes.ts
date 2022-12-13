@@ -5,7 +5,6 @@ import {LoadingStatus} from "../../../types/common";
 
 export enum TopicsActionsType {
     SET_TOPICS = "topics/SET_TOPICS",
-    FETCH_TOPICS = "topics/FETCH_TOPICS",
     FETCH_TOPICS_BY_IDS = "topics/FETCH_TOPICS_BY_IDS",
     FETCH_TOPICS_BY_CATEGORIES = "topics/FETCH_TOPICS_BY_CATEGORIES",
     SET_TOPICS_BY_CATEGORIES = "topics/SET_TOPICS_BY_CATEGORIES",
@@ -18,10 +17,6 @@ export enum TopicsActionsType {
 export interface SetTopicsActionInterface extends Action<TopicsActionsType> {
     type: TopicsActionsType.SET_TOPICS;
     payload: TopicsState["topics"];
-}
-
-export interface FetchTopicsActionInterface extends Action<TopicsActionsType> {
-    type: TopicsActionsType.FETCH_TOPICS;
 }
 
 export interface FetchTopicsByIdsActionInterface extends Action<TopicsActionsType> {

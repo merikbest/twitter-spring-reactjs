@@ -17,12 +17,6 @@ describe("TopicApi", () => {
 
     beforeEach(() => mockAdapter.reset());
 
-    describe("should fetch TopicApi.getTopics", () => {
-        it("[200] should get topics Success", () => {
-            testApiCall(mockAdapter, "onGet", API_TOPICS, 200, mockTopics, TopicApi.getTopics);
-        });
-    });
-
     describe("should fetch TopicApi.getTopicsByIds", () => {
         it("[200] should get topics by ids Success", () => {
             testApiCall(mockAdapter, "onPost", API_TOPICS_SUGGESTED, 200, mockTopics, TopicApi.getTopicsByIds, {topicIds: [1, 2, 3]});
@@ -41,13 +35,13 @@ describe("TopicApi", () => {
         });
     });
 
-    describe("should fetch TopicApi.addNotInterestedTopic", () => {
-        it("[200] should add not interested topic Success", () => {
-            testApiCall(mockAdapter, "onGet", `${API_TOPICS_NOT_INTERESTED}/1`, 200, true, TopicApi.addNotInterestedTopic, 1);
+    describe("should fetch TopicApi.processNotInterestedTopic", () => {
+        it("[200] should process not interested topic Success", () => {
+            testApiCall(mockAdapter, "onGet", `${API_TOPICS_NOT_INTERESTED}/1`, 200, true, TopicApi.processNotInterestedTopic, 1);
         });
 
         it("[404] should topic not found", () => {
-            testApiCall(mockAdapter, "onGet", `${API_TOPICS_NOT_INTERESTED}/1`, 404, "Topic not found", TopicApi.addNotInterestedTopic, 1);
+            testApiCall(mockAdapter, "onGet", `${API_TOPICS_NOT_INTERESTED}/1`, 404, "Topic not found", TopicApi.processNotInterestedTopic, 1);
         });
     });
 

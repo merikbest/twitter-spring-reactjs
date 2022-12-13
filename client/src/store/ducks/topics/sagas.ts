@@ -17,16 +17,6 @@ import {TopicApi} from "../../../services/api/topicApi";
 import {TopicResponse} from "../../types/topic";
 import {TopicsByCategoriesResponse} from "./contracts/state";
 
-export function* fetchTopicsRequest() {
-    try {
-        yield put(setTopicsLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<TopicResponse[]> = yield call(TopicApi.getTopics);
-        yield put(setTopics(response.data));
-    } catch (error) {
-        yield put(setTopicsLoadingState(LoadingStatus.ERROR));
-    }
-}
-
 export function* fetchTopicsByIdsRequest({payload}: FetchTopicsByIdsActionInterface) {
     try {
         yield put(setTopicsLoadingState(LoadingStatus.LOADING));
@@ -58,7 +48,6 @@ export function* fetchNotInterestedTopicsRequest() {
 }
 
 export function* topicsSaga() {
-    yield takeLatest(TopicsActionsType.FETCH_TOPICS, fetchTopicsRequest);
     yield takeLatest(TopicsActionsType.FETCH_TOPICS_BY_IDS, fetchTopicsByIdsRequest);
     yield takeLatest(TopicsActionsType.FETCH_TOPICS_BY_CATEGORIES, fetchTopicsByCategoriesRequest);
     yield takeLatest(TopicsActionsType.FETCH_NOT_INTERESTED_TOPICS, fetchNotInterestedTopicsRequest);
