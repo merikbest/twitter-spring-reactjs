@@ -52,10 +52,10 @@ public class TopicServiceImpl implements TopicService {
     public Boolean processNotInterestedTopic(Long topicId) {
         checkIsTopicExist(topicId);
         Long userId = authenticationService.getAuthenticatedUserId();
-        boolean isNotInterestedTopicExist = topicRepository.isNotInterestedTopicExist(userId, topicId);
+        boolean isTopicNotInterested = topicRepository.isTopicNotInterested(userId, topicId);
 
-        if (isNotInterestedTopicExist) {
-            topicRepository.removeNotInterestedTopic(userId);
+        if (isTopicNotInterested) {
+            topicRepository.removeNotInterestedTopic(userId, topicId);
             return false;
         } else {
             topicRepository.addNotInterestedTopic(userId, topicId);
@@ -68,10 +68,10 @@ public class TopicServiceImpl implements TopicService {
     public Boolean processFollowTopic(Long topicId) {
         checkIsTopicExist(topicId);
         Long userId = authenticationService.getAuthenticatedUserId();
-        boolean isFollowedTopicExist = topicRepository.isFollowedTopicExist(userId, topicId);
+        boolean isTopicFollowed = topicRepository.isTopicFollowed(userId, topicId);
 
-        if (isFollowedTopicExist) {
-            topicRepository.removeFollowedTopic(userId);
+        if (isTopicFollowed) {
+            topicRepository.removeFollowedTopic(userId, topicId);
             return false;
         } else {
             topicRepository.addFollowedTopic(userId, topicId);
@@ -85,5 +85,15 @@ public class TopicServiceImpl implements TopicService {
         if (!isTopicExist) {
             throw new ApiRequestException("Topic not found", HttpStatus.NOT_FOUND);
         }
+    }
+
+    public boolean isTopicFollowed(Long topicId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return topicRepository.isTopicFollowed(authUserId, topicId);
+    }
+
+    public boolean isTopicNotInterested(Long topicId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return topicRepository.isTopicNotInterested(authUserId, topicId);
     }
 }

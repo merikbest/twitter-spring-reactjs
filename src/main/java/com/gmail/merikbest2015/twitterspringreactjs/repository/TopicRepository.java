@@ -22,17 +22,17 @@ public interface TopicRepository extends JpaRepository<Topic, Long> {
     @Query("SELECT CASE WHEN count(topic) > 0 THEN true ELSE false END FROM Topic topic WHERE topic.id = :topicId")
     boolean isTopicExist(Long topicId);
 
-    @Query("SELECT CASE WHEN count(notInterestedTopic) > 0 THEN true ELSE false END FROM User user " +
-            "LEFT JOIN user.notInterestedTopics notInterestedTopic " +
-            "WHERE user.id = :userId " +
-            "AND notInterestedTopic.id = :topicId")
-    boolean isNotInterestedTopicExist(Long userId, Long topicId);
-
     @Query("SELECT CASE WHEN count(followedTopic) > 0 THEN true ELSE false END FROM User user " +
             "LEFT JOIN user.followedTopics followedTopic " +
             "WHERE user.id = :userId " +
             "AND followedTopic.id = :topicId")
-    boolean isFollowedTopicExist(Long userId, Long topicId);
+    boolean isTopicFollowed(Long userId, Long topicId);
+
+    @Query("SELECT CASE WHEN count(notInterestedTopic) > 0 THEN true ELSE false END FROM User user " +
+            "LEFT JOIN user.notInterestedTopics notInterestedTopic " +
+            "WHERE user.id = :userId " +
+            "AND notInterestedTopic.id = :topicId")
+    boolean isTopicNotInterested(Long userId, Long topicId);
 
     @Modifying
     @Query(value = "INSERT INTO users_not_interested_topics (user_id, not_interested_topics_id) VALUES (?1, ?2)", nativeQuery = true)
@@ -43,10 +43,10 @@ public interface TopicRepository extends JpaRepository<Topic, Long> {
     void addFollowedTopic(Long userId, Long topicId);
 
     @Modifying
-    @Query(value = "DELETE FROM users_not_interested_topics WHERE user_id = ?1", nativeQuery = true)
-    void removeNotInterestedTopic(Long userId);
+    @Query(value = "DELETE FROM users_not_interested_topics WHERE user_id = ?1 AND not_interested_topics_id = ?2", nativeQuery = true)
+    void removeNotInterestedTopic(Long userId, Long topicId);
 
     @Modifying
-    @Query(value = "DELETE FROM users_followed_topics WHERE user_id = ?1", nativeQuery = true)
-    void removeFollowedTopic(Long userId);
+    @Query(value = "DELETE FROM users_followed_topics WHERE user_id = ?1 AND followed_topics_id = ?2", nativeQuery = true)
+    void removeFollowedTopic(Long userId, Long topicId);
 }
