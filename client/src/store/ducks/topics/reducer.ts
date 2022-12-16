@@ -23,6 +23,23 @@ export const topicsReducer = produce((draft: Draft<TopicsState>, action: TopicsA
             draft.topicsByCategoriesLoadingState = LoadingStatus.LOADED;
             break;
 
+        case TopicsActionsType.SET_NOT_INTERESTED_TOPIC:
+            const notInterestedTopicIndex = draft.topics.findIndex((topic) => topic.id === action.payload.topicsId);
+            if (notInterestedTopicIndex !== -1) draft.topics[notInterestedTopicIndex].isTopicNotInterested = action.payload.isTopicNotInterested;
+            break;
+
+        case TopicsActionsType.SET_FOLLOW_TOPIC:
+            if (action.payload.topicCategory) {
+                const topicIndex = draft.topicsByCategories.findIndex((value) => value.topicCategory === action.payload.topicCategory);
+                const followedTopicIndex = draft.topicsByCategories[topicIndex].topicsByCategories.findIndex((topic) => topic.id === action.payload.topicsId);
+                if (followedTopicIndex !== -1) {
+                    draft.topicsByCategories[topicIndex].topicsByCategories[followedTopicIndex].isTopicFollowed = action.payload.isTopicFollowed;
+                }
+            }
+            const followedTopicIndex = draft.topics.findIndex((topic) => topic.id === action.payload.topicsId);
+            if (followedTopicIndex !== -1) draft.topics[followedTopicIndex].isTopicFollowed = action.payload.isTopicFollowed;
+            break;
+
         case TopicsActionsType.RESET_TOPICS_STATE:
             draft.topics = [];
             draft.topicsLoadingState = LoadingStatus.LOADING;

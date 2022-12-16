@@ -2,6 +2,8 @@ export interface TopicResponse {
     id: number;
     topicName: string;
     topicCategory: TopicCategory;
+    isTopicFollowed: boolean;
+    isTopicNotInterested: boolean;
 }
 
 export enum TopicCategory {
