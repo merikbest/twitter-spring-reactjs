@@ -1,28 +1,51 @@
 import React, {FC, ReactElement} from "react";
 import {Button, ButtonGroup, Divider, Typography} from "@material-ui/core";
+import {useDispatch} from "react-redux";
 
-import {CloseIcon, PlusIcon} from "../../../../icons";
+import {CheckIcon, CloseIcon, PlusIcon} from "../../../../icons";
 import {useFollowedTopicItemStyles} from "./FollowedTopicItemStyles";
+import {TopicResponse} from "../../../../store/types/topic";
+import {processFollowTopic, processNotInterestedTopic} from "../../../../store/ducks/topics/actionCreators";
 
 interface TopicItemProps {
-    topicName: string;
+    topic: TopicResponse;
 }
 
-const FollowedTopicItem: FC<TopicItemProps> = ({topicName}): ReactElement => {
-    const classes = useFollowedTopicItemStyles();
+const FollowedTopicItem: FC<TopicItemProps> = ({topic}): ReactElement => {
+    const classes = useFollowedTopicItemStyles({
+        isTopicFollowed: topic.isTopicFollowed,
+        isTopicNotInterested: topic.isTopicNotInterested
+    });
+    const dispatch = useDispatch();
+
+    const onClickFollowTopic = (): void => {
+        dispatch(processFollowTopic({topicsId: topic.id, topicCategory: topic.topicCategory}));
+    };
+
+    const onClickNotInterestedTopic = (): void => {
+        dispatch(processNotInterestedTopic(topic.id));
+    };
 
     return (
-        <div className={classes.topicItem}>
+        <div className={classes.topicItem} onClick={topic.isTopicFollowed ? onClickFollowTopic : undefined}>
             <ButtonGroup variant="outlined">
-                <Button className={classes.topicItemTextInfo}>
+                <Button
+                    className={classes.topicItemTextInfo}
+                    disabled={topic.isTopicNotInterested}
+                    onClick={topic.isTopicFollowed ? undefined : onClickFollowTopic}
+                >
                     <Typography variant={"h6"} component={"div"}>
-                        {topicName}
+                        {topic.topicName}
                     </Typography>
                     <>{PlusIcon}</>
                 </Button>
-                <Button className={classes.topicItemCloseButton}>
-                    <Divider orientation="vertical" flexItem />
-                    <>{CloseIcon}</>
+                <Button
+                    className={classes.topicItemCloseButton}
+                    disabled={topic.isTopicNotInterested}
+                    onClick={topic.isTopicFollowed ? undefined : onClickNotInterestedTopic}
+                >
+                    {!topic.isTopicNotInterested && <Divider orientation="vertical" flexItem/>}
+                    <>{topic.isTopicFollowed ? CheckIcon : CloseIcon}</>
                 </Button>
             </ButtonGroup>
         </div>
