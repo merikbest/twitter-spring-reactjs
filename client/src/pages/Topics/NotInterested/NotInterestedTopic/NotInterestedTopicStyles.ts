@@ -38,11 +38,4 @@ export const useNotInterestedTopicStyles = makeStyles((theme: Theme) => ({
     buttonWrapper: {
         flex: 1,
     },
-    outlinedButton: {
-        float: "right",
-        width: 79,
-        "&:hover": {
-            backgroundColor: theme.palette.secondary.light,
-        },
-    },
 }));

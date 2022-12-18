@@ -1,17 +1,34 @@
 import React, {FC, ReactElement} from "react";
 import {Typography} from "@material-ui/core";
-import Button from "@material-ui/core/Button/Button";
+import {useDispatch} from "react-redux";
 
 import {useNotInterestedTopicStyles} from "./NotInterestedTopicStyles";
 import {TopicIconContained} from "../../../../icons";
+import {processFollowTopic} from "../../../../store/ducks/topics/actionCreators";
+import {TopicResponse} from "../../../../store/types/topic";
+import UnfollowTopicButton from "./UnfollowTopicButton/UnfollowTopicButton";
+import FollowTopicButton from "./FollowTopicButton/FollowTopicButton";
 
 interface NotInterestedTopicProps {
-    topicName: string;
-    category: string;
+    topic: TopicResponse;
 }
 
-const NotInterestedTopic: FC<NotInterestedTopicProps> = ({topicName, category}): ReactElement => {
+const NotInterestedTopic: FC<NotInterestedTopicProps> = ({topic}): ReactElement => {
     const classes = useNotInterestedTopicStyles();
+    const dispatch = useDispatch();
+
+    const onClickFollowTopic = (): void => {
+        dispatch(processFollowTopic({topicsId: topic.id, topicCategory: topic.topicCategory}));
+    };
+
+    const converterCategory = (category: string): string | null => {
+        if (!category) {
+            return null;
+        } else {
+            const categoryString = category.replace(/_/g, " ").toLowerCase();
+            return categoryString.charAt(0).toUpperCase() + categoryString.slice(1);
+        }
+    };
 
     return (
         <div className={classes.container}>
@@ -20,21 +37,18 @@ const NotInterestedTopic: FC<NotInterestedTopicProps> = ({topicName, category}):
             </div>
             <div className={classes.topicInfo}>
                 <Typography variant={"h6"} component={"div"}>
-                    {topicName}
+                    {topic.topicName}
                 </Typography>
                 <Typography variant={"subtitle1"} component={"div"}>
-                    {category}
+                    {converterCategory(topic.topicCategory)}
                 </Typography>
             </div>
             <div className={classes.buttonWrapper}>
-                <Button
-                    className={classes.outlinedButton}
-                    color="primary"
-                    variant="outlined"
-                    size="small"
-                >
-                    Follow
-                </Button>
+                {topic.isTopicFollowed ? (
+                    <UnfollowTopicButton topicName={topic.topicName} onClickFollowTopic={onClickFollowTopic}/>
+                ) : (
+                    <FollowTopicButton onClickButton={onClickFollowTopic}/>
+                )}
             </div>
         </div>
     );

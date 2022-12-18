@@ -7,12 +7,21 @@ import {useUnfollowModalStyles} from "./UnfollowModalStyles";
 
 interface UnfollowModalProps {
     fullName: string;
+    infoText?: string;
     visible?: boolean;
     onClose: () => void;
     handleUnfollow: () => void;
 }
 
-const UnfollowModal: FC<UnfollowModalProps> = ({fullName, visible, onClose, handleUnfollow}): ReactElement | null => {
+const UnfollowModal: FC<UnfollowModalProps> = (
+    {
+        fullName,
+        infoText,
+        visible,
+        onClose,
+        handleUnfollow
+    }
+): ReactElement | null => {
     const classes = useUnfollowModalStyles();
 
     const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
@@ -31,8 +40,8 @@ const UnfollowModal: FC<UnfollowModalProps> = ({fullName, visible, onClose, hand
                         Unfollow {fullName}?
                     </Typography>
                     <Typography variant={"subtitle1"} component={"div"}>
-                        Their Tweets will no longer show up in your home timeline. You can still view their
-                        profile, unless their Tweets are protected.
+                        {infoText ?? "Their Tweets will no longer show up in your home timeline. You can still view their" +
+                            " profile, unless their Tweets are protected."}
                     </Typography>
                     <div className={classes.modalButtonWrapper}>
                         <Button
