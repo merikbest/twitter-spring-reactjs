@@ -3,10 +3,10 @@ package com.gmail.merikbest2015.twitterspringreactjs.service.impl;
 import com.gmail.merikbest2015.twitterspringreactjs.dto.response.TopicsByCategoriesResponse;
 import com.gmail.merikbest2015.twitterspringreactjs.enums.TopicCategory;
 import com.gmail.merikbest2015.twitterspringreactjs.exception.ApiRequestException;
-import com.gmail.merikbest2015.twitterspringreactjs.model.Topic;
-import com.gmail.merikbest2015.twitterspringreactjs.model.User;
 import com.gmail.merikbest2015.twitterspringreactjs.repository.TopicRepository;
-import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.TopicByCategoryProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.topic.FollowedTopicProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.topic.NotInterestedTopicProjection;
+import com.gmail.merikbest2015.twitterspringreactjs.repository.projection.topic.TopicProjection;
 import com.gmail.merikbest2015.twitterspringreactjs.service.AuthenticationService;
 import com.gmail.merikbest2015.twitterspringreactjs.service.TopicService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class TopicServiceImpl implements TopicService {
     private final TopicRepository topicRepository;
 
     @Override
-    public List<TopicByCategoryProjection> getTopicsByIds(List<Long> topicsIds) {
+    public List<TopicProjection> getTopicsByIds(List<Long> topicsIds) {
         return topicRepository.getTopicsByIds(topicsIds);
     }
 
@@ -42,9 +42,21 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public List<Topic> getNotInterestedTopics() {
-        User user = authenticationService.getAuthenticatedUser();
-        return user.getNotInterestedTopics();
+    public List<FollowedTopicProjection> getFollowedTopics() {
+        Long userId = authenticationService.getAuthenticatedUserId();
+        return topicRepository.getFollowedTopics(userId, FollowedTopicProjection.class);
+    }
+
+    @Override
+    public List<TopicProjection> getFollowedTopicsByUserId(Long userId) {
+        // TODO add check isMyProfileBlocked and isPrivateProfile
+        return topicRepository.getFollowedTopics(userId, TopicProjection.class);
+    }
+
+    @Override
+    public List<NotInterestedTopicProjection> getNotInterestedTopics() {
+        Long userId = authenticationService.getAuthenticatedUserId();
+        return topicRepository.getNotInterestedTopic(userId);
     }
 
     @Override
@@ -58,6 +70,7 @@ public class TopicServiceImpl implements TopicService {
             topicRepository.removeNotInterestedTopic(userId, topicId);
             return false;
         } else {
+            topicRepository.removeFollowedTopic(userId, topicId);
             topicRepository.addNotInterestedTopic(userId, topicId);
             return true;
         }
@@ -74,6 +87,7 @@ public class TopicServiceImpl implements TopicService {
             topicRepository.removeFollowedTopic(userId, topicId);
             return false;
         } else {
+            topicRepository.removeNotInterestedTopic(userId, topicId);
             topicRepository.addFollowedTopic(userId, topicId);
             return true;
         }

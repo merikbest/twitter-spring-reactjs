@@ -28,6 +28,16 @@ public class TopicController {
         return ResponseEntity.ok(topicMapper.getTopicsByCategories(request.getCategories()));
     }
 
+    @GetMapping("/followed")
+    public ResponseEntity<List<TopicResponse>> getFollowedTopics() {
+        return ResponseEntity.ok(topicMapper.getFollowedTopics());
+    }
+
+    @GetMapping("/followed/{userId}")
+    public ResponseEntity<List<TopicResponse>> getFollowedTopicsByUserId(@PathVariable Long userId) {
+        return ResponseEntity.ok(topicMapper.getFollowedTopicsByUserId(userId));
+    }
+
     @GetMapping("/not_interested")
     public ResponseEntity<List<TopicResponse>> getNotInterestedTopics() {
         return ResponseEntity.ok(topicMapper.getNotInterestedTopics());

@@ -1,9 +1,9 @@
-package com.gmail.merikbest2015.twitterspringreactjs.repository.projection;
+package com.gmail.merikbest2015.twitterspringreactjs.repository.projection.topic;
 
 import com.gmail.merikbest2015.twitterspringreactjs.enums.TopicCategory;
 import org.springframework.beans.factory.annotation.Value;
 
-public interface TopicByCategoryProjection {
+public interface TopicProjection {
     Long getId();
     String getTopicName();
     TopicCategory getTopicCategory();

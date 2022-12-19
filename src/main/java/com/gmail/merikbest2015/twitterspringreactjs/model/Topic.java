@@ -29,7 +29,13 @@ public class Topic {
 
     @ManyToMany
     @JoinTable(name = "topic_followers",
-            joinColumns = @JoinColumn(name = "topics_id"),
-            inverseJoinColumns = @JoinColumn(name = "users_id"))
+            joinColumns = @JoinColumn(name = "topic_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> topicFollowers;
+
+    @ManyToMany
+    @JoinTable(name = "topic_not_interested",
+            joinColumns = @JoinColumn(name = "topic_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> topicNotInterested;
 }
