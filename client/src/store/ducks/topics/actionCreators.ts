@@ -1,10 +1,13 @@
 import {
+    FetchFollowedTopicsActionInterface,
     FetchNotInterestedTopicsActionInterface,
     FetchTopicsByCategoriesActionInterface,
     FetchTopicsByIdsActionInterface,
     ProcessFollowTopicActionInterface,
     ProcessNotInterestedTopicActionInterface,
     ResetTopicsStateActionInterface,
+    SetFollowedTopicsActionInterface,
+    SetFollowedTopicsLoadingStateActionInterface,
     SetFollowTopicActionInterface,
     SetNotInterestedTopicActionInterface,
     SetTopicsActionInterface,
@@ -47,6 +50,15 @@ export const fetchNotInterestedTopics = (): FetchNotInterestedTopicsActionInterf
     type: TopicsActionsType.FETCH_NOT_INTERESTED_TOPICS,
 });
 
+export const fetchFollowedTopics = (): FetchFollowedTopicsActionInterface => ({
+    type: TopicsActionsType.FETCH_FOLLOWED_TOPICS,
+});
+
+export const setFollowedTopics = (payload: TopicsState["followedTopics"]): SetFollowedTopicsActionInterface => ({
+    type: TopicsActionsType.SET_FOLLOWED_TOPICS,
+    payload
+});
+
 export const processNotInterestedTopic = (payload: number): ProcessNotInterestedTopicActionInterface => ({
     type: TopicsActionsType.PROCESS_NOT_INTERESTED_TOPIC,
     payload,
@@ -78,5 +90,10 @@ export const setTopicsLoadingState = (payload: LoadingStatus): SetTopicsLoadingS
 
 export const setTopicsByCategoriesLoadingState = (payload: LoadingStatus): SetTopicsByCategoriesLoadingStateActionInterface => ({
     type: TopicsActionsType.SET_TOPICS_BY_CATEGORIES_LOADING_STATE,
+    payload,
+});
+
+export const setFollowedTopicsLoadingState = (payload: LoadingStatus): SetFollowedTopicsLoadingStateActionInterface => ({
+    type: TopicsActionsType.SET_FOLLOWED_TOPICS_LOADING_STATE,
     payload,
 });

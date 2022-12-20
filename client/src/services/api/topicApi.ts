@@ -1,9 +1,9 @@
 import axios, {AxiosResponse} from "axios";
 
 import {
-    API_TOPICS,
     API_TOPICS_CATEGORY,
     API_TOPICS_FOLLOW,
+    API_TOPICS_FOLLOWED,
     API_TOPICS_NOT_INTERESTED,
     API_TOPICS_SUGGESTED
 } from "../../util/endpoints";
@@ -20,6 +20,12 @@ export const TopicApi = {
     },
     async getTopicsByCategories(request: TopicsCategoriesRequest): Promise<AxiosResponse<TopicsByCategoriesResponse[]>> {
         return await axios.post<TopicsByCategoriesResponse[]>(API_TOPICS_CATEGORY, request);
+    },
+    async getFollowedTopics(): Promise<AxiosResponse<TopicResponse[]>> {
+        return await axios.get<TopicResponse[]>(API_TOPICS_FOLLOWED);
+    },
+    async getFollowedTopicsByUserId(userId: number): Promise<AxiosResponse<TopicResponse[]>> {
+        return await axios.get<TopicResponse[]>(`${API_TOPICS_FOLLOWED}/${userId}`);
     },
     async getNotInterestedTopics(): Promise<AxiosResponse<TopicResponse[]>> {
         return await axios.get<TopicResponse[]>(API_TOPICS_NOT_INTERESTED);

@@ -4,6 +4,8 @@ import {TopicCategory, TopicResponse} from "../../../types/topic";
 export interface TopicsState {
     topics: TopicResponse[];
     topicsLoadingState: LoadingStatus;
+    followedTopics: TopicResponse[];
+    followedTopicsLoadingState: LoadingStatus;
     topicsByCategories: TopicsByCategoriesResponse[];
     topicsByCategoriesLoadingState: LoadingStatus;
 }

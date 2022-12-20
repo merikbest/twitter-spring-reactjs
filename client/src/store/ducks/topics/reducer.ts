@@ -7,6 +7,8 @@ import {TopicsActions, TopicsActionsType} from "./contracts/actionTypes";
 export const initialTopicsState: TopicsState = {
     topics: [],
     topicsLoadingState: LoadingStatus.LOADING,
+    followedTopics: [],
+    followedTopicsLoadingState: LoadingStatus.LOADING,
     topicsByCategories: [],
     topicsByCategoriesLoadingState: LoadingStatus.LOADING,
 };
@@ -21,6 +23,11 @@ export const topicsReducer = produce((draft: Draft<TopicsState>, action: TopicsA
         case TopicsActionsType.SET_TOPICS_BY_CATEGORIES:
             draft.topicsByCategories = action.payload;
             draft.topicsByCategoriesLoadingState = LoadingStatus.LOADED;
+            break;
+
+        case TopicsActionsType.SET_FOLLOWED_TOPICS:
+            draft.followedTopics = action.payload;
+            draft.followedTopicsLoadingState = LoadingStatus.LOADED;
             break;
 
         case TopicsActionsType.SET_NOT_INTERESTED_TOPIC:
@@ -46,6 +53,8 @@ export const topicsReducer = produce((draft: Draft<TopicsState>, action: TopicsA
         case TopicsActionsType.RESET_TOPICS_STATE:
             draft.topics = [];
             draft.topicsLoadingState = LoadingStatus.LOADING;
+            draft.followedTopics = [];
+            draft.followedTopicsLoadingState = LoadingStatus.LOADING;
             draft.topicsByCategories = [];
             draft.topicsByCategoriesLoadingState = LoadingStatus.LOADING;
             break;
@@ -56,6 +65,10 @@ export const topicsReducer = produce((draft: Draft<TopicsState>, action: TopicsA
 
         case TopicsActionsType.SET_TOPICS_BY_CATEGORIES_LOADING_STATE:
             draft.topicsByCategoriesLoadingState = action.payload;
+            break;
+
+        case TopicsActionsType.SET_FOLLOWED_TOPICS_LOADING_STATE:
+            draft.followedTopicsLoadingState = action.payload;
             break;
 
         default:
