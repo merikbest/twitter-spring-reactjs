@@ -2,7 +2,7 @@ import React, {FC, ReactElement, useState} from "react";
 import Button from "@material-ui/core/Button/Button";
 
 import {useUnfollowTopicButtonStyles} from "./UnfollowTopicButtonStyles";
-import UnfollowModal from "../../../../../components/UnfollowModal/UnfollowModal";
+import UnfollowModal from "../../../../components/UnfollowModal/UnfollowModal";
 
 interface UnfollowTopicButtonProps {
     topicName: string;

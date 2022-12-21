@@ -3,16 +3,16 @@ import {Button, ButtonGroup, Divider, Typography} from "@material-ui/core";
 import {useDispatch} from "react-redux";
 
 import {CheckIcon, CloseIcon, PlusIcon} from "../../../../icons";
-import {useFollowedTopicItemStyles} from "./FollowedTopicItemStyles";
+import {useFollowedTopicItemButton} from "./FollowedTopicItemButton";
 import {TopicResponse} from "../../../../store/types/topic";
 import {processFollowTopic, processNotInterestedTopic} from "../../../../store/ducks/topics/actionCreators";
 
-interface TopicItemProps {
+interface TopicButtonProps {
     topic: TopicResponse;
 }
 
-const FollowedTopicItem: FC<TopicItemProps> = ({topic}): ReactElement => {
-    const classes = useFollowedTopicItemStyles({
+const FollowedTopicButton: FC<TopicButtonProps> = ({topic}): ReactElement => {
+    const classes = useFollowedTopicItemButton({
         isTopicFollowed: topic.isTopicFollowed,
         isTopicNotInterested: topic.isTopicNotInterested
     });
@@ -52,4 +52,4 @@ const FollowedTopicItem: FC<TopicItemProps> = ({topic}): ReactElement => {
     );
 };
 
-export default FollowedTopicItem;
+export default FollowedTopicButton;

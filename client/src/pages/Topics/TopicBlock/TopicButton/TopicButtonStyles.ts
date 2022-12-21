@@ -1,11 +1,11 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
-interface UseTopicsItemStyles {
+interface UseTopicsButtonStyles {
     isTopicFollowed: boolean;
     isTopicNotInterested: boolean;
 }
 
-export const useTopicItemStyles = makeStyles<Theme, UseTopicsItemStyles>((theme) => ({
+export const useTopicButtonStyles = makeStyles<Theme, UseTopicsButtonStyles>((theme) => ({
     topicItem: {
         opacity: props => props.isTopicNotInterested ? 0.5 : 1,
         padding: "4px 0px",

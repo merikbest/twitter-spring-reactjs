@@ -2,17 +2,17 @@ import React, {FC, ReactElement} from "react";
 import {useDispatch} from "react-redux";
 import {Button, Typography} from "@material-ui/core";
 
-import {useTopicItemStyles} from "./TopicItemStyles";
+import {useTopicButtonStyles} from "./TopicButtonStyles";
 import {CheckIcon, PlusIcon} from "../../../../icons";
 import {processFollowTopic} from "../../../../store/ducks/topics/actionCreators";
 import {TopicResponse} from "../../../../store/types/topic";
 
-interface TopicsItemProps {
+interface TopicsButtonProps {
     topic: TopicResponse;
 }
 
-const TopicItem: FC<TopicsItemProps> = ({topic}): ReactElement => {
-    const classes = useTopicItemStyles({
+const TopicButton: FC<TopicsButtonProps> = ({topic}): ReactElement => {
+    const classes = useTopicButtonStyles({
         isTopicFollowed: topic.isTopicFollowed,
         isTopicNotInterested: topic.isTopicNotInterested
     });
@@ -34,4 +34,4 @@ const TopicItem: FC<TopicsItemProps> = ({topic}): ReactElement => {
     );
 };
 
-export default TopicItem;
+export default TopicButton;

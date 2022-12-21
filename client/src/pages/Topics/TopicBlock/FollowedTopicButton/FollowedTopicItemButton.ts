@@ -1,11 +1,11 @@
 import {makeStyles, Theme} from "@material-ui/core";
 
-interface UseFollowedTopicItemStyles {
+interface UseFollowedTopicButtonStyles {
     isTopicFollowed: boolean;
     isTopicNotInterested: boolean;
 }
 
-export const useFollowedTopicItemStyles = makeStyles<Theme, UseFollowedTopicItemStyles>((theme) => ({
+export const useFollowedTopicItemButton = makeStyles<Theme, UseFollowedTopicButtonStyles>((theme) => ({
     topicItem: {
         "& .MuiButtonGroup-root": {
             opacity: props => props.isTopicNotInterested ? 0.5 : 1,

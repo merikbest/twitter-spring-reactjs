@@ -2,19 +2,19 @@ import React, {FC, ReactElement} from "react";
 import {Typography} from "@material-ui/core";
 import {useDispatch} from "react-redux";
 
-import {useNotInterestedTopicStyles} from "./NotInterestedTopicStyles";
-import {TopicIconContained} from "../../../../icons";
-import {processFollowTopic} from "../../../../store/ducks/topics/actionCreators";
-import {TopicResponse} from "../../../../store/types/topic";
+import {useTopicItemStyles} from "./TopicItemStyles";
+import {TopicIconContained} from "../../../icons";
+import {processFollowTopic} from "../../../store/ducks/topics/actionCreators";
+import {TopicResponse} from "../../../store/types/topic";
 import UnfollowTopicButton from "./UnfollowTopicButton/UnfollowTopicButton";
 import FollowTopicButton from "./FollowTopicButton/FollowTopicButton";
 
-interface NotInterestedTopicProps {
+interface TopicItemProps {
     topic: TopicResponse;
 }
 
-const NotInterestedTopic: FC<NotInterestedTopicProps> = ({topic}): ReactElement => {
-    const classes = useNotInterestedTopicStyles();
+const TopicItem: FC<TopicItemProps> = ({topic}): ReactElement => {
+    const classes = useTopicItemStyles();
     const dispatch = useDispatch();
 
     const onClickFollowTopic = (): void => {
@@ -54,4 +54,4 @@ const NotInterestedTopic: FC<NotInterestedTopicProps> = ({topic}): ReactElement 
     );
 };
 
-export default NotInterestedTopic;
+export default TopicItem;

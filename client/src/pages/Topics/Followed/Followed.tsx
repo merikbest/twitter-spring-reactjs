@@ -8,10 +8,16 @@ import {FOLLOW_AND_UNFOLLOW_TOPICS} from "../../../util/pathConstants";
 import {useGlobalStyles} from "../../../util/globalClasses";
 import {useTopicsStyles} from "../TopicsStyles";
 import TopicsCarousel from "../TopicsCarousel/TopicsCarousel";
-import {selectIsTopicsLoading, selectTopicsItems} from "../../../store/ducks/topics/selectors";
-import {fetchTopicsByIds, resetTopicsState} from "../../../store/ducks/topics/actionCreators";
+import {
+    selectFollowedTopicsItems,
+    selectIsFollowedTopicsLoading,
+    selectIsTopicsLoading,
+    selectTopicsItems
+} from "../../../store/ducks/topics/selectors";
+import {fetchFollowedTopics, fetchTopicsByIds, resetTopicsState} from "../../../store/ducks/topics/actionCreators";
 import TopicBlock from "../TopicBlock/TopicBlock";
 import Spinner from "../../../components/Spinner/Spinner";
+import TopicItem from "../TopicItem/TopicItem";
 
 export const topicsIds = [1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020];
 
@@ -20,10 +26,13 @@ const Followed = (): ReactElement => {
     const topicClasses = useTopicsStyles();
     const dispatch = useDispatch();
     const topics = useSelector(selectTopicsItems);
+    const followedTopics = useSelector(selectFollowedTopicsItems);
     const isTopicsLoading = useSelector(selectIsTopicsLoading);
+    const isFollowedTopicsLoading = useSelector(selectIsFollowedTopicsLoading);
 
     useEffect(() => {
         dispatch(fetchTopicsByIds({topicsIds}));
+        dispatch(fetchFollowedTopics());
 
         return () => {
             dispatch(resetTopicsState());
@@ -37,6 +46,11 @@ const Followed = (): ReactElement => {
                 publicly on your profile
             </Typography>
             <Divider/>
+            {isFollowedTopicsLoading ? (
+                <Spinner/>
+            ) : (
+                followedTopics.map((topic) => <TopicItem key={topic.id} topic={topic}/>)
+            )}
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
                     Suggested Topics
