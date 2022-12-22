@@ -12,6 +12,7 @@ public class TestConstants {
     public static final String URL_USER_SETTINGS_UPDATE = URL_USER_SETTINGS_BASIC + "/update";
     public static final String URL_LISTS_BASIC = "/api/v1/lists";
     public static final String URL_CHAT_BASIC = "/api/v1/chat";
+    public static final String URL_TOPICS_BASIC = "/api/v1/topics";
 
     public static final String HASHTAG = "#JetBrains";
 
