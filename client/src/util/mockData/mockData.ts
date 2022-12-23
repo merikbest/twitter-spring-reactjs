@@ -1326,16 +1326,22 @@ export const mockTopics = [
     {
         "id": 1,
         "topicName": "Elon Musk",
-        "topicCategory": TopicCategory.ENTERTAINMENT
+        "topicCategory": TopicCategory.ENTERTAINMENT,
+        "isTopicFollowed": false,
+        "isTopicNotInterested": false,
     },
     {
         "id": 2,
         "topicName": "PewDiePie",
-        "topicCategory": TopicCategory.GAMING
+        "topicCategory": TopicCategory.GAMING,
+        "isTopicFollowed": false,
+        "isTopicNotInterested": false,
     },
     {
         "id": 3,
         "topicName": "Funny Tweets",
-        "topicCategory": TopicCategory.ONLY_ON_TWITTER
+        "topicCategory": TopicCategory.ONLY_ON_TWITTER,
+        "isTopicFollowed": false,
+        "isTopicNotInterested": false,
     }
 ] as unknown as TopicResponse[];
