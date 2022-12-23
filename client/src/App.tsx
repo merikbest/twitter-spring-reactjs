@@ -84,6 +84,7 @@ import FullTweet from "./pages/FullTweet/FullTweet";
 import Connect from "./pages/Connect/Connect";
 import Trends from './pages/Trends/Trends';
 import Topics from "./pages/Topics/Topics";
+import UserTopics from "./pages/UserTopics/UserTopics";
 
 const App: FC = (): ReactElement => {
     const history = useHistory();
@@ -233,6 +234,7 @@ const App: FC = (): ReactElement => {
                         <Route path={`${LISTS_MEMBERSHIPS}/:id`} component={ListsMemberships} exact/>
                         <Route path={`${LISTS}/:listId`} component={FullList} exact/>
                         <Route path={`${PROFILE}/:userId`} component={UserPage} exact/>
+                        <Route path={`${PROFILE}/:userId${TOPICS}`} component={UserTopics} exact/>
                         <Route path={`${USER_FOLLOWERS_YOU_FOLLOW}/:id`} component={FollowersYouKnow} exact/>
                         <Route path={`${USER}/:id/:follow`} component={FollowingFollowers} exact/>
                     </Switch>

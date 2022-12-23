@@ -15,6 +15,7 @@ export enum TopicsActionsType {
     FETCH_TOPICS_BY_IDS = "topics/FETCH_TOPICS_BY_IDS",
     FETCH_TOPICS_BY_CATEGORIES = "topics/FETCH_TOPICS_BY_CATEGORIES",
     FETCH_FOLLOWED_TOPICS = "topics/FETCH_FOLLOWED_TOPICS",
+    FETCH_FOLLOWED_TOPICS_BY_USER_ID = "topics/FETCH_FOLLOWED_TOPICS_BY_USER_ID",
     SET_FOLLOWED_TOPICS = "topics/SET_FOLLOWED_TOPICS",
     SET_TOPICS_BY_CATEGORIES = "topics/SET_TOPICS_BY_CATEGORIES",
     FETCH_NOT_INTERESTED_TOPICS = "topics/FETCH_NOT_INTERESTED_TOPICS",
@@ -45,6 +46,11 @@ export interface FetchTopicsByCategoriesActionInterface extends Action<TopicsAct
 
 export interface FetchFollowedTopicsActionInterface extends Action<TopicsActionsType> {
     type: TopicsActionsType.FETCH_FOLLOWED_TOPICS;
+}
+
+export interface FetchFollowedTopicsByUserIdActionInterface extends Action<TopicsActionsType> {
+    type: TopicsActionsType.FETCH_FOLLOWED_TOPICS_BY_USER_ID;
+    payload: number;
 }
 
 export interface SetFollowedTopicsActionInterface extends Action<TopicsActionsType> {

@@ -2,6 +2,7 @@ import {AxiosResponse} from "axios";
 import {call, put, takeLatest} from "redux-saga/effects";
 
 import {
+    FetchFollowedTopicsByUserIdActionInterface,
     FetchTopicsByCategoriesActionInterface,
     FetchTopicsByIdsActionInterface,
     ProcessFollowTopicActionInterface,
@@ -63,6 +64,16 @@ export function* fetchFollowedTopicsRequest() {
     }
 }
 
+export function* fetchFollowedTopicsByUserIdRequest({payload}: FetchFollowedTopicsByUserIdActionInterface) {
+    try {
+        yield put(setFollowedTopicsLoadingState(LoadingStatus.LOADING));
+        const response: AxiosResponse<TopicResponse[]> = yield call(TopicApi.getFollowedTopicsByUserId, payload);
+        yield put(setFollowedTopics(response.data));
+    } catch (error) {
+        yield put(setFollowedTopicsLoadingState(LoadingStatus.ERROR));
+    }
+}
+
 export function* processNotInterestedTopicRequest({payload}: ProcessNotInterestedTopicActionInterface) {
     try {
         const response: AxiosResponse<boolean> = yield call(TopicApi.processNotInterestedTopic, payload);
@@ -90,6 +101,7 @@ export function* topicsSaga() {
     yield takeLatest(TopicsActionsType.FETCH_TOPICS_BY_CATEGORIES, fetchTopicsByCategoriesRequest);
     yield takeLatest(TopicsActionsType.FETCH_NOT_INTERESTED_TOPICS, fetchNotInterestedTopicsRequest);
     yield takeLatest(TopicsActionsType.FETCH_FOLLOWED_TOPICS, fetchFollowedTopicsRequest);
+    yield takeLatest(TopicsActionsType.FETCH_FOLLOWED_TOPICS_BY_USER_ID, fetchFollowedTopicsByUserIdRequest);
     yield takeLatest(TopicsActionsType.PROCESS_NOT_INTERESTED_TOPIC, processNotInterestedTopicRequest);
     yield takeLatest(TopicsActionsType.PROCESS_FOLLOW_TOPIC, processFollowTopicRequest);
 }

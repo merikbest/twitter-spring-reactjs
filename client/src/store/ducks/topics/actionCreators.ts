@@ -1,5 +1,6 @@
 import {
     FetchFollowedTopicsActionInterface,
+    FetchFollowedTopicsByUserIdActionInterface,
     FetchNotInterestedTopicsActionInterface,
     FetchTopicsByCategoriesActionInterface,
     FetchTopicsByIdsActionInterface,
@@ -52,6 +53,11 @@ export const fetchNotInterestedTopics = (): FetchNotInterestedTopicsActionInterf
 
 export const fetchFollowedTopics = (): FetchFollowedTopicsActionInterface => ({
     type: TopicsActionsType.FETCH_FOLLOWED_TOPICS,
+});
+
+export const fetchFollowedTopicsByUserId = (payload: number): FetchFollowedTopicsByUserIdActionInterface => ({
+    type: TopicsActionsType.FETCH_FOLLOWED_TOPICS_BY_USER_ID,
+    payload,
 });
 
 export const setFollowedTopics = (payload: TopicsState["followedTopics"]): SetFollowedTopicsActionInterface => ({
