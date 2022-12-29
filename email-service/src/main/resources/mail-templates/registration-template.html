@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .table {
+            border-collapse: collapse;
+            width: 600px;
+            border-radius: 50px;
+            border: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+<table align="center" class="table">
+    <tr>
+        <td style="background-color: #ffffff; padding: 40px 30px 40px 30px; text-align: center">
+            <h3>Hello <span th:text="${fullName}" th:remove="tag"></span>!</h3>
+            <p>Welcome to Twitter clone!</p>
+            <p>Your registration code : <span th:text="${registrationCode}" th:remove="tag"></span></p>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

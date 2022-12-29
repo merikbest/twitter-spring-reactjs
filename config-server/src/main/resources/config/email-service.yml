@@ -1,0 +1,29 @@
+server:
+    port: 8019
+
+spring:
+    application:
+        name: email-service
+    zipkin:
+        base-url: http://localhost:9411
+    mail:
+        host: smtp.gmail.com
+        username: twitter.spring.reactjs@gmail.com
+        password: Fcnhfk-rbtd
+        port: 465
+        protocol: smtps
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+mail:
+    debug: false
+
+eureka:
+    client:
+        service-url:
+            defaultZone: http://localhost:8761/eureka
+        fetch-registry: true
+        register-with-eureka: true

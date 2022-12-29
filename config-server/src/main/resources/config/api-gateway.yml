@@ -1,0 +1,29 @@
+server:
+    port: 8000
+
+spring:
+    application:
+        name: api-gateway
+    cloud:
+        gateway:
+            discovery:
+                locator:
+                    enabled: true
+                    lower-case-service-id: true
+            routes:
+                -   id: topic-service
+                    uri: lb://topic-service
+                    predicates:
+                        - Path=/api/v1/topics/**
+                    filters:
+                        - AuthFilter
+
+    zipkin:
+        base-url: http://localhost:9411
+
+eureka:
+    client:
+        service-url:
+            defaultZone: http://localhost:8761/eureka
+        fetch-registry: true
+        register-with-eureka: true
