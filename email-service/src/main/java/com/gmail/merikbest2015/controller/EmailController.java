@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.controller;
 
-import com.gmail.merikbest2015.dto.EmailRequest;
+import com.gmail.merikbest2015.client.email.EmailRequest;
 import com.gmail.merikbest2015.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

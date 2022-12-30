@@ -1,13 +1,8 @@
 package com.gmail.merikbest2015.controller;
 
-import com.gmail.merikbest2015.dto.request.UserRequest;
-import com.gmail.merikbest2015.dto.response.HeaderResponse;
 import com.gmail.merikbest2015.dto.response.notification.NotificationInfoResponse;
 import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
-import com.gmail.merikbest2015.dto.response.tweet.TweetImageResponse;
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
-import com.gmail.merikbest2015.dto.response.tweet.TweetUserResponse;
 import com.gmail.merikbest2015.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

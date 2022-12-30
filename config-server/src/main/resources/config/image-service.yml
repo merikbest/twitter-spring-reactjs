@@ -1,0 +1,23 @@
+server:
+    port: 8021
+
+spring:
+    application:
+        name: topic-service
+    zipkin:
+        base-url: http://localhost:9411
+
+amazon:
+    s3:
+        bucket:
+            name: twitterclonestorage
+    aws:
+        access-key: AKIATP4TDBGPAJUNI5EY
+        secret-key: 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
+
+eureka:
+    client:
+        service-url:
+            defaultZone: http://localhost:8761/eureka
+        fetch-registry: true
+        register-with-eureka: true

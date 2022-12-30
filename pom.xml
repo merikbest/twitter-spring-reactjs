@@ -20,7 +20,9 @@
         <module>email-service</module>
         <module>user-service</module>
         <module>commons-domain</module>
-        <module>user-api</module>
+        <module>image-service</module>
+        <module>client</module>
+        <module>tweet-service</module>
     </modules>
 
     <properties>

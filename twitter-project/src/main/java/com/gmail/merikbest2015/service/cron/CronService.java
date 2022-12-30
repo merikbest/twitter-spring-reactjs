@@ -1,6 +1,5 @@
 package com.gmail.merikbest2015.service.cron;
 
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import lombok.RequiredArgsConstructor;

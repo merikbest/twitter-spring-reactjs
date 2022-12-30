@@ -1,7 +1,6 @@
 package com.gmail.merikbest2015.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gmail.merikbest2015.dto.request.UserRequest;
 import com.gmail.merikbest2015.enums.ReplyType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

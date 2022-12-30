@@ -2,9 +2,7 @@ package com.gmail.merikbest2015.controller;
 
 import com.gmail.merikbest2015.dto.request.ChatMessageRequest;
 import com.gmail.merikbest2015.dto.request.MessageWithTweetRequest;
-import com.gmail.merikbest2015.dto.response.HeaderResponse;
 import com.gmail.merikbest2015.dto.response.UserChatResponse;
-import com.gmail.merikbest2015.dto.response.UserResponse;
 import com.gmail.merikbest2015.dto.response.chats.ChatMessageResponse;
 import com.gmail.merikbest2015.dto.response.chats.ChatResponse;
 import com.gmail.merikbest2015.mapper.ChatMapper;

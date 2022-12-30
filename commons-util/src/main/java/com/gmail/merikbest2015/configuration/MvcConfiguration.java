@@ -20,7 +20,7 @@ public class MvcConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/api/v1/**")
+        registry.addMapping("/ui/v1/**")
                 .allowedOrigins(hostname)
                 .allowedMethods("HEAD", "OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE")
                 .exposedHeaders("page-total-count")

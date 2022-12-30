@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.controller.rest;
 
-import com.gmail.merikbest2015.dto.ImageResponse;
-import com.gmail.merikbest2015.dto.response.AuthUserResponse;
-import com.gmail.merikbest2015.dto.response.UserProfileResponse;
+import com.gmail.merikbest2015.dto.*;
+import com.gmail.merikbest2015.dto.request.UserRequest;
+import com.gmail.merikbest2015.dto.response.*;
 import com.gmail.merikbest2015.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +10,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -117,11 +116,6 @@ public class UserController {
         return ResponseEntity.ok(userMapper.updateUserProfile(userRequest));
     }
 
-    @PostMapping("/upload")
-    public ResponseEntity<ImageResponse> uploadImage(@RequestPart("file") MultipartFile file) {
-        return ResponseEntity.ok(userMapper.uploadImage(file));
-    }
-
     @GetMapping("/images/{userId}")
     public ResponseEntity<List<TweetImageResponse>> getUserTweetImages(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.getUserTweetImages(userId));
@@ -211,5 +205,4 @@ public class UserController {
     public ResponseEntity<UserDetailResponse> getUserDetails(@PathVariable Long userId) {
         return ResponseEntity.ok(userMapper.getUserDetails(userId));
     }
-
 }

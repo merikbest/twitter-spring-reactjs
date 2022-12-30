@@ -1,14 +1,9 @@
 package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.dto.request.SettingsRequest;
-import com.gmail.merikbest2015.dto.request.UserRequest;
-import com.gmail.merikbest2015.dto.response.HeaderResponse;
 import com.gmail.merikbest2015.dto.response.notification.NotificationInfoResponse;
 import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
-import com.gmail.merikbest2015.dto.response.tweet.TweetImageResponse;
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
-import com.gmail.merikbest2015.dto.response.tweet.TweetUserResponse;
 import com.gmail.merikbest2015.enums.BackgroundColorType;
 import com.gmail.merikbest2015.enums.ColorSchemeType;
 import com.gmail.merikbest2015.repository.projection.BookmarkProjection;

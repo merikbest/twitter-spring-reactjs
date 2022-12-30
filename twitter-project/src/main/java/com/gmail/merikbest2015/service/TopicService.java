@@ -1,6 +1,5 @@
 package com.gmail.merikbest2015.service;
 
-import com.gmail.merikbest2015.dto.response.TopicsByCategoriesResponse;
 import com.gmail.merikbest2015.enums.TopicCategory;
 import com.gmail.merikbest2015.repository.projection.FollowedTopicProjection;
 import com.gmail.merikbest2015.repository.projection.NotInterestedTopicProjection;

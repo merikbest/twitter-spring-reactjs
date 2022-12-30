@@ -2,8 +2,6 @@ package com.gmail.merikbest2015.controller;
 
 import com.gmail.merikbest2015.dto.request.SuggestedTopicsRequest;
 import com.gmail.merikbest2015.dto.request.TopicsCategoriesRequest;
-import com.gmail.merikbest2015.dto.response.TopicResponse;
-import com.gmail.merikbest2015.dto.response.TopicsByCategoriesResponse;
 import com.gmail.merikbest2015.mapper.TopicMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

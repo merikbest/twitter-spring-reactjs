@@ -2,13 +2,11 @@ package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.dto.request.ListsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
-import com.gmail.merikbest2015.dto.response.HeaderResponse;
 import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
 import com.gmail.merikbest2015.dto.response.lists.ListResponse;
 import com.gmail.merikbest2015.dto.response.lists.ListUserResponse;
 import com.gmail.merikbest2015.dto.response.lists.ListsOwnerMemberResponse;
 import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.model.Lists;
 import com.gmail.merikbest2015.model.Notification;
 import com.gmail.merikbest2015.repository.projection.lists.ListMemberProjection;

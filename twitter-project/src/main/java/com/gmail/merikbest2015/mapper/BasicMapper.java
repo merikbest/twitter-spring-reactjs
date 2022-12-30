@@ -1,6 +1,5 @@
 package com.gmail.merikbest2015.mapper;
 
-import com.gmail.merikbest2015.dto.response.HeaderResponse;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;

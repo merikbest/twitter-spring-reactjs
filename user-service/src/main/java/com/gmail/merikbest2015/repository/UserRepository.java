@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.enums.BackgroundColorType;
 import com.gmail.merikbest2015.enums.ColorSchemeType;
 import com.gmail.merikbest2015.models.Tweet;
 import com.gmail.merikbest2015.models.User;
+import com.gmail.merikbest2015.projection.UserProjection;
 import com.gmail.merikbest2015.repository.projection.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

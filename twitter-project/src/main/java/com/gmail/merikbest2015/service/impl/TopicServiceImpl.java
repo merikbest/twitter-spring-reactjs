@@ -1,6 +1,5 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.dto.response.TopicsByCategoriesResponse;
 import com.gmail.merikbest2015.enums.TopicCategory;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.repository.TopicRepository;

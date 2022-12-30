@@ -49,5 +49,10 @@
             <artifactId>thymeleaf-spring5</artifactId>
             <version>3.0.12.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>com.gmail.merikbest2015</groupId>
+            <artifactId>client</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>

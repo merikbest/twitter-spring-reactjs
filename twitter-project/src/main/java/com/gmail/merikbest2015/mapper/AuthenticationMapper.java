@@ -1,7 +1,5 @@
 package com.gmail.merikbest2015.mapper;
 
-import com.gmail.merikbest2015.dto.response.AuthUserResponse;
-import com.gmail.merikbest2015.dto.response.AuthenticationResponse;
 import com.gmail.merikbest2015.exception.InputFieldException;
 import com.gmail.merikbest2015.repository.projection.user.AuthUserProjection;
 import com.gmail.merikbest2015.service.AuthenticationService;

@@ -1,7 +1,6 @@
 package com.gmail.merikbest2015.controller;
 
 import com.gmail.merikbest2015.dto.request.SettingsRequest;
-import com.gmail.merikbest2015.dto.response.AuthenticationResponse;
 import com.gmail.merikbest2015.dto.response.UserPhoneResponse;
 import com.gmail.merikbest2015.enums.BackgroundColorType;
 import com.gmail.merikbest2015.enums.ColorSchemeType;

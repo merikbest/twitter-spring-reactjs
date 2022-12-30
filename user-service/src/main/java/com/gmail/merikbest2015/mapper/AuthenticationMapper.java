@@ -1,9 +1,10 @@
 package com.gmail.merikbest2015.mapper;
 
+import com.gmail.merikbest2015.dto.AuthUserResponse;
+import com.gmail.merikbest2015.dto.AuthenticationResponse;
 import com.gmail.merikbest2015.dto.request.*;
-import com.gmail.merikbest2015.dto.response.AuthUserResponse;
-import com.gmail.merikbest2015.dto.response.AuthenticationResponse;
 import com.gmail.merikbest2015.exception.InputFieldException;
+import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
 import com.gmail.merikbest2015.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -54,8 +55,7 @@ public class AuthenticationMapper {
     }
 
     public AuthUserResponse findByPasswordResetCode(String code) {
-//        AuthUserProjection user = authenticationService.findByPasswordResetCode(code);
-        Object user = authenticationService.findByPasswordResetCode(code);
+        AuthUserProjection user = authenticationService.findByPasswordResetCode(code);
         return modelMapper.map(user, AuthUserResponse.class);
     }
 
