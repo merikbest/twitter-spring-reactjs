@@ -12,17 +12,20 @@
 
     <modules>
         <module>eureka-server</module>
-        <module>twitter-project</module>
-        <module>topic-service</module>
-        <module>commons-util</module>
         <module>config-server</module>
         <module>api-gateway</module>
-        <module>email-service</module>
-        <module>user-service</module>
-        <module>commons-domain</module>
-        <module>image-service</module>
         <module>client</module>
+<!--        <module>twitter-project</module>-->
+        <module>commons-util</module>
+        <module>commons-domain</module>
+        <module>email-service</module>
+        <module>image-service</module>
+        <module>topic-service</module>
+        <module>user-service</module>
         <module>tweet-service</module>
+        <module>tag-service</module>
+        <module>lists-service</module>
+        <module>chat-service</module>
     </modules>
 
     <properties>

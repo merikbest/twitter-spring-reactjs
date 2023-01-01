@@ -1,5 +1,5 @@
 server:
-    port: 8003
+    port: 8002
 spring:
     application:
         name: tweet-service
@@ -32,5 +32,3 @@ eureka:
             defaultZone: http://localhost:8761/eureka
         fetch-registry: true
         register-with-eureka: true
-
-

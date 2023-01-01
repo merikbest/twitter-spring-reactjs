@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.client.tag.TagClient;
 import com.gmail.merikbest2015.client.user.AuthenticationClient;
 import com.gmail.merikbest2015.client.user.UserClient;
 import com.gmail.merikbest2015.enums.LinkCoverSize;
@@ -45,11 +46,11 @@ public class TweetServiceImpl implements TweetService {
     private final RetweetRepository retweetRepository;
     private final LikeTweetRepository likeTweetRepository;
     private final NotificationRepository notificationRepository;
-    private final TagRepository tagRepository;
     private final PollRepository pollRepository;
     private final PollChoiceRepository pollChoiceRepository;
     private final AuthenticationClient authenticationClient;
     private final UserClient userClient;
+    private final TagClient tagClient;
     private final RestTemplate restTemplate;
 
     @Value("${google.api.url}")
@@ -196,12 +197,12 @@ public class TweetServiceImpl implements TweetService {
         if (user.getPinnedTweet() != null && user.getPinnedTweet().getId().equals(tweetId)) {
             user.setPinnedTweet(null);
         }
-        List<Tag> tags = tagRepository.findByTweets_Id(tweetId);
+        List<Tag> tags = tagClient.getTagsByTweetId(tweetId);
         tags.forEach(tag -> {
             long tweetsQuantity = tag.getTweetsQuantity() - 1;
 
             if (tweetsQuantity == 0) {
-                tagRepository.delete(tag);
+                tagClient.deleteTag(tag);
             } else {
                 tag.setTweetsQuantity(tweetsQuantity);
             }
@@ -434,7 +435,7 @@ public class TweetServiceImpl implements TweetService {
 
         if (!hashtags.isEmpty()) {
             hashtags.forEach(hashtag -> {
-                Tag tag = tagRepository.findByTagName(hashtag);
+                Tag tag = tagClient.getTagByTagName(hashtag);
 
                 if (tag != null) {
                     Long tweetsQuantity = tag.getTweetsQuantity();
@@ -442,13 +443,13 @@ public class TweetServiceImpl implements TweetService {
                     tag.setTweetsQuantity(tweetsQuantity);
                     List<Tweet> taggedTweets = tag.getTweets();
                     taggedTweets.add(tweet);
-                    tagRepository.save(tag);
+                    tagClient.saveTag(tag);
                 } else {
                     Tag newTag = new Tag();
                     newTag.setTagName(hashtag);
                     newTag.setTweetsQuantity(1L);
                     newTag.setTweets(Collections.singletonList(tweet));
-                    tagRepository.save(newTag);
+                    tagClient.saveTag(newTag);
                 }
             });
         }

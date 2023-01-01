@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.feign;
 
-import com.gmail.merikbest2015.dto.EmailRequest;
+import com.gmail.merikbest2015.client.email.EmailRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.client.tweet.TweetPageableRequest;
+import com.gmail.merikbest2015.client.tweet.TweetUserIdsRequest;
 import com.gmail.merikbest2015.models.Tweet;
 import com.gmail.merikbest2015.projection.TweetImageProjection;
 import com.gmail.merikbest2015.projection.TweetProjection;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -57,7 +59,21 @@ public class TweetClientServiceImpl implements TweetClientService {
     }
 
     @Override
-    public List<TweetsProjection> getNotificationsFromTweetAuthors(Long userId) {
-        return tweetRepository.getNotificationsFromTweetAuthors(userId);
+    public List<TweetProjection> getNotificationsFromTweetAuthors(Long userId) {
+        return tweetRepository.getNotificationsFromTweetAuthors(userId).stream()
+                .map(TweetsProjection::getTweet)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TweetProjection> getTweetsByTagName(String tagName) {
+        return tweetRepository.getTweetsByTagName(tagName).stream()
+                .map(TweetsProjection::getTweet)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<TweetProjection> getTweetsByUserIds(TweetUserIdsRequest request) {
+        return tweetRepository.findTweetsByUserIds(request.getUserIds(), request.getPageable());
     }
 }

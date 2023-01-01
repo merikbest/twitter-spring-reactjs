@@ -1,10 +1,10 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.client.tweet.TweetPageableRequest;
+import com.gmail.merikbest2015.client.tweet.TweetUserIdsRequest;
 import com.gmail.merikbest2015.models.Tweet;
 import com.gmail.merikbest2015.projection.TweetImageProjection;
 import com.gmail.merikbest2015.projection.TweetProjection;
-import com.gmail.merikbest2015.projection.TweetsProjection;
 import com.gmail.merikbest2015.projection.TweetsUserProjection;
 import org.springframework.data.domain.Page;
 
@@ -27,5 +27,9 @@ public interface TweetClientService {
 
     List<TweetsUserProjection> getRepliesByUserId(Long userId);
 
-    List<TweetsProjection> getNotificationsFromTweetAuthors(Long userId);
+    List<TweetProjection> getNotificationsFromTweetAuthors(Long userId);
+
+    List<TweetProjection> getTweetsByTagName(String tagName);
+
+    Page<TweetProjection> getTweetsByUserIds(TweetUserIdsRequest request);
 }

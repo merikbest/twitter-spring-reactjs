@@ -404,19 +404,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.getFollowerRequests(authUserId, pageable);
     }
 
-    @Override
-    public List<Long> getUserFollowersIds() {
-        Long authUserId = authenticationService.getAuthenticatedUserId();
-        List<Long> userFollowersIds = userRepository.getUserFollowersIds(authUserId);
-        userFollowersIds.add(authUserId);
-        return userFollowersIds;
-    }
-
-    @Override
-    public void saveUser(User user) {
-        userRepository.save(user);
-    }
-
     private void checkIsUserExist(Long userId) {
         boolean userExist = userRepository.isUserExist(userId);
 

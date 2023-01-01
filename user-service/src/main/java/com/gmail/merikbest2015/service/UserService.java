@@ -76,8 +76,4 @@ public interface UserService {
     UserDetailProjection getUserDetails(Long userId);
 
     Page<FollowerUserProjection> getFollowerRequests(Pageable pageable);
-
-    List<Long> getUserFollowersIds();
-
-    void saveUser(User user);
 }

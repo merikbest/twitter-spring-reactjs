@@ -2,7 +2,7 @@ package com.gmail.merikbest2015.dto.request;
 
 import com.gmail.merikbest2015.enums.LinkCoverSize;
 import com.gmail.merikbest2015.enums.ReplyType;
-import com.gmail.merikbest2015.model.Image;
+import com.gmail.merikbest2015.models.Image;
 import lombok.Data;
 
 import java.time.LocalDateTime;
