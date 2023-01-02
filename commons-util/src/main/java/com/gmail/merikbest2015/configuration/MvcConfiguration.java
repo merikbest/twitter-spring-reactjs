@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class MvcConfiguration implements WebMvcConfigurer {
 
-    @Value("${hostname}")
+    @Value("${hostname:http://localhost:3000}")
     private String hostname;
 
     @Bean

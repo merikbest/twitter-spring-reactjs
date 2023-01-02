@@ -17,7 +17,7 @@ public class BasicMapper {
 
     private final ModelMapper modelMapper;
 
-    <T, S> S convertToResponse(T data, Class<S> type) {
+    public <T, S> S convertToResponse(T data, Class<S> type) {
         return modelMapper.map(data, type);
     }
 

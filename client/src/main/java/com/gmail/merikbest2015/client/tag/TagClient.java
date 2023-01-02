@@ -10,7 +10,7 @@ import java.util.List;
 public interface TagClient {
 
     @GetMapping("/api/v1/tags/{tweetId}")
-    List<Tag> getTagsByTweetId(@PathVariable Long tweetId);
+    List<Tag> getTagsByTweetId(@PathVariable("tweetId") Long tweetId);
 
     @GetMapping("/api/v1/tags/search")
     Tag getTagByTagName(@RequestParam String tagName);

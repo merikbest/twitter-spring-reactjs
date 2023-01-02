@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.dto.request.AuthenticationRequest;
 import com.gmail.merikbest2015.dto.request.RegistrationRequest;
 import com.gmail.merikbest2015.models.User;
 import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
+import com.gmail.merikbest2015.repository.projection.UserPrincipalProjection;
 import org.springframework.validation.BindingResult;
 
 import java.util.Map;
@@ -13,6 +14,8 @@ public interface AuthenticationService {
     Long getAuthenticatedUserId();
 
     User getAuthenticatedUser();
+
+    UserPrincipalProjection getUserPrincipalByEmail(String email);
 
     Map<String, Object> login(AuthenticationRequest request, BindingResult bindingResult);
 

@@ -10,6 +10,7 @@ import com.gmail.merikbest2015.models.User;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
 import com.gmail.merikbest2015.repository.projection.UserCommonProjection;
+import com.gmail.merikbest2015.repository.projection.UserPrincipalProjection;
 import com.gmail.merikbest2015.security.JwtProvider;
 import com.gmail.merikbest2015.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
@@ -50,9 +51,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
+    public UserPrincipalProjection getUserPrincipalByEmail(String email) {
+        return userRepository.getAuthUserByEmail(email, UserPrincipalProjection.class)
+                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
+    }
+
+    @Override
     public Map<String, Object> login(AuthenticationRequest request, BindingResult bindingResult) {
         processInputErrors(bindingResult);
-        AuthUserProjection user = userRepository.getAuthUserByEmail(request.getEmail())
+        AuthUserProjection user = userRepository.getAuthUserByEmail(request.getEmail(), AuthUserProjection.class)
                 .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
         String token = jwtProvider.createToken(request.getEmail(), "USER");
         Map<String, Object> response = new HashMap<>();
@@ -117,7 +124,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (password.length() < 8) {
             throw new ApiRequestException("Your password needs to be at least 8 characters", HttpStatus.BAD_REQUEST);
         }
-        AuthUserProjection user = userRepository.getAuthUserByEmail(email)
+        AuthUserProjection user = userRepository.getAuthUserByEmail(email, AuthUserProjection.class)
                 .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
         userRepository.updatePassword(passwordEncoder.encode(password), user.getId());
         userRepository.updateActiveUserProfile(user.getId());

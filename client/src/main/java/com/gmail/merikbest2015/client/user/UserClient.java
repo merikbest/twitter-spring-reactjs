@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 import java.util.Optional;
 
-@FeignClient("user-service")
+@FeignClient(name = "user-service", contextId = "UserClient")
 public interface UserClient {
 
     @GetMapping("/api/v1/user/{userId}")
-    Optional<User> getUserById(@PathVariable Long userId);
+    Optional<User> getUserById(@PathVariable("userId") Long userId);
 
     @PostMapping("/api/v1/user/ids")
     List<User> getUsersByIds(@RequestBody UserIdsRequest request);
@@ -26,19 +26,19 @@ public interface UserClient {
     List<Long> getUserFollowersIds();
 
     @GetMapping("/api/v1/user/search/{username}")
-    Page<UserChatProjection> searchUsersByUsername(@PathVariable String username, Pageable pageable);
+    Page<UserChatProjection> searchUsersByUsername(@PathVariable("username") String username, Pageable pageable);
 
     @GetMapping("/api/v1/user/valid/{userId}/{authUserId}")
-    Optional<User> getValidUser(@PathVariable Long userId, @PathVariable Long authUserId);
+    Optional<User> getValidUser(@PathVariable("userId") Long userId, @PathVariable("authUserId") Long authUserId);
 
     @GetMapping("/api/v1/user/is_blocked/{userId}/{supposedBlockedUserId}")
-    Boolean isUserBlocked(@PathVariable Long userId, @PathVariable Long supposedBlockedUserId);
+    Boolean isUserBlocked(@PathVariable("userId") Long userId, @PathVariable("supposedBlockedUserId") Long supposedBlockedUserId);
 
     @GetMapping("/api/v1/user/is_user_blocked/{userId}")
-    Boolean isUserBlockedByMyProfile(@PathVariable Long userId);
+    Boolean isUserBlockedByMyProfile(@PathVariable("userId") Long userId);
 
     @GetMapping("/api/v1/user/is_my_profile_blocked/{userId}")
-    Boolean isMyProfileBlockedByUser(@PathVariable Long userId);
+    Boolean isMyProfileBlockedByUser(@PathVariable("userId") Long userId);
 
     @PostMapping("/api/v1/user")
     void saveUser(User user);

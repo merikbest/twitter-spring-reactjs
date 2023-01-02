@@ -1,11 +1,16 @@
 package com.gmail.merikbest2015.client.user;
 
+import com.gmail.merikbest2015.dto.UserPrincipalResponse;
 import com.gmail.merikbest2015.models.User;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient("user-service")
+@FeignClient(name = "user-service", contextId = "AuthenticationClient")
 public interface AuthenticationClient {
+
+    @GetMapping("/api/v1/auth/user/{email}")
+    UserPrincipalResponse getUserPrincipalByEmail(@PathVariable("email") String email);
 
     @GetMapping("/api/v1/auth/user/id")
     Long getAuthenticatedUserId();

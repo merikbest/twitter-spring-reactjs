@@ -1,5 +1,7 @@
 package com.gmail.merikbest2015.security;
 
+import com.gmail.merikbest2015.client.user.AuthenticationClient;
+import com.gmail.merikbest2015.dto.UserPrincipalResponse;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,14 +17,16 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class JwtProvider {
 
-    @Value("${jwt.header}")
+    @Value("${jwt.header:Authorization}")
     private String authorizationHeader;
 
-    @Value("${jwt.secret}")
+    @Value("${jwt.secret:dejavu}")
     private String secretKey;
 
-    @Value("${jwt.expiration}")
+    @Value("${jwt.expiration:6048000}")
     private long validityInMilliseconds;
+
+    private final AuthenticationClient authenticationClient;
 
     @PostConstruct
     protected void init() {
@@ -56,13 +60,13 @@ public class JwtProvider {
         }
     }
 
-//    public UserPrincipalResponse getUserPrincipal(String token) {
-//        String email = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
-//        UserPrincipalResponse user = customerClient.findUserPrincipalByEmail(email).getBody();
-//
-//        if (user.getActivationCode() != null) {
-//            throw new JwtAuthenticationException("Email not activated");
-//        }
-//        return user;
-//    }
+    public UserPrincipalResponse getUserPrincipal(String token) {
+        String email = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+        UserPrincipalResponse user = authenticationClient.getUserPrincipalByEmail(email);
+
+        if (user.getActivationCode() != null) {
+            throw new JwtAuthenticationException("Email not activated");
+        }
+        return user;
+    }
 }

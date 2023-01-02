@@ -25,7 +25,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<AuthUserProjection> findAuthUserById(Long userId);
 
     @Query("SELECT user FROM User user WHERE user.email = :email")
-    Optional<AuthUserProjection> getAuthUserByEmail(String email);
+    <T> Optional<T> getAuthUserByEmail(String email, Class<T> type);
 
     @Query("SELECT user FROM User user WHERE user.id = :userId")
     Optional<UserProfileProjection> getUserProfileById(Long userId);

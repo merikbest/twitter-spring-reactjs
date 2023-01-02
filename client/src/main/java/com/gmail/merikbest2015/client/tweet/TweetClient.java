@@ -16,13 +16,13 @@ import java.util.Optional;
 public interface TweetClient {
 
     @GetMapping("/api/v1/tweets/{userId}")
-    Optional<Tweet> getTweetById(@PathVariable Long userId);
+    Optional<Tweet> getTweetById(@PathVariable("userId") Long userId);
 
     @GetMapping("/api/v1/tweets/user/{userId}")
-    List<TweetsUserProjection> getTweetsByUserId(@PathVariable Long userId);
+    List<TweetsUserProjection> getTweetsByUserId(@PathVariable("userId") Long userId);
 
     @GetMapping("/api/v1/tweets/pinned/{userId}")
-    Optional<TweetsUserProjection> getPinnedTweetByUserId(@PathVariable Long userId);
+    Optional<TweetsUserProjection> getPinnedTweetByUserId(@PathVariable("userId") Long userId);
 
     @PostMapping("/api/v1/tweets/user/media")
     Page<TweetProjection> getAllUserMediaTweets(@RequestBody TweetPageableRequest request);
@@ -34,13 +34,13 @@ public interface TweetClient {
     List<TweetImageProjection> getUserTweetImages(@RequestBody TweetPageableRequest request);
 
     @GetMapping("/api/v1/tweets/replies/{userId}")
-    List<TweetsUserProjection> getRepliesByUserId(@PathVariable Long userId);
+    List<TweetsUserProjection> getRepliesByUserId(@PathVariable("userId") Long userId);
 
     @GetMapping("/api/v1/tweets/notification/{userId}")
-    List<TweetsProjection> getNotificationsFromTweetAuthors(@PathVariable Long userId);
+    List<TweetsProjection> getNotificationsFromTweetAuthors(@PathVariable("userId") Long userId);
 
     @GetMapping("/api/v1/tweets/tag")
-    List<TweetProjection> getTweetsByTagName(@RequestParam String tagName);
+    List<TweetProjection> getTweetsByTagName(@RequestParam("tagName") String tagName);
 
     @GetMapping("/api/v1/tweets/user/ids")
     Page<TweetProjection> getTweetsByUserIds(@RequestBody TweetUserIdsRequest request);
