@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.controller.rest;
 
-import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.TagResponse;
-import com.gmail.merikbest2015.dto.TweetResponse;
+import com.gmail.merikbest2015.commons.dto.TweetResponse;
 import com.gmail.merikbest2015.mapper.TagMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.client.user;
 
-import com.gmail.merikbest2015.models.User;
-import com.gmail.merikbest2015.projection.UserChatProjection;
+import com.gmail.merikbest2015.commons.models.User;
+import com.gmail.merikbest2015.commons.projection.UserChatProjection;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

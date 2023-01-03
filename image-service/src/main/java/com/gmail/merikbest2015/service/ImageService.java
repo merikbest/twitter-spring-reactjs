@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.service;
 
-import com.gmail.merikbest2015.models.Image;
+import com.gmail.merikbest2015.commons.models.Image;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface ImageService {

@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.repository;
 
-import com.gmail.merikbest2015.enums.TopicCategory;
-import com.gmail.merikbest2015.models.Topic;
+import com.gmail.merikbest2015.commons.enums.TopicCategory;
+import com.gmail.merikbest2015.commons.models.Topic;
 import com.gmail.merikbest2015.repository.projection.NotInterestedTopicProjection;
 import com.gmail.merikbest2015.repository.projection.TopicProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,7 +29,6 @@ public interface TopicRepository extends JpaRepository<Topic, Long> {
     @Query("SELECT topic FROM Topic topic " +
             "LEFT JOIN topic.topicNotInterested topicNotInterested " +
             "WHERE topicNotInterested.id = :userId")
-//            "WHERE topic.id = :userId OR topic.id = :userId")
     List<NotInterestedTopicProjection> getNotInterestedTopic(@Param("userId") Long userId);
 
     @Query("SELECT CASE WHEN count(topic) > 0 THEN true ELSE false END FROM Topic topic WHERE topic.id = :topicId")
@@ -39,14 +38,12 @@ public interface TopicRepository extends JpaRepository<Topic, Long> {
             "LEFT JOIN topic.topicFollowers topicFollower " +
             "WHERE topicFollower.id = :userId " +
             "AND topic.id = :topicId")
-//            "WHERE topic.id = :topicId OR topic.id = :userId")
     boolean isTopicFollowed(@Param("userId") Long userId, @Param("topicId") Long topicId);
 
     @Query("SELECT CASE WHEN count(topic) > 0 THEN true ELSE false END FROM Topic topic " +
             "LEFT JOIN topic.topicNotInterested topicNotInterested " +
             "WHERE topicNotInterested.id = :userId " +
             "AND topic.id = :topicId")
-//            "WHERE topic.id = :topicId OR topic.id = :userId")
     boolean isTopicNotInterested(@Param("userId") Long userId, @Param("topicId") Long topicId);
 
     @Modifying

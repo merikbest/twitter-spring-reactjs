@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.controller.rest;
 
-import com.gmail.merikbest2015.dto.AuthUserResponse;
-import com.gmail.merikbest2015.dto.AuthenticationResponse;
+import com.gmail.merikbest2015.commons.dto.AuthUserResponse;
+import com.gmail.merikbest2015.commons.dto.AuthenticationResponse;
 import com.gmail.merikbest2015.dto.request.*;
 import com.gmail.merikbest2015.mapper.AuthenticationMapper;
 import lombok.RequiredArgsConstructor;

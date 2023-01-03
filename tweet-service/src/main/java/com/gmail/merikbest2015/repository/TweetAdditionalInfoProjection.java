@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.repository;
 
-import com.gmail.merikbest2015.enums.ReplyType;
+import com.gmail.merikbest2015.commons.enums.ReplyType;
 import org.springframework.beans.factory.annotation.Value;
 
 public interface TweetAdditionalInfoProjection {

@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.repository.projection;
 
-import com.gmail.merikbest2015.enums.BackgroundColorType;
-import com.gmail.merikbest2015.enums.ColorSchemeType;
-import com.gmail.merikbest2015.projection.ImageProjection;
+import com.gmail.merikbest2015.commons.enums.BackgroundColorType;
+import com.gmail.merikbest2015.commons.enums.ColorSchemeType;
+import com.gmail.merikbest2015.commons.projection.ImageProjection;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;

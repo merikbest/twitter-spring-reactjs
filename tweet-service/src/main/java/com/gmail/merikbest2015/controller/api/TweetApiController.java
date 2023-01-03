@@ -2,10 +2,10 @@ package com.gmail.merikbest2015.controller.api;
 
 import com.gmail.merikbest2015.client.tweet.TweetPageableRequest;
 import com.gmail.merikbest2015.client.tweet.TweetUserIdsRequest;
-import com.gmail.merikbest2015.models.Tweet;
-import com.gmail.merikbest2015.projection.TweetImageProjection;
-import com.gmail.merikbest2015.projection.TweetProjection;
-import com.gmail.merikbest2015.projection.TweetsUserProjection;
+import com.gmail.merikbest2015.commons.models.Tweet;
+import com.gmail.merikbest2015.commons.projection.TweetImageProjection;
+import com.gmail.merikbest2015.commons.projection.TweetProjection;
+import com.gmail.merikbest2015.commons.projection.TweetsUserProjection;
 import com.gmail.merikbest2015.service.TweetClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

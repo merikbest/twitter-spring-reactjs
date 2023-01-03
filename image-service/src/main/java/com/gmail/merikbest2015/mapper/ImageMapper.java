@@ -1,7 +1,8 @@
 package com.gmail.merikbest2015.mapper;
 
-import com.gmail.merikbest2015.dto.ImageResponse;
-import com.gmail.merikbest2015.models.Image;
+import com.gmail.merikbest2015.commons.dto.ImageResponse;
+import com.gmail.merikbest2015.commons.mapper.BasicMapper;
+import com.gmail.merikbest2015.commons.models.Image;
 import com.gmail.merikbest2015.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

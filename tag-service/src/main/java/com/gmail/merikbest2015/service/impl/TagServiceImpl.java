@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.client.tweet.TweetClient;
-import com.gmail.merikbest2015.projection.TagProjection;
-import com.gmail.merikbest2015.projection.TweetProjection;
+import com.gmail.merikbest2015.commons.projection.TagProjection;
+import com.gmail.merikbest2015.commons.projection.TweetProjection;
 import com.gmail.merikbest2015.repository.TagRepository;
 import com.gmail.merikbest2015.service.TagService;
 import lombok.RequiredArgsConstructor;

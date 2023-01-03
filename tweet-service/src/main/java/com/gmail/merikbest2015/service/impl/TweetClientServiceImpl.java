@@ -2,11 +2,11 @@ package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.client.tweet.TweetPageableRequest;
 import com.gmail.merikbest2015.client.tweet.TweetUserIdsRequest;
-import com.gmail.merikbest2015.models.Tweet;
-import com.gmail.merikbest2015.projection.TweetImageProjection;
-import com.gmail.merikbest2015.projection.TweetProjection;
-import com.gmail.merikbest2015.projection.TweetsProjection;
-import com.gmail.merikbest2015.projection.TweetsUserProjection;
+import com.gmail.merikbest2015.commons.models.Tweet;
+import com.gmail.merikbest2015.commons.projection.TweetImageProjection;
+import com.gmail.merikbest2015.commons.projection.TweetProjection;
+import com.gmail.merikbest2015.commons.projection.TweetsProjection;
+import com.gmail.merikbest2015.commons.projection.TweetsUserProjection;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.service.TweetClientService;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.client.user.UserIdsRequest;
-import com.gmail.merikbest2015.models.User;
+import com.gmail.merikbest2015.commons.models.User;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.UserChatProjection;
 import com.gmail.merikbest2015.service.AuthenticationService;

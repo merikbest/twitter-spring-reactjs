@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.controller;
 
-import com.gmail.merikbest2015.dto.ImageResponse;
+import com.gmail.merikbest2015.commons.dto.ImageResponse;
 import com.gmail.merikbest2015.mapper.ImageMapper;
-import com.gmail.merikbest2015.models.Image;
+import com.gmail.merikbest2015.commons.models.Image;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

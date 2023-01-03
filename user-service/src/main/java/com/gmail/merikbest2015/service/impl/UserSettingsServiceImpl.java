@@ -1,13 +1,12 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.enums.BackgroundColorType;
-import com.gmail.merikbest2015.enums.ColorSchemeType;
-import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.models.User;
+import com.gmail.merikbest2015.commons.enums.BackgroundColorType;
+import com.gmail.merikbest2015.commons.enums.ColorSchemeType;
+import com.gmail.merikbest2015.commons.exception.ApiRequestException;
+import com.gmail.merikbest2015.commons.models.User;
 import com.gmail.merikbest2015.repository.UserRepository;
-import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
 import com.gmail.merikbest2015.repository.projection.UserCommonProjection;
-import com.gmail.merikbest2015.security.JwtProvider;
+import com.gmail.merikbest2015.commons.security.JwtProvider;
 import com.gmail.merikbest2015.service.AuthenticationService;
 import com.gmail.merikbest2015.service.UserSettingsService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;

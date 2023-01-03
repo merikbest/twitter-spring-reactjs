@@ -1,8 +1,9 @@
 package com.gmail.merikbest2015.mapper;
 
-import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.commons.dto.HeaderResponse;
+import com.gmail.merikbest2015.commons.mapper.BasicMapper;
 import com.gmail.merikbest2015.dto.TagResponse;
-import com.gmail.merikbest2015.dto.TweetResponse;
+import com.gmail.merikbest2015.commons.dto.TweetResponse;
 import com.gmail.merikbest2015.service.TagService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

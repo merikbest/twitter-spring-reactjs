@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.repository;
 
-import com.gmail.merikbest2015.models.ChatMessage;
+import com.gmail.merikbest2015.commons.models.ChatMessage;
 import com.gmail.merikbest2015.repository.projection.ChatMessageProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

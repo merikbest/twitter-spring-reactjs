@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.controller.rest;
 
-import com.gmail.merikbest2015.dto.*;
+import com.gmail.merikbest2015.commons.dto.*;
 import com.gmail.merikbest2015.dto.request.UserRequest;
 import com.gmail.merikbest2015.dto.response.*;
 import com.gmail.merikbest2015.mapper.UserMapper;

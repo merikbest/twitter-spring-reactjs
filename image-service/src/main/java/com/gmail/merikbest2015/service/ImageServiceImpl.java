@@ -2,7 +2,7 @@ package com.gmail.merikbest2015.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.gmail.merikbest2015.models.Image;
+import com.gmail.merikbest2015.commons.models.Image;
 import com.gmail.merikbest2015.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

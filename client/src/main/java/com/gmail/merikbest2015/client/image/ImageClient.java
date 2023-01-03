@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.client.image;
 
-import com.gmail.merikbest2015.dto.ImageResponse;
-import com.gmail.merikbest2015.models.Image;
+import com.gmail.merikbest2015.commons.dto.ImageResponse;
+import com.gmail.merikbest2015.commons.models.Image;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;

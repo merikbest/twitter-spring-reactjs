@@ -1,17 +1,18 @@
 package com.gmail.merikbest2015.mapper;
 
-import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.commons.dto.HeaderResponse;
+import com.gmail.merikbest2015.commons.mapper.BasicMapper;
 import com.gmail.merikbest2015.dto.request.ChatMessageRequest;
 import com.gmail.merikbest2015.dto.request.MessageWithTweetRequest;
 import com.gmail.merikbest2015.dto.response.ChatMessageResponse;
 import com.gmail.merikbest2015.dto.response.ChatResponse;
-import com.gmail.merikbest2015.dto.UserResponse;
+import com.gmail.merikbest2015.commons.dto.UserResponse;
 import com.gmail.merikbest2015.dto.response.UserChatResponse;
-import com.gmail.merikbest2015.models.ChatMessage;
-import com.gmail.merikbest2015.projection.UserProjection;
+import com.gmail.merikbest2015.commons.models.ChatMessage;
+import com.gmail.merikbest2015.commons.projection.UserProjection;
 import com.gmail.merikbest2015.repository.projection.ChatMessageProjection;
 import com.gmail.merikbest2015.repository.projection.ChatProjection;
-import com.gmail.merikbest2015.projection.UserChatProjection;
+import com.gmail.merikbest2015.commons.projection.UserChatProjection;
 import com.gmail.merikbest2015.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,7 +28,6 @@ public class ChatMapper {
 
     private final BasicMapper basicMapper;
     private final ChatService chatService;
-//    private final UserService userService;
 
     private ChatMessageResponse getChatMessageResponse(Map<String, Object> messageMap) {
         ChatMessageProjection chatMessageProjection = (ChatMessageProjection) messageMap.get("message");

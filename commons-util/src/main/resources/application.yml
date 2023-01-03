@@ -1,7 +1,0 @@
-hostname: http://localhost:3000
-jwt:
-    header: Authorization
-    secret: dejavu
-    expiration: 6048000
-
-

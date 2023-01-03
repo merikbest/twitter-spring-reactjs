@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.repository;
 
-import com.gmail.merikbest2015.models.Tweet;
-import com.gmail.merikbest2015.projection.*;
+import com.gmail.merikbest2015.commons.models.Tweet;
+import com.gmail.merikbest2015.commons.projection.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

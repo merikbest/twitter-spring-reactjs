@@ -1,13 +1,13 @@
 package com.gmail.merikbest2015.service;
 
+import com.gmail.merikbest2015.client.user.AuthenticationClient;
 import com.gmail.merikbest2015.dto.response.TopicsByCategoriesResponse;
-import com.gmail.merikbest2015.enums.TopicCategory;
-import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.commons.enums.TopicCategory;
+import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.repository.TopicRepository;
 import com.gmail.merikbest2015.repository.projection.FollowedTopicProjection;
 import com.gmail.merikbest2015.repository.projection.NotInterestedTopicProjection;
 import com.gmail.merikbest2015.repository.projection.TopicProjection;
-//import com.gmail.merikbest2015.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,8 +20,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TopicServiceImpl implements TopicService {
 
-//    private final AuthenticationService authenticationService;
     private final TopicRepository topicRepository;
+    private final AuthenticationClient authenticationClient;
 
     @Override
     public List<TopicProjection> getTopicsByIds(List<Long> topicsIds) {
@@ -42,8 +42,8 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public List<FollowedTopicProjection> getFollowedTopics() {
-//        Long userId = authenticationService.getAuthenticatedUserId();
-        return topicRepository.getFollowedTopics(1L, FollowedTopicProjection.class);
+        Long userId = authenticationClient.getAuthenticatedUserId();
+        return topicRepository.getFollowedTopics(userId, FollowedTopicProjection.class);
     }
 
     @Override
@@ -54,23 +54,23 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public List<NotInterestedTopicProjection> getNotInterestedTopics() {
-//        Long userId = authenticationService.getAuthenticatedUserId();
-        return topicRepository.getNotInterestedTopic(1L);
+        Long userId = authenticationClient.getAuthenticatedUserId();
+        return topicRepository.getNotInterestedTopic(userId);
     }
 
     @Override
     @Transactional
     public Boolean processNotInterestedTopic(Long topicId) {
         checkIsTopicExist(topicId);
-//        Long userId = authenticationService.getAuthenticatedUserId();
-        boolean isTopicNotInterested = topicRepository.isTopicNotInterested(1L, topicId);
+        Long userId = authenticationClient.getAuthenticatedUserId();
+        boolean isTopicNotInterested = topicRepository.isTopicNotInterested(userId, topicId);
 
         if (isTopicNotInterested) {
-            topicRepository.removeNotInterestedTopic(1L, topicId);
+            topicRepository.removeNotInterestedTopic(userId, topicId);
             return false;
         } else {
-            topicRepository.removeFollowedTopic(1L, topicId);
-            topicRepository.addNotInterestedTopic(1L, topicId);
+            topicRepository.removeFollowedTopic(userId, topicId);
+            topicRepository.addNotInterestedTopic(userId, topicId);
             return true;
         }
     }
@@ -79,15 +79,15 @@ public class TopicServiceImpl implements TopicService {
     @Transactional
     public Boolean processFollowTopic(Long topicId) {
         checkIsTopicExist(topicId);
-//        Long userId = authenticationService.getAuthenticatedUserId();
-        boolean isTopicFollowed = topicRepository.isTopicFollowed(1L, topicId);
+        Long userId = authenticationClient.getAuthenticatedUserId();
+        boolean isTopicFollowed = topicRepository.isTopicFollowed(userId, topicId);
 
         if (isTopicFollowed) {
-            topicRepository.removeFollowedTopic(1L, topicId);
+            topicRepository.removeFollowedTopic(userId, topicId);
             return false;
         } else {
-            topicRepository.removeNotInterestedTopic(1L, topicId);
-            topicRepository.addFollowedTopic(1L, topicId);
+            topicRepository.removeNotInterestedTopic(userId, topicId);
+            topicRepository.addFollowedTopic(userId, topicId);
             return true;
         }
     }
@@ -101,12 +101,12 @@ public class TopicServiceImpl implements TopicService {
     }
 
     public boolean isTopicFollowed(Long topicId) {
-//        Long authUserId = authenticationService.getAuthenticatedUserId();
-        return topicRepository.isTopicFollowed(1L, topicId);
+        Long userId = authenticationClient.getAuthenticatedUserId();
+        return topicRepository.isTopicFollowed(userId, topicId);
     }
 
     public boolean isTopicNotInterested(Long topicId) {
-//        Long authUserId = authenticationService.getAuthenticatedUserId();
-        return topicRepository.isTopicNotInterested(1L, topicId);
+        Long userId = authenticationClient.getAuthenticatedUserId();
+        return topicRepository.isTopicNotInterested(userId, topicId);
     }
 }

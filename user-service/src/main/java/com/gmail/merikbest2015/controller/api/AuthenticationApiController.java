@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.controller.api;
 
-import com.gmail.merikbest2015.dto.UserPrincipalResponse;
-import com.gmail.merikbest2015.mapper.BasicMapper;
-import com.gmail.merikbest2015.models.User;
+import com.gmail.merikbest2015.commons.dto.UserPrincipalResponse;
+import com.gmail.merikbest2015.commons.mapper.BasicMapper;
+import com.gmail.merikbest2015.commons.models.User;
 import com.gmail.merikbest2015.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

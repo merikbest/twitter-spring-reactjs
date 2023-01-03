@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.repository;
 
-import com.gmail.merikbest2015.models.Poll;
+import com.gmail.merikbest2015.commons.models.Poll;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

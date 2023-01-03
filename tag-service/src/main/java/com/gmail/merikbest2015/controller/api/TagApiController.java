@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.controller.api;
 
-import com.gmail.merikbest2015.models.Tag;
+import com.gmail.merikbest2015.commons.models.Tag;
 import com.gmail.merikbest2015.service.TagClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

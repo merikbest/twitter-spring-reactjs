@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.models.Tag;
+import com.gmail.merikbest2015.commons.models.Tag;
 import com.gmail.merikbest2015.repository.TagRepository;
 import com.gmail.merikbest2015.service.TagClientService;
 import lombok.RequiredArgsConstructor;

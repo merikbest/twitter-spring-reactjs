@@ -1,14 +1,15 @@
 package com.gmail.merikbest2015.mapper;
 
-import com.gmail.merikbest2015.dto.HeaderResponse;
-import com.gmail.merikbest2015.dto.NotificationResponse;
-import com.gmail.merikbest2015.dto.TweetResponse;
+import com.gmail.merikbest2015.commons.dto.HeaderResponse;
+import com.gmail.merikbest2015.commons.dto.NotificationResponse;
+import com.gmail.merikbest2015.commons.dto.TweetResponse;
+import com.gmail.merikbest2015.commons.mapper.BasicMapper;
 import com.gmail.merikbest2015.dto.request.ListsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.dto.response.*;
-import com.gmail.merikbest2015.models.Lists;
-import com.gmail.merikbest2015.models.Notification;
-import com.gmail.merikbest2015.projection.TweetProjection;
+import com.gmail.merikbest2015.commons.models.Lists;
+import com.gmail.merikbest2015.commons.models.Notification;
+import com.gmail.merikbest2015.commons.projection.TweetProjection;
 import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.service.ListsService;
 import lombok.RequiredArgsConstructor;

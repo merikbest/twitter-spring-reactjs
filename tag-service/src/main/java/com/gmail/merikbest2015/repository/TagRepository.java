@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.repository;
 
-import com.gmail.merikbest2015.models.Tag;
-import com.gmail.merikbest2015.projection.TagProjection;
+import com.gmail.merikbest2015.commons.models.Tag;
+import com.gmail.merikbest2015.commons.projection.TagProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

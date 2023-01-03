@@ -17,7 +17,7 @@
     <dependencies>
         <dependency>
             <groupId>com.gmail.merikbest2015</groupId>
-            <artifactId>commons-domain</artifactId>
+            <artifactId>commons</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

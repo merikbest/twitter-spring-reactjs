@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.client.tag;
 
-import com.gmail.merikbest2015.models.Tag;
+import com.gmail.merikbest2015.commons.models.Tag;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,7 @@ public interface TagClient {
     List<Tag> getTagsByTweetId(@PathVariable("tweetId") Long tweetId);
 
     @GetMapping("/api/v1/tags/search")
-    Tag getTagByTagName(@RequestParam String tagName);
+    Tag getTagByTagName(@RequestParam("tagName") String tagName);
 
     @PostMapping("/api/v1/tags/save")
     Tag saveTag(@RequestBody Tag tag);

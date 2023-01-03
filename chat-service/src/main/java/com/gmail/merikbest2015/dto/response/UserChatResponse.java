@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.gmail.merikbest2015.dto.UserResponse;
+import com.gmail.merikbest2015.commons.dto.UserResponse;
 import lombok.Getter;
 import lombok.Setter;
 

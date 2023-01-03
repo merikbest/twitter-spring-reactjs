@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.client.user;
 
-import com.gmail.merikbest2015.dto.UserPrincipalResponse;
-import com.gmail.merikbest2015.models.User;
+import com.gmail.merikbest2015.commons.dto.UserPrincipalResponse;
+import com.gmail.merikbest2015.commons.models.User;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

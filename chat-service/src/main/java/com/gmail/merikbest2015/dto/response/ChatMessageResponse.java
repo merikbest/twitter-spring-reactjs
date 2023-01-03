@@ -2,7 +2,7 @@ package com.gmail.merikbest2015.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.gmail.merikbest2015.projection.ImageProjection;
+import com.gmail.merikbest2015.commons.projection.ImageProjection;
 import lombok.Getter;
 import lombok.Setter;
 

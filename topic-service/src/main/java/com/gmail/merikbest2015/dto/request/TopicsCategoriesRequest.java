@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.dto.request;
 
-import com.gmail.merikbest2015.enums.TopicCategory;
+import com.gmail.merikbest2015.commons.enums.TopicCategory;
 import lombok.Getter;
 import lombok.Setter;
 

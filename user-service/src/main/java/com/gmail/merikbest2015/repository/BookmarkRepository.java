@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.repository;
 
-import com.gmail.merikbest2015.models.Bookmark;
+import com.gmail.merikbest2015.commons.models.Bookmark;
 import com.gmail.merikbest2015.repository.projection.BookmarkProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
