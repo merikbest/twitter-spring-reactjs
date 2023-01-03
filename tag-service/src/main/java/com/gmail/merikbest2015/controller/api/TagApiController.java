@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.controller.api;
 
+import com.gmail.merikbest2015.commons.controller.PathConstants;
 import com.gmail.merikbest2015.commons.models.Tag;
 import com.gmail.merikbest2015.service.TagClientService;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/tags")
+@RequestMapping(PathConstants.API_V1_TAGS)
 public class TagApiController {
 
     private final TagClientService tagClientService;

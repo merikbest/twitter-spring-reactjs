@@ -22,17 +22,17 @@ public class TweetApiController {
     private final TweetClientService tweetClientService;
 
     @GetMapping("/{userId}")
-    public Optional<Tweet> getTweetById(@PathVariable Long userId) {
+    public Optional<Tweet> getTweetById(@PathVariable("userId") Long userId) {
         return tweetClientService.getTweetById(userId);
     }
 
     @GetMapping("/user/{userId}")
-    public List<TweetsUserProjection> getTweetsByUserId(@PathVariable Long userId) {
+    public List<TweetsUserProjection> getTweetsByUserId(@PathVariable("userId") Long userId) {
         return tweetClientService.getTweetsByUserId(userId);
     }
 
     @GetMapping("/pinned/{userId}")
-    public Optional<TweetsUserProjection> getPinnedTweetByUserId(@PathVariable Long userId) {
+    public Optional<TweetsUserProjection> getPinnedTweetByUserId(@PathVariable("userId") Long userId) {
         return tweetClientService.getPinnedTweetByUserId(userId);
     }
 
@@ -52,17 +52,17 @@ public class TweetApiController {
     }
 
     @GetMapping("/replies/{userId}")
-    public List<TweetsUserProjection> getRepliesByUserId(@PathVariable Long userId) {
+    public List<TweetsUserProjection> getRepliesByUserId(@PathVariable("userId") Long userId) {
         return tweetClientService.getRepliesByUserId(userId);
     }
 
     @GetMapping("/notification/{userId}")
-    public List<TweetProjection> getNotificationsFromTweetAuthors(@PathVariable Long userId) {
+    public List<TweetProjection> getNotificationsFromTweetAuthors(@PathVariable("userId") Long userId) {
         return tweetClientService.getNotificationsFromTweetAuthors(userId);
     }
 
     @GetMapping("/tag")
-    public List<TweetProjection> getTweetsByTagName(@RequestParam String tagName) {
+    public List<TweetProjection> getTweetsByTagName(@RequestParam("tagName") String tagName) {
         return tweetClientService.getTweetsByTagName(tagName);
     }
 

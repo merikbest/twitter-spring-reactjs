@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.controller.rest;
 
+import com.gmail.merikbest2015.commons.controller.PathConstants;
 import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.TagResponse;
 import com.gmail.merikbest2015.commons.dto.TweetResponse;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/ui/v1/tags")
+@RequestMapping(PathConstants.UI_V1_TAGS)
 public class TagController {
 
     private final TagMapper tagMapper;
