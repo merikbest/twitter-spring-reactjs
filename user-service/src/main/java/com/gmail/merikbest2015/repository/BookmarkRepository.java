@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -17,5 +18,5 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
             "WHERE user.id = :userId " +
             "AND tweet.deleted = false " +
             "ORDER BY bookmark.bookmarkDate DESC")
-    Page<BookmarkProjection> getUserBookmarks(Long userId, Pageable pageable);
+    Page<BookmarkProjection> getUserBookmarks(@Param("userId") Long userId, Pageable pageable);
 }

@@ -21,7 +21,7 @@ public class UserApiController {
     private final UserClientService userService;
 
     @GetMapping("/{userId}")
-    public Optional<User> getUserById(@PathVariable Long userId) {
+    public Optional<User> getUserById(@PathVariable("userId") Long userId) {
         return userService.getUserById(userId);
     }
 
@@ -36,32 +36,47 @@ public class UserApiController {
     }
 
     @GetMapping("/search/{username}")
-    public Page<UserChatProjection> searchUsersByUsername(@PathVariable String username, Pageable pageable) {
+    public Page<UserChatProjection> searchUsersByUsername(@PathVariable("username") String username, Pageable pageable) {
         return userService.searchUsersByUsername(username, pageable);
     }
 
     @GetMapping("/valid/{userId}/{authUserId}")
-    public Optional<User> getValidUser(@PathVariable Long userId, @PathVariable Long authUserId) {
+    public Optional<User> getValidUser(@PathVariable("userId") Long userId, @PathVariable("authUserId") Long authUserId) {
         return userService.getValidUser(userId, authUserId);
     }
 
-    @GetMapping("/is_blocked/{userId}/{supposedBlockedUserId}")
-    public Boolean isUserBlocked(@PathVariable Long userId, @PathVariable Long supposedBlockedUserId) {
-        return userService.isUserBlocked(userId, supposedBlockedUserId);
+    @GetMapping("/is_followed/{userId}")
+    public Boolean isUserFollowByOtherUser(@PathVariable("userId") Long userId) {
+        return userService.isUserFollowByOtherUser(userId);
+    }
+
+    @GetMapping("/is_muted/{userId}")
+    public Boolean isUserMutedByMyProfile(@PathVariable("userId") Long userId) {
+        return userService.isUserMutedByMyProfile(userId);
+    }
+
+    @GetMapping("/is_blocked/{userId}/{blockedUserId}")
+    public Boolean isUserBlocked(@PathVariable("userId") Long userId, @PathVariable("blockedUserId") Long blockedUserId) {
+        return userService.isUserBlocked(userId, blockedUserId);
     }
 
     @GetMapping("/is_user_blocked/{userId}")
-    public Boolean isUserBlockedByMyProfile(@PathVariable Long userId) {
+    public Boolean isUserBlockedByMyProfile(@PathVariable("userId") Long userId) {
         return userService.isUserBlockedByMyProfile(userId);
     }
 
     @GetMapping("/is_my_profile_blocked/{userId}")
-    public Boolean isMyProfileBlockedByUser(@PathVariable Long userId) {
+    public Boolean isMyProfileBlockedByUser(@PathVariable("userId") Long userId) {
         return userService.isMyProfileBlockedByUser(userId);
     }
 
+    @GetMapping("/is_approved/{userId}")
+    public Boolean isMyProfileWaitingForApprove(@PathVariable("userId") Long userId) {
+        return userService.isMyProfileWaitingForApprove(userId);
+    }
+
     @PostMapping
-    public void saveUser(User user) {
+    public void saveUser(@RequestBody User user) {
         userService.saveUser(user);
     }
 }

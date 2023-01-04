@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.commons.models.ChatMessage;
 import com.gmail.merikbest2015.repository.projection.ChatMessageProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,8 +20,8 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
             "LEFT JOIN c.participants cp " +
             "WHERE cm.chat.id = :chatId " +
             "AND cp.user.id = :userId")
-    List<ChatMessageProjection> getAllByChatId(Long chatId, Long userId);
+    List<ChatMessageProjection> getAllByChatId(@Param("chatId") Long chatId, @Param("userId") Long userId);
 
     @Query("SELECT cm FROM ChatMessage cm WHERE cm.id = :messageId")
-    ChatMessageProjection getChatMessageById(Long messageId);
+    ChatMessageProjection getChatMessageById(@Param("messageId") Long messageId);
 }

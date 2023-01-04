@@ -16,12 +16,12 @@ public class TagApiController {
     private final TagClientService tagClientService;
 
     @GetMapping("/{tweetId}")
-    public List<Tag> getTagsByTweetId(@PathVariable Long tweetId) {
+    public List<Tag> getTagsByTweetId(@PathVariable("tweetId") Long tweetId) {
         return tagClientService.getTagsByTweetId(tweetId);
     }
 
     @GetMapping("/search")
-    public Tag getTagByTagName(@RequestParam String tagName) {
+    public Tag getTagByTagName(@RequestParam("tagName") String tagName) {
         return tagClientService.getTagByTagName(tagName);
     }
 

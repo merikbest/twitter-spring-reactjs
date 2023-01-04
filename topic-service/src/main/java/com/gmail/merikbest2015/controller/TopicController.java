@@ -34,7 +34,7 @@ public class TopicController {
     }
 
     @GetMapping("/followed/{userId}")
-    public ResponseEntity<List<TopicResponse>> getFollowedTopicsByUserId(@PathVariable Long userId) {
+    public ResponseEntity<List<TopicResponse>> getFollowedTopicsByUserId(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(topicMapper.getFollowedTopicsByUserId(userId));
     }
 
@@ -44,12 +44,12 @@ public class TopicController {
     }
 
     @GetMapping("/not_interested/{topicId}")
-    public ResponseEntity<Boolean> processNotInterestedTopic(@PathVariable Long topicId) {
+    public ResponseEntity<Boolean> processNotInterestedTopic(@PathVariable("topicId") Long topicId) {
         return ResponseEntity.ok(topicMapper.processNotInterestedTopic(topicId));
     }
 
     @GetMapping("/follow/{topicId}")
-    public ResponseEntity<Boolean> processFollowTopic(@PathVariable Long topicId) {
+    public ResponseEntity<Boolean> processFollowTopic(@PathVariable("topicId") Long topicId) {
         return ResponseEntity.ok(topicMapper.processFollowTopic(topicId));
     }
 }

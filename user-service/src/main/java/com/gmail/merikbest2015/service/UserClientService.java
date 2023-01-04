@@ -21,11 +21,17 @@ public interface UserClientService {
 
     Optional<User> getValidUser(Long userId, Long authUserId);
 
+    Boolean isUserFollowByOtherUser(Long userId);
+
+    Boolean isUserMutedByMyProfile(Long userId);
+
     Boolean isUserBlocked(Long userId, Long supposedBlockedUserId);
 
     Boolean isUserBlockedByMyProfile(Long userId);
 
     Boolean isMyProfileBlockedByUser(Long userId);
+
+    Boolean isMyProfileWaitingForApprove(Long userId);
 
     void saveUser(User user);
 }

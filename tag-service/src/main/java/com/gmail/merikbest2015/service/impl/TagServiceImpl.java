@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.client.tweet.TweetClient;
+import com.gmail.merikbest2015.commons.dto.TweetResponse;
 import com.gmail.merikbest2015.commons.projection.TagProjection;
-import com.gmail.merikbest2015.commons.projection.TweetProjection;
 import com.gmail.merikbest2015.repository.TagRepository;
 import com.gmail.merikbest2015.service.TagService;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<TweetProjection> getTweetsByTag(String tagName) {
+    public List<TweetResponse> getTweetsByTag(String tagName) {
         return tweetClient.getTweetsByTagName(tagName);
     }
 }

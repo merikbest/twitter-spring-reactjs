@@ -29,7 +29,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
             if (token != null && isTokenValid) {
                 String email = jwtProvider.parseToken(token);
                 UserPrincipalResponse user = restTemplate.getForObject(
-                        "http://localhost:8001/api/v1/auth/user/{email}",
+                        "http://user-service/api/v1/auth/user/{email}",
                         UserPrincipalResponse.class,
                         email
                 );
@@ -41,10 +41,10 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
                         .mutate()
                         .header("X-auth-user-id", String.valueOf(user.getId()))
                         .build();
+                return chain.filter(exchange);
             } else {
                 throw new JwtAuthenticationException("JWT token is expired or invalid");
             }
-            return chain.filter(exchange);
         };
     }
 

@@ -1,5 +1,7 @@
 package com.gmail.merikbest2015.client.tweet;
 
+import com.gmail.merikbest2015.commons.configuration.FeignConfiguration;
+import com.gmail.merikbest2015.commons.dto.TweetResponse;
 import com.gmail.merikbest2015.commons.models.Tweet;
 import com.gmail.merikbest2015.commons.projection.TweetImageProjection;
 import com.gmail.merikbest2015.commons.projection.TweetProjection;
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@FeignClient("tweet-service")
+@FeignClient(value = "tweet-service", configuration = FeignConfiguration.class)
 public interface TweetClient {
 
     @GetMapping("/api/v1/tweets/{userId}")
@@ -40,7 +42,7 @@ public interface TweetClient {
     List<TweetsProjection> getNotificationsFromTweetAuthors(@PathVariable("userId") Long userId);
 
     @GetMapping("/api/v1/tweets/tag")
-    List<TweetProjection> getTweetsByTagName(@RequestParam("tagName") String tagName);
+    List<TweetResponse> getTweetsByTagName(@RequestParam("tagName") String tagName);
 
     @GetMapping("/api/v1/tweets/user/ids")
     Page<TweetProjection> getTweetsByUserIds(@RequestBody TweetUserIdsRequest request);

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -29,75 +30,75 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Page<UserProjection> findByActiveTrueAndIdNot(Long id, Pageable pageable);
 
     @Query("SELECT user FROM User user WHERE user.id = :userId")
-    Optional<AuthUserProjection> findAuthUserById(Long userId);
+    Optional<AuthUserProjection> findAuthUserById(@Param("userId") Long userId);
 
     @Query("SELECT user FROM User user WHERE user.email = :email")
-    <T> Optional<T> getAuthUserByEmail(String email, Class<T> type);
+    <T> Optional<T> getAuthUserByEmail(@Param("email") String email, Class<T> type);
 
     @Query("SELECT user FROM User user WHERE user.id = :userId")
-    Optional<UserProfileProjection> getUserProfileById(Long userId);
+    Optional<UserProfileProjection> getUserProfileById(@Param("userId") Long userId);
 
     @Query("SELECT user.password FROM User user WHERE user.id = :userId")
-    String getUserPasswordById(Long userId);
+    String getUserPasswordById(@Param("userId") Long userId);
 
     @Query("SELECT u.id AS id, u.fullName AS fullName, u.username AS username, u.about AS about, u.avatar AS avatar, " +
             "u.privateProfile AS privateProfile, u.mutedDirectMessages AS mutedDirectMessages " +
             "FROM User u " +
             "WHERE UPPER(u.fullName) LIKE UPPER(CONCAT('%',:name,'%')) AND u.active = true " +
             "OR UPPER(u.username) LIKE UPPER(CONCAT('%',:name,'%')) AND u.active = true")
-    <T> Page<T> findByFullNameOrUsername(String name, Pageable pageable, Class<T> type);
+    <T> Page<T> findByFullNameOrUsername(@Param("name") String name, Pageable pageable, Class<T> type);
 
     @Query("SELECT user FROM User user WHERE user.email = :email")
-    Optional<UserCommonProjection> findCommonUserByEmail(String email);
+    Optional<UserCommonProjection> findCommonUserByEmail(@Param("email") String email);
 
     @Query("SELECT user FROM User user WHERE user.activationCode = :code")
-    Optional<UserCommonProjection> findCommonUserByActivationCode(String code);
+    Optional<UserCommonProjection> findCommonUserByActivationCode(@Param("code") String code);
 
     @Query("SELECT user FROM User user " +
             "LEFT JOIN user.followers follower " +
             "WHERE user.id = :userId " +
             "AND (user.privateProfile = false OR follower.id = :authUserId)")
-    Optional<User> getValidUser(Long userId, Long authUserId);
+    Optional<User> getValidUser(@Param("userId") Long userId, @Param("authUserId") Long authUserId);
 
     @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user WHERE user.id = :userId")
-    boolean isUserExist(Long userId);
+    boolean isUserExist(@Param("userId") Long userId);
 
     @Query("SELECT follower.id FROM User user LEFT JOIN user.followers follower WHERE user.id = :userId")
-    List<Long> getUserFollowersIds(Long userId);
+    List<Long> getUserFollowersIds(@Param("userId") Long userId);
 
     @Query("SELECT f.id AS id, f.fullName AS fullName, f.username AS username, f.about AS about, f.avatar AS avatar, " +
             "f.privateProfile AS privateProfile, f.mutedDirectMessages AS mutedDirectMessages " +
             "FROM User user " +
             "LEFT JOIN user.followers f " +
             "WHERE user.id = :userId")
-    Page<UserProjection> getFollowersById(Long userId, Pageable pageable);
+    Page<UserProjection> getFollowersById(@Param("userId") Long userId, Pageable pageable);
 
     @Query("SELECT f.id AS id, f.fullName AS fullName, f.username AS username, f.about AS about, f.avatar AS avatar, " +
             "f.privateProfile AS privateProfile, f.mutedDirectMessages AS mutedDirectMessages " +
             "FROM User user " +
             "LEFT JOIN user.following f " +
             "WHERE user.id = :userId")
-    Page<UserProjection> getFollowingById(Long userId, Pageable pageable);
+    Page<UserProjection> getFollowingById(@Param("userId") Long userId, Pageable pageable);
 
     @Query("SELECT b.id AS id, b.fullName AS fullName, b.username AS username, b.about AS about, b.avatar AS avatar, " +
             "b.privateProfile AS isPrivateProfile " +
             "FROM User user " +
             "LEFT JOIN user.userBlockedList b " +
             "WHERE user.id = :userId")
-    Page<BlockedUserProjection> getUserBlockListById(Long userId, Pageable pageable);
+    Page<BlockedUserProjection> getUserBlockListById(@Param("userId") Long userId, Pageable pageable);
 
     @Query("SELECT m.id as id, m.fullName as fullName, m.username as username, " +
             "m.about as about, m.avatar as avatar, m.privateProfile as isPrivateProfile " +
             "FROM User user " +
             "LEFT JOIN user.userMutedList m " +
             "WHERE user.id = :userId")
-    Page<MutedUserProjection> getUserMuteListById(Long userId, Pageable pageable);
+    Page<MutedUserProjection> getUserMuteListById(@Param("userId") Long userId, Pageable pageable);
 
     @Query("SELECT f.id AS id, f.fullName AS fullName, f.username AS username, f.about AS about, f.avatar AS avatar " +
             "FROM User user " +
             "LEFT JOIN user.followerRequests f " +
             "WHERE user.id = :userId")
-    Page<FollowerUserProjection> getFollowerRequests(Long userId, Pageable pageable);
+    Page<FollowerUserProjection> getFollowerRequests(@Param("userId") Long userId, Pageable pageable);
 
     @Query("SELECT notification.tweet.user as tweetAuthor FROM User user " +
             "LEFT JOIN user.notifications notification " +
@@ -105,38 +106,38 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "WHERE user.id = :userId " +
             "AND notification.notificationType = 'TWEET' " +
             "AND subscriber.id = :userId ")
-    List<TweetAuthorProjection> getNotificationsTweetAuthors(Long userId);
+    List<TweetAuthorProjection> getNotificationsTweetAuthors(@Param("userId") Long userId);
 
     @Query("SELECT CASE WHEN count(blockedUser) > 0 THEN true ELSE false END FROM User user " +
             "LEFT JOIN user.userBlockedList blockedUser " +
             "WHERE user.id = :userId " +
             "AND blockedUser.id = :blockedUserId")
-    boolean isUserBlocked(Long userId, Long blockedUserId);
+    boolean isUserBlocked(@Param("userId") Long userId, @Param("blockedUserId") Long blockedUserId);
 
     @Query("SELECT CASE WHEN count(userMuted) > 0 THEN true ELSE false END FROM User user " +
             "LEFT JOIN user.userMutedList userMuted " +
             "WHERE user.id = :userId " +
             "AND userMuted.id = :mutedUserId")
-    boolean isUserMuted(Long userId, Long mutedUserId);
+    boolean isUserMuted(@Param("userId") Long userId, @Param("mutedUserId") Long mutedUserId);
 
     @Query("SELECT CASE WHEN count(follower) > 0 THEN true ELSE false END " +
             "FROM User user " +
             "LEFT JOIN user.followers follower " +
             "WHERE user.id = :authUserId " +
             "AND follower.id = :userId")
-    boolean isUserFollowByOtherUser(Long authUserId, Long userId);
+    boolean isUserFollowByOtherUser(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
 
     @Query("SELECT CASE WHEN count(followerRequest) > 0 THEN true ELSE false END FROM User user " +
             "LEFT JOIN user.followerRequests followerRequest " +
             "WHERE user.id = :userId " +
             "AND followerRequest.id = :authUserId")
-    boolean isMyProfileWaitingForApprove(Long userId, Long authUserId);
+    boolean isMyProfileWaitingForApprove(@Param("userId") Long userId, @Param("authUserId") Long authUserId);
 
     @Query("SELECT CASE WHEN count(subscriber) > 0 THEN true ELSE false END FROM User user " +
             "LEFT JOIN user.subscribers subscriber " +
             "WHERE user.id = :userId " +
             "AND subscriber.id = :subscriberUserId")
-    boolean isMyProfileSubscribed(Long userId, Long subscriberUserId);
+    boolean isMyProfileSubscribed(@Param("userId") Long userId, @Param("subscriberUserId") Long subscriberUserId);
 
     @Query("SELECT CASE WHEN count(participantUser) > 0 THEN true ELSE false END FROM User user " +
             "LEFT JOIN user.chats chats " +
@@ -145,10 +146,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "LEFT JOIN participant.user participantUser " +
             "WHERE user.id = :authUserId " +
             "AND participantUser.id = :userId")
-    boolean isUserChatParticipant(Long userId, Long authUserId);
+    boolean isUserChatParticipant(@Param("userId") Long userId, @Param("authUserId") Long authUserId);
 
     @Query("SELECT user FROM User user WHERE user.id = :userId")
-    Optional<UserDetailProjection> getUserDetails(Long userId);
+    Optional<UserDetailProjection> getUserDetails(@Param("userId") Long userId);
 
     @Query(value = "SELECT users.id as id, users.full_name as fullName, users.username as username, users.about as about, " +
             "users.private_profile as isPrivateProfile, images.id as img_id, images.src as img_src " +
@@ -169,65 +170,65 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "SELECT user_subscriptions.subscriber_id FROM users " +
             "JOIN user_subscriptions ON users.id = user_subscriptions.user_id " +
             "WHERE users.id = ?2)", nativeQuery = true)
-    <T> List<T> getSameFollowers(Long userId, Long authUserId, Class<T> type);
+    <T> List<T> getSameFollowers(@Param("userId") Long userId, @Param("authUserId") Long authUserId, Class<T> type);
 
     @Modifying
     @Query("UPDATE User user SET user.email = :email WHERE user.id = :userId")
-    void updateEmail(String email, Long userId);
+    void updateEmail(@Param("email") String email, @Param("userId") Long userId);
 
     @Modifying
     @Query("UPDATE User user SET user.password = :password WHERE user.id = :userId")
-    void updatePassword(String password, Long userId);
+    void updatePassword(@Param("password") String password, @Param("userId") Long userId);
 
     @Modifying
     @Query("UPDATE User user SET user.passwordResetCode = :passwordResetCode WHERE user.id = :userId")
-    void updatePasswordResetCode(String passwordResetCode, Long userId);
+    void updatePasswordResetCode(@Param("passwordResetCode") String passwordResetCode, @Param("userId") Long userId);
 
     @Modifying
     @Query("UPDATE User user SET user.active = true WHERE user.id = :userId")
-    void updateActiveUserProfile(Long userId);
+    void updateActiveUserProfile(@Param("userId") Long userId);
 
     @Modifying
     @Query("UPDATE User user SET user.profileStarted = true WHERE user.id = :userId")
-    void updateProfileStarted(Long userId);
+    void updateProfileStarted(@Param("userId") Long userId);
 
     @Modifying
     @Query("UPDATE User user SET user.activationCode = :activationCode WHERE user.id = :userId")
-    void updateActivationCode(String activationCode, Long userId);
+    void updateActivationCode(@Param("activationCode") String activationCode, @Param("userId") Long userId);
 
     @Modifying
     @Query("UPDATE User user SET user.username = :username WHERE user.id = :userId")
-    void updateUsername(String username, Long userId);
+    void updateUsername(@Param("username") String username, @Param("userId") Long userId);
 
     @Modifying
     @Query("UPDATE User user SET user.countryCode = :countryCode, user.phone = :phone WHERE user.id = :userId")
-    void updatePhone(String countryCode, Long phone, Long userId);
+    void updatePhone(@Param("countryCode") String countryCode, @Param("phone") Long phone, @Param("userId") Long userId);
 
     @Modifying
     @Query("UPDATE User user SET user.country = :country WHERE user.id = :userId")
-    void updateCountry(String country, Long userId);
+    void updateCountry(@Param("country") String country, @Param("userId") Long userId);
 
     @Modifying
     @Query("UPDATE User user SET user.gender = :gender WHERE user.id = :userId")
-    void updateGender(String gender, Long userId);
+    void updateGender(@Param("gender") String gender, @Param("userId") Long userId);
 
     @Modifying
     @Query("UPDATE User user SET user.language = :language WHERE user.id = :userId")
-    void updateLanguage(String language, Long userId);
+    void updateLanguage(@Param("language") String language, @Param("userId") Long userId);
 
     @Modifying
     @Query("UPDATE User user SET user.mutedDirectMessages = :mutedDirectMessages WHERE user.id = :userId")
-    void updateDirectMessageRequests(boolean mutedDirectMessages, Long userId);
+    void updateDirectMessageRequests(@Param("mutedDirectMessages") boolean mutedDirectMessages, @Param("userId") Long userId);
 
     @Modifying
     @Query("UPDATE User user SET user.privateProfile = :privateProfile WHERE user.id = :userId")
-    void updatePrivateProfile(boolean privateProfile, Long userId);
+    void updatePrivateProfile(@Param("privateProfile") boolean privateProfile, @Param("userId") Long userId);
 
     @Modifying
     @Query("UPDATE User user SET user.colorScheme = :colorSchemeType WHERE user.id = :userId")
-    void updateColorScheme(ColorSchemeType colorSchemeType, Long userId);
+    void updateColorScheme(@Param("colorSchemeType") ColorSchemeType colorSchemeType, @Param("userId") Long userId);
 
     @Modifying
-    @Query("UPDATE User user SET user.backgroundColor = :backgroundColorType WHERE user.id = :userId")
-    void updateBackgroundColor(BackgroundColorType backgroundColorType, Long userId);
+    @Query("UPDATE User user SET user.backgroundColor = :backgroundColor WHERE user.id = :userId")
+    void updateBackgroundColor(@Param("backgroundColor") BackgroundColorType backgroundColorType, @Param("userId") Long userId);
 }

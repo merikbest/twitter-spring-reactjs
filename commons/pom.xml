@@ -39,7 +39,7 @@
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
-            <version>2.3.9</version>
+            <version>3.1.1</version>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

@@ -14,10 +14,30 @@ spring:
                 -   id: topic-service
                     uri: lb://topic-service
                     predicates:
-                        - Path=/api/v1/topics/**
+                        - Path=/ui/v1/topics/**
                     filters:
                         - AuthFilter
 
+                -   id: tag-service
+                    uri: lb://tag-service
+                    predicates:
+                        - Path=/ui/v1/tags/**, /api/v1/tags/**
+                    filters:
+                        - AuthFilter
+
+                -   id: tweet-service
+                    uri: lb://tweet-service
+                    predicates:
+                        - Path=/ui/v1/tweets/**, /api/v1/tweets/**
+                    filters:
+                        - AuthFilter
+
+                -   id: user-service
+                    uri: lb://user-service
+                    predicates:
+                        - Path=/ui/v1/user/**, /api/v1/user/**, /api/v1/auth/user/**
+                    filters:
+                        - AuthFilter
     zipkin:
         base-url: http://localhost:9411
 

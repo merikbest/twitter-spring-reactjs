@@ -35,7 +35,7 @@ public class TagController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<TweetResponse>> getTweetsByTag(@RequestParam String tagName) {
+    public ResponseEntity<List<TweetResponse>> getTweetsByTag(@RequestParam("tagName") String tagName) {
         return ResponseEntity.ok(tagMapper.getTweetsByTag(tagName));
     }
 }

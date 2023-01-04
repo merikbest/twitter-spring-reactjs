@@ -99,7 +99,7 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public Page<TweetProjection> getQuotesByTweetId(Pageable pageable, Long tweetId) {
-        return tweetRepository.getQuotesByTweetId(pageable, tweetId);
+        return tweetRepository.getQuotesByTweetId(tweetId, pageable);
     }
 
     @Override
@@ -365,6 +365,26 @@ public class TweetServiceImpl implements TweetService {
     public boolean isUserBookmarkedTweet(Long tweetId) {
         Long authUserId = authenticationClient.getAuthenticatedUserId();
         return tweetRepository.isUserBookmarkedTweet(authUserId, tweetId);
+    }
+
+    public boolean isUserFollowByOtherUser(Long userId) {
+        return userClient.isUserFollowByOtherUser(userId);
+    }
+
+    public boolean isUserMutedByMyProfile(Long userId) {
+        return userClient.isUserMutedByMyProfile(userId);
+    }
+
+    public boolean isUserBlockedByMyProfile(Long userId) {
+        return userClient.isUserBlockedByMyProfile(userId);
+    }
+
+    public boolean isMyProfileBlockedByUser(Long userId) {
+        return userClient.isMyProfileBlockedByUser(userId);
+    }
+
+    public boolean isMyProfileWaitingForApprove(Long userId) {
+        return userClient.isMyProfileWaitingForApprove(userId);
     }
 
     private Notification notificationHandler(User user, Tweet tweet, NotificationType notificationType) {

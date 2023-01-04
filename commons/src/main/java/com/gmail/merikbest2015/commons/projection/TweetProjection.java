@@ -36,7 +36,7 @@ public interface TweetProjection {
     @Value("#{@tweetServiceImpl.isUserBookmarkedTweet(target.id)}")
     boolean getIsTweetBookmarked();
 
-    @Value("#{@userServiceImpl.isUserFollowByOtherUser(target.user.id)}")
+    @Value("#{@tweetServiceImpl.isUserFollowByOtherUser(target.user.id)}")
     boolean getIsUserFollowByOtherUser();
 
     @Value("#{target.retweets.size()}")
@@ -58,19 +58,19 @@ public interface TweetProjection {
         String getUsername();
         ImageProjection getAvatar();
 
-        @Value("#{@userServiceImpl.isUserMutedByMyProfile(target.id)}")
+        @Value("#{@tweetServiceImpl.isUserMutedByMyProfile(target.id)}")
         boolean getIsUserMuted();
 
-        @Value("#{@userServiceImpl.isUserBlockedByMyProfile(target.id)}")
+        @Value("#{@tweetServiceImpl.isUserBlockedByMyProfile(target.id)}")
         boolean getIsUserBlocked();
 
-        @Value("#{@userServiceImpl.isMyProfileBlockedByUser(target.id)}")
+        @Value("#{@tweetServiceImpl.isMyProfileBlockedByUser(target.id)}")
         boolean getIsMyProfileBlocked();
 
-        @Value("#{@userServiceImpl.isMyProfileWaitingForApprove(target.id)}")
+        @Value("#{@tweetServiceImpl.isMyProfileWaitingForApprove(target.id)}")
         boolean getIsWaitingForApprove();
 
-        @Value("#{@userServiceImpl.isUserFollowByOtherUser(target.id)}")
+        @Value("#{@tweetServiceImpl.isUserFollowByOtherUser(target.id)}")
         boolean getIsFollower();
     }
 

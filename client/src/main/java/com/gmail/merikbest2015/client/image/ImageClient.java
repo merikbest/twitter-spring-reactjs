@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.client.image;
 
+import com.gmail.merikbest2015.commons.configuration.FeignConfiguration;
 import com.gmail.merikbest2015.commons.dto.ImageResponse;
 import com.gmail.merikbest2015.commons.models.Image;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
-@FeignClient("image-service")
+@FeignClient(value = "image-service", configuration = FeignConfiguration.class)
 public interface ImageClient {
 
     @PostMapping("/api/v1/image/upload")

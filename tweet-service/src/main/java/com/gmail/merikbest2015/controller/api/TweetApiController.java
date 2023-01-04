@@ -2,10 +2,12 @@ package com.gmail.merikbest2015.controller.api;
 
 import com.gmail.merikbest2015.client.tweet.TweetPageableRequest;
 import com.gmail.merikbest2015.client.tweet.TweetUserIdsRequest;
+import com.gmail.merikbest2015.commons.dto.TweetResponse;
 import com.gmail.merikbest2015.commons.models.Tweet;
 import com.gmail.merikbest2015.commons.projection.TweetImageProjection;
 import com.gmail.merikbest2015.commons.projection.TweetProjection;
 import com.gmail.merikbest2015.commons.projection.TweetsUserProjection;
+import com.gmail.merikbest2015.mapper.TweetClientMapper;
 import com.gmail.merikbest2015.service.TweetClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,6 +22,7 @@ import java.util.Optional;
 public class TweetApiController {
 
     private final TweetClientService tweetClientService;
+    private final TweetClientMapper tweetClientMapper;
 
     @GetMapping("/{userId}")
     public Optional<Tweet> getTweetById(@PathVariable("userId") Long userId) {
@@ -62,8 +65,8 @@ public class TweetApiController {
     }
 
     @GetMapping("/tag")
-    public List<TweetProjection> getTweetsByTagName(@RequestParam("tagName") String tagName) {
-        return tweetClientService.getTweetsByTagName(tagName);
+    public List<TweetResponse> getTweetsByTagName(@RequestParam("tagName") String tagName) {
+        return tweetClientMapper.getTweetsByTagName(tagName);
     }
 
     @GetMapping("/user/ids")

@@ -51,6 +51,16 @@ public class UserClientServiceImpl implements UserClientService {
     }
 
     @Override
+    public Boolean isUserFollowByOtherUser(Long userId) {
+        return userService.isUserFollowByOtherUser(userId);
+    }
+
+    @Override
+    public Boolean isUserMutedByMyProfile(Long userId) {
+        return userService.isUserMutedByMyProfile(userId);
+    }
+
+    @Override
     public Boolean isUserBlocked(Long userId, Long supposedBlockedUserId) {
         return userRepository.isUserBlocked(userId, supposedBlockedUserId);
     }
@@ -63,6 +73,11 @@ public class UserClientServiceImpl implements UserClientService {
     @Override
     public Boolean isMyProfileBlockedByUser(Long userId) {
         return userService.isMyProfileBlockedByUser(userId);
+    }
+
+    @Override
+    public Boolean isMyProfileWaitingForApprove(Long userId) {
+        return userService.isMyProfileWaitingForApprove(userId);
     }
 
     @Override

@@ -27,6 +27,6 @@ public class TagMapper {
     }
 
     public List<TweetResponse> getTweetsByTag(String tagName) {
-        return basicMapper.convertToResponseList(tagService.getTweetsByTag(tagName), TweetResponse.class);
+        return tagService.getTweetsByTag(tagName);
     }
 }
