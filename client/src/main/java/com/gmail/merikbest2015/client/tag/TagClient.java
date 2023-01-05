@@ -7,18 +7,20 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.gmail.merikbest2015.commons.controller.PathConstants.API_V1_TAGS;
+
 @FeignClient(value = "tag-service", configuration = FeignConfiguration.class)
 public interface TagClient {
 
-    @GetMapping("/api/v1/tags/{tweetId}")
+    @GetMapping(API_V1_TAGS + "/{tweetId}")
     List<Tag> getTagsByTweetId(@PathVariable("tweetId") Long tweetId);
 
-    @GetMapping("/api/v1/tags/search")
+    @GetMapping(API_V1_TAGS + "/search")
     Tag getTagByTagName(@RequestParam("tagName") String tagName);
 
-    @PostMapping("/api/v1/tags/save")
+    @PostMapping(API_V1_TAGS + "/save")
     Tag saveTag(@RequestBody Tag tag);
 
-    @DeleteMapping("/api/v1/tags/delete")
+    @DeleteMapping(API_V1_TAGS + "/delete")
     void deleteTag(@RequestBody Tag tag);
 }

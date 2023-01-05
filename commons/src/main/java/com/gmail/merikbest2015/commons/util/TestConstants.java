@@ -35,7 +35,8 @@ public class TestConstants {
     public static final boolean PRIVATE_PROFILE = false;
     public static final boolean PROFILE_CUSTOMIZED = true;
     public static final boolean PROFILE_STARTED = true;
-    
+    public static final String AUTH_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMjAxNkBnbWFpbC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzY0ODcyMSwiZXhwIjoxNjczNjk2NzIxfQ.KgiNzoq1UPNoeWaY00aPOinDdvv2e6NNlfupyaW2JxU";
+
     public static final String TEST_TWEET_TEXT = "test text";
     public static final String USERNAME2 = "John Doe";
     public static final String ABOUT2 = "Hello2";

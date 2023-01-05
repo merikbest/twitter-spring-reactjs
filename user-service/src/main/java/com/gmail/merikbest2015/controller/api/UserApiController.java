@@ -2,7 +2,6 @@ package com.gmail.merikbest2015.controller.api;
 
 import com.gmail.merikbest2015.client.user.UserIdsRequest;
 import com.gmail.merikbest2015.commons.models.User;
-
 import com.gmail.merikbest2015.repository.projection.UserChatProjection;
 import com.gmail.merikbest2015.service.UserClientService;
 import lombok.RequiredArgsConstructor;
@@ -13,9 +12,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+import static com.gmail.merikbest2015.commons.controller.PathConstants.API_V1_USER;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/user")
+@RequestMapping(API_V1_USER)
 public class UserApiController {
 
     private final UserClientService userService;

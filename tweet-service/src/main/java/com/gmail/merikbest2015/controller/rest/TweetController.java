@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.gmail.merikbest2015.commons.controller.PathConstants.UI_V1_TWEETS;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/ui/v1/tweets")
+@RequestMapping(UI_V1_TWEETS)
 public class TweetController {
 
     private final TweetMapper tweetMapper;

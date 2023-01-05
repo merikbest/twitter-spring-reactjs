@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.gmail.merikbest2015.commons.controller.PathConstants.API_V1_AUTH;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/auth")
+@RequestMapping(API_V1_AUTH)
 public class AuthenticationApiController {
 
     private final AuthenticationService authenticationService;

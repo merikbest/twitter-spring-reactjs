@@ -10,15 +10,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import static com.gmail.merikbest2015.commons.controller.PathConstants.API_V1_IMAGE;
+
 @FeignClient(value = "image-service", configuration = FeignConfiguration.class)
 public interface ImageClient {
 
-    @PostMapping("/api/v1/image/upload")
+    @PostMapping(API_V1_IMAGE + "/upload")
     ImageResponse uploadImage(@RequestPart("file") MultipartFile file);
 
-    @PostMapping("/api/v1/image/save")
+    @PostMapping(API_V1_IMAGE + "/save")
     Image saveImage(@RequestBody Image image);
 
-    @DeleteMapping("/api/v1/image/delete")
+    @DeleteMapping(API_V1_IMAGE + "/delete")
     void deleteImage(@RequestBody Image image);
 }

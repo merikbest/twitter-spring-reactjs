@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.gmail.merikbest2015.commons.controller.PathConstants.UI_V1_LISTS;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/ui/v1/lists")
+@RequestMapping(UI_V1_LISTS)
 public class ListsController {
 
     private final ListsMapper listsMapper;

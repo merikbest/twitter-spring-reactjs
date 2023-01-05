@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.MessagingException;
 
+import static com.gmail.merikbest2015.commons.controller.PathConstants.API_V1_EMAIL;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/email")
+@RequestMapping(API_V1_EMAIL)
 public class EmailController {
 
     private final EmailService emailService;

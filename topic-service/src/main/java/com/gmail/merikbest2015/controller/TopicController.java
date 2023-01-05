@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.gmail.merikbest2015.commons.controller.PathConstants.UI_V1_TOPICS;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/topics")
+@RequestMapping(UI_V1_TOPICS)
 public class TopicController {
 
     private final TopicMapper topicMapper;

@@ -14,42 +14,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 import java.util.Optional;
 
+import static com.gmail.merikbest2015.commons.controller.PathConstants.API_V1_USER;
+
 @FeignClient(name = "user-service", contextId = "UserClient", configuration = FeignConfiguration.class)
 public interface UserClient {
 
-    @GetMapping("/api/v1/user/{userId}")
+    @GetMapping(API_V1_USER + "/{userId}")
     Optional<User> getUserById(@PathVariable("userId") Long userId);
 
-    @PostMapping("/api/v1/user/ids")
+    @PostMapping(API_V1_USER + "/ids")
     List<User> getUsersByIds(@RequestBody UserIdsRequest request);
 
-    @GetMapping("/api/v1/user/ids")
+    @GetMapping(API_V1_USER + "/ids")
     List<Long> getUserFollowersIds();
 
-    @GetMapping("/api/v1/user/search/{username}")
+    @GetMapping(API_V1_USER + "/search/{username}")
     Page<UserChatProjection> searchUsersByUsername(@PathVariable("username") String username, Pageable pageable);
 
-    @GetMapping("/api/v1/user/valid/{userId}/{authUserId}")
+    @GetMapping(API_V1_USER + "/valid/{userId}/{authUserId}")
     Optional<User> getValidUser(@PathVariable("userId") Long userId, @PathVariable("authUserId") Long authUserId);
 
-    @GetMapping("/api/v1/user/is_followed/{userId}")
+    @GetMapping(API_V1_USER + "/is_followed/{userId}")
     Boolean isUserFollowByOtherUser(@PathVariable("userId") Long userId);
 
-    @GetMapping("/api/v1/user/is_muted/{userId}")
+    @GetMapping(API_V1_USER + "/is_muted/{userId}")
     Boolean isUserMutedByMyProfile(@PathVariable("userId") Long userId);
 
-    @GetMapping("/api/v1/user/is_blocked/{userId}/{supposedBlockedUserId}")
+    @GetMapping(API_V1_USER + "/is_blocked/{userId}/{supposedBlockedUserId}")
     Boolean isUserBlocked(@PathVariable("userId") Long userId, @PathVariable("supposedBlockedUserId") Long supposedBlockedUserId);
 
-    @GetMapping("/api/v1/user/is_user_blocked/{userId}")
+    @GetMapping(API_V1_USER + "/is_user_blocked/{userId}")
     Boolean isUserBlockedByMyProfile(@PathVariable("userId") Long userId);
 
-    @GetMapping("/api/v1/user/is_my_profile_blocked/{userId}")
+    @GetMapping(API_V1_USER + "/is_my_profile_blocked/{userId}")
     Boolean isMyProfileBlockedByUser(@PathVariable("userId") Long userId);
 
-    @GetMapping("/api/v1/user/is_approved/{userId}")
+    @GetMapping(API_V1_USER + "/is_approved/{userId}")
     Boolean isMyProfileWaitingForApprove(@PathVariable("userId") Long userId);
 
-    @PostMapping("/api/v1/user")
+    @PostMapping(API_V1_USER)
     void saveUser(@RequestBody User user);
 }

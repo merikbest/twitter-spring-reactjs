@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.gmail.merikbest2015.commons.controller.PathConstants.UI_V1_USER;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/ui/v1/user")
+@RequestMapping(UI_V1_USER)
 public class UserController {
 
     private final UserMapper userMapper;

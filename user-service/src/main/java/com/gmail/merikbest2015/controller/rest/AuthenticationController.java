@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import static com.gmail.merikbest2015.commons.controller.PathConstants.UI_V1_AUTH;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/ui/v1/auth")
+@RequestMapping(UI_V1_AUTH)
 public class AuthenticationController {
 
     private final AuthenticationMapper authenticationMapper;

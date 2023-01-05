@@ -7,9 +7,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import static com.gmail.merikbest2015.commons.controller.PathConstants.API_V1_IMAGE;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/image")
+@RequestMapping(API_V1_IMAGE)
 public class ImageController {
 
     private final ImageMapper imageMapper;

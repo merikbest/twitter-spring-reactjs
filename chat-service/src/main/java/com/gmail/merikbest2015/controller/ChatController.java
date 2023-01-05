@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.gmail.merikbest2015.commons.controller.PathConstants.UI_V1_CHAT;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/ui/v1/chat")
+@RequestMapping(UI_V1_CHAT)
 public class ChatController {
 
     private final ChatMapper chatMapper;

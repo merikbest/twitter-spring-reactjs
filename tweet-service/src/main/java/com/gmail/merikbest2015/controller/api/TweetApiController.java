@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+import static com.gmail.merikbest2015.commons.controller.PathConstants.API_V1_TWEETS;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/tweets")
+@RequestMapping(API_V1_TWEETS)
 public class TweetApiController {
 
     private final TweetClientService tweetClientService;

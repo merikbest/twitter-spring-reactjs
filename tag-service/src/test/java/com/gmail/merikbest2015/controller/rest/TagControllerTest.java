@@ -1,6 +1,5 @@
 package com.gmail.merikbest2015.controller.rest;
 
-import com.gmail.merikbest2015.client.tweet.TweetClient;
 import com.gmail.merikbest2015.commons.controller.PathConstants;
 import com.gmail.merikbest2015.commons.enums.ReplyType;
 import org.junit.jupiter.api.DisplayName;
@@ -8,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -27,16 +25,11 @@ public class TagControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-//    @Autowired
-//    private TweetClient tweetClient;
-
-//    @MockBean
-//    private TweetRepository tweetRepository;
-
     @Test
     @DisplayName("[200] GET /ui/v1/tags - Get all tags")
     public void getTags() throws Exception {
-        mockMvc.perform(get(PathConstants.UI_V1_TAGS))
+        mockMvc.perform(get(PathConstants.UI_V1_TAGS)
+                        .header("X-auth-user-id", 2L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
@@ -47,7 +40,8 @@ public class TagControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/tags/trends - Get trends")
     public void getTrends() throws Exception {
-        mockMvc.perform(get(PathConstants.UI_V1_TAGS + "/trends"))
+        mockMvc.perform(get(PathConstants.UI_V1_TAGS + "/trends")
+                        .header("X-auth-user-id", 2L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
@@ -58,7 +52,9 @@ public class TagControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/tags/search?tagName=#JetBrains - Get tweets by hashtag")
     public void getTweetsByTag() throws Exception {
-        mockMvc.perform(get(PathConstants.UI_V1_TAGS + "/search").param("tagName", "#JetBrains"))
+        mockMvc.perform(get(PathConstants.UI_V1_TAGS + "/search")
+                        .param("tagName", "#JetBrains")
+                        .header("X-auth-user-id", 2L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(43L))
