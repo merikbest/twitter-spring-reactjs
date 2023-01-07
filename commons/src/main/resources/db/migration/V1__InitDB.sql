@@ -20,7 +20,7 @@ create table bookmarks
     tweet_id      int8,
     users_id      int8,
     primary key (id)
-);
+);;
 create table chat_messages
 (
     id       int8 not null,
@@ -66,7 +66,6 @@ create table lists
     description   varchar(255),
     private       boolean,
     name          varchar(255),
-    pinned_date   timestamp,
     user_id       int8,
     wallpaper_id  int8,
     primary key (id)
@@ -81,11 +80,6 @@ create table lists_members
     lists_id   int8 not null,
     members_id int8 not null
 );
-create table lists_tweets
-(
-    lists_id  int8 not null,
-    tweets_id int8 not null
-);
 create table notifications
 (
     id                int8 not null,
@@ -96,6 +90,14 @@ create table notifications
     tweet_id          int8,
     user_id           int8,
     user_to_follow_id int8,
+    primary key (id)
+);
+create table pinned_lists
+(
+    id          bigserial not null,
+    pinned_date timestamp,
+    list_id     int8,
+    user_id     int8,
     primary key (id)
 );
 create table pool_choices
@@ -284,11 +286,6 @@ create table users
     website               varchar(255),
     primary key (id)
 );
-create table users_lists
-(
-    user_id  int8 not null,
-    lists_id int8 not null
-);
 create table users_notifications
 (
     user_id          int8 not null,
@@ -337,10 +334,6 @@ alter table if exists lists_members
     add constraint FK3eyxgv67fr9v8v1hoyuntj499 foreign key (members_id) references users;
 alter table if exists lists_members
     add constraint FK2jagg2qq4hgojny4m0vab1a41 foreign key (lists_id) references lists;
-alter table if exists lists_tweets
-    add constraint FKki3q16adfmnrsxq5gtkjigeuk foreign key (tweets_id) references tweets;
-alter table if exists lists_tweets
-    add constraint FKekr4n4mx3h0wfjoqabkwvb2yh foreign key (lists_id) references lists;
 alter table if exists notifications
     add constraint FKl9wo2rxxj0mfx56n2b72tsf18 foreign key (list_id) references lists;
 alter table if exists notifications
@@ -351,6 +344,10 @@ alter table if exists notifications
     add constraint FK9y21adhxn0ayjhfocscqox7bh foreign key (user_id) references users;
 alter table if exists notifications
     add constraint FKkm4kxtpw8ab56e3v6tuy0pebo foreign key (user_to_follow_id) references users;
+alter table if exists pinned_lists
+    add constraint FKitrqtkm38dksugdear2t8pspf foreign key (list_id) references lists;
+alter table if exists pinned_lists
+    add constraint FK9gqgc6kb4f9klnq0rti7hlc1b foreign key (user_id) references users;
 alter table if exists pool_choices_voted_user
     add constraint FKcr0cypmwnffwhb8uob3s5phym foreign key (voted_user_id) references users;
 alter table if exists pool_choices_voted_user
@@ -433,10 +430,6 @@ alter table if exists user_wallpaper
     add constraint FKj5r6vfnl1ng92trfw95nuj8ck foreign key (wallpaper_id) references images;
 alter table if exists user_wallpaper
     add constraint FKl6rrb8qu4wyp9g6eyd1gqs2c6 foreign key (user_id) references users;
-alter table if exists users_lists
-    add constraint FKcswqmdei3nib5x5gq25weuftw foreign key (lists_id) references lists;
-alter table if exists users_lists
-    add constraint FKjgo95u0dtudqcry0l04rkjmfp foreign key (user_id) references users;
 alter table if exists users_notifications
     add constraint FK17pt2krtfgoof65xdvtbpf5aw foreign key (notifications_id) references notifications;
 alter table if exists users_notifications

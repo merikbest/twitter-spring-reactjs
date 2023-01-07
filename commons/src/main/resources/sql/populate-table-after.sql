@@ -18,7 +18,6 @@ delete from topic_not_interested;
 delete from topic_followers;
 delete from lists_followers;
 delete from lists_members;
-delete from lists_tweets;
 delete from pool_choices_voted_user;
 delete from pools_poll_choices;
 delete from tweet_pool;

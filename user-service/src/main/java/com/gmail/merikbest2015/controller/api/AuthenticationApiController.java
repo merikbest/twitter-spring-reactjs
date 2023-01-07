@@ -34,4 +34,9 @@ public class AuthenticationApiController {
     public User getAuthenticatedUser() {
         return authenticationService.getAuthenticatedUser();
     }
+
+    @GetMapping("/users")
+    public User getAuthUser() {
+        return mapper.convertToResponse(authenticationService.getAuthenticatedUserProjection(), User.class);
+    }
 }

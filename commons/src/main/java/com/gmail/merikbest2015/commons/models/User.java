@@ -142,9 +142,6 @@ public class User {
     @OneToMany
     private List<Notification> notifications;
 
-    @ManyToMany
-    private List<Lists> lists;
-
     @OneToMany(mappedBy = "user")
     private List<ChatParticipant> chats;
 
@@ -193,7 +190,6 @@ public class User {
     public User() {
         this.registrationDate = LocalDateTime.now().withNano(0);
         this.bookmarks = new ArrayList<>();
-        this.lists = new ArrayList<>();
         this.unreadMessages = new ArrayList<>();
         this.subscribers = new ArrayList<>();
         this.backgroundColor = BackgroundColorType.DEFAULT;

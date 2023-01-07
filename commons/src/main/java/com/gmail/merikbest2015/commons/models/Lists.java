@@ -30,9 +30,6 @@ public class Lists {
     @Column(name = "private")
     private boolean isPrivate;
 
-    @Column(name = "pinned_date")
-    private LocalDateTime pinnedDate;
-
     @Column(name = "alt_wallpaper")
     private String altWallpaper;
 
@@ -44,8 +41,8 @@ public class Lists {
     @JoinColumn(name = "user_id")
     private User listOwner;
 
-    @ManyToMany
-    private List<Tweet> tweets;
+    @OneToMany(mappedBy = "list")
+    private List<PinnedLists> pinnedLists;
 
     @ManyToMany
     private List<User> members;
@@ -54,7 +51,6 @@ public class Lists {
     private List<User> followers;
 
     public Lists() {
-        this.tweets = new ArrayList<>();
         this.members = new ArrayList<>();
         this.followers = new ArrayList<>();
     }

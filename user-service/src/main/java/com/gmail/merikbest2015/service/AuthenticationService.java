@@ -15,6 +15,8 @@ public interface AuthenticationService {
 
     User getAuthenticatedUser();
 
+    AuthUserProjection getAuthenticatedUserProjection();
+
     UserPrincipalProjection getUserPrincipalByEmail(String email);
 
     Map<String, Object> login(AuthenticationRequest request, BindingResult bindingResult);

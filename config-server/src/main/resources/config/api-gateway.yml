@@ -38,6 +38,15 @@ spring:
                         - Path=/ui/v1/user/**, /api/v1/user/**, /api/v1/auth/user/**
                     filters:
                         - AuthFilter
+
+                -   id: lists-service
+                    uri: lb://lists-service
+                    predicates:
+                        - Path=/ui/v1/lists/**
+                    filters:
+                        - AuthFilter
+
+
     zipkin:
         base-url: http://localhost:9411
 

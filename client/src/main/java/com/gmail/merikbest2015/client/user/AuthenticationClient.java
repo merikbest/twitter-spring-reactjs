@@ -20,4 +20,7 @@ public interface AuthenticationClient {
 
     @GetMapping(API_V1_AUTH + "/user")
     User getAuthenticatedUser();
+
+    @GetMapping(API_V1_AUTH + "/users")
+    User getAuthUser();
 }
