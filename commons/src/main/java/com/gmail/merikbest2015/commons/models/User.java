@@ -140,7 +140,7 @@ public class User {
     private List<Bookmark> bookmarks;
 
     @OneToMany
-    private List<Notification> notifications;
+    private List<Notification> notifications; // TODO DELETE
 
     @OneToMany(mappedBy = "user")
     private List<ChatParticipant> chats;

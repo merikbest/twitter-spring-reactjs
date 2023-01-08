@@ -19,7 +19,7 @@ public interface UserClientService {
 
     Page<UserChatProjection> searchUsersByUsername(String username, Pageable pageable);
 
-    Optional<User> getValidUser(Long userId, Long authUserId);
+    User getValidUser(Long userId, Long authUserId);
 
     Boolean isUserFollowByOtherUser(Long userId);
 
@@ -32,6 +32,8 @@ public interface UserClientService {
     Boolean isMyProfileBlockedByUser(Long userId);
 
     Boolean isMyProfileWaitingForApprove(Long userId);
+
+    void increaseNotificationsCount(Long userId);
 
     void saveUser(User user);
 }

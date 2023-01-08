@@ -32,7 +32,7 @@ public interface UserClient {
     Page<UserChatProjection> searchUsersByUsername(@PathVariable("username") String username, Pageable pageable);
 
     @GetMapping(API_V1_USER + "/valid/{userId}/{authUserId}")
-    Optional<User> getValidUser(@PathVariable("userId") Long userId, @PathVariable("authUserId") Long authUserId);
+    User getValidUser(@PathVariable("userId") Long userId, @PathVariable("authUserId") Long authUserId);
 
     @GetMapping(API_V1_USER + "/is_followed/{userId}")
     Boolean isUserFollowByOtherUser(@PathVariable("userId") Long userId);
@@ -51,6 +51,9 @@ public interface UserClient {
 
     @GetMapping(API_V1_USER + "/is_approved/{userId}")
     Boolean isMyProfileWaitingForApprove(@PathVariable("userId") Long userId);
+
+    @GetMapping(API_V1_USER + "/notification/{userId}")
+    void increaseNotificationsCount(@PathVariable("userId") Long userId);
 
     @PostMapping(API_V1_USER)
     void saveUser(@RequestBody User user);

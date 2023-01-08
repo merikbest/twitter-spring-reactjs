@@ -1,17 +1,13 @@
 package com.gmail.merikbest2015.repository;
 
 import com.gmail.merikbest2015.commons.models.Lists;
-import com.gmail.merikbest2015.commons.projection.TweetProjection;
 import com.gmail.merikbest2015.repository.projection.*;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,23 +31,18 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
             "WHERE lo.id = :ownerId")
     List<SimpleListProjection> getUserOwnerLists(@Param("ownerId") Long ownerId);
 
+    @Query("SELECT list FROM Lists list " +
+            "WHERE list.id = :listId " +
+            "AND list.listOwner.id = :ownerId")
+    Optional<Lists> getAuthUserListById(@Param("listId") Long listId, @Param("ownerId") Long ownerId);
+
     @Query("SELECT l FROM Lists l WHERE l.id = :listId")
     ListUserProjection getUserTweetListById(@Param("listId") Long listId);
-
-//    List<Lists> findByListOwner_Id(Long id);
-
-//    Optional<Lists> findByIdAndIsPrivateFalse(Long id);
 
     @Query("SELECT CASE WHEN count(list) > 0 THEN true ELSE false END FROM Lists list " +
             "WHERE list.id = :listId " +
             "AND list.isPrivate = false")
     boolean findByIdAndIsPrivateFalse(@Param("listId") Long listId);
-
-    @Query("SELECT l FROM Lists l " +
-            "LEFT JOIN l.listOwner u " +
-            "WHERE u.id = :ownerId " +
-            "AND l.id IN :listIds")
-    List<Lists> getListsByIds(@Param("ownerId") Long ownerId, @Param("listIds") List<Long> listIds);
 
     @Query("SELECT list FROM Lists list " +
             "LEFT JOIN list.pinnedLists pinnedList " +
@@ -68,14 +59,6 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
             "OR l.id = :listId AND l.listOwner.id = :userId")
     List<Long> getListMembersIds(@Param("listId") Long listId, @Param("userId") Long userId);
 
-//    @Query("SELECT t FROM Tweet t " +
-//            "JOIN t.user u " +
-//            "JOIN u.lists l " +
-//            "WHERE l.id = :listId " +
-//            "AND t.addressedUsername IS NULL " +
-//            "ORDER BY t.dateTime DESC")
-//    Page<TweetProjection> getTweetsByListId(@Param("listId") Long listId, Pageable pageable);
-
     @Query("SELECT lists FROM Lists lists " +
             "LEFT JOIN lists.followers listsFollower " +
             "WHERE lists.id = :listId AND listsFollower.id = :userId " +
@@ -89,8 +72,10 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
     boolean isListPrivate(@Param("listId") Long listId, @Param("authUserId") Long authUserId);
 
     @Query("SELECT CASE WHEN count(list) > 0 THEN true ELSE false END FROM Lists list " +
+            "LEFT JOIN list.followers listsFollower " +
             "WHERE list.id = :listId " +
-            "AND list.listOwner.id = :listOwnerId")
+            "AND list.listOwner.id = :listOwnerId " +
+            "OR listsFollower.id = :listOwnerId")
     boolean isListExist(@Param("listId") Long listId, @Param("listOwnerId") Long listOwnerId);
 
     @Query("SELECT CASE WHEN count(follower) > 0 THEN true ELSE false END FROM Lists list " +
@@ -112,7 +97,7 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
     List<ListProjection> findByListOwnerIdAndIsPrivateFalse(@Param("ownerId") Long ownerId);
 
     @Query("SELECT list FROM Lists list " +
-            "LEFT JOIN list.members m " + // <- QuerySyntaxException: unexpected token: LEFT JOIN list.members member ???
+            "LEFT JOIN list.members m " +
             "WHERE m.id = :userId")
     List<ListProjection> findByMembers_Id(@Param("userId") Long userId);
 
@@ -153,12 +138,11 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
             "AND list.id = :listId")
     boolean isListFollowed(@Param("userId") Long userId, @Param("listId") Long listId);
 
-//    @Query("SELECT CASE WHEN count(list) > 0 THEN true ELSE false END FROM Lists list " +
-//            "LEFT JOIN list.listOwner listOwner " +
-//            "WHERE listOwner.id = :userId " +
-//            "AND list.id = :listId " +
-//            "AND list.pinnedDate != null")
-//    boolean isListPinned(@Param("userId") Long userId, @Param("listId") Long listId);
+    @Query("SELECT CASE WHEN count(m) > 0 THEN true ELSE false END FROM Lists list " +
+            "LEFT JOIN list.members m " +
+            "WHERE list.id = :listId " +
+            "AND m.id = :userId")
+    boolean isMemberInList(@Param("listId") Long listId, @Param("userId") Long userId);
 
     @Modifying
     @Query(value = "INSERT INTO lists_followers (followers_id, lists_id) VALUES (?1, ?2)", nativeQuery = true)
@@ -168,7 +152,11 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
     @Query(value = "DELETE FROM lists_followers WHERE followers_id = ?1 AND lists_id = ?2", nativeQuery = true)
     void removeFollowerFromList(@Param("userId") Long userId, @Param("listId") Long listId);
 
-//    @Modifying
-//    @Query("UPDATE Lists list SET list.pinnedDate = :pinnedDate WHERE list.id = :listId")
-//    void updateListPinnedDate(@Param("listId") Long listId, @Param("pinnedDate") LocalDateTime pinnedDate);
+    @Modifying
+    @Query(value = "INSERT INTO lists_members (members_id, lists_id) VALUES (?1, ?2)", nativeQuery = true)
+    void addMemberToList(@Param("userId") Long userId, @Param("listId") Long listId);
+
+    @Modifying
+    @Query(value = "DELETE FROM lists_members WHERE members_id = ?1 AND lists_id = ?2", nativeQuery = true)
+    void removeMemberFromList(@Param("userId") Long userId, @Param("listId") Long listId);
 }
