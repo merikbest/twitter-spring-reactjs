@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ public class UserToListsRequest {
     private List<ListsRequest> lists;
 
     @Data
+    @NoArgsConstructor
     @AllArgsConstructor
     public static class ListsRequest {
         private Long listId;

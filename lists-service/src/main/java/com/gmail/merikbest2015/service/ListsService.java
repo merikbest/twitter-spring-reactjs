@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.commons.models.Lists;
 import com.gmail.merikbest2015.commons.projection.TweetProjection;
 import com.gmail.merikbest2015.repository.projection.*;
+import com.gmail.merikbest2015.repository.projection.pinned.PinnedListProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

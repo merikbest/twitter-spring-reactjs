@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.repository;
 
 import com.gmail.merikbest2015.commons.models.Lists;
 import com.gmail.merikbest2015.repository.projection.*;
+import com.gmail.merikbest2015.repository.projection.pinned.PinnedListProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -44,12 +45,6 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
             "AND list.isPrivate = false")
     boolean findByIdAndIsPrivateFalse(@Param("listId") Long listId);
 
-    @Query("SELECT list FROM Lists list " +
-            "LEFT JOIN list.pinnedLists pinnedList " +
-            "WHERE pinnedList.pinnedUser.id = :userId " +
-            "ORDER BY pinnedList.pinnedDate DESC")
-    List<PinnedListProjection> getUserPinnedLists(@Param("userId") Long userId);
-
     @Query("SELECT list FROM Lists list WHERE list.id = :listId")
     PinnedListProjection getUserPinnedListById(@Param("listId") Long listId);
 
@@ -75,7 +70,8 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
             "LEFT JOIN list.followers listsFollower " +
             "WHERE list.id = :listId " +
             "AND list.listOwner.id = :listOwnerId " +
-            "OR listsFollower.id = :listOwnerId")
+            "OR list.id = :listId " +
+            "AND listsFollower.id = :listOwnerId")
     boolean isListExist(@Param("listId") Long listId, @Param("listOwnerId") Long listOwnerId);
 
     @Query("SELECT CASE WHEN count(follower) > 0 THEN true ELSE false END FROM Lists list " +

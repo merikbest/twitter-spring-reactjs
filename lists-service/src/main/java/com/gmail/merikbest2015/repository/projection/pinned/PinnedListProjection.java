@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.repository.projection;
+package com.gmail.merikbest2015.repository.projection.pinned;
 
 import com.gmail.merikbest2015.commons.projection.ImageProjection;
 

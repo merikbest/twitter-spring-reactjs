@@ -11,6 +11,7 @@ import com.gmail.merikbest2015.commons.models.Lists;
 import com.gmail.merikbest2015.commons.models.Notification;
 import com.gmail.merikbest2015.commons.projection.TweetProjection;
 import com.gmail.merikbest2015.repository.projection.*;
+import com.gmail.merikbest2015.repository.projection.pinned.PinnedListProjection;
 import com.gmail.merikbest2015.service.ListsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
