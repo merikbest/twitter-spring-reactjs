@@ -2,7 +2,9 @@ package com.gmail.merikbest2015.controller.api;
 
 import com.gmail.merikbest2015.client.tweet.TweetPageableRequest;
 import com.gmail.merikbest2015.client.tweet.TweetUserIdsRequest;
+import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import com.gmail.merikbest2015.commons.dto.TweetResponse;
+import com.gmail.merikbest2015.commons.mapper.BasicMapper;
 import com.gmail.merikbest2015.commons.models.Tweet;
 import com.gmail.merikbest2015.commons.projection.TweetImageProjection;
 import com.gmail.merikbest2015.commons.projection.TweetProjection;
@@ -10,7 +12,9 @@ import com.gmail.merikbest2015.commons.projection.TweetsUserProjection;
 import com.gmail.merikbest2015.mapper.TweetClientMapper;
 import com.gmail.merikbest2015.service.TweetClientService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +29,7 @@ public class TweetApiController {
 
     private final TweetClientService tweetClientService;
     private final TweetClientMapper tweetClientMapper;
+    private final BasicMapper basicMapper;
 
     @GetMapping("/{userId}")
     public Optional<Tweet> getTweetById(@PathVariable("userId") Long userId) {
@@ -71,8 +76,9 @@ public class TweetApiController {
         return tweetClientMapper.getTweetsByTagName(tagName);
     }
 
-    @GetMapping("/user/ids")
-    public Page<TweetProjection> getTweetsByUserIds(@RequestBody TweetUserIdsRequest request) {
-        return tweetClientService.getTweetsByUserIds(request);
+    @PostMapping("/user/ids")
+    public HeaderResponse<TweetResponse> getTweetsByUserIds(@RequestBody TweetUserIdsRequest request, @SpringQueryMap Pageable pageable) {
+        Page<TweetProjection> tweets = tweetClientService.getTweetsByUserIds(request, pageable);
+        return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
     }
 }

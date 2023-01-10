@@ -4,30 +4,33 @@ import com.gmail.merikbest2015.client.image.ImageClient;
 import com.gmail.merikbest2015.client.tweet.TweetClient;
 import com.gmail.merikbest2015.client.tweet.TweetUserIdsRequest;
 import com.gmail.merikbest2015.client.user.UserClient;
-import com.gmail.merikbest2015.commons.util.AuthUtil;
-import com.gmail.merikbest2015.dto.request.UserToListsRequest;
+import com.gmail.merikbest2015.commons.dto.HeaderResponse;
+import com.gmail.merikbest2015.commons.dto.TweetResponse;
 import com.gmail.merikbest2015.commons.enums.NotificationType;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.commons.models.Lists;
 import com.gmail.merikbest2015.commons.models.Notification;
 import com.gmail.merikbest2015.commons.models.User;
-import com.gmail.merikbest2015.commons.projection.TweetProjection;
-import com.gmail.merikbest2015.repository.ListsRepository;
 import com.gmail.merikbest2015.commons.repository.NotificationRepository;
+import com.gmail.merikbest2015.commons.util.AuthUtil;
+import com.gmail.merikbest2015.dto.request.UserToListsRequest;
+import com.gmail.merikbest2015.repository.ListsRepository;
 import com.gmail.merikbest2015.repository.PinnedListsRepository;
 import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.repository.projection.pinned.PinnedListProjection;
 import com.gmail.merikbest2015.repository.projection.pinned.PinnedListsProjection;
 import com.gmail.merikbest2015.service.ListsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -72,11 +75,11 @@ public class ListsServiceImpl implements ListsService {
     public ListUserProjection createTweetList(Lists list) {
         Long userId = AuthUtil.getAuthenticatedUserId();
 
-        if (!list.getListOwner().getId().equals(userId)) {
-            throw new ApiRequestException("List owner not found", HttpStatus.NOT_FOUND);
-        }
         if (list.getName().length() == 0 || list.getName().length() > 25) {
             throw new ApiRequestException("Incorrect list name length", HttpStatus.BAD_REQUEST);
+        }
+        if (!list.getListOwner().getId().equals(userId)) {
+            throw new ApiRequestException("List owner not found", HttpStatus.NOT_FOUND);
         }
         // TODO pass listOwner (User) from front-end
         Lists userTweetList = listsRepository.save(list);
@@ -107,12 +110,15 @@ public class ListsServiceImpl implements ListsService {
         if (!listFromDb.getListOwner().getId().equals(userId)) {
             throw new ApiRequestException("List owner not found", HttpStatus.NOT_FOUND);
         }
-        listsRepository.save(listInfo);
+        listFromDb.setName(listInfo.getName());
+        listFromDb.setDescription(listInfo.getDescription());
+        listFromDb.setWallpaper(listInfo.getWallpaper());
+        listFromDb.setPrivate(listInfo.isPrivate());
         return listsRepository.getListById(listFromDb.getId(), userId).get();
     }
 
     @Override
-    @Transactional(rollbackFor = ApiRequestException.class)
+    @Transactional
     public String deleteList(Long listId) {
         Long userId = AuthUtil.getAuthenticatedUserId();
         Lists list = listsRepository.findById(listId)
@@ -124,6 +130,7 @@ public class ListsServiceImpl implements ListsService {
         if (list.getWallpaper() != null) {
             imageClient.deleteImage(list.getWallpaper());
         }
+        pinnedListsRepository.deletePinnedList(listId);
         listsRepository.delete(list);
         return "List id:" + list.getId() + " deleted.";
     }
@@ -244,10 +251,10 @@ public class ListsServiceImpl implements ListsService {
     }
 
     @Override
-    public Page<TweetProjection> getTweetsByListId(Long listId, Pageable pageable) {
+    public HeaderResponse<TweetResponse> getTweetsByListId(Long listId, Pageable pageable) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         List<Long> listMembersIds = listsRepository.getListMembersIds(listId, authUserId);
-        return tweetClient.getTweetsByUserIds(new TweetUserIdsRequest(listMembersIds, pageable));
+        return tweetClient.getTweetsByUserIds(new TweetUserIdsRequest(listMembersIds), pageable);
     }
 
     @Override

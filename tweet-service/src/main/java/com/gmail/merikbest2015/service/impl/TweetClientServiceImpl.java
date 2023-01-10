@@ -11,6 +11,7 @@ import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.service.TweetClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -73,7 +74,7 @@ public class TweetClientServiceImpl implements TweetClientService {
     }
 
     @Override
-    public Page<TweetProjection> getTweetsByUserIds(TweetUserIdsRequest request) {
-        return tweetRepository.findTweetsByUserIds(request.getUserIds(), request.getPageable());
+    public Page<TweetProjection> getTweetsByUserIds(TweetUserIdsRequest request, Pageable pageable) {
+        return tweetRepository.findTweetsByUserIds(request.getUserIds(), pageable);
     }
 }

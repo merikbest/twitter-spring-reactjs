@@ -7,6 +7,7 @@ import com.gmail.merikbest2015.commons.projection.TweetImageProjection;
 import com.gmail.merikbest2015.commons.projection.TweetProjection;
 import com.gmail.merikbest2015.commons.projection.TweetsUserProjection;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,5 +32,5 @@ public interface TweetClientService {
 
     List<TweetProjection> getTweetsByTagName(String tagName);
 
-    Page<TweetProjection> getTweetsByUserIds(TweetUserIdsRequest request);
+    Page<TweetProjection> getTweetsByUserIds(TweetUserIdsRequest request, Pageable pageable);
 }

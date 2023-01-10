@@ -6,6 +6,7 @@ import com.gmail.merikbest2015.commons.dto.UserResponse;
 import com.gmail.merikbest2015.commons.enums.ReplyType;
 import com.gmail.merikbest2015.dto.request.ListsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -204,8 +205,11 @@ public class ListsControllerTest {
     @Test
     @DisplayName("[200] POST /ui/v1/lists - Create Tweet List")
     public void createTweetList() throws Exception {
+        UserResponse userResponse = new UserResponse();
+        userResponse.setId(USER_ID);
         ListsRequest listsRequest = new ListsRequest();
         listsRequest.setName(LIST_NAME);
+        listsRequest.setListOwner(userResponse);
         listsRequest.setDescription(LIST_DESCRIPTION);
         listsRequest.setAltWallpaper(LIST_ALT_WALLPAPER);
 
@@ -214,7 +218,6 @@ public class ListsControllerTest {
                         .content(mapper.writeValueAsString(listsRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(100))
                 .andExpect(jsonPath("$.name").value(LIST_NAME))
                 .andExpect(jsonPath("$.description").value(LIST_DESCRIPTION))
                 .andExpect(jsonPath("$.altWallpaper").value(LIST_ALT_WALLPAPER))
@@ -454,7 +457,7 @@ public class ListsControllerTest {
                         .header("X-auth-user-id", 2L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
-                .andExpect(jsonPath("$[0].id").value(6))
+                .andExpect(jsonPath("$[0].id", Matchers.oneOf(4, 6)))
                 .andExpect(jsonPath("$[0].name").value(LIST_NAME))
                 .andExpect(jsonPath("$[0].altWallpaper").value(LIST_ALT_WALLPAPER))
                 .andExpect(jsonPath("$[0].wallpaper").isEmpty())

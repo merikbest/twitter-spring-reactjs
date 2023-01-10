@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.client.tweet;
 
 import com.gmail.merikbest2015.commons.configuration.FeignConfiguration;
+import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import com.gmail.merikbest2015.commons.dto.TweetResponse;
 import com.gmail.merikbest2015.commons.models.Tweet;
 import com.gmail.merikbest2015.commons.projection.TweetImageProjection;
@@ -8,7 +9,9 @@ import com.gmail.merikbest2015.commons.projection.TweetProjection;
 import com.gmail.merikbest2015.commons.projection.TweetsProjection;
 import com.gmail.merikbest2015.commons.projection.TweetsUserProjection;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,6 +49,6 @@ public interface TweetClient {
     @GetMapping(API_V1_TWEETS + "/tag")
     List<TweetResponse> getTweetsByTagName(@RequestParam("tagName") String tagName);
 
-    @GetMapping(API_V1_TWEETS + "/user/ids")
-    Page<TweetProjection> getTweetsByUserIds(@RequestBody TweetUserIdsRequest request);
+    @PostMapping(API_V1_TWEETS + "/user/ids")
+    HeaderResponse<TweetResponse> getTweetsByUserIds(@RequestBody TweetUserIdsRequest request, @SpringQueryMap Pageable pageable);
 }

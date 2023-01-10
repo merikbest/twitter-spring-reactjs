@@ -2,7 +2,6 @@ package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.client.email.EmailClient;
 import com.gmail.merikbest2015.client.email.EmailRequest;
-import com.gmail.merikbest2015.commons.mapper.BasicMapper;
 import com.gmail.merikbest2015.dto.request.AuthenticationRequest;
 import com.gmail.merikbest2015.dto.request.RegistrationRequest;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
@@ -39,7 +38,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
     private final EmailClient emailClient;
-    private final BasicMapper basicMapper;
 
     @Override
     public Long getAuthenticatedUserId() {

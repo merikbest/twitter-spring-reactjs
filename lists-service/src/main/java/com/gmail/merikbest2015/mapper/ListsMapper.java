@@ -4,17 +4,15 @@ import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import com.gmail.merikbest2015.commons.dto.NotificationResponse;
 import com.gmail.merikbest2015.commons.dto.TweetResponse;
 import com.gmail.merikbest2015.commons.mapper.BasicMapper;
+import com.gmail.merikbest2015.commons.models.Lists;
+import com.gmail.merikbest2015.commons.models.Notification;
 import com.gmail.merikbest2015.dto.request.ListsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.dto.response.*;
-import com.gmail.merikbest2015.commons.models.Lists;
-import com.gmail.merikbest2015.commons.models.Notification;
-import com.gmail.merikbest2015.commons.projection.TweetProjection;
 import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.repository.projection.pinned.PinnedListProjection;
 import com.gmail.merikbest2015.service.ListsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
@@ -108,8 +106,7 @@ public class ListsMapper {
     }
 
     public HeaderResponse<TweetResponse> getTweetsByListId(Long listId, Pageable pageable) {
-        Page<TweetProjection> tweets = listsService.getTweetsByListId(listId, pageable);
-        return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
+        return listsService.getTweetsByListId(listId, pageable);
     }
 
     public BaseListResponse getListDetails(Long listId) {
