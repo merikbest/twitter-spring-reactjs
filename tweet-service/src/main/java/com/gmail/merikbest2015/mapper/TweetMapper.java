@@ -116,7 +116,7 @@ public class TweetMapper {
     public NotificationResponse likeTweet(Long tweetId) {
         Map<String, Object> notificationDetails = tweetService.likeTweet(tweetId);
         NotificationResponse notification = basicMapper.convertToResponse(notificationDetails.get("notification"), NotificationResponse.class);
-        notification.getTweet().setNotificationCondition((Boolean) notificationDetails.get("isTweetLiked"));
+//        notification.getTweet().setNotificationCondition((Boolean) notificationDetails.get("isTweetLiked"));
         return notification;
     }
 

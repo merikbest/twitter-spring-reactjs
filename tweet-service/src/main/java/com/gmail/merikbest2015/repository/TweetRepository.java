@@ -22,6 +22,9 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId")
     Optional<TweetAdditionalInfoProjection> getTweetAdditionalInfoById(@Param("tweetId") Long tweetId);
 
+    @Query("SELECT tweet.user.id FROM Tweet tweet WHERE tweet.id = :tweetId")
+    Optional<Long> getTweetAuthorId(@Param("tweetId") Long tweetId);
+
     @Query("SELECT tweet FROM Tweet tweet " +
             "LEFT JOIN tweet.user user " +
             "WHERE user.id IN :userIds " +

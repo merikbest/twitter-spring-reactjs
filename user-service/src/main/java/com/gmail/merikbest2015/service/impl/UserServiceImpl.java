@@ -13,7 +13,6 @@ import com.gmail.merikbest2015.commons.projection.*;
 import com.gmail.merikbest2015.commons.repository.LikeTweetRepository;
 import com.gmail.merikbest2015.commons.repository.NotificationRepository;
 import com.gmail.merikbest2015.commons.repository.RetweetRepository;
-import com.gmail.merikbest2015.commons.projection.*;
 import com.gmail.merikbest2015.repository.*;
 import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.service.AuthenticationService;
@@ -429,6 +428,11 @@ public class UserServiceImpl implements UserService {
     public boolean isUserFollowByOtherUser(Long userId) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
         return userRepository.isUserFollowByOtherUser(authUserId, userId);
+    }
+
+    public boolean isUserHavePrivateProfile(Long userId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return userRepository.isUserHavePrivateProfile(userId, authUserId);
     }
 
     public boolean isUserBlockedByMyProfile(Long userId) {

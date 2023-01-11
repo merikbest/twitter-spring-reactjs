@@ -51,6 +51,11 @@ public class UserApiController {
         return userService.isUserFollowByOtherUser(userId);
     }
 
+    @GetMapping("/is_private/{userId}")
+    public Boolean isUserHavePrivateProfile(@PathVariable("userId") Long userId) {
+        return userService.isUserHavePrivateProfile(userId);
+    }
+
     @GetMapping("/is_muted/{userId}")
     public Boolean isUserMutedByMyProfile(@PathVariable("userId") Long userId) {
         return userService.isUserMutedByMyProfile(userId);
@@ -79,6 +84,11 @@ public class UserApiController {
     @GetMapping("/notification/{userId}")
     public void increaseNotificationsCount(@PathVariable("userId") Long userId) {
         userService.increaseNotificationsCount(userId);
+    }
+
+    @GetMapping("/like/count/{increaseCount}")
+    public void increaseNotificationsCount(@PathVariable("increaseCount") boolean increaseCount) {
+        userService.updateLikeCount(increaseCount);
     }
 
     @PostMapping

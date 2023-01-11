@@ -23,6 +23,8 @@ public interface UserClientService {
 
     Boolean isUserFollowByOtherUser(Long userId);
 
+    Boolean isUserHavePrivateProfile(Long userId);
+
     Boolean isUserMutedByMyProfile(Long userId);
 
     Boolean isUserBlocked(Long userId, Long supposedBlockedUserId);
@@ -34,6 +36,8 @@ public interface UserClientService {
     Boolean isMyProfileWaitingForApprove(Long userId);
 
     void increaseNotificationsCount(Long userId);
+
+    void updateLikeCount(boolean increase);
 
     void saveUser(User user);
 }

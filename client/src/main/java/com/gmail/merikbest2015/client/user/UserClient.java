@@ -37,6 +37,9 @@ public interface UserClient {
     @GetMapping(API_V1_USER + "/is_followed/{userId}")
     Boolean isUserFollowByOtherUser(@PathVariable("userId") Long userId);
 
+    @GetMapping(API_V1_USER + "/is_private/{userId}")
+    Boolean isUserHavePrivateProfile(@PathVariable("userId") Long userId);
+
     @GetMapping(API_V1_USER + "/is_muted/{userId}")
     Boolean isUserMutedByMyProfile(@PathVariable("userId") Long userId);
 
@@ -54,6 +57,9 @@ public interface UserClient {
 
     @GetMapping(API_V1_USER + "/notification/{userId}")
     void increaseNotificationsCount(@PathVariable("userId") Long userId);
+
+    @GetMapping(API_V1_USER + "/like/count/{increaseCount}")
+    void updateLikeCount(@PathVariable("increaseCount") boolean increaseCount);
 
     @PostMapping(API_V1_USER)
     void saveUser(@RequestBody User user);

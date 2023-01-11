@@ -108,6 +108,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "AND subscriber.id = :userId ")
     List<TweetAuthorProjection> getNotificationsTweetAuthors(@Param("userId") Long userId);
 
+    @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user " +
+            "LEFT JOIN user.following following " +
+            "WHERE user.id = :userId AND user.privateProfile = true AND following.id != :authUserId")
+    boolean isUserHavePrivateProfile(@Param("userId") Long userId, @Param("authUserId") Long authUserId);
+
     @Query("SELECT CASE WHEN count(blockedUser) > 0 THEN true ELSE false END FROM User user " +
             "LEFT JOIN user.userBlockedList blockedUser " +
             "WHERE user.id = :userId " +
@@ -175,6 +180,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE User user SET user.notificationsCount = user.notificationsCount + 1 WHERE user.id = :userId")
     void increaseNotificationsCount(@Param("userId") Long userId);
+
+    @Modifying
+    @Query("UPDATE User user SET user.likeCount = " +
+            "CASE WHEN :increaseCount = true THEN (user.likeCount + 1) " +
+            "ELSE (user.likeCount - 1) END " +
+            "WHERE user.id = :userId")
+    void updateLikeCount(@Param("increaseCount") boolean increaseCount, @Param("userId") Long userId);
 
     @Modifying
     @Query("UPDATE User user SET user.email = :email WHERE user.id = :userId")

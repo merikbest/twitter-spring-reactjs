@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.client.user.UserIdsRequest;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.commons.mapper.BasicMapper;
 import com.gmail.merikbest2015.commons.models.User;
+import com.gmail.merikbest2015.commons.util.AuthUtil;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.NotificationUserProjection;
 import com.gmail.merikbest2015.repository.projection.UserChatProjection;
@@ -64,6 +65,11 @@ public class UserClientServiceImpl implements UserClientService {
     }
 
     @Override
+    public Boolean isUserHavePrivateProfile(Long userId) {
+        return userService.isUserHavePrivateProfile(userId);
+    }
+
+    @Override
     public Boolean isUserMutedByMyProfile(Long userId) {
         return userService.isUserMutedByMyProfile(userId);
     }
@@ -92,6 +98,13 @@ public class UserClientServiceImpl implements UserClientService {
     @Transactional
     public void increaseNotificationsCount(Long userId) {
         userRepository.increaseNotificationsCount(userId);
+    }
+
+    @Override
+    @Transactional
+    public void updateLikeCount(boolean increaseCount) {
+        Long userId = AuthUtil.getAuthenticatedUserId();
+        userRepository.updateLikeCount(increaseCount, userId);
     }
 
     @Override

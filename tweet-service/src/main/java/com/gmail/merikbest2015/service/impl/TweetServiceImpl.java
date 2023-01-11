@@ -14,6 +14,7 @@ import com.gmail.merikbest2015.commons.repository.RetweetRepository;
 import com.gmail.merikbest2015.commons.projection.TweetProjection;
 import com.gmail.merikbest2015.commons.projection.TweetsProjection;
 import com.gmail.merikbest2015.commons.projection.UserProjection;
+import com.gmail.merikbest2015.commons.util.AuthUtil;
 import com.gmail.merikbest2015.repository.*;
 import com.gmail.merikbest2015.service.TweetService;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -222,32 +224,48 @@ public class TweetServiceImpl implements TweetService {
     @Override
     @Transactional
     public Map<String, Object> likeTweet(Long tweetId) {
-        User user = authenticationClient.getAuthenticatedUser();
-        Tweet tweet = tweetRepository.findById(tweetId)
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        Long tweetAuthorId = tweetRepository.getTweetAuthorId(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-        List<LikeTweet> likedTweets = user.getLikedTweets();
-        Optional<LikeTweet> likedTweet = likedTweets.stream()
-                .filter(t -> t.getTweet().getId().equals(tweet.getId()))
-                .findFirst();
-        boolean isTweetLiked;
-
-        if (likedTweet.isPresent()) {
-            likedTweets.remove(likedTweet.get());
-            likeTweetRepository.delete(likedTweet.get());
-            user.setLikeCount(user.getLikeCount() - 1);
-            isTweetLiked = false;
-        } else {
-            LikeTweet newLikedTweet = new LikeTweet();
-            newLikedTweet.setTweet(tweet);
-            newLikedTweet.setUser(user);
-            user.setLikeCount(user.getLikeCount() + 1);
-            likeTweetRepository.save(newLikedTweet);
-            likedTweets.add(newLikedTweet);
-            isTweetLiked = true;
+        if (isMyProfileBlockedByUser(tweetAuthorId)) {
+            throw new ApiRequestException("User profile blocked", HttpStatus.BAD_REQUEST);
         }
-        Notification notification = notificationHandler(user, tweet, NotificationType.LIKE);
-        return Map.of("notification", notification, "isTweetLiked", isTweetLiked);
+        if (isUserHavePrivateProfile(tweetAuthorId)) {
+            throw new ApiRequestException("User have private profile", HttpStatus.BAD_REQUEST);
+        }
+        boolean isTweetLiked = likeTweetRepository.isTweetLiked(authUserId, tweetId);
+        boolean likedTweet;
+
+        if (isTweetLiked) {
+            likeTweetRepository.removeLikedTweet(authUserId, tweetId);
+            userClient.updateLikeCount(false);
+            likedTweet = false;
+        } else {
+            BigDecimal id = likeTweetRepository.getNextVal();
+            likeTweetRepository.addLikedTweet(id, authUserId, tweetId, LocalDateTime.now().withNano(0));
+            userClient.updateLikeCount(true);
+            likedTweet = true;
+        }
+        Notification notification = notificationHandler2(authUserId, tweetAuthorId, tweetId, NotificationType.LIKE);
+        return Map.of("notification", notification, "isTweetLiked", likedTweet);
     }
+
+    private Notification notificationHandler2(Long authUserId, Long tweetAuthorId, Long tweetId, NotificationType notificationType) {
+        if (!tweetAuthorId.equals(authUserId)) {
+            boolean isTweetNotificationExists = notificationRepository.isTweetNotificationExists(
+                    tweetAuthorId, authUserId, tweetId, notificationType);
+
+            if (isTweetNotificationExists) {
+                BigDecimal id = notificationRepository.getNextVal();
+                LocalDateTime date = LocalDateTime.now().withNano(0); // TODO move to sql migration script
+                notificationRepository.addNotification(id, tweetAuthorId, authUserId, tweetId, notificationType, date);
+                userClient.increaseNotificationsCount(tweetAuthorId);
+                return notificationRepository.getById(id.longValue());
+            }
+        }
+        return new Notification();
+    }
+
 
     @Override
     @Transactional
@@ -385,6 +403,10 @@ public class TweetServiceImpl implements TweetService {
 
     public boolean isMyProfileWaitingForApprove(Long userId) {
         return userClient.isMyProfileWaitingForApprove(userId);
+    }
+
+    public boolean isUserHavePrivateProfile(Long userId) {
+        return userClient.isUserHavePrivateProfile(userId);
     }
 
     private Notification notificationHandler(User user, Tweet tweet, NotificationType notificationType) {
