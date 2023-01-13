@@ -8,14 +8,17 @@ import com.gmail.merikbest2015.commons.enums.NotificationType;
 import com.gmail.merikbest2015.commons.enums.ReplyType;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.commons.models.*;
-import com.gmail.merikbest2015.commons.repository.LikeTweetRepository;
-import com.gmail.merikbest2015.commons.repository.NotificationRepository;
-import com.gmail.merikbest2015.commons.repository.RetweetRepository;
 import com.gmail.merikbest2015.commons.projection.TweetProjection;
 import com.gmail.merikbest2015.commons.projection.TweetsProjection;
 import com.gmail.merikbest2015.commons.projection.UserProjection;
+import com.gmail.merikbest2015.commons.repository.LikeTweetRepository;
+import com.gmail.merikbest2015.commons.repository.NotificationRepository;
+import com.gmail.merikbest2015.commons.repository.RetweetRepository;
 import com.gmail.merikbest2015.commons.util.AuthUtil;
-import com.gmail.merikbest2015.repository.*;
+import com.gmail.merikbest2015.repository.PollChoiceRepository;
+import com.gmail.merikbest2015.repository.PollRepository;
+import com.gmail.merikbest2015.repository.TweetAdditionalInfoProjection;
+import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.service.TweetService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -38,7 +41,10 @@ import java.awt.image.BufferedImage;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -224,95 +230,47 @@ public class TweetServiceImpl implements TweetService {
     @Override
     @Transactional
     public Map<String, Object> likeTweet(Long tweetId) {
-        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        User authUser = userClient.getAuthNotificationUser(AuthUtil.getAuthenticatedUserId());
         Tweet tweet = tweetRepository.findById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-        User user = checkIsPrivateUserProfile(tweet.getUser().getId(), authUserId);
-
-        if (isMyProfileBlockedByUser(tweet.getUser().getId())) {
-            throw new ApiRequestException("User profile blocked", HttpStatus.BAD_REQUEST);
-        }
-        boolean isTweetLiked = likeTweetRepository.isTweetLiked(authUserId, tweetId);
+        checkIsValidUserProfile(tweet.getUser().getId());
+        boolean isTweetLiked = likeTweetRepository.isTweetLiked(authUser.getId(), tweet.getId());
         boolean likedTweet;
 
         if (isTweetLiked) {
-            likeTweetRepository.removeLikedTweet(authUserId, tweetId);
+            likeTweetRepository.removeLikedTweet(authUser.getId(), tweet.getId());
             userClient.updateLikeCount(false);
             likedTweet = false;
         } else {
             BigDecimal id = likeTweetRepository.getNextVal();
-            likeTweetRepository.addLikedTweet(id, authUserId, tweetId, LocalDateTime.now().withNano(0));
+            likeTweetRepository.addLikedTweet(id, authUser.getId(), tweet.getId());
             userClient.updateLikeCount(true);
             likedTweet = true;
         }
-
-        Notification notification = notificationHandler3(authUserId, user, tweet, NotificationType.LIKE);
-        return Map.of("notification", notification, "isTweetLiked", likedTweet);
-    }
-
-//    private Notification notificationHandler2(Long authUserId, Long tweetAuthorId, Long tweetId, NotificationType notificationType) {
-//        if (!tweetAuthorId.equals(authUserId)) {
-//            boolean isTweetNotificationExists = notificationRepository.isTweetNotificationExists(
-//                    tweetAuthorId, authUserId, tweetId, notificationType);
-//
-//            if (isTweetNotificationExists) {
-//                BigDecimal id = notificationRepository.getNextVal();
-//                LocalDateTime date = LocalDateTime.now().withNano(0); // TODO move to sql migration script
-//                notificationRepository.addNotification(id, tweetAuthorId, authUserId, tweetId, notificationType, date);
-//                userClient.increaseNotificationsCount(tweetAuthorId);
-//                return notificationRepository.getById(id.longValue());
-//            }
-//        }
-//        return new Notification();
-//    }
-
-    private Notification notificationHandler3(Long authUserId, User user, Tweet tweet, NotificationType notificationType) {
-        Notification notification = new Notification();
-        notification.setNotificationType(notificationType);
-        notification.setNotifiedUser(tweet.getUser());
-        notification.setUser(user);
-        notification.setTweet(tweet);
-
-        if (!tweet.getUser().getId().equals(authUserId)) {
-            boolean isTweetNotificationExists = notificationRepository.isTweetNotificationExists(
-                    tweet.getUser().getId(), authUserId, tweet.getId(), notificationType);
-
-            if (!isTweetNotificationExists) {
-                userClient.increaseNotificationsCount(tweet.getUser().getId());
-                return notificationRepository.save(notification);
-            }
-        }
-        return notification;
+        return notificationHandler(authUser, tweet, NotificationType.LIKE, likedTweet);
     }
 
     @Override
     @Transactional
     public Map<String, Object> retweet(Long tweetId) {
-        User user = authenticationClient.getAuthenticatedUser();
+        User authUser = userClient.getAuthNotificationUser(AuthUtil.getAuthenticatedUserId());
         Tweet tweet = tweetRepository.findById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-        List<Retweet> retweets = user.getRetweets();
-        Optional<Retweet> retweet = retweets.stream()
-                .filter(t -> t.getTweet().getId().equals(tweet.getId()))
-                .findFirst();
-        boolean isTweetRetweeted;
+        checkIsValidUserProfile(tweet.getUser().getId());
+        boolean isTweetRetweeted = retweetRepository.isTweetRetweeted(authUser.getId(), tweet.getId());
+        boolean retweeted;
 
-        if (retweet.isPresent()) {
-            retweets.remove(retweet.get());
-            retweetRepository.delete(retweet.get());
-            user.setTweetCount(user.getTweetCount() - 1);
-            isTweetRetweeted = false;
+        if (isTweetRetweeted) {
+            retweetRepository.removeRetweetedTweet(authUser.getId(), tweet.getId());
+            userClient.updateTweetCount(false);
+            retweeted = false;
         } else {
-            Retweet newRetweet = new Retweet();
-            newRetweet.setTweet(tweet);
-            newRetweet.setUser(user);
-            retweetRepository.save(newRetweet);
-            retweets.add(newRetweet);
-            user.setTweetCount(user.getTweetCount() + 1);
-            isTweetRetweeted = true;
+            BigDecimal id = retweetRepository.getNextVal();
+            retweetRepository.addRetweetedTweet(id, authUser.getId(), tweet.getId());
+            userClient.updateTweetCount(true);
+            retweeted = true;
         }
-        Notification notification = notificationHandler(user, tweet, NotificationType.RETWEET);
-        return Map.of("notification", notification, "isTweetRetweeted", isTweetRetweeted);
+        return notificationHandler(authUser, tweet, NotificationType.RETWEET, retweeted);
     }
 
     @Override
@@ -427,38 +385,34 @@ public class TweetServiceImpl implements TweetService {
         return userClient.isUserHavePrivateProfile(userId);
     }
 
-    private User checkIsPrivateUserProfile(Long userId, Long authUserId) {
-        try {
-            return userClient.getValidUser(userId, authUserId);
-        } catch (RuntimeException exception) {
-            throw new ApiRequestException("User not found", HttpStatus.NOT_FOUND);
+    private void checkIsValidUserProfile(Long userId) {
+        if (isUserHavePrivateProfile(userId)) {
+            throw new ApiRequestException("User not found", HttpStatus.BAD_REQUEST);
+        }
+        if (isMyProfileBlockedByUser(userId)) {
+            throw new ApiRequestException("User profile blocked", HttpStatus.BAD_REQUEST);
         }
     }
 
-    private Notification notificationHandler(User user, Tweet tweet, NotificationType notificationType) {
+    private Map<String, Object> notificationHandler(User authUser, Tweet tweet, NotificationType notificationType,
+                                                    boolean notificationCondition) {
         Notification notification = new Notification();
         notification.setNotificationType(notificationType);
         notification.setNotifiedUser(tweet.getUser());
-        notification.setUser(user);
+        notification.setUser(authUser);
         notification.setTweet(tweet);
 
-        if (!tweet.getUser().getId().equals(user.getId())) {
-            Optional<Notification> userNotification = tweet.getUser().getNotifications().stream()
-                    .filter(n -> n.getNotificationType().equals(notificationType)
-                            && n.getTweet().equals(tweet)
-                            && n.getUser().equals(user))
-                    .findFirst();
+        if (!tweet.getUser().getId().equals(authUser.getId())) {
+            boolean isTweetNotificationExists = notificationRepository.isTweetNotificationExists(
+                    tweet.getUser().getId(), authUser.getId(), tweet.getId(), notificationType);
 
-            if (userNotification.isEmpty()) {
+            if (!isTweetNotificationExists) {
+                userClient.increaseNotificationsCount(tweet.getUser().getId());
                 Notification newNotification = notificationRepository.save(notification);
-                tweet.getUser().setNotificationsCount(tweet.getUser().getNotificationsCount() + 1);
-                List<Notification> notifications = tweet.getUser().getNotifications();
-                notifications.add(newNotification);
-                userClient.saveUser(tweet.getUser());
-                return newNotification;
+                return Map.of("notification", newNotification, "notificationCondition", notificationCondition);
             }
         }
-        return notification;
+        return Map.of("notification", notification, "notificationCondition", notificationCondition);
     }
 
     @Transactional
@@ -466,17 +420,17 @@ public class TweetServiceImpl implements TweetService {
         if (tweet.getText().length() == 0 || tweet.getText().length() > 280) {
             throw new ApiRequestException("Incorrect tweet text length", HttpStatus.BAD_REQUEST);
         }
-        User user = authenticationClient.getAuthenticatedUser();
+        User user = authenticationClient.getAuthenticatedUser(); // getAuthUser
         tweet.setUser(user);
-        boolean isMediaTweetCreated = parseMetadataFromURL(tweet); // find metadata from url
+        boolean isMediaTweetCreated = parseMetadataFromURL(tweet);
         Tweet createdTweet = tweetRepository.save(tweet);
 
         if (isMediaTweetCreated || createdTweet.getImages() != null) {
-            user.setMediaTweetCount(user.getMediaTweetCount() + 1);
+            user.setMediaTweetCount(user.getMediaTweetCount() + 1); // increaseMediaTweetCount
         } else {
-            user.setTweetCount(user.getTweetCount() + 1);
+            user.setTweetCount(user.getTweetCount() + 1); // increaseTweetCount
         }
-        user.getTweets().add(createdTweet);
+        user.getTweets().add(createdTweet); // insert user_id, tweet_id
 //        userRepository.save(user);
         parseHashtagInText(tweet); // find hashtag in text
 
@@ -486,7 +440,7 @@ public class TweetServiceImpl implements TweetService {
         notification.setTweet(tweet);
 
         user.getSubscribers().forEach(subscriber -> {
-            subscriber.setNotificationsCount(subscriber.getNotificationsCount() + 1);
+            subscriber.setNotificationsCount(subscriber.getNotificationsCount() + 1); // increaseNotificationCount
             List<Notification> notifications = subscriber.getNotifications();
             notification.setNotifiedUser(subscriber);
             notifications.add(notification);

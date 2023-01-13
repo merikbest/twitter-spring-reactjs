@@ -54,7 +54,7 @@ create table images
 create table like_tweets
 (
     id              int8 not null,
-    like_tweet_date timestamp,
+    like_tweet_date timestamp default current_timestamp,
     tweets_id       int8,
     users_id        int8,
     primary key (id)
@@ -135,7 +135,7 @@ create table replies
 create table retweets
 (
     id           int8 not null,
-    retweet_date timestamp,
+    retweet_date timestamp default current_timestamp,
     tweets_id    int8,
     users_id     int8,
     primary key (id)

@@ -34,6 +34,9 @@ public interface UserClient {
     @GetMapping(API_V1_USER + "/valid/{userId}/{authUserId}")
     User getValidUser(@PathVariable("userId") Long userId, @PathVariable("authUserId") Long authUserId);
 
+    @GetMapping(API_V1_USER + "/notification/user/{authUserId}")
+    User getAuthNotificationUser(@PathVariable("authUserId") Long authUserId);
+
     @GetMapping(API_V1_USER + "/is_followed/{userId}")
     Boolean isUserFollowByOtherUser(@PathVariable("userId") Long userId);
 
@@ -60,6 +63,9 @@ public interface UserClient {
 
     @GetMapping(API_V1_USER + "/like/count/{increaseCount}")
     void updateLikeCount(@PathVariable("increaseCount") boolean increaseCount);
+
+    @GetMapping(API_V1_USER + "/tweet/count/{increaseCount}")
+    void updateTweetCount(@PathVariable("increaseCount") boolean increaseCount);
 
     @PostMapping(API_V1_USER)
     void saveUser(@RequestBody User user);

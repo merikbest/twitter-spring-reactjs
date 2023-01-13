@@ -432,7 +432,7 @@ public class UserServiceImpl implements UserService {
 
     public boolean isUserHavePrivateProfile(Long userId) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
-        return userRepository.isUserHavePrivateProfile(userId, authUserId);
+        return !userRepository.isUserHavePrivateProfile(userId, authUserId);
     }
 
     public boolean isUserBlockedByMyProfile(Long userId) {

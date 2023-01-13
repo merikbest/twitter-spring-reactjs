@@ -11,7 +11,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Repository
 public interface LikeTweetRepository extends JpaRepository<LikeTweet, Long> {
@@ -34,12 +33,8 @@ public interface LikeTweetRepository extends JpaRepository<LikeTweet, Long> {
     void removeLikedTweet(@Param("userId") Long userId, @Param("tweetId") Long tweetId);
 
     @Modifying
-    @Query(value = "INSERT INTO like_tweets (id, users_id, tweets_id, like_tweet_date) VALUES (?1, ?2, ?3, ?4)",
-            nativeQuery = true)
-    void addLikedTweet(@Param("id") BigDecimal id,
-                       @Param("userId") Long userId,
-                       @Param("tweetId") Long tweetId,
-                       @Param("likeTweetDate") LocalDateTime likeTweetDate);
+    @Query(value = "INSERT INTO like_tweets (id, users_id, tweets_id) VALUES (?1, ?2, ?3)", nativeQuery = true)
+    void addLikedTweet(@Param("id") BigDecimal id, @Param("userId") Long userId, @Param("tweetId") Long tweetId);
 
     @Query(value = "SELECT nextval('like_tweets_seq')", nativeQuery = true)
     BigDecimal getNextVal();

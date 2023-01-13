@@ -19,7 +19,7 @@ public class LikeTweet {
     @SequenceGenerator(name = "like_tweets_seq", sequenceName = "like_tweets_seq", initialValue = 100, allocationSize = 1)
     private Long id;
 
-    @Column(name = "like_tweet_date")
+    @Column(name = "like_tweet_date", columnDefinition="timestamp default current_timestamp")
     private LocalDateTime likeTweetDate;
 
     @ManyToOne
@@ -29,8 +29,4 @@ public class LikeTweet {
     @ManyToOne
     @JoinColumn(name = "tweets_id")
     private Tweet tweet;
-
-    public LikeTweet() {
-        this.likeTweetDate = LocalDateTime.now().withNano(0);
-    }
 }

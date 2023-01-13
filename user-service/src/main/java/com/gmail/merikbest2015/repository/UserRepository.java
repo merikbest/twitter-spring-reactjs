@@ -60,6 +60,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "OR user.id = :userId AND following.id = :authUserId")
     Optional<NotificationUserProjection> getValidUser(@Param("userId") Long userId, @Param("authUserId") Long authUserId);
 
+    @Query("SELECT user FROM User user WHERE user.id = :authUserId")
+    AuthNotificationUserProjection getAuthNotificationUser(@Param("authUserId") Long authUserId);
+
     @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user WHERE user.id = :userId")
     boolean isUserExist(@Param("userId") Long userId);
 
@@ -110,7 +113,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user " +
             "LEFT JOIN user.following following " +
-            "WHERE user.id = :userId AND user.privateProfile = true AND following.id != :authUserId")
+            "WHERE user.id = :userId AND user.privateProfile = false " +
+            "OR user.id = :userId AND user.privateProfile = true AND following.id = :authUserId")
     boolean isUserHavePrivateProfile(@Param("userId") Long userId, @Param("authUserId") Long authUserId);
 
     @Query("SELECT CASE WHEN count(blockedUser) > 0 THEN true ELSE false END FROM User user " +
@@ -187,6 +191,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "ELSE (user.likeCount - 1) END " +
             "WHERE user.id = :userId")
     void updateLikeCount(@Param("increaseCount") boolean increaseCount, @Param("userId") Long userId);
+
+    @Modifying
+    @Query("UPDATE User user SET user.tweetCount = " +
+            "CASE WHEN :increaseCount = true THEN (user.tweetCount + 1) " +
+            "ELSE (user.tweetCount - 1) END " +
+            "WHERE user.id = :userId")
+    void updateTweetCount(boolean increaseCount, Long userId);
 
     @Modifying
     @Query("UPDATE User user SET user.email = :email WHERE user.id = :userId")

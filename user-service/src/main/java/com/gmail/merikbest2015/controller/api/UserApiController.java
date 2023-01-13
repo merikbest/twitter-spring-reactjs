@@ -46,6 +46,11 @@ public class UserApiController {
         return userService.getValidUser(userId, authUserId);
     }
 
+    @GetMapping("/notification/user/{authUserId}")
+    public User getAuthNotificationUser(@PathVariable("authUserId") Long authUserId) {
+        return userService.getAuthNotificationUser(authUserId);
+    }
+
     @GetMapping("/is_followed/{userId}")
     public Boolean isUserFollowByOtherUser(@PathVariable("userId") Long userId) {
         return userService.isUserFollowByOtherUser(userId);
@@ -87,8 +92,13 @@ public class UserApiController {
     }
 
     @GetMapping("/like/count/{increaseCount}")
-    public void increaseNotificationsCount(@PathVariable("increaseCount") boolean increaseCount) {
+    public void updateLikeCount(@PathVariable("increaseCount") boolean increaseCount) {
         userService.updateLikeCount(increaseCount);
+    }
+
+    @GetMapping("/tweet/count/{increaseCount}")
+    public void updateTweetCount(@PathVariable("increaseCount") boolean increaseCount) {
+        userService.updateTweetCount(increaseCount);
     }
 
     @PostMapping

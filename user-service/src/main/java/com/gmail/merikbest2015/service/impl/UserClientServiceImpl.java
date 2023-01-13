@@ -6,6 +6,7 @@ import com.gmail.merikbest2015.commons.mapper.BasicMapper;
 import com.gmail.merikbest2015.commons.models.User;
 import com.gmail.merikbest2015.commons.util.AuthUtil;
 import com.gmail.merikbest2015.repository.UserRepository;
+import com.gmail.merikbest2015.repository.projection.AuthNotificationUserProjection;
 import com.gmail.merikbest2015.repository.projection.NotificationUserProjection;
 import com.gmail.merikbest2015.repository.projection.UserChatProjection;
 import com.gmail.merikbest2015.service.AuthenticationService;
@@ -60,6 +61,12 @@ public class UserClientServiceImpl implements UserClientService {
     }
 
     @Override
+    public User getAuthNotificationUser(Long authUserId) {
+        AuthNotificationUserProjection user = userRepository.getAuthNotificationUser(authUserId);
+        return basicMapper.convertToResponse(user, User.class);
+    }
+
+    @Override
     public Boolean isUserFollowByOtherUser(Long userId) {
         return userService.isUserFollowByOtherUser(userId);
     }
@@ -105,6 +112,12 @@ public class UserClientServiceImpl implements UserClientService {
     public void updateLikeCount(boolean increaseCount) {
         Long userId = AuthUtil.getAuthenticatedUserId();
         userRepository.updateLikeCount(increaseCount, userId);
+    }
+
+    @Override
+    public void updateTweetCount(boolean increaseCount) {
+        Long userId = AuthUtil.getAuthenticatedUserId();
+        userRepository.updateTweetCount(increaseCount, userId);
     }
 
     @Override

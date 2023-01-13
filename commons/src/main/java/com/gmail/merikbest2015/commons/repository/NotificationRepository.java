@@ -7,13 +7,10 @@ import com.gmail.merikbest2015.commons.projection.NotificationProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Repository
@@ -50,17 +47,4 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
             "AND n.id = :notificationId")
     Optional<NotificationInfoProjection> getUserNotificationById(@Param("userId") Long userId,
                                                                  @Param("notificationId") Long notificationId);
-
-    @Modifying
-    @Query(value = "INSERT INTO notifications (id, notified_user_id, user_id, tweet_id, notification_type, date) " +
-            "VALUES (?1, ?2, ?3, ?4, ?5)", nativeQuery = true)
-    void addNotification(@Param("id") BigDecimal id,
-                         @Param("notifiedUserId") Long notifiedUserId,
-                         @Param("userId") Long userId,
-                         @Param("tweetId") Long tweetId,
-                         @Param("notificationType") NotificationType type,
-                         @Param("date") LocalDateTime likeTweetDate);
-
-    @Query(value = "SELECT nextval('notifications_seq')", nativeQuery = true)
-    BigDecimal getNextVal();
 }
