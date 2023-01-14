@@ -42,7 +42,6 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -208,16 +207,7 @@ public class TweetServiceImpl implements TweetService {
         if (user.getPinnedTweet() != null && user.getPinnedTweet().getId().equals(tweetId)) {
             user.setPinnedTweet(null);
         }
-        List<Tag> tags = tagClient.getTagsByTweetId(tweetId);
-        tags.forEach(tag -> {
-            long tweetsQuantity = tag.getTweetsQuantity() - 1;
-
-            if (tweetsQuantity == 0) {
-                tagClient.deleteTag(tag);
-            } else {
-                tag.setTweetsQuantity(tweetsQuantity);
-            }
-        });
+        tagClient.deleteTagsByTweetId(tweetId);
         tweet.setDeleted(true);
         return "Your Tweet was deleted";
     }
@@ -278,10 +268,11 @@ public class TweetServiceImpl implements TweetService {
     public TweetProjection replyTweet(Long tweetId, Tweet reply) {
         Tweet tweet = tweetRepository.findById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+        checkIsValidUserProfile(tweet.getUser().getId());
         reply.setAddressedTweetId(tweetId);
         Tweet replyTweet = createTweet(reply);
-        tweet.getReplies().add(replyTweet);
-        return getTweetById(replyTweet.getId());
+        tweetRepository.addReply(tweetId, replyTweet.getId());
+        return tweetRepository.findTweetById(replyTweet.getId()).get();
     }
 
     @Override
@@ -420,64 +411,29 @@ public class TweetServiceImpl implements TweetService {
         if (tweet.getText().length() == 0 || tweet.getText().length() > 280) {
             throw new ApiRequestException("Incorrect tweet text length", HttpStatus.BAD_REQUEST);
         }
-        User user = authenticationClient.getAuthenticatedUser(); // getAuthUser
+        User user = authenticationClient.getAuthUser();
         tweet.setUser(user);
         boolean isMediaTweetCreated = parseMetadataFromURL(tweet);
         Tweet createdTweet = tweetRepository.save(tweet);
 
         if (isMediaTweetCreated || createdTweet.getImages() != null) {
-            user.setMediaTweetCount(user.getMediaTweetCount() + 1); // increaseMediaTweetCount
+            userClient.updateMediaTweetCount(true);
         } else {
-            user.setTweetCount(user.getTweetCount() + 1); // increaseTweetCount
+            userClient.updateTweetCount(true);
         }
-        user.getTweets().add(createdTweet); // insert user_id, tweet_id
-//        userRepository.save(user);
-        parseHashtagInText(tweet); // find hashtag in text
+        tagClient.parseHashtagsInText(createdTweet.getText(), createdTweet.getId());
 
-        Notification notification = new Notification();
-        notification.setNotificationType(NotificationType.TWEET);
-        notification.setUser(user);
-        notification.setTweet(tweet);
-
-        user.getSubscribers().forEach(subscriber -> {
-            subscriber.setNotificationsCount(subscriber.getNotificationsCount() + 1); // increaseNotificationCount
-            List<Notification> notifications = subscriber.getNotifications();
+        List<User> subscribers = userClient.getSubscribersByUserId(user.getId());
+        subscribers.forEach(subscriber -> {
+            Notification notification = new Notification();
+            notification.setNotificationType(NotificationType.TWEET);
+            notification.setUser(user);
+            notification.setTweet(createdTweet);
             notification.setNotifiedUser(subscriber);
-            notifications.add(notification);
+            userClient.increaseNotificationsCount(subscriber.getId());
             notificationRepository.save(notification);
         });
         return createdTweet;
-    }
-
-    private void parseHashtagInText(Tweet tweet) {
-        Pattern pattern = Pattern.compile("(#\\w+)\\b");
-        Matcher match = pattern.matcher(tweet.getText());
-        List<String> hashtags = new ArrayList<>();
-
-        while (match.find()) {
-            hashtags.add(match.group(1));
-        }
-
-        if (!hashtags.isEmpty()) {
-            hashtags.forEach(hashtag -> {
-                Tag tag = tagClient.getTagByTagName(hashtag);
-
-                if (tag != null) {
-                    Long tweetsQuantity = tag.getTweetsQuantity();
-                    tweetsQuantity = tweetsQuantity + 1;
-                    tag.setTweetsQuantity(tweetsQuantity);
-                    List<Tweet> taggedTweets = tag.getTweets();
-                    taggedTweets.add(tweet);
-                    tagClient.saveTag(tag);
-                } else {
-                    Tag newTag = new Tag();
-                    newTag.setTagName(hashtag);
-                    newTag.setTweetsQuantity(1L);
-                    newTag.setTweets(Collections.singletonList(tweet));
-                    tagClient.saveTag(newTag);
-                }
-            });
-        }
     }
 
     @SneakyThrows

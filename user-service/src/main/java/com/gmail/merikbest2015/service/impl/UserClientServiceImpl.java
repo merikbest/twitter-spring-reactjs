@@ -9,6 +9,7 @@ import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.AuthNotificationUserProjection;
 import com.gmail.merikbest2015.repository.projection.NotificationUserProjection;
 import com.gmail.merikbest2015.repository.projection.UserChatProjection;
+import com.gmail.merikbest2015.repository.projection.UserSubscriberProjection;
 import com.gmail.merikbest2015.service.AuthenticationService;
 import com.gmail.merikbest2015.service.UserClientService;
 import lombok.RequiredArgsConstructor;
@@ -67,6 +68,12 @@ public class UserClientServiceImpl implements UserClientService {
     }
 
     @Override
+    public List<User> getSubscribersByUserId(Long userId) {
+        List<UserSubscriberProjection> subscribers = userRepository.getSubscribersByUserId(userId);
+        return basicMapper.convertToResponseList(subscribers, User.class);
+    }
+
+    @Override
     public Boolean isUserFollowByOtherUser(Long userId) {
         return userService.isUserFollowByOtherUser(userId);
     }
@@ -115,9 +122,17 @@ public class UserClientServiceImpl implements UserClientService {
     }
 
     @Override
+    @Transactional
     public void updateTweetCount(boolean increaseCount) {
         Long userId = AuthUtil.getAuthenticatedUserId();
         userRepository.updateTweetCount(increaseCount, userId);
+    }
+
+    @Override
+    @Transactional
+    public void updateMediaTweetCount(boolean increaseCount) {
+        Long userId = AuthUtil.getAuthenticatedUserId();
+        userRepository.updateMediaTweetCount(increaseCount, userId);
     }
 
     @Override

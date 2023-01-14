@@ -23,6 +23,8 @@ public interface UserClientService {
 
     User getAuthNotificationUser(Long authUserId);
 
+    List<User> getSubscribersByUserId(Long userId);
+
     Boolean isUserFollowByOtherUser(Long userId);
 
     Boolean isUserHavePrivateProfile(Long userId);
@@ -42,6 +44,8 @@ public interface UserClientService {
     void updateLikeCount(boolean increase);
 
     void updateTweetCount(boolean increaseCount);
+
+    void updateMediaTweetCount(boolean increaseCount);
 
     void saveUser(User user);
 }

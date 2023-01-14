@@ -1,9 +1,8 @@
-package com.gmail.merikbest2015.commons.models;
+package com.gmail.merikbest2015.model;
 
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
@@ -26,11 +25,4 @@ public class Tag {
     @NonNull
     @Column(name = "tweets_quantity")
     private Long tweetsQuantity;
-
-    @NonNull
-    @ManyToMany
-    @JoinTable(name = "tweets_tags",
-            joinColumns = @JoinColumn(name = "tags_id"),
-            inverseJoinColumns = @JoinColumn(name = "tweets_id"))
-    private List<Tweet> tweets;
 }

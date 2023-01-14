@@ -128,7 +128,7 @@ public class User {
     private Image wallpaper;
 
     @ManyToMany
-    private List<Tweet> tweets;
+    private List<Tweet> tweets; // TODO DELETE
 
     @OneToMany(mappedBy = "user")
     private List<LikeTweet> likedTweets;

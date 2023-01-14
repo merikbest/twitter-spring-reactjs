@@ -111,6 +111,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "AND subscriber.id = :userId ")
     List<TweetAuthorProjection> getNotificationsTweetAuthors(@Param("userId") Long userId);
 
+    @Query("SELECT subscriber FROM User user " +
+            "LEFT JOIN user.subscribers subscriber " +
+            "WHERE user.id = :userId")
+    List<UserSubscriberProjection> getSubscribersByUserId(@Param("userId") Long userId);
+
     @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user " +
             "LEFT JOIN user.following following " +
             "WHERE user.id = :userId AND user.privateProfile = false " +
@@ -197,7 +202,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "CASE WHEN :increaseCount = true THEN (user.tweetCount + 1) " +
             "ELSE (user.tweetCount - 1) END " +
             "WHERE user.id = :userId")
-    void updateTweetCount(boolean increaseCount, Long userId);
+    void updateTweetCount(@Param("increaseCount") boolean increaseCount, @Param("userId") Long userId);
+
+    @Modifying
+    @Query("UPDATE User user SET user.mediaTweetCount = " +
+            "CASE WHEN :increaseCount = true THEN (user.mediaTweetCount + 1) " +
+            "ELSE (user.mediaTweetCount - 1) END " +
+            "WHERE user.id = :userId")
+    void updateMediaTweetCount(@Param("increaseCount") boolean increaseCount, @Param("userId") Long userId);
 
     @Modifying
     @Query("UPDATE User user SET user.email = :email WHERE user.id = :userId")

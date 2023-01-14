@@ -1,9 +1,8 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.client.tweet.TweetClient;
-import com.gmail.merikbest2015.commons.dto.TweetResponse;
-import com.gmail.merikbest2015.commons.projection.TagProjection;
+import com.gmail.merikbest2015.dto.TweetResponse;
 import com.gmail.merikbest2015.repository.TagRepository;
+import com.gmail.merikbest2015.repository.projection.TagProjection;
 import com.gmail.merikbest2015.service.TagService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,7 +16,7 @@ import java.util.List;
 public class TagServiceImpl implements TagService {
 
     private final TagRepository tagRepository;
-    private final TweetClient tweetClient;
+//    private final TweetClient tweetClient;
 
     @Override
     public List<TagProjection> getTags() {
@@ -31,6 +30,7 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public List<TweetResponse> getTweetsByTag(String tagName) {
-        return tweetClient.getTweetsByTagName(tagName);
+//        return tweetClient.getTweetsByTagName(tagName);
+        return null;
     }
 }
