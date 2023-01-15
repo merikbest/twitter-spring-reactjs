@@ -71,9 +71,9 @@ public class TweetApiController {
         return tweetClientService.getNotificationsFromTweetAuthors(userId);
     }
 
-    @GetMapping("/tag")
-    public List<TweetResponse> getTweetsByTagName(@RequestParam("tagName") String tagName) {
-        return tweetClientMapper.getTweetsByTagName(tagName);
+    @GetMapping("/ids/{tweetIds}")
+    public List<TweetResponse> getTweetsByIds(@PathVariable("tweetIds") List<Long> tweetIds) {
+        return tweetClientMapper.getTweetsByIds(tweetIds);
     }
 
     @PostMapping("/user/ids")

@@ -10,7 +10,7 @@ create sequence pool_choices_seq start 100 increment 1;
 create sequence pools_seq start 100 increment 1;
 create sequence retweets_seq start 100 increment 1;
 -- create sequence tags_seq start 100 increment 1;
-create sequence topics_seq start 100 increment 1;
+-- create sequence topics_seq start 100 increment 1;
 create sequence tweets_seq start 100 increment 1;
 create sequence users_seq start 100 increment 1;
 create table bookmarks
@@ -152,23 +152,23 @@ create table subscribers
 --     tweets_quantity int8,
 --     primary key (id)
 -- );
-create table topic_followers
-(
-    topic_id int8 not null,
-    user_id  int8 not null
-);
-create table topic_not_interested
-(
-    topic_id int8 not null,
-    user_id  int8 not null
-);
-create table topics
-(
-    id             int8 not null,
-    topic_category varchar(255),
-    topic_name     varchar(255),
-    primary key (id)
-);
+-- create table topic_followers
+-- (
+--     topic_id int8 not null,
+--     user_id  int8 not null
+-- );
+-- create table topic_not_interested
+-- (
+--     topic_id int8 not null,
+--     user_id  int8 not null
+-- );
+-- create table topics
+-- (
+--     id             int8 not null,
+--     topic_category varchar(255),
+--     topic_name     varchar(255),
+--     primary key (id)
+-- );
 create table tweet_pool
 (
     pools_id  int8,
@@ -372,14 +372,14 @@ alter table if exists subscribers
     add constraint FKh0b65sm1qah4q8iy69k8aaxij foreign key (subscriber_id) references users;
 alter table if exists subscribers
     add constraint FKll9lhik8xj3ep6ahtdt7me7pu foreign key (user_id) references users;
-alter table if exists topic_followers
-    add constraint FKmns6yuero7mqfqm36m5tihgfn foreign key (user_id) references users;
-alter table if exists topic_followers
-    add constraint FK61aoq1yc5828mhhqpgp37tadp foreign key (topic_id) references topics;
-alter table if exists topic_not_interested
-    add constraint FKbbo35w3ciycwcc1y66yjsqi0 foreign key (user_id) references users;
-alter table if exists topic_not_interested
-    add constraint FKl7w9th05emxw92vkf9relbvbj foreign key (topic_id) references topics;
+-- alter table if exists topic_followers
+--     add constraint FKmns6yuero7mqfqm36m5tihgfn foreign key (user_id) references users;
+-- alter table if exists topic_followers
+--     add constraint FK61aoq1yc5828mhhqpgp37tadp foreign key (topic_id) references topics;
+-- alter table if exists topic_not_interested
+--     add constraint FKbbo35w3ciycwcc1y66yjsqi0 foreign key (user_id) references users;
+-- alter table if exists topic_not_interested
+--     add constraint FKl7w9th05emxw92vkf9relbvbj foreign key (topic_id) references topics;
 alter table if exists tweet_pool
     add constraint FKfd0dxawayvyp132ntdhi8ptfa foreign key (pools_id) references pools;
 alter table if exists tweet_pool

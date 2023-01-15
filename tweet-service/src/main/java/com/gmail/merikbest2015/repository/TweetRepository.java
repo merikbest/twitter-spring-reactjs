@@ -127,13 +127,19 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "ORDER BY notificationTweet.dateTime DESC")
     List<TweetsProjection> getNotificationsFromTweetAuthors(@Param("userId") Long userId);
 
-    @Query("SELECT tagTweet as tweet " +
-            "FROM Tag tag " +
-            "LEFT JOIN tag.tweets tagTweet " +
-            "WHERE tag.tagName = :tagName " +
-            "AND tagTweet.deleted = false " +
-            "ORDER BY tagTweet.dateTime DESC")
-    List<TweetsProjection> getTweetsByTagName(@Param("tagName") String tagName);
+//    @Query("SELECT tagTweet as tweet " +
+//            "FROM Tag tag " +
+//            "LEFT JOIN tag.tweets tagTweet " +
+//            "WHERE tag.tagName = :tagName " +
+//            "AND tagTweet.deleted = false " +
+//            "ORDER BY tagTweet.dateTime DESC")
+//    List<TweetsProjection> getTweetsByTagName(@Param("tagName") String tagName);
+
+    @Query("SELECT tweet FROM Tweet tweet " +
+            "WHERE tweet.id IN :tweetIds " +
+            "AND tweet.deleted = false " +
+            "ORDER BY tweet.dateTime DESC")
+    List<TweetProjection> getTweetsByIds(@Param("tweetIds") List<Long> tweetIds);
 
     @Query("SELECT u.id FROM Tweet tweet " +
             "LEFT JOIN tweet.retweets retweet " +

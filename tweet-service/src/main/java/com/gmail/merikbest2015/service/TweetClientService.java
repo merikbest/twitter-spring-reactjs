@@ -30,7 +30,7 @@ public interface TweetClientService {
 
     List<TweetProjection> getNotificationsFromTweetAuthors(Long userId);
 
-    List<TweetProjection> getTweetsByTagName(String tagName);
+    List<TweetProjection> getTweetsByIds(List<Long> tweetIds);
 
     Page<TweetProjection> getTweetsByUserIds(TweetUserIdsRequest request, Pageable pageable);
 }

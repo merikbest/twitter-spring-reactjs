@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TagRepository extends JpaRepository<Tag, Long> {
@@ -19,7 +20,7 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
 
     List<TagProjection> findTop5ByOrderByTweetsQuantityDesc();
 
-    Tag findByTagName(String tagName);
+    Optional<Tag> findByTagName(String tagName);
 
     @Query("SELECT tag FROM Tag tag WHERE tag.id IN :tagIds")
     List<Tag> getTagsBuIds(@Param("tagIds") List<Long> tagIds);

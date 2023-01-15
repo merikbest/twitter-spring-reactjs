@@ -46,8 +46,8 @@ public interface TweetClient {
     @GetMapping(API_V1_TWEETS + "/notification/{userId}")
     List<TweetsProjection> getNotificationsFromTweetAuthors(@PathVariable("userId") Long userId);
 
-    @GetMapping(API_V1_TWEETS + "/tag")
-    List<TweetResponse> getTweetsByTagName(@RequestParam("tagName") String tagName);
+    @GetMapping(API_V1_TWEETS + "/ids/{tweetIds}")
+    List<TweetResponse> getTweetsByIds(@PathVariable("tweetIds") List<Long> tweetIds);
 
     @PostMapping(API_V1_TWEETS + "/user/ids")
     HeaderResponse<TweetResponse> getTweetsByUserIds(@RequestBody TweetUserIdsRequest request, @SpringQueryMap Pageable pageable);

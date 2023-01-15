@@ -1,9 +1,13 @@
 package com.gmail.merikbest2015.service;
 
-import com.gmail.merikbest2015.client.user.AuthenticationClient;
 import com.gmail.merikbest2015.dto.response.TopicsByCategoriesResponse;
-import com.gmail.merikbest2015.commons.enums.TopicCategory;
-import com.gmail.merikbest2015.commons.exception.ApiRequestException;
+import com.gmail.merikbest2015.enums.TopicCategory;
+import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.feign.AuthenticationClient;
+import com.gmail.merikbest2015.model.TopicFollowers;
+import com.gmail.merikbest2015.model.TopicNotInterested;
+import com.gmail.merikbest2015.repository.TopicFollowersRepository;
+import com.gmail.merikbest2015.repository.TopicNotInterestedRepository;
 import com.gmail.merikbest2015.repository.TopicRepository;
 import com.gmail.merikbest2015.repository.projection.FollowedTopicProjection;
 import com.gmail.merikbest2015.repository.projection.NotInterestedTopicProjection;
@@ -21,11 +25,13 @@ import java.util.List;
 public class TopicServiceImpl implements TopicService {
 
     private final TopicRepository topicRepository;
+    private final TopicFollowersRepository topicFollowersRepository;
+    private final TopicNotInterestedRepository topicNotInterestedRepository;
     private final AuthenticationClient authenticationClient;
 
     @Override
     public List<TopicProjection> getTopicsByIds(List<Long> topicsIds) {
-        return topicRepository.getTopicsByIds(topicsIds);
+        return topicRepository.getTopicsByIds(topicsIds, TopicProjection.class);
     }
 
     @Override
@@ -43,19 +49,22 @@ public class TopicServiceImpl implements TopicService {
     @Override
     public List<FollowedTopicProjection> getFollowedTopics() {
         Long userId = authenticationClient.getAuthenticatedUserId();
-        return topicRepository.getFollowedTopics(userId, FollowedTopicProjection.class);
+        List<Long> followedTopicsIds = topicFollowersRepository.getFollowedTopics(userId);
+        return topicRepository.getTopicsByIds(followedTopicsIds, FollowedTopicProjection.class);
     }
 
     @Override
     public List<TopicProjection> getFollowedTopicsByUserId(Long userId) {
         // TODO add check isMyProfileBlocked and isPrivateProfile
-        return topicRepository.getFollowedTopics(userId, TopicProjection.class);
+        List<Long> followedTopicsIds = topicFollowersRepository.getFollowedTopics(userId);
+        return topicRepository.getTopicsByIds(followedTopicsIds, TopicProjection.class);
     }
 
     @Override
     public List<NotInterestedTopicProjection> getNotInterestedTopics() {
         Long userId = authenticationClient.getAuthenticatedUserId();
-        return topicRepository.getNotInterestedTopic(userId);
+        List<Long> notInterestedTopicIds = topicNotInterestedRepository.getNotInterestedTopic(userId);
+        return topicRepository.getTopicsByIds(notInterestedTopicIds, NotInterestedTopicProjection.class);
     }
 
     @Override
@@ -63,14 +72,15 @@ public class TopicServiceImpl implements TopicService {
     public Boolean processNotInterestedTopic(Long topicId) {
         checkIsTopicExist(topicId);
         Long userId = authenticationClient.getAuthenticatedUserId();
-        boolean isTopicNotInterested = topicRepository.isTopicNotInterested(userId, topicId);
+        TopicNotInterested topic = topicNotInterestedRepository.getNotInterestedByUserIdAndTopicId(userId, topicId);
 
-        if (isTopicNotInterested) {
-            topicRepository.removeNotInterestedTopic(userId, topicId);
+        if (topic != null) {
+            topicNotInterestedRepository.delete(topic);
             return false;
         } else {
-            topicRepository.removeFollowedTopic(userId, topicId);
-            topicRepository.addNotInterestedTopic(userId, topicId);
+            topicFollowersRepository.removeFollowedTopic(userId, topicId);
+            TopicNotInterested topicNotInterested = new TopicNotInterested(userId, topicId);
+            topicNotInterestedRepository.save(topicNotInterested);
             return true;
         }
     }
@@ -80,14 +90,15 @@ public class TopicServiceImpl implements TopicService {
     public Boolean processFollowTopic(Long topicId) {
         checkIsTopicExist(topicId);
         Long userId = authenticationClient.getAuthenticatedUserId();
-        boolean isTopicFollowed = topicRepository.isTopicFollowed(userId, topicId);
+        TopicFollowers follower = topicFollowersRepository.getFollowerByUserIdAndTopicId(userId, topicId);
 
-        if (isTopicFollowed) {
-            topicRepository.removeFollowedTopic(userId, topicId);
+        if (follower != null) {
+            topicFollowersRepository.delete(follower);
             return false;
         } else {
-            topicRepository.removeNotInterestedTopic(userId, topicId);
-            topicRepository.addFollowedTopic(userId, topicId);
+            topicNotInterestedRepository.removeNotInterestedTopic(userId, topicId);
+            TopicFollowers topicFollowers = new TopicFollowers(userId, topicId);
+            topicFollowersRepository.save(topicFollowers);
             return true;
         }
     }
@@ -102,11 +113,11 @@ public class TopicServiceImpl implements TopicService {
 
     public boolean isTopicFollowed(Long topicId) {
         Long userId = authenticationClient.getAuthenticatedUserId();
-        return topicRepository.isTopicFollowed(userId, topicId);
+        return topicFollowersRepository.isTopicFollowed(userId, topicId);
     }
 
     public boolean isTopicNotInterested(Long topicId) {
         Long userId = authenticationClient.getAuthenticatedUserId();
-        return topicRepository.isTopicNotInterested(userId, topicId);
+        return topicNotInterestedRepository.isTopicNotInterested(userId, topicId);
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,16 +35,18 @@ public class TagClientServiceImpl implements TagClientService {
 
         if (!hashtags.isEmpty()) {
             hashtags.forEach(hashtag -> {
-                Tag tag = tagRepository.findByTagName(hashtag);
+                Optional<Tag> tag = tagRepository.findByTagName(hashtag);
+                TweetTag tweetTag;
 
-                if (tag != null) {
-                    TweetTag tweetTag = new TweetTag(tag.getId(), tweetId);
-                    tweetTagRepository.save(tweetTag);
-                    tagRepository.updateTagQuantity(tag.getId(), true);
+                if (tag.isPresent()) {
+                    tweetTag = new TweetTag(tag.get().getId(), tweetId);
+                    tagRepository.updateTagQuantity(tag.get().getId(), true);
                 } else {
                     Tag newTag = new Tag(hashtag, 1L);
                     tagRepository.save(newTag);
+                    tweetTag = new TweetTag(newTag.getId(), tweetId);
                 }
+                tweetTagRepository.save(tweetTag);
             });
         }
     }

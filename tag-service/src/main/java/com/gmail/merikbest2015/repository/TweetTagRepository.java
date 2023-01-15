@@ -15,6 +15,9 @@ public interface TweetTagRepository extends JpaRepository<TweetTag, Long> {
     @Query("SELECT tweetTag.tagId FROM TweetTag tweetTag WHERE tweetTag.tweetId = :tweetId")
     List<Long> getTagIdsByTweetId(@Param("tweetId") Long tweetId);
 
+    @Query("SELECT tweetTag.tweetId FROM TweetTag tweetTag WHERE tweetTag.tagId = :tagId")
+    List<Long> getTweetIdsByTagId(@Param("tagId") Long tagId);
+
     @Modifying
     @Query(value = "DELETE FROM tweet_tags WHERE tag_id = ?1", nativeQuery = true)
     void deleteTag(@Param("tagId") Long tagId);

@@ -67,10 +67,8 @@ public class TweetClientServiceImpl implements TweetClientService {
     }
 
     @Override
-    public List<TweetProjection> getTweetsByTagName(String tagName) {
-        return tweetRepository.getTweetsByTagName(tagName).stream()
-                .map(TweetsProjection::getTweet)
-                .collect(Collectors.toList());
+    public List<TweetProjection> getTweetsByIds(List<Long> tweetIds) {
+        return tweetRepository.getTweetsByIds(tweetIds);
     }
 
     @Override
