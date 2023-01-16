@@ -95,6 +95,7 @@ INSERT INTO replies (tweets_id, reply_id) VALUES (10, 16);
 INSERT INTO quotes (tweets_id, quote_id) VALUES (13, 15);
 -- user_pinned_tweet
 INSERT INTO user_pinned_tweet (tweet_id, user_id) VALUES (1, 1);
+
 -- -- tags
 -- INSERT INTO tags (id, tag_name, tweets_quantity) VALUES (1, '#FirstTweet', 5);
 -- INSERT INTO tags (id, tag_name, tweets_quantity) VALUES (2, '#myCat', 4);
@@ -110,6 +111,7 @@ INSERT INTO user_pinned_tweet (tweet_id, user_id) VALUES (1, 1);
 -- INSERT INTO tweets_tags (tags_id, tweets_id) VALUES (2, 10);
 -- INSERT INTO tweets_tags (tags_id, tweets_id) VALUES (2, 12);
 -- INSERT INTO tweets_tags (tags_id, tweets_id) VALUES (3, 13);
+
 -- bookmarks
 INSERT INTO bookmarks (id, bookmark_date, tweet_id, users_id) VALUES (1, '2022-02-10 21:09:18.000000', 8, 1);
 INSERT INTO bookmarks (id, bookmark_date, tweet_id, users_id) VALUES (2, '2022-02-10 21:09:28.000000', 15, 1);
@@ -125,13 +127,15 @@ INSERT INTO chat_messages (id, date, text, user_id, chat_id, tweet_id) VALUES (3
 INSERT INTO chat_messages (id, date, text, user_id, chat_id, tweet_id) VALUES (4, '2021-10-16 16:42:50.000000', 'Good)', 1, 1, 14);
 -- unread_messages
 INSERT INTO unread_messages (user_id, chat_message_id) VALUES (2, 4);
--- lists
-INSERT INTO lists (id, alt_wallpaper, description, private, name, user_id, wallpaper_id) VALUES (3, 'https://pbs.twimg.com/media/EXZ27UwVcAIcDfd?format=png&name=small', 'Hello from my list', false, 'Hello World!', 2, null);
-INSERT INTO lists (id, alt_wallpaper, description, private, name, user_id, wallpaper_id) VALUES (2, 'https://pbs.twimg.com/media/EXZ2w_qUcAMwN3x?format=png&name=small', 'Some description', false, 'Internal', 1, null);
-INSERT INTO lists (id, alt_wallpaper, description, private, name, user_id, wallpaper_id) VALUES (1, 'https://pbs.twimg.com/media/EXZ1_hkUYAA56JA?format=png&name=small', 'Random List Description', false, 'Random List', 1, null);
--- lists_members
-INSERT INTO lists_members (lists_id, members_id) VALUES (1, 4);
-INSERT INTO lists_members (lists_id, members_id) VALUES (1, 2);
+
+-- -- lists
+-- INSERT INTO lists (id, alt_wallpaper, description, private, name, user_id, wallpaper_id) VALUES (3, 'https://pbs.twimg.com/media/EXZ27UwVcAIcDfd?format=png&name=small', 'Hello from my list', false, 'Hello World!', 2, null);
+-- INSERT INTO lists (id, alt_wallpaper, description, private, name, user_id, wallpaper_id) VALUES (2, 'https://pbs.twimg.com/media/EXZ2w_qUcAMwN3x?format=png&name=small', 'Some description', false, 'Internal', 1, null);
+-- INSERT INTO lists (id, alt_wallpaper, description, private, name, user_id, wallpaper_id) VALUES (1, 'https://pbs.twimg.com/media/EXZ1_hkUYAA56JA?format=png&name=small', 'Random List Description', false, 'Random List', 1, null);
+-- -- lists_members
+-- INSERT INTO lists_members (lists_id, members_id) VALUES (1, 4);
+-- INSERT INTO lists_members (lists_id, members_id) VALUES (1, 2);
+
 -- notifications
 INSERT INTO notifications (id, date, notification_type, tweet_id, user_id, user_to_follow_id, list_id, notified_user_id) VALUES (1, '2021-10-15 21:36:52.000000', 'LIKE', 1, 2, null, null, 1);
 INSERT INTO notifications (id, date, notification_type, tweet_id, user_id, user_to_follow_id, list_id, notified_user_id) VALUES (2, '2021-10-15 21:37:01.000000', 'LIKE', 2, 2, null, null, 1);

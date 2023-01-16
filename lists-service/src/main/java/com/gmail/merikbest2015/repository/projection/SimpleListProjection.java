@@ -1,11 +1,9 @@
 package com.gmail.merikbest2015.repository.projection;
 
-import com.gmail.merikbest2015.commons.projection.ImageProjection;
-
 public interface SimpleListProjection {
     Long getId();
     String getName();
     String getAltWallpaper();
-    ImageProjection getWallpaper();
+    ListsWallpaperProjection getWallpaper();
     boolean getIsPrivate();
 }

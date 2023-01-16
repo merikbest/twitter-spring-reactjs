@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.dto.response;
+package com.gmail.merikbest2015.commons.dto.commons_new;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gmail.merikbest2015.commons.dto.ImageResponse;

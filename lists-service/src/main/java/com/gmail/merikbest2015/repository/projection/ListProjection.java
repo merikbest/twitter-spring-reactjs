@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.repository.projection;
 
-import com.gmail.merikbest2015.commons.projection.ImageProjection;
+import com.gmail.merikbest2015.dto.lists.ListOwnerResponse;
 import org.springframework.beans.factory.annotation.Value;
 
 public interface ListProjection {
@@ -8,8 +8,11 @@ public interface ListProjection {
     String getName();
     String getDescription();
     String getAltWallpaper();
-    ImageProjection getWallpaper();
-    ListOwnerProjection getListOwner();
+    ListsWallpaperProjection getWallpaper();
+    Long getListOwnerId();
+
+    @Value("#{@listsServiceImpl.getListOwnerById(target.listOwnerId)}")
+    ListOwnerResponse getListOwner();
 
     @Value("#{@listsServiceImpl.isMyProfileFollowList(target.id)}")
     boolean getIsFollower();

@@ -1,12 +1,12 @@
 package com.gmail.merikbest2015.controller;
 
-import com.gmail.merikbest2015.commons.dto.HeaderResponse;
-import com.gmail.merikbest2015.commons.dto.NotificationResponse;
-import com.gmail.merikbest2015.commons.dto.TweetResponse;
+import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.dto.TweetResponse;
 import com.gmail.merikbest2015.dto.request.ListsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.dto.response.*;
 import com.gmail.merikbest2015.mapper.ListsMapper;
+import com.gmail.merikbest2015.repository.projection.BaseListProjection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.commons.controller.PathConstants.UI_V1_LISTS;
+import static com.gmail.merikbest2015.controller.PathConstants.UI_V1_LISTS;
 
 @RestController
 @RequiredArgsConstructor
@@ -93,12 +93,13 @@ public class ListsController {
 
     @GetMapping("/add/user/{userId}/{listId}")
     public ResponseEntity<Boolean> addUserToList(@PathVariable("userId") Long userId, @PathVariable("listId") Long listId) {
-        NotificationResponse notification = listsMapper.addUserToList(userId, listId);
-
-        if (notification.getId() != null) {
-            messagingTemplate.convertAndSend("/topic/notifications/" + notification.getUser().getId(), notification);
-        }
-        return ResponseEntity.ok(notification.isAddedToList());
+//        NotificationResponse notification = listsMapper.addUserToList(userId, listId);
+//
+//        if (notification.getId() != null) {
+//            messagingTemplate.convertAndSend("/topic/notifications/" + notification.getUser().getId(), notification);
+//        }
+//        return ResponseEntity.ok(notification.isAddedToList());
+        return null;
     }
 
     @GetMapping("/{listId}/tweets")

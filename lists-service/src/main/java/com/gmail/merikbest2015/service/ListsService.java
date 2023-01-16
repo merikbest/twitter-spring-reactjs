@@ -1,9 +1,9 @@
 package com.gmail.merikbest2015.service;
 
-import com.gmail.merikbest2015.commons.dto.HeaderResponse;
-import com.gmail.merikbest2015.commons.dto.TweetResponse;
+import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.dto.TweetResponse;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
-import com.gmail.merikbest2015.commons.models.Lists;
+import com.gmail.merikbest2015.model.Lists;
 import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.repository.projection.pinned.PinnedListProjection;
 import org.springframework.data.domain.Pageable;

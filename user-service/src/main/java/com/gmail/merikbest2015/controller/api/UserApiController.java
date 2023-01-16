@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.controller.api;
 
 import com.gmail.merikbest2015.client.user.UserIdsRequest;
+import com.gmail.merikbest2015.commons.dto.commons_new.ListOwnerResponse;
 import com.gmail.merikbest2015.commons.models.User;
 import com.gmail.merikbest2015.repository.projection.UserChatProjection;
 import com.gmail.merikbest2015.service.UserClientService;
@@ -114,5 +115,11 @@ public class UserApiController {
     @PostMapping
     public void saveUser(@RequestBody User user) {
         userService.saveUser(user);
+    }
+
+    // NEW
+    @GetMapping("/list/owner/{userId}")
+    public ListOwnerResponse getListOwnerById(@PathVariable("userId") Long userId) {
+        return userService.getListOwnerById(userId);
     }
 }

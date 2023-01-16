@@ -1,14 +1,13 @@
 package com.gmail.merikbest2015.mapper;
 
-import com.gmail.merikbest2015.commons.dto.HeaderResponse;
-import com.gmail.merikbest2015.commons.dto.NotificationResponse;
-import com.gmail.merikbest2015.commons.dto.TweetResponse;
-import com.gmail.merikbest2015.commons.mapper.BasicMapper;
-import com.gmail.merikbest2015.commons.models.Lists;
-import com.gmail.merikbest2015.commons.models.Notification;
+//import com.gmail.merikbest2015.commons.dto.NotificationResponse;
+//import com.gmail.merikbest2015.commons.models.Notification;
+import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.dto.TweetResponse;
 import com.gmail.merikbest2015.dto.request.ListsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.dto.response.*;
+import com.gmail.merikbest2015.model.Lists;
 import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.repository.projection.pinned.PinnedListProjection;
 import com.gmail.merikbest2015.service.ListsService;
@@ -97,13 +96,13 @@ public class ListsMapper {
         return listsService.addUserToLists(userToListsRequest);
     }
 
-    public NotificationResponse addUserToList(Long userId, Long listId) {
-        Map<String, Object> notificationDetails = listsService.addUserToList(userId, listId);
-        Notification notification = (Notification) notificationDetails.get("notification");
-        NotificationResponse notificationResponse = basicMapper.convertToResponse(notification, NotificationResponse.class);
-        notificationResponse.setAddedToList((Boolean) notificationDetails.get("isAddedToList"));
-        return notificationResponse;
-    }
+//    public NotificationResponse addUserToList(Long userId, Long listId) {
+//        Map<String, Object> notificationDetails = listsService.addUserToList(userId, listId);
+//        Notification notification = (Notification) notificationDetails.get("notification");
+//        NotificationResponse notificationResponse = basicMapper.convertToResponse(notification, NotificationResponse.class);
+//        notificationResponse.setAddedToList((Boolean) notificationDetails.get("isAddedToList"));
+//        return notificationResponse;
+//    }
 
     public HeaderResponse<TweetResponse> getTweetsByListId(Long listId, Pageable pageable) {
         return listsService.getTweetsByListId(listId, pageable);

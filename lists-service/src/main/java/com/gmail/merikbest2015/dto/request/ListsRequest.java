@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.dto.request;
 
-import com.gmail.merikbest2015.commons.dto.ImageResponse;
-import com.gmail.merikbest2015.commons.dto.UserResponse;
+import com.gmail.merikbest2015.dto.lists.ListOwnerResponse;
+import com.gmail.merikbest2015.dto.response.ListsWallpaperResponse;
 import lombok.Data;
 
 @Data
@@ -10,7 +10,7 @@ public class ListsRequest {
     private String name;
     private String description;
     private Boolean isPrivate;
-    private UserResponse listOwner;
+    private ListOwnerResponse listOwner;
     private String altWallpaper;
-    private ImageResponse wallpaper;
+    private ListsWallpaperResponse wallpaper;
 }

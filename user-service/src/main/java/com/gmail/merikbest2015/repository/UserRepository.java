@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.commons.enums.BackgroundColorType;
 import com.gmail.merikbest2015.commons.enums.ColorSchemeType;
 import com.gmail.merikbest2015.commons.models.User;
 import com.gmail.merikbest2015.commons.projection.UserProjection;
+import com.gmail.merikbest2015.commons.projection.commons_new.ListOwnerProjection;
 import com.gmail.merikbest2015.repository.projection.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -270,4 +271,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE User user SET user.backgroundColor = :backgroundColor WHERE user.id = :userId")
     void updateBackgroundColor(@Param("backgroundColor") BackgroundColorType backgroundColorType, @Param("userId") Long userId);
+
+    // NEW
+    @Query("SELECT user FROM User user WHERE user.id = :userId")
+    ListOwnerProjection getListOwnerById(@Param("userId") Long userId);
 }

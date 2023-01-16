@@ -1,9 +1,11 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.client.user.UserIdsRequest;
+import com.gmail.merikbest2015.commons.dto.commons_new.ListOwnerResponse;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.commons.mapper.BasicMapper;
 import com.gmail.merikbest2015.commons.models.User;
+import com.gmail.merikbest2015.commons.projection.commons_new.ListOwnerProjection;
 import com.gmail.merikbest2015.commons.util.AuthUtil;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.AuthNotificationUserProjection;
@@ -139,5 +141,12 @@ public class UserClientServiceImpl implements UserClientService {
     @Transactional
     public void saveUser(User user) {
         userRepository.save(user);
+    }
+
+    // NEW
+    @Override
+    public ListOwnerResponse getListOwnerById(Long userId) {
+        ListOwnerProjection user = userRepository.getListOwnerById(userId);
+        return basicMapper.convertToResponse(user, ListOwnerResponse.class);
     }
 }
