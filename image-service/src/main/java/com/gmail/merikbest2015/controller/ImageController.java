@@ -1,6 +1,5 @@
 package com.gmail.merikbest2015.controller;
 
-import com.gmail.merikbest2015.commons.dto.ImageResponse;
 import com.gmail.merikbest2015.mapper.ImageMapper;
 import com.gmail.merikbest2015.commons.models.Image;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,7 @@ public class ImageController {
     private final ImageMapper imageMapper;
 
     @PostMapping("/upload")
-    public ImageResponse uploadImage(@RequestPart("file") MultipartFile file) {
+    public String uploadImage(@RequestPart("file") MultipartFile file) {
         return imageMapper.uploadImage(file);
     }
 

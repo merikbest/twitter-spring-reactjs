@@ -11,7 +11,7 @@ create table lists
     description   varchar(255),
     private       boolean,
     alt_wallpaper varchar(255),
-    wallpaper_id  int8,
+    wallpaper     varchar(255),
     list_owner_id int8,
     primary key (id)
 );
@@ -29,16 +29,10 @@ create table lists_members
     member_id int8 not null,
     primary key (id)
 );
-create table lists_wallpaper
-(
-    id  int8 not null,
-    src varchar(255),
-    primary key (id)
-);
 create table pinned_lists
 (
     id             bigserial not null,
-    pinned_date    timestamp,
+    pinned_date    timestamp default current_timestamp,
     list_id        int8,
     pinned_user_id int8,
     primary key (id)

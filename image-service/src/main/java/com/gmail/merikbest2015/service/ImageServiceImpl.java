@@ -27,8 +27,8 @@ public class ImageServiceImpl implements ImageService {
     private String bucketName;
 
     @Override
-    public Image uploadImage(MultipartFile multipartFile) {
-        Image image = new Image();
+    public String uploadImage(MultipartFile multipartFile) {
+        String image = null;
         if (multipartFile != null) {
             File file = new File(multipartFile.getOriginalFilename());
             try (FileOutputStream fos = new FileOutputStream(file)) {
@@ -38,10 +38,10 @@ public class ImageServiceImpl implements ImageService {
             }
             String fileName = UUID.randomUUID() + "_" + multipartFile.getOriginalFilename();
             amazonS3client.putObject(new PutObjectRequest(bucketName, fileName, file));
-            image.setSrc(amazonS3client.getUrl(bucketName, fileName).toString());
+            image = amazonS3client.getUrl(bucketName, fileName).toString();
             file.delete();
         }
-        return imageRepository.save(image);
+        return image;
     }
 
     @Override

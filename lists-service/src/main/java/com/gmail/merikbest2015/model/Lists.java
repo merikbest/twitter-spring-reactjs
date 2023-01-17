@@ -31,12 +31,11 @@ public class Lists {
     @Column(name = "alt_wallpaper")
     private String altWallpaper;
 
+    @Column(name = "wallpaper")
+    private String wallpaper;
+
     @OneToMany(mappedBy = "list")
     private List<PinnedLists> pinnedLists;
-
-    @OneToOne
-    @JoinColumn(name = "wallpaper_id")
-    private ListsWallpaper wallpaper;
 
     @Column(name = "list_owner_id")
     private Long listOwnerId;

@@ -19,6 +19,9 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
     @Query("SELECT list FROM Lists list WHERE list.isPrivate = false")
     List<ListProjection> getAllTweetLists();
 
+    @Query("SELECT list FROM Lists list WHERE list.id IN :listIds")
+    List<ListProjection> getTweetListsByIds(@Param("listIds") List<Long> listIds);
+
     @Query("SELECT list FROM Lists list " +
             "WHERE list.listOwnerId = :ownerId " +
             "OR list.id IN :listIds")
@@ -41,6 +44,24 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
     @Query("SELECT list FROM Lists list WHERE list.id = :listId")
     ListUserProjection getUserTweetListById(@Param("listId") Long listId);
 
+    @Query("SELECT list FROM Lists list WHERE list.listOwnerId = :ownerId AND list.isPrivate = false")
+    List<ListProjection> getUserTweetListsById(@Param("ownerId") Long ownerId);
+
+    @Query("SELECT CASE WHEN count(list) > 0 THEN true ELSE false END FROM Lists list " +
+            "WHERE list.id = :listId " +
+            "AND list.isPrivate = false")
+    boolean findByIdAndIsPrivateFalse(@Param("listId") Long listId);
+
+    @Query("SELECT list FROM Lists list " +
+            "WHERE list.id = :listId AND list.listOwnerId = :listOwnerId " +
+            "OR list.id = :listId AND list.id IN :listIds")
+    Optional<Lists> getListWhereUserConsist(@Param("listIds") List<Long> listIds,
+                                            @Param("listId") Long listId,
+                                            @Param("listOwnerId") Long listOwnerId);
+
+    @Query("SELECT list FROM Lists list WHERE list.id = :listId")
+    PinnedListProjection getUserPinnedListById(@Param("listId") Long listId);
+
 //    @Query("SELECT list FROM Lists list " +
 //            "LEFT JOIN list.listOwner listOwner " +
 //            "LEFT JOIN list.followers follower " +
@@ -60,14 +81,9 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
 //            "AND list.listOwner.id = :ownerId")
 //    Optional<Lists> getAuthUserListById(@Param("listId") Long listId, @Param("ownerId") Long ownerId);
 
-//    @Query("SELECT CASE WHEN count(list) > 0 THEN true ELSE false END FROM Lists list " +
-//            "WHERE list.id = :listId " +
-//            "AND list.isPrivate = false")
-//    boolean findByIdAndIsPrivateFalse(@Param("listId") Long listId);
-//
-//    @Query("SELECT list FROM Lists list WHERE list.id = :listId")
-//    PinnedListProjection getUserPinnedListById(@Param("listId") Long listId);
-//
+
+
+
 //    @Query("SELECT m.id FROM Lists l " +
 //            "LEFT JOIN l.members m " +
 //            "WHERE l.id = :listId AND l.isPrivate = false " +
@@ -78,15 +94,8 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
 //            "WHERE list.id = :listId " +
 //            "AND list.listOwner.id != :authUserId")
 //    boolean isListPrivate(@Param("listId") Long listId, @Param("authUserId") Long authUserId);
-//
-//    @Query("SELECT CASE WHEN count(list) > 0 THEN true ELSE false END FROM Lists list " +
-//            "LEFT JOIN list.followers listsFollower " +
-//            "WHERE list.id = :listId " +
-//            "AND list.listOwner.id = :listOwnerId " +
-//            "OR list.id = :listId " +
-//            "AND listsFollower.id = :listOwnerId")
-//    boolean isListExist(@Param("listId") Long listId, @Param("listOwnerId") Long listOwnerId);
-//
+
+
 //    @Query("SELECT CASE WHEN count(follower) > 0 THEN true ELSE false END FROM Lists list " +
 //            "LEFT JOIN list.followers follower " +
 //            "WHERE list.id = :listId " +
@@ -101,15 +110,7 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
 //    boolean isListIncludeUser(@Param("listId") Long listId,
 //                              @Param("authUserId") Long authUserId,
 //                              @Param("memberId") Long memberId);
-//
-//    @Query("SELECT list FROM Lists list WHERE list.listOwner.id = :ownerId AND list.isPrivate = false")
-//    List<ListProjection> findByListOwnerIdAndIsPrivateFalse(@Param("ownerId") Long ownerId);
-//
-//    @Query("SELECT list FROM Lists list " +
-//            "LEFT JOIN list.members m " +
-//            "WHERE m.id = :userId")
-//    List<ListProjection> findByMembers_Id(@Param("userId") Long userId);
-//
+
 //    @Query("SELECT lists FROM Lists lists " +
 //            "WHERE lists.id = :listId AND lists.isPrivate = false " +
 //            "OR lists.id = :listId AND lists.listOwner.id = :authUserId")
@@ -140,13 +141,7 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
 //            "WHERE UPPER(u.fullName) LIKE UPPER(CONCAT('%',:name,'%')) AND u.active = true " +
 //            "OR UPPER(u.username) LIKE UPPER(CONCAT('%',:name,'%')) AND u.active = true")
 //    List<ListsMemberProjection> searchListMembersByUsername(@Param("name") String name);
-//
-//    @Query("SELECT CASE WHEN count(list) > 0 THEN true ELSE false END FROM Lists list " +
-//            "LEFT JOIN list.followers listFollower " +
-//            "WHERE listFollower.id = :userId " +
-//            "AND list.id = :listId")
-//    boolean isListFollowed(@Param("userId") Long userId, @Param("listId") Long listId);
-//
+
 //    @Query("SELECT CASE WHEN count(m) > 0 THEN true ELSE false END FROM Lists list " +
 //            "LEFT JOIN list.members m " +
 //            "WHERE list.id = :listId " +
@@ -156,11 +151,7 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
 //    @Modifying
 //    @Query(value = "INSERT INTO lists_followers (followers_id, lists_id) VALUES (?1, ?2)", nativeQuery = true)
 //    void addFollowerToList(@Param("userId") Long userId, @Param("listId") Long listId);
-//
-//    @Modifying
-//    @Query(value = "DELETE FROM lists_followers WHERE followers_id = ?1 AND lists_id = ?2", nativeQuery = true)
-//    void removeFollowerFromList(@Param("userId") Long userId, @Param("listId") Long listId);
-//
+
 //    @Modifying
 //    @Query(value = "INSERT INTO lists_members (members_id, lists_id) VALUES (?1, ?2)", nativeQuery = true)
 //    void addMemberToList(@Param("userId") Long userId, @Param("listId") Long listId);

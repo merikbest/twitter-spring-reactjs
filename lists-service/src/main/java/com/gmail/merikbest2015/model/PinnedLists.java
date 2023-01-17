@@ -1,8 +1,6 @@
 package com.gmail.merikbest2015.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,6 +9,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @EqualsAndHashCode
+@NoArgsConstructor
+@RequiredArgsConstructor
 @Table(name = "pinned_lists")
 public class PinnedLists {
 
@@ -19,13 +19,15 @@ public class PinnedLists {
     @SequenceGenerator(name = "pinned_lists_seq", sequenceName = "pinned_lists_seq", initialValue = 100, allocationSize = 1)
     private Long id;
 
-    @Column(name = "pinned_date")
-    private LocalDateTime pinnedDate;
+    @Column(name = "pinned_date", columnDefinition = "timestamp default current_timestamp")
+    private LocalDateTime pinnedDate = LocalDateTime.now();
 
+    @NonNull
     @ManyToOne
-    @JoinColumn(name = "list_id")
+    @JoinColumn(name = "list_id", nullable = false)
     private Lists list;
 
-    @Column(name = "pinned_user_id")
+    @NonNull
+    @Column(name = "pinned_user_id", nullable = false)
     private Long pinnedUserId;
 }

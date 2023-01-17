@@ -15,8 +15,8 @@ public class ImageMapper {
     private final BasicMapper mapper;
     private final ImageService imageService;
 
-    public ImageResponse uploadImage(MultipartFile file) {
-        return mapper.convertToResponse(imageService.uploadImage(file), ImageResponse.class);
+    public String uploadImage(MultipartFile file) {
+        return imageService.uploadImage(file);
     }
 
     public Image saveImage(Image image) {
