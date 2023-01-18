@@ -27,7 +27,7 @@ public interface PinnedListsRepository extends JpaRepository<PinnedLists, Long> 
     @Query("SELECT pinnedList FROM PinnedLists pinnedList " +
             "WHERE pinnedList.list.id = :listId " +
             "AND pinnedList.pinnedUserId = :userId")
-    PinnedLists getPinnedByUserIdAndTopicId(@Param("listId") Long listId, @Param("userId") Long userId);
+    PinnedLists getPinnedByUserIdAndListId(@Param("listId") Long listId, @Param("userId") Long userId);
 
 
 //    @Query("SELECT CASE WHEN count(pinnedList) > 0 THEN true ELSE false END FROM PinnedLists pinnedList " +

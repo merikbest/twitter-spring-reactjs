@@ -18,9 +18,9 @@ public interface ListsFollowersRepository extends JpaRepository<ListsFollowers, 
     boolean isListFollowed(@Param("userId") Long userId, @Param("listId") Long listId);
 
     @Query("SELECT listFollower FROM ListsFollowers listFollower " +
-            "WHERE listFollower.followerId = :userId " +
-            "AND listFollower.listId = :listId")
-    ListsFollowers getFollowerByUserIdAndTopicId(@Param("userId") Long userId, @Param("listId") Long listId);
+            "WHERE listFollower.listId = :listId " +
+            "AND listFollower.followerId = :userId")
+    ListsFollowers getListFollower(@Param("listId") Long listId, @Param("userId") Long userId);
 
     @Query("SELECT listFollower.listId FROM ListsFollowers listFollower WHERE listFollower.followerId = :userId")
     List<Long> getListIds(@Param("userId") Long userId);
