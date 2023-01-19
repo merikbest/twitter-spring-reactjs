@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.service;
 
-import com.gmail.merikbest2015.client.user.UserIdsRequest;
+import com.gmail.merikbest2015.commons.dto.commons_new.UserIdsRequest;
+import com.gmail.merikbest2015.commons.dto.commons_new.ListMemberResponse;
 import com.gmail.merikbest2015.commons.dto.commons_new.ListOwnerResponse;
 import com.gmail.merikbest2015.commons.models.User;
 import com.gmail.merikbest2015.repository.projection.UserChatProjection;
@@ -51,4 +52,6 @@ public interface UserClientService {
     void saveUser(User user);
     // NEW
     ListOwnerResponse getListOwnerById(Long userId);
+
+    List<ListMemberResponse> getListParticipantsByIds(UserIdsRequest request);
 }

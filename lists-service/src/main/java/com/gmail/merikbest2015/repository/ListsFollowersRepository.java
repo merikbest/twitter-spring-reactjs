@@ -25,6 +25,9 @@ public interface ListsFollowersRepository extends JpaRepository<ListsFollowers, 
     @Query("SELECT listFollower.listId FROM ListsFollowers listFollower WHERE listFollower.followerId = :userId")
     List<Long> getListIds(@Param("userId") Long userId);
 
+    @Query("SELECT listFollower.followerId FROM ListsFollowers listFollower WHERE listFollower.listId = :listId")
+    List<Long> getFollowersIds(@Param("listId") Long listId);
+
     @Query("SELECT COUNT(listFollower) FROM ListsFollowers listFollower WHERE listFollower.listId = :listId")
     Long getFollowersSize(@Param("listId") Long listId);
 

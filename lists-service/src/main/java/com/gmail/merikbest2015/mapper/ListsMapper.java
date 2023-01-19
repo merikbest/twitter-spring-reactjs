@@ -4,6 +4,7 @@ package com.gmail.merikbest2015.mapper;
 //import com.gmail.merikbest2015.commons.models.Notification;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.TweetResponse;
+import com.gmail.merikbest2015.dto.lists.ListMemberResponse;
 import com.gmail.merikbest2015.dto.request.ListsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.dto.response.*;
@@ -114,8 +115,7 @@ public class ListsMapper {
     }
 
     public List<ListMemberResponse> getListFollowers(Long listId, Long listOwnerId) {
-        List<ListMemberProjection> followers = listsService.getListFollowers(listId, listOwnerId);
-        return basicMapper.convertToResponseList(followers, ListMemberResponse.class);
+        return listsService.getListFollowers(listId, listOwnerId);
     }
 
     public List<?> getListMembers(Long listId, Long listOwnerId) {

@@ -49,6 +49,6 @@ public interface TweetClient {
     @GetMapping(API_V1_TWEETS + "/ids/{tweetIds}")
     List<TweetResponse> getTweetsByIds(@PathVariable("tweetIds") List<Long> tweetIds);
 
-    @PostMapping(API_V1_TWEETS + "/user/ids")
+    @PostMapping(API_V1_TWEETS + "/user/ids") // del
     HeaderResponse<TweetResponse> getTweetsByUserIds(@RequestBody TweetUserIdsRequest request, @SpringQueryMap Pageable pageable);
 }

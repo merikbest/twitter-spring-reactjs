@@ -275,4 +275,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // NEW
     @Query("SELECT user FROM User user WHERE user.id = :userId")
     ListOwnerProjection getListOwnerById(@Param("userId") Long userId);
+
+    @Query("SELECT user FROM User user WHERE user.id IN :userIds")
+    List<ListMemberProjection> getUsersByIds(@Param("userIds") List<Long> userIds);
 }

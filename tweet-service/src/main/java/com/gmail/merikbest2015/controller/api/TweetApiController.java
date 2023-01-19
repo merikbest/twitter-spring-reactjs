@@ -77,7 +77,8 @@ public class TweetApiController {
     }
 
     @PostMapping("/user/ids")
-    public HeaderResponse<TweetResponse> getTweetsByUserIds(@RequestBody TweetUserIdsRequest request, @SpringQueryMap Pageable pageable) {
+    public HeaderResponse<TweetResponse> getTweetsByUserIds(@RequestBody TweetUserIdsRequest request,
+                                                            @SpringQueryMap Pageable pageable) {
         Page<TweetProjection> tweets = tweetClientService.getTweetsByUserIds(request, pageable);
         return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
     }

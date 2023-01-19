@@ -94,12 +94,16 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
 
     @Query("SELECT CASE WHEN count(list) > 0 THEN true ELSE false END FROM Lists list " +
             "WHERE list.id = :listId AND list.listOwnerId = :authUserId " +
-            "OR list.id = :listId AND list.listOwnerId = :authUserId " +
+            "OR list.id = :listId AND list.isPrivate = false " +
             "OR list.id = :listId AND list.isPrivate = true AND list.id IN :listIds")
-    boolean isPrivate(@Param("listIds") List<Long> listIds,
-                @Param("listId") Long listId,
-                @Param("authUserId") Long authUserId);
+    boolean isListNotPrivate(@Param("listIds") List<Long> listIds,
+                             @Param("listId") Long listId,
+                             @Param("authUserId") Long authUserId); // see getListMembersIds
 
+    @Query("SELECT lists FROM Lists lists " +
+            "WHERE lists.id = :listId AND lists.isPrivate = false " +
+            "OR lists.id = :listId AND lists.listOwnerId = :authUserId")
+    Optional<BaseListProjection> getListDetails(@Param("listId") Long listId, @Param("authUserId") Long authUserId);
 
     //    @Query("SELECT m.id FROM Lists l " +
 //            "LEFT JOIN l.members m " +

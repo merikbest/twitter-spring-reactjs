@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.client.user.UserIdsRequest;
+import com.gmail.merikbest2015.commons.dto.commons_new.UserIdsRequest;
+import com.gmail.merikbest2015.commons.dto.commons_new.ListMemberResponse;
 import com.gmail.merikbest2015.commons.dto.commons_new.ListOwnerResponse;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.commons.mapper.BasicMapper;
@@ -8,10 +9,7 @@ import com.gmail.merikbest2015.commons.models.User;
 import com.gmail.merikbest2015.commons.projection.commons_new.ListOwnerProjection;
 import com.gmail.merikbest2015.commons.util.AuthUtil;
 import com.gmail.merikbest2015.repository.UserRepository;
-import com.gmail.merikbest2015.repository.projection.AuthNotificationUserProjection;
-import com.gmail.merikbest2015.repository.projection.NotificationUserProjection;
-import com.gmail.merikbest2015.repository.projection.UserChatProjection;
-import com.gmail.merikbest2015.repository.projection.UserSubscriberProjection;
+import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.service.AuthenticationService;
 import com.gmail.merikbest2015.service.UserClientService;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +38,7 @@ public class UserClientServiceImpl implements UserClientService {
 
     @Override
     public List<User> getUsersByIds(UserIdsRequest request) {
-        return userRepository.findByIdIn(request.getUsersIds());
+        return userRepository.findByIdIn(request.getUserIds());
     }
 
     @Override
@@ -148,5 +146,11 @@ public class UserClientServiceImpl implements UserClientService {
     public ListOwnerResponse getListOwnerById(Long userId) {
         ListOwnerProjection user = userRepository.getListOwnerById(userId);
         return basicMapper.convertToResponse(user, ListOwnerResponse.class);
+    }
+
+    @Override
+    public List<ListMemberResponse> getListParticipantsByIds(UserIdsRequest request) {
+        List<ListMemberProjection> users = userRepository.getUsersByIds(request.getUserIds());
+        return basicMapper.convertToResponseList(users, ListMemberResponse.class);
     }
 }
