@@ -8,7 +8,7 @@ public interface ListProjection {
     String getName();
     String getDescription();
     String getAltWallpaper();
-    ListsWallpaperProjection getWallpaper();
+    String getWallpaper();
     Long getListOwnerId();
 
     @Value("#{@listsServiceImpl.getListOwnerById(target.listOwnerId)}")

@@ -153,4 +153,10 @@ public class UserClientServiceImpl implements UserClientService {
         List<ListMemberProjection> users = userRepository.getUsersByIds(request.getUserIds());
         return basicMapper.convertToResponseList(users, ListMemberResponse.class);
     }
+
+    @Override
+    public List<ListMemberResponse> searchListMembersByUsername(String username) {
+        List<ListMemberProjection> users = userRepository.searchListMembersByUsername(username);
+        return basicMapper.convertToResponseList(users, ListMemberResponse.class);
+    }
 }

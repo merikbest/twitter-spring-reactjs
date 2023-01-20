@@ -121,14 +121,14 @@ public class ListsController {
     }
 
     @GetMapping("/{listId}/{listOwnerId}/members")
-    public ResponseEntity<List<?>> getListMembers(@PathVariable("listId") Long listId,
-                                                  @PathVariable("listOwnerId") Long listOwnerId) {
+    public ResponseEntity<List<ListMemberResponse>> getListMembers(@PathVariable("listId") Long listId,
+                                                                   @PathVariable("listOwnerId") Long listOwnerId) {
         return ResponseEntity.ok(listsMapper.getListMembers(listId, listOwnerId));
     }
 
     @GetMapping("/search/{listId}/{username}")
-    public ResponseEntity<List<ListsOwnerMemberResponse>> searchListMembersByUsername(@PathVariable("listId") Long listId,
-                                                                                      @PathVariable("username") String username) {
+    public ResponseEntity<List<ListMemberResponse>> searchListMembersByUsername(@PathVariable("listId") Long listId,
+                                                                                @PathVariable("username") String username) {
         return ResponseEntity.ok(listsMapper.searchListMembersByUsername(listId, username));
     }
 }

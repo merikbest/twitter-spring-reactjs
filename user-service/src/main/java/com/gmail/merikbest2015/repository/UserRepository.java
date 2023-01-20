@@ -278,4 +278,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT user FROM User user WHERE user.id IN :userIds")
     List<ListMemberProjection> getUsersByIds(@Param("userIds") List<Long> userIds);
+
+    @Query("SELECT user FROM User user " +
+            "WHERE UPPER(user.fullName) LIKE UPPER(CONCAT('%',:username,'%')) AND user.active = true " +
+            "OR UPPER(user.username) LIKE UPPER(CONCAT('%',:username,'%')) AND user.active = true")
+    List<ListMemberProjection> searchListMembersByUsername(@Param("username") String username);
 }

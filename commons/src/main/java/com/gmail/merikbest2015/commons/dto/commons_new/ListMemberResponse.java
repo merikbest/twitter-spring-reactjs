@@ -12,6 +12,9 @@ public class ListMemberResponse {
     private String about;
     private ImageResponse avatar;
 
+    @JsonProperty("isMemberInList")
+    private boolean isMemberInList;
+
     @JsonProperty("isPrivateProfile")
     private boolean isPrivateProfile;
 }

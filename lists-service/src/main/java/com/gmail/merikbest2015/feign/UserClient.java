@@ -18,7 +18,8 @@ import static com.gmail.merikbest2015.controller.PathConstants.API_V1_USER;
 public interface UserClient {
 
     @GetMapping(API_V1_USER + "/is_blocked/{userId}/{supposedBlockedUserId}")
-    Boolean isUserBlocked(@PathVariable("userId") Long userId, @PathVariable("supposedBlockedUserId") Long supposedBlockedUserId);
+    Boolean isUserBlocked(@PathVariable("userId") Long userId,
+                          @PathVariable("supposedBlockedUserId") Long supposedBlockedUserId);
 
     @GetMapping(API_V1_USER + "/list/owner/{userId}")
     ListOwnerResponse getListOwnerById(@PathVariable("userId") Long userId);
@@ -28,4 +29,7 @@ public interface UserClient {
 
     @PostMapping(API_V1_USER + "/list/participants")
     List<ListMemberResponse> getListParticipantsByIds(@RequestBody UserIdsRequest request);
+
+    @GetMapping(API_V1_USER + "/list/participants/{username}")
+    List<ListMemberResponse> searchListMembersByUsername(@PathVariable("username") String username);
 }

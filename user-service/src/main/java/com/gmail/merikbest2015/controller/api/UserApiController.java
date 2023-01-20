@@ -128,4 +128,9 @@ public class UserApiController {
     public List<ListMemberResponse> getListParticipantsByIds(@RequestBody UserIdsRequest request) {
         return userService.getListParticipantsByIds(request);
     }
+
+    @GetMapping("/list/participants/{username}")
+    public List<ListMemberResponse> searchListMembersByUsername(@PathVariable("username") String username) {
+        return userService.searchListMembersByUsername(username);
+    }
 }

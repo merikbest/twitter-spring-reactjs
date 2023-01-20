@@ -1,7 +1,5 @@
 package com.gmail.merikbest2015.mapper;
 
-//import com.gmail.merikbest2015.commons.dto.NotificationResponse;
-//import com.gmail.merikbest2015.commons.models.Notification;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.TweetResponse;
 import com.gmail.merikbest2015.dto.lists.ListMemberResponse;
@@ -10,13 +8,12 @@ import com.gmail.merikbest2015.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.dto.response.*;
 import com.gmail.merikbest2015.model.Lists;
 import com.gmail.merikbest2015.repository.projection.*;
-import com.gmail.merikbest2015.repository.projection.pinned.PinnedListProjection;
+import com.gmail.merikbest2015.repository.projection.PinnedListProjection;
 import com.gmail.merikbest2015.service.ListsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -118,37 +115,11 @@ public class ListsMapper {
         return listsService.getListFollowers(listId, listOwnerId);
     }
 
-    public List<?> getListMembers(Long listId, Long listOwnerId) {
-        Map<String, Object> listMembers = listsService.getListMembers(listId, listOwnerId);
-
-        if (listMembers.get("userMembers") != null) {
-            List<ListMemberProjection> userMembers = (List<ListMemberProjection>) listMembers.get("userMembers");
-            return basicMapper.convertToResponseList(userMembers, ListMemberResponse.class);
-        } else {
-            List<ListsOwnerMemberProjection> userMembers = (List<ListsOwnerMemberProjection>) listMembers.get("authUserMembers");
-
-            if (userMembers.get(0).getMember() == null) {
-                return new ArrayList<>();
-            } else {
-                List<ListsOwnerMemberResponse> members = new ArrayList<>();
-                userMembers.forEach(listsMemberProjection -> {
-                    ListsOwnerMemberResponse member = basicMapper.convertToResponse(listsMemberProjection.getMember(), ListsOwnerMemberResponse.class);
-                    member.setMemberInList(listsMemberProjection.getIsMemberInList());
-                    members.add(member);
-                });
-                return members;
-            }
-        }
+    public List<ListMemberResponse> getListMembers(Long listId, Long listOwnerId) {
+        return listsService.getListMembers(listId, listOwnerId);
     }
 
-    public List<ListsOwnerMemberResponse> searchListMembersByUsername(Long listId, String username) {
-        List<Map<String, Object>> userMembers = listsService.searchListMembersByUsername(listId, username);
-        return userMembers.stream()
-                .map(userMemberMap -> {
-                    ListsOwnerMemberResponse member = basicMapper.convertToResponse(userMemberMap.get("member"), ListsOwnerMemberResponse.class);
-                    member.setMemberInList((Boolean) userMemberMap.get("isMemberInList"));
-                    return member;
-                })
-                .collect(Collectors.toList());
+    public List<ListMemberResponse> searchListMembersByUsername(Long listId, String username) {
+        return listsService.searchListMembersByUsername(listId, username);
     }
 }

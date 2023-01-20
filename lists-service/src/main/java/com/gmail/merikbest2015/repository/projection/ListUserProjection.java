@@ -8,7 +8,7 @@ public interface ListUserProjection {
     String getName();
     String getDescription();
     String getAltWallpaper();
-    ListsWallpaperProjection getWallpaper();
+    String getWallpaper();
     boolean getIsPrivate();
     Long getListOwnerId();
 

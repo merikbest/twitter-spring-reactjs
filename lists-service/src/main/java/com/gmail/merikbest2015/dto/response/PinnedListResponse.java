@@ -8,7 +8,7 @@ public class PinnedListResponse {
     private Long id;
     private String name;
     private String altWallpaper;
-    private ListsWallpaperResponse wallpaper;
+    private String wallpaper;
 
     @JsonProperty("isPrivate")
     private boolean isPrivate;

@@ -54,4 +54,6 @@ public interface UserClientService {
     ListOwnerResponse getListOwnerById(Long userId);
 
     List<ListMemberResponse> getListParticipantsByIds(UserIdsRequest request);
+
+    List<ListMemberResponse> searchListMembersByUsername(String username);
 }

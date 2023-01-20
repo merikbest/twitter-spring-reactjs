@@ -10,7 +10,7 @@ public class BaseListResponse {
     private String name;
     private String description;
     private String altWallpaper;
-    private ListsWallpaperResponse wallpaper;
+    private String wallpaper;
     private ListOwnerResponse listOwner;
     private Long membersSize;
     private Long followersSize;

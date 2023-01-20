@@ -10,7 +10,7 @@ public class ListResponse {
     private String name;
     private String description;
     private String altWallpaper;
-    private ListsWallpaperResponse wallpaper;
+    private String wallpaper;
     private ListOwnerResponse listOwner;
 
     @JsonProperty("isFollower")
