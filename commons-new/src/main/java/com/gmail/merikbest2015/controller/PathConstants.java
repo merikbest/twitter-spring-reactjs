@@ -29,7 +29,11 @@ public class PathConstants {
     // topics
     public static final String UI_V1_TOPICS = UI_V1 + "/topics";
     // lists
-    public static final String UI_V1_LISTS = UI_V1 + "/lists";
+    public static final String LISTS = "/lists";
+    public static final String API_V1_LISTS = API_V1 + LISTS;
+    public static final String UI_V1_LISTS = UI_V1 + LISTS;
     // chat
     public static final String UI_V1_CHAT = UI_V1 + "/chat";
+    // notification
+    public static final String API_V1_NOTIFICATION = API_V1 + "/notification";
 }

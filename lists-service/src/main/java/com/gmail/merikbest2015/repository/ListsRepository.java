@@ -1,11 +1,7 @@
 package com.gmail.merikbest2015.repository;
 
 import com.gmail.merikbest2015.model.Lists;
-import com.gmail.merikbest2015.repository.projection.BaseListProjection;
-import com.gmail.merikbest2015.repository.projection.ListProjection;
-import com.gmail.merikbest2015.repository.projection.ListUserProjection;
-import com.gmail.merikbest2015.repository.projection.SimpleListProjection;
-import com.gmail.merikbest2015.repository.projection.PinnedListProjection;
+import com.gmail.merikbest2015.repository.projection.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -101,4 +97,7 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
             "WHERE list.id = :listId " +
             "AND list.listOwnerId != :authUserId")
     boolean isListPrivate(@Param("listId") Long listId, @Param("authUserId") Long authUserId);
+
+    @Query("SELECT list FROM Lists list WHERE list.id = :listId")
+    NotificationListProjection getNotificationList(@Param("listId") Long listId);
 }

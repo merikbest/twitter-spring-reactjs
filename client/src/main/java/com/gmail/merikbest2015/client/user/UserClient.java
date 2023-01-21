@@ -34,7 +34,7 @@ public interface UserClient {
     @GetMapping(API_V1_USER + "/valid/{userId}/{authUserId}")
     User getValidUser(@PathVariable("userId") Long userId, @PathVariable("authUserId") Long authUserId);
 
-    @GetMapping(API_V1_USER + "/notification/user/{authUserId}")
+    @GetMapping(API_V1_USER + "/notification/authUser/{authUserId}")
     User getAuthNotificationUser(@PathVariable("authUserId") Long authUserId);
 
     @GetMapping(API_V1_USER + "/subscribers/{userId}")

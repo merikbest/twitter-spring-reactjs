@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.controller.api;
 
+import com.gmail.merikbest2015.commons.dto.NotificationUserResponse;
 import com.gmail.merikbest2015.commons.dto.commons_new.UserIdsRequest;
 import com.gmail.merikbest2015.commons.dto.commons_new.ListMemberResponse;
 import com.gmail.merikbest2015.commons.dto.commons_new.ListOwnerResponse;
@@ -48,7 +49,7 @@ public class UserApiController {
         return userService.getValidUser(userId, authUserId);
     }
 
-    @GetMapping("/notification/user/{authUserId}")
+    @GetMapping("/notification/authUser/{authUserId}")
     public User getAuthNotificationUser(@PathVariable("authUserId") Long authUserId) {
         return userService.getAuthNotificationUser(authUserId);
     }
@@ -133,4 +134,11 @@ public class UserApiController {
     public List<ListMemberResponse> searchListMembersByUsername(@PathVariable("username") String username) {
         return userService.searchListMembersByUsername(username);
     }
+
+    @GetMapping("/notification/user/{userId}")
+    public NotificationUserResponse getNotificationUser(@PathVariable("userId") Long userId) {
+        return userService.getNotificationUser(userId);
+    }
+
+
 }

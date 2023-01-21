@@ -1,12 +1,14 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.dto.NotificationRequest;
 import com.gmail.merikbest2015.dto.TweetResponse;
 import com.gmail.merikbest2015.dto.lists.ListMemberResponse;
 import com.gmail.merikbest2015.dto.lists.ListOwnerResponse;
 import com.gmail.merikbest2015.dto.lists.UserIdsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.feign.NotificationClient;
 import com.gmail.merikbest2015.feign.TweetClient;
 import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.model.Lists;
@@ -32,7 +34,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -42,6 +43,7 @@ public class ListsServiceImpl implements ListsService {
     private final ListsFollowersRepository listsFollowersRepository;
     private final ListsMembersRepository listsMembersRepository;
     private final PinnedListsRepository pinnedListsRepository;
+    private final NotificationClient notificationClient;
     private final UserClient userClient;
     private final TweetClient tweetClient;
 
@@ -178,7 +180,7 @@ public class ListsServiceImpl implements ListsService {
 
     @Override
     @Transactional
-    public String addUserToLists(UserToListsRequest listsRequest) { // TODO add notification
+    public String addUserToLists(UserToListsRequest listsRequest) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         checkUserIsBlocked(authUserId, listsRequest.getUserId());
         checkUserIsBlocked(listsRequest.getUserId(), authUserId);
@@ -187,13 +189,15 @@ public class ListsServiceImpl implements ListsService {
             checkIsListExist(list.getListId(), authUserId);
             ListsMembers member = listsMembersRepository.getListMember(list.getListId(), listsRequest.getUserId());
 
-            if (!list.getIsMemberInList()) {
+            if (list.getIsMemberInList()) {
+                listsMembersRepository.delete(member);
+            } else {
                 if (member == null) {
                     ListsMembers newMember = new ListsMembers(list.getListId(), listsRequest.getUserId());
                     listsMembersRepository.save(newMember);
+                    notificationClient.createListNotification(new NotificationRequest(
+                            true, listsRequest.getUserId(), authUserId, list.getListId()));
                 }
-            } else {
-                listsMembersRepository.delete(member);
             }
         });
         return "User added to lists success.";
@@ -201,46 +205,25 @@ public class ListsServiceImpl implements ListsService {
 
     @Override
     @Transactional
-    public Map<String, Object> addUserToList(Long userId, Long listId) {
+    public Boolean addUserToList(Long userId, Long listId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         checkUserIsBlocked(authUserId, userId);
         checkUserIsBlocked(userId, authUserId);
-//        User user = checkIsPrivateUserProfile(userId, authUserId);
         checkIsPrivateUserProfile(userId);
-        Lists list = listsRepository.getAuthUserListById(listId, authUserId)
-                .orElseThrow(() -> new ApiRequestException("List not found", HttpStatus.NOT_FOUND));
-//        boolean isMemberInList = listsRepository.isMemberInList(listId, userId);
+        checkIsListExist(listId, authUserId);
         ListsMembers member = listsMembersRepository.getListMember(listId, userId);
         boolean isAddedToList;
 
         if (member != null) {
-//            listsRepository.removeMemberFromList(userId, listId);
             listsMembersRepository.delete(member);
             isAddedToList = false;
         } else {
-//            listsRepository.addMemberToList(userId, listId);
             ListsMembers newMember = new ListsMembers(listId, userId);
             listsMembersRepository.save(newMember);
             isAddedToList = true;
+            notificationClient.createListNotification(new NotificationRequest(true, userId, authUserId, listId));
         }
-
-//        Notification notification = new Notification();
-//        notification.setNotificationType(NotificationType.LISTS);
-//        notification.setNotifiedUser(user);
-//        notification.setUser(user);
-//        notification.setList(list);
-//
-//        if (!user.getId().equals(authUserId)) {
-//            boolean isNotificationExists = notificationRepository.isNotificationExists(userId, listId, NotificationType.LISTS);
-//
-//            if (!isNotificationExists) {
-//                Notification newNotification = notificationRepository.save(notification);
-//                userClient.increaseNotificationsCount(userId);
-//                return Map.of("notification", newNotification, "isAddedToList", isAddedToList);
-//            }
-//        }
-//        return Map.of("notification", notification, "isAddedToList", isAddedToList);
-        return null;
+        return isAddedToList;
     }
 
     @Override

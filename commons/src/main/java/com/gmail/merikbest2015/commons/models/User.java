@@ -131,13 +131,13 @@ public class User {
     private List<Tweet> tweets; // TODO DELETE
 
     @OneToMany(mappedBy = "user")
-    private List<LikeTweet> likedTweets;
+    private List<LikeTweet> likedTweets; // TODO DELETE
 
     @OneToMany(mappedBy = "user")
-    private List<Retweet> retweets;
+    private List<Retweet> retweets; // TODO DELETE
 
     @OneToMany(mappedBy = "user")
-    private List<Bookmark> bookmarks;
+    private List<Bookmark> bookmarks; // TODO DELETE
 
     @OneToMany
     private List<Notification> notifications; // TODO DELETE

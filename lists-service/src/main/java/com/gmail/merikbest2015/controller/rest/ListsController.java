@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.controller;
+package com.gmail.merikbest2015.controller.rest;
 
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.TweetResponse;
@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +23,6 @@ import static com.gmail.merikbest2015.controller.PathConstants.UI_V1_LISTS;
 public class ListsController {
 
     private final ListsMapper listsMapper;
-    private final SimpMessagingTemplate messagingTemplate;
 
     @GetMapping
     public ResponseEntity<List<ListResponse>> getAllTweetLists() {
@@ -93,13 +91,7 @@ public class ListsController {
 
     @GetMapping("/add/user/{userId}/{listId}")
     public ResponseEntity<Boolean> addUserToList(@PathVariable("userId") Long userId, @PathVariable("listId") Long listId) {
-//        NotificationResponse notification = listsMapper.addUserToList(userId, listId);
-//
-//        if (notification.getId() != null) {
-//            messagingTemplate.convertAndSend("/topic/notifications/" + notification.getUser().getId(), notification);
-//        }
-//        return ResponseEntity.ok(notification.isAddedToList());
-        return null;
+        return ResponseEntity.ok(listsMapper.addUserToList(userId, listId));
     }
 
     @GetMapping("/{listId}/tweets")

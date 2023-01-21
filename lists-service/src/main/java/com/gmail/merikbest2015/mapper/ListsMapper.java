@@ -94,13 +94,9 @@ public class ListsMapper {
         return listsService.addUserToLists(userToListsRequest);
     }
 
-//    public NotificationResponse addUserToList(Long userId, Long listId) {
-//        Map<String, Object> notificationDetails = listsService.addUserToList(userId, listId);
-//        Notification notification = (Notification) notificationDetails.get("notification");
-//        NotificationResponse notificationResponse = basicMapper.convertToResponse(notification, NotificationResponse.class);
-//        notificationResponse.setAddedToList((Boolean) notificationDetails.get("isAddedToList"));
-//        return notificationResponse;
-//    }
+    public Boolean addUserToList(Long userId, Long listId) {
+        return listsService.addUserToList(userId, listId);
+    }
 
     public HeaderResponse<TweetResponse> getTweetsByListId(Long listId, Pageable pageable) {
         return listsService.getTweetsByListId(listId, pageable);

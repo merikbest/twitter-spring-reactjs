@@ -283,4 +283,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "WHERE UPPER(user.fullName) LIKE UPPER(CONCAT('%',:username,'%')) AND user.active = true " +
             "OR UPPER(user.username) LIKE UPPER(CONCAT('%',:username,'%')) AND user.active = true")
     List<ListMemberProjection> searchListMembersByUsername(@Param("username") String username);
+
+    @Query("SELECT user FROM User user WHERE user.id = :userId")
+    NotificationUserProjection getNotificationUser(@Param("userId") Long userId);
 }

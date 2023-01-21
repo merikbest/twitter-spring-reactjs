@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.service;
 
+import com.gmail.merikbest2015.commons.dto.NotificationUserResponse;
 import com.gmail.merikbest2015.commons.dto.commons_new.UserIdsRequest;
 import com.gmail.merikbest2015.commons.dto.commons_new.ListMemberResponse;
 import com.gmail.merikbest2015.commons.dto.commons_new.ListOwnerResponse;
@@ -56,4 +57,6 @@ public interface UserClientService {
     List<ListMemberResponse> getListParticipantsByIds(UserIdsRequest request);
 
     List<ListMemberResponse> searchListMembersByUsername(String username);
+
+    NotificationUserResponse getNotificationUser(Long userId);
 }

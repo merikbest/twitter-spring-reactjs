@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.commons.dto.NotificationUserResponse;
 import com.gmail.merikbest2015.commons.dto.commons_new.UserIdsRequest;
 import com.gmail.merikbest2015.commons.dto.commons_new.ListMemberResponse;
 import com.gmail.merikbest2015.commons.dto.commons_new.ListOwnerResponse;
@@ -158,5 +159,11 @@ public class UserClientServiceImpl implements UserClientService {
     public List<ListMemberResponse> searchListMembersByUsername(String username) {
         List<ListMemberProjection> users = userRepository.searchListMembersByUsername(username);
         return basicMapper.convertToResponseList(users, ListMemberResponse.class);
+    }
+
+    @Override
+    public NotificationUserResponse getNotificationUser(Long userId) {
+        NotificationUserProjection user = userRepository.getNotificationUser(userId);
+        return basicMapper.convertToResponse(user, NotificationUserResponse.class);
     }
 }

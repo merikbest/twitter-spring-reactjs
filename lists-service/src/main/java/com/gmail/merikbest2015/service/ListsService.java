@@ -40,7 +40,7 @@ public interface ListsService {
 
     String addUserToLists(UserToListsRequest userToListsRequest);
 
-    Map<String, Object> addUserToList(Long userId, Long listId);
+    Boolean addUserToList(Long userId, Long listId);
 
     HeaderResponse<TweetResponse> getTweetsByListId(Long listId, Pageable pageable);
 
