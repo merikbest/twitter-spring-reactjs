@@ -156,11 +156,11 @@ public class UserMapper {
     }
 
     public List<NotificationUserResponse> getTweetAuthorsNotifications() {
-        List<TweetAuthorProjection> tweetAuthorsNotifications = userService.getTweetAuthorsNotifications();
-        List<TweetAuthorProjection.AuthorProjection> tweetAuthorsProjection = tweetAuthorsNotifications.contains(null)
+        List<TweetAuthorsProjection> tweetAuthorsNotifications = userService.getTweetAuthorsNotifications();
+        List<TweetAuthorsProjection.AuthorProjection> tweetAuthorsProjection = tweetAuthorsNotifications.contains(null)
                 ? new ArrayList<>()
                 : tweetAuthorsNotifications.stream()
-                .map(TweetAuthorProjection::getTweetAuthor)
+                .map(TweetAuthorsProjection::getTweetAuthor)
                 .collect(Collectors.toList());
         return basicMapper.convertToResponseList(tweetAuthorsProjection, NotificationUserResponse.class);
     }

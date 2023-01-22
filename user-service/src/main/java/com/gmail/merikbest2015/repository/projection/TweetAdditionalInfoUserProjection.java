@@ -1,14 +1,11 @@
 package com.gmail.merikbest2015.repository.projection;
 
-import com.gmail.merikbest2015.commons.projection.ImageProjection;
 import org.springframework.beans.factory.annotation.Value;
 
-public interface TweetAuthorProjection {
+public interface TweetAdditionalInfoUserProjection {
     Long getId();
-    String getEmail();
     String getFullName();
     String getUsername();
-    ImageProjection getAvatar();
 
     @Value("#{@userServiceImpl.isUserMutedByMyProfile(target.id)}")
     boolean getIsUserMuted();
@@ -18,9 +15,6 @@ public interface TweetAuthorProjection {
 
     @Value("#{@userServiceImpl.isMyProfileBlockedByUser(target.id)}")
     boolean getIsMyProfileBlocked();
-
-    @Value("#{@userServiceImpl.isMyProfileWaitingForApprove(target.id)}")
-    boolean getIsWaitingForApprove();
 
     @Value("#{@userServiceImpl.isUserFollowByOtherUser(target.id)}")
     boolean getIsFollower();

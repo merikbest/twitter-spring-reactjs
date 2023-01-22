@@ -1,9 +1,9 @@
 package com.gmail.merikbest2015.service;
 
+import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import com.gmail.merikbest2015.commons.dto.NotificationUserResponse;
-import com.gmail.merikbest2015.commons.dto.commons_new.UserIdsRequest;
-import com.gmail.merikbest2015.commons.dto.commons_new.ListMemberResponse;
-import com.gmail.merikbest2015.commons.dto.commons_new.ListOwnerResponse;
+import com.gmail.merikbest2015.commons.dto.UserResponse;
+import com.gmail.merikbest2015.commons.dto.commons_new.*;
 import com.gmail.merikbest2015.commons.models.User;
 import com.gmail.merikbest2015.repository.projection.UserChatProjection;
 import org.springframework.data.domain.Page;
@@ -59,4 +59,12 @@ public interface UserClientService {
     List<ListMemberResponse> searchListMembersByUsername(String username);
 
     NotificationUserResponse getNotificationUser(Long userId);
+
+    TweetAuthorResponse getTweetAuthor(Long userId);
+
+    TweetAdditionalInfoUserResponse getTweetAdditionalInfoUser(Long userId);
+
+    HeaderResponse<UserResponse> getTweetLikedUsersByIds(UserIdsRequest request, Pageable pageable);
+
+    HeaderResponse<UserResponse> getRetweetedUsersByTweetId(UserIdsRequest request, Pageable pageable);
 }

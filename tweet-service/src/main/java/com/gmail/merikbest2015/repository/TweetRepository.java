@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.repository;
 
 import com.gmail.merikbest2015.model.Tweet;
+import com.gmail.merikbest2015.repository.projection.TweetAdditionalInfoProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -8,6 +9,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TweetRepository extends JpaRepository<Tweet, Long> {
@@ -19,12 +23,39 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "ORDER BY tweet.dateTime DESC")
     Page<TweetProjection> findAllTweets(Pageable pageable);
 
-//    @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId")
-//    Optional<TweetProjection> findTweetById(@Param("tweetId") Long tweetId);
-//
-//    @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId")
-//    Optional<TweetAdditionalInfoProjection> getTweetAdditionalInfoById(@Param("tweetId") Long tweetId);
-//
+    @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId")
+    Optional<TweetProjection> findTweetById(@Param("tweetId") Long tweetId);
+
+    @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId")
+    Optional<TweetAdditionalInfoProjection> getTweetAdditionalInfoById(@Param("tweetId") Long tweetId);
+
+    @Query("SELECT tweet FROM Tweet tweet " +
+            "WHERE tweet.addressedTweetId = :tweetId " +
+            "AND tweet.deleted = false " +
+            "ORDER BY tweet.dateTime DESC")
+    List<TweetProjection> getRepliesByTweetId(@Param("tweetId") Long tweetId);
+
+    @Query("SELECT tweet FROM Tweet tweet " +
+            "LEFT JOIN tweet.quoteTweet quoteTweet " +
+            "WHERE quoteTweet.id = :tweetId " +
+            "AND quoteTweet.deleted = false")
+    Page<TweetProjection> getQuotesByTweetId(@Param("tweetId") Long tweetId, Pageable pageable);
+
+//    @Query("SELECT user FROM User user " +
+//            "LEFT JOIN user.retweets retweet " +
+//            "LEFT JOIN retweet.tweet tweet " +
+//            "WHERE tweet.id = :tweetId " +
+//            "ORDER BY retweet.retweetDate DESC")
+//    Page<UserProjection> getRetweetedUsersByTweetId(@Param("tweetId") Long tweetId, Pageable pageable);
+
+//    @Query("SELECT user FROM User user " +
+//            "LEFT JOIN user.likedTweets likedTweet " +
+//            "LEFT JOIN likedTweet.tweet tweet " +
+//            "WHERE tweet.id = :tweetId " +
+//            "ORDER BY likedTweet.likeTweetDate DESC")
+//    Page<UserProjection> getLikedUsersByTweetId(@Param("tweetId") Long tweetId, Pageable pageable);
+
+
 //    @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId")
 //    Optional<Tweet> getTweetAuthorId(@Param("tweetId") Long tweetId);
 //

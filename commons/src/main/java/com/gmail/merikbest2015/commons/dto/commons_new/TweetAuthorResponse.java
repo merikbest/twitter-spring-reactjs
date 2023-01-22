@@ -1,12 +1,11 @@
-package com.gmail.merikbest2015.dto;
+package com.gmail.merikbest2015.commons.dto.commons_new;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
+import com.gmail.merikbest2015.commons.dto.ImageResponse;
+import lombok.Data;
 
-@Getter
-@Setter
-public class UserTweetResponse {
+@Data
+public class TweetAuthorResponse {
     private Long id;
     private String email;
     private String fullName;
@@ -28,4 +27,3 @@ public class UserTweetResponse {
     @JsonProperty("isUserMuted")
     private boolean isUserMuted;
 }
-

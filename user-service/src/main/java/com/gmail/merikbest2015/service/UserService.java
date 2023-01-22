@@ -31,7 +31,7 @@ public interface UserService {
 
     Page<NotificationProjection> getUserNotifications(Pageable pageable);
 
-    List<TweetAuthorProjection> getTweetAuthorsNotifications();
+    List<TweetAuthorsProjection> getTweetAuthorsNotifications();
 
     NotificationInfoProjection getUserNotificationById(Long notificationId);
 

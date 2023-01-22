@@ -1,10 +1,14 @@
 package com.gmail.merikbest2015.repository;
 
 import com.gmail.merikbest2015.model.LikeTweet;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface LikeTweetRepository extends JpaRepository<LikeTweet, Long> {
@@ -14,6 +18,12 @@ public interface LikeTweetRepository extends JpaRepository<LikeTweet, Long> {
             "WHERE likeTweet.userId = :userId " +
             "AND likeTweet.tweetId = :tweetId")
     boolean isUserLikedTweet(@Param("userId") Long userId, @Param("tweetId") Long tweetId);
+
+    @Query("SELECT COUNT(likeTweet) FROM LikeTweet likeTweet WHERE likeTweet.tweetId = :tweetId")
+    Long getLikedTweetsSize(@Param("tweetId") Long tweetId);
+
+    @Query("SELECT likeTweet.userId FROM LikeTweet likeTweet WHERE likeTweet.tweetId = :tweetId")
+    Page<Long> getLikedUserIds(@Param("tweetId") Long tweetId, Pageable pageable);
 
 //    @Query("SELECT likeTweet FROM LikeTweet likeTweet " +
 //            "LEFT JOIN likeTweet.user user " +

@@ -20,11 +20,4 @@ public class PollChoice {
 
     @Column(name = "choice")
     private String choice;
-
-//    @ManyToMany
-//    private List<User> votedUser;
-//
-//    public PollChoice() {
-//        this.votedUser = new ArrayList<>();
-//    }
 }

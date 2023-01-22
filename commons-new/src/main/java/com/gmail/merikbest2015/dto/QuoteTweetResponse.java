@@ -18,7 +18,7 @@ public class QuoteTweetResponse {
     private String linkDescription;
     private String linkCover;
     private LinkCoverSize linkCoverSize;
-    private UserTweetResponse user;
+    private TweetAuthorResponse user;
     @JsonProperty("isDeleted")
     private boolean isDeleted;
 }

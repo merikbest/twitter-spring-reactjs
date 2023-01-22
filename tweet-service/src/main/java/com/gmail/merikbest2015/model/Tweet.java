@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode(exclude = {"poll", "user"})
+@EqualsAndHashCode(exclude = {"poll"})
 @Table(name = "tweets")
 public class Tweet {
 
@@ -63,20 +63,11 @@ public class Tweet {
     @Column(name = "deleted")
     private boolean deleted;
 
-//    @ManyToOne
-//    @JoinColumn(name = "users_id")
-//    private User user;
     @Column(name = "author_id", nullable = false)
     private Long authorId;
 
     @OneToMany
     private List<TweetImage> images;
-
-    @OneToMany(mappedBy = "tweet")
-    private List<LikeTweet> likedTweets;
-
-    @OneToMany(mappedBy = "tweet")
-    private List<Retweet> retweets;
 
     @OneToOne
     @JoinTable(name = "tweet_quote",

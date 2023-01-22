@@ -1,6 +1,8 @@
 package com.gmail.merikbest2015.repository;
 
 import com.gmail.merikbest2015.model.Retweet;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,6 +16,12 @@ public interface RetweetRepository extends JpaRepository<Retweet, Long> {
             "WHERE retweet.userId = :userId " +
             "AND retweet.tweetId = :tweetId")
     boolean isUserRetweetedTweet(@Param("userId") Long userId, @Param("tweetId") Long tweetId);
+
+    @Query("SELECT COUNT(retweet) FROM Retweet retweet WHERE retweet.tweetId = :tweetId")
+    Long getRetweetSize(@Param("tweetId") Long tweetId);
+
+    @Query("SELECT retweet.userId FROM Retweet retweet WHERE retweet.tweetId = :tweetId")
+    Page<Long> getRetweetedUserIds(@Param("tweetId") Long tweetId, Pageable pageable);
 
 //    @Query("SELECT r AS retweet FROM Retweet r " +
 //            "LEFT JOIN r.user u " +

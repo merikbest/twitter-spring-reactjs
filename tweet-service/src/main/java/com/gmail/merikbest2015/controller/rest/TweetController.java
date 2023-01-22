@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.controller.rest;
 
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.TweetResponse;
+import com.gmail.merikbest2015.dto.UserResponse;
 import com.gmail.merikbest2015.dto.notification.NotificationResponse;
 import com.gmail.merikbest2015.dto.notification.NotificationTweetResponse;
 import com.gmail.merikbest2015.dto.request.TweetDeleteRequest;
@@ -12,6 +13,7 @@ import com.gmail.merikbest2015.dto.response.TweetAdditionalInfoResponse;
 import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.mapper.TweetMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static com.gmail.merikbest2015.controller.PathConstants.UI_V1_TWEETS;
-
 
 @RestController
 @RequiredArgsConstructor
@@ -36,36 +37,36 @@ public class TweetController {
         HeaderResponse<TweetResponse> response = tweetMapper.getTweets(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
-//
-//    @GetMapping("/{tweetId}")
-//    public ResponseEntity<TweetResponse> getTweetById(@PathVariable("tweetId") Long tweetId) {
-//        return ResponseEntity.ok(tweetMapper.getTweetById(tweetId));
-//    }
-//
-//    @GetMapping("/{tweetId}/info")
-//    public ResponseEntity<TweetAdditionalInfoResponse> getTweetAdditionalInfoById(@PathVariable("tweetId") Long tweetId) {
-//        return ResponseEntity.ok(tweetMapper.getTweetAdditionalInfoById(tweetId));
-//    }
-//
-//    @GetMapping("/{tweetId}/replies") // TODO add pagination
-//    public ResponseEntity<List<TweetResponse>> getRepliesByTweetId(@PathVariable("tweetId") Long tweetId) {
-//        return ResponseEntity.ok(tweetMapper.getRepliesByTweetId(tweetId));
-//    }
-//
-//    @GetMapping("/{tweetId}/quotes")
-//    public ResponseEntity<List<TweetResponse>> getQuotesByTweetId(@PathVariable("tweetId") Long tweetId,
-//                                                                  @PageableDefault(size = 10) Pageable pageable) {
-//        HeaderResponse<TweetResponse> response = tweetMapper.getQuotesByTweetId(pageable, tweetId);
-//        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
-//    }
-//
-//    @GetMapping("/{tweetId}/liked-users")
-//    public ResponseEntity<List<UserResponse>> getLikedUsersByTweetId(@PathVariable("tweetId") Long tweetId,
-//                                                                     @PageableDefault(size = 15) Pageable pageable) {
-//        HeaderResponse<UserResponse> response = tweetMapper.getLikedUsersByTweetId(tweetId, pageable);
-//        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
-//    }
-//
+
+    @GetMapping("/{tweetId}")
+    public ResponseEntity<TweetResponse> getTweetById(@PathVariable("tweetId") Long tweetId) {
+        return ResponseEntity.ok(tweetMapper.getTweetById(tweetId));
+    }
+
+    @GetMapping("/{tweetId}/info")
+    public ResponseEntity<TweetAdditionalInfoResponse> getTweetAdditionalInfoById(@PathVariable("tweetId") Long tweetId) {
+        return ResponseEntity.ok(tweetMapper.getTweetAdditionalInfoById(tweetId));
+    }
+
+    @GetMapping("/{tweetId}/replies") // TODO add pagination
+    public ResponseEntity<List<TweetResponse>> getRepliesByTweetId(@PathVariable("tweetId") Long tweetId) {
+        return ResponseEntity.ok(tweetMapper.getRepliesByTweetId(tweetId));
+    }
+
+    @GetMapping("/{tweetId}/quotes")
+    public ResponseEntity<List<TweetResponse>> getQuotesByTweetId(@PathVariable("tweetId") Long tweetId,
+                                                                  @PageableDefault(size = 10) Pageable pageable) {
+        HeaderResponse<TweetResponse> response = tweetMapper.getQuotesByTweetId(pageable, tweetId);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
+    }
+
+    @GetMapping("/{tweetId}/liked-users")
+    public ResponseEntity<List<UserResponse>> getLikedUsersByTweetId(@PathVariable("tweetId") Long tweetId,
+                                                                     @PageableDefault(size = 15) Pageable pageable) {
+        HeaderResponse<UserResponse> response = tweetMapper.getLikedUsersByTweetId(tweetId, pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
+    }
+
 //    @GetMapping("/{tweetId}/retweeted-users")
 //    public ResponseEntity<List<UserResponse>> getRetweetedUsersByTweetId(@PathVariable("tweetId") Long tweetId,
 //                                                                         @PageableDefault(size = 15) Pageable pageable) {

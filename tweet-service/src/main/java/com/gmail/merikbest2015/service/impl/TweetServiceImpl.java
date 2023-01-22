@@ -1,15 +1,29 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.dto.TweetAdditionalInfoUserResponse;
+import com.gmail.merikbest2015.dto.TweetAuthorResponse;
+import com.gmail.merikbest2015.dto.UserResponse;
+import com.gmail.merikbest2015.dto.lists.UserIdsRequest;
+import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.repository.*;
+import com.gmail.merikbest2015.repository.projection.TweetAdditionalInfoProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
+import com.gmail.merikbest2015.repository.projection.TweetsProjection;
 import com.gmail.merikbest2015.service.TweetService;
 import com.gmail.merikbest2015.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +36,7 @@ public class TweetServiceImpl implements TweetService {
     private final RetweetRepository retweetRepository;
     private final BookmarkRepository bookmarkRepository;
 
+    private final UserClient userClient;
 
     private final RestTemplate restTemplate;
 
@@ -29,7 +44,6 @@ public class TweetServiceImpl implements TweetService {
 //    private final LikeTweetRepository likeTweetRepository;
 //    private final NotificationRepository notificationRepository;
 //    private final AuthenticationClient authenticationClient;
-//    private final UserClient userClient;
 //    private final TagClient tagClient;
 
     @Value("${google.api.url}")
@@ -43,51 +57,46 @@ public class TweetServiceImpl implements TweetService {
         return tweetRepository.findAllTweets(pageable);
     }
 
-//    @Override
-//    public TweetProjection getTweetById(Long tweetId) {
-//        TweetProjection tweet = tweetRepository.findTweetById(tweetId)
-//                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-//
-//        if (tweet.isDeleted()) {
-//            throw new ApiRequestException("Sorry, that Tweet has been deleted.", HttpStatus.BAD_REQUEST);
-//        }
-//        return tweet;
-//    }
-//
-//    @Override
-//    public TweetAdditionalInfoProjection getTweetAdditionalInfoById(Long tweetId) {
-//        TweetAdditionalInfoProjection additionalInfo = tweetRepository.getTweetAdditionalInfoById(tweetId)
-//                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-//
-//        if (additionalInfo.isDeleted()) {
-//            throw new ApiRequestException("Sorry, that Tweet has been deleted.", HttpStatus.BAD_REQUEST);
-//        }
-//        return additionalInfo;
-//    }
-//
-//    @Override
-//    public List<TweetProjection> getRepliesByTweetId(Long tweetId) {
-//        List<TweetsProjection> repliesByTweetId = tweetRepository.getRepliesByTweetId(tweetId);
-//        return repliesByTweetId.contains(null) ? new ArrayList<>() : repliesByTweetId.stream()
-//                .map(TweetsProjection::getTweet)
-//                .collect(Collectors.toList());
-//    }
-//
-//    @Override
-//    public Page<TweetProjection> getQuotesByTweetId(Pageable pageable, Long tweetId) {
-//        return tweetRepository.getQuotesByTweetId(tweetId, pageable);
-//    }
-//
-//    @Override
-//    public Page<UserProjection> getLikedUsersByTweetId(Long tweetId, Pageable pageable) {
-//        return tweetRepository.getLikedUsersByTweetId(tweetId, pageable);
-//    }
-//
-//    @Override
-//    public Page<UserProjection> getRetweetedUsersByTweetId(Long tweetId, Pageable pageable) {
-//        return tweetRepository.getRetweetedUsersByTweetId(tweetId, pageable);
-//    }
-//
+    @Override
+    public TweetProjection getTweetById(Long tweetId) {
+        // TODO add check: isMyProfileBlocked, IsUserHavePrivateProfile
+        TweetProjection tweet = tweetRepository.findTweetById(tweetId)
+                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+        checkIsTweetDeleted(tweet.isDeleted());
+        return tweet;
+    }
+
+    @Override
+    public TweetAdditionalInfoProjection getTweetAdditionalInfoById(Long tweetId) {
+        // TODO add check: isMyProfileBlocked, IsUserHavePrivateProfile
+        TweetAdditionalInfoProjection additionalInfo = tweetRepository.getTweetAdditionalInfoById(tweetId)
+                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+        checkIsTweetDeleted(additionalInfo.isDeleted());
+        return additionalInfo;
+    }
+
+    @Override
+    public List<TweetProjection> getRepliesByTweetId(Long tweetId) {
+        return tweetRepository.getRepliesByTweetId(tweetId);
+    }
+
+    @Override
+    public Page<TweetProjection> getQuotesByTweetId(Pageable pageable, Long tweetId) {
+        return tweetRepository.getQuotesByTweetId(tweetId, pageable);
+    }
+
+    @Override
+    public HeaderResponse<UserResponse> getLikedUsersByTweetId(Long tweetId, Pageable pageable) {
+        Page<Long> likedUserIds = likeTweetRepository.getLikedUserIds(tweetId, pageable);
+        return userClient.getTweetLikedUsersByIds(new UserIdsRequest(likedUserIds.getContent()), pageable);
+    }
+
+    @Override
+    public HeaderResponse<UserResponse> getRetweetedUsersByTweetId(Long tweetId, Pageable pageable) {
+        Page<Long> retweetedUserIds = retweetRepository.getRetweetedUserIds(tweetId, pageable);
+        return userClient.getRetweetedUsersByIds(new UserIdsRequest(retweetedUserIds.getContent()), pageable);
+    }
+
 //    @Override
 //    public Page<TweetProjection> getMediaTweets(Pageable pageable) {
 //        return tweetRepository.findAllTweetsWithImages(pageable);
@@ -322,28 +331,37 @@ public class TweetServiceImpl implements TweetService {
     }
 
     public boolean isUserFollowByOtherUser(Long userId) {
-//        return userClient.isUserFollowByOtherUser(userId);
-        return false;
+        return userClient.isUserFollowByOtherUser(userId);
     }
 
-    public boolean isUserMutedByMyProfile(Long userId) {
+//    public boolean isUserMutedByMyProfile(Long userId) {
 //        return userClient.isUserMutedByMyProfile(userId);
-        return false;
-    }
-
-    public boolean isUserBlockedByMyProfile(Long userId) {
+//    }
+//
+//    public boolean isUserBlockedByMyProfile(Long userId) {
 //        return userClient.isUserBlockedByMyProfile(userId);
-        return false;
-    }
-
-    public boolean isMyProfileBlockedByUser(Long userId) {
+//    }
+//
+//    public boolean isMyProfileBlockedByUser(Long userId) {
 //        return userClient.isMyProfileBlockedByUser(userId);
-        return false;
+//    }
+//
+//    public boolean isMyProfileWaitingForApprove(Long userId) {
+//        return userClient.isMyProfileWaitingForApprove(userId);
+//    }
+
+    public TweetAuthorResponse getTweetAuthor(Long userId) { // NEW
+        return userClient.getTweetAuthor(userId);
     }
 
-    public boolean isMyProfileWaitingForApprove(Long userId) {
-//        return userClient.isMyProfileWaitingForApprove(userId);
-        return false;
+    public TweetAdditionalInfoUserResponse getTweetAdditionalInfoUser(Long userId) { // NEW
+        return userClient.getTweetAdditionalInfoUser(userId);
+    }
+
+    private void checkIsTweetDeleted(boolean isDeleted) {
+        if (isDeleted) {
+            throw new ApiRequestException("Sorry, that Tweet has been deleted.", HttpStatus.BAD_REQUEST);
+        }
     }
 
 //    public boolean isUserHavePrivateProfile(Long userId) {

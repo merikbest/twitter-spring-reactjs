@@ -1,13 +1,14 @@
 package com.gmail.merikbest2015.controller.api;
 
+import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import com.gmail.merikbest2015.commons.dto.NotificationUserResponse;
-import com.gmail.merikbest2015.commons.dto.commons_new.UserIdsRequest;
-import com.gmail.merikbest2015.commons.dto.commons_new.ListMemberResponse;
-import com.gmail.merikbest2015.commons.dto.commons_new.ListOwnerResponse;
+import com.gmail.merikbest2015.commons.dto.UserResponse;
+import com.gmail.merikbest2015.commons.dto.commons_new.*;
 import com.gmail.merikbest2015.commons.models.User;
 import com.gmail.merikbest2015.repository.projection.UserChatProjection;
 import com.gmail.merikbest2015.service.UserClientService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -140,5 +141,25 @@ public class UserApiController {
         return userService.getNotificationUser(userId);
     }
 
+    @GetMapping("/tweet/author/{userId}")
+    public TweetAuthorResponse getTweetAuthor(@PathVariable("userId") Long userId) {
+        return userService.getTweetAuthor(userId);
+    }
 
+    @GetMapping("/tweet/additional/info/{userId}")
+    public TweetAdditionalInfoUserResponse getTweetAdditionalInfoUser(@PathVariable("userId") Long userId) {
+        return userService.getTweetAdditionalInfoUser(userId);
+    }
+
+    @PostMapping("/tweet/liked")
+    public HeaderResponse<UserResponse> getTweetLikedUsersByIds(@RequestBody UserIdsRequest request,
+                                                                @SpringQueryMap Pageable pageable) {
+        return userService.getTweetLikedUsersByIds(request, pageable);
+    }
+
+    @PostMapping("/tweet/retweeted")
+    public HeaderResponse<UserResponse> getRetweetedUsersByTweetId(@RequestBody UserIdsRequest request,
+                                                                   @SpringQueryMap Pageable pageable) {
+        return userService.getRetweetedUsersByTweetId(request, pageable);
+    }
 }

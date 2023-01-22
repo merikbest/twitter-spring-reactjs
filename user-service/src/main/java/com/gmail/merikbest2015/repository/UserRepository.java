@@ -110,7 +110,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "WHERE user.id = :userId " +
             "AND notification.notificationType = 'TWEET' " +
             "AND subscriber.id = :userId ")
-    List<TweetAuthorProjection> getNotificationsTweetAuthors(@Param("userId") Long userId);
+    List<TweetAuthorsProjection> getNotificationsTweetAuthors(@Param("userId") Long userId);
 
     @Query("SELECT subscriber FROM User user " +
             "LEFT JOIN user.subscribers subscriber " +
@@ -286,4 +286,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT user FROM User user WHERE user.id = :userId")
     NotificationUserProjection getNotificationUser(@Param("userId") Long userId);
+
+    @Query("SELECT user FROM User user WHERE user.id = :userId")
+    TweetAuthorProjection getTweetAuthor(@Param("userId") Long userId);
+
+    @Query("SELECT user FROM User user WHERE user.id = :userId")
+    TweetAdditionalInfoUserProjection getTweetAdditionalInfoUser(@Param("userId") Long userId);
+
+    @Query("SELECT user FROM User user WHERE user.id IN :userIds")
+    Page<UserProjection> getTweetLikedUsersByIds(@Param("userIds") List<Long> userIds, Pageable pageable);
+
+    @Query("SELECT user FROM User user WHERE user.id IN :userIds")
+    Page<UserProjection> getRetweetedUsersByTweetId(List<Long> userIds, Pageable pageable);
 }

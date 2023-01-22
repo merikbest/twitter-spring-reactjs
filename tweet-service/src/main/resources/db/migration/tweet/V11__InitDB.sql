@@ -106,27 +106,33 @@ create table bookmarks
     primary key (id)
 );
 
-alter table if exists tweets_images
-    add constraint FKn08la7vf9dnjm23ddlupi7hjo foreign key (images_id) references images;
-alter table if exists tweets_images
-    add constraint FKgka7vl35am9mwo21xiy4o3dw3 foreign key (tweet_id) references tweets;
-
-alter table if exists tweet_quote
-    add constraint FKftie7ivytjuvpm6118d05upa7 foreign key (quote_tweet_id) references tweets;
-alter table if exists tweet_quote
-    add constraint FK3an4vbda2c9lw7gla5tng2um4 foreign key (tweet_id) references tweets;
-
-alter table if exists tweet_poll
-    add constraint FKfd0dxawayvyp132ntdhi8ptfa foreign key (poll_id) references pools;
-alter table if exists tweet_poll
-    add constraint FKgia483b845hgruqemh2skyy2v foreign key (tweet_id) references tweets;
-
-alter table if exists replies
-    add constraint FKftas7wbrv961d6th8yy5nqdq7 foreign key (reply_id) references tweets;
-alter table if exists replies
-    add constraint FK1og4qeuvwr4yt0py1yq2jk794 foreign key (tweet_id) references tweets;
-
-alter table if exists quotes
+alter table polls_poll_choices
+    add constraint UK_jua6yjwmepyjcakmqpxkfn9q3 unique (poll_choices_id);
+alter table quotes
+    add constraint UK_iuv1sbh2mxfhdvwpemnnhveyp unique (quote_id);
+alter table tweets_images
+    add constraint UK_r0mdr0mxkjw13pm37pqs86vl unique (images_id);
+alter table polls_poll_choices
+    add constraint FKiov00wdpikhs1naueduv299in foreign key (poll_choices_id) references poll_choices;
+alter table polls_poll_choices
+    add constraint FKow4jtx281l96oqbewwf7wdl8n foreign key (poll_id) references polls;
+alter table quotes
     add constraint FK1cfwrx9kkp9fufamcbbf4n31y foreign key (quote_id) references tweets;
-alter table if exists quotes
-    add constraint FKnaftxirm45fovgfqhjudyf2s0 foreign key (tweet_id) references tweets;
+alter table quotes
+    add constraint FK1cp5vxtrurwfs2gbo1hcm02u7 foreign key (tweet_id) references tweets;
+alter table replies
+    add constraint FKftas7wbrv961d6th8yy5nqdq7 foreign key (reply_id) references tweets;
+alter table replies
+    add constraint FKc0y0dqmqpv2b19wgb7f7a7r8i foreign key (tweet_id) references tweets;
+alter table tweet_poll
+    add constraint FKqy1momv4lqjht95f6mv5fbac5 foreign key (poll_id) references polls;
+alter table tweet_poll
+    add constraint FK954x9jc864d69ifsgwub38c1p foreign key (tweet_id) references tweets;
+alter table tweet_quote
+    add constraint FKftie7ivytjuvpm6118d05upa7 foreign key (quote_tweet_id) references tweets;
+alter table tweet_quote
+    add constraint FKlkw1iu7ifknitq1q75f09vpo5 foreign key (tweet_id) references tweets;
+alter table tweets_images
+    add constraint FKgg4e58t98pdpjlv0lyp4ausbx foreign key (images_id) references tweet_images;
+alter table tweets_images
+    add constraint FKgka7vl35am9mwo21xiy4o3dw3 foreign key (tweet_id) references tweets;

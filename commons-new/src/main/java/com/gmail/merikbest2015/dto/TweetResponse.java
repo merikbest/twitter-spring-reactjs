@@ -25,7 +25,7 @@ public class TweetResponse {
     private String linkDescription;
     private String linkCover;
     private LinkCoverSize linkCoverSize;
-    private UserTweetResponse user;
+    private TweetAuthorResponse user;
     private List<ImageResponse> images;
     private QuoteTweetResponse quoteTweet;
     private PollResponse poll;

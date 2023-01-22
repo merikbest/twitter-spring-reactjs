@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.repository.projection;
 
+import com.gmail.merikbest2015.dto.TweetAuthorResponse;
 import com.gmail.merikbest2015.enums.LinkCoverSize;
 import com.gmail.merikbest2015.enums.ReplyType;
-import com.gmail.merikbest2015.projection.ImageProjection;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
@@ -22,11 +22,14 @@ public interface TweetProjection {
     String getLinkDescription();
     String getLinkCover();
     LinkCoverSize getLinkCoverSize();
-    UserProjection getUser();
-    List<ImageProjection> getImages();
+    Long getAuthorId();
+    List<TweetImageProjection> getImages();
     QuoteTweetProjection getQuoteTweet();
     PollProjection getPoll();
     boolean isDeleted();
+
+    @Value("#{@tweetServiceImpl.getTweetAuthor(target.authorId)}")
+    TweetAuthorResponse getUser();
 
     @Value("#{@tweetServiceImpl.isUserLikedTweet(target.id)}")
     boolean getIsTweetLiked();
@@ -37,43 +40,20 @@ public interface TweetProjection {
     @Value("#{@tweetServiceImpl.isUserBookmarkedTweet(target.id)}")
     boolean getIsTweetBookmarked();
 
-    @Value("#{@tweetServiceImpl.isUserFollowByOtherUser(target.user.id)}")
+    @Value("#{@tweetServiceImpl.isUserFollowByOtherUser(target.authorId)}")
     boolean getIsUserFollowByOtherUser();
 
-    @Value("#{target.retweets.size()}")
-    Integer getRetweetsCount();
+    @Value("#{@retweetRepository.getRetweetSize(target.id)}")
+    Long getRetweetsCount();
 
-    @Value("#{target.likedTweets.size()}")
-    Integer getLikedTweetsCount();
+    @Value("#{@likeTweetRepository.getLikedTweetsSize(target.id)}")
+    Long getLikedTweetsCount();
 
     @Value("#{target.replies.size()}")
-    Integer getRepliesCount();
+    Long getRepliesCount();
 
     @Value("#{target.quotes.size()}")
-    Integer getQuotesCount();
-
-    interface UserProjection {
-        Long getId();
-        String getEmail();
-        String getFullName();
-        String getUsername();
-        ImageProjection getAvatar();
-
-        @Value("#{@tweetServiceImpl.isUserMutedByMyProfile(target.id)}")
-        boolean getIsUserMuted();
-
-        @Value("#{@tweetServiceImpl.isUserBlockedByMyProfile(target.id)}")
-        boolean getIsUserBlocked();
-
-        @Value("#{@tweetServiceImpl.isMyProfileBlockedByUser(target.id)}")
-        boolean getIsMyProfileBlocked();
-
-        @Value("#{@tweetServiceImpl.isMyProfileWaitingForApprove(target.id)}")
-        boolean getIsWaitingForApprove();
-
-        @Value("#{@tweetServiceImpl.isUserFollowByOtherUser(target.id)}")
-        boolean getIsFollower();
-    }
+    Long getQuotesCount();
 
     interface QuoteTweetProjection {
         @Value("#{target.isDeleted ? null : target.id}")
@@ -100,8 +80,11 @@ public interface TweetProjection {
         @Value("#{target.isDeleted ? null : target.linkCoverSize}")
         LinkCoverSize getLinkCoverSize();
 
-        @Value("#{target.isDeleted ? null : target.user}")
-        UserProjection getUser();
+        @Value("#{target.isDeleted ? null : target.authorId}")
+        Long getAuthorId();
+
+        @Value("#{target.isDeleted ? null : @tweetServiceImpl.getTweetAuthor(target.authorId)}")
+        TweetAuthorResponse getUser();
         boolean isDeleted();
     }
 
@@ -114,10 +97,8 @@ public interface TweetProjection {
     interface PollChoiceProjection {
         Long getId();
         String getChoice();
-        List<VotedUser> getVotedUser();
-    }
 
-    interface VotedUser {
-        Long getId();
+        @Value("#{@pollChoiceVotedRepository.getVotedUserIds(target.id)}")
+        List<VotedUserProjection> getVotedUser();
     }
 }

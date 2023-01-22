@@ -1,12 +1,13 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import com.gmail.merikbest2015.commons.dto.NotificationUserResponse;
-import com.gmail.merikbest2015.commons.dto.commons_new.UserIdsRequest;
-import com.gmail.merikbest2015.commons.dto.commons_new.ListMemberResponse;
-import com.gmail.merikbest2015.commons.dto.commons_new.ListOwnerResponse;
+import com.gmail.merikbest2015.commons.dto.UserResponse;
+import com.gmail.merikbest2015.commons.dto.commons_new.*;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.commons.mapper.BasicMapper;
 import com.gmail.merikbest2015.commons.models.User;
+import com.gmail.merikbest2015.commons.projection.UserProjection;
 import com.gmail.merikbest2015.commons.projection.commons_new.ListOwnerProjection;
 import com.gmail.merikbest2015.commons.util.AuthUtil;
 import com.gmail.merikbest2015.repository.UserRepository;
@@ -165,5 +166,29 @@ public class UserClientServiceImpl implements UserClientService {
     public NotificationUserResponse getNotificationUser(Long userId) {
         NotificationUserProjection user = userRepository.getNotificationUser(userId);
         return basicMapper.convertToResponse(user, NotificationUserResponse.class);
+    }
+
+    @Override
+    public TweetAuthorResponse getTweetAuthor(Long userId) {
+        TweetAuthorProjection user = userRepository.getTweetAuthor(userId);
+        return basicMapper.convertToResponse(user, TweetAuthorResponse.class);
+    }
+
+    @Override
+    public TweetAdditionalInfoUserResponse getTweetAdditionalInfoUser(Long userId) {
+        TweetAdditionalInfoUserProjection user = userRepository.getTweetAdditionalInfoUser(userId);
+        return basicMapper.convertToResponse(user, TweetAdditionalInfoUserResponse.class);
+    }
+
+    @Override
+    public HeaderResponse<UserResponse> getTweetLikedUsersByIds(UserIdsRequest request, Pageable pageable) {
+        Page<UserProjection> users = userRepository.getTweetLikedUsersByIds(request.getUserIds(), pageable);
+        return basicMapper.getHeaderResponse(users, UserResponse.class);
+    }
+
+    @Override
+    public HeaderResponse<UserResponse> getRetweetedUsersByTweetId(UserIdsRequest request, Pageable pageable) {
+        Page<UserProjection> users = userRepository.getRetweetedUsersByTweetId(request.getUserIds(), pageable);
+        return basicMapper.getHeaderResponse(users, UserResponse.class);
     }
 }

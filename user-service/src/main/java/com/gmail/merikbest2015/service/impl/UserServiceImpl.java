@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<TweetAuthorProjection> getTweetAuthorsNotifications() {
+    public List<TweetAuthorsProjection> getTweetAuthorsNotifications() {
         User user = authenticationService.getAuthenticatedUser();
         user.setNotificationsCount(0L);
         return userRepository.getNotificationsTweetAuthors(user.getId());

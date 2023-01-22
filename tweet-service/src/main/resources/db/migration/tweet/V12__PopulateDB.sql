@@ -15,16 +15,16 @@ INSERT INTO tweets (id, addressed_id, addressed_tweet_id, addressed_username, da
 INSERT INTO tweets (id, addressed_id, addressed_tweet_id, addressed_username, date_time, link, link_cover, link_cover_size, link_description, link_title, reply_type, scheduled_date, text, author_id, deleted) VALUES (4, null, null, null, '2021-10-15 21:20:22.000000', 'https://www.youtube.com/watch?v=hTWKbfoikeg&ab_channel=NirvanaVEVO', 'https://i.ytimg.com/vi/hTWKbfoikeg/mqdefault.jpg', null, null, 'Nirvana - Smells Like Teen Spirit (Official Music Video)', 'EVERYONE', null, 'https://www.youtube.com/watch?v=hTWKbfoikeg&ab_channel=NirvanaVEVO', 1, false);
 INSERT INTO tweets (id, addressed_id, addressed_tweet_id, addressed_username, date_time, link, link_cover, link_cover_size, link_description, link_title, reply_type, scheduled_date, text, author_id, deleted) VALUES (3, null, null, null, '2021-10-15 21:20:21.000000', 'https://www.youtube.com/watch?v=-k9qDxyxS3s&ab_channel=BMTHOfficialVEVO', 'https://i.ytimg.com/vi/-k9qDxyxS3s/mqdefault.jpg', null, null, 'Bring Me The Horizon - Shadow Moses (Official Video)', 'EVERYONE', null, 'https://www.youtube.com/watch?v=-k9qDxyxS3s&ab_channel=BMTHOfficialVEVO', 1, false);
 INSERT INTO tweets (id, addressed_id, addressed_tweet_id, addressed_username, date_time, link, link_cover, link_cover_size, link_description, link_title, reply_type, scheduled_date, text, author_id, deleted) VALUES (2, null, null, null, '2021-10-15 21:20:18.000000', 'https://www.youtube.com/watch?v=ewZZNeYDiLo&ab_channel=TeamSESH', 'https://i.ytimg.com/vi/ewZZNeYDiLo/mqdefault.jpg', null, null, 'Bones - RestInPeace', 'EVERYONE', null, 'https://www.youtube.com/watch?v=ewZZNeYDiLo&ab_channel=TeamSESH', 1, false);
--- tweets_images
-INSERT INTO tweets_images (tweet_id, images_id) VALUES (6, 1);
-INSERT INTO tweets_images (tweet_id, images_id) VALUES (8, 4);
-INSERT INTO tweets_images (tweet_id, images_id) VALUES (10, 6);
-INSERT INTO tweets_images (tweet_id, images_id) VALUES (12, 8);
 -- tweet_images
 INSERT INTO tweet_images (id, src) VALUES (1, 'https://perfumeweb2.s3.eu-central-1.amazonaws.com/0a6c735d-def8-4587-a29f-221915ef6cb4_ff2d023b3220f93bbc79233614dea542.jpg');
 INSERT INTO tweet_images (id, src) VALUES (4, 'https://perfumeweb2.s3.eu-central-1.amazonaws.com/25e1a117-8eac-4156-9cc3-2311319082af_EH0yOTgWwAAXPdT.png');
 INSERT INTO tweet_images (id, src) VALUES (6, 'https://perfumeweb2.s3.eu-central-1.amazonaws.com/ac48eb0e-73e7-4887-a523-47c5a557d1ad_Ec1OBK3XsAEjVZR.png');
 INSERT INTO tweet_images (id, src) VALUES (8, 'https://perfumeweb2.s3.eu-central-1.amazonaws.com/a2692fac-4b70-4828-845c-2fe439473f82_Cl5DjoUWYAAslnd.jfif');
+-- tweets_images
+INSERT INTO tweets_images (tweet_id, images_id) VALUES (6, 1);
+INSERT INTO tweets_images (tweet_id, images_id) VALUES (8, 4);
+INSERT INTO tweets_images (tweet_id, images_id) VALUES (10, 6);
+INSERT INTO tweets_images (tweet_id, images_id) VALUES (12, 8);
 -- tweet_quote
 INSERT INTO tweet_quote (quote_tweet_id, tweet_id) VALUES (13, 15);
 -- replies

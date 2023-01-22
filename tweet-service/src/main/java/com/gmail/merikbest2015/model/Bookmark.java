@@ -30,10 +30,4 @@ public class Bookmark {
     @NonNull
     @Column(name = "user_id", nullable = false)
     private Long userId;
-//    @ManyToOne
-//    @JoinColumn(name = "users_id")
-//    private User user;
-
-//    @OneToOne
-//    private Tweet tweet;
 }

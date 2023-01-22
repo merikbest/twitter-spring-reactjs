@@ -30,11 +30,4 @@ public class Retweet {
     @NonNull
     @Column(name = "user_id", nullable = false)
     private Long userId;
-//    @ManyToOne
-//    @JoinColumn(name = "users_id")
-//    private User user;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "tweets_id")
-//    private Tweet tweet;
 }
