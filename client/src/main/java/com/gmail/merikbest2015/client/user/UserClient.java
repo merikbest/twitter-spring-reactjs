@@ -6,10 +6,7 @@ import com.gmail.merikbest2015.commons.projection.UserChatProjection;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -64,13 +61,13 @@ public interface UserClient {
     @GetMapping(API_V1_USER + "/notification/{userId}")
     void increaseNotificationsCount(@PathVariable("userId") Long userId);
 
-    @GetMapping(API_V1_USER + "/like/count/{increaseCount}")
+    @PutMapping(API_V1_USER + "/like/count/{increaseCount}")
     void updateLikeCount(@PathVariable("increaseCount") boolean increaseCount);
 
-    @GetMapping(API_V1_USER + "/tweet/count/{increaseCount}")
+    @PutMapping(API_V1_USER + "/tweet/count/{increaseCount}")
     void updateTweetCount(@PathVariable("increaseCount") boolean increaseCount);
 
-    @GetMapping(API_V1_USER + "/media/count/{increaseCount}")
+    @PutMapping(API_V1_USER + "/media/count/{increaseCount}")
     void updateMediaTweetCount(@PathVariable("increaseCount") boolean increaseCount);
 
     @GetMapping(API_V1_USER + "/tweet/create/{userId}/{tweetId}")

@@ -12,5 +12,5 @@ import static com.gmail.merikbest2015.controller.PathConstants.API_V1_NOTIFICATI
 public interface NotificationClient {
 
     @PostMapping(API_V1_NOTIFICATION + "/list")
-    void createListNotification(@RequestBody NotificationRequest request);
+    void sendListNotification(@RequestBody NotificationRequest request);
 }

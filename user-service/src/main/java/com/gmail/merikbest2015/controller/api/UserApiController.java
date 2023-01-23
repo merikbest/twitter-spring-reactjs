@@ -56,7 +56,7 @@ public class UserApiController {
     }
 
     @GetMapping("/subscribers/{userId}")
-    public List<User> getSubscribersByUserId(@PathVariable("userId") Long userId) {
+    public List<Long> getSubscribersByUserId(@PathVariable("userId") Long userId) {
         return userService.getSubscribersByUserId(userId);
     }
 
@@ -105,12 +105,12 @@ public class UserApiController {
         userService.updateLikeCount(increaseCount);
     }
 
-    @GetMapping("/tweet/count/{increaseCount}")
+    @PutMapping("/tweet/count/{increaseCount}")
     public void updateTweetCount(@PathVariable("increaseCount") boolean increaseCount) {
         userService.updateTweetCount(increaseCount);
     }
 
-    @GetMapping("/media/count/{increaseCount}")
+    @PutMapping("/media/count/{increaseCount}")
     public void updateMediaTweetCount(@PathVariable("increaseCount") boolean increaseCount) {
         userService.updateMediaTweetCount(increaseCount);
     }
@@ -161,5 +161,15 @@ public class UserApiController {
     public HeaderResponse<UserResponse> getRetweetedUsersByTweetId(@RequestBody UserIdsRequest request,
                                                                    @SpringQueryMap Pageable pageable) {
         return userService.getRetweetedUsersByTweetId(request, pageable);
+    }
+
+    @PutMapping("/tweet/pinned/{tweetId}")
+    public void updatePinnedTweetId(@PathVariable("tweetId") Long tweetId) {
+        userService.updatePinnedTweetId(tweetId);
+    }
+
+    @GetMapping("/ids/{text}")
+    public List<Long> getUserIdsByUsername(@PathVariable("text") String text) {
+        return userService.getUserIdsByUsername(text);
     }
 }

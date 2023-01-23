@@ -21,7 +21,7 @@ public class Poll {
     private Long id;
 
     @Column(name = "date_time")
-    private LocalDateTime dateTime = LocalDateTime.now();
+    private LocalDateTime dateTime;
 
     @OneToOne(mappedBy = "poll")
     private Tweet tweet;

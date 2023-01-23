@@ -284,6 +284,7 @@ create table users
     tweet_count           int8    default 0,
     username              varchar(255),
     website               varchar(255),
+    pinned_tweet_id       int8,
     primary key (id)
 );
 create table users_notifications

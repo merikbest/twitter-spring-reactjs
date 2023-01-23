@@ -112,10 +112,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "AND subscriber.id = :userId ")
     List<TweetAuthorsProjection> getNotificationsTweetAuthors(@Param("userId") Long userId);
 
-    @Query("SELECT subscriber FROM User user " +
+    @Query("SELECT subscriber.id FROM User user " +
             "LEFT JOIN user.subscribers subscriber " +
             "WHERE user.id = :userId")
-    List<UserSubscriberProjection> getSubscribersByUserId(@Param("userId") Long userId);
+    List<Long> getSubscribersByUserId(@Param("userId") Long userId);
 
     @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user " +
             "LEFT JOIN user.following following " +
@@ -297,5 +297,27 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Page<UserProjection> getTweetLikedUsersByIds(@Param("userIds") List<Long> userIds, Pageable pageable);
 
     @Query("SELECT user FROM User user WHERE user.id IN :userIds")
-    Page<UserProjection> getRetweetedUsersByTweetId(List<Long> userIds, Pageable pageable);
+    Page<UserProjection> getRetweetedUsersByTweetId(@Param("userIds") List<Long> userIds, Pageable pageable);
+
+    @Query("SELECT user.pinnedTweetId FROM User user WHERE user.id = :userId")
+    Long getPinnedTweetId(@Param("userId") Long userId);
+
+    @Modifying
+    @Query("UPDATE User user SET user.pinnedTweetId = :pinnedTweetId WHERE user.id = :userId")
+    void updatePinnedTweetId(@Param("pinnedTweetId") Long pinnedTweetId, @Param("userId") Long userId);
+
+    @Query("SELECT user.id FROM User user " +
+            "LEFT JOIN user.userBlockedList blockedUser " +
+            "LEFT JOIN user.following following " +
+            "WHERE UPPER(user.fullName) LIKE UPPER(CONCAT('%',:username,'%')) " +
+            "   AND user.privateProfile = false " +
+            "   AND (user.privateProfile = false OR user.privateProfile = true AND following.id = :userId) " +
+            "   AND user.active = true " +
+            "   AND blockedUser.id <> :userId " +
+            "OR UPPER(user.username) LIKE UPPER(CONCAT('%',:username,'%')) " +
+            "   AND user.privateProfile = false " +
+            "   AND (user.privateProfile = false OR user.privateProfile = true AND following.id = :userId) " +
+            "   AND user.active = true " +
+            "   AND blockedUser.id <> :userId")
+    List<Long> getUserIdsByUsername(@Param("username") String username);
 }

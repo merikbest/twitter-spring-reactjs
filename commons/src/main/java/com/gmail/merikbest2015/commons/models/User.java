@@ -113,7 +113,10 @@ public class User {
     @JoinTable(name = "user_pinned_tweet",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "tweet_id"))
-    private Tweet pinnedTweet;
+    private Tweet pinnedTweet; // replace with: private Long pinnedTweetId;
+
+    @Column(name = "pinned_tweet_id")
+    private Long pinnedTweetId;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "user_avatar",

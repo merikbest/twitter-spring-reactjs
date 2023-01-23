@@ -14,8 +14,12 @@ public class NotificationMapper {
     private final BasicMapper basicMapper;
     private final NotificationService notificationService;
 
-    public NotificationResponse createListNotification(NotificationRequest request) {
+    public NotificationResponse sendListNotification(NotificationRequest request) {
         Notification notification = basicMapper.convertToResponse(request, Notification.class);
-        return notificationService.createListNotification(notification, request.isAddedToList());
+        return notificationService.sendListNotification(notification, request.isNotificationCondition());
+    }
+
+    public void sendTweetNotificationToSubscribers(Long tweetId) {
+        notificationService.sendTweetNotificationToSubscribers(tweetId);
     }
 }

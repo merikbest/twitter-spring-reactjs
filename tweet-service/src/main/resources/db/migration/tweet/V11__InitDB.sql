@@ -62,7 +62,7 @@ create table tweet_poll
 create table polls
 (
     id        int8 not null,
-    date_time timestamp default current_timestamp,
+    date_time timestamp,
     primary key (id)
 );
 create table polls_poll_choices
@@ -78,8 +78,10 @@ create table poll_choices
 );
 create table poll_choice_voted
 (
+    id             int8 not null,
     poll_choice_id int8 not null,
-    voted_user_id  int8 not null
+    voted_user_id  int8 not null,
+    primary key (id)
 );
 create table liked_tweets
 (

@@ -5,7 +5,7 @@ import com.gmail.merikbest2015.commons.enums.ColorSchemeType;
 
 import java.time.LocalDateTime;
 
-public interface UserSubscriberProjection {
+public interface UserSubscriberProjection { // DEL
     Long getId();
     String getEmail();
     String getFullName();

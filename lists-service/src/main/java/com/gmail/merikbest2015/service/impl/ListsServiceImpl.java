@@ -195,7 +195,7 @@ public class ListsServiceImpl implements ListsService {
                 if (member == null) {
                     ListsMembers newMember = new ListsMembers(list.getListId(), listsRequest.getUserId());
                     listsMembersRepository.save(newMember);
-                    notificationClient.createListNotification(new NotificationRequest(
+                    notificationClient.sendListNotification(new NotificationRequest(
                             true, listsRequest.getUserId(), authUserId, list.getListId()));
                 }
             }
@@ -221,7 +221,7 @@ public class ListsServiceImpl implements ListsService {
             ListsMembers newMember = new ListsMembers(listId, userId);
             listsMembersRepository.save(newMember);
             isAddedToList = true;
-            notificationClient.createListNotification(new NotificationRequest(true, userId, authUserId, listId));
+            notificationClient.sendListNotification(new NotificationRequest(true, userId, authUserId, listId));
         }
         return isAddedToList;
     }

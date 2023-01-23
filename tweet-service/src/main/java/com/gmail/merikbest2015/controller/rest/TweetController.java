@@ -67,80 +67,80 @@ public class TweetController {
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-//    @GetMapping("/{tweetId}/retweeted-users")
-//    public ResponseEntity<List<UserResponse>> getRetweetedUsersByTweetId(@PathVariable("tweetId") Long tweetId,
-//                                                                         @PageableDefault(size = 15) Pageable pageable) {
-//        HeaderResponse<UserResponse> response = tweetMapper.getRetweetedUsersByTweetId(tweetId, pageable);
-//        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
-//    }
-//
-//    @GetMapping("/media")
-//    public ResponseEntity<List<TweetResponse>> getMediaTweets(@PageableDefault(size = 10) Pageable pageable) {
-//        HeaderResponse<TweetResponse> response = tweetMapper.getMediaTweets(pageable);
-//        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
-//    }
-//
-//    @GetMapping("/video")
-//    public ResponseEntity<List<TweetResponse>> getTweetsWithVideo(@PageableDefault(size = 10) Pageable pageable) {
-//        HeaderResponse<TweetResponse> response = tweetMapper.getTweetsWithVideo(pageable);
-//        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
-//    }
-//
-//    @GetMapping("/follower")
-//    public ResponseEntity<List<TweetResponse>> getFollowersTweets(@PageableDefault(size = 10) Pageable pageable) {
-//        HeaderResponse<TweetResponse> response = tweetMapper.getFollowersTweets(pageable);
-//        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
-//    }
-//
-//    @GetMapping("/schedule")
-//    public ResponseEntity<List<TweetResponse>> getScheduledTweets(@PageableDefault(size = 15) Pageable pageable) {
-//        HeaderResponse<TweetResponse> response = tweetMapper.getScheduledTweets(pageable);
-//        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
-//    }
-//
-//    @PostMapping
-//    public ResponseEntity<TweetResponse> createTweet(@RequestBody TweetRequest tweetRequest) {
-//        TweetResponse tweet = tweetMapper.createTweet(tweetRequest);
-//        messagingTemplate.convertAndSend("/topic/feed/add", tweet);
-//        messagingTemplate.convertAndSend("/topic/user/add/tweet/" + tweet.getUser().getId(), tweet);
-//        return ResponseEntity.ok(tweet);
-//    }
-//
-//    @PostMapping("/poll")
-//    public ResponseEntity<TweetResponse> createPoll(@RequestBody TweetRequest tweetRequest) {
-//        TweetResponse tweet = tweetMapper.createPoll(tweetRequest);
-//        messagingTemplate.convertAndSend("/topic/feed/add", tweet);
-//        messagingTemplate.convertAndSend("/topic/user/add/tweet/" + tweet.getUser().getId(), tweet);
-//        return ResponseEntity.ok(tweet);
-//    }
-//
-//    @PostMapping("/schedule")
-//    public ResponseEntity<TweetResponse> createScheduledTweet(@RequestBody TweetRequest tweetRequest) {
-//        return ResponseEntity.ok(tweetMapper.createTweet(tweetRequest));
-//    }
-//
-//    @PutMapping("/schedule")
-//    public ResponseEntity<TweetResponse> updateScheduledTweet(@RequestBody TweetRequest tweetRequest) {
-//        return ResponseEntity.ok(tweetMapper.updateScheduledTweet(tweetRequest));
-//    }
-//
-//    @DeleteMapping("/schedule")
-//    public ResponseEntity<String> deleteScheduledTweets(@RequestBody TweetDeleteRequest tweetRequest) {
-//        return ResponseEntity.ok(tweetMapper.deleteScheduledTweets(tweetRequest));
-//    }
-//
-//    @DeleteMapping("/{tweetId}")
-//    public ResponseEntity<String> deleteTweet(@PathVariable("tweetId") Long tweetId) {
-//        return ResponseEntity.ok(tweetMapper.deleteTweet(tweetId));
-//    }
-//
-//    @GetMapping("/search/{text}")
-//    public ResponseEntity<List<TweetResponse>> searchTweets(@PathVariable("text") String text,
-//                                                            @PageableDefault Pageable pageable) {
-//        HeaderResponse<TweetResponse> response = tweetMapper.searchTweets(text, pageable);
-//        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
-//    }
-//
+    @GetMapping("/{tweetId}/retweeted-users")
+    public ResponseEntity<List<UserResponse>> getRetweetedUsersByTweetId(@PathVariable("tweetId") Long tweetId,
+                                                                         @PageableDefault(size = 15) Pageable pageable) {
+        HeaderResponse<UserResponse> response = tweetMapper.getRetweetedUsersByTweetId(tweetId, pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
+    }
+
+    @GetMapping("/media")
+    public ResponseEntity<List<TweetResponse>> getMediaTweets(@PageableDefault(size = 10) Pageable pageable) {
+        HeaderResponse<TweetResponse> response = tweetMapper.getMediaTweets(pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
+    }
+
+    @GetMapping("/video")
+    public ResponseEntity<List<TweetResponse>> getTweetsWithVideo(@PageableDefault(size = 10) Pageable pageable) {
+        HeaderResponse<TweetResponse> response = tweetMapper.getTweetsWithVideo(pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
+    }
+
+    @GetMapping("/follower")
+    public ResponseEntity<List<TweetResponse>> getFollowersTweets(@PageableDefault(size = 10) Pageable pageable) {
+        HeaderResponse<TweetResponse> response = tweetMapper.getFollowersTweets(pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
+    }
+
+    @GetMapping("/schedule")
+    public ResponseEntity<List<TweetResponse>> getScheduledTweets(@PageableDefault(size = 15) Pageable pageable) {
+        HeaderResponse<TweetResponse> response = tweetMapper.getScheduledTweets(pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
+    }
+
+    @PostMapping
+    public ResponseEntity<TweetResponse> createTweet(@RequestBody TweetRequest tweetRequest) {
+        TweetResponse tweet = tweetMapper.createTweet(tweetRequest);
+        messagingTemplate.convertAndSend("/topic/feed/add", tweet);
+        messagingTemplate.convertAndSend("/topic/user/add/tweet/" + tweet.getUser().getId(), tweet);
+        return ResponseEntity.ok(tweet);
+    }
+
+    @PostMapping("/poll")
+    public ResponseEntity<TweetResponse> createPoll(@RequestBody TweetRequest tweetRequest) {
+        TweetResponse tweet = tweetMapper.createPoll(tweetRequest);
+        messagingTemplate.convertAndSend("/topic/feed/add", tweet);
+        messagingTemplate.convertAndSend("/topic/user/add/tweet/" + tweet.getUser().getId(), tweet);
+        return ResponseEntity.ok(tweet);
+    }
+
+    @PostMapping("/schedule")
+    public ResponseEntity<TweetResponse> createScheduledTweet(@RequestBody TweetRequest tweetRequest) {
+        return ResponseEntity.ok(tweetMapper.createTweet(tweetRequest));
+    }
+
+    @PutMapping("/schedule")
+    public ResponseEntity<TweetResponse> updateScheduledTweet(@RequestBody TweetRequest tweetRequest) {
+        return ResponseEntity.ok(tweetMapper.updateScheduledTweet(tweetRequest));
+    }
+
+    @DeleteMapping("/schedule")
+    public ResponseEntity<String> deleteScheduledTweets(@RequestBody TweetDeleteRequest tweetRequest) {
+        return ResponseEntity.ok(tweetMapper.deleteScheduledTweets(tweetRequest));
+    }
+
+    @DeleteMapping("/{tweetId}")
+    public ResponseEntity<String> deleteTweet(@PathVariable("tweetId") Long tweetId) {
+        return ResponseEntity.ok(tweetMapper.deleteTweet(tweetId));
+    }
+
+    @GetMapping("/search/{text}")
+    public ResponseEntity<List<TweetResponse>> searchTweets(@PathVariable("text") String text,
+                                                            @PageableDefault Pageable pageable) {
+        HeaderResponse<TweetResponse> response = tweetMapper.searchTweets(text, pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
+    }
+
 //    @GetMapping("/like/{userId}/{tweetId}")
 //    public ResponseEntity<NotificationTweetResponse> likeTweet(@PathVariable("userId") Long userId,
 //                                                               @PathVariable("tweetId") Long tweetId) {

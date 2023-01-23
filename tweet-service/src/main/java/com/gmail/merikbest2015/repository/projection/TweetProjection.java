@@ -49,10 +49,10 @@ public interface TweetProjection {
     @Value("#{@likeTweetRepository.getLikedTweetsSize(target.id)}")
     Long getLikedTweetsCount();
 
-    @Value("#{target.replies.size()}")
+    @Value("#{target.replies != null ? target.replies.size() : 0}")
     Long getRepliesCount();
 
-    @Value("#{target.quotes.size()}")
+    @Value("#{target.quotes != null ? target.quotes.size() : 0}")
     Long getQuotesCount();
 
     interface QuoteTweetProjection {

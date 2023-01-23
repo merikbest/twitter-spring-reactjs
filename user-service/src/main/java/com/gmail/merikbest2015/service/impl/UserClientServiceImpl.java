@@ -70,9 +70,8 @@ public class UserClientServiceImpl implements UserClientService {
     }
 
     @Override
-    public List<User> getSubscribersByUserId(Long userId) {
-        List<UserSubscriberProjection> subscribers = userRepository.getSubscribersByUserId(userId);
-        return basicMapper.convertToResponseList(subscribers, User.class);
+    public List<Long> getSubscribersByUserId(Long userId) {
+        return userRepository.getSubscribersByUserId(userId);
     }
 
     @Override
@@ -190,5 +189,22 @@ public class UserClientServiceImpl implements UserClientService {
     public HeaderResponse<UserResponse> getRetweetedUsersByTweetId(UserIdsRequest request, Pageable pageable) {
         Page<UserProjection> users = userRepository.getRetweetedUsersByTweetId(request.getUserIds(), pageable);
         return basicMapper.getHeaderResponse(users, UserResponse.class);
+    }
+
+    @Override
+    @Transactional
+    public void updatePinnedTweetId(Long tweetId) {
+        Long userId = AuthUtil.getAuthenticatedUserId();
+        Long pinnedTweetId = userRepository.getPinnedTweetId(userId);
+
+        if (pinnedTweetId != null && pinnedTweetId.equals(tweetId)) {
+            userRepository.updatePinnedTweetId(null, userId);
+        }
+    }
+
+    @Override
+    public List<Long> getUserIdsByUsername(String text) {
+        Long userId = AuthUtil.getAuthenticatedUserId();
+        return userRepository.getUserIdsByUsername(text);
     }
 }

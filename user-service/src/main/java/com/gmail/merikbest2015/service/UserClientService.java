@@ -26,7 +26,7 @@ public interface UserClientService {
 
     User getAuthNotificationUser(Long authUserId);
 
-    List<User> getSubscribersByUserId(Long userId);
+    List<Long> getSubscribersByUserId(Long userId);
 
     Boolean isUserFollowByOtherUser(Long userId);
 
@@ -67,4 +67,8 @@ public interface UserClientService {
     HeaderResponse<UserResponse> getTweetLikedUsersByIds(UserIdsRequest request, Pageable pageable);
 
     HeaderResponse<UserResponse> getRetweetedUsersByTweetId(UserIdsRequest request, Pageable pageable);
+
+    void updatePinnedTweetId(Long tweetId);
+
+    List<Long> getUserIdsByUsername(String text);
 }
