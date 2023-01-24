@@ -168,8 +168,8 @@ public class UserApiController {
         userService.updatePinnedTweetId(tweetId);
     }
 
-    @GetMapping("/ids/{text}")
-    public List<Long> getUserIdsByUsername(@PathVariable("text") String text) {
-        return userService.getUserIdsByUsername(text);
+    @PostMapping("/tweet/valid/ids/{text}")
+    public List<Long> getValidUserIds(@RequestBody UserIdsRequest request, @PathVariable("text") String text) {
+        return userService.getValidUserIds(request, text);
     }
 }

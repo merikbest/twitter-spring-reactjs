@@ -19,6 +19,11 @@ public class NotificationMapper {
         return notificationService.sendListNotification(notification, request.isNotificationCondition());
     }
 
+    public NotificationResponse sendTweetNotification(NotificationRequest request) {
+        Notification notification = basicMapper.convertToResponse(request, Notification.class);
+        return notificationService.sendTweetNotification(notification, request.isNotificationCondition());
+    }
+
     public void sendTweetNotificationToSubscribers(Long tweetId) {
         notificationService.sendTweetNotificationToSubscribers(tweetId);
     }

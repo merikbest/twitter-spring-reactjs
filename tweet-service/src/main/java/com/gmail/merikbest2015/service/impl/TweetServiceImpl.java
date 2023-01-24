@@ -1,11 +1,10 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.dto.HeaderResponse;
-import com.gmail.merikbest2015.dto.TweetAdditionalInfoUserResponse;
-import com.gmail.merikbest2015.dto.TweetAuthorResponse;
-import com.gmail.merikbest2015.dto.UserResponse;
+import com.gmail.merikbest2015.dto.*;
 import com.gmail.merikbest2015.dto.lists.UserIdsRequest;
+import com.gmail.merikbest2015.dto.notification.NotificationResponse;
 import com.gmail.merikbest2015.enums.LinkCoverSize;
+import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.NotificationClient;
 import com.gmail.merikbest2015.feign.TagClient;
@@ -46,6 +45,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -207,14 +208,14 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public Page<TweetProjection> searchTweets(String text, Pageable pageable) {
-        // search tweets by text or username/fullName
-        List<Long> userIdsByUsername = userClient.getUserIdsByUsername(text);
-        return tweetRepository.findAllByText(userIdsByUsername, text, pageable);
+        List<Long> userIds = tweetRepository.getUserIdsByTweetText(text);
+        List<Long> validUserIds = userClient.getValidUserIds(new UserIdsRequest(userIds), text);
+        return tweetRepository.findAllByText(validUserIds, pageable);
     }
 
     @Override
     @Transactional
-    public Map<String, Object> likeTweet(Long tweetId) {
+    public NotificationResponse likeTweet(Long tweetId) {
         Long userId = AuthUtil.getAuthenticatedUserId();
         Tweet tweet = tweetRepository.findById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
@@ -232,8 +233,8 @@ public class TweetServiceImpl implements TweetService {
             userClient.updateLikeCount(true);
             isTweetLiked = true;
         }
-        return null;
-//        return notificationHandler(authUser, tweet, NotificationType.LIKE, isTweetLiked);
+        return notificationClient.sendTweetNotification(new NotificationRequest(NotificationType.LIKE, isTweetLiked,
+                tweet.getAuthorId(), userId, tweetId));
     }
 
 //    @Override

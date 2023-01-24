@@ -1,5 +1,7 @@
 package com.gmail.merikbest2015.service;
 
+import com.gmail.merikbest2015.dto.notification.NotificationTweetResponse;
+
 public interface TweetClientService {
 
 //    Optional<Tweet> getTweetById(Long userId);
@@ -21,4 +23,7 @@ public interface TweetClientService {
 //    List<TweetProjection> getTweetsByIds(List<Long> tweetIds);
 //
 //    Page<TweetProjection> getTweetsByUserIds(TweetUserIdsRequest request, Pageable pageable);
+
+    // NEW
+    NotificationTweetResponse getNotificationTweet(Long tweetId);
 }

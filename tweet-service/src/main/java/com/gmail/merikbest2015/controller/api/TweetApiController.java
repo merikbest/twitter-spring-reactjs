@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.controller.api;
 
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.TweetResponse;
+import com.gmail.merikbest2015.dto.notification.NotificationTweetResponse;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.mapper.TweetClientMapper;
 import com.gmail.merikbest2015.model.Tweet;
@@ -78,4 +79,10 @@ public class TweetApiController {
 //        Page<TweetProjection> tweets = tweetClientService.getTweetsByUserIds(request, pageable);
 //        return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
 //    }
+
+    // NEW
+    @GetMapping(API_V1_TWEETS + "/{tweetId}")
+    public NotificationTweetResponse getNotificationTweet(@PathVariable("tweetId") Long tweetId) {
+        return tweetClientService.getNotificationTweet(tweetId);
+    }
 }

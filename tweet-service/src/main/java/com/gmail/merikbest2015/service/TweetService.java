@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.UserResponse;
+import com.gmail.merikbest2015.dto.notification.NotificationResponse;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.projection.TweetAdditionalInfoProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
@@ -47,7 +48,7 @@ public interface TweetService {
 
     Page<TweetProjection> searchTweets(String text, Pageable pageable);
 
-    Map<String, Object> likeTweet(Long tweetId);
+    NotificationResponse likeTweet(Long tweetId);
 
 //    Map<String, Object> retweet(Long tweetId);
 //

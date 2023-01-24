@@ -307,17 +307,19 @@ public interface UserRepository extends JpaRepository<User, Long> {
     void updatePinnedTweetId(@Param("pinnedTweetId") Long pinnedTweetId, @Param("userId") Long userId);
 
     @Query("SELECT user.id FROM User user " +
-            "LEFT JOIN user.userBlockedList blockedUser " +
             "LEFT JOIN user.following following " +
-            "WHERE UPPER(user.fullName) LIKE UPPER(CONCAT('%',:username,'%')) " +
-            "   AND user.privateProfile = false " +
-            "   AND (user.privateProfile = false OR user.privateProfile = true AND following.id = :userId) " +
-            "   AND user.active = true " +
-            "   AND blockedUser.id <> :userId " +
-            "OR UPPER(user.username) LIKE UPPER(CONCAT('%',:username,'%')) " +
-            "   AND user.privateProfile = false " +
-            "   AND (user.privateProfile = false OR user.privateProfile = true AND following.id = :userId) " +
-            "   AND user.active = true " +
-            "   AND blockedUser.id <> :userId")
-    List<Long> getUserIdsByUsername(@Param("username") String username);
+            "WHERE user.id IN :userIds " +
+            "AND (user.privateProfile = false OR (user.privateProfile = true AND following.id IN :userIds) " +
+            "   AND user.active = true)")
+    List<Long> getValidUserIdsByIds(@Param("userIds") List<Long> userIds);
+
+    @Query("SELECT user.id FROM User user " +
+            "LEFT JOIN user.following following " +
+            "WHERE (UPPER(user.fullName) LIKE UPPER(CONCAT('%',:username,'%')) " +
+            "   AND (user.privateProfile = false OR (user.privateProfile = true AND following.id IN :userIds) " +
+            "       AND user.active = true)) " +
+            "OR (UPPER(user.username) LIKE UPPER(CONCAT('%',:username,'%')) " +
+            "   AND (user.privateProfile = false OR (user.privateProfile = true AND following.id IN :userIds) " +
+            "       AND user.active = true))")
+    List<Long> getValidUserIdsByName(@Param("username") String username);
 }

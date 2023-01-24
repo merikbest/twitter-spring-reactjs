@@ -141,20 +141,14 @@ public class TweetController {
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-//    @GetMapping("/like/{userId}/{tweetId}")
-//    public ResponseEntity<NotificationTweetResponse> likeTweet(@PathVariable("userId") Long userId,
-//                                                               @PathVariable("tweetId") Long tweetId) {
-//        NotificationResponse notification = tweetMapper.likeTweet(tweetId);
-//
-//        if (notification.getId() != null) {
-//            messagingTemplate.convertAndSend("/topic/notifications/" + notification.getTweet().getUser().getId(), notification);
-//        }
-//        messagingTemplate.convertAndSend("/topic/feed", notification);
-//        messagingTemplate.convertAndSend("/topic/tweet/" + notification.getTweet().getId(), notification);
-//        messagingTemplate.convertAndSend("/topic/user/update/tweet/" + userId, notification);
-//        return ResponseEntity.ok(notification.getTweet());
-//    }
-//
+    @GetMapping("/like/{userId}/{tweetId}")
+    public ResponseEntity<NotificationTweetResponse> likeTweet(@PathVariable("userId") Long userId,
+                                                               @PathVariable("tweetId") Long tweetId) {
+        NotificationResponse notification = tweetMapper.likeTweet(tweetId);
+        messagingTemplate.convertAndSend("/topic/user/update/tweet/" + userId, notification);
+        return ResponseEntity.ok(notification.getTweet());
+    }
+
 //    @GetMapping("/retweet/{userId}/{tweetId}")
 //    public ResponseEntity<NotificationTweetResponse> retweet(@PathVariable("userId") Long userId,
 //                                                             @PathVariable("tweetId") Long tweetId) {

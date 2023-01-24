@@ -26,6 +26,18 @@ public class NotificationController {
         }
     }
 
+    @PostMapping("/tweet")
+    public NotificationResponse sendTweetNotification(@RequestBody NotificationRequest request) {
+        NotificationResponse notification = notificationMapper.sendTweetNotification(request);
+
+        if (notification.getId() != null) {
+            messagingTemplate.convertAndSend("/topic/notifications/" + notification.getTweet().getAuthorId(), notification);
+        }
+        messagingTemplate.convertAndSend("/topic/feed", notification);
+        messagingTemplate.convertAndSend("/topic/tweet/" + notification.getTweet().getId(), notification);
+        return notification;
+    }
+
     @GetMapping("/tweet/{tweetId}")
     public void sendTweetNotificationToSubscribers(@PathVariable("tweetId") Long tweetId) {
         notificationMapper.sendTweetNotificationToSubscribers(tweetId);

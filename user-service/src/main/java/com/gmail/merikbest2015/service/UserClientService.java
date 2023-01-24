@@ -70,5 +70,5 @@ public interface UserClientService {
 
     void updatePinnedTweetId(Long tweetId);
 
-    List<Long> getUserIdsByUsername(String text);
+    List<Long> getValidUserIds(UserIdsRequest request, String text);
 }

@@ -8,6 +8,6 @@ import lombok.Setter;
 public class NotificationTweetResponse {
     private Long id;
     private String text;
-    private NotificationCommonUserResponse user;
+    private Long authorId;
     private boolean notificationCondition;
 }

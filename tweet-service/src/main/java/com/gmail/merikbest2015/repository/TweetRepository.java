@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.repository;
 
 import com.gmail.merikbest2015.model.Tweet;
+import com.gmail.merikbest2015.repository.projection.NotificationTweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetAdditionalInfoProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import org.springframework.data.domain.Page;
@@ -72,14 +73,14 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     Optional<Tweet> getTweetByUserId(@Param("userId") Long userId);
 
     @Query("SELECT tweet FROM Tweet tweet " +
-            "WHERE tweet.scheduledDate IS NULL AND tweet.deleted = false " +
-//            "AND (tweet.text LIKE CONCAT('%',:text,'%') AND tweet.authorId IN :userIds) " +
-//            "OR tweet.scheduledDate IS NULL AND tweet.deleted = false " +
-            "AND (tweet.text LIKE CONCAT('%',:text,'%') OR tweet.authorId IN :userIds) " +
+            "WHERE tweet.scheduledDate IS NULL " +
+            "AND tweet.deleted = false " +
+            "AND tweet.authorId IN :userIds " +
             "ORDER BY tweet.dateTime DESC")
-    Page<TweetProjection> findAllByText(@Param("userIds") List<Long> userIds,
-                                        @Param("text") String text,
-                                        Pageable pageable);
+    Page<TweetProjection> findAllByText(@Param("userIds") List<Long> userIds, Pageable pageable);
+
+    @Query("SELECT tweet.authorId FROM Tweet tweet WHERE tweet.text LIKE CONCAT('%',:text,'%')")
+    List<Long> getUserIdsByTweetText(@Param("text") String text);
 
 //    @Query("SELECT user FROM User user " +
 //            "LEFT JOIN user.retweets retweet " +
@@ -279,4 +280,8 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 //    @Modifying
 //    @Query(value = "INSERT INTO replies (tweets_id, reply_id) VALUES (?1, ?2)", nativeQuery = true)
 //    void addReply(@Param("tweetId") Long tweetId, @Param("replyId") Long replyId);
+
+    // NEW
+    @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId")
+    NotificationTweetProjection getNotificationTweet(@Param("tweetId") Long tweetId);
 }

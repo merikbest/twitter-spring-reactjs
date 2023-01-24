@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -203,8 +204,10 @@ public class UserClientServiceImpl implements UserClientService {
     }
 
     @Override
-    public List<Long> getUserIdsByUsername(String text) {
-        Long userId = AuthUtil.getAuthenticatedUserId();
-        return userRepository.getUserIdsByUsername(text);
+    public List<Long> getValidUserIds(UserIdsRequest request, String text) {
+        List<Long> validUserIds = userRepository.getValidUserIdsByIds(request.getUserIds());
+        List<Long> userIdsByUsername = userRepository.getValidUserIdsByName(text);
+        return Stream.concat(validUserIds.stream(), userIdsByUsername.stream())
+                .distinct().sorted().toList();
     }
 }

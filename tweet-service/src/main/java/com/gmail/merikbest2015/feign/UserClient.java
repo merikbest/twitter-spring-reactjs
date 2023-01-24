@@ -53,9 +53,9 @@ public interface UserClient {
     @PutMapping(API_V1_USER + "/tweet/pinned/{tweetId}")
     void updatePinnedTweetId(@PathVariable("tweetId") Long tweetId);
 
-    @GetMapping(API_V1_USER + "/ids/{text}")
-    List<Long> getUserIdsByUsername(@PathVariable("text") String text);
-
     @PutMapping(API_V1_USER + "/like/count/{increaseCount}")
     void updateLikeCount(@PathVariable("increaseCount") boolean increaseCount);
+
+    @PostMapping(API_V1_USER + "/tweet/valid/ids/{text}")
+    List<Long> getValidUserIds(@RequestBody UserIdsRequest request, @PathVariable("text") String text);
 }

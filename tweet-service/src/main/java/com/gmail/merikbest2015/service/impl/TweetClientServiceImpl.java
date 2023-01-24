@@ -1,6 +1,10 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.dto.notification.NotificationListResponse;
+import com.gmail.merikbest2015.dto.notification.NotificationTweetResponse;
+import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.repository.TweetRepository;
+import com.gmail.merikbest2015.repository.projection.NotificationTweetProjection;
 import com.gmail.merikbest2015.service.TweetClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class TweetClientServiceImpl implements TweetClientService {
 
     private final TweetRepository tweetRepository;
-
+    private final BasicMapper basicMapper;
 //    @Override
 //    public Optional<Tweet> getTweetById(Long userId) {
 //        return tweetRepository.findById(userId);
@@ -62,4 +66,10 @@ public class TweetClientServiceImpl implements TweetClientService {
 //    public Page<TweetProjection> getTweetsByUserIds(TweetUserIdsRequest request, Pageable pageable) {
 //        return tweetRepository.findTweetsByUserIds(request.getUserIds(), pageable);
 //    }
+
+    @Override
+    public NotificationTweetResponse getNotificationTweet(Long tweetId) {
+        NotificationTweetProjection tweet = tweetRepository.getNotificationTweet(tweetId);
+        return basicMapper.convertToResponse(tweet, NotificationTweetResponse.class);
+    }
 }

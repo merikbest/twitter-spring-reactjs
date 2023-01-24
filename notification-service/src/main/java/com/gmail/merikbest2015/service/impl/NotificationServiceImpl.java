@@ -81,22 +81,22 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     private NotificationResponse convertToNotificationListResponse(Notification notification, boolean isAddedToList) {
-        NotificationUserResponse notificationUser = userClient.getNotificationUser(notification.getUserId());
-        NotificationListResponse notificationList = listsClient.getNotificationList(notification.getListId());
+        NotificationUserResponse userResponse = userClient.getNotificationUser(notification.getUserId());
+        NotificationListResponse listResponse = listsClient.getNotificationList(notification.getListId());
         NotificationResponse notificationResponse = basicMapper.convertToResponse(notification, NotificationResponse.class);
-        notificationResponse.setUser(notificationUser);
-        notificationResponse.setList(notificationList);
+        notificationResponse.setUser(userResponse);
+        notificationResponse.setList(listResponse);
         notificationResponse.setAddedToList(isAddedToList);
         return notificationResponse;
     }
 
     private NotificationResponse convertToNotificationTweetResponse(Notification notification, boolean isTweetLiked) {
-        NotificationUserResponse notificationUser = userClient.getNotificationUser(notification.getUserId());
-        NotificationTweetResponse notificationTweet = tweetClient.getNotificationTweet(notification.getTweetId());
-        notificationTweet.setNotificationCondition(isTweetLiked);
+        NotificationUserResponse userResponse = userClient.getNotificationUser(notification.getUserId());
+        NotificationTweetResponse tweetResponse = tweetClient.getNotificationTweet(notification.getTweetId());
+        tweetResponse.setNotificationCondition(isTweetLiked);
         NotificationResponse notificationResponse = basicMapper.convertToResponse(notification, NotificationResponse.class);
-        notificationResponse.setUser(notificationUser);
-        notificationResponse.setTweet(notificationTweet);
+        notificationResponse.setUser(userResponse);
+        notificationResponse.setTweet(tweetResponse);
         return notificationResponse;
     }
 }

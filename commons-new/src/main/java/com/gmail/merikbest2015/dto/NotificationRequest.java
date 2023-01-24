@@ -15,14 +15,6 @@ public class NotificationRequest {
     private Long listId;
     private boolean notificationCondition;
 
-    public NotificationRequest(boolean isAddedToList, Long notifiedUserId, Long userId, Long listId) {
-        this.notificationType = NotificationType.LISTS;
-        this.notificationCondition = isAddedToList;
-        this.notifiedUserId = notifiedUserId;
-        this.userId = userId;
-        this.listId = listId;
-    }
-
     public NotificationRequest(NotificationType notificationType, boolean isTweetLiked, Long notifiedUserId,
                                Long userId, Long tweetId) {
         this.notificationType = notificationType;
@@ -30,5 +22,13 @@ public class NotificationRequest {
         this.notifiedUserId = notifiedUserId;
         this.userId = userId;
         this.tweetId = tweetId;
+    }
+
+    public NotificationRequest(boolean isAddedToList, Long notifiedUserId, Long userId, Long listId) {
+        this.notificationType = NotificationType.LISTS;
+        this.notificationCondition = isAddedToList;
+        this.notifiedUserId = notifiedUserId;
+        this.userId = userId;
+        this.listId = listId;
     }
 }
