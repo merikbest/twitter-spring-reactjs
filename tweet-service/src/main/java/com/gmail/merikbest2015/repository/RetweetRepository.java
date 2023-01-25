@@ -23,6 +23,11 @@ public interface RetweetRepository extends JpaRepository<Retweet, Long> {
     @Query("SELECT retweet.userId FROM Retweet retweet WHERE retweet.tweetId = :tweetId")
     Page<Long> getRetweetedUserIds(@Param("tweetId") Long tweetId, Pageable pageable);
 
+    @Query("SELECT retweet FROM Retweet retweet " +
+            "WHERE retweet.userId = :userId " +
+            "AND retweet.tweetId = :tweetId")
+    Retweet isTweetRetweeted(@Param("userId") Long userId, @Param("tweetId") Long tweetId);
+
 //    @Query("SELECT r AS retweet FROM Retweet r " +
 //            "LEFT JOIN r.user u " +
 //            "LEFT JOIN r.tweet t " +

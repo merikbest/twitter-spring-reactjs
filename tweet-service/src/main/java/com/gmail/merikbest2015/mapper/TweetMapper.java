@@ -6,7 +6,10 @@ import com.gmail.merikbest2015.dto.UserResponse;
 import com.gmail.merikbest2015.dto.notification.NotificationResponse;
 import com.gmail.merikbest2015.dto.request.TweetDeleteRequest;
 import com.gmail.merikbest2015.dto.request.TweetRequest;
+import com.gmail.merikbest2015.dto.response.NotificationReplyResponse;
 import com.gmail.merikbest2015.dto.response.TweetAdditionalInfoResponse;
+import com.gmail.merikbest2015.enums.NotificationType;
+import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.projection.TweetAdditionalInfoProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
@@ -17,7 +20,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -113,6 +115,27 @@ public class TweetMapper {
     public NotificationResponse likeTweet(Long tweetId) {
         return tweetService.likeTweet(tweetId);
     }
+
+    public NotificationResponse retweet(Long tweetId) {
+        return tweetService.retweet(tweetId);
+    }
+
+    public NotificationReplyResponse replyTweet(Long tweetId, TweetRequest tweetRequest) {
+        TweetProjection tweet = tweetService.replyTweet(tweetId, basicMapper.convertToResponse(tweetRequest, Tweet.class));
+        TweetResponse replyTweet = basicMapper.convertToResponse(tweet, TweetResponse.class);
+        return new NotificationReplyResponse(tweetId, NotificationType.REPLY, replyTweet);
+    }
+
+    public TweetResponse quoteTweet(Long tweetId, TweetRequest tweetRequest) {
+        TweetProjection tweet = tweetService.quoteTweet(tweetId, basicMapper.convertToResponse(tweetRequest, Tweet.class));
+        return basicMapper.convertToResponse(tweet, TweetResponse.class);
+    }
+
+    public TweetResponse changeTweetReplyType(Long tweetId, ReplyType replyType) {
+        TweetProjection tweet = tweetService.changeTweetReplyType(tweetId, replyType);
+        return basicMapper.convertToResponse(tweet, TweetResponse.class);
+    }
+
 
 
 //    public TweetResponse getTweetById(Long tweetId) {

@@ -7,6 +7,7 @@ import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -77,10 +78,17 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "AND tweet.deleted = false " +
             "AND tweet.authorId IN :userIds " +
             "ORDER BY tweet.dateTime DESC")
-    Page<TweetProjection> findAllByText(@Param("userIds") List<Long> userIds, Pageable pageable);
+    Page<TweetProjection> searchTweets(@Param("userIds") List<Long> userIds, Pageable pageable);
 
     @Query("SELECT tweet.authorId FROM Tweet tweet WHERE tweet.text LIKE CONCAT('%',:text,'%')")
     List<Long> getUserIdsByTweetText(@Param("text") String text);
+
+    @Modifying
+    @Query(value = "INSERT INTO replies (tweets_id, reply_id) VALUES (?1, ?2)", nativeQuery = true)
+    void addReply(@Param("tweetId") Long tweetId, @Param("replyId") Long replyId);
+
+    @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId AND tweet.authorId = :userId")
+    Optional<Tweet> getTweetByAuthorIdAndTweetId(@Param("tweetId") Long tweetId, @Param("userId") Long userId);
 
 //    @Query("SELECT user FROM User user " +
 //            "LEFT JOIN user.retweets retweet " +

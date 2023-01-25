@@ -5,14 +5,12 @@ import com.gmail.merikbest2015.dto.lists.UserIdsRequest;
 import com.gmail.merikbest2015.dto.notification.NotificationResponse;
 import com.gmail.merikbest2015.enums.LinkCoverSize;
 import com.gmail.merikbest2015.enums.NotificationType;
+import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.NotificationClient;
 import com.gmail.merikbest2015.feign.TagClient;
 import com.gmail.merikbest2015.feign.UserClient;
-import com.gmail.merikbest2015.model.LikeTweet;
-import com.gmail.merikbest2015.model.Poll;
-import com.gmail.merikbest2015.model.PollChoice;
-import com.gmail.merikbest2015.model.Tweet;
+import com.gmail.merikbest2015.model.*;
 import com.gmail.merikbest2015.repository.*;
 import com.gmail.merikbest2015.repository.projection.TweetAdditionalInfoProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
@@ -210,7 +208,7 @@ public class TweetServiceImpl implements TweetService {
     public Page<TweetProjection> searchTweets(String text, Pageable pageable) {
         List<Long> userIds = tweetRepository.getUserIdsByTweetText(text);
         List<Long> validUserIds = userClient.getValidUserIds(new UserIdsRequest(userIds), text);
-        return tweetRepository.findAllByText(validUserIds, pageable);
+        return tweetRepository.searchTweets(validUserIds, pageable);
     }
 
     @Override
@@ -237,68 +235,64 @@ public class TweetServiceImpl implements TweetService {
                 tweet.getAuthorId(), userId, tweetId));
     }
 
-//    @Override
-//    @Transactional
-//    public Map<String, Object> retweet(Long tweetId) {
-//        User authUser = userClient.getAuthNotificationUser(AuthUtil.getAuthenticatedUserId());
-//        Tweet tweet = tweetRepository.findById(tweetId)
-//                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-//        checkIsValidUserProfile(tweet.getUser().getId());
-//        boolean isTweetRetweeted = retweetRepository.isTweetRetweeted(authUser.getId(), tweet.getId());
-//        boolean retweeted;
-//
-//        if (isTweetRetweeted) {
-//            retweetRepository.removeRetweetedTweet(authUser.getId(), tweet.getId());
-//            userClient.updateTweetCount(false);
-//            retweeted = false;
-//        } else {
-//            BigDecimal id = retweetRepository.getNextVal();
-//            retweetRepository.addRetweetedTweet(id, authUser.getId(), tweet.getId());
-//            userClient.updateTweetCount(true);
-//            retweeted = true;
-//        }
-//        return notificationHandler(authUser, tweet, NotificationType.RETWEET, retweeted);
-//    }
-//
-//    @Override
-//    @Transactional
-//    public TweetProjection replyTweet(Long tweetId, Tweet reply) {
-//        Tweet tweet = tweetRepository.findById(tweetId)
-//                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-//        checkIsValidUserProfile(tweet.getUser().getId());
-//        reply.setAddressedTweetId(tweetId);
-//        Tweet replyTweet = createTweet(reply);
-//        tweetRepository.addReply(tweetId, replyTweet.getId());
-//        return tweetRepository.findTweetById(replyTweet.getId()).get();
-//    }
-//
-//    @Override
-//    @Transactional
-//    public TweetProjection quoteTweet(Long tweetId, Tweet quote) {
-//        Tweet tweet = tweetRepository.findById(tweetId)
-//                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-//        User user = authenticationClient.getAuthenticatedUser();
-//        user.setTweetCount(user.getTweetCount() + 1);
-//        quote.setQuoteTweet(tweet);
-//        Tweet createdTweet = createTweet(quote);
-//        tweet.getQuotes().add(createdTweet);
-//        return getTweetById(createdTweet.getId());
-//    }
-//
-//    @Override
-//    @Transactional
-//    public TweetProjection changeTweetReplyType(Long tweetId, ReplyType replyType) {
-//        Tweet tweet = tweetRepository.findById(tweetId)
-//                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-//        User user = authenticationClient.getAuthenticatedUser();
-//        user.getTweets().stream()
-//                .filter(userTweet -> userTweet.getId().equals(tweet.getId()))
-//                .findFirst()
-//                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-//        tweet.setReplyType(replyType);
-//        return getTweetById(tweet.getId());
-//    }
-//
+    @Override
+    @Transactional
+    public NotificationResponse retweet(Long tweetId) {
+        Long userId = AuthUtil.getAuthenticatedUserId();
+        Tweet tweet = tweetRepository.findById(tweetId)
+                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+        checkIsValidUserProfile(tweet.getAuthorId());
+        Retweet retweet = retweetRepository.isTweetRetweeted(userId, tweetId);
+        boolean isRetweeted;
+
+        if (retweet != null) {
+            retweetRepository.delete(retweet);
+            userClient.updateTweetCount(false);
+            isRetweeted = false;
+        } else {
+            Retweet newRetweet = new Retweet(userId, tweetId);
+            retweetRepository.save(newRetweet);
+            userClient.updateTweetCount(true);
+            isRetweeted = true;
+        }
+        return notificationClient.sendTweetNotification(new NotificationRequest(NotificationType.RETWEET, isRetweeted,
+                tweet.getAuthorId(), userId, tweetId));
+    }
+
+    @Override
+    @Transactional
+    public TweetProjection replyTweet(Long tweetId, Tweet reply) {
+        Tweet tweet = tweetRepository.findById(tweetId)
+                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+        checkIsValidUserProfile(tweet.getAuthorId());
+        reply.setAddressedTweetId(tweetId);
+        Tweet replyTweet = createTweet(reply);
+        tweetRepository.addReply(tweetId, replyTweet.getId());
+        return tweetRepository.findTweetById(replyTweet.getId()).get();
+    }
+
+    @Override
+    @Transactional
+    public TweetProjection quoteTweet(Long tweetId, Tweet quote) {
+        Tweet tweet = tweetRepository.findById(tweetId)
+                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+        userClient.updateTweetCount(true);
+        quote.setQuoteTweet(tweet);
+        Tweet createdTweet = createTweet(quote);
+        tweet.getQuotes().add(createdTweet);
+        return getTweetById(createdTweet.getId());
+    }
+
+    @Override
+    @Transactional
+    public TweetProjection changeTweetReplyType(Long tweetId, ReplyType replyType) {
+        Long userId = AuthUtil.getAuthenticatedUserId();
+        Tweet tweet = tweetRepository.getTweetByAuthorIdAndTweetId(tweetId, userId)
+                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+        tweet.setReplyType(replyType);
+        return getTweetById(tweet.getId());
+    }
+
 //    @Override
 //    @Transactional
 //    public TweetProjection voteInPoll(Long tweetId, Long pollId, Long pollChoiceId) {

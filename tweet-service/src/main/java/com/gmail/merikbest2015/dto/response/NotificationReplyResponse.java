@@ -2,11 +2,13 @@ package com.gmail.merikbest2015.dto.response;
 
 import com.gmail.merikbest2015.dto.TweetResponse;
 import com.gmail.merikbest2015.enums.NotificationType;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
 public class NotificationReplyResponse {
     private Long tweetId;
     private NotificationType notificationType;

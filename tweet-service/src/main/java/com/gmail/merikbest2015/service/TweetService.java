@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.service;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.UserResponse;
 import com.gmail.merikbest2015.dto.notification.NotificationResponse;
+import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.projection.TweetAdditionalInfoProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
@@ -50,14 +51,14 @@ public interface TweetService {
 
     NotificationResponse likeTweet(Long tweetId);
 
-//    Map<String, Object> retweet(Long tweetId);
-//
-//    TweetProjection replyTweet(Long tweetId, Tweet reply);
-//
-//    TweetProjection quoteTweet(Long tweetId, Tweet quote);
-//
-//    TweetProjection changeTweetReplyType(Long tweetId, ReplyType replyType);
-//
+    NotificationResponse retweet(Long tweetId);
+
+    TweetProjection replyTweet(Long tweetId, Tweet reply);
+
+    TweetProjection quoteTweet(Long tweetId, Tweet quote);
+
+    TweetProjection changeTweetReplyType(Long tweetId, ReplyType replyType);
+
 //    TweetProjection voteInPoll(Long tweetId, Long pollId, Long pollChoiceId);
 //
 //    Boolean getIsTweetBookmarked(Long tweetId);

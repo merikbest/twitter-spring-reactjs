@@ -1,9 +1,6 @@
 package com.gmail.merikbest2015.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +9,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @EqualsAndHashCode
+@NoArgsConstructor
+@RequiredArgsConstructor
 @Table(name = "retweets")
 public class Retweet {
 
@@ -24,10 +23,10 @@ public class Retweet {
     private LocalDateTime retweetDate = LocalDateTime.now();
 
     @NonNull
-    @Column(name = "tweet_id", nullable = false)
-    private Long tweetId;
-
-    @NonNull
     @Column(name = "user_id", nullable = false)
     private Long userId;
+
+    @NonNull
+    @Column(name = "tweet_id", nullable = false)
+    private Long tweetId;
 }
