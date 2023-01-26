@@ -19,10 +19,10 @@ public class PollChoiceVoted {
     private Long id;
 
     @NonNull
-    @Column(name = "poll_choice_id", nullable = false)
-    private Long pollChoiceId;
-
-    @NonNull
     @Column(name = "voted_user_id", nullable = false)
     private Long votedUserId;
+
+    @NonNull
+    @Column(name = "poll_choice_id", nullable = false)
+    private Long pollChoiceId;
 }

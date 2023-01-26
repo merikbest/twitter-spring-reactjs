@@ -90,6 +90,9 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId AND tweet.authorId = :userId")
     Optional<Tweet> getTweetByAuthorIdAndTweetId(@Param("tweetId") Long tweetId, @Param("userId") Long userId);
 
+    @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId AND tweet.poll.id = :pollId")
+    Optional<Tweet> getTweetByPollIdAndTweetId(@Param("tweetId") Long tweetId, @Param("pollId") Long pollId);
+
 //    @Query("SELECT user FROM User user " +
 //            "LEFT JOIN user.retweets retweet " +
 //            "LEFT JOIN retweet.tweet tweet " +

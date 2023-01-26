@@ -76,9 +76,7 @@ public class Tweet {
     private Tweet quoteTweet;
 
     @OneToOne
-    @JoinTable(name = "tweet_poll",
-            joinColumns = @JoinColumn(name = "tweet_id"),
-            inverseJoinColumns = @JoinColumn(name = "poll_id"))
+    @JoinColumn(name = "poll_id")
     private Poll poll;
 
     @ManyToMany

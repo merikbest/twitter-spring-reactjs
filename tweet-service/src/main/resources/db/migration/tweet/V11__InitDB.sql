@@ -24,6 +24,7 @@ create table tweets
     deleted            boolean,
     link_cover_size    varchar(255),
     author_id          int8 not null,
+    poll_id            int8,
     primary key (id)
 );
 create table tweets_images
@@ -53,16 +54,11 @@ create table quotes
     tweet_id int8 not null,
     quote_id int8 not null
 );
-create table tweet_poll
-(
-    poll_id  int8,
-    tweet_id int8 not null,
-    primary key (tweet_id)
-);
 create table polls
 (
     id        int8 not null,
     date_time timestamp,
+    tweet_id  int8,
     primary key (id)
 );
 create table polls_poll_choices
@@ -114,6 +110,8 @@ alter table quotes
     add constraint UK_iuv1sbh2mxfhdvwpemnnhveyp unique (quote_id);
 alter table tweets_images
     add constraint UK_r0mdr0mxkjw13pm37pqs86vl unique (images_id);
+alter table polls
+    add constraint FKefqmdrrkmxe77he6qnw5lr30a foreign key (tweet_id) references tweets;
 alter table polls_poll_choices
     add constraint FKiov00wdpikhs1naueduv299in foreign key (poll_choices_id) references poll_choices;
 alter table polls_poll_choices
@@ -126,14 +124,12 @@ alter table replies
     add constraint FKftas7wbrv961d6th8yy5nqdq7 foreign key (reply_id) references tweets;
 alter table replies
     add constraint FKc0y0dqmqpv2b19wgb7f7a7r8i foreign key (tweet_id) references tweets;
-alter table tweet_poll
-    add constraint FKqy1momv4lqjht95f6mv5fbac5 foreign key (poll_id) references polls;
-alter table tweet_poll
-    add constraint FK954x9jc864d69ifsgwub38c1p foreign key (tweet_id) references tweets;
 alter table tweet_quote
     add constraint FKftie7ivytjuvpm6118d05upa7 foreign key (quote_tweet_id) references tweets;
 alter table tweet_quote
     add constraint FKlkw1iu7ifknitq1q75f09vpo5 foreign key (tweet_id) references tweets;
+alter table tweets
+    add constraint FKeiad9ainy3nwc9wlojt1s6eqv foreign key (poll_id) references polls;
 alter table tweets_images
     add constraint FKgg4e58t98pdpjlv0lyp4ausbx foreign key (images_id) references tweet_images;
 alter table tweets_images

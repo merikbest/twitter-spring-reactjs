@@ -23,7 +23,7 @@ public class Poll {
     @Column(name = "date_time")
     private LocalDateTime dateTime;
 
-    @OneToOne(mappedBy = "poll")
+    @OneToOne
     private Tweet tweet;
 
     @OneToMany

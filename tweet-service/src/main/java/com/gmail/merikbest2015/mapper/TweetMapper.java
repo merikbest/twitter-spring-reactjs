@@ -6,6 +6,7 @@ import com.gmail.merikbest2015.dto.UserResponse;
 import com.gmail.merikbest2015.dto.notification.NotificationResponse;
 import com.gmail.merikbest2015.dto.request.TweetDeleteRequest;
 import com.gmail.merikbest2015.dto.request.TweetRequest;
+import com.gmail.merikbest2015.dto.request.VoteRequest;
 import com.gmail.merikbest2015.dto.response.NotificationReplyResponse;
 import com.gmail.merikbest2015.dto.response.TweetAdditionalInfoResponse;
 import com.gmail.merikbest2015.enums.NotificationType;
@@ -136,7 +137,15 @@ public class TweetMapper {
         return basicMapper.convertToResponse(tweet, TweetResponse.class);
     }
 
+    public TweetResponse voteInPoll(VoteRequest voteRequest) {
+        TweetProjection tweet = tweetService.voteInPoll(voteRequest.getTweetId(), voteRequest.getPollId(),
+                voteRequest.getPollChoiceId());
+        return basicMapper.convertToResponse(tweet, TweetResponse.class);
+    }
 
+    public Boolean getIsTweetBookmarked(Long tweetId) {
+        return tweetService.getIsTweetBookmarked(tweetId);
+    }
 
 //    public TweetResponse getTweetById(Long tweetId) {
 //        TweetProjection tweet = tweetService.getTweetById(tweetId);

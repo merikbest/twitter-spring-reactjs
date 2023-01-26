@@ -7,6 +7,7 @@ import com.gmail.merikbest2015.dto.notification.NotificationResponse;
 import com.gmail.merikbest2015.dto.notification.NotificationTweetResponse;
 import com.gmail.merikbest2015.dto.request.TweetDeleteRequest;
 import com.gmail.merikbest2015.dto.request.TweetRequest;
+import com.gmail.merikbest2015.dto.request.VoteRequest;
 import com.gmail.merikbest2015.dto.response.NotificationReplyResponse;
 import com.gmail.merikbest2015.dto.response.TweetAdditionalInfoResponse;
 import com.gmail.merikbest2015.enums.ReplyType;
@@ -188,17 +189,17 @@ public class TweetController {
         return ResponseEntity.ok(tweet);
     }
 
-//    @PostMapping("/vote") // TODO validate and fix
-//    public ResponseEntity<TweetResponse> voteInPoll(@RequestBody VoteRequest voteRequest) {
-//        TweetResponse tweet = tweetMapper.voteInPoll(voteRequest);
-//        messagingTemplate.convertAndSend("/topic/feed", tweet);
-//        messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
-//        messagingTemplate.convertAndSend("/topic/user/update/tweet/" + tweet.getUser().getId(), tweet);
-//        return ResponseEntity.ok(tweet);
-//    }
-//
-//    @GetMapping("/{tweetId}/bookmarked")
-//    public ResponseEntity<Boolean> getIsTweetBookmarked(@PathVariable("tweetId") Long tweetId) {
-//        return ResponseEntity.ok(tweetMapper.getIsTweetBookmarked(tweetId));
-//    }
+    @PostMapping("/vote") // TODO validate and fix
+    public ResponseEntity<TweetResponse> voteInPoll(@RequestBody VoteRequest voteRequest) {
+        TweetResponse tweet = tweetMapper.voteInPoll(voteRequest);
+        messagingTemplate.convertAndSend("/topic/feed", tweet);
+        messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
+        messagingTemplate.convertAndSend("/topic/user/update/tweet/" + tweet.getUser().getId(), tweet);
+        return ResponseEntity.ok(tweet);
+    }
+
+    @GetMapping("/{tweetId}/bookmarked")
+    public ResponseEntity<Boolean> getIsTweetBookmarked(@PathVariable("tweetId") Long tweetId) {
+        return ResponseEntity.ok(tweetMapper.getIsTweetBookmarked(tweetId));
+    }
 }

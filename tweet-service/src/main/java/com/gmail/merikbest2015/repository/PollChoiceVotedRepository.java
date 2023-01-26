@@ -14,4 +14,10 @@ public interface PollChoiceVotedRepository extends JpaRepository<PollChoiceVoted
 
     @Query("SELECT poolChoice.votedUserId as id FROM PollChoiceVoted poolChoice WHERE poolChoice.pollChoiceId = :pollChoiceId")
     List<VotedUserProjection> getVotedUserIds(@Param("pollChoiceId") Long pollChoiceId);
+
+    @Query("SELECT CASE WHEN count(poolChoice) > 0 THEN true ELSE false END " +
+            "FROM PollChoiceVoted poolChoice " +
+            "WHERE poolChoice.votedUserId = :userId " +
+            "AND poolChoice.pollChoiceId = :pollChoiceId")
+    boolean ifUserVoted(@Param("votedUserId") Long votedUserId, @Param("pollChoiceId") Long pollChoiceId);
 }

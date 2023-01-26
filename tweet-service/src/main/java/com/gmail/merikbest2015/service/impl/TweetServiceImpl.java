@@ -14,7 +14,6 @@ import com.gmail.merikbest2015.model.*;
 import com.gmail.merikbest2015.repository.*;
 import com.gmail.merikbest2015.repository.projection.TweetAdditionalInfoProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
-import com.gmail.merikbest2015.repository.projection.TweetsProjection;
 import com.gmail.merikbest2015.service.TweetService;
 import com.gmail.merikbest2015.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
@@ -39,12 +38,8 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -53,6 +48,7 @@ public class TweetServiceImpl implements TweetService {
     private final TweetRepository tweetRepository;
     private final PollRepository pollRepository;
     private final PollChoiceRepository pollChoiceRepository;
+    private final PollChoiceVotedRepository pollChoiceVotedRepository;
     private final LikeTweetRepository likeTweetRepository;
     private final RetweetRepository retweetRepository;
     private final BookmarkRepository bookmarkRepository;
@@ -293,36 +289,34 @@ public class TweetServiceImpl implements TweetService {
         return getTweetById(tweet.getId());
     }
 
-//    @Override
-//    @Transactional
-//    public TweetProjection voteInPoll(Long tweetId, Long pollId, Long pollChoiceId) {
-//        Poll poll = pollRepository.findById(pollId)
-//                .orElseThrow(() -> new ApiRequestException("Poll not found", HttpStatus.NOT_FOUND));
-//        PollChoice pollChoice = pollChoiceRepository.findById(pollChoiceId)
-//                .orElseThrow(() -> new ApiRequestException("Poll choice not found", HttpStatus.NOT_FOUND));
-//        Tweet tweet = tweetRepository.findById(tweetId)
-//                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-//
-//        if (!tweet.getPoll().getId().equals(poll.getId())) {
-//            throw new ApiRequestException("Poll in tweet not exist", HttpStatus.NOT_FOUND);
-//        }
-//        User user = authenticationClient.getAuthenticatedUser();
-//        List<PollChoice> pollChoices = tweet.getPoll().getPollChoices().stream()
-//                .peek(choice -> {
-//                    if (choice.getId().equals(pollChoice.getId())) {
-//                        choice.getVotedUser().add(user);
-//                    }
-//                })
-//                .collect(Collectors.toList());
-//        tweet.getPoll().setPollChoices(pollChoices);
-//        return getTweetById(tweet.getId());
-//    }
-//
-//    @Override
-//    public Boolean getIsTweetBookmarked(Long tweetId) {
-//        return isUserBookmarkedTweet(tweetId);
-//    }
-//
+    @Override
+    @Transactional
+    public TweetProjection voteInPoll(Long tweetId, Long pollId, Long pollChoiceId) {
+        // TODO add check: isUserHavePrivateProfile, isMyProfileBlocked by Tweet author
+        tweetRepository.getTweetByPollIdAndTweetId(tweetId, pollId)
+                .orElseThrow(() -> new ApiRequestException("Poll in tweet not exist", HttpStatus.NOT_FOUND));
+        Poll poll = pollRepository.getPollByPollChoiceId(pollId, pollChoiceId)
+                .orElseThrow(() -> new ApiRequestException("Poll choice not found", HttpStatus.NOT_FOUND));
+
+        if (LocalDateTime.now().isAfter(poll.getDateTime())) {
+            throw new ApiRequestException("Poll is not available", HttpStatus.BAD_REQUEST);
+        }
+        Long userId = AuthUtil.getAuthenticatedUserId();
+        boolean ifUserVoted = pollChoiceVotedRepository.ifUserVoted(userId, pollChoiceId);
+
+        if (ifUserVoted) {
+            throw new ApiRequestException("User voted in poll", HttpStatus.BAD_REQUEST);
+        }
+        PollChoiceVoted votedUser = new PollChoiceVoted(userId, pollChoiceId);
+        pollChoiceVotedRepository.save(votedUser);
+        return getTweetById(tweetId);
+    }
+
+    @Override
+    public Boolean getIsTweetBookmarked(Long tweetId) {
+        return isUserBookmarkedTweet(tweetId);
+    }
+
 //    public List<Long> getRetweetsUserIds(Long tweetId) {
 //        List<Long> retweetsUserIds = tweetRepository.getRetweetsUserIds(tweetId);
 //        return retweetsUserIds.contains(null) ? new ArrayList<>() : retweetsUserIds;
