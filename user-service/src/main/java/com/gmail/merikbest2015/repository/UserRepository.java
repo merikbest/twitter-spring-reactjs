@@ -321,5 +321,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "OR (UPPER(user.username) LIKE UPPER(CONCAT('%',:username,'%')) " +
             "   AND (user.privateProfile = false OR (user.privateProfile = true AND following.id IN :userIds) " +
             "       AND user.active = true))")
-    List<Long> getValidUserIdsByName(@Param("username") String username);
+    List<Long> getValidUserIdsByName(@Param("username") String username, @Param("userIds") List<Long> userIds);
 }

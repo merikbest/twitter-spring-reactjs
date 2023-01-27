@@ -55,13 +55,7 @@ public class TweetServiceImpl implements TweetService {
     private final NotificationClient notificationClient;
     private final UserClient userClient;
     private final TagClient tagClient;
-
     private final RestTemplate restTemplate;
-
-//    private final RetweetRepository retweetRepository;
-//    private final LikeTweetRepository likeTweetRepository;
-//    private final NotificationRepository notificationRepository;
-//    private final AuthenticationClient authenticationClient;
 
     @Value("${google.api.url}")
     private String googleApiUrl;
@@ -76,24 +70,28 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public TweetProjection getTweetById(Long tweetId) {
-        // TODO add check: isMyProfileBlocked, IsUserHavePrivateProfile
         TweetProjection tweet = tweetRepository.findTweetById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+        checkIsValidUserProfile(tweet.getAuthorId());
         checkIsTweetDeleted(tweet.isDeleted());
         return tweet;
     }
 
     @Override
     public TweetAdditionalInfoProjection getTweetAdditionalInfoById(Long tweetId) {
-        // TODO add check: isMyProfileBlocked, IsUserHavePrivateProfile
         TweetAdditionalInfoProjection additionalInfo = tweetRepository.getTweetAdditionalInfoById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+        checkIsValidUserProfile(additionalInfo.getAuthorId());
         checkIsTweetDeleted(additionalInfo.isDeleted());
         return additionalInfo;
     }
 
     @Override
     public List<TweetProjection> getRepliesByTweetId(Long tweetId) {
+        Tweet tweet = tweetRepository.findById(tweetId)
+                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+        checkIsValidUserProfile(tweet.getAuthorId());
+        checkIsTweetDeleted(tweet.isDeleted());
         return tweetRepository.getRepliesByTweetId(tweetId);
     }
 
@@ -204,7 +202,7 @@ public class TweetServiceImpl implements TweetService {
     public Page<TweetProjection> searchTweets(String text, Pageable pageable) {
         List<Long> userIds = tweetRepository.getUserIdsByTweetText(text);
         List<Long> validUserIds = userClient.getValidUserIds(new UserIdsRequest(userIds), text);
-        return tweetRepository.searchTweets(validUserIds, pageable);
+        return tweetRepository.searchTweets(text, validUserIds, pageable);
     }
 
     @Override
@@ -272,6 +270,7 @@ public class TweetServiceImpl implements TweetService {
     public TweetProjection quoteTweet(Long tweetId, Tweet quote) {
         Tweet tweet = tweetRepository.findById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+        checkIsValidUserProfile(tweet.getAuthorId());
         userClient.updateTweetCount(true);
         quote.setQuoteTweet(tweet);
         Tweet createdTweet = createTweet(quote);
@@ -285,6 +284,10 @@ public class TweetServiceImpl implements TweetService {
         Long userId = AuthUtil.getAuthenticatedUserId();
         Tweet tweet = tweetRepository.getTweetByAuthorIdAndTweetId(tweetId, userId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+
+        if (!tweet.getAuthorId().equals(userId)) {
+            throw new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND);
+        }
         tweet.setReplyType(replyType);
         return getTweetById(tweet.getId());
     }
@@ -292,9 +295,9 @@ public class TweetServiceImpl implements TweetService {
     @Override
     @Transactional
     public TweetProjection voteInPoll(Long tweetId, Long pollId, Long pollChoiceId) {
-        // TODO add check: isUserHavePrivateProfile, isMyProfileBlocked by Tweet author
-        tweetRepository.getTweetByPollIdAndTweetId(tweetId, pollId)
+        Tweet tweet = tweetRepository.getTweetByPollIdAndTweetId(tweetId, pollId)
                 .orElseThrow(() -> new ApiRequestException("Poll in tweet not exist", HttpStatus.NOT_FOUND));
+        checkIsValidUserProfile(tweet.getAuthorId());
         Poll poll = pollRepository.getPollByPollChoiceId(pollId, pollChoiceId)
                 .orElseThrow(() -> new ApiRequestException("Poll choice not found", HttpStatus.NOT_FOUND));
 
@@ -317,11 +320,6 @@ public class TweetServiceImpl implements TweetService {
         return isUserBookmarkedTweet(tweetId);
     }
 
-//    public List<Long> getRetweetsUserIds(Long tweetId) {
-//        List<Long> retweetsUserIds = tweetRepository.getRetweetsUserIds(tweetId);
-//        return retweetsUserIds.contains(null) ? new ArrayList<>() : retweetsUserIds;
-//    }
-
     public boolean isUserLikedTweet(Long tweetId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         return likeTweetRepository.isUserLikedTweet(authUserId, tweetId);
@@ -341,31 +339,19 @@ public class TweetServiceImpl implements TweetService {
         return userClient.isUserFollowByOtherUser(userId);
     }
 
-//    public boolean isUserMutedByMyProfile(Long userId) {
-//        return userClient.isUserMutedByMyProfile(userId);
-//    }
-//
-//    public boolean isUserBlockedByMyProfile(Long userId) {
-//        return userClient.isUserBlockedByMyProfile(userId);
-//    }
-
     public boolean isMyProfileBlockedByUser(Long userId) {
         return userClient.isMyProfileBlockedByUser(userId);
     }
 
-//    public boolean isMyProfileWaitingForApprove(Long userId) {
-//        return userClient.isMyProfileWaitingForApprove(userId);
-//    }
-
-    public TweetAuthorResponse getTweetAuthor(Long userId) { // NEW
+    public TweetAuthorResponse getTweetAuthor(Long userId) {
         return userClient.getTweetAuthor(userId);
     }
 
-    public TweetAdditionalInfoUserResponse getTweetAdditionalInfoUser(Long userId) { // NEW
+    public TweetAdditionalInfoUserResponse getTweetAdditionalInfoUser(Long userId) {
         return userClient.getTweetAdditionalInfoUser(userId);
     }
 
-    private void checkTweetTextLength(String text) { // NEW
+    private void checkTweetTextLength(String text) {
         if (text.length() == 0 || text.length() > 280) {
             throw new ApiRequestException("Incorrect tweet text length", HttpStatus.BAD_REQUEST);
         }
@@ -389,27 +375,6 @@ public class TweetServiceImpl implements TweetService {
             throw new ApiRequestException("User profile blocked", HttpStatus.BAD_REQUEST);
         }
     }
-
-//    private Map<String, Object> notificationHandler(User authUser, Tweet tweet, NotificationType notificationType,
-//                                                    boolean notificationCondition) {
-//        Notification notification = new Notification();
-//        notification.setNotificationType(notificationType);
-//        notification.setNotifiedUser(tweet.getUser());
-//        notification.setUser(authUser);
-//        notification.setTweet(tweet);
-//
-//        if (!tweet.getUser().getId().equals(authUser.getId())) {
-//            boolean isTweetNotificationExists = notificationRepository.isTweetNotificationExists(
-//                    tweet.getUser().getId(), authUser.getId(), tweet.getId(), notificationType);
-//
-//            if (!isTweetNotificationExists) {
-//                userClient.increaseNotificationsCount(tweet.getUser().getId());
-//                Notification newNotification = notificationRepository.save(notification);
-//                return Map.of("notification", newNotification, "notificationCondition", notificationCondition);
-//            }
-//        }
-//        return Map.of("notification", notification, "notificationCondition", notificationCondition);
-//    }
 
     @Transactional
     public Tweet createTweet(Tweet tweet) {

@@ -81,7 +81,7 @@ public class TweetApiController {
 //    }
 
     // NEW
-    @GetMapping(API_V1_TWEETS + "/{tweetId}")
+    @GetMapping("/{tweetId}")
     public NotificationTweetResponse getNotificationTweet(@PathVariable("tweetId") Long tweetId) {
         return tweetClientService.getNotificationTweet(tweetId);
     }

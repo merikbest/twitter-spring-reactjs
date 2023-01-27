@@ -17,7 +17,7 @@ public interface PollChoiceVotedRepository extends JpaRepository<PollChoiceVoted
 
     @Query("SELECT CASE WHEN count(poolChoice) > 0 THEN true ELSE false END " +
             "FROM PollChoiceVoted poolChoice " +
-            "WHERE poolChoice.votedUserId = :userId " +
+            "WHERE poolChoice.votedUserId = :votedUserId " +
             "AND poolChoice.pollChoiceId = :pollChoiceId")
     boolean ifUserVoted(@Param("votedUserId") Long votedUserId, @Param("pollChoiceId") Long pollChoiceId);
 }

@@ -100,7 +100,7 @@ public class UserApiController {
         userService.increaseNotificationsCount(userId);
     }
 
-    @GetMapping("/like/count/{increaseCount}")
+    @PutMapping("/like/count/{increaseCount}")
     public void updateLikeCount(@PathVariable("increaseCount") boolean increaseCount) {
         userService.updateLikeCount(increaseCount);
     }

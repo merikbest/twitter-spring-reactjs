@@ -33,7 +33,7 @@ public class NotificationServiceImpl implements NotificationService {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
 
         if (!notification.getNotifiedUserId().equals(authUserId)) {
-            boolean isNotificationExists = notificationRepository.isNotificationExists(
+            boolean isNotificationExists = notificationRepository.isListNotificationExists(
                     notification.getNotifiedUserId(), notification.getListId(), notification.getNotificationType());
 
             if (!isNotificationExists) {
@@ -50,7 +50,7 @@ public class NotificationServiceImpl implements NotificationService {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
 
         if (!notification.getNotifiedUserId().equals(authUserId)) {
-            boolean isNotificationExists = notificationRepository.isNotificationExists(
+            boolean isNotificationExists = notificationRepository.isTweetNotificationExists(
                     notification.getNotifiedUserId(), notification.getTweetId(), notification.getNotificationType());
 
             if (!isNotificationExists) {

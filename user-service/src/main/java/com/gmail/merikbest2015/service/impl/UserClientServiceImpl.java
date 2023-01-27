@@ -206,8 +206,7 @@ public class UserClientServiceImpl implements UserClientService {
     @Override
     public List<Long> getValidUserIds(UserIdsRequest request, String text) {
         List<Long> validUserIds = userRepository.getValidUserIdsByIds(request.getUserIds());
-        List<Long> userIdsByUsername = userRepository.getValidUserIdsByName(text);
-        return Stream.concat(validUserIds.stream(), userIdsByUsername.stream())
-                .distinct().sorted().toList();
+        List<Long> userIdsByUsername = userRepository.getValidUserIdsByName(text, request.getUserIds());
+        return Stream.concat(validUserIds.stream(), userIdsByUsername.stream()).distinct().toList();
     }
 }
