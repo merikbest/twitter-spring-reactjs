@@ -209,4 +209,15 @@ public class UserClientServiceImpl implements UserClientService {
         List<Long> userIdsByUsername = userRepository.getValidUserIdsByName(text, request.getUserIds());
         return Stream.concat(validUserIds.stream(), userIdsByUsername.stream()).distinct().toList();
     }
+
+    @Override
+    public ChatUserParticipantResponse getChatParticipant(Long userId) {
+        ChatUserParticipantProjection user = userRepository.getChatParticipant(userId);
+        return basicMapper.convertToResponse(user, ChatUserParticipantResponse.class);
+    }
+
+    @Override
+    public Boolean isUserExists(Long userId) {
+        return userRepository.isUserExists(userId);
+    }
 }

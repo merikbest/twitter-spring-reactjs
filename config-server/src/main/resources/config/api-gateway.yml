@@ -46,6 +46,13 @@ spring:
                     filters:
                         - AuthFilter
 
+                -   id: chat-service
+                    uri: lb://chat-service
+                    predicates:
+                        - Path=/ui/v1/chat/**
+                    filters:
+                        - AuthFilter
+
 
     zipkin:
         base-url: http://localhost:9411

@@ -172,4 +172,14 @@ public class UserApiController {
     public List<Long> getValidUserIds(@RequestBody UserIdsRequest request, @PathVariable("text") String text) {
         return userService.getValidUserIds(request, text);
     }
+
+    @GetMapping("/chat/participant/{userId}")
+    public ChatUserParticipantResponse getChatParticipant(@PathVariable("userId") Long userId) {
+        return userService.getChatParticipant(userId);
+    }
+
+    @GetMapping("/is_exists/{userId}")
+    public Boolean isUserExists(@PathVariable("userId") Long userId) {
+        return userService.isUserExists(userId);
+    }
 }

@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.gmail.merikbest2015.commons.dto.ImageResponse;
+import com.gmail.merikbest2015.dto.ChatUserParticipantResponse;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,27 +19,9 @@ public class ChatResponse {
     @Setter
     static class ParticipantResponse {
         private Long id;
-        private UserParticipantResponse user;
+        private ChatUserParticipantResponse user;
 
         @JsonProperty("isLeftChat")
         private boolean leftChat;
-
-        @Getter
-        @Setter
-        static class UserParticipantResponse {
-            private Long id;
-            private String fullName;
-            private String username;
-            private ImageResponse avatar;
-
-            @JsonProperty("isMutedDirectMessages")
-            private boolean isMutedDirectMessages;
-
-            @JsonProperty("isUserBlocked")
-            private boolean isUserBlocked;
-
-            @JsonProperty("isMyProfileBlocked")
-            private boolean isMyProfileBlocked;
-        }
     }
 }

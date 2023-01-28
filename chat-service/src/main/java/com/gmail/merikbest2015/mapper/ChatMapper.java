@@ -1,22 +1,13 @@
 package com.gmail.merikbest2015.mapper;
 
-import com.gmail.merikbest2015.commons.dto.HeaderResponse;
-import com.gmail.merikbest2015.commons.mapper.BasicMapper;
 import com.gmail.merikbest2015.dto.request.ChatMessageRequest;
-import com.gmail.merikbest2015.dto.request.MessageWithTweetRequest;
 import com.gmail.merikbest2015.dto.response.ChatMessageResponse;
 import com.gmail.merikbest2015.dto.response.ChatResponse;
-import com.gmail.merikbest2015.commons.dto.UserResponse;
-import com.gmail.merikbest2015.dto.response.UserChatResponse;
-import com.gmail.merikbest2015.commons.models.ChatMessage;
-import com.gmail.merikbest2015.commons.projection.UserProjection;
+import com.gmail.merikbest2015.model.ChatMessage;
 import com.gmail.merikbest2015.repository.projection.ChatMessageProjection;
 import com.gmail.merikbest2015.repository.projection.ChatProjection;
-import com.gmail.merikbest2015.commons.projection.UserChatProjection;
 import com.gmail.merikbest2015.service.ChatService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -56,7 +47,7 @@ public class ChatMapper {
         return basicMapper.convertToResponseList(chatMessages, ChatMessageResponse.class);
     }
 
-    public Integer readChatMessages(Long chatId) {
+    public Long readChatMessages(Long chatId) {
         return chatService.readChatMessages(chatId);
     }
 
@@ -66,22 +57,22 @@ public class ChatMapper {
         return getChatMessageResponse(messageMap);
     }
 
-    public ChatMessageResponse addMessageWithTweet(MessageWithTweetRequest request) {
-        Map<String, Object> messageMap = chatService.addMessageWithTweet(request.getText(), request.getTweetId(), request.getUsersIds());
-        return getChatMessageResponse(messageMap);
-    }
-
-    public String leaveFromConversation(Long participantId, Long chatId) {
-        return chatService.leaveFromConversation(participantId, chatId);
-    }
-
-    public UserResponse getParticipant(Long participantId, Long chatId) {
-        UserProjection participant = chatService.getParticipant(participantId, chatId);
-        return basicMapper.convertToResponse(participant, UserResponse.class);
-    }
-    
-    public HeaderResponse<UserChatResponse> searchParticipantsByUsername(String username, Pageable pageable) {
-        Page<UserChatProjection> participants = chatService.searchUsersByUsername(username, pageable);
-        return basicMapper.getHeaderResponse(participants, UserChatResponse.class);
-    }
+//    public ChatMessageResponse addMessageWithTweet(MessageWithTweetRequest request) {
+//        Map<String, Object> messageMap = chatService.addMessageWithTweet(request.getText(), request.getTweetId(), request.getUsersIds());
+//        return getChatMessageResponse(messageMap);
+//    }
+//
+//    public String leaveFromConversation(Long participantId, Long chatId) {
+//        return chatService.leaveFromConversation(participantId, chatId);
+//    }
+//
+//    public UserResponse getParticipant(Long participantId, Long chatId) {
+//        UserProjection participant = chatService.getParticipant(participantId, chatId);
+//        return basicMapper.convertToResponse(participant, UserResponse.class);
+//    }
+//
+//    public HeaderResponse<UserChatResponse> searchParticipantsByUsername(String username, Pageable pageable) {
+//        Page<UserChatProjection> participants = chatService.searchUsersByUsername(username, pageable);
+//        return basicMapper.getHeaderResponse(participants, UserChatResponse.class);
+//    }
 }

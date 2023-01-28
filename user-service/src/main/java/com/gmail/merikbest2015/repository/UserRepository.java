@@ -322,4 +322,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "   AND (user.privateProfile = false OR (user.privateProfile = true AND following.id IN :userIds) " +
             "       AND user.active = true))")
     List<Long> getValidUserIdsByName(@Param("username") String username, @Param("userIds") List<Long> userIds);
+
+    @Query("SELECT user FROM User user WHERE user.id = :userId")
+    ChatUserParticipantProjection getChatParticipant(@Param("userId") Long userId);
+
+    @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user WHERE user.id = :userId")
+    boolean isUserExists(@Param("userId") Long userId);
 }

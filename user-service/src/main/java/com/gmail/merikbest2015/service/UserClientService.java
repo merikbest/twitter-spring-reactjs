@@ -71,4 +71,8 @@ public interface UserClientService {
     void updatePinnedTweetId(Long tweetId);
 
     List<Long> getValidUserIds(UserIdsRequest request, String text);
+
+    ChatUserParticipantResponse getChatParticipant(Long userId);
+
+    Boolean isUserExists(Long userId);
 }
