@@ -376,6 +376,10 @@ public class TweetServiceImpl implements TweetService {
         }
     }
 
+    public ChatTweetUserResponse getChatTweetUser(Long userId) {
+        return userClient.getChatTweetUser(userId);
+    }
+
     @Transactional
     public Tweet createTweet(Tweet tweet) {
         checkTweetTextLength(tweet.getText());

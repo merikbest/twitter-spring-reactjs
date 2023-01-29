@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @EqualsAndHashCode
+@NoArgsConstructor
 @Table(name = "chat_messages")
 public class ChatMessage {
 
@@ -37,4 +39,10 @@ public class ChatMessage {
     @ManyToOne
     @JoinColumn(name = "chat_id")
     private Chat chat;
+
+    public ChatMessage(String text, Long tweetId, Long authorId) {
+        this.text = text;
+        this.tweetId = tweetId;
+        this.authorId = authorId;
+    }
 }

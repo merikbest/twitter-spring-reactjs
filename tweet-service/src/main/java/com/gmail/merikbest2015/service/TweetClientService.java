@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.service;
 
+import com.gmail.merikbest2015.dto.ChatTweetResponse;
 import com.gmail.merikbest2015.dto.notification.NotificationTweetResponse;
 
 public interface TweetClientService {
@@ -26,4 +27,8 @@ public interface TweetClientService {
 
     // NEW
     NotificationTweetResponse getNotificationTweet(Long tweetId);
+
+    Boolean isTweetExists(Long tweetId);
+
+    ChatTweetResponse getChatTweet(Long tweetId);
 }

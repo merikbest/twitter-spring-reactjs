@@ -1,9 +1,10 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.dto.notification.NotificationListResponse;
+import com.gmail.merikbest2015.dto.ChatTweetResponse;
 import com.gmail.merikbest2015.dto.notification.NotificationTweetResponse;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.repository.TweetRepository;
+import com.gmail.merikbest2015.repository.projection.ChatTweetProjection;
 import com.gmail.merikbest2015.repository.projection.NotificationTweetProjection;
 import com.gmail.merikbest2015.service.TweetClientService;
 import lombok.RequiredArgsConstructor;
@@ -71,5 +72,16 @@ public class TweetClientServiceImpl implements TweetClientService {
     public NotificationTweetResponse getNotificationTweet(Long tweetId) {
         NotificationTweetProjection tweet = tweetRepository.getNotificationTweet(tweetId);
         return basicMapper.convertToResponse(tweet, NotificationTweetResponse.class);
+    }
+
+    @Override
+    public Boolean isTweetExists(Long tweetId) {
+        return tweetRepository.isTweetExists(tweetId);
+    }
+
+    @Override
+    public ChatTweetResponse getChatTweet(Long tweetId) {
+        ChatTweetProjection tweet = tweetRepository.getChatTweet(tweetId);
+        return basicMapper.convertToResponse(tweet, ChatTweetResponse.class);
     }
 }

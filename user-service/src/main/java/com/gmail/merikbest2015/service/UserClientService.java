@@ -5,8 +5,6 @@ import com.gmail.merikbest2015.commons.dto.NotificationUserResponse;
 import com.gmail.merikbest2015.commons.dto.UserResponse;
 import com.gmail.merikbest2015.commons.dto.commons_new.*;
 import com.gmail.merikbest2015.commons.models.User;
-import com.gmail.merikbest2015.repository.projection.UserChatProjection;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -20,7 +18,7 @@ public interface UserClientService {
 
     List<Long> getUserFollowersIds();
 
-    Page<UserChatProjection> searchUsersByUsername(String username, Pageable pageable);
+    HeaderResponse<UserChatResponse> searchUsersByUsername(String username, Pageable pageable);
 
     User getValidUser(Long userId, Long authUserId);
 
@@ -75,4 +73,8 @@ public interface UserClientService {
     ChatUserParticipantResponse getChatParticipant(Long userId);
 
     Boolean isUserExists(Long userId);
+
+    UserResponse getUserResponseById(Long userId);
+
+    ChatTweetUserResponse getChatTweetUser(Long userId);
 }

@@ -5,11 +5,9 @@ import com.gmail.merikbest2015.commons.dto.NotificationUserResponse;
 import com.gmail.merikbest2015.commons.dto.UserResponse;
 import com.gmail.merikbest2015.commons.dto.commons_new.*;
 import com.gmail.merikbest2015.commons.models.User;
-import com.gmail.merikbest2015.repository.projection.UserChatProjection;
 import com.gmail.merikbest2015.service.UserClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.openfeign.SpringQueryMap;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,7 +39,7 @@ public class UserApiController {
     }
 
     @GetMapping("/search/{username}")
-    public Page<UserChatProjection> searchUsersByUsername(@PathVariable("username") String username, Pageable pageable) {
+    public HeaderResponse<UserChatResponse> searchUsersByUsername(@PathVariable("username") String username, Pageable pageable) {
         return userService.searchUsersByUsername(username, pageable);
     }
 
@@ -181,5 +179,15 @@ public class UserApiController {
     @GetMapping("/is_exists/{userId}")
     public Boolean isUserExists(@PathVariable("userId") Long userId) {
         return userService.isUserExists(userId);
+    }
+
+    @GetMapping("/{userId}")
+    public UserResponse getUserResponseById(@PathVariable("userId") Long userId) {
+        return userService.getUserResponseById(userId);
+    }
+
+    @GetMapping("/chat/{userId}")
+    public ChatTweetUserResponse getChatTweetUser(@PathVariable("userId") Long userId) {
+        return userService.getChatTweetUser(userId);
     }
 }

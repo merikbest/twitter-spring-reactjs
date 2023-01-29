@@ -328,4 +328,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user WHERE user.id = :userId")
     boolean isUserExists(@Param("userId") Long userId);
+
+    @Query("SELECT user FROM User user WHERE user.id = :userId")
+    UserProjection getUserResponseById(@Param("userId") Long userId);
+
+    @Query("SELECT user FROM User user WHERE user.id = :userId")
+    ChatTweetUserProjection getChatTweetUser(@Param("userId") Long userId);
 }

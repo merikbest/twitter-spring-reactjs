@@ -53,8 +53,9 @@ public class UserClientServiceImpl implements UserClientService {
     }
 
     @Override
-    public Page<UserChatProjection> searchUsersByUsername(String username, Pageable pageable) {
-        return userRepository.findByFullNameOrUsername(username, pageable, UserChatProjection.class);
+    public HeaderResponse<UserChatResponse> searchUsersByUsername(String username, Pageable pageable) {
+        Page<UserChatProjection> users = userRepository.findByFullNameOrUsername(username, pageable, UserChatProjection.class);
+        return basicMapper.getHeaderResponse(users, UserChatResponse.class);
     }
 
     @Override
@@ -219,5 +220,17 @@ public class UserClientServiceImpl implements UserClientService {
     @Override
     public Boolean isUserExists(Long userId) {
         return userRepository.isUserExists(userId);
+    }
+
+    @Override
+    public UserResponse getUserResponseById(Long userId) {
+        UserProjection user = userRepository.getUserResponseById(userId);
+        return basicMapper.convertToResponse(user, UserResponse.class);
+    }
+
+    @Override
+    public ChatTweetUserResponse getChatTweetUser(Long userId) {
+        ChatTweetUserProjection user = userRepository.getChatTweetUser(userId);
+        return basicMapper.convertToResponse(user, ChatTweetUserResponse.class);
     }
 }

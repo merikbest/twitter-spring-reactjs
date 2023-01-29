@@ -1,10 +1,7 @@
 package com.gmail.merikbest2015.feign;
 
 import com.gmail.merikbest2015.configuration.FeignConfiguration;
-import com.gmail.merikbest2015.dto.HeaderResponse;
-import com.gmail.merikbest2015.dto.TweetAdditionalInfoUserResponse;
-import com.gmail.merikbest2015.dto.TweetAuthorResponse;
-import com.gmail.merikbest2015.dto.UserResponse;
+import com.gmail.merikbest2015.dto.*;
 import com.gmail.merikbest2015.dto.lists.UserIdsRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
@@ -58,4 +55,7 @@ public interface UserClient {
 
     @PostMapping(API_V1_USER + "/tweet/valid/ids/{text}")
     List<Long> getValidUserIds(@RequestBody UserIdsRequest request, @PathVariable("text") String text);
+
+    @GetMapping(API_V1_USER + "/chat/{userId}")
+    ChatTweetUserResponse getChatTweetUser(@PathVariable("userId") Long userId);
 }
