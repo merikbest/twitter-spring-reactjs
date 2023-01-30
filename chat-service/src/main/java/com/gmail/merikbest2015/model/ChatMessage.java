@@ -34,7 +34,7 @@ public class ChatMessage {
     private Long authorId;
 
     @Column(name = "is_unread", columnDefinition = "boolean default true")
-    private boolean unread;
+    private boolean unread = true;
 
     @ManyToOne
     @JoinColumn(name = "chat_id")

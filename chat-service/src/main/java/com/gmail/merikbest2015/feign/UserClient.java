@@ -4,12 +4,17 @@ import com.gmail.merikbest2015.configuration.FeignConfiguration;
 import com.gmail.merikbest2015.dto.ChatUserParticipantResponse;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.UserResponse;
+import com.gmail.merikbest2015.dto.lists.UserIdsRequest;
 import com.gmail.merikbest2015.dto.response.UserChatResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 import static com.gmail.merikbest2015.controller.PathConstants.API_V1_USER;
 
@@ -34,4 +39,7 @@ public interface UserClient {
     @GetMapping(API_V1_USER + "/search/{username}")
     HeaderResponse<UserChatResponse> searchUsersByUsername(@PathVariable("username") String username,
                                                            @SpringQueryMap Pageable pageable);
+
+    @PostMapping(API_V1_USER + "/chat/valid/ids")
+    List<Long> validateChatUsersIds(@RequestBody UserIdsRequest request);
 }

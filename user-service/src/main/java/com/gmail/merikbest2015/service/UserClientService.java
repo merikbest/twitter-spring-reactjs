@@ -77,4 +77,6 @@ public interface UserClientService {
     UserResponse getUserResponseById(Long userId);
 
     ChatTweetUserResponse getChatTweetUser(Long userId);
+
+    List<Long> validateChatUsersIds(UserIdsRequest request);
 }

@@ -20,14 +20,14 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
             "LEFT JOIN chat.participants chatParticipant " +
             "WHERE chat.id = :chatId " +
             "AND chatParticipant.userId = :userId")
-    Optional<ChatProjection> getChatById(@Param("chatId") Long chatId, @Param("userId") Long userId);
+    <T> Optional<T> getChatById(@Param("chatId") Long chatId, @Param("userId") Long userId, Class<T> type);
 
-    @Query("SELECT chat.id FROM Chat chat " +
+    @Query("SELECT chat FROM Chat chat " +
             "LEFT JOIN chat.participants participant " +
             "WHERE participant.userId IN (:authUserId, :userId)  " +
             "GROUP BY chat " +
             "HAVING COUNT(DISTINCT participant.userId) = 2")
-    Long getChatIdByParticipants(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
+    Chat getChatByParticipants(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
 
     @Query("SELECT chat FROM Chat chat " +
             "LEFT JOIN chat.participants participant " +
@@ -40,11 +40,6 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
             "WHERE participant.userId = :userId " +
             "AND participant.leftChat = false")
     List<Long> getChatIdsByUserId(@Param("userId") Long userId);
-
-    @Query("SELECT chat FROM Chat chat " +
-            "LEFT JOIN chat.participants chatParticipant " +
-            "WHERE chatParticipant.userId = :userId")
-    Chat getUserChat(@Param("userId") Long userId);
 
     @Query("SELECT CASE WHEN count(chatParticipant) > 0 THEN true ELSE false END FROM Chat chat " +
         "JOIN chat.participants chatParticipant " +

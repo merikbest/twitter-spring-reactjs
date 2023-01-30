@@ -23,9 +23,9 @@ public interface ChatService {
 
     Long readChatMessages(Long chatId);
 
-    Map<String, Object> addMessage(ChatMessage chatMessage, Long chatId);
+    Map<Long, ChatMessageProjection> addMessage(ChatMessage chatMessage, Long chatId);
 
-    Map<String, Object> addMessageWithTweet(String text, Long tweetId, List<Long> usersIds);
+    Map<Long, ChatMessageProjection> addMessageWithTweet(String text, Long tweetId, List<Long> usersIds);
 
     UserResponse getParticipant(Long participantId, Long chatId);
 

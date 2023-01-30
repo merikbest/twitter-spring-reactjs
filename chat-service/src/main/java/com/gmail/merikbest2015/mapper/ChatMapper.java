@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,16 +50,16 @@ public class ChatMapper {
         return chatService.readChatMessages(chatId);
     }
 
-    public ChatMessageResponse addMessage(ChatMessageRequest chatMessageRequest) {
-        Map<String, Object> messageMap = chatService.addMessage(
-                basicMapper.convertToResponse(chatMessageRequest, ChatMessage.class), chatMessageRequest.getChatId());
-        return getChatMessageResponse(messageMap);
+    public Map<Long, ChatMessageResponse> addMessage(ChatMessageRequest request) {
+        Map<Long, ChatMessageProjection> messages = chatService.addMessage(
+                basicMapper.convertToResponse(request, ChatMessage.class), request.getChatId());
+        return getChatMessageResponse(messages);
     }
 
-    public ChatMessageResponse addMessageWithTweet(MessageWithTweetRequest request) {
-        Map<String, Object> messageMap = chatService.addMessageWithTweet(request.getText(), request.getTweetId(),
-                request.getUsersIds());
-        return getChatMessageResponse(messageMap);
+    public Map<Long, ChatMessageResponse> addMessageWithTweet(MessageWithTweetRequest request) {
+        Map<Long, ChatMessageProjection> messages = chatService.addMessageWithTweet(
+                request.getText(), request.getTweetId(), request.getUsersIds());
+        return getChatMessageResponse(messages);
     }
 
     public String leaveFromConversation(Long participantId, Long chatId) {
@@ -73,10 +74,12 @@ public class ChatMapper {
         return chatService.searchUsersByUsername(username, pageable);
     }
 
-    private ChatMessageResponse getChatMessageResponse(Map<String, Object> messageMap) {
-        ChatMessageProjection chatMessageProjection = (ChatMessageProjection) messageMap.get("message");
-        ChatMessageResponse message = basicMapper.convertToResponse(chatMessageProjection, ChatMessageResponse.class);
-        message.setChatParticipantsIds((List<Long>) messageMap.get("chatParticipantsIds"));
-        return message;
+    private Map<Long, ChatMessageResponse> getChatMessageResponse(Map<Long, ChatMessageProjection> messages) {
+        Map<Long, ChatMessageResponse> messagesResponse = new HashMap<>();
+        messages.forEach((userId, messageProjection) -> {
+            ChatMessageResponse messageResponse = basicMapper.convertToResponse(messageProjection, ChatMessageResponse.class);
+            messagesResponse.put(userId, messageResponse);
+        });
+        return messagesResponse;
     }
 }

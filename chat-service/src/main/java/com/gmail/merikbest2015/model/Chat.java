@@ -26,6 +26,6 @@ public class Chat {
     @OneToMany(mappedBy = "chat")
     private List<ChatParticipant> participants;
 
-    @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "chat")
     private List<ChatMessage> messages;
 }

@@ -233,4 +233,12 @@ public class UserClientServiceImpl implements UserClientService {
         ChatTweetUserProjection user = userRepository.getChatTweetUser(userId);
         return basicMapper.convertToResponse(user, ChatTweetUserResponse.class);
     }
+
+    @Override
+    public List<Long> validateChatUsersIds(UserIdsRequest request) {
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        List<Long> blockedUserIds = userRepository.geUserIdsWhoBlockedMyProfile(request.getUserIds(), authUserId);
+        request.getUserIds().removeAll(blockedUserIds);
+        return request.getUserIds();
+    }
 }

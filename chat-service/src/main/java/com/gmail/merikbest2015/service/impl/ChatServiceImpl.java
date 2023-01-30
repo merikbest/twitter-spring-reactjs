@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.dto.ChatTweetResponse;
 import com.gmail.merikbest2015.dto.ChatUserParticipantResponse;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.UserResponse;
+import com.gmail.merikbest2015.dto.lists.UserIdsRequest;
 import com.gmail.merikbest2015.dto.response.UserChatResponse;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.TweetClient;
@@ -24,10 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -42,7 +40,7 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public ChatProjection getChatById(Long chatId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
-        return chatRepository.getChatById(chatId, authUserId)
+        return chatRepository.getChatById(chatId, authUserId, ChatProjection.class)
                 .orElseThrow(() -> new ApiRequestException("Chat not found", HttpStatus.NOT_FOUND));
     }
 
@@ -61,23 +59,23 @@ public class ChatServiceImpl implements ChatService {
             throw new ApiRequestException("User not found", HttpStatus.BAD_REQUEST);
         }
         isParticipantBlocked(authUserId, userId);
-        Long chatId = chatRepository.getChatIdByParticipants(authUserId, userId);
+        Chat chat = chatRepository.getChatByParticipants(authUserId, userId);
 
-        if (chatId == null) {
-            Chat chat = new Chat();
-            chatRepository.save(chat);
-            ChatParticipant authUserParticipant = chatParticipantRepository.save(new ChatParticipant(authUserId, chat));
-            ChatParticipant userParticipant = chatParticipantRepository.save(new ChatParticipant(userId, chat));
-            chat.setParticipants(Arrays.asList(authUserParticipant, userParticipant));
-            return chatRepository.getChatById(chat.getId());
+        if (chat == null) {
+            Chat newChat = new Chat();
+            chatRepository.save(newChat);
+            ChatParticipant authUserParticipant = chatParticipantRepository.save(new ChatParticipant(authUserId, newChat));
+            ChatParticipant userParticipant = chatParticipantRepository.save(new ChatParticipant(userId, newChat));
+            newChat.setParticipants(Arrays.asList(authUserParticipant, userParticipant));
+            return chatRepository.getChatById(newChat.getId());
         }
-        return chatRepository.getChatById(chatId);
+        return chatRepository.getChatById(chat.getId());
     }
 
     @Override
     public List<ChatMessageProjection> getChatMessages(Long chatId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
-        chatRepository.getChatById(chatId, authUserId)
+        chatRepository.getChatById(chatId, authUserId, ChatProjection.class)
                 .orElseThrow(() -> new ApiRequestException("Chat not found", HttpStatus.NOT_FOUND));
         return chatMessageRepository.getChatMessages(chatId);
     }
@@ -93,58 +91,59 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     @Transactional
-    public Map<String, Object> addMessage(ChatMessage chatMessage, Long chatId) {
+    public Map<Long, ChatMessageProjection> addMessage(ChatMessage chatMessage, Long chatId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
-        Chat chat = chatRepository.findById(chatId)
+        Chat chat = chatRepository.getChatById(chatId, authUserId, Chat.class)
                 .orElseThrow(() -> new ApiRequestException("Chat not found", HttpStatus.NOT_FOUND));
-        ChatParticipant chatParticipant = chatParticipantRepository.getChatParticipant(chatId, authUserId)
-                .orElseThrow(() -> new ApiRequestException("Participant in chat not found", HttpStatus.NOT_FOUND));
+        ChatParticipant chatParticipant = chat.getParticipants().stream()
+                .filter(participant -> !participant.getUserId().equals(authUserId))
+                .findFirst()
+                .orElseThrow(() -> new ApiRequestException("Chat participant not found", HttpStatus.NOT_FOUND));
         isParticipantBlocked(authUserId, chatParticipant.getUserId());
         chatMessage.setAuthorId(authUserId);
         chatMessage.setChat(chat);
         chatMessageRepository.save(chatMessage);
         chatParticipantRepository.updateParticipantWhoLeftChat(chatParticipant.getUserId(), chatId);
         chat.getMessages().add(chatMessage);
-        List<Long> chatParticipantsIds = chatParticipantRepository.getChatParticipantIds(chatId);
-        ChatMessageProjection message = chatMessageRepository.getChatMessageById(chatMessage.getId());
-        return Map.of("chatParticipantsIds", chatParticipantsIds, "message", message);
+        ChatMessageProjection message = chatMessageRepository.getChatMessageById(chatMessage.getId()).get();
+        Map<Long, ChatMessageProjection> chatParticipants = new HashMap<>();
+        chatParticipantRepository.getChatParticipantIds(chatId)
+                .forEach(userId -> chatParticipants.put(userId, message));
+        return chatParticipants;
     }
 
     @Override
     @Transactional
-    public Map<String, Object> addMessageWithTweet(String text, Long tweetId, List<Long> usersIds) {
+    public Map<Long, ChatMessageProjection> addMessageWithTweet(String text, Long tweetId, List<Long> usersIds) {
         if (!tweetClient.isTweetExists(tweetId)) {
             throw new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND);
         }
+        List<Long> validUserIds = userClient.validateChatUsersIds(new UserIdsRequest(usersIds));
+        Map<Long, ChatMessageProjection> chatParticipants = new HashMap<>();
         Long authUserId = AuthUtil.getAuthenticatedUserId();
-        // TODO validate List<Long> usersIds
-        List<Long> chatParticipantsIds = new ArrayList<>();
-        ChatMessage chatMessage = new ChatMessage(text, tweetId, authUserId);
-        usersIds.forEach(userId -> {
-            ChatParticipant chatParticipant = chatParticipantRepository.getChatParticipant(userId);
-            Boolean isUserBlockedByMyProfile = userClient.isUserBlockedByMyProfile(userId);
-//            Boolean isUserBlockedByMyProfile = userClient.isMyProfileBlockedByUser(userId); <- use this
+        validUserIds.forEach(userId -> {
+            ChatMessage chatMessage = new ChatMessage(text, tweetId, authUserId);
+            Chat chat = chatRepository.getChatByParticipants(authUserId, userId);
+            Boolean isUserBlockedByMyProfile = userClient.isMyProfileBlockedByUser(userId);
 
-            if (chatParticipant == null && !isUserBlockedByMyProfile) {
-                Chat chat = new Chat();
-                chatRepository.save(chat);
-                ChatParticipant authorParticipant = chatParticipantRepository.save(new ChatParticipant(authUserId, chat));
-                ChatParticipant userParticipant = chatParticipantRepository.save(new ChatParticipant(userId, chat));
-                chat.setParticipants(Arrays.asList(authorParticipant, userParticipant));
-                chatMessage.setChat(chat);
+            if (chat == null && !isUserBlockedByMyProfile) {
+                Chat newChat = new Chat();
+                chatRepository.save(newChat);
+                ChatParticipant authorParticipant = chatParticipantRepository.save(new ChatParticipant(authUserId, newChat));
+                ChatParticipant userParticipant = chatParticipantRepository.save(new ChatParticipant(userId, newChat));
+                newChat.setParticipants(List.of(authorParticipant, userParticipant));
+                chatMessage.setChat(newChat);
                 chatMessageRepository.save(chatMessage);
             } else if (!isUserBlockedByMyProfile) {
-                Chat chat = chatRepository.getUserChat(userId);
-                chatParticipantRepository.updateParticipantWhoLeftChat(userId, chat.getId());
                 chatMessage.setChat(chat);
                 chatMessageRepository.save(chatMessage);
+                chatParticipantRepository.updateParticipantWhoLeftChat(userId, chat.getId());
                 chat.getMessages().add(chatMessage);
-                chatRepository.save(chat);
             }
-            chatParticipantsIds.add(userId);
+            ChatMessageProjection message = chatMessageRepository.getChatMessageById(chatMessage.getId()).get();
+            chatParticipants.put(userId, message);
         });
-        ChatMessageProjection chatMessageProjection = chatMessageRepository.getChatMessageById(chatMessage.getId());
-        return Map.of("chatParticipantsIds", chatParticipantsIds, "message", chatMessageProjection);
+        return chatParticipants;
     }
 
     @Override
@@ -187,7 +186,6 @@ public class ChatServiceImpl implements ChatService {
         return userClient.searchUsersByUsername(username, pageable);
     }
 
-    // NEW
     public ChatUserParticipantResponse getChatParticipant(Long userId) {
         return userClient.getChatParticipant(userId);
     }

@@ -13,15 +13,6 @@ import java.util.Optional;
 @Repository
 public interface ChatParticipantRepository extends JpaRepository<ChatParticipant, Long> {
 
-    @Query("SELECT chatParticipant FROM ChatParticipant chatParticipant " +
-            "WHERE chatParticipant.userId = :userId")
-    ChatParticipant getChatParticipant(@Param("userId") Long userId);
-
-    @Query("SELECT chatParticipant FROM ChatParticipant chatParticipant " +
-            "WHERE chatParticipant.chat.id = :chatId " +
-            "AND chatParticipant.userId <> :authUserId")
-    Optional<ChatParticipant> getChatParticipant(@Param("chatId") Long chatId, @Param("authUserId") Long authUserId);
-
     @Query("SELECT chatParticipant.id FROM ChatParticipant chatParticipant WHERE chatParticipant.chat.id = :chatId")
     List<Long> getChatParticipantIds(@Param("chatId") Long chatId);
 

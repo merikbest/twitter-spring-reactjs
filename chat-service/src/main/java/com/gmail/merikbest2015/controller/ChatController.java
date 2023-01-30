@@ -53,19 +53,17 @@ public class ChatController {
     }
 
     @PostMapping("/add/message")
-    public ResponseEntity<ChatMessageResponse> addMessage(@RequestBody ChatMessageRequest chatMessage) {
-        ChatMessageResponse message = chatMapper.addMessage(chatMessage);
-        message.getChatParticipantsIds()
-                .forEach(userId -> messagingTemplate.convertAndSend("/topic/chat/" + userId, message));
-        return ResponseEntity.ok(message);
+    public ResponseEntity<Void> addMessage(@RequestBody ChatMessageRequest request) {
+        chatMapper.addMessage(request)
+                .forEach((userId, message) -> messagingTemplate.convertAndSend("/topic/chat/" + userId, message));
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/add/message/tweet")
-    public ResponseEntity<ChatMessageResponse> addMessageWithTweet(@RequestBody MessageWithTweetRequest request) {
-        ChatMessageResponse message = chatMapper.addMessageWithTweet(request);
-        message.getChatParticipantsIds()
-                .forEach(userId -> messagingTemplate.convertAndSend("/topic/chat/" + userId, message));
-        return ResponseEntity.ok(message);
+    public ResponseEntity<Void> addMessageWithTweet(@RequestBody MessageWithTweetRequest request) {
+        chatMapper.addMessageWithTweet(request)
+                .forEach((userId, message) -> messagingTemplate.convertAndSend("/topic/chat/" + userId, message));
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/participant/{participantId}/{chatId}")

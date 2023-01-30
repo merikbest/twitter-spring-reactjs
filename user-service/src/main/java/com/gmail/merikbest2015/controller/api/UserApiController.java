@@ -23,10 +23,10 @@ public class UserApiController {
 
     private final UserClientService userService;
 
-    @GetMapping("/{userId}")
-    public Optional<User> getUserById(@PathVariable("userId") Long userId) {
-        return userService.getUserById(userId);
-    }
+//    @GetMapping("/{userId}")
+//    public Optional<User> getUserById(@PathVariable("userId") Long userId) {
+//        return userService.getUserById(userId);
+//    }
 
     @PostMapping("/ids")
     public List<User> getUsersByIds(@RequestBody UserIdsRequest request) {
@@ -189,5 +189,10 @@ public class UserApiController {
     @GetMapping("/chat/{userId}")
     public ChatTweetUserResponse getChatTweetUser(@PathVariable("userId") Long userId) {
         return userService.getChatTweetUser(userId);
+    }
+
+    @PostMapping("/chat/valid/ids")
+    public List<Long> validateChatUsersIds(@RequestBody UserIdsRequest request) {
+        return userService.validateChatUsersIds(request);
     }
 }

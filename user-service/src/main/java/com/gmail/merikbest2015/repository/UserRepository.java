@@ -334,4 +334,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT user FROM User user WHERE user.id = :userId")
     ChatTweetUserProjection getChatTweetUser(@Param("userId") Long userId);
+
+    @Query("SELECT user.id FROM User user " +
+            "LEFT JOIN user.userBlockedList blockedUser " +
+            "WHERE user.id IN :userIds " +
+            "AND blockedUser.id = :authUserId")
+    List<Long> geUserIdsWhoBlockedMyProfile(@Param("userIds") List<Long> userIds, @Param("authUserId") Long authUserId);
 }
