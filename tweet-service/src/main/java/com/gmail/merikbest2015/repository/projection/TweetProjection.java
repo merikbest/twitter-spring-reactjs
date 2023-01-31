@@ -85,6 +85,7 @@ public interface TweetProjection {
 
         @Value("#{target.isDeleted ? null : @tweetServiceImpl.getTweetAuthor(target.authorId)}")
         TweetAuthorResponse getUser();
+
         boolean isDeleted();
     }
 

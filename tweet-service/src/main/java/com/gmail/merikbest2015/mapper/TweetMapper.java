@@ -9,17 +9,21 @@ import com.gmail.merikbest2015.dto.request.TweetRequest;
 import com.gmail.merikbest2015.dto.request.VoteRequest;
 import com.gmail.merikbest2015.dto.response.NotificationReplyResponse;
 import com.gmail.merikbest2015.dto.response.TweetAdditionalInfoResponse;
+import com.gmail.merikbest2015.dto.response.TweetUserResponse;
 import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.model.Tweet;
+import com.gmail.merikbest2015.repository.projection.LikeTweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetAdditionalInfoProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
+import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
 import com.gmail.merikbest2015.service.TweetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -37,6 +41,28 @@ public class TweetMapper {
     public TweetResponse getTweetById(Long tweetId) {
         TweetProjection tweet = tweetService.getTweetById(tweetId);
         return basicMapper.convertToResponse(tweet, TweetResponse.class);
+    }
+
+    public HeaderResponse<TweetUserResponse> getUserTweets(Long userId, Pageable pageable) {
+        Page<TweetUserProjection> tweets = tweetService.getUserTweets(userId, pageable);
+        return basicMapper.getHeaderResponse(tweets, TweetUserResponse.class);
+    }
+
+    public HeaderResponse<TweetResponse> getUserLikedTweets(Long userId, Pageable pageable) {
+        Page<LikeTweetProjection> userLikedTweets = tweetService.getUserLikedTweets(userId, pageable);
+        List<TweetProjection> tweets = new ArrayList<>();
+        userLikedTweets.getContent().forEach(likeTweet -> tweets.add(likeTweet.getTweet()));
+        return basicMapper.getHeaderResponse(tweets, userLikedTweets.getTotalPages(), TweetResponse.class);
+    }
+
+    public HeaderResponse<TweetResponse> getUserMediaTweets(Long userId, Pageable pageable) {
+        Page<TweetProjection> tweets = tweetService.getUserMediaTweets(userId, pageable);
+        return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
+    }
+
+    public HeaderResponse<TweetUserResponse> getUserRetweetsAndReplies(Long userId, Pageable pageable) {
+        Page<TweetUserProjection> tweets = tweetService.getUserRetweetsAndReplies(userId, pageable);
+        return basicMapper.getHeaderResponse(tweets, TweetUserResponse.class);
     }
 
     public TweetAdditionalInfoResponse getTweetAdditionalInfoById(Long tweetId) {

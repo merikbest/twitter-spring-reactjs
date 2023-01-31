@@ -1,13 +1,13 @@
 package com.gmail.merikbest2015.service;
 
-import com.gmail.merikbest2015.dto.notification.NotificationResponse;
-import com.gmail.merikbest2015.model.Notification;
+import com.gmail.merikbest2015.repository.projection.NotificationProjection;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface NotificationService {
 
-    NotificationResponse sendListNotification(Notification notification, boolean isAddedToList);
+    Page<NotificationProjection> getUserNotifications(Pageable pageable);
 
-    NotificationResponse sendTweetNotification(Notification notification, boolean isTweetLiked);
+    void getTweetAuthorsNotifications();
 
-    void sendTweetNotificationToSubscribers(Long tweetId);
 }

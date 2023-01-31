@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.repository;
 
 import com.gmail.merikbest2015.model.LikeTweet;
+import com.gmail.merikbest2015.repository.projection.LikeTweetProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,6 +11,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LikeTweetRepository extends JpaRepository<LikeTweet, Long> {
+
+    @Query("SELECT likeTweet FROM LikeTweet likeTweet " +
+            "WHERE likeTweet.userId = :userId " +
+            "ORDER BY likeTweet.likeTweetDate DESC")
+    Page<LikeTweetProjection> getUserLikedTweets(@Param("userId") Long userId, Pageable pageable);
 
     @Query("SELECT CASE WHEN count(likeTweet) > 0 THEN true ELSE false END " +
             "FROM LikeTweet likeTweet " +

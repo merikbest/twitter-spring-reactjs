@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.mapper;
 
-import com.gmail.merikbest2015.commons.dto.AuthUserResponse;
-import com.gmail.merikbest2015.commons.dto.AuthenticationResponse;
 import com.gmail.merikbest2015.dto.request.*;
+import com.gmail.merikbest2015.dto.response.AuthUserResponse;
+import com.gmail.merikbest2015.dto.response.AuthenticationResponse;
 import com.gmail.merikbest2015.exception.InputFieldException;
 import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
 import com.gmail.merikbest2015.service.AuthenticationService;
@@ -54,8 +54,8 @@ public class AuthenticationMapper {
         return authenticationService.sendPasswordResetCode(email);
     }
 
-    public AuthUserResponse findByPasswordResetCode(String code) {
-        AuthUserProjection user = authenticationService.findByPasswordResetCode(code);
+    public AuthUserResponse getByPasswordResetCode(String code) {
+        AuthUserProjection user = authenticationService.getByPasswordResetCode(code);
         return modelMapper.map(user, AuthUserResponse.class);
     }
 
@@ -64,9 +64,9 @@ public class AuthenticationMapper {
         return authenticationService.passwordReset(request.getEmail(), request.getPassword(), request.getPassword2());
     }
 
-    public String findEmail(String email, BindingResult bindingResult) {
+    public String getEmail(String email, BindingResult bindingResult) {
         processInputErrors(bindingResult);
-        return authenticationService.findEmail(email);
+        return authenticationService.getEmail(email);
     }
 
     public String sendRegistrationCode(String email, BindingResult bindingResult) {

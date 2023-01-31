@@ -36,4 +36,5 @@ public class PathConstants {
     public static final String UI_V1_CHAT = UI_V1 + "/chat";
     // notification
     public static final String API_V1_NOTIFICATION = API_V1 + "/notification";
+    public static final String UI_V1_NOTIFICATION = UI_V1 + "/notification";
 }

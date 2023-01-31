@@ -146,7 +146,7 @@ public class User {
     private List<Notification> notifications; // TODO DELETE
 
     @OneToMany(mappedBy = "user")
-    private List<ChatParticipant> chats;
+    private List<ChatParticipant> chats; // TODO DELETE
 
     @ManyToMany
     @JoinTable(name = "user_muted",

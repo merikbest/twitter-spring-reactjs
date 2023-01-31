@@ -58,4 +58,10 @@ public interface UserClient {
 
     @GetMapping(API_V1_USER + "/chat/{userId}")
     ChatTweetUserResponse getChatTweetUser(@PathVariable("userId") Long userId);
+
+    @GetMapping(API_V1_USER + "/is_exists/{userId}")
+    Boolean isUserExists(@PathVariable("userId") Long userId);
+
+    @GetMapping(API_V1_USER + "/tweet/pinned/{userId}")
+    Long getUserPinnedTweetId(@PathVariable("userId") Long userId);
 }

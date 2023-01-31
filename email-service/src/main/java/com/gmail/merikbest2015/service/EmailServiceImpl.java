@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.service;
 
-import com.gmail.merikbest2015.client.email.EmailRequest;
+import com.gmail.merikbest2015.dto.EmailRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,8 +23,8 @@ public class EmailServiceImpl implements EmailService {
     @Value("${spring.mail.username}")
     private String username;
 
-    @SneakyThrows
     @Override
+    @SneakyThrows
     public void sendMessageHtml(EmailRequest emailRequest) throws MessagingException {
         Context thymeleafContext = new Context();
         thymeleafContext.setVariables(emailRequest.getAttributes());

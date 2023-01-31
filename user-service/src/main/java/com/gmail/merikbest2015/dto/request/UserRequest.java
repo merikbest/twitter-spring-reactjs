@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.dto.request;
 
-import com.gmail.merikbest2015.commons.dto.ImageResponse;
+import com.gmail.merikbest2015.dto.ImageResponse;
 import lombok.Data;
 
 @Data

@@ -10,6 +10,7 @@ import com.gmail.merikbest2015.dto.request.TweetRequest;
 import com.gmail.merikbest2015.dto.request.VoteRequest;
 import com.gmail.merikbest2015.dto.response.NotificationReplyResponse;
 import com.gmail.merikbest2015.dto.response.TweetAdditionalInfoResponse;
+import com.gmail.merikbest2015.dto.response.TweetUserResponse;
 import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.mapper.TweetMapper;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +41,34 @@ public class TweetController {
     @GetMapping("/{tweetId}")
     public ResponseEntity<TweetResponse> getTweetById(@PathVariable("tweetId") Long tweetId) {
         return ResponseEntity.ok(tweetMapper.getTweetById(tweetId));
+    }
+
+    @GetMapping("/user/{userId}") // TODO change endpoint in frontend
+    public ResponseEntity<List<TweetUserResponse>> getUserTweets(@PathVariable Long userId,
+                                                                 @PageableDefault(size = 10) Pageable pageable) {
+        HeaderResponse<TweetUserResponse> response = tweetMapper.getUserTweets(userId, pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
+    }
+
+    @GetMapping("/liked/user/{userId}") // TODO change endpoint in frontend
+    public ResponseEntity<List<TweetResponse>> getUserLikedTweets(@PathVariable Long userId,
+                                                                  @PageableDefault(size = 10) Pageable pageable) {
+        HeaderResponse<TweetResponse> response = tweetMapper.getUserLikedTweets(userId, pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
+    }
+
+    @GetMapping("/media/user/{userId}/") // TODO change endpoint in frontend
+    public ResponseEntity<List<TweetResponse>> getUserMediaTweets(@PathVariable Long userId,
+                                                                  @PageableDefault(size = 10) Pageable pageable) {
+        HeaderResponse<TweetResponse> response = tweetMapper.getUserMediaTweets(userId, pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
+    }
+
+    @GetMapping("/replies/user/{userId}/") // TODO change endpoint in frontend
+    public ResponseEntity<List<TweetUserResponse>> getUserRetweetsAndReplies(@PathVariable Long userId,
+                                                                             @PageableDefault(size = 10) Pageable pageable) {
+        HeaderResponse<TweetUserResponse> response = tweetMapper.getUserRetweetsAndReplies(userId, pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
     @GetMapping("/{tweetId}/info")

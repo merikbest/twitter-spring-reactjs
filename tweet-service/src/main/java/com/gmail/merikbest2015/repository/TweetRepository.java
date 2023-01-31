@@ -1,10 +1,7 @@
 package com.gmail.merikbest2015.repository;
 
 import com.gmail.merikbest2015.model.Tweet;
-import com.gmail.merikbest2015.repository.projection.ChatTweetProjection;
-import com.gmail.merikbest2015.repository.projection.NotificationTweetProjection;
-import com.gmail.merikbest2015.repository.projection.TweetAdditionalInfoProjection;
-import com.gmail.merikbest2015.repository.projection.TweetProjection;
+import com.gmail.merikbest2015.repository.projection.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,7 +24,32 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     Page<TweetProjection> findAllTweets(Pageable pageable);
 
     @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId")
-    Optional<TweetProjection> findTweetById(@Param("tweetId") Long tweetId);
+    <T> Optional<T> getTweetById(@Param("tweetId") Long tweetId, Class<T> type);
+
+    @Query("SELECT tweet FROM Tweet tweet " +
+            "WHERE tweet.authorId = :userId " +
+            "AND tweet.addressedUsername IS NULL " +
+            "AND tweet.scheduledDate IS NULL " +
+            "AND tweet.deleted = false " +
+            "ORDER BY tweet.dateTime DESC")
+    List<TweetUserProjection> getTweetsByUserId(@Param("userId") Long userId);
+
+    @Query("SELECT tweet FROM Tweet tweet " +
+            "LEFT JOIN tweet.images image " +
+            "WHERE tweet.scheduledDate IS NULL AND tweet.deleted = false " +
+            "AND (tweet.authorId = :userId AND image.id IS NOT NULL) " +
+            "OR tweet.scheduledDate IS NULL AND tweet.deleted = false " +
+            "AND (tweet.authorId = :userId AND tweet.text LIKE CONCAT('%','youtu','%')) " +
+            "ORDER BY tweet.dateTime DESC")
+    Page<TweetProjection> getUserMediaTweets(@Param("userId") Long userId, Pageable pageable);
+
+    @Query("SELECT tweet FROM Tweet tweet " +
+            "WHERE tweet.authorId = :userId " +
+            "AND tweet.addressedUsername IS NOT NULL " +
+            "AND tweet.scheduledDate IS NULL " +
+            "AND tweet.deleted = false " +
+            "ORDER BY tweet.dateTime DESC")
+    List<TweetUserProjection> getRepliesByUserId(@Param("userId") Long userId);
 
     @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId")
     Optional<TweetAdditionalInfoProjection> getTweetAdditionalInfoById(@Param("tweetId") Long tweetId);
@@ -103,4 +125,5 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId")
     ChatTweetProjection getChatTweet(@Param("tweetId") Long tweetId);
+
 }

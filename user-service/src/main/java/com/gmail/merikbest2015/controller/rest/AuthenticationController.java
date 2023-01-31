@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.controller.rest;
 
-import com.gmail.merikbest2015.commons.dto.AuthUserResponse;
-import com.gmail.merikbest2015.commons.dto.AuthenticationResponse;
 import com.gmail.merikbest2015.dto.request.*;
+import com.gmail.merikbest2015.dto.response.AuthUserResponse;
+import com.gmail.merikbest2015.dto.response.AuthenticationResponse;
 import com.gmail.merikbest2015.mapper.AuthenticationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import static com.gmail.merikbest2015.commons.controller.PathConstants.UI_V1_AUTH;
+import static com.gmail.merikbest2015.controller.PathConstants.UI_V1_AUTH;
 
 @RestController
 @RequiredArgsConstructor
@@ -51,8 +51,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/forgot/email")
-    public ResponseEntity<String> findExistingEmail(@Valid @RequestBody ProcessEmailRequest request, BindingResult bindingResult) {
-        return ResponseEntity.ok(authenticationMapper.findEmail(request.getEmail(), bindingResult));
+    public ResponseEntity<String> getExistingEmail(@Valid @RequestBody ProcessEmailRequest request, BindingResult bindingResult) {
+        return ResponseEntity.ok(authenticationMapper.getEmail(request.getEmail(), bindingResult));
     }
 
     @PostMapping("/forgot")
@@ -62,7 +62,7 @@ public class AuthenticationController {
 
     @GetMapping("/reset/{code}")
     public ResponseEntity<AuthUserResponse> getUserByResetCode(@PathVariable String code) {
-        return ResponseEntity.ok(authenticationMapper.findByPasswordResetCode(code));
+        return ResponseEntity.ok(authenticationMapper.getByPasswordResetCode(code));
     }
 
     @PostMapping("/reset")
