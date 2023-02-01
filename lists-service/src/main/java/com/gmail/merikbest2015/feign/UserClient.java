@@ -3,7 +3,7 @@ package com.gmail.merikbest2015.feign;
 import com.gmail.merikbest2015.configuration.FeignConfiguration;
 import com.gmail.merikbest2015.dto.lists.ListMemberResponse;
 import com.gmail.merikbest2015.dto.lists.ListOwnerResponse;
-import com.gmail.merikbest2015.dto.lists.UserIdsRequest;
+import com.gmail.merikbest2015.dto.IdsRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +28,7 @@ public interface UserClient {
     Boolean isUserHavePrivateProfile(@PathVariable("userId") Long userId);
 
     @PostMapping(API_V1_USER + "/list/participants")
-    List<ListMemberResponse> getListParticipantsByIds(@RequestBody UserIdsRequest request);
+    List<ListMemberResponse> getListParticipantsByIds(@RequestBody IdsRequest request);
 
     @GetMapping(API_V1_USER + "/list/participants/{username}")
     List<ListMemberResponse> searchListMembersByUsername(@PathVariable("username") String username);

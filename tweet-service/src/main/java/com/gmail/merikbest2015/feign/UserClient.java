@@ -2,7 +2,7 @@ package com.gmail.merikbest2015.feign;
 
 import com.gmail.merikbest2015.configuration.FeignConfiguration;
 import com.gmail.merikbest2015.dto.*;
-import com.gmail.merikbest2015.dto.lists.UserIdsRequest;
+import com.gmail.merikbest2015.dto.IdsRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.data.domain.Pageable;
@@ -31,11 +31,11 @@ public interface UserClient {
     TweetAdditionalInfoUserResponse getTweetAdditionalInfoUser(@PathVariable("userId") Long userId);
 
     @PostMapping(API_V1_USER + "/tweet/liked")
-    HeaderResponse<UserResponse> getTweetLikedUsersByIds(@RequestBody UserIdsRequest request,
+    HeaderResponse<UserResponse> getTweetLikedUsersByIds(@RequestBody IdsRequest request,
                                                          @SpringQueryMap Pageable pageable);
 
     @PostMapping(API_V1_USER + "/tweet/retweeted")
-    HeaderResponse<UserResponse> getRetweetedUsersByIds(@RequestBody UserIdsRequest request,
+    HeaderResponse<UserResponse> getRetweetedUsersByIds(@RequestBody IdsRequest request,
                                                         @SpringQueryMap Pageable pageable);
 
     @GetMapping(API_V1_USER + "/ids")
@@ -54,7 +54,7 @@ public interface UserClient {
     void updateLikeCount(@PathVariable("increaseCount") boolean increaseCount);
 
     @PostMapping(API_V1_USER + "/tweet/valid/ids/{text}")
-    List<Long> getValidUserIds(@RequestBody UserIdsRequest request, @PathVariable("text") String text);
+    List<Long> getValidUserIds(@RequestBody IdsRequest request, @PathVariable("text") String text);
 
     @GetMapping(API_V1_USER + "/chat/{userId}")
     ChatTweetUserResponse getChatTweetUser(@PathVariable("userId") Long userId);

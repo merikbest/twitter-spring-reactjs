@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.dto.NotificationInfoResponse;
 import com.gmail.merikbest2015.dto.TweetResponse;
 import com.gmail.merikbest2015.dto.notification.NotificationResponse;
 import com.gmail.merikbest2015.dto.notification.NotificationUserResponse;
+import com.gmail.merikbest2015.repository.projection.NotificationInfoProjection;
 import com.gmail.merikbest2015.repository.projection.NotificationProjection;
 import com.gmail.merikbest2015.service.NotificationService;
 import lombok.RequiredArgsConstructor;
@@ -29,29 +30,19 @@ public class NotificationMapper {
     }
 
     public List<NotificationUserResponse> getTweetAuthorsNotifications() {
-        notificationService.getTweetAuthorsNotifications();
-//        List<TweetAuthorsProjection> tweetAuthorsNotifications = userService.getTweetAuthorsNotifications();
-//        List<TweetAuthorsProjection.AuthorProjection> tweetAuthorsProjection = tweetAuthorsNotifications.contains(null)
-//                ? new ArrayList<>()
-//                : tweetAuthorsNotifications.stream()
-//                .map(TweetAuthorsProjection::getTweetAuthor)
-//                .collect(Collectors.toList());
-//        return basicMapper.convertToResponseList(tweetAuthorsProjection, NotificationUserResponse.class);
-        return null;
+        return notificationService.getTweetAuthorsNotifications();
     }
 
     public NotificationInfoResponse getUserNotificationById(Long notificationId) {
-//        NotificationInfoProjection notification = userService.getUserNotificationById(notificationId);
-//        return basicMapper.convertToResponse(notification, NotificationInfoResponse.class);
-        return null;
+        NotificationInfoProjection notification = notificationService.getUserNotificationById(notificationId);
+        return basicMapper.convertToResponse(notification, NotificationInfoResponse.class);
     }
 
     public HeaderResponse<TweetResponse> getNotificationsFromTweetAuthors(Pageable pageable) {
-//        Page<TweetsProjection> tweetsProjections = userService.getNotificationsFromTweetAuthors(pageable);
+        return notificationService.getNotificationsFromTweetAuthors(pageable);
 //        List<TweetProjection> tweets = tweetsProjections.getContent().stream()
 //                .map(TweetsProjection::getTweet)
 //                .collect(Collectors.toList());
 //        return basicMapper.getHeaderResponse(tweets, tweetsProjections.getTotalPages(), TweetResponse.class);
-        return null;
     }
 }

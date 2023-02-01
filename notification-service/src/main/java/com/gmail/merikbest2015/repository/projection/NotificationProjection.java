@@ -1,7 +1,10 @@
 package com.gmail.merikbest2015.repository.projection;
 
+import com.gmail.merikbest2015.dto.notification.NotificationListResponse;
+import com.gmail.merikbest2015.dto.notification.NotificationTweetResponse;
+import com.gmail.merikbest2015.dto.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.enums.NotificationType;
-import com.gmail.merikbest2015.projection.ImageProjection;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
 
@@ -9,25 +12,20 @@ public interface NotificationProjection {
     Long getId();
     LocalDateTime getDate();
     NotificationType getNotificationType();
-    NotificationUserProjection getUser();
-    NotificationUserProjection getUserToFollow();
-    NotificationTweetProjection getTweet();
-    NotificationListProjection getList();
+    Long getUserId();
+    Long getUserToFollowId();
+    Long getTweetId();
+    Long getListId();
 
-    interface NotificationUserProjection {
-        Long getId();
-        String getUsername();
-        ImageProjection getAvatar();
-    }
+    @Value("#{target.userId == null ? null : @notificationServiceImpl.getNotificationUser(target.userId)}")
+    NotificationUserResponse getUser();
 
-    interface NotificationTweetProjection {
-        Long getId();
-        String getText();
-        NotificationUserProjection getUser();
-    }
+    @Value("#{target.userToFollowId == null ? null : @notificationServiceImpl.getNotificationUser(target.userToFollowId)}")
+    NotificationUserResponse getUserToFollow();
 
-    interface NotificationListProjection {
-        Long getId();
-        String getName();
-    }
+    @Value("#{target.tweetId == null ? null : @notificationServiceImpl.getNotificationTweet(target.tweetId)}")
+    NotificationTweetResponse getTweet();
+
+    @Value("#{target.listId == null ? null : @notificationServiceImpl.getNotificationList(target.listId)}")
+    NotificationListResponse getList();
 }

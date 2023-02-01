@@ -7,6 +7,8 @@ public interface NotificationClientService {
 
     NotificationResponse sendListNotification(Notification notification, boolean isAddedToList);
 
+    NotificationResponse sendUserNotification(Notification notification, boolean notificationCondition);
+
     NotificationResponse sendTweetNotification(Notification notification, boolean isTweetLiked);
 
     void sendTweetNotificationToSubscribers(Long tweetId);

@@ -4,7 +4,7 @@ import com.gmail.merikbest2015.dto.ChatTweetResponse;
 import com.gmail.merikbest2015.dto.ChatUserParticipantResponse;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.UserResponse;
-import com.gmail.merikbest2015.dto.lists.UserIdsRequest;
+import com.gmail.merikbest2015.dto.IdsRequest;
 import com.gmail.merikbest2015.dto.response.UserChatResponse;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.TweetClient;
@@ -118,7 +118,7 @@ public class ChatServiceImpl implements ChatService {
         if (!tweetClient.isTweetExists(tweetId)) {
             throw new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND);
         }
-        List<Long> validUserIds = userClient.validateChatUsersIds(new UserIdsRequest(usersIds));
+        List<Long> validUserIds = userClient.validateChatUsersIds(new IdsRequest(usersIds));
         Map<Long, ChatMessageProjection> chatParticipants = new HashMap<>();
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         validUserIds.forEach(userId -> {

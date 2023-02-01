@@ -4,7 +4,7 @@ import com.gmail.merikbest2015.configuration.FeignConfiguration;
 import com.gmail.merikbest2015.dto.ChatUserParticipantResponse;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.UserResponse;
-import com.gmail.merikbest2015.dto.lists.UserIdsRequest;
+import com.gmail.merikbest2015.dto.IdsRequest;
 import com.gmail.merikbest2015.dto.response.UserChatResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
@@ -41,5 +41,5 @@ public interface UserClient {
                                                            @SpringQueryMap Pageable pageable);
 
     @PostMapping(API_V1_USER + "/chat/valid/ids")
-    List<Long> validateChatUsersIds(@RequestBody UserIdsRequest request);
+    List<Long> validateChatUsersIds(@RequestBody IdsRequest request);
 }

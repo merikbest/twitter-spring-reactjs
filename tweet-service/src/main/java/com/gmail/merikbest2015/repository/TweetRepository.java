@@ -126,4 +126,9 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId")
     ChatTweetProjection getChatTweet(@Param("tweetId") Long tweetId);
 
+    @Query("SELECT tweet FROM Tweet tweet " +
+            "WHERE tweet.id IN :tweetIds " +
+            "AND tweet.deleted = false " +
+            "ORDER BY tweet.dateTime DESC")
+    Page<TweetProjection> getTweetsByIds(@Param("tweetIds")List<Long> tweetIds, Pageable pageable);
 }

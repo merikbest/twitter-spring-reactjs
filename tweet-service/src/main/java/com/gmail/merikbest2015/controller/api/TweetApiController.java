@@ -2,11 +2,13 @@ package com.gmail.merikbest2015.controller.api;
 
 import com.gmail.merikbest2015.dto.ChatTweetResponse;
 import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.dto.IdsRequest;
 import com.gmail.merikbest2015.dto.TweetResponse;
 import com.gmail.merikbest2015.dto.notification.NotificationTweetResponse;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.mapper.TweetClientMapper;
 import com.gmail.merikbest2015.model.Tweet;
+import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.service.TweetClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.openfeign.SpringQueryMap;
@@ -83,6 +85,16 @@ public class TweetApiController {
 
     // NEW
     @GetMapping("/{tweetId}")
+    public TweetResponse getTweetById(@PathVariable("tweetId") Long tweetId) {
+        return tweetClientService.getTweetById(tweetId);
+    }
+
+    @PostMapping("/ids")
+    public HeaderResponse<TweetResponse> getTweetsByIds(@RequestBody IdsRequest request, Pageable pageable) {
+        return tweetClientService.getTweetsByIds(request, pageable);
+    }
+
+    @GetMapping("/notification/{tweetId}")
     public NotificationTweetResponse getNotificationTweet(@PathVariable("tweetId") Long tweetId) {
         return tweetClientService.getNotificationTweet(tweetId);
     }

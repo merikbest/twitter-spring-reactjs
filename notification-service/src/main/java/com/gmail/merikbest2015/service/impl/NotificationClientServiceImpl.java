@@ -11,12 +11,9 @@ import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.model.Notification;
 import com.gmail.merikbest2015.repository.NotificationRepository;
-import com.gmail.merikbest2015.repository.projection.NotificationProjection;
 import com.gmail.merikbest2015.service.NotificationClientService;
 import com.gmail.merikbest2015.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,6 +43,23 @@ public class NotificationClientServiceImpl implements NotificationClientService 
             }
         }
         return convertToNotificationListResponse(notification, isAddedToList);
+    }
+
+    @Override
+    public NotificationResponse sendUserNotification(Notification notification, boolean isFollowed) {
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+
+        if (!notification.getNotifiedUserId().equals(authUserId)) {
+            boolean isNotificationExists = notificationRepository.isUserNotificationExists(
+                    notification.getNotifiedUserId(), notification.getUserToFollowId(), notification.getNotificationType());
+
+            if (!isNotificationExists) {
+                notificationRepository.save(notification);
+                userClient.increaseNotificationsCount(notification.getUserId());
+                return convertToNotificationUserResponse(notification, isFollowed);
+            }
+        }
+        return convertToNotificationUserResponse(notification, isFollowed);
     }
 
     @Override
@@ -90,6 +104,16 @@ public class NotificationClientServiceImpl implements NotificationClientService 
         notificationResponse.setUser(userResponse);
         notificationResponse.setList(listResponse);
         notificationResponse.setAddedToList(isAddedToList);
+        return notificationResponse;
+    }
+
+    private NotificationResponse convertToNotificationUserResponse(Notification notification, boolean isFollowed) {
+        NotificationUserResponse userResponse = userClient.getNotificationUser(notification.getUserId());
+        NotificationUserResponse followerResponse = userClient.getNotificationUser(notification.getUserToFollowId());
+        followerResponse.setFollower(isFollowed);
+        NotificationResponse notificationResponse = basicMapper.convertToResponse(notification, NotificationResponse.class);
+        notificationResponse.setUser(userResponse);
+        notificationResponse.setUserToFollow(followerResponse);
         return notificationResponse;
     }
 

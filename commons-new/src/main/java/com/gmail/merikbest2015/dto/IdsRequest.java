@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.dto.lists;
+package com.gmail.merikbest2015.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +9,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserIdsRequest {
-    private List<Long> userIds;
+public class IdsRequest {
+    private List<Long> ids;
 }

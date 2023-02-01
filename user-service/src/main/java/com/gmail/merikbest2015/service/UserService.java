@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.service;
 
+import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,16 +42,19 @@ public interface UserService {
 //
 //    Boolean processUserBookmarks(Long tweetId);
 //
+
+    AuthUserProjection updateUserProfile(User userInfo);
+
 //    List<TweetImageProjection> getUserTweetImages(Long userId);
-//
-//    AuthUserProjection updateUserProfile(User userInfo);
-//
-//    Page<UserProjection> getFollowers(Long userId, Pageable pageable);
-//
-//    Page<UserProjection> getFollowing(Long userId, Pageable pageable);
-//
-//    Map<String, Object> processFollow(Long userId);
-//
+
+    Page<UserProjection> getFollowers(Long userId, Pageable pageable);
+
+    Page<UserProjection> getFollowing(Long userId, Pageable pageable);
+
+    Page<FollowerUserProjection> getFollowerRequests(Pageable pageable);
+
+    Boolean processFollow(Long userId);
+
 //    List<BaseUserProjection> overallFollowers(Long userId);
 //
 //    UserProfileProjection processFollowRequestToPrivateProfile(Long userId);
@@ -73,5 +77,4 @@ public interface UserService {
 //
 //    UserDetailProjection getUserDetails(Long userId);
 //
-//    Page<FollowerUserProjection> getFollowerRequests(Pageable pageable);
 }

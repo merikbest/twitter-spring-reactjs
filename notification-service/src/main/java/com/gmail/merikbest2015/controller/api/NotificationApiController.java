@@ -26,6 +26,15 @@ public class NotificationApiController {
         }
     }
 
+    @PostMapping("/user")
+    public void sendUserNotification(@RequestBody NotificationRequest request) {
+        NotificationResponse notification = notificationClientMapper.sendUserNotification(request);
+
+        if (notification.getId() != null) {
+            messagingTemplate.convertAndSend("/topic/notifications/" + notification.getUser().getId(), notification);
+        }
+    }
+
     @PostMapping("/tweet")
     public NotificationResponse sendTweetNotification(@RequestBody NotificationRequest request) {
         NotificationResponse notification = notificationClientMapper.sendTweetNotification(request);

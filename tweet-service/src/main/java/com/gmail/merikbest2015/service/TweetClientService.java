@@ -1,7 +1,11 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.dto.ChatTweetResponse;
+import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.dto.IdsRequest;
+import com.gmail.merikbest2015.dto.TweetResponse;
 import com.gmail.merikbest2015.dto.notification.NotificationTweetResponse;
+import org.springframework.data.domain.Pageable;
 
 public interface TweetClientService {
 
@@ -26,6 +30,10 @@ public interface TweetClientService {
 //    Page<TweetProjection> getTweetsByUserIds(TweetUserIdsRequest request, Pageable pageable);
 
     // NEW
+    TweetResponse getTweetById(Long tweetId);
+
+    HeaderResponse<TweetResponse> getTweetsByIds(IdsRequest request, Pageable pageable);
+
     NotificationTweetResponse getNotificationTweet(Long tweetId);
 
     Boolean isTweetExists(Long tweetId);

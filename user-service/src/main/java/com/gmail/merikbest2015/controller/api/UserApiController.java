@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.controller.api;
 
+import com.gmail.merikbest2015.dto.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.service.UserClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.openfeign.SpringQueryMap;
@@ -128,12 +129,12 @@ public class UserApiController {
 //    public List<ListMemberResponse> searchListMembersByUsername(@PathVariable("username") String username) {
 //        return userService.searchListMembersByUsername(username);
 //    }
-//
-//    @GetMapping("/notification/user/{userId}")
-//    public NotificationUserResponse getNotificationUser(@PathVariable("userId") Long userId) {
-//        return userService.getNotificationUser(userId);
-//    }
-//
+
+    @GetMapping("/notification/user/{userId}")
+    public NotificationUserResponse getNotificationUser(@PathVariable("userId") Long userId) {
+        return userService.getNotificationUser(userId);
+    }
+
 //    @GetMapping("/tweet/author/{userId}")
 //    public TweetAuthorResponse getTweetAuthor(@PathVariable("userId") Long userId) {
 //        return userService.getTweetAuthor(userId);
@@ -177,7 +178,7 @@ public class UserApiController {
 //    }
 //
 //    @GetMapping("/{userId}")
-//    public UserResponse getUserResponseById(@PathVariable("userId") Long userId) {
+//    public UserResponse getUserById(@PathVariable("userId") Long userId) {
 //        return userService.getUserResponseById(userId);
 //    }
 //
@@ -190,4 +191,20 @@ public class UserApiController {
 //    public List<Long> validateChatUsersIds(@RequestBody UserIdsRequest request) {
 //        return userService.validateChatUsersIds(request);
 //    }
+
+    // NEW
+    @GetMapping("/subscribers")
+    public List<NotificationUserResponse> getUsersWhichUserSubscribed() {
+        return userService.getUsersWhichUserSubscribed();
+    }
+
+    @GetMapping("/subscribers/ids")
+    public List<Long> getUserIdsWhichUserSubscribed() {
+        return userService.getUserIdsWhichUserSubscribed();
+    }
+
+    @GetMapping("/notification/reset")
+    public void resetNotificationCount() {
+        userService.resetNotificationCount();
+    }
 }

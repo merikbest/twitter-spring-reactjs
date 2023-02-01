@@ -1,20 +1,17 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.dto.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.service.AuthenticationService;
 import com.gmail.merikbest2015.service.UserClientService;
+import com.gmail.merikbest2015.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -153,13 +150,13 @@ public class UserClientServiceImpl implements UserClientService {
 //        List<ListMemberProjection> users = userRepository.searchListMembersByUsername(username);
 //        return basicMapper.convertToResponseList(users, ListMemberResponse.class);
 //    }
-//
-//    @Override
-//    public NotificationUserResponse getNotificationUser(Long userId) {
-//        NotificationUserProjection user = userRepository.getNotificationUser(userId);
-//        return basicMapper.convertToResponse(user, NotificationUserResponse.class);
-//    }
-//
+
+    @Override
+    public NotificationUserResponse getNotificationUser(Long userId) {
+        NotificationUserProjection user = userRepository.getNotificationUser(userId);
+        return basicMapper.convertToResponse(user, NotificationUserResponse.class);
+    }
+
 //    @Override
 //    public TweetAuthorResponse getTweetAuthor(Long userId) {
 //        TweetAuthorProjection user = userRepository.getTweetAuthor(userId);
@@ -232,4 +229,25 @@ public class UserClientServiceImpl implements UserClientService {
 //        request.getUserIds().removeAll(blockedUserIds);
 //        return request.getUserIds();
 //    }
+
+    // NEW
+    @Override
+    public List<NotificationUserResponse> getUsersWhichUserSubscribed() {
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        List<NotificationUserProjection> users = userRepository.getUsersWhichUserSubscribed(authUserId);
+        return basicMapper.convertToResponseList(users, NotificationUserResponse.class);
+    }
+
+    @Override
+    public List<Long> getUserIdsWhichUserSubscribed() {
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        return userRepository.getUserIdsWhichUserSubscribed(authUserId);
+    }
+
+    @Override
+    @Transactional
+    public void resetNotificationCount() {
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        userRepository.resetNotificationCount(authUserId);
+    }
 }

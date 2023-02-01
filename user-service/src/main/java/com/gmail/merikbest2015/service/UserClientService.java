@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.service;
 
+import com.gmail.merikbest2015.dto.notification.NotificationUserResponse;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -50,9 +51,9 @@ public interface UserClientService {
 //    List<ListMemberResponse> getListParticipantsByIds(UserIdsRequest request);
 //
 //    List<ListMemberResponse> searchListMembersByUsername(String username);
-//
-//    NotificationUserResponse getNotificationUser(Long userId);
-//
+
+    NotificationUserResponse getNotificationUser(Long userId);
+
 //    TweetAuthorResponse getTweetAuthor(Long userId);
 //
 //    TweetAdditionalInfoUserResponse getTweetAdditionalInfoUser(Long userId);
@@ -74,4 +75,11 @@ public interface UserClientService {
 //    ChatTweetUserResponse getChatTweetUser(Long userId);
 //
 //    List<Long> validateChatUsersIds(UserIdsRequest request);
+
+    // NEW
+    List<NotificationUserResponse> getUsersWhichUserSubscribed();
+
+    List<Long> getUserIdsWhichUserSubscribed();
+
+    void resetNotificationCount();
 }

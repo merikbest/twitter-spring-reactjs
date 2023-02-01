@@ -117,45 +117,40 @@ public class UserController {
 //    public ResponseEntity<Boolean> processUserBookmarks(@PathVariable Long tweetId) {
 //        return ResponseEntity.ok(userMapper.processUserBookmarks(tweetId));
 //    }
-//
-//    @PutMapping
-//    public ResponseEntity<AuthUserResponse> updateUserProfile(@RequestBody UserRequest userRequest) {
-//        return ResponseEntity.ok(userMapper.updateUserProfile(userRequest));
-//    }
-//
+
+    @PutMapping
+    public ResponseEntity<AuthUserResponse> updateUserProfile(@RequestBody UserRequest userRequest) {
+        return ResponseEntity.ok(userMapper.updateUserProfile(userRequest));
+    }
+
 //    @GetMapping("/images/{userId}")
 //    public ResponseEntity<List<TweetImageResponse>> getUserTweetImages(@PathVariable Long userId) {
 //        return ResponseEntity.ok(userMapper.getUserTweetImages(userId));
 //    }
-//
-//    @GetMapping("/followers/{userId}")
-//    public ResponseEntity<List<UserResponse>> getFollowers(@PathVariable Long userId, @PageableDefault(size = 15) Pageable pageable) {
-//        HeaderResponse<UserResponse> response = userMapper.getFollowers(userId, pageable);
-//        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
-//    }
-//
-//    @GetMapping("/following/{userId}")
-//    public ResponseEntity<List<UserResponse>> getFollowing(@PathVariable Long userId, @PageableDefault(size = 15) Pageable pageable) {
-//        HeaderResponse<UserResponse> response = userMapper.getFollowing(userId, pageable);
-//        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
-//    }
-//
-//    @GetMapping("/follower-requests")
-//    public ResponseEntity<List<FollowerUserResponse>> getFollowerRequests(@PageableDefault(size = 10) Pageable pageable) {
-//        HeaderResponse<FollowerUserResponse> response = userMapper.getFollowerRequests(pageable);
-//        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
-//    }
-//
-//    @GetMapping("/follow/{userId}")
-//    public ResponseEntity<NotificationUserResponse> processFollow(@PathVariable Long userId) {
-//        NotificationResponse notification = userMapper.processFollow(userId);
-//
-//        if (notification.getId() != null) {
-//            messagingTemplate.convertAndSend("/topic/notifications/" + notification.getUserToFollow().getId(), notification);
-//        }
-//        return ResponseEntity.ok(notification.getUserToFollow());
-//    }
-//
+
+    @GetMapping("/followers/{userId}")
+    public ResponseEntity<List<UserResponse>> getFollowers(@PathVariable Long userId, @PageableDefault(size = 15) Pageable pageable) {
+        HeaderResponse<UserResponse> response = userMapper.getFollowers(userId, pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
+    }
+
+    @GetMapping("/following/{userId}")
+    public ResponseEntity<List<UserResponse>> getFollowing(@PathVariable Long userId, @PageableDefault(size = 15) Pageable pageable) {
+        HeaderResponse<UserResponse> response = userMapper.getFollowing(userId, pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
+    }
+
+    @GetMapping("/follower-requests")
+    public ResponseEntity<List<FollowerUserResponse>> getFollowerRequests(@PageableDefault(size = 10) Pageable pageable) {
+        HeaderResponse<FollowerUserResponse> response = userMapper.getFollowerRequests(pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
+    }
+
+    @GetMapping("/follow/{userId}")
+    public ResponseEntity<Boolean> processFollow(@PathVariable Long userId) {
+        return ResponseEntity.ok(userMapper.processFollow(userId));
+    }
+
 //    @GetMapping("/follow/overall/{userId}") // TODO add pagination
 //    public ResponseEntity<List<UserResponse>> overallFollowers(@PathVariable Long userId) {
 //        return ResponseEntity.ok(userMapper.overallFollowers(userId));

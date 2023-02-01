@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.dto.*;
-import com.gmail.merikbest2015.dto.lists.UserIdsRequest;
+import com.gmail.merikbest2015.dto.IdsRequest;
 import com.gmail.merikbest2015.dto.notification.NotificationResponse;
 import com.gmail.merikbest2015.enums.LinkCoverSize;
 import com.gmail.merikbest2015.enums.NotificationType;
@@ -144,13 +144,13 @@ public class TweetServiceImpl implements TweetService {
     @Override
     public HeaderResponse<UserResponse> getLikedUsersByTweetId(Long tweetId, Pageable pageable) {
         Page<Long> likedUserIds = likeTweetRepository.getLikedUserIds(tweetId, pageable);
-        return userClient.getTweetLikedUsersByIds(new UserIdsRequest(likedUserIds.getContent()), pageable);
+        return userClient.getTweetLikedUsersByIds(new IdsRequest(likedUserIds.getContent()), pageable);
     }
 
     @Override
     public HeaderResponse<UserResponse> getRetweetedUsersByTweetId(Long tweetId, Pageable pageable) {
         Page<Long> retweetedUserIds = retweetRepository.getRetweetedUserIds(tweetId, pageable);
-        return userClient.getRetweetedUsersByIds(new UserIdsRequest(retweetedUserIds.getContent()), pageable);
+        return userClient.getRetweetedUsersByIds(new IdsRequest(retweetedUserIds.getContent()), pageable);
     }
 
     @Override
@@ -242,7 +242,7 @@ public class TweetServiceImpl implements TweetService {
     @Override
     public Page<TweetProjection> searchTweets(String text, Pageable pageable) {
         List<Long> userIds = tweetRepository.getUserIdsByTweetText(text);
-        List<Long> validUserIds = userClient.getValidUserIds(new UserIdsRequest(userIds), text);
+        List<Long> validUserIds = userClient.getValidUserIds(new IdsRequest(userIds), text);
         return tweetRepository.searchTweets(text, validUserIds, pageable);
     }
 

@@ -1,6 +1,9 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.dto.NotificationRequest;
+import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.feign.NotificationClient;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.*;
 import com.gmail.merikbest2015.repository.projection.*;
@@ -31,7 +34,7 @@ public class UserServiceImpl implements UserService {
 //    private final RetweetRepository retweetRepository;
 //    private final LikeTweetRepository likeTweetRepository;
 //    private final NotificationRepository notificationRepository;
-//    private final TweetClient tweetClient;
+    private final NotificationClient notificationClient;
 //    private final ImageClient imageClient;
 
     @Override
@@ -179,93 +182,76 @@ public class UserServiceImpl implements UserService {
 //    public List<TweetImageProjection> getUserTweetImages(Long userId) {
 //        return tweetClient.getUserTweetImages(new TweetPageableRequest(userId, PageRequest.of(0, 6)));
 //    }
-//
-//    @Override
-//    @Transactional
-//    public AuthUserProjection updateUserProfile(User userInfo) {
-//        if (userInfo.getUsername().length() == 0 || userInfo.getUsername().length() > 50) {
-//            throw new ApiRequestException("Incorrect username length", HttpStatus.BAD_REQUEST);
-//        }
-//        User user = authenticationService.getAuthenticatedUser();
-//
-//        if (userInfo.getAvatar() != null) {
-//            user.setAvatar(userInfo.getAvatar());
-//            imageClient.saveImage(userInfo.getAvatar());
-//        }
-//        if (userInfo.getWallpaper() != null) {
-//            user.setWallpaper(userInfo.getWallpaper());
-//            imageClient.saveImage(userInfo.getWallpaper());
-//        }
-//        user.setUsername(userInfo.getUsername());
-//        user.setAbout(userInfo.getAbout());
-//        user.setLocation(userInfo.getLocation());
-//        user.setWebsite(userInfo.getWebsite());
-//        user.setProfileCustomized(true);
-//        return userRepository.findAuthUserById(user.getId()).get();
-//    }
-//
-//    @Override
-//    public Page<UserProjection> getFollowers(Long userId, Pageable pageable) {
-//        checkIsUserExist(userId);
-//        checkIsUserBlocked(userId);
-//        return userRepository.getFollowersById(userId, pageable);
-//    }
-//
-//    @Override
-//    public Page<UserProjection> getFollowing(Long userId, Pageable pageable) {
-//        checkIsUserExist(userId);
-//        checkIsUserBlocked(userId);
-//        return userRepository.getFollowingById(userId, pageable);
-//    }
-//
-//    @Override
-//    @Transactional
-//    public Map<String, Object> processFollow(Long userId) {
-//        User user = authenticationService.getAuthenticatedUser();
-//        User currentUser = userRepository.findById(userId)
-//                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
-//        List<User> followers = user.getFollowers();
-//        Optional<User> follower = followers.stream()
-//                .filter(f -> f.getId().equals(currentUser.getId()))
-//                .findFirst();
-//        boolean isFollower;
-//
-//        if (follower.isPresent()) {
-//            followers.remove(follower.get());
-//            List<User> subscribers = currentUser.getSubscribers();
-//            Optional<User> subscriber = subscribers.stream()
-//                    .filter(s -> s.getId().equals(user.getId()))
-//                    .findFirst();
-//            subscriber.ifPresent(subscribers::remove);
-//            isFollower = false;
-//        } else {
-//            followers.add(currentUser);
-//            isFollower = true;
-//        }
-//
-//        Notification notification = new Notification();
-//        notification.setNotificationType(NotificationType.FOLLOW);
-//        notification.setUser(user);
-//        notification.setUserToFollow(currentUser);
-//        notification.setNotifiedUser(currentUser);
-//
-//        if (!currentUser.getId().equals(user.getId())) {
-//            Optional<Notification> userNotification = currentUser.getNotifications().stream()
-//                    .filter(n -> n.getNotificationType().equals(NotificationType.FOLLOW)
-//                            && n.getUser().getId().equals(user.getId()))
-//                    .findFirst();
-//
-//            if (userNotification.isEmpty()) {
-//                Notification newNotification = notificationRepository.save(notification);
-//                currentUser.setNotificationsCount(currentUser.getNotificationsCount() + 1);
-//                List<Notification> notifications = currentUser.getNotifications();
-//                notifications.add(newNotification);
-//                return Map.of("notification", newNotification, "isFollower", isFollower);
-//            }
-//        }
-//        return Map.of("notification", notification, "isFollower", isFollower);
-//    }
-//
+
+    @Override
+    @Transactional
+    public AuthUserProjection updateUserProfile(User userInfo) {
+        if (userInfo.getUsername().length() == 0 || userInfo.getUsername().length() > 50) {
+            throw new ApiRequestException("Incorrect username length", HttpStatus.BAD_REQUEST);
+        }
+        User user = authenticationService.getAuthenticatedUser();
+
+        if (userInfo.getAvatar() != null) {
+            user.setAvatar(userInfo.getAvatar());
+        }
+        if (userInfo.getWallpaper() != null) {
+            user.setWallpaper(userInfo.getWallpaper());
+        }
+        user.setUsername(userInfo.getUsername());
+        user.setAbout(userInfo.getAbout());
+        user.setLocation(userInfo.getLocation());
+        user.setWebsite(userInfo.getWebsite());
+        user.setProfileCustomized(true);
+        return userRepository.getUserById(user.getId(), AuthUserProjection.class).get();
+    }
+
+    @Override
+    public Page<UserProjection> getFollowers(Long userId, Pageable pageable) {
+        checkIsUserExist(userId);
+        checkIsUserBlocked(userId);
+        return userRepository.getFollowersById(userId, pageable);
+    }
+
+    @Override
+    public Page<UserProjection> getFollowing(Long userId, Pageable pageable) {
+        checkIsUserExist(userId);
+        checkIsUserBlocked(userId);
+        return userRepository.getFollowingById(userId, pageable);
+    }
+
+    @Override
+    public Page<FollowerUserProjection> getFollowerRequests(Pageable pageable) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return userRepository.getFollowerRequests(authUserId, pageable);
+    }
+
+    @Override
+    @Transactional
+    public Boolean processFollow(Long userId) {
+        checkIsUserExist(userId);
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        boolean isFollower = userRepository.isFollower(authUserId, userId);
+        boolean follower;
+
+        if (isFollower) {
+            userRepository.unfollow(authUserId, userId);
+            userRepository.unsubscribe(userId, authUserId);
+            follower = false;
+        } else {
+            userRepository.follow(authUserId, userId);
+            follower = true;
+        }
+
+        NotificationRequest request = NotificationRequest.builder()
+                .notificationType(NotificationType.FOLLOW)
+                .userId(authUserId)
+                .userToFollowId(userId)
+                .notifiedUserId(userId)
+                .build();
+        notificationClient.sendUserNotification(request);
+        return follower;
+    }
+
 //    @Override
 //    public List<BaseUserProjection> overallFollowers(Long userId) {
 //        checkIsUserExist(userId);
@@ -404,50 +390,50 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-//    private void checkIsUserBlocked(Long userId) {
-//        Long authUserId = authenticationService.getAuthenticatedUserId();
-//        boolean userBlocked = userRepository.isUserBlocked(userId, authUserId);
-//
-//        if (userBlocked) {
-//            throw new ApiRequestException("User (id:" + authUserId + ") is blocked", HttpStatus.BAD_REQUEST);
-//        }
-//    }
-//
-//    public boolean isUserFollowByOtherUser(Long userId) {
-//        Long authUserId = authenticationService.getAuthenticatedUserId();
-//        return userRepository.isUserFollowByOtherUser(authUserId, userId);
-//    }
-//
-//    public boolean isUserHavePrivateProfile(Long userId) {
-//        Long authUserId = authenticationService.getAuthenticatedUserId();
-//        return !userRepository.isUserHavePrivateProfile(userId, authUserId);
-//    }
-//
-//    public boolean isUserBlockedByMyProfile(Long userId) {
-//        Long authUserId = authenticationService.getAuthenticatedUserId();
-//        return userRepository.isUserBlocked(authUserId, userId);
-//    }
-//
-//    public boolean isUserMutedByMyProfile(Long userId) {
-//        Long authUserId = authenticationService.getAuthenticatedUserId();
-//        return userRepository.isUserMuted(authUserId, userId);
-//    }
-//
-//    public boolean isMyProfileBlockedByUser(Long userId) {
-//        Long authUserId = authenticationService.getAuthenticatedUserId();
-//        return userRepository.isUserBlocked(userId, authUserId);
-//    }
-//
-//    public boolean isMyProfileWaitingForApprove(Long userId) {
-//        Long authUserId = authenticationService.getAuthenticatedUserId();
-//        return userRepository.isMyProfileWaitingForApprove(userId, authUserId);
-//    }
-//
-//    public boolean isMyProfileSubscribed(Long userId) {
-//        Long authUserId = authenticationService.getAuthenticatedUserId();
-//        return userRepository.isMyProfileSubscribed(userId, authUserId);
-//    }
-//
+    private void checkIsUserBlocked(Long userId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        boolean userBlocked = userRepository.isUserBlocked(userId, authUserId);
+
+        if (userBlocked) {
+            throw new ApiRequestException("User (id:" + authUserId + ") is blocked", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public boolean isUserFollowByOtherUser(Long userId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return userRepository.isUserFollowByOtherUser(authUserId, userId);
+    }
+
+    public boolean isUserHavePrivateProfile(Long userId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return !userRepository.isUserHavePrivateProfile(userId, authUserId);
+    }
+
+    public boolean isUserBlockedByMyProfile(Long userId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return userRepository.isUserBlocked(authUserId, userId);
+    }
+
+    public boolean isUserMutedByMyProfile(Long userId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return userRepository.isUserMuted(authUserId, userId);
+    }
+
+    public boolean isMyProfileBlockedByUser(Long userId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return userRepository.isUserBlocked(userId, authUserId);
+    }
+
+    public boolean isMyProfileWaitingForApprove(Long userId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return userRepository.isMyProfileWaitingForApprove(userId, authUserId);
+    }
+
+    public boolean isMyProfileSubscribed(Long userId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return userRepository.isMyProfileSubscribed(userId, authUserId);
+    }
+
 //    public boolean isUserChatParticipant(Long userId) {
 //        Long authUserId = authenticationService.getAuthenticatedUserId();
 //        return userRepository.isUserChatParticipant(userId, authUserId);

@@ -1,11 +1,11 @@
 package com.gmail.merikbest2015.dto;
 
 import com.gmail.merikbest2015.enums.NotificationType;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
+@Builder
 public class NotificationRequest {
     private NotificationType notificationType;
     private Long notifiedUserId;
