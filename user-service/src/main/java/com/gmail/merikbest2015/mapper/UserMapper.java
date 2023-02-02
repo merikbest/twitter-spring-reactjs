@@ -140,40 +140,32 @@ public class UserMapper {
 //        return userService.processUserBookmarks(tweetId);
 //    }
 
+    public List<UserResponse> overallFollowers(Long userId) {
+        List<BaseUserProjection> users = userService.overallFollowers(userId);
+        return basicMapper.convertToResponseList(users, UserResponse.class);
+    }
 
-//    public List<UserResponse> overallFollowers(Long userId) {
-//        List<BaseUserProjection> users = userService.overallFollowers(userId);
-//        return users.stream()
-//                .map(baseUserProjection -> {
-//                    UserResponse userResponse = basicMapper.convertToResponse(baseUserProjection, UserResponse.class);
-//                    Map<String, Object> avatar = baseUserProjection.getAvatar();
-//                    userResponse.setAvatar(new ImageResponse((Long) avatar.get("id"), (String) avatar.get("src")));
-//                    return userResponse;
-//                })
-//                .collect(Collectors.toList());
-//    }
-//
-//    public UserProfileResponse processFollowRequestToPrivateProfile(Long userId) {
-//        UserProfileProjection user = userService.processFollowRequestToPrivateProfile(userId);
-//        return basicMapper.convertToResponse(user, UserProfileResponse.class);
-//    }
-//
-//    public String acceptFollowRequest(Long userId) {
-//        return userService.acceptFollowRequest(userId);
-//    }
-//
-//    public String declineFollowRequest(Long userId) {
-//        return userService.declineFollowRequest(userId);
-//    }
-//
-//    public Boolean processSubscribeToNotifications(Long userId) {
-//        return userService.processSubscribeToNotifications(userId);
-//    }
-//
-//    public Long processPinTweet(Long tweetId) {
-//        return userService.processPinTweet(tweetId);
-//    }
-//
+    public UserProfileResponse processFollowRequestToPrivateProfile(Long userId) {
+        UserProfileProjection user = userService.processFollowRequestToPrivateProfile(userId);
+        return basicMapper.convertToResponse(user, UserProfileResponse.class);
+    }
+
+    public String acceptFollowRequest(Long userId) {
+        return userService.acceptFollowRequest(userId);
+    }
+
+    public String declineFollowRequest(Long userId) {
+        return userService.declineFollowRequest(userId);
+    }
+
+    public Boolean processSubscribeToNotifications(Long userId) {
+        return userService.processSubscribeToNotifications(userId);
+    }
+
+    public Long processPinTweet(Long tweetId) {
+        return userService.processPinTweet(tweetId);
+    }
+
 //    public HeaderResponse<NotificationResponse> getUserNotifications(Pageable pageable) {
 //        Page<NotificationProjection> notifications = userService.getUserNotifications(pageable);
 //        return basicMapper.getHeaderResponse(notifications, NotificationResponse.class);
@@ -206,16 +198,16 @@ public class UserMapper {
 //        Page<TweetProjection> tweets = userService.getUserMentions(pageable);
 //        return basicMapper.getHeaderResponse(tweets.getContent(), tweets.getTotalPages(), TweetResponse.class);
 //    }
-//
-//    public HeaderResponse<BlockedUserResponse> getBlockList(Pageable pageable) {
-//        Page<BlockedUserProjection> blockList = userService.getBlockList(pageable);
-//        return basicMapper.getHeaderResponse(blockList, BlockedUserResponse.class);
-//    }
-//
-//    public Boolean processBlockList(Long userId) {
-//        return userService.processBlockList(userId);
-//    }
-//
+
+    public HeaderResponse<BlockedUserResponse> getBlockList(Pageable pageable) {
+        Page<BlockedUserProjection> blockList = userService.getBlockList(pageable);
+        return basicMapper.getHeaderResponse(blockList, BlockedUserResponse.class);
+    }
+
+    public Boolean processBlockList(Long userId) {
+        return userService.processBlockList(userId);
+    }
+
 //    public HeaderResponse<MutedUserResponse> getMutedList(Pageable pageable) {
 //        Page<MutedUserProjection> mutedList = userService.getMutedList(pageable);
 //        return basicMapper.getHeaderResponse(mutedList, MutedUserResponse.class);

@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.dto.NotificationRequest;
 import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.NotificationClient;
+import com.gmail.merikbest2015.feign.TweetClient;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.*;
 import com.gmail.merikbest2015.repository.projection.*;
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
     private final AuthenticationService authenticationService;
     private final UserRepository userRepository;
-//    private final RetweetRepository retweetRepository;
+    private final TweetClient tweetClient;
 //    private final LikeTweetRepository likeTweetRepository;
 //    private final NotificationRepository notificationRepository;
     private final NotificationClient notificationClient;
@@ -235,7 +236,7 @@ public class UserServiceImpl implements UserService {
 
         if (isFollower) {
             userRepository.unfollow(authUserId, userId);
-            userRepository.unsubscribe(userId, authUserId);
+            userRepository.unsubscribe(authUserId, userId);
             follower = false;
         } else {
             userRepository.follow(authUserId, userId);
@@ -252,108 +253,107 @@ public class UserServiceImpl implements UserService {
         return follower;
     }
 
-//    @Override
-//    public List<BaseUserProjection> overallFollowers(Long userId) {
-//        checkIsUserExist(userId);
-//        Long authUserId = authenticationService.getAuthenticatedUserId();
-//        return userRepository.getSameFollowers(userId, authUserId, BaseUserProjection.class);
-//    }
-//
-//    @Override
-//    @Transactional
-//    public UserProfileProjection processFollowRequestToPrivateProfile(Long userId) {
-//        User user = authenticationService.getAuthenticatedUser();
-//        User currentUser = userRepository.findById(userId)
-//                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
-//        List<User> followerRequests = currentUser.getFollowerRequests();
-//        Optional<User> followerRequest = currentUser.getFollowerRequests().stream()
-//                .filter(follower -> follower.getId().equals(user.getId()))
-//                .findFirst();
-//
-//        if (followerRequest.isPresent()) {
-//            followerRequests.remove(followerRequest.get());
-//        } else {
-//            followerRequests.add(user);
-//        }
-//        return userRepository.getUserProfileById(userId).get();
-//    }
-//
-//    @Override
-//    @Transactional
-//    public String acceptFollowRequest(Long userId) {
-//        User user = authenticationService.getAuthenticatedUser();
-//        User currentUser = userRepository.findById(userId)
-//                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
-//        user.getFollowerRequests().remove(currentUser);
-//        user.getFollowers().add(currentUser);
-//        return "User (id:" + userId + ") accepted.";
-//    }
-//
-//    @Override
-//    @Transactional
-//    public String declineFollowRequest(Long userId) {
-//        User user = authenticationService.getAuthenticatedUser();
-//        User currentUser = userRepository.findById(userId)
-//                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
-//        user.getFollowerRequests().remove(currentUser);
-//        return "User (id:" + userId + ") declined.";
-//    }
-//
-//    @Override
-//    @Transactional
-//    public Boolean processSubscribeToNotifications(Long userId) {
-//        User user = authenticationService.getAuthenticatedUser();
-//        User currentUser = userRepository.findById(userId)
-//                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
-//        return processUserList(user, currentUser.getSubscribers());
-//    }
-//
-//    @Override
-//    @Transactional
-//    public Long processPinTweet(Long tweetId) {
-//        User user = authenticationService.getAuthenticatedUser();
-//        Tweet tweet = tweetClient.getTweetById(tweetId)
-//                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-//
-//        if (user.getPinnedTweet() == null || !user.getPinnedTweet().getId().equals(tweet.getId())) {
-//            user.setPinnedTweet(tweet);
-//            return tweet.getId();
-//        } else {
-//            user.setPinnedTweet(null);
-//            return 0L;
-//        }
-//    }
-//
-//    @Override
-//    public Page<BlockedUserProjection> getBlockList(Pageable pageable) {
-//        Long authUserId = authenticationService.getAuthenticatedUserId();
-//        return userRepository.getUserBlockListById(authUserId, pageable);
-//    }
-//
-//    @Override
-//    @Transactional
-//    public Boolean processBlockList(Long userId) {
-//        User user = authenticationService.getAuthenticatedUser();
-//        User currentUser = userRepository.findById(userId)
-//                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
-//        List<User> userBlockedList = user.getUserBlockedList();
-//        Optional<User> userFromList = userBlockedList.stream()
-//                .filter(blockedUser -> blockedUser.getId().equals(currentUser.getId()))
-//                .findFirst();
-//
-//        if (userFromList.isPresent()) {
-//            userBlockedList.remove(userFromList.get());
-//            return false;
-//        } else {
-//            userBlockedList.add(currentUser);
-//            user.getFollowers().removeIf(follower -> follower.getId().equals(currentUser.getId()));
-//            user.getFollowing().removeIf(following -> following.getId().equals(currentUser.getId()));
-//            // TODO get lists by user id instead of user.getLists()
-////            user.getLists().removeIf(list -> list.getMembers().stream()
-////                    .anyMatch(member -> member.getId().equals(currentUser.getId())));
-//            return true;
-//        }
-//    }
+    @Override
+    public List<BaseUserProjection> overallFollowers(Long userId) {
+        checkIsUserExist(userId);
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return userRepository.getSameFollowers(userId, authUserId, BaseUserProjection.class);
+    }
+
+    @Override
+    @Transactional
+    public UserProfileProjection processFollowRequestToPrivateProfile(Long userId) {
+        checkIsUserExist(userId);
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        boolean isFollowerRequest = userRepository.isFollowerRequest(userId, authUserId);
+
+        if (isFollowerRequest) {
+            userRepository.removeFollowerRequest(authUserId, userId);
+        } else {
+            userRepository.addFollowerRequest(authUserId, userId);
+        }
+        return userRepository.getUserById(userId, UserProfileProjection.class).get();
+    }
+
+    @Override
+    @Transactional
+    public String acceptFollowRequest(Long userId) {
+        checkIsUserExist(userId);
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        userRepository.removeFollowerRequest(userId, authUserId);
+        userRepository.follow(userId, authUserId);
+        return "User (id:" + userId + ") accepted.";
+    }
+
+    @Override
+    @Transactional
+    public String declineFollowRequest(Long userId) {
+        checkIsUserExist(userId);
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        userRepository.removeFollowerRequest(userId, authUserId);
+        return "User (id:" + userId + ") declined.";
+    }
+
+    @Override
+    @Transactional
+    public Boolean processSubscribeToNotifications(Long userId) {
+        checkIsUserExist(userId);
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        boolean isUserSubscribed = userRepository.isUserSubscribed(userId, authUserId);
+
+        if (isUserSubscribed) {
+            userRepository.unsubscribe(authUserId, userId);
+            return false;
+        } else {
+            userRepository.subscribe(authUserId, userId);
+            return true;
+        }
+    }
+
+    @Override
+    @Transactional
+    public Long processPinTweet(Long tweetId) {
+        if (!tweetClient.isTweetExists(tweetId)) {
+            throw new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND);
+        }
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        Long pinnedTweetId = userRepository.getPinnedTweetId(authUserId);
+
+        if (pinnedTweetId == null || !pinnedTweetId.equals(tweetId)) {
+            userRepository.updatePinnedTweetId(tweetId, authUserId);
+            return tweetId;
+        } else {
+            userRepository.updatePinnedTweetId(null, authUserId);
+            return 0L;
+        }
+    }
+
+    @Override
+    public Page<BlockedUserProjection> getBlockList(Pageable pageable) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return userRepository.getUserBlockListById(authUserId, pageable);
+    }
+
+    @Override
+    @Transactional
+    public Boolean processBlockList(Long userId) {
+        checkIsUserExist(userId);
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        boolean isUserBlocked = userRepository.isUserBlocked(authUserId, userId);
+
+        if (isUserBlocked) {
+            userRepository.unblockUser(authUserId, userId);
+            return false;
+        } else {
+            userRepository.blockUser(authUserId, userId);
+            userRepository.unfollow(authUserId, userId);
+            userRepository.unfollow(userId, authUserId);
+            // TODO get lists by user id instead of user.getLists()
+//            user.getLists().removeIf(list -> list.getMembers().stream()
+//                    .anyMatch(member -> member.getId().equals(currentUser.getId())));
+            return true;
+        }
+    }
 //
 //    @Override
 //    public Page<MutedUserProjection> getMutedList(Pageable pageable) {

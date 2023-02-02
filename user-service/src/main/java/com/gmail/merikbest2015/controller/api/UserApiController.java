@@ -88,12 +88,12 @@ public class UserApiController {
 //    public Boolean isMyProfileWaitingForApprove(@PathVariable("userId") Long userId) {
 //        return userService.isMyProfileWaitingForApprove(userId);
 //    }
-//
-//    @GetMapping("/notification/{userId}")
-//    public void increaseNotificationsCount(@PathVariable("userId") Long userId) {
-//        userService.increaseNotificationsCount(userId);
-//    }
-//
+
+    @GetMapping("/notification/{userId}")
+    public void increaseNotificationsCount(@PathVariable("userId") Long userId) {
+        userService.increaseNotificationsCount(userId);
+    }
+
 //    @PutMapping("/like/count/{increaseCount}")
 //    public void updateLikeCount(@PathVariable("increaseCount") boolean increaseCount) {
 //        userService.updateLikeCount(increaseCount);

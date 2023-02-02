@@ -55,22 +55,22 @@ public interface UserService {
 
     Boolean processFollow(Long userId);
 
-//    List<BaseUserProjection> overallFollowers(Long userId);
-//
-//    UserProfileProjection processFollowRequestToPrivateProfile(Long userId);
-//
-//    String acceptFollowRequest(Long userId);
-//
-//    String declineFollowRequest(Long userId);
-//
-//    Boolean processSubscribeToNotifications(Long userId);
-//
-//    Long processPinTweet(Long tweetId);
-//
-//    Page<BlockedUserProjection> getBlockList(Pageable pageable);
-//
-//    Boolean processBlockList(Long userId);
-//
+    List<BaseUserProjection> overallFollowers(Long userId);
+
+    UserProfileProjection processFollowRequestToPrivateProfile(Long userId);
+
+    String acceptFollowRequest(Long userId);
+
+    String declineFollowRequest(Long userId);
+
+    Boolean processSubscribeToNotifications(Long userId);
+
+    Long processPinTweet(Long tweetId);
+
+    Page<BlockedUserProjection> getBlockList(Pageable pageable);
+
+    Boolean processBlockList(Long userId);
+
 //    Page<MutedUserProjection> getMutedList(Pageable pageable);
 //
 //    Boolean processMutedList(Long userId);

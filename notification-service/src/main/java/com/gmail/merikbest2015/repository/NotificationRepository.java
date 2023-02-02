@@ -27,7 +27,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
 
     @Query("SELECT CASE WHEN count(notification) > 0 THEN true ELSE false END FROM Notification notification " +
             "WHERE notification.notifiedUserId = :userId " +
-            "AND notification.userToFollowId = :listId " +
+            "AND notification.userToFollowId = :userToFollowId " +
             "AND notification.notificationType = :notificationType")
     boolean isUserNotificationExists(@Param("userId") Long userId,
                                      @Param("userToFollowId") Long userToFollowId,

@@ -9,7 +9,7 @@ public class UserResponse {
     private String fullName;
     private String username;
     private String about;
-    private ImageResponse avatar;
+    private String avatar;
 
     @JsonProperty("isPrivateProfile")
     private boolean privateProfile;

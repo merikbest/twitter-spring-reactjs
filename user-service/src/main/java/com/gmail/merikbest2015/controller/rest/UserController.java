@@ -151,47 +151,47 @@ public class UserController {
         return ResponseEntity.ok(userMapper.processFollow(userId));
     }
 
-//    @GetMapping("/follow/overall/{userId}") // TODO add pagination
-//    public ResponseEntity<List<UserResponse>> overallFollowers(@PathVariable Long userId) {
-//        return ResponseEntity.ok(userMapper.overallFollowers(userId));
-//    }
-//
-//    @GetMapping("/follow/private/{userId}")
-//    public ResponseEntity<UserProfileResponse> processFollowRequestToPrivateProfile(@PathVariable Long userId) {
-//        return ResponseEntity.ok(userMapper.processFollowRequestToPrivateProfile(userId));
-//    }
-//
-//    @GetMapping("/follow/accept/{userId}")
-//    public ResponseEntity<String> acceptFollowRequest(@PathVariable Long userId) {
-//        return ResponseEntity.ok(userMapper.acceptFollowRequest(userId));
-//    }
-//
-//    @GetMapping("/follow/decline/{userId}")
-//    public ResponseEntity<String> declineFollowRequest(@PathVariable Long userId) {
-//        return ResponseEntity.ok(userMapper.declineFollowRequest(userId));
-//    }
-//
-//    @GetMapping("/subscribe/{userId}")
-//    public ResponseEntity<Boolean> processSubscribeToNotifications(@PathVariable Long userId) {
-//        return ResponseEntity.ok(userMapper.processSubscribeToNotifications(userId));
-//    }
-//
-//    @GetMapping("/pin/tweet/{tweetId}")
-//    public ResponseEntity<Long> processPinTweet(@PathVariable Long tweetId) {
-//        return ResponseEntity.ok(userMapper.processPinTweet(tweetId));
-//    }
-//
-//    @GetMapping("/blocked")
-//    public ResponseEntity<List<BlockedUserResponse>> getBlockList(@PageableDefault(size = 15) Pageable pageable) {
-//        HeaderResponse<BlockedUserResponse> response = userMapper.getBlockList(pageable);
-//        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
-//    }
-//
-//    @GetMapping("/blocked/{userId}")
-//    public ResponseEntity<Boolean> processBlockList(@PathVariable Long userId) {
-//        return ResponseEntity.ok(userMapper.processBlockList(userId));
-//    }
-//
+    @GetMapping("/follow/overall/{userId}") // TODO add pagination
+    public ResponseEntity<List<UserResponse>> overallFollowers(@PathVariable Long userId) {
+        return ResponseEntity.ok(userMapper.overallFollowers(userId));
+    }
+
+    @GetMapping("/follow/private/{userId}")
+    public ResponseEntity<UserProfileResponse> processFollowRequestToPrivateProfile(@PathVariable Long userId) {
+        return ResponseEntity.ok(userMapper.processFollowRequestToPrivateProfile(userId));
+    }
+
+    @GetMapping("/follow/accept/{userId}")
+    public ResponseEntity<String> acceptFollowRequest(@PathVariable Long userId) {
+        return ResponseEntity.ok(userMapper.acceptFollowRequest(userId));
+    }
+
+    @GetMapping("/follow/decline/{userId}")
+    public ResponseEntity<String> declineFollowRequest(@PathVariable Long userId) {
+        return ResponseEntity.ok(userMapper.declineFollowRequest(userId));
+    }
+
+    @GetMapping("/subscribe/{userId}")
+    public ResponseEntity<Boolean> processSubscribeToNotifications(@PathVariable Long userId) {
+        return ResponseEntity.ok(userMapper.processSubscribeToNotifications(userId));
+    }
+
+    @GetMapping("/pin/tweet/{tweetId}")
+    public ResponseEntity<Long> processPinTweet(@PathVariable Long tweetId) {
+        return ResponseEntity.ok(userMapper.processPinTweet(tweetId));
+    }
+
+    @GetMapping("/blocked")
+    public ResponseEntity<List<BlockedUserResponse>> getBlockList(@PageableDefault(size = 15) Pageable pageable) {
+        HeaderResponse<BlockedUserResponse> response = userMapper.getBlockList(pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
+    }
+
+    @GetMapping("/blocked/{userId}")
+    public ResponseEntity<Boolean> processBlockList(@PathVariable Long userId) {
+        return ResponseEntity.ok(userMapper.processBlockList(userId));
+    }
+
 //    @GetMapping("/muted")
 //    public ResponseEntity<List<MutedUserResponse>> getMutedList(@PageableDefault(size = 15) Pageable pageable) {
 //        HeaderResponse<MutedUserResponse> response = userMapper.getMutedList(pageable);

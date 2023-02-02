@@ -266,8 +266,7 @@ public class TweetServiceImpl implements TweetService {
             userClient.updateLikeCount(true);
             isTweetLiked = true;
         }
-        return notificationClient.sendTweetNotification(new NotificationRequest(NotificationType.LIKE, isTweetLiked,
-                tweet.getAuthorId(), userId, tweetId));
+        return sendNotification(NotificationType.LIKE, isTweetLiked, tweet.getAuthorId(), userId, tweetId);
     }
 
     @Override
@@ -290,8 +289,7 @@ public class TweetServiceImpl implements TweetService {
             userClient.updateTweetCount(true);
             isRetweeted = true;
         }
-        return notificationClient.sendTweetNotification(new NotificationRequest(NotificationType.RETWEET, isRetweeted,
-                tweet.getAuthorId(), userId, tweetId));
+        return sendNotification(NotificationType.RETWEET, isRetweeted, tweet.getAuthorId(), userId, tweetId);
     }
 
     @Override
@@ -509,6 +507,18 @@ public class TweetServiceImpl implements TweetService {
 
     private String getContent(Element element) {
         return element == null ? "" : element.attr("content");
+    }
+
+    private NotificationResponse sendNotification(NotificationType notificationType, boolean isTweetLiked, Long notifiedUserId,
+                                  Long userId, Long tweetId) {
+        NotificationRequest request = NotificationRequest.builder()
+                .notificationType(notificationType)
+                .notificationCondition(isTweetLiked)
+                .notifiedUserId(notifiedUserId)
+                .userId(userId)
+                .tweetId(tweetId)
+                .build();
+        return notificationClient.sendTweetNotification(request);
     }
 
     private <T> Page<T> getPageableTweetProjectionList(Pageable pageable, List<T> tweets, int totalPages) {

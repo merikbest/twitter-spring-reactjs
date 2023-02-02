@@ -38,7 +38,7 @@ public class NotificationClientServiceImpl implements NotificationClientService 
 
             if (!isNotificationExists) {
                 notificationRepository.save(notification);
-                userClient.increaseNotificationsCount(notification.getUserId());
+                userClient.increaseNotificationsCount(notification.getNotifiedUserId());
                 return convertToNotificationListResponse(notification, isAddedToList);
             }
         }
@@ -55,7 +55,7 @@ public class NotificationClientServiceImpl implements NotificationClientService 
 
             if (!isNotificationExists) {
                 notificationRepository.save(notification);
-                userClient.increaseNotificationsCount(notification.getUserId());
+                userClient.increaseNotificationsCount(notification.getNotifiedUserId());
                 return convertToNotificationUserResponse(notification, isFollowed);
             }
         }
@@ -72,7 +72,7 @@ public class NotificationClientServiceImpl implements NotificationClientService 
 
             if (!isNotificationExists) {
                 notificationRepository.save(notification);
-                userClient.increaseNotificationsCount(notification.getUserId());
+                userClient.increaseNotificationsCount(notification.getNotifiedUserId());
                 return convertToNotificationTweetResponse(notification, isTweetLiked);
             }
         }

@@ -126,13 +126,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "WHERE following.id = :userId")
     Page<UserProjection> getFollowingById(@Param("userId") Long userId, Pageable pageable);
 
-//    @Query("SELECT b.id AS id, b.fullName AS fullName, b.username AS username, b.about AS about, b.avatar AS avatar, " +
-//            "b.privateProfile AS isPrivateProfile " +
-//            "FROM User user " +
-//            "LEFT JOIN user.userBlockedList b " +
-//            "WHERE user.id = :userId")
-//    Page<BlockedUserProjection> getUserBlockListById(@Param("userId") Long userId, Pageable pageable);
-//
 //    @Query("SELECT m.id as id, m.fullName as fullName, m.username as username, " +
 //            "m.about as about, m.avatar as avatar, m.privateProfile as isPrivateProfile " +
 //            "FROM User user " +
@@ -206,32 +199,28 @@ public interface UserRepository extends JpaRepository<User, Long> {
 //
 //    @Query("SELECT user FROM User user WHERE user.id = :userId")
 //    Optional<UserDetailProjection> getUserDetails(@Param("userId") Long userId);
-//
-//    @Query(value = "SELECT users.id as id, users.full_name as fullName, users.username as username, users.about as about, " +
-//            "users.private_profile as isPrivateProfile, images.id as img_id, images.src as img_src " +
-//            "FROM users " +
-//            "LEFT JOIN user_avatar ON users.id = user_avatar.user_id " +
-//            "LEFT JOIN images ON user_avatar.avatar_id = images.id " +
-//            "WHERE users.id IN ( " +
-//            "SELECT user_subscriptions.subscriber_id FROM users " +
-//            "JOIN user_subscriptions ON users.id = user_subscriptions.user_id " +
-//            "WHERE users.id = ?1) " +
-//            "INTERSECT " +
-//            "SELECT users.id as id, users.full_name as fullName, users.username as username, users.about as about, " +
-//            "users.private_profile as isPrivateProfile, images.id as img_id, images.src as img_src " +
-//            "FROM users " +
-//            "LEFT JOIN user_avatar ON users.id = user_avatar.user_id " +
-//            "LEFT JOIN images ON user_avatar.avatar_id = images.id " +
-//            "WHERE users.id IN ( " +
-//            "SELECT user_subscriptions.subscriber_id FROM users " +
-//            "JOIN user_subscriptions ON users.id = user_subscriptions.user_id " +
-//            "WHERE users.id = ?2)", nativeQuery = true)
-//    <T> List<T> getSameFollowers(@Param("userId") Long userId, @Param("authUserId") Long authUserId, Class<T> type);
-//
-//    @Modifying
-//    @Query("UPDATE User user SET user.notificationsCount = user.notificationsCount + 1 WHERE user.id = :userId")
-//    void increaseNotificationsCount(@Param("userId") Long userId);
-//
+
+    @Query(value = "SELECT users.id as id, users.full_name as fullName, users.username as username, users.about as about, " +
+            "users.private_profile as isPrivateProfile, users.avatar as avatar " +
+            "FROM users " +
+            "WHERE users.id IN ( " +
+            "   SELECT user_subscriptions.subscriber_id FROM users " +
+            "   JOIN user_subscriptions ON users.id = user_subscriptions.user_id " +
+            "   WHERE users.id = ?1) " +
+            "INTERSECT " +
+            "SELECT users.id as id, users.full_name as fullName, users.username as username, users.about as about, " +
+            "users.private_profile as isPrivateProfile, users.avatar as avatar " +
+            "FROM users " +
+            "WHERE users.id IN ( " +
+            "   SELECT user_subscriptions.subscriber_id FROM users " +
+            "   JOIN user_subscriptions ON users.id = user_subscriptions.user_id " +
+            "   WHERE users.id = ?2)", nativeQuery = true)
+    <T> List<T> getSameFollowers(@Param("userId") Long userId, @Param("authUserId") Long authUserId, Class<T> type);
+
+    @Modifying
+    @Query("UPDATE User user SET user.notificationsCount = user.notificationsCount + 1 WHERE user.id = :userId")
+    void increaseNotificationsCount(@Param("userId") Long userId);
+
 //    @Modifying
 //    @Query("UPDATE User user SET user.likeCount = " +
 //            "CASE WHEN :increaseCount = true THEN (user.likeCount + 1) " +
@@ -339,10 +328,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
 //
 //    @Query("SELECT user FROM User user WHERE user.id IN :userIds")
 //    Page<UserProjection> getRetweetedUsersByTweetId(@Param("userIds") List<Long> userIds, Pageable pageable);
-//
-//    @Query("SELECT user.pinnedTweetId FROM User user WHERE user.id = :userId")
-//    Long getPinnedTweetId(@Param("userId") Long userId);
-//
+
+    @Query("SELECT user.pinnedTweetId FROM User user WHERE user.id = :userId")
+    Long getPinnedTweetId(@Param("userId") Long userId);
+
+    @Modifying
+    @Query("UPDATE User user SET user.pinnedTweetId = :tweetId WHERE user.id = :userId")
+    void updatePinnedTweetId(@Param("tweetId") Long tweetId, @Param("userId") Long userId);
+
 //    @Modifying
 //    @Query("UPDATE User user SET user.pinnedTweetId = :pinnedTweetId WHERE user.id = :userId")
 //    void updatePinnedTweetId(@Param("pinnedTweetId") Long pinnedTweetId, @Param("userId") Long userId);
@@ -404,19 +397,56 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user " +
             "LEFT JOIN user.followers follower " +
-            "WHERE follower.id = :authUserId " +
-            "AND user.id = :userId")
+            "WHERE follower.id = :userId " +
+            "AND user.id = :authUserId")
     boolean isFollower(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
+
+    @Modifying
+    @Query(value = "INSERT INTO user_subscriptions (user_id, subscriber_id) VALUES (?1, ?2)", nativeQuery = true)
+    void follow(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
 
     @Modifying
     @Query(value = "DELETE FROM user_subscriptions WHERE user_id = ?1 AND subscriber_id = ?2", nativeQuery = true)
     void unfollow(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
 
-    @Modifying
-    @Query(value = "DELETE FROM subscribers WHERE user_id = ?1 AND subscriber_id = ?2", nativeQuery = true)
-    void unsubscribe(@Param("userId") Long userId, @Param("authUserId") Long authUserId);
+    @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user " +
+            "LEFT JOIN user.subscribers subscriber " +
+            "WHERE user.id = :userId " +
+            "AND subscriber.id = :authUserId")
+    boolean isUserSubscribed(@Param("userId") Long userId, @Param("authUserId") Long authUserId);
 
     @Modifying
-    @Query(value = "INSERT INTO user_subscriptions (user_id, subscriber_id) VALUES (?1, ?2)", nativeQuery = true)
-    void follow(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
+    @Query(value = "INSERT INTO subscribers (subscriber_id, user_id) VALUES (?1, ?2)", nativeQuery = true)
+    void subscribe(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
+
+    @Modifying
+    @Query(value = "DELETE FROM subscribers WHERE subscriber_id = ?1 AND user_id = ?2", nativeQuery = true)
+    void unsubscribe(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
+
+    @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user " +
+            "LEFT JOIN user.followerRequests followerRequest " +
+            "WHERE user.id = :userId " +
+            "AND followerRequest.id = :authUserId")
+    boolean isFollowerRequest(@Param("userId") Long userId, @Param("authUserId") Long authUserId);
+
+    @Modifying
+    @Query(value = "DELETE FROM user_follower_requests WHERE follower_id = ?1 AND user_id = ?2", nativeQuery = true)
+    void removeFollowerRequest(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
+
+    @Modifying
+    @Query(value = "INSERT INTO user_follower_requests (follower_id, user_id) VALUES (?1, ?2)", nativeQuery = true)
+    void addFollowerRequest(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
+
+    @Query(value = "SELECT * FROM users " +
+            "LEFT JOIN user_blocked ON user_blocked.blocked_user_id = users.id " +
+            "WHERE user_blocked.user_id = :userId", nativeQuery = true)
+    Page<BlockedUserProjection> getUserBlockListById(@Param("userId") Long userId, Pageable pageable);
+
+    @Modifying
+    @Query(value = "INSERT INTO user_blocked (user_id, blocked_user_id) VALUES (?1, ?2)", nativeQuery = true)
+    void blockUser(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
+
+    @Modifying
+    @Query(value = "DELETE FROM user_blocked WHERE user_id = ?1 AND blocked_user_id = ?2", nativeQuery = true)
+    void unblockUser(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
 }

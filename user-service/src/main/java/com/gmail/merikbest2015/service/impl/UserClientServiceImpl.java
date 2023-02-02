@@ -98,13 +98,13 @@ public class UserClientServiceImpl implements UserClientService {
 //    public Boolean isMyProfileWaitingForApprove(Long userId) {
 //        return userService.isMyProfileWaitingForApprove(userId);
 //    }
-//
-//    @Override
-//    @Transactional
-//    public void increaseNotificationsCount(Long userId) {
-//        userRepository.increaseNotificationsCount(userId);
-//    }
-//
+
+    @Override
+    @Transactional
+    public void increaseNotificationsCount(Long userId) {
+        userRepository.increaseNotificationsCount(userId);
+    }
+
 //    @Override
 //    @Transactional
 //    public void updateLikeCount(boolean increaseCount) {

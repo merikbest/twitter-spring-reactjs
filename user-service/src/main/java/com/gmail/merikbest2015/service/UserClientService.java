@@ -35,9 +35,9 @@ public interface UserClientService {
 //    Boolean isMyProfileBlockedByUser(Long userId);
 //
 //    Boolean isMyProfileWaitingForApprove(Long userId);
-//
-//    void increaseNotificationsCount(Long userId);
-//
+
+    void increaseNotificationsCount(Long userId);
+
 //    void updateLikeCount(boolean increase);
 //
 //    void updateTweetCount(boolean increaseCount);
