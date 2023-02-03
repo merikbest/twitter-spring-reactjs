@@ -10,6 +10,7 @@ import com.gmail.merikbest2015.dto.request.TweetRequest;
 import com.gmail.merikbest2015.dto.request.VoteRequest;
 import com.gmail.merikbest2015.dto.response.NotificationReplyResponse;
 import com.gmail.merikbest2015.dto.response.TweetAdditionalInfoResponse;
+import com.gmail.merikbest2015.dto.response.TweetImageResponse;
 import com.gmail.merikbest2015.dto.response.TweetUserResponse;
 import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.mapper.TweetMapper;
@@ -19,6 +20,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -124,6 +126,11 @@ public class TweetController {
     public ResponseEntity<List<TweetResponse>> getScheduledTweets(@PageableDefault(size = 15) Pageable pageable) {
         HeaderResponse<TweetResponse> response = tweetMapper.getScheduledTweets(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
+    }
+
+    @PostMapping("/upload/{imageSrc}") // TODO add endpoint to frontend
+    public ResponseEntity<TweetImageResponse> uploadTweetImage(@RequestPart("file") MultipartFile file) {
+        return ResponseEntity.ok(tweetMapper.uploadTweetImage(file));
     }
 
     @PostMapping

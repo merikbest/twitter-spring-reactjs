@@ -1,6 +1,5 @@
 package com.gmail.merikbest2015.repository.projection;
 
-import com.gmail.merikbest2015.projection.ImageProjection;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
@@ -22,11 +21,9 @@ public interface UserProfileProjection {
     Long getNotificationsCount();
     boolean isMutedDirectMessages();
     boolean isPrivateProfile();
-    ImageProjection getAvatar();
-    ImageProjection getWallpaper();
-
-    @Value("#{target.pinnedTweet != null ? target.pinnedTweet.id : 0}")
-    Integer getPinnedTweetId();
+    String getAvatar();
+    String getWallpaper();
+    Long getPinnedTweetId();
 
     @Value("#{target.followers.size()}")
     Integer getFollowersSize();

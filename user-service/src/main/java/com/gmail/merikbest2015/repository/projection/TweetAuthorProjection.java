@@ -1,6 +1,5 @@
 package com.gmail.merikbest2015.repository.projection;
 
-import com.gmail.merikbest2015.projection.ImageProjection;
 import org.springframework.beans.factory.annotation.Value;
 
 public interface TweetAuthorProjection {
@@ -8,7 +7,7 @@ public interface TweetAuthorProjection {
     String getEmail();
     String getFullName();
     String getUsername();
-    ImageProjection getAvatar();
+    String getAvatar();
 
     @Value("#{@userServiceImpl.isUserMutedByMyProfile(target.id)}")
     boolean getIsUserMuted();

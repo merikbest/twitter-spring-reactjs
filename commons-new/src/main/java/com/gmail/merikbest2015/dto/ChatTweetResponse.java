@@ -19,6 +19,6 @@ public class ChatTweetResponse {
         private Long id;
         private String fullName;
         private String username;
-        private ImageResponse avatar;
+        private String avatar;
     }
 }

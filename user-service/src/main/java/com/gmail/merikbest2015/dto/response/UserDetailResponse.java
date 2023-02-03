@@ -1,7 +1,6 @@
 package com.gmail.merikbest2015.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.gmail.merikbest2015.dto.ImageResponse;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +13,7 @@ public class UserDetailResponse {
     private String fullName;
     private String username;
     private String about;
-    private ImageResponse avatar;
+    private String avatar;
     private Integer followersSize;
     private Integer followingSize;
     private List<SameFollowerResponse> sameFollowers;

@@ -8,7 +8,7 @@ public class ChatUserParticipantResponse {
     private Long id;
     private String fullName;
     private String username;
-    private ImageResponse avatar;
+    private String avatar;
 
     @JsonProperty("isMutedDirectMessages")
     private boolean isMutedDirectMessages;

@@ -1,15 +1,12 @@
 package com.gmail.merikbest2015.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.gmail.merikbest2015.dto.ImageResponse;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 public class UserProfileResponse {
     private Long id;
     private String fullName;
@@ -24,9 +21,9 @@ public class UserProfileResponse {
     private Long mediaTweetCount;
     private Long likeCount;
     private Long notificationsCount;
-    private ImageResponse avatar;
-    private ImageResponse wallpaper;
-    private Integer pinnedTweetId;
+    private String avatar;
+    private String wallpaper;
+    private Long pinnedTweetId;
     private Integer followersSize;
     private Integer followingSize;
     private List<SameFollowerResponse> sameFollowers;

@@ -2,8 +2,6 @@ package com.gmail.merikbest2015.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.gmail.merikbest2015.commons.models.Image;
-import com.gmail.merikbest2015.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,7 +18,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ImageServiceImpl implements ImageService {
 
-    private final ImageRepository imageRepository;
     private final AmazonS3 amazonS3client;
 
     @Value("${amazon.s3.bucket.name}")
@@ -42,15 +39,5 @@ public class ImageServiceImpl implements ImageService {
             file.delete();
         }
         return image;
-    }
-
-    @Override
-    public Image saveImage(Image image) {
-        return imageRepository.save(image);
-    }
-
-    @Override
-    public void deleteImage(Image image) {
-        imageRepository.delete(image);
     }
 }

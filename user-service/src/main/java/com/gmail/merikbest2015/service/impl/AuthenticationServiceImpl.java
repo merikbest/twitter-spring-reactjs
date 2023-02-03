@@ -45,12 +45,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public AuthUserProjection getAuthenticatedUserProjection() {
-        return userRepository.getUserById(getUserId(), AuthUserProjection.class)
-                .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
-    }
-
-    @Override
     public User getAuthenticatedUser() {
         return userRepository.findById(getUserId())
                 .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));

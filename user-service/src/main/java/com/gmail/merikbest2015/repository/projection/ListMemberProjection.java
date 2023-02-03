@@ -1,6 +1,5 @@
 package com.gmail.merikbest2015.repository.projection;
 
-import com.gmail.merikbest2015.projection.ImageProjection;
 import org.springframework.beans.factory.annotation.Value;
 
 public interface ListMemberProjection {
@@ -8,7 +7,7 @@ public interface ListMemberProjection {
     String getFullName();
     String getUsername();
     String getAbout();
-    ImageProjection getAvatar();
+    String getAvatar();
     boolean getPrivateProfile();
 
     @Value("#{false}")

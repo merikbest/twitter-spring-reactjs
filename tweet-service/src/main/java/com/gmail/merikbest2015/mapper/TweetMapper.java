@@ -9,10 +9,12 @@ import com.gmail.merikbest2015.dto.request.TweetRequest;
 import com.gmail.merikbest2015.dto.request.VoteRequest;
 import com.gmail.merikbest2015.dto.response.NotificationReplyResponse;
 import com.gmail.merikbest2015.dto.response.TweetAdditionalInfoResponse;
+import com.gmail.merikbest2015.dto.response.TweetImageResponse;
 import com.gmail.merikbest2015.dto.response.TweetUserResponse;
 import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.model.Tweet;
+import com.gmail.merikbest2015.model.TweetImage;
 import com.gmail.merikbest2015.repository.projection.LikeTweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetAdditionalInfoProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
@@ -22,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,6 +109,11 @@ public class TweetMapper {
     public HeaderResponse<TweetResponse> getScheduledTweets(Pageable pageable) {
         Page<TweetProjection> tweets = tweetService.getScheduledTweets(pageable);
         return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
+    }
+
+    public TweetImageResponse uploadTweetImage(MultipartFile file) {
+        TweetImage tweetImage = tweetService.uploadTweetImage(file);
+        return basicMapper.convertToResponse(tweetImage, TweetImageResponse.class);
     }
 
     public TweetResponse createTweet(TweetRequest tweetRequest) {

@@ -71,10 +71,9 @@ public interface UserService {
 
     Boolean processBlockList(Long userId);
 
-//    Page<MutedUserProjection> getMutedList(Pageable pageable);
-//
-//    Boolean processMutedList(Long userId);
-//
-//    UserDetailProjection getUserDetails(Long userId);
-//
+    Page<MutedUserProjection> getMutedList(Pageable pageable);
+
+    Boolean processMutedList(Long userId);
+
+    UserDetailProjection getUserDetails(Long userId);
 }

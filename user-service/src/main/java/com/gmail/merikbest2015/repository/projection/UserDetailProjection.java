@@ -1,6 +1,5 @@
 package com.gmail.merikbest2015.repository.projection;
 
-import com.gmail.merikbest2015.projection.ImageProjection;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
@@ -10,7 +9,7 @@ public interface UserDetailProjection {
     String getFullName();
     String getUsername();
     String getAbout();
-    ImageProjection getAvatar();
+    String getAvatar();
     boolean getPrivateProfile();
 
     @Value("#{target.followers.size()}")

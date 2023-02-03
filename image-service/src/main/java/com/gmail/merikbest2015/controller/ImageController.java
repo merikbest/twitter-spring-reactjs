@@ -1,32 +1,21 @@
 package com.gmail.merikbest2015.controller;
 
-import com.gmail.merikbest2015.mapper.ImageMapper;
-import com.gmail.merikbest2015.commons.models.Image;
+import com.gmail.merikbest2015.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import static com.gmail.merikbest2015.commons.controller.PathConstants.API_V1_IMAGE;
+import static com.gmail.merikbest2015.controller.PathConstants.API_V1_IMAGE;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(API_V1_IMAGE)
 public class ImageController {
 
-    private final ImageMapper imageMapper;
+    private final ImageService imageService;
 
     @PostMapping("/upload")
     public String uploadImage(@RequestPart("file") MultipartFile file) {
-        return imageMapper.uploadImage(file);
-    }
-
-    @PostMapping("/save")
-    public Image saveImage(@RequestBody Image image) {
-        return imageMapper.saveImage(image);
-    }
-
-    @PostMapping("/delete")
-    public void deleteImage(@RequestBody Image image) {
-        imageMapper.deleteImage(image);
+        return imageService.uploadImage(file);
     }
 }

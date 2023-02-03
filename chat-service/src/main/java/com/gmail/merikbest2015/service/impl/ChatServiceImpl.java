@@ -1,10 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.dto.ChatTweetResponse;
-import com.gmail.merikbest2015.dto.ChatUserParticipantResponse;
-import com.gmail.merikbest2015.dto.HeaderResponse;
-import com.gmail.merikbest2015.dto.UserResponse;
-import com.gmail.merikbest2015.dto.IdsRequest;
+import com.gmail.merikbest2015.dto.*;
 import com.gmail.merikbest2015.dto.response.UserChatResponse;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.TweetClient;
@@ -25,7 +21,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -183,7 +183,18 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public HeaderResponse<UserChatResponse> searchUsersByUsername(String username, Pageable pageable) {
-        return userClient.searchUsersByUsername(username, pageable);
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        HeaderResponse<UserChatResponse> users = userClient.searchUsersByUsername(username, pageable);
+        List<UserChatResponse> usersResponse = users.getItems().stream()
+                .peek(user -> {
+                    Chat chat = chatRepository.getChatByParticipants(authUserId, user.getId());
+
+                    if (chat != null) {
+                        user.setUserChatParticipant(true);
+                    }
+                }).toList();
+        users.setItems(usersResponse);
+        return users;
     }
 
     public ChatUserParticipantResponse getChatParticipant(Long userId) {

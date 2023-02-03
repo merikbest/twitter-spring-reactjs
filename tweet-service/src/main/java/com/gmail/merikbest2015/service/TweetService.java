@@ -5,12 +5,14 @@ import com.gmail.merikbest2015.dto.UserResponse;
 import com.gmail.merikbest2015.dto.notification.NotificationResponse;
 import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.model.Tweet;
+import com.gmail.merikbest2015.model.TweetImage;
 import com.gmail.merikbest2015.repository.projection.LikeTweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetAdditionalInfoProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -45,6 +47,8 @@ public interface TweetService {
     Page<TweetProjection> getFollowersTweets(Pageable pageable);
 
     Page<TweetProjection> getScheduledTweets(Pageable pageable);
+
+    TweetImage uploadTweetImage(MultipartFile file);
 
     TweetProjection createNewTweet(Tweet tweet);
 

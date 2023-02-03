@@ -7,6 +7,7 @@ import com.gmail.merikbest2015.enums.LinkCoverSize;
 import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.feign.ImageClient;
 import com.gmail.merikbest2015.feign.NotificationClient;
 import com.gmail.merikbest2015.feign.TagClient;
 import com.gmail.merikbest2015.feign.UserClient;
@@ -32,6 +33,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -47,6 +49,7 @@ import java.util.regex.Pattern;
 public class TweetServiceImpl implements TweetService {
 
     private final TweetRepository tweetRepository;
+    private final TweetImageRepository tweetImageRepository;
     private final PollRepository pollRepository;
     private final PollChoiceRepository pollChoiceRepository;
     private final PollChoiceVotedRepository pollChoiceVotedRepository;
@@ -56,6 +59,7 @@ public class TweetServiceImpl implements TweetService {
     private final NotificationClient notificationClient;
     private final UserClient userClient;
     private final TagClient tagClient;
+    private final ImageClient imageClient;
     private final RestTemplate restTemplate;
 
     @Value("${google.api.url}")
@@ -173,6 +177,12 @@ public class TweetServiceImpl implements TweetService {
     public Page<TweetProjection> getScheduledTweets(Pageable pageable) {
         Long userId = AuthUtil.getAuthenticatedUserId();
         return tweetRepository.getScheduledTweets(userId, pageable);
+    }
+
+    @Override
+    public TweetImage uploadTweetImage(MultipartFile file) {
+        String imageSrc = imageClient.uploadImage(file);
+        return tweetImageRepository.save(new TweetImage(imageSrc));
     }
 
     @Override

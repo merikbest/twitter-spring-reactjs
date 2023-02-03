@@ -29,7 +29,7 @@ public interface UserClient {
     @GetMapping(API_V1_USER + "/subscribers/{userId}")
     List<Long> getSubscribersByUserId(@PathVariable("userId") Long userId);
 
-    @GetMapping(API_V1_USER + "/subscribers/ids")
+    @GetMapping(API_V1_USER + "/subscribers")
     List<NotificationUserResponse> getUsersWhichUserSubscribed();
 
     @GetMapping(API_V1_USER + "/subscribers/ids")

@@ -17,9 +17,9 @@ import static com.gmail.merikbest2015.controller.PathConstants.API_V1_USER;
 @FeignClient(name = "user-service", contextId = "UserClient", configuration = FeignConfiguration.class)
 public interface UserClient {
 
-    @GetMapping(API_V1_USER + "/is_blocked/{userId}/{supposedBlockedUserId}")
+    @GetMapping(API_V1_USER + "/is_blocked/{userId}/{blockedUserId}")
     Boolean isUserBlocked(@PathVariable("userId") Long userId,
-                          @PathVariable("supposedBlockedUserId") Long supposedBlockedUserId);
+                          @PathVariable("blockedUserId") Long blockedUserId);
 
     @GetMapping(API_V1_USER + "/list/owner/{userId}")
     ListOwnerResponse getListOwnerById(@PathVariable("userId") Long userId);

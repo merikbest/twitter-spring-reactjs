@@ -1,11 +1,7 @@
 package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.dto.HeaderResponse;
-import com.gmail.merikbest2015.dto.ImageResponse;
-import com.gmail.merikbest2015.dto.TweetResponse;
 import com.gmail.merikbest2015.dto.UserResponse;
-import com.gmail.merikbest2015.dto.notification.NotificationResponse;
-import com.gmail.merikbest2015.dto.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.dto.request.UserRequest;
 import com.gmail.merikbest2015.dto.response.*;
 import com.gmail.merikbest2015.model.User;
@@ -16,10 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -208,17 +201,17 @@ public class UserMapper {
         return userService.processBlockList(userId);
     }
 
-//    public HeaderResponse<MutedUserResponse> getMutedList(Pageable pageable) {
-//        Page<MutedUserProjection> mutedList = userService.getMutedList(pageable);
-//        return basicMapper.getHeaderResponse(mutedList, MutedUserResponse.class);
-//    }
-//
-//    public Boolean processMutedList(Long userId) {
-//        return userService.processMutedList(userId);
-//    }
-//
-//    public UserDetailResponse getUserDetails(Long userId) {
-//        UserDetailProjection userDetails = userService.getUserDetails(userId);
-//        return basicMapper.convertToResponse(userDetails, UserDetailResponse.class);
-//    }
+    public HeaderResponse<MutedUserResponse> getMutedList(Pageable pageable) {
+        Page<MutedUserProjection> mutedList = userService.getMutedList(pageable);
+        return basicMapper.getHeaderResponse(mutedList, MutedUserResponse.class);
+    }
+
+    public Boolean processMutedList(Long userId) {
+        return userService.processMutedList(userId);
+    }
+
+    public UserDetailResponse getUserDetails(Long userId) {
+        UserDetailProjection userDetails = userService.getUserDetails(userId);
+        return basicMapper.convertToResponse(userDetails, UserDetailResponse.class);
+    }
 }

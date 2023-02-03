@@ -1,7 +1,5 @@
 package com.gmail.merikbest2015.repository.projection;
 
-import com.gmail.merikbest2015.projection.ImageProjection;
-
 public interface TweetAuthorsProjection {
     AuthorProjection getTweetAuthor();
 
@@ -9,6 +7,6 @@ public interface TweetAuthorsProjection {
         Long getId();
         String getUsername();
         String getFullName();
-        ImageProjection getAvatar();
+        String getAvatar();
     }
 }

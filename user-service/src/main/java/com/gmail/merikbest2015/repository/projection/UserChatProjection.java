@@ -1,6 +1,5 @@
 package com.gmail.merikbest2015.repository.projection;
 
-import com.gmail.merikbest2015.projection.ImageProjection;
 import org.springframework.beans.factory.annotation.Value;
 
 public interface UserChatProjection {
@@ -8,7 +7,7 @@ public interface UserChatProjection {
     String getFullName();
     String getUsername();
     String getAbout();
-    ImageProjection getAvatar();
+    String getAvatar();
     boolean getPrivateProfile();
     boolean getMutedDirectMessages();
 
@@ -24,6 +23,6 @@ public interface UserChatProjection {
     @Value("#{@userServiceImpl.isUserFollowByOtherUser(target.id)}")
     boolean getIsFollower();
 
-    @Value("#{@userServiceImpl.isUserChatParticipant(target.id)}")
+    @Value("#{false}")
     boolean getIsUserChatParticipant();
 }
