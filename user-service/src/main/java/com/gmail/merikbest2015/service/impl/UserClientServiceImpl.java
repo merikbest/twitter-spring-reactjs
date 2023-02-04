@@ -11,6 +11,7 @@ import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.service.AuthenticationService;
 import com.gmail.merikbest2015.service.UserClientService;
 import com.gmail.merikbest2015.util.AuthUtil;
+import com.gmail.merikbest2015.util.UserServiceHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +28,7 @@ public class UserClientServiceImpl implements UserClientService {
     private final UserRepository userRepository;
     private final BasicMapper basicMapper;
     private final AuthenticationService authenticationService;
-    private final UserServiceImpl userService;
+    private final UserServiceHelper userServiceHelper;
 
     @Override
     public List<Long> getUserFollowersIds() {
@@ -50,12 +51,12 @@ public class UserClientServiceImpl implements UserClientService {
 
     @Override
     public Boolean isUserFollowByOtherUser(Long userId) {
-        return userService.isUserFollowByOtherUser(userId);
+        return userServiceHelper.isUserFollowByOtherUser(userId);
     }
 
     @Override
     public Boolean isUserHavePrivateProfile(Long userId) {
-        return userService.isUserHavePrivateProfile(userId);
+        return userServiceHelper.isUserHavePrivateProfile(userId);
     }
 
     @Override
@@ -65,12 +66,12 @@ public class UserClientServiceImpl implements UserClientService {
 
     @Override
     public Boolean isUserBlockedByMyProfile(Long userId) {
-        return userService.isUserBlockedByMyProfile(userId);
+        return userServiceHelper.isUserBlockedByMyProfile(userId);
     }
 
     @Override
     public Boolean isMyProfileBlockedByUser(Long userId) {
-        return userService.isMyProfileBlockedByUser(userId);
+        return userServiceHelper.isMyProfileBlockedByUser(userId);
     }
 
     @Override

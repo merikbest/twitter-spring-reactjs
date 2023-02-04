@@ -17,7 +17,7 @@ public class ListsClientServiceImpl implements ListsClientService {
 
     @Override
     public NotificationListResponse getNotificationList(Long listId) {
-        NotificationListProjection list = listsRepository.getNotificationList(listId);
+        NotificationListProjection list = listsRepository.getListById(listId, NotificationListProjection.class);
         return basicMapper.convertToResponse(list, NotificationListResponse.class);
     }
 }

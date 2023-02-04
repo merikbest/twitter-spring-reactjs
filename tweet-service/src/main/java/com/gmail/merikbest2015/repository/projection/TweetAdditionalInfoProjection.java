@@ -11,6 +11,6 @@ public interface TweetAdditionalInfoProjection {
     boolean isDeleted();
     Long getAuthorId();
 
-    @Value("#{@tweetServiceImpl.getTweetAdditionalInfoUser(target.authorId)}")
+    @Value("#{@tweetServiceHelper.getTweetAdditionalInfoUser(target.authorId)}")
     TweetAdditionalInfoUserResponse getUser();
 }

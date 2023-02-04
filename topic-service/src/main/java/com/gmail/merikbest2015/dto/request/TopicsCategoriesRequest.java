@@ -1,13 +1,11 @@
 package com.gmail.merikbest2015.dto.request;
 
 import com.gmail.merikbest2015.enums.TopicCategory;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 public class TopicsCategoriesRequest {
     private List<TopicCategory> categories;
 }

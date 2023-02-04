@@ -7,15 +7,15 @@ public interface TweetAdditionalInfoUserProjection {
     String getFullName();
     String getUsername();
 
-    @Value("#{@userServiceImpl.isUserMutedByMyProfile(target.id)}")
+    @Value("#{@userServiceHelper.isUserMutedByMyProfile(target.id)}")
     boolean getIsUserMuted();
 
-    @Value("#{@userServiceImpl.isUserBlockedByMyProfile(target.id)}")
+    @Value("#{@userServiceHelper.isUserBlockedByMyProfile(target.id)}")
     boolean getIsUserBlocked();
 
-    @Value("#{@userServiceImpl.isMyProfileBlockedByUser(target.id)}")
+    @Value("#{@userServiceHelper.isMyProfileBlockedByUser(target.id)}")
     boolean getIsMyProfileBlocked();
 
-    @Value("#{@userServiceImpl.isUserFollowByOtherUser(target.id)}")
+    @Value("#{@userServiceHelper.isUserFollowByOtherUser(target.id)}")
     boolean getIsFollower();
 }

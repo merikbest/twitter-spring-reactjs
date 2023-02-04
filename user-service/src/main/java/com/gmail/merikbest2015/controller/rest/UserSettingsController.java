@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static com.gmail.merikbest2015.controller.PathConstants.UI_V1_USER_SETTINGS_UPDATE;
 
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(UI_V1_USER_SETTINGS_UPDATE)

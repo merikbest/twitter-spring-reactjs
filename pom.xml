@@ -23,7 +23,6 @@
         <module>tag-service</module>
         <module>lists-service</module>
         <module>chat-service</module>
-        <module>commons-new</module>
         <module>notification-service</module>
     </modules>
 

@@ -201,6 +201,10 @@ public class ChatServiceImpl implements ChatService {
         return userClient.getChatParticipant(userId);
     }
 
+    public ChatTweetResponse getChatTweet(Long tweetId) {
+        return tweetClient.getChatTweet(tweetId);
+    }
+
     private void isParticipantBlocked(Long authUserId, Long userId) {
         Boolean isUserBlockedByMyProfile = userClient.isUserBlockedByMyProfile(authUserId);
         Boolean isMyProfileBlockedByUser = userClient.isMyProfileBlockedByUser(userId);
@@ -208,9 +212,5 @@ public class ChatServiceImpl implements ChatService {
         if (isUserBlockedByMyProfile || isMyProfileBlockedByUser) {
             throw new ApiRequestException("Participant is blocked", HttpStatus.BAD_REQUEST);
         }
-    }
-
-    public ChatTweetResponse getChatTweet(Long tweetId) {
-        return tweetClient.getChatTweet(tweetId);
     }
 }

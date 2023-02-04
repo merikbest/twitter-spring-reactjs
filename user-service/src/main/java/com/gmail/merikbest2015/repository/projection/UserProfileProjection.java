@@ -26,29 +26,29 @@ public interface UserProfileProjection {
     Long getPinnedTweetId();
 
     @Value("#{target.followers.size()}")
-    Integer getFollowersSize();
+    Long getFollowersSize();
 
     @Value("#{target.following.size()}")
-    Integer getFollowingSize();
+    Long getFollowingSize();
 
-    @Value("#{@userServiceImpl.isUserMutedByMyProfile(target.id)}")
+    @Value("#{@userServiceHelper.isUserMutedByMyProfile(target.id)}")
     boolean getIsUserMuted();
 
-    @Value("#{@userServiceImpl.isUserBlockedByMyProfile(target.id)}")
+    @Value("#{@userServiceHelper.isUserBlockedByMyProfile(target.id)}")
     boolean getIsUserBlocked();
 
-    @Value("#{@userServiceImpl.isMyProfileBlockedByUser(target.id)}")
+    @Value("#{@userServiceHelper.isMyProfileBlockedByUser(target.id)}")
     boolean getIsMyProfileBlocked();
 
-    @Value("#{@userServiceImpl.isMyProfileWaitingForApprove(target.id)}")
+    @Value("#{@userServiceHelper.isMyProfileWaitingForApprove(target.id)}")
     boolean getIsWaitingForApprove();
 
-    @Value("#{@userServiceImpl.isUserFollowByOtherUser(target.id)}")
+    @Value("#{@userServiceHelper.isUserFollowByOtherUser(target.id)}")
     boolean getIsFollower();
 
-    @Value("#{@userServiceImpl.isMyProfileSubscribed(target.id)}")
+    @Value("#{@userServiceHelper.isMyProfileSubscribed(target.id)}")
     boolean getIsSubscriber();
 
-    @Value("#{@userServiceImpl.getSameFollowers(target.id)}")
+    @Value("#{@userServiceHelper.getSameFollowers(target.id)}")
     List<SameFollower> getSameFollowers();
 }

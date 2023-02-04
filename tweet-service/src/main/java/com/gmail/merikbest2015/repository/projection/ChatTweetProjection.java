@@ -16,7 +16,7 @@ public interface ChatTweetProjection {
     @Value("#{target.isDeleted ? null : target.dateTime}")
     LocalDateTime getDateTime();
 
-    @Value("#{target.isDeleted ? null : @tweetServiceImpl.getChatTweetUser(target.authorId)}")
+    @Value("#{target.isDeleted ? null : @tweetServiceHelper.getChatTweetUser(target.authorId)}")
     ChatTweetUserResponse getUser();
 
     Long getAuthorId();

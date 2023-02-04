@@ -13,6 +13,9 @@ import java.util.Optional;
 @Repository
 public interface ListsRepository extends JpaRepository<Lists, Long> {
 
+    @Query("SELECT list FROM Lists list WHERE list.id = :listId")
+    <T> T getListById(@Param("listId") Long listId, Class<T> type);
+
     @Query("SELECT list FROM Lists list WHERE list.isPrivate = false")
     List<ListProjection> getAllTweetLists();
 
@@ -38,9 +41,6 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
                                              @Param("listId") Long listId,
                                              @Param("userId") Long userId);
 
-    @Query("SELECT list FROM Lists list WHERE list.id = :listId")
-    ListUserProjection getUserTweetListById(@Param("listId") Long listId);
-
     @Query("SELECT list FROM Lists list WHERE list.listOwnerId = :ownerId AND list.isPrivate = false")
     List<ListProjection> getUserTweetListsById(@Param("ownerId") Long ownerId);
 
@@ -55,9 +55,6 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
     Optional<Lists> getListWhereUserConsist(@Param("listIds") List<Long> listIds,
                                             @Param("listId") Long listId,
                                             @Param("listOwnerId") Long listOwnerId);
-
-    @Query("SELECT list FROM Lists list WHERE list.id = :listId")
-    PinnedListProjection getUserPinnedListById(@Param("listId") Long listId);
 
     @Query("SELECT list FROM Lists list WHERE list.listOwnerId = :ownerId")
     List<SimpleListProjection> getUserOwnerLists(@Param("ownerId") Long ownerId);
@@ -77,9 +74,6 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
                         @Param("listId") Long listId,
                         @Param("listOwnerId") Long listOwnerId);
 
-    @Query("SELECT list FROM Lists list WHERE list.id = :listId AND list.listOwnerId = :ownerId")
-    Optional<Lists> getAuthUserListById(@Param("listId") Long listId, @Param("ownerId") Long ownerId);
-
     @Query("SELECT CASE WHEN count(list) > 0 THEN true ELSE false END FROM Lists list " +
             "WHERE list.id = :listId AND list.listOwnerId = :authUserId " +
             "OR list.id = :listId AND list.isPrivate = false " +
@@ -97,7 +91,4 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
             "WHERE list.id = :listId " +
             "AND list.listOwnerId != :authUserId")
     boolean isListPrivate(@Param("listId") Long listId, @Param("authUserId") Long authUserId);
-
-    @Query("SELECT list FROM Lists list WHERE list.id = :listId")
-    NotificationListProjection getNotificationList(@Param("listId") Long listId);
 }

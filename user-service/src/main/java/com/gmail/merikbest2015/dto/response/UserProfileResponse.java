@@ -24,8 +24,8 @@ public class UserProfileResponse {
     private String avatar;
     private String wallpaper;
     private Long pinnedTweetId;
-    private Integer followersSize;
-    private Integer followingSize;
+    private Long followersSize;
+    private Long followingSize;
     private List<SameFollowerResponse> sameFollowers;
 
     @JsonProperty("isMutedDirectMessages")

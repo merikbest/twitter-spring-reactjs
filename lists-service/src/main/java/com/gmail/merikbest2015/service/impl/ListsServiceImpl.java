@@ -80,7 +80,7 @@ public class ListsServiceImpl implements ListsService {
         validateListNameLength(list.getName());
         validateListOwner(list.getListOwnerId(), userId);
         listsRepository.save(list);
-        return listsRepository.getUserTweetListById(list.getId());
+        return listsRepository.getListById(list.getId(), ListUserProjection.class);
     }
 
     @Override
@@ -144,7 +144,7 @@ public class ListsServiceImpl implements ListsService {
             ListsFollowers bewFollower = new ListsFollowers(listId, userId);
             listsFollowersRepository.save(bewFollower);
         }
-        return listsRepository.getUserTweetListById(listId);
+        return listsRepository.getListById(listId, ListUserProjection.class);
     }
 
     @Override
@@ -162,7 +162,7 @@ public class ListsServiceImpl implements ListsService {
             PinnedLists newPinnedLists = new PinnedLists(list, userId);
             pinnedListsRepository.save(newPinnedLists);
         }
-        return listsRepository.getUserPinnedListById(listId);
+        return listsRepository.getListById(listId, PinnedListProjection.class);
         // TODO or return true/false if lists pinned
     }
 

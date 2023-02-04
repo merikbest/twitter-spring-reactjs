@@ -10,6 +10,6 @@ public interface BlockedUserProjection {
     String getAvatar();
     boolean getIsPrivateProfile();
 
-    @Value("#{@userServiceImpl.isUserBlockedByMyProfile(target.id)}")
+    @Value("#{@userServiceHelper.isUserBlockedByMyProfile(target.id)}")
     boolean getIsUserBlocked();
 }

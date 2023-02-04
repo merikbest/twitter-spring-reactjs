@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gmail.merikbest2015.commons.enums.TopicCategory;
+import com.gmail.merikbest2015.enums.TopicCategory;
 import com.gmail.merikbest2015.dto.request.SuggestedTopicsRequest;
 import com.gmail.merikbest2015.dto.request.TopicsCategoriesRequest;
 import org.junit.jupiter.api.DisplayName;
@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 
-import static com.gmail.merikbest2015.commons.controller.PathConstants.UI_V1_TOPICS;
+import static com.gmail.merikbest2015.controller.PathConstants.UI_V1_TOPICS;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

@@ -16,15 +16,15 @@ import java.util.Optional;
 @Repository
 public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
+    @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId")
+    <T> Optional<T> getTweetById(@Param("tweetId") Long tweetId, Class<T> type);
+
     @Query("SELECT tweet FROM Tweet tweet " +
             "WHERE tweet.addressedUsername IS NULL " +
             "AND tweet.scheduledDate IS NULL " +
             "AND tweet.deleted = false " +
             "ORDER BY tweet.dateTime DESC")
     Page<TweetProjection> findAllTweets(Pageable pageable);
-
-    @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId")
-    <T> Optional<T> getTweetById(@Param("tweetId") Long tweetId, Class<T> type);
 
     @Query("SELECT tweet FROM Tweet tweet " +
             "WHERE tweet.authorId = :userId " +
@@ -51,14 +51,17 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "ORDER BY tweet.dateTime DESC")
     List<TweetUserProjection> getRepliesByUserId(@Param("userId") Long userId);
 
-    @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId")
-    Optional<TweetAdditionalInfoProjection> getTweetAdditionalInfoById(@Param("tweetId") Long tweetId);
-
     @Query("SELECT tweet FROM Tweet tweet " +
             "WHERE tweet.addressedTweetId = :tweetId " +
             "AND tweet.deleted = false " +
             "ORDER BY tweet.dateTime DESC")
     List<TweetProjection> getRepliesByTweetId(@Param("tweetId") Long tweetId);
+
+    @Query("SELECT tweet FROM Tweet tweet " +
+            "WHERE tweet.addressedId = :userId " +
+            "AND tweet.deleted = false " +
+            "ORDER BY tweet.dateTime DESC")
+    Page<TweetProjection> getUserMentions(@Param("userId") Long userId, Pageable pageable);
 
     @Query("SELECT tweet FROM Tweet tweet " +
             "LEFT JOIN tweet.quoteTweet quoteTweet " +
@@ -116,19 +119,27 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId AND tweet.poll.id = :pollId")
     Optional<Tweet> getTweetByPollIdAndTweetId(@Param("tweetId") Long tweetId, @Param("pollId") Long pollId);
 
-    // NEW
-    @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId")
-    NotificationTweetProjection getNotificationTweet(@Param("tweetId") Long tweetId);
-
     @Query("SELECT CASE WHEN count(tweet) > 0 THEN true ELSE false END FROM Tweet tweet WHERE tweet.id = :tweetId")
     boolean isTweetExists(@Param("tweetId") Long tweetId);
-
-    @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId")
-    ChatTweetProjection getChatTweet(@Param("tweetId") Long tweetId);
 
     @Query("SELECT tweet FROM Tweet tweet " +
             "WHERE tweet.id IN :tweetIds " +
             "AND tweet.deleted = false " +
             "ORDER BY tweet.dateTime DESC")
-    Page<TweetProjection> getTweetsByIds(@Param("tweetIds")List<Long> tweetIds, Pageable pageable);
+    List<TweetProjection> getTweetListsByIds(@Param("tweetIds") List<Long> tweetIds);
+
+    @Query("SELECT tweet FROM Tweet tweet " +
+            "WHERE tweet.id IN :tweetIds " +
+            "AND tweet.deleted = false " +
+            "ORDER BY tweet.dateTime DESC")
+    Page<TweetProjection> getTweetsByIds(@Param("tweetIds") List<Long> tweetIds, Pageable pageable);
+
+    @Query("SELECT tweet.id AS tweetId, image.id AS imageId, image.src AS src FROM Tweet tweet " +
+            "LEFT JOIN tweet.images image " +
+            "WHERE tweet.scheduledDate IS NULL " +
+            "AND tweet.authorId = :userId " +
+            "AND image.id IS NOT NULL " +
+            "AND tweet.deleted = false " +
+            "ORDER BY tweet.dateTime DESC")
+    List<ProfileTweetImageProjection> getUserTweetImages(@Param("userId") Long userId, Pageable pageable);
 }

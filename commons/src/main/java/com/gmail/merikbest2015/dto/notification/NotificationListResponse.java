@@ -1,0 +1,9 @@
+package com.gmail.merikbest2015.dto.notification;
+
+import lombok.Data;
+
+@Data
+public class NotificationListResponse {
+    private Long id;
+    private String name;
+}

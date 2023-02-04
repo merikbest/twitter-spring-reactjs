@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
 
-public interface AuthUserProjection {
+public interface AuthUserProjection { // TODO refactor
     Long getId();
     String getEmail();
     String getFullName();

@@ -1,21 +1,22 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.dto.*;
 import com.gmail.merikbest2015.dto.IdsRequest;
-import com.gmail.merikbest2015.dto.notification.NotificationResponse;
 import com.gmail.merikbest2015.enums.LinkCoverSize;
-import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.ImageClient;
 import com.gmail.merikbest2015.feign.NotificationClient;
 import com.gmail.merikbest2015.feign.TagClient;
 import com.gmail.merikbest2015.feign.UserClient;
-import com.gmail.merikbest2015.model.*;
-import com.gmail.merikbest2015.repository.*;
+import com.gmail.merikbest2015.model.Tweet;
+import com.gmail.merikbest2015.model.TweetImage;
+import com.gmail.merikbest2015.repository.RetweetRepository;
+import com.gmail.merikbest2015.repository.TweetImageRepository;
+import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.service.TweetService;
 import com.gmail.merikbest2015.util.AuthUtil;
+import com.gmail.merikbest2015.util.TweetServiceHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.json.JSONArray;
@@ -25,9 +26,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.support.PagedListHolder;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -38,8 +38,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -49,13 +47,9 @@ import java.util.regex.Pattern;
 public class TweetServiceImpl implements TweetService {
 
     private final TweetRepository tweetRepository;
+    private final TweetServiceHelper tweetServiceHelper;
     private final TweetImageRepository tweetImageRepository;
-    private final PollRepository pollRepository;
-    private final PollChoiceRepository pollChoiceRepository;
-    private final PollChoiceVotedRepository pollChoiceVotedRepository;
-    private final LikeTweetRepository likeTweetRepository;
     private final RetweetRepository retweetRepository;
-    private final BookmarkRepository bookmarkRepository;
     private final NotificationClient notificationClient;
     private final UserClient userClient;
     private final TagClient tagClient;
@@ -77,17 +71,17 @@ public class TweetServiceImpl implements TweetService {
     public TweetProjection getTweetById(Long tweetId) {
         TweetProjection tweet = tweetRepository.getTweetById(tweetId, TweetProjection.class)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-        checkIsValidUserProfile(tweet.getAuthorId());
         checkIsTweetDeleted(tweet.isDeleted());
+        tweetServiceHelper.checkIsValidUserProfile(tweet.getAuthorId());
         return tweet;
     }
 
     @Override
     public Page<TweetUserProjection> getUserTweets(Long userId, Pageable pageable) {
-        checkIsUserExist(userId);
+        tweetServiceHelper.checkIsUserExist(userId);
         List<TweetUserProjection> tweets = tweetRepository.getTweetsByUserId(userId);
         List<RetweetProjection> retweets = retweetRepository.getRetweetsByUserId(userId);
-        List<TweetUserProjection> userTweets = combineTweetsArrays(tweets, retweets);
+        List<TweetUserProjection> userTweets = tweetServiceHelper.combineTweetsArrays(tweets, retweets);
         Long pinnedTweetId = userClient.getUserPinnedTweetId(userId);
 
         if (pinnedTweetId != null) {
@@ -98,36 +92,32 @@ public class TweetServiceImpl implements TweetService {
                 userTweets.add(0, pinnedTweet);
             }
         }
-        return getPageableTweetProjectionList(pageable, userTweets, tweets.size() + retweets.size());
-    }
-
-    @Override
-    public Page<LikeTweetProjection> getUserLikedTweets(Long userId, Pageable pageable) {
-        checkIsUserExist(userId);
-        return likeTweetRepository.getUserLikedTweets(userId, pageable);
+        return tweetServiceHelper.getPageableTweetProjectionList(pageable, userTweets, tweets.size() + retweets.size());
     }
 
     @Override
     public Page<TweetProjection> getUserMediaTweets(Long userId, Pageable pageable) {
-        checkIsUserExist(userId);
+        tweetServiceHelper.checkIsUserExist(userId);
         return tweetRepository.getUserMediaTweets(userId, pageable);
     }
 
     @Override
-    public Page<TweetUserProjection> getUserRetweetsAndReplies(Long userId, Pageable pageable) {
-        checkIsUserExist(userId);
-        List<TweetUserProjection> replies = tweetRepository.getRepliesByUserId(userId);
-        List<RetweetProjection> retweets = retweetRepository.getRetweetsByUserId(userId);
-        List<TweetUserProjection> userTweets = combineTweetsArrays(replies, retweets);
-        return getPageableTweetProjectionList(pageable, userTweets, replies.size() + retweets.size());
+    public Page<TweetProjection> getUserMentions(Pageable pageable) {
+        Long userId = AuthUtil.getAuthenticatedUserId();
+        return tweetRepository.getUserMentions(userId, pageable);
+    }
+
+    @Override
+    public List<ProfileTweetImageProjection> getUserTweetImages(Long userId) {
+        return tweetRepository.getUserTweetImages(userId, PageRequest.of(0, 6));
     }
 
     @Override
     public TweetAdditionalInfoProjection getTweetAdditionalInfoById(Long tweetId) {
-        TweetAdditionalInfoProjection additionalInfo = tweetRepository.getTweetAdditionalInfoById(tweetId)
+        TweetAdditionalInfoProjection additionalInfo = tweetRepository.getTweetById(tweetId, TweetAdditionalInfoProjection.class)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-        checkIsValidUserProfile(additionalInfo.getAuthorId());
         checkIsTweetDeleted(additionalInfo.isDeleted());
+        tweetServiceHelper.checkIsValidUserProfile(additionalInfo.getAuthorId());
         return additionalInfo;
     }
 
@@ -135,26 +125,14 @@ public class TweetServiceImpl implements TweetService {
     public List<TweetProjection> getRepliesByTweetId(Long tweetId) {
         Tweet tweet = tweetRepository.findById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-        checkIsValidUserProfile(tweet.getAuthorId());
         checkIsTweetDeleted(tweet.isDeleted());
+        tweetServiceHelper.checkIsValidUserProfile(tweet.getAuthorId());
         return tweetRepository.getRepliesByTweetId(tweetId);
     }
 
     @Override
     public Page<TweetProjection> getQuotesByTweetId(Pageable pageable, Long tweetId) {
         return tweetRepository.getQuotesByTweetId(tweetId, pageable);
-    }
-
-    @Override
-    public HeaderResponse<UserResponse> getLikedUsersByTweetId(Long tweetId, Pageable pageable) {
-        Page<Long> likedUserIds = likeTweetRepository.getLikedUserIds(tweetId, pageable);
-        return userClient.getTweetLikedUsersByIds(new IdsRequest(likedUserIds.getContent()), pageable);
-    }
-
-    @Override
-    public HeaderResponse<UserResponse> getRetweetedUsersByTweetId(Long tweetId, Pageable pageable) {
-        Page<Long> retweetedUserIds = retweetRepository.getRetweetedUserIds(tweetId, pageable);
-        return userClient.getRetweetedUsersByIds(new IdsRequest(retweetedUserIds.getContent()), pageable);
     }
 
     @Override
@@ -189,33 +167,6 @@ public class TweetServiceImpl implements TweetService {
     @Transactional
     public TweetProjection createNewTweet(Tweet tweet) {
         Tweet createdTweet = createTweet(tweet);
-        return getTweetById(createdTweet.getId());
-    }
-
-    @Override
-    @Transactional
-    public TweetProjection createPoll(Long pollDateTime, List<String> choices, Tweet tweet) {
-        if (choices.size() < 2 || choices.size() > 4) {
-            throw new ApiRequestException("Incorrect poll choices", HttpStatus.BAD_REQUEST);
-        }
-        Tweet createdTweet = createTweet(tweet);
-        LocalDateTime dateTime = LocalDateTime.now().plusMinutes(pollDateTime);
-        Poll poll = new Poll();
-        poll.setTweet(createdTweet);
-        poll.setDateTime(dateTime);
-        List<PollChoice> pollChoices = new ArrayList<>();
-        choices.forEach(choice -> {
-            if (choice.length() == 0 || choice.length() > 25) {
-                throw new ApiRequestException("Incorrect choice text length", HttpStatus.BAD_REQUEST);
-            }
-            PollChoice pollChoice = new PollChoice();
-            pollChoice.setChoice(choice);
-            pollChoiceRepository.save(pollChoice);
-            pollChoices.add(pollChoice);
-        });
-        poll.setPollChoices(pollChoices);
-        pollRepository.save(poll);
-        createdTweet.setPoll(poll);
         return getTweetById(createdTweet.getId());
     }
 
@@ -258,56 +209,10 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     @Transactional
-    public NotificationResponse likeTweet(Long tweetId) {
-        Long userId = AuthUtil.getAuthenticatedUserId();
-        Tweet tweet = tweetRepository.findById(tweetId)
-                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-        checkIsValidUserProfile(tweet.getAuthorId());
-        LikeTweet likedTweet = likeTweetRepository.getLikedTweet(userId, tweetId);
-        boolean isTweetLiked;
-
-        if (likedTweet != null) {
-            likeTweetRepository.delete(likedTweet);
-            userClient.updateLikeCount(false);
-            isTweetLiked = false;
-        } else {
-            LikeTweet newLikeTweet = new LikeTweet(userId, tweetId);
-            likeTweetRepository.save(newLikeTweet);
-            userClient.updateLikeCount(true);
-            isTweetLiked = true;
-        }
-        return sendNotification(NotificationType.LIKE, isTweetLiked, tweet.getAuthorId(), userId, tweetId);
-    }
-
-    @Override
-    @Transactional
-    public NotificationResponse retweet(Long tweetId) {
-        Long userId = AuthUtil.getAuthenticatedUserId();
-        Tweet tweet = tweetRepository.findById(tweetId)
-                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-        checkIsValidUserProfile(tweet.getAuthorId());
-        Retweet retweet = retweetRepository.isTweetRetweeted(userId, tweetId);
-        boolean isRetweeted;
-
-        if (retweet != null) {
-            retweetRepository.delete(retweet);
-            userClient.updateTweetCount(false);
-            isRetweeted = false;
-        } else {
-            Retweet newRetweet = new Retweet(userId, tweetId);
-            retweetRepository.save(newRetweet);
-            userClient.updateTweetCount(true);
-            isRetweeted = true;
-        }
-        return sendNotification(NotificationType.RETWEET, isRetweeted, tweet.getAuthorId(), userId, tweetId);
-    }
-
-    @Override
-    @Transactional
     public TweetProjection replyTweet(Long tweetId, Tweet reply) {
         Tweet tweet = tweetRepository.findById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-        checkIsValidUserProfile(tweet.getAuthorId());
+        tweetServiceHelper.checkIsValidUserProfile(tweet.getAuthorId());
         reply.setAddressedTweetId(tweetId);
         Tweet replyTweet = createTweet(reply);
         tweetRepository.addReply(tweetId, replyTweet.getId());
@@ -319,7 +224,7 @@ public class TweetServiceImpl implements TweetService {
     public TweetProjection quoteTweet(Long tweetId, Tweet quote) {
         Tweet tweet = tweetRepository.findById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-        checkIsValidUserProfile(tweet.getAuthorId());
+        tweetServiceHelper.checkIsValidUserProfile(tweet.getAuthorId());
         userClient.updateTweetCount(true);
         quote.setQuoteTweet(tweet);
         Tweet createdTweet = createTweet(quote);
@@ -341,73 +246,6 @@ public class TweetServiceImpl implements TweetService {
         return getTweetById(tweet.getId());
     }
 
-    @Override
-    @Transactional
-    public TweetProjection voteInPoll(Long tweetId, Long pollId, Long pollChoiceId) {
-        Tweet tweet = tweetRepository.getTweetByPollIdAndTweetId(tweetId, pollId)
-                .orElseThrow(() -> new ApiRequestException("Poll in tweet not exist", HttpStatus.NOT_FOUND));
-        checkIsValidUserProfile(tweet.getAuthorId());
-        Poll poll = pollRepository.getPollByPollChoiceId(pollId, pollChoiceId)
-                .orElseThrow(() -> new ApiRequestException("Poll choice not found", HttpStatus.NOT_FOUND));
-
-        if (LocalDateTime.now().isAfter(poll.getDateTime())) {
-            throw new ApiRequestException("Poll is not available", HttpStatus.BAD_REQUEST);
-        }
-        Long userId = AuthUtil.getAuthenticatedUserId();
-        boolean ifUserVoted = pollChoiceVotedRepository.ifUserVoted(userId, pollChoiceId);
-
-        if (ifUserVoted) {
-            throw new ApiRequestException("User voted in poll", HttpStatus.BAD_REQUEST);
-        }
-        PollChoiceVoted votedUser = new PollChoiceVoted(userId, pollChoiceId);
-        pollChoiceVotedRepository.save(votedUser);
-        return getTweetById(tweetId);
-    }
-
-    @Override
-    public Boolean getIsTweetBookmarked(Long tweetId) {
-        return isUserBookmarkedTweet(tweetId);
-    }
-
-    private void checkIsUserExist(Long userId) {
-        boolean isUserExist = userClient.isUserExists(userId);
-
-        if (!isUserExist) {
-            throw new ApiRequestException("User (id:" + userId + ") not found", HttpStatus.NOT_FOUND);
-        }
-    }
-
-    public boolean isUserLikedTweet(Long tweetId) {
-        Long authUserId = AuthUtil.getAuthenticatedUserId();
-        return likeTweetRepository.isUserLikedTweet(authUserId, tweetId);
-    }
-
-    public boolean isUserRetweetedTweet(Long tweetId) {
-        Long authUserId = AuthUtil.getAuthenticatedUserId();
-        return retweetRepository.isUserRetweetedTweet(authUserId, tweetId);
-    }
-
-    public boolean isUserBookmarkedTweet(Long tweetId) {
-        Long authUserId = AuthUtil.getAuthenticatedUserId();
-        return bookmarkRepository.isUserBookmarkedTweet(authUserId, tweetId);
-    }
-
-    public boolean isUserFollowByOtherUser(Long userId) {
-        return userClient.isUserFollowByOtherUser(userId);
-    }
-
-    public boolean isMyProfileBlockedByUser(Long userId) {
-        return userClient.isMyProfileBlockedByUser(userId);
-    }
-
-    public TweetAuthorResponse getTweetAuthor(Long userId) {
-        return userClient.getTweetAuthor(userId);
-    }
-
-    public TweetAdditionalInfoUserResponse getTweetAdditionalInfoUser(Long userId) {
-        return userClient.getTweetAdditionalInfoUser(userId);
-    }
-
     private void checkTweetTextLength(String text) {
         if (text.length() == 0 || text.length() > 280) {
             throw new ApiRequestException("Incorrect tweet text length", HttpStatus.BAD_REQUEST);
@@ -418,23 +256,6 @@ public class TweetServiceImpl implements TweetService {
         if (isDeleted) {
             throw new ApiRequestException("Sorry, that Tweet has been deleted.", HttpStatus.BAD_REQUEST);
         }
-    }
-
-    public boolean isUserHavePrivateProfile(Long userId) {
-        return userClient.isUserHavePrivateProfile(userId);
-    }
-
-    private void checkIsValidUserProfile(Long userId) {
-        if (isUserHavePrivateProfile(userId)) {
-            throw new ApiRequestException("User not found", HttpStatus.BAD_REQUEST);
-        }
-        if (isMyProfileBlockedByUser(userId)) {
-            throw new ApiRequestException("User profile blocked", HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    public ChatTweetUserResponse getChatTweetUser(Long userId) {
-        return userClient.getChatTweetUser(userId);
     }
 
     @Transactional
@@ -517,50 +338,5 @@ public class TweetServiceImpl implements TweetService {
 
     private String getContent(Element element) {
         return element == null ? "" : element.attr("content");
-    }
-
-    private NotificationResponse sendNotification(NotificationType notificationType, boolean isTweetLiked, Long notifiedUserId,
-                                  Long userId, Long tweetId) {
-        NotificationRequest request = NotificationRequest.builder()
-                .notificationType(notificationType)
-                .notificationCondition(isTweetLiked)
-                .notifiedUserId(notifiedUserId)
-                .userId(userId)
-                .tweetId(tweetId)
-                .build();
-        return notificationClient.sendTweetNotification(request);
-    }
-
-    private <T> Page<T> getPageableTweetProjectionList(Pageable pageable, List<T> tweets, int totalPages) {
-        PagedListHolder<T> page = new PagedListHolder<>(tweets);
-        page.setPage(pageable.getPageNumber());
-        page.setPageSize(pageable.getPageSize());
-        return new PageImpl<>(page.getPageList(), pageable, totalPages);
-    }
-
-    private List<TweetUserProjection> combineTweetsArrays(List<TweetUserProjection> tweets,
-                                                          List<RetweetProjection> retweets) {
-        List<TweetUserProjection> allTweets = new ArrayList<>();
-        int i = 0;
-        int j = 0;
-
-        while (i < tweets.size() && j < retweets.size()) {
-            if (tweets.get(i).getDateTime().isAfter(retweets.get(j).getRetweetDate())) {
-                allTweets.add(tweets.get(i));
-                i++;
-            } else {
-                allTweets.add(retweets.get(j).getTweet());
-                j++;
-            }
-        }
-        while (i < tweets.size()) {
-            allTweets.add(tweets.get(i));
-            i++;
-        }
-        while (j < retweets.size()) {
-            allTweets.add(retweets.get(j).getTweet());
-            j++;
-        }
-        return allTweets;
     }
 }

@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.dto.IdsRequest;
 import com.gmail.merikbest2015.dto.TweetResponse;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.TweetClient;
@@ -39,6 +40,6 @@ public class TagServiceImpl implements TagService {
         Tag tag = tagRepository.findByTagName(tagName)
                 .orElseThrow(() -> new ApiRequestException("Tag not found", HttpStatus.NOT_FOUND));
         List<Long> tweetIds = tweetTagRepository.getTweetIdsByTagId(tag.getId());
-        return tweetClient.getTweetsByIds(tweetIds);
+        return tweetClient.getTweetsByIds(new IdsRequest(tweetIds));
     }
 }

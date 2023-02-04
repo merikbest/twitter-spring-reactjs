@@ -13,9 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -40,9 +38,5 @@ public class NotificationMapper {
 
     public HeaderResponse<TweetResponse> getNotificationsFromTweetAuthors(Pageable pageable) {
         return notificationService.getNotificationsFromTweetAuthors(pageable);
-//        List<TweetProjection> tweets = tweetsProjections.getContent().stream()
-//                .map(TweetsProjection::getTweet)
-//                .collect(Collectors.toList());
-//        return basicMapper.getHeaderResponse(tweets, tweetsProjections.getTotalPages(), TweetResponse.class);
     }
 }

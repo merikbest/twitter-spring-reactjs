@@ -5,107 +5,56 @@ import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.IdsRequest;
 import com.gmail.merikbest2015.dto.TweetResponse;
 import com.gmail.merikbest2015.dto.notification.NotificationTweetResponse;
-import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.mapper.TweetClientMapper;
-import com.gmail.merikbest2015.model.Tweet;
-import com.gmail.merikbest2015.repository.projection.TweetProjection;
-import com.gmail.merikbest2015.service.TweetClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.openfeign.SpringQueryMap;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 import static com.gmail.merikbest2015.controller.PathConstants.API_V1_TWEETS;
-
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(API_V1_TWEETS)
 public class TweetApiController {
 
-    private final TweetClientService tweetClientService;
     private final TweetClientMapper tweetClientMapper;
-    private final BasicMapper basicMapper;
 
-//    @GetMapping("/{userId}")
-//    public Optional<Tweet> getTweetById(@PathVariable("userId") Long userId) {
-//        return tweetClientService.getTweetById(userId);
-//    }
-//
-//    @GetMapping("/user/{userId}")
-//    public List<TweetsUserProjection> getTweetsByUserId(@PathVariable("userId") Long userId) {
-//        return tweetClientService.getTweetsByUserId(userId);
-//    }
-//
-//    @GetMapping("/pinned/{userId}")
-//    public Optional<TweetsUserProjection> getPinnedTweetByUserId(@PathVariable("userId") Long userId) {
-//        return tweetClientService.getPinnedTweetByUserId(userId);
-//    }
-//
-//    @PostMapping("/user/media")
-//    public Page<TweetProjection> getAllUserMediaTweets(@RequestBody TweetPageableRequest request) {
-//        return tweetClientService.getAllUserMediaTweets(request);
-//    }
-//
-//    @PostMapping("/user/mentions")
-//    public Page<TweetProjection> getUserMentions(@RequestBody TweetPageableRequest request) {
-//        return tweetClientService.getUserMentions(request);
-//    }
-//
-//    @PostMapping("/user/images")
-//    public List<TweetImageProjection> getUserTweetImages(@RequestBody TweetPageableRequest request) {
-//        return tweetClientService.getUserTweetImages(request);
-//    }
-//
-//    @GetMapping("/replies/{userId}")
-//    public List<TweetsUserProjection> getRepliesByUserId(@PathVariable("userId") Long userId) {
-//        return tweetClientService.getRepliesByUserId(userId);
-//    }
-//
-//    @GetMapping("/notification/{userId}")
-//    public List<TweetProjection> getNotificationsFromTweetAuthors(@PathVariable("userId") Long userId) {
-//        return tweetClientService.getNotificationsFromTweetAuthors(userId);
-//    }
-//
-//    @GetMapping("/ids/{tweetIds}")
-//    public List<TweetResponse> getTweetsByIds(@PathVariable("tweetIds") List<Long> tweetIds) {
-//        return tweetClientMapper.getTweetsByIds(tweetIds);
-//    }
-//
-//    @PostMapping("/user/ids")
-//    public HeaderResponse<TweetResponse> getTweetsByUserIds(@RequestBody TweetUserIdsRequest request,
-//                                                            @SpringQueryMap Pageable pageable) {
-//        Page<TweetProjection> tweets = tweetClientService.getTweetsByUserIds(request, pageable);
-//        return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
-//    }
+    @PostMapping("/tag/ids")
+    public List<TweetResponse> getTweetsByIds(@RequestBody IdsRequest requests) {
+        return tweetClientMapper.getTweetsByIds(requests);
+    }
 
-    // NEW
+    @PostMapping("/user/ids")
+    public HeaderResponse<TweetResponse> getTweetsByUserIds(@RequestBody IdsRequest request,
+                                                            @SpringQueryMap Pageable pageable) {
+        return tweetClientMapper.getTweetsByUserIds(request, pageable);
+    }
+
     @GetMapping("/{tweetId}")
     public TweetResponse getTweetById(@PathVariable("tweetId") Long tweetId) {
-        return tweetClientService.getTweetById(tweetId);
+        return tweetClientMapper.getTweetById(tweetId);
     }
 
     @PostMapping("/ids")
     public HeaderResponse<TweetResponse> getTweetsByIds(@RequestBody IdsRequest request, Pageable pageable) {
-        return tweetClientService.getTweetsByIds(request, pageable);
+        return tweetClientMapper.getTweetsByIds(request, pageable);
     }
 
     @GetMapping("/notification/{tweetId}")
     public NotificationTweetResponse getNotificationTweet(@PathVariable("tweetId") Long tweetId) {
-        return tweetClientService.getNotificationTweet(tweetId);
+        return tweetClientMapper.getNotificationTweet(tweetId);
     }
 
     @GetMapping("/id/{tweetId}")
     public Boolean isTweetExists(@PathVariable("tweetId") Long tweetId) {
-        return tweetClientService.isTweetExists(tweetId);
+        return tweetClientMapper.isTweetExists(tweetId);
     }
 
     @GetMapping("/chat/{tweetId}")
     public ChatTweetResponse getChatTweet(@PathVariable("tweetId") Long tweetId) {
-        return tweetClientService.getChatTweet(tweetId);
+        return tweetClientMapper.getChatTweet(tweetId);
     }
 }

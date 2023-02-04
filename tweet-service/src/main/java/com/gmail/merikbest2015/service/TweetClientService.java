@@ -1,42 +1,27 @@
 package com.gmail.merikbest2015.service;
 
-import com.gmail.merikbest2015.dto.ChatTweetResponse;
-import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.IdsRequest;
-import com.gmail.merikbest2015.dto.TweetResponse;
-import com.gmail.merikbest2015.dto.notification.NotificationTweetResponse;
+import com.gmail.merikbest2015.repository.projection.ChatTweetProjection;
+import com.gmail.merikbest2015.repository.projection.NotificationTweetProjection;
+import com.gmail.merikbest2015.repository.projection.TweetProjection;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface TweetClientService {
 
-//    Optional<Tweet> getTweetById(Long userId);
-//
-//    List<TweetsUserProjection> getTweetsByUserId(Long userId);
-//
-//    Optional<TweetsUserProjection> getPinnedTweetByUserId(Long userId);
-//
-//    Page<TweetProjection> getAllUserMediaTweets(TweetPageableRequest request);
-//
-//    Page<TweetProjection> getUserMentions(TweetPageableRequest request);
-//
-//    List<TweetImageProjection> getUserTweetImages(TweetPageableRequest request);
-//
-//    List<TweetsUserProjection> getRepliesByUserId(Long userId);
-//
-//    List<TweetProjection> getNotificationsFromTweetAuthors(Long userId);
-//
-//    List<TweetProjection> getTweetsByIds(List<Long> tweetIds);
-//
-//    Page<TweetProjection> getTweetsByUserIds(TweetUserIdsRequest request, Pageable pageable);
+    List<TweetProjection> getTweetsByIds(IdsRequest requests);
 
-    // NEW
-    TweetResponse getTweetById(Long tweetId);
+    Page<TweetProjection> getTweetsByUserIds(IdsRequest request, Pageable pageable);
 
-    HeaderResponse<TweetResponse> getTweetsByIds(IdsRequest request, Pageable pageable);
+    TweetProjection getTweetById(Long tweetId);
 
-    NotificationTweetResponse getNotificationTweet(Long tweetId);
+    Page<TweetProjection> getTweetsByIds(IdsRequest request, Pageable pageable);
+
+    NotificationTweetProjection getNotificationTweet(Long tweetId);
 
     Boolean isTweetExists(Long tweetId);
 
-    ChatTweetResponse getChatTweet(Long tweetId);
+    ChatTweetProjection getChatTweet(Long tweetId);
 }

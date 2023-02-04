@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.repository.projection;
 
-import com.gmail.merikbest2015.projection.ListOwnerProjection;
+import com.gmail.merikbest2015.dto.lists.ListOwnerResponse;
 import org.springframework.beans.factory.annotation.Value;
 
 public interface BaseListProjection {
@@ -13,7 +13,7 @@ public interface BaseListProjection {
     boolean getIsPrivate();
 
     @Value("#{@listsServiceImpl.getListOwnerById(target.listOwnerId)}")
-    ListOwnerProjection getListOwner();
+    ListOwnerResponse getListOwner();
 
     @Value("#{@listsMembersRepository.getMembersSize(target.id)}")
     Long getMembersSize();
