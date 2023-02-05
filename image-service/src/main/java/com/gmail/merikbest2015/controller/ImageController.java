@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import static com.gmail.merikbest2015.controller.PathConstants.API_V1_IMAGE;
+import static com.gmail.merikbest2015.constants.PathConstants.API_V1_IMAGE;
 
 @RestController
 @RequiredArgsConstructor

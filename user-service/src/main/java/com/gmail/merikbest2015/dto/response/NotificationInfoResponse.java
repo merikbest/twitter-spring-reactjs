@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.dto.response;
 
-import com.gmail.merikbest2015.dto.TweetResponse;
-import com.gmail.merikbest2015.dto.UserResponse;
+import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.enums.NotificationType;
 import lombok.Data;
 

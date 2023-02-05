@@ -1,10 +1,11 @@
 package com.gmail.merikbest2015.controller.api;
 
+import com.gmail.merikbest2015.dto.request.TweetTextRequest;
 import com.gmail.merikbest2015.service.TagClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import static com.gmail.merikbest2015.controller.PathConstants.API_V1_TAGS;
+import static com.gmail.merikbest2015.constants.PathConstants.API_V1_TAGS;
 
 @RestController
 @RequiredArgsConstructor
@@ -13,9 +14,9 @@ public class TagApiController {
 
     private final TagClientService tagClientService;
 
-    @GetMapping("/parse/{text}/{tweetId}")
-    public void parseHashtagsInText(@PathVariable("text") String text, @PathVariable("tweetId") Long tweetId) {
-        tagClientService.parseHashtagsInText(text, tweetId);
+    @PostMapping("/parse/{tweetId}")
+    public void parseHashtagsInText(@PathVariable("tweetId") Long tweetId, @RequestBody TweetTextRequest request) {
+        tagClientService.parseHashtagsInText(tweetId, request.getText());
     }
 
     @DeleteMapping("/delete/{tweetId}")

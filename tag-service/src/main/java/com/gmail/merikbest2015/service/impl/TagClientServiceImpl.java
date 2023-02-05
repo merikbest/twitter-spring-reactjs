@@ -24,7 +24,7 @@ public class TagClientServiceImpl implements TagClientService {
 
     @Override
     @Transactional
-    public void parseHashtagsInText(String text, Long tweetId) {
+    public void parseHashtagsInText(Long tweetId, String text) {
         Pattern pattern = Pattern.compile("(#\\w+)\\b");
         Matcher match = pattern.matcher(text);
         List<String> hashtags = new ArrayList<>();

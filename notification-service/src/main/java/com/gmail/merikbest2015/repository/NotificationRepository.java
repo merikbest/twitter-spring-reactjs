@@ -20,25 +20,31 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     @Query("SELECT CASE WHEN count(notification) > 0 THEN true ELSE false END FROM Notification notification " +
             "WHERE notification.notifiedUserId = :userId " +
             "AND notification.listId = :listId " +
+            "AND notification.userId = :authUserId " +
             "AND notification.notificationType = :notificationType")
     boolean isListNotificationExists(@Param("userId") Long userId,
                                      @Param("listId") Long listId,
+                                     @Param("authUserId") Long authUserId,
                                      @Param("notificationType") NotificationType type);
 
     @Query("SELECT CASE WHEN count(notification) > 0 THEN true ELSE false END FROM Notification notification " +
             "WHERE notification.notifiedUserId = :userId " +
             "AND notification.userToFollowId = :userToFollowId " +
+            "AND notification.userId = :authUserId " +
             "AND notification.notificationType = :notificationType")
     boolean isUserNotificationExists(@Param("userId") Long userId,
                                      @Param("userToFollowId") Long userToFollowId,
+                                     @Param("authUserId") Long authUserId,
                                      @Param("notificationType") NotificationType type);
 
     @Query("SELECT CASE WHEN count(notification) > 0 THEN true ELSE false END FROM Notification notification " +
             "WHERE notification.notifiedUserId = :userId " +
             "AND notification.tweetId = :tweetId " +
+            "AND notification.userId = :authUserId " +
             "AND notification.notificationType = :notificationType")
     boolean isTweetNotificationExists(@Param("userId") Long userId,
                                       @Param("tweetId") Long tweetId,
+                                      @Param("authUserId") Long authUserId,
                                       @Param("notificationType") NotificationType type);
 
     @Query("SELECT notification FROM Notification notification " +

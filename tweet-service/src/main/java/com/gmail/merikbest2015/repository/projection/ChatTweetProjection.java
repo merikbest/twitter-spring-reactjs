@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.repository.projection;
 
-import com.gmail.merikbest2015.dto.ChatTweetUserResponse;
+import com.gmail.merikbest2015.dto.response.chat.ChatTweetUserResponse;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;

@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.repository.projection;
 
-import com.gmail.merikbest2015.dto.TweetAuthorResponse;
+import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
 import com.gmail.merikbest2015.enums.LinkCoverSize;
 import com.gmail.merikbest2015.enums.ReplyType;
 import org.springframework.beans.factory.annotation.Value;

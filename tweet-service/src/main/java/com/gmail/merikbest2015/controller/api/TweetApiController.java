@@ -1,10 +1,10 @@
 package com.gmail.merikbest2015.controller.api;
 
-import com.gmail.merikbest2015.dto.ChatTweetResponse;
+import com.gmail.merikbest2015.dto.response.chat.ChatTweetResponse;
 import com.gmail.merikbest2015.dto.HeaderResponse;
-import com.gmail.merikbest2015.dto.IdsRequest;
-import com.gmail.merikbest2015.dto.TweetResponse;
-import com.gmail.merikbest2015.dto.notification.NotificationTweetResponse;
+import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.dto.response.notification.NotificationTweetResponse;
 import com.gmail.merikbest2015.mapper.TweetClientMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.openfeign.SpringQueryMap;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.controller.PathConstants.API_V1_TWEETS;
+import static com.gmail.merikbest2015.constants.PathConstants.API_V1_TWEETS;
 
 @RestController
 @RequiredArgsConstructor

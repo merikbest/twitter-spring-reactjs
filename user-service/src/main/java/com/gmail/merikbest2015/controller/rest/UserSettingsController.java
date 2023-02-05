@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.gmail.merikbest2015.controller.PathConstants.UI_V1_USER_SETTINGS_UPDATE;
+import static com.gmail.merikbest2015.constants.PathConstants.UI_V1_USER_SETTINGS_UPDATE;
 
 @RestController
 @RequiredArgsConstructor

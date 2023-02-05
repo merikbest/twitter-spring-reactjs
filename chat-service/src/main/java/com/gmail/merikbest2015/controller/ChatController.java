@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.controller;
 
 import com.gmail.merikbest2015.dto.HeaderResponse;
-import com.gmail.merikbest2015.dto.UserResponse;
+import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.dto.request.ChatMessageRequest;
 import com.gmail.merikbest2015.dto.request.MessageWithTweetRequest;
 import com.gmail.merikbest2015.dto.response.ChatMessageResponse;
@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.controller.PathConstants.UI_V1_CHAT;
+import static com.gmail.merikbest2015.constants.PathConstants.UI_V1_CHAT;
+import static com.gmail.merikbest2015.constants.WebsocketConstants.TOPIC_CHAT;
 
 @RestController
 @RequiredArgsConstructor
@@ -55,14 +56,14 @@ public class ChatController {
     @PostMapping("/add/message")
     public ResponseEntity<Void> addMessage(@RequestBody ChatMessageRequest request) {
         chatMapper.addMessage(request)
-                .forEach((userId, message) -> messagingTemplate.convertAndSend("/topic/chat/" + userId, message));
+                .forEach((userId, message) -> messagingTemplate.convertAndSend(TOPIC_CHAT + userId, message));
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/add/message/tweet")
     public ResponseEntity<Void> addMessageWithTweet(@RequestBody MessageWithTweetRequest request) {
         chatMapper.addMessageWithTweet(request)
-                .forEach((userId, message) -> messagingTemplate.convertAndSend("/topic/chat/" + userId, message));
+                .forEach((userId, message) -> messagingTemplate.convertAndSend(TOPIC_CHAT + userId, message));
         return ResponseEntity.ok().build();
     }
 

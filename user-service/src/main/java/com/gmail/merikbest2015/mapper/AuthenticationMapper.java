@@ -3,7 +3,6 @@ package com.gmail.merikbest2015.mapper;
 import com.gmail.merikbest2015.dto.request.*;
 import com.gmail.merikbest2015.dto.response.AuthUserResponse;
 import com.gmail.merikbest2015.dto.response.AuthenticationResponse;
-import com.gmail.merikbest2015.exception.InputFieldException;
 import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
 import com.gmail.merikbest2015.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
@@ -20,19 +19,6 @@ public class AuthenticationMapper {
     private final ModelMapper modelMapper;
     private final AuthenticationService authenticationService;
 
-    AuthenticationResponse getAuthenticationResponse(Map<String, Object> credentials) {
-        AuthenticationResponse response = new AuthenticationResponse();
-        response.setUser(modelMapper.map(credentials.get("user"), AuthUserResponse.class));
-        response.setToken((String) credentials.get("token"));
-        return response;
-    }
-
-    private void processInputErrors(BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw new InputFieldException(bindingResult);
-        }
-    }
-
     public AuthenticationResponse login(AuthenticationRequest request, BindingResult bindingResult) {
         return getAuthenticationResponse(authenticationService.login(request, bindingResult));
     }
@@ -41,46 +27,48 @@ public class AuthenticationMapper {
         return authenticationService.registration(request, bindingResult);
     }
 
+    public String sendRegistrationCode(String email, BindingResult bindingResult) {
+        return authenticationService.sendRegistrationCode(email, bindingResult);
+    }
+
+    public String checkRegistrationCode(String code) {
+        return authenticationService.checkRegistrationCode(code);
+    }
+
+    public AuthenticationResponse endRegistration(EndRegistrationRequest request, BindingResult bindingResult) {
+        return getAuthenticationResponse(authenticationService.endRegistration(request.getEmail(), request.getPassword(), bindingResult));
+    }
+
     public AuthenticationResponse getUserByToken() {
         return getAuthenticationResponse(authenticationService.getUserByToken());
     }
 
-    public String activateUser(String code) {
-        return authenticationService.activateUser(code);
+    public String getExistingEmail(String email, BindingResult bindingResult) {
+        return authenticationService.getExistingEmail(email, bindingResult);
     }
 
     public String sendPasswordResetCode(String email, BindingResult bindingResult) {
-        processInputErrors(bindingResult);
-        return authenticationService.sendPasswordResetCode(email);
+        return authenticationService.sendPasswordResetCode(email, bindingResult);
     }
 
-    public AuthUserResponse getByPasswordResetCode(String code) {
-        AuthUserProjection user = authenticationService.getByPasswordResetCode(code);
+    public AuthUserResponse getUserByPasswordResetCode(String code) {
+        AuthUserProjection user = authenticationService.getUserByPasswordResetCode(code);
         return modelMapper.map(user, AuthUserResponse.class);
     }
 
     public String passwordReset(PasswordResetRequest request, BindingResult bindingResult) {
-        processInputErrors(bindingResult);
-        return authenticationService.passwordReset(request.getEmail(), request.getPassword(), request.getPassword2());
-    }
-
-    public String getEmail(String email, BindingResult bindingResult) {
-        processInputErrors(bindingResult);
-        return authenticationService.getEmail(email);
-    }
-
-    public String sendRegistrationCode(String email, BindingResult bindingResult) {
-        processInputErrors(bindingResult);
-        return authenticationService.sendRegistrationCode(email);
-    }
-
-    public AuthenticationResponse endRegistration(EndRegistrationRequest request, BindingResult bindingResult) {
-        processInputErrors(bindingResult);
-        return getAuthenticationResponse(authenticationService.endRegistration(request.getEmail(), request.getPassword()));
+        return authenticationService.passwordReset(request.getEmail(), request.getPassword(), request.getPassword2(), bindingResult);
     }
 
     public String currentPasswordReset(CurrentPasswordResetRequest request, BindingResult bindingResult) {
-        processInputErrors(bindingResult);
-        return authenticationService.currentPasswordReset(request.getCurrentPassword(), request.getPassword(), request.getPassword2());
+        return authenticationService.currentPasswordReset(request.getCurrentPassword(), request.getPassword(),
+                request.getPassword2(), bindingResult);
+    }
+
+    AuthenticationResponse getAuthenticationResponse(Map<String, Object> credentials) {
+        AuthenticationResponse response = new AuthenticationResponse();
+        response.setUser(modelMapper.map(credentials.get("user"), AuthUserResponse.class));
+        response.setToken((String) credentials.get("token"));
+        return response;
     }
 }

@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 
-import static com.gmail.merikbest2015.controller.PathConstants.UI_V1_TOPICS;
+import static com.gmail.merikbest2015.constants.PathConstants.UI_V1_TOPICS;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

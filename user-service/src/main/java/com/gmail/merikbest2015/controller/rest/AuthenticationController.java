@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import static com.gmail.merikbest2015.controller.PathConstants.UI_V1_AUTH;
+import static com.gmail.merikbest2015.constants.PathConstants.UI_V1_AUTH;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,7 +26,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/registration/check")
-    public ResponseEntity<String> checkEmail(@Valid @RequestBody RegistrationRequest request, BindingResult bindingResult) {
+    public ResponseEntity<String> registration(@Valid @RequestBody RegistrationRequest request, BindingResult bindingResult) {
         return ResponseEntity.ok(authenticationMapper.registration(request, bindingResult));
     }
 
@@ -37,7 +37,7 @@ public class AuthenticationController {
 
     @GetMapping("/registration/activate/{code}")
     public ResponseEntity<String> checkRegistrationCode(@PathVariable String code) {
-        return ResponseEntity.ok(authenticationMapper.activateUser(code));
+        return ResponseEntity.ok(authenticationMapper.checkRegistrationCode(code));
     }
 
     @PostMapping("/registration/confirm")
@@ -52,7 +52,7 @@ public class AuthenticationController {
 
     @PostMapping("/forgot/email")
     public ResponseEntity<String> getExistingEmail(@Valid @RequestBody ProcessEmailRequest request, BindingResult bindingResult) {
-        return ResponseEntity.ok(authenticationMapper.getEmail(request.getEmail(), bindingResult));
+        return ResponseEntity.ok(authenticationMapper.getExistingEmail(request.getEmail(), bindingResult));
     }
 
     @PostMapping("/forgot")
@@ -61,8 +61,8 @@ public class AuthenticationController {
     }
 
     @GetMapping("/reset/{code}")
-    public ResponseEntity<AuthUserResponse> getUserByResetCode(@PathVariable String code) {
-        return ResponseEntity.ok(authenticationMapper.getByPasswordResetCode(code));
+    public ResponseEntity<AuthUserResponse> getUserByPasswordResetCode(@PathVariable String code) {
+        return ResponseEntity.ok(authenticationMapper.getUserByPasswordResetCode(code));
     }
 
     @PostMapping("/reset")

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.controller.PathConstants.UI_V1_USER;
+import static com.gmail.merikbest2015.constants.PathConstants.UI_V1_USER;
 
 @RestController
 @RequiredArgsConstructor

@@ -96,8 +96,10 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "ORDER BY tweet.scheduledDate DESC")
     Page<TweetProjection> getScheduledTweets(@Param("userId") Long userId, Pageable pageable);
 
-    @Query("SELECT tweet FROM Tweet tweet WHERE tweet.authorId = :userId")
-    Optional<Tweet> getTweetByUserId(@Param("userId") Long userId);
+    @Query("SELECT tweet FROM Tweet tweet " +
+            "WHERE tweet.authorId = :userId " +
+            "AND tweet.id = :tweetId")
+    Optional<Tweet> getTweetByUserId(@Param("userId") Long userId, @Param("tweetId") Long tweetId);
 
     @Query("SELECT tweet FROM Tweet tweet " +
             "WHERE tweet.scheduledDate IS NULL " +

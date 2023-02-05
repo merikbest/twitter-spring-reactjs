@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.controller.rest;
 
 import com.gmail.merikbest2015.dto.HeaderResponse;
-import com.gmail.merikbest2015.dto.TweetResponse;
-import com.gmail.merikbest2015.dto.lists.ListMemberResponse;
+import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
 import com.gmail.merikbest2015.dto.request.ListsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.dto.response.*;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.controller.PathConstants.UI_V1_LISTS;
+import static com.gmail.merikbest2015.constants.PathConstants.UI_V1_LISTS;
 
 @RestController
 @RequiredArgsConstructor

@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.mapper;
 
-import com.gmail.merikbest2015.dto.NotificationRequest;
-import com.gmail.merikbest2015.dto.notification.NotificationResponse;
+import com.gmail.merikbest2015.dto.request.NotificationRequest;
+import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.model.Notification;
 import com.gmail.merikbest2015.service.NotificationClientService;
 import lombok.RequiredArgsConstructor;

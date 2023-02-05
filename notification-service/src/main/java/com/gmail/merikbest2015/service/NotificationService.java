@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.dto.HeaderResponse;
-import com.gmail.merikbest2015.dto.TweetResponse;
-import com.gmail.merikbest2015.dto.notification.NotificationUserResponse;
+import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.repository.projection.NotificationInfoProjection;
 import com.gmail.merikbest2015.repository.projection.NotificationProjection;
 import org.springframework.data.domain.Page;

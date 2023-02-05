@@ -1,14 +1,15 @@
 package com.gmail.merikbest2015.feign;
 
 import com.gmail.merikbest2015.configuration.FeignConfiguration;
-import com.gmail.merikbest2015.dto.ChatTweetResponse;
+import com.gmail.merikbest2015.dto.response.chat.ChatTweetResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import static com.gmail.merikbest2015.controller.PathConstants.API_V1_TWEETS;
+import static com.gmail.merikbest2015.constants.PathConstants.API_V1_TWEETS;
+import static com.gmail.merikbest2015.constants.FeignConstants.TWEET_SERVICE;
 
-@FeignClient(name = "tweet-service", configuration = FeignConfiguration.class)
+@FeignClient(name = TWEET_SERVICE, configuration = FeignConfiguration.class)
 public interface TweetClient {
 
     @GetMapping(API_V1_TWEETS + "/id/{tweetId}")

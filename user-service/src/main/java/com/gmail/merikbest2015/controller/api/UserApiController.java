@@ -1,9 +1,16 @@
 package com.gmail.merikbest2015.controller.api;
 
 import com.gmail.merikbest2015.dto.*;
-import com.gmail.merikbest2015.dto.lists.ListMemberResponse;
-import com.gmail.merikbest2015.dto.lists.ListOwnerResponse;
-import com.gmail.merikbest2015.dto.notification.NotificationUserResponse;
+import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.response.chat.ChatTweetUserResponse;
+import com.gmail.merikbest2015.dto.response.chat.ChatUserParticipantResponse;
+import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
+import com.gmail.merikbest2015.dto.response.lists.ListOwnerResponse;
+import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
+import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
+import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
+import com.gmail.merikbest2015.dto.response.user.UserChatResponse;
+import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.service.UserClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.openfeign.SpringQueryMap;
@@ -12,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.controller.PathConstants.API_V1_USER;
+import static com.gmail.merikbest2015.constants.PathConstants.API_V1_USER;
 
 @RestController
 @RequiredArgsConstructor
@@ -127,6 +134,11 @@ public class UserApiController {
     @PutMapping("/tweet/pinned/{tweetId}")
     public void updatePinnedTweetId(@PathVariable("tweetId") Long tweetId) {
         userService.updatePinnedTweetId(tweetId);
+    }
+
+    @GetMapping("/tweet/pinned/{userId}")
+    public Long getUserPinnedTweetId(@PathVariable("userId") Long userId) {
+        return userService.getUserPinnedTweetId(userId);
     }
 
     @PostMapping("/tweet/valid/ids/{text}")

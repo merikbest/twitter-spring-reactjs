@@ -1,13 +1,14 @@
 package com.gmail.merikbest2015.controller.api;
 
-import com.gmail.merikbest2015.dto.NotificationRequest;
-import com.gmail.merikbest2015.dto.notification.NotificationResponse;
+import com.gmail.merikbest2015.dto.request.NotificationRequest;
+import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.mapper.NotificationClientMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import static com.gmail.merikbest2015.controller.PathConstants.API_V1_NOTIFICATION;
+import static com.gmail.merikbest2015.constants.PathConstants.API_V1_NOTIFICATION;
+import static com.gmail.merikbest2015.constants.WebsocketConstants.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ public class NotificationApiController {
         NotificationResponse notification = notificationClientMapper.sendListNotification(request);
 
         if (notification.getId() != null) {
-            messagingTemplate.convertAndSend("/topic/notifications/" + notification.getUser().getId(), notification);
+            messagingTemplate.convertAndSend(TOPIC_NOTIFICATIONS + notification.getUser().getId(), notification);
         }
     }
 
@@ -31,7 +32,7 @@ public class NotificationApiController {
         NotificationResponse notification = notificationClientMapper.sendUserNotification(request);
 
         if (notification.getId() != null) {
-            messagingTemplate.convertAndSend("/topic/notifications/" + notification.getUser().getId(), notification);
+            messagingTemplate.convertAndSend(TOPIC_NOTIFICATIONS + notification.getUser().getId(), notification);
         }
     }
 
@@ -40,10 +41,10 @@ public class NotificationApiController {
         NotificationResponse notification = notificationClientMapper.sendTweetNotification(request);
 
         if (notification.getId() != null) {
-            messagingTemplate.convertAndSend("/topic/notifications/" + notification.getTweet().getAuthorId(), notification);
+            messagingTemplate.convertAndSend(TOPIC_NOTIFICATIONS + notification.getTweet().getAuthorId(), notification);
         }
-        messagingTemplate.convertAndSend("/topic/feed", notification);
-        messagingTemplate.convertAndSend("/topic/tweet/" + notification.getTweet().getId(), notification);
+        messagingTemplate.convertAndSend(TOPIC_FEED, notification);
+        messagingTemplate.convertAndSend(TOPIC_TWEET + notification.getTweet().getId(), notification);
         return notification;
     }
 

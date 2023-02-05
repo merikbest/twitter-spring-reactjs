@@ -31,7 +31,7 @@ create table users
     registration_date     timestamp,
     role                  varchar(255),
     tweet_count           int8    default 0,
-    unread_messages_count int8,
+    unread_messages_count int8    default 0,
     username              varchar(255),
     wallpaper             varchar(255),
     website               varchar(255),

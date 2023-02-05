@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.gmail.merikbest2015.dto.lists.ListOwnerResponse;
+import com.gmail.merikbest2015.dto.response.lists.ListOwnerResponse;
 import lombok.Data;
 
 @Data

@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.dto;
+package com.gmail.merikbest2015.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

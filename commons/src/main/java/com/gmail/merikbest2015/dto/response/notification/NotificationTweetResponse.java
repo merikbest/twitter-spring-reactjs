@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.dto.notification;
+package com.gmail.merikbest2015.dto.response.notification;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.projection;
+package com.gmail.merikbest2015.repository.projection;
 
 public interface ListOwnerProjection {
     Long getId();

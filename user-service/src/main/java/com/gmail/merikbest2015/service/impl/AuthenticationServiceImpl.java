@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.dto.EmailRequest;
+import com.gmail.merikbest2015.dto.request.EmailRequest;
 import com.gmail.merikbest2015.dto.request.AuthenticationRequest;
 import com.gmail.merikbest2015.dto.request.RegistrationRequest;
 import com.gmail.merikbest2015.exception.ApiRequestException;
@@ -98,7 +98,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     @Transactional
-    public String sendRegistrationCode(String email) {
+    public String sendRegistrationCode(String email, BindingResult bindingResult) {
+        processInputErrors(bindingResult);
         UserCommonProjection user = userRepository.getUserByEmail(email, UserCommonProjection.class)
                 .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
         userRepository.updateActivationCode(UUID.randomUUID().toString().substring(0, 7), user.getId());
@@ -111,7 +112,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     @Transactional
-    public String activateUser(String code) {
+    public String checkRegistrationCode(String code) {
         UserCommonProjection user = userRepository.getCommonUserByActivationCode(code)
                 .orElseThrow(() -> new ApiRequestException("Activation code not found.", HttpStatus.NOT_FOUND));
         userRepository.updateActivationCode(null, user.getId());
@@ -120,7 +121,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     @Transactional
-    public Map<String, Object> endRegistration(String email, String password) {
+    public Map<String, Object> endRegistration(String email, String password, BindingResult bindingResult) {
+        processInputErrors(bindingResult);
         if (password.length() < 8) {
             throw new ApiRequestException("Your password needs to be at least 8 characters", HttpStatus.BAD_REQUEST);
         }
@@ -147,21 +149,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public String getEmail(String email) {
+    public String getExistingEmail(String email, BindingResult bindingResult) {
+        processInputErrors(bindingResult);
         userRepository.getUserByEmail(email, UserCommonProjection.class)
                 .orElseThrow(() -> new ApiRequestException("Email not found", HttpStatus.NOT_FOUND));
         return "Reset password code is send to your E-mail";
     }
 
     @Override
-    public AuthUserProjection getByPasswordResetCode(String code) {
-        return userRepository.getByPasswordResetCode(code)
-                .orElseThrow(() -> new ApiRequestException("Password reset code is invalid!", HttpStatus.BAD_REQUEST));
-    }
-
-    @Override
     @Transactional
-    public String sendPasswordResetCode(String email) {
+    public String sendPasswordResetCode(String email, BindingResult bindingResult) {
+        processInputErrors(bindingResult);
         UserCommonProjection user = userRepository.getUserByEmail(email, UserCommonProjection.class)
                 .orElseThrow(() -> new ApiRequestException("Email not found", HttpStatus.NOT_FOUND));
         userRepository.updatePasswordResetCode(UUID.randomUUID().toString().substring(0, 7), user.getId());
@@ -173,8 +171,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
+    public AuthUserProjection getUserByPasswordResetCode(String code) {
+        return userRepository.getByPasswordResetCode(code)
+                .orElseThrow(() -> new ApiRequestException("Password reset code is invalid!", HttpStatus.BAD_REQUEST));
+    }
+
+    @Override
     @Transactional
-    public String passwordReset(String email, String password, String password2) {
+    public String passwordReset(String email, String password, String password2, BindingResult bindingResult) {
+        processInputErrors(bindingResult);
         checkMatchPasswords(password, password2);
         UserCommonProjection user = userRepository.getUserByEmail(email, UserCommonProjection.class)
                 .orElseThrow(() -> new InputFieldException(HttpStatus.NOT_FOUND, Map.of("email", "Email not found")));
@@ -185,7 +190,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     @Transactional
-    public String currentPasswordReset(String currentPassword, String password, String password2) {
+    public String currentPasswordReset(String currentPassword, String password, String password2, BindingResult bindingResult) {
+        processInputErrors(bindingResult);
         Long userId = getAuthenticatedUserId();
         String userPassword = userRepository.getUserPasswordById(userId);
 

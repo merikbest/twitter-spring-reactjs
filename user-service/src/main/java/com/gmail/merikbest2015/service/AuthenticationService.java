@@ -21,21 +21,21 @@ public interface AuthenticationService {
 
     String registration(RegistrationRequest request, BindingResult bindingResult);
 
-    String sendRegistrationCode(String email);
+    String sendRegistrationCode(String email, BindingResult bindingResult);
 
-    String activateUser(String code);
+    String checkRegistrationCode(String code);
 
-    Map<String, Object> endRegistration(String email, String password);
+    Map<String, Object> endRegistration(String email, String password, BindingResult bindingResult);
 
     Map<String, Object> getUserByToken();
 
-    String getEmail(String email);
+    String getExistingEmail(String email, BindingResult bindingResult);
 
-    AuthUserProjection getByPasswordResetCode(String code);
+    String sendPasswordResetCode(String email, BindingResult bindingResult);
 
-    String sendPasswordResetCode(String email);
+    AuthUserProjection getUserByPasswordResetCode(String code);
 
-    String passwordReset(String email, String password, String password2);
+    String passwordReset(String email, String password, String password2, BindingResult bindingResult);
 
-    String currentPasswordReset(String currentPassword, String password, String password2);
+    String currentPasswordReset(String currentPassword, String password, String password2, BindingResult bindingResult);
 }

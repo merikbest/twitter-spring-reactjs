@@ -2,7 +2,7 @@ package com.gmail.merikbest2015.controller.rest;
 
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.TagResponse;
-import com.gmail.merikbest2015.dto.TweetResponse;
+import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.mapper.TagMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.controller.PathConstants.UI_V1_TAGS;
+import static com.gmail.merikbest2015.constants.PathConstants.UI_V1_TAGS;
 
 @RestController
 @RequiredArgsConstructor

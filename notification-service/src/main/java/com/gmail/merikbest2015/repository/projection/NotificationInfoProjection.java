@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.repository.projection;
 
-import com.gmail.merikbest2015.dto.TweetResponse;
-import com.gmail.merikbest2015.dto.UserResponse;
+import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.enums.NotificationType;
 import org.springframework.beans.factory.annotation.Value;
 

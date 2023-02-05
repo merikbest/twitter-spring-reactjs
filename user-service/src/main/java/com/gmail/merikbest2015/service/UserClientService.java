@@ -1,9 +1,16 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.dto.*;
-import com.gmail.merikbest2015.dto.lists.ListMemberResponse;
-import com.gmail.merikbest2015.dto.lists.ListOwnerResponse;
-import com.gmail.merikbest2015.dto.notification.NotificationUserResponse;
+import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.response.chat.ChatTweetUserResponse;
+import com.gmail.merikbest2015.dto.response.chat.ChatUserParticipantResponse;
+import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
+import com.gmail.merikbest2015.dto.response.lists.ListOwnerResponse;
+import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
+import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
+import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
+import com.gmail.merikbest2015.dto.response.user.UserChatResponse;
+import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -51,6 +58,8 @@ public interface UserClientService {
     HeaderResponse<UserResponse> getRetweetedUsersByTweetId(IdsRequest request, Pageable pageable);
 
     void updatePinnedTweetId(Long tweetId);
+
+    Long getUserPinnedTweetId(Long userId);
 
     List<Long> getValidUserIds(IdsRequest request, String text);
 

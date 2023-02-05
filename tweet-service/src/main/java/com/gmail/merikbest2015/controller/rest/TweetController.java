@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.controller.rest;
 
 import com.gmail.merikbest2015.dto.HeaderResponse;
-import com.gmail.merikbest2015.dto.TweetResponse;
+import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.dto.request.TweetDeleteRequest;
 import com.gmail.merikbest2015.dto.request.TweetRequest;
 import com.gmail.merikbest2015.dto.response.*;
@@ -17,7 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.controller.PathConstants.UI_V1_TWEETS;
+import static com.gmail.merikbest2015.constants.PathConstants.UI_V1_TWEETS;
+import static com.gmail.merikbest2015.constants.WebsocketConstants.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -45,7 +46,7 @@ public class TweetController {
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping("/media/user/{userId}/") // TODO change endpoint in frontend
+    @GetMapping("/media/user/{userId}") // TODO change endpoint in frontend
     public ResponseEntity<List<TweetResponse>> getUserMediaTweets(@PathVariable Long userId,
                                                                   @PageableDefault(size = 10) Pageable pageable) {
         HeaderResponse<TweetResponse> response = tweetMapper.getUserMediaTweets(userId, pageable);
@@ -112,8 +113,8 @@ public class TweetController {
     @PostMapping
     public ResponseEntity<TweetResponse> createTweet(@RequestBody TweetRequest tweetRequest) {
         TweetResponse tweet = tweetMapper.createTweet(tweetRequest);
-        messagingTemplate.convertAndSend("/topic/feed/add", tweet);
-        messagingTemplate.convertAndSend("/topic/user/add/tweet/" + tweet.getUser().getId(), tweet);
+        messagingTemplate.convertAndSend(TOPIC_FEED_ADD, tweet);
+        messagingTemplate.convertAndSend(TOPIC_USER_ADD_TWEET + tweet.getUser().getId(), tweet);
         return ResponseEntity.ok(tweet);
     }
 
@@ -149,9 +150,9 @@ public class TweetController {
                                                                 @PathVariable("tweetId") Long tweetId,
                                                                 @RequestBody TweetRequest tweetRequest) {
         NotificationReplyResponse notification = tweetMapper.replyTweet(tweetId, tweetRequest);
-        messagingTemplate.convertAndSend("/topic/feed", notification);
-        messagingTemplate.convertAndSend("/topic/tweet/" + notification.getTweetId(), notification);
-        messagingTemplate.convertAndSend("/topic/user/update/tweet/" + userId, notification);
+        messagingTemplate.convertAndSend(TOPIC_FEED, notification);
+        messagingTemplate.convertAndSend(TOPIC_TWEET + notification.getTweetId(), notification);
+        messagingTemplate.convertAndSend(TOPIC_USER_UPDATE_TWEET + userId, notification);
         return ResponseEntity.ok(notification);
     }
 
@@ -160,9 +161,9 @@ public class TweetController {
                                                     @PathVariable("tweetId") Long tweetId,
                                                     @RequestBody TweetRequest tweetRequest) {
         TweetResponse tweet = tweetMapper.quoteTweet(tweetId, tweetRequest);
-        messagingTemplate.convertAndSend("/topic/feed/add", tweet);
-        messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
-        messagingTemplate.convertAndSend("/topic/user/add/tweet/" + userId, tweet);
+        messagingTemplate.convertAndSend(TOPIC_FEED_ADD, tweet);
+        messagingTemplate.convertAndSend(TOPIC_TWEET + tweet.getId(), tweet);
+        messagingTemplate.convertAndSend(TOPIC_USER_ADD_TWEET + userId, tweet);
         return ResponseEntity.ok(tweet);
     }
 
@@ -171,9 +172,9 @@ public class TweetController {
                                                               @PathVariable("tweetId") Long tweetId,
                                                               @RequestParam ReplyType replyType) {
         TweetResponse tweet = tweetMapper.changeTweetReplyType(tweetId, replyType);
-        messagingTemplate.convertAndSend("/topic/feed", tweet);
-        messagingTemplate.convertAndSend("/topic/tweet/" + tweet.getId(), tweet);
-        messagingTemplate.convertAndSend("/topic/user/update/tweet/" + userId, tweet);
+        messagingTemplate.convertAndSend(TOPIC_FEED, tweet);
+        messagingTemplate.convertAndSend(TOPIC_TWEET + tweet.getId(), tweet);
+        messagingTemplate.convertAndSend(TOPIC_USER_UPDATE_TWEET + userId, tweet);
         return ResponseEntity.ok(tweet);
     }
 }

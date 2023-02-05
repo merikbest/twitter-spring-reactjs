@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.controller.api;
 
-import com.gmail.merikbest2015.dto.UserPrincipalResponse;
+import com.gmail.merikbest2015.dto.response.user.UserPrincipalResponse;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.gmail.merikbest2015.controller.PathConstants.API_V1_AUTH;
+import static com.gmail.merikbest2015.constants.PathConstants.API_V1_AUTH;
 
 @RestController
 @RequiredArgsConstructor

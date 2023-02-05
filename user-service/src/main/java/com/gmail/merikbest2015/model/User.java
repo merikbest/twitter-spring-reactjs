@@ -75,16 +75,16 @@ public class User {
     private String role;
 
     @Column(name = "tweet_count", columnDefinition = "int8 default 0")
-    private Long tweetCount;
+    private Long tweetCount = 0L;
 
     @Column(name = "media_tweet_count", columnDefinition = "int8 default 0")
-    private Long mediaTweetCount;
+    private Long mediaTweetCount = 0L;
 
     @Column(name = "like_count", columnDefinition = "int8 default 0")
-    private Long likeCount;
+    private Long likeCount = 0L;
 
     @Column(name = "notifications_count", columnDefinition = "int8 default 0")
-    private Long notificationsCount;
+    private Long notificationsCount = 0L;
 
     @Column(name = "active", columnDefinition = "boolean default false")
     private boolean active;
@@ -110,16 +110,16 @@ public class User {
     private ColorSchemeType colorScheme;
 
     @Column(name = "pinned_tweet_id")
-    private Long pinnedTweetId; // +
+    private Long pinnedTweetId;
 
     @Column(name = "avatar")
-    private String avatar; // +
+    private String avatar;
 
     @Column(name = "wallpaper")
-    private String wallpaper; // +
+    private String wallpaper;
 
-    @Column(name = "unread_messages_count")
-    private Long unreadMessagesCount; // +
+    @Column(name = "unread_messages_count", columnDefinition = "int8 default 0")
+    private Long unreadMessagesCount = 0L;
 
     @ManyToMany
     @JoinTable(name = "user_muted",

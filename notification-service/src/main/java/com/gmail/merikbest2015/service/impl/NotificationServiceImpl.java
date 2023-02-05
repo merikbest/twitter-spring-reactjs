@@ -1,12 +1,12 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.dto.HeaderResponse;
-import com.gmail.merikbest2015.dto.TweetResponse;
-import com.gmail.merikbest2015.dto.UserResponse;
-import com.gmail.merikbest2015.dto.IdsRequest;
-import com.gmail.merikbest2015.dto.notification.NotificationListResponse;
-import com.gmail.merikbest2015.dto.notification.NotificationTweetResponse;
-import com.gmail.merikbest2015.dto.notification.NotificationUserResponse;
+import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.dto.response.user.UserResponse;
+import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.response.notification.NotificationListResponse;
+import com.gmail.merikbest2015.dto.response.notification.NotificationTweetResponse;
+import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.ListsClient;
 import com.gmail.merikbest2015.feign.TweetClient;

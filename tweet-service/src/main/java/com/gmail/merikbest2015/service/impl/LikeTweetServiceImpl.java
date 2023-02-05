@@ -1,9 +1,9 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.dto.HeaderResponse;
-import com.gmail.merikbest2015.dto.IdsRequest;
-import com.gmail.merikbest2015.dto.UserResponse;
-import com.gmail.merikbest2015.dto.notification.NotificationResponse;
+import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.response.user.UserResponse;
+import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.UserClient;

@@ -1,7 +1,11 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.dto.*;
+import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.response.UserChatResponse;
+import com.gmail.merikbest2015.dto.response.chat.ChatTweetResponse;
+import com.gmail.merikbest2015.dto.response.chat.ChatUserParticipantResponse;
+import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.TweetClient;
 import com.gmail.merikbest2015.feign.UserClient;
@@ -25,7 +29,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

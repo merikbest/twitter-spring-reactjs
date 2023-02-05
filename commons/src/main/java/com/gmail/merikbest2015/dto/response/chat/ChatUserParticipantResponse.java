@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.dto;
+package com.gmail.merikbest2015.dto.response.chat;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

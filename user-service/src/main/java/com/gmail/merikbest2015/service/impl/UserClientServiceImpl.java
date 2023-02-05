@@ -1,11 +1,18 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.dto.*;
-import com.gmail.merikbest2015.dto.lists.ListMemberResponse;
-import com.gmail.merikbest2015.dto.lists.ListOwnerResponse;
-import com.gmail.merikbest2015.dto.notification.NotificationUserResponse;
+import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.response.chat.ChatTweetUserResponse;
+import com.gmail.merikbest2015.dto.response.chat.ChatUserParticipantResponse;
+import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
+import com.gmail.merikbest2015.dto.response.lists.ListOwnerResponse;
+import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
+import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
+import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
+import com.gmail.merikbest2015.dto.response.user.UserChatResponse;
+import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.mapper.BasicMapper;
-import com.gmail.merikbest2015.projection.ListOwnerProjection;
+import com.gmail.merikbest2015.repository.projection.ListOwnerProjection;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.service.AuthenticationService;
@@ -159,6 +166,11 @@ public class UserClientServiceImpl implements UserClientService {
         if (pinnedTweetId != null && pinnedTweetId.equals(tweetId)) {
             userRepository.updatePinnedTweetId(null, userId);
         }
+    }
+
+    @Override
+    public Long getUserPinnedTweetId(Long userId) {
+        return userRepository.getPinnedTweetId(userId);
     }
 
     @Override

@@ -2,7 +2,11 @@ package com.gmail.merikbest2015.feign;
 
 import com.gmail.merikbest2015.configuration.FeignConfiguration;
 import com.gmail.merikbest2015.dto.*;
-import com.gmail.merikbest2015.dto.IdsRequest;
+import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.response.chat.ChatTweetUserResponse;
+import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
+import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
+import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.data.domain.Pageable;
@@ -10,9 +14,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.controller.PathConstants.API_V1_USER;
+import static com.gmail.merikbest2015.constants.PathConstants.API_V1_USER;
+import static com.gmail.merikbest2015.constants.FeignConstants.USER_SERVICE;
 
-@FeignClient(name = "user-service", contextId = "UserClient", configuration = FeignConfiguration.class)
+@FeignClient(name = USER_SERVICE, contextId = "UserClient", configuration = FeignConfiguration.class)
 public interface UserClient {
 
     @GetMapping(API_V1_USER + "/is_followed/{userId}")

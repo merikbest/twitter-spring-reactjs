@@ -1,9 +1,9 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.dto.notification.NotificationListResponse;
-import com.gmail.merikbest2015.dto.notification.NotificationResponse;
-import com.gmail.merikbest2015.dto.notification.NotificationTweetResponse;
-import com.gmail.merikbest2015.dto.notification.NotificationUserResponse;
+import com.gmail.merikbest2015.dto.response.notification.NotificationListResponse;
+import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
+import com.gmail.merikbest2015.dto.response.notification.NotificationTweetResponse;
+import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.feign.ListsClient;
 import com.gmail.merikbest2015.feign.TweetClient;
@@ -34,7 +34,7 @@ public class NotificationClientServiceImpl implements NotificationClientService 
 
         if (!notification.getNotifiedUserId().equals(authUserId)) {
             boolean isNotificationExists = notificationRepository.isListNotificationExists(
-                    notification.getNotifiedUserId(), notification.getListId(), notification.getNotificationType());
+                    notification.getNotifiedUserId(), notification.getListId(), authUserId, notification.getNotificationType());
 
             if (!isNotificationExists) {
                 notificationRepository.save(notification);
@@ -51,7 +51,7 @@ public class NotificationClientServiceImpl implements NotificationClientService 
 
         if (!notification.getNotifiedUserId().equals(authUserId)) {
             boolean isNotificationExists = notificationRepository.isUserNotificationExists(
-                    notification.getNotifiedUserId(), notification.getUserToFollowId(), notification.getNotificationType());
+                    notification.getNotifiedUserId(), notification.getUserToFollowId(), authUserId, notification.getNotificationType());
 
             if (!isNotificationExists) {
                 notificationRepository.save(notification);
@@ -68,7 +68,7 @@ public class NotificationClientServiceImpl implements NotificationClientService 
 
         if (!notification.getNotifiedUserId().equals(authUserId)) {
             boolean isNotificationExists = notificationRepository.isTweetNotificationExists(
-                    notification.getNotifiedUserId(), notification.getTweetId(), notification.getNotificationType());
+                    notification.getNotifiedUserId(), notification.getTweetId(), authUserId, notification.getNotificationType());
 
             if (!isNotificationExists) {
                 notificationRepository.save(notification);

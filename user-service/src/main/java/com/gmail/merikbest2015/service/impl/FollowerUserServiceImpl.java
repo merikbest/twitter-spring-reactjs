@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.dto.NotificationRequest;
+import com.gmail.merikbest2015.dto.request.NotificationRequest;
 import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.feign.NotificationClient;
 import com.gmail.merikbest2015.repository.UserRepository;
@@ -54,24 +54,28 @@ public class FollowerUserServiceImpl implements FollowerUserService {
         userServiceHelper.checkIsUserExist(userId);
         Long authUserId = authenticationService.getAuthenticatedUserId();
         boolean isFollower = userRepository.isFollower(authUserId, userId);
-        boolean follower;
+        boolean follower = false;
 
         if (isFollower) {
             userRepository.unfollow(authUserId, userId);
             userRepository.unsubscribe(authUserId, userId);
-            follower = false;
         } else {
-            userRepository.follow(authUserId, userId);
-            follower = true;
-        }
+            boolean isPrivateProfile = userRepository.getUserPrivateProfile(userId);
 
-        NotificationRequest request = NotificationRequest.builder()
-                .notificationType(NotificationType.FOLLOW)
-                .userId(authUserId)
-                .userToFollowId(userId)
-                .notifiedUserId(userId)
-                .build();
-        notificationClient.sendUserNotification(request);
+            if (!isPrivateProfile) {
+                userRepository.follow(authUserId, userId);
+                NotificationRequest request = NotificationRequest.builder()
+                        .notificationType(NotificationType.FOLLOW)
+                        .userId(authUserId)
+                        .userToFollowId(userId)
+                        .notifiedUserId(userId)
+                        .build();
+                notificationClient.sendUserNotification(request);
+                follower = true;
+            } else {
+                userRepository.addFollowerRequest(authUserId, userId);
+            }
+        }
         return follower;
     }
 

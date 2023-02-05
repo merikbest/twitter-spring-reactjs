@@ -1,10 +1,10 @@
 package com.gmail.merikbest2015.mapper;
 
-import com.gmail.merikbest2015.dto.ChatTweetResponse;
+import com.gmail.merikbest2015.dto.response.chat.ChatTweetResponse;
 import com.gmail.merikbest2015.dto.HeaderResponse;
-import com.gmail.merikbest2015.dto.IdsRequest;
-import com.gmail.merikbest2015.dto.TweetResponse;
-import com.gmail.merikbest2015.dto.notification.NotificationTweetResponse;
+import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.dto.response.notification.NotificationTweetResponse;
 import com.gmail.merikbest2015.repository.projection.ChatTweetProjection;
 import com.gmail.merikbest2015.repository.projection.NotificationTweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;

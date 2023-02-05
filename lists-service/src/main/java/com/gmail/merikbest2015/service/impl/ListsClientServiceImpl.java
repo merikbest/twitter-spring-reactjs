@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.dto.notification.NotificationListResponse;
+import com.gmail.merikbest2015.dto.response.notification.NotificationListResponse;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.repository.ListsRepository;
 import com.gmail.merikbest2015.repository.projection.NotificationListProjection;

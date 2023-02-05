@@ -40,7 +40,7 @@ public class UserSettingsServiceImpl implements UserSettingsService {
     @Override
     @Transactional
     public Map<String, Object> updateEmail(String email) {
-        Optional<UserCommonProjection> userByEmail = userRepository.findCommonUserByEmail(email);
+        Optional<UserCommonProjection> userByEmail = userRepository.getUserByEmail(email, UserCommonProjection.class);
 
         if (userByEmail.isEmpty()) {
             User user = authenticationService.getAuthenticatedUser();

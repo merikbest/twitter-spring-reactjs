@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.dto.IdsRequest;
-import com.gmail.merikbest2015.dto.TweetResponse;
+import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.TweetClient;
 import com.gmail.merikbest2015.model.Tag;
