@@ -1,5 +1,5 @@
 import {BaseListResponse, ListOwnerResponse} from "../../../types/lists";
-import {Image, LoadingStatus} from "../../../types/common";
+import {LoadingStatus} from "../../../types/common";
 
 export interface ListState {
     list?: BaseListResponse;
@@ -12,5 +12,5 @@ export interface EditListsRequest {
     listOwner: ListOwnerResponse;
     description?: string;
     isPrivate?: boolean;
-    wallpaper?: Image;
+    wallpaper?: string;
 }

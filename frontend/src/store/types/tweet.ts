@@ -35,6 +35,7 @@ export interface TweetAdditionalInfoResponse {
     text: string;
     replyType: ReplyType;
     addressedTweetId: number;
+    isDeleted: boolean;
     user: {
         id: number;
         fullName: string;
@@ -51,7 +52,7 @@ export interface UserTweetResponse {
     email: string;
     fullName: string;
     username: string;
-    avatar: Image;
+    avatar: string;
     isPrivateProfile: boolean;
     isFollower: boolean;
     isMyProfileBlocked: boolean;

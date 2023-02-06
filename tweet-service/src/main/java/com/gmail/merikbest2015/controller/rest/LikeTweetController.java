@@ -29,7 +29,7 @@ public class LikeTweetController {
     private final LikeTweetMapper likeTweetMapper;
     private final SimpMessagingTemplate messagingTemplate;
 
-    @GetMapping("/liked/user/{userId}") // TODO change endpoint in frontend
+    @GetMapping("/liked/user/{userId}")
     public ResponseEntity<List<TweetResponse>> getUserLikedTweets(@PathVariable Long userId,
                                                                   @PageableDefault(size = 10) Pageable pageable) {
         HeaderResponse<TweetResponse> response = likeTweetMapper.getUserLikedTweets(userId, pageable);

@@ -16,8 +16,8 @@ export interface UserProfileResponse {
     notificationsCount: number;
     isMutedDirectMessages: boolean;
     isPrivateProfile: boolean;
-    avatar: Image;
-    wallpaper: Image;
+    avatar: string;
+    wallpaper: string;
     pinnedTweetId: number;
     followersSize: number;
     followingSize: number;
@@ -35,7 +35,7 @@ export interface UserResponse {
     fullName: string;
     username: string;
     about: string;
-    avatar: Image;
+    avatar: string;
     isPrivateProfile: boolean;
     isMutedDirectMessages: boolean;
     isUserBlocked: boolean;
@@ -71,8 +71,8 @@ export interface AuthUserResponse {
     isPrivateProfile: boolean;
     backgroundColor: string;
     colorScheme: string;
-    avatar: Image;
-    wallpaper: Image;
+    avatar: string;
+    wallpaper: string;
     pinnedTweetId: number;
     followersSize: number;
     followingSize: number;
@@ -85,7 +85,7 @@ export interface BlockedUserResponse {
     fullName: string;
     username: string;
     about: string;
-    avatar: Image;
+    avatar: string;
     isPrivateProfile: boolean;
     isUserBlocked: boolean;
 }
@@ -95,7 +95,7 @@ export interface MutedUserResponse {
     fullName: string;
     username: string;
     about: string;
-    avatar: Image;
+    avatar: string;
     isPrivateProfile: boolean;
     isUserMuted: boolean;
 }
@@ -105,7 +105,7 @@ export interface FollowerUserResponse {
     fullName: string;
     username: string;
     about: string;
-    avatar: Image;
+    avatar: string;
 }
 
 export interface UserDetailResponse {
@@ -113,7 +113,7 @@ export interface UserDetailResponse {
     fullName: string;
     username: string;
     about: string;
-    avatar: Image;
+    avatar: string;
     isPrivateProfile: boolean;
     isUserBlocked: boolean;
     isMyProfileBlocked: boolean;

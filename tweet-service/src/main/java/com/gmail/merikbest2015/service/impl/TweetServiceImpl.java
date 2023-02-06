@@ -55,7 +55,6 @@ public class TweetServiceImpl implements TweetService {
     private final UserClient userClient;
     private final TagClient tagClient;
     private final ImageClient imageClient;
-//    private final RestTemplate restTemplate;
 
     @Value("${google.api.url}")
     private String googleApiUrl;

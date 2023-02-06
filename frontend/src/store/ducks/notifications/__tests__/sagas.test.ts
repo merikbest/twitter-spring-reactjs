@@ -37,6 +37,7 @@ import {setPageableTweets, setTweetsLoadingState} from "../../tweets/actionCreat
 import {TweetResponse} from "../../../types/tweet";
 import {NotificationsActionsType} from "../contracts/actionTypes";
 import {LoadingStatus} from "../../../types/common";
+import {TweetApi} from "../../../../services/api/tweetApi";
 
 describe("notificationsSaga:", () => {
 
@@ -84,7 +85,7 @@ describe("notificationsSaga:", () => {
         const worker = fetchMentionsRequest(fetchMentions(1));
 
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
-        testCall(worker, UserApi.getUserMentions, 1);
+        testCall(worker, TweetApi.getUserMentions, 1);
         testSetResponse(worker, mockPageableTweets, setPageableTweets, mockExpectedResponse(mockPageableTweets), "TweetResponse");
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR)
     });

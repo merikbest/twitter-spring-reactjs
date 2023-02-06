@@ -39,27 +39,27 @@ public class TweetController {
         return ResponseEntity.ok(tweetMapper.getTweetById(tweetId));
     }
 
-    @GetMapping("/user/{userId}") // TODO change endpoint in frontend
+    @GetMapping("/user/{userId}")
     public ResponseEntity<List<TweetUserResponse>> getUserTweets(@PathVariable Long userId,
                                                                  @PageableDefault(size = 10) Pageable pageable) {
         HeaderResponse<TweetUserResponse> response = tweetMapper.getUserTweets(userId, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping("/media/user/{userId}") // TODO change endpoint in frontend
+    @GetMapping("/media/user/{userId}")
     public ResponseEntity<List<TweetResponse>> getUserMediaTweets(@PathVariable Long userId,
                                                                   @PageableDefault(size = 10) Pageable pageable) {
         HeaderResponse<TweetResponse> response = tweetMapper.getUserMediaTweets(userId, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping("/user/mentions") // TODO change endpoint in frontend
+    @GetMapping("/user/mentions")
     public ResponseEntity<List<TweetResponse>> getUserMentions(@PageableDefault(size = 10) Pageable pageable) {
         HeaderResponse<TweetResponse> response = tweetMapper.getUserMentions(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping("/images/{userId}") // TODO change endpoint in frontend
+    @GetMapping("/images/{userId}")
     public ResponseEntity<List<ProfileTweetImageResponse>> getUserTweetImages(@PathVariable Long userId) {
         return ResponseEntity.ok(tweetMapper.getUserTweetImages(userId));
     }

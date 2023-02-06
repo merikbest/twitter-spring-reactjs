@@ -5,6 +5,7 @@ import {
     API_TWEETS,
     API_TWEETS_CHANGE_REPLY,
     API_TWEETS_FOLLOWER,
+    API_TWEETS_IMAGES,
     API_TWEETS_LIKE,
     API_TWEETS_LIKED_USERS,
     API_TWEETS_MEDIA,
@@ -15,6 +16,12 @@ import {
     API_TWEETS_RETWEET,
     API_TWEETS_SCHEDULE,
     API_TWEETS_SEARCH,
+    API_TWEETS_USER_BOOKMARKS,
+    API_TWEETS_USER_LIKED,
+    API_TWEETS_USER_MEDIA,
+    API_TWEETS_USER_MENTIONS,
+    API_TWEETS_USER_REPLIES,
+    API_TWEETS_USER_TWEETS,
     API_TWEETS_VIDEO,
     API_TWEETS_VOTE
 } from "../../../util/endpoints";
@@ -25,9 +32,11 @@ import {ReplyType} from "../../../store/types/common";
 describe("TweetApi", () => {
     const mockAdapter = new MockAdapter(axios);
     const tweetNotFoundError = "Tweet not found";
+    const mockUserErrorResponse = "User not found";
     const mockAddTweetRequest = {text: "test", images: [], replyType: ReplyType.EVERYONE};
     const mockNotificationTweet = {id: 1, text: "test", user: {id: 1}, notificationCondition: true};
     const tweetActionRequest = {tweetId: 1, userId: 1};
+    const mockPageable = {userId: 1, page: 1};
 
     beforeEach(() => mockAdapter.reset());
 
@@ -175,7 +184,15 @@ describe("TweetApi", () => {
     });
 
     describe("should fetch TweetApi.replyTweet", () => {
-        const mockReplyTweet = {text: "test", addressedId: 1, addressedUsername: "test", replyType: ReplyType.MENTION, images: [], tweetId: 1, userId: 1};
+        const mockReplyTweet = {
+            text: "test",
+            addressedId: 1,
+            addressedUsername: "test",
+            replyType: ReplyType.MENTION,
+            images: [],
+            tweetId: 1,
+            userId: 1
+        };
 
         it("[200] should reply tweet Success", () => {
             testApiCall(mockAdapter, "onPost", `${API_TWEETS_REPLY}/1/1`, 200, mockFullTweet, TweetApi.replyTweet, mockReplyTweet);
@@ -187,7 +204,7 @@ describe("TweetApi", () => {
     });
 
     describe("should fetch TweetApi.quoteTweet", () => {
-        const mockQuoteTweet = {tweetId: 1, userId: 1, text: "test", images:[], replyType: ReplyType.MENTION};
+        const mockQuoteTweet = {tweetId: 1, userId: 1, text: "test", images: [], replyType: ReplyType.MENTION};
 
         it("[200] should quote tweet Success", () => {
             testApiCall(mockAdapter, "onPost", `${API_TWEETS_QUOTE}/1/1`, 200, mockFullTweet, TweetApi.quoteTweet, mockQuoteTweet);
@@ -221,4 +238,75 @@ describe("TweetApi", () => {
             testApiCall(mockAdapter, "onPost", API_TWEETS_VOTE, 404, tweetNotFoundError, TweetApi.voteInPoll, mockVote);
         });
     });
+
+    describe("should fetch TweetApi.getUserBookmarks", () => {
+        it("[200] should get user bookmarks Success", () => {
+            testApiCall(mockAdapter, "onGet", API_TWEETS_USER_BOOKMARKS, 200, mockTweets, TweetApi.getUserBookmarks, 1);
+        });
+    });
+
+    describe("should fetch TweetApi.addTweetToBookmarks", () => {
+        it("[200] should add tweet to bookmarks Success", () => {
+            testApiCall(mockAdapter, "onGet", `${API_TWEETS_USER_BOOKMARKS}/1`, 200, true, TweetApi.addTweetToBookmarks, 1);
+        });
+
+        it("[404] should tweet not found", () => {
+            testApiCall(mockAdapter, "onGet", `${API_TWEETS_USER_BOOKMARKS}/1`, 404, tweetNotFoundError, TweetApi.addTweetToBookmarks, 1);
+        });
+    });
+
+    describe("should fetch TweetApi.getUserLikedTweets", () => {
+        it("[200] should get user liked tweets Success", () => {
+            testApiCall(mockAdapter, "onGet", API_TWEETS_USER_LIKED(1), 200, mockTweets, TweetApi.getUserLikedTweets, mockPageable);
+        });
+
+        it("[404] should user not found", () => {
+            testApiCall(mockAdapter, "onGet", API_TWEETS_USER_LIKED(1), 404, mockUserErrorResponse, TweetApi.getUserLikedTweets, mockPageable);
+        });
+    });
+
+    describe("should fetch TweetApi.getUserRetweetsAndReplies", () => {
+        it("[200] should get user retweets and replies Success", () => {
+            testApiCall(mockAdapter, "onGet", API_TWEETS_USER_REPLIES(1), 200, mockTweets, TweetApi.getUserRetweetsAndReplies, mockPageable);
+        });
+
+        it("[404] should user not found", () => {
+            testApiCall(mockAdapter, "onGet", API_TWEETS_USER_REPLIES(1), 404, mockUserErrorResponse, TweetApi.getUserRetweetsAndReplies, mockPageable);
+        });
+    });
+
+    describe("should fetch TweetApi.getUserTweets", () => {
+        it("[200] should get user tweets Success", () => {
+            testApiCall(mockAdapter, "onGet", API_TWEETS_USER_TWEETS(1), 200, mockTweets, TweetApi.getUserTweets, mockPageable);
+        });
+
+        it("[404] should user not found", () => {
+            testApiCall(mockAdapter, "onGet", API_TWEETS_USER_TWEETS(1), 404, mockUserErrorResponse, TweetApi.getUserTweets, mockPageable);
+        });
+    });
+
+    describe("should fetch TweetApi.getUserMediaTweets", () => {
+        it("[200] should get user media tweets Success", () => {
+            testApiCall(mockAdapter, "onGet", API_TWEETS_USER_MEDIA(1), 200, mockTweets, TweetApi.getUserMediaTweets, mockPageable);
+        });
+
+        it("[404] should user not found", () => {
+            testApiCall(mockAdapter, "onGet", API_TWEETS_USER_MEDIA(1), 404, mockUserErrorResponse, TweetApi.getUserMediaTweets, mockPageable);
+        });
+    });
+
+    describe("should fetch TweetApi.getUserMentions", () => {
+        it("[200] should get user mentions Success", () => {
+            testApiCall(mockAdapter, "onGet", API_TWEETS_USER_MENTIONS, 200, mockTweets, TweetApi.getUserMentions, 1);
+        });
+    });
+
+    describe("should fetch TweetApi.getUserTweetImages", () => {
+        const mockTweetImageResponse = [{tweetId: 1, imageId: 1, src: "test"}];
+
+        it("[200] should get user tweet images Success", () => {
+            testApiCall(mockAdapter, "onGet", `${API_TWEETS_IMAGES}/1`, 200, mockTweetImageResponse, TweetApi.getUserTweetImages, 1);
+        });
+    });
+
 });

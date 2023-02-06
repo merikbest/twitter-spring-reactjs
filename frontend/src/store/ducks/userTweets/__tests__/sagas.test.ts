@@ -14,11 +14,11 @@ import {
     setUserTweetsLoadingStatus
 } from "../actionCreators";
 import {testCall, testLoadingStatus, testSetResponse, testWatchSaga} from "../../../../util/testHelper";
-import {UserApi} from "../../../../services/api/userApi";
 import {AxiosResponse} from "axios";
 import {TweetResponse} from "../../../types/tweet";
 import {UserTweetsActionType} from "../contracts/actionTypes";
 import {LoadingStatus} from "../../../types/common";
+import {TweetApi} from "../../../../services/api/tweetApi";
 
 describe("userTweetsSaga:", () => {
     const mockTweets = [{id: 1}, {id: 2}] as TweetResponse[];
@@ -28,7 +28,7 @@ describe("userTweetsSaga:", () => {
         const worker = fetchUserTweetsRequest(fetchUserTweets({userId: "1", page: 1}));
 
         testLoadingStatus(worker, setUserTweetsLoadingStatus, LoadingStatus.LOADING);
-        testCall(worker, UserApi.getUserTweets, {userId: "1", page: 1});
+        testCall(worker, TweetApi.getUserTweets, {userId: "1", page: 1});
         testSetResponse(worker, mockPageableTweets, setUserTweets, {
             items: mockPageableTweets.data,
             pagesCount: parseInt(mockPageableTweets.headers["page-total-count"])
@@ -40,7 +40,7 @@ describe("userTweetsSaga:", () => {
         const worker = fetchUserLikedTweetsRequest(fetchUserLikedTweets({userId: "1", page: 1}));
 
         testLoadingStatus(worker, setUserTweetsLoadingStatus, LoadingStatus.LOADING);
-        testCall(worker, UserApi.getUserLikedTweets, {userId: "1", page: 1});
+        testCall(worker, TweetApi.getUserLikedTweets, {userId: "1", page: 1});
         testSetResponse(worker, mockPageableTweets, setUserTweets, {
             items: mockPageableTweets.data,
             pagesCount: parseInt(mockPageableTweets.headers["page-total-count"])
@@ -52,7 +52,7 @@ describe("userTweetsSaga:", () => {
         const worker = fetchUserMediaTweetsRequest(fetchUserMediaTweets({userId: "1", page: 1}));
 
         testLoadingStatus(worker, setUserTweetsLoadingStatus, LoadingStatus.LOADING);
-        testCall(worker, UserApi.getUserMediaTweets, {userId: "1", page: 1});
+        testCall(worker, TweetApi.getUserMediaTweets, {userId: "1", page: 1});
         testSetResponse(worker, mockPageableTweets, setUserTweets, {
             items: mockPageableTweets.data,
             pagesCount: parseInt(mockPageableTweets.headers["page-total-count"])
@@ -64,7 +64,7 @@ describe("userTweetsSaga:", () => {
         const worker = fetchUserRetweetsAndRepliesRequest(fetchUserRetweetsAndReplies({userId: "1", page: 1}));
 
         testLoadingStatus(worker, setUserTweetsLoadingStatus, LoadingStatus.LOADING);
-        testCall(worker, UserApi.getUserRetweetsAndReplies, {userId: "1", page: 1});
+        testCall(worker, TweetApi.getUserRetweetsAndReplies, {userId: "1", page: 1});
         testSetResponse(worker, mockPageableTweets, setUserTweets, {
             items: mockPageableTweets.data,
             pagesCount: parseInt(mockPageableTweets.headers["page-total-count"])

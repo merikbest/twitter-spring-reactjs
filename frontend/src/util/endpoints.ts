@@ -1,5 +1,5 @@
-export const HOST = "http://localhost:8080";
-export const API_ENDPOINT = HOST + "/api/v1";
+export const HOST = "http://localhost:8000";
+export const API_ENDPOINT = HOST + "/ui/v1";
 export const WS_URL = HOST + "/websocket";
 
 // AuthApi
@@ -73,13 +73,19 @@ export const API_TWEETS_REPLY = `${API_ENDPOINT}/tweets/reply`;
 export const API_TWEETS_QUOTE = `${API_ENDPOINT}/tweets/quote`;
 export const API_TWEETS_CHANGE_REPLY = `${API_ENDPOINT}/tweets/reply/change`;
 export const API_TWEETS_VOTE = `${API_ENDPOINT}/tweets/vote`;
+export const API_TWEETS_USER_BOOKMARKS = `${API_ENDPOINT}/tweets/user/bookmarks`;
+export const API_TWEETS_USER_LIKED = (userId: string | number) => `${API_ENDPOINT}/tweets/user/${userId}/liked`;
+export const API_TWEETS_USER_REPLIES = (userId: string | number) => `${API_ENDPOINT}/tweets/user/${userId}/replies`;
+export const API_TWEETS_USER_TWEETS = (userId: string | number) => `${API_ENDPOINT}/tweets/user/${userId}/tweets`;
+export const API_TWEETS_USER_MEDIA = (userId: string | number) => `${API_ENDPOINT}/tweets/user/${userId}/media`;
+export const API_TWEETS_USER_MENTIONS = `${API_ENDPOINT}/tweets/user/mentions`;
+export const API_TWEETS_IMAGES = `${API_ENDPOINT}/tweets/images`;
 
 // UserApi
 export const API_USER = `${API_ENDPOINT}/user`;
 export const API_USER_ALL = `${API_ENDPOINT}/user/all`;
 export const API_USER_RELEVANT = `${API_ENDPOINT}/user/relevant`;
 export const API_USER_SEARCH = `${API_ENDPOINT}/user/search`;
-export const API_USER_IMAGES = `${API_ENDPOINT}/user/images`;
 export const API_USER_UPLOAD_IMAGE = `${API_ENDPOINT}/user/upload`;
 export const API_USER_FOLLOWERS = `${API_ENDPOINT}/user/followers`;
 export const API_USER_FOLLOWING = `${API_ENDPOINT}/user/following`;
@@ -90,15 +96,9 @@ export const API_USER_FOLLOW_PRIVATE = `${API_ENDPOINT}/user/follow/private`;
 export const API_USER_FOLLOW_ACCEPT = `${API_ENDPOINT}/user/follow/accept`;
 export const API_USER_FOLLOW_DECLINE = `${API_ENDPOINT}/user/follow/decline`;
 export const API_USER_SUBSCRIBE = `${API_ENDPOINT}/user/subscribe`;
-export const API_USER_TWEETS = (userId: string | number) => `${API_ENDPOINT}/user/${userId}/tweets`;
-export const API_USER_LIKED = (userId: string | number) => `${API_ENDPOINT}/user/${userId}/liked`;
-export const API_USER_MEDIA = (userId: string | number) => `${API_ENDPOINT}/user/${userId}/media`;
-export const API_USER_REPLIES = (userId: string | number) => `${API_ENDPOINT}/user/${userId}/replies`;
 export const API_USER_NOTIFICATIONS = `${API_ENDPOINT}/user/notifications`;
 export const API_USER_NOTIFICATIONS_SUBSCRIBES = `${API_ENDPOINT}/user/notifications/subscribes`;
 export const API_USER_NOTIFICATIONS_TIMELINE = `${API_ENDPOINT}/user/notifications/timeline`;
-export const API_USER_MENTIONS = `${API_ENDPOINT}/user/mentions`;
-export const API_USER_BOOKMARKS = `${API_ENDPOINT}/user/bookmarks`;
 export const API_USER_START = (userId: number) => `${API_ENDPOINT}/user/${userId}/start`;
 export const API_USER_PIN_TWEET = `${API_ENDPOINT}/user/pin/tweet`;
 export const API_USER_BLOCKED = `${API_ENDPOINT}/user/blocked`;

@@ -25,7 +25,6 @@ import {
     setTweetLoadingState
 } from './actionCreators';
 import {TweetResponse} from "../../types/tweet";
-import {UserApi} from "../../../services/api/userApi";
 import {UserResponse} from "../../types/user";
 import {deleteTweet, setUpdatedBookmarkedTweetTweetsState} from "../tweets/actionCreators";
 import {deleteUserTweet, setUpdatedBookmarkedTweetUserTweetState} from "../userTweets/actionCreators";
@@ -44,7 +43,7 @@ export function* fetchTweetDataRequest({payload: tweetId}: FetchTweetDataActionI
 
 export function* addTweetToBookmarksRequest({payload}: AddTweetToBookmarksActionInterface) {
     try {
-        const {data}: AxiosResponse<boolean> = yield call(UserApi.addTweetToBookmarks, payload);
+        const {data}: AxiosResponse<boolean> = yield call(TweetApi.addTweetToBookmarks, payload);
         yield put(setBookmarkedTweet(data));
         yield put(setUpdatedBookmarkedTweetTweetsState({tweetId: payload, isTweetBookmarked: data}));
         yield put(setUpdatedBookmarkedTweetUserTweetState({tweetId: payload, isTweetBookmarked: data}));

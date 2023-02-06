@@ -27,7 +27,6 @@ import {
     VoteActionInterface
 } from "./contracts/actionTypes";
 import {TagApi} from "../../../services/api/tagApi";
-import {UserApi} from "../../../services/api/userApi";
 import {TweetResponse} from "../../types/tweet";
 import {ListsApi} from "../../../services/api/listsApi";
 import {deleteUserTweet} from "../userTweets/actionCreators";
@@ -219,7 +218,7 @@ export function* retweetRequest({payload}: RetweetActionInterface) {
 export function* fetchUserBookmarksRequest({payload}: FetchBookmarksActionInterface) {
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<TweetResponse[]> = yield call(UserApi.getUserBookmarks, payload);
+        const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.getUserBookmarks, payload);
         yield put(setPageableTweets({
             items: response.data,
             pagesCount: parseInt(response.headers["page-total-count"])

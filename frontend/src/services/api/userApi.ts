@@ -11,15 +11,13 @@ import {
     UserResponse
 } from "../../store/types/user";
 import {NotificationInfoResponse, NotificationResponse, NotificationUserResponse} from "../../store/types/notification";
-import {TweetImageResponse, TweetResponse} from "../../store/types/tweet";
+import {TweetResponse} from "../../store/types/tweet";
 import {UserRequest} from "../../store/ducks/user/contracts/state";
 import {FollowersRequest, SearchByNameRequest} from "../../store/ducks/usersSearch/contracts/state";
-import {UserTweetRequest} from "../../store/ducks/userTweets/contracts/state";
 import {
     API_USER,
     API_USER_ALL,
     API_USER_BLOCKED,
-    API_USER_BOOKMARKS,
     API_USER_DETAILS,
     API_USER_FOLLOW,
     API_USER_FOLLOW_ACCEPT,
@@ -29,21 +27,15 @@ import {
     API_USER_FOLLOWER_REQUESTS,
     API_USER_FOLLOWERS,
     API_USER_FOLLOWING,
-    API_USER_IMAGES,
-    API_USER_LIKED,
-    API_USER_MEDIA,
-    API_USER_MENTIONS,
     API_USER_MUTED,
     API_USER_NOTIFICATIONS,
     API_USER_NOTIFICATIONS_SUBSCRIBES,
     API_USER_NOTIFICATIONS_TIMELINE,
     API_USER_PIN_TWEET,
     API_USER_RELEVANT,
-    API_USER_REPLIES,
     API_USER_SEARCH,
     API_USER_START,
-    API_USER_SUBSCRIBE,
-    API_USER_TWEETS
+    API_USER_SUBSCRIBE
 } from "../../util/endpoints";
 
 export const UserApi = {
@@ -61,9 +53,6 @@ export const UserApi = {
     },
     async updateUserProfile(request: UserRequest): Promise<AxiosResponse<AuthUserResponse>> {
         return await axios.put<AuthUserResponse>(API_USER, request);
-    },
-    async getUserTweetImages(userId: number): Promise<AxiosResponse<TweetImageResponse[]>> {
-        return await axios.get<TweetImageResponse[]>(`${API_USER_IMAGES}/${userId}`);
     },
     async getFollowers({userId, page}: FollowersRequest): Promise<AxiosResponse<UserResponse[]>> {
         return await axios.get<UserResponse[]>(`${API_USER_FOLLOWERS}/${userId}`, {params: {page: page}});
@@ -92,18 +81,6 @@ export const UserApi = {
     async processSubscribeToNotifications(userId: number): Promise<AxiosResponse<boolean>> {
         return await axios.get<boolean>(`${API_USER_SUBSCRIBE}/${userId}`);
     },
-    async getUserTweets({userId, page}: UserTweetRequest): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(API_USER_TWEETS(userId), {params: {page: page}});
-    },
-    async getUserLikedTweets({userId, page}: UserTweetRequest): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(API_USER_LIKED(userId), {params: {page: page}});
-    },
-    async getUserMediaTweets({userId, page}: UserTweetRequest): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(API_USER_MEDIA(userId), {params: {page: page}});
-    },
-    async getUserRetweetsAndReplies({userId, page}: UserTweetRequest): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(API_USER_REPLIES(userId), {params: {page: page}});
-    },
     async getUserNotifications(pageNumber: number): Promise<AxiosResponse<NotificationResponse[]>> {
         return await axios.get<NotificationResponse[]>(API_USER_NOTIFICATIONS, {params: {page: pageNumber}});
     },
@@ -115,15 +92,6 @@ export const UserApi = {
     },
     async getNotificationsFromTweetAuthors(pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
         return await axios.get<TweetResponse[]>(API_USER_NOTIFICATIONS_TIMELINE, {params: {page: pageNumber}});
-    },
-    async getUserMentions(pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(API_USER_MENTIONS, {params: {page: pageNumber}});
-    },
-    async getUserBookmarks(pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(API_USER_BOOKMARKS, {params: {page: pageNumber}});
-    },
-    async addTweetToBookmarks(tweetId: number): Promise<AxiosResponse<boolean>> {
-        return await axios.get<boolean>(`${API_USER_BOOKMARKS}/${tweetId}`);
     },
     async startUseTwitter(userId: number): Promise<AxiosResponse<boolean>> {
         return await axios.get<boolean>(API_USER_START(userId));

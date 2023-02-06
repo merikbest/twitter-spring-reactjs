@@ -24,8 +24,8 @@ import {UserApi} from "../../../../services/api/userApi";
 import {ChatApi} from "../../../../services/api/chatApi";
 import {TweetImageResponse} from "../../../types/tweet";
 import {UserProfileActionsType} from "../contracts/actionTypes";
-import {boolean} from "yup";
 import {LoadingStatus} from "../../../types/common";
+import {TweetApi} from "../../../../services/api/tweetApi";
 
 describe("userProfileSaga:", () => {
     const mockUserProfileResponse = {data: {id: 1}} as AxiosResponse<UserProfileResponse>;
@@ -62,7 +62,7 @@ describe("userProfileSaga:", () => {
         const worker = fetchImagesRequest(fetchImages(1));
 
         testLoadingStatus(worker, setImagesLoadingStatus, LoadingStatus.LOADING);
-        testCall(worker, UserApi.getUserTweetImages, 1);
+        testCall(worker, TweetApi.getUserTweetImages, 1);
         testSetResponse(worker, mockTweetImageResponse, setImages, mockTweetImageResponse.data, "TweetImageResponse");
         testLoadingStatus(worker, setImagesLoadingStatus, LoadingStatus.ERROR)
     });

@@ -54,7 +54,6 @@ import {AxiosResponse} from "axios";
 import {TagApi} from "../../../../services/api/tagApi";
 import {ListsApi} from "../../../../services/api/listsApi";
 import {AddQuoteTweet, AddTweet, Vote} from "../contracts/state";
-import {UserApi} from "../../../../services/api/userApi";
 import {
     mockExpectedResponse,
     testCall,
@@ -230,7 +229,7 @@ describe("tweetsSaga:", () => {
     describe("fetchUserBookmarksRequest:", () => {
         const worker = fetchUserBookmarksRequest(fetchUserBookmarks(1));
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
-        testCall(worker, UserApi.getUserBookmarks, 1);
+        testCall(worker, TweetApi.getUserBookmarks, 1);
         testSetResponse(worker, mockPageableTweets, setPageableTweets, mockExpectedResponse(mockPageableTweets), "TweetResponse");
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });

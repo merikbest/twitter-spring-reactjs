@@ -31,7 +31,6 @@ import {
 } from "../actionCreators";
 import {TweetResponse} from "../../../types/tweet";
 import {TweetApi} from "../../../../services/api/tweetApi";
-import {UserApi} from "../../../../services/api/userApi";
 import {setUpdatedBookmarkedTweetTweetsState} from "../../tweets/actionCreators";
 import {setUpdatedBookmarkedTweetUserTweetState} from "../../userTweets/actionCreators";
 import {ReplyTweet} from "../contracts/state";
@@ -62,7 +61,7 @@ describe("tweetSaga:", () => {
         const mockResponse = {data: true} as AxiosResponse<boolean>;
         const mockPayload = {tweetId: 1, isTweetBookmarked: true};
 
-        testCall(worker, UserApi.addTweetToBookmarks, 1, true);
+        testCall(worker, TweetApi.addTweetToBookmarks, 1, true);
         testSetResponse(worker, mockResponse, setBookmarkedTweet, mockResponse.data, "boolean");
         testSetResponse(worker, true, setUpdatedBookmarkedTweetTweetsState, mockPayload, "boolean");
         testSetResponse(worker, true, setUpdatedBookmarkedTweetUserTweetState, mockPayload, "boolean");

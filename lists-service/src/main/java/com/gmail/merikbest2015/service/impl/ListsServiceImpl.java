@@ -7,6 +7,7 @@ import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
 import com.gmail.merikbest2015.dto.response.lists.ListOwnerResponse;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
+import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.NotificationClient;
 import com.gmail.merikbest2015.feign.TweetClient;
@@ -135,7 +136,7 @@ public class ListsServiceImpl implements ListsService {
             throw new ApiRequestException("List not found", HttpStatus.NOT_FOUND);
         }
         Long userId = AuthUtil.getAuthenticatedUserId();
-        ListsFollowers follower = listsFollowersRepository.getListFollower(userId, listId);
+        ListsFollowers follower = listsFollowersRepository.getListFollower(listId, userId);
 
         if (follower != null) {
             listsFollowersRepository.delete(follower);
@@ -282,7 +283,7 @@ public class ListsServiceImpl implements ListsService {
     @Override
     public List<ListMemberResponse> searchListMembersByUsername(Long listId, String username) {
         return userClient.searchListMembersByUsername(username).stream()
-                .map(member -> new ListMemberResponse(isListIncludeUser(listId, member.getId())))
+                .peek(member -> member.setMemberInList(isListIncludeUser(listId, member.getId())))
                 .toList();
     }
 
@@ -338,6 +339,7 @@ public class ListsServiceImpl implements ListsService {
 
     private void sendNotification(Long notifiedUserId, Long userId, Long listId) {
         NotificationRequest request = NotificationRequest.builder()
+                .notificationType(NotificationType.LISTS)
                 .notificationCondition(true)
                 .notifiedUserId(notifiedUserId)
                 .userId(userId)

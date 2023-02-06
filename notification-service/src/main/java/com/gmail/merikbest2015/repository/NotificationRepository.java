@@ -49,7 +49,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
 
     @Query("SELECT notification FROM Notification notification " +
             "WHERE notification.notifiedUserId = :userId " +
-            "AND notification.notificationType != 'TWEET' " +
+            "AND notification.notificationType <> 'TWEET' " +
             "ORDER BY notification.date DESC")
     Page<NotificationProjection> getNotificationsByUserId(@Param("userId") Long userId, Pageable pageable);
 
@@ -60,7 +60,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     List<Long> getTweetIdsByNotificationType(@Param("userIds") List<Long> userIds, @Param("userId") Long userId);
 
     @Query("SELECT notification FROM Notification notification " +
-            "WHERE notification.userId = :userId " +
+            "WHERE notification.notifiedUserId = :userId " +
             "AND notification.id = :notificationId")
     Optional<NotificationInfoProjection> getUserNotificationById(@Param("userId") Long userId,
                                                                  @Param("notificationId") Long notificationId);

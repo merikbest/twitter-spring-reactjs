@@ -112,7 +112,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     List<Long> getUserIdsByTweetText(@Param("text") String text);
 
     @Modifying
-    @Query(value = "INSERT INTO replies (tweets_id, reply_id) VALUES (?1, ?2)", nativeQuery = true)
+    @Query(value = "INSERT INTO replies (tweet_id, reply_id) VALUES (?1, ?2)", nativeQuery = true)
     void addReply(@Param("tweetId") Long tweetId, @Param("replyId") Long replyId);
 
     @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId AND tweet.authorId = :userId")

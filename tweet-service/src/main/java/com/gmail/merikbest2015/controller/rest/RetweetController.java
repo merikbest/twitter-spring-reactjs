@@ -29,7 +29,7 @@ public class RetweetController {
     private final RetweetMapper retweetMapper;
     private final SimpMessagingTemplate messagingTemplate;
 
-    @GetMapping("/replies/user/{userId}") // TODO change endpoint in frontend
+    @GetMapping("/replies/user/{userId}")
     public ResponseEntity<List<TweetUserResponse>> getUserRetweetsAndReplies(@PathVariable Long userId,
                                                                              @PageableDefault(size = 10) Pageable pageable) {
         HeaderResponse<TweetUserResponse> response = retweetMapper.getUserRetweetsAndReplies(userId, pageable);

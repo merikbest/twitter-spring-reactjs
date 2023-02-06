@@ -18,12 +18,15 @@ export interface AddLists {
     description?: string;
     isPrivate: boolean;
     altWallpaper?: string;
-    wallpaper?: Image;
+    wallpaper?: string;
 }
 
 export interface AddUserToListsRequest {
     userId: number;
-    lists: { listId: number; isMemberInList: boolean; }[];
+    lists: {
+        listId: number;
+        isMemberInList: boolean;
+    }[];
 }
 
 export interface UpdateListsPayload {

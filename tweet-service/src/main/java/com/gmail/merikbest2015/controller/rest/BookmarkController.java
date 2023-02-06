@@ -23,13 +23,13 @@ public class BookmarkController {
 
     private final BookmarkMapper bookmarkMapper;
 
-    @GetMapping("/user/bookmarks") // TODO change endpoint in frontend
+    @GetMapping("/user/bookmarks")
     public ResponseEntity<List<TweetResponse>> getUserBookmarks(@PageableDefault(size = 10) Pageable pageable) {
         HeaderResponse<TweetResponse> response = bookmarkMapper.getUserBookmarks(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping("/user/bookmarks/{tweetId}") // TODO change endpoint in frontend
+    @GetMapping("/user/bookmarks/{tweetId}")
     public ResponseEntity<Boolean> processUserBookmarks(@PathVariable Long tweetId) {
         return ResponseEntity.ok(bookmarkMapper.processUserBookmarks(tweetId));
     }

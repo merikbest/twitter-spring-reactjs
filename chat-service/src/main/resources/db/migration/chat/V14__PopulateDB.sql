@@ -9,6 +9,6 @@ INSERT INTO chats_participants (id, left_chat, chat_id, user_id) VALUES (5, fals
 INSERT INTO chats_participants (id, left_chat, chat_id, user_id) VALUES (6, true, 10, 5);
 
 -- chat_messages
-INSERT INTO chat_messages (id, date, text, author_id, chat_id, tweet_id) VALUES (5, '2021-10-03 20:39:55.000000', 'hello from MrCat', 2, 8, 40);
+INSERT INTO chat_messages (id, date, text, author_id, chat_id, tweet_id) VALUES (5, '2021-10-03 20:39:55.000000', 'hello from MrCat', 2, 8, 6);
 INSERT INTO chat_messages (id, date, text, author_id, chat_id, tweet_id) VALUES (6, '2021-10-03 20:40:19.000000', 'hello from John Doe', 1, 8, null);
 INSERT INTO chat_messages (id, date, text, author_id, chat_id, tweet_id) VALUES (7, '2021-10-03 20:41:03.000000', 'test message 2 from John Doe', 1, 8, null);

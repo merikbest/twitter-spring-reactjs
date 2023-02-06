@@ -20,6 +20,7 @@ import {setPageableTweets, setTweetsLoadingState} from "../tweets/actionCreators
 import {NotificationInfoResponse, NotificationResponse, NotificationUserResponse} from "../../types/notification";
 import {TweetResponse} from "../../types/tweet";
 import {LoadingStatus} from "../../types/common";
+import {TweetApi} from "../../../services/api/tweetApi";
 
 export function* fetchNotificationsRequest({payload}: FetchNotificationsActionInterface) {
     try {
@@ -60,7 +61,7 @@ export function* fetchNotificationsFromTweetAuthorsRequest({payload}: FetchNotif
 export function* fetchMentionsRequest({payload}: FetchMentionsActionInterface) {
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<TweetResponse[]> = yield call(UserApi.getUserMentions, payload);
+        const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.getUserMentions, payload);
         yield put(setPageableTweets({
             items: response.data,
             pagesCount: parseInt(response.headers["page-total-count"])

@@ -20,6 +20,7 @@ import {ChatApi} from "../../../services/api/chatApi";
 import {UserProfileResponse} from "../../types/user";
 import {TweetImageResponse} from "../../types/tweet";
 import {LoadingStatus} from "../../types/common";
+import {TweetApi} from "../../../services/api/tweetApi";
 
 export function* fetchUserRequest({payload}: FetchUserProfileActionInterface) {
     try {
@@ -53,7 +54,7 @@ export function* fetchChatParticipantRequest({payload}: FetchChatParticipantActi
 export function* fetchImagesRequest({payload}: FetchImagesActionInterface) {
     try {
         yield put(setImagesLoadingStatus(LoadingStatus.LOADING));
-        const response: AxiosResponse<TweetImageResponse[]> = yield call(UserApi.getUserTweetImages, payload);
+        const response: AxiosResponse<TweetImageResponse[]> = yield call(TweetApi.getUserTweetImages, payload);
         yield put(setImages(response.data));
     } catch (error) {
         yield put(setImagesLoadingStatus(LoadingStatus.ERROR));
