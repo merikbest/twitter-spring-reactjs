@@ -12,7 +12,7 @@ interface ListsModalItemProps {
 
 const ListsModalItem: FC<ListsModalItemProps> = memo(({list}): ReactElement => {
     const classes = useListsModalStyles();
-    const wallpaper = list?.wallpaper ? list?.wallpaper?.src : list?.altWallpaper;
+    const wallpaper = list?.wallpaper ? list?.wallpaper : list?.altWallpaper;
 
     return (
         <>

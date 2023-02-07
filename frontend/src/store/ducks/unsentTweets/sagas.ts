@@ -10,7 +10,7 @@ import {LoadingStatus} from "../../types/common";
 export function* fetchUnsentTweetsRequest({payload}: FetchUnsentTweetsActionInterface) {
     try {
         yield put(setUnsentTweetsLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.fetchScheduledTweets, payload);
+        const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.getScheduledTweets, payload);
         yield put(setUnsentTweets({
             items: response.data,
             pagesCount: parseInt(response.headers["page-total-count"])

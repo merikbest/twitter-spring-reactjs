@@ -25,7 +25,7 @@ const DirectUserItem: FC<DirectUserItemProps> = memo((
     }
 ): ReactElement => {
     const classes = useDirectUserItemStyles();
-    const userAvatar = user?.avatar?.src ? user?.avatar.src : DEFAULT_PROFILE_IMG;
+    const userAvatar = user?.avatar ?? DEFAULT_PROFILE_IMG;
 
     return (
         <ListItem

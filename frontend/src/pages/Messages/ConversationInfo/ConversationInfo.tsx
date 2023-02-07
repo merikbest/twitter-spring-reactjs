@@ -24,6 +24,7 @@ import UnfollowButton from "../../../components/Buttons/UnfollowButton/UnfollowB
 import BlockButton from "./BlockButton/BlockButton";
 import ConversationUserAvatar from "./ConversationUserAvatar/ConversationUserAvatar";
 import ConversationUserInfo from "./ConversationUserInfo/ConversationUserInfo";
+import {DEFAULT_PROFILE_IMG} from "../../../util/url";
 
 interface ConversationInfoProps {
     participantId?: number;
@@ -71,7 +72,7 @@ const ConversationInfo: FC<ConversationInfoProps> = ({participantId, chatId}): R
                     <>
                         <Link to={`${PROFILE}/${chatParticipant?.id}`} className={globalClasses.link}>
                             <div className={classes.pageInfoWrapper}>
-                                <ConversationUserAvatar avatar={chatParticipant?.avatar}/>
+                                <ConversationUserAvatar avatar={chatParticipant?.avatar ?? DEFAULT_PROFILE_IMG}/>
                                 <div style={{flex: 1}}>
                                     <div className={classes.participantInfoWrapper}>
                                         <ConversationUserInfo

@@ -42,41 +42,41 @@ describe("TweetApi", () => {
 
     describe("should fetch TweetApi.fetchTweets", () => {
         it("[200] should fetch tweets Success", () => {
-            testApiCall(mockAdapter, "onGet", API_TWEETS, 200, mockTweets, TweetApi.fetchTweets, 1);
+            testApiCall(mockAdapter, "onGet", API_TWEETS, 200, mockTweets, TweetApi.getTweets, 1);
         });
     });
 
     describe("should fetch TweetApi.fetchMediaTweets", () => {
         it("[200] should fetch media tweets Success", () => {
-            testApiCall(mockAdapter, "onGet", API_TWEETS_MEDIA, 200, mockTweets, TweetApi.fetchMediaTweets, 1);
+            testApiCall(mockAdapter, "onGet", API_TWEETS_MEDIA, 200, mockTweets, TweetApi.getMediaTweets, 1);
         });
     });
 
     describe("should fetch TweetApi.fetchTweetsWithVideo", () => {
         it("[200] should fetch tweets with video Success", () => {
-            testApiCall(mockAdapter, "onGet", API_TWEETS_VIDEO, 200, mockTweets, TweetApi.fetchTweetsWithVideo, 1);
+            testApiCall(mockAdapter, "onGet", API_TWEETS_VIDEO, 200, mockTweets, TweetApi.getTweetsWithVideo, 1);
         });
     });
 
     describe("should fetch TweetApi.fetchFollowersTweets", () => {
         it("[200] should fetch followers tweets Success", () => {
-            testApiCall(mockAdapter, "onGet", API_TWEETS_FOLLOWER, 200, mockTweets, TweetApi.fetchFollowersTweets, 1);
+            testApiCall(mockAdapter, "onGet", API_TWEETS_FOLLOWER, 200, mockTweets, TweetApi.getFollowersTweets, 1);
         });
     });
 
     describe("should fetch TweetApi.fetchScheduledTweets", () => {
         it("[200] should fetch scheduled tweets Success", () => {
-            testApiCall(mockAdapter, "onGet", API_TWEETS_SCHEDULE, 200, mockTweets, TweetApi.fetchScheduledTweets, 1);
+            testApiCall(mockAdapter, "onGet", API_TWEETS_SCHEDULE, 200, mockTweets, TweetApi.getScheduledTweets, 1);
         });
     });
 
     describe("should fetch TweetApi.fetchTweetData", () => {
         it("[200] should fetch tweet data Success", () => {
-            testApiCall(mockAdapter, "onGet", `${API_TWEETS}/1`, 200, mockFullTweet, TweetApi.fetchTweetData, 1);
+            testApiCall(mockAdapter, "onGet", `${API_TWEETS}/1`, 200, mockFullTweet, TweetApi.getTweetById, 1);
         });
 
         it("[404] should tweet not found", () => {
-            testApiCall(mockAdapter, "onGet", `${API_TWEETS}/1`, 404, tweetNotFoundError, TweetApi.fetchTweetData, 1);
+            testApiCall(mockAdapter, "onGet", `${API_TWEETS}/1`, 404, tweetNotFoundError, TweetApi.getTweetById, 1);
         });
     });
 

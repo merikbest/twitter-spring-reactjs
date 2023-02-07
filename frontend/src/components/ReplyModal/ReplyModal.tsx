@@ -62,7 +62,7 @@ const ReplyModal: FC<ReplyModalProps> = (
                     <Avatar
                         className={classnames(globalClasses.avatar, classes.avatar)}
                         alt={`avatar ${user.id}`}
-                        src={user.avatar?.src ? user.avatar?.src : DEFAULT_PROFILE_IMG}
+                        src={user.avatar ?? DEFAULT_PROFILE_IMG}
                     />
                     <div>
                         <div className={classes.header}>

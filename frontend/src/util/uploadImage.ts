@@ -1,8 +1,7 @@
 import axios from "axios";
-import {Image} from "../store/types/common";
 import {API_USER_UPLOAD_IMAGE} from "./endpoints";
 
-export const uploadImage = async (image: File): Promise<Image> => {
+export const uploadImage = async (image: File): Promise<string> => {
     const formData = new FormData();
     formData.append("file", image);
 

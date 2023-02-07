@@ -1,4 +1,4 @@
-import {Image, SameFollowerResponse} from "./common";
+import {SameFollowerResponse} from "./common";
 
 export interface UserProfileResponse {
     id: number;

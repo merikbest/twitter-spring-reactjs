@@ -42,8 +42,8 @@ const SetupProfileModal: FC<SetupProfileModalProps> = ({visible, onClose}): Reac
     };
 
     const onSubmit = async () => {
-        let avatarResponse: Image | undefined = undefined;
-        let wallpaperResponse: Image | undefined = undefined;
+        let avatarResponse: string | undefined = undefined;
+        let wallpaperResponse: string | undefined = undefined;
 
         if (avatar) {
             avatarResponse = await uploadImage(avatar.file);

@@ -15,7 +15,7 @@ const MessagesModalUser: FC<MessagesModalUser> = memo(({user}): ReactElement => 
 
     return (
         <div className={classes.container}>
-            <Avatar className={classes.listAvatar} src={user?.avatar ? user?.avatar.src : DEFAULT_PROFILE_IMG}/>
+            <Avatar className={classes.listAvatar} src={user?.avatar ?? DEFAULT_PROFILE_IMG}/>
             <div style={{flex: 1}}>
                 <div className={classes.header}>
                     <div className={classes.headerInfo}>

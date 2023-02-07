@@ -52,7 +52,7 @@ describe("tweetSaga:", () => {
     describe("fetchTweetDataRequest:", () => {
         const worker = fetchTweetDataRequest(fetchTweetData(1));
         testLoadingStatus(worker, setTweetLoadingState, LoadingStatus.LOADING);
-        testCall(worker, TweetApi.fetchTweetData, 1);
+        testCall(worker, TweetApi.getTweetById, 1);
         testSetResponse(worker, mockTweet, setTweetData, mockTweet.data, "TweetResponse");
     });
 

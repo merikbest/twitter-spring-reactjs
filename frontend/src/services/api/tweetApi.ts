@@ -31,6 +31,7 @@ import {
     API_TWEETS_RETWEETED_USERS,
     API_TWEETS_SCHEDULE,
     API_TWEETS_SEARCH,
+    API_TWEETS_UPLOAD,
     API_TWEETS_USER_BOOKMARKS,
     API_TWEETS_USER_LIKED,
     API_TWEETS_USER_MEDIA,
@@ -41,25 +42,26 @@ import {
     API_TWEETS_VOTE
 } from "../../util/endpoints";
 import {UserTweetRequest} from "../../store/ducks/userTweets/contracts/state";
+import {Image} from "../../store/types/common";
 
 export const TweetApi = {
-    async fetchTweets(pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
+    async getTweets(pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
         return await axios.get<TweetResponse[]>(API_TWEETS, {params: {page: pageNumber}});
     },
-    async fetchMediaTweets(pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(API_TWEETS_MEDIA, {params: {page: pageNumber}});
-    },
-    async fetchTweetsWithVideo(pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(API_TWEETS_VIDEO, {params: {page: pageNumber}});
-    },
-    async fetchFollowersTweets(pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(API_TWEETS_FOLLOWER, {params: {page: pageNumber}});
-    },
-    async fetchScheduledTweets(pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(API_TWEETS_SCHEDULE, {params: {page: pageNumber}});
-    },
-    async fetchTweetData(tweetId: number): Promise<AxiosResponse<TweetResponse>> {
+    async getTweetById(tweetId: number): Promise<AxiosResponse<TweetResponse>> {
         return await axios.get<TweetResponse>(`${API_TWEETS}/${tweetId}`);
+    },
+    async getUserTweets({userId, page}: UserTweetRequest): Promise<AxiosResponse<TweetResponse[]>> {
+        return await axios.get<TweetResponse[]>(API_TWEETS_USER_TWEETS(userId), {params: {page: page}});
+    },
+    async getUserMediaTweets({userId, page}: UserTweetRequest): Promise<AxiosResponse<TweetResponse[]>> {
+        return await axios.get<TweetResponse[]>(API_TWEETS_USER_MEDIA(userId), {params: {page: page}});
+    },
+    async getUserMentions(pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
+        return await axios.get<TweetResponse[]>(API_TWEETS_USER_MENTIONS, {params: {page: pageNumber}});
+    },
+    async getUserTweetImages(userId: number): Promise<AxiosResponse<TweetImageResponse[]>> {
+        return await axios.get<TweetImageResponse[]>(`${API_TWEETS_IMAGES}/${userId}`);
     },
     async getTweetAdditionalInfoById(tweetId: number): Promise<AxiosResponse<TweetAdditionalInfoResponse>> {
         return await axios.get<TweetAdditionalInfoResponse>(API_TWEETS_INFO(tweetId)); // TODO add tests
@@ -69,6 +71,18 @@ export const TweetApi = {
     },
     async getQuotesByTweetId(tweetId: number, pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
         return await axios.get<TweetResponse[]>(API_TWEETS_QUOTES(tweetId), {params: {page: pageNumber}});
+    },
+    async getMediaTweets(pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
+        return await axios.get<TweetResponse[]>(API_TWEETS_MEDIA, {params: {page: pageNumber}});
+    },
+    async getTweetsWithVideo(pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
+        return await axios.get<TweetResponse[]>(API_TWEETS_VIDEO, {params: {page: pageNumber}});
+    },
+    async getFollowersTweets(pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
+        return await axios.get<TweetResponse[]>(API_TWEETS_FOLLOWER, {params: {page: pageNumber}});
+    },
+    async getScheduledTweets(pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
+        return await axios.get<TweetResponse[]>(API_TWEETS_SCHEDULE, {params: {page: pageNumber}});
     },
     async createTweet(request: AddTweet): Promise<AxiosResponse<TweetResponse>> {
         return await axios.post<TweetResponse>(API_TWEETS, request);
@@ -131,16 +145,11 @@ export const TweetApi = {
     async getRetweetedUsersByTweetId({tweetId, pageNumber}: FetchTweetUsersPayload): Promise<AxiosResponse<UserResponse[]>> {
         return await axios.get<UserResponse[]>(API_TWEETS_RETWEETED_USERS(tweetId), {params: {page: pageNumber}});
     },
-    async getUserTweets({userId, page}: UserTweetRequest): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(API_TWEETS_USER_TWEETS(userId), {params: {page: page}});
-    },
-    async getUserMediaTweets({userId, page}: UserTweetRequest): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(API_TWEETS_USER_MEDIA(userId), {params: {page: page}});
-    },
-    async getUserMentions(pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(API_TWEETS_USER_MENTIONS, {params: {page: pageNumber}});
-    },
-    async getUserTweetImages(userId: number): Promise<AxiosResponse<TweetImageResponse[]>> {
-        return await axios.get<TweetImageResponse[]>(`${API_TWEETS_IMAGES}/${userId}`);
+    async uploadTweetImage(formData: FormData): Promise<AxiosResponse<Image>> { // TODO add tests
+        return await axios.post<Image>(API_TWEETS_UPLOAD, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
     },
 };

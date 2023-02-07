@@ -35,13 +35,12 @@ const TweetComponent: FC<TweetComponentProps> = memo(({tweet, activeTab, isTweet
     const myProfileId = useSelector(selectUserDataId);
     const isUserCanReply = (tweet?.replyType === ReplyType.MENTION) && (myProfileId !== tweet?.user.id);
     const classes = useTweetComponentStyles({isTweetImageModal});
-    const avatar = tweet?.user.avatar ? tweet?.user.avatar.src : DEFAULT_PROFILE_IMG;
 
     return (
         <Paper className={classes.container} variant="outlined">
             <TweetActions tweetId={tweet?.id} retweetsUserIds={tweet?.retweetsUserIds} activeTab={activeTab}/>
             <div className={classes.tweetWrapper}>
-                <TweetAvatar userId={tweet?.user.id} src={avatar}/>
+                <TweetAvatar userId={tweet?.user.id} src={tweet?.user.avatar ?? DEFAULT_PROFILE_IMG}/>
                 <div className={classes.tweetContainer}>
                     <div className={classes.header}>
                         <TweetHeader

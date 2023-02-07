@@ -16,7 +16,7 @@ describe("unsentTweetsSaga:", () => {
         const worker = fetchUnsentTweetsRequest(fetchUnsentTweets(1));
 
         testLoadingStatus(worker, setUnsentTweetsLoadingState, LoadingStatus.LOADING);
-        testCall(worker, TweetApi.fetchScheduledTweets, 1);
+        testCall(worker, TweetApi.getScheduledTweets, 1);
         testSetResponse(worker, mockPageableTweets, setUnsentTweets, {
             items: mockPageableTweets.data,
             pagesCount: parseInt(mockPageableTweets.headers["page-total-count"])

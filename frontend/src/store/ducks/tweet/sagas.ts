@@ -34,7 +34,7 @@ import {LoadingStatus} from "../../types/common";
 export function* fetchTweetDataRequest({payload: tweetId}: FetchTweetDataActionInterface) {
     try {
         yield put(setTweetLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<TweetResponse> = yield call(TweetApi.fetchTweetData, tweetId);
+        const response: AxiosResponse<TweetResponse> = yield call(TweetApi.getTweetById, tweetId);
         yield put(setTweetData(response.data));
     } catch (error: any) {
         yield put(setErrorMessage(error.response.data));

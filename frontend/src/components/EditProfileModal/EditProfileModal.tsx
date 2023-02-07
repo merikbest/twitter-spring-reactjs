@@ -93,8 +93,8 @@ const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}): ReactE
                                 className={classes.wallpaperImg}
                                 key={wallpaper?.src}
                                 alt={"wallpaper"}
-                                src={(userData?.wallpaper?.src && !wallpaper?.src) ?
-                                    userData?.wallpaper?.src : wallpaper?.src}
+                                src={(userData?.wallpaper && !wallpaper?.src) ?
+                                    userData?.wallpaper : wallpaper?.src}
                              />
                             <div className={classes.wallpaperEditImg}>
                                 <UploadProfileImage name={"wallpaper"} image={wallpaper} onChangeImage={setWallpaper}/>
@@ -104,7 +104,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}): ReactE
                             <UploadProfileImage name={"avatar"} image={avatar} onChangeImage={setAvatar}/>
                             <Avatar
                                 key={avatar?.src}
-                                src={(userData?.avatar?.src && !avatar?.src) ? userData?.avatar?.src : avatar?.src}
+                                src={(userData?.avatar && !avatar?.src) ? userData?.avatar : avatar?.src}
                             >
                                 <img alt="default-img" src={DEFAULT_PROFILE_IMG}/>
                             </Avatar>

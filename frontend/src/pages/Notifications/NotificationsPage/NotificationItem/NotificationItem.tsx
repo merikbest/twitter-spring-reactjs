@@ -20,7 +20,7 @@ export interface NotificationItemProps {
 const NotificationItem: FC<NotificationItemProps> = memo(({notification}): ReactElement => {
     const classes = useNotificationItemStyles();
     const {visiblePopperWindow, handleHoverPopper, handleLeavePopper} = useHoverUser();
-    const avatar = notification.user.avatar?.src ? notification.user.avatar?.src : DEFAULT_PROFILE_IMG;
+    const avatar = notification.user.avatar ?? DEFAULT_PROFILE_IMG;
 
     return (
         <LinkWrapper

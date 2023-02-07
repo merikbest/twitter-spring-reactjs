@@ -3,7 +3,6 @@ import {Typography} from "@material-ui/core";
 
 import {useYouTubeVideoStyles} from "./YouTubeVideoStyles";
 import {LinkIcon} from "../../icons";
-import {TweetResponse} from "../../store/types/tweet";
 
 interface YouTubeVideoProps {
     link: string;

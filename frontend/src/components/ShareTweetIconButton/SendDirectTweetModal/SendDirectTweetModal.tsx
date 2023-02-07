@@ -24,6 +24,7 @@ import InfiniteScrollWrapper from '../../InfiniteScrollWrapper/InfiniteScrollWra
 import SendDirectMessageFooter from "./SendDirectMessageFooter/SendDirectMessageFooter";
 import {ChatResponse} from "../../../store/types/chat";
 import {setOpenSnackBar} from "../../../store/ducks/actionSnackbar/actionCreators";
+import {DEFAULT_PROFILE_IMG} from "../../../util/url";
 
 interface SendDirectTweetModalProps {
     tweetId: number;
@@ -143,7 +144,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
                             avatar={
                                 <Avatar
                                     alt={selectedUser?.fullName}
-                                    src={selectedUser?.avatar?.src}
+                                    src={selectedUser?.avatar ?? DEFAULT_PROFILE_IMG}
                                 />
                             }
                             label={selectedUser?.fullName}

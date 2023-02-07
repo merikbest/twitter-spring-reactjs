@@ -138,17 +138,17 @@ export function* fetchUserDataRequest() {
 
 export function* processFollowUserRequest({payload}: FollowUserActionInterface) {
     try {
-        const {data}: AxiosResponse<NotificationUserResponse> = yield call(UserApi.follow, payload.userId);
-        yield put(setFollowToTweetsState({userId: data.id, tweetId: payload.tweetId!, isFollower: data.isFollower}));
-        yield put(setFollowToUsersTweetState({userId: data.id, tweetId: payload.tweetId!, isFollower: data.isFollower}));
-        yield put(setUserFollowing(data.isFollower));
-        yield put(setFollowToUserProfile(data.isFollower));
-        yield put(setFollowToUserDetail(data.isFollower));
-        yield put(setFollowToUsersState({userId: data.id, isFollower: data.isFollower}));
-        yield put(setFollowToUsersSearchState({userId: data.id, isFollower: data.isFollower}));
-        yield put(setFollowToTweetState(data.isFollower));
-        yield put(setFollowToNotificationInfo(data.isFollower));
-        yield put(setFollowedTweetAdditionalInfo(data.isFollower));
+        const {data}: AxiosResponse<boolean> = yield call(UserApi.follow, payload.userId);
+        yield put(setFollowToTweetsState({userId: payload.userId, tweetId: payload.tweetId!, isFollower: data}));
+        yield put(setFollowToUsersTweetState({userId: payload.userId, tweetId: payload.tweetId!, isFollower: data}));
+        yield put(setUserFollowing(data));
+        yield put(setFollowToUserProfile(data));
+        yield put(setFollowToUserDetail(data));
+        yield put(setFollowToUsersState({userId: payload.userId, isFollower: data}));
+        yield put(setFollowToUsersSearchState({userId: payload.userId, isFollower: data}));
+        yield put(setFollowToTweetState(data));
+        yield put(setFollowToNotificationInfo(data));
+        yield put(setFollowedTweetAdditionalInfo(data));
     } catch (error) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }

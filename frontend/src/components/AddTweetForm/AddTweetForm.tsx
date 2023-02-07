@@ -15,7 +15,6 @@ import {
     updateScheduledTweet,
 } from "../../store/ducks/tweets/actionCreators";
 import UploadImages from '../UploadImages/UploadImages';
-import {uploadImage} from "../../util/uploadImage";
 import {fetchReplyTweet} from "../../store/ducks/tweet/actionCreators";
 import {useAddTweetFormStyles} from "./AddTweetFormStyles";
 import {GifIcon, PullIcon} from "../../icons";
@@ -33,6 +32,7 @@ import ProfileAvatar from "./ProfileAvatar/ProfileAvatar";
 import ScheduleDateInfo from "./ScheduleDateInfo/ScheduleDateInfo";
 import AddTweetImage from "./AddTweetImage/AddTweetImage";
 import {useParams} from "react-router-dom";
+import {TweetApi} from "../../services/api/tweetApi";
 
 export interface AddTweetFormProps {
     unsentTweet?: TweetResponse;
@@ -105,17 +105,23 @@ const AddTweetForm: FC<AddTweetFormProps> = (
         setText(text + " " + convertedEmoji);
     }, [text]);
 
+    const uploadTweetImages = async (): Promise<Array<Image>> => {
+        let result: Array<Image> = [];
+
+        for (const image of images) {
+            const formData = new FormData();
+            formData.append("file", image.file);
+            const {data} = await TweetApi.uploadTweetImage(formData);
+            result.push(data);
+        }
+        return result;
+    };
+
     const handleClickAddTweet = async (): Promise<void> => {
         const {day, hour, minute, choice1, choice2, choice3, choice4} = pollData;
         const pollDateTime = (day * 1440) + (hour * 60) + minute;
         const choices = [choice1, choice2, choice3, choice4].filter(item => item);
-        const result: Array<Image> = [];
-
-        for (let i = 0; i < images.length; i++) {
-            const file: File = images[i].file;
-            const image: Image = await uploadImage(file);
-            result.push(image);
-        }
+        const result = await uploadTweetImages();
 
         if (visiblePoll) {
             dispatch(addPoll({
@@ -159,13 +165,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
     };
 
     const handleClickQuoteTweet = async (): Promise<void> => {
-        let result: Array<Image> = [];
-
-        for (let i = 0; i < images.length; i++) {
-            const file: File = images[i].file;
-            const image: Image = await uploadImage(file);
-            result.push(image);
-        }
+        const result = await uploadTweetImages();
 
         dispatch(addQuoteTweet({
             text: textConverter(),
@@ -183,13 +183,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
     };
 
     const handleClickReplyTweet = async (): Promise<void> => {
-        let result: Array<Image> = [];
-
-        for (let i = 0; i < images.length; i++) {
-            const file: File = images[i].file;
-            const image: Image = await uploadImage(file);
-            result.push(image);
-        }
+        const result = await uploadTweetImages();
 
         dispatch(fetchReplyTweet({
             tweetId: tweetId!,

@@ -80,6 +80,7 @@ export const API_TWEETS_USER_TWEETS = (userId: string | number) => `${API_ENDPOI
 export const API_TWEETS_USER_MEDIA = (userId: string | number) => `${API_ENDPOINT}/tweets/user/${userId}/media`;
 export const API_TWEETS_USER_MENTIONS = `${API_ENDPOINT}/tweets/user/mentions`;
 export const API_TWEETS_IMAGES = `${API_ENDPOINT}/tweets/images`;
+export const API_TWEETS_UPLOAD = `${API_ENDPOINT}/tweets/upload`;
 
 // UserApi
 export const API_USER = `${API_ENDPOINT}/user`;

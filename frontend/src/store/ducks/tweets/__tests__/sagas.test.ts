@@ -72,7 +72,7 @@ describe("tweetsSaga:", () => {
     describe("fetchTweetsRequest:", () => {
         const worker = fetchTweetsRequest(fetchTweets(1));
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
-        testCall(worker, TweetApi.fetchTweets, 1);
+        testCall(worker, TweetApi.getTweets, 1);
         testSetResponse(worker, mockPageableTweets, setPageableTweets, {
             items: mockPageableTweets.data,
             pagesCount: parseInt(mockPageableTweets.headers["page-total-count"])
@@ -83,7 +83,7 @@ describe("tweetsSaga:", () => {
     describe("fetchMediaTweetsRequest:", () => {
         const worker = fetchMediaTweetsRequest(fetchMediaTweets(1));
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
-        testCall(worker, TweetApi.fetchMediaTweets, 1);
+        testCall(worker, TweetApi.getMediaTweets, 1);
         testSetResponse(worker, mockPageableTweets, setPageableTweets, {
             items: mockPageableTweets.data,
             pagesCount: parseInt(mockPageableTweets.headers["page-total-count"])
@@ -94,7 +94,7 @@ describe("tweetsSaga:", () => {
     describe("fetchTweetsWithVideoRequest:", () => {
         const worker = fetchTweetsWithVideoRequest(fetchTweetsWithVideo(1));
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
-        testCall(worker, TweetApi.fetchTweetsWithVideo, 1);
+        testCall(worker, TweetApi.getTweetsWithVideo, 1);
         testSetResponse(worker, mockPageableTweets, setPageableTweets, {
             items: mockPageableTweets.data,
             pagesCount: parseInt(mockPageableTweets.headers["page-total-count"])
@@ -105,7 +105,7 @@ describe("tweetsSaga:", () => {
     describe("fetchFollowersTweetsRequest:", () => {
         const worker = fetchFollowersTweetsRequest(fetchFollowersTweets(1));
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
-        testCall(worker, TweetApi.fetchFollowersTweets, 1);
+        testCall(worker, TweetApi.getFollowersTweets, 1);
         testSetResponse(worker, mockPageableTweets, setPageableTweets, {
             items: mockPageableTweets.data,
             pagesCount: parseInt(mockPageableTweets.headers["page-total-count"])

@@ -17,9 +17,9 @@ const UserWallpaper = memo((): ReactElement => {
             {wallpaper && (
                 <Link to={{
                     pathname: `${PROFILE_HEADER_PHOTO}/${userProfileId}`,
-                    state: {background: location, imageSrc: wallpaper.src}
+                    state: {background: location, imageSrc: wallpaper}
                 }}>
-                    <img key={wallpaper.src} src={wallpaper.src} alt={wallpaper.src}/>
+                    <img key={wallpaper} src={wallpaper} alt={wallpaper}/>
                 </Link>
             )}
         </div>

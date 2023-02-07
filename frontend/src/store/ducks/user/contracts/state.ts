@@ -1,4 +1,4 @@
-import {BackgroundTheme, ColorScheme, Image, LoadingStatus} from "../../../types/common";
+import {BackgroundTheme, ColorScheme, LoadingStatus} from "../../../types/common";
 import {AuthUserResponse} from "../../../types/user";
 
 export interface UserState {
@@ -24,8 +24,8 @@ export interface UserRequest {
     username: string;
     location: string;
     website: string;
-    avatar: Image;
-    wallpaper: Image;
+    avatar: string;
+    wallpaper: string;
     about: string;
 }
 

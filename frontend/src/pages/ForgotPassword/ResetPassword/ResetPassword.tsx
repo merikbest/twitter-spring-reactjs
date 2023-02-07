@@ -47,7 +47,7 @@ const ResetPassword: FC = (): ReactElement => {
                 <Avatar
                     alt={`avatar`}
                     className={classes.avatar}
-                    src={location.state.user?.avatar?.src ? location.state.user?.avatar?.src : DEFAULT_PROFILE_IMG}
+                    src={location.state.user?.avatar ?? DEFAULT_PROFILE_IMG}
                 />
                 <div className={classes.info}>
                     <Typography variant={"h6"} component={"div"}>

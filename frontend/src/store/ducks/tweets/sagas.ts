@@ -35,7 +35,7 @@ import {LoadingStatus} from "../../types/common";
 export function* fetchTweetsRequest({payload}: FetchTweetsActionInterface) {
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.fetchTweets, payload);
+        const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.getTweets, payload);
         yield put(setPageableTweets({
             items: response.data,
             pagesCount: parseInt(response.headers["page-total-count"])
@@ -48,7 +48,7 @@ export function* fetchTweetsRequest({payload}: FetchTweetsActionInterface) {
 export function* fetchMediaTweetsRequest({payload}: FetchMediaTweetsActionInterface) {
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.fetchMediaTweets, payload);
+        const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.getMediaTweets, payload);
         yield put(setPageableTweets({
             items: response.data,
             pagesCount: parseInt(response.headers["page-total-count"])
@@ -61,7 +61,7 @@ export function* fetchMediaTweetsRequest({payload}: FetchMediaTweetsActionInterf
 export function* fetchTweetsWithVideoRequest({payload}: FetchTweetsWithVideoActionInterface) {
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.fetchTweetsWithVideo, payload);
+        const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.getTweetsWithVideo, payload);
         yield put(setPageableTweets({
             items: response.data,
             pagesCount: parseInt(response.headers["page-total-count"])
@@ -74,7 +74,7 @@ export function* fetchTweetsWithVideoRequest({payload}: FetchTweetsWithVideoActi
 export function* fetchFollowersTweetsRequest({payload}: FetchFollowersTweetsActionInterface) {
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.fetchFollowersTweets, payload);
+        const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.getFollowersTweets, payload);
         yield put(setPageableTweets({
             items: response.data,
             pagesCount: parseInt(response.headers["page-total-count"])

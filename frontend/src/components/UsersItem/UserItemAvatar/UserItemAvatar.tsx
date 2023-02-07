@@ -3,16 +3,13 @@ import Avatar from "@material-ui/core/Avatar/Avatar";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar/ListItemAvatar";
 
 import {useGlobalStyles} from "../../../util/globalClasses";
-import {DEFAULT_PROFILE_IMG} from "../../../util/url";
-import {Image} from "../../../store/types/common";
 
 interface UserItemAvatarProps {
-    userAvatar?: Image;
+    avatar?: string;
 }
 
-const UserItemAvatar: FC<UserItemAvatarProps> = memo(({userAvatar}): ReactElement => {
+const UserItemAvatar: FC<UserItemAvatarProps> = memo(({avatar}): ReactElement => {
     const globalClasses = useGlobalStyles();
-    const avatar = userAvatar ? userAvatar.src : DEFAULT_PROFILE_IMG;
 
     return (
         <ListItemAvatar>

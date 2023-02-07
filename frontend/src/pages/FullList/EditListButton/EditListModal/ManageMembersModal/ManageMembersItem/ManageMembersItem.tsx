@@ -12,6 +12,7 @@ import {PROFILE} from "../../../../../../util/pathConstants";
 import ManageMemberButton from "./ManageMemberButton/ManageMemberButton";
 import MemberItemInfo from "./MemberItemInfo/MemberItemInfo";
 import MemberItemAvatar from "./MemberItemAvatar/MemberItemAvatar";
+import {DEFAULT_PROFILE_IMG} from "../../../../../../util/url";
 
 interface ManageMembersItemProps {
     listId?: number
@@ -35,7 +36,7 @@ const ManageMembersItem: FC<ManageMembersItemProps> = memo((
     return (
         <LinkWrapper path={`${PROFILE}/${user?.id}`} visiblePopperWindow={visiblePopperWindow}>
             <Paper className={classes.container} variant="outlined">
-                <MemberItemAvatar avatar={user?.avatar}/>
+                <MemberItemAvatar avatar={user?.avatar ?? DEFAULT_PROFILE_IMG}/>
                 <div style={{flex: 1}}>
                     <div className={classes.header}>
                         <div

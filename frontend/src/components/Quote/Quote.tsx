@@ -25,8 +25,8 @@ const Quote: FC<QuoteProps> = memo(({quoteTweet, isTweetQuoted, isFullTweet}): R
                 <div className={classes.quoteTweetWrapper}>
                     <Avatar
                         className={classes.quoteTweetAvatar}
-                        alt={`avatar ${quoteTweet.user.avatar?.id}`}
-                        src={quoteTweet.user.avatar ? quoteTweet.user.avatar.src : DEFAULT_PROFILE_IMG}
+                        alt={`avatar ${quoteTweet.user.avatar}`}
+                        src={quoteTweet.user.avatar ?? DEFAULT_PROFILE_IMG}
                     />
                     <Typography component={"span"} className={classes.quoteTweetFullName}>
                         {quoteTweet.user.fullName}

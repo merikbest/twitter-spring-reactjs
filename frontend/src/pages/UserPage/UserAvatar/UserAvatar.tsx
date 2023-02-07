@@ -15,10 +15,10 @@ const UserAvatar = memo((): ReactElement => {
     return (
         <Link to={{
             pathname: `${PROFILE_PHOTO}/${userProfileId}`,
-            state: {background: location, imageSrc: avatar ? avatar.src : DEFAULT_PROFILE_IMG}
+            state: {background: location, imageSrc: avatar ?? DEFAULT_PROFILE_IMG}
         }}>
             <div style={{display: "inline-block"}}>
-                <Avatar src={userProfileId ? (avatar ? avatar.src : DEFAULT_PROFILE_IMG) : undefined}>
+                <Avatar src={userProfileId ? (avatar ?? DEFAULT_PROFILE_IMG) : undefined}>
                     <div></div>
                 </Avatar>
             </div>

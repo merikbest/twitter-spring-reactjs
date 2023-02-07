@@ -28,7 +28,7 @@ export interface EditListModalFormProps {
     name: string;
     description: string;
     isPrivate: boolean;
-    wallpaper: Image;
+    wallpaper: string;
 }
 
 export const EditListModalFormSchema = yup.object().shape({
@@ -42,7 +42,7 @@ const EditListModal: FC<EditListModalProps> = ({visible, onClose}): ReactElement
 
     const [wallpaper, setWallpaper] = useState<ImageObj>();
     const [isListPrivate, setIsListPrivate] = useState<boolean>(false);
-    const listWrapperSrc = list?.wallpaper?.src ? list?.wallpaper?.src : list?.altWallpaper;
+    const listWrapperSrc = list?.wallpaper ?? list?.altWallpaper;
 
     const {control, handleSubmit, formState: {errors}} = useForm<EditListModalFormProps>({
         defaultValues: {
@@ -61,7 +61,7 @@ const EditListModal: FC<EditListModalProps> = ({visible, onClose}): ReactElement
     }, [visible]);
 
     const onSubmit = async (data: EditListModalFormProps): Promise<void> => {
-        let wallpaperResponse: Image | undefined = undefined;
+        let wallpaperResponse: string | undefined = undefined;
 
         if (wallpaper) {
             wallpaperResponse = await uploadImage(wallpaper.file);

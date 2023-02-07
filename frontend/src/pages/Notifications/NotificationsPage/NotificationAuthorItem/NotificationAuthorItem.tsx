@@ -24,7 +24,7 @@ const NotificationAuthorItem: FC<NotificationAuthorItemProps> = memo(({tweetAuth
             <Avatar
                 className={classes.notificationAvatar}
                 alt={`avatar ${tweetAuthor?.id!}`}
-                src={tweetAuthor?.avatar ? tweetAuthor?.avatar?.src : DEFAULT_PROFILE_IMG}
+                src={tweetAuthor?.avatar ?? DEFAULT_PROFILE_IMG}
             />
             <PopperUserWindow visible={visiblePopperWindow}/>
         </div>

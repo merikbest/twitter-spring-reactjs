@@ -15,6 +15,7 @@ import LinkWrapper from "../LinkWrapper/LinkWrapper";
 import {PROFILE} from "../../util/pathConstants";
 import UserItemInfo from "./UserItemInfo/UserItemInfo";
 import UserItemAvatar from "./UserItemAvatar/UserItemAvatar";
+import {DEFAULT_PROFILE_IMG} from "../../util/url";
 
 export interface UsersItemProps {
     user?: UserResponse,
@@ -35,7 +36,7 @@ const UsersItem: FC<UsersItemProps> = memo(({user, size}): ReactElement => {
     return (
         <LinkWrapper path={`${PROFILE}/${user?.id}`} visiblePopperWindow={visiblePopperWindow}>
             <ListItem className={classes.container}>
-                <UserItemAvatar userAvatar={user?.avatar}/>
+                <UserItemAvatar avatar={user?.avatar ?? DEFAULT_PROFILE_IMG}/>
                 <div
                     id={"userInfo"}
                     className={classes.userInfo}
