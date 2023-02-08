@@ -12,7 +12,6 @@ export const API_AUTH_FORGOT_EMAIL = `${API_ENDPOINT}/auth/forgot/email`;
 export const API_AUTH_FORGOT = `${API_ENDPOINT}/auth/forgot`;
 export const API_AUTH_RESET = `${API_ENDPOINT}/auth/reset`;
 export const API_AUTH_RESET_CURRENT = `${API_ENDPOINT}/auth/reset/current`;
-export const API_AUTH_USER = `${API_ENDPOINT}/auth/user`;
 
 // ChatApi
 export const API_CHAT = `${API_ENDPOINT}/chat`;
@@ -74,10 +73,10 @@ export const API_TWEETS_QUOTE = `${API_ENDPOINT}/tweets/quote`;
 export const API_TWEETS_CHANGE_REPLY = `${API_ENDPOINT}/tweets/reply/change`;
 export const API_TWEETS_VOTE = `${API_ENDPOINT}/tweets/vote`;
 export const API_TWEETS_USER_BOOKMARKS = `${API_ENDPOINT}/tweets/user/bookmarks`;
-export const API_TWEETS_USER_LIKED = (userId: string | number) => `${API_ENDPOINT}/tweets/user/${userId}/liked`;
-export const API_TWEETS_USER_REPLIES = (userId: string | number) => `${API_ENDPOINT}/tweets/user/${userId}/replies`;
-export const API_TWEETS_USER_TWEETS = (userId: string | number) => `${API_ENDPOINT}/tweets/user/${userId}/tweets`;
-export const API_TWEETS_USER_MEDIA = (userId: string | number) => `${API_ENDPOINT}/tweets/user/${userId}/media`;
+export const API_TWEETS_USER_LIKED = (userId: string | number) => `${API_ENDPOINT}/tweets/liked/user/${userId}`;
+export const API_TWEETS_USER_REPLIES = (userId: string | number) => `${API_ENDPOINT}/tweets/replies/user/${userId}`;
+export const API_TWEETS_USER_MEDIA = (userId: string | number) => `${API_ENDPOINT}/tweets/media/user/${userId}`;
+export const API_TWEETS_USER_TWEETS = (userId: string | number) => `${API_ENDPOINT}/tweets/user/${userId}`;
 export const API_TWEETS_USER_MENTIONS = `${API_ENDPOINT}/tweets/user/mentions`;
 export const API_TWEETS_IMAGES = `${API_ENDPOINT}/tweets/images`;
 export const API_TWEETS_UPLOAD = `${API_ENDPOINT}/tweets/upload`;
@@ -97,14 +96,16 @@ export const API_USER_FOLLOW_PRIVATE = `${API_ENDPOINT}/user/follow/private`;
 export const API_USER_FOLLOW_ACCEPT = `${API_ENDPOINT}/user/follow/accept`;
 export const API_USER_FOLLOW_DECLINE = `${API_ENDPOINT}/user/follow/decline`;
 export const API_USER_SUBSCRIBE = `${API_ENDPOINT}/user/subscribe`;
-export const API_USER_NOTIFICATIONS = `${API_ENDPOINT}/user/notifications`;
-export const API_USER_NOTIFICATIONS_SUBSCRIBES = `${API_ENDPOINT}/user/notifications/subscribes`;
-export const API_USER_NOTIFICATIONS_TIMELINE = `${API_ENDPOINT}/user/notifications/timeline`;
+export const API_NOTIFICATION = `${API_ENDPOINT}/notification`;
+export const API_NOTIFICATION_USER = `${API_ENDPOINT}/notification/user`;
+export const API_NOTIFICATION_SUBSCRIBES = `${API_ENDPOINT}/notification/subscribes`;
+export const API_NOTIFICATION_TIMELINE = `${API_ENDPOINT}/notification/timeline`;
 export const API_USER_START = (userId: number) => `${API_ENDPOINT}/user/${userId}/start`;
 export const API_USER_PIN_TWEET = `${API_ENDPOINT}/user/pin/tweet`;
 export const API_USER_BLOCKED = `${API_ENDPOINT}/user/blocked`;
 export const API_USER_MUTED = `${API_ENDPOINT}/user/muted`;
 export const API_USER_DETAILS = `${API_ENDPOINT}/user/details`;
+export const API_USER_TOKEN = `${API_ENDPOINT}/user/token`;
 
 // UserSettingsApi
 export const API_SETTINGS_UPDATE_USERNAME = `${API_ENDPOINT}/settings/update/username`;

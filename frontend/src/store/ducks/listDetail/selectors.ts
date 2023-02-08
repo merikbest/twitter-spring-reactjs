@@ -12,12 +12,12 @@ export const selectListDetailItemFollowersSize = (state: RootState) => selectLis
 export const selectListDetailItemMembersSize = (state: RootState) => selectListDetailItem(state)?.membersSize;
 export const selectListDetailItemIsFollower = (state: RootState) => selectListDetailItem(state)?.isFollower;
 export const selectListDetailItemWallpaper = (state: RootState) =>
-    selectListDetailItem(state)?.wallpaper ? selectListDetailItem(state)?.wallpaper.src : selectListDetailItem(state)?.altWallpaper;
+    selectListDetailItem(state)?.wallpaper ?? selectListDetailItem(state)?.altWallpaper;
 export const selectListDetailItemOwnerId = (state: RootState) => selectListDetailItem(state)?.listOwner.id;
 export const selectListDetailItemOwnerFullName = (state: RootState) => selectListDetailItem(state)?.listOwner.fullName;
 export const selectListDetailItemOwnerUsername = (state: RootState) => selectListDetailItem(state)?.listOwner.username;
 export const selectListDetailItemOwnerAvatar = (state: RootState) =>
-    selectListDetailItem(state)?.listOwner.avatar ? selectListDetailItem(state)?.listOwner.avatar.src : DEFAULT_PROFILE_IMG;
+    selectListDetailItem(state)?.listOwner.avatar ?? DEFAULT_PROFILE_IMG;
 export const selectLoadingState = (state: RootState): LoadingStatus => selectListDetail(state).loadingState;
 export const selectIsListDetailLoading = (state: RootState): boolean => selectLoadingState(state) === LoadingStatus.LOADING;
 export const selectIsListDetailLoaded = (state: RootState): boolean => selectLoadingState(state) === LoadingStatus.LOADED;

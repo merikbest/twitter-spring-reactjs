@@ -27,10 +27,10 @@ const UnfollowButton: FC<UnfollowButtonProps> = ({user}): ReactElement => {
     };
 
     const handleUnfollow = (): void => {
-        if (user?.isPrivateProfile) {
-            dispatch(processFollowRequest(user.id!));
+        if (user?.isPrivateProfile && !user.isFollower) {
+            dispatch(processFollowRequest(user!.id));
         } else {
-            dispatch(unfollowUser({userId: user?.id!}));
+            dispatch(unfollowUser({userId: user!.id}));
             setVisibleUnfollowModal(false);
         }
     };

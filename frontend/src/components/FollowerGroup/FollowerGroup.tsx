@@ -30,7 +30,7 @@ const FollowerGroup: FC<FollowerGroupProps> = ({userId, sameFollowers}): ReactEl
                                     <Avatar
                                         key={follower.id}
                                         alt={follower.username}
-                                        src={follower.avatar ? follower.avatar.src : DEFAULT_PROFILE_IMG}
+                                        src={follower.avatar ?? DEFAULT_PROFILE_IMG}
                                     />
                                 ))}
                             </AvatarGroup>

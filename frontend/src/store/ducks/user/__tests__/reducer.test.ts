@@ -44,7 +44,7 @@ describe("userReducer:", () => {
             userReducer(
                 {
                     ...initialUserState,
-                    data: {id: 1, unreadMessagesSize: 0} as AuthUserResponse
+                    data: {id: 1, unreadMessagesCount: 0} as AuthUserResponse
                 },
                 {
                     type: UserActionsType.SET_UNREAD_MESSAGE,
@@ -53,7 +53,7 @@ describe("userReducer:", () => {
             ),
             {
                 ...initialUserState,
-                data: {id: 1, unreadMessagesSize: 1} as AuthUserResponse,
+                data: {id: 1, unreadMessagesCount: 1} as AuthUserResponse,
                 status: LoadingStatus.LOADED
             }
         );

@@ -172,7 +172,7 @@ export const mockUser = {
     "followersSize": 1,
     "followingSize": 1,
     "followerRequestsSize": null,
-    "unreadMessagesSize": 0,
+    "unreadMessagesCount": 0,
     "isMutedDirectMessages": false,
     "isPrivateProfile": false
 } as unknown as AuthUserResponse;

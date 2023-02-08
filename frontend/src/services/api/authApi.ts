@@ -16,7 +16,7 @@ import {
     API_AUTH_REGISTRATION_CONFIRM,
     API_AUTH_RESET,
     API_AUTH_RESET_CURRENT,
-    API_AUTH_USER
+    API_USER_TOKEN
 } from "../../util/endpoints";
 
 export const AuthApi = {
@@ -51,6 +51,6 @@ export const AuthApi = {
         return await axios.post<string>(API_AUTH_RESET_CURRENT, postData);
     },
     async getMe(): Promise<AxiosResponse<AuthenticationResponse>> {
-        return await axios.get<AuthenticationResponse>(API_AUTH_USER);
+        return await axios.get<AuthenticationResponse>(API_USER_TOKEN);
     },
 };

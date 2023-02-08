@@ -54,11 +54,7 @@ const ChatMessage: FC<ChatMessageProps> = memo(({message, isParticipantMessage})
                                         <div className={classes.tweetUserInfoWrapper}>
                                             <Avatar
                                                 className={classes.tweetAvatar}
-                                                src={(message.tweet?.user.avatar?.src) ? (
-                                                    message.tweet?.user.avatar?.src
-                                                ) : (
-                                                    DEFAULT_PROFILE_IMG)
-                                                }
+                                                src={message.tweet?.user.avatar ?? DEFAULT_PROFILE_IMG}
                                             />
                                             <Typography variant={"h6"} component={"span"}>
                                                 {message.tweet?.user.fullName}

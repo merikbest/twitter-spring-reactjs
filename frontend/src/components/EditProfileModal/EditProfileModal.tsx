@@ -19,7 +19,6 @@ import {useEditProfileModalStyles} from "./EditProfileModalStyles";
 import {DEFAULT_PROFILE_IMG} from "../../util/url";
 import CloseButton from "../CloseButton/CloseButton";
 import {updatedUserData} from "../../store/ducks/user/actionCreators";
-import {Image} from "../../store/types/common";
 
 interface EditProfileModalProps {
     visible?: boolean;
@@ -55,8 +54,8 @@ const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}): ReactE
     });
 
     const onSubmit = async (data: EditProfileFormProps): Promise<void> => {
-        let avatarResponse: Image | undefined = undefined;
-        let wallpaperResponse: Image | undefined = undefined;
+        let avatarResponse: string | undefined = undefined;
+        let wallpaperResponse: string | undefined = undefined;
         if (avatar) {
             avatarResponse = await uploadImage(avatar.file);
         }

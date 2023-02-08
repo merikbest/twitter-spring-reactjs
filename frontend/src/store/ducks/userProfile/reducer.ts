@@ -24,9 +24,11 @@ export const userProfileReducer = produce((draft: Draft<UserProfileState>, actio
 
         case UserProfileActionsType.SET_FOLLOW_TO_USER_PROFILE:
             if (draft.user) {
-                draft.user.isFollower = action.payload;
-                draft.user.followingSize = action.payload ? draft.user.followingSize + 1 : draft.user.followingSize - 1;
-                draft.loadingState = LoadingStatus.SUCCESS;
+                if (draft.user.id === action.payload.userId) {
+                    draft.user.isFollower = action.payload.isFollower;
+                    draft.user.followingSize = action.payload ? draft.user.followingSize + 1 : draft.user.followingSize - 1;
+                    draft.loadingState = LoadingStatus.SUCCESS;
+                }
             }
             break;
 

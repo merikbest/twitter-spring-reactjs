@@ -2,6 +2,7 @@ import {Action} from "redux";
 import {UserProfileResponse} from "../../../types/user";
 import {ChatParticipantRequest, UserProfileState} from "./state";
 import {LoadingStatus} from "../../../types/common";
+import {FollowUsersPayload} from "../../users/contracts/state";
 
 export enum UserProfileActionsType {
     FETCH_USER = 'userProfile/FETCH_USER',
@@ -44,7 +45,7 @@ export interface SetMutedActionInterface extends Action<UserProfileActionsType> 
 
 export interface SetFollowToUserProfileActionInterface extends Action<UserProfileActionsType> {
     type: UserProfileActionsType.SET_FOLLOW_TO_USER_PROFILE;
-    payload: boolean;
+    payload: FollowUsersPayload;
 }
 
 export interface SetSubscribeToUserProfileActionInterface extends Action<UserProfileActionsType> {

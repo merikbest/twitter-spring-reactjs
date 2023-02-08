@@ -4,20 +4,19 @@ import {Avatar} from "@material-ui/core";
 import classnames from "classnames";
 
 import {PROFILE} from "../../../../../../../util/pathConstants";
-import {Image} from "../../../../../../../store/types/common";
 import {DEFAULT_PROFILE_IMG} from "../../../../../../../util/url";
 import {useGlobalStyles} from "../../../../../../../util/globalClasses";
 import {useMutedAccountItemStyles} from "../MutedAccountItemStyles";
 
 interface MuteAccountAvatarProps {
     userId: number;
-    avatar: Image;
+    avatar: string;
 }
 
 const MuteAccountAvatar: FC<MuteAccountAvatarProps> = memo(({userId, avatar}): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useMutedAccountItemStyles();
-    const avatarSrc = avatar ? avatar.src : DEFAULT_PROFILE_IMG;
+    const avatarSrc = avatar ?? DEFAULT_PROFILE_IMG;
 
     return (
         <Link to={`${PROFILE}/${userId}`}>

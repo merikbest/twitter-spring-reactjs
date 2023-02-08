@@ -9,7 +9,6 @@ import {useCreateListsModalStyles} from "./CreateListsModalStyles";
 import UploadProfileImage from "../../../../components/EditProfileModal/UploadProfileImage";
 import {ImageObj} from "../../../../components/AddTweetForm/AddTweetForm";
 import {uploadImage} from "../../../../util/uploadImage";
-import {Image} from "../../../../store/types/common";
 import CreateListsModalInput from "./CreateListsModalInput/CreateListsModalInput";
 import {createList} from "../../../../store/ducks/lists/actionCreators";
 import {wallpapers} from "../../../../util/wallpapers";
@@ -24,7 +23,7 @@ interface CreateListsModalFormProps {
     name: string;
     description: string;
     isPrivate: boolean;
-    wallpaper: Image;
+    wallpaper: string;
 }
 
 const CreateListsModalFormSchema = yup.object().shape({
@@ -42,7 +41,7 @@ const CreateListsModal: FC<CreateListsModalProps> = ({visible, onClose}): ReactE
 
     const onSubmit = async (data: CreateListsModalFormProps): Promise<void> => {
         const altWallpaper = Math.floor(Math.random() * wallpapers.length);
-        let wallpaperResponse: Image | undefined = undefined;
+        let wallpaperResponse: string | undefined = undefined;
 
         if (wallpaper) {
             wallpaperResponse = await uploadImage(wallpaper.file);

@@ -77,7 +77,7 @@ export interface AuthUserResponse {
     followersSize: number;
     followingSize: number;
     followerRequestsSize: number;
-    unreadMessagesSize: number;
+    unreadMessagesCount: number;
 }
 
 export interface BlockedUserResponse {

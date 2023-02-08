@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.dto.request.UserRequest;
 import com.gmail.merikbest2015.dto.response.*;
+import com.gmail.merikbest2015.mapper.AuthenticationMapper;
 import com.gmail.merikbest2015.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,12 @@ import static com.gmail.merikbest2015.constants.PathConstants.UI_V1_USER;
 public class UserController {
 
     private final UserMapper userMapper;
+    private final AuthenticationMapper authenticationMapper;
+
+    @GetMapping("/token")
+    public ResponseEntity<AuthenticationResponse> getUserByToken() {
+        return ResponseEntity.ok(authenticationMapper.getUserByToken());
+    }
 
     @GetMapping("/{userId}")
     public ResponseEntity<UserProfileResponse> getUserById(@PathVariable Long userId) {

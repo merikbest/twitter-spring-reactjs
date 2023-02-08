@@ -32,17 +32,17 @@ public class NotificationController {
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping("/notifications/subscribes")
+    @GetMapping("/subscribes")
     public ResponseEntity<List<NotificationUserResponse>> getTweetAuthorsNotifications() {
         return ResponseEntity.ok(notificationMapper.getTweetAuthorsNotifications());
     }
 
-    @GetMapping("/notifications/{notificationId}")
-    public ResponseEntity<NotificationInfoResponse> getUserNotificationById(@PathVariable Long notificationId) {
+    @GetMapping("/{notificationId}")
+    public ResponseEntity<NotificationInfoResponse> getUserNotificationById(@PathVariable("notificationId") Long notificationId) {
         return ResponseEntity.ok(notificationMapper.getUserNotificationById(notificationId));
     }
 
-    @GetMapping("/notifications/timeline")
+    @GetMapping("/timeline")
     public ResponseEntity<List<TweetResponse>> getNotificationsFromTweetAuthors(@PageableDefault(size = 10) Pageable pageable) {
         HeaderResponse<TweetResponse> response = notificationMapper.getNotificationsFromTweetAuthors(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());

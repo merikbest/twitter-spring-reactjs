@@ -10,6 +10,7 @@ import {LISTS_MEMBERSHIPS, PROFILE, TOPICS} from "../../../util/pathConstants";
 import ActionIconButton from "../../../components/ActionIconButton/ActionIconButton";
 import {
     selectUserProfileId,
+    selectUserProfileIsFollower,
     selectUserProfileIsPrivateProfile,
     selectUserProfileIsUserBlocked,
     selectUserProfileUsername
@@ -27,6 +28,7 @@ const UserPageActions = memo((): ReactElement => {
     const username = useSelector(selectUserProfileUsername);
     const isUserBlocked = useSelector(selectUserProfileIsUserBlocked);
     const isPrivateProfile = useSelector(selectUserProfileIsPrivateProfile);
+    const isFollower = useSelector(selectUserProfileIsFollower);
     const [open, setOpen] = useState<boolean>(false);
 
     const handleClick = (): void => {
@@ -46,7 +48,7 @@ const UserPageActions = memo((): ReactElement => {
                 {open && (
                     <div className={classes.dropdown}>
                         <List>
-                            {!isPrivateProfile && (
+                            {(!isPrivateProfile || isFollower) && (
                                 <>
                                     <Link to={`${PROFILE}/${userProfileId}${TOPICS}`} className={classes.routeLink}>
                                         <UserItemAction title={"View Topics"} icon={TopicIcon}/>

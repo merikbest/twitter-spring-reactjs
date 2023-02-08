@@ -6,7 +6,6 @@ import PopperListWindow from "../../PopperListWindow/PopperListWindow";
 import {useListsItemStyles} from "../ListsItemStyles";
 import {useHoverList} from "../../../../hook/useHoverList";
 import {DEFAULT_PROFILE_IMG} from "../../../../util/url";
-import {Image} from "../../../../store/types/common";
 
 interface ListInfoDescriptionProps {
     listId?: number;
@@ -15,7 +14,7 @@ interface ListInfoDescriptionProps {
     listIsPrivate?: boolean;
     listOwnerFullName?: string;
     listOwnerUsername?: string;
-    listOwnerAvatar?: Image;
+    listOwnerAvatar?: string;
 }
 
 const ListInfoDescription: FC<ListInfoDescriptionProps> = memo((
@@ -31,7 +30,7 @@ const ListInfoDescription: FC<ListInfoDescriptionProps> = memo((
 ): ReactElement => {
     const classes = useListsItemStyles();
     const {visiblePopperWindow, handleHoverPopper, handleLeavePopper} = useHoverList();
-    const avatar = listOwnerAvatar ? listOwnerAvatar.src : DEFAULT_PROFILE_IMG;
+    const avatar = listOwnerAvatar ? listOwnerAvatar : DEFAULT_PROFILE_IMG;
 
     return (
         <div

@@ -18,10 +18,7 @@ const ChatHeader = memo((): ReactElement => {
 
     return (
         <Paper className={classnames(globalClasses.pageHeader, classes.chatHeader)}>
-            <Avatar
-                className={classes.chatAvatar}
-                src={chatParticipant?.avatar ? chatParticipant?.avatar.src : DEFAULT_PROFILE_IMG}
-            />
+            <Avatar className={classes.chatAvatar} src={chatParticipant?.avatar ?? DEFAULT_PROFILE_IMG}/>
             <div style={{flex: 1}}>
                 <Typography variant="h5">
                     {chatParticipant?.fullName}

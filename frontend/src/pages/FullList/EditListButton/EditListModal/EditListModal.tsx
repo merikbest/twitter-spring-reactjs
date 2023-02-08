@@ -16,7 +16,6 @@ import {editList} from "../../../../store/ducks/list/actionCreators";
 import {uploadImage} from "../../../../util/uploadImage";
 import CloseButton from "../../../../components/CloseButton/CloseButton";
 import {selectListItem} from "../../../../store/ducks/list/selectors";
-import {Image} from "../../../../store/types/common";
 
 interface EditListModalProps {
     visible?: boolean;

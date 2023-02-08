@@ -6,6 +6,20 @@ spring:
         name: api-gateway
     cloud:
         gateway:
+            globalcors:
+                corsConfigurations:
+                    '[/ui/v1/**]':
+                        allowedOrigins: "http://localhost:3000"
+                        exposedHeaders: "page-total-count"
+                        allowedHeaders: "*"
+                        allowedMethods:
+                        - GET
+                        - POST
+                        - PUT
+                        - DELETE
+                        - PATCH
+                        - OPTIONS
+                        - HEAD
             discovery:
                 locator:
                     enabled: true
@@ -35,14 +49,19 @@ spring:
                 -   id: user-service
                     uri: lb://user-service
                     predicates:
-                        - Path=/ui/v1/user/**, /ui/v1/auth/**, /api/v1/user/**, /api/v1/auth/user/**
+                        - Path=/ui/v1/user/**, /api/v1/user/**, /api/v1/auth/**
                     filters:
-                        - AuthFilter
+                        - name: AuthFilter
+
+                -   id: auth-service
+                    uri: lb://user-service
+                    predicates:
+                        - Path=/ui/v1/auth/**
 
                 -   id: lists-service
                     uri: lb://lists-service
                     predicates:
-                        - Path=/ui/v1/lists/**
+                        - Path=/ui/v1/lists/**, /api/v1/lists/**
                     filters:
                         - AuthFilter
 
@@ -56,9 +75,14 @@ spring:
                 -   id: notification-service
                     uri: lb://notification-service
                     predicates:
-                        - Path=/ui/v1/notification/**
+                        - Path=/ui/v1/notification/**, /api/v1/notification/**
                     filters:
                         - AuthFilter
+
+                -   id: websocket-service
+                    uri: lb://notification-service
+                    predicates:
+                        - Path=/websocket/**
 
                 -   id: image-service
                     uri: lb://image-service
@@ -66,6 +90,11 @@ spring:
                         - Path=/api/v1/image/upload
                     filters:
                         - AuthFilter
+
+                -   id: email-service
+                    uri: lb://email-service
+                    predicates:
+                        - Path=/api/v1/email/suggested
 
     zipkin:
         base-url: http://localhost:9411

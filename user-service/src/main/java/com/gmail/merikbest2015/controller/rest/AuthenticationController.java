@@ -45,11 +45,6 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationMapper.endRegistration(request, bindingResult));
     }
 
-    @GetMapping("/user")
-    public ResponseEntity<AuthenticationResponse> getUserByToken() {
-        return ResponseEntity.ok(authenticationMapper.getUserByToken());
-    }
-
     @PostMapping("/forgot/email")
     public ResponseEntity<String> getExistingEmail(@Valid @RequestBody ProcessEmailRequest request, BindingResult bindingResult) {
         return ResponseEntity.ok(authenticationMapper.getExistingEmail(request.getEmail(), bindingResult));

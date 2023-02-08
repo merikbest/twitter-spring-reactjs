@@ -6,6 +6,7 @@ import {List} from "@material-ui/core";
 
 import {
     selectUserProfileId,
+    selectUserProfileIsFollower,
     selectUserProfileIsMyProfileBlocked,
     selectUserProfileIsPrivateProfile
 } from "../../../store/ducks/userProfile/selectors";
@@ -26,9 +27,10 @@ const UserInteractionCount = memo((): ReactElement => {
     const userProfileId = useSelector(selectUserProfileId);
     const isPrivateProfile = useSelector(selectUserProfileIsPrivateProfile);
     const isMyProfileBlocked = useSelector(selectUserProfileIsMyProfileBlocked);
+    const isFollower = useSelector(selectUserProfileIsFollower);
 
     const LinkToFollowers = ({children, linkTo}: LinkToFollowersProps): JSX.Element => {
-        if (isPrivateProfile && linkTo && userProfileId !== myProfileId) {
+        if (isPrivateProfile && userProfileId !== myProfileId && !isFollower) {
             return <div className={classes.followLink}>{children}</div>;
         } else {
             return <Link to={`${USER}/${userProfileId}/${linkTo}`} className={classes.followLink}>{children}</Link>

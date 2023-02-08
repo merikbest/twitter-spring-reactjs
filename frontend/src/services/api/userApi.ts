@@ -28,14 +28,14 @@ import {
     API_USER_FOLLOWERS,
     API_USER_FOLLOWING,
     API_USER_MUTED,
-    API_USER_NOTIFICATIONS,
-    API_USER_NOTIFICATIONS_SUBSCRIBES,
-    API_USER_NOTIFICATIONS_TIMELINE,
+    API_NOTIFICATION_USER,
+    API_NOTIFICATION_SUBSCRIBES,
+    API_NOTIFICATION_TIMELINE,
     API_USER_PIN_TWEET,
     API_USER_RELEVANT,
     API_USER_SEARCH,
     API_USER_START,
-    API_USER_SUBSCRIBE
+    API_USER_SUBSCRIBE, API_NOTIFICATION
 } from "../../util/endpoints";
 
 export const UserApi = {
@@ -82,16 +82,16 @@ export const UserApi = {
         return await axios.get<boolean>(`${API_USER_SUBSCRIBE}/${userId}`);
     },
     async getUserNotifications(pageNumber: number): Promise<AxiosResponse<NotificationResponse[]>> {
-        return await axios.get<NotificationResponse[]>(API_USER_NOTIFICATIONS, {params: {page: pageNumber}});
+        return await axios.get<NotificationResponse[]>(API_NOTIFICATION_USER, {params: {page: pageNumber}});
     },
     async getTweetAuthorsNotifications(): Promise<AxiosResponse<NotificationUserResponse[]>> {
-        return await axios.get<NotificationUserResponse[]>(API_USER_NOTIFICATIONS_SUBSCRIBES);
+        return await axios.get<NotificationUserResponse[]>(API_NOTIFICATION_SUBSCRIBES);
     },
     async getUserNotificationById(notificationId: number): Promise<AxiosResponse<NotificationInfoResponse>> {
-        return await axios.get<NotificationInfoResponse>(`${API_USER_NOTIFICATIONS}/${notificationId}`);
+        return await axios.get<NotificationInfoResponse>(`${API_NOTIFICATION}/${notificationId}`);
     },
     async getNotificationsFromTweetAuthors(pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(API_USER_NOTIFICATIONS_TIMELINE, {params: {page: pageNumber}});
+        return await axios.get<TweetResponse[]>(API_NOTIFICATION_TIMELINE, {params: {page: pageNumber}});
     },
     async startUseTwitter(userId: number): Promise<AxiosResponse<boolean>> {
         return await axios.get<boolean>(API_USER_START(userId));

@@ -4,6 +4,7 @@ import {useSelector} from "react-redux";
 import FollowerGroup from "../../../components/FollowerGroup/FollowerGroup";
 import {
     selectUserProfileId,
+    selectUserProfileIsFollower,
     selectUserProfileIsMyProfileBlocked,
     selectUserProfileIsPrivateProfile,
     selectUserProfileSameFollowers
@@ -14,10 +15,11 @@ const UserFollowerGroup = memo((): ReactElement => {
     const isMyProfileBlocked = useSelector(selectUserProfileIsMyProfileBlocked);
     const isPrivateProfile = useSelector(selectUserProfileIsPrivateProfile);
     const sameFollowers = useSelector(selectUserProfileSameFollowers);
+    const isFollower = useSelector(selectUserProfileIsFollower);
 
     return (
         <>
-            {userProfileId && !isMyProfileBlocked && !isPrivateProfile && (
+            {userProfileId && !isMyProfileBlocked && (!isPrivateProfile || isFollower) && (
                 <FollowerGroup userId={userProfileId} sameFollowers={sameFollowers}/>
             )}
         </>

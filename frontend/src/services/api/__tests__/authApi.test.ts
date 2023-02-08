@@ -13,7 +13,7 @@ import {
     API_AUTH_REGISTRATION_CONFIRM,
     API_AUTH_RESET,
     API_AUTH_RESET_CURRENT,
-    API_AUTH_USER
+    API_USER_TOKEN
 } from "../../../util/endpoints";
 import {mockUser} from "../../../util/mockData/mockData";
 import {testApiCall} from "../../../util/apiTestHelper";
@@ -174,11 +174,11 @@ describe("AuthApi", () => {
 
     describe("should fetch AuthApi.getMe", () => {
         it("[200] should get user success", () => {
-            testApiCall(mockAdapter, "onGet", API_AUTH_USER, 200, mockAuthUserResponse, AuthApi.getMe);
+            testApiCall(mockAdapter, "onGet", API_USER_TOKEN, 200, mockAuthUserResponse, AuthApi.getMe);
         });
 
         it("[404] should User not found", () => {
-            testApiCall(mockAdapter, "onGet", API_AUTH_USER, 404, mockUserErrorResponse, AuthApi.getMe);
+            testApiCall(mockAdapter, "onGet", API_USER_TOKEN, 404, mockUserErrorResponse, AuthApi.getMe);
         });
     });
 });

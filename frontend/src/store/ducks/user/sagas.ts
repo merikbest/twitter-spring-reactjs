@@ -142,7 +142,7 @@ export function* processFollowUserRequest({payload}: FollowUserActionInterface) 
         yield put(setFollowToTweetsState({userId: payload.userId, tweetId: payload.tweetId!, isFollower: data}));
         yield put(setFollowToUsersTweetState({userId: payload.userId, tweetId: payload.tweetId!, isFollower: data}));
         yield put(setUserFollowing(data));
-        yield put(setFollowToUserProfile(data));
+        yield put(setFollowToUserProfile({userId: payload.userId, isFollower: data}));
         yield put(setFollowToUserDetail(data));
         yield put(setFollowToUsersState({userId: payload.userId, isFollower: data}));
         yield put(setFollowToUsersSearchState({userId: payload.userId, isFollower: data}));

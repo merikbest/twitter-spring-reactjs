@@ -38,7 +38,7 @@ import {
     selectUserDataId,
     selectUserDataIsPrivateProfile,
     selectUserDataNotificationsCount,
-    selectUserDataUnreadMessagesSize
+    selectUserDataUnreadMessagesCount
 } from "../../store/ducks/user/selectors";
 import {useSideMenuStyles} from "./SideMenuStyles";
 import AddTweetModal from "../AddTweetModal/AddTweetModal";
@@ -69,7 +69,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
     const location = useLocation();
     const myProfileId = useSelector(selectUserDataId);
     const notificationsCount = useSelector(selectUserDataNotificationsCount);
-    const unreadMessagesSize = useSelector(selectUserDataUnreadMessagesSize);
+    const unreadMessagesCount = useSelector(selectUserDataUnreadMessagesCount);
     const followerRequestsSize = useSelector(selectUserDataFollowerRequestsSize);
     const isPrivateProfile = useSelector(selectUserDataIsPrivateProfile);
     const loadingStatus = useSelector(selectLoadingState);
@@ -202,9 +202,9 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                         <div>
                             <Hidden smDown>
                                 <>
-                                    {(unreadMessagesSize !== 0) && (
+                                    {(unreadMessagesCount !== 0) && (
                                         <span className={classes.count}>
-                                            {unreadMessagesSize}
+                                            {unreadMessagesCount}
                                         </span>
                                     )}
                                     {(location.pathname.includes(MESSAGES)) ? (

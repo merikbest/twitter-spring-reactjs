@@ -6,7 +6,6 @@ import ProfileHeaderModal from "./ProfileHeaderModal/ProfileHeaderModal";
 import {ImageObj} from "../../components/AddTweetForm/AddTweetForm";
 import ProfileDescriptionModal from "./ProfileDescriptionModal/ProfileDescriptionModal";
 import ProfileUpdatedModal from "./ProfileUpdatedModal/ProfileUpdatedModal";
-import {Image} from "../../store/types/common";
 import {uploadImage} from "../../util/uploadImage";
 import {
     selectUserProfileLocation,

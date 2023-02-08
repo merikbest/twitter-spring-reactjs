@@ -37,16 +37,9 @@ const ChatParticipant: FC<ChatParticipantProps> = memo((
                 <Avatar
                     className={classes.userAvatar}
                     src={(isMyProfile) ? (
-                        (chat.participants[0].user.avatar?.src) ? (
-                            chat.participants[0].user.avatar.src
-                        ) : (
-                            DEFAULT_PROFILE_IMG
-                        )
-                    ) : ((chat.participants[1].user.avatar?.src) ? (
-                            chat.participants[1].user.avatar?.src
-                        ) : (
-                            DEFAULT_PROFILE_IMG
-                        )
+                        chat.participants[0].user.avatar ?? DEFAULT_PROFILE_IMG
+                    ) : (
+                        chat.participants[1].user.avatar ?? DEFAULT_PROFILE_IMG
                     )}
                 />
                 <div>

@@ -72,18 +72,18 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<Long> getUserFollowersIds(@Param("userId") Long userId);
 
     @Query("SELECT user FROM User user " +
-            "LEFT JOIN user.followers follower " +
-            "WHERE follower.id = :userId")
+            "LEFT JOIN user.following following " +
+            "WHERE following.id = :userId")
     Page<UserProjection> getFollowersById(@Param("userId") Long userId, Pageable pageable);
 
     @Query("SELECT user FROM User user " +
-            "LEFT JOIN user.following following " +
-            "WHERE following.id = :userId")
+            "LEFT JOIN user.followers follower " +
+            "WHERE follower.id = :userId")
     Page<UserProjection> getFollowingById(@Param("userId") Long userId, Pageable pageable);
 
-    @Query("SELECT user FROM User user " +
-            "LEFT JOIN user.followerRequests followerRequest " +
-            "WHERE followerRequest.id = :userId")
+    @Query(value = "SELECT *, users.full_name as fullName FROM users " +
+            "LEFT JOIN user_follower_requests ufr ON users.id = ufr.follower_id " +
+            "WHERE ufr.user_id = :userId", nativeQuery = true)
     Page<FollowerUserProjection> getFollowerRequests(@Param("userId") Long userId, Pageable pageable);
 
     @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user " +

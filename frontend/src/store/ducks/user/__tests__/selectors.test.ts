@@ -7,7 +7,7 @@ import {
     selectUserDataIsPrivateProfile,
     selectUserDataIsProfileStarted,
     selectUserDataNotificationsCount,
-    selectUserDataUnreadMessagesSize,
+    selectUserDataUnreadMessagesCount,
     selectUserFollowersSize,
     selectUserFollowingSize,
     selectUserIsError,
@@ -55,8 +55,8 @@ describe("user selectors:", () => {
     });
 
     describe("selectUserDataUnreadMessagesSize", () => {
-        it("should return unreadMessagesSize number", () => {
-            expect(selectUserDataUnreadMessagesSize(createMockRootState())).toBe(0);
+        it("should return unreadMessagesCount number", () => {
+            expect(selectUserDataUnreadMessagesCount(createMockRootState())).toBe(0);
         });
     });
 

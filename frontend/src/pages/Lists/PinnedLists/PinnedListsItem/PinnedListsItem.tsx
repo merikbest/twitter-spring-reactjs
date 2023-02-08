@@ -18,7 +18,6 @@ const PinnedListsItem: FC<PinnedListsItemProps> = memo(({pinnedList}): ReactElem
     const globalClasses = useGlobalStyles();
     const classes = usePinnedListsItemStyles();
     const {visiblePopperWindow, handleHoverPopper, handleLeavePopper} = useHoverList();
-    const pinnedListWallpaper = pinnedList?.wallpaper ? pinnedList?.wallpaper?.src : pinnedList?.altWallpaper;
 
     return (
         <Link to={`${LISTS}/${pinnedList?.id}`} className={globalClasses.link}>
@@ -28,7 +27,7 @@ const PinnedListsItem: FC<PinnedListsItemProps> = memo(({pinnedList}): ReactElem
                 onMouseEnter={() => handleHoverPopper(pinnedList?.id!)}
                 onMouseLeave={handleLeavePopper}
             >
-                <Avatar variant="square" className={classes.listAvatar} src={pinnedListWallpaper}/>
+                <Avatar variant="square" className={classes.listAvatar} src={pinnedList?.wallpaper ?? pinnedList?.altWallpaper}/>
                 <Typography component={"div"} className={classes.pinnedListName}>
                     {pinnedList?.isPrivate && <LockIcon/>}
                     {" "}{pinnedList?.name}

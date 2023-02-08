@@ -7,13 +7,12 @@ export const selectUserState = (state: RootState): UserState => state.user;
 export const selectUserData = (state: RootState): UserState["data"] => selectUserState(state).data;
 export const selectUserDataId = (state: RootState) => selectUserData(state)?.id;
 export const selectUserDataNotificationsCount = (state: RootState) => selectUserData(state)?.notificationsCount;
-export const selectUserDataUnreadMessagesSize = (state: RootState) => selectUserData(state)?.unreadMessagesSize;
+export const selectUserDataUnreadMessagesCount = (state: RootState) => selectUserData(state)?.unreadMessagesCount;
 export const selectUserDataFollowerRequestsSize = (state: RootState) => selectUserData(state)?.followerRequestsSize;
 export const selectUserDataIsPrivateProfile = (state: RootState) => selectUserData(state)?.isPrivateProfile;
 export const selectUserDataIsProfileStarted = (state: RootState) => selectUserData(state)?.profileStarted;
 export const selectUserDataIsMutedDirectMessages = (state: RootState) => selectUserData(state)?.isMutedDirectMessages;
-export const selectUserProfileAvatar = (state: RootState) =>
-    selectUserData(state)?.avatar ? selectUserData(state)?.avatar.src : DEFAULT_PROFILE_IMG;
+export const selectUserProfileAvatar = (state: RootState) => selectUserData(state)?.avatar ?? DEFAULT_PROFILE_IMG;
 export const selectUserProfileFullName = (state: RootState) => selectUserData(state)?.fullName;
 export const selectUserProfileUsername = (state: RootState) => selectUserData(state)?.username;
 export const selectUserProfileCountryCode = (state: RootState) => selectUserData(state)?.countryCode;

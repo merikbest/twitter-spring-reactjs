@@ -24,7 +24,7 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
 
         case UserActionsType.SET_UNREAD_MESSAGE:
             if (draft.data) {
-                draft.data.unreadMessagesSize = draft.data.unreadMessagesSize + 1;
+                draft.data.unreadMessagesCount = draft.data.unreadMessagesCount + 1;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
@@ -130,7 +130,7 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
 
         case UserActionsType.SET_READ_MESSAGE:
             if (draft.data) {
-                draft.data.unreadMessagesSize = action.payload;
+                draft.data.unreadMessagesCount = action.payload;
                 draft.status = LoadingStatus.LOADED;
             }
             break;

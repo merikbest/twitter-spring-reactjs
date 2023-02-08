@@ -18,6 +18,7 @@ import {
 } from './contracts/actionTypes';
 import {ChatParticipantRequest, UserProfileState} from "./contracts/state";
 import {UserProfileResponse} from "../../types/user";
+import {FollowUsersPayload} from "../users/contracts/state";
 
 export const setBlocked = (payload: boolean): SetBlockedActionInterface => ({
     type: UserProfileActionsType.SET_BLOCKED,
@@ -29,7 +30,7 @@ export const setMuted = (payload: boolean): SetMutedActionInterface => ({
     payload,
 });
 
-export const setFollowToUserProfile = (payload: boolean): SetFollowToUserProfileActionInterface => ({
+export const setFollowToUserProfile = (payload: FollowUsersPayload): SetFollowToUserProfileActionInterface => ({
     type: UserProfileActionsType.SET_FOLLOW_TO_USER_PROFILE,
     payload,
 });

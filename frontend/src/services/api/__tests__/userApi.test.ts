@@ -15,9 +15,9 @@ import {
     API_USER_FOLLOWERS,
     API_USER_FOLLOWING,
     API_USER_MUTED,
-    API_USER_NOTIFICATIONS,
-    API_USER_NOTIFICATIONS_SUBSCRIBES,
-    API_USER_NOTIFICATIONS_TIMELINE,
+    API_NOTIFICATION_USER,
+    API_NOTIFICATION_SUBSCRIBES,
+    API_NOTIFICATION_TIMELINE,
     API_USER_PIN_TWEET,
     API_USER_RELEVANT,
     API_USER_SEARCH,
@@ -173,29 +173,29 @@ describe("UserApi", () => {
 
     describe("should fetch UserApi.getUserNotifications", () => {
         it("[200] should get user notifications Success", () => {
-            testApiCall(mockAdapter, "onGet", API_USER_NOTIFICATIONS, 200, [{id: 1}], UserApi.getUserNotifications, 1);
+            testApiCall(mockAdapter, "onGet", API_NOTIFICATION_USER, 200, [{id: 1}], UserApi.getUserNotifications, 1);
         });
     });
 
     describe("should fetch UserApi.getTweetAuthorsNotifications", () => {
         it("[200] should get tweet authors notifications Success", () => {
-            testApiCall(mockAdapter, "onGet", API_USER_NOTIFICATIONS_SUBSCRIBES, 200, [{id: 1}], UserApi.getTweetAuthorsNotifications);
+            testApiCall(mockAdapter, "onGet", API_NOTIFICATION_SUBSCRIBES, 200, [{id: 1}], UserApi.getTweetAuthorsNotifications);
         });
     });
 
     describe("should fetch UserApi.getUserNotificationById", () => {
         it("[200] should get user notification by id Success", () => {
-            testApiCall(mockAdapter, "onGet", `${API_USER_NOTIFICATIONS}/1`, 200, [{id: 1}], UserApi.getUserNotificationById, 1);
+            testApiCall(mockAdapter, "onGet", `${API_NOTIFICATION_USER}/1`, 200, [{id: 1}], UserApi.getUserNotificationById, 1);
         });
 
         it("[404] should user not found", () => {
-            testApiCall(mockAdapter, "onGet", `${API_USER_NOTIFICATIONS}/1`, 404, "Notification not found", UserApi.getUserNotificationById, 1);
+            testApiCall(mockAdapter, "onGet", `${API_NOTIFICATION_USER}/1`, 404, "Notification not found", UserApi.getUserNotificationById, 1);
         });
     });
 
     describe("should fetch UserApi.getNotificationsFromTweetAuthors", () => {
         it("[200] should get notifications from tweet authors Success", () => {
-            testApiCall(mockAdapter, "onGet", API_USER_NOTIFICATIONS_TIMELINE, 200, mockTweets, UserApi.getNotificationsFromTweetAuthors, 1);
+            testApiCall(mockAdapter, "onGet", API_NOTIFICATION_TIMELINE, 200, mockTweets, UserApi.getNotificationsFromTweetAuthors, 1);
         });
     });
 
