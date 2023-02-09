@@ -21,7 +21,7 @@ export interface Settings {
 }
 
 export interface UserRequest {
-    username: string;
+    fullName: string;
     location: string;
     website: string;
     avatar: string;

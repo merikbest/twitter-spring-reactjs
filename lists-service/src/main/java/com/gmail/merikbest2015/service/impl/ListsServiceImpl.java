@@ -303,6 +303,11 @@ public class ListsServiceImpl implements ListsService {
         return listsRepository.isListIncludeUser(listIds, listId, authUserId);
     }
 
+    public boolean isListPinned(Long listId) {
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        return pinnedListsRepository.isListPinned(listId, authUserId);
+    }
+
     private void checkUserIsBlocked(Long userId, Long supposedBlockedUserId) {
         boolean isPresent = userClient.isUserBlocked(userId, supposedBlockedUserId);
 

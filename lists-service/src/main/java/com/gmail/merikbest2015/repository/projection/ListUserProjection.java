@@ -14,4 +14,7 @@ public interface ListUserProjection {
 
     @Value("#{@listsServiceImpl.getListOwnerById(target.listOwnerId)}")
     ListOwnerResponse getListOwner();
+
+    @Value("#{@listsServiceImpl.isListPinned(target.id)}")
+    boolean getIsListPinned();
 }

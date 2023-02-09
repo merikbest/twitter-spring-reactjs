@@ -15,4 +15,7 @@ public class ListUserResponse {
 
     @JsonProperty("isPrivate")
     private boolean isPrivate;
+
+    @JsonProperty("isListPinned")
+    private boolean isListPinned;
 }

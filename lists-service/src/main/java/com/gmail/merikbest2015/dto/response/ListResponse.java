@@ -15,4 +15,7 @@ public class ListResponse {
 
     @JsonProperty("isFollower")
     private boolean isFollower;
+
+    @JsonProperty("isListPinned")
+    private boolean isListPinned;
 }

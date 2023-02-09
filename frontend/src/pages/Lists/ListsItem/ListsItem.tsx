@@ -30,12 +30,12 @@ const ListsItem: FC<ListsItemProps> = memo(({list, listIndex, isMyList}): ReactE
     const onClickPinList = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
         event.preventDefault();
         event.stopPropagation();
-        // TODO fix "List not found" error
-        // if (list?.pinnedDate) {
-        //     dispatch(unpinList(list!.id));
-        // } else {
-        //     dispatch(pinList(list!.id));
-        // }
+
+        if (list?.isListPinned) {
+            dispatch(unpinList(list!.id));
+        } else {
+            dispatch(pinList(list!.id));
+        }
     };
 
     return (
@@ -55,10 +55,8 @@ const ListsItem: FC<ListsItemProps> = memo(({list, listIndex, isMyList}): ReactE
                     {isMyList && (
                         <ActionIconButton
                             onClick={onClickPinList}
-                            // actionText={list?.pinnedDate ? "Unpin" : "Pin"}
-                            // icon={list?.pinnedDate ? PinIconFilled : PinIcon}
-                            actionText={"Pin"}
-                            icon={PinIcon}
+                            actionText={list?.isListPinned ? "Unpin" : "Pin"}
+                            icon={list?.isListPinned ? PinIconFilled : PinIcon}
                         />
                     )}
                     {(myProfileId === list?.listOwner.id || isMyList) ? null : (

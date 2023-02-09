@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public AuthUserProjection updateUserProfile(User userInfo) {
-        if (userInfo.getUsername().length() == 0 || userInfo.getUsername().length() > 50) {
+        if (userInfo.getFullName().length() == 0 || userInfo.getFullName().length() > 50) {
             throw new ApiRequestException("Incorrect username length", HttpStatus.BAD_REQUEST);
         }
         User user = authenticationService.getAuthenticatedUser();
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
         if (userInfo.getWallpaper() != null) {
             user.setWallpaper(userInfo.getWallpaper());
         }
-        user.setUsername(userInfo.getUsername());
+        user.setFullName(userInfo.getFullName());
         user.setAbout(userInfo.getAbout());
         user.setLocation(userInfo.getLocation());
         user.setWebsite(userInfo.getWebsite());

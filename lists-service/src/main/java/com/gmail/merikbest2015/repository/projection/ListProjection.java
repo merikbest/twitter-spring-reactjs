@@ -16,4 +16,7 @@ public interface ListProjection {
 
     @Value("#{@listsServiceImpl.isMyProfileFollowList(target.id)}")
     boolean getIsFollower();
+
+    @Value("#{@listsServiceImpl.isListPinned(target.id)}")
+    boolean getIsListPinned();
 }

@@ -8,8 +8,8 @@ import ProfileDescriptionModal from "./ProfileDescriptionModal/ProfileDescriptio
 import ProfileUpdatedModal from "./ProfileUpdatedModal/ProfileUpdatedModal";
 import {uploadImage} from "../../util/uploadImage";
 import {
+    selectUserProfileFullName,
     selectUserProfileLocation,
-    selectUserProfileUsername,
     selectUserProfileWebsite
 } from "../../store/ducks/user/selectors";
 import {updatedUserData} from "../../store/ducks/user/actionCreators";
@@ -23,7 +23,7 @@ interface SetupProfileModalProps {
 const SetupProfileModal: FC<SetupProfileModalProps> = ({visible, onClose}): ReactElement => {
     const classes = useSetupProfileModalStyles();
     const dispatch = useDispatch();
-    const username = useSelector(selectUserProfileUsername);
+    const fullName = useSelector(selectUserProfileFullName);
     const location = useSelector(selectUserProfileLocation);
     const website = useSelector(selectUserProfileWebsite);
     const [visibleProfileHeaderModal, setVisibleProfileHeaderModal] = React.useState<boolean>(false);
@@ -52,7 +52,7 @@ const SetupProfileModal: FC<SetupProfileModalProps> = ({visible, onClose}): Reac
         }
 
         dispatch(updatedUserData({
-            username: username!,
+            fullName: fullName!,
             location: location!,
             website: website!,
             avatar: avatarResponse!,

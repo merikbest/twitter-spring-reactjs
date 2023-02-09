@@ -77,8 +77,7 @@ export const listsReducer = produce((draft: Draft<ListsState>, action: ListsActi
 
         case ListsActionType.SET_PINED_LIST_TO_USER_LIST:
             const pinToUserListIndex = draft.userLists.findIndex((list) => list.id === action.payload.id);
-            // TODO FIX PIN
-            // if (pinToUserListIndex !== -1) draft.userLists[pinToUserListIndex].pinnedDate = action.payload.pinnedDate;
+            if (pinToUserListIndex !== -1) draft.userLists[pinToUserListIndex].isListPinned = action.payload.isListPinned;
             break;
 
         case ListsActionType.RESET_LISTS_STATE:

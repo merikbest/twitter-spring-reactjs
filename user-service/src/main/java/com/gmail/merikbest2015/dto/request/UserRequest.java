@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class UserRequest {
-    private String username;
+    private String fullName;
     private String about;
     private String location;
     private String website;

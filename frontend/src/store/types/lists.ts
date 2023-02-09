@@ -1,5 +1,3 @@
-import {Image} from "./common";
-
 export interface BaseListResponse {
     id: number;
     name: string;
@@ -45,31 +43,31 @@ export interface ListResponse {
     id: number;
     name: string;
     description: string;
-    // pinnedDate: string;
     altWallpaper: string;
     wallpaper: string
     listOwner: ListOwnerResponse;
     isFollower: boolean;
+    isListPinned: boolean;
 }
 
 export interface ListUserResponse {
     id: number;
     name: string;
     description: string;
-    // pinnedDate: string;
     altWallpaper: string;
     wallpaper: string
     listOwner: ListOwnerResponse;
     isPrivate: boolean;
+    isListPinned: boolean;
 }
 
 export interface PinnedListResponse {
     id: number;
     name: string;
-    // pinnedDate: string;
     altWallpaper: string;
     wallpaper: string
     isPrivate: boolean;
+    isListPinned: boolean;
 }
 
 export interface SimpleListResponse {

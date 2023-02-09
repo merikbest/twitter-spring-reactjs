@@ -26,14 +26,14 @@ interface EditProfileModalProps {
 }
 
 export interface EditProfileFormProps {
-    username: string;
+    fullName: string;
     about: string;
     location: string;
     website: string;
 }
 
 export const EditProfileFormSchema = yup.object().shape({
-    username: yup.string().min(1, "Name can’t be blank").required(),
+    fullName: yup.string().min(1, "Name can’t be blank").required(),
 });
 
 const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}): ReactElement | null => {
@@ -45,7 +45,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}): ReactE
 
     const {control, handleSubmit, formState: {errors}} = useForm<EditProfileFormProps>({
         defaultValues: {
-            username: userData?.username,
+            fullName: userData?.fullName,
             about: userData?.about,
             location: userData?.location,
             website: userData?.website,
@@ -111,14 +111,14 @@ const EditProfileModal: FC<EditProfileModalProps> = ({visible, onClose}): ReactE
                         <FormControl className={classes.inputWrapper} variant="outlined">
                             <FormGroup aria-label="position">
                                 <Controller
-                                    name="username"
+                                    name="fullName"
                                     control={control}
                                     defaultValue=""
                                     render={({field: {onChange, value}}) => (
                                         <TweeterInput
-                                            name="username"
-                                            helperText={errors.username?.message}
-                                            error={!!errors.username}
+                                            name="fullName"
+                                            helperText={errors.fullName?.message}
+                                            error={!!errors.fullName}
                                             label={"Name"}
                                             maxTextLength={50}
                                             onChange={onChange}

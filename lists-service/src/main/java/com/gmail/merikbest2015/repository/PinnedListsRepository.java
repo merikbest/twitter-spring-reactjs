@@ -19,6 +19,11 @@ public interface PinnedListsRepository extends JpaRepository<PinnedLists, Long> 
             "AND pinnedList.pinnedUserId = :userId")
     PinnedLists getPinnedByUserIdAndListId(@Param("listId") Long listId, @Param("userId") Long userId);
 
+    @Query("SELECT CASE WHEN count(pinnedList) > 0 THEN true ELSE false END FROM PinnedLists pinnedList " +
+            "WHERE pinnedList.list.id = :pinnedListId " +
+            "AND pinnedList.pinnedUserId = :pinnedUserId")
+    boolean isListPinned(@Param("pinnedListId") Long pinnedListId, @Param("pinnedUserId") Long pinnedUserId);
+
     @Modifying
     @Query(value = "DELETE FROM pinned_lists WHERE list_id = ?1 AND pinned_user_id = ?2", nativeQuery = true)
     void removePinnedList(@Param("listId") Long listId, @Param("userId") Long userId);
