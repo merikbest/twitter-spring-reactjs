@@ -24,6 +24,7 @@
         <module>lists-service</module>
         <module>chat-service</module>
         <module>notification-service</module>
+        <module>websocket-service</module>
     </modules>
 
     <properties>

@@ -80,9 +80,9 @@ spring:
                         - AuthFilter
 
                 -   id: websocket-service
-                    uri: lb://notification-service
+                    uri: lb://websocket-service
                     predicates:
-                        - Path=/websocket/**
+                        - Path=/websocket/**, /api/v1/websocket/**
 
                 -   id: image-service
                     uri: lb://image-service
