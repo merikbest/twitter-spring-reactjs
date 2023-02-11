@@ -1,15 +1,12 @@
 import React, {memo, ReactElement, useState} from "react";
-import {Link} from "react-router-dom";
 import {ClickAwayListener, List} from "@material-ui/core";
 import {useSelector} from "react-redux";
 
 import {useUserPageActionsStyles} from "./UserPageActionsStyles";
-import {EditIcon, ListsIcon, MomentsIcon, ReportIcon, ShareIcon, TopicIcon} from "../../../icons";
+import {EditIcon, MomentsIcon, ReportIcon, ShareIcon} from "../../../icons";
 import {useGlobalStyles} from "../../../util/globalClasses";
-import {LISTS_MEMBERSHIPS, PROFILE, TOPICS} from "../../../util/pathConstants";
 import ActionIconButton from "../../../components/ActionIconButton/ActionIconButton";
 import {
-    selectUserProfileId,
     selectUserProfileIsFollower,
     selectUserProfileIsPrivateProfile,
     selectUserProfileIsUserBlocked,
@@ -20,11 +17,12 @@ import CopyProfileLinkButton from "./CopyProfileLinkButton/CopyProfileLinkButton
 import MuteUserButton from "./MuteUserButton/MuteUserButton";
 import BlockUserButton from "./BlockUserButton/BlockUserButton";
 import UserItemAction from "./UserItemAction/UserItemAction";
+import ViewUserListsButton from "./ViewUserListsButton/ViewUserListsButton";
+import ViewUserTopicsButton from "./ViewUserTopicsButton/ViewUserTopicsButton";
 
 const UserPageActions = memo((): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useUserPageActionsStyles();
-    const userProfileId = useSelector(selectUserProfileId);
     const username = useSelector(selectUserProfileUsername);
     const isUserBlocked = useSelector(selectUserProfileIsUserBlocked);
     const isPrivateProfile = useSelector(selectUserProfileIsPrivateProfile);
@@ -50,13 +48,9 @@ const UserPageActions = memo((): ReactElement => {
                         <List>
                             {(!isPrivateProfile || isFollower) && (
                                 <>
-                                    <Link to={`${PROFILE}/${userProfileId}${TOPICS}`} className={classes.routeLink}>
-                                        <UserItemAction title={"View Topics"} icon={TopicIcon}/>
-                                    </Link>
+                                    <ViewUserTopicsButton/>
                                     <AddUserToListsButton/>
-                                    <Link to={`${LISTS_MEMBERSHIPS}/${userProfileId}`} className={classes.routeLink}>
-                                        <UserItemAction title={"View Lists"} icon={ListsIcon}/>
-                                    </Link>
+                                    <ViewUserListsButton/>
                                     <UserItemAction title={"View Moments"} icon={MomentsIcon}/>
                                     {!isUserBlocked && (
                                         <>

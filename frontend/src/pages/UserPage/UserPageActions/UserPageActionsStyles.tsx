@@ -36,9 +36,4 @@ export const useUserPageActionsStyles = makeStyles((theme: Theme) => ({
             height: "1.30em",
         },
     },
-    routeLink: {
-        width: "100%",
-        color: theme.palette.text.primary,
-        textDecoration: "none",
-    },
 }));

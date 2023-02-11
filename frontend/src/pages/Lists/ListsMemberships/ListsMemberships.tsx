@@ -4,10 +4,10 @@ import {useHistory, useParams} from "react-router-dom";
 import {Paper} from "@material-ui/core";
 
 import {fetchUserProfile} from "../../../store/ducks/userProfile/actionCreators";
-import {selectUserProfile} from "../../../store/ducks/userProfile/selectors";
+import {selectUserProfile, selectUsersIsSuccessLoaded} from "../../../store/ducks/userProfile/selectors";
 import {selectUserDataId} from "../../../store/ducks/user/selectors";
 import {fetchUserListsById, resetListsState} from "../../../store/ducks/lists/actionCreators";
-import {selectIsLoaded, selectIsLoading, selectUserListsItems} from "../../../store/ducks/lists/selectors";
+import {selectIsLoading, selectListsItems} from "../../../store/ducks/lists/selectors";
 import Spinner from "../../../components/Spinner/Spinner";
 import ListsItem from "../ListsItem/ListsItem";
 import {useGlobalStyles} from "../../../util/globalClasses";
@@ -24,28 +24,28 @@ const ListsMemberships: FC = (): ReactElement => {
     const params = useParams<{ id: string }>();
     const myProfileId = useSelector(selectUserDataId);
     const userProfile = useSelector(selectUserProfile);
-    const lists = useSelector(selectUserListsItems);
-    const isLoading = useSelector(selectIsLoading);
-    const isLoaded = useSelector(selectIsLoaded);
+    const isUserProfileLoaded = useSelector(selectUsersIsSuccessLoaded);
+    const lists = useSelector(selectListsItems);
+    const isListsLoading = useSelector(selectIsLoading);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        dispatch(fetchUserProfile(parseInt(params.id)));
+        dispatch(fetchUserProfile(Number(params.id)));
 
         return () => {
             dispatch(resetListsState());
         };
-    }, [params.id]);
+    }, [params]);
     
     useEffect(() => {
-        if (userProfile) {
+        if (isUserProfileLoaded && userProfile) {
             if ((userProfile.isPrivateProfile && !userProfile.isFollower) || userProfile.isMyProfileBlocked) {
                 history.push(`${PROFILE}/${userProfile.id}`);
             } else {
-                dispatch(fetchUserListsById(parseInt(params.id)));
+                dispatch(fetchUserListsById(Number(params.id)));
             }
         }
-    }, [userProfile])
+    }, [isUserProfileLoaded])
 
     return (
         <Paper className={globalClasses.pageContainer} variant="outlined">
@@ -56,10 +56,10 @@ const ListsMemberships: FC = (): ReactElement => {
                 />
             </PageHeaderWrapper>
             <div className={globalClasses.contentWrapper}>
-                {isLoading ? (
+                {(isListsLoading && !lists.length) ? (
                     <Spinner/>
                 ) : (
-                    (lists.length === 0 && isLoaded) ? (
+                    (!isListsLoading && !lists.length) ? (
                         <EmptyPageDescription
                             title={(myProfileId === userProfile?.id) ? (
                                 "You haven’t been added to any Lists yet"

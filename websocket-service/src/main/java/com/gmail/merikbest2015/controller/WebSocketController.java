@@ -9,12 +9,12 @@ import static com.gmail.merikbest2015.constants.PathConstants.API_V1_WEBSOCKET;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(API_V1_WEBSOCKET)
-public class WebsocketController {
+public class WebSocketController {
 
     private final SimpMessagingTemplate messagingTemplate;
 
-    @PostMapping("/{destination}")
-    public void send(@PathVariable("destination") String destination, @RequestBody Object request) {
+    @PostMapping
+    public void send(@RequestParam("destination") String destination, @RequestBody Object request) {
         messagingTemplate.convertAndSend(destination, request);
     }
 }

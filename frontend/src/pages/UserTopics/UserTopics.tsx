@@ -1,5 +1,5 @@
 import React, {ReactElement, useEffect} from "react";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
@@ -9,26 +9,43 @@ import Spinner from "../../components/Spinner/Spinner";
 import TopicItem from "../Topics/TopicItem/TopicItem";
 import {useGlobalStyles} from "../../util/globalClasses";
 import EmptyPageDescription from "../../components/EmptyPageDescription/EmptyPageDescription";
+import {fetchUserProfile} from "../../store/ducks/userProfile/actionCreators";
+import {PROFILE} from "../../util/pathConstants";
+import {selectUserProfile, selectUsersIsSuccessLoaded} from "../../store/ducks/userProfile/selectors";
 
 const UserTopics = (): ReactElement => {
     const globalClasses = useGlobalStyles();
     const dispatch = useDispatch();
+    const history = useHistory();
+    const params = useParams<{ userId: string }>();
+    const userProfile = useSelector(selectUserProfile);
+    const isUserProfileLoaded = useSelector(selectUsersIsSuccessLoaded);
     const followedTopics = useSelector(selectFollowedTopicsItems);
     const isFollowedTopicsLoading = useSelector(selectIsFollowedTopicsLoading);
-    const params = useParams<{ userId: string }>();
 
     useEffect(() => {
-        dispatch(fetchFollowedTopicsByUserId(Number(params.userId)));
+        window.scrollTo(0, 0);
+        dispatch(fetchUserProfile(Number(params.userId)));
 
         return () => {
             dispatch(resetTopicsState());
         };
-    }, []);
+    }, [params]);
+
+    useEffect(() => {
+        if (isUserProfileLoaded && userProfile) {
+            if ((userProfile.isPrivateProfile && !userProfile.isFollower) || userProfile.isMyProfileBlocked) {
+                history.push(`${PROFILE}/${userProfile.id}`);
+            } else {
+                dispatch(fetchFollowedTopicsByUserId(Number(params.userId)));
+            }
+        }
+    }, [isUserProfileLoaded])
 
     return (
         <PageWrapper title={"Topics"}>
             <div className={globalClasses.contentWrapper}>
-                {isFollowedTopicsLoading ? (
+                {(isFollowedTopicsLoading && !followedTopics.length) ? (
                     <Spinner/>
                 ) : (
                     (!isFollowedTopicsLoading && !followedTopics.length) ? (

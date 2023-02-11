@@ -7,12 +7,12 @@ import com.gmail.merikbest2015.dto.request.MessageWithTweetRequest;
 import com.gmail.merikbest2015.dto.response.ChatMessageResponse;
 import com.gmail.merikbest2015.dto.response.ChatResponse;
 import com.gmail.merikbest2015.dto.response.UserChatResponse;
+import com.gmail.merikbest2015.feign.WebSocketClient;
 import com.gmail.merikbest2015.mapper.ChatMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +26,7 @@ import static com.gmail.merikbest2015.constants.WebsocketConstants.TOPIC_CHAT;
 public class ChatController {
 
     private final ChatMapper chatMapper;
-    private final SimpMessagingTemplate messagingTemplate;
+    private final WebSocketClient webSocketClient;
 
     @GetMapping("/{chatId}")
     public ResponseEntity<ChatResponse> getChatById(@PathVariable("chatId") Long chatId) {
@@ -56,14 +56,14 @@ public class ChatController {
     @PostMapping("/add/message")
     public ResponseEntity<Void> addMessage(@RequestBody ChatMessageRequest request) {
         chatMapper.addMessage(request)
-                .forEach((userId, message) -> messagingTemplate.convertAndSend(TOPIC_CHAT + userId, message));
+                .forEach((userId, message) -> webSocketClient.send(TOPIC_CHAT + userId, message));
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/add/message/tweet")
     public ResponseEntity<Void> addMessageWithTweet(@RequestBody MessageWithTweetRequest request) {
         chatMapper.addMessageWithTweet(request)
-                .forEach((userId, message) -> messagingTemplate.convertAndSend(TOPIC_CHAT + userId, message));
+                .forEach((userId, message) -> webSocketClient.send(TOPIC_CHAT + userId, message));
         return ResponseEntity.ok().build();
     }
 

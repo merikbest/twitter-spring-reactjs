@@ -158,7 +158,7 @@ export function* listsSaga() {
     yield takeEvery(ListsActionType.FETCH_LISTS, fetchListsRequest);
     yield takeEvery(ListsActionType.FETCH_USER_LISTS, fetchUserListsRequest);
     yield takeEvery(ListsActionType.FETCH_USER_LISTS_BY_ID, fetchUserListsByIdRequest);
-    yield takeEvery(ListsActionType.FETCH_USER_LISTS_BY_ID, fetchTweetListsWhichUserInRequest);
+    yield takeEvery(ListsActionType.FETCH_TWEET_LISTS_WHICH_USER_IN, fetchTweetListsWhichUserInRequest);
     yield takeEvery(ListsActionType.FETCH_PINNED_LISTS, fetchPinnedListsRequest);
     yield takeEvery(ListsActionType.FETCH_SIMPLE_LISTS, fetchSimpleListsRequest);
     yield takeEvery(ListsActionType.CREATE_LIST, createListRequest);
