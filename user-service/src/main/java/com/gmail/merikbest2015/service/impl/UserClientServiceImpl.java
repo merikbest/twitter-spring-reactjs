@@ -174,10 +174,19 @@ public class UserClientServiceImpl implements UserClientService {
     }
 
     @Override
-    public List<Long> getValidUserIds(IdsRequest request, String text) {
-        List<Long> validUserIds = userRepository.getValidUserIdsByIds(request.getIds());
+    public List<Long> getValidTweetUserIds(IdsRequest request, String text) {
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        List<Long> validUserIds = userRepository.getValidUserIdsByIds(request.getIds(), authUserId);
         List<Long> userIdsByUsername = userRepository.getValidUserIdsByName(text, request.getIds());
         return Stream.concat(validUserIds.stream(), userIdsByUsername.stream()).distinct().toList();
+    }
+
+    @Override
+    public List<Long> getValidUserIds(IdsRequest request) {
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        List<Long> blockedUserIds = userRepository.getUserIdsWhoBlockedMyProfile(request.getIds(), authUserId);
+        request.getIds().removeAll(blockedUserIds);
+        return userRepository.getValidUserIdsByIds(request.getIds(), authUserId);
     }
 
     @Override

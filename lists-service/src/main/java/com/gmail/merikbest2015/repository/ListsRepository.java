@@ -16,8 +16,11 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
     @Query("SELECT list FROM Lists list WHERE list.id = :listId")
     <T> T getListById(@Param("listId") Long listId, Class<T> type);
 
-    @Query("SELECT list FROM Lists list WHERE list.isPrivate = false")
-    List<ListProjection> getAllTweetLists();
+    @Query("SELECT list FROM Lists list WHERE list.listOwnerId IN :listOwnerIds")
+    List<ListProjection> getAllTweetLists(@Param("listOwnerIds") List<Long> listOwnerIds);
+
+    @Query("SELECT DISTINCT list.listOwnerId FROM Lists list")
+    List<Long> getListOwnerIds();
 
     @Query("SELECT list FROM Lists list WHERE list.id IN :listIds")
     List<ListProjection> getTweetListsByIds(@Param("listIds") List<Long> listIds);

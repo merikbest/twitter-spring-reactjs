@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.util;
 
+import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.response.chat.ChatTweetUserResponse;
 import com.gmail.merikbest2015.dto.request.NotificationRequest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
@@ -46,14 +47,6 @@ public class TweetServiceHelper {
         return tweetRepository.getTweetById(tweetId, TweetUserProjection.class).get();
     }
 
-    public void checkIsUserExist(Long userId) {
-        boolean isUserExist = userClient.isUserExists(userId);
-
-        if (!isUserExist) {
-            throw new ApiRequestException("User (id:" + userId + ") not found", HttpStatus.NOT_FOUND);
-        }
-    }
-
     public boolean isUserLikedTweet(Long tweetId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         return likeTweetRepository.isUserLikedTweet(authUserId, tweetId);
@@ -73,10 +66,6 @@ public class TweetServiceHelper {
         return userClient.isUserFollowByOtherUser(userId);
     }
 
-    public boolean isMyProfileBlockedByUser(Long userId) {
-        return userClient.isMyProfileBlockedByUser(userId);
-    }
-
     public TweetAuthorResponse getTweetAuthor(Long userId) {
         return userClient.getTweetAuthor(userId);
     }
@@ -85,23 +74,61 @@ public class TweetServiceHelper {
         return userClient.getTweetAdditionalInfoUser(userId);
     }
 
-    public boolean isUserHavePrivateProfile(Long userId) {
-        return userClient.isUserHavePrivateProfile(userId);
+    public ChatTweetUserResponse getChatTweetUser(Long userId) {
+        return userClient.getChatTweetUser(userId);
     }
 
+    // Validate
+    public List<Long> getValidUserIds() {
+        List<Long> tweetAuthorIds = tweetRepository.getTweetAuthorIds();
+        return userClient.getValidUserIds(new IdsRequest(tweetAuthorIds));
+    }
+
+    public void checkIsUserExist(Long userId) {
+        boolean isUserExist = userClient.isUserExists(userId);
+
+        if (!isUserExist) {
+            throw new ApiRequestException("User (id:" + userId + ") not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    public void validateTweet(boolean isDeleted, Long tweetAuthorId) {
+        if (isDeleted) {
+            throw new ApiRequestException("Sorry, that Tweet has been deleted.", HttpStatus.BAD_REQUEST);
+        }
+        checkIsValidUserProfile(tweetAuthorId);
+    }
+
+    public void validateUserProfile(Long userId) {
+        checkIsUserExist(userId);
+        checkIsValidUserProfile(userId);
+    }
+//
+//    public boolean isMyProfileBlockedByUser(Long userId) {
+//        return userClient.isMyProfileBlockedByUser(userId);
+//    }
+//
+//    public boolean isUserHavePrivateProfile(Long userId) {
+//        return userClient.isUserHavePrivateProfile(userId);
+//    }
+//
     public void checkIsValidUserProfile(Long userId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
 
-        if (isUserHavePrivateProfile(userId) && !userId.equals(authUserId)) {
-            throw new ApiRequestException("User not found", HttpStatus.BAD_REQUEST);
-        }
-        if (isMyProfileBlockedByUser(userId)) {
-            throw new ApiRequestException("User profile blocked", HttpStatus.BAD_REQUEST);
+        if (!userId.equals(authUserId)) {
+            if (userClient.isUserHavePrivateProfile(userId)) {
+                throw new ApiRequestException("User not found", HttpStatus.NOT_FOUND);
+            }
+            if (userClient.isMyProfileBlockedByUser(userId)) {
+                throw new ApiRequestException("User profile blocked", HttpStatus.BAD_REQUEST);
+            }
         }
     }
 
-    public ChatTweetUserResponse getChatTweetUser(Long userId) {
-        return userClient.getChatTweetUser(userId);
+    public void checkTweetTextLength(String text) {
+        if (text.length() == 0 || text.length() > 280) {
+            throw new ApiRequestException("Incorrect tweet text length", HttpStatus.BAD_REQUEST);
+        }
     }
 
     public NotificationResponse sendNotification(NotificationType notificationType, boolean isTweetLiked, Long notifiedUserId,

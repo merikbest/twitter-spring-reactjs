@@ -19,12 +19,19 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId")
     <T> Optional<T> getTweetById(@Param("tweetId") Long tweetId, Class<T> type);
 
-    @Query("SELECT tweet FROM Tweet tweet " +
+    @Query("SELECT DISTINCT tweet.authorId FROM Tweet tweet " +
             "WHERE tweet.addressedUsername IS NULL " +
+            "AND tweet.scheduledDate IS NULL " +
+            "AND tweet.deleted = false")
+    List<Long> getTweetAuthorIds();
+
+    @Query("SELECT tweet FROM Tweet tweet " +
+            "WHERE tweet.authorId IN :userIds " +
+            "AND tweet.addressedUsername IS NULL " +
             "AND tweet.scheduledDate IS NULL " +
             "AND tweet.deleted = false " +
             "ORDER BY tweet.dateTime DESC")
-    Page<TweetProjection> findAllTweets(Pageable pageable);
+    Page<TweetProjection> getTweetsByAuthorIds(@Param("userIds") List<Long> userIds, Pageable pageable);
 
     @Query("SELECT tweet FROM Tweet tweet " +
             "WHERE tweet.authorId = :userId " +
@@ -65,22 +72,27 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("SELECT tweet FROM Tweet tweet " +
             "LEFT JOIN tweet.quoteTweet quoteTweet " +
-            "WHERE quoteTweet.id = :tweetId " +
+            "WHERE tweet.authorId IN :userIds " +
+            "AND quoteTweet.id = :tweetId " +
             "AND quoteTweet.deleted = false")
-    Page<TweetProjection> getQuotesByTweetId(@Param("tweetId") Long tweetId, Pageable pageable);
+    Page<TweetProjection> getQuotesByTweetId(@Param("userIds") List<Long> userIds,
+                                             @Param("tweetId") Long tweetId,
+                                             Pageable pageable);
 
     @Query("SELECT tweet FROM Tweet tweet " +
-            "WHERE tweet.scheduledDate IS NULL " +
+            "WHERE tweet.authorId IN :userIds " +
+            "AND tweet.scheduledDate IS NULL " +
             "AND tweet.images.size <> 0 " +
             "AND tweet.deleted = false " +
             "ORDER BY tweet.dateTime DESC")
-    Page<TweetProjection> getMediaTweets(Pageable pageable);
+    Page<TweetProjection> getMediaTweets(@Param("userIds") List<Long> userIds, Pageable pageable);
 
     @Query("SELECT tweet FROM Tweet tweet " +
-            "WHERE tweet.scheduledDate IS NULL " +
+            "WHERE tweet.authorId IN :userIds " +
+            "AND tweet.scheduledDate IS NULL " +
             "AND tweet.deleted = false " +
             "AND tweet.text LIKE CONCAT('%','youtu','%')")
-    Page<TweetProjection> getTweetsWithVideo(Pageable pageable);
+    Page<TweetProjection> getTweetsWithVideo(@Param("userIds") List<Long> userIds, Pageable pageable);
 
     @Query("SELECT tweet FROM Tweet tweet " +
             "WHERE tweet.authorId IN :userIds " +

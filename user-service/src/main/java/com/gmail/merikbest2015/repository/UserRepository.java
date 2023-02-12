@@ -229,9 +229,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT user.id FROM User user " +
             "LEFT JOIN user.following following " +
             "WHERE user.id IN :userIds " +
-            "AND (user.privateProfile = false OR (user.privateProfile = true AND following.id IN :userIds) " +
+            "AND (user.privateProfile = false " +
+            "   OR (user.privateProfile = true AND (following.id = :userId OR user.id = :userId)) " +
             "   AND user.active = true)")
-    List<Long> getValidUserIdsByIds(@Param("userIds") List<Long> userIds);
+    List<Long> getValidUserIdsByIds(@Param("userIds") List<Long> userIds, @Param("userId") Long userId);
 
     @Query("SELECT user.id FROM User user " +
             "LEFT JOIN user.following following " +

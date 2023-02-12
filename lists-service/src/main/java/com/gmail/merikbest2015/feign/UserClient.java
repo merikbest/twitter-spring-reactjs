@@ -33,4 +33,7 @@ public interface UserClient {
 
     @GetMapping(API_V1_USER + "/list/participants/{username}")
     List<ListMemberResponse> searchListMembersByUsername(@PathVariable("username") String username);
+
+    @PostMapping(API_V1_USER + "/valid/ids")
+    List<Long> getValidUserIds(@RequestBody IdsRequest request);
 }

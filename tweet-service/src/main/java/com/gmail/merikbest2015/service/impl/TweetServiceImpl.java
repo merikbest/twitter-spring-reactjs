@@ -64,21 +64,21 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public Page<TweetProjection> getTweets(Pageable pageable) {
-        return tweetRepository.findAllTweets(pageable);
+        List<Long> validUserIds = tweetServiceHelper.getValidUserIds();
+        return tweetRepository.getTweetsByAuthorIds(validUserIds, pageable);
     }
 
     @Override
     public TweetProjection getTweetById(Long tweetId) {
         TweetProjection tweet = tweetRepository.getTweetById(tweetId, TweetProjection.class)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-        checkIsTweetDeleted(tweet.isDeleted());
-        tweetServiceHelper.checkIsValidUserProfile(tweet.getAuthorId());
+        tweetServiceHelper.validateTweet(tweet.isDeleted(), tweet.getAuthorId());
         return tweet;
     }
 
     @Override
     public Page<TweetUserProjection> getUserTweets(Long userId, Pageable pageable) {
-        tweetServiceHelper.checkIsUserExist(userId);
+        tweetServiceHelper.validateUserProfile(userId);
         List<TweetUserProjection> tweets = tweetRepository.getTweetsByUserId(userId);
         List<RetweetProjection> retweets = retweetRepository.getRetweetsByUserId(userId);
         List<TweetUserProjection> userTweets = tweetServiceHelper.combineTweetsArrays(tweets, retweets);
@@ -97,7 +97,7 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public Page<TweetProjection> getUserMediaTweets(Long userId, Pageable pageable) {
-        tweetServiceHelper.checkIsUserExist(userId);
+        tweetServiceHelper.validateUserProfile(userId);
         return tweetRepository.getUserMediaTweets(userId, pageable);
     }
 
@@ -109,6 +109,7 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public List<ProfileTweetImageProjection> getUserTweetImages(Long userId) {
+        tweetServiceHelper.validateUserProfile(userId);
         return tweetRepository.getUserTweetImages(userId, PageRequest.of(0, 6));
     }
 
@@ -116,8 +117,7 @@ public class TweetServiceImpl implements TweetService {
     public TweetAdditionalInfoProjection getTweetAdditionalInfoById(Long tweetId) {
         TweetAdditionalInfoProjection additionalInfo = tweetRepository.getTweetById(tweetId, TweetAdditionalInfoProjection.class)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-        checkIsTweetDeleted(additionalInfo.isDeleted());
-        tweetServiceHelper.checkIsValidUserProfile(additionalInfo.getAuthorId());
+        tweetServiceHelper.validateTweet(additionalInfo.isDeleted(), additionalInfo.getAuthorId());
         return additionalInfo;
     }
 
@@ -125,24 +125,26 @@ public class TweetServiceImpl implements TweetService {
     public List<TweetProjection> getRepliesByTweetId(Long tweetId) {
         Tweet tweet = tweetRepository.findById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-        checkIsTweetDeleted(tweet.isDeleted());
-        tweetServiceHelper.checkIsValidUserProfile(tweet.getAuthorId());
+        tweetServiceHelper.validateTweet(tweet.isDeleted(), tweet.getAuthorId());
         return tweetRepository.getRepliesByTweetId(tweetId);
     }
 
     @Override
     public Page<TweetProjection> getQuotesByTweetId(Pageable pageable, Long tweetId) {
-        return tweetRepository.getQuotesByTweetId(tweetId, pageable);
+        List<Long> validUserIds = tweetServiceHelper.getValidUserIds();
+        return tweetRepository.getQuotesByTweetId(validUserIds, tweetId, pageable);
     }
 
     @Override
     public Page<TweetProjection> getMediaTweets(Pageable pageable) {
-        return tweetRepository.getMediaTweets(pageable);
+        List<Long> validUserIds = tweetServiceHelper.getValidUserIds();
+        return tweetRepository.getMediaTweets(validUserIds, pageable);
     }
 
     @Override
     public Page<TweetProjection> getTweetsWithVideo(Pageable pageable) {
-        return tweetRepository.getTweetsWithVideo(pageable);
+        List<Long> validUserIds = tweetServiceHelper.getValidUserIds();
+        return tweetRepository.getTweetsWithVideo(validUserIds, pageable);
     }
 
     @Override
@@ -175,7 +177,7 @@ public class TweetServiceImpl implements TweetService {
     public TweetProjection updateScheduledTweet(Tweet tweetInfo) {
         Tweet tweet = tweetRepository.findById(tweetInfo.getId())
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-        checkTweetTextLength(tweetInfo.getText());
+        tweetServiceHelper.checkTweetTextLength(tweetInfo.getText());
         tweet.setText(tweetInfo.getText());
         tweet.setImages(tweetInfo.getImages());
         return getTweetById(tweet.getId());
@@ -203,7 +205,7 @@ public class TweetServiceImpl implements TweetService {
     @Override
     public Page<TweetProjection> searchTweets(String text, Pageable pageable) {
         List<Long> userIds = tweetRepository.getUserIdsByTweetText(text);
-        List<Long> validUserIds = userClient.getValidUserIds(new IdsRequest(userIds), text);
+        List<Long> validUserIds = userClient.getValidTweetUserIds(new IdsRequest(userIds), text);
         return tweetRepository.searchTweets(text, validUserIds, pageable);
     }
 
@@ -212,7 +214,7 @@ public class TweetServiceImpl implements TweetService {
     public TweetProjection replyTweet(Long tweetId, Tweet reply) {
         Tweet tweet = tweetRepository.findById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-        tweetServiceHelper.checkIsValidUserProfile(tweet.getAuthorId());
+        tweetServiceHelper.validateTweet(tweet.isDeleted(), tweet.getAuthorId());
         reply.setAddressedTweetId(tweetId);
         Tweet replyTweet = createTweet(reply);
         tweetRepository.addReply(tweetId, replyTweet.getId());
@@ -224,7 +226,7 @@ public class TweetServiceImpl implements TweetService {
     public TweetProjection quoteTweet(Long tweetId, Tweet quote) {
         Tweet tweet = tweetRepository.findById(tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-        tweetServiceHelper.checkIsValidUserProfile(tweet.getAuthorId());
+        tweetServiceHelper.validateTweet(tweet.isDeleted(), tweet.getAuthorId());
         userClient.updateTweetCount(true);
         quote.setQuoteTweet(tweet);
         Tweet createdTweet = createTweet(quote);
@@ -246,21 +248,9 @@ public class TweetServiceImpl implements TweetService {
         return getTweetById(tweet.getId());
     }
 
-    private void checkTweetTextLength(String text) {
-        if (text.length() == 0 || text.length() > 280) {
-            throw new ApiRequestException("Incorrect tweet text length", HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    private void checkIsTweetDeleted(boolean isDeleted) {
-        if (isDeleted) {
-            throw new ApiRequestException("Sorry, that Tweet has been deleted.", HttpStatus.BAD_REQUEST);
-        }
-    }
-
     @Transactional
     public Tweet createTweet(Tweet tweet) {
-        checkTweetTextLength(tweet.getText());
+        tweetServiceHelper.checkTweetTextLength(tweet.getText());
         Long userId = AuthUtil.getAuthenticatedUserId();
         tweet.setAuthorId(userId);
         boolean isMediaTweetCreated = parseMetadataFromURL(tweet);

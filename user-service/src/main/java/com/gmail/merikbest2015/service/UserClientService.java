@@ -61,7 +61,9 @@ public interface UserClientService {
 
     Long getUserPinnedTweetId(Long userId);
 
-    List<Long> getValidUserIds(IdsRequest request, String text);
+    List<Long> getValidTweetUserIds(IdsRequest request, String text);
+
+    List<Long> getValidUserIds(IdsRequest request);
 
     ChatUserParticipantResponse getChatParticipant(Long userId);
 

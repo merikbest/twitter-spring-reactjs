@@ -59,7 +59,10 @@ public interface UserClient {
     void updateLikeCount(@PathVariable("increaseCount") boolean increaseCount);
 
     @PostMapping(API_V1_USER + "/tweet/valid/ids/{text}")
-    List<Long> getValidUserIds(@RequestBody IdsRequest request, @PathVariable("text") String text);
+    List<Long> getValidTweetUserIds(@RequestBody IdsRequest request, @PathVariable("text") String text);
+
+    @PostMapping(API_V1_USER + "/valid/ids")
+    List<Long> getValidUserIds(@RequestBody IdsRequest request);
 
     @GetMapping(API_V1_USER + "/chat/{userId}")
     ChatTweetUserResponse getChatTweetUser(@PathVariable("userId") Long userId);
