@@ -103,8 +103,8 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public Page<TweetProjection> getUserMentions(Pageable pageable) {
-        Long userId = AuthUtil.getAuthenticatedUserId();
-        return tweetRepository.getUserMentions(userId, pageable);
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        return tweetRepository.getUserMentions(authUserId, pageable);
     }
 
     @Override
@@ -123,9 +123,7 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public List<TweetProjection> getRepliesByTweetId(Long tweetId) {
-        Tweet tweet = tweetRepository.findById(tweetId)
-                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-        tweetServiceHelper.validateTweet(tweet.isDeleted(), tweet.getAuthorId());
+        tweetServiceHelper.checkValidTweet(tweetId);
         return tweetRepository.getRepliesByTweetId(tweetId);
     }
 
@@ -155,8 +153,8 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public Page<TweetProjection> getScheduledTweets(Pageable pageable) {
-        Long userId = AuthUtil.getAuthenticatedUserId();
-        return tweetRepository.getScheduledTweets(userId, pageable);
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        return tweetRepository.getScheduledTweets(authUserId, pageable);
     }
 
     @Override
@@ -193,8 +191,8 @@ public class TweetServiceImpl implements TweetService {
     @Override
     @Transactional
     public String deleteTweet(Long tweetId) {
-        Long userId = AuthUtil.getAuthenticatedUserId();
-        Tweet tweet = tweetRepository.getTweetByUserId(userId, tweetId)
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        Tweet tweet = tweetRepository.getTweetByUserId(authUserId, tweetId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
         userClient.updatePinnedTweetId(tweetId);
         tagClient.deleteTagsByTweetId(tweetId);
@@ -212,9 +210,7 @@ public class TweetServiceImpl implements TweetService {
     @Override
     @Transactional
     public TweetProjection replyTweet(Long tweetId, Tweet reply) {
-        Tweet tweet = tweetRepository.findById(tweetId)
-                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-        tweetServiceHelper.validateTweet(tweet.isDeleted(), tweet.getAuthorId());
+        tweetServiceHelper.checkValidTweet(tweetId);
         reply.setAddressedTweetId(tweetId);
         Tweet replyTweet = createTweet(reply);
         tweetRepository.addReply(tweetId, replyTweet.getId());
@@ -224,9 +220,7 @@ public class TweetServiceImpl implements TweetService {
     @Override
     @Transactional
     public TweetProjection quoteTweet(Long tweetId, Tweet quote) {
-        Tweet tweet = tweetRepository.findById(tweetId)
-                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-        tweetServiceHelper.validateTweet(tweet.isDeleted(), tweet.getAuthorId());
+        Tweet tweet = tweetServiceHelper.checkValidTweet(tweetId);
         userClient.updateTweetCount(true);
         quote.setQuoteTweet(tweet);
         Tweet createdTweet = createTweet(quote);
@@ -237,11 +231,11 @@ public class TweetServiceImpl implements TweetService {
     @Override
     @Transactional
     public TweetProjection changeTweetReplyType(Long tweetId, ReplyType replyType) {
-        Long userId = AuthUtil.getAuthenticatedUserId();
-        Tweet tweet = tweetRepository.getTweetByAuthorIdAndTweetId(tweetId, userId)
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        Tweet tweet = tweetRepository.getTweetByAuthorIdAndTweetId(tweetId, authUserId)
                 .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
 
-        if (!tweet.getAuthorId().equals(userId)) {
+        if (!tweet.getAuthorId().equals(authUserId)) {
             throw new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND);
         }
         tweet.setReplyType(replyType);
@@ -251,8 +245,8 @@ public class TweetServiceImpl implements TweetService {
     @Transactional
     public Tweet createTweet(Tweet tweet) {
         tweetServiceHelper.checkTweetTextLength(tweet.getText());
-        Long userId = AuthUtil.getAuthenticatedUserId();
-        tweet.setAuthorId(userId);
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        tweet.setAuthorId(authUserId);
         boolean isMediaTweetCreated = parseMetadataFromURL(tweet);
         tweetRepository.save(tweet);
 

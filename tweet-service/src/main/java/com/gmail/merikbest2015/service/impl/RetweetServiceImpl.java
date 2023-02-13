@@ -2,10 +2,9 @@ package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
-import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
+import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.enums.NotificationType;
-import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.model.Retweet;
 import com.gmail.merikbest2015.model.Tweet;
@@ -19,7 +18,6 @@ import com.gmail.merikbest2015.util.TweetServiceHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +34,7 @@ public class RetweetServiceImpl implements RetweetService {
 
     @Override
     public Page<TweetUserProjection> getUserRetweetsAndReplies(Long userId, Pageable pageable) {
-        tweetServiceHelper.checkIsUserExist(userId);
+        tweetServiceHelper.validateUserProfile(userId);
         List<TweetUserProjection> replies = tweetRepository.getRepliesByUserId(userId);
         List<RetweetProjection> retweets = retweetRepository.getRetweetsByUserId(userId);
         List<TweetUserProjection> userTweets = tweetServiceHelper.combineTweetsArrays(replies, retweets);
@@ -45,18 +43,17 @@ public class RetweetServiceImpl implements RetweetService {
 
     @Override
     public HeaderResponse<UserResponse> getRetweetedUsersByTweetId(Long tweetId, Pageable pageable) {
-        Page<Long> retweetedUserIds = retweetRepository.getRetweetedUserIds(tweetId, pageable);
-        return userClient.getRetweetedUsersByIds(new IdsRequest(retweetedUserIds.getContent()), pageable);
+        tweetServiceHelper.checkValidTweet(tweetId);
+        List<Long> retweetedUserIds = retweetRepository.getRetweetedUserIds(tweetId);
+        return userClient.getRetweetedUsersByIds(new IdsRequest(retweetedUserIds), pageable);
     }
 
     @Override
     @Transactional
     public NotificationResponse retweet(Long tweetId) {
-        Long userId = AuthUtil.getAuthenticatedUserId();
-        Tweet tweet = tweetRepository.findById(tweetId)
-                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
-        tweetServiceHelper.checkIsValidUserProfile(tweet.getAuthorId());
-        Retweet retweet = retweetRepository.isTweetRetweeted(userId, tweetId);
+        Tweet tweet = tweetServiceHelper.checkValidTweet(tweetId);
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        Retweet retweet = retweetRepository.isTweetRetweeted(authUserId, tweetId);
         boolean isRetweeted;
 
         if (retweet != null) {
@@ -64,11 +61,11 @@ public class RetweetServiceImpl implements RetweetService {
             userClient.updateTweetCount(false);
             isRetweeted = false;
         } else {
-            Retweet newRetweet = new Retweet(userId, tweetId);
+            Retweet newRetweet = new Retweet(authUserId, tweetId);
             retweetRepository.save(newRetweet);
             userClient.updateTweetCount(true);
             isRetweeted = true;
         }
-        return tweetServiceHelper.sendNotification(NotificationType.RETWEET, isRetweeted, tweet.getAuthorId(), userId, tweetId);
+        return tweetServiceHelper.sendNotification(NotificationType.RETWEET, isRetweeted, tweet.getAuthorId(), authUserId, tweetId);
     }
 }

@@ -9,6 +9,6 @@ public interface BookmarkProjection {
     LocalDateTime getBookmarkDate();
     Long getTweetId();
 
-    @Value("#{@tweetServiceHelper.getTweetProjection(target.tweetId)}")
+    @Value("#{@tweetProjectionHelper.getTweetProjection(target.tweetId)}")
     TweetProjection getTweet();
 }

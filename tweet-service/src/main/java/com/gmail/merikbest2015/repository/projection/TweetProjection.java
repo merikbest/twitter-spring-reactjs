@@ -28,19 +28,19 @@ public interface TweetProjection {
     PollProjection getPoll();
     boolean isDeleted();
 
-    @Value("#{@tweetServiceHelper.getTweetAuthor(target.authorId)}")
+    @Value("#{@tweetProjectionHelper.getTweetAuthor(target.authorId)}")
     TweetAuthorResponse getUser();
 
-    @Value("#{@tweetServiceHelper.isUserLikedTweet(target.id)}")
+    @Value("#{@tweetProjectionHelper.isUserLikedTweet(target.id)}")
     boolean getIsTweetLiked();
 
-    @Value("#{@tweetServiceHelper.isUserRetweetedTweet(target.id)}")
+    @Value("#{@tweetProjectionHelper.isUserRetweetedTweet(target.id)}")
     boolean getIsTweetRetweeted();
 
-    @Value("#{@tweetServiceHelper.isUserBookmarkedTweet(target.id)}")
+    @Value("#{@tweetProjectionHelper.isUserBookmarkedTweet(target.id)}")
     boolean getIsTweetBookmarked();
 
-    @Value("#{@tweetServiceHelper.isUserFollowByOtherUser(target.authorId)}")
+    @Value("#{@tweetProjectionHelper.isUserFollowByOtherUser(target.authorId)}")
     boolean getIsUserFollowByOtherUser();
 
     @Value("#{@retweetRepository.getRetweetSize(target.id)}")
@@ -83,7 +83,7 @@ public interface TweetProjection {
         @Value("#{target.isDeleted ? null : target.authorId}")
         Long getAuthorId();
 
-        @Value("#{target.isDeleted ? null : @tweetServiceHelper.getTweetAuthor(target.authorId)}")
+        @Value("#{target.isDeleted ? null : @tweetProjectionHelper.getTweetAuthor(target.authorId)}")
         TweetAuthorResponse getUser();
 
         boolean isDeleted();

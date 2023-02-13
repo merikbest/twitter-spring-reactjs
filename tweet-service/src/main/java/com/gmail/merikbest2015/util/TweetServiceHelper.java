@@ -1,21 +1,15 @@
 package com.gmail.merikbest2015.util;
 
 import com.gmail.merikbest2015.dto.request.IdsRequest;
-import com.gmail.merikbest2015.dto.response.chat.ChatTweetUserResponse;
 import com.gmail.merikbest2015.dto.request.NotificationRequest;
-import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
-import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
 import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.NotificationClient;
 import com.gmail.merikbest2015.feign.UserClient;
-import com.gmail.merikbest2015.repository.BookmarkRepository;
-import com.gmail.merikbest2015.repository.LikeTweetRepository;
-import com.gmail.merikbest2015.repository.RetweetRepository;
+import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.RetweetProjection;
-import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.support.PagedListHolder;
@@ -33,63 +27,19 @@ import java.util.List;
 public class TweetServiceHelper {
 
     private final TweetRepository tweetRepository;
-    private final LikeTweetRepository likeTweetRepository;
-    private final RetweetRepository retweetRepository;
-    private final BookmarkRepository bookmarkRepository;
     private final NotificationClient notificationClient;
     private final UserClient userClient;
 
-    public TweetProjection getTweetProjection(Long tweetId) {
-        return tweetRepository.getTweetById(tweetId, TweetProjection.class).get();
-    }
-
-    public TweetUserProjection getTweetUserProjection(Long tweetId) {
-        return tweetRepository.getTweetById(tweetId, TweetUserProjection.class).get();
-    }
-
-    public boolean isUserLikedTweet(Long tweetId) {
-        Long authUserId = AuthUtil.getAuthenticatedUserId();
-        return likeTweetRepository.isUserLikedTweet(authUserId, tweetId);
-    }
-
-    public boolean isUserRetweetedTweet(Long tweetId) {
-        Long authUserId = AuthUtil.getAuthenticatedUserId();
-        return retweetRepository.isUserRetweetedTweet(authUserId, tweetId);
-    }
-
-    public boolean isUserBookmarkedTweet(Long tweetId) {
-        Long authUserId = AuthUtil.getAuthenticatedUserId();
-        return bookmarkRepository.isUserBookmarkedTweet(authUserId, tweetId);
-    }
-
-    public boolean isUserFollowByOtherUser(Long userId) {
-        return userClient.isUserFollowByOtherUser(userId);
-    }
-
-    public TweetAuthorResponse getTweetAuthor(Long userId) {
-        return userClient.getTweetAuthor(userId);
-    }
-
-    public TweetAdditionalInfoUserResponse getTweetAdditionalInfoUser(Long userId) {
-        return userClient.getTweetAdditionalInfoUser(userId);
-    }
-
-    public ChatTweetUserResponse getChatTweetUser(Long userId) {
-        return userClient.getChatTweetUser(userId);
-    }
-
-    // Validate
     public List<Long> getValidUserIds() {
         List<Long> tweetAuthorIds = tweetRepository.getTweetAuthorIds();
         return userClient.getValidUserIds(new IdsRequest(tweetAuthorIds));
     }
 
-    public void checkIsUserExist(Long userId) {
-        boolean isUserExist = userClient.isUserExists(userId);
-
-        if (!isUserExist) {
-            throw new ApiRequestException("User (id:" + userId + ") not found", HttpStatus.NOT_FOUND);
-        }
+    public Tweet checkValidTweet(Long tweetId) {
+        Tweet tweet = tweetRepository.findById(tweetId)
+                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+        validateTweet(tweet.isDeleted(), tweet.getAuthorId());
+        return tweet;
     }
 
     public void validateTweet(boolean isDeleted, Long tweetAuthorId) {
@@ -100,18 +50,14 @@ public class TweetServiceHelper {
     }
 
     public void validateUserProfile(Long userId) {
-        checkIsUserExist(userId);
+        boolean isUserExist = userClient.isUserExists(userId);
+
+        if (!isUserExist) {
+            throw new ApiRequestException("User (id:" + userId + ") not found", HttpStatus.NOT_FOUND);
+        }
         checkIsValidUserProfile(userId);
     }
-//
-//    public boolean isMyProfileBlockedByUser(Long userId) {
-//        return userClient.isMyProfileBlockedByUser(userId);
-//    }
-//
-//    public boolean isUserHavePrivateProfile(Long userId) {
-//        return userClient.isUserHavePrivateProfile(userId);
-//    }
-//
+
     public void checkIsValidUserProfile(Long userId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
 

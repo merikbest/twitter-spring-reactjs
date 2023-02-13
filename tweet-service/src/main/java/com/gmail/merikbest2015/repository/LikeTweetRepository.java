@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface LikeTweetRepository extends JpaRepository<LikeTweet, Long> {
 
@@ -27,7 +29,7 @@ public interface LikeTweetRepository extends JpaRepository<LikeTweet, Long> {
     Long getLikedTweetsSize(@Param("tweetId") Long tweetId);
 
     @Query("SELECT likeTweet.userId FROM LikeTweet likeTweet WHERE likeTweet.tweetId = :tweetId")
-    Page<Long> getLikedUserIds(@Param("tweetId") Long tweetId, Pageable pageable);
+    List<Long> getLikedUserIds(@Param("tweetId") Long tweetId);
 
     @Query("SELECT likeTweet FROM LikeTweet likeTweet " +
             "WHERE likeTweet.userId = :userId " +
