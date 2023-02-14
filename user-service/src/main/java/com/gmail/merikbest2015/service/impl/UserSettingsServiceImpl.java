@@ -32,8 +32,8 @@ public class UserSettingsServiceImpl implements UserSettingsService {
         if (username.length() == 0 || username.length() > 50) {
             throw new ApiRequestException("Incorrect username length", HttpStatus.BAD_REQUEST);
         }
-        Long userId = authenticationService.getAuthenticatedUserId();
-        userRepository.updateUsername(username, userId);
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        userRepository.updateUsername(username, authUserId);
         return username;
     }
 
@@ -62,16 +62,16 @@ public class UserSettingsServiceImpl implements UserSettingsService {
         if (phoneLength < 6 || phoneLength > 10) {
             throw new ApiRequestException("Not valid phone number", HttpStatus.BAD_REQUEST);
         }
-        Long userId = authenticationService.getAuthenticatedUserId();
-        userRepository.updatePhone(countryCode, phone, userId);
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        userRepository.updatePhone(countryCode, phone, authUserId);
         return Map.of("countryCode", countryCode, "phone", phone);
     }
 
     @Override
     @Transactional
     public String updateCountry(String country) {
-        Long userId = authenticationService.getAuthenticatedUserId();
-        userRepository.updateCountry(country, userId);
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        userRepository.updateCountry(country, authUserId);
         return country;
     }
 
@@ -81,48 +81,48 @@ public class UserSettingsServiceImpl implements UserSettingsService {
         if (gender.length() == 0 || gender.length() > 30) {
             throw new ApiRequestException("Incorrect gender length", HttpStatus.BAD_REQUEST);
         }
-        Long userId = authenticationService.getAuthenticatedUserId();
-        userRepository.updateGender(gender, userId);
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        userRepository.updateGender(gender, authUserId);
         return gender;
     }
 
     @Override
     @Transactional
     public String updateLanguage(String language) {
-        Long userId = authenticationService.getAuthenticatedUserId();
-        userRepository.updateLanguage(language, userId);
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        userRepository.updateLanguage(language, authUserId);
         return language;
     }
 
     @Override
     @Transactional
     public boolean updateDirectMessageRequests(boolean mutedDirectMessages) {
-        Long userId = authenticationService.getAuthenticatedUserId();
-        userRepository.updateDirectMessageRequests(mutedDirectMessages, userId);
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        userRepository.updateDirectMessageRequests(mutedDirectMessages, authUserId);
         return mutedDirectMessages;
     }
 
     @Override
     @Transactional
     public boolean updatePrivateProfile(boolean privateProfile) {
-        Long userId = authenticationService.getAuthenticatedUserId();
-        userRepository.updatePrivateProfile(privateProfile, userId);
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        userRepository.updatePrivateProfile(privateProfile, authUserId);
         return privateProfile;
     }
 
     @Override
     @Transactional
     public ColorSchemeType updateColorScheme(ColorSchemeType colorSchemeType) {
-        Long userId = authenticationService.getAuthenticatedUserId();
-        userRepository.updateColorScheme(colorSchemeType, userId);
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        userRepository.updateColorScheme(colorSchemeType, authUserId);
         return colorSchemeType;
     }
 
     @Override
     @Transactional
     public BackgroundColorType updateBackgroundColor(BackgroundColorType backgroundColorType) {
-        Long userId = authenticationService.getAuthenticatedUserId();
-        userRepository.updateBackgroundColor(backgroundColorType, userId);
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        userRepository.updateBackgroundColor(backgroundColorType, authUserId);
         return backgroundColorType;
     }
 }

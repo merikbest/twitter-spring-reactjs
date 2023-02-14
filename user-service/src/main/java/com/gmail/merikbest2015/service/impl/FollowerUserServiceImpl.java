@@ -30,15 +30,13 @@ public class FollowerUserServiceImpl implements FollowerUserService {
 
     @Override
     public Page<UserProjection> getFollowers(Long userId, Pageable pageable) {
-        userServiceHelper.checkIsUserExist(userId);
-        userServiceHelper.checkIsUserBlocked(userId);
+        userServiceHelper.validateUserProfile(userId);
         return userRepository.getFollowersById(userId, pageable);
     }
 
     @Override
-    public Page<UserProjection> getFollowing(Long userId, Pageable pageable) { // TODO check in swagger
-        userServiceHelper.checkIsUserExist(userId);
-        userServiceHelper.checkIsUserBlocked(userId);
+    public Page<UserProjection> getFollowing(Long userId, Pageable pageable) {
+        userServiceHelper.validateUserProfile(userId);
         return userRepository.getFollowingById(userId, pageable);
     }
 
@@ -51,7 +49,7 @@ public class FollowerUserServiceImpl implements FollowerUserService {
     @Override
     @Transactional
     public Boolean processFollow(Long userId) {
-        userServiceHelper.checkIsUserExist(userId);
+        userServiceHelper.checkIsUserExistOrMyProfileBlocked(userId);
         Long authUserId = authenticationService.getAuthenticatedUserId();
         boolean isFollower = userRepository.isFollower(authUserId, userId);
         boolean follower = false;
@@ -81,7 +79,7 @@ public class FollowerUserServiceImpl implements FollowerUserService {
 
     @Override
     public List<BaseUserProjection> overallFollowers(Long userId) {
-        userServiceHelper.checkIsUserExist(userId);
+        userServiceHelper.validateUserProfile(userId);
         Long authUserId = authenticationService.getAuthenticatedUserId();
         return userRepository.getSameFollowers(userId, authUserId, BaseUserProjection.class);
     }
@@ -89,7 +87,7 @@ public class FollowerUserServiceImpl implements FollowerUserService {
     @Override
     @Transactional
     public UserProfileProjection processFollowRequestToPrivateProfile(Long userId) {
-        userServiceHelper.checkIsUserExist(userId);
+        userServiceHelper.checkIsUserExistOrMyProfileBlocked(userId);
         Long authUserId = authenticationService.getAuthenticatedUserId();
         boolean isFollowerRequest = userRepository.isFollowerRequest(userId, authUserId);
 

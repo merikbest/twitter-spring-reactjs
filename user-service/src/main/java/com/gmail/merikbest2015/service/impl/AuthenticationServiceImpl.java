@@ -192,14 +192,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Transactional
     public String currentPasswordReset(String currentPassword, String password, String password2, BindingResult bindingResult) {
         processInputErrors(bindingResult);
-        Long userId = getAuthenticatedUserId();
-        String userPassword = userRepository.getUserPasswordById(userId);
+        Long authUserId = getAuthenticatedUserId();
+        String userPassword = userRepository.getUserPasswordById(authUserId);
 
         if (!passwordEncoder.matches(currentPassword, userPassword)) {
             processPasswordException("currentPassword", "The password you entered was incorrect.", HttpStatus.NOT_FOUND);
         }
         checkMatchPasswords(password, password2);
-        userRepository.updatePassword(passwordEncoder.encode(password), userId);
+        userRepository.updatePassword(passwordEncoder.encode(password), authUserId);
         return "Your password has been successfully updated.";
     }
 

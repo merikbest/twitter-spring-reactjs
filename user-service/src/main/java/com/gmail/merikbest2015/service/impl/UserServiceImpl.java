@@ -34,8 +34,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<UserProjection> getUsers(Pageable pageable) {
-        Long userId = authenticationService.getAuthenticatedUserId();
-        return userRepository.findByActiveTrueAndIdNot(userId, pageable);
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        return userRepository.findByActiveTrueAndIdNot(authUserId, pageable);
     }
 
     @Override
@@ -51,8 +51,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public Boolean startUseTwitter() {
-        Long userId = authenticationService.getAuthenticatedUserId();
-        userRepository.updateProfileStarted(userId);
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        userRepository.updateProfileStarted(authUserId);
         return true;
     }
 
@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public Boolean processSubscribeToNotifications(Long userId) {
-        userServiceHelper.checkIsUserExist(userId);
+        userServiceHelper.checkIsUserExistOrMyProfileBlocked(userId);
         Long authUserId = authenticationService.getAuthenticatedUserId();
         boolean isUserSubscribed = userRepository.isUserSubscribed(userId, authUserId);
 

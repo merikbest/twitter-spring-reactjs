@@ -17,6 +17,21 @@ public class UserServiceHelper {
     private final AuthenticationService authenticationService;
     private final UserRepository userRepository;
 
+    public void validateUserProfile(Long userId) {
+        checkIsUserExist(userId);
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+
+        if (!userId.equals(authUserId)) {
+            checkIsUserBlocked(userId);
+            checkIsUserHavePrivateProfile(userId);
+        }
+    }
+
+    public void checkIsUserExistOrMyProfileBlocked(Long userId) {
+        checkIsUserExist(userId);
+        checkIsUserBlocked(userId);
+    }
+
     public void checkIsUserExist(Long userId) {
         boolean userExist = userRepository.isUserExist(userId);
 
@@ -30,7 +45,15 @@ public class UserServiceHelper {
         boolean userBlocked = userRepository.isUserBlocked(userId, authUserId);
 
         if (userBlocked) {
-            throw new ApiRequestException("User (id:" + authUserId + ") is blocked", HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException("User profile blocked", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public void checkIsUserHavePrivateProfile(Long userId) {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+
+        if (!userRepository.isUserHavePrivateProfile(userId, authUserId)) {
+            throw new ApiRequestException("User not found", HttpStatus.NOT_FOUND);
         }
     }
 
