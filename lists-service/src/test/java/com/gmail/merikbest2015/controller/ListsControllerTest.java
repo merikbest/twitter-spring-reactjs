@@ -2,8 +2,7 @@ package com.gmail.merikbest2015.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gmail.merikbest2015.commons.dto.UserResponse;
-import com.gmail.merikbest2015.commons.enums.ReplyType;
+import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.dto.request.ListsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
 import org.hamcrest.Matchers;
@@ -19,8 +18,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 
-import static com.gmail.merikbest2015.commons.controller.PathConstants.UI_V1_LISTS;
-import static com.gmail.merikbest2015.commons.util.TestConstants.*;
+import static com.gmail.merikbest2015.constants.PathConstants.UI_V1_LISTS;
+import static com.gmail.merikbest2015.util.TestConstants.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -205,11 +204,9 @@ public class ListsControllerTest {
     @Test
     @DisplayName("[200] POST /ui/v1/lists - Create Tweet List")
     public void createTweetList() throws Exception {
-        UserResponse userResponse = new UserResponse();
-        userResponse.setId(USER_ID);
         ListsRequest listsRequest = new ListsRequest();
         listsRequest.setName(LIST_NAME);
-        listsRequest.setListOwner(userResponse);
+        listsRequest.setListOwnerId(USER_ID);
         listsRequest.setDescription(LIST_DESCRIPTION);
         listsRequest.setAltWallpaper(LIST_ALT_WALLPAPER);
 
@@ -318,10 +315,8 @@ public class ListsControllerTest {
     @Test
     @DisplayName("[404] PUT /ui/v1/lists - Should list Not Found")
     public void editTweetList_ShouldListNotFound() throws Exception {
-        UserResponse userResponse = new UserResponse();
-        userResponse.setId(USER_ID);
         ListsRequest listsRequest = new ListsRequest();
-        listsRequest.setListOwner(userResponse);
+        listsRequest.setListOwnerId(USER_ID);
         listsRequest.setId(99L);
         listsRequest.setName(LIST_DESCRIPTION);
         listsRequest.setDescription("edited description");
@@ -337,10 +332,8 @@ public class ListsControllerTest {
     @Test
     @DisplayName("[404] PUT /ui/v1/lists - Should list owner Not Found")
     public void editTweetList_ShouldListOwnerNotFound() throws Exception {
-        UserResponse userResponse = new UserResponse();
-        userResponse.setId(3L);
         ListsRequest listsRequest = new ListsRequest();
-        listsRequest.setListOwner(userResponse);
+        listsRequest.setListOwnerId(3L);
         listsRequest.setId(5L);
         listsRequest.setName(LIST_DESCRIPTION);
         listsRequest.setDescription("edited description");

@@ -7,10 +7,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>websocket-service</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>websocket-service</name>
 
     <properties>
+        <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -36,9 +38,31 @@
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.gmail.merikbest2015</groupId>
             <artifactId>commons</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

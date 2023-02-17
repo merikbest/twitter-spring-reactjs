@@ -1,6 +1,5 @@
 package com.gmail.merikbest2015.controller.api;
 
-import com.gmail.merikbest2015.commons.controller.PathConstants;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static com.gmail.merikbest2015.constants.PathConstants.API_V1_TAGS;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -26,7 +26,7 @@ public class TagApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/tags/43 - Get Tags By TweetId")
     public void getTags() throws Exception {
-        mockMvc.perform(get(PathConstants.API_V1_TAGS + "/43")
+        mockMvc.perform(get(API_V1_TAGS + "/43")
                         .header("X-auth-user-id", 2L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(2)))

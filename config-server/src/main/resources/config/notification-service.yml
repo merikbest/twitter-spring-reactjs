@@ -4,7 +4,7 @@ spring:
     application:
         name: notification-service
     datasource:
-        url: jdbc:postgresql://localhost:5432/notification
+        url: jdbc:postgresql://${DATASOURCE_HOST:localhost}:5432/notification
         username: postgres
         password: root
         driverClassName: org.postgresql.Driver
@@ -17,13 +17,15 @@ spring:
     flyway:
         locations: classpath:db/migration/notification
     zipkin:
-        base-url: http://localhost:9411
+        base-url: http://${ZIPKIN_HOST:localhost}:9411
     rabbitmq:
-        addresses: localhost:5672
+        addresses: ${RABBITMQ_HOST:localhost}:5672
 
 eureka:
     client:
         service-url:
-            defaultZone: http://localhost:8761/eureka
+            defaultZone: http://${EUREKA_HOST:localhost}:8761/eureka
         fetch-registry: true
         register-with-eureka: true
+    instance:
+        hostname: ${EUREKA_HOST:localhost}

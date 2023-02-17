@@ -3,4 +3,4 @@ spring:
         name: tag-service
     cloud:
         config:
-            uri: http://localhost:8888/
+            uri: http://${CONFIG_SERVER_HOST:localhost}:8888/
