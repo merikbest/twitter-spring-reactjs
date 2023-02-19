@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,11 +28,22 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.yml")
-@Sql(value = {"/sql/populate-table-before.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(value = {"/sql/populate-table-after.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+@Sql(value = {
+        "/sql/populate-lists-db.sql",
+        "/sql/populate-user-db.sql",
+        "/sql/populate-tweet-db.sql",
+        "/sql/populate-notification-db.sql",
+}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = {
+        "/sql/clear-lists-db.sql",
+        "/sql/clear-user-db.sql",
+        "/sql/clear-tweet-db.sql",
+        "/sql/clear-notification-db.sql",
+}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class ListsControllerTest {
 
     @Autowired
@@ -763,3 +775,4 @@ public class ListsControllerTest {
                 .andExpect(jsonPath("$[0].isMemberInList").value(false));
     }
 }
+//@Profile("test")
