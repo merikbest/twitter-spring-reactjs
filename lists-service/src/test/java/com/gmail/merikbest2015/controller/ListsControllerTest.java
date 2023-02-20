@@ -1,10 +1,9 @@
 package com.gmail.merikbest2015.controller;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.dto.request.ListsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
+import com.gmail.merikbest2015.enums.ReplyType;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -23,27 +21,17 @@ import static com.gmail.merikbest2015.constants.PathConstants.UI_V1_LISTS;
 import static com.gmail.merikbest2015.util.TestConstants.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
-@TestPropertySource("/application-test.yml")
-@Sql(value = {
-        "/sql/populate-lists-db.sql",
-        "/sql/populate-user-db.sql",
-        "/sql/populate-tweet-db.sql",
-        "/sql/populate-notification-db.sql",
-}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(value = {
-        "/sql/clear-lists-db.sql",
-        "/sql/clear-user-db.sql",
-        "/sql/clear-tweet-db.sql",
-        "/sql/clear-notification-db.sql",
-}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+@ActiveProfiles("test")
+@Sql(value = "/sql-test/populate-lists-db.sql", executionPhase = BEFORE_TEST_METHOD)
+@Sql(value = "/sql-test/clear-lists-db.sql", executionPhase = AFTER_TEST_METHOD)
 public class ListsControllerTest {
 
     @Autowired
@@ -69,7 +57,7 @@ public class ListsControllerTest {
         mockMvc.perform(get(UI_V1_LISTS)
                         .header("X-auth-user-id", 2L))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(3)))
+                .andExpect(jsonPath("$[*]", hasSize(6)))
                 .andExpect(jsonPath("$[0].id").value(4L))
                 .andExpect(jsonPath("$[0].name").value(LIST_NAME))
                 .andExpect(jsonPath("$[0].description").value(LIST_DESCRIPTION))
@@ -214,6 +202,24 @@ public class ListsControllerTest {
     }
 
     @Test
+    @DisplayName("[400] GET /ui/v1/lists/10 - Should validate is list author blocked my profile")
+    public void getBlockedUserByListId() throws Exception {
+        mockMvc.perform(get(UI_V1_LISTS + "/10")
+                        .header("X-auth-user-id", 2L))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is("User with ID:2 is blocked")));
+    }
+
+    @Test
+    @DisplayName("[404] GET /ui/v1/lists/11 - Should validate is list author have private profile")
+    public void getPrivateUserProfileByListId() throws Exception {
+        mockMvc.perform(get(UI_V1_LISTS + "/11")
+                        .header("X-auth-user-id", 2L))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("User not found")));
+    }
+
+    @Test
     @DisplayName("[200] POST /ui/v1/lists - Create Tweet List")
     public void createTweetList() throws Exception {
         ListsRequest listsRequest = new ListsRequest();
@@ -237,7 +243,7 @@ public class ListsControllerTest {
 
     @Test
     @DisplayName("[400] POST /ui/v1/lists - Should list name length is 0")
-    public void createTweetList_ShouldListNameLengthIs0() throws Exception {
+    public void createTweetList_ShouldListNameLengthIs0Symbols() throws Exception {
         ListsRequest listsRequest = new ListsRequest();
         listsRequest.setName("");
         listsRequest.setDescription(LIST_DESCRIPTION);
@@ -268,9 +274,27 @@ public class ListsControllerTest {
     }
 
     @Test
+    @DisplayName("[404] POST /ui/v1/lists - Should list owner Not Found")
+    public void createTweetList_ShouldValidateListOwner() throws Exception {
+        ListsRequest listsRequest = new ListsRequest();
+        listsRequest.setName(LIST_NAME);
+        listsRequest.setListOwnerId(1L);
+        listsRequest.setDescription(LIST_DESCRIPTION);
+        listsRequest.setAltWallpaper(LIST_ALT_WALLPAPER);
+
+        mockMvc.perform(post(UI_V1_LISTS)
+                        .header("X-auth-user-id", 2L)
+                        .content(mapper.writeValueAsString(listsRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("List owner not found")));
+    }
+
+    @Test
     @DisplayName("[200] PUT /ui/v1/lists - Edit Tweet List")
     public void editTweetList() throws Exception {
         ListsRequest listsRequest = new ListsRequest();
+        listsRequest.setListOwnerId(2L);
         listsRequest.setId(4L);
         listsRequest.setName("edited name");
         listsRequest.setDescription("edited description");
@@ -381,7 +405,7 @@ public class ListsControllerTest {
     public void deleteAnotherUserList_ShouldNotFound() throws Exception {
         mockMvc.perform(delete(UI_V1_LISTS + "/5")
                         .header("X-auth-user-id", 2L))
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is("List owner not found")));
     }
 
@@ -447,6 +471,19 @@ public class ListsControllerTest {
     }
 
     @Test
+    @DisplayName("[200] GET /ui/v1/lists/pin/4 - Unpin list")
+    public void unpinList() throws Exception {
+        mockMvc.perform(get(UI_V1_LISTS + "/pin/4")
+                        .header("X-auth-user-id", 2L))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(4))
+                .andExpect(jsonPath("$.name").value(LIST_NAME))
+                .andExpect(jsonPath("$.altWallpaper").value(LIST_ALT_WALLPAPER))
+                .andExpect(jsonPath("$.wallpaper").isEmpty())
+                .andExpect(jsonPath("$.isPrivate").value(false));
+    }
+
+    @Test
     @DisplayName("[404] GET /ui/v1/lists/pin/8 - Should pinned list Not Found by id")
     public void pinList_ShouldPinnedListNotFound() throws Exception {
         mockMvc.perform(get(UI_V1_LISTS + "/pin/8")
@@ -466,21 +503,8 @@ public class ListsControllerTest {
                 .andExpect(jsonPath("$[0].name").value(LIST_NAME))
                 .andExpect(jsonPath("$[0].altWallpaper").value(LIST_ALT_WALLPAPER))
                 .andExpect(jsonPath("$[0].wallpaper").isEmpty())
-                .andExpect(jsonPath("$[0].isMemberInList").value(false))
-                .andExpect(jsonPath("$[0].isPrivate").value(true));
-    }
-
-    @Test
-    @DisplayName("[200] GET /ui/v1/lists/pin/4 - Unpin list")
-    public void unpinList() throws Exception {
-        mockMvc.perform(get(UI_V1_LISTS + "/pin/4")
-                        .header("X-auth-user-id", 2L))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(4))
-                .andExpect(jsonPath("$.name").value(LIST_NAME))
-                .andExpect(jsonPath("$.altWallpaper").value(LIST_ALT_WALLPAPER))
-                .andExpect(jsonPath("$.wallpaper").isEmpty())
-                .andExpect(jsonPath("$.isPrivate").value(false));
+                .andExpect(jsonPath("$[0].isMemberInList").value(true))
+                .andExpect(jsonPath("$[0].isPrivate").value(false));
     }
 
     @Test
@@ -624,12 +648,12 @@ public class ListsControllerTest {
     }
 
     @Test
-    @DisplayName("[200] GET /ui/v1/lists/5/tweets - Get tweets by other user private list id")
+    @DisplayName("[404] GET /ui/v1/lists/5/tweets - Get tweets by other user private list id")
     public void getTweetsByUserPrivateListId() throws Exception {
         mockMvc.perform(get(UI_V1_LISTS + "/5/tweets")
                         .header("X-auth-user-id", 2L))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(0)));
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is("List not found")));
     }
 
     @Test
@@ -670,7 +694,7 @@ public class ListsControllerTest {
                 .andExpect(jsonPath("$[0].fullName").value(USERNAME2))
                 .andExpect(jsonPath("$[0].username").value(USERNAME2))
                 .andExpect(jsonPath("$[0].about").value(ABOUT2))
-                .andExpect(jsonPath("$[0].avatar.id").value(11L))
+                .andExpect(jsonPath("$[0].avatar").value(AVATAR_SRC_2))
                 .andExpect(jsonPath("$[0].isPrivateProfile").value(false));
     }
 
@@ -712,7 +736,7 @@ public class ListsControllerTest {
                 .andExpect(jsonPath("$[0].fullName").value(USERNAME2))
                 .andExpect(jsonPath("$[0].username").value(USERNAME2))
                 .andExpect(jsonPath("$[0].about").value(ABOUT2))
-                .andExpect(jsonPath("$[0].avatar.id").value(11L))
+                .andExpect(jsonPath("$[0].avatar").value(AVATAR_SRC_2))
                 .andExpect(jsonPath("$[0].isPrivateProfile").value(false))
                 .andExpect(jsonPath("$[0].isMemberInList").value(true));
     }
@@ -728,7 +752,7 @@ public class ListsControllerTest {
                 .andExpect(jsonPath("$[0].fullName").value(USERNAME2))
                 .andExpect(jsonPath("$[0].username").value(USERNAME2))
                 .andExpect(jsonPath("$[0].about").value(ABOUT2))
-                .andExpect(jsonPath("$[0].avatar.id").value(11L))
+                .andExpect(jsonPath("$[0].avatar").value(AVATAR_SRC_2))
                 .andExpect(jsonPath("$[0].isPrivateProfile").value(false));
     }
 
@@ -770,9 +794,8 @@ public class ListsControllerTest {
                 .andExpect(jsonPath("$[0].fullName").value(USERNAME))
                 .andExpect(jsonPath("$[0].username").value(USERNAME))
                 .andExpect(jsonPath("$[0].about").value(ABOUT))
-                .andExpect(jsonPath("$[0].avatar.id").value(AVATAR_ID))
+                .andExpect(jsonPath("$[0].avatar").value(AVATAR_SRC_1))
                 .andExpect(jsonPath("$[0].isPrivateProfile").value(false))
                 .andExpect(jsonPath("$[0].isMemberInList").value(false));
     }
 }
-//@Profile("test")

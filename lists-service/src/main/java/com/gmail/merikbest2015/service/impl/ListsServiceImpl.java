@@ -203,7 +203,7 @@ public class ListsServiceImpl implements ListsService {
             checkIsListExist(list.getListId(), authUserId);
             ListsMembers member = listsMembersRepository.getListMember(list.getListId(), listsRequest.getUserId());
 
-            if (list.getIsMemberInList()) {
+            if (list.getIsMemberInList() && member != null) {
                 listsMembersRepository.delete(member);
             } else {
                 if (member == null) {
@@ -288,7 +288,7 @@ public class ListsServiceImpl implements ListsService {
         } else {
             checkIsListExist(listId, authUserId);
             return getListMemberResponses(listId).stream()
-                    .map(member -> new ListMemberResponse(isListIncludeUser(listId, member.getId())))
+                    .peek(member -> member.setMemberInList(isListIncludeUser(listId, member.getId())))
                     .toList();
         }
     }
