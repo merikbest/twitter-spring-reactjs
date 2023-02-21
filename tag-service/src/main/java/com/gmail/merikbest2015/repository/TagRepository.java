@@ -23,7 +23,7 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
     Optional<Tag> findByTagName(String tagName);
 
     @Query("SELECT tag FROM Tag tag WHERE tag.id IN :tagIds")
-    List<Tag> getTagsBuIds(@Param("tagIds") List<Long> tagIds);
+    List<Tag> getTagsByIds(@Param("tagIds") List<Long> tagIds);
 
     @Modifying
     @Query("UPDATE Tag tag SET tag.tweetsQuantity = " +

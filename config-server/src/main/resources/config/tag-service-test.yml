@@ -1,10 +1,10 @@
 server:
-    port: 8007
+    port: 8004
 spring:
     application:
-        name: notification-service
+        name: tag-service
     datasource:
-        url: jdbc:postgresql://localhost:5432/notification-test
+        url: jdbc:postgresql://localhost:5432/tag-test
         username: postgres
         password: root
         driverClassName: org.postgresql.Driver

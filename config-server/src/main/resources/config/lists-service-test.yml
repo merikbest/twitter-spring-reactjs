@@ -14,9 +14,6 @@ spring:
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.PostgreSQLDialect
-    cloud:
-        config:
-            enabled: false
 eureka:
     client:
         service-url:

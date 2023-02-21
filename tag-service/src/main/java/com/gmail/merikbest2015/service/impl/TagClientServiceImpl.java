@@ -55,7 +55,7 @@ public class TagClientServiceImpl implements TagClientService {
     @Transactional
     public void deleteTagsByTweetId(Long tweetId) {
         List<Long> tagsIds = tweetTagRepository.getTagIdsByTweetId(tweetId);
-        List<Tag> tags = tagRepository.getTagsBuIds(tagsIds);
+        List<Tag> tags = tagRepository.getTagsByIds(tagsIds);
         tags.forEach(tag -> {
             if (tag.getTweetsQuantity() - 1 == 0) {
                 tagRepository.delete(tag);

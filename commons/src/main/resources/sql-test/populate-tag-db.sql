@@ -1,5 +1,5 @@
 -- tags
-INSERT INTO "tag-test".public.tags (id, tag_name, tweets_quantity) VALUES (2, '#JetBrains', 1);
+INSERT INTO "tag-test".public.tags (id, tag_name, tweets_quantity) VALUES (2, '#JetBrains', 2);
 INSERT INTO "tag-test".public.tags (id, tag_name, tweets_quantity) VALUES (3, '#test', 1);
 
 -- tweet_tags

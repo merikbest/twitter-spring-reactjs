@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.controller;
+package com.gmail.merikbest2015.controller.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gmail.merikbest2015.dto.request.ListsRequest;
