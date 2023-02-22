@@ -20,7 +20,7 @@ public class NotificationApiController {
 
     @PostMapping("/list")
     public void sendListNotification(@RequestBody NotificationRequest request) {
-        NotificationResponse notification = notificationClientMapper.sendListNotification(request);
+        NotificationResponse notification = notificationClientMapper.sendNotification(request);
 
         if (notification.getId() != null) {
             webSocketClient.send(TOPIC_NOTIFICATIONS + notification.getUser().getId(), notification);
@@ -29,7 +29,7 @@ public class NotificationApiController {
 
     @PostMapping("/user")
     public void sendUserNotification(@RequestBody NotificationRequest request) {
-        NotificationResponse notification = notificationClientMapper.sendUserNotification(request);
+        NotificationResponse notification = notificationClientMapper.sendNotification(request);
 
         if (notification.getId() != null) {
             webSocketClient.send(TOPIC_NOTIFICATIONS + notification.getUser().getId(), notification);
@@ -38,7 +38,7 @@ public class NotificationApiController {
 
     @PostMapping("/tweet")
     public NotificationResponse sendTweetNotification(@RequestBody NotificationRequest request) {
-        NotificationResponse notification = notificationClientMapper.sendTweetNotification(request);
+        NotificationResponse notification = notificationClientMapper.sendNotification(request);
 
         if (notification.getId() != null) {
             webSocketClient.send(TOPIC_NOTIFICATIONS + notification.getTweet().getAuthorId(), notification);

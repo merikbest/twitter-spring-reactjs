@@ -29,54 +29,29 @@ public class NotificationClientServiceImpl implements NotificationClientService 
     private final BasicMapper basicMapper;
 
     @Override
-    public NotificationResponse sendListNotification(Notification notification, boolean isAddedToList) {
+    public NotificationResponse sendNotification(Notification notification, boolean notificationCondition) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
 
         if (!notification.getNotifiedUserId().equals(authUserId)) {
-            boolean isNotificationExists = notificationRepository.isListNotificationExists(
-                    notification.getNotifiedUserId(), notification.getListId(), authUserId, notification.getNotificationType());
+            boolean isNotificationExists;
 
+            if (notification.getNotificationType().equals(NotificationType.LISTS)) {
+                isNotificationExists = notificationRepository.isListNotificationExists(
+                        notification.getNotifiedUserId(), notification.getListId(), authUserId, notification.getNotificationType());
+            } else if (notification.getNotificationType().equals(NotificationType.FOLLOW)) {
+                isNotificationExists = notificationRepository.isUserNotificationExists(
+                        notification.getNotifiedUserId(), notification.getUserToFollowId(), authUserId, notification.getNotificationType());
+            } else {
+                isNotificationExists = notificationRepository.isTweetNotificationExists(
+                        notification.getNotifiedUserId(), notification.getTweetId(), authUserId, notification.getNotificationType());
+            }
             if (!isNotificationExists) {
                 notificationRepository.save(notification);
                 userClient.increaseNotificationsCount(notification.getNotifiedUserId());
-                return convertToNotificationListResponse(notification, isAddedToList);
+                return convertToNotificationResponse(notification, notificationCondition);
             }
         }
-        return convertToNotificationListResponse(notification, isAddedToList);
-    }
-
-    @Override
-    public NotificationResponse sendUserNotification(Notification notification, boolean isFollowed) {
-        Long authUserId = AuthUtil.getAuthenticatedUserId();
-
-        if (!notification.getNotifiedUserId().equals(authUserId)) {
-            boolean isNotificationExists = notificationRepository.isUserNotificationExists(
-                    notification.getNotifiedUserId(), notification.getUserToFollowId(), authUserId, notification.getNotificationType());
-
-            if (!isNotificationExists) {
-                notificationRepository.save(notification);
-                userClient.increaseNotificationsCount(notification.getNotifiedUserId());
-                return convertToNotificationUserResponse(notification, isFollowed);
-            }
-        }
-        return convertToNotificationUserResponse(notification, isFollowed);
-    }
-
-    @Override
-    public NotificationResponse sendTweetNotification(Notification notification, boolean isTweetLiked) {
-        Long authUserId = AuthUtil.getAuthenticatedUserId();
-
-        if (!notification.getNotifiedUserId().equals(authUserId)) {
-            boolean isNotificationExists = notificationRepository.isTweetNotificationExists(
-                    notification.getNotifiedUserId(), notification.getTweetId(), authUserId, notification.getNotificationType());
-
-            if (!isNotificationExists) {
-                notificationRepository.save(notification);
-                userClient.increaseNotificationsCount(notification.getNotifiedUserId());
-                return convertToNotificationTweetResponse(notification, isTweetLiked);
-            }
-        }
-        return convertToNotificationTweetResponse(notification, isTweetLiked);
+        return convertToNotificationResponse(notification, notificationCondition);
     }
 
     @Override
@@ -94,6 +69,16 @@ public class NotificationClientServiceImpl implements NotificationClientService 
                 notificationRepository.save(notification);
                 userClient.increaseNotificationsCount(subscriberId);
             });
+        }
+    }
+
+    private NotificationResponse convertToNotificationResponse(Notification notification, boolean notificationCondition) {
+        if (notification.getNotificationType().equals(NotificationType.LISTS)) {
+            return convertToNotificationListResponse(notification, notificationCondition);
+        } else if (notification.getNotificationType().equals(NotificationType.FOLLOW)) {
+            return convertToNotificationUserResponse(notification, notificationCondition);
+        } else {
+            return convertToNotificationTweetResponse(notification, notificationCondition);
         }
     }
 

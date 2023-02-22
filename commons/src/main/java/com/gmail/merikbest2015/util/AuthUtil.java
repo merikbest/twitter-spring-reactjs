@@ -8,12 +8,14 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static com.gmail.merikbest2015.constants.PathConstants.AUTH_USER_ID_HEADER;
+
 public class AuthUtil {
 
     public static Long getAuthenticatedUserId() {
         RequestAttributes attribs = RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = ((ServletRequestAttributes) attribs).getRequest();
-        String userId = request.getHeader("X-auth-user-id");
+        String userId = request.getHeader(AUTH_USER_ID_HEADER);
 
         if (userId == null) {
             throw new ApiRequestException("User not found", HttpStatus.NOT_FOUND);

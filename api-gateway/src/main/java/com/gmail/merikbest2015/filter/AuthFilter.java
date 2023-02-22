@@ -8,6 +8,8 @@ import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFac
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import static com.gmail.merikbest2015.constants.PathConstants.AUTH_USER_ID_HEADER;
+
 @Component
 public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> {
 
@@ -39,7 +41,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
                 }
                 exchange.getRequest()
                         .mutate()
-                        .header("X-auth-user-id", String.valueOf(user.getId()))
+                        .header(AUTH_USER_ID_HEADER, String.valueOf(user.getId()))
                         .build();
                 return chain.filter(exchange);
             } else {

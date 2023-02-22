@@ -5,11 +5,7 @@ import com.gmail.merikbest2015.model.Notification;
 
 public interface NotificationClientService {
 
-    NotificationResponse sendListNotification(Notification notification, boolean isAddedToList);
-
-    NotificationResponse sendUserNotification(Notification notification, boolean notificationCondition);
-
-    NotificationResponse sendTweetNotification(Notification notification, boolean isTweetLiked);
+    NotificationResponse sendNotification(Notification notification, boolean notificationCondition);
 
     void sendTweetNotificationToSubscribers(Long tweetId);
 }

@@ -10,6 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static com.gmail.merikbest2015.constants.PathConstants.AUTH_USER_ID_HEADER;
 import static com.gmail.merikbest2015.constants.PathConstants.UI_V1_TAGS;
 import static com.gmail.merikbest2015.util.TestConstants.*;
 import static org.hamcrest.Matchers.hasSize;
@@ -33,7 +34,7 @@ public class TagControllerTest {
     @DisplayName("[200] GET /ui/v1/tags - Get all tags")
     public void getTags() throws Exception {
         mockMvc.perform(get(UI_V1_TAGS)
-                        .header("X-auth-user-id", 2L))
+                        .header(AUTH_USER_ID_HEADER, 2L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
@@ -45,7 +46,7 @@ public class TagControllerTest {
     @DisplayName("[200] GET /ui/v1/tags/trends - Get trends")
     public void getTrends() throws Exception {
         mockMvc.perform(get(UI_V1_TAGS + "/trends")
-                        .header("X-auth-user-id", 2L))
+                        .header(AUTH_USER_ID_HEADER, 2L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
@@ -58,7 +59,7 @@ public class TagControllerTest {
     public void getTweetsByTag() throws Exception {
         mockMvc.perform(get(UI_V1_TAGS + "/search")
                         .param("tagName", "#JetBrains")
-                        .header("X-auth-user-id", 2L))
+                        .header(AUTH_USER_ID_HEADER, 2L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(43L))

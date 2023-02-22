@@ -14,19 +14,9 @@ public class NotificationClientMapper {
     private final BasicMapper basicMapper;
     private final NotificationClientService notificationClientService;
 
-    public NotificationResponse sendListNotification(NotificationRequest request) {
+    public NotificationResponse sendNotification(NotificationRequest request) {
         Notification notification = basicMapper.convertToResponse(request, Notification.class);
-        return notificationClientService.sendListNotification(notification, request.isNotificationCondition());
-    }
-
-    public NotificationResponse sendUserNotification(NotificationRequest request) {
-        Notification notification = basicMapper.convertToResponse(request, Notification.class);
-        return notificationClientService.sendUserNotification(notification, request.isNotificationCondition());
-    }
-
-    public NotificationResponse sendTweetNotification(NotificationRequest request) {
-        Notification notification = basicMapper.convertToResponse(request, Notification.class);
-        return notificationClientService.sendTweetNotification(notification, request.isNotificationCondition());
+        return notificationClientService.sendNotification(notification, request.isNotificationCondition());
     }
 
     public void sendTweetNotificationToSubscribers(Long tweetId) {

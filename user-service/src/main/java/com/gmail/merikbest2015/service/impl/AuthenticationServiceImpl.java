@@ -30,6 +30,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.gmail.merikbest2015.constants.PathConstants.AUTH_USER_ID_HEADER;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -206,7 +208,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private Long getUserId() {
         RequestAttributes attribs = RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = ((ServletRequestAttributes) attribs).getRequest();
-        return Long.parseLong(request.getHeader("X-auth-user-id"));
+        return Long.parseLong(request.getHeader(AUTH_USER_ID_HEADER));
     }
 
     private void processInputErrors(BindingResult bindingResult) {

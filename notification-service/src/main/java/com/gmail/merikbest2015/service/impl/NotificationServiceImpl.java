@@ -37,9 +37,9 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     @Transactional
     public Page<NotificationProjection> getUserNotifications(Pageable pageable) {
-        Long userId = AuthUtil.getAuthenticatedUserId();
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
         userClient.resetNotificationCount();
-        return notificationRepository.getNotificationsByUserId(userId, pageable);
+        return notificationRepository.getNotificationsByUserId(authUserId, pageable);
     }
 
     @Override
@@ -51,8 +51,8 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public NotificationInfoProjection getUserNotificationById(Long notificationId) {
-        Long userId = AuthUtil.getAuthenticatedUserId();
-        return notificationRepository.getUserNotificationById(userId, notificationId)
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        return notificationRepository.getUserNotificationById(authUserId, notificationId)
                 .orElseThrow(() -> new ApiRequestException("Notification not found", HttpStatus.NOT_FOUND));
     }
 

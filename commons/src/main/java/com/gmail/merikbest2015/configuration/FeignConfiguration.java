@@ -9,6 +9,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static com.gmail.merikbest2015.constants.PathConstants.AUTH_USER_ID_HEADER;
+
 @Configuration
 public class FeignConfiguration {
 
@@ -17,7 +19,7 @@ public class FeignConfiguration {
         return template -> {
             RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
             HttpServletRequest request = ((ServletRequestAttributes) attributes).getRequest();
-            template.header("X-auth-user-id", request.getHeader("X-auth-user-id"));
+            template.header(AUTH_USER_ID_HEADER, request.getHeader(AUTH_USER_ID_HEADER));
         };
     }
 }
