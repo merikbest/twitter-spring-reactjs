@@ -24,6 +24,7 @@ public class TestConstants {
     public static final Long AVATAR_ID = 33L;
     public static final String AVATAR_SRC_1 = "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg";
     public static final String AVATAR_SRC_2 = "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg";
+    public static final String WALLPAPER_SRC = "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/d0e5b95f-acc0-47ef-b499-477f7e5a1a06_PrMnWa2z.jpg";
     public static final Long WALLPAPER_ID = 44L;
     public static final String COUNTRY_CODE = "UA";
     public static final Long PHONE = 666966623L;

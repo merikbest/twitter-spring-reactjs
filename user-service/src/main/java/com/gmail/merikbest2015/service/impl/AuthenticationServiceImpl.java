@@ -73,6 +73,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     @Transactional
     public String registration(RegistrationRequest request, BindingResult bindingResult) {
+        processInputErrors(bindingResult);
         Optional<User> existingUser = userRepository.getUserByEmail(request.getEmail(), User.class);
 
         if (existingUser.isEmpty()) {
