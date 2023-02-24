@@ -18,6 +18,7 @@ import java.util.Arrays;
 
 import static com.gmail.merikbest2015.constants.PathConstants.AUTH_USER_ID_HEADER;
 import static com.gmail.merikbest2015.constants.PathConstants.UI_V1_TOPICS;
+import static com.gmail.merikbest2015.util.TestConstants.USER_ID;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
@@ -47,7 +48,7 @@ public class TopicControllerTest {
         topicsRequest.setTopicsIds(Arrays.asList(1001L, 1002L, 1003L, 1004L, 1005L, 1006L, 1007L, 1008L, 1009L, 1010L));
 
         mockMvc.perform(post(UI_V1_TOPICS + "/suggested")
-                        .header(AUTH_USER_ID_HEADER, 2L)
+                        .header(AUTH_USER_ID_HEADER, USER_ID)
                         .content(mapper.writeValueAsString(topicsRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
@@ -61,7 +62,7 @@ public class TopicControllerTest {
         topicsRequest.setCategories(Arrays.asList(TopicCategory.ONLY_ON_TWITTER, TopicCategory.GAMING));
 
         mockMvc.perform(post(UI_V1_TOPICS + "/category")
-                        .header(AUTH_USER_ID_HEADER, 2L)
+                        .header(AUTH_USER_ID_HEADER, USER_ID)
                         .content(mapper.writeValueAsString(topicsRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
@@ -76,7 +77,7 @@ public class TopicControllerTest {
     @DisplayName("[200] GET /ui/v1/topics/followed - Get followed topics")
     public void getFollowedTopics() throws Exception {
         mockMvc.perform(get(UI_V1_TOPICS + "/followed")
-                        .header(AUTH_USER_ID_HEADER, 2L))
+                        .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(4)));
     }
@@ -85,7 +86,7 @@ public class TopicControllerTest {
     @DisplayName("[200] GET /ui/v1/topics/followed/2 - Get followed topics by user id")
     public void getFollowedTopicsByUserId() throws Exception {
         mockMvc.perform(get(UI_V1_TOPICS + "/followed/2")
-                        .header(AUTH_USER_ID_HEADER, 2L))
+                        .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(4)));
     }
@@ -94,7 +95,7 @@ public class TopicControllerTest {
     @DisplayName("[404] GET /ui/v1/topics/followed/1 - Should user have private profile")
     public void getFollowedTopicsByUserId_UserHavePrivateProfile() throws Exception {
         mockMvc.perform(get(UI_V1_TOPICS + "/followed/1")
-                        .header(AUTH_USER_ID_HEADER, 2L))
+                        .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is("User not found")));
     }
@@ -103,7 +104,7 @@ public class TopicControllerTest {
     @DisplayName("[404] GET /ui/v1/topics/followed/99 - Should return User not found")
     public void getFollowedTopicsByUserId_UserNotFound() throws Exception {
         mockMvc.perform(get(UI_V1_TOPICS + "/followed/99")
-                        .header(AUTH_USER_ID_HEADER, 2L))
+                        .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is("User (id:99) not found")));
     }
@@ -112,7 +113,7 @@ public class TopicControllerTest {
     @DisplayName("[400] GET /ui/v1/topics/followed/5 - Should User blocked")
     public void getFollowedTopicsByUserId_UserBlocked() throws Exception {
         mockMvc.perform(get(UI_V1_TOPICS + "/followed/5")
-                        .header(AUTH_USER_ID_HEADER, 2L))
+                        .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is("User profile blocked")));
     }
@@ -121,7 +122,7 @@ public class TopicControllerTest {
     @DisplayName("[200] GET /ui/v1/topics/not_interested - Get not interested topics")
     public void getNotInterestedTopics() throws Exception {
         mockMvc.perform(get(UI_V1_TOPICS + "/not_interested")
-                        .header(AUTH_USER_ID_HEADER, 2L))
+                        .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(2)));
     }
@@ -130,7 +131,7 @@ public class TopicControllerTest {
     @DisplayName("[200] GET /ui/v1/topics/not_interested/1001 - Add not interested topic")
     public void processNotInterestedTopic_addTopic() throws Exception {
         mockMvc.perform(get(UI_V1_TOPICS + "/not_interested/1001")
-                        .header(AUTH_USER_ID_HEADER, 2L))
+                        .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(true)));
     }
@@ -139,7 +140,7 @@ public class TopicControllerTest {
     @DisplayName("[200] GET /ui/v1/topics/not_interested/1018 - Remove not interested topic")
     public void processNotInterestedTopic_removeTopic() throws Exception {
         mockMvc.perform(get(UI_V1_TOPICS + "/not_interested/1018")
-                        .header(AUTH_USER_ID_HEADER, 2L))
+                        .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(false)));
     }
@@ -148,7 +149,7 @@ public class TopicControllerTest {
     @DisplayName("[200] GET /ui/v1/topics/not_interested/1 - Should topic not found")
     public void processNotInterestedTopic_NotFound() throws Exception {
         mockMvc.perform(get(UI_V1_TOPICS + "/not_interested/1")
-                        .header(AUTH_USER_ID_HEADER, 2L))
+                        .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is("Topic not found")));
     }
@@ -157,7 +158,7 @@ public class TopicControllerTest {
     @DisplayName("[200] GET /ui/v1/topics/follow/1001 - Follow topic")
     public void processFollowTopic_followTopic() throws Exception {
         mockMvc.perform(get(UI_V1_TOPICS + "/follow/1001")
-                        .header(AUTH_USER_ID_HEADER, 2L))
+                        .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(true)));
     }
@@ -166,7 +167,7 @@ public class TopicControllerTest {
     @DisplayName("[200] GET /ui/v1/topics/follow/1008 - Unfollow topic")
     public void processFollowTopic_unfollowTopic() throws Exception {
         mockMvc.perform(get(UI_V1_TOPICS + "/follow/1008")
-                        .header(AUTH_USER_ID_HEADER, 2L))
+                        .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(false)));
     }
@@ -175,7 +176,7 @@ public class TopicControllerTest {
     @DisplayName("[200] GET /ui/v1/topics/follow/1 - Should topic not found")
     public void processFollowTopic_NotFound() throws Exception {
         mockMvc.perform(get(UI_V1_TOPICS + "/follow/1")
-                        .header(AUTH_USER_ID_HEADER, 2L))
+                        .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is("Topic not found")));
     }

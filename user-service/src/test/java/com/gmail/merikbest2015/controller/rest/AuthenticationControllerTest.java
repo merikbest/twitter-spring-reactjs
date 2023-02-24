@@ -480,7 +480,7 @@ public class AuthenticationControllerTest {
         passwordResetRequest.setPassword2(PASSWORD);
 
         mockMvc.perform(post(UI_V1_AUTH + "/reset/current")
-                        .header(AUTH_USER_ID_HEADER, 2L)
+                        .header(AUTH_USER_ID_HEADER, USER_ID)
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
@@ -495,7 +495,7 @@ public class AuthenticationControllerTest {
         passwordResetRequest.setPassword(PASSWORD);
         passwordResetRequest.setPassword2(PASSWORD);
         mockMvc.perform(post(UI_V1_AUTH + "/reset/current")
-                        .header(AUTH_USER_ID_HEADER, 2L)
+                        .header(AUTH_USER_ID_HEADER, USER_ID)
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -510,7 +510,7 @@ public class AuthenticationControllerTest {
         passwordResetRequest.setPassword(null);
         passwordResetRequest.setPassword2(PASSWORD);
         mockMvc.perform(post(UI_V1_AUTH + "/reset/current")
-                        .header(AUTH_USER_ID_HEADER, 2L)
+                        .header(AUTH_USER_ID_HEADER, USER_ID)
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -525,7 +525,7 @@ public class AuthenticationControllerTest {
         passwordResetRequest.setPassword(PASSWORD);
         passwordResetRequest.setPassword2(null);
         mockMvc.perform(post(UI_V1_AUTH + "/reset/current")
-                        .header(AUTH_USER_ID_HEADER, 2L)
+                        .header(AUTH_USER_ID_HEADER, USER_ID)
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -540,7 +540,7 @@ public class AuthenticationControllerTest {
         passwordResetRequest.setPassword("test");
         passwordResetRequest.setPassword2(PASSWORD);
         mockMvc.perform(post(UI_V1_AUTH + "/reset/current")
-                        .header(AUTH_USER_ID_HEADER, 2L)
+                        .header(AUTH_USER_ID_HEADER, USER_ID)
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -556,7 +556,7 @@ public class AuthenticationControllerTest {
         passwordResetRequest.setPassword(PASSWORD);
         passwordResetRequest.setPassword2("test");
         mockMvc.perform(post(UI_V1_AUTH + "/reset/current")
-                        .header(AUTH_USER_ID_HEADER, 2L)
+                        .header(AUTH_USER_ID_HEADER, USER_ID)
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -572,7 +572,7 @@ public class AuthenticationControllerTest {
         passwordResetRequest.setPassword(PASSWORD);
         passwordResetRequest.setPassword2(PASSWORD);
         mockMvc.perform(post(UI_V1_AUTH + "/reset/current")
-                        .header(AUTH_USER_ID_HEADER, 2L)
+                        .header(AUTH_USER_ID_HEADER, USER_ID)
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
@@ -587,7 +587,7 @@ public class AuthenticationControllerTest {
         passwordResetRequest.setPassword("qwerty123456");
         passwordResetRequest.setPassword2(PASSWORD);
         mockMvc.perform(post(UI_V1_AUTH + "/reset/current")
-                        .header(AUTH_USER_ID_HEADER, 2L)
+                        .header(AUTH_USER_ID_HEADER, USER_ID)
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())

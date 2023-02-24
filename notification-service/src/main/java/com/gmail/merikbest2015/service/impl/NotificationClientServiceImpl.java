@@ -33,18 +33,14 @@ public class NotificationClientServiceImpl implements NotificationClientService 
         Long authUserId = AuthUtil.getAuthenticatedUserId();
 
         if (!notification.getNotifiedUserId().equals(authUserId)) {
-            boolean isNotificationExists;
-
-            if (notification.getNotificationType().equals(NotificationType.LISTS)) {
-                isNotificationExists = notificationRepository.isListNotificationExists(
+            boolean isNotificationExists = switch (notification.getNotificationType()) {
+                case LISTS -> notificationRepository.isListNotificationExists(
                         notification.getNotifiedUserId(), notification.getListId(), authUserId, notification.getNotificationType());
-            } else if (notification.getNotificationType().equals(NotificationType.FOLLOW)) {
-                isNotificationExists = notificationRepository.isUserNotificationExists(
+                case FOLLOW -> notificationRepository.isUserNotificationExists(
                         notification.getNotifiedUserId(), notification.getUserToFollowId(), authUserId, notification.getNotificationType());
-            } else {
-                isNotificationExists = notificationRepository.isTweetNotificationExists(
+                default -> notificationRepository.isTweetNotificationExists(
                         notification.getNotifiedUserId(), notification.getTweetId(), authUserId, notification.getNotificationType());
-            }
+            };
             if (!isNotificationExists) {
                 notificationRepository.save(notification);
                 userClient.increaseNotificationsCount(notification.getNotifiedUserId());
@@ -73,13 +69,11 @@ public class NotificationClientServiceImpl implements NotificationClientService 
     }
 
     private NotificationResponse convertToNotificationResponse(Notification notification, boolean notificationCondition) {
-        if (notification.getNotificationType().equals(NotificationType.LISTS)) {
-            return convertToNotificationListResponse(notification, notificationCondition);
-        } else if (notification.getNotificationType().equals(NotificationType.FOLLOW)) {
-            return convertToNotificationUserResponse(notification, notificationCondition);
-        } else {
-            return convertToNotificationTweetResponse(notification, notificationCondition);
-        }
+        return switch (notification.getNotificationType()) {
+            case LISTS -> convertToNotificationListResponse(notification, notificationCondition);
+            case FOLLOW -> convertToNotificationUserResponse(notification, notificationCondition);
+            default -> convertToNotificationTweetResponse(notification, notificationCondition);
+        };
     }
 
     private NotificationResponse convertToNotificationListResponse(Notification notification, boolean isAddedToList) {

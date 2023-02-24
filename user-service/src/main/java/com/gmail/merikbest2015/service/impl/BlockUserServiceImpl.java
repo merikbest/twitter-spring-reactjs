@@ -39,9 +39,6 @@ public class BlockUserServiceImpl implements BlockUserService {
             userRepository.blockUser(authUserId, userId);
             userRepository.unfollow(authUserId, userId);
             userRepository.unfollow(userId, authUserId);
-            // TODO get lists by user id instead of user.getLists()
-//            user.getLists().removeIf(list -> list.getMembers().stream()
-//                    .anyMatch(member -> member.getId().equals(currentUser.getId())));
             return true;
         }
     }

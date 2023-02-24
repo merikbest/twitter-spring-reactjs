@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static com.gmail.merikbest2015.constants.PathConstants.API_V1_NOTIFICATION;
 import static com.gmail.merikbest2015.constants.PathConstants.AUTH_USER_ID_HEADER;
+import static com.gmail.merikbest2015.util.TestConstants.USER_ID;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -44,7 +45,7 @@ public class NotificationApiControllerTest {
                 .listId(4L)
                 .build();
         mockMvc.perform(post(API_V1_NOTIFICATION + "/list")
-                        .header(AUTH_USER_ID_HEADER, 2L)
+                        .header(AUTH_USER_ID_HEADER, USER_ID)
                         .content(mapper.writeValueAsString(notificationRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
@@ -60,7 +61,7 @@ public class NotificationApiControllerTest {
                 .userToFollowId(1L)
                 .build();
         mockMvc.perform(post(API_V1_NOTIFICATION + "/user")
-                        .header(AUTH_USER_ID_HEADER, 2L)
+                        .header(AUTH_USER_ID_HEADER, USER_ID)
                         .content(mapper.writeValueAsString(notificationRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
@@ -77,7 +78,7 @@ public class NotificationApiControllerTest {
                 .tweetId(45L)
                 .build();
         mockMvc.perform(post(API_V1_NOTIFICATION + "/tweet")
-                        .header(AUTH_USER_ID_HEADER, 2L)
+                        .header(AUTH_USER_ID_HEADER, USER_ID)
                         .content(mapper.writeValueAsString(notificationRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());

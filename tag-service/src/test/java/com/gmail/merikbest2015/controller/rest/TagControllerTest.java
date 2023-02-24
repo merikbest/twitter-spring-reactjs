@@ -34,7 +34,7 @@ public class TagControllerTest {
     @DisplayName("[200] GET /ui/v1/tags - Get all tags")
     public void getTags() throws Exception {
         mockMvc.perform(get(UI_V1_TAGS)
-                        .header(AUTH_USER_ID_HEADER, 2L))
+                        .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
@@ -46,7 +46,7 @@ public class TagControllerTest {
     @DisplayName("[200] GET /ui/v1/tags/trends - Get trends")
     public void getTrends() throws Exception {
         mockMvc.perform(get(UI_V1_TAGS + "/trends")
-                        .header(AUTH_USER_ID_HEADER, 2L))
+                        .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
@@ -59,7 +59,7 @@ public class TagControllerTest {
     public void getTweetsByTag() throws Exception {
         mockMvc.perform(get(UI_V1_TAGS + "/search")
                         .param("tagName", "#JetBrains")
-                        .header(AUTH_USER_ID_HEADER, 2L))
+                        .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(43L))
