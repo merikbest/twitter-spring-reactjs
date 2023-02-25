@@ -31,7 +31,7 @@ public class BlockUserControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    @DisplayName("[200] GET /api/v1/user/blocked - Get blocked users")
+    @DisplayName("[200] GET /ui/v1/user/blocked - Get blocked users")
     public void getBlockList() throws Exception {
         mockMvc.perform(get(UI_V1_USER + "/blocked")
                 .header(AUTH_USER_ID_HEADER, USER_ID))
@@ -47,7 +47,7 @@ public class BlockUserControllerTest {
     }
 
     @Test
-    @DisplayName("[200] GET /api/v1/user/blocked/3 - Add user to block list by id")
+    @DisplayName("[200] GET /ui/v1/user/blocked/3 - Add user to block list by id")
     public void addToBlockList() throws Exception {
         mockMvc.perform(get(UI_V1_USER + "/blocked/3")
                 .header(AUTH_USER_ID_HEADER, USER_ID))
@@ -56,7 +56,7 @@ public class BlockUserControllerTest {
     }
 
     @Test
-    @DisplayName("[200] GET /api/v1/user/blocked/4 - Remove user from block list by id")
+    @DisplayName("[200] GET /ui/v1/user/blocked/4 - Remove user from block list by id")
     public void removeFromBlockList() throws Exception {
         mockMvc.perform(get(UI_V1_USER + "/blocked/4")
                 .header(AUTH_USER_ID_HEADER, USER_ID))
@@ -65,7 +65,7 @@ public class BlockUserControllerTest {
     }
 
     @Test
-    @DisplayName("[404] GET /api/v1/user/blocked/99 - Should user Not Found by id")
+    @DisplayName("[404] GET /ui/v1/user/blocked/99 - Should user Not Found by id")
     public void processBlockList_ShouldUserNotFound() throws Exception {
         mockMvc.perform(get(UI_V1_USER + "/blocked/99")
                 .header(AUTH_USER_ID_HEADER, USER_ID))
