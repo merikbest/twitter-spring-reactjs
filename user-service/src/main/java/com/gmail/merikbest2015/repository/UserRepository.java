@@ -165,6 +165,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "WHERE user.id = :userId")
     void updateMediaTweetCount(@Param("increaseCount") boolean increaseCount, @Param("userId") Long userId);
 
+    @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user WHERE user.email = :email")
+    boolean isEmailExist(@Param("email") String email);
+
     @Modifying
     @Query("UPDATE User user SET user.email = :email WHERE user.id = :userId")
     void updateEmail(@Param("email") String email, @Param("userId") Long userId);

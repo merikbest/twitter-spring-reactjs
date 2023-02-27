@@ -56,12 +56,12 @@ public class Tweet {
     @Column(name = "link_cover")
     private String linkCover;
 
+    @Column(name = "deleted")
+    private boolean deleted;
+
     @Column(name = "link_cover_size")
     @Enumerated(EnumType.STRING)
     private LinkCoverSize linkCoverSize;
-
-    @Column(name = "deleted")
-    private boolean deleted;
 
     @Column(name = "author_id", nullable = false)
     private Long authorId;

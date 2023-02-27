@@ -3,9 +3,8 @@ package com.gmail.merikbest2015.service.impl;
 import com.gmail.merikbest2015.enums.BackgroundColorType;
 import com.gmail.merikbest2015.enums.ColorSchemeType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.UserRepository;
-import com.gmail.merikbest2015.repository.projection.UserCommonProjection;
+import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
 import com.gmail.merikbest2015.security.JwtProvider;
 import com.gmail.merikbest2015.service.AuthenticationService;
 import com.gmail.merikbest2015.service.UserSettingsService;
@@ -16,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -40,12 +38,11 @@ public class UserSettingsServiceImpl implements UserSettingsService {
     @Override
     @Transactional
     public Map<String, Object> updateEmail(String email) {
-        Optional<UserCommonProjection> userByEmail = userRepository.getUserByEmail(email, UserCommonProjection.class);
-
-        if (userByEmail.isEmpty()) {
-            User user = authenticationService.getAuthenticatedUser();
-            userRepository.updateEmail(email, user.getId());
+        if (!userRepository.isEmailExist(email)) {
+            Long authUserId = authenticationService.getAuthenticatedUserId();
+            userRepository.updateEmail(email, authUserId);
             String token = jwtProvider.createToken(email, "USER");
+            AuthUserProjection user = userRepository.getUserById(authUserId, AuthUserProjection.class).get();
             Map<String, Object> response = new HashMap<>();
             response.put("user", user);
             response.put("token", token);

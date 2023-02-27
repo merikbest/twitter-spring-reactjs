@@ -36,7 +36,7 @@ public class AuthenticationController {
     }
 
     @GetMapping("/registration/activate/{code}")
-    public ResponseEntity<String> checkRegistrationCode(@PathVariable String code) {
+    public ResponseEntity<String> checkRegistrationCode(@PathVariable("code") String code) {
         return ResponseEntity.ok(authenticationMapper.checkRegistrationCode(code));
     }
 
@@ -56,7 +56,7 @@ public class AuthenticationController {
     }
 
     @GetMapping("/reset/{code}")
-    public ResponseEntity<AuthUserResponse> getUserByPasswordResetCode(@PathVariable String code) {
+    public ResponseEntity<AuthUserResponse> getUserByPasswordResetCode(@PathVariable("code") String code) {
         return ResponseEntity.ok(authenticationMapper.getUserByPasswordResetCode(code));
     }
 
