@@ -114,6 +114,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetailProjection getUserDetails(Long userId) {
+        userServiceHelper.checkIsUserExistOrMyProfileBlocked(userId);
         return userRepository.getUserById(userId, UserDetailProjection.class)
                 .orElseThrow(() -> new ApiRequestException("User not found", HttpStatus.NOT_FOUND));
     }
