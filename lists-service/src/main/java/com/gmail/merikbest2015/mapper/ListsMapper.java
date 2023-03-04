@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -87,7 +86,7 @@ public class ListsMapper {
                     simpleListResponse.setMemberInList((Boolean) list.get("isMemberInList"));
                     return simpleListResponse;
                 })
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public String addUserToLists(UserToListsRequest userToListsRequest) {

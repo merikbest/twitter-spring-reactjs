@@ -10,18 +10,18 @@ create sequence bookmarks_seq start 100 increment 1;
 create table tweets
 (
     id                 int8 not null,
-    text               text,
+    text               varchar(255) not null,
     date_time          timestamp default current_timestamp,
     scheduled_date     timestamp,
     addressed_username varchar(255),
     addressed_id       int8,
     addressed_tweet_id int8,
-    reply_type         varchar(255),
+    reply_type         varchar(255) default 'EVERYONE',
     link               varchar(255),
     link_title         varchar(255),
     link_description   varchar(255),
     link_cover         varchar(255),
-    deleted            boolean,
+    deleted            boolean default false,
     link_cover_size    varchar(255),
     author_id          int8 not null,
     poll_id            int8,
@@ -69,7 +69,7 @@ create table polls_poll_choices
 create table poll_choices
 (
     id     int8 not null,
-    choice varchar(255),
+    choice varchar(255) not null,
     primary key (id)
 );
 create table poll_choice_voted
@@ -134,3 +134,13 @@ alter table tweets_images
     add constraint FKgg4e58t98pdpjlv0lyp4ausbx foreign key (images_id) references tweet_images;
 alter table tweets_images
     add constraint FKgka7vl35am9mwo21xiy4o3dw3 foreign key (tweet_id) references tweets;
+
+create index bookmarks_user_id_idx on bookmarks (user_id);
+create index bookmarks_tweet_id_idx on bookmarks (tweet_id);
+create index liked_tweets_user_id_idx on liked_tweets (user_id);
+create index liked_tweets_tweet_id_idx on liked_tweets (tweet_id);
+create index poll_choice_voted_voted_user_id_idx on poll_choice_voted (voted_user_id);
+create index poll_choice_voted_poll_choice_id_idx on poll_choice_voted (poll_choice_id);
+create index retweets_user_id_idx on retweets (user_id);
+create index retweets_tweet_id_idx on retweets (tweet_id);
+create index tweets_author_id_idx on tweets (author_id);

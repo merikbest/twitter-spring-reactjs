@@ -12,6 +12,9 @@ import java.util.Optional;
 
 @Repository
 public interface ListsRepository extends JpaRepository<Lists, Long> {
+    String COMMON_LISTS_EXPRESSION = "list.id as id, list.name as name, list.description as description, " +
+            "list.altWallpaper as altWallpaper, list.wallpaper as wallpaper, list.listOwnerId as listOwnerId";
+    String LISTS_EXPRESSION = COMMON_LISTS_EXPRESSION + ", list.isPrivate as isPrivate";
 
     @Query("SELECT list FROM Lists list WHERE list.id = :listId")
     <T> T getListById(@Param("listId") Long listId, Class<T> type);
@@ -22,13 +25,18 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
     @Query("SELECT DISTINCT list.listOwnerId FROM Lists list")
     List<Long> getListOwnerIds();
 
-    @Query("SELECT list FROM Lists list WHERE list.id IN :listIds")
-    List<ListProjection> getTweetListsByIds(@Param("listIds") List<Long> listIds);
+    @Query("SELECT " + COMMON_LISTS_EXPRESSION + " FROM Lists list " +
+            "WHERE list.id IN (" +
+            "   SELECT listsMembers.listId FROM ListsMembers listsMembers " +
+            "   WHERE listsMembers.memberId = :userId)")
+    List<ListProjection> getTweetListsByIds(@Param("userId") Long userId);
 
-    @Query("SELECT list FROM Lists list " +
-            "WHERE list.listOwnerId = :ownerId " +
-            "OR list.id IN :listIds")
-    List<ListUserProjection> getUserTweetLists(@Param("ownerId") Long ownerId, @Param("listIds") List<Long> listIds);
+    @Query("SELECT " + LISTS_EXPRESSION + " FROM Lists list " +
+            "WHERE list.listOwnerId = :userId " +
+            "OR list.id IN (" +
+            "   SELECT listFollower.listId FROM ListsFollowers listFollower " +
+            "   WHERE listFollower.followerId = :userId)")
+    List<ListUserProjection> getUserTweetLists(@Param("userId") Long userId);
 
     @Query("SELECT list FROM Lists list " +
             "LEFT JOIN list.pinnedLists pinnedList " +
@@ -36,13 +44,13 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
             "ORDER BY pinnedList.pinnedDate DESC")
     List<PinnedListProjection> getUserPinnedLists(@Param("userId") Long userId);
 
-    @Query("SELECT list FROM Lists list " +
-            "WHERE list.id = :listId AND list.id IN :listIds " +
+    @Query("SELECT " + LISTS_EXPRESSION + " FROM Lists list " +
+            "WHERE list.id = :listId AND list.id IN (" +
+            "   SELECT listFollower.listId FROM ListsFollowers listFollower " +
+            "   WHERE listFollower.followerId = :userId) " +
             "OR list.id = :listId AND list.isPrivate = false " +
             "OR list.id = :listId AND list.listOwnerId = :userId")
-    Optional<BaseListProjection> getListById(@Param("listIds") List<Long> listIds,
-                                             @Param("listId") Long listId,
-                                             @Param("userId") Long userId);
+    Optional<BaseListProjection> getListById(@Param("listId") Long listId, @Param("userId") Long userId);
 
     @Query("SELECT list FROM Lists list WHERE list.listOwnerId = :ownerId AND list.isPrivate = false")
     List<ListProjection> getUserTweetListsById(@Param("ownerId") Long ownerId);
@@ -54,10 +62,10 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
 
     @Query("SELECT list FROM Lists list " +
             "WHERE list.id = :listId AND list.listOwnerId = :listOwnerId " +
-            "OR list.id = :listId AND list.id IN :listIds")
-    Optional<Lists> getListWhereUserConsist(@Param("listIds") List<Long> listIds,
-                                            @Param("listId") Long listId,
-                                            @Param("listOwnerId") Long listOwnerId);
+            "OR list.id = :listId AND list.id IN (" +
+            "   SELECT listFollower.listId FROM ListsFollowers listFollower " +
+            "   WHERE listFollower.followerId = :listOwnerId)")
+    Optional<Lists> getListWhereUserConsist(@Param("listId") Long listId, @Param("listOwnerId") Long listOwnerId);
 
     @Query("SELECT list FROM Lists list WHERE list.listOwnerId = :ownerId")
     List<SimpleListProjection> getUserOwnerLists(@Param("ownerId") Long ownerId);
@@ -65,25 +73,27 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
     @Query("SELECT CASE WHEN count(list) > 0 THEN true ELSE false END FROM Lists list " +
             "WHERE list.id = :listId " +
             "AND list.listOwnerId = :authUserId " +
-            "AND list.id IN :listIds")
-    boolean isListIncludeUser(@Param("listIds") List<Long> listIds,
-                              @Param("listId") Long listId,
-                              @Param("authUserId") Long authUserId);
+            "AND list.id IN (" +
+            "   SELECT listsMembers.listId FROM ListsMembers listsMembers " +
+            "   WHERE listsMembers.memberId = :memberId)")
+    boolean isListIncludeUser(@Param("listId") Long listId,
+                              @Param("authUserId") Long authUserId,
+                              @Param("memberId") Long memberId);
 
     @Query("SELECT CASE WHEN count(list) > 0 THEN true ELSE false END FROM Lists list " +
             "WHERE list.id = :listId AND list.listOwnerId = :listOwnerId " +
-            "OR list.id = :listId AND list.id IN :listIds")
-    boolean isListExist(@Param("listIds") List<Long> listIds,
-                        @Param("listId") Long listId,
-                        @Param("listOwnerId") Long listOwnerId);
+            "OR list.id = :listId AND list.id IN (" +
+            "   SELECT listFollower.listId FROM ListsFollowers listFollower " +
+            "   WHERE listFollower.followerId = :listOwnerId)")
+    boolean isListExist(@Param("listId") Long listId, @Param("listOwnerId") Long listOwnerId);
 
     @Query("SELECT CASE WHEN count(list) > 0 THEN true ELSE false END FROM Lists list " +
             "WHERE list.id = :listId AND list.listOwnerId = :authUserId " +
             "OR list.id = :listId AND list.isPrivate = false " +
-            "OR list.id = :listId AND list.isPrivate = true AND list.id IN :listIds")
-    boolean isListNotPrivate(@Param("listIds") List<Long> listIds,
-                             @Param("listId") Long listId,
-                             @Param("authUserId") Long authUserId);
+            "OR list.id = :listId AND list.isPrivate = true AND list.id IN (" +
+            "   SELECT listFollower.listId FROM ListsFollowers listFollower " +
+            "   WHERE listFollower.followerId = :authUserId)")
+    boolean isListNotPrivate(@Param("listId") Long listId, @Param("authUserId") Long authUserId);
 
     @Query("SELECT lists FROM Lists lists " +
             "WHERE lists.id = :listId AND lists.isPrivate = false " +
@@ -92,6 +102,6 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
 
     @Query("SELECT list.isPrivate FROM Lists list " +
             "WHERE list.id = :listId " +
-            "AND list.listOwnerId != :authUserId")
+            "AND list.listOwnerId <> :authUserId")
     boolean isListPrivate(@Param("listId") Long listId, @Param("authUserId") Long authUserId);
 }

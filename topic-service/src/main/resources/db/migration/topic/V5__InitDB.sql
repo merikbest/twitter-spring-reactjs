@@ -5,8 +5,8 @@ create sequence topic_not_interested_seq start 100 increment 1;
 create table topics
 (
     id             int8 not null,
+    topic_name     varchar(255) not null unique,
     topic_category varchar(255),
-    topic_name     varchar(255),
     primary key (id)
 );
 

@@ -20,17 +20,17 @@ public class Notification {
     @SequenceGenerator(name = "notifications_seq", sequenceName = "notifications_seq", initialValue = 100, allocationSize = 1)
     private Long id;
 
-    @Column(name = "date")
+    @Column(name = "date", columnDefinition = "timestamp default current_timestamp")
     private LocalDateTime date = LocalDateTime.now();
 
-    @Column(name = "notification_type")
+    @Column(name = "notification_type", nullable = false)
     @Enumerated(EnumType.STRING)
     private NotificationType notificationType;
 
-    @Column(name = "notified_user_id")
+    @Column(name = "notified_user_id", nullable = false)
     private Long notifiedUserId;
 
-    @Column(name = "user_id")
+    @Column(name = "user_id", nullable = false)
     private Long userId;
 
     @Column(name = "user_to_follow_id")

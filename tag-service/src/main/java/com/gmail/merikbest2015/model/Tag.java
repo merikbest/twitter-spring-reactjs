@@ -10,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @EqualsAndHashCode
-@Table(name = "tags")
+@Table(name = "tags", indexes = @Index(name = "tags_tag_name_idx", columnList = "tag_name"))
 public class Tag {
 
     @Id
@@ -19,10 +19,9 @@ public class Tag {
     private Long id;
 
     @NonNull
-    @Column(name = "tag_name")
+    @Column(name = "tag_name", nullable = false)
     private String tagName;
 
-    @NonNull
-    @Column(name = "tweets_quantity")
-    private Long tweetsQuantity;
+    @Column(name = "tweets_quantity", columnDefinition = "int8 default 1")
+    private Long tweetsQuantity = 1L;
 }

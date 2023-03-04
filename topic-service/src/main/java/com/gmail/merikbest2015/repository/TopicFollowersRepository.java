@@ -7,13 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface TopicFollowersRepository extends JpaRepository<TopicFollowers, Long> {
-
-    @Query("SELECT follower.topicId FROM TopicFollowers follower WHERE follower.userId = :userId")
-    List<Long> getFollowedTopics(@Param("userId") Long userId);
 
     @Query("SELECT follower FROM TopicFollowers follower " +
             "WHERE follower.userId = :userId " +

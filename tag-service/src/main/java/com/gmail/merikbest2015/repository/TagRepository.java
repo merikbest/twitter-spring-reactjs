@@ -1,7 +1,6 @@
 package com.gmail.merikbest2015.repository;
 
 import com.gmail.merikbest2015.model.Tag;
-import com.gmail.merikbest2015.repository.projection.TagProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,9 +15,9 @@ import java.util.Optional;
 @Repository
 public interface TagRepository extends JpaRepository<Tag, Long> {
 
-    Page<TagProjection> findByOrderByTweetsQuantityDesc(Pageable pageable);
+    Page<Tag> findByOrderByTweetsQuantityDesc(Pageable pageable);
 
-    List<TagProjection> findTop5ByOrderByTweetsQuantityDesc();
+    List<Tag> findTop5ByOrderByTweetsQuantityDesc();
 
     Optional<Tag> findByTagName(String tagName);
 

@@ -11,7 +11,12 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @NoArgsConstructor
 @RequiredArgsConstructor
-@Table(name = "liked_tweets")
+@Table(
+        name = "liked_tweets",
+        indexes = {
+                @Index(name = "liked_tweets_user_id_idx", columnList = "user_id"),
+                @Index(name = "liked_tweets_tweet_id_idx", columnList = "tweet_id"),
+        })
 public class LikeTweet {
 
     @Id
@@ -19,7 +24,7 @@ public class LikeTweet {
     @SequenceGenerator(name = "liked_tweets_seq", sequenceName = "liked_tweets_seq", initialValue = 100, allocationSize = 1)
     private Long id;
 
-    @Column(name = "liked_tweet_date")
+    @Column(name = "liked_tweet_date", columnDefinition = "timestamp default current_timestamp")
     private LocalDateTime likeTweetDate = LocalDateTime.now();
 
     @NonNull

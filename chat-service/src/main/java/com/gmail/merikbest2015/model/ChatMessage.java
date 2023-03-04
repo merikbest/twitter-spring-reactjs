@@ -11,7 +11,12 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @NoArgsConstructor
 @RequiredArgsConstructor
-@Table(name = "chat_messages")
+@Table(
+        name = "chat_messages",
+        indexes = {
+                @Index(name = "chat_messages_author_id_idx", columnList = "author_id"),
+                @Index(name = "chat_messages_chat_id_idx", columnList = "chat_id"),
+        })
 public class ChatMessage {
 
     @Id
@@ -20,10 +25,10 @@ public class ChatMessage {
     private Long id;
 
     @NonNull
-    @Column(name = "text")
+    @Column(name = "text", nullable = false)
     private String text;
 
-    @Column(name = "date")
+    @Column(name = "date", columnDefinition = "timestamp default current_timestamp")
     private LocalDateTime date = LocalDateTime.now();
 
     @Column(name = "is_unread", columnDefinition = "boolean default true")
@@ -34,10 +39,10 @@ public class ChatMessage {
     private Long tweetId;
 
     @NonNull
-    @Column(name = "author_id")
+    @Column(name = "author_id", nullable = false)
     private Long authorId;
 
     @ManyToOne
-    @JoinColumn(name = "chat_id")
+    @JoinColumn(name = "chat_id", nullable = false)
     private Chat chat;
 }

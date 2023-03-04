@@ -7,7 +7,6 @@ import com.gmail.merikbest2015.feign.TweetClient;
 import com.gmail.merikbest2015.model.Tag;
 import com.gmail.merikbest2015.repository.TagRepository;
 import com.gmail.merikbest2015.repository.TweetTagRepository;
-import com.gmail.merikbest2015.repository.projection.TagProjection;
 import com.gmail.merikbest2015.service.TagService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,12 +25,12 @@ public class TagServiceImpl implements TagService {
     private final TweetClient tweetClient;
 
     @Override
-    public List<TagProjection> getTags() {
+    public List<Tag> getTags() {
         return tagRepository.findTop5ByOrderByTweetsQuantityDesc();
     }
 
     @Override
-    public Page<TagProjection> getTrends(Pageable pageable) {
+    public Page<Tag> getTrends(Pageable pageable) {
         return tagRepository.findByOrderByTweetsQuantityDesc(pageable);
     }
 

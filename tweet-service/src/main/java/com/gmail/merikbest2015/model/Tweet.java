@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode(exclude = {"poll"})
-@Table(name = "tweets")
+@Table(name = "tweets", indexes = @Index(name = "tweets_author_id_idx", columnList = "author_id"))
 public class Tweet {
 
     @Id
@@ -22,10 +22,10 @@ public class Tweet {
     @SequenceGenerator(name = "tweets_seq", sequenceName = "tweets_seq", initialValue = 100, allocationSize = 1)
     private Long id;
 
-    @Column(name = "text", length = 1337, columnDefinition = "text")
+    @Column(name = "text", length = 1337, nullable = false)
     private String text;
 
-    @Column(name = "date_time")
+    @Column(name = "date_time", columnDefinition = "timestamp default current_timestamp")
     private LocalDateTime dateTime = LocalDateTime.now();
 
     @Column(name = "scheduled_date")
@@ -40,9 +40,9 @@ public class Tweet {
     @Column(name = "addressed_tweet_id")
     private Long addressedTweetId;
 
-    @Column(name = "reply_type")
+    @Column(name = "reply_type", columnDefinition = "varchar(255) default 'EVERYONE'")
     @Enumerated(EnumType.STRING)
-    private ReplyType replyType;
+    private ReplyType replyType = ReplyType.EVERYONE;
 
     @Column(name = "link")
     private String link;
@@ -56,8 +56,8 @@ public class Tweet {
     @Column(name = "link_cover")
     private String linkCover;
 
-    @Column(name = "deleted")
-    private boolean deleted;
+    @Column(name = "deleted", columnDefinition = "boolean default false")
+    private boolean deleted = false;
 
     @Column(name = "link_cover_size")
     @Enumerated(EnumType.STRING)

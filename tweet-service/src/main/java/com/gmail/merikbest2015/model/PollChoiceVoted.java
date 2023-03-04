@@ -10,7 +10,12 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @NoArgsConstructor
 @RequiredArgsConstructor
-@Table(name = "poll_choice_voted")
+@Table(
+        name = "poll_choice_voted",
+        indexes = {
+                @Index(name = "poll_choice_voted_voted_user_id_idx", columnList = "voted_user_id"),
+                @Index(name = "poll_choice_voted_poll_choice_id_idx", columnList = "poll_choice_id"),
+        })
 public class PollChoiceVoted {
 
     @Id

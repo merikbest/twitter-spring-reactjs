@@ -11,12 +11,12 @@ public interface ListProjection {
     String getWallpaper();
     Long getListOwnerId();
 
-    @Value("#{@listsServiceImpl.getListOwnerById(target.listOwnerId)}")
+    @Value("#{@listsServiceHelper.getListOwnerById(target.listOwnerId)}")
     ListOwnerResponse getListOwner();
 
-    @Value("#{@listsServiceImpl.isMyProfileFollowList(target.id)}")
+    @Value("#{@listsServiceHelper.isMyProfileFollowList(target.id)}")
     boolean getIsFollower();
 
-    @Value("#{@listsServiceImpl.isListPinned(target.id)}")
+    @Value("#{@listsServiceHelper.isListPinned(target.id)}")
     boolean getIsListPinned();
 }

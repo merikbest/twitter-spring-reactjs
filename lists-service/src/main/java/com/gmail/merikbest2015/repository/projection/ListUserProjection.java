@@ -9,12 +9,12 @@ public interface ListUserProjection {
     String getDescription();
     String getAltWallpaper();
     String getWallpaper();
-    boolean getIsPrivate();
     Long getListOwnerId();
+    boolean getIsPrivate();
 
-    @Value("#{@listsServiceImpl.getListOwnerById(target.listOwnerId)}")
+    @Value("#{@listsServiceHelper.getListOwnerById(target.listOwnerId)}")
     ListOwnerResponse getListOwner();
 
-    @Value("#{@listsServiceImpl.isListPinned(target.id)}")
+    @Value("#{@listsServiceHelper.isListPinned(target.id)}")
     boolean getIsListPinned();
 }

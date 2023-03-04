@@ -11,7 +11,12 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @NoArgsConstructor
 @RequiredArgsConstructor
-@Table(name = "retweets")
+@Table(
+        name = "retweets",
+        indexes = {
+                @Index(name = "retweets_user_id_idx", columnList = "user_id"),
+                @Index(name = "retweets_tweet_id_idx", columnList = "tweet_id"),
+        })
 public class Retweet {
 
     @Id
@@ -19,7 +24,7 @@ public class Retweet {
     @SequenceGenerator(name = "retweets_seq", sequenceName = "retweets_seq", initialValue = 100, allocationSize = 1)
     private Long id;
 
-    @Column(name = "retweet_date")
+    @Column(name = "retweet_date", columnDefinition = "timestamp default current_timestamp")
     private LocalDateTime retweetDate = LocalDateTime.now();
 
     @NonNull

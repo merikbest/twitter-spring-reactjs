@@ -16,9 +16,6 @@ public interface ListsMembersRepository extends JpaRepository<ListsMembers, Long
             "AND listsMembers.memberId = :userId")
     ListsMembers getListMember(@Param("listId") Long listId, @Param("userId") Long userId);
 
-    @Query("SELECT listsMembers.listId FROM ListsMembers listsMembers WHERE listsMembers.memberId = :userId")
-    List<Long> getListIds(@Param("userId") Long userId);
-
     @Query("SELECT listsMembers.memberId FROM ListsMembers listsMembers WHERE listsMembers.listId = :listId")
     List<Long> getMembersIds(@Param("listId") Long listId);
 

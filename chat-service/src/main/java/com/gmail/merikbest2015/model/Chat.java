@@ -20,7 +20,7 @@ public class Chat {
     @SequenceGenerator(name = "chats_seq", sequenceName = "chats_seq", initialValue = 100, allocationSize = 1)
     private Long id;
 
-    @Column(name = "creation_date")
+    @Column(name = "creation_date", columnDefinition = "timestamp default current_timestamp")
     private LocalDateTime creationDate = LocalDateTime.now();
 
     @OneToMany(mappedBy = "chat")

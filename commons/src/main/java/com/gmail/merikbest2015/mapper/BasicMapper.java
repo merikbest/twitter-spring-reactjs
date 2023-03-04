@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -24,7 +23,7 @@ public class BasicMapper {
     public <T, S> List<S> convertToResponseList(List<T> lists, Class<S> type) {
         return lists.contains(null) ? new ArrayList<>() : lists.stream()
                 .map(list -> convertToResponse(list, type))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public <T, S> HeaderResponse<S> getHeaderResponse(Page<T> pageableItems, Class<S> type) {

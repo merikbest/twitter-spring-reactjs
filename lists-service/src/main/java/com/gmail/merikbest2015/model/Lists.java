@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
-@Table(name = "lists")
+@Table(name = "lists", indexes = @Index(name = "lists_list_owner_id_idx", columnList = "list_owner_id"))
 public class Lists {
 
     @Id
@@ -19,14 +19,14 @@ public class Lists {
     @SequenceGenerator(name = "lists_seq", sequenceName = "lists_seq", initialValue = 100, allocationSize = 1)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "description")
     private String description;
 
-    @Column(name = "private")
-    private boolean isPrivate;
+    @Column(name = "private", columnDefinition = "boolean default false")
+    private boolean isPrivate = false;
 
     @Column(name = "alt_wallpaper")
     private String altWallpaper;
@@ -37,6 +37,6 @@ public class Lists {
     @OneToMany(mappedBy = "list")
     private List<PinnedLists> pinnedLists;
 
-    @Column(name = "list_owner_id")
+    @Column(name = "list_owner_id", nullable = false)
     private Long listOwnerId;
 }

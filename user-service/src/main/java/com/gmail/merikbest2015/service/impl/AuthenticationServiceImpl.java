@@ -82,17 +82,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             user.setUsername(request.getUsername());
             user.setFullName(request.getUsername());
             user.setBirthday(request.getBirthday());
-            user.setRole("USER");
             userRepository.save(user);
             return "User data checked.";
         }
-
         if (!existingUser.get().isActive()) {
             existingUser.get().setUsername(request.getUsername());
             existingUser.get().setFullName(request.getUsername());
             existingUser.get().setBirthday(request.getBirthday());
-            existingUser.get().setRegistrationDate(LocalDateTime.now().withNano(0));
-            existingUser.get().setRole("USER");
             userRepository.save(existingUser.get());
             return "User data checked.";
         }

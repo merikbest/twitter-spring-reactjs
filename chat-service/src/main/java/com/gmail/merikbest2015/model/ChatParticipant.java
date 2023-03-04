@@ -10,7 +10,12 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @NoArgsConstructor
 @RequiredArgsConstructor
-@Table(name = "chats_participants")
+@Table(
+        name = "chats_participants",
+        indexes = {
+                @Index(name = "chats_participants_user_id_idx", columnList = "user_id"),
+                @Index(name = "chats_participants_chat_id_idx", columnList = "chat_id"),
+        })
 public class ChatParticipant {
 
     @Id
@@ -19,14 +24,14 @@ public class ChatParticipant {
     private Long id;
 
     @Column(name = "left_chat", columnDefinition = "boolean default false")
-    private boolean leftChat;
+    private boolean leftChat = false;
 
     @NonNull
-    @Column(name = "user_id")
+    @Column(name = "user_id", nullable = false)
     private Long userId;
 
     @ManyToOne
     @NonNull
-    @JoinColumn(name = "chat_id")
+    @JoinColumn(name = "chat_id", nullable = false)
     private Chat chat;
 }

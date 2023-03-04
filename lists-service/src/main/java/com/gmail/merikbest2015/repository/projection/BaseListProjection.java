@@ -12,7 +12,7 @@ public interface BaseListProjection {
     Long getListOwnerId();
     boolean getIsPrivate();
 
-    @Value("#{@listsServiceImpl.getListOwnerById(target.listOwnerId)}")
+    @Value("#{@listsServiceHelper.getListOwnerById(target.listOwnerId)}")
     ListOwnerResponse getListOwner();
 
     @Value("#{@listsMembersRepository.getMembersSize(target.id)}")
@@ -21,6 +21,6 @@ public interface BaseListProjection {
     @Value("#{@listsFollowersRepository.getFollowersSize(target.id)}")
     Long getFollowersSize();
 
-    @Value("#{@listsServiceImpl.isMyProfileFollowList(target.id)}")
+    @Value("#{@listsServiceHelper.isMyProfileFollowList(target.id)}")
     boolean getIsFollower();
 }

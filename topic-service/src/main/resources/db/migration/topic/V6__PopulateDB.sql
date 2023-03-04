@@ -13,7 +13,6 @@ INSERT INTO topics (id, topic_category, topic_name) VALUES (1011, null, 'Science
 INSERT INTO topics (id, topic_category, topic_name) VALUES (1012, null, 'Cats');
 INSERT INTO topics (id, topic_category, topic_name) VALUES (1013, null, 'Dogs');
 INSERT INTO topics (id, topic_category, topic_name) VALUES (1014, null, 'Bitcoin');
-INSERT INTO topics (id, topic_category, topic_name) VALUES (1015, null, 'Science');
 INSERT INTO topics (id, topic_category, topic_name) VALUES (1016, null, 'Xbox');
 INSERT INTO topics (id, topic_category, topic_name) VALUES (1017, 'GAMING', 'Game');
 INSERT INTO topics (id, topic_category, topic_name) VALUES (1018, 'GAMING', 'Cyberpunk 2077');

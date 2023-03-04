@@ -10,7 +10,12 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @NoArgsConstructor
 @RequiredArgsConstructor
-@Table(name = "tweet_tags")
+@Table(
+        name = "tweet_tags",
+        indexes = {
+                @Index(name = "tweet_tags_tag_id_idx", columnList = "tag_id"),
+                @Index(name = "tweet_tags_tweet_id_idx", columnList = "tweet_id"),
+        })
 public class TweetTag {
 
     @Id

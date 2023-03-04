@@ -40,17 +40,15 @@ public class PollServiceImpl implements PollService {
             throw new ApiRequestException("Incorrect poll choices", HttpStatus.BAD_REQUEST);
         }
         Tweet createdTweet = tweetService.createTweet(tweet);
-        LocalDateTime dateTime = LocalDateTime.now().plusMinutes(pollDateTime);
         Poll poll = new Poll();
         poll.setTweet(createdTweet);
-        poll.setDateTime(dateTime);
+        poll.setDateTime(LocalDateTime.now().plusMinutes(pollDateTime));
         List<PollChoice> pollChoices = new ArrayList<>();
         choices.forEach(choice -> {
             if (choice.length() == 0 || choice.length() > 25) {
                 throw new ApiRequestException("Incorrect choice text length", HttpStatus.BAD_REQUEST);
             }
-            PollChoice pollChoice = new PollChoice();
-            pollChoice.setChoice(choice);
+            PollChoice pollChoice = new PollChoice(choice);
             pollChoiceRepository.save(pollChoice);
             pollChoices.add(pollChoice);
         });

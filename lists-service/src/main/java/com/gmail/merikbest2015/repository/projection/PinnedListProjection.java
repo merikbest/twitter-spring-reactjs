@@ -9,6 +9,6 @@ public interface PinnedListProjection {
     String getWallpaper();
     boolean getIsPrivate();
 
-    @Value("#{@listsServiceImpl.isListPinned(target.id)}")
+    @Value("#{@listsServiceHelper.isListPinned(target.id)}")
     boolean getIsListPinned();
 }

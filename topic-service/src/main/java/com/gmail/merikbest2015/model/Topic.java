@@ -19,7 +19,7 @@ public class Topic {
     @SequenceGenerator(name = "topics_seq", sequenceName = "topics_seq", initialValue = 100, allocationSize = 1)
     private Long id;
 
-    @Column(name = "topic_name")
+    @Column(name = "topic_name", nullable = false, unique = true)
     private String topicName;
 
     @Column(name = "topic_category")

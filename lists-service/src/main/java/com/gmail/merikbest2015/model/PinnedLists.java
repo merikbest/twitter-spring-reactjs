@@ -11,7 +11,12 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @NoArgsConstructor
 @RequiredArgsConstructor
-@Table(name = "pinned_lists")
+@Table(
+        name = "pinned_lists",
+        indexes = {
+                @Index(name = "pinned_lists_list_id_idx", columnList = "list_id"),
+                @Index(name = "pinned_lists_pinned_user_id_idx", columnList = "pinned_user_id")
+        })
 public class PinnedLists {
 
     @Id

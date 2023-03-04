@@ -7,13 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface TopicNotInterestedRepository extends JpaRepository<TopicNotInterested, Long> {
-
-    @Query("SELECT notInterested.topicId FROM TopicNotInterested notInterested WHERE notInterested.userId = :userId")
-    List<Long> getNotInterestedTopic(@Param("userId") Long userId);
 
     @Query("SELECT notInterested FROM TopicNotInterested notInterested " +
             "WHERE notInterested.userId = :userId " +

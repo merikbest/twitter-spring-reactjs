@@ -1,8 +1,6 @@
 package com.gmail.merikbest2015.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -10,6 +8,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @EqualsAndHashCode
+@NoArgsConstructor
+@RequiredArgsConstructor
 @Table(name = "poll_choices")
 public class PollChoice {
 
@@ -18,6 +18,7 @@ public class PollChoice {
     @SequenceGenerator(name = "poll_choices_seq", sequenceName = "poll_choices_seq", initialValue = 100, allocationSize = 1)
     private Long id;
 
-    @Column(name = "choice")
+    @NonNull
+    @Column(name = "choice", nullable = false)
     private String choice;
 }
