@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.repository.UserRepository;
+import com.gmail.merikbest2015.repository.MuteUserRepository;
 import com.gmail.merikbest2015.repository.projection.MutedUserProjection;
 import com.gmail.merikbest2015.service.AuthenticationService;
 import com.gmail.merikbest2015.service.MuteUserService;
@@ -15,14 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class MuteUserServiceImpl implements MuteUserService {
 
+    private final MuteUserRepository muteUserRepository;
     private final AuthenticationService authenticationService;
-    private final UserRepository userRepository;
     private final UserServiceHelper userServiceHelper;
 
     @Override
     public Page<MutedUserProjection> getMutedList(Pageable pageable) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
-        return userRepository.getUserMuteListById(authUserId, pageable);
+        return muteUserRepository.getUserMuteListById(authUserId, pageable);
     }
 
     @Override
@@ -30,13 +30,13 @@ public class MuteUserServiceImpl implements MuteUserService {
     public Boolean processMutedList(Long userId) {
         userServiceHelper.checkIsUserExist(userId);
         Long authUserId = authenticationService.getAuthenticatedUserId();
-        boolean isUserMuted = userRepository.isUserMuted(authUserId, userId);
+        boolean isUserMuted = muteUserRepository.isUserMuted(authUserId, userId);
 
         if (isUserMuted) {
-            userRepository.unmuteUser(authUserId, userId);
+            muteUserRepository.unmuteUser(authUserId, userId);
             return false;
         } else {
-            userRepository.muteUser(authUserId, userId);
+            muteUserRepository.muteUser(authUserId, userId);
             return true;
         }
     }

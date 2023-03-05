@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.repository.UserRepository;
+import com.gmail.merikbest2015.repository.BlockUserRepository;
+import com.gmail.merikbest2015.repository.FollowerUserRepository;
 import com.gmail.merikbest2015.repository.projection.BlockedUserProjection;
 import com.gmail.merikbest2015.service.AuthenticationService;
 import com.gmail.merikbest2015.service.BlockUserService;
@@ -16,13 +17,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class BlockUserServiceImpl implements BlockUserService {
 
     private final AuthenticationService authenticationService;
-    private final UserRepository userRepository;
+    private final BlockUserRepository blockUserRepository;
+    private final FollowerUserRepository followerUserRepository;
     private final UserServiceHelper userServiceHelper;
 
     @Override
     public Page<BlockedUserProjection> getBlockList(Pageable pageable) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
-        return userRepository.getUserBlockListById(authUserId, pageable);
+        return blockUserRepository.getUserBlockListById(authUserId, pageable);
     }
 
     @Override
@@ -30,15 +32,15 @@ public class BlockUserServiceImpl implements BlockUserService {
     public Boolean processBlockList(Long userId) {
         userServiceHelper.checkIsUserExist(userId);
         Long authUserId = authenticationService.getAuthenticatedUserId();
-        boolean isUserBlocked = userRepository.isUserBlocked(authUserId, userId);
+        boolean isUserBlocked = blockUserRepository.isUserBlocked(authUserId, userId);
 
         if (isUserBlocked) {
-            userRepository.unblockUser(authUserId, userId);
+            blockUserRepository.unblockUser(authUserId, userId);
             return false;
         } else {
-            userRepository.blockUser(authUserId, userId);
-            userRepository.unfollow(authUserId, userId);
-            userRepository.unfollow(userId, authUserId);
+            blockUserRepository.blockUser(authUserId, userId);
+            followerUserRepository.unfollow(authUserId, userId);
+            followerUserRepository.unfollow(userId, authUserId);
             return true;
         }
     }

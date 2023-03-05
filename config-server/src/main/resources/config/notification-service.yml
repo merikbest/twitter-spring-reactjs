@@ -21,6 +21,21 @@ spring:
     rabbitmq:
         addresses: ${RABBITMQ_HOST:localhost}:5672
 
+resilience4j:
+    circuitbreaker:
+        instances:
+            lists-service:
+                minimum-number-of-calls: 5
+            tweet-service:
+                minimum-number-of-calls: 5
+            user-service:
+                minimum-number-of-calls: 5
+            websocket-service:
+                minimum-number-of-calls: 5
+feign:
+    circuitbreaker:
+        enabled: true
+
 eureka:
     client:
         service-url:

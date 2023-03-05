@@ -1,7 +1,5 @@
 package com.gmail.merikbest2015.repository;
 
-import com.gmail.merikbest2015.enums.BackgroundColorType;
-import com.gmail.merikbest2015.enums.ColorSchemeType;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.*;
 import org.springframework.data.domain.Page;
@@ -68,48 +66,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT user.privateProfile FROM User user WHERE user.id = :userId")
     boolean getUserPrivateProfile(@Param("userId") Long userId);
 
-    @Query("SELECT follower.id FROM User user LEFT JOIN user.followers follower WHERE user.id = :userId")
-    List<Long> getUserFollowersIds(@Param("userId") Long userId);
-
-    @Query("SELECT user FROM User user " +
-            "LEFT JOIN user.following following " +
-            "WHERE following.id = :userId")
-    Page<UserProjection> getFollowersById(@Param("userId") Long userId, Pageable pageable);
-
-    @Query("SELECT user FROM User user " +
-            "LEFT JOIN user.followers follower " +
-            "WHERE follower.id = :userId")
-    Page<UserProjection> getFollowingById(@Param("userId") Long userId, Pageable pageable);
-
-    @Query(value = "SELECT *, users.full_name as fullName FROM users " +
-            "LEFT JOIN user_follower_requests ufr ON users.id = ufr.follower_id " +
-            "WHERE ufr.user_id = :userId", nativeQuery = true)
-    Page<FollowerUserProjection> getFollowerRequests(@Param("userId") Long userId, Pageable pageable);
-
     @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user " +
             "LEFT JOIN user.following following " +
             "WHERE user.id = :userId AND user.privateProfile = false " +
             "OR user.id = :userId AND user.privateProfile = true AND following.id = :authUserId")
     boolean isUserHavePrivateProfile(@Param("userId") Long userId, @Param("authUserId") Long authUserId);
-
-    @Query("SELECT CASE WHEN count(blockedUser) > 0 THEN true ELSE false END FROM User user " +
-            "LEFT JOIN user.userBlockedList blockedUser " +
-            "WHERE user.id = :userId " +
-            "AND blockedUser.id = :blockedUserId")
-    boolean isUserBlocked(@Param("userId") Long userId, @Param("blockedUserId") Long blockedUserId);
-
-    @Query("SELECT CASE WHEN count(userMuted) > 0 THEN true ELSE false END FROM User user " +
-            "LEFT JOIN user.userMutedList userMuted " +
-            "WHERE user.id = :userId " +
-            "AND userMuted.id = :mutedUserId")
-    boolean isUserMuted(@Param("userId") Long userId, @Param("mutedUserId") Long mutedUserId);
-
-    @Query("SELECT CASE WHEN count(follower) > 0 THEN true ELSE false END " +
-            "FROM User user " +
-            "LEFT JOIN user.followers follower " +
-            "WHERE user.id = :authUserId " +
-            "AND follower.id = :userId")
-    boolean isUserFollowByOtherUser(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
 
     @Query("SELECT CASE WHEN count(followerRequest) > 0 THEN true ELSE false END FROM User user " +
             "LEFT JOIN user.followerRequests followerRequest " +
@@ -122,23 +83,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "WHERE user.id = :userId " +
             "AND subscriber.id = :subscriberUserId")
     boolean isMyProfileSubscribed(@Param("userId") Long userId, @Param("subscriberUserId") Long subscriberUserId);
-
-    @Query(value = "SELECT users.id as id, users.full_name as fullName, users.username as username, users.about as about, " +
-            "users.private_profile as isPrivateProfile, users.avatar as avatar " +
-            "FROM users " +
-            "WHERE users.id IN ( " +
-            "   SELECT user_subscriptions.subscriber_id FROM users " +
-            "   JOIN user_subscriptions ON users.id = user_subscriptions.user_id " +
-            "   WHERE users.id = ?1) " +
-            "INTERSECT " +
-            "SELECT users.id as id, users.full_name as fullName, users.username as username, users.about as about, " +
-            "users.private_profile as isPrivateProfile, users.avatar as avatar " +
-            "FROM users " +
-            "WHERE users.id IN ( " +
-            "   SELECT user_subscriptions.subscriber_id FROM users " +
-            "   JOIN user_subscriptions ON users.id = user_subscriptions.user_id " +
-            "   WHERE users.id = ?2)", nativeQuery = true)
-    <T> List<T> getSameFollowers(@Param("userId") Long userId, @Param("authUserId") Long authUserId, Class<T> type);
 
     @Modifying
     @Query("UPDATE User user SET user.notificationsCount = user.notificationsCount + 1 WHERE user.id = :userId")
@@ -164,49 +108,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "ELSE (user.mediaTweetCount - 1) END " +
             "WHERE user.id = :userId")
     void updateMediaTweetCount(@Param("increaseCount") boolean increaseCount, @Param("userId") Long userId);
-
-    @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user WHERE user.email = :email")
-    boolean isEmailExist(@Param("email") String email);
-
-    @Modifying
-    @Query("UPDATE User user SET user.email = :email WHERE user.id = :userId")
-    void updateEmail(@Param("email") String email, @Param("userId") Long userId);
-
-    @Modifying
-    @Query("UPDATE User user SET user.username = :username WHERE user.id = :userId")
-    void updateUsername(@Param("username") String username, @Param("userId") Long userId);
-
-    @Modifying
-    @Query("UPDATE User user SET user.countryCode = :countryCode, user.phone = :phone WHERE user.id = :userId")
-    void updatePhone(@Param("countryCode") String countryCode, @Param("phone") Long phone, @Param("userId") Long userId);
-
-    @Modifying
-    @Query("UPDATE User user SET user.country = :country WHERE user.id = :userId")
-    void updateCountry(@Param("country") String country, @Param("userId") Long userId);
-
-    @Modifying
-    @Query("UPDATE User user SET user.gender = :gender WHERE user.id = :userId")
-    void updateGender(@Param("gender") String gender, @Param("userId") Long userId);
-
-    @Modifying
-    @Query("UPDATE User user SET user.language = :language WHERE user.id = :userId")
-    void updateLanguage(@Param("language") String language, @Param("userId") Long userId);
-
-    @Modifying
-    @Query("UPDATE User user SET user.mutedDirectMessages = :mutedDirectMessages WHERE user.id = :userId")
-    void updateDirectMessageRequests(@Param("mutedDirectMessages") boolean mutedDirectMessages, @Param("userId") Long userId);
-
-    @Modifying
-    @Query("UPDATE User user SET user.privateProfile = :privateProfile WHERE user.id = :userId")
-    void updatePrivateProfile(@Param("privateProfile") boolean privateProfile, @Param("userId") Long userId);
-
-    @Modifying
-    @Query("UPDATE User user SET user.colorScheme = :colorSchemeType WHERE user.id = :userId")
-    void updateColorScheme(@Param("colorSchemeType") ColorSchemeType colorSchemeType, @Param("userId") Long userId);
-
-    @Modifying
-    @Query("UPDATE User user SET user.backgroundColor = :backgroundColor WHERE user.id = :userId")
-    void updateBackgroundColor(@Param("backgroundColor") BackgroundColorType backgroundColorType, @Param("userId") Long userId);
 
     @Query("SELECT user FROM User user WHERE user.id IN :userIds")
     List<ListMemberProjection> getUsersByIds(@Param("userIds") List<Long> userIds);
@@ -276,20 +177,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     void resetNotificationCount(@Param("userId") Long userId);
 
     @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user " +
-            "LEFT JOIN user.followers follower " +
-            "WHERE follower.id = :userId " +
-            "AND user.id = :authUserId")
-    boolean isFollower(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
-
-    @Modifying
-    @Query(value = "INSERT INTO user_subscriptions (user_id, subscriber_id) VALUES (?1, ?2)", nativeQuery = true)
-    void follow(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
-
-    @Modifying
-    @Query(value = "DELETE FROM user_subscriptions WHERE user_id = ?1 AND subscriber_id = ?2", nativeQuery = true)
-    void unfollow(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
-
-    @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user " +
             "LEFT JOIN user.subscribers subscriber " +
             "WHERE user.id = :userId " +
             "AND subscriber.id = :authUserId")
@@ -302,48 +189,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query(value = "DELETE FROM subscribers WHERE subscriber_id = ?1 AND user_id = ?2", nativeQuery = true)
     void unsubscribe(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
-
-    @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user " +
-            "LEFT JOIN user.followerRequests followerRequest " +
-            "WHERE user.id = :userId " +
-            "AND followerRequest.id = :authUserId")
-    boolean isFollowerRequest(@Param("userId") Long userId, @Param("authUserId") Long authUserId);
-
-    @Modifying
-    @Query(value = "DELETE FROM user_follower_requests WHERE follower_id = ?1 AND user_id = ?2", nativeQuery = true)
-    void removeFollowerRequest(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
-
-    @Modifying
-    @Query(value = "INSERT INTO user_follower_requests (follower_id, user_id) " +
-            "SELECT * FROM (SELECT ?1, ?2) AS tmp " +
-            "WHERE NOT EXISTS ( " +
-            "   SELECT follower_id FROM user_follower_requests WHERE follower_id = ?1 " +
-            ") LIMIT 1", nativeQuery = true)
-    void addFollowerRequest(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
-
-    @Query(value = "SELECT *, users.full_name as fullName, users.private_profile as privateProfile FROM users " +
-            "LEFT JOIN user_blocked ON user_blocked.blocked_user_id = users.id " +
-            "WHERE user_blocked.user_id = :userId", nativeQuery = true)
-    Page<BlockedUserProjection> getUserBlockListById(@Param("userId") Long userId, Pageable pageable);
-
-    @Modifying
-    @Query(value = "INSERT INTO user_blocked (user_id, blocked_user_id) VALUES (?1, ?2)", nativeQuery = true)
-    void blockUser(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
-
-    @Modifying
-    @Query(value = "DELETE FROM user_blocked WHERE user_id = ?1 AND blocked_user_id = ?2", nativeQuery = true)
-    void unblockUser(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
-
-    @Query(value = "SELECT *, users.full_name as fullName, users.private_profile as privateProfile FROM users " +
-            "LEFT JOIN user_muted ON user_muted.muted_user_id = users.id " +
-            "WHERE user_muted.user_id = :userId", nativeQuery = true)
-    Page<MutedUserProjection> getUserMuteListById(@Param("userId") Long userId, Pageable pageable);
-
-    @Modifying
-    @Query(value = "INSERT INTO user_muted (user_id, muted_user_id) VALUES (?1, ?2)", nativeQuery = true)
-    void muteUser(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
-
-    @Modifying
-    @Query(value = "DELETE FROM user_muted WHERE user_id = ?1 AND muted_user_id = ?2", nativeQuery = true)
-    void unmuteUser(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
 }

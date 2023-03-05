@@ -21,6 +21,23 @@ spring:
     rabbitmq:
         addresses: ${RABBITMQ_HOST:localhost}:5672
 
+resilience4j:
+    circuitbreaker:
+        instances:
+            image-service:
+                minimum-number-of-calls: 5
+            notification-service:
+                minimum-number-of-calls: 5
+            tag-service:
+                minimum-number-of-calls: 5
+            user-service:
+                minimum-number-of-calls: 5
+            websocket-service:
+                minimum-number-of-calls: 5
+feign:
+    circuitbreaker:
+        enabled: true
+
 google:
     api:
         url: https://www.googleapis.com/youtube/v3/videos?id=%s&key=%s&part=snippet,contentDetails,statistics,status

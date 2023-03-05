@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.configuration.FeignConfiguration;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import static com.gmail.merikbest2015.constants.PathConstants.API_V1_TWEETS;
 import static com.gmail.merikbest2015.constants.FeignConstants.TWEET_SERVICE;
 
+@CircuitBreaker(name = TWEET_SERVICE)
 @FeignClient(value = TWEET_SERVICE, configuration = FeignConfiguration.class)
 public interface TweetClient {
 

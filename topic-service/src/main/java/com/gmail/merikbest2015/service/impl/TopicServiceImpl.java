@@ -115,7 +115,7 @@ public class TopicServiceImpl implements TopicService {
             if (userClient.isMyProfileBlockedByUser(userId)) {
                 throw new ApiRequestException("User profile blocked", HttpStatus.BAD_REQUEST);
             }
-            if (!userClient.isUserHavePrivateProfile(userId)) {
+            if (userClient.isUserHavePrivateProfile(userId)) {
                 throw new ApiRequestException("User not found", HttpStatus.NOT_FOUND);
             }
         }

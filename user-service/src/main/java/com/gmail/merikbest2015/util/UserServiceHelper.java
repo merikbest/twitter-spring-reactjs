@@ -1,6 +1,9 @@
 package com.gmail.merikbest2015.util;
 
 import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.repository.BlockUserRepository;
+import com.gmail.merikbest2015.repository.FollowerUserRepository;
+import com.gmail.merikbest2015.repository.MuteUserRepository;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.SameFollower;
 import com.gmail.merikbest2015.service.AuthenticationService;
@@ -16,6 +19,9 @@ public class UserServiceHelper {
 
     private final AuthenticationService authenticationService;
     private final UserRepository userRepository;
+    private final FollowerUserRepository followerUserRepository;
+    private final BlockUserRepository blockUserRepository;
+    private final MuteUserRepository muteUserRepository;
 
     public void validateUserProfile(Long userId) {
         checkIsUserExist(userId);
@@ -42,7 +48,7 @@ public class UserServiceHelper {
 
     public void checkIsUserBlocked(Long userId) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
-        boolean userBlocked = userRepository.isUserBlocked(userId, authUserId);
+        boolean userBlocked = blockUserRepository.isUserBlocked(userId, authUserId);
 
         if (userBlocked) {
             throw new ApiRequestException("User profile blocked", HttpStatus.BAD_REQUEST);
@@ -59,7 +65,7 @@ public class UserServiceHelper {
 
     public boolean isUserFollowByOtherUser(Long userId) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
-        return userRepository.isUserFollowByOtherUser(authUserId, userId);
+        return followerUserRepository.isUserFollowByOtherUser(authUserId, userId);
     }
 
     public boolean isUserHavePrivateProfile(Long userId) {
@@ -69,17 +75,17 @@ public class UserServiceHelper {
 
     public boolean isUserBlockedByMyProfile(Long userId) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
-        return userRepository.isUserBlocked(authUserId, userId);
+        return blockUserRepository.isUserBlocked(authUserId, userId);
     }
 
     public boolean isUserMutedByMyProfile(Long userId) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
-        return userRepository.isUserMuted(authUserId, userId);
+        return muteUserRepository.isUserMuted(authUserId, userId);
     }
 
     public boolean isMyProfileBlockedByUser(Long userId) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
-        return userRepository.isUserBlocked(userId, authUserId);
+        return blockUserRepository.isUserBlocked(userId, authUserId);
     }
 
     public boolean isMyProfileWaitingForApprove(Long userId) {
@@ -94,6 +100,6 @@ public class UserServiceHelper {
 
     public List<SameFollower> getSameFollowers(Long userId) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
-        return userRepository.getSameFollowers(userId, authUserId, SameFollower.class);
+        return followerUserRepository.getSameFollowers(userId, authUserId, SameFollower.class);
     }
 }

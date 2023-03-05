@@ -12,6 +12,8 @@ import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
 import com.gmail.merikbest2015.dto.response.user.UserChatResponse;
 import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.mapper.BasicMapper;
+import com.gmail.merikbest2015.repository.BlockUserRepository;
+import com.gmail.merikbest2015.repository.FollowerUserRepository;
 import com.gmail.merikbest2015.repository.projection.ListOwnerProjection;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.*;
@@ -33,6 +35,8 @@ import java.util.stream.Stream;
 public class UserClientServiceImpl implements UserClientService {
 
     private final UserRepository userRepository;
+    private final FollowerUserRepository followerUserRepository;
+    private final BlockUserRepository blockUserRepository;
     private final BasicMapper basicMapper;
     private final AuthenticationService authenticationService;
     private final UserServiceHelper userServiceHelper;
@@ -40,7 +44,7 @@ public class UserClientServiceImpl implements UserClientService {
     @Override
     public List<Long> getUserFollowersIds() {
         Long authUserId = authenticationService.getAuthenticatedUserId();
-        List<Long> userFollowersIds = userRepository.getUserFollowersIds(authUserId);
+        List<Long> userFollowersIds = followerUserRepository.getUserFollowersIds(authUserId);
         userFollowersIds.add(authUserId);
         return userFollowersIds;
     }
@@ -68,7 +72,7 @@ public class UserClientServiceImpl implements UserClientService {
 
     @Override
     public Boolean isUserBlocked(Long userId, Long blockedUserId) {
-        return userRepository.isUserBlocked(userId, blockedUserId);
+        return blockUserRepository.isUserBlocked(userId, blockedUserId);
     }
 
     @Override
