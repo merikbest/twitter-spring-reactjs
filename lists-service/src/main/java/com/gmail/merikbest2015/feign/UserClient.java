@@ -15,34 +15,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.gmail.merikbest2015.constants.FeignConstants.USER_SERVICE;
-import static com.gmail.merikbest2015.constants.PathConstants.API_V1_USER;
+import static com.gmail.merikbest2015.constants.PathConstants.*;
 
-@FeignClient(name = USER_SERVICE, contextId = "UserClient", configuration = FeignConfiguration.class)
+@FeignClient(name = USER_SERVICE, path = API_V1_USER, contextId = "UserClient", configuration = FeignConfiguration.class)
 public interface UserClient {
 
     @CircuitBreaker(name = USER_SERVICE)
-    @GetMapping(API_V1_USER + "/is_blocked/{userId}/{blockedUserId}")
+    @GetMapping(IS_BLOCKED_USER_ID)
     Boolean isUserBlocked(@PathVariable("userId") Long userId,
                           @PathVariable("blockedUserId") Long blockedUserId);
 
     @CircuitBreaker(name = USER_SERVICE)
-    @GetMapping(API_V1_USER + "/list/owner/{userId}")
+    @GetMapping(LIST_OWNER_USER_ID)
     ListOwnerResponse getListOwnerById(@PathVariable("userId") Long userId);
 
     @CircuitBreaker(name = USER_SERVICE)
-    @GetMapping(API_V1_USER + "/is_private/{userId}")
+    @GetMapping(IS_PRIVATE_USER_ID)
     Boolean isUserHavePrivateProfile(@PathVariable("userId") Long userId);
 
     @CircuitBreaker(name = USER_SERVICE, fallbackMethod = "defaultEmptyMemberList")
-    @PostMapping(API_V1_USER + "/list/participants")
+    @PostMapping(LIST_PARTICIPANTS)
     List<ListMemberResponse> getListParticipantsByIds(@RequestBody IdsRequest request);
 
     @CircuitBreaker(name = USER_SERVICE, fallbackMethod = "defaultEmptyMemberList")
-    @GetMapping(API_V1_USER + "/list/participants/{username}")
+    @GetMapping(LIST_PARTICIPANTS_USERNAME)
     List<ListMemberResponse> searchListMembersByUsername(@PathVariable("username") String username);
 
     @CircuitBreaker(name = USER_SERVICE, fallbackMethod = "defaultEmptyIdsList")
-    @PostMapping(API_V1_USER + "/valid/ids")
+    @PostMapping(VALID_IDS)
     List<Long> getValidUserIds(@RequestBody IdsRequest request);
 
     default ArrayList<ListMemberResponse> defaultEmptyMemberList(Throwable throwable) {

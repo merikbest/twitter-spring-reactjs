@@ -14,9 +14,12 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.constants.PathConstants.API_V1_USER;
-import static com.gmail.merikbest2015.constants.PathConstants.AUTH_USER_ID_HEADER;
+import static com.gmail.merikbest2015.constants.PathConstants.*;
+import static com.gmail.merikbest2015.constants.PathConstants.TWEET_COUNT;
 import static com.gmail.merikbest2015.util.TestConstants.*;
+import static com.gmail.merikbest2015.util.TestConstants.USERNAME;
+import static com.gmail.merikbest2015.util.TestConstants.USER_EMAIL;
+import static com.gmail.merikbest2015.util.TestConstants.USER_ID;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
@@ -41,7 +44,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/user/ids - Get user followers ids")
     public void getUserFollowersIds() throws Exception {
-        mockMvc.perform(get(API_V1_USER + "/ids")
+        mockMvc.perform(get(API_V1_USER + IDS)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(List.of(1, 4, 2))));
@@ -50,7 +53,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/user/search/MrCat - Search Users By Username")
     public void searchUsersByUsername() throws Exception {
-        mockMvc.perform(get(API_V1_USER + "/search/MrCat")
+        mockMvc.perform(get(API_V1_USER + SEARCH_USERNAME, USERNAME)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.items[*]", hasSize(6)))
@@ -70,7 +73,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/user/subscribers/2 - Get subscribers by user id")
     public void getSubscribersByUserId() throws Exception {
-        mockMvc.perform(get(API_V1_USER + "/subscribers/2")
+        mockMvc.perform(get(API_V1_USER + SUBSCRIBERS_USER_ID, USER_ID)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(List.of(1))));
@@ -79,7 +82,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/user/is_followed/1 - Get is user follow by other user")
     public void isUserFollowByOtherUser() throws Exception {
-        mockMvc.perform(get(API_V1_USER + "/is_followed/1")
+        mockMvc.perform(get(API_V1_USER + IS_FOLLOWED_USER_ID, 1)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(true)));
@@ -88,7 +91,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/user/is_private/1 - Get is user have private profile")
     public void isUserHavePrivateProfile() throws Exception {
-        mockMvc.perform(get(API_V1_USER + "/is_private/1")
+        mockMvc.perform(get(API_V1_USER + IS_PRIVATE_USER_ID, 1)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(false)));
@@ -97,7 +100,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/user/is_blocked/2/1 - Get is user blocked")
     public void isUserBlocked() throws Exception {
-        mockMvc.perform(get(API_V1_USER + "/is_blocked/2/1")
+        mockMvc.perform(get(API_V1_USER + IS_BLOCKED_USER_ID, 2, 1)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(false)));
@@ -106,7 +109,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/user/is_user_blocked/1 - Get is user blocked by my profile")
     public void isUserBlockedByMyProfile() throws Exception {
-        mockMvc.perform(get(API_V1_USER + "/is_user_blocked/1")
+        mockMvc.perform(get(API_V1_USER + IS_USER_BLOCKED_USER_ID, 1)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(false)));
@@ -115,7 +118,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/user/is_my_profile_blocked/1 - Get is my profile blocked by user")
     public void isMyProfileBlockedByUser() throws Exception {
-        mockMvc.perform(get(API_V1_USER + "/is_my_profile_blocked/1")
+        mockMvc.perform(get(API_V1_USER + IS_MY_PROFILE_BLOCKED_USER_ID, 1)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(false)));
@@ -124,7 +127,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/user/notification/2 - Increase notifications count")
     public void increaseNotificationsCount() throws Exception {
-        mockMvc.perform(get(API_V1_USER + "/notification/2")
+        mockMvc.perform(get(API_V1_USER + NOTIFICATION_USER_ID, 2)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk());
     }
@@ -132,7 +135,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] PUT /api/v1/user/like/count/true - Update like count")
     public void updateLikeCount() throws Exception {
-        mockMvc.perform(put(API_V1_USER + "/like/count/true")
+        mockMvc.perform(put(API_V1_USER + LIKE_COUNT, true)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk());
     }
@@ -140,7 +143,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] PUT /api/v1/user/tweet/count/true - Update tweet count")
     public void updateTweetCount() throws Exception {
-        mockMvc.perform(put(API_V1_USER + "/tweet/count/true")
+        mockMvc.perform(put(API_V1_USER + TWEET_COUNT, true)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk());
     }
@@ -148,7 +151,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] PUT /api/v1/user/media/count/true - Update media tweet count")
     public void updateMediaTweetCount() throws Exception {
-        mockMvc.perform(put(API_V1_USER + "/media/count/true")
+        mockMvc.perform(put(API_V1_USER + MEDIA_COUNT, true)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk());
     }
@@ -156,7 +159,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/user/list/owner/2 - Get list owner by id")
     public void getListOwnerById() throws Exception {
-        mockMvc.perform(get(API_V1_USER + "/list/owner/2")
+        mockMvc.perform(get(API_V1_USER + LIST_OWNER_USER_ID, 2)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(USER_ID))
@@ -169,7 +172,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] POST /api/v1/user/list/participants - Get list participants by ids")
     public void getListParticipantsByIds() throws Exception {
-        mockMvc.perform(post(API_V1_USER + "/list/participants")
+        mockMvc.perform(post(API_V1_USER + LIST_PARTICIPANTS)
                         .content(mapper.writeValueAsString(new IdsRequest(List.of(2L, 3L))))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
@@ -186,7 +189,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/user/list/participants/MrCat - Search list members by username")
     public void searchListMembersByUsername() throws Exception {
-        mockMvc.perform(get(API_V1_USER + "/list/participants/MrCat")
+        mockMvc.perform(get(API_V1_USER + LIST_PARTICIPANTS_USERNAME, USERNAME)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(6)))
@@ -202,7 +205,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/user/notification/user/2 - Get Notification User")
     public void getNotificationUser() throws Exception {
-        mockMvc.perform(get(API_V1_USER + "/notification/user/2")
+        mockMvc.perform(get(API_V1_USER + NOTIFICATION_USER_USER_ID, USER_ID)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(USER_ID))
@@ -214,7 +217,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/user/tweet/author/2 - Get tweet author")
     public void getTweetAuthor() throws Exception {
-        mockMvc.perform(get(API_V1_USER + "/tweet/author/2")
+        mockMvc.perform(get(API_V1_USER + TWEET_AUTHOR_USER_ID, USER_ID)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(USER_ID))
@@ -232,7 +235,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/user/tweet/additional/info/2 - Get tweet additional info user")
     public void getTweetAdditionalInfoUser() throws Exception {
-        mockMvc.perform(get(API_V1_USER + "/tweet/additional/info/2")
+        mockMvc.perform(get(API_V1_USER + TWEET_ADDITIONAL_INFO_USER_ID, USER_ID)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(USER_ID))
@@ -247,7 +250,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] POST /api/v1/user/tweet/liked - Get tweet liked users by ids")
     public void getTweetLikedUsersByIds() throws Exception {
-        mockMvc.perform(post(API_V1_USER + "/tweet/liked")
+        mockMvc.perform(post(API_V1_USER + TWEET_LIKED)
                         .content(mapper.writeValueAsString(new IdsRequest(List.of(2L, 3L))))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
@@ -269,7 +272,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] POST /api/v1/user/tweet/retweeted - Get retweeted users by tweet id")
     public void getRetweetedUsersByTweetId() throws Exception {
-        mockMvc.perform(post(API_V1_USER + "/tweet/retweeted")
+        mockMvc.perform(post(API_V1_USER + TWEET_RETWEETED)
                         .content(mapper.writeValueAsString(new IdsRequest(List.of(2L, 3L))))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
@@ -291,7 +294,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] PUT /api/v1/user/tweet/pinned/99 - Update pinned tweet id")
     public void updatePinnedTweetId() throws Exception {
-        mockMvc.perform(put(API_V1_USER + "/tweet/pinned/99")
+        mockMvc.perform(put(API_V1_USER + TWEET_PINNED_TWEET_ID, 99)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk());
     }
@@ -299,7 +302,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/user/tweet/pinned/2 - Get user pinned tweet id")
     public void getUserPinnedTweetId() throws Exception {
-        mockMvc.perform(get(API_V1_USER + "/tweet/pinned/2")
+        mockMvc.perform(get(API_V1_USER + TWEET_PINNED_USER_ID, 2)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(40)));
@@ -308,7 +311,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] POST /api/v1/user/tweet/valid/ids/MrCat - Get valid tweet user ids")
     public void getValidTweetUserIds() throws Exception {
-        mockMvc.perform(post(API_V1_USER + "/tweet/valid/ids/MrCat")
+        mockMvc.perform(post(API_V1_USER + TWEET_VALID_IDS, USERNAME)
                         .content(mapper.writeValueAsString(new IdsRequest(List.of(2L, 3L))))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
@@ -319,7 +322,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] POST /api/v1/user/valid/ids - Get valid ids")
     public void getValidUserIds() throws Exception {
-        mockMvc.perform(post(API_V1_USER + "/valid/ids")
+        mockMvc.perform(post(API_V1_USER + VALID_IDS)
                         .content(mapper.writeValueAsString(new IdsRequest(List.of(2L, 3L))))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
@@ -330,7 +333,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/user/chat/participant/3 - Get chat participant")
     public void getChatParticipant() throws Exception {
-        mockMvc.perform(get(API_V1_USER + "/chat/participant/3")
+        mockMvc.perform(get(API_V1_USER + CHAT_PARTICIPANT_USER_ID, 3)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(3))
@@ -345,7 +348,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/user/is_exists/1 - Is user exists")
     public void isUserExists() throws Exception {
-        mockMvc.perform(get(API_V1_USER + "/is_exists/1")
+        mockMvc.perform(get(API_V1_USER + IS_EXISTS_USER_ID, 1)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(true)));
@@ -373,7 +376,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/user/chat/2 - Get chat tweet user")
     public void getChatTweetUser() throws Exception {
-        mockMvc.perform(get(API_V1_USER + "/chat/2")
+        mockMvc.perform(get(API_V1_USER + CHAT_USER_ID, USER_ID)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(USER_ID))
@@ -385,7 +388,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] POST /api/v1/user/chat/valid/ids - Validate chat users ids")
     public void validateChatUsersIds() throws Exception {
-        mockMvc.perform(post(API_V1_USER + "/chat/valid/ids")
+        mockMvc.perform(post(API_V1_USER + CHAT_VALID_IDS)
                         .content(mapper.writeValueAsString(new IdsRequest(List.of(2L, 3L))))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
@@ -396,7 +399,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/user/subscribers - Get users which user subscribed")
     public void getUsersWhichUserSubscribed() throws Exception {
-        mockMvc.perform(get(API_V1_USER + "/subscribers")
+        mockMvc.perform(get(API_V1_USER + SUBSCRIBERS)
                         .header(AUTH_USER_ID_HEADER, 1L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
@@ -409,7 +412,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/user/subscribers/ids - Get user id which user subscribed")
     public void getUserIdsWhichUserSubscribed() throws Exception {
-        mockMvc.perform(get(API_V1_USER + "/subscribers/ids")
+        mockMvc.perform(get(API_V1_USER + SUBSCRIBERS_IDS)
                         .header(AUTH_USER_ID_HEADER, 1L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(List.of(2))));
@@ -418,7 +421,7 @@ public class UserApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/user/notification/reset - Reset notification count")
     public void resetNotificationCount() throws Exception {
-        mockMvc.perform(get(API_V1_USER + "/notification/reset")
+        mockMvc.perform(get(API_V1_USER + NOTIFICATION_RESET)
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk());
     }

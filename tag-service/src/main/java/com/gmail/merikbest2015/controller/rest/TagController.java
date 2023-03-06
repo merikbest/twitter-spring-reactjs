@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.constants.PathConstants.UI_V1_TAGS;
+import static com.gmail.merikbest2015.constants.PathConstants.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,13 +29,13 @@ public class TagController {
         return ResponseEntity.ok(tagMapper.getTags());
     }
 
-    @GetMapping("/trends")
+    @GetMapping(TRENDS)
     public ResponseEntity<List<TagResponse>> getTrends(@PageableDefault(size = 20) Pageable pageable) {
         HeaderResponse<TagResponse> response = tagMapper.getTrends(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping("/search")
+    @GetMapping(SEARCH)
     public ResponseEntity<List<TweetResponse>> getTweetsByTag(@RequestParam("tagName") String tagName) {
         return ResponseEntity.ok(tagMapper.getTweetsByTag(tagName));
     }

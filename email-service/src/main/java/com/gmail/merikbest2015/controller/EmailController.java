@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.mail.MessagingException;
 
 import static com.gmail.merikbest2015.constants.PathConstants.API_V1_EMAIL;
+import static com.gmail.merikbest2015.constants.PathConstants.SUGGESTED;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,7 +21,7 @@ public class EmailController {
 
     private final EmailService emailService;
 
-    @PostMapping("/suggested")
+    @PostMapping(SUGGESTED)
     public ResponseEntity<Void> sendEmail(@RequestBody EmailRequest emailRequest) throws MessagingException {
         emailService.sendMessageHtml(emailRequest);
         return ResponseEntity.noContent().build();

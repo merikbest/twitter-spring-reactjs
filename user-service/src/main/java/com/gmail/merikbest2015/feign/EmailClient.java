@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import static com.gmail.merikbest2015.constants.FeignConstants.EMAIL_SERVICE;
 import static com.gmail.merikbest2015.constants.PathConstants.API_V1_EMAIL;
+import static com.gmail.merikbest2015.constants.PathConstants.SUGGESTED;
 
 @CircuitBreaker(name = EMAIL_SERVICE)
-@FeignClient(value = EMAIL_SERVICE, configuration = FeignConfiguration.class)
+@FeignClient(value = EMAIL_SERVICE, path = API_V1_EMAIL, configuration = FeignConfiguration.class)
 public interface EmailClient {
 
-    @PostMapping(API_V1_EMAIL + "/suggested")
+    @PostMapping(SUGGESTED)
     ResponseEntity<Void> sendEmail(@RequestBody EmailRequest emailRequest);
 }

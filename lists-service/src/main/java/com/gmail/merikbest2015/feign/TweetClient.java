@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import static com.gmail.merikbest2015.constants.PathConstants.API_V1_TWEETS;
 import static com.gmail.merikbest2015.constants.FeignConstants.TWEET_SERVICE;
+import static com.gmail.merikbest2015.constants.PathConstants.USER_IDS;
 
 @CircuitBreaker(name = TWEET_SERVICE)
-@FeignClient(value = TWEET_SERVICE, configuration = FeignConfiguration.class)
+@FeignClient(value = TWEET_SERVICE, path = API_V1_TWEETS, configuration = FeignConfiguration.class)
 public interface TweetClient {
 
-    @PostMapping(API_V1_TWEETS + "/user/ids")
+    @PostMapping(USER_IDS)
     HeaderResponse<TweetResponse> getTweetsByUserIds(@RequestBody IdsRequest request,
                                                      @SpringQueryMap Pageable pageable);
 }

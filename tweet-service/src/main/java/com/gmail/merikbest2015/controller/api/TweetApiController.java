@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.constants.PathConstants.API_V1_TWEETS;
+import static com.gmail.merikbest2015.constants.PathConstants.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,38 +22,38 @@ public class TweetApiController {
 
     private final TweetClientMapper tweetClientMapper;
 
-    @PostMapping("/tag/ids")
+    @PostMapping(TAG_IDS)
     public List<TweetResponse> getTweetsByIds(@RequestBody IdsRequest requests) {
         return tweetClientMapper.getTweetsByIds(requests);
     }
 
-    @PostMapping("/user/ids")
+    @PostMapping(USER_IDS)
     public HeaderResponse<TweetResponse> getTweetsByUserIds(@RequestBody IdsRequest request,
                                                             @SpringQueryMap Pageable pageable) {
         return tweetClientMapper.getTweetsByUserIds(request, pageable);
     }
 
-    @GetMapping("/{tweetId}")
+    @GetMapping(TWEET_ID)
     public TweetResponse getTweetById(@PathVariable("tweetId") Long tweetId) {
         return tweetClientMapper.getTweetById(tweetId);
     }
 
-    @PostMapping("/ids")
+    @PostMapping(IDS)
     public HeaderResponse<TweetResponse> getTweetsByIds(@RequestBody IdsRequest request, Pageable pageable) {
         return tweetClientMapper.getTweetsByIds(request, pageable);
     }
 
-    @GetMapping("/notification/{tweetId}")
+    @GetMapping(NOTIFICATION_TWEET_ID)
     public NotificationTweetResponse getNotificationTweet(@PathVariable("tweetId") Long tweetId) {
         return tweetClientMapper.getNotificationTweet(tweetId);
     }
 
-    @GetMapping("/id/{tweetId}")
+    @GetMapping(ID_TWEET_ID)
     public Boolean isTweetExists(@PathVariable("tweetId") Long tweetId) {
         return tweetClientMapper.isTweetExists(tweetId);
     }
 
-    @GetMapping("/chat/{tweetId}")
+    @GetMapping(CHAT_TWEET_ID)
     public ChatTweetResponse getChatTweet(@PathVariable("tweetId") Long tweetId) {
         return tweetClientMapper.getChatTweet(tweetId);
     }

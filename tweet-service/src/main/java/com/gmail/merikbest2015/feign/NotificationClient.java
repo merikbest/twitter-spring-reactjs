@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import static com.gmail.merikbest2015.constants.FeignConstants.NOTIFICATION_SERVICE;
-import static com.gmail.merikbest2015.constants.PathConstants.API_V1_NOTIFICATION;
+import static com.gmail.merikbest2015.constants.PathConstants.*;
 
 @CircuitBreaker(name = NOTIFICATION_SERVICE)
-@FeignClient(name = NOTIFICATION_SERVICE, configuration = FeignConfiguration.class)
+@FeignClient(name = NOTIFICATION_SERVICE, path = API_V1_NOTIFICATION, configuration = FeignConfiguration.class)
 public interface NotificationClient {
 
-    @PostMapping(API_V1_NOTIFICATION + "/tweet")
+    @PostMapping(TWEET)
     NotificationResponse sendTweetNotification(@RequestBody NotificationRequest request);
 
-    @GetMapping(API_V1_NOTIFICATION + "/tweet/{tweetId}")
+    @GetMapping(TWEET_TWEET_ID)
     void sendTweetNotificationToSubscribers(@PathVariable("tweetId") Long tweetId);
 }

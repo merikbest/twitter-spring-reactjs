@@ -7,7 +7,7 @@ import com.gmail.merikbest2015.mapper.NotificationClientMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import static com.gmail.merikbest2015.constants.PathConstants.API_V1_NOTIFICATION;
+import static com.gmail.merikbest2015.constants.PathConstants.*;
 import static com.gmail.merikbest2015.constants.WebsocketConstants.*;
 
 @RestController
@@ -18,7 +18,7 @@ public class NotificationApiController {
     private final NotificationClientMapper notificationClientMapper;
     private final WebSocketClient webSocketClient;
 
-    @PostMapping("/list")
+    @PostMapping(LIST)
     public void sendListNotification(@RequestBody NotificationRequest request) {
         NotificationResponse notification = notificationClientMapper.sendNotification(request);
 
@@ -27,7 +27,7 @@ public class NotificationApiController {
         }
     }
 
-    @PostMapping("/user")
+    @PostMapping(USER)
     public void sendUserNotification(@RequestBody NotificationRequest request) {
         NotificationResponse notification = notificationClientMapper.sendNotification(request);
 
@@ -36,7 +36,7 @@ public class NotificationApiController {
         }
     }
 
-    @PostMapping("/tweet")
+    @PostMapping(TWEET)
     public NotificationResponse sendTweetNotification(@RequestBody NotificationRequest request) {
         NotificationResponse notification = notificationClientMapper.sendNotification(request);
 
@@ -48,7 +48,7 @@ public class NotificationApiController {
         return notification;
     }
 
-    @GetMapping("/tweet/{tweetId}")
+    @GetMapping(TWEET_TWEET_ID)
     public void sendTweetNotificationToSubscribers(@PathVariable("tweetId") Long tweetId) {
         notificationClientMapper.sendTweetNotificationToSubscribers(tweetId);
     }

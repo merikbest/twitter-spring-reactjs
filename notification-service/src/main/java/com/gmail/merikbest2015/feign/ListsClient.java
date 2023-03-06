@@ -9,11 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import static com.gmail.merikbest2015.constants.FeignConstants.LISTS_SERVICE;
 import static com.gmail.merikbest2015.constants.PathConstants.API_V1_LISTS;
+import static com.gmail.merikbest2015.constants.PathConstants.LIST_ID;
 
 @CircuitBreaker(name = LISTS_SERVICE)
-@FeignClient(name = LISTS_SERVICE, configuration = FeignConfiguration.class)
+@FeignClient(name = LISTS_SERVICE, path = API_V1_LISTS, configuration = FeignConfiguration.class)
 public interface ListsClient {
 
-    @GetMapping(API_V1_LISTS + "/{listId}")
+    @GetMapping(LIST_ID)
     NotificationListResponse getNotificationList(@PathVariable("listId") Long listId);
 }

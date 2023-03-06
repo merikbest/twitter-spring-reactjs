@@ -33,7 +33,7 @@ public class AuthenticationApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/auth/user/test2015@test.test - Get user principal by email")
     public void getUserPrincipalByEmail() throws Exception {
-        mockMvc.perform(get(API_V1_AUTH + "/user/test2015@test.test")
+        mockMvc.perform(get(API_V1_AUTH + USER_EMAIL, "test2015@test.test")
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(USER_ID))
@@ -44,7 +44,7 @@ public class AuthenticationApiControllerTest {
     @Test
     @DisplayName("[404] GET /api/v1/auth/user/test9999@test.test - Should user principal Not Found by email")
     public void getUserPrincipalByEmail_ShouldUserNotFound() throws Exception {
-        mockMvc.perform(get(API_V1_AUTH + "/user/test9999@test.test")
+        mockMvc.perform(get(API_V1_AUTH + USER_EMAIL, "test9999@test.test")
                         .header(AUTH_USER_ID_HEADER, USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is("User not found")));

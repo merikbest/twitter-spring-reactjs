@@ -18,79 +18,79 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.gmail.merikbest2015.constants.FeignConstants.USER_SERVICE;
-import static com.gmail.merikbest2015.constants.PathConstants.API_V1_USER;
+import static com.gmail.merikbest2015.constants.PathConstants.*;
 
-@FeignClient(name = USER_SERVICE, contextId = "UserClient", configuration = FeignConfiguration.class)
+@FeignClient(name = USER_SERVICE, path = API_V1_USER, contextId = "UserClient", configuration = FeignConfiguration.class)
 public interface UserClient {
 
     @CircuitBreaker(name = USER_SERVICE)
-    @GetMapping(API_V1_USER + "/is_followed/{userId}")
+    @GetMapping(IS_FOLLOWED_USER_ID)
     Boolean isUserFollowByOtherUser(@PathVariable("userId") Long userId);
 
     @CircuitBreaker(name = USER_SERVICE)
-    @GetMapping(API_V1_USER + "/is_private/{userId}")
+    @GetMapping(IS_PRIVATE_USER_ID)
     Boolean isUserHavePrivateProfile(@PathVariable("userId") Long userId);
 
     @CircuitBreaker(name = USER_SERVICE)
-    @GetMapping(API_V1_USER + "/is_my_profile_blocked/{userId}")
+    @GetMapping(IS_MY_PROFILE_BLOCKED_USER_ID)
     Boolean isMyProfileBlockedByUser(@PathVariable("userId") Long userId);
 
     @CircuitBreaker(name = USER_SERVICE)
-    @GetMapping(API_V1_USER + "/tweet/author/{userId}")
+    @GetMapping(TWEET_AUTHOR_USER_ID)
     TweetAuthorResponse getTweetAuthor(@PathVariable("userId") Long userId);
 
     @CircuitBreaker(name = USER_SERVICE)
-    @GetMapping(API_V1_USER + "/tweet/additional/info/{userId}")
+    @GetMapping(TWEET_ADDITIONAL_INFO_USER_ID)
     TweetAdditionalInfoUserResponse getTweetAdditionalInfoUser(@PathVariable("userId") Long userId);
 
     @CircuitBreaker(name = USER_SERVICE, fallbackMethod = "defaultEmptyUserResponse")
-    @PostMapping(API_V1_USER + "/tweet/liked")
+    @PostMapping(TWEET_LIKED)
     HeaderResponse<UserResponse> getTweetLikedUsersByIds(@RequestBody IdsRequest request,
                                                          @SpringQueryMap Pageable pageable);
 
     @CircuitBreaker(name = USER_SERVICE, fallbackMethod = "defaultEmptyUserResponse")
-    @PostMapping(API_V1_USER + "/tweet/retweeted")
+    @PostMapping(TWEET_RETWEETED)
     HeaderResponse<UserResponse> getRetweetedUsersByIds(@RequestBody IdsRequest request,
                                                         @SpringQueryMap Pageable pageable);
 
     @CircuitBreaker(name = USER_SERVICE, fallbackMethod = "defaultEmptyIdsList")
-    @GetMapping(API_V1_USER + "/ids")
+    @GetMapping(IDS)
     List<Long> getUserFollowersIds();
 
     @CircuitBreaker(name = USER_SERVICE)
-    @PutMapping(API_V1_USER + "/tweet/count/{increaseCount}")
+    @PutMapping(TWEET_COUNT)
     void updateTweetCount(@PathVariable("increaseCount") boolean increaseCount);
 
     @CircuitBreaker(name = USER_SERVICE)
-    @PutMapping(API_V1_USER + "/media/count/{increaseCount}")
+    @PutMapping(MEDIA_COUNT)
     void updateMediaTweetCount(@PathVariable("increaseCount") boolean increaseCount);
 
     @CircuitBreaker(name = USER_SERVICE)
-    @PutMapping(API_V1_USER + "/tweet/pinned/{tweetId}")
+    @PutMapping(TWEET_PINNED_TWEET_ID)
     void updatePinnedTweetId(@PathVariable("tweetId") Long tweetId);
 
     @CircuitBreaker(name = USER_SERVICE)
-    @PutMapping(API_V1_USER + "/like/count/{increaseCount}")
+    @PutMapping(LIKE_COUNT)
     void updateLikeCount(@PathVariable("increaseCount") boolean increaseCount);
 
     @CircuitBreaker(name = USER_SERVICE, fallbackMethod = "defaultEmptyIdsList")
-    @PostMapping(API_V1_USER + "/tweet/valid/ids/{text}")
+    @PostMapping(TWEET_VALID_IDS)
     List<Long> getValidTweetUserIds(@RequestBody IdsRequest request, @PathVariable("text") String text);
 
     @CircuitBreaker(name = USER_SERVICE, fallbackMethod = "defaultEmptyIdsList")
-    @PostMapping(API_V1_USER + "/valid/ids")
+    @PostMapping(VALID_IDS)
     List<Long> getValidUserIds(@RequestBody IdsRequest request);
 
     @CircuitBreaker(name = USER_SERVICE)
-    @GetMapping(API_V1_USER + "/chat/{userId}")
+    @GetMapping(CHAT_USER_ID)
     ChatTweetUserResponse getChatTweetUser(@PathVariable("userId") Long userId);
 
     @CircuitBreaker(name = USER_SERVICE)
-    @GetMapping(API_V1_USER + "/is_exists/{userId}")
+    @GetMapping(IS_EXISTS_USER_ID)
     Boolean isUserExists(@PathVariable("userId") Long userId);
 
     @CircuitBreaker(name = USER_SERVICE, fallbackMethod = "defaultEmptyPinnedTweetId")
-    @GetMapping(API_V1_USER + "/tweet/pinned/{userId}")
+    @GetMapping(TWEET_PINNED_USER_ID)
     Long getUserPinnedTweetId(@PathVariable("userId") Long userId);
 
     default HeaderResponse<UserResponse> defaultEmptyUserResponse(Throwable throwable) {

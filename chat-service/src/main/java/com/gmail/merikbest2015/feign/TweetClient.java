@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import static com.gmail.merikbest2015.constants.FeignConstants.TWEET_SERVICE;
-import static com.gmail.merikbest2015.constants.PathConstants.API_V1_TWEETS;
+import static com.gmail.merikbest2015.constants.PathConstants.*;
 
 @CircuitBreaker(name = TWEET_SERVICE)
-@FeignClient(name = TWEET_SERVICE, configuration = FeignConfiguration.class)
+@FeignClient(name = TWEET_SERVICE, path = API_V1_TWEETS, configuration = FeignConfiguration.class)
 public interface TweetClient {
 
-    @GetMapping(API_V1_TWEETS + "/id/{tweetId}")
+    @GetMapping(ID_TWEET_ID)
     Boolean isTweetExists(@PathVariable("tweetId") Long tweetId);
 
-    @GetMapping(API_V1_TWEETS + "/chat/{tweetId}")
+    @GetMapping(CHAT_TWEET_ID)
     ChatTweetResponse getChatTweet(@PathVariable("tweetId") Long tweetId);
 }

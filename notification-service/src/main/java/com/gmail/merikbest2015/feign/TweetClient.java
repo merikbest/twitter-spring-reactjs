@@ -15,18 +15,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import static com.gmail.merikbest2015.constants.FeignConstants.TWEET_SERVICE;
-import static com.gmail.merikbest2015.constants.PathConstants.API_V1_TWEETS;
+import static com.gmail.merikbest2015.constants.PathConstants.*;
 
 @CircuitBreaker(name = TWEET_SERVICE)
-@FeignClient(name = TWEET_SERVICE, configuration = FeignConfiguration.class)
+@FeignClient(name = TWEET_SERVICE, path = API_V1_TWEETS, configuration = FeignConfiguration.class)
 public interface TweetClient {
 
-    @GetMapping(API_V1_TWEETS + "/{tweetId}")
+    @GetMapping(TWEET_ID)
     TweetResponse getTweetById(@PathVariable("tweetId") Long tweetId);
 
-    @GetMapping(API_V1_TWEETS + "/notification/{tweetId}")
+    @GetMapping(NOTIFICATION_TWEET_ID)
     NotificationTweetResponse getNotificationTweet(@PathVariable("tweetId") Long tweetId);
 
-    @PostMapping(API_V1_TWEETS + "/ids")
+    @PostMapping(IDS)
     HeaderResponse<TweetResponse> getTweetsByIds(@RequestBody IdsRequest idsRequest, @SpringQueryMap Pageable pageable);
 }

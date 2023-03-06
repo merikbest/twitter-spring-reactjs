@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import static com.gmail.merikbest2015.constants.PathConstants.API_V1_AUTH;
+import static com.gmail.merikbest2015.constants.PathConstants.USER_EMAIL;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class AuthenticationApiController {
     private final AuthenticationService authenticationService;
     private final BasicMapper mapper;
 
-    @GetMapping("/user/{email}")
+    @GetMapping(USER_EMAIL)
     public UserPrincipalResponse getUserPrincipalByEmail(@PathVariable("email") String email) {
         return mapper.convertToResponse(authenticationService.getUserPrincipalByEmail(email), UserPrincipalResponse.class);
     }

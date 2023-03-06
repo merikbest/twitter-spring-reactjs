@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.constants.PathConstants.UI_V1_NOTIFICATION;
+import static com.gmail.merikbest2015.constants.PathConstants.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,23 +26,23 @@ public class NotificationController {
 
     private final NotificationMapper notificationMapper;
 
-    @GetMapping("/user")
+    @GetMapping(USER)
     public ResponseEntity<List<NotificationResponse>> getUserNotifications(@PageableDefault(size = 10) Pageable pageable) {
         HeaderResponse<NotificationResponse> response = notificationMapper.getUserNotifications(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping("/subscribes")
+    @GetMapping(SUBSCRIBES)
     public ResponseEntity<List<NotificationUserResponse>> getTweetAuthorsNotifications() {
         return ResponseEntity.ok(notificationMapper.getTweetAuthorsNotifications());
     }
 
-    @GetMapping("/{notificationId}")
+    @GetMapping(NOTIFICATION_ID)
     public ResponseEntity<NotificationInfoResponse> getUserNotificationById(@PathVariable("notificationId") Long notificationId) {
         return ResponseEntity.ok(notificationMapper.getUserNotificationById(notificationId));
     }
 
-    @GetMapping("/timeline")
+    @GetMapping(TIMELINE)
     public ResponseEntity<List<TweetResponse>> getNotificationsFromTweetAuthors(@PageableDefault(size = 10) Pageable pageable) {
         HeaderResponse<TweetResponse> response = notificationMapper.getNotificationsFromTweetAuthors(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());

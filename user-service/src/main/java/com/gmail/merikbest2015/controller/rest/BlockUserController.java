@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.constants.PathConstants.UI_V1_USER;
+import static com.gmail.merikbest2015.constants.PathConstants.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,13 +23,13 @@ public class BlockUserController {
 
     private final BlockUserMapper blockUserMapper;
 
-    @GetMapping("/blocked")
+    @GetMapping(BLOCKED)
     public ResponseEntity<List<BlockedUserResponse>> getBlockList(@PageableDefault(size = 15) Pageable pageable) {
         HeaderResponse<BlockedUserResponse> response = blockUserMapper.getBlockList(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping("/blocked/{userId}")
+    @GetMapping(BLOCKED_USER_ID)
     public ResponseEntity<Boolean> processBlockList(@PathVariable Long userId) {
         return ResponseEntity.ok(blockUserMapper.processBlockList(userId));
     }

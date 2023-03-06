@@ -9,11 +9,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import static com.gmail.merikbest2015.constants.FeignConstants.IMAGE_SERVICE;
 import static com.gmail.merikbest2015.constants.PathConstants.API_V1_IMAGE;
+import static com.gmail.merikbest2015.constants.PathConstants.UPLOAD;
 
 @CircuitBreaker(name = IMAGE_SERVICE)
-@FeignClient(name = IMAGE_SERVICE, configuration = FeignConfiguration.class)
+@FeignClient(name = IMAGE_SERVICE, path = API_V1_IMAGE, configuration = FeignConfiguration.class)
 public interface ImageClient {
-    
-    @PostMapping(API_V1_IMAGE + "/upload")
+
+    @PostMapping(UPLOAD)
     String uploadImage(@RequestPart("file") MultipartFile file);
 }

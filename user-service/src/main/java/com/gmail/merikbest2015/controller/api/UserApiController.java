@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.constants.PathConstants.API_V1_USER;
+import static com.gmail.merikbest2015.constants.PathConstants.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,165 +28,165 @@ public class UserApiController {
 
     private final UserClientService userService;
 
-    @GetMapping("/ids")
+    @GetMapping(IDS)
     public List<Long> getUserFollowersIds() {
         return userService.getUserFollowersIds();
     }
 
-    @GetMapping("/search/{username}")
+    @GetMapping(SEARCH_USERNAME)
     public HeaderResponse<UserChatResponse> searchUsersByUsername(@PathVariable("username") String username,
                                                                   Pageable pageable) {
         return userService.searchUsersByUsername(username, pageable);
     }
 
-    @GetMapping("/subscribers/{userId}")
+    @GetMapping(SUBSCRIBERS_USER_ID)
     public List<Long> getSubscribersByUserId(@PathVariable("userId") Long userId) {
         return userService.getSubscribersByUserId(userId);
     }
 
-    @GetMapping("/is_followed/{userId}")
+    @GetMapping(IS_FOLLOWED_USER_ID)
     public Boolean isUserFollowByOtherUser(@PathVariable("userId") Long userId) {
         return userService.isUserFollowByOtherUser(userId);
     }
 
-    @GetMapping("/is_private/{userId}")
+    @GetMapping(IS_PRIVATE_USER_ID)
     public Boolean isUserHavePrivateProfile(@PathVariable("userId") Long userId) {
         return userService.isUserHavePrivateProfile(userId);
     }
 
-    @GetMapping("/is_blocked/{userId}/{blockedUserId}")
+    @GetMapping(IS_BLOCKED_USER_ID)
     public Boolean isUserBlocked(@PathVariable("userId") Long userId, @PathVariable("blockedUserId") Long blockedUserId) {
         return userService.isUserBlocked(userId, blockedUserId);
     }
 
-    @GetMapping("/is_user_blocked/{userId}")
+    @GetMapping(IS_USER_BLOCKED_USER_ID)
     public Boolean isUserBlockedByMyProfile(@PathVariable("userId") Long userId) {
         return userService.isUserBlockedByMyProfile(userId);
     }
 
-    @GetMapping("/is_my_profile_blocked/{userId}")
+    @GetMapping(IS_MY_PROFILE_BLOCKED_USER_ID)
     public Boolean isMyProfileBlockedByUser(@PathVariable("userId") Long userId) {
         return userService.isMyProfileBlockedByUser(userId);
     }
 
-    @GetMapping("/notification/{userId}")
+    @GetMapping(NOTIFICATION_USER_ID)
     public void increaseNotificationsCount(@PathVariable("userId") Long userId) {
         userService.increaseNotificationsCount(userId);
     }
 
-    @PutMapping("/like/count/{increaseCount}")
+    @PutMapping(LIKE_COUNT)
     public void updateLikeCount(@PathVariable("increaseCount") boolean increaseCount) {
         userService.updateLikeCount(increaseCount);
     }
 
-    @PutMapping("/tweet/count/{increaseCount}")
+    @PutMapping(TWEET_COUNT)
     public void updateTweetCount(@PathVariable("increaseCount") boolean increaseCount) {
         userService.updateTweetCount(increaseCount);
     }
 
-    @PutMapping("/media/count/{increaseCount}")
+    @PutMapping(MEDIA_COUNT)
     public void updateMediaTweetCount(@PathVariable("increaseCount") boolean increaseCount) {
         userService.updateMediaTweetCount(increaseCount);
     }
 
-    @GetMapping("/list/owner/{userId}")
+    @GetMapping(LIST_OWNER_USER_ID)
     public ListOwnerResponse getListOwnerById(@PathVariable("userId") Long userId) {
         return userService.getListOwnerById(userId);
     }
 
-    @PostMapping("/list/participants")
+    @PostMapping(LIST_PARTICIPANTS)
     public List<ListMemberResponse> getListParticipantsByIds(@RequestBody IdsRequest request) {
         return userService.getListParticipantsByIds(request);
     }
 
-    @GetMapping("/list/participants/{username}")
+    @GetMapping(LIST_PARTICIPANTS_USERNAME)
     public List<ListMemberResponse> searchListMembersByUsername(@PathVariable("username") String username) {
         return userService.searchListMembersByUsername(username);
     }
 
-    @GetMapping("/notification/user/{userId}")
+    @GetMapping(NOTIFICATION_USER_USER_ID)
     public NotificationUserResponse getNotificationUser(@PathVariable("userId") Long userId) {
         return userService.getNotificationUser(userId);
     }
 
-    @GetMapping("/tweet/author/{userId}")
+    @GetMapping(TWEET_AUTHOR_USER_ID)
     public TweetAuthorResponse getTweetAuthor(@PathVariable("userId") Long userId) {
         return userService.getTweetAuthor(userId);
     }
 
-    @GetMapping("/tweet/additional/info/{userId}")
+    @GetMapping(TWEET_ADDITIONAL_INFO_USER_ID)
     public TweetAdditionalInfoUserResponse getTweetAdditionalInfoUser(@PathVariable("userId") Long userId) {
         return userService.getTweetAdditionalInfoUser(userId);
     }
 
-    @PostMapping("/tweet/liked")
+    @PostMapping(TWEET_LIKED)
     public HeaderResponse<UserResponse> getTweetLikedUsersByIds(@RequestBody IdsRequest request,
                                                                 @SpringQueryMap Pageable pageable) {
         return userService.getTweetLikedUsersByIds(request, pageable);
     }
 
-    @PostMapping("/tweet/retweeted")
+    @PostMapping(TWEET_RETWEETED)
     public HeaderResponse<UserResponse> getRetweetedUsersByTweetId(@RequestBody IdsRequest request,
                                                                    @SpringQueryMap Pageable pageable) {
         return userService.getRetweetedUsersByTweetId(request, pageable);
     }
 
-    @PutMapping("/tweet/pinned/{tweetId}")
+    @PutMapping(TWEET_PINNED_TWEET_ID)
     public void updatePinnedTweetId(@PathVariable("tweetId") Long tweetId) {
         userService.updatePinnedTweetId(tweetId);
     }
 
-    @GetMapping("/tweet/pinned/{userId}")
+    @GetMapping(TWEET_PINNED_USER_ID)
     public Long getUserPinnedTweetId(@PathVariable("userId") Long userId) {
         return userService.getUserPinnedTweetId(userId);
     }
 
-    @PostMapping("/tweet/valid/ids/{text}")
+    @PostMapping(TWEET_VALID_IDS)
     public List<Long> getValidTweetUserIds(@RequestBody IdsRequest request, @PathVariable("text") String text) {
         return userService.getValidTweetUserIds(request, text);
     }
 
-    @PostMapping("/valid/ids")
+    @PostMapping(VALID_IDS)
     public List<Long> getValidUserIds(@RequestBody IdsRequest request) {
         return userService.getValidUserIds(request);
     }
 
-    @GetMapping("/chat/participant/{userId}")
+    @GetMapping(CHAT_PARTICIPANT_USER_ID)
     public ChatUserParticipantResponse getChatParticipant(@PathVariable("userId") Long userId) {
         return userService.getChatParticipant(userId);
     }
 
-    @GetMapping("/is_exists/{userId}")
+    @GetMapping(IS_EXISTS_USER_ID)
     public Boolean isUserExists(@PathVariable("userId") Long userId) {
         return userService.isUserExists(userId);
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping(USER_ID)
     public UserResponse getUserById(@PathVariable("userId") Long userId) {
         return userService.getUserResponseById(userId);
     }
 
-    @GetMapping("/chat/{userId}")
+    @GetMapping(CHAT_USER_ID)
     public ChatTweetUserResponse getChatTweetUser(@PathVariable("userId") Long userId) {
         return userService.getChatTweetUser(userId);
     }
 
-    @PostMapping("/chat/valid/ids")
+    @PostMapping(CHAT_VALID_IDS)
     public List<Long> validateChatUsersIds(@RequestBody IdsRequest request) {
         return userService.validateChatUsersIds(request);
     }
 
-    @GetMapping("/subscribers")
+    @GetMapping(SUBSCRIBERS)
     public List<NotificationUserResponse> getUsersWhichUserSubscribed() {
         return userService.getUsersWhichUserSubscribed();
     }
 
-    @GetMapping("/subscribers/ids")
+    @GetMapping(SUBSCRIBERS_IDS)
     public List<Long> getUserIdsWhichUserSubscribed() {
         return userService.getUserIdsWhichUserSubscribed();
     }
 
-    @GetMapping("/notification/reset")
+    @GetMapping(NOTIFICATION_RESET)
     public void resetNotificationCount() {
         userService.resetNotificationCount();
     }

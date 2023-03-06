@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.constants.PathConstants.UI_V1_CHAT;
+import static com.gmail.merikbest2015.constants.PathConstants.*;
 import static com.gmail.merikbest2015.constants.WebsocketConstants.TOPIC_CHAT;
 
 @RestController
@@ -28,58 +28,58 @@ public class ChatController {
     private final ChatMapper chatMapper;
     private final WebSocketClient webSocketClient;
 
-    @GetMapping("/{chatId}")
+    @GetMapping(CHAT_ID)
     public ResponseEntity<ChatResponse> getChatById(@PathVariable("chatId") Long chatId) {
         return ResponseEntity.ok(chatMapper.getChatById(chatId));
     }
 
-    @GetMapping("/users")
+    @GetMapping(USERS)
     public ResponseEntity<List<ChatResponse>> getUserChats() {
         return ResponseEntity.ok(chatMapper.getUserChats());
     }
 
-    @GetMapping("/create/{userId}")
+    @GetMapping(CREATE_USER_ID)
     public ResponseEntity<ChatResponse> createChat(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(chatMapper.createChat(userId));
     }
 
-    @GetMapping("/{chatId}/messages")
+    @GetMapping(CHAT_ID_MESSAGES)
     public ResponseEntity<List<ChatMessageResponse>> getChatMessages(@PathVariable("chatId") Long chatId) {
         return ResponseEntity.ok(chatMapper.getChatMessages(chatId));
     }
 
-    @GetMapping("/{chatId}/read/messages")
+    @GetMapping(CHAT_ID_READ_MESSAGES)
     public ResponseEntity<Long> readChatMessages(@PathVariable("chatId") Long chatId) {
         return ResponseEntity.ok(chatMapper.readChatMessages(chatId));
     }
 
-    @PostMapping("/add/message")
+    @PostMapping(ADD_MESSAGE)
     public ResponseEntity<Void> addMessage(@RequestBody ChatMessageRequest request) {
         chatMapper.addMessage(request)
                 .forEach((userId, message) -> webSocketClient.send(TOPIC_CHAT + userId, message));
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/add/message/tweet")
+    @PostMapping(ADD_MESSAGE_TWEET)
     public ResponseEntity<Void> addMessageWithTweet(@RequestBody MessageWithTweetRequest request) {
         chatMapper.addMessageWithTweet(request)
                 .forEach((userId, message) -> webSocketClient.send(TOPIC_CHAT + userId, message));
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/participant/{participantId}/{chatId}")
+    @GetMapping(PARTICIPANT_CHAT_ID)
     public ResponseEntity<UserResponse> getParticipant(@PathVariable("participantId") Long participantId,
                                                        @PathVariable("chatId") Long chatId) {
         return ResponseEntity.ok(chatMapper.getParticipant(participantId, chatId));
     }
 
-    @GetMapping("/leave/{participantId}/{chatId}")
+    @GetMapping(LEAVE_CHAT_ID)
     public ResponseEntity<String> leaveFromConversation(@PathVariable("participantId") Long participantId,
                                                         @PathVariable("chatId") Long chatId) {
         return ResponseEntity.ok(chatMapper.leaveFromConversation(participantId, chatId));
     }
 
-    @GetMapping("/search/{username}")
+    @GetMapping(SEARCH_USERNAME)
     public ResponseEntity<List<UserChatResponse>> searchParticipantsByUsername(@PathVariable("username") String username,
                                                                                @PageableDefault(size = 15) Pageable pageable) {
         HeaderResponse<UserChatResponse> response = chatMapper.searchParticipantsByUsername(username, pageable);

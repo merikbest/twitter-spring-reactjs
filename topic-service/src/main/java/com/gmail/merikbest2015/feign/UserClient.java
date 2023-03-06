@@ -7,18 +7,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import static com.gmail.merikbest2015.constants.FeignConstants.USER_SERVICE;
-import static com.gmail.merikbest2015.constants.PathConstants.API_V1_USER;
+import static com.gmail.merikbest2015.constants.PathConstants.*;
 
 @CircuitBreaker(name = USER_SERVICE)
-@FeignClient(name = USER_SERVICE, contextId = "UserClient", configuration = FeignConfiguration.class)
+@FeignClient(name = USER_SERVICE, path = API_V1_USER, contextId = "UserClient", configuration = FeignConfiguration.class)
 public interface UserClient {
 
-    @GetMapping(API_V1_USER + "/is_exists/{userId}")
+    @GetMapping(IS_EXISTS_USER_ID)
     Boolean isUserExists(@PathVariable("userId") Long userId);
 
-    @GetMapping(API_V1_USER + "/is_my_profile_blocked/{userId}")
+    @GetMapping(IS_MY_PROFILE_BLOCKED_USER_ID)
     Boolean isMyProfileBlockedByUser(@PathVariable("userId") Long userId);
 
-    @GetMapping(API_V1_USER + "/is_private/{userId}")
+    @GetMapping(IS_PRIVATE_USER_ID)
     Boolean isUserHavePrivateProfile(@PathVariable("userId") Long userId);
 }

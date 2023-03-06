@@ -11,30 +11,30 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 import static com.gmail.merikbest2015.constants.FeignConstants.USER_SERVICE;
-import static com.gmail.merikbest2015.constants.PathConstants.API_V1_USER;
+import static com.gmail.merikbest2015.constants.PathConstants.*;
 
 @CircuitBreaker(name = USER_SERVICE)
-@FeignClient(name = USER_SERVICE, contextId = "UserClient", configuration = FeignConfiguration.class)
+@FeignClient(name = USER_SERVICE, path = API_V1_USER, contextId = "UserClient", configuration = FeignConfiguration.class)
 public interface UserClient {
 
-    @GetMapping(API_V1_USER + "/{userId}")
+    @GetMapping(USER_ID)
     UserResponse getUserById(@PathVariable("userId") Long userId);
 
-    @GetMapping(API_V1_USER + "/notification/{userId}")
+    @GetMapping(NOTIFICATION_USER_ID)
     void increaseNotificationsCount(@PathVariable("userId") Long userId);
 
-    @GetMapping(API_V1_USER + "/notification/user/{userId}")
+    @GetMapping(NOTIFICATION_USER_USER_ID)
     NotificationUserResponse getNotificationUser(@PathVariable("userId") Long userId);
 
-    @GetMapping(API_V1_USER + "/notification/reset")
+    @GetMapping(NOTIFICATION_RESET)
     void resetNotificationCount();
 
-    @GetMapping(API_V1_USER + "/subscribers/{userId}")
+    @GetMapping(SUBSCRIBERS_USER_ID)
     List<Long> getSubscribersByUserId(@PathVariable("userId") Long userId);
 
-    @GetMapping(API_V1_USER + "/subscribers")
+    @GetMapping(SUBSCRIBERS)
     List<NotificationUserResponse> getUsersWhichUserSubscribed();
 
-    @GetMapping(API_V1_USER + "/subscribers/ids")
+    @GetMapping(SUBSCRIBERS_IDS)
     List<Long> getUserIdsWhichUserSubscribed();
 }

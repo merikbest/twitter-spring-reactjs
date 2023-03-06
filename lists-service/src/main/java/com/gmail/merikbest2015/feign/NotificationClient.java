@@ -9,11 +9,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import static com.gmail.merikbest2015.constants.PathConstants.API_V1_NOTIFICATION;
 import static com.gmail.merikbest2015.constants.FeignConstants.NOTIFICATION_SERVICE;
+import static com.gmail.merikbest2015.constants.PathConstants.LIST;
 
 @CircuitBreaker(name = NOTIFICATION_SERVICE)
-@FeignClient(value = NOTIFICATION_SERVICE, configuration = FeignConfiguration.class)
+@FeignClient(value = NOTIFICATION_SERVICE, path = API_V1_NOTIFICATION, configuration = FeignConfiguration.class)
 public interface NotificationClient {
 
-    @PostMapping(API_V1_NOTIFICATION + "/list")
+    @PostMapping(LIST)
     void sendListNotification(@RequestBody NotificationRequest request);
 }

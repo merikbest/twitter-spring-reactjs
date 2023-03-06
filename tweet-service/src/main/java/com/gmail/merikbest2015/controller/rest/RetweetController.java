@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.constants.PathConstants.UI_V1_TWEETS;
+import static com.gmail.merikbest2015.constants.PathConstants.*;
 import static com.gmail.merikbest2015.constants.WebsocketConstants.TOPIC_USER_UPDATE_TWEET;
 
 @RestController
@@ -29,21 +29,21 @@ public class RetweetController {
     private final RetweetMapper retweetMapper;
     private final WebSocketClient webSocketClient;
 
-    @GetMapping("/replies/user/{userId}")
+    @GetMapping(REPLIES_USER_ID)
     public ResponseEntity<List<TweetUserResponse>> getUserRetweetsAndReplies(@PathVariable Long userId,
                                                                              @PageableDefault(size = 10) Pageable pageable) {
         HeaderResponse<TweetUserResponse> response = retweetMapper.getUserRetweetsAndReplies(userId, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping("/{tweetId}/retweeted-users")
+    @GetMapping(TWEET_ID_RETWEETED_USERS)
     public ResponseEntity<List<UserResponse>> getRetweetedUsersByTweetId(@PathVariable("tweetId") Long tweetId,
                                                                          @PageableDefault(size = 15) Pageable pageable) {
         HeaderResponse<UserResponse> response = retweetMapper.getRetweetedUsersByTweetId(tweetId, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping("/retweet/{userId}/{tweetId}")
+    @GetMapping(RETWEET_USER_ID_TWEET_ID)
     public ResponseEntity<NotificationTweetResponse> retweet(@PathVariable("userId") Long userId,
                                                              @PathVariable("tweetId") Long tweetId) {
         NotificationResponse notification = retweetMapper.retweet(tweetId);

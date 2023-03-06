@@ -8,6 +8,7 @@ import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFac
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import static com.gmail.merikbest2015.constants.FeignConstants.USER_SERVICE;
 import static com.gmail.merikbest2015.constants.PathConstants.AUTH_USER_ID_HEADER;
 
 @Component
@@ -31,7 +32,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
             if (token != null && isTokenValid) {
                 String email = jwtProvider.parseToken(token);
                 UserPrincipalResponse user = restTemplate.getForObject(
-                        "http://user-service:8001/api/v1/auth/user/{email}",
+                        String.format("http://%s:8001/api/v1/auth/user/{email}", USER_SERVICE),
                         UserPrincipalResponse.class,
                         email
                 );
