@@ -15,7 +15,7 @@ public interface ChatProjection {
         Long getId();
         Long getUserId();
 
-        @Value("#{@chatServiceImpl.getChatParticipant(target.userId)}")
+        @Value("#{@chatServiceHelper.getChatParticipant(target.userId)}")
         ChatUserParticipantResponse getUser();
         boolean getLeftChat();
     }

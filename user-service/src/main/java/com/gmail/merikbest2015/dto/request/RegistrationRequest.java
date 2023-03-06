@@ -6,14 +6,16 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import static com.gmail.merikbest2015.constants.ErrorMessage.*;
+
 @Data
 public class RegistrationRequest {
 
-    @Email(regexp = ".+@.+\\..+", message = "Please enter a valid email address.")
+    @Email(regexp = ".+@.+\\..+", message = EMAIL_NOT_VALID)
     private String email;
 
-    @NotBlank(message = "What’s your name?")
-    @Size(min = 1, max = 50, message = "Please enter a valid name.")
+    @NotBlank(message = BLANK_NAME)
+    @Size(min = 1, max = 50, message = NAME_NOT_VALID)
     private String username;
 
     private String birthday;

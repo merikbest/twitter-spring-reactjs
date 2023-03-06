@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.gmail.merikbest2015.constants.ErrorMessage.*;
+
 @Service
 @RequiredArgsConstructor
 public class ListsServiceHelper {
@@ -44,7 +46,7 @@ public class ListsServiceHelper {
         boolean isPresent = userClient.isUserBlocked(userId, supposedBlockedUserId);
 
         if (isPresent) {
-            throw new ApiRequestException("User with ID:" + supposedBlockedUserId + " is blocked", HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(String.format(USER_ID_BLOCKED, supposedBlockedUserId), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -52,7 +54,7 @@ public class ListsServiceHelper {
         boolean isPrivateUserProfile = userClient.isUserHavePrivateProfile(userId);
 
         if (isPrivateUserProfile) {
-            throw new ApiRequestException("User not found", HttpStatus.NOT_FOUND);
+            throw new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -61,7 +63,7 @@ public class ListsServiceHelper {
         boolean isPublic = listsRepository.isListPrivate(listId, authUserId);
 
         if (isPublic && !isMyProfileFollowList(listId)) {
-            throw new ApiRequestException("List not found", HttpStatus.NOT_FOUND);
+            throw new ApiRequestException(LIST_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -69,7 +71,7 @@ public class ListsServiceHelper {
         boolean isListExist = listsRepository.isListExist(listId, listOwnerId);
 
         if (!isListExist) {
-            throw new ApiRequestException("List not found", HttpStatus.NOT_FOUND);
+            throw new ApiRequestException(LIST_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -86,13 +88,13 @@ public class ListsServiceHelper {
 
     public void validateListNameLength(String listName) {
         if (listName.length() == 0 || listName.length() > 25) {
-            throw new ApiRequestException("Incorrect list name length", HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(INCORRECT_LIST_NAME_LENGTH, HttpStatus.BAD_REQUEST);
         }
     }
 
     public void validateListOwner(Long listOwnerId, Long authUserId) {
         if (!listOwnerId.equals(authUserId)) {
-            throw new ApiRequestException("List owner not found", HttpStatus.NOT_FOUND);
+            throw new ApiRequestException(LIST_OWNER_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
     }
 

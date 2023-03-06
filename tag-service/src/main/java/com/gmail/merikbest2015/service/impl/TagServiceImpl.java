@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.gmail.merikbest2015.constants.ErrorMessage.TAG_NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 public class TagServiceImpl implements TagService {
@@ -37,7 +39,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public List<TweetResponse> getTweetsByTag(String tagName) {
         Tag tag = tagRepository.findByTagName(tagName)
-                .orElseThrow(() -> new ApiRequestException("Tag not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(TAG_NOT_FOUND, HttpStatus.NOT_FOUND));
         List<Long> tweetIds = tweetTagRepository.getTweetIdsByTagId(tag.getId());
         return tweetClient.getTweetsByIds(new IdsRequest(tweetIds));
     }

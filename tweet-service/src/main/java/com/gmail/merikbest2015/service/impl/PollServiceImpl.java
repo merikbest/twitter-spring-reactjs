@@ -22,6 +22,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.gmail.merikbest2015.constants.ErrorMessage.*;
+
 @Service
 @RequiredArgsConstructor
 public class PollServiceImpl implements PollService {
@@ -37,7 +39,7 @@ public class PollServiceImpl implements PollService {
     @Transactional
     public TweetProjection createPoll(Long pollDateTime, List<String> choices, Tweet tweet) {
         if (choices.size() < 2 || choices.size() > 4) {
-            throw new ApiRequestException("Incorrect poll choices", HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(INCORRECT_POLL_CHOICES, HttpStatus.BAD_REQUEST);
         }
         Tweet createdTweet = tweetService.createTweet(tweet);
         Poll poll = new Poll();
@@ -46,7 +48,7 @@ public class PollServiceImpl implements PollService {
         List<PollChoice> pollChoices = new ArrayList<>();
         choices.forEach(choice -> {
             if (choice.length() == 0 || choice.length() > 25) {
-                throw new ApiRequestException("Incorrect choice text length", HttpStatus.BAD_REQUEST);
+                throw new ApiRequestException(INCORRECT_CHOICE_TEXT_LENGTH, HttpStatus.BAD_REQUEST);
             }
             PollChoice pollChoice = new PollChoice(choice);
             pollChoiceRepository.save(pollChoice);
@@ -62,19 +64,19 @@ public class PollServiceImpl implements PollService {
     @Transactional
     public TweetProjection voteInPoll(Long tweetId, Long pollId, Long pollChoiceId) {
         Tweet tweet = tweetRepository.getTweetByPollIdAndTweetId(tweetId, pollId)
-                .orElseThrow(() -> new ApiRequestException("Poll in tweet not exist", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(POLL_NOT_FOUND, HttpStatus.NOT_FOUND));
         tweetServiceHelper.checkIsValidUserProfile(tweet.getAuthorId());
         Poll poll = pollRepository.getPollByPollChoiceId(pollId, pollChoiceId)
-                .orElseThrow(() -> new ApiRequestException("Poll choice not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(POLL_CHOICE_NOT_FOUND, HttpStatus.NOT_FOUND));
 
         if (LocalDateTime.now().isAfter(poll.getDateTime())) {
-            throw new ApiRequestException("Poll is not available", HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(POLL_IS_NOT_AVAILABLE, HttpStatus.BAD_REQUEST);
         }
         Long userId = AuthUtil.getAuthenticatedUserId();
         boolean ifUserVoted = pollChoiceVotedRepository.ifUserVoted(userId, pollChoiceId);
 
         if (ifUserVoted) {
-            throw new ApiRequestException("User voted in poll", HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(USER_VOTED_IN_POLL, HttpStatus.BAD_REQUEST);
         }
         PollChoiceVoted votedUser = new PollChoiceVoted(userId, pollChoiceId);
         pollChoiceVotedRepository.save(votedUser);

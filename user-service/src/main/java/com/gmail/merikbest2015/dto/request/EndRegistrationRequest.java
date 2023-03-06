@@ -6,13 +6,15 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import static com.gmail.merikbest2015.constants.ErrorMessage.*;
+
 @Data
 public class EndRegistrationRequest {
     
-    @Email(regexp = ".+@.+\\..+", message = "Please enter a valid email address.")
+    @Email(regexp = ".+@.+\\..+", message = EMAIL_NOT_VALID)
     private String email;
 
-    @NotBlank(message = "Password confirmation cannot be empty.")
-    @Size(min = 8, message = "Your password needs to be at least 8 characters. Please enter a longer one.")
+    @NotBlank(message = EMPTY_PASSWORD_CONFIRMATION)
+    @Size(min = 8, message = SHORT_PASSWORD)
     private String password;
 }

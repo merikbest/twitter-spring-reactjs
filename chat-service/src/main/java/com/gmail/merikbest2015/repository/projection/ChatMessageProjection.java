@@ -11,7 +11,7 @@ public interface ChatMessageProjection {
     LocalDateTime getDate();
     Long getAuthorId();
     Long getTweetId();
-    @Value("#{target.tweetId == null ? null : @chatServiceImpl.getChatTweet(target.tweetId)}")
+    @Value("#{target.tweetId == null ? null : @chatServiceHelper.getChatTweet(target.tweetId)}")
     ChatTweetResponse getTweet();
     ChatProjection getChat();
 

@@ -22,6 +22,8 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.gmail.merikbest2015.constants.ErrorMessage.*;
+
 @Component
 @RequiredArgsConstructor
 public class TweetServiceHelper {
@@ -37,14 +39,14 @@ public class TweetServiceHelper {
 
     public Tweet checkValidTweet(Long tweetId) {
         Tweet tweet = tweetRepository.findById(tweetId)
-                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
         validateTweet(tweet.isDeleted(), tweet.getAuthorId());
         return tweet;
     }
 
     public void validateTweet(boolean isDeleted, Long tweetAuthorId) {
         if (isDeleted) {
-            throw new ApiRequestException("Sorry, that Tweet has been deleted.", HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(TWEET_DELETED, HttpStatus.BAD_REQUEST);
         }
         checkIsValidUserProfile(tweetAuthorId);
     }
@@ -53,7 +55,7 @@ public class TweetServiceHelper {
         boolean isUserExist = userClient.isUserExists(userId);
 
         if (!isUserExist) {
-            throw new ApiRequestException("User (id:" + userId + ") not found", HttpStatus.NOT_FOUND);
+            throw new ApiRequestException(String.format(USER_ID_NOT_FOUND, userId), HttpStatus.NOT_FOUND);
         }
         checkIsValidUserProfile(userId);
     }
@@ -63,17 +65,17 @@ public class TweetServiceHelper {
 
         if (!userId.equals(authUserId)) {
             if (userClient.isUserHavePrivateProfile(userId)) {
-                throw new ApiRequestException("User not found", HttpStatus.NOT_FOUND);
+                throw new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
             }
             if (userClient.isMyProfileBlockedByUser(userId)) {
-                throw new ApiRequestException("User profile blocked", HttpStatus.BAD_REQUEST);
+                throw new ApiRequestException(USER_PROFILE_BLOCKED, HttpStatus.BAD_REQUEST);
             }
         }
     }
 
     public void checkTweetTextLength(String text) {
         if (text.length() == 0 || text.length() > 280) {
-            throw new ApiRequestException("Incorrect tweet text length", HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(INCORRECT_TWEET_TEXT_LENGTH, HttpStatus.BAD_REQUEST);
         }
     }
 

@@ -8,6 +8,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static com.gmail.merikbest2015.constants.ErrorMessage.USER_NOT_FOUND;
 import static com.gmail.merikbest2015.constants.PathConstants.AUTH_USER_ID_HEADER;
 
 public class AuthUtil {
@@ -18,7 +19,7 @@ public class AuthUtil {
         String userId = request.getHeader(AUTH_USER_ID_HEADER);
 
         if (userId == null) {
-            throw new ApiRequestException("User not found", HttpStatus.NOT_FOUND);
+            throw new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
         } else {
             return Long.parseLong(userId);
         }

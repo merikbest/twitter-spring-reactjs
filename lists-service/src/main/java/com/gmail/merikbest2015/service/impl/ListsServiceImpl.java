@@ -33,6 +33,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static com.gmail.merikbest2015.constants.ErrorMessage.LIST_NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 public class ListsServiceImpl implements ListsService {
@@ -68,7 +70,7 @@ public class ListsServiceImpl implements ListsService {
     public BaseListProjection getListById(Long listId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         BaseListProjection list = listsRepository.getListById(listId, authUserId)
-                .orElseThrow(() -> new ApiRequestException("List not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(LIST_NOT_FOUND, HttpStatus.NOT_FOUND));
         listsServiceHelper.checkUserIsBlocked(list.getListOwnerId(), authUserId);
         listsServiceHelper.checkIsPrivateUserProfile(list.getListOwnerId());
         return list;
@@ -110,7 +112,7 @@ public class ListsServiceImpl implements ListsService {
     @Transactional
     public BaseListProjection editTweetList(Lists listInfo) {
         Lists list = listsRepository.findById(listInfo.getId())
-                .orElseThrow(() -> new ApiRequestException("List not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(LIST_NOT_FOUND, HttpStatus.NOT_FOUND));
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         listsServiceHelper.validateListNameLength(listInfo.getName());
         listsServiceHelper.validateListOwner(listInfo.getListOwnerId(), authUserId);
@@ -125,7 +127,7 @@ public class ListsServiceImpl implements ListsService {
     @Transactional
     public String deleteList(Long listId) {
         Lists list = listsRepository.findById(listId)
-                .orElseThrow(() -> new ApiRequestException("List not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(LIST_NOT_FOUND, HttpStatus.NOT_FOUND));
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         listsServiceHelper.validateListOwner(list.getListOwnerId(), authUserId);
         pinnedListsRepository.deletePinnedList(listId);
@@ -139,7 +141,7 @@ public class ListsServiceImpl implements ListsService {
         boolean isListExist = listsRepository.findByIdAndIsPrivateFalse(listId);
 
         if (!isListExist) {
-            throw new ApiRequestException("List not found", HttpStatus.NOT_FOUND);
+            throw new ApiRequestException(LIST_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         ListsFollowers follower = listsFollowersRepository.getListFollower(listId, authUserId);
@@ -159,7 +161,7 @@ public class ListsServiceImpl implements ListsService {
     public PinnedListProjection pinList(Long listId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         Lists list = listsRepository.getListWhereUserConsist(listId, authUserId)
-                .orElseThrow(() -> new ApiRequestException("List not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(LIST_NOT_FOUND, HttpStatus.NOT_FOUND));
         PinnedLists pinnedLists = pinnedListsRepository.getPinnedByUserIdAndListId(listId, authUserId);
 
         if (pinnedLists != null) {
@@ -237,7 +239,7 @@ public class ListsServiceImpl implements ListsService {
         boolean isListNotPrivate = listsRepository.isListNotPrivate(listId, authUserId);
 
         if (!isListNotPrivate) {
-            throw new ApiRequestException("List not found", HttpStatus.NOT_FOUND);
+            throw new ApiRequestException(LIST_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
         List<Long> membersIds = listsMembersRepository.getMembersIds(listId);
         return tweetClient.getTweetsByUserIds(new IdsRequest(membersIds), pageable);
@@ -247,7 +249,7 @@ public class ListsServiceImpl implements ListsService {
     public BaseListProjection getListDetails(Long listId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         return listsRepository.getListDetails(listId, authUserId)
-                .orElseThrow(() -> new ApiRequestException("List not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(LIST_NOT_FOUND, HttpStatus.NOT_FOUND));
     }
 
     @Override

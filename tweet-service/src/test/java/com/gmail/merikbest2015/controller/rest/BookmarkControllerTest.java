@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.controller.rest;
 
 import com.gmail.merikbest2015.enums.ReplyType;
+import com.gmail.merikbest2015.util.TestConstants;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.gmail.merikbest2015.constants.PathConstants.AUTH_USER_ID_HEADER;
-import static com.gmail.merikbest2015.constants.PathConstants.UI_V1_TWEETS;
-import static com.gmail.merikbest2015.util.TestConstants.USER_ID;
+import static com.gmail.merikbest2015.constants.ErrorMessage.TWEET_DELETED;
+import static com.gmail.merikbest2015.constants.ErrorMessage.TWEET_NOT_FOUND;
+import static com.gmail.merikbest2015.constants.PathConstants.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
@@ -34,8 +35,8 @@ public class BookmarkControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/tweets/user/bookmarks - Get user bookmarks")
     public void getUserBookmarks() throws Exception {
-        mockMvc.perform(get(UI_V1_TWEETS + "/user/bookmarks")
-                        .header(AUTH_USER_ID_HEADER, USER_ID))
+        mockMvc.perform(get(UI_V1_TWEETS + USER_BOOKMARKS)
+                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(40L))
@@ -68,8 +69,8 @@ public class BookmarkControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/tweets/user/bookmarks/43 - Add tweet to bookmarks")
     public void processUserBookmarks_addBookmark() throws Exception {
-        mockMvc.perform(get(UI_V1_TWEETS + "/user/bookmarks/43")
-                        .header(AUTH_USER_ID_HEADER, USER_ID))
+        mockMvc.perform(get(UI_V1_TWEETS + USER_BOOKMARKS_TWEET_ID, 43)
+                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(true));
     }
@@ -77,8 +78,8 @@ public class BookmarkControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/tweets/user/bookmarks/40 - Remove tweet from bookmarks")
     public void processUserBookmarks_removeBookmark() throws Exception {
-        mockMvc.perform(get(UI_V1_TWEETS + "/user/bookmarks/40")
-                        .header(AUTH_USER_ID_HEADER, USER_ID))
+        mockMvc.perform(get(UI_V1_TWEETS + USER_BOOKMARKS_TWEET_ID, 40)
+                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(false));
     }
@@ -86,26 +87,26 @@ public class BookmarkControllerTest {
     @Test
     @DisplayName("[404] GET /ui/v1/tweets/user/bookmarks/99 - Should Tweet Not Found")
     public void processUserBookmarks_ShouldTweetNotFound() throws Exception {
-        mockMvc.perform(get(UI_V1_TWEETS + "/user/bookmarks/99")
-                        .header(AUTH_USER_ID_HEADER, USER_ID))
+        mockMvc.perform(get(UI_V1_TWEETS + USER_BOOKMARKS_TWEET_ID, 99)
+                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is("Tweet not found")));
+                .andExpect(jsonPath("$", is(TWEET_NOT_FOUND)));
     }
 
     @Test
     @DisplayName("[400] GET /ui/v1/tweets/user/bookmarks/49 - Should Tweet deleted")
     public void processUserBookmarks_ShouldTweetDeleted() throws Exception {
-        mockMvc.perform(get(UI_V1_TWEETS + "/user/bookmarks/49")
-                        .header(AUTH_USER_ID_HEADER, USER_ID))
+        mockMvc.perform(get(UI_V1_TWEETS + USER_BOOKMARKS_TWEET_ID, 49)
+                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is("Sorry, that Tweet has been deleted.")));
+                .andExpect(jsonPath("$", is(TWEET_DELETED)));
     }
 
     @Test
     @DisplayName("[200] GET /ui/v1/tweets/43/bookmarked - Get is tweet bookmarked")
     public void getIsTweetBookmarked() throws Exception {
-        mockMvc.perform(get(UI_V1_TWEETS + "/43/bookmarked")
-                        .header(AUTH_USER_ID_HEADER, USER_ID))
+        mockMvc.perform(get(UI_V1_TWEETS + TWEET_ID_BOOKMARKED, 43)
+                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(false));
     }

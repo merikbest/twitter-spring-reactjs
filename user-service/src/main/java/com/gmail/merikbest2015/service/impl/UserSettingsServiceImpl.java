@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.gmail.merikbest2015.constants.ErrorMessage.*;
+
 @Service
 @RequiredArgsConstructor
 public class UserSettingsServiceImpl implements UserSettingsService {
@@ -30,7 +32,7 @@ public class UserSettingsServiceImpl implements UserSettingsService {
     @Transactional
     public String updateUsername(String username) {
         if (username.length() == 0 || username.length() > 50) {
-            throw new ApiRequestException("Incorrect username length", HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(INCORRECT_USERNAME_LENGTH, HttpStatus.BAD_REQUEST);
         }
         Long authUserId = authenticationService.getAuthenticatedUserId();
         userSettingsRepository.updateUsername(username, authUserId);
@@ -50,7 +52,7 @@ public class UserSettingsServiceImpl implements UserSettingsService {
             response.put("token", token);
             return response;
         }
-        throw new ApiRequestException("Email has already been taken.", HttpStatus.FORBIDDEN);
+        throw new ApiRequestException(EMAIL_HAS_ALREADY_BEEN_TAKEN, HttpStatus.FORBIDDEN);
     }
 
     @Override
@@ -59,7 +61,7 @@ public class UserSettingsServiceImpl implements UserSettingsService {
         int phoneLength = String.valueOf(phone).length();
 
         if (phoneLength < 6 || phoneLength > 10) {
-            throw new ApiRequestException("Not valid phone number", HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(INVALID_PHONE_NUMBER, HttpStatus.BAD_REQUEST);
         }
         Long authUserId = authenticationService.getAuthenticatedUserId();
         userSettingsRepository.updatePhone(countryCode, phone, authUserId);
@@ -78,7 +80,7 @@ public class UserSettingsServiceImpl implements UserSettingsService {
     @Transactional
     public String updateGender(String gender) {
         if (gender.length() == 0 || gender.length() > 30) {
-            throw new ApiRequestException("Incorrect gender length", HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(INVALID_GENDER_LENGTH, HttpStatus.BAD_REQUEST);
         }
         Long authUserId = authenticationService.getAuthenticatedUserId();
         userSettingsRepository.updateGender(gender, authUserId);

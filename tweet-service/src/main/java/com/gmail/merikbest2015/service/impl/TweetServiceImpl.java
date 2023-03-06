@@ -43,6 +43,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.gmail.merikbest2015.constants.ErrorMessage.TWEET_NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 public class TweetServiceImpl implements TweetService {
@@ -71,7 +73,7 @@ public class TweetServiceImpl implements TweetService {
     @Override
     public TweetProjection getTweetById(Long tweetId) {
         TweetProjection tweet = tweetRepository.getTweetById(tweetId, TweetProjection.class)
-                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
         tweetServiceHelper.validateTweet(tweet.isDeleted(), tweet.getAuthorId());
         return tweet;
     }
@@ -116,7 +118,7 @@ public class TweetServiceImpl implements TweetService {
     @Override
     public TweetAdditionalInfoProjection getTweetAdditionalInfoById(Long tweetId) {
         TweetAdditionalInfoProjection additionalInfo = tweetRepository.getTweetById(tweetId, TweetAdditionalInfoProjection.class)
-                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
         tweetServiceHelper.validateTweet(additionalInfo.isDeleted(), additionalInfo.getAuthorId());
         return additionalInfo;
     }
@@ -174,7 +176,7 @@ public class TweetServiceImpl implements TweetService {
     @Transactional
     public TweetProjection updateScheduledTweet(Tweet tweetInfo) {
         Tweet tweet = tweetRepository.findById(tweetInfo.getId())
-                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
         tweetServiceHelper.checkTweetTextLength(tweetInfo.getText());
         tweet.setText(tweetInfo.getText());
         tweet.setImages(tweetInfo.getImages());
@@ -193,7 +195,7 @@ public class TweetServiceImpl implements TweetService {
     public String deleteTweet(Long tweetId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         Tweet tweet = tweetRepository.getTweetByUserId(authUserId, tweetId)
-                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
         userClient.updatePinnedTweetId(tweetId);
         tagClient.deleteTagsByTweetId(tweetId);
         tweet.setDeleted(true);
@@ -233,10 +235,10 @@ public class TweetServiceImpl implements TweetService {
     public TweetProjection changeTweetReplyType(Long tweetId, ReplyType replyType) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         Tweet tweet = tweetRepository.getTweetByAuthorIdAndTweetId(tweetId, authUserId)
-                .orElseThrow(() -> new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
 
         if (!tweet.getAuthorId().equals(authUserId)) {
-            throw new ApiRequestException("Tweet not found", HttpStatus.NOT_FOUND);
+            throw new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
         tweet.setReplyType(replyType);
         return getTweetById(tweet.getId());

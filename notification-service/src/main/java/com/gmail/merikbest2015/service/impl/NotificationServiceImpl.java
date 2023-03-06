@@ -25,6 +25,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.gmail.merikbest2015.constants.ErrorMessage.NOTIFICATION_NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 public class NotificationServiceImpl implements NotificationService {
@@ -53,7 +55,7 @@ public class NotificationServiceImpl implements NotificationService {
     public NotificationInfoProjection getUserNotificationById(Long notificationId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         return notificationRepository.getUserNotificationById(authUserId, notificationId)
-                .orElseThrow(() -> new ApiRequestException("Notification not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(NOTIFICATION_NOT_FOUND, HttpStatus.NOT_FOUND));
     }
 
     @Override
