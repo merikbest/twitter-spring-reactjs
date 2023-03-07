@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.*;
@@ -47,10 +46,7 @@ public class UserSettingsServiceImpl implements UserSettingsService {
             userSettingsRepository.updateEmail(email, authUserId);
             String token = jwtProvider.createToken(email, "USER");
             AuthUserProjection user = userRepository.getUserById(authUserId, AuthUserProjection.class).get();
-            Map<String, Object> response = new HashMap<>();
-            response.put("user", user);
-            response.put("token", token);
-            return response;
+            return Map.of("user", user, "token", token);
         }
         throw new ApiRequestException(EMAIL_HAS_ALREADY_BEEN_TAKEN, HttpStatus.FORBIDDEN);
     }

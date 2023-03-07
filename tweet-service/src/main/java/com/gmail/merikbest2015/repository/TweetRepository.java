@@ -33,9 +33,6 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "ORDER BY tweet.dateTime DESC")
     Page<TweetProjection> getTweetsByAuthorIds(@Param("userIds") List<Long> userIds, Pageable pageable);
 
-    @Query("SELECT tweet.authorId FROM Tweet tweet WHERE tweet.id = :tweetId")
-    Optional<Long> getTweetAuthorId(@Param("tweetId") Long tweetId);
-
     @Query("SELECT tweet FROM Tweet tweet " +
             "WHERE tweet.authorId = :userId " +
             "AND tweet.addressedUsername IS NULL " +

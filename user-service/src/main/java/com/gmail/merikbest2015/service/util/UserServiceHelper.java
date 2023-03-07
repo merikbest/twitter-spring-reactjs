@@ -1,6 +1,7 @@
-package com.gmail.merikbest2015.util;
+package com.gmail.merikbest2015.service.util;
 
 import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.exception.InputFieldException;
 import com.gmail.merikbest2015.repository.BlockUserRepository;
 import com.gmail.merikbest2015.repository.FollowerUserRepository;
 import com.gmail.merikbest2015.repository.MuteUserRepository;
@@ -10,6 +11,7 @@ import com.gmail.merikbest2015.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.BindingResult;
 
 import java.util.List;
 
@@ -24,6 +26,12 @@ public class UserServiceHelper {
     private final FollowerUserRepository followerUserRepository;
     private final BlockUserRepository blockUserRepository;
     private final MuteUserRepository muteUserRepository;
+
+    public void processInputErrors(BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new InputFieldException(bindingResult);
+        }
+    }
 
     public void validateUserProfile(Long userId) {
         checkIsUserExist(userId);

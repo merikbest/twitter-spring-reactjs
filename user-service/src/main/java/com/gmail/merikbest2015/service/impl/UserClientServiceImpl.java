@@ -20,7 +20,7 @@ import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.service.AuthenticationService;
 import com.gmail.merikbest2015.service.UserClientService;
 import com.gmail.merikbest2015.util.AuthUtil;
-import com.gmail.merikbest2015.util.UserServiceHelper;
+import com.gmail.merikbest2015.service.util.UserServiceHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -132,7 +132,7 @@ public class ListsServiceImpl implements ListsService {
         listsServiceHelper.validateListOwner(list.getListOwnerId(), authUserId);
         pinnedListsRepository.deletePinnedList(listId);
         listsRepository.delete(list);
-        return "List id:" + listId + " deleted.";
+        return String.format("List id:%s deleted.", listId);
     }
 
     @Override

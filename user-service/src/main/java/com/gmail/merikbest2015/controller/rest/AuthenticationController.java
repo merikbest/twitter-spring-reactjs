@@ -25,26 +25,6 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationMapper.login(request, bindingResult));
     }
 
-    @PostMapping(REGISTRATION_CHECK)
-    public ResponseEntity<String> registration(@Valid @RequestBody RegistrationRequest request, BindingResult bindingResult) {
-        return ResponseEntity.ok(authenticationMapper.registration(request, bindingResult));
-    }
-
-    @PostMapping(REGISTRATION_CODE)
-    public ResponseEntity<String> sendRegistrationCode(@Valid @RequestBody ProcessEmailRequest request, BindingResult bindingResult) {
-        return ResponseEntity.ok(authenticationMapper.sendRegistrationCode(request.getEmail(), bindingResult));
-    }
-
-    @GetMapping(REGISTRATION_ACTIVATE_CODE)
-    public ResponseEntity<String> checkRegistrationCode(@PathVariable("code") String code) {
-        return ResponseEntity.ok(authenticationMapper.checkRegistrationCode(code));
-    }
-
-    @PostMapping(REGISTRATION_CONFIRM)
-    public ResponseEntity<AuthenticationResponse> endRegistration(@Valid @RequestBody EndRegistrationRequest request, BindingResult bindingResult) {
-        return ResponseEntity.ok(authenticationMapper.endRegistration(request, bindingResult));
-    }
-
     @PostMapping(FORGOT_EMAIL)
     public ResponseEntity<String> getExistingEmail(@Valid @RequestBody ProcessEmailRequest request, BindingResult bindingResult) {
         return ResponseEntity.ok(authenticationMapper.getExistingEmail(request.getEmail(), bindingResult));

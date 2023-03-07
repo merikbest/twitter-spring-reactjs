@@ -39,15 +39,9 @@ public interface TweetService {
 
     Page<TweetProjection> getFollowersTweets(Pageable pageable);
 
-    Page<TweetProjection> getScheduledTweets(Pageable pageable);
-
     TweetImage uploadTweetImage(MultipartFile file);
 
     TweetProjection createNewTweet(Tweet tweet);
-
-    TweetProjection updateScheduledTweet(Tweet tweetInfo);
-
-    String deleteScheduledTweets(List<Long> tweetsIds);
 
     String deleteTweet(Long tweetId);
 

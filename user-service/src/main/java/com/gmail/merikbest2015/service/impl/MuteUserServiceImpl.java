@@ -4,7 +4,7 @@ import com.gmail.merikbest2015.repository.MuteUserRepository;
 import com.gmail.merikbest2015.repository.projection.MutedUserProjection;
 import com.gmail.merikbest2015.service.AuthenticationService;
 import com.gmail.merikbest2015.service.MuteUserService;
-import com.gmail.merikbest2015.util.UserServiceHelper;
+import com.gmail.merikbest2015.service.util.UserServiceHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

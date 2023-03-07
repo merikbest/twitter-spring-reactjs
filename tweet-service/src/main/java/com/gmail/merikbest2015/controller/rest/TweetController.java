@@ -2,7 +2,6 @@ package com.gmail.merikbest2015.controller.rest;
 
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
-import com.gmail.merikbest2015.dto.request.TweetDeleteRequest;
 import com.gmail.merikbest2015.dto.request.TweetRequest;
 import com.gmail.merikbest2015.dto.response.*;
 import com.gmail.merikbest2015.enums.ReplyType;
@@ -99,12 +98,6 @@ public class TweetController {
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping(SCHEDULE)
-    public ResponseEntity<List<TweetResponse>> getScheduledTweets(@PageableDefault(size = 15) Pageable pageable) {
-        HeaderResponse<TweetResponse> response = tweetMapper.getScheduledTweets(pageable);
-        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
-    }
-
     @PostMapping(UPLOAD) // TODO add endpoint to frontend
     public ResponseEntity<TweetImageResponse> uploadTweetImage(@RequestPart("file") MultipartFile file) {
         return ResponseEntity.ok(tweetMapper.uploadTweetImage(file));
@@ -116,21 +109,6 @@ public class TweetController {
         webSocketClient.send(TOPIC_FEED_ADD, tweet);
         webSocketClient.send(TOPIC_USER_ADD_TWEET + tweet.getUser().getId(), tweet);
         return ResponseEntity.ok(tweet);
-    }
-
-    @PostMapping(SCHEDULE)
-    public ResponseEntity<TweetResponse> createScheduledTweet(@RequestBody TweetRequest tweetRequest) {
-        return ResponseEntity.ok(tweetMapper.createTweet(tweetRequest));
-    }
-
-    @PutMapping(SCHEDULE)
-    public ResponseEntity<TweetResponse> updateScheduledTweet(@RequestBody TweetRequest tweetRequest) {
-        return ResponseEntity.ok(tweetMapper.updateScheduledTweet(tweetRequest));
-    }
-
-    @DeleteMapping(SCHEDULE)
-    public ResponseEntity<String> deleteScheduledTweets(@RequestBody TweetDeleteRequest tweetRequest) {
-        return ResponseEntity.ok(tweetMapper.deleteScheduledTweets(tweetRequest));
     }
 
     @DeleteMapping(TWEET_ID)

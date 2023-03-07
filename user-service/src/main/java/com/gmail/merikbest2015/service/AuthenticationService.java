@@ -1,7 +1,6 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.dto.request.AuthenticationRequest;
-import com.gmail.merikbest2015.dto.request.RegistrationRequest;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
 import com.gmail.merikbest2015.repository.projection.UserPrincipalProjection;
@@ -18,14 +17,6 @@ public interface AuthenticationService {
     UserPrincipalProjection getUserPrincipalByEmail(String email);
 
     Map<String, Object> login(AuthenticationRequest request, BindingResult bindingResult);
-
-    String registration(RegistrationRequest request, BindingResult bindingResult);
-
-    String sendRegistrationCode(String email, BindingResult bindingResult);
-
-    String checkRegistrationCode(String code);
-
-    Map<String, Object> endRegistration(String email, String password, BindingResult bindingResult);
 
     Map<String, Object> getUserByToken();
 

@@ -23,22 +23,6 @@ public class AuthenticationMapper {
         return getAuthenticationResponse(authenticationService.login(request, bindingResult));
     }
 
-    public String registration(RegistrationRequest request, BindingResult bindingResult) {
-        return authenticationService.registration(request, bindingResult);
-    }
-
-    public String sendRegistrationCode(String email, BindingResult bindingResult) {
-        return authenticationService.sendRegistrationCode(email, bindingResult);
-    }
-
-    public String checkRegistrationCode(String code) {
-        return authenticationService.checkRegistrationCode(code);
-    }
-
-    public AuthenticationResponse endRegistration(EndRegistrationRequest request, BindingResult bindingResult) {
-        return getAuthenticationResponse(authenticationService.endRegistration(request.getEmail(), request.getPassword(), bindingResult));
-    }
-
     public AuthenticationResponse getUserByToken() {
         return getAuthenticationResponse(authenticationService.getUserByToken());
     }

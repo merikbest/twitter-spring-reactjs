@@ -6,7 +6,6 @@ import com.gmail.merikbest2015.repository.projection.ChatTweetProjection;
 import com.gmail.merikbest2015.repository.projection.NotificationTweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.service.TweetClientService;
-import com.gmail.merikbest2015.util.TweetServiceHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +18,6 @@ import java.util.List;
 public class TweetClientServiceImpl implements TweetClientService {
 
     private final TweetRepository tweetRepository;
-    private final TweetServiceHelper tweetServiceHelper;
 
     @Override
     public List<TweetProjection> getTweetsByIds(IdsRequest requests) {

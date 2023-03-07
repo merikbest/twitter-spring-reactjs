@@ -2,7 +2,6 @@ package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
-import com.gmail.merikbest2015.dto.request.TweetDeleteRequest;
 import com.gmail.merikbest2015.dto.request.TweetRequest;
 import com.gmail.merikbest2015.dto.response.*;
 import com.gmail.merikbest2015.enums.NotificationType;
@@ -86,11 +85,6 @@ public class TweetMapper {
         return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
     }
 
-    public HeaderResponse<TweetResponse> getScheduledTweets(Pageable pageable) {
-        Page<TweetProjection> tweets = tweetService.getScheduledTweets(pageable);
-        return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
-    }
-
     public TweetImageResponse uploadTweetImage(MultipartFile file) {
         TweetImage tweetImage = tweetService.uploadTweetImage(file);
         return basicMapper.convertToResponse(tweetImage, TweetImageResponse.class);
@@ -99,15 +93,6 @@ public class TweetMapper {
     public TweetResponse createTweet(TweetRequest tweetRequest) {
         TweetProjection tweet = tweetService.createNewTweet(basicMapper.convertToResponse(tweetRequest, Tweet.class));
         return basicMapper.convertToResponse(tweet, TweetResponse.class);
-    }
-
-    public TweetResponse updateScheduledTweet(TweetRequest tweetRequest) {
-        TweetProjection tweet = tweetService.updateScheduledTweet(basicMapper.convertToResponse(tweetRequest, Tweet.class));
-        return basicMapper.convertToResponse(tweet, TweetResponse.class);
-    }
-
-    public String deleteScheduledTweets(TweetDeleteRequest tweetRequest) {
-        return tweetService.deleteScheduledTweets(tweetRequest.getTweetsIds());
     }
 
     public String deleteTweet(Long tweetId) {

@@ -154,12 +154,6 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
-    public Page<TweetProjection> getScheduledTweets(Pageable pageable) {
-        Long authUserId = AuthUtil.getAuthenticatedUserId();
-        return tweetRepository.getScheduledTweets(authUserId, pageable);
-    }
-
-    @Override
     public TweetImage uploadTweetImage(MultipartFile file) {
         String imageSrc = imageClient.uploadImage(file);
         return tweetImageRepository.save(new TweetImage(imageSrc));
@@ -170,24 +164,6 @@ public class TweetServiceImpl implements TweetService {
     public TweetProjection createNewTweet(Tweet tweet) {
         Tweet createdTweet = createTweet(tweet);
         return getTweetById(createdTweet.getId());
-    }
-
-    @Override
-    @Transactional
-    public TweetProjection updateScheduledTweet(Tweet tweetInfo) {
-        Tweet tweet = tweetRepository.findById(tweetInfo.getId())
-                .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
-        tweetServiceHelper.checkTweetTextLength(tweetInfo.getText());
-        tweet.setText(tweetInfo.getText());
-        tweet.setImages(tweetInfo.getImages());
-        return getTweetById(tweet.getId());
-    }
-
-    @Override
-    @Transactional
-    public String deleteScheduledTweets(List<Long> tweetsIds) {
-        tweetsIds.forEach(this::deleteTweet);
-        return "Scheduled tweets deleted.";
     }
 
     @Override

@@ -11,7 +11,7 @@ import com.gmail.merikbest2015.repository.projection.UserProfileProjection;
 import com.gmail.merikbest2015.repository.projection.UserProjection;
 import com.gmail.merikbest2015.service.AuthenticationService;
 import com.gmail.merikbest2015.service.FollowerUserService;
-import com.gmail.merikbest2015.util.UserServiceHelper;
+import com.gmail.merikbest2015.service.util.UserServiceHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -108,7 +108,7 @@ public class FollowerUserServiceImpl implements FollowerUserService {
         Long authUserId = authenticationService.getAuthenticatedUserId();
         followerUserRepository.removeFollowerRequest(userId, authUserId);
         followerUserRepository.follow(userId, authUserId);
-        return "User (id:" + userId + ") accepted.";
+        return String.format("User (id:%s) accepted.", userId);
     }
 
     @Override
@@ -117,6 +117,6 @@ public class FollowerUserServiceImpl implements FollowerUserService {
         userServiceHelper.checkIsUserExist(userId);
         Long authUserId = authenticationService.getAuthenticatedUserId();
         followerUserRepository.removeFollowerRequest(userId, authUserId);
-        return "User (id:" + userId + ") declined.";
+        return String.format("User (id:%s) declined.", userId);
     }
 }
