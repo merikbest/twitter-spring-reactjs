@@ -11,5 +11,5 @@ delete from "tweet-test".public.liked_tweets;
 delete from "tweet-test".public.poll_choices;
 delete from "tweet-test".public.retweets;
 
-delete from "tweet-test".public.polls;
 delete from "tweet-test".public.tweets;
+delete from "tweet-test".public.polls;

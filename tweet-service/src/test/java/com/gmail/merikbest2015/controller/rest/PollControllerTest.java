@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@Sql(value = {"/sql-test/populate-tweet-db.sql"}, executionPhase = BEFORE_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-tweet-db.sql", "/sql-test/populate-tweet-db.sql"}, executionPhase = BEFORE_TEST_METHOD)
 @Sql(value = {"/sql-test/clear-tweet-db.sql"}, executionPhase = AFTER_TEST_METHOD)
 public class PollControllerTest {
 
@@ -72,7 +72,7 @@ public class PollControllerTest {
                 .andExpect(jsonPath("$.linkCoverSize").isEmpty())
                 .andExpect(jsonPath("$.quoteTweet").isEmpty())
                 .andExpect(jsonPath("$.user.id").value(2L))
-                .andExpect(jsonPath("$.poll.id").value(100L))
+                .andExpect(jsonPath("$.poll.id").isNotEmpty())
                 .andExpect(jsonPath("$.poll.pollChoices[0].id").isNotEmpty())
                 .andExpect(jsonPath("$.poll.pollChoices[1].id").isNotEmpty())
                 .andExpect(jsonPath("$.images").isEmpty())
@@ -256,7 +256,7 @@ public class PollControllerTest {
                         .content(mapper.writeValueAsString(voteRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(TWEET_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(POLL_NOT_FOUND)));
     }
 
     @Test

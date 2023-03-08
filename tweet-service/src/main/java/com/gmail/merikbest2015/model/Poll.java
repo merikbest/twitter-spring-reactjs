@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -11,7 +12,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode(exclude = "tweet")
+@NoArgsConstructor
+@EqualsAndHashCode(of = "id")
 @Table(name = "polls")
 public class Poll {
 
@@ -23,7 +25,7 @@ public class Poll {
     @Column(name = "date_time")
     private LocalDateTime dateTime;
 
-    @OneToOne
+    @OneToOne(mappedBy = "poll")
     private Tweet tweet;
 
     @OneToMany

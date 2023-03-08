@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@Sql(value = {"/sql-test/populate-topic-db.sql"}, executionPhase = BEFORE_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-topic-db.sql", "/sql-test/populate-topic-db.sql"}, executionPhase = BEFORE_TEST_METHOD)
 @Sql(value = {"/sql-test/clear-topic-db.sql"}, executionPhase = AFTER_TEST_METHOD)
 public class TopicControllerTest {
 
@@ -92,9 +92,9 @@ public class TopicControllerTest {
     }
 
     @Test
-    @DisplayName("[404] GET /ui/v1/topics/followed/1 - Should user have private profile")
+    @DisplayName("[404] GET /ui/v1/topics/followed/3 - Should user have private profile")
     public void getFollowedTopicsByUserId_UserHavePrivateProfile() throws Exception {
-        mockMvc.perform(get(UI_V1_TOPICS + FOLLOWED_USER_ID, 1)
+        mockMvc.perform(get(UI_V1_TOPICS + FOLLOWED_USER_ID, 3)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(USER_NOT_FOUND)));

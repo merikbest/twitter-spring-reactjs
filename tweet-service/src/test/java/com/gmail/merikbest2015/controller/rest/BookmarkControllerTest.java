@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@Sql(value = {"/sql-test/populate-tweet-db.sql"}, executionPhase = BEFORE_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-tweet-db.sql", "/sql-test/populate-tweet-db.sql"}, executionPhase = BEFORE_TEST_METHOD)
 @Sql(value = {"/sql-test/clear-tweet-db.sql"}, executionPhase = AFTER_TEST_METHOD)
 public class BookmarkControllerTest {
 
@@ -54,7 +54,7 @@ public class BookmarkControllerTest {
                 .andExpect(jsonPath("$[0].linkCoverSize").isEmpty())
                 .andExpect(jsonPath("$[0].quoteTweet").isEmpty())
                 .andExpect(jsonPath("$[0].user.id").value(2L))
-                .andExpect(jsonPath("$[0].poll").isEmpty())
+                .andExpect(jsonPath("$[0].poll.id").value(2L))
                 .andExpect(jsonPath("$[*].images", hasSize(1)))
                 .andExpect(jsonPath("$[0].retweetsCount").value(1L))
                 .andExpect(jsonPath("$[0].likedTweetsCount").value(1L))

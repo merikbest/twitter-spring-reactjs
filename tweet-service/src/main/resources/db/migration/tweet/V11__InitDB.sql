@@ -58,7 +58,6 @@ create table polls
 (
     id        int8 not null,
     date_time timestamp,
-    tweet_id  int8,
     primary key (id)
 );
 create table polls_poll_choices
@@ -110,8 +109,6 @@ alter table quotes
     add constraint UK_iuv1sbh2mxfhdvwpemnnhveyp unique (quote_id);
 alter table tweets_images
     add constraint UK_r0mdr0mxkjw13pm37pqs86vl unique (images_id);
-alter table polls
-    add constraint FKefqmdrrkmxe77he6qnw5lr30a foreign key (tweet_id) references tweets;
 alter table polls_poll_choices
     add constraint FKiov00wdpikhs1naueduv299in foreign key (poll_choices_id) references poll_choices;
 alter table polls_poll_choices

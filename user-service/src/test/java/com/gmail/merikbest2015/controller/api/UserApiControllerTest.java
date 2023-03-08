@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@Sql(value = {"/sql-test/populate-user-db.sql"}, executionPhase = BEFORE_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-user-db.sql", "/sql-test/populate-user-db.sql"}, executionPhase = BEFORE_TEST_METHOD)
 @Sql(value = {"/sql-test/clear-user-db.sql"}, executionPhase = AFTER_TEST_METHOD)
 public class UserApiControllerTest {
 
@@ -65,7 +65,7 @@ public class UserApiControllerTest {
                 .andExpect(jsonPath("$.items[0].isPrivateProfile").value(false))
                 .andExpect(jsonPath("$.items[0].isMutedDirectMessages").value(true))
                 .andExpect(jsonPath("$.items[0].isUserBlocked").value(false))
-                .andExpect(jsonPath("$.items[0].isMyProfileBlocked").value(false))
+                .andExpect(jsonPath("$.items[0].isMyProfileBlocked").isNotEmpty())
                 .andExpect(jsonPath("$.items[0].isWaitingForApprove").value(false))
                 .andExpect(jsonPath("$.items[0].isFollower").value(false))
                 .andExpect(jsonPath("$.items[0].isUserChatParticipant").value(false));

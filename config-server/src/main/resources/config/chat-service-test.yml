@@ -1,10 +1,10 @@
 server:
-    port: 8001
+    port: 8006
 spring:
     application:
-        name: user-service
+        name: chat-service
     datasource:
-        url: jdbc:postgresql://localhost:5432/user-test
+        url: jdbc:postgresql://localhost:5432/chat-test
         username: postgres
         password: root
         driverClassName: org.postgresql.Driver
@@ -17,7 +17,7 @@ spring:
     sql:
         init:
             mode: always
-            data-locations: classpath:sql-test/clear-user-db.sql, classpath:sql-test/populate-user-db.sql
+            data-locations: classpath:sql-test/clear-chat-db.sql, classpath:sql-test/populate-chat-db.sql
 eureka:
     client:
         service-url:

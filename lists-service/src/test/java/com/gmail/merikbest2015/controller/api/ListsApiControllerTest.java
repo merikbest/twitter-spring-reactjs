@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@Sql(value = "/sql-test/populate-lists-db.sql", executionPhase = BEFORE_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-lists-db.sql", "/sql-test/populate-lists-db.sql"}, executionPhase = BEFORE_TEST_METHOD)
 @Sql(value = "/sql-test/clear-lists-db.sql", executionPhase = AFTER_TEST_METHOD)
 public class ListsApiControllerTest {
 

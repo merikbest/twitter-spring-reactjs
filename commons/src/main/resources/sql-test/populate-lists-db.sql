@@ -21,4 +21,3 @@ INSERT INTO "lists-test".public.lists_members (id, list_id, member_id) VALUES (1
 INSERT INTO "lists-test".public.lists_members (id, list_id, member_id) VALUES (2, 5, 1);
 INSERT INTO "lists-test".public.lists_members (id, list_id, member_id) VALUES (3, 7, 2);
 INSERT INTO "lists-test".public.lists_members (id, list_id, member_id) VALUES (4, 9, 1);
--- 5 4 3

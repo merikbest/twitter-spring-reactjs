@@ -7,9 +7,9 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
 @NoArgsConstructor
 @RequiredArgsConstructor
+@EqualsAndHashCode(of = "id")
 @Table(name = "topic_followers")
 public class TopicFollowers {
 

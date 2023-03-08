@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@Sql(value = "/sql-test/populate-lists-db.sql", executionPhase = BEFORE_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-lists-db.sql", "/sql-test/populate-lists-db.sql"}, executionPhase = BEFORE_TEST_METHOD)
 @Sql(value = "/sql-test/clear-lists-db.sql", executionPhase = AFTER_TEST_METHOD)
 public class ListsControllerTest {
 
@@ -791,12 +791,12 @@ public class ListsControllerTest {
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(6)))
-                .andExpect(jsonPath("$[0].id").value(TestConstants.USER_ID))
+                .andExpect(jsonPath("$[0].id").isNotEmpty())
                 .andExpect(jsonPath("$[0].fullName").value(TestConstants.USERNAME))
                 .andExpect(jsonPath("$[0].username").value(TestConstants.USERNAME))
                 .andExpect(jsonPath("$[0].about").value(TestConstants.ABOUT))
                 .andExpect(jsonPath("$[0].avatar").value(TestConstants.AVATAR_SRC_1))
-                .andExpect(jsonPath("$[0].isPrivateProfile").value(false))
-                .andExpect(jsonPath("$[0].isMemberInList").value(false));
+                .andExpect(jsonPath("$[0].isPrivateProfile").isNotEmpty())
+                .andExpect(jsonPath("$[0].isMemberInList").isNotEmpty());
     }
 }

@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.model;
 import com.gmail.merikbest2015.enums.NotificationType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -11,7 +12,8 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
+@NoArgsConstructor
+@EqualsAndHashCode(of = "id")
 @Table(name = "notifications")
 public class Notification {
 

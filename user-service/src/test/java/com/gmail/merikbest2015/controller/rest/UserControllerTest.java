@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@Sql(value = {"/sql-test/populate-user-db.sql"}, executionPhase = BEFORE_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-user-db.sql", "/sql-test/populate-user-db.sql"}, executionPhase = BEFORE_TEST_METHOD)
 @Sql(value = {"/sql-test/clear-user-db.sql"}, executionPhase = AFTER_TEST_METHOD)
 public class UserControllerTest {
 
@@ -72,7 +72,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.location").value("Kyiv"))
                 .andExpect(jsonPath("$.about").value(TestConstants.ABOUT2))
                 .andExpect(jsonPath("$.website").value(TestConstants.WEBSITE))
-                .andExpect(jsonPath("$.country").value(COUNTRY))
+                .andExpect(jsonPath("$.country").value(TestConstants.COUNTRY))
                 .andExpect(jsonPath("$.birthday").isEmpty())
                 .andExpect(jsonPath("$.registrationDate").value(TestConstants.REGISTRATION_DATE))
                 .andExpect(jsonPath("$.tweetCount").value(TestConstants.TWEET_COUNT))
@@ -144,7 +144,7 @@ public class UserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/search/MrCat - Search users by username")
     public void searchUsersByUsername() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + SEARCH_USERNAME, USERNAME)
+        mockMvc.perform(get(UI_V1_USER + SEARCH_USERNAME, TestConstants.USERNAME)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(6)))
@@ -198,10 +198,10 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.location").value("test"))
                 .andExpect(jsonPath("$.about").value("test"))
                 .andExpect(jsonPath("$.website").value("test"))
-                .andExpect(jsonPath("$.countryCode").value(COUNTRY))
-                .andExpect(jsonPath("$.phone").value(PHONE))
-                .andExpect(jsonPath("$.country").value(COUNTRY))
-                .andExpect(jsonPath("$.gender").value(GENDER))
+                .andExpect(jsonPath("$.countryCode").value(TestConstants.COUNTRY))
+                .andExpect(jsonPath("$.phone").value(TestConstants.PHONE))
+                .andExpect(jsonPath("$.country").value(TestConstants.COUNTRY))
+                .andExpect(jsonPath("$.gender").value(TestConstants.GENDER))
                 .andExpect(jsonPath("$.birthday").value(TestConstants.BIRTHDAY))
                 .andExpect(jsonPath("$.registrationDate").value(TestConstants.REGISTRATION_DATE))
                 .andExpect(jsonPath("$.tweetCount").value(TestConstants.TWEET_COUNT))
@@ -211,8 +211,8 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.active").value(true))
                 .andExpect(jsonPath("$.profileCustomized").value(true))
                 .andExpect(jsonPath("$.profileStarted").value(true))
-                .andExpect(jsonPath("$.backgroundColor").value(BACKGROUND_COLOR))
-                .andExpect(jsonPath("$.colorScheme").value(COLOR_SCHEME))
+                .andExpect(jsonPath("$.backgroundColor").value(TestConstants.BACKGROUND_COLOR))
+                .andExpect(jsonPath("$.colorScheme").value(TestConstants.COLOR_SCHEME))
                 .andExpect(jsonPath("$.avatar").value(TestConstants.AVATAR_SRC_1))
                 .andExpect(jsonPath("$.wallpaper").value(TestConstants.WALLPAPER_SRC))
                 .andExpect(jsonPath("$.pinnedTweetId").value(TestConstants.PINNED_TWEET_ID))

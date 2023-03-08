@@ -9,6 +9,7 @@ import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.SameFollower;
 import com.gmail.merikbest2015.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
@@ -21,6 +22,7 @@ import static com.gmail.merikbest2015.constants.ErrorMessage.*;
 @RequiredArgsConstructor
 public class UserServiceHelper {
 
+    @Lazy
     private final AuthenticationService authenticationService;
     private final UserRepository userRepository;
     private final FollowerUserRepository followerUserRepository;

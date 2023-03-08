@@ -1,9 +1,13 @@
 -- tweet_images
 INSERT INTO "tweet-test".public.tweet_images (id, src) VALUES (1, 'https://twitterclonestorage.s3.eu-central-1.amazonaws.com/0a6c735d-def8-4587-a29f-221915ef6cb4_ff2d023b3220f93bbc79233614dea542.jpg');
 
+-- polls
+INSERT INTO "tweet-test".public.polls (id, date_time) VALUES (2, '2222-10-10 20:29:03.812910');
+INSERT INTO "tweet-test".public.polls (id, date_time) VALUES (8, '2021-10-10 20:29:03.812910');
+
 -- tweets
 INSERT INTO "tweet-test".public.tweets (id, addressed_id, addressed_tweet_id, addressed_username, date_time, reply_type, text, author_id, link, link_cover, link_description, link_title, link_cover_size, scheduled_date, deleted, poll_id) VALUES (39, null, null, null, '2021-10-03 20:29:03.00vo0000', 'EVERYONE', 'test tweet',  2, null, null, null, null, null, '3021-10-03 20:33:36.000000', false, null);
-INSERT INTO "tweet-test".public.tweets (id, addressed_id, addressed_tweet_id, addressed_username, date_time, reply_type, text, author_id, link, link_cover, link_description, link_title, link_cover_size, scheduled_date, deleted, poll_id) VALUES (40, null, null, null, '2021-10-03 20:29:03.00vo0000', 'EVERYONE', 'test tweet',  2, null, null, null, null, null, null, false, null);
+INSERT INTO "tweet-test".public.tweets (id, addressed_id, addressed_tweet_id, addressed_username, date_time, reply_type, text, author_id, link, link_cover, link_description, link_title, link_cover_size, scheduled_date, deleted, poll_id) VALUES (40, null, null, null, '2021-10-03 20:29:03.00vo0000', 'EVERYONE', 'test tweet',  2, null, null, null, null, null, null, false, 2);
 INSERT INTO "tweet-test".public.tweets (id, addressed_id, addressed_tweet_id, addressed_username, date_time, reply_type, text, author_id, link, link_cover, link_description, link_title, link_cover_size, scheduled_date, deleted, poll_id) VALUES (41, 2, 40, 'MrCat', '2021-10-03 20:31:55.000000', 'EVERYONE', 'test reply', 1, null, null, null, null, null, null, false, null);
 INSERT INTO "tweet-test".public.tweets (id, addressed_id, addressed_tweet_id, addressed_username, date_time, reply_type, text, author_id, link, link_cover, link_description, link_title, link_cover_size, scheduled_date, deleted, poll_id) VALUES (42, null, null, null, '2021-10-03 20:33:36.000000', 'EVERYONE', 'https://www.youtube.com/watch?v=ewZZNeYDiLo&ab_channel=TeamSESH', 2, 'https://www.youtube.com/watch?v=ewZZNeYDiLo&ab_channel=TeamSESH', 'https://i.ytimg.com/vi/ewZZNeYDiLo/mqdefault.jpg', null, 'Bones - RestInPeace', null, null, false, null);
 INSERT INTO "tweet-test".public.tweets (id, addressed_id, addressed_tweet_id, addressed_username, date_time, reply_type, text, author_id, link, link_cover, link_description, link_title, link_cover_size, scheduled_date, deleted, poll_id) VALUES (43, null, null, null, '2021-10-03 20:34:15.000000', 'EVERYONE', '#JetBrains https://www.jetbrains.com/ ', 2, 'https://www.jetbrains.com/', 'https://resources.jetbrains.com/storage/products/jetbrains/img/meta/preview.png', 'JetBrains is a cutting-edge software vendor specializing in the creation of intelligent development tools, including IntelliJ IDEA – the leading Java IDE, and the Kotlin programming language.', 'JetBrains', 'LARGE', null, false, null);
@@ -36,10 +40,6 @@ INSERT INTO "tweet-test".public.replies (tweet_id, reply_id) VALUES (40, 41);
 -- quotes
 INSERT INTO "tweet-test".public.quotes (tweet_id, quote_id) VALUES (44, 43);
 INSERT INTO "tweet-test".public.quotes (tweet_id, quote_id) VALUES (45, 40);
-
--- polls
-INSERT INTO "tweet-test".public.polls (id, date_time, tweet_id) VALUES (2, '2021-10-10 20:29:03.812910', 40);
-INSERT INTO "tweet-test".public.polls (id, date_time, tweet_id) VALUES (8, '2021-10-10 20:29:03.812910', 48);
 
 -- poll_choices
 INSERT INTO "tweet-test".public.poll_choices (id, choice) VALUES (9, 'test 1');
