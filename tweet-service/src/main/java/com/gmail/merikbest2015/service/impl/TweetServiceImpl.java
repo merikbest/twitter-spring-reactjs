@@ -131,6 +131,7 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     public Page<TweetProjection> getQuotesByTweetId(Pageable pageable, Long tweetId) {
+        tweetServiceHelper.checkValidTweet(tweetId);
         List<Long> validUserIds = tweetServiceHelper.getValidUserIds();
         return tweetRepository.getQuotesByTweetId(validUserIds, tweetId, pageable);
     }
