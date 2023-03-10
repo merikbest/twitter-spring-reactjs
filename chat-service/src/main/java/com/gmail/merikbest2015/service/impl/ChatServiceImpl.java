@@ -48,8 +48,9 @@ public class ChatServiceImpl implements ChatService {
     public ChatProjection createChat(Long userId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         Boolean isUserExists = userClient.isUserExists(userId);
+
         if (!isUserExists) {
-            throw new ApiRequestException(USER_NOT_FOUND, HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
         chatServiceHelper.isParticipantBlocked(authUserId, userId);
         Chat chat = chatRepository.getChatByParticipants(authUserId, userId);

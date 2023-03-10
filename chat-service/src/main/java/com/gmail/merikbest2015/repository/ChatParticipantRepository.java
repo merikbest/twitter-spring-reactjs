@@ -28,6 +28,11 @@ public interface ChatParticipantRepository extends JpaRepository<ChatParticipant
             "AND chatParticipant.chat.id = :chatId")
     Optional<Long> getParticipantUserId(@Param("participantId") Long participantId, @Param("chatId") Long chatId);
 
+    @Query("SELECT chatParticipant.userId FROM ChatParticipant chatParticipant " +
+            "WHERE chatParticipant.id <> :authUserId " +
+            "AND chatParticipant.chat.id = :chatId")
+    Long getChatParticipantId(@Param("authUserId") Long authUserId, @Param("chatId") Long chatId);
+
     @Modifying
     @Query("UPDATE ChatParticipant chatParticipant " +
             "SET chatParticipant.leftChat = true " +

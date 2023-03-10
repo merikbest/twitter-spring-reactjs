@@ -14,12 +14,12 @@ public class ChatParticipantMapper {
 
     private final ChatParticipantService chatParticipantService;
 
-    public String leaveFromConversation(Long participantId, Long chatId) {
-        return chatParticipantService.leaveFromConversation(participantId, chatId);
-    }
-
     public UserResponse getParticipant(Long participantId, Long chatId) {
         return chatParticipantService.getParticipant(participantId, chatId);
+    }
+
+    public String leaveFromConversation(Long participantId, Long chatId) {
+        return chatParticipantService.leaveFromConversation(participantId, chatId);
     }
 
     public HeaderResponse<UserChatResponse> searchParticipantsByUsername(String username, Pageable pageable) {

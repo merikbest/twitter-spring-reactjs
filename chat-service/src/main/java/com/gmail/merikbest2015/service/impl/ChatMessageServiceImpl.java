@@ -60,15 +60,12 @@ public class ChatMessageServiceImpl implements ChatMessageService {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         Chat chat = chatRepository.getChatById(chatId, authUserId, Chat.class)
                 .orElseThrow(() -> new ApiRequestException(CHAT_NOT_FOUND, HttpStatus.NOT_FOUND));
-        ChatParticipant chatParticipant = chat.getParticipants().stream()
-                .filter(participant -> !participant.getUserId().equals(authUserId))
-                .findFirst()
-                .orElseThrow(() -> new ApiRequestException(CHAT_PARTICIPANT_NOT_FOUND, HttpStatus.NOT_FOUND));
-        chatServiceHelper.isParticipantBlocked(authUserId, chatParticipant.getUserId());
+        Long chatParticipantId = chatParticipantRepository.getChatParticipantId(authUserId, chatId);
+        chatServiceHelper.isParticipantBlocked(authUserId, chatParticipantId);
         chatMessage.setAuthorId(authUserId);
         chatMessage.setChat(chat);
         chatMessageRepository.save(chatMessage);
-        chatParticipantRepository.updateParticipantWhoLeftChat(chatParticipant.getUserId(), chatId);
+        chatParticipantRepository.updateParticipantWhoLeftChat(chatParticipantId, chatId);
         chat.getMessages().add(chatMessage);
         ChatMessageProjection message = chatMessageRepository.getChatMessageById(chatMessage.getId()).get();
         Map<Long, ChatMessageProjection> chatParticipants = new HashMap<>();
