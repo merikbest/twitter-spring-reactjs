@@ -49,9 +49,10 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     @Transactional
     public Long readChatMessages(Long chatId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
+        chatRepository.getChatById(chatId, authUserId, ChatProjection.class)
+                .orElseThrow(() -> new ApiRequestException(CHAT_NOT_FOUND, HttpStatus.NOT_FOUND));
         chatMessageRepository.readChatMessages(chatId, authUserId);
-        List<Long> chatIds = chatRepository.getChatIdsByUserId(authUserId);
-        return chatMessageRepository.getUnreadMessagesCount(chatIds, authUserId);
+        return chatMessageRepository.getUnreadMessagesCount(authUserId);
     }
 
     @Override

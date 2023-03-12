@@ -35,12 +35,6 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
             "AND participant.leftChat = false")
     List<ChatProjection> getChatsByUserId(@Param("userId") Long userId);
 
-    @Query("SELECT chat.id FROM Chat chat " +
-            "LEFT JOIN chat.participants participant " +
-            "WHERE participant.userId = :userId " +
-            "AND participant.leftChat = false")
-    List<Long> getChatIdsByUserId(@Param("userId") Long userId);
-
     @Query("SELECT CASE WHEN count(chatParticipant) > 0 THEN true ELSE false END FROM Chat chat " +
         "JOIN chat.participants chatParticipant " +
         "WHERE chat.id = :chatId " +

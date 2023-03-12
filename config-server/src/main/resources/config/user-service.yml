@@ -21,6 +21,12 @@ spring:
     rabbitmq:
         addresses: ${RABBITMQ_HOST:localhost}:5672
 
+rabbitmq:
+    exchanges:
+        internal: internal.exchange
+    routing-keys:
+        internal-mail: internal.mail.routing-key
+
 resilience4j:
     circuitbreaker:
         instances:

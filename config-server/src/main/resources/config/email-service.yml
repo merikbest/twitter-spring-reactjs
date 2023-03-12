@@ -6,6 +6,8 @@ spring:
         name: email-service
     zipkin:
         base-url: http://${ZIPKIN_HOST:localhost}:9411
+    rabbitmq:
+        addresses: ${RABBITMQ_HOST:localhost}:5672
     mail:
         host: smtp.gmail.com
         username: twitter.spring.reactjs@gmail.com
@@ -20,6 +22,14 @@ spring:
                         enable: true
 mail:
     debug: false
+
+rabbitmq:
+    exchanges:
+        internal: internal.exchange
+    queues:
+        mail: mail.queue
+    routing-keys:
+        internal-mail: internal.mail.routing-key
 
 eureka:
     client:

@@ -1,10 +1,10 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.amqp.AmqpProducer;
 import com.gmail.merikbest2015.dto.request.AuthenticationRequest;
 import com.gmail.merikbest2015.dto.request.EmailRequest;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.exception.InputFieldException;
-import com.gmail.merikbest2015.feign.EmailClient;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
@@ -38,7 +38,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserServiceHelper userServiceHelper;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
-    private final EmailClient emailClient;
+    private final AmqpProducer amqpProducer;
 
     @Override
     public Long getAuthenticatedUserId() {
@@ -89,10 +89,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         UserCommonProjection user = userRepository.getUserByEmail(email, UserCommonProjection.class)
                 .orElseThrow(() -> new ApiRequestException(EMAIL_NOT_FOUND, HttpStatus.NOT_FOUND));
         userRepository.updatePasswordResetCode(UUID.randomUUID().toString().substring(0, 7), user.getId());
-        Map<String, Object> attributes = Map.of(
-                "fullName", user.getFullName(),
-                "passwordResetCode", user.getPasswordResetCode());
-        emailClient.sendEmail(new EmailRequest(user.getEmail(), "Password reset", "password-reset-template", attributes));
+        EmailRequest request = EmailRequest.builder()
+                .to(user.getEmail())
+                .subject("Password reset")
+                .template("password-reset-template")
+                .attributes(Map.of(
+                        "fullName", user.getFullName(),
+                        "passwordResetCode", user.getPasswordResetCode()))
+                .build();
+        amqpProducer.sendEmail(request);
         return "Reset password code is send to your E-mail";
     }
 
