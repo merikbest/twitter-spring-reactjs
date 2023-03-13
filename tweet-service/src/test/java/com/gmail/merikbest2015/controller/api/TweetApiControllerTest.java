@@ -126,6 +126,15 @@ public class TweetApiControllerTest {
     }
 
     @Test
+    @DisplayName("[200] GET /api/v1/tweets/count/test - Get tweet count by text")
+    public void getTweetCountByText() throws Exception {
+        mockMvc.perform(get(API_V1_TWEETS + COUNT_TEXT, "test")
+                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value(4));
+    }
+
+    @Test
     @DisplayName("[200] GET /api/v1/tweets/chat/43 - Get chat tweet")
     public void getChatTweet() throws Exception {
         mockMvc.perform(get(API_V1_TWEETS + CHAT_TWEET_ID, 43)

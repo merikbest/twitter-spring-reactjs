@@ -5,7 +5,7 @@ import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.response.chat.ChatTweetUserResponse;
 import com.gmail.merikbest2015.dto.response.chat.ChatUserParticipantResponse;
 import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
-import com.gmail.merikbest2015.dto.response.lists.ListOwnerResponse;
+import com.gmail.merikbest2015.dto.response.lists.CommonUserResponse;
 import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
@@ -90,7 +90,7 @@ public class UserApiController {
     }
 
     @GetMapping(LIST_OWNER_USER_ID)
-    public ListOwnerResponse getListOwnerById(@PathVariable("userId") Long userId) {
+    public CommonUserResponse getListOwnerById(@PathVariable("userId") Long userId) {
         return userService.getListOwnerById(userId);
     }
 

@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.repository.projection;
 
-import com.gmail.merikbest2015.dto.response.lists.ListOwnerResponse;
+import com.gmail.merikbest2015.dto.response.lists.CommonUserResponse;
 import org.springframework.beans.factory.annotation.Value;
 
 public interface ListUserProjection {
@@ -13,7 +13,7 @@ public interface ListUserProjection {
     boolean getIsPrivate();
 
     @Value("#{@listsServiceHelper.getListOwnerById(target.listOwnerId)}")
-    ListOwnerResponse getListOwner();
+    CommonUserResponse getListOwner();
 
     @Value("#{@listsServiceHelper.isListPinned(target.id)}")
     boolean getIsListPinned();

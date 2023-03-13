@@ -52,6 +52,10 @@ public class TweetClientMapper {
         return tweetClientService.isTweetExists(tweetId);
     }
 
+    public Long getTweetCountByText(String text) {
+        return tweetClientService.getTweetCountByText(text);
+    }
+
     public ChatTweetResponse getChatTweet(Long tweetId) {
         ChatTweetProjection tweet = tweetClientService.getChatTweet(tweetId);
         return basicMapper.convertToResponse(tweet, ChatTweetResponse.class);

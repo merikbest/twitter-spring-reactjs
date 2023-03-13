@@ -21,6 +21,9 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
 
     Optional<Tag> findByTagName(String tagName);
 
+    @Query("SELECT tag.tagName FROM Tag tag WHERE tag.tagName LIKE CONCAT('%',:text,'%')")
+    List<String> getTagsByText(@Param("text") String text);
+
     @Query("SELECT tag FROM Tag tag WHERE tag.id IN :tagIds")
     List<Tag> getTagsByIds(@Param("tagIds") List<Long> tagIds);
 

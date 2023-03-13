@@ -5,7 +5,7 @@ import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.response.chat.ChatTweetUserResponse;
 import com.gmail.merikbest2015.dto.response.chat.ChatUserParticipantResponse;
 import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
-import com.gmail.merikbest2015.dto.response.lists.ListOwnerResponse;
+import com.gmail.merikbest2015.dto.response.lists.CommonUserResponse;
 import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
@@ -41,7 +41,7 @@ public interface UserClientService {
 
     void updateMediaTweetCount(boolean increaseCount);
 
-    ListOwnerResponse getListOwnerById(Long userId);
+    CommonUserResponse getListOwnerById(Long userId);
 
     List<ListMemberResponse> getListParticipantsByIds(IdsRequest request);
 

@@ -53,6 +53,11 @@ public class TweetApiController {
         return tweetClientMapper.isTweetExists(tweetId);
     }
 
+    @GetMapping(COUNT_TEXT) // TODO add tests
+    public Long getTweetCountByText(@PathVariable("text") String text) {
+        return tweetClientMapper.getTweetCountByText(text);
+    }
+
     @GetMapping(CHAT_TWEET_ID)
     public ChatTweetResponse getChatTweet(@PathVariable("tweetId") Long tweetId) {
         return tweetClientMapper.getChatTweet(tweetId);

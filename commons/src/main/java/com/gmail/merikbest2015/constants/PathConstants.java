@@ -39,7 +39,7 @@ public class PathConstants {
     public static final String USER_ID = "/{userId}";
     public static final String ALL = "/all";
     public static final String RELEVANT = "/relevant";
-    public static final String SEARCH_USERNAME = "/search/{username}";
+    public static final String SEARCH_USERNAME = "/items/search/{username}";
     public static final String START = "/start";
     public static final String SUBSCRIBE_USER_ID = "/subscribe/{userId}";
     public static final String PIN_TWEET_ID = "/pin/tweet/{tweetId}";
@@ -105,6 +105,7 @@ public class PathConstants {
     public static final String TWEET_ID = "/{tweetId}";
     public static final String NOTIFICATION_TWEET_ID = "/notification/{tweetId}";
     public static final String ID_TWEET_ID = "/id/{tweetId}";
+    public static final String COUNT_TEXT = "/count/{text}";
     public static final String CHAT_TWEET_ID = "/chat/{tweetId}";
     public static final String UI_V1_TWEETS = UI_V1 + TWEETS;
     public static final String USER_BOOKMARKS = "/user/bookmarks";

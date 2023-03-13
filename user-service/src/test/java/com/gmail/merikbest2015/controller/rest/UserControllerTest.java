@@ -161,12 +161,23 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("[200] GET /ui/v1/user/search/test - Search users by username Not Found")
+    @DisplayName("[200] GET /ui/v1/user/items/search/test - Search users by username Not Found")
     public void searchUsersByUsername_NotFound() throws Exception {
         mockMvc.perform(get(UI_V1_USER + SEARCH_USERNAME, "test")
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(0)));
+    }
+
+    @Test
+    @DisplayName("[200] GET /ui/v1/user/search/MrCat - Search by text")
+    public void searchByText() throws Exception {
+        mockMvc.perform(get(UI_V1_USER + SEARCH_TEXT, TestConstants.USERNAME)
+                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.tweetCount").value(0L))
+                .andExpect(jsonPath("$.tags[*]", hasSize(0)))
+                .andExpect(jsonPath("$.users[*]", hasSize(6)));
     }
 
     @Test

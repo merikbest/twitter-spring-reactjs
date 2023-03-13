@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.dto.response.lists.CommonUserResponse;
 import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.dto.request.UserRequest;
 import com.gmail.merikbest2015.dto.response.*;
@@ -12,7 +13,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -39,6 +42,17 @@ public class UserMapper {
     public HeaderResponse<UserResponse> searchUsersByUsername(String username, Pageable pageable) {
         Page<UserProjection> users = userService.searchUsersByUsername(username, pageable, UserProjection.class);
         return basicMapper.getHeaderResponse(users, UserResponse.class);
+    }
+
+    public SearchResultResponse searchByText(String text) {
+        Map<String, Object> searchResult = userService.searchByText(text);
+        SearchResultResponse searchResultResponse = new SearchResultResponse();
+        searchResultResponse.setTweetCount((Long) searchResult.get("tweetCount"));
+        searchResultResponse.setTags((List<String>) searchResult.get("tags"));
+        List<CommonUserResponse> users = basicMapper.convertToResponseList(
+                (List<CommonUserProjection>) searchResult.get("users"), CommonUserResponse.class);
+        searchResultResponse.setUsers(users);
+        return searchResultResponse;
     }
 
     public Boolean startUseTwitter() {

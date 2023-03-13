@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
 
@@ -16,6 +17,8 @@ public interface UserService {
     List<UserProjection> getRelevantUsers();
 
     <T> Page<T> searchUsersByUsername(String username, Pageable pageable, Class<T> type);
+
+    Map<String, Object> searchByText(String text);
 
     Boolean startUseTwitter();
 

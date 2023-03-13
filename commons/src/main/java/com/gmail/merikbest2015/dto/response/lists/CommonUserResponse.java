@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class ListOwnerResponse {
+public class CommonUserResponse {
     private Long id;
     private String fullName;
     private String username;

@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.gmail.merikbest2015.dto.response.lists.ListOwnerResponse;
+import com.gmail.merikbest2015.dto.response.lists.CommonUserResponse;
 import lombok.Data;
 
 @Data
@@ -11,7 +11,7 @@ public class ListResponse {
     private String description;
     private String altWallpaper;
     private String wallpaper;
-    private ListOwnerResponse listOwner;
+    private CommonUserResponse listOwner;
 
     @JsonProperty("isFollower")
     private boolean isFollower;

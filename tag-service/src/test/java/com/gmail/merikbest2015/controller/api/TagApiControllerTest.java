@@ -17,10 +17,11 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.gmail.merikbest2015.constants.PathConstants.*;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -38,6 +39,16 @@ public class TagApiControllerTest {
 
     @Autowired
     private TagRepository tagRepository;
+
+    @Test
+    @DisplayName("[200] GET /api/v1/tags/search/test - Get tags by text")
+    public void getTagsByText() throws Exception {
+        mockMvc.perform(get(API_V1_TAGS + SEARCH_TEXT, "test")
+                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(1)))
+                .andExpect(jsonPath("$[0]").value("#test"));
+    }
 
     @Test
     @DisplayName("[200] GET /api/v1/tags/parse/99 - Parse new hashtag in text")

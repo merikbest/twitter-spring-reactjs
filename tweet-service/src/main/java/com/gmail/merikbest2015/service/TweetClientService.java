@@ -23,5 +23,7 @@ public interface TweetClientService {
 
     Boolean isTweetExists(Long tweetId);
 
+    Long getTweetCountByText(String text);
+
     ChatTweetProjection getChatTweet(Long tweetId);
 }

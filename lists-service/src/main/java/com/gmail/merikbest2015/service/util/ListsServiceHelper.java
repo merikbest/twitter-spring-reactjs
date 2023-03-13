@@ -3,7 +3,7 @@ package com.gmail.merikbest2015.service.util;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.request.NotificationRequest;
 import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
-import com.gmail.merikbest2015.dto.response.lists.ListOwnerResponse;
+import com.gmail.merikbest2015.dto.response.lists.CommonUserResponse;
 import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.NotificationClient;
@@ -103,7 +103,7 @@ public class ListsServiceHelper {
         return listsFollowersRepository.isListFollowed(authUserId, listId);
     }
 
-    public ListOwnerResponse getListOwnerById(Long userId) {
+    public CommonUserResponse getListOwnerById(Long userId) {
         return userClient.getListOwnerById(userId);
     }
 

@@ -1,7 +1,9 @@
 package com.gmail.merikbest2015.repository;
 
 import com.gmail.merikbest2015.model.Tweet;
-import com.gmail.merikbest2015.repository.projection.*;
+import com.gmail.merikbest2015.repository.projection.ProfileTweetImageProjection;
+import com.gmail.merikbest2015.repository.projection.TweetProjection;
+import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -156,4 +158,10 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "AND tweet.deleted = false " +
             "ORDER BY tweet.dateTime DESC")
     List<ProfileTweetImageProjection> getUserTweetImages(@Param("userId") Long userId, Pageable pageable);
+
+    @Query("SELECT COUNT(tweet) FROM Tweet tweet " +
+            "WHERE tweet.scheduledDate IS NULL " +
+            "AND tweet.deleted = false " +
+            "AND tweet.text LIKE CONCAT('%',:text,'%')")
+    Long getTweetCountByText(@Param("text") String text);
 }

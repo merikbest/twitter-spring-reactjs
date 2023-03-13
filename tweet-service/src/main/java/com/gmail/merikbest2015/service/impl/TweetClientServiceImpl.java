@@ -50,6 +50,11 @@ public class TweetClientServiceImpl implements TweetClientService {
     }
 
     @Override
+    public Long getTweetCountByText(String text) {
+        return tweetRepository.getTweetCountByText(text);
+    }
+
+    @Override
     public ChatTweetProjection getChatTweet(Long tweetId) {
         return tweetRepository.getTweetById(tweetId, ChatTweetProjection.class).get();
     }

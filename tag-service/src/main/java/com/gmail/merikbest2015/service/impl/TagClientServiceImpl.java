@@ -23,6 +23,11 @@ public class TagClientServiceImpl implements TagClientService {
     private final TweetTagRepository tweetTagRepository;
 
     @Override
+    public List<String> getTagsByText(String text) {
+        return tagRepository.getTagsByText(text);
+    }
+
+    @Override
     @Transactional
     public void parseHashtagsInText(Long tweetId, String text) {
         Pattern pattern = Pattern.compile("(#\\w+)\\b");

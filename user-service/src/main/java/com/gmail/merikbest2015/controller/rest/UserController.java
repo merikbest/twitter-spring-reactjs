@@ -52,6 +52,11 @@ public class UserController {
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
+    @GetMapping(SEARCH_TEXT) // TODO add tests
+    public ResponseEntity<SearchResultResponse> searchByText(@PathVariable String text) {
+        return ResponseEntity.ok(userMapper.searchByText(text));
+    }
+
     @GetMapping(START)
     public ResponseEntity<Boolean> startUseTwitter() {
         return ResponseEntity.ok(userMapper.startUseTwitter());
